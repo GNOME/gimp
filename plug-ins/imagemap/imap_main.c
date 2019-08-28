@@ -60,8 +60,45 @@
 #define ZOOMED(x) (_zoom_factor * (x))
 #define GET_REAL_COORD(x) ((x) / _zoom_factor)
 
-static gint             zoom_in         (void);
-static gint             zoom_out        (void);
+
+typedef struct _Imap      Imap;
+typedef struct _ImapClass ImapClass;
+
+struct _Imap
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _ImapClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define IMAP_TYPE  (imap_get_type ())
+#define IMAP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), IMAP_TYPE, Imap))
+
+GType                   imap_get_type         (void) G_GNUC_CONST;
+
+static GList          * imap_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * imap_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * imap_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static gint             dialog                (GimpDrawable         *drawable);
+static gint             zoom_in               (void);
+static gint             zoom_out              (void);
+
+
+G_DEFINE_TYPE (Imap, imap, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (IMAP_TYPE)
 
 
 /* Global variables */
@@ -70,7 +107,7 @@ static PreferencesData_t _preferences = {CSIM, TRUE, FALSE, TRUE, TRUE, FALSE,
 FALSE, TRUE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
 static MRU_t *_mru;
 
-static gint32        _drawable_id;
+static GimpDrawable *_drawable;
 static GdkCursorType _cursor = GDK_TOP_LEFT_ARROW;
 static gboolean     _show_url = TRUE;
 static gchar       *_filename = NULL;
@@ -86,89 +123,90 @@ static gint         _zoom_factor = 1;
 static gboolean (*_button_press_func)(GtkWidget*, GdkEventButton*, gpointer);
 static gpointer _button_press_param;
 
-/* Declare local functions. */
-static void  query  (void);
-static void  run    (const gchar      *name,
-                     gint              nparams,
-                     const GimpParam  *param,
-                     gint             *nreturn_vals,
-                     GimpParam       **return_vals);
-static gint  dialog (gint32            drawable_id);
-
-const GimpPlugInInfo PLUG_IN_INFO = {
-   NULL,                        /* init_proc */
-   NULL,                        /* quit_proc */
-   query,                       /* query_proc */
-   run,                         /* run_proc */
-};
-
-static int run_flag = 0;
+static int      run_flag = 0;
 
 
-MAIN ()
-
-static void query(void)
+static void
+imap_class_init (ImapClass *klass)
 {
-   static const GimpParamDef args[] = {
-      {GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0) }"},
-      {GIMP_PDB_IMAGE,    "image",    "Input image (unused)"},
-      {GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
-   };
-   static const GimpParamDef *return_vals = NULL;
-   static int nreturn_vals = 0;
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-   gimp_install_procedure(PLUG_IN_PROC,
-                          N_("Create a clickable imagemap"),
-                          "",
-                          "Maurits Rijk",
-                          "Maurits Rijk",
-                          "1998-2005",
-                          N_("_Image Map..."),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), nreturn_vals,
-                          args, return_vals);
-
-   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Web");
+  plug_in_class->query_procedures = imap_query_procedures;
+  plug_in_class->create_procedure = imap_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+imap_init (Imap *imap)
 {
-   static GimpParam values[1];
-   GimpRunMode run_mode;
-   gint32      drawable_id;
-   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+}
 
-   INIT_I18N ();
-   gegl_init (NULL, NULL);
+static GList *
+imap_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
-   *nreturn_vals = 1;
-   *return_vals = values;
+static GimpProcedure *
+imap_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
 
-   run_mode    = param[0].data.d_int32;
-   drawable_id = param[2].data.d_drawable;
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            imap_run, NULL, NULL);
 
-   _drawable_id = drawable_id;
-   _image_name = gimp_image_get_name(param[1].data.d_image);
-   _image_width = gimp_image_width(param[1].data.d_image);
-   _image_height = gimp_image_height(param[1].data.d_image);
+      gimp_procedure_set_image_types (procedure, "*");
 
-   _map_info.color = gimp_drawable_is_rgb(drawable_id);
+      gimp_procedure_set_menu_label (procedure, N_("_Image Map..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Web");
 
-   if (run_mode == GIMP_RUN_INTERACTIVE) {
-      if (!dialog(drawable_id)) {
-         /* The dialog was closed, or something similarly evil happened. */
-         status = GIMP_PDB_EXECUTION_ERROR;
-      }
-   }
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Create a clickable imagemap"),
+                                        NULL,
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Maurits Rijk",
+                                      "Maurits Rijk",
+                                      "1998-2005");
+    }
 
-   values[0].type = GIMP_PDB_STATUS;
-   values[0].data.d_status = status;
+  return procedure;
+}
+
+static GimpValueArray *
+imap_run (GimpProcedure        *procedure,
+         GimpRunMode           run_mode,
+         GimpImage            *image,
+         GimpDrawable         *drawable,
+         const GimpValueArray *args,
+         gpointer              run_data)
+{
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  _drawable = drawable;
+
+  _image_name   = gimp_image_get_name (image);
+  _image_width  = gimp_image_width (image);
+  _image_height = gimp_image_height (image);
+
+  _map_info.color = gimp_drawable_is_rgb (drawable);
+
+  if (run_mode != GIMP_RUN_INTERACTIVE)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CALLING_ERROR,
+                                             NULL);
+
+  if (! dialog (drawable))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             NULL);
+
+  return gimp_procedure_new_return_values (procedure,
+                                           GIMP_PDB_SUCCESS,
+                                           NULL);
 }
 
 GtkWidget*
@@ -1185,7 +1223,7 @@ do_send_to_back(void)
 void
 do_use_gimp_guides_dialog(void)
 {
-  command_execute (gimp_guides_command_new (_shapes, _drawable_id));
+  command_execute (gimp_guides_command_new (_shapes, _drawable));
 }
 
 void
@@ -1207,7 +1245,7 @@ factory_move_down(void)
 }
 
 static gint
-dialog(gint32 drawable_id)
+dialog (GimpDrawable *drawable)
 {
    GtkWidget    *dlg;
    GtkWidget    *hbox;
@@ -1262,7 +1300,7 @@ dialog(gint32 drawable_id)
    /* selection_set_edit_command(tools, factory_edit); */
    gtk_box_pack_start(GTK_BOX(hbox), tools, FALSE, FALSE, 0);
 
-   _preview = make_preview(drawable_id);
+   _preview = make_preview (drawable);
 
    g_signal_connect(_preview->preview, "motion-notify-event",
                     G_CALLBACK(preview_move), NULL);

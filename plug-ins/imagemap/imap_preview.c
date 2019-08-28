@@ -86,21 +86,21 @@ render_background(Preview_t *preview_base)
 
 static void
 render_rgb_image (Preview_t *preview_base,
-                  gint32     drawable_id)
+                  GimpDrawable *drawable)
 {
   GeglBuffer *buffer;
   guchar     *dest_buffer;
   gint        dwidth, dheight, pwidth, pheight;
   GtkWidget  *preview = preview_base->preview;
 
-  dwidth  = gimp_drawable_width (drawable_id);
-  dheight = gimp_drawable_height (drawable_id);
+  dwidth  = gimp_drawable_width (drawable);
+  dheight = gimp_drawable_height (drawable);
   pwidth  = preview_base->widget_width;
   pheight = preview_base->widget_height;
 
   dest_buffer = g_new (guchar, pwidth * pheight * 4);
 
-  buffer = gimp_drawable_get_buffer (drawable_id);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, pwidth, pheight),
                    MIN ((gdouble) pwidth / (gdouble) dwidth,
@@ -121,10 +121,10 @@ render_rgb_image (Preview_t *preview_base,
 
 static void
 render_preview (Preview_t *preview_base,
-                gint32     drawable_id)
+                GimpDrawable *drawable)
 {
   render_background (preview_base);
-  render_rgb_image (preview_base, drawable_id);
+  render_rgb_image (preview_base, drawable);
 }
 
 static gboolean
@@ -180,7 +180,7 @@ preview_zoom(Preview_t *preview, gint zoom_factor)
    gtk_widget_set_size_request (preview->preview, preview->widget_width,
                                 preview->widget_height);
    gtk_widget_queue_resize(preview->window);
-   render_preview(preview, preview->drawable_id);
+   render_preview(preview, preview->drawable);
    preview_redraw();
 }
 
@@ -239,7 +239,7 @@ preview_size_allocate (GtkWidget *widget,
 {
   Preview_t *preview = preview_void;
 
-  render_preview (preview, preview->drawable_id);
+  render_preview (preview, preview->drawable);
 }
 
 static void
@@ -254,7 +254,7 @@ scroll_adj_changed (GtkAdjustment *adj,
 }
 
 Preview_t *
-make_preview (gint32 drawable_id)
+make_preview (GimpDrawable *drawable)
 {
    Preview_t *data = g_new(Preview_t, 1);
    GtkAdjustment *hadj;
@@ -268,7 +268,7 @@ make_preview (gint32 drawable_id)
    GtkWidget *scrollbar;
    gint width, height;
 
-   data->drawable_id = drawable_id;
+   data->drawable = drawable;
    data->preview = preview = gimp_preview_area_new ();
 
    g_object_set_data (G_OBJECT (preview), "preview", data);
@@ -289,8 +289,8 @@ make_preview (gint32 drawable_id)
                      G_CALLBACK (handle_drop),
                      NULL);
 
-   data->widget_width  = data->width  = gimp_drawable_width (drawable_id);
-   data->widget_height = data->height = gimp_drawable_height (drawable_id);
+   data->widget_width  = data->width  = gimp_drawable_width (drawable);
+   data->widget_height = data->height = gimp_drawable_height (drawable);
    gtk_widget_set_size_request (preview, data->widget_width,
                                 data->widget_height);
 
@@ -381,7 +381,7 @@ make_preview (gint32 drawable_id)
 
    gtk_widget_show (preview);
 
-   render_preview (data, drawable_id);
+   render_preview (data, drawable);
 
    gtk_widget_show (grid);
 
