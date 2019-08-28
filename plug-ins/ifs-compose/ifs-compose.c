@@ -175,25 +175,47 @@ typedef struct
   gboolean   run;
 } IfsComposeInterface;
 
-/* Declare local functions.
- */
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+
+typedef struct _Ifs      Ifs;
+typedef struct _IfsClass IfsClass;
+
+struct _Ifs
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _IfsClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define IFS_TYPE  (ifs_get_type ())
+#define IFS (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), IFS_TYPE, Ifs))
+
+GType                   ifs_get_type         (void) G_GNUC_CONST;
+
+static GList          * ifs_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * ifs_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * ifs_run              (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
 
 /*  user interface functions  */
-static gint           ifs_compose_dialog          (gint32        drawable_id);
-static void           ifs_options_dialog          (GtkWidget    *parent);
+static gint           ifs_compose_dialog          (GimpDrawable *drawable);
+static void           ifs_options_dialog          (GtkWidget     *parent);
 static GtkWidget    * ifs_compose_trans_page      (void);
 static GtkWidget    * ifs_compose_color_page      (void);
-static GtkUIManager * design_op_menu_create       (GtkWidget   *window);
+static GtkUIManager * design_op_menu_create       (GtkWidget    *window);
 static void           design_op_actions_update    (void);
-static void           design_area_create          (GtkWidget   *window,
-                                                   gint         design_width,
-                                                   gint         design_height);
+static void           design_area_create          (GtkWidget    *window,
+                                                   gint          design_width,
+                                                   gint          design_height);
 
 /* functions for drawing design window */
 static void update_values                   (void);
@@ -224,7 +246,7 @@ static void recompute_center              (gboolean   save_undo);
 static void recompute_center_cb           (GtkWidget *widget,
                                            gpointer   data);
 
-static void ifs_compose                   (gint32     drawable_id);
+static void ifs_compose                   (GimpDrawable *drawable);
 
 static ColorMap *color_map_create         (const gchar  *name,
                                            GimpRGB      *orig_color,
@@ -267,9 +289,11 @@ static void ifs_compose_response          (GtkWidget *widget,
                                            gint       response_id,
                                            gpointer   data);
 
-/*
- *  Some static variables
- */
+
+G_DEFINE_TYPE (Ifs, ifs, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (IFS_TYPE)
+
 
 static IfsDialog        *ifsD       = NULL;
 static IfsOptionsDialog *ifsOptD    = NULL;
@@ -305,81 +329,78 @@ static IfsComposeInterface ifscint =
   FALSE,   /* run          */
 };
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
-};
-
-
-MAIN ()
 
 static void
-query (void)
+ifs_class_init (IfsClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create an Iterated Function System (IFS) fractal"),
-                          "Interactively create an Iterated Function System "
-                          "fractal. Use the window on the upper left to adjust "
-                          "the component transformations of the fractal. The "
-                          "operation that is performed is selected by the "
-                          "buttons underneath the window, or from a menu "
-                          "popped up by the right mouse button. The fractal "
-                          "will be rendered with a transparent background if "
-                          "the current image has an alpha channel.",
-                          "Owen Taylor",
-                          "Owen Taylor",
-                          "1997",
-                          N_("_IFS Fractal..."),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), nreturn_vals,
-                          args, return_vals);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC,
-                             "<Image>/Filters/Render/Fractals");
+  plug_in_class->query_procedures = ifs_query_procedures;
+  plug_in_class->create_procedure = ifs_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+ifs_init (Ifs *ifs)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
-  GimpParasite      *parasite = NULL;
-  gint32             image_id;
-  gint32             drawable_id;
-  gboolean           found_parasite = FALSE;
+}
+
+static GList *
+ifs_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+ifs_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            ifs_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_IFS Fractal..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Render/Fractals");
+
+      gimp_procedure_set_documentation
+        (procedure,
+         N_("Create an Iterated Function System (IFS) fractal"),
+         "Interactively create an Iterated Function System "
+         "fractal. Use the window on the upper left to adjust"
+         "the component transformations of the fractal. The "
+         "operation that is performed is selected by the "
+         "buttons underneath the window, or from a menu "
+         "popped up by the right mouse button. The fractal "
+         "will be rendered with a transparent background if "
+         "the current image has an alpha channel.",
+         name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Owen Taylor",
+                                      "Owen Taylor",
+                                      "1997");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+ifs_run (GimpProcedure        *procedure,
+         GimpRunMode           run_mode,
+         GimpImage            *image,
+         GimpDrawable         *drawable,
+         const GimpValueArray *args,
+         gpointer              run_data)
+{
+  GimpParasite *parasite = NULL;
+  gboolean      found_parasite = FALSE;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  image_id    = param[1].data.d_image;
-  drawable_id = param[2].data.d_drawable;
 
   switch (run_mode)
     {
@@ -387,7 +408,7 @@ run (const gchar      *name,
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_item_get_parasite (drawable_id,
+      parasite = gimp_item_get_parasite (GIMP_ITEM (drawable),
                                          PLUG_IN_PARASITE);
       if (parasite)
         {
@@ -396,7 +417,7 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
         }
 
-      if (!found_parasite)
+      if (! found_parasite)
         {
           gint length = gimp_get_data_size (PLUG_IN_PROC);
 
@@ -414,12 +435,16 @@ run (const gchar      *name,
       count_for_naming = ifsvals.num_elements;
 
       /*  First acquire information with a dialog  */
-      if (! ifs_compose_dialog (drawable_id))
-        return;
+      if (! ifs_compose_dialog (drawable))
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      status = GIMP_PDB_CALLING_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               NULL);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -445,47 +470,43 @@ run (const gchar      *name,
       break;
     }
 
-  /*  Render the fractal  */
-  if (status == GIMP_PDB_SUCCESS)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        {
-          gchar        *str;
-          GimpParasite *parasite;
+      gchar        *str;
+      GimpParasite *parasite;
 
-          gimp_image_undo_group_start (image_id);
+      gimp_image_undo_group_start (image);
 
-          /*  run the effect  */
-          ifs_compose (drawable_id);
+      /*  run the effect  */
+      ifs_compose (drawable);
 
-          /*  Store data for next invocation - both globally and
-           *  as a parasite on this layer
-           */
-          str = ifsvals_stringify (&ifsvals, elements);
+      /*  Store data for next invocation - both globally and
+       *  as a parasite on this layer
+       */
+      str = ifsvals_stringify (&ifsvals, elements);
 
-          gimp_set_data (PLUG_IN_PROC, str, strlen (str) + 1);
+      gimp_set_data (PLUG_IN_PROC, str, strlen (str) + 1);
 
-          parasite = gimp_parasite_new (PLUG_IN_PARASITE,
-                                        GIMP_PARASITE_PERSISTENT |
-                                        GIMP_PARASITE_UNDOABLE,
-                                        strlen (str) + 1, str);
-          gimp_item_attach_parasite (drawable_id, parasite);
-          gimp_parasite_free (parasite);
+      parasite = gimp_parasite_new (PLUG_IN_PARASITE,
+                                    GIMP_PARASITE_PERSISTENT |
+                                    GIMP_PARASITE_UNDOABLE,
+                                    strlen (str) + 1, str);
+      gimp_item_attach_parasite (GIMP_ITEM (drawable), parasite);
+      gimp_parasite_free (parasite);
 
-          g_free (str);
+      g_free (str);
 
-          gimp_image_undo_group_end (image_id);
+      gimp_image_undo_group_end (image);
 
-          gimp_displays_flush ();
-        }
-      else
-        {
-          /*  run the effect  */
-          ifs_compose (drawable_id);
-        }
+      gimp_displays_flush ();
+    }
+  else
+    {
+      /*  run the effect  */
+      ifs_compose (drawable);
     }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static GtkWidget *
@@ -710,7 +731,7 @@ ifs_compose_color_page (void)
 }
 
 static gint
-ifs_compose_dialog (gint32 drawable_id)
+ifs_compose_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *label;
@@ -721,8 +742,8 @@ ifs_compose_dialog (gint32 drawable_id)
   GtkWidget *aspect_frame;
   GtkWidget *notebook;
   GtkWidget *page;
-  gint       design_width  = gimp_drawable_width (drawable_id);
-  gint       design_height = gimp_drawable_height (drawable_id);
+  gint       design_width  = gimp_drawable_width  (drawable);
+  gint       design_height = gimp_drawable_height (drawable);
 
   if (design_width > design_height)
     {
@@ -743,8 +764,8 @@ ifs_compose_dialog (gint32 drawable_id)
 
   ifsD = g_new0 (IfsDialog, 1);
 
-  ifsD->drawable_width  = gimp_drawable_width (drawable_id);
-  ifsD->drawable_height = gimp_drawable_height (drawable_id);
+  ifsD->drawable_width  = gimp_drawable_width  (drawable);
+  ifsD->drawable_height = gimp_drawable_height (drawable);
   ifsD->preview_width   = design_width;
   ifsD->preview_height  = design_height;
 
@@ -1250,12 +1271,12 @@ ifs_options_dialog (GtkWidget *parent)
 }
 
 static void
-ifs_compose (gint32 drawable_id)
+ifs_compose (GimpDrawable *drawable)
 {
-  GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable_id);
-  gint        width  = gimp_drawable_width (drawable_id);
-  gint        height = gimp_drawable_height (drawable_id);
-  gboolean    alpha  = gimp_drawable_has_alpha (drawable_id);
+  GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable);
+  gint        width  = gimp_drawable_width (drawable);
+  gint        height = gimp_drawable_height (drawable);
+  gboolean    alpha  = gimp_drawable_has_alpha (drawable);
   const Babl *format;
   gint        num_bands;
   gint        band_height;
@@ -1399,8 +1420,8 @@ ifs_compose (gint32 drawable_id)
 
   g_object_unref (buffer);
 
-  gimp_drawable_merge_shadow (drawable_id, TRUE);
-  gimp_drawable_update (drawable_id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, 0, 0, width, height);
 }
 
 static void
