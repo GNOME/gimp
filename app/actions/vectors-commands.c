@@ -386,12 +386,8 @@ vectors_selection_to_vectors_cmd_callback (GimpAction *action,
 
   advanced = (gboolean) g_variant_get_int32 (value);
 
-  if (advanced)
-    procedure = gimp_pdb_lookup_procedure (image->gimp->pdb,
-                                           "plug-in-sel2path-advanced");
-  else
-    procedure = gimp_pdb_lookup_procedure (image->gimp->pdb,
-                                           "plug-in-sel2path");
+  procedure = gimp_pdb_lookup_procedure (image->gimp->pdb,
+                                         "plug-in-sel2path");
 
   if (! procedure)
     {
@@ -404,10 +400,10 @@ vectors_selection_to_vectors_cmd_callback (GimpAction *action,
   display = gimp_context_get_display (action_data_get_context (data));
 
   args = gimp_procedure_get_arguments (procedure);
-  gimp_value_array_truncate (args, 2);
 
   g_value_set_enum     (gimp_value_array_index (args, 0),
-                        GIMP_RUN_INTERACTIVE);
+                        advanced ?
+                        GIMP_RUN_INTERACTIVE : GIMP_RUN_NONINTERACTIVE);
   gimp_value_set_image (gimp_value_array_index (args, 1),
                         image);
 

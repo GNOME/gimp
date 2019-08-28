@@ -345,7 +345,7 @@ dialog_create_selection_area (SELVALS *sels)
                               TRUE, 0, 0,
                               _("Percentage of the curve away from the worst point "
                                 "to look for a better place to subdivide."), NULL);
-  g_signal_connect (adj, "vahanged",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->subdivide_search);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
