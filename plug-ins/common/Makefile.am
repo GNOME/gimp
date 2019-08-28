@@ -296,8 +296,6 @@ blinds_LDADD = \
 	$(INTLLIBS)		\
 	$(blinds_RC)
 
-border_average_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 border_average_SOURCES = \
 	border-average.c
 
