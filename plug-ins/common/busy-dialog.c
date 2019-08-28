@@ -38,12 +38,32 @@ typedef struct
 } Context;
 
 
-static void                query                           (void);
-static void                run                             (const gchar      *name,
-                                                            gint              nparams,
-                                                            const GimpParam  *param,
-                                                            gint             *nreturn_vals,
-                                                            GimpParam       **return_vals);
+typedef struct _BusyDialog      BusyDialog;
+typedef struct _BusyDialogClass BusyDialogClass;
+
+struct _BusyDialog
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _BusyDialogClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define BUSY_DIALOG_TYPE  (busy_dialog_get_type ())
+#define BUSY_DIALOG (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BUSY_DIALOG_TYPE, BusyDialog))
+
+GType                     busy_dialog_get_type         (void) G_GNUC_CONST;
+
+
+static GList             * busy_dialog_query_procedures    (GimpPlugIn           *plug_in);
+static GimpProcedure     * busy_dialog_create_procedure    (GimpPlugIn           *plug_in,
+                                                            const gchar          *name);
+static GimpValueArray    * busy_dialog_run                 (GimpProcedure        *procedure,
+                                                            const GimpValueArray *args,
+                                                            gpointer              run_data);
 
 static GimpPDBStatusType   busy_dialog                     (gint              read_fd,
                                                             gint              write_fd,
@@ -62,82 +82,116 @@ static void                busy_dialog_response            (GtkDialog        *di
                                                             Context          *context);
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (BusyDialog, busy_dialog, GIMP_TYPE_PLUG_IN)
 
-
-MAIN ()
-
+GIMP_MAIN (BUSY_DIALOG_TYPE)
 
 static void
-query (void)
+busy_dialog_class_init (BusyDialogClass *klass)
 {
-  static const GimpParamDef args [] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",   "The run mode { RUN-INTERACTIVE (0) }"             },
-    { GIMP_PDB_INT32,  "read-fd",    "The read file descriptor"                         },
-    { GIMP_PDB_INT32,  "write-fd",   "The write file descriptor"                        },
-    { GIMP_PDB_STRING, "message",    "The message"                                      },
-    { GIMP_PDB_INT32,  "cancelable", "Whether the dialog is cancelable (TRUE or FALSE)" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          "Show a dialog while waiting for an operation to finish",
-                          "Used by GIMP to display a dialog, containing a "
-                          "spinner and a custom message, while waiting for an "
-                          "ongoing operation to finish. Optionally, the dialog "
-                          "may provide a \"Cancel\" button, which can be used "
-                          "to cancel the operation.",
-                          "Ell",
-                          "Ell",
-                          "2018",
-                          NULL,
-                          "",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+  plug_in_class->query_procedures = busy_dialog_query_procedures;
+  plug_in_class->create_procedure = busy_dialog_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *params,
-     gint             *n_return_vals,
-     GimpParam       **return_vals)
+busy_dialog_init (BusyDialog *busy_dialog)
 {
-  GimpRunMode       run_mode = params[0].data.d_int32;
-  GimpPDBStatusType status   = GIMP_PDB_SUCCESS;
+}
 
-  static GimpParam  values[1];
+static GList *
+busy_dialog_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+static GimpProcedure *
+busy_dialog_create_procedure (GimpPlugIn  *plug_in,
+                              const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
 
-  *n_return_vals = 1;
-  *return_vals   = values;
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      busy_dialog_run, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Show a dialog while waiting for an operation to finish",
+                                        "Used by GIMP to display a dialog, containing a "
+                                        "spinner and a custom message, while waiting for an "
+                                        "ongoing operation to finish. Optionally, the dialog "
+                                        "may provide a \"Cancel\" button, which can be used "
+                                        "to cancel the operation.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Ell",
+                                      "Ell",
+                                      "2018");
+
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "read-fd",
+                         "The read file descriptor",
+                         "The read file descriptor",
+                         G_MININT, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "write-fd",
+                         "The write file descriptor",
+                         "The write file descriptor",
+                         G_MININT, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "message",
+                            "The message",
+                            "The message",
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "cancelable",
+                             "Whether the dialog is cancelable",
+                             "Whether the dialog is cancelable",
+                             FALSE,
+                             G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+busy_dialog_run (GimpProcedure        *procedure,
+                 const GimpValueArray *args,
+                 gpointer              run_data)
+{
+  GimpValueArray    *return_vals = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   INIT_I18N ();
 
+  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_NONINTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      if (n_params != 5)
+      if (gimp_value_array_length (args) != 5)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
       else
         {
-          status = busy_dialog (params[1].data.d_int32,
-                                params[2].data.d_int32,
-                                params[3].data.d_string,
-                                params[4].data.d_int32);
+          status = busy_dialog (GIMP_VALUES_GET_INT (args, 1),
+                                GIMP_VALUES_GET_INT (args, 2),
+                                GIMP_VALUES_GET_STRING (args, 3),
+                                GIMP_VALUES_GET_BOOLEAN (args, 4));
         }
       break;
 
@@ -146,7 +200,9 @@ run (const gchar      *name,
       break;
     }
 
-  values[0].data.d_status = status;
+  return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
+
+  return return_vals;
 }
 
 static GimpPDBStatusType

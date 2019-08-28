@@ -314,8 +314,6 @@ border_average_LDADD = \
 	$(INTLLIBS)		\
 	$(border_average_RC)
 
-busy_dialog_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 busy_dialog_SOURCES = \
 	busy-dialog.c
 
