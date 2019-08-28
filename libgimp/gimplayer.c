@@ -321,44 +321,6 @@ gimp_layer_new_deprecated (gint32         image_id,
 }
 
 /**
- * gimp_layer_new_from_surface_deprecated: (skip)
- * @image_id:        The RGB image to which to add the layer.
- * @name:            The layer name.
- * @surface:         A Cairo image surface.
- * @progress_start:  start of progress
- * @progress_end:    end of progress
- *
- * Create a new layer from a #cairo_surface_t.
- *
- * This procedure creates a new layer from the given
- * #cairo_surface_t. The image has to be an RGB image and just like
- * with gimp_layer_new() you will still need to add the layer to it.
- *
- * If you pass @progress_end > @progress_start to this function,
- * gimp_progress_update() will be called for. You have to call
- * gimp_progress_init() beforehand then.
- *
- * Returns: The newly created layer ID.
- *
- * Since: 2.8
- */
-gint32
-gimp_layer_new_from_surface_deprecated (gint32                image_id,
-                                        const gchar          *name,
-                                        cairo_surface_t      *surface,
-                                        gdouble               progress_start,
-                                        gdouble               progress_end)
-{
-  GimpLayer *layer;
-
-  layer = gimp_layer_new_from_surface (gimp_image_get_by_id (image_id),
-                                       name, surface,
-                                       progress_start, progress_end);
-
-  return gimp_item_get_id (GIMP_ITEM (layer));
-}
-
-/**
  * gimp_layer_copy_deprecated: (skip)
  * @layer_ID: The layer to copy.
  *

@@ -574,7 +574,6 @@ EXPORTS
 	gimp_layer_new_from_drawable
 	gimp_layer_new_from_pixbuf
 	gimp_layer_new_from_surface
-	gimp_layer_new_from_surface_deprecated
 	gimp_layer_new_from_visible
 	gimp_layer_remove_mask
 	gimp_layer_resize
