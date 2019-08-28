@@ -17,7 +17,6 @@ help_RC = help.rc.o
 endif
 
 AM_CPPFLAGS = \
-	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-DDATADIR=\""$(gimpdatadir)"\"	\
 	-I$(top_srcdir)			\
 	$(CAIRO_CFLAGS)			\
