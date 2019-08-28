@@ -1,5 +1,5 @@
 %plugins = (
-    'align-layers' => { ui => 1, old_api => 1 },
+    'align-layers' => { ui => 1 },
     'animation-optimize' => { gegl => 1, old_api => 1 },
     'animation-play' => { ui => 1, gegl => 1 },
     'blinds' => { ui => 1, gegl => 1 },

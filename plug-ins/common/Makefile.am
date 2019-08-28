@@ -225,8 +225,6 @@ install-%: %
 	  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(gimpplugindir)/plug-ins/$$p/$$f || exit 1; \
 	else :; fi
 
-align_layers_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 align_layers_SOURCES = \
 	align-layers.c
 
