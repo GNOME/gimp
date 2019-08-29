@@ -34,9 +34,11 @@
       <xi:include href="xml/gimpplugin.xml" />
       <xi:include href="xml/gimppdb.xml" />
       <xi:include href="xml/gimpprocedure.xml" />
+      <xi:include href="xml/gimpprocedure-params.xml" />
       <xi:include href="xml/gimpimageprocedure.xml" />
       <xi:include href="xml/gimpfileprocedure.xml" />
       <xi:include href="xml/gimploadprocedure.xml" />
+      <xi:include href="xml/gimpthumbnailprocedure.xml" />
       <xi:include href="xml/gimpsaveprocedure.xml" />
       <xi:include href="xml/gimpparamspecs.xml" />
       <xi:include href="xml/gimpprogress.xml" />
@@ -66,6 +68,7 @@
       <xi:include href="xml/gimpitem.xml" />
       <xi:include href="xml/gimpitemtransform.xml" />
       <xi:include href="xml/gimplayer.xml" />
+      <xi:include href="xml/gimplayermask.xml" />
       <xi:include href="xml/gimppixbuf.xml" />
       <xi:include href="xml/gimpselection.xml" />
       <xi:include href="xml/gimptextlayer.xml" />
