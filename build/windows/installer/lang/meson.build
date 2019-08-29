@@ -45,16 +45,16 @@ extractlang = find_program('extractlang.sh')
 
 all_isl = []
 foreach language : languages
-  code    = language.get('code')
-  prefix  = language.get('prefix', '[@0@]'.format(code))
-  encoding= language.get('encoding', 'WINDOWS-1252')
+  lang_code    = language.get('code')
+  lang_prefix  = language.get('prefix', '[@0@]'.format(code))
+  lang_encoding= language.get('encoding', 'WINDOWS-1252')
 
-  islfile = '@0@.setup.isl'.format(code)
+  islfile = '@0@.setup.isl'.format(lang_code)
 
   all_isl += custom_target(islfile,
     input : isl_input,
     output: islfile,
-    command: [ extractlang, prefix, encoding, '@INPUT@' ],
+    command: [ extractlang, lang_prefix, lang_encoding, '@INPUT@' ],
     capture: true,
     build_by_default: true,
   )

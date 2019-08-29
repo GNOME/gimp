@@ -5,7 +5,7 @@ manconf.set('GIMP_VERSION',   gimp_version)
 manconf.set('gimpdatadir',    prefix / gimpdatadir)
 manconf.set('gimplocaledir',  prefix / localedir)
 manconf.set('gimpplugindir',  prefix / gimpplugindir)
-manconf.set('manpage_gimpdir', '\fB$XDG_CONFIG_HOME\fP/' + gimpdir / gimp_app_version)
+manconf.set('manpage_gimpdir', '$XDG_CONFIG_HOME/' + gimpdir / gimp_app_version)
 manconf.set('gimpsysconfdir', prefix / gimpsysconfdir)
 manconf.set('mypaint_brushes_dir', libmypaint_brushes_dir)
 

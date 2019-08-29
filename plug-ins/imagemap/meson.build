@@ -116,7 +116,7 @@ if flex.found() and bison.found()
 
   foreach syntax : syntaxes
 
-    prefix =  syntax + '_'
+    syntax_prefix =  syntax + '_'
     imapname = 'imap_' + syntax
 
     custom_target(
@@ -126,7 +126,7 @@ if flex.found() and bison.found()
       command: [
         flex,
         '--case-insensitive',
-        '--prefix', prefix,
+        '--prefix', syntax_prefix,
         '--outfile', '@OUTPUT@',
         '@INPUT@',
       ],
@@ -139,7 +139,7 @@ if flex.found() and bison.found()
       command: [
         bison, '--yacc',
         '-d',
-        '--name-prefix', prefix,
+        '--name-prefix', syntax_prefix,
         '@INPUT@'
       ],
     )
@@ -151,7 +151,7 @@ if flex.found() and bison.found()
       command: [
         bison, '--yacc',
         '-d',
-        '--name-prefix', prefix,
+        '--name-prefix', syntax_prefix,
         '--output', '@OUTPUT@',
         '@INPUT@'
       ],
