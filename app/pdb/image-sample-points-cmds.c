@@ -56,7 +56,7 @@ image_add_sample_point_invoker (GimpProcedure         *procedure,
   gint position_y;
   guint sample_point = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   position_x = g_value_get_int (gimp_value_array_index (args, 1));
   position_y = g_value_get_int (gimp_value_array_index (args, 2));
 
@@ -96,7 +96,7 @@ image_delete_sample_point_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   guint sample_point;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
@@ -128,7 +128,7 @@ image_find_next_sample_point_invoker (GimpProcedure         *procedure,
   guint sample_point;
   guint next_sample_point = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
@@ -171,7 +171,7 @@ image_get_sample_point_position_invoker (GimpProcedure         *procedure,
   gint position_x = 0;
   gint position_y = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
@@ -216,11 +216,11 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                      "2016",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("position-x",
                                                  "position x",
@@ -256,11 +256,11 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                      "2016",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("sample-point",
                                                   "sample point",
@@ -284,11 +284,11 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                      "2016",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("sample-point",
                                                   "sample point",
@@ -318,11 +318,11 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                      "2016",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("sample-point",
                                                   "sample point",

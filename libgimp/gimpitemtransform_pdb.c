@@ -67,7 +67,7 @@ gimp_item_transform_translate (GimpItem *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, off_x,
                                           G_TYPE_DOUBLE, off_y,
                                           G_TYPE_NONE);
@@ -82,7 +82,7 @@ gimp_item_transform_translate (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -122,7 +122,7 @@ _gimp_item_transform_translate (gint32  item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_DOUBLE, off_x,
                                           G_TYPE_DOUBLE, off_y,
                                           G_TYPE_NONE);
@@ -137,7 +137,7 @@ _gimp_item_transform_translate (gint32  item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -189,7 +189,7 @@ gimp_item_transform_flip_simple (GimpItem            *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, axis,
@@ -205,7 +205,7 @@ gimp_item_transform_flip_simple (GimpItem            *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -257,7 +257,7 @@ _gimp_item_transform_flip_simple (gint32              item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, axis,
@@ -273,7 +273,7 @@ _gimp_item_transform_flip_simple (gint32              item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -327,7 +327,7 @@ gimp_item_transform_flip (GimpItem *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -344,7 +344,7 @@ gimp_item_transform_flip (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -398,7 +398,7 @@ _gimp_item_transform_flip (gint32  item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -415,7 +415,7 @@ _gimp_item_transform_flip (gint32  item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -486,7 +486,7 @@ gimp_item_transform_perspective (GimpItem *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -507,7 +507,7 @@ gimp_item_transform_perspective (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -578,7 +578,7 @@ _gimp_item_transform_perspective (gint32  item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -599,7 +599,7 @@ _gimp_item_transform_perspective (gint32  item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -656,7 +656,7 @@ gimp_item_transform_rotate_simple (GimpItem         *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           GIMP_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, center_x,
@@ -673,7 +673,7 @@ gimp_item_transform_rotate_simple (GimpItem         *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -730,7 +730,7 @@ _gimp_item_transform_rotate_simple (gint32           item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           GIMP_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, center_x,
@@ -747,7 +747,7 @@ _gimp_item_transform_rotate_simple (gint32           item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -806,7 +806,7 @@ gimp_item_transform_rotate (GimpItem *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, center_x,
@@ -823,7 +823,7 @@ gimp_item_transform_rotate (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -882,7 +882,7 @@ _gimp_item_transform_rotate (gint32   item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_BOOLEAN, auto_center,
                                           G_TYPE_DOUBLE, center_x,
@@ -899,7 +899,7 @@ _gimp_item_transform_rotate (gint32   item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -955,7 +955,7 @@ gimp_item_transform_scale (GimpItem *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -972,7 +972,7 @@ gimp_item_transform_scale (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1028,7 +1028,7 @@ _gimp_item_transform_scale (gint32  item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -1045,7 +1045,7 @@ _gimp_item_transform_scale (gint32  item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1099,7 +1099,7 @@ gimp_item_transform_shear (GimpItem            *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           GIMP_TYPE_ORIENTATION_TYPE, shear_type,
                                           G_TYPE_DOUBLE, magnitude,
                                           G_TYPE_NONE);
@@ -1114,7 +1114,7 @@ gimp_item_transform_shear (GimpItem            *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1168,7 +1168,7 @@ _gimp_item_transform_shear (gint32              item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           GIMP_TYPE_ORIENTATION_TYPE, shear_type,
                                           G_TYPE_DOUBLE, magnitude,
                                           G_TYPE_NONE);
@@ -1183,7 +1183,7 @@ _gimp_item_transform_shear (gint32              item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1248,7 +1248,7 @@ gimp_item_transform_2d (GimpItem *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, source_x,
                                           G_TYPE_DOUBLE, source_y,
                                           G_TYPE_DOUBLE, scale_x,
@@ -1268,7 +1268,7 @@ gimp_item_transform_2d (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1333,7 +1333,7 @@ _gimp_item_transform_2d (gint32  item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_DOUBLE, source_x,
                                           G_TYPE_DOUBLE, source_y,
                                           G_TYPE_DOUBLE, scale_x,
@@ -1353,7 +1353,7 @@ _gimp_item_transform_2d (gint32  item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1420,7 +1420,7 @@ gimp_item_transform_matrix (GimpItem *item,
   GimpItem *ret_item = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_DOUBLE, coeff_0_0,
                                           G_TYPE_DOUBLE, coeff_0_1,
                                           G_TYPE_DOUBLE, coeff_0_2,
@@ -1442,7 +1442,7 @@ gimp_item_transform_matrix (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1509,7 +1509,7 @@ _gimp_item_transform_matrix (gint32  item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_DOUBLE, coeff_0_0,
                                           G_TYPE_DOUBLE, coeff_0_1,
                                           G_TYPE_DOUBLE, coeff_0_2,
@@ -1531,7 +1531,7 @@ _gimp_item_transform_matrix (gint32  item_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item_ID = gimp_value_get_item_id (gimp_value_array_index (return_vals, 1));
+    ret_item_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

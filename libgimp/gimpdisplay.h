@@ -70,6 +70,8 @@ GType         gimp_display_get_type     (void) G_GNUC_CONST;
 gint32        gimp_display_get_id       (GimpDisplay    *display);
 GimpDisplay * gimp_display_get_by_id    (gint32          display_id);
 
+gboolean      gimp_display_is_valid     (GimpDisplay    *display);
+
 
 G_END_DECLS
 

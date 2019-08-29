@@ -107,11 +107,10 @@ HELP
       GIMP_PDB_SUCCESS)
     {
       if (gimp_value_array_length (return_vals) > 1 &&
-          GIMP_VALUE_HOLDS_IMAGE_ID (gimp_value_array_index (return_vals, 1)))
+          GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_vals, 1)))
         {
           GimpImage *image =
-            gimp_value_get_image (gimp_value_array_index (return_vals, 1),
-                                  gimp);
+            g_value_get_object (gimp_value_array_index (return_vals, 1));
           gimp_image_set_load_proc (image, file_proc);
         }
     }

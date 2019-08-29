@@ -32,20 +32,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
+gboolean gimp_item_id_is_valid      (gint item_id);
+gboolean gimp_item_id_is_drawable   (gint item_id);
+gboolean gimp_item_id_is_layer      (gint item_id);
+gboolean gimp_item_id_is_text_layer (gint item_id);
+gboolean gimp_item_id_is_channel    (gint item_id);
+gboolean gimp_item_id_is_layer_mask (gint item_id);
+gboolean gimp_item_id_is_selection  (gint item_id);
+gboolean gimp_item_id_is_vectors    (gint item_id);
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gboolean              gimp_item_is_valid          (GimpItem           *item);
 GimpImage*            gimp_item_get_image         (GimpItem           *item);
 gboolean              gimp_item_delete            (GimpItem           *item);
-gboolean              gimp_item_is_drawable       (GimpItem           *item);
-gboolean              gimp_item_is_layer          (GimpItem           *item);
-gboolean              gimp_item_is_text_layer     (GimpItem           *item);
-gboolean              gimp_item_is_channel        (GimpItem           *item);
-gboolean              gimp_item_is_layer_mask     (GimpItem           *item);
-gboolean              gimp_item_is_selection      (GimpItem           *item);
-gboolean              gimp_item_is_vectors        (GimpItem           *item);
 gboolean              gimp_item_is_group          (GimpItem           *item);
 GimpItem*             gimp_item_get_parent        (GimpItem           *item);
 G_GNUC_INTERNAL gint* _gimp_item_get_children     (GimpItem           *item,
@@ -85,16 +84,8 @@ gchar**               gimp_item_get_parasite_list (GimpItem           *item,
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
-#define gimp_item_is_valid _gimp_item_is_valid
 #define gimp_item_get_image _gimp_item_get_image
 #define gimp_item_delete _gimp_item_delete
-#define gimp_item_is_drawable _gimp_item_is_drawable
-#define gimp_item_is_layer _gimp_item_is_layer
-#define gimp_item_is_text_layer _gimp_item_is_text_layer
-#define gimp_item_is_channel _gimp_item_is_channel
-#define gimp_item_is_layer_mask _gimp_item_is_layer_mask
-#define gimp_item_is_selection _gimp_item_is_selection
-#define gimp_item_is_vectors _gimp_item_is_vectors
 #define gimp_item_is_group _gimp_item_is_group
 #define gimp_item_get_parent _gimp_item_get_parent
 #define gimp_item_get_expanded _gimp_item_get_expanded
@@ -125,16 +116,8 @@ gchar**               gimp_item_get_parasite_list (GimpItem           *item,
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gboolean      _gimp_item_is_valid          (gint32              item_ID);
 gint32        _gimp_item_get_image         (gint32              item_ID);
 gboolean      _gimp_item_delete            (gint32              item_ID);
-gboolean      _gimp_item_is_drawable       (gint32              item_ID);
-gboolean      _gimp_item_is_layer          (gint32              item_ID);
-gboolean      _gimp_item_is_text_layer     (gint32              item_ID);
-gboolean      _gimp_item_is_channel        (gint32              item_ID);
-gboolean      _gimp_item_is_layer_mask     (gint32              item_ID);
-gboolean      _gimp_item_is_selection      (gint32              item_ID);
-gboolean      _gimp_item_is_vectors        (gint32              item_ID);
 gboolean      _gimp_item_is_group          (gint32              item_ID);
 gint32        _gimp_item_get_parent        (gint32              item_ID);
 gboolean      _gimp_item_get_expanded      (gint32              item_ID);

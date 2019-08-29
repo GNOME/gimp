@@ -51,7 +51,7 @@ progress_init_invoker (GimpProcedure         *procedure,
   GimpObject *gdisplay;
 
   message = g_value_get_string (gimp_value_array_index (args, 0));
-  gdisplay = gimp_value_get_display (gimp_value_array_index (args, 1), gimp);
+  gdisplay = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -315,11 +315,11 @@ register_progress_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display_id ("gdisplay",
-                                                           "gdisplay",
-                                                           "GimpDisplay to update progressbar in, or %NULL for a separate window",
-                                                           pdb->gimp, TRUE,
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_display ("gdisplay",
+                                                        "gdisplay",
+                                                        "GimpDisplay to update progressbar in, or %NULL for a separate window",
+                                                        TRUE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

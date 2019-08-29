@@ -61,9 +61,9 @@ image_select_color_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   GimpRGB color;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   gimp_value_get_rgb (gimp_value_array_index (args, 3), &color);
 
   if (success)
@@ -108,9 +108,9 @@ image_select_contiguous_color_invoker (GimpProcedure         *procedure,
   gdouble x;
   gdouble y;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   x = g_value_get_double (gimp_value_array_index (args, 3));
   y = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -160,7 +160,7 @@ image_select_rectangle_invoker (GimpProcedure         *procedure,
   gdouble width;
   gdouble height;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
   x = g_value_get_double (gimp_value_array_index (args, 2));
   y = g_value_get_double (gimp_value_array_index (args, 3));
@@ -203,7 +203,7 @@ image_select_round_rectangle_invoker (GimpProcedure         *procedure,
   gdouble corner_radius_x;
   gdouble corner_radius_y;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
   x = g_value_get_double (gimp_value_array_index (args, 2));
   y = g_value_get_double (gimp_value_array_index (args, 3));
@@ -249,7 +249,7 @@ image_select_ellipse_invoker (GimpProcedure         *procedure,
   gdouble width;
   gdouble height;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
   x = g_value_get_double (gimp_value_array_index (args, 2));
   y = g_value_get_double (gimp_value_array_index (args, 3));
@@ -289,7 +289,7 @@ image_select_polygon_invoker (GimpProcedure         *procedure,
   gint num_segs;
   const gdouble *segs;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
   num_segs = g_value_get_int (gimp_value_array_index (args, 2));
   segs = gimp_value_get_float_array (gimp_value_array_index (args, 3));
@@ -327,9 +327,9 @@ image_select_item_invoker (GimpProcedure         *procedure,
   gint operation;
   GimpItem *item;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  item = gimp_value_get_item (gimp_value_array_index (args, 2), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -374,11 +374,11 @@ register_image_select_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The affected image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The affected image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -387,11 +387,11 @@ register_image_select_procs (GimpPDB *pdb)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The affected drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("color",
                                                     "color",
@@ -420,11 +420,11 @@ register_image_select_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The affected image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The affected image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -433,11 +433,11 @@ register_image_select_procs (GimpPDB *pdb)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The affected drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -469,11 +469,11 @@ register_image_select_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -524,11 +524,11 @@ register_image_select_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -591,11 +591,11 @@ register_image_select_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -646,11 +646,11 @@ register_image_select_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -688,11 +688,11 @@ register_image_select_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -701,11 +701,11 @@ register_image_select_procs (GimpPDB *pdb)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The item to render to the selection",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The item to render to the selection",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -67,7 +67,7 @@ gimp_image_resize (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
@@ -123,7 +123,7 @@ _gimp_image_resize (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
@@ -170,7 +170,7 @@ gimp_image_resize_to_layers (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -213,7 +213,7 @@ _gimp_image_resize_to_layers (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -259,7 +259,7 @@ gimp_image_scale (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_NONE);
@@ -307,7 +307,7 @@ _gimp_image_scale (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_NONE);
@@ -360,7 +360,7 @@ gimp_image_crop (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
@@ -415,7 +415,7 @@ _gimp_image_crop (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
@@ -459,7 +459,7 @@ gimp_image_flip (GimpImage           *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_NONE);
 
@@ -500,7 +500,7 @@ _gimp_image_flip (gint32              image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_NONE);
 
@@ -541,7 +541,7 @@ gimp_image_rotate (GimpImage        *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_NONE);
 
@@ -582,7 +582,7 @@ _gimp_image_rotate (gint32           image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_NONE);
 

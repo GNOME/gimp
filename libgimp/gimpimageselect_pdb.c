@@ -77,9 +77,9 @@ gimp_image_select_color (GimpImage      *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
@@ -142,9 +142,9 @@ _gimp_image_select_color (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
@@ -218,9 +218,9 @@ gimp_image_select_contiguous_color (GimpImage      *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_NONE);
@@ -295,9 +295,9 @@ _gimp_image_select_contiguous_color (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_NONE);
@@ -354,7 +354,7 @@ gimp_image_select_rectangle (GimpImage      *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -414,7 +414,7 @@ _gimp_image_select_rectangle (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -481,7 +481,7 @@ gimp_image_select_round_rectangle (GimpImage      *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -550,7 +550,7 @@ _gimp_image_select_round_rectangle (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -613,7 +613,7 @@ gimp_image_select_ellipse (GimpImage      *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -674,7 +674,7 @@ _gimp_image_select_ellipse (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -736,7 +736,7 @@ gimp_image_select_polygon (GimpImage      *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_INT, num_segs,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -797,7 +797,7 @@ _gimp_image_select_polygon (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_INT, num_segs,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -852,9 +852,9 @@ gimp_image_select_item (GimpImage      *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -905,9 +905,9 @@ _gimp_image_select_item (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

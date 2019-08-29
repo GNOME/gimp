@@ -104,11 +104,11 @@ file_data_init (Gimp *gimp)
                                                        GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "Output image",
-                                                             gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_image ("image",
+                                                          "Image",
+                                                          "Output image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
 
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
@@ -153,18 +153,18 @@ file_data_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "Input image",
-                                                         gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "Image",
+                                                      "Input image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "Active drawable "
-                                                            "of input image",
-                                                            gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "Drawable",
+                                                         "Active drawable "
+                                                         "of input image",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",
@@ -252,11 +252,11 @@ file_data_init (Gimp *gimp)
                                                        GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "Output image",
-                                                             gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_image ("image",
+                                                          "Image",
+                                                          "Output image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
 
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
@@ -301,18 +301,18 @@ file_data_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "Input image",
-                                                         gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "Image",
+                                                      "Input image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "Active drawable "
-                                                            "of input image",
-                                                            gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "Drawable",
+                                                         "Active drawable "
+                                                         "of input image",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",
@@ -406,11 +406,11 @@ file_data_init (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "Output image",
-                                                             gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_image ("image",
+                                                          "Image",
+                                                          "Output image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
 
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
@@ -455,18 +455,18 @@ file_data_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "Input image",
-                                                         gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "Image",
+                                                      "Input image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "Active drawable "
-                                                            "of input image",
-                                                            gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "Drawable",
+                                                         "Active drawable "
+                                                         "of input image",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",

@@ -131,25 +131,25 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       gimp_param_spec_rgb_get_default (pspec,
                                        &param_def->meta.m_color.default_val);
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_DISPLAY_ID)
+  else if (pspec_type == GIMP_TYPE_PARAM_IMAGE)
     {
-      GimpParamSpecDisplayID *ispec = GIMP_PARAM_SPEC_DISPLAY_ID (pspec);
+      GimpParamSpecImage *ispec = GIMP_PARAM_SPEC_IMAGE (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_IMAGE_ID)
+  else if (GIMP_IS_PARAM_SPEC_ITEM (pspec))
     {
-      GimpParamSpecImageID *ispec = GIMP_PARAM_SPEC_IMAGE_ID (pspec);
+      GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
     }
-  else if (GIMP_IS_PARAM_SPEC_ITEM_ID (pspec))
+  else if (pspec_type == GIMP_TYPE_PARAM_DISPLAY)
     {
-      GimpParamSpecItemID *ispec = GIMP_PARAM_SPEC_ITEM_ID (pspec);
+      GimpParamSpecDisplay *ispec = GIMP_PARAM_SPEC_DISPLAY (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
@@ -162,63 +162,39 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_param_def.type_name =
         (gchar *) g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec));
     }
-  else if (pspec_type == G_TYPE_PARAM_OBJECT)
-    {
-      GType        value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
-      const gchar *type_name  = NULL;
+}
 
-      if (! strcmp (g_type_name (value_type), "GimpDisplay"))
-        {
-          /* strcmp() because GimpDisplay is not visible from app/plug-in */
-          type_name = "GimpParamDisplayID";
-        }
-      else if (value_type == GIMP_TYPE_IMAGE)
-        {
-          type_name = "GimpParamImageID";
-        }
-      else if (value_type == GIMP_TYPE_ITEM)
-        {
-          type_name = "GimpParamItemID";
-        }
-      else if (value_type == GIMP_TYPE_DRAWABLE)
-        {
-          type_name = "GimpParamDrawableID";
-        }
-      else if (g_type_is_a (value_type, GIMP_TYPE_LAYER))
-        {
-          /* g_type_is_a() because the core has layer subclasses */
-          type_name = "GimpParamLayerID";
-        }
-      else if (value_type == GIMP_TYPE_CHANNEL)
-        {
-          type_name = "GimpParamChannelID";
-        }
-      else if (value_type == GIMP_TYPE_LAYER_MASK)
-        {
-          type_name = "GimpParamLayerMaskID";
-        }
-      else if (value_type == GIMP_TYPE_SELECTION)
-        {
-          type_name = "GimpParamSelectionID";
-        }
-      else if (value_type == GIMP_TYPE_VECTORS)
-        {
-          type_name = "GimpParamVectorsID";
-        }
+static GimpImage *
+get_image_by_id (gpointer gimp,
+                 gint     id)
+{
+#ifdef LIBGIMP_COMPILATION
+  return gimp_image_get_by_id (id);
+#else
+  return gimp_image_get_by_id (gimp, id);
+#endif
+}
 
-      if (type_name)
-        {
-          param_def->param_def_type    = GP_PARAM_DEF_TYPE_ID;
-          param_def->type_name         = (gchar *) type_name;
-          param_def->meta.m_id.none_ok = TRUE;
-        }
-      else
-        {
-          g_printerr ("%s: GParamSpec is for object type "
-                      "which has no ID '%s'\n",
-                      G_STRFUNC, param_def->type_name);
-        }
-    }
+static GimpItem *
+get_item_by_id (gpointer gimp,
+                gint     id)
+{
+#ifdef LIBGIMP_COMPILATION
+  return gimp_item_get_by_id (id);
+#else
+  return gimp_item_get_by_id (gimp, id);
+#endif
+}
+
+static GObject *
+get_display_by_id (gpointer gimp,
+                   gint     id)
+{
+#ifdef LIBGIMP_COMPILATION
+  return (GObject *) gimp_display_get_by_id (id);
+#else
+  return (GObject *) gimp_get_display_by_id (gimp, id);
+#endif
 }
 
 void
@@ -357,17 +333,17 @@ _gimp_gp_param_to_value (gpointer        gimp,
                                          param->data.d_array.size /
                                          sizeof (GimpRGB));
     }
-  else if (GIMP_VALUE_HOLDS_DISPLAY_ID    (value) ||
-           GIMP_VALUE_HOLDS_IMAGE_ID      (value) ||
-           GIMP_VALUE_HOLDS_ITEM_ID       (value) ||
-           GIMP_VALUE_HOLDS_DRAWABLE_ID   (value) ||
-           GIMP_VALUE_HOLDS_LAYER_ID      (value) ||
-           GIMP_VALUE_HOLDS_CHANNEL_ID    (value) ||
-           GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) ||
-           GIMP_VALUE_HOLDS_SELECTION_ID  (value) ||
-           GIMP_VALUE_HOLDS_VECTORS_ID    (value))
+  else if (GIMP_VALUE_HOLDS_IMAGE (value))
     {
-      g_value_set_int (value, param->data.d_int);
+      g_value_set_object (value, get_image_by_id (gimp, param->data.d_int));
+    }
+  else if (GIMP_VALUE_HOLDS_ITEM (value))
+    {
+      g_value_set_object (value, get_item_by_id (gimp, param->data.d_int));
+    }
+  else if (GIMP_VALUE_HOLDS_DISPLAY (value))
+    {
+      g_value_set_object (value, get_display_by_id (gimp, param->data.d_int));
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
@@ -611,19 +587,43 @@ _gimp_value_to_gp_param (const GValue *value,
           param->data.d_string_array.data = NULL;
         }
     }
-  else if (GIMP_VALUE_HOLDS_DISPLAY_ID (value)    ||
-           GIMP_VALUE_HOLDS_IMAGE_ID (value)      ||
-           GIMP_VALUE_HOLDS_ITEM_ID (value)       ||
-           GIMP_VALUE_HOLDS_DRAWABLE_ID (value)   ||
-           GIMP_VALUE_HOLDS_LAYER_ID (value)      ||
-           GIMP_VALUE_HOLDS_CHANNEL_ID (value)    ||
-           GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) ||
-           GIMP_VALUE_HOLDS_SELECTION_ID (value)  ||
-           GIMP_VALUE_HOLDS_VECTORS_ID (value))
+  else if (GIMP_VALUE_HOLDS_IMAGE (value))
     {
+      GimpImage *image = g_value_get_object (value);
+
       param->param_type = GP_PARAM_TYPE_INT;
 
-      param->data.d_int = g_value_get_int (value);
+      param->data.d_int = image ? gimp_image_get_id (image) : -1;
+    }
+  else if (GIMP_VALUE_HOLDS_ITEM (value))
+    {
+      GimpItem *item = g_value_get_object (value);
+
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = item ? gimp_item_get_id (item) : -1;
+    }
+  else if (GIMP_VALUE_HOLDS_DISPLAY (value))
+    {
+      GObject *display = g_value_get_object (value);
+      gint     id      = -1;
+
+#if 0
+      if (full_copy)
+        {
+          g_free (param->type_name);
+          param->type_name = "GObject";
+        }
+      else
+        param->type_name = (gchar *) "GObject";
+#endif
+
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      if (display)
+        g_object_get (display, "id", &id, NULL);
+
+      param->data.d_int = id;
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
@@ -631,79 +631,6 @@ _gimp_value_to_gp_param (const GValue *value,
 
       _gimp_param_spec_to_gp_param_def (g_value_get_param (value),
                                         &param->data.d_param_def);
-    }
-  else if (G_VALUE_HOLDS_OBJECT (value))
-    {
-      const gchar *type_name = NULL;
-
-      if (! strcmp (g_type_name (type), "GimpDisplay"))
-        {
-          /* strcmp() because GimpDisplay is not visible from app/plug-in */
-          type_name = "GimpDisplayID";
-        }
-      else if (type == GIMP_TYPE_IMAGE)
-        {
-          type_name = "GimpImageID";
-        }
-      else if (type == GIMP_TYPE_ITEM)
-        {
-          type_name = "GimpItemID";
-        }
-      else if (type == GIMP_TYPE_DRAWABLE)
-        {
-          type_name = "GimpDrawableID";
-        }
-      else if (g_type_is_a (type, GIMP_TYPE_LAYER))
-        {
-          /* g_type_is_a() because the core has layer subclasses */
-          type_name = "GimpLayerID";
-        }
-      else if (type == GIMP_TYPE_CHANNEL)
-        {
-          type_name = "GimpChannelID";
-        }
-      else if (type == GIMP_TYPE_LAYER_MASK)
-        {
-          type_name = "GimpLayerMaskID";
-        }
-      else if (type == GIMP_TYPE_SELECTION)
-        {
-          type_name = "GimpSelectionID";
-        }
-      else if (type == GIMP_TYPE_VECTORS)
-        {
-          type_name = "GimpVectorsID";
-        }
-
-      if (type_name)
-        {
-          GObject *object = g_value_get_object (value);
-          gint     id     = -1;
-
-          if (object)
-            g_object_get (object, "id", &id, NULL);
-
-          param->param_type = GP_PARAM_TYPE_INT;
-
-          if (full_copy)
-            {
-              g_free (param->type_name);
-              param->type_name = g_strdup (type_name);
-            }
-          else
-            {
-              param->type_name = (gchar *) type_name;
-            }
-
-          param->data.d_int = id;
-        }
-      else
-        {
-          g_printerr ("%s: GValue contains unsupported object type "
-                      "which has no ID '%s'\n",
-                      G_STRFUNC, param->type_name);
-          return;
-        }
     }
 
   if (param->param_type == -1)

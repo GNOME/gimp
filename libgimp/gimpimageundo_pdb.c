@@ -56,7 +56,7 @@ gimp_image_undo_group_start (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -97,7 +97,7 @@ _gimp_image_undo_group_start (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -136,7 +136,7 @@ gimp_image_undo_group_end (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -175,7 +175,7 @@ _gimp_image_undo_group_end (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -216,7 +216,7 @@ gimp_image_undo_is_enabled (GimpImage *image)
   gboolean enabled = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -258,7 +258,7 @@ _gimp_image_undo_is_enabled (gint32 image_ID)
   gboolean enabled = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -301,7 +301,7 @@ gimp_image_undo_disable (GimpImage *image)
   gboolean disabled = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -344,7 +344,7 @@ _gimp_image_undo_disable (gint32 image_ID)
   gboolean disabled = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -386,7 +386,7 @@ gimp_image_undo_enable (GimpImage *image)
   gboolean enabled = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -428,7 +428,7 @@ _gimp_image_undo_enable (gint32 image_ID)
   gboolean enabled = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -477,7 +477,7 @@ gimp_image_undo_freeze (GimpImage *image)
   gboolean frozen = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -526,7 +526,7 @@ _gimp_image_undo_freeze (gint32 image_ID)
   gboolean frozen = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -574,7 +574,7 @@ gimp_image_undo_thaw (GimpImage *image)
   gboolean thawed = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -622,7 +622,7 @@ _gimp_image_undo_thaw (gint32 image_ID)
   gboolean thawed = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

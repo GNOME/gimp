@@ -57,7 +57,7 @@ _gimp_progress_init (const gchar *message,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, message,
-                                          GIMP_TYPE_DISPLAY_ID, gimp_display_get_id (gdisplay),
+                                          GIMP_TYPE_DISPLAY, gdisplay,
                                           G_TYPE_NONE);
 
   if (pdb)

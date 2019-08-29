@@ -45,7 +45,6 @@ EXPORTS
 	gimp_channel_get_opacity
 	gimp_channel_get_show_masked
 	gimp_channel_get_type
-	gimp_channel_id_get_type
 	gimp_channel_new
 	gimp_channel_new_from_component
 	gimp_channel_set_color
@@ -180,7 +179,7 @@ EXPORTS
 	gimp_display_get_id
 	gimp_display_get_type
 	gimp_display_get_window_handle
-	gimp_display_id_get_type
+	gimp_display_id_is_valid
 	gimp_display_is_valid
 	gimp_display_name
 	gimp_display_new
@@ -223,7 +222,6 @@ EXPORTS
 	gimp_drawable_height
 	gimp_drawable_histogram
 	gimp_drawable_hue_saturation
-	gimp_drawable_id_get_type
 	gimp_drawable_invert
 	gimp_drawable_is_gray
 	gimp_drawable_is_indexed
@@ -431,7 +429,7 @@ EXPORTS
 	gimp_image_grid_set_spacing
 	gimp_image_grid_set_style
 	gimp_image_height
-	gimp_image_id_get_type
+	gimp_image_id_is_valid
 	gimp_image_insert_channel
 	gimp_image_insert_layer
 	gimp_image_insert_vectors
@@ -514,7 +512,14 @@ EXPORTS
 	gimp_item_get_tattoo
 	gimp_item_get_type
 	gimp_item_get_visible
-	gimp_item_id_get_type
+	gimp_item_id_is_channel
+	gimp_item_id_is_drawable
+	gimp_item_id_is_layer
+	gimp_item_id_is_layer_mask
+	gimp_item_id_is_selection
+	gimp_item_id_is_text_layer
+	gimp_item_id_is_valid
+	gimp_item_id_is_vectors
 	gimp_item_is_channel
 	gimp_item_is_drawable
 	gimp_item_is_group
@@ -564,10 +569,8 @@ EXPORTS
 	gimp_layer_get_show_mask
 	gimp_layer_get_type
 	gimp_layer_group_new
-	gimp_layer_id_get_type
 	gimp_layer_is_floating_sel
 	gimp_layer_mask_get_type
-	gimp_layer_mask_id_get_type
 	gimp_layer_mode_get_type
 	gimp_layer_new
 	gimp_layer_new_deprecated
@@ -626,24 +629,24 @@ EXPORTS
 	gimp_palettes_popup
 	gimp_palettes_refresh
 	gimp_palettes_set_popup
-	gimp_param_channel_id_get_type
-	gimp_param_display_id_get_type
-	gimp_param_drawable_id_get_type
-	gimp_param_image_id_get_type
-	gimp_param_item_id_get_type
-	gimp_param_layer_id_get_type
-	gimp_param_layer_mask_id_get_type
-	gimp_param_selection_id_get_type
-	gimp_param_spec_channel_id
-	gimp_param_spec_display_id
-	gimp_param_spec_drawable_id
-	gimp_param_spec_image_id
-	gimp_param_spec_item_id
-	gimp_param_spec_layer_id
-	gimp_param_spec_layer_mask_id
-	gimp_param_spec_selection_id
-	gimp_param_spec_vectors_id
-	gimp_param_vectors_id_get_type
+	gimp_param_channel_get_type
+	gimp_param_display_get_type
+	gimp_param_drawable_get_type
+	gimp_param_image_get_type
+	gimp_param_item_get_type
+	gimp_param_layer_get_type
+	gimp_param_layer_mask_get_type
+	gimp_param_selection_get_type
+	gimp_param_spec_channel
+	gimp_param_spec_display
+	gimp_param_spec_drawable
+	gimp_param_spec_image
+	gimp_param_spec_item
+	gimp_param_spec_layer
+	gimp_param_spec_layer_mask
+	gimp_param_spec_selection
+	gimp_param_spec_vectors
+	gimp_param_vectors_get_type
 	gimp_pattern_get_info
 	gimp_pattern_get_pixels
 	gimp_pattern_select_destroy
@@ -741,7 +744,6 @@ EXPORTS
 	gimp_selection_flood
 	gimp_selection_get_type
 	gimp_selection_grow
-	gimp_selection_id_get_type
 	gimp_selection_invert
 	gimp_selection_is_empty
 	gimp_selection_none
@@ -790,24 +792,6 @@ EXPORTS
 	gimp_tile_height
 	gimp_tile_width
 	gimp_user_time
-	gimp_value_get_channel_id
-	gimp_value_get_display_id
-	gimp_value_get_drawable_id
-	gimp_value_get_image_id
-	gimp_value_get_item_id
-	gimp_value_get_layer_id
-	gimp_value_get_layer_mask_id
-	gimp_value_get_selection_id
-	gimp_value_get_vectors_id
-	gimp_value_set_channel_id
-	gimp_value_set_display_id
-	gimp_value_set_drawable_id
-	gimp_value_set_image_id
-	gimp_value_set_item_id
-	gimp_value_set_layer_id
-	gimp_value_set_layer_mask_id
-	gimp_value_set_selection_id
-	gimp_value_set_vectors_id
 	gimp_vectors_bezier_stroke_conicto
 	gimp_vectors_bezier_stroke_cubicto
 	gimp_vectors_bezier_stroke_lineto
@@ -818,7 +802,6 @@ EXPORTS
 	gimp_vectors_export_to_string
 	gimp_vectors_get_strokes
 	gimp_vectors_get_type
-	gimp_vectors_id_get_type
 	gimp_vectors_import_from_file
 	gimp_vectors_import_from_string
 	gimp_vectors_new

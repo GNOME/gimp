@@ -214,51 +214,51 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
       switch (script->args[i].type)
         {
         case SF_IMAGE:
-          pspec = gimp_param_spec_image_id ("image",
-                                            "Image",
-                                            script->args[i].label,
-                                            TRUE,
-                                            G_PARAM_READWRITE);
+          pspec = gimp_param_spec_image ("image",
+                                         "Image",
+                                         script->args[i].label,
+                                         TRUE,
+                                         G_PARAM_READWRITE);
           break;
 
         case SF_DRAWABLE:
-          pspec = gimp_param_spec_drawable_id ("drawable",
-                                               "Drawable",
-                                               script->args[i].label,
-                                               TRUE,
-                                               G_PARAM_READWRITE);
-          break;
-
-        case SF_LAYER:
-          pspec = gimp_param_spec_layer_id ("layer",
-                                            "Layer",
+          pspec = gimp_param_spec_drawable ("drawable",
+                                            "Drawable",
                                             script->args[i].label,
                                             TRUE,
                                             G_PARAM_READWRITE);
           break;
 
+        case SF_LAYER:
+          pspec = gimp_param_spec_layer ("layer",
+                                         "Layer",
+                                         script->args[i].label,
+                                         TRUE,
+                                         G_PARAM_READWRITE);
+          break;
+
         case SF_CHANNEL:
-          pspec = gimp_param_spec_channel_id ("channel",
-                                              "Channel",
-                                              script->args[i].label,
-                                              TRUE,
-                                              G_PARAM_READWRITE);
+          pspec = gimp_param_spec_channel ("channel",
+                                           "Channel",
+                                           script->args[i].label,
+                                           TRUE,
+                                           G_PARAM_READWRITE);
           break;
 
         case SF_VECTORS:
-          pspec = gimp_param_spec_vectors_id ("vectors",
-                                              "Vectors",
-                                              script->args[i].label,
-                                              TRUE,
-                                              G_PARAM_READWRITE);
+          pspec = gimp_param_spec_vectors ("vectors",
+                                           "Vectors",
+                                           script->args[i].label,
+                                           TRUE,
+                                           G_PARAM_READWRITE);
           break;
 
         case SF_DISPLAY:
-          pspec = gimp_param_spec_display_id ("display",
-                                              "Display",
-                                              script->args[i].label,
-                                              TRUE,
-                                              G_PARAM_READWRITE);
+          pspec = gimp_param_spec_display ("display",
+                                           "Display",
+                                           script->args[i].label,
+                                           TRUE,
+                                           G_PARAM_READWRITE);
           break;
 
         case SF_COLOR:
@@ -806,49 +806,61 @@ script_fu_script_param_init (SFScript             *script,
       switch (type)
         {
         case SF_IMAGE:
-          if (GIMP_VALUE_HOLDS_IMAGE_ID (value))
+          if (GIMP_VALUE_HOLDS_IMAGE (value))
             {
-              arg->value.sfa_image = gimp_value_get_image_id (value);
+              GimpImage *image = g_value_get_object (value);
+
+              arg->value.sfa_image = gimp_image_get_id (image);
               return TRUE;
             }
           break;
 
         case SF_DRAWABLE:
-          if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value))
+          if (GIMP_VALUE_HOLDS_DRAWABLE (value))
             {
-              arg->value.sfa_drawable = gimp_value_get_drawable_id (value);
+              GimpItem *item = g_value_get_object (value);
+
+              arg->value.sfa_drawable = gimp_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_LAYER:
-          if (GIMP_VALUE_HOLDS_LAYER_ID (value))
+          if (GIMP_VALUE_HOLDS_LAYER (value))
             {
-              arg->value.sfa_layer = gimp_value_get_layer_id (value);
+              GimpItem *item = g_value_get_object (value);
+
+              arg->value.sfa_layer = gimp_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_CHANNEL:
-          if (GIMP_VALUE_HOLDS_CHANNEL_ID (value))
+          if (GIMP_VALUE_HOLDS_CHANNEL (value))
             {
-              arg->value.sfa_channel = gimp_value_get_channel_id (value);
+              GimpItem *item = g_value_get_object (value);
+
+              arg->value.sfa_channel = gimp_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_VECTORS:
-          if (GIMP_VALUE_HOLDS_VECTORS_ID (value))
+          if (GIMP_VALUE_HOLDS_VECTORS (value))
             {
-              arg->value.sfa_vectors = gimp_value_get_vectors_id (value);
+              GimpItem *item = g_value_get_object (value);
+
+              arg->value.sfa_vectors = gimp_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_DISPLAY:
-          if (GIMP_VALUE_HOLDS_DISPLAY_ID (value))
+          if (GIMP_VALUE_HOLDS_DISPLAY (value))
             {
-              arg->value.sfa_display = gimp_value_get_display_id (value);
+              GimpDisplay *display = g_value_get_object (value);
+
+              arg->value.sfa_display = gimp_display_get_id (display);
               return TRUE;
             }
           break;

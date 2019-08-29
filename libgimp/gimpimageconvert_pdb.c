@@ -56,7 +56,7 @@ gimp_image_convert_rgb (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -97,7 +97,7 @@ _gimp_image_convert_rgb (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -136,7 +136,7 @@ gimp_image_convert_grayscale (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -175,7 +175,7 @@ _gimp_image_convert_grayscale (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -237,7 +237,7 @@ gimp_image_convert_indexed (GimpImage              *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
                                           GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
                                           G_TYPE_INT, num_cols,
@@ -305,7 +305,7 @@ _gimp_image_convert_indexed (gint32                  image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
                                           GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
                                           G_TYPE_INT, num_cols,
@@ -406,7 +406,7 @@ gimp_image_convert_precision (GimpImage     *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
 
@@ -451,7 +451,7 @@ _gimp_image_convert_precision (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
 

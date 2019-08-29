@@ -1432,38 +1432,7 @@ gimp_procedure_validate_args (GimpProcedure   *procedure,
       GType       arg_type  = G_VALUE_TYPE (arg);
       GType       spec_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
-      /* As special cases, validation can transform IDs into their
-       * respective object.
-       */
-      if (arg_type == GIMP_TYPE_IMAGE_ID &&
-          spec_type == GIMP_TYPE_IMAGE)
-        {
-          GValue value = G_VALUE_INIT;
-
-          g_value_init (&value, GIMP_TYPE_IMAGE);
-          g_value_set_object (&value,
-                              gimp_image_get_by_id (g_value_get_int (arg)));
-          gimp_value_array_remove (args, i);
-          gimp_value_array_insert (args, i, &value);
-          g_value_unset (&value);
-        }
-      else if ((arg_type == GIMP_TYPE_ITEM_ID &&
-                spec_type == GIMP_TYPE_ITEM)     ||
-               (arg_type == GIMP_TYPE_DRAWABLE_ID &&
-                spec_type == GIMP_TYPE_DRAWABLE) ||
-               (arg_type == GIMP_TYPE_LAYER_ID &&
-                spec_type == GIMP_TYPE_LAYER))
-        {
-          GValue value = G_VALUE_INIT;
-
-          g_value_init (&value, spec_type);
-          g_value_set_object (&value,
-                              gimp_item_get_by_id (g_value_get_int (arg)));
-          gimp_value_array_remove (args, i);
-          gimp_value_array_insert (args, i, &value);
-          g_value_unset (&value);
-        }
-      else if (arg_type != spec_type)
+      if (arg_type != spec_type)
         {
           if (return_vals)
             {
@@ -1659,7 +1628,7 @@ _gimp_procedure_get_display (GimpProcedure *procedure,
   GimpDisplay *display = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (_gimp_display_is_valid (display_id), NULL);
+  g_return_val_if_fail (gimp_display_id_is_valid (display_id), NULL);
 
   if (G_UNLIKELY (! procedure->priv->displays))
     procedure->priv->displays =
@@ -1692,7 +1661,7 @@ _gimp_procedure_get_image (GimpProcedure *procedure,
   GimpImage *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (_gimp_image_is_valid (image_id), NULL);
+  g_return_val_if_fail (gimp_image_id_is_valid (image_id), NULL);
 
   if (G_UNLIKELY (! procedure->priv->images))
     procedure->priv->images =
@@ -1725,7 +1694,7 @@ _gimp_procedure_get_item (GimpProcedure *procedure,
   GimpItem *item = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (_gimp_item_is_valid (item_id), NULL);
+  g_return_val_if_fail (gimp_item_id_is_valid (item_id), NULL);
 
   if (G_UNLIKELY (! procedure->priv->items))
     procedure->priv->items =

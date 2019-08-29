@@ -16,30 +16,30 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub image_is_valid {
-    $blurb = 'Returns TRUE if the image is valid.';
+sub image_id_is_valid {
+    $blurb = 'Returns TRUE if the image ID is valid.';
 
     $help = <<'HELP';
-This procedure checks if the given image is valid and refers to an
+This procedure checks if the given image ID is valid and refers to an
 existing image.
 HELP
 
-    &neo_pdb_misc('2007', '2.4');
+    &neo_pdb_misc('2007', '3.0');
 
     @inargs = (
-        { name => 'image', type => 'image', no_validate => 1,
-          desc => 'The image to check' }
+        { name => 'image_id', type => 'int32',
+          desc => 'The image ID to check' }
     );
 
     @outargs = (
         { name => 'valid', type => 'boolean',
-          desc => 'Whether the image is valid' }
+          desc => 'Whether the image ID is valid' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  valid = GIMP_IS_IMAGE (image);
+  valid = (gimp_image_get_by_id (gimp, image_id) != NULL);
 }
 CODE
     );
@@ -2947,7 +2947,7 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(image_is_valid
+@procs = qw(image_id_is_valid
             image_list
             image_new image_new_with_precision
             image_duplicate image_delete

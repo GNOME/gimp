@@ -1311,31 +1311,31 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
 
   if (! item)
     {
-      if (_gimp_item_is_layer (item_id))
+      if (gimp_item_id_is_layer (item_id))
         {
           item = g_object_new (GIMP_TYPE_LAYER,
                                "id", item_id,
                                NULL);
         }
-      else if (_gimp_item_is_layer_mask (item_id))
+      else if (gimp_item_id_is_layer_mask (item_id))
         {
           item = g_object_new (GIMP_TYPE_LAYER_MASK,
                                "id", item_id,
                                NULL);
         }
-      else if (_gimp_item_is_selection (item_id))
+      else if (gimp_item_id_is_selection (item_id))
         {
           item = g_object_new (GIMP_TYPE_SELECTION,
                                "id", item_id,
                                NULL);
         }
-      else if (_gimp_item_is_channel (item_id))
+      else if (gimp_item_id_is_channel (item_id))
         {
           item = g_object_new (GIMP_TYPE_CHANNEL,
                                "id", item_id,
                                NULL);
         }
-      else if (_gimp_item_is_vectors (item_id))
+      else if (gimp_item_id_is_vectors (item_id))
         {
           item = g_object_new (GIMP_TYPE_VECTORS,
                                "id", item_id,

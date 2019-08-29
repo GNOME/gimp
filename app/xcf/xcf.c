@@ -141,17 +141,17 @@ xcf_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "Input image",
-                                                         gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "Image",
+                                                      "Input image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "Active drawable of input image",
-                                                            gimp, TRUE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "Drawable",
+                                                         "Active drawable of input image",
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "Filename",
@@ -232,11 +232,11 @@ xcf_init (Gimp *gimp)
                                                        GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "Output image",
-                                                             gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_image ("image",
+                                                          "Image",
+                                                          "Output image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 }
@@ -459,7 +459,7 @@ xcf_load_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (image)
-    gimp_value_set_image (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
 
   gimp_unset_busy (gimp);
 
@@ -484,7 +484,7 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
   gimp_set_busy (gimp);
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 1));
   uri   = g_value_get_string (gimp_value_array_index (args, 3));
   file  = g_file_new_for_uri (uri);
 

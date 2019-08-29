@@ -113,11 +113,10 @@ file_load_invoker (GimpProcedure         *procedure,
       GIMP_PDB_SUCCESS)
     {
       if (gimp_value_array_length (return_vals) > 1 &&
-          GIMP_VALUE_HOLDS_IMAGE_ID (gimp_value_array_index (return_vals, 1)))
+          GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_vals, 1)))
         {
           GimpImage *image =
-            gimp_value_get_image (gimp_value_array_index (return_vals, 1),
-                                  gimp);
+            g_value_get_object (gimp_value_array_index (return_vals, 1));
           gimp_image_set_load_proc (image, file_proc);
         }
     }
@@ -143,7 +142,7 @@ file_load_layer_invoker (GimpProcedure         *procedure,
   GimpLayer *layer = NULL;
 
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 1));
   filename = g_value_get_string (gimp_value_array_index (args, 2));
 
   if (success)
@@ -177,7 +176,7 @@ file_load_layer_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_layer (gimp_value_array_index (return_vals, 1), layer);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), layer);
 
   return return_vals;
 }
@@ -199,7 +198,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
   gint32 *layer_ids = NULL;
 
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 1));
   filename = g_value_get_string (gimp_value_array_index (args, 2));
 
   if (success)
@@ -388,7 +387,7 @@ file_save_thumbnail_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   const gchar *filename;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   filename = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
@@ -661,11 +660,11 @@ register_fileops_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "image",
-                                                             "The output image",
-                                                             pdb->gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_image ("image",
+                                                          "image",
+                                                          "The output image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -692,11 +691,11 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0]),
                                       GIMP_RUN_WITH_LAST_VALS);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Destination image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Destination image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",
@@ -705,11 +704,11 @@ register_fileops_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_id ("layer",
-                                                             "layer",
-                                                             "The layer created when loading the image file",
-                                                             pdb->gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer ("layer",
+                                                          "layer",
+                                                          "The layer created when loading the image file",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -736,11 +735,11 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0]),
                                       GIMP_RUN_WITH_LAST_VALS);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Destination image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Destination image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",
@@ -783,17 +782,17 @@ register_fileops_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Drawable to save",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Drawable to save",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",
@@ -871,11 +870,11 @@ register_fileops_procs (GimpPDB *pdb)
                                      "1997",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",

@@ -477,16 +477,16 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
       GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
       G_IS_PARAM_SPEC_STRING      (procedure->args[1]) &&
       G_IS_PARAM_SPEC_STRING      (procedure->args[2]) &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
+      GIMP_IS_PARAM_SPEC_IMAGE    (procedure->values[0]))
     {
       uri_value = gimp_value_array_index (args, 1);
     }
-  else if ((procedure->num_args >= 5)                          &&
-           GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) &&
-           GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
-           GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) &&
-           G_IS_PARAM_SPEC_STRING         (procedure->args[3]) &&
-           G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
+  else if ((procedure->num_args >= 5)                       &&
+           GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
+           GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) &&
+           GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[2]) &&
+           G_IS_PARAM_SPEC_STRING      (procedure->args[3]) &&
+           G_IS_PARAM_SPEC_STRING      (procedure->args[4]))
     {
       uri_value = gimp_value_array_index (args, 3);
     }
@@ -649,11 +649,11 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     {
       if ((procedure->num_args < 3)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
           ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_LAYER_ID   ||
+                               == GIMP_TYPE_PARAM_LAYER      ||
              G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_DRAWABLE_ID))
+                               == GIMP_TYPE_PARAM_DRAWABLE))
         {
           required = "(INT | ENUM GimpRunMode), IMAGE, (LAYER | DRAWABLE)";
           goto failure;
@@ -663,11 +663,11 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     {
       if ((procedure->num_args < 3)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
           ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_CHANNEL_ID ||
+                               == GIMP_TYPE_PARAM_CHANNEL    ||
              G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_DRAWABLE_ID))
+                               == GIMP_TYPE_PARAM_DRAWABLE))
         {
           required = "(INT | ENUM GimpRunMode), IMAGE, (CHANNEL | DRAWABLE)";
           goto failure;
@@ -675,10 +675,10 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     }
   else if (g_str_has_prefix (menu_path, "<Vectors>"))
     {
-      if ((procedure->num_args < 3)                            ||
-          ! GIMP_IS_PARAM_SPEC_RUN_MODE   (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID   (procedure->args[1]) ||
-          ! GIMP_IS_PARAM_SPEC_VECTORS_ID (procedure->args[2]))
+      if ((procedure->num_args < 3)                          ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
+          ! GIMP_IS_PARAM_SPEC_VECTORS  (procedure->args[2]))
         {
           required = "(INT | ENUM GimpRunMode), IMAGE, VECTORS";
           goto failure;
@@ -688,7 +688,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     {
       if ((procedure->num_args < 2)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
+          ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]))
         {
           required = "(INT | ENUM GimpRunMode), IMAGE";
           goto failure;
@@ -706,7 +706,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
         }
 
       if ((procedure->num_values < 1) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
+          ! GIMP_IS_PARAM_SPEC_IMAGE (procedure->values[0]))
         {
           required = "IMAGE";
           goto failure;
@@ -714,12 +714,12 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     }
   else if (g_str_has_prefix (menu_path, "<Save>"))
     {
-      if ((procedure->num_args < 5)                             ||
-          ! GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
-          ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) ||
-          ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||
-          ! G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
+      if ((procedure->num_args < 5)                          ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
+          ! GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[2]) ||
+          ! G_IS_PARAM_SPEC_STRING      (procedure->args[3]) ||
+          ! G_IS_PARAM_SPEC_STRING      (procedure->args[4]))
         {
           required = "(INT | ENUM GimpRunMode), IMAGE, DRAWABLE, STRING, STRING";
           goto failure;

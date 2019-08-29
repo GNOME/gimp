@@ -126,11 +126,11 @@ procedure_commands_get_image_args (GimpProcedure   *procedure,
     }
 
   if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[n_args]))
+      GIMP_IS_PARAM_SPEC_IMAGE (procedure->args[n_args]))
     {
       if (image)
         {
-          gimp_value_set_image (gimp_value_array_index (args, n_args), image);
+          g_value_set_object (gimp_value_array_index (args, n_args), image);
           n_args++;
         }
       else
@@ -167,22 +167,22 @@ procedure_commands_get_item_args (GimpProcedure *procedure,
     }
 
   if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[n_args]))
+      GIMP_IS_PARAM_SPEC_IMAGE (procedure->args[n_args]))
     {
       if (image)
         {
-          gimp_value_set_image (gimp_value_array_index (args, n_args), image);
+          g_value_set_object (gimp_value_array_index (args, n_args), image);
           n_args++;
 
           if (gimp_value_array_length (args) > n_args &&
-              GIMP_IS_PARAM_SPEC_ITEM_ID (procedure->args[n_args]))
+              GIMP_IS_PARAM_SPEC_ITEM (procedure->args[n_args]))
             {
               if (item &&
                   g_type_is_a (G_TYPE_FROM_INSTANCE (item),
-                               GIMP_PARAM_SPEC_ITEM_ID (procedure->args[n_args])->item_type))
+                               G_PARAM_SPEC_VALUE_TYPE (procedure->args[n_args])))
                 {
-                  gimp_value_set_item (gimp_value_array_index (args, n_args),
-                                       item);
+                  g_value_set_object (gimp_value_array_index (args, n_args),
+                                      item);
                   n_args++;
                 }
               else
@@ -221,12 +221,11 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
     }
 
   if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_DISPLAY_ID (procedure->args[n_args]))
+      GIMP_IS_PARAM_SPEC_DISPLAY (procedure->args[n_args]))
     {
       if (display)
         {
-          gimp_value_set_display (gimp_value_array_index (args, n_args),
-                                  GIMP_OBJECT (display));
+          g_value_set_object (gimp_value_array_index (args, n_args), display);
           n_args++;
         }
       else
@@ -238,24 +237,24 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
     }
 
   if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[n_args]))
+      GIMP_IS_PARAM_SPEC_IMAGE (procedure->args[n_args]))
     {
       GimpImage *image = display ? gimp_display_get_image (display) : NULL;
 
       if (image)
         {
-          gimp_value_set_image (gimp_value_array_index (args, n_args), image);
+          g_value_set_object (gimp_value_array_index (args, n_args), image);
           n_args++;
 
           if (gimp_value_array_length (args) > n_args &&
-              GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[n_args]))
+              GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[n_args]))
             {
               GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
               if (drawable)
                 {
-                  gimp_value_set_drawable (gimp_value_array_index (args, n_args),
-                                           drawable);
+                  g_value_set_object (gimp_value_array_index (args, n_args),
+                                      drawable);
                   n_args++;
                 }
               else

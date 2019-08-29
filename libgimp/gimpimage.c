@@ -168,6 +168,25 @@ gimp_image_get_by_id (gint32 image_id)
 }
 
 /**
+ * gimp_image_is_valid:
+ * @image: The image to check.
+ *
+ * Returns TRUE if the image is valid.
+ *
+ * This procedure checks if the given image is valid and refers to
+ * an existing image.
+ *
+ * Returns: Whether the image is valid.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_image_is_valid (GimpImage *image)
+{
+  return gimp_image_id_is_valid (gimp_image_get_id (image));
+}
+
+/**
  * gimp_get_images:
  * @num_images: (out): The number of images in the returned array.
  *

@@ -27,7 +27,13 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimpselection.h"
 #include "core/gimpparamspecs.h"
+
+#include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
 #include "gimp-pdb-compat.h"
@@ -69,28 +75,33 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
         { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
         { GIMP_TYPE_RGB_ARRAY,       GIMP_PDB_COLORARRAY  },
 
-        { GIMP_TYPE_ITEM_ID,         GIMP_PDB_ITEM        },
-        { GIMP_TYPE_DISPLAY_ID,      GIMP_PDB_DISPLAY     },
-        { GIMP_TYPE_IMAGE_ID,        GIMP_PDB_IMAGE       },
-        { GIMP_TYPE_LAYER_ID,        GIMP_PDB_LAYER       },
-        { GIMP_TYPE_CHANNEL_ID,      GIMP_PDB_CHANNEL     },
-        { GIMP_TYPE_DRAWABLE_ID,     GIMP_PDB_DRAWABLE    },
-        { GIMP_TYPE_SELECTION_ID,    GIMP_PDB_SELECTION   },
-        { GIMP_TYPE_LAYER_MASK_ID,   GIMP_PDB_CHANNEL     },
-        { GIMP_TYPE_VECTORS_ID,      GIMP_PDB_VECTORS     },
+        { GIMP_TYPE_ITEM,            GIMP_PDB_ITEM        },
+        { GIMP_TYPE_IMAGE,           GIMP_PDB_IMAGE       },
+        { GIMP_TYPE_LAYER,           GIMP_PDB_LAYER       },
+        { GIMP_TYPE_CHANNEL,         GIMP_PDB_CHANNEL     },
+        { GIMP_TYPE_DRAWABLE,        GIMP_PDB_DRAWABLE    },
+        { GIMP_TYPE_SELECTION,       GIMP_PDB_SELECTION   },
+        { GIMP_TYPE_LAYER_MASK,      GIMP_PDB_CHANNEL     },
+        { GIMP_TYPE_VECTORS,         GIMP_PDB_VECTORS     },
 
         { GIMP_TYPE_PARASITE,        GIMP_PDB_PARASITE    },
 
         { GIMP_TYPE_PDB_STATUS_TYPE, GIMP_PDB_STATUS      }
       };
 
-      gint i;
+      GType type;
+      gint  i;
 
       pdb_type_quark = g_quark_from_static_string ("gimp-pdb-type");
 
       for (i = 0; i < G_N_ELEMENTS (type_mapping); i++)
         g_type_set_qdata (type_mapping[i].g_type, pdb_type_quark,
                           GINT_TO_POINTER (type_mapping[i].pdb_type));
+
+      type = g_type_from_name ("GimpDisplay");
+      if (type)
+        g_type_set_qdata (type, pdb_type_quark,
+                          GINT_TO_POINTER (GIMP_PDB_DISPLAY));
     }
 
   pdb_type = GPOINTER_TO_INT (g_type_get_qdata (type, pdb_type_quark));

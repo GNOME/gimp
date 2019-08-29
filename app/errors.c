@@ -488,11 +488,11 @@ gimp_eek (const gchar *reason,
                                               gimp_get_user_context (the_errors_gimp),
                                               NULL, NULL,
                                               "gimp-xcf-save",
-                                              GIMP_TYPE_RUN_MODE,    GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE_ID,    gimp_image_get_id (image),
-                                              GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (item),
-                                              G_TYPE_STRING,         backup_path,
-                                              G_TYPE_STRING,         backup_path,
+                                              GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                              GIMP_TYPE_IMAGE,    image,
+                                              GIMP_TYPE_DRAWABLE, item,
+                                              G_TYPE_STRING,      backup_path,
+                                              G_TYPE_STRING,      backup_path,
                                               G_TYPE_NONE);
           i++;
         }

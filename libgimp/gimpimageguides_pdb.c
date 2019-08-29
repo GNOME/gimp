@@ -57,7 +57,7 @@ gimp_image_add_hguide (GimpImage *image,
   guint guide = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, yposition,
                                           G_TYPE_NONE);
 
@@ -101,7 +101,7 @@ _gimp_image_add_hguide (gint32 image_ID,
   gint32 guide_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, yposition,
                                           G_TYPE_NONE);
 
@@ -145,7 +145,7 @@ gimp_image_add_vguide (GimpImage *image,
   guint guide = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, xposition,
                                           G_TYPE_NONE);
 
@@ -189,7 +189,7 @@ _gimp_image_add_vguide (gint32 image_ID,
   gint32 guide_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, xposition,
                                           G_TYPE_NONE);
 
@@ -232,7 +232,7 @@ gimp_image_delete_guide (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
@@ -274,7 +274,7 @@ _gimp_image_delete_guide (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 
@@ -319,7 +319,7 @@ gimp_image_find_next_guide (GimpImage *image,
   guint next_guide = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
@@ -365,7 +365,7 @@ _gimp_image_find_next_guide (gint32 image_ID,
   gint32 next_guide_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 
@@ -408,7 +408,7 @@ gimp_image_get_guide_orientation (GimpImage *image,
   GimpOrientationType orientation = GIMP_ORIENTATION_UNKNOWN;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
@@ -451,7 +451,7 @@ _gimp_image_get_guide_orientation (gint32 image_ID,
   GimpOrientationType orientation = GIMP_ORIENTATION_UNKNOWN;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 
@@ -494,7 +494,7 @@ gimp_image_get_guide_position (GimpImage *image,
   gint position = G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, guide,
                                           G_TYPE_NONE);
 
@@ -537,7 +537,7 @@ _gimp_image_get_guide_position (gint32 image_ID,
   gint position = G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 

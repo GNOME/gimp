@@ -59,7 +59,7 @@ gimp_vectors_new (GimpImage   *image,
   GimpVectors *vectors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
@@ -73,7 +73,7 @@ gimp_vectors_new (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -104,7 +104,7 @@ _gimp_vectors_new (gint32       image_ID,
   gint32 vectors_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
@@ -118,7 +118,7 @@ _gimp_vectors_new (gint32       image_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+    vectors_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -149,8 +149,8 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
   GimpVectors *vectors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -163,7 +163,7 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -194,8 +194,8 @@ _gimp_vectors_new_from_text_layer (gint32 image_ID,
   gint32 vectors_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -208,7 +208,7 @@ _gimp_vectors_new_from_text_layer (gint32 image_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+    vectors_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -237,7 +237,7 @@ gimp_vectors_copy (GimpVectors *vectors)
   GimpVectors *vectors_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -250,7 +250,7 @@ gimp_vectors_copy (GimpVectors *vectors)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors_copy = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -279,7 +279,7 @@ _gimp_vectors_copy (gint32 vectors_ID)
   gint32 vectors_copy_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -292,7 +292,7 @@ _gimp_vectors_copy (gint32 vectors_ID)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors_copy_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+    vectors_copy_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -325,7 +325,7 @@ gimp_vectors_get_strokes (GimpVectors *vectors,
   gint *stroke_ids = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -376,7 +376,7 @@ _gimp_vectors_get_strokes (gint32  vectors_ID,
   gint *stroke_ids = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -426,7 +426,7 @@ gimp_vectors_stroke_get_length (GimpVectors *vectors,
   gdouble length = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
@@ -473,7 +473,7 @@ _gimp_vectors_stroke_get_length (gint32  vectors_ID,
   gdouble length = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
@@ -535,7 +535,7 @@ gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, dist,
                                           G_TYPE_DOUBLE, precision,
@@ -610,7 +610,7 @@ _gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, dist,
                                           G_TYPE_DOUBLE, precision,
@@ -668,7 +668,7 @@ gimp_vectors_remove_stroke (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
@@ -711,7 +711,7 @@ _gimp_vectors_remove_stroke (gint32 vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
@@ -754,7 +754,7 @@ gimp_vectors_stroke_close (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
@@ -797,7 +797,7 @@ _gimp_vectors_stroke_close (gint32 vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
@@ -844,7 +844,7 @@ gimp_vectors_stroke_translate (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_INT, off_x,
                                           G_TYPE_INT, off_y,
@@ -893,7 +893,7 @@ _gimp_vectors_stroke_translate (gint32 vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_INT, off_x,
                                           G_TYPE_INT, off_y,
@@ -942,7 +942,7 @@ gimp_vectors_stroke_scale (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, scale_x,
                                           G_TYPE_DOUBLE, scale_y,
@@ -991,7 +991,7 @@ _gimp_vectors_stroke_scale (gint32  vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, scale_x,
                                           G_TYPE_DOUBLE, scale_y,
@@ -1042,7 +1042,7 @@ gimp_vectors_stroke_rotate (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, center_x,
                                           G_TYPE_DOUBLE, center_y,
@@ -1094,7 +1094,7 @@ _gimp_vectors_stroke_rotate (gint32  vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, center_x,
                                           G_TYPE_DOUBLE, center_y,
@@ -1144,7 +1144,7 @@ gimp_vectors_stroke_flip (GimpVectors         *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_DOUBLE, axis,
@@ -1193,7 +1193,7 @@ _gimp_vectors_stroke_flip (gint32              vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_DOUBLE, axis,
@@ -1248,7 +1248,7 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x1,
                                           G_TYPE_DOUBLE, y1,
@@ -1305,7 +1305,7 @@ _gimp_vectors_stroke_flip_free (gint32  vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x1,
                                           G_TYPE_DOUBLE, y1,
@@ -1361,7 +1361,7 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
   GimpVectorsStrokeType type = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
@@ -1421,7 +1421,7 @@ _gimp_vectors_stroke_get_points (gint32     vectors_ID,
   GimpVectorsStrokeType type = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
@@ -1485,7 +1485,7 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           GIMP_TYPE_VECTORS_STROKE_TYPE, type,
                                           G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -1546,7 +1546,7 @@ _gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           GIMP_TYPE_VECTORS_STROKE_TYPE, type,
                                           G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -1602,7 +1602,7 @@ gimp_vectors_stroke_interpolate (GimpVectors *vectors,
   gdouble *coords = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
@@ -1661,7 +1661,7 @@ _gimp_vectors_stroke_interpolate (gint32    vectors_ID,
   gdouble *coords = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
@@ -1714,7 +1714,7 @@ gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
@@ -1761,7 +1761,7 @@ _gimp_vectors_bezier_stroke_new_moveto (gint32  vectors_ID,
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
@@ -1810,7 +1810,7 @@ gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -1859,7 +1859,7 @@ _gimp_vectors_bezier_stroke_lineto (gint32  vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -1914,7 +1914,7 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -1971,7 +1971,7 @@ _gimp_vectors_bezier_stroke_conicto (gint32  vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -2030,7 +2030,7 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -2091,7 +2091,7 @@ _gimp_vectors_bezier_stroke_cubicto (gint32  vectors_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -2148,7 +2148,7 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, radius_x,
@@ -2204,7 +2204,7 @@ _gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, radius_x,
@@ -2261,7 +2261,7 @@ gimp_vectors_import_from_file (GimpImage    *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, filename,
                                           G_TYPE_BOOLEAN, merge,
                                           G_TYPE_BOOLEAN, scale,
@@ -2324,7 +2324,7 @@ _gimp_vectors_import_from_file (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_BOOLEAN, merge,
                                           G_TYPE_BOOLEAN, scale,
@@ -2390,7 +2390,7 @@ gimp_vectors_import_from_string (GimpImage    *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, string,
                                           G_TYPE_INT, length,
                                           G_TYPE_BOOLEAN, merge,
@@ -2457,7 +2457,7 @@ _gimp_vectors_import_from_string (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, string,
                                           G_TYPE_INT, length,
                                           G_TYPE_BOOLEAN, merge,
@@ -2517,9 +2517,9 @@ gimp_vectors_export_to_file (GimpImage   *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, filename,
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2566,9 +2566,9 @@ _gimp_vectors_export_to_file (gint32       image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, filename,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2615,8 +2615,8 @@ gimp_vectors_export_to_string (GimpImage   *image,
   gchar *string = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2663,8 +2663,8 @@ _gimp_vectors_export_to_string (gint32 image_ID,
   gchar *string = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
+                                          GIMP_TYPE_VECTORS, gimp_item_get_by_id (vectors_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

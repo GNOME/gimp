@@ -61,7 +61,7 @@ gimp_image_add_sample_point (GimpImage *image,
   guint sample_point = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, position_x,
                                           G_TYPE_INT, position_y,
                                           G_TYPE_NONE);
@@ -110,7 +110,7 @@ _gimp_image_add_sample_point (gint32 image_ID,
   gint32 sample_point_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, position_x,
                                           G_TYPE_INT, position_y,
                                           G_TYPE_NONE);
@@ -156,7 +156,7 @@ gimp_image_delete_sample_point (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
                                           G_TYPE_NONE);
 
@@ -200,7 +200,7 @@ _gimp_image_delete_sample_point (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 
@@ -248,7 +248,7 @@ gimp_image_find_next_sample_point (GimpImage *image,
   guint next_sample_point = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
                                           G_TYPE_NONE);
 
@@ -297,7 +297,7 @@ _gimp_image_find_next_sample_point (gint32 image_ID,
   gint32 next_sample_point_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 
@@ -345,7 +345,7 @@ gimp_image_get_sample_point_position (GimpImage *image,
   gint position_x = G_MININT;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
                                           G_TYPE_NONE);
 
@@ -396,7 +396,7 @@ _gimp_image_get_sample_point_position (gint32  image_ID,
   gint position_x = G_MININT;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 

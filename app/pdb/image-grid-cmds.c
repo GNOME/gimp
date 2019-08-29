@@ -56,7 +56,7 @@ image_grid_get_spacing_invoker (GimpProcedure         *procedure,
   gdouble xspacing = 0.0;
   gdouble yspacing = 0.0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -96,7 +96,7 @@ image_grid_set_spacing_invoker (GimpProcedure         *procedure,
   gdouble xspacing;
   gdouble yspacing;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   xspacing = g_value_get_double (gimp_value_array_index (args, 1));
   yspacing = g_value_get_double (gimp_value_array_index (args, 2));
 
@@ -131,7 +131,7 @@ image_grid_get_offset_invoker (GimpProcedure         *procedure,
   gdouble xoffset = 0.0;
   gdouble yoffset = 0.0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -171,7 +171,7 @@ image_grid_set_offset_invoker (GimpProcedure         *procedure,
   gdouble xoffset;
   gdouble yoffset;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   xoffset = g_value_get_double (gimp_value_array_index (args, 1));
   yoffset = g_value_get_double (gimp_value_array_index (args, 2));
 
@@ -205,7 +205,7 @@ image_grid_get_foreground_color_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -238,7 +238,7 @@ image_grid_set_foreground_color_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpRGB fgcolor;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   gimp_value_get_rgb (gimp_value_array_index (args, 1), &fgcolor);
 
   if (success)
@@ -268,7 +268,7 @@ image_grid_get_background_color_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -301,7 +301,7 @@ image_grid_set_background_color_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpRGB bgcolor;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   gimp_value_get_rgb (gimp_value_array_index (args, 1), &bgcolor);
 
   if (success)
@@ -331,7 +331,7 @@ image_grid_get_style_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   gint style = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -364,7 +364,7 @@ image_grid_set_style_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   gint style;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   style = g_value_get_enum (gimp_value_array_index (args, 1));
 
   if (success)
@@ -400,11 +400,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("xspacing",
                                                         "xspacing",
@@ -434,11 +434,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("xspacing",
                                                     "xspacing",
@@ -468,11 +468,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("xoffset",
                                                         "xoffset",
@@ -502,11 +502,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("xoffset",
                                                     "xoffset",
@@ -536,11 +536,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("fgcolor",
                                                         "fgcolor",
@@ -565,11 +565,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("fgcolor",
                                                     "fgcolor",
@@ -594,11 +594,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("bgcolor",
                                                         "bgcolor",
@@ -623,11 +623,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("bgcolor",
                                                     "bgcolor",
@@ -652,11 +652,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("style",
                                                       "style",
@@ -681,11 +681,11 @@ register_image_grid_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("style",
                                                   "style",

@@ -62,7 +62,7 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, brightness,
                                           G_TYPE_DOUBLE, contrast,
                                           G_TYPE_NONE);
@@ -110,7 +110,7 @@ _gimp_drawable_brightness_contrast (gint32  drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, brightness,
                                           G_TYPE_DOUBLE, contrast,
                                           G_TYPE_NONE);
@@ -169,7 +169,7 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_TRANSFER_MODE, transfer_mode,
                                           G_TYPE_BOOLEAN, preserve_lum,
                                           G_TYPE_DOUBLE, cyan_red,
@@ -231,7 +231,7 @@ _gimp_drawable_color_balance (gint32           drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_TRANSFER_MODE, transfer_mode,
                                           G_TYPE_BOOLEAN, preserve_lum,
                                           G_TYPE_DOUBLE, cyan_red,
@@ -285,7 +285,7 @@ gimp_drawable_colorize_hsl (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, hue,
                                           G_TYPE_DOUBLE, saturation,
                                           G_TYPE_DOUBLE, lightness,
@@ -337,7 +337,7 @@ _gimp_drawable_colorize_hsl (gint32  drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, hue,
                                           G_TYPE_DOUBLE, saturation,
                                           G_TYPE_DOUBLE, lightness,
@@ -391,7 +391,7 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_INT, num_values,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -446,7 +446,7 @@ _gimp_drawable_curves_explicit (gint32                drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_INT, num_values,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -501,7 +501,7 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -556,7 +556,7 @@ _gimp_drawable_curves_spline (gint32                drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -605,7 +605,7 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_DESATURATE_MODE, desaturate_mode,
                                           G_TYPE_NONE);
 
@@ -651,7 +651,7 @@ _gimp_drawable_desaturate (gint32             drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_DESATURATE_MODE, desaturate_mode,
                                           G_TYPE_NONE);
 
@@ -700,7 +700,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, mask_only,
                                           G_TYPE_NONE);
 
@@ -749,7 +749,7 @@ _gimp_drawable_equalize (gint32   drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_BOOLEAN, mask_only,
                                           G_TYPE_NONE);
 
@@ -823,7 +823,7 @@ gimp_drawable_histogram (GimpDrawable         *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, start_range,
                                           G_TYPE_DOUBLE, end_range,
@@ -916,7 +916,7 @@ _gimp_drawable_histogram (gint32                drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, start_range,
                                           G_TYPE_DOUBLE, end_range,
@@ -990,7 +990,7 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HUE_RANGE, hue_range,
                                           G_TYPE_DOUBLE, hue_offset,
                                           G_TYPE_DOUBLE, lightness,
@@ -1049,7 +1049,7 @@ _gimp_drawable_hue_saturation (gint32       drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HUE_RANGE, hue_range,
                                           G_TYPE_DOUBLE, hue_offset,
                                           G_TYPE_DOUBLE, lightness,
@@ -1099,7 +1099,7 @@ gimp_drawable_invert (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, linear,
                                           G_TYPE_NONE);
 
@@ -1145,7 +1145,7 @@ _gimp_drawable_invert (gint32   drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_BOOLEAN, linear,
                                           G_TYPE_NONE);
 
@@ -1213,7 +1213,7 @@ gimp_drawable_levels (GimpDrawable         *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, low_input,
                                           G_TYPE_DOUBLE, high_input,
@@ -1288,7 +1288,7 @@ _gimp_drawable_levels (gint32               drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, low_input,
                                           G_TYPE_DOUBLE, high_input,
@@ -1338,7 +1338,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1380,7 +1380,7 @@ _gimp_drawable_levels_stretch (gint32 drawable_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1423,7 +1423,7 @@ gimp_drawable_posterize (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, levels,
                                           G_TYPE_NONE);
 
@@ -1467,7 +1467,7 @@ _gimp_drawable_posterize (gint32 drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, levels,
                                           G_TYPE_NONE);
 
@@ -1517,7 +1517,7 @@ gimp_drawable_threshold (GimpDrawable         *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, low_threshold,
                                           G_TYPE_DOUBLE, high_threshold,
@@ -1569,7 +1569,7 @@ _gimp_drawable_threshold (gint32               drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, low_threshold,
                                           G_TYPE_DOUBLE, high_threshold,

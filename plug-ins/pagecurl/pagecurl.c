@@ -265,6 +265,7 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_VAL_LAYER (procedure, "curl-layer",
                            "Curl layer",
                            "The new layer with the curl.",
+                           FALSE,
                            G_PARAM_READWRITE);
     }
 

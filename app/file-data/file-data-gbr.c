@@ -103,7 +103,7 @@ file_gbr_load_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (image)
-    gimp_value_set_image (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
 
   gimp_unset_busy (gimp);
 
@@ -130,8 +130,8 @@ file_gbr_save_invoker (GimpProcedure         *procedure,
 
   gimp_set_busy (gimp);
 
-  image    = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  image    = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   uri      = g_value_get_string (gimp_value_array_index (args, 3));
   spacing  = g_value_get_int (gimp_value_array_index (args, 5));
   name     = g_value_get_string (gimp_value_array_index (args, 6));

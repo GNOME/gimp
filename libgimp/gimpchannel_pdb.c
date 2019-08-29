@@ -69,7 +69,7 @@ _gimp_channel_new (GimpImage     *image,
   GimpChannel *channel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_STRING, name,
@@ -87,7 +87,7 @@ _gimp_channel_new (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -123,7 +123,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   GimpChannel *channel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
@@ -138,7 +138,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -174,7 +174,7 @@ _gimp_channel_new_from_component (gint32           image_ID,
   gint32 channel_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
@@ -189,7 +189,7 @@ _gimp_channel_new_from_component (gint32           image_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+    channel_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -217,7 +217,7 @@ gimp_channel_copy (GimpChannel *channel)
   GimpChannel *channel_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -230,7 +230,7 @@ gimp_channel_copy (GimpChannel *channel)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_copy = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -258,7 +258,7 @@ _gimp_channel_copy (gint32 channel_ID)
   gint32 channel_copy_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -271,7 +271,7 @@ _gimp_channel_copy (gint32 channel_ID)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_copy_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+    channel_copy_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -306,8 +306,8 @@ gimp_channel_combine_masks (GimpChannel    *channel1,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel1)),
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel2)),
+                                          GIMP_TYPE_CHANNEL, channel1,
+                                          GIMP_TYPE_CHANNEL, channel2,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
@@ -357,8 +357,8 @@ _gimp_channel_combine_masks (gint32         channel1_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel1_ID,
-                                          GIMP_TYPE_CHANNEL_ID, channel2_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel1_ID),
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel2_ID),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
@@ -401,7 +401,7 @@ gimp_channel_get_show_masked (GimpChannel *channel)
   gboolean show_masked = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -442,7 +442,7 @@ _gimp_channel_get_show_masked (gint32 channel_ID)
   gboolean show_masked = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -485,7 +485,7 @@ gimp_channel_set_show_masked (GimpChannel *channel,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL, channel,
                                           G_TYPE_BOOLEAN, show_masked,
                                           G_TYPE_NONE);
 
@@ -528,7 +528,7 @@ _gimp_channel_set_show_masked (gint32   channel_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel_ID),
                                           G_TYPE_BOOLEAN, show_masked,
                                           G_TYPE_NONE);
 
@@ -567,7 +567,7 @@ gimp_channel_get_opacity (GimpChannel *channel)
   gdouble opacity = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -606,7 +606,7 @@ _gimp_channel_get_opacity (gint32 channel_ID)
   gdouble opacity = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -647,7 +647,7 @@ gimp_channel_set_opacity (GimpChannel *channel,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL, channel,
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
 
@@ -688,7 +688,7 @@ _gimp_channel_set_opacity (gint32  channel_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel_ID),
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
 
@@ -729,7 +729,7 @@ gimp_channel_get_color (GimpChannel *channel,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -772,7 +772,7 @@ _gimp_channel_get_color (gint32   channel_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -815,7 +815,7 @@ gimp_channel_set_color (GimpChannel   *channel,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL, channel,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
@@ -856,7 +856,7 @@ _gimp_channel_set_color (gint32         channel_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL, gimp_item_get_by_id (channel_ID),
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 

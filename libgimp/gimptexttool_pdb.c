@@ -85,8 +85,8 @@ gimp_text_fontname (GimpImage    *image,
   GimpLayer *text_layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_STRING, text,
@@ -107,7 +107,7 @@ gimp_text_fontname (GimpImage    *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    text_layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    text_layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -164,8 +164,8 @@ _gimp_text_fontname (gint32        image_ID,
   gint32 text_layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_STRING, text,
@@ -186,7 +186,7 @@ _gimp_text_fontname (gint32        image_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    text_layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    text_layer_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

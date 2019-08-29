@@ -70,7 +70,7 @@ gimp_selection_bounds (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -140,7 +140,7 @@ _gimp_selection_bounds (gint32    image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -198,7 +198,7 @@ gimp_selection_value (GimpImage *image,
   gint value = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, x,
                                           G_TYPE_INT, y,
                                           G_TYPE_NONE);
@@ -244,7 +244,7 @@ _gimp_selection_value (gint32 image_ID,
   gint value = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, x,
                                           G_TYPE_INT, y,
                                           G_TYPE_NONE);
@@ -286,7 +286,7 @@ gimp_selection_is_empty (GimpImage *image)
   gboolean is_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -326,7 +326,7 @@ _gimp_selection_is_empty (gint32 image_ID)
   gboolean is_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -373,7 +373,7 @@ gimp_selection_translate (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
@@ -421,7 +421,7 @@ _gimp_selection_translate (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
@@ -470,7 +470,7 @@ _gimp_selection_float (GimpDrawable *drawable,
   GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
@@ -485,7 +485,7 @@ _gimp_selection_float (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -512,7 +512,7 @@ gimp_selection_invert (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -551,7 +551,7 @@ _gimp_selection_invert (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -592,7 +592,7 @@ gimp_selection_sharpen (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -633,7 +633,7 @@ _gimp_selection_sharpen (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -672,7 +672,7 @@ gimp_selection_all (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -711,7 +711,7 @@ _gimp_selection_all (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -750,7 +750,7 @@ gimp_selection_none (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -789,7 +789,7 @@ _gimp_selection_none (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -830,7 +830,7 @@ gimp_selection_feather (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_DOUBLE, radius,
                                           G_TYPE_NONE);
 
@@ -872,7 +872,7 @@ _gimp_selection_feather (gint32  image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_DOUBLE, radius,
                                           G_TYPE_NONE);
 
@@ -915,7 +915,7 @@ gimp_selection_border (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, radius,
                                           G_TYPE_NONE);
 
@@ -958,7 +958,7 @@ _gimp_selection_border (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, radius,
                                           G_TYPE_NONE);
 
@@ -1000,7 +1000,7 @@ gimp_selection_grow (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, steps,
                                           G_TYPE_NONE);
 
@@ -1042,7 +1042,7 @@ _gimp_selection_grow (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, steps,
                                           G_TYPE_NONE);
 
@@ -1085,7 +1085,7 @@ gimp_selection_shrink (GimpImage *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, steps,
                                           G_TYPE_NONE);
 
@@ -1128,7 +1128,7 @@ _gimp_selection_shrink (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_INT, steps,
                                           G_TYPE_NONE);
 
@@ -1172,7 +1172,7 @@ gimp_selection_flood (GimpImage *image)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1215,7 +1215,7 @@ _gimp_selection_flood (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1255,7 +1255,7 @@ gimp_selection_save (GimpImage *image)
   GimpChannel *channel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1268,7 +1268,7 @@ gimp_selection_save (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1296,7 +1296,7 @@ _gimp_selection_save (gint32 image_ID)
   gint32 channel_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1309,7 +1309,7 @@ _gimp_selection_save (gint32 image_ID)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+    channel_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

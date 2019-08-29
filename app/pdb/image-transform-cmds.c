@@ -59,7 +59,7 @@ image_resize_invoker (GimpProcedure         *procedure,
   gint offx;
   gint offy;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   new_width = g_value_get_int (gimp_value_array_index (args, 1));
   new_height = g_value_get_int (gimp_value_array_index (args, 2));
   offx = g_value_get_int (gimp_value_array_index (args, 3));
@@ -86,7 +86,7 @@ image_resize_to_layers_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -110,7 +110,7 @@ image_scale_invoker (GimpProcedure         *procedure,
   gint new_width;
   gint new_height;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   new_width = g_value_get_int (gimp_value_array_index (args, 1));
   new_height = g_value_get_int (gimp_value_array_index (args, 2));
 
@@ -148,7 +148,7 @@ image_crop_invoker (GimpProcedure         *procedure,
   gint offx;
   gint offy;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   new_width = g_value_get_int (gimp_value_array_index (args, 1));
   new_height = g_value_get_int (gimp_value_array_index (args, 2));
   offx = g_value_get_int (gimp_value_array_index (args, 3));
@@ -183,7 +183,7 @@ image_flip_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   gint flip_type;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   flip_type = g_value_get_enum (gimp_value_array_index (args, 1));
 
   if (success)
@@ -207,7 +207,7 @@ image_rotate_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   gint rotate_type;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   rotate_type = g_value_get_enum (gimp_value_array_index (args, 1));
 
   if (success)
@@ -244,11 +244,11 @@ register_image_transform_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
@@ -290,11 +290,11 @@ register_image_transform_procs (GimpPDB *pdb)
                                      "2004",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -312,11 +312,11 @@ register_image_transform_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
@@ -346,11 +346,11 @@ register_image_transform_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("new-width",
                                                  "new width",
@@ -392,11 +392,11 @@ register_image_transform_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("flip-type",
                                                      "flip type",
@@ -423,11 +423,11 @@ register_image_transform_procs (GimpPDB *pdb)
                                      "2003",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("rotate-type",
                                                   "rotate type",

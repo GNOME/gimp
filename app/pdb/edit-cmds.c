@@ -61,7 +61,7 @@ edit_cut_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -108,7 +108,7 @@ edit_copy_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -153,7 +153,7 @@ edit_copy_visible_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   gboolean non_empty = FALSE;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -193,7 +193,7 @@ edit_paste_invoker (GimpProcedure         *procedure,
   gboolean paste_into;
   GimpLayer *floating_sel = NULL;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   paste_into = g_value_get_boolean (gimp_value_array_index (args, 1));
 
   if (success)
@@ -223,7 +223,7 @@ edit_paste_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_layer (gimp_value_array_index (return_vals, 1), floating_sel);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), floating_sel);
 
   return return_vals;
 }
@@ -254,7 +254,7 @@ edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_image (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
 
   return return_vals;
 }
@@ -273,7 +273,7 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
@@ -327,7 +327,7 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
@@ -379,7 +379,7 @@ edit_named_copy_visible_invoker (GimpProcedure         *procedure,
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
@@ -426,7 +426,7 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
   gboolean paste_into;
   GimpLayer *floating_sel = NULL;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
   paste_into = g_value_get_boolean (gimp_value_array_index (args, 2));
 
@@ -456,7 +456,7 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_layer (gimp_value_array_index (return_vals, 1), floating_sel);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), floating_sel);
 
   return return_vals;
 }
@@ -495,7 +495,7 @@ edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_image (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
 
   return return_vals;
 }
@@ -519,11 +519,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to cut from",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to cut from",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
@@ -547,11 +547,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to copy from",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to copy from",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
@@ -575,11 +575,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "2004",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image to copy from",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image to copy from",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
@@ -603,11 +603,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to paste to",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to paste to",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("paste-into",
                                                      "paste into",
@@ -615,11 +615,11 @@ register_edit_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_id ("floating-sel",
-                                                             "floating sel",
-                                                             "The new floating selection",
-                                                             pdb->gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer ("floating-sel",
+                                                          "floating sel",
+                                                          "The new floating selection",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -637,11 +637,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "image",
-                                                             "The new image",
-                                                             pdb->gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_image ("image",
+                                                          "image",
+                                                          "The new image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -659,11 +659,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to cut from",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to cut from",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -695,11 +695,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to copy from",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to copy from",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -731,11 +731,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image to copy from",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image to copy from",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -767,11 +767,11 @@ register_edit_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to paste to",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to paste to",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -786,11 +786,11 @@ register_edit_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_id ("floating-sel",
-                                                             "floating sel",
-                                                             "The new floating selection",
-                                                             pdb->gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer ("floating-sel",
+                                                          "floating sel",
+                                                          "The new floating selection",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -815,11 +815,11 @@ register_edit_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "image",
-                                                             "The new image",
-                                                             pdb->gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_image ("image",
+                                                          "image",
+                                                          "The new image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

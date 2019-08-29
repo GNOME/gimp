@@ -37,7 +37,9 @@
 /*  include the implementation, they are shared between app/ and
  *  libgimp/ but need different headers.
  */
+#define LIBGIMP_COMPILATION
 #include "gimpgpparams-body.c"
+#undef LIBGIMP_COMPILATION
 
 GParamSpec *
 _gimp_gp_param_def_to_param_spec (gpointer          gimp,
@@ -153,50 +155,50 @@ _gimp_gp_param_def_to_param_spec (gpointer          gimp,
                                     flags);
 
     case GP_PARAM_DEF_TYPE_ID:
-      if (! strcmp (param_def->type_name, "GimpParamDisplayID"))
-        return gimp_param_spec_display_id (name, nick, blurb,
-                                           param_def->meta.m_id.none_ok,
-                                           flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamImageID"))
-        return gimp_param_spec_image_id (name, nick, blurb,
-                                         param_def->meta.m_id.none_ok,
-                                         flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamItemID"))
-        return gimp_param_spec_item_id (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "GimpParamDisplay"))
+        return gimp_param_spec_display (name, nick, blurb,
                                         param_def->meta.m_id.none_ok,
                                         flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamDrawableID"))
-        return gimp_param_spec_drawable_id (name, nick, blurb,
-                                            param_def->meta.m_id.none_ok,
-                                            flags);
+      if (! strcmp (param_def->type_name, "GimpParamImage"))
+        return gimp_param_spec_image (name, nick, blurb,
+                                      param_def->meta.m_id.none_ok,
+                                      flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamLayerID"))
-        return gimp_param_spec_layer_id (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "GimpParamItem"))
+        return gimp_param_spec_item (name, nick, blurb,
+                                     param_def->meta.m_id.none_ok,
+                                     flags);
+
+      if (! strcmp (param_def->type_name, "GimpParamDrawable"))
+        return gimp_param_spec_drawable (name, nick, blurb,
                                          param_def->meta.m_id.none_ok,
                                          flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamChannelID"))
-        return gimp_param_spec_channel_id (name, nick, blurb,
+      if (! strcmp (param_def->type_name, "GimpParamLayer"))
+        return gimp_param_spec_layer (name, nick, blurb,
+                                      param_def->meta.m_id.none_ok,
+                                      flags);
+
+      if (! strcmp (param_def->type_name, "GimpParamChannel"))
+        return gimp_param_spec_channel (name, nick, blurb,
+                                        param_def->meta.m_id.none_ok,
+                                        flags);
+
+      if (! strcmp (param_def->type_name, "GimpParamLayerMask"))
+        return gimp_param_spec_layer_mask (name, nick, blurb,
                                            param_def->meta.m_id.none_ok,
                                            flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamLayerMaskID"))
-        return gimp_param_spec_layer_mask_id (name, nick, blurb,
-                                              param_def->meta.m_id.none_ok,
-                                              flags);
+      if (! strcmp (param_def->type_name, "GimpParamSelection"))
+        return gimp_param_spec_selection (name, nick, blurb,
+                                          param_def->meta.m_id.none_ok,
+                                          flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamSelectionID"))
-        return gimp_param_spec_selection_id (name, nick, blurb,
-                                             param_def->meta.m_id.none_ok,
-                                             flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamVectorsID"))
-        return gimp_param_spec_vectors_id (name, nick, blurb,
-                                           param_def->meta.m_id.none_ok,
-                                           flags);
+      if (! strcmp (param_def->type_name, "GimpParamVectors"))
+        return gimp_param_spec_vectors (name, nick, blurb,
+                                        param_def->meta.m_id.none_ok,
+                                        flags);
       break;
 
     case GP_PARAM_DEF_TYPE_PARAM_DEF:

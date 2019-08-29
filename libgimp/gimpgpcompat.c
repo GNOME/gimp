@@ -107,45 +107,45 @@ _gimp_gp_compat_param_spec (GimpPDBArgType  arg_type,
       break;
 
     case GIMP_PDB_ITEM:
-      pspec = gimp_param_spec_item_id (name, nick, blurb,
+      pspec = gimp_param_spec_item (name, nick, blurb,
+                                    TRUE,
+                                    G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_DISPLAY:
+      pspec = gimp_param_spec_display (name, nick, blurb,
                                        TRUE,
                                        G_PARAM_READWRITE);
       break;
 
-    case GIMP_PDB_DISPLAY:
-      pspec = gimp_param_spec_display_id (name, nick, blurb,
-                                          TRUE,
-                                          G_PARAM_READWRITE);
-      break;
-
     case GIMP_PDB_IMAGE:
-      pspec = gimp_param_spec_image_id (name, nick, blurb,
-                                        TRUE,
-                                        G_PARAM_READWRITE);
+      pspec = gimp_param_spec_image (name, nick, blurb,
+                                     TRUE,
+                                     G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_LAYER:
-      pspec = gimp_param_spec_layer_id (name, nick, blurb,
+      pspec = gimp_param_spec_layer (name, nick, blurb,
+                                     TRUE,
+                                     G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_CHANNEL:
+      pspec = gimp_param_spec_channel (name, nick, blurb,
+                                       TRUE,
+                                       G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_DRAWABLE:
+      pspec = gimp_param_spec_drawable (name, nick, blurb,
                                         TRUE,
                                         G_PARAM_READWRITE);
       break;
 
-    case GIMP_PDB_CHANNEL:
-      pspec = gimp_param_spec_channel_id (name, nick, blurb,
-                                          TRUE,
-                                          G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_DRAWABLE:
-      pspec = gimp_param_spec_drawable_id (name, nick, blurb,
-                                           TRUE,
-                                           G_PARAM_READWRITE);
-      break;
-
     case GIMP_PDB_SELECTION:
-      pspec = gimp_param_spec_selection_id (name, nick, blurb,
-                                            TRUE,
-                                            G_PARAM_READWRITE);
+      pspec = gimp_param_spec_selection (name, nick, blurb,
+                                         TRUE,
+                                         G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_COLORARRAY:
@@ -154,9 +154,9 @@ _gimp_gp_compat_param_spec (GimpPDBArgType  arg_type,
       break;
 
     case GIMP_PDB_VECTORS:
-      pspec = gimp_param_spec_vectors_id (name, nick, blurb,
-                                          TRUE,
-                                          G_PARAM_READWRITE);
+      pspec = gimp_param_spec_vectors (name, nick, blurb,
+                                       TRUE,
+                                       G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_PARASITE:
@@ -221,31 +221,31 @@ _gimp_pdb_arg_type_to_gtype (GimpPDBArgType  type)
       return GIMP_TYPE_RGB;
 
     case GIMP_PDB_ITEM:
-      return GIMP_TYPE_ITEM_ID;
+      return GIMP_TYPE_ITEM;
 
     case GIMP_PDB_DISPLAY:
-      return GIMP_TYPE_DISPLAY_ID;
+      return GIMP_TYPE_DISPLAY;
 
     case GIMP_PDB_IMAGE:
-      return GIMP_TYPE_IMAGE_ID;
+      return GIMP_TYPE_IMAGE;
 
     case GIMP_PDB_LAYER:
-      return GIMP_TYPE_LAYER_ID;
+      return GIMP_TYPE_LAYER;
 
     case GIMP_PDB_CHANNEL:
-      return GIMP_TYPE_CHANNEL_ID;
+      return GIMP_TYPE_CHANNEL;
 
     case GIMP_PDB_DRAWABLE:
-      return GIMP_TYPE_DRAWABLE_ID;
+      return GIMP_TYPE_DRAWABLE;
 
     case GIMP_PDB_SELECTION:
-      return GIMP_TYPE_SELECTION_ID;
+      return GIMP_TYPE_SELECTION;
 
     case GIMP_PDB_COLORARRAY:
       return GIMP_TYPE_RGB_ARRAY;
 
     case GIMP_PDB_VECTORS:
-      return GIMP_TYPE_VECTORS_ID;
+      return GIMP_TYPE_VECTORS;
 
     case GIMP_PDB_PARASITE:
       return GIMP_TYPE_PARASITE;
@@ -297,15 +297,15 @@ _gimp_pdb_gtype_to_arg_type (GType type)
         { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
         { GIMP_TYPE_RGB_ARRAY,       GIMP_PDB_COLORARRAY  },
 
-        { GIMP_TYPE_ITEM_ID,         GIMP_PDB_ITEM        },
-        { GIMP_TYPE_DISPLAY_ID,      GIMP_PDB_DISPLAY     },
-        { GIMP_TYPE_IMAGE_ID,        GIMP_PDB_IMAGE       },
-        { GIMP_TYPE_LAYER_ID,        GIMP_PDB_LAYER       },
-        { GIMP_TYPE_CHANNEL_ID,      GIMP_PDB_CHANNEL     },
-        { GIMP_TYPE_DRAWABLE_ID,     GIMP_PDB_DRAWABLE    },
-        { GIMP_TYPE_SELECTION_ID,    GIMP_PDB_SELECTION   },
-        { GIMP_TYPE_LAYER_MASK_ID,   GIMP_PDB_CHANNEL     },
-        { GIMP_TYPE_VECTORS_ID,      GIMP_PDB_VECTORS     },
+        { GIMP_TYPE_ITEM,            GIMP_PDB_ITEM        },
+        { GIMP_TYPE_DISPLAY,         GIMP_PDB_DISPLAY     },
+        { GIMP_TYPE_IMAGE,           GIMP_PDB_IMAGE       },
+        { GIMP_TYPE_LAYER,           GIMP_PDB_LAYER       },
+        { GIMP_TYPE_CHANNEL,         GIMP_PDB_CHANNEL     },
+        { GIMP_TYPE_DRAWABLE,        GIMP_PDB_DRAWABLE    },
+        { GIMP_TYPE_SELECTION,       GIMP_PDB_SELECTION   },
+        { GIMP_TYPE_LAYER_MASK,      GIMP_PDB_CHANNEL     },
+        { GIMP_TYPE_VECTORS,         GIMP_PDB_VECTORS     },
 
         { GIMP_TYPE_PARASITE,        GIMP_PDB_PARASITE    },
 

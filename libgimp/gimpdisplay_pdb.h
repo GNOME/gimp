@@ -32,11 +32,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_displays_flush (void);
+gboolean gimp_display_id_is_valid (gint display_id);
+gboolean gimp_displays_flush      (void);
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gboolean     gimp_display_is_valid          (GimpDisplay *display);
 GimpDisplay* gimp_display_new               (GimpImage   *image);
 gboolean     gimp_display_delete            (GimpDisplay *display);
 gint         gimp_display_get_window_handle (GimpDisplay *display);
@@ -45,7 +45,6 @@ gboolean     gimp_displays_reconnect        (GimpImage   *old_image,
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
-#define gimp_display_is_valid _gimp_display_is_valid
 #define gimp_display_new _gimp_display_new
 #define gimp_display_delete _gimp_display_delete
 #define gimp_display_get_window_handle _gimp_display_get_window_handle
@@ -58,7 +57,6 @@ gboolean     gimp_displays_reconnect        (GimpImage   *old_image,
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gboolean _gimp_display_is_valid          (gint32 display_ID);
 gint32   _gimp_display_new               (gint32 image_ID);
 gboolean _gimp_display_delete            (gint32 display_ID);
 gint     _gimp_display_get_window_handle (gint32 display_ID);

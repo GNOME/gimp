@@ -84,11 +84,13 @@ gimp_image_procedure_constructed (GObject *object)
   GIMP_PROC_ARG_IMAGE (procedure, "image",
                        "Image",
                        "The input image",
+                       FALSE,
                        G_PARAM_READWRITE);
 
   GIMP_PROC_ARG_DRAWABLE (procedure, "drawable",
                           "Drawable",
                           "The input drawable",
+                          TRUE,
                           G_PARAM_READWRITE);
 }
 

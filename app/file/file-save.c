@@ -69,8 +69,6 @@ file_save (Gimp                *gimp,
   GFile             *local_file = NULL;
   gchar             *uri        = NULL;
   gboolean           mounted    = TRUE;
-  gint32             image_id;
-  gint32             drawable_id;
   GError            *my_error   = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
@@ -188,19 +186,16 @@ file_save (Gimp                *gimp,
   if (! uri)
     uri = g_file_get_uri (file);
 
-  image_id    = gimp_image_get_id (image);
-  drawable_id = gimp_item_get_id (GIMP_ITEM (drawable));
-
   return_vals =
     gimp_pdb_execute_procedure_by_name (image->gimp->pdb,
                                         gimp_get_user_context (gimp),
                                         progress, error,
                                         gimp_object_get_name (file_proc),
-                                        GIMP_TYPE_RUN_MODE,    run_mode,
-                                        GIMP_TYPE_IMAGE_ID,    image_id,
-                                        GIMP_TYPE_DRAWABLE_ID, drawable_id,
-                                        G_TYPE_STRING,         uri,
-                                        G_TYPE_STRING,         uri,
+                                        GIMP_TYPE_RUN_MODE, run_mode,
+                                        GIMP_TYPE_IMAGE,    image,
+                                        GIMP_TYPE_DRAWABLE, drawable,
+                                        G_TYPE_STRING,      uri,
+                                        G_TYPE_STRING,      uri,
                                         G_TYPE_NONE);
 
   status = g_value_get_enum (gimp_value_array_index (return_vals, 0));

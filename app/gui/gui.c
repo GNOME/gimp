@@ -150,12 +150,12 @@ static void       gui_compare_accelerator       (gpointer            data,
                                                  guint               accel_key,
                                                  GdkModifierType     accel_mods,
                                                  gboolean            changed);
-static void      gui_check_unique_accelerator   (gpointer            data,
+static void       gui_check_unique_accelerator  (gpointer            data,
                                                  const gchar        *accel_path,
                                                  guint               accel_key,
                                                  GdkModifierType     accel_mods,
                                                  gboolean            changed);
-static gboolean  gui_check_action_exists        (const gchar *accel_path);
+static gboolean   gui_check_action_exists       (const gchar        *accel_path);
 
 
 /*  private variables  */
@@ -174,6 +174,9 @@ gui_libs_init (GOptionContext *context)
   g_return_if_fail (context != NULL);
 
   g_option_context_add_group (context, gtk_get_option_group (TRUE));
+
+  /*  make the GimpDisplay type known by name early, needed for the PDB */
+  g_type_class_ref (GIMP_TYPE_DISPLAY);
 }
 
 void

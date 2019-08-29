@@ -57,7 +57,7 @@ image_add_hguide_invoker (GimpProcedure         *procedure,
   gint yposition;
   guint guide = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   yposition = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
@@ -96,7 +96,7 @@ image_add_vguide_invoker (GimpProcedure         *procedure,
   gint xposition;
   guint guide = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   xposition = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
@@ -133,7 +133,7 @@ image_delete_guide_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   guint guide;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
@@ -164,7 +164,7 @@ image_find_next_guide_invoker (GimpProcedure         *procedure,
   guint guide;
   guint next_guide = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
@@ -205,7 +205,7 @@ image_get_guide_orientation_invoker (GimpProcedure         *procedure,
   guint guide;
   gint orientation = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
@@ -241,7 +241,7 @@ image_get_guide_position_invoker (GimpProcedure         *procedure,
   guint guide;
   gint position = 0;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
@@ -282,11 +282,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                      "1998",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("yposition",
                                                  "yposition",
@@ -316,11 +316,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                      "1998",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("xposition",
                                                  "xposition",
@@ -350,11 +350,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                      "1998",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
                                                   "guide",
@@ -378,11 +378,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                      "1998",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
                                                   "guide",
@@ -412,11 +412,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                      "1998",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
                                                   "guide",
@@ -449,11 +449,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                      "1998",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
                                                   "guide",

@@ -62,7 +62,7 @@ item_transform_translate_invoker (GimpProcedure         *procedure,
   gdouble off_x;
   gdouble off_y;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   off_x = g_value_get_double (gimp_value_array_index (args, 1));
   off_y = g_value_get_double (gimp_value_array_index (args, 2));
 
@@ -88,7 +88,7 @@ item_transform_translate_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -108,7 +108,7 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
   gboolean auto_center;
   gdouble axis;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   flip_type = g_value_get_enum (gimp_value_array_index (args, 1));
   auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
   axis = g_value_get_double (gimp_value_array_index (args, 3));
@@ -172,7 +172,7 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -193,7 +193,7 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
   gdouble x1;
   gdouble y1;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   x0 = g_value_get_double (gimp_value_array_index (args, 1));
   y0 = g_value_get_double (gimp_value_array_index (args, 2));
   x1 = g_value_get_double (gimp_value_array_index (args, 3));
@@ -273,7 +273,7 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -298,7 +298,7 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
   gdouble x3;
   gdouble y3;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   x0 = g_value_get_double (gimp_value_array_index (args, 1));
   y0 = g_value_get_double (gimp_value_array_index (args, 2));
   x1 = g_value_get_double (gimp_value_array_index (args, 3));
@@ -385,7 +385,7 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -406,7 +406,7 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
   gdouble center_x;
   gdouble center_y;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   rotate_type = g_value_get_enum (gimp_value_array_index (args, 1));
   auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
   center_x = g_value_get_double (gimp_value_array_index (args, 3));
@@ -475,7 +475,7 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -496,7 +496,7 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
   gdouble center_x;
   gdouble center_y;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   angle = g_value_get_double (gimp_value_array_index (args, 1));
   auto_center = g_value_get_boolean (gimp_value_array_index (args, 2));
   center_x = g_value_get_double (gimp_value_array_index (args, 3));
@@ -581,7 +581,7 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -602,7 +602,7 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
   gdouble x1;
   gdouble y1;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   x0 = g_value_get_double (gimp_value_array_index (args, 1));
   y0 = g_value_get_double (gimp_value_array_index (args, 2));
   x1 = g_value_get_double (gimp_value_array_index (args, 3));
@@ -685,7 +685,7 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -704,7 +704,7 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
   gint shear_type;
   gdouble magnitude;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   shear_type = g_value_get_enum (gimp_value_array_index (args, 1));
   magnitude = g_value_get_double (gimp_value_array_index (args, 2));
 
@@ -784,7 +784,7 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -808,7 +808,7 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
   gdouble dest_x;
   gdouble dest_y;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   source_x = g_value_get_double (gimp_value_array_index (args, 1));
   source_y = g_value_get_double (gimp_value_array_index (args, 2));
   scale_x = g_value_get_double (gimp_value_array_index (args, 3));
@@ -894,7 +894,7 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -920,7 +920,7 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
   gdouble coeff_2_1;
   gdouble coeff_2_2;
 
-  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  item = g_value_get_object (gimp_value_array_index (args, 0));
   coeff_0_0 = g_value_get_double (gimp_value_array_index (args, 1));
   coeff_0_1 = g_value_get_double (gimp_value_array_index (args, 2));
   coeff_0_2 = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1012,7 +1012,7 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_item (gimp_value_array_index (return_vals, 1), item);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), item);
 
   return return_vals;
 }
@@ -1038,11 +1038,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2018",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("off-x",
                                                     "off x",
@@ -1056,11 +1056,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The translated item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The translated item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1084,11 +1084,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2004",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("flip-type",
                                                      "flip type",
@@ -1111,11 +1111,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The flipped item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The flipped item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1139,11 +1139,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -1169,11 +1169,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The flipped item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The flipped item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1199,11 +1199,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -1253,11 +1253,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The transformed item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The transformed item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1281,11 +1281,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("rotate-type",
                                                   "rotate type",
@@ -1312,11 +1312,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The rotated item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The rotated item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1340,11 +1340,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
@@ -1370,11 +1370,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The rotated item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The rotated item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1400,11 +1400,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -1430,11 +1430,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The scaled item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The scaled item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1460,11 +1460,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("shear-type",
                                                      "shear type",
@@ -1481,11 +1481,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The sheared item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The sheared item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1511,11 +1511,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("source-x",
                                                     "source x",
@@ -1559,11 +1559,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The transformed item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The transformed item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1589,11 +1589,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "2010",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The affected item",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The affected item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-0-0",
                                                     "coeff 0 0",
@@ -1649,11 +1649,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item_id ("item",
-                                                            "item",
-                                                            "The transformed item",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_item ("item",
+                                                         "item",
+                                                         "The transformed item",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

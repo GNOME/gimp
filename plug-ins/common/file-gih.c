@@ -426,14 +426,14 @@ gih_save (GimpProcedure        *procedure,
       save_retvals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-gih-save-internal",
-                                GIMP_TYPE_RUN_MODE,    GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE_ID,    gimp_image_get_id (image),
-                                GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
-                                G_TYPE_STRING,         uri,
-                                G_TYPE_STRING,         uri,
-                                G_TYPE_INT,            info.spacing,
-                                G_TYPE_STRING,         info.description,
-                                G_TYPE_STRING,         paramstring,
+                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                GIMP_TYPE_IMAGE,    image,
+                                GIMP_TYPE_DRAWABLE, drawable,
+                                G_TYPE_STRING,      uri,
+                                G_TYPE_STRING,      uri,
+                                G_TYPE_INT,         info.spacing,
+                                G_TYPE_STRING,      info.description,
+                                G_TYPE_STRING,      paramstring,
                                 G_TYPE_NONE);
 
       g_free (uri);

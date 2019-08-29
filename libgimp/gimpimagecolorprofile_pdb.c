@@ -60,7 +60,7 @@ _gimp_image_get_color_profile (GimpImage *image,
   guint8 *profile_data = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -114,7 +114,7 @@ _gimp_image_get_effective_color_profile (GimpImage *image,
   guint8 *profile_data = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -168,7 +168,7 @@ _gimp_image_set_color_profile (GimpImage    *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_bytes,
                                           GIMP_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -218,7 +218,7 @@ gimp_image_set_color_profile_from_file (GimpImage   *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, uri,
                                           G_TYPE_NONE);
 
@@ -266,7 +266,7 @@ _gimp_image_set_color_profile_from_file (gint32       image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, uri,
                                           G_TYPE_NONE);
 
@@ -318,7 +318,7 @@ _gimp_image_convert_color_profile (GimpImage                *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_bytes,
                                           GIMP_TYPE_UINT8_ARRAY, NULL,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
@@ -372,7 +372,7 @@ gimp_image_convert_color_profile_from_file (GimpImage                *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, uri,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,
@@ -424,7 +424,7 @@ _gimp_image_convert_color_profile_from_file (gint32                    image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, uri,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,

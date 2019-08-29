@@ -173,6 +173,153 @@ gimp_item_get_by_id (gint32 item_id)
 }
 
 /**
+ * gimp_item_is_valid:
+ * @item: The item to check.
+ *
+ * Returns TRUE if the item is valid.
+ *
+ * This procedure checks if the given item is valid and refers to an
+ * existing item.
+ *
+ * Returns: Whether the item is valid.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_valid (GimpItem *item)
+{
+  return gimp_item_id_is_valid (gimp_item_get_id (item));
+}
+
+/**
+ * gimp_item_is_drawable:
+ * @item: The item.
+ *
+ * Returns whether the item is a drawable.
+ *
+ * This procedure returns TRUE if the specified item is a drawable.
+ *
+ * Returns: TRUE if the item is a drawable, FALSE otherwise.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_drawable (GimpItem *item)
+{
+  return gimp_item_id_is_drawable (gimp_item_get_id (item));
+}
+
+/**
+ * gimp_item_is_layer:
+ * @item: The item.
+ *
+ * Returns whether the item is a layer.
+ *
+ * This procedure returns TRUE if the specified item is a layer.
+ *
+ * Returns: TRUE if the item is a layer, FALSE otherwise.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_layer (GimpItem *item)
+{
+  return gimp_item_id_is_layer (gimp_item_get_id (item));
+}
+
+/**
+ * gimp_item_is_text_layer:
+ * @item: The item.
+ *
+ * Returns whether the item is a text layer.
+ *
+ * This procedure returns TRUE if the specified item is a text
+ * layer.
+ *
+ * Returns: TRUE if the item is a text layer, FALSE otherwise.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_text_layer (GimpItem *item)
+{
+  return gimp_item_id_is_text_layer (gimp_item_get_id (item));
+}
+
+/**
+ * gimp_item_is_channel:
+ * @item: The item.
+ *
+ * Returns whether the item is a channel.
+ *
+ * This procedure returns TRUE if the specified item is a channel.
+ *
+ * Returns: TRUE if the item is a channel, FALSE otherwise.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_channel (GimpItem *item)
+{
+  return gimp_item_id_is_channel (gimp_item_get_id (item));
+}
+
+/**
+ * gimp_item_is_layer_mask:
+ * @item: The item.
+ *
+ * Returns whether the item is a layer mask.
+ *
+ * This procedure returns TRUE if the specified item is a layer
+ * mask.
+ *
+ * Returns: TRUE if the item is a layer mask, FALSE otherwise.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_layer_mask (GimpItem *item)
+{
+  return gimp_item_id_is_layer_mask (gimp_item_get_id (item));
+}
+
+/**
+ * gimp_item_is_selection:
+ * @item: The item.
+ *
+ * Returns whether the item is a selection.
+ *
+ * This procedure returns TRUE if the specified item is a selection.
+ *
+ * Returns: TRUE if the item is a selection, FALSE otherwise.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_selection (GimpItem *item)
+{
+  return gimp_item_id_is_selection (gimp_item_get_id (item));
+}
+
+/**
+ * gimp_item_is_vectors:
+ * @item: The item.
+ *
+ * Returns whether the item is a vectors.
+ *
+ * This procedure returns TRUE if the specified item is a vectors.
+ *
+ * Returns: TRUE if the item is a vectors, FALSE otherwise.
+ *
+ * Since: 2.8
+ **/
+gboolean
+gimp_item_is_vectors (GimpItem *item)
+{
+  return gimp_item_id_is_vectors (gimp_item_get_id (item));
+}
+
+/**
  * gimp_item_get_children:
  * @item:         The item.
  * @num_children: (out): The number of items in the returned array.

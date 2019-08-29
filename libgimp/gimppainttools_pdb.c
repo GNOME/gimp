@@ -63,7 +63,7 @@ gimp_airbrush (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, pressure,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -115,7 +115,7 @@ _gimp_airbrush (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, pressure,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -165,7 +165,7 @@ gimp_airbrush_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -214,7 +214,7 @@ _gimp_airbrush_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -278,8 +278,8 @@ gimp_clone (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (src_drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          GIMP_TYPE_DRAWABLE, src_drawable,
                                           GIMP_TYPE_CLONE_TYPE, clone_type,
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
@@ -346,8 +346,8 @@ _gimp_clone (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_DRAWABLE_ID, src_drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (src_drawable_ID),
                                           GIMP_TYPE_CLONE_TYPE, clone_type,
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
@@ -400,7 +400,7 @@ gimp_clone_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -450,7 +450,7 @@ _gimp_clone_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -502,7 +502,7 @@ gimp_convolve (GimpDrawable     *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, pressure,
                                           GIMP_TYPE_CONVOLVE_TYPE, convolve_type,
                                           G_TYPE_INT, num_strokes,
@@ -556,7 +556,7 @@ _gimp_convolve (gint32            drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, pressure,
                                           GIMP_TYPE_CONVOLVE_TYPE, convolve_type,
                                           G_TYPE_INT, num_strokes,
@@ -607,7 +607,7 @@ gimp_convolve_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -656,7 +656,7 @@ _gimp_convolve_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -707,7 +707,7 @@ gimp_dodgeburn (GimpDrawable      *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, exposure,
                                           GIMP_TYPE_DODGE_BURN_TYPE, dodgeburn_type,
                                           GIMP_TYPE_TRANSFER_MODE, dodgeburn_mode,
@@ -761,7 +761,7 @@ _gimp_dodgeburn (gint32             drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, exposure,
                                           GIMP_TYPE_DODGE_BURN_TYPE, dodgeburn_type,
                                           GIMP_TYPE_TRANSFER_MODE, dodgeburn_mode,
@@ -812,7 +812,7 @@ gimp_dodgeburn_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -860,7 +860,7 @@ _gimp_dodgeburn_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -913,7 +913,7 @@ gimp_eraser (GimpDrawable             *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           GIMP_TYPE_BRUSH_APPLICATION_MODE, hardness,
@@ -968,7 +968,7 @@ _gimp_eraser (gint32                    drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           GIMP_TYPE_BRUSH_APPLICATION_MODE, hardness,
@@ -1019,7 +1019,7 @@ gimp_eraser_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1068,7 +1068,7 @@ _gimp_eraser_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1126,8 +1126,8 @@ gimp_heal (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (src_drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          GIMP_TYPE_DRAWABLE, src_drawable,
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
                                           G_TYPE_INT, num_strokes,
@@ -1187,8 +1187,8 @@ _gimp_heal (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_DRAWABLE_ID, src_drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (src_drawable_ID),
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
                                           G_TYPE_INT, num_strokes,
@@ -1242,7 +1242,7 @@ gimp_heal_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1294,7 +1294,7 @@ _gimp_heal_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1354,7 +1354,7 @@ gimp_paintbrush (GimpDrawable             *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, fade_out,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -1417,7 +1417,7 @@ _gimp_paintbrush (gint32                    drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, fade_out,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -1478,7 +1478,7 @@ gimp_paintbrush_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1536,7 +1536,7 @@ _gimp_paintbrush_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1586,7 +1586,7 @@ gimp_pencil (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1636,7 +1636,7 @@ _gimp_pencil (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1685,7 +1685,7 @@ gimp_smudge (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, pressure,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -1735,7 +1735,7 @@ _gimp_smudge (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_DOUBLE, pressure,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -1784,7 +1784,7 @@ gimp_smudge_default (GimpDrawable  *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -1832,7 +1832,7 @@ _gimp_smudge_default (gint32         drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);

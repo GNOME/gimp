@@ -68,7 +68,7 @@ gimp_text_layer_new (GimpImage   *image,
   GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, text,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_DOUBLE, size,
@@ -85,7 +85,7 @@ gimp_text_layer_new (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -126,7 +126,7 @@ _gimp_text_layer_new (gint32       image_ID,
   gint32 layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, text,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_DOUBLE, size,
@@ -143,7 +143,7 @@ _gimp_text_layer_new (gint32       image_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -172,7 +172,7 @@ gimp_text_layer_get_text (GimpLayer *layer)
   gchar *text = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -214,7 +214,7 @@ _gimp_text_layer_get_text (gint32 layer_ID)
   gchar *text = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -257,7 +257,7 @@ gimp_text_layer_set_text (GimpLayer   *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_STRING, text,
                                           G_TYPE_NONE);
 
@@ -300,7 +300,7 @@ _gimp_text_layer_set_text (gint32       layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_STRING, text,
                                           G_TYPE_NONE);
 
@@ -347,7 +347,7 @@ gimp_text_layer_get_markup (GimpLayer *layer)
   gchar *markup = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -393,7 +393,7 @@ _gimp_text_layer_get_markup (gint32 layer_ID)
   gchar *markup = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -436,7 +436,7 @@ gimp_text_layer_get_font (GimpLayer *layer)
   gchar *font = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -478,7 +478,7 @@ _gimp_text_layer_get_font (gint32 layer_ID)
   gchar *font = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -521,7 +521,7 @@ gimp_text_layer_set_font (GimpLayer   *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_STRING, font,
                                           G_TYPE_NONE);
 
@@ -564,7 +564,7 @@ _gimp_text_layer_set_font (gint32       layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_STRING, font,
                                           G_TYPE_NONE);
 
@@ -609,7 +609,7 @@ gimp_text_layer_get_font_size (GimpLayer *layer,
   gdouble font_size = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -657,7 +657,7 @@ _gimp_text_layer_get_font_size (gint32    layer_ID,
   gdouble font_size = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -706,7 +706,7 @@ gimp_text_layer_set_font_size (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_DOUBLE, font_size,
                                           GIMP_TYPE_UNIT, unit,
                                           G_TYPE_NONE);
@@ -753,7 +753,7 @@ _gimp_text_layer_set_font_size (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_DOUBLE, font_size,
                                           GIMP_TYPE_UNIT, unit,
                                           G_TYPE_NONE);
@@ -796,7 +796,7 @@ gimp_text_layer_get_antialias (GimpLayer *layer)
   gboolean antialias = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -838,7 +838,7 @@ _gimp_text_layer_get_antialias (gint32 layer_ID)
   gboolean antialias = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -882,7 +882,7 @@ gimp_text_layer_set_antialias (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, antialias,
                                           G_TYPE_NONE);
 
@@ -926,7 +926,7 @@ _gimp_text_layer_set_antialias (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_BOOLEAN, antialias,
                                           G_TYPE_NONE);
 
@@ -969,7 +969,7 @@ gimp_text_layer_get_hint_style (GimpLayer *layer)
   GimpTextHintStyle style = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1012,7 +1012,7 @@ _gimp_text_layer_get_hint_style (gint32 layer_ID)
   GimpTextHintStyle style = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1057,7 +1057,7 @@ gimp_text_layer_set_hint_style (GimpLayer         *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_TEXT_HINT_STYLE, style,
                                           G_TYPE_NONE);
 
@@ -1102,7 +1102,7 @@ _gimp_text_layer_set_hint_style (gint32            layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_TEXT_HINT_STYLE, style,
                                           G_TYPE_NONE);
 
@@ -1144,7 +1144,7 @@ gimp_text_layer_get_kerning (GimpLayer *layer)
   gboolean kerning = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1186,7 +1186,7 @@ _gimp_text_layer_get_kerning (gint32 layer_ID)
   gboolean kerning = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1229,7 +1229,7 @@ gimp_text_layer_set_kerning (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, kerning,
                                           G_TYPE_NONE);
 
@@ -1272,7 +1272,7 @@ _gimp_text_layer_set_kerning (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_BOOLEAN, kerning,
                                           G_TYPE_NONE);
 
@@ -1315,7 +1315,7 @@ gimp_text_layer_get_language (GimpLayer *layer)
   gchar *language = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1358,7 +1358,7 @@ _gimp_text_layer_get_language (gint32 layer_ID)
   gchar *language = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1402,7 +1402,7 @@ gimp_text_layer_set_language (GimpLayer   *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_STRING, language,
                                           G_TYPE_NONE);
 
@@ -1446,7 +1446,7 @@ _gimp_text_layer_set_language (gint32       layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_STRING, language,
                                           G_TYPE_NONE);
 
@@ -1488,7 +1488,7 @@ gimp_text_layer_get_base_direction (GimpLayer *layer)
   GimpTextDirection direction = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1530,7 +1530,7 @@ _gimp_text_layer_get_base_direction (gint32 layer_ID)
   GimpTextDirection direction = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1574,7 +1574,7 @@ gimp_text_layer_set_base_direction (GimpLayer         *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_TEXT_DIRECTION, direction,
                                           G_TYPE_NONE);
 
@@ -1618,7 +1618,7 @@ _gimp_text_layer_set_base_direction (gint32            layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_TEXT_DIRECTION, direction,
                                           G_TYPE_NONE);
 
@@ -1660,7 +1660,7 @@ gimp_text_layer_get_justification (GimpLayer *layer)
   GimpTextJustification justify = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1702,7 +1702,7 @@ _gimp_text_layer_get_justification (gint32 layer_ID)
   GimpTextJustification justify = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1746,7 +1746,7 @@ gimp_text_layer_set_justification (GimpLayer             *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_TEXT_JUSTIFICATION, justify,
                                           G_TYPE_NONE);
 
@@ -1790,7 +1790,7 @@ _gimp_text_layer_set_justification (gint32                layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_TEXT_JUSTIFICATION, justify,
                                           G_TYPE_NONE);
 
@@ -1833,7 +1833,7 @@ gimp_text_layer_get_color (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1878,7 +1878,7 @@ _gimp_text_layer_get_color (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1923,7 +1923,7 @@ gimp_text_layer_set_color (GimpLayer     *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
@@ -1966,7 +1966,7 @@ _gimp_text_layer_set_color (gint32         layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
@@ -2008,7 +2008,7 @@ gimp_text_layer_get_indent (GimpLayer *layer)
   gdouble indent = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2050,7 +2050,7 @@ _gimp_text_layer_get_indent (gint32 layer_ID)
   gdouble indent = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2094,7 +2094,7 @@ gimp_text_layer_set_indent (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_DOUBLE, indent,
                                           G_TYPE_NONE);
 
@@ -2138,7 +2138,7 @@ _gimp_text_layer_set_indent (gint32  layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_DOUBLE, indent,
                                           G_TYPE_NONE);
 
@@ -2180,7 +2180,7 @@ gimp_text_layer_get_line_spacing (GimpLayer *layer)
   gdouble line_spacing = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2222,7 +2222,7 @@ _gimp_text_layer_get_line_spacing (gint32 layer_ID)
   gdouble line_spacing = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2266,7 +2266,7 @@ gimp_text_layer_set_line_spacing (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_DOUBLE, line_spacing,
                                           G_TYPE_NONE);
 
@@ -2310,7 +2310,7 @@ _gimp_text_layer_set_line_spacing (gint32  layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_DOUBLE, line_spacing,
                                           G_TYPE_NONE);
 
@@ -2352,7 +2352,7 @@ gimp_text_layer_get_letter_spacing (GimpLayer *layer)
   gdouble letter_spacing = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2394,7 +2394,7 @@ _gimp_text_layer_get_letter_spacing (gint32 layer_ID)
   gdouble letter_spacing = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2438,7 +2438,7 @@ gimp_text_layer_set_letter_spacing (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_DOUBLE, letter_spacing,
                                           G_TYPE_NONE);
 
@@ -2482,7 +2482,7 @@ _gimp_text_layer_set_letter_spacing (gint32  layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_DOUBLE, letter_spacing,
                                           G_TYPE_NONE);
 
@@ -2529,7 +2529,7 @@ gimp_text_layer_resize (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_DOUBLE, width,
                                           G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);
@@ -2577,7 +2577,7 @@ _gimp_text_layer_resize (gint32  layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_DOUBLE, width,
                                           G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);

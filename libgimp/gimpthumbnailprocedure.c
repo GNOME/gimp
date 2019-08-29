@@ -89,6 +89,7 @@ gimp_thumbnail_procedure_constructed (GObject *object)
   GIMP_PROC_VAL_IMAGE (procedure, "image",
                        "Image",
                        "Thumbnail image",
+                       TRUE,
                        GIMP_PARAM_READWRITE);
 
   GIMP_PROC_VAL_INT (procedure, "image-width",

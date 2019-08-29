@@ -38,23 +38,30 @@
 
 
 static GimpValueArray *
-display_is_valid_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
-                          GError               **error)
+display_id_is_valid_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
+  gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpObject *display;
+  gint display_id;
   gboolean valid = FALSE;
 
-  display = gimp_value_get_display (gimp_value_array_index (args, 0), gimp);
+  display_id = g_value_get_int (gimp_value_array_index (args, 0));
 
-  valid = (display != NULL);
+  if (success)
+    {
+      valid = (gimp_get_display_by_id (gimp, display_id) != NULL);
+    }
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_boolean (gimp_value_array_index (return_vals, 1), valid);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), valid);
 
   return return_vals;
 }
@@ -72,7 +79,7 @@ display_new_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpObject *display = NULL;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -96,7 +103,7 @@ display_new_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_display (gimp_value_array_index (return_vals, 1), display);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), display);
 
   return return_vals;
 }
@@ -112,7 +119,7 @@ display_delete_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpObject *display;
 
-  display = gimp_value_get_display (gimp_value_array_index (args, 0), gimp);
+  display = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -136,7 +143,7 @@ display_get_window_handle_invoker (GimpProcedure         *procedure,
   GimpObject *display;
   gint window = 0;
 
-  display = gimp_value_get_display (gimp_value_array_index (args, 0), gimp);
+  display = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -177,8 +184,8 @@ displays_reconnect_invoker (GimpProcedure         *procedure,
   GimpImage *old_image;
   GimpImage *new_image;
 
-  old_image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  new_image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  old_image = g_value_get_object (gimp_value_array_index (args, 0));
+  new_image = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -206,24 +213,24 @@ register_display_procs (GimpPDB *pdb)
   GimpProcedure *procedure;
 
   /*
-   * gimp-display-is-valid
+   * gimp-display-id-is-valid
    */
-  procedure = gimp_procedure_new (display_is_valid_invoker);
+  procedure = gimp_procedure_new (display_id_is_valid_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-display-is-valid");
+                               "gimp-display-id-is-valid");
   gimp_procedure_set_static_strings (procedure,
-                                     "Returns TRUE if the display is valid.",
+                                     "Returns TRUE if the display ID is valid.",
                                      "This procedure checks if the given display ID is valid and refers to an existing display.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2007",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display_id ("display",
-                                                           "display",
-                                                           "The display to check",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               g_param_spec_int ("display-id",
+                                                 "display id",
+                                                 "The display ID to check",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("valid",
                                                          "valid",
@@ -247,17 +254,17 @@ register_display_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_display_id ("display",
-                                                               "display",
-                                                               "The new display",
-                                                               pdb->gimp, FALSE,
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_display ("display",
+                                                            "display",
+                                                            "The new display",
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -275,11 +282,11 @@ register_display_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display_id ("display",
-                                                           "display",
-                                                           "The display to delete",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_display ("display",
+                                                        "display",
+                                                        "The display to delete",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -297,11 +304,11 @@ register_display_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display_id ("display",
-                                                           "display",
-                                                           "The display to get the window handle from",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_display ("display",
+                                                        "display",
+                                                        "The display to get the window handle from",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("window",
                                                      "window",
@@ -341,17 +348,17 @@ register_display_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("old-image",
-                                                         "old image",
-                                                         "The old image (must have at least one display)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("old-image",
+                                                      "old image",
+                                                      "The old image (must have at least one display)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("new-image",
-                                                         "new image",
-                                                         "The new image (must not have a display)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("new-image",
+                                                      "new image",
+                                                      "The new image (must not have a display)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -236,7 +236,7 @@ sub generate_fun {
         if (exists $_->{array}) {
             $value_array .= "NULL";
         }
-        elsif (exists $arg->{convert_func} && ! $api_deprecated) {
+        elsif (exists $arg->{convert_func} && $api_deprecated) {
             $value_array .= eval qq/"$arg->{convert_func}"/;
         }
         else {

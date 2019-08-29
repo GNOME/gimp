@@ -79,11 +79,13 @@ gimp_save_procedure_constructed (GObject *object)
   GIMP_PROC_ARG_IMAGE (procedure, "image",
                        "Image",
                        "The image to save",
+                       FALSE,
                        G_PARAM_READWRITE);
 
   GIMP_PROC_ARG_DRAWABLE (procedure, "drawable",
                           "Drawable",
                           "The drawable to save",
+                          FALSE,
                           G_PARAM_READWRITE);
 
   GIMP_PROC_ARG_STRING (procedure, "uri",

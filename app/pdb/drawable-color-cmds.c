@@ -64,7 +64,7 @@ drawable_brightness_contrast_invoker (GimpProcedure         *procedure,
   gdouble brightness;
   gdouble contrast;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   brightness = g_value_get_double (gimp_value_array_index (args, 1));
   contrast = g_value_get_double (gimp_value_array_index (args, 2));
 
@@ -109,7 +109,7 @@ drawable_color_balance_invoker (GimpProcedure         *procedure,
   gdouble magenta_green;
   gdouble yellow_blue;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   transfer_mode = g_value_get_enum (gimp_value_array_index (args, 1));
   preserve_lum = g_value_get_boolean (gimp_value_array_index (args, 2));
   cyan_red = g_value_get_double (gimp_value_array_index (args, 3));
@@ -161,7 +161,7 @@ drawable_colorize_hsl_invoker (GimpProcedure         *procedure,
   gdouble saturation;
   gdouble lightness;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   hue = g_value_get_double (gimp_value_array_index (args, 1));
   saturation = g_value_get_double (gimp_value_array_index (args, 2));
   lightness = g_value_get_double (gimp_value_array_index (args, 3));
@@ -208,7 +208,7 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
   gint num_values;
   const gdouble *values;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   num_values = g_value_get_int (gimp_value_array_index (args, 2));
   values = gimp_value_get_float_array (gimp_value_array_index (args, 3));
@@ -257,7 +257,7 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
   gint num_points;
   const gdouble *points;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   num_points = g_value_get_int (gimp_value_array_index (args, 2));
   points = gimp_value_get_float_array (gimp_value_array_index (args, 3));
@@ -303,7 +303,7 @@ drawable_desaturate_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint desaturate_mode;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   desaturate_mode = g_value_get_enum (gimp_value_array_index (args, 1));
 
   if (success)
@@ -344,7 +344,7 @@ drawable_equalize_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gboolean mask_only;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   mask_only = g_value_get_boolean (gimp_value_array_index (args, 1));
 
   if (success)
@@ -383,7 +383,7 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
   gdouble count = 0.0;
   gdouble percentile = 0.0;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   start_range = g_value_get_double (gimp_value_array_index (args, 2));
   end_range = g_value_get_double (gimp_value_array_index (args, 3));
@@ -469,7 +469,7 @@ drawable_hue_saturation_invoker (GimpProcedure         *procedure,
   gdouble saturation;
   gdouble overlap;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   hue_range = g_value_get_enum (gimp_value_array_index (args, 1));
   hue_offset = g_value_get_double (gimp_value_array_index (args, 2));
   lightness = g_value_get_double (gimp_value_array_index (args, 3));
@@ -519,7 +519,7 @@ drawable_invert_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gboolean linear;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   linear = g_value_get_boolean (gimp_value_array_index (args, 1));
 
   if (success)
@@ -562,7 +562,7 @@ drawable_levels_invoker (GimpProcedure         *procedure,
   gdouble high_output;
   gboolean clamp_output;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   low_input = g_value_get_double (gimp_value_array_index (args, 2));
   high_input = g_value_get_double (gimp_value_array_index (args, 3));
@@ -621,7 +621,7 @@ drawable_levels_stretch_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -651,7 +651,7 @@ drawable_posterize_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint levels;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   levels = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
@@ -693,7 +693,7 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
   gdouble low_threshold;
   gdouble high_threshold;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   low_threshold = g_value_get_double (gimp_value_array_index (args, 2));
   high_threshold = g_value_get_double (gimp_value_array_index (args, 3));
@@ -744,11 +744,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1997",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("brightness",
                                                     "brightness",
@@ -778,11 +778,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1997",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("transfer-mode",
                                                   "transfer mode",
@@ -831,11 +831,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "2004",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hue",
                                                     "hue",
@@ -871,11 +871,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
@@ -911,11 +911,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
@@ -951,11 +951,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("desaturate-mode",
                                                   "desaturate mode",
@@ -980,11 +980,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("mask-only",
                                                      "mask only",
@@ -1008,11 +1008,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
@@ -1085,11 +1085,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("hue-range",
                                                   "hue range",
@@ -1138,11 +1138,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("linear",
                                                      "linear",
@@ -1166,11 +1166,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
@@ -1237,11 +1237,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "2003",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1259,11 +1259,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1997",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("levels",
                                                  "levels",
@@ -1287,11 +1287,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                      "1997",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",

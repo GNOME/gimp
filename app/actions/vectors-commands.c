@@ -401,11 +401,11 @@ vectors_selection_to_vectors_cmd_callback (GimpAction *action,
 
   args = gimp_procedure_get_arguments (procedure);
 
-  g_value_set_enum     (gimp_value_array_index (args, 0),
-                        advanced ?
-                        GIMP_RUN_INTERACTIVE : GIMP_RUN_NONINTERACTIVE);
-  gimp_value_set_image (gimp_value_array_index (args, 1),
-                        image);
+  g_value_set_enum   (gimp_value_array_index (args, 0),
+                      advanced ?
+                      GIMP_RUN_INTERACTIVE : GIMP_RUN_NONINTERACTIVE);
+  g_value_set_object (gimp_value_array_index (args, 1),
+                      image);
 
   gimp_procedure_execute_async (procedure, image->gimp,
                                 action_data_get_context (data),

@@ -242,9 +242,9 @@ gimp_gegl_procedure_execute (GimpProcedure   *procedure,
   GObject      *config;
   GeglNode     *node;
 
-  image    = gimp_value_get_image    (gimp_value_array_index (args, 1), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  config   = g_value_get_object      (gimp_value_array_index (args, 3));
+  image    = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  config   = g_value_get_object (gimp_value_array_index (args, 3));
 
   node = gegl_node_new_child (NULL,
                               "operation",
@@ -458,17 +458,17 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "Input image",
-                                                         gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "Image",
+                                                      "Input image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "Input drawable",
-                                                            gimp, TRUE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "Drawable",
+                                                         "Input drawable",
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("settings",
                                                     "Settings",

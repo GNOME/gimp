@@ -60,7 +60,7 @@ gimp_edit_cut (GimpDrawable *drawable)
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -106,7 +106,7 @@ _gimp_edit_cut (gint32 drawable_ID)
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -152,7 +152,7 @@ gimp_edit_copy (GimpDrawable *drawable)
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -198,7 +198,7 @@ _gimp_edit_copy (gint32 drawable_ID)
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -244,7 +244,7 @@ gimp_edit_copy_visible (GimpImage *image)
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -290,7 +290,7 @@ _gimp_edit_copy_visible (gint32 image_ID)
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -345,7 +345,7 @@ gimp_edit_paste (GimpDrawable *drawable,
   GimpLayer *floating_sel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
 
@@ -359,7 +359,7 @@ gimp_edit_paste (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    floating_sel = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -401,7 +401,7 @@ _gimp_edit_paste (gint32   drawable_ID,
   gint32 floating_sel_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
 
@@ -415,7 +415,7 @@ _gimp_edit_paste (gint32   drawable_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    floating_sel_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -457,7 +457,7 @@ gimp_edit_paste_as_new_image (void)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -499,7 +499,7 @@ _gimp_edit_paste_as_new_image (void)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+    image_ID = gimp_image_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -534,7 +534,7 @@ gimp_edit_named_cut (GimpDrawable *drawable,
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
@@ -582,7 +582,7 @@ _gimp_edit_named_cut (gint32       drawable_ID,
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
@@ -631,7 +631,7 @@ gimp_edit_named_copy (GimpDrawable *drawable,
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
@@ -679,7 +679,7 @@ _gimp_edit_named_copy (gint32       drawable_ID,
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
@@ -728,7 +728,7 @@ gimp_edit_named_copy_visible (GimpImage   *image,
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
@@ -776,7 +776,7 @@ _gimp_edit_named_copy_visible (gint32       image_ID,
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
@@ -823,7 +823,7 @@ gimp_edit_named_paste (GimpDrawable *drawable,
   GimpLayer *floating_sel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
@@ -838,7 +838,7 @@ gimp_edit_named_paste (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    floating_sel = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -871,7 +871,7 @@ _gimp_edit_named_paste (gint32       drawable_ID,
   gint32 floating_sel_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
@@ -886,7 +886,7 @@ _gimp_edit_named_paste (gint32       drawable_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    floating_sel_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -928,7 +928,7 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -970,7 +970,7 @@ _gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+    image_ID = gimp_image_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

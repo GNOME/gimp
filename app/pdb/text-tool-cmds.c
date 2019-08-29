@@ -62,8 +62,8 @@ text_fontname_invoker (GimpProcedure         *procedure,
   const gchar *fontname;
   GimpLayer *text_layer = NULL;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 1), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (gimp_value_array_index (args, 1));
   x = g_value_get_double (gimp_value_array_index (args, 2));
   y = g_value_get_double (gimp_value_array_index (args, 3));
   text = g_value_get_string (gimp_value_array_index (args, 4));
@@ -96,7 +96,7 @@ text_fontname_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_layer (gimp_value_array_index (return_vals, 1), text_layer);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), text_layer);
 
   return return_vals;
 }
@@ -168,17 +168,17 @@ register_text_tool_procs (GimpPDB *pdb)
                                      "1998- 2001",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable: (%NULL for a new text layer)",
-                                                            pdb->gimp, TRUE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The affected drawable: (%NULL for a new text layer)",
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -231,11 +231,11 @@ register_text_tool_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_id ("text-layer",
-                                                             "text layer",
-                                                             "The new text layer or %NULL if no layer was created.",
-                                                             pdb->gimp, TRUE,
-                                                             GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer ("text-layer",
+                                                          "text layer",
+                                                          "The new text layer or %NULL if no layer was created.",
+                                                          TRUE,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -220,6 +220,7 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_VAL_IMAGE (procedure, "image",
                            "Image",
                            "Output image",
+                           FALSE,
                            G_PARAM_READWRITE);
     }
 

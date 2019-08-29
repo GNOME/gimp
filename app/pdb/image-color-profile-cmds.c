@@ -56,7 +56,7 @@ image_get_color_profile_invoker (GimpProcedure         *procedure,
   gint num_bytes = 0;
   guint8 *profile_data = NULL;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -102,7 +102,7 @@ image_get_effective_color_profile_invoker (GimpProcedure         *procedure,
   gint num_bytes = 0;
   guint8 *profile_data = NULL;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -147,7 +147,7 @@ image_set_color_profile_invoker (GimpProcedure         *procedure,
   gint num_bytes;
   const guint8 *color_profile;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   num_bytes = g_value_get_int (gimp_value_array_index (args, 1));
   color_profile = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
 
@@ -193,7 +193,7 @@ image_set_color_profile_from_file_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   const gchar *uri;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   uri = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
@@ -242,7 +242,7 @@ image_convert_color_profile_invoker (GimpProcedure         *procedure,
   gint intent;
   gboolean bpc;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   num_bytes = g_value_get_int (gimp_value_array_index (args, 1));
   color_profile = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
   intent = g_value_get_enum (gimp_value_array_index (args, 3));
@@ -290,7 +290,7 @@ image_convert_color_profile_from_file_invoker (GimpProcedure         *procedure,
   gint intent;
   gboolean bpc;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 0));
   uri = g_value_get_string (gimp_value_array_index (args, 1));
   intent = g_value_get_enum (gimp_value_array_index (args, 2));
   bpc = g_value_get_boolean (gimp_value_array_index (args, 3));
@@ -343,11 +343,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-bytes",
                                                      "num bytes",
@@ -376,11 +376,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-bytes",
                                                      "num bytes",
@@ -409,11 +409,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-bytes",
                                                  "num bytes",
@@ -442,11 +442,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "uri",
@@ -471,11 +471,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-bytes",
                                                  "num bytes",
@@ -517,11 +517,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "uri",

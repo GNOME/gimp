@@ -292,6 +292,7 @@ film_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_VAL_IMAGE (procedure, "new-image",
                            "New image",
                            "Outout image",
+                           FALSE,
                            G_PARAM_READWRITE);
     }
 

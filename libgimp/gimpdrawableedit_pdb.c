@@ -60,7 +60,7 @@ gimp_drawable_edit_clear (GimpDrawable *drawable)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -105,7 +105,7 @@ _gimp_drawable_edit_clear (gint32 drawable_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -153,7 +153,7 @@ gimp_drawable_edit_fill (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_NONE);
 
@@ -202,7 +202,7 @@ _gimp_drawable_edit_fill (gint32       drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_NONE);
 
@@ -261,7 +261,7 @@ gimp_drawable_edit_bucket_fill (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -322,7 +322,7 @@ _gimp_drawable_edit_bucket_fill (gint32       drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -396,7 +396,7 @@ gimp_drawable_edit_gradient_fill (GimpDrawable     *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_GRADIENT_TYPE, gradient_type,
                                           G_TYPE_DOUBLE, offset,
                                           G_TYPE_BOOLEAN, supersample,
@@ -477,7 +477,7 @@ _gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_GRADIENT_TYPE, gradient_type,
                                           G_TYPE_DOUBLE, offset,
                                           G_TYPE_BOOLEAN, supersample,
@@ -536,7 +536,7 @@ gimp_drawable_edit_stroke_selection (GimpDrawable *drawable)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -585,7 +585,7 @@ _gimp_drawable_edit_stroke_selection (gint32 drawable_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -638,8 +638,8 @@ gimp_drawable_edit_stroke_item (GimpDrawable *drawable,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
-                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          GIMP_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -692,8 +692,8 @@ _gimp_drawable_edit_stroke_item (gint32 drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
+                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

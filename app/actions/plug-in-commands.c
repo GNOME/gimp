@@ -152,7 +152,7 @@ plug_in_run_cmd_callback (GimpAction *action,
         {
           /* remember only image plug-ins */
           if (procedure->num_args >= 2 &&
-              GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
+              GIMP_IS_PARAM_SPEC_IMAGE (procedure->args[1]))
             {
               gimp_filter_history_add (gimp, procedure);
             }

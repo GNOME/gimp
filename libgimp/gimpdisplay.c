@@ -168,3 +168,22 @@ gimp_display_get_by_id (gint32 display_id)
 
   return NULL;
 }
+
+/**
+ * gimp_display_is_valid:
+ * @display: The display to check.
+ *
+ * Returns TRUE if the display is valid.
+ *
+ * This procedure checks if the given display is valid and refers to
+ * an existing display.
+ *
+ * Returns: Whether the display is valid.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_display_is_valid (GimpDisplay *display)
+{
+  return gimp_display_id_is_valid (gimp_display_get_id (display));
+}

@@ -89,7 +89,7 @@ gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
        ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
        ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
        (! file_proc->generic_file_proc &&
-        ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))))
+        ! GIMP_IS_PARAM_SPEC_IMAGE (procedure->values[0]))))
     {
       gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "load handler \"%s\" does not take the standard "
@@ -136,12 +136,12 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
 
   procedure = GIMP_PROCEDURE (file_proc);
 
-  if ((procedure->num_args < 5)                             ||
-      ! GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) ||
-      ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
-      ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) ||
-      ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||
-      ! G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
+  if ((procedure->num_args < 5)                          ||
+      ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+      ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
+      ! GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[2]) ||
+      ! G_IS_PARAM_SPEC_STRING      (procedure->args[3]) ||
+      ! G_IS_PARAM_SPEC_STRING      (procedure->args[4]))
     {
       gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "save handler \"%s\" does not take the standard "

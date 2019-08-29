@@ -237,8 +237,7 @@ file_open_image (Gimp                *gimp,
   *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
   if (*status == GIMP_PDB_SUCCESS && ! file_proc->generic_file_proc)
-    image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
-                                  gimp);
+    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   if (local_file)
     {
@@ -383,10 +382,9 @@ file_open_thumbnail (Gimp           *gimp,
       status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
       if (status == GIMP_PDB_SUCCESS &&
-          GIMP_VALUE_HOLDS_IMAGE_ID (gimp_value_array_index (return_vals, 1)))
+          GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_vals, 1)))
         {
-          image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
-                                        gimp);
+          image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
           if (gimp_value_array_length (return_vals) >= 3 &&
               G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 2)) &&

@@ -70,6 +70,15 @@ GType         gimp_item_get_type      (void) G_GNUC_CONST;
 gint32        gimp_item_get_id        (GimpItem     *item);
 GimpItem    * gimp_item_get_by_id     (gint32        item_id);
 
+gboolean      gimp_item_is_valid      (GimpItem     *item);
+gboolean      gimp_item_is_drawable   (GimpItem     *item);
+gboolean      gimp_item_is_layer      (GimpItem     *item);
+gboolean      gimp_item_is_text_layer (GimpItem     *item);
+gboolean      gimp_item_is_channel    (GimpItem     *item);
+gboolean      gimp_item_is_layer_mask (GimpItem     *item);
+gboolean      gimp_item_is_selection  (GimpItem     *item);
+gboolean      gimp_item_is_vectors    (GimpItem     *item);
+
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
 GimpItem   ** gimp_item_get_children  (GimpItem     *item,

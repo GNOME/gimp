@@ -63,7 +63,7 @@ drawable_edit_clear_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -93,7 +93,7 @@ drawable_edit_fill_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint fill_type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   fill_type = g_value_get_enum (gimp_value_array_index (args, 1));
 
   if (success)
@@ -141,7 +141,7 @@ drawable_edit_bucket_fill_invoker (GimpProcedure         *procedure,
   gdouble x;
   gdouble y;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   fill_type = g_value_get_enum (gimp_value_array_index (args, 1));
   x = g_value_get_double (gimp_value_array_index (args, 2));
   y = g_value_get_double (gimp_value_array_index (args, 3));
@@ -207,7 +207,7 @@ drawable_edit_gradient_fill_invoker (GimpProcedure         *procedure,
   gdouble x2;
   gdouble y2;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
   gradient_type = g_value_get_enum (gimp_value_array_index (args, 1));
   offset = g_value_get_double (gimp_value_array_index (args, 2));
   supersample = g_value_get_boolean (gimp_value_array_index (args, 3));
@@ -290,7 +290,7 @@ drawable_edit_stroke_selection_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -334,8 +334,8 @@ drawable_edit_stroke_item_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   GimpItem *item;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
-  item = gimp_value_get_item (gimp_value_array_index (args, 1), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  item = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -390,11 +390,11 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to clear from",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to clear from",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -414,11 +414,11 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "1995-2000",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to fill to",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to fill to",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
@@ -446,11 +446,11 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "2018",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The affected drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
@@ -489,11 +489,11 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "2018",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The affected drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("gradient-type",
                                                   "gradient type",
@@ -574,11 +574,11 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to stroke to",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to stroke to",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -598,17 +598,17 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "2018",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable to stroke to",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable to stroke to",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The item to stroke",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_item ("item",
+                                                     "item",
+                                                     "The item to stroke",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

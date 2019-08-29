@@ -176,6 +176,7 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_IMAGE (procedure, "image",
                            "Image",
                            "The input image",
+                           FALSE,
                            G_PARAM_READWRITE);
     }
 

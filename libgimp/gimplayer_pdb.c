@@ -70,7 +70,7 @@ _gimp_layer_new (GimpImage     *image,
   GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           GIMP_TYPE_IMAGE_TYPE, type,
@@ -89,7 +89,7 @@ _gimp_layer_new (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -125,8 +125,8 @@ gimp_layer_new_from_visible (GimpImage   *image,
   GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (dest_image),
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_IMAGE, dest_image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
@@ -140,7 +140,7 @@ gimp_layer_new_from_visible (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -176,8 +176,8 @@ _gimp_layer_new_from_visible (gint32       image_ID,
   gint32 layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_IMAGE_ID, dest_image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (dest_image_ID),
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
@@ -191,7 +191,7 @@ _gimp_layer_new_from_visible (gint32       image_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -223,8 +223,8 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
   GimpLayer *layer_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (dest_image),
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          GIMP_TYPE_IMAGE, dest_image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -237,7 +237,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_copy = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -269,8 +269,8 @@ _gimp_layer_new_from_drawable (gint32 drawable_ID,
   gint32 layer_copy_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_IMAGE_ID, dest_image_ID,
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (dest_image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -283,7 +283,7 @@ _gimp_layer_new_from_drawable (gint32 drawable_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_copy_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer_copy_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -317,7 +317,7 @@ gimp_layer_group_new (GimpImage *image)
   GimpLayer *layer_group = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -330,7 +330,7 @@ gimp_layer_group_new (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_group = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer_group = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -364,7 +364,7 @@ _gimp_layer_group_new (gint32 image_ID)
   gint32 layer_group_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -377,7 +377,7 @@ _gimp_layer_group_new (gint32 image_ID)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_group_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer_group_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -410,7 +410,7 @@ _gimp_layer_copy (GimpLayer *layer,
   GimpLayer *layer_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, add_alpha,
                                           G_TYPE_NONE);
 
@@ -424,7 +424,7 @@ _gimp_layer_copy (GimpLayer *layer,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_copy = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -454,7 +454,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -496,7 +496,7 @@ _gimp_layer_add_alpha (gint32 layer_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -539,7 +539,7 @@ gimp_layer_flatten (GimpLayer *layer)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -582,7 +582,7 @@ _gimp_layer_flatten (gint32 layer_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -631,7 +631,7 @@ gimp_layer_scale (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_BOOLEAN, local_origin,
@@ -683,7 +683,7 @@ _gimp_layer_scale (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_BOOLEAN, local_origin,
@@ -735,7 +735,7 @@ gimp_layer_resize (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
@@ -788,7 +788,7 @@ _gimp_layer_resize (gint32 layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
@@ -831,7 +831,7 @@ gimp_layer_resize_to_image_size (GimpLayer *layer)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -870,7 +870,7 @@ _gimp_layer_resize_to_image_size (gint32 layer_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -914,7 +914,7 @@ gimp_layer_set_offsets (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
@@ -960,7 +960,7 @@ _gimp_layer_set_offsets (gint32 layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
@@ -1021,7 +1021,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
   GimpLayerMask *mask = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_ADD_MASK_TYPE, mask_type,
                                           G_TYPE_NONE);
 
@@ -1035,7 +1035,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask = GIMP_LAYER_MASK (gimp_item_get_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
+    mask = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1082,7 +1082,7 @@ _gimp_layer_create_mask (gint32          layer_ID,
   gint32 mask_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_ADD_MASK_TYPE, mask_type,
                                           G_TYPE_NONE);
 
@@ -1096,7 +1096,7 @@ _gimp_layer_create_mask (gint32          layer_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask_ID = gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1));
+    mask_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1123,7 +1123,7 @@ gimp_layer_get_mask (GimpLayer *layer)
   GimpLayerMask *mask = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1136,7 +1136,7 @@ gimp_layer_get_mask (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask = GIMP_LAYER_MASK (gimp_item_get_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
+    mask = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1163,7 +1163,7 @@ _gimp_layer_get_mask (gint32 layer_ID)
   gint32 mask_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1176,7 +1176,7 @@ _gimp_layer_get_mask (gint32 layer_ID)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask_ID = gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1));
+    mask_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1205,7 +1205,7 @@ gimp_layer_from_mask (GimpLayerMask *mask)
   GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_MASK_ID, gimp_item_get_id (GIMP_ITEM (mask)),
+                                          GIMP_TYPE_LAYER_MASK, mask,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1218,7 +1218,7 @@ gimp_layer_from_mask (GimpLayerMask *mask)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1247,7 +1247,7 @@ _gimp_layer_from_mask (gint32 mask_ID)
   gint32 layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_MASK_ID, mask_ID,
+                                          GIMP_TYPE_LAYER_MASK, gimp_item_get_by_id (mask_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1260,7 +1260,7 @@ _gimp_layer_from_mask (gint32 mask_ID)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1294,8 +1294,8 @@ gimp_layer_add_mask (GimpLayer     *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
-                                          GIMP_TYPE_LAYER_MASK_ID, gimp_item_get_id (GIMP_ITEM (mask)),
+                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_LAYER_MASK, mask,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1341,8 +1341,8 @@ _gimp_layer_add_mask (gint32 layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
-                                          GIMP_TYPE_LAYER_MASK_ID, mask_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
+                                          GIMP_TYPE_LAYER_MASK, gimp_item_get_by_id (mask_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1383,7 +1383,7 @@ gimp_layer_remove_mask (GimpLayer         *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_MASK_APPLY_MODE, mode,
                                           G_TYPE_NONE);
 
@@ -1425,7 +1425,7 @@ _gimp_layer_remove_mask (gint32            layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_MASK_APPLY_MODE, mode,
                                           G_TYPE_NONE);
 
@@ -1466,7 +1466,7 @@ gimp_layer_is_floating_sel (GimpLayer *layer)
   gboolean is_floating_sel = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1507,7 +1507,7 @@ _gimp_layer_is_floating_sel (gint32 layer_ID)
   gboolean is_floating_sel = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1547,7 +1547,7 @@ gimp_layer_get_lock_alpha (GimpLayer *layer)
   gboolean lock_alpha = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1587,7 +1587,7 @@ _gimp_layer_get_lock_alpha (gint32 layer_ID)
   gboolean lock_alpha = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1629,7 +1629,7 @@ gimp_layer_set_lock_alpha (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, lock_alpha,
                                           G_TYPE_NONE);
 
@@ -1671,7 +1671,7 @@ _gimp_layer_set_lock_alpha (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_BOOLEAN, lock_alpha,
                                           G_TYPE_NONE);
 
@@ -1712,7 +1712,7 @@ gimp_layer_get_apply_mask (GimpLayer *layer)
   gboolean apply_mask = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1753,7 +1753,7 @@ _gimp_layer_get_apply_mask (gint32 layer_ID)
   gboolean apply_mask = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1797,7 +1797,7 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, apply_mask,
                                           G_TYPE_NONE);
 
@@ -1841,7 +1841,7 @@ _gimp_layer_set_apply_mask (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_BOOLEAN, apply_mask,
                                           G_TYPE_NONE);
 
@@ -1883,7 +1883,7 @@ gimp_layer_get_show_mask (GimpLayer *layer)
   gboolean show_mask = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1925,7 +1925,7 @@ _gimp_layer_get_show_mask (gint32 layer_ID)
   gboolean show_mask = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1969,7 +1969,7 @@ gimp_layer_set_show_mask (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, show_mask,
                                           G_TYPE_NONE);
 
@@ -2013,7 +2013,7 @@ _gimp_layer_set_show_mask (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_BOOLEAN, show_mask,
                                           G_TYPE_NONE);
 
@@ -2054,7 +2054,7 @@ gimp_layer_get_edit_mask (GimpLayer *layer)
   gboolean edit_mask = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2095,7 +2095,7 @@ _gimp_layer_get_edit_mask (gint32 layer_ID)
   gboolean edit_mask = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2139,7 +2139,7 @@ gimp_layer_set_edit_mask (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, edit_mask,
                                           G_TYPE_NONE);
 
@@ -2183,7 +2183,7 @@ _gimp_layer_set_edit_mask (gint32   layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_BOOLEAN, edit_mask,
                                           G_TYPE_NONE);
 
@@ -2222,7 +2222,7 @@ gimp_layer_get_opacity (GimpLayer *layer)
   gdouble opacity = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2261,7 +2261,7 @@ _gimp_layer_get_opacity (gint32 layer_ID)
   gdouble opacity = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2302,7 +2302,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
 
@@ -2343,7 +2343,7 @@ _gimp_layer_set_opacity (gint32  layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
 
@@ -2382,7 +2382,7 @@ gimp_layer_get_mode (GimpLayer *layer)
   GimpLayerMode mode = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2421,7 +2421,7 @@ _gimp_layer_get_mode (gint32 layer_ID)
   GimpLayerMode mode = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2462,7 +2462,7 @@ gimp_layer_set_mode (GimpLayer     *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_LAYER_MODE, mode,
                                           G_TYPE_NONE);
 
@@ -2503,7 +2503,7 @@ _gimp_layer_set_mode (gint32        layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_LAYER_MODE, mode,
                                           G_TYPE_NONE);
 
@@ -2544,7 +2544,7 @@ gimp_layer_get_blend_space (GimpLayer *layer)
   GimpLayerColorSpace blend_space = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2585,7 +2585,7 @@ _gimp_layer_get_blend_space (gint32 layer_ID)
   GimpLayerColorSpace blend_space = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2628,7 +2628,7 @@ gimp_layer_set_blend_space (GimpLayer           *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_LAYER_COLOR_SPACE, blend_space,
                                           G_TYPE_NONE);
 
@@ -2671,7 +2671,7 @@ _gimp_layer_set_blend_space (gint32              layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_LAYER_COLOR_SPACE, blend_space,
                                           G_TYPE_NONE);
 
@@ -2712,7 +2712,7 @@ gimp_layer_get_composite_space (GimpLayer *layer)
   GimpLayerColorSpace composite_space = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2753,7 +2753,7 @@ _gimp_layer_get_composite_space (gint32 layer_ID)
   GimpLayerColorSpace composite_space = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2796,7 +2796,7 @@ gimp_layer_set_composite_space (GimpLayer           *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_LAYER_COLOR_SPACE, composite_space,
                                           G_TYPE_NONE);
 
@@ -2839,7 +2839,7 @@ _gimp_layer_set_composite_space (gint32              layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_LAYER_COLOR_SPACE, composite_space,
                                           G_TYPE_NONE);
 
@@ -2880,7 +2880,7 @@ gimp_layer_get_composite_mode (GimpLayer *layer)
   GimpLayerCompositeMode composite_mode = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2921,7 +2921,7 @@ _gimp_layer_get_composite_mode (gint32 layer_ID)
   GimpLayerCompositeMode composite_mode = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2964,7 +2964,7 @@ gimp_layer_set_composite_mode (GimpLayer              *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_LAYER_COMPOSITE_MODE, composite_mode,
                                           G_TYPE_NONE);
 
@@ -3007,7 +3007,7 @@ _gimp_layer_set_composite_mode (gint32                 layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_LAYER_COMPOSITE_MODE, composite_mode,
                                           G_TYPE_NONE);
 

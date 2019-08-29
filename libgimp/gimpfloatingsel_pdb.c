@@ -55,7 +55,7 @@ gimp_floating_sel_remove (GimpLayer *floating_sel)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (floating_sel)),
+                                          GIMP_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -95,7 +95,7 @@ _gimp_floating_sel_remove (gint32 floating_sel_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, floating_sel_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (floating_sel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -136,7 +136,7 @@ gimp_floating_sel_anchor (GimpLayer *floating_sel)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (floating_sel)),
+                                          GIMP_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -177,7 +177,7 @@ _gimp_floating_sel_anchor (gint32 floating_sel_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, floating_sel_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (floating_sel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -222,7 +222,7 @@ gimp_floating_sel_to_layer (GimpLayer *floating_sel)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (floating_sel)),
+                                          GIMP_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -267,7 +267,7 @@ _gimp_floating_sel_to_layer (gint32 floating_sel_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, floating_sel_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (floating_sel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -308,8 +308,8 @@ gimp_floating_sel_attach (GimpLayer    *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -350,8 +350,8 @@ _gimp_floating_sel_attach (gint32 layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

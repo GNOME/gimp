@@ -78,7 +78,7 @@ gimp_file_load (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -129,7 +129,7 @@ _gimp_file_load (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+    image_ID = gimp_image_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -165,7 +165,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -179,7 +179,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -215,7 +215,7 @@ _gimp_file_load_layer (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -229,7 +229,7 @@ _gimp_file_load_layer (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -269,7 +269,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -327,7 +327,7 @@ _gimp_file_load_layers (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -387,8 +387,8 @@ gimp_file_save (GimpRunMode   run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_STRING, filename,
                                           G_TYPE_STRING, raw_filename,
                                           G_TYPE_NONE);
@@ -443,8 +443,8 @@ _gimp_file_save (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
+                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_STRING, raw_filename,
                                           G_TYPE_NONE);
@@ -491,7 +491,7 @@ gimp_file_save_thumbnail (GimpImage   *image,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE, image,
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -537,7 +537,7 @@ _gimp_file_save_thumbnail (gint32       image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 

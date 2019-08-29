@@ -780,8 +780,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
 
           if (g_param_value_validate (pspec, arg))
             {
-              if (GIMP_IS_PARAM_SPEC_DRAWABLE_ID (pspec) &&
-                  g_value_get_int (arg) == -1)
+              if (GIMP_IS_PARAM_SPEC_DRAWABLE (pspec) &&
+                  g_value_get_object (arg) == NULL)
                 {
                   if (return_vals)
                     {
@@ -810,8 +810,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                    g_param_spec_get_name (pspec));
                     }
                 }
-              else if (GIMP_IS_PARAM_SPEC_IMAGE_ID (pspec) &&
-                       g_value_get_int (arg) == -1)
+              else if (GIMP_IS_PARAM_SPEC_IMAGE (pspec) &&
+                       g_value_get_object (arg) == NULL)
                 {
                   if (return_vals)
                     {

@@ -94,6 +94,7 @@ gimp_load_procedure_constructed (GObject *object)
   GIMP_PROC_VAL_IMAGE (procedure, "image",
                        "Image",
                        "Output image",
+                       TRUE,
                        GIMP_PARAM_READWRITE);
 }
 

@@ -32,11 +32,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL gint* _gimp_image_list (gint *num_images);
+gboolean              gimp_image_id_is_valid (gint  image_id);
+G_GNUC_INTERNAL gint* _gimp_image_list       (gint *num_images);
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gboolean                 gimp_image_is_valid                   (GimpImage           *image);
 GimpImage*               gimp_image_new                        (gint                 width,
                                                                 gint                 height,
                                                                 GimpImageBaseType    type);
@@ -197,7 +197,6 @@ gchar**                  gimp_image_get_parasite_list          (GimpImage       
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
-#define gimp_image_is_valid _gimp_image_is_valid
 #define gimp_image_new _gimp_image_new
 #define gimp_image_new_with_precision _gimp_image_new_with_precision
 #define gimp_image_duplicate _gimp_image_duplicate
@@ -278,7 +277,6 @@ gchar**                  gimp_image_get_parasite_list          (GimpImage       
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gboolean          _gimp_image_is_valid                   (gint32              image_ID);
 gint32            _gimp_image_new                        (gint                width,
                                                           gint                height,
                                                           GimpImageBaseType   type);

@@ -410,7 +410,7 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
   guchar greenmode;
   guchar bluemode;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   redfrequency = g_value_get_double (gimp_value_array_index (args, 3));
   redangle = g_value_get_double (gimp_value_array_index (args, 4));
   greenfrequency = g_value_get_double (gimp_value_array_index (args, 5));
@@ -467,7 +467,7 @@ plug_in_antialias_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -506,7 +506,7 @@ plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
   gint direction;
   gint depth;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   direction = g_value_get_int (gimp_value_array_index (args, 3));
   depth = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -550,7 +550,7 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
   gboolean keep_surroundings;
   gboolean set_background;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   refraction = g_value_get_double (gimp_value_array_index (args, 3));
   keep_surroundings = g_value_get_boolean (gimp_value_array_index (args, 4));
   set_background = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -608,8 +608,8 @@ plug_in_autocrop_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpDrawable *drawable;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -671,8 +671,8 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpDrawable *drawable;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -725,7 +725,7 @@ plug_in_autostretch_hsv_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -773,8 +773,8 @@ plug_in_bump_map_invoker (GimpProcedure         *procedure,
   gboolean invert;
   gint type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  bumpmap = gimp_value_get_drawable (gimp_value_array_index (args, 3), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  bumpmap = g_value_get_object (gimp_value_array_index (args, 3));
   azimuth = g_value_get_double (gimp_value_array_index (args, 4));
   elevation = g_value_get_double (gimp_value_array_index (args, 5));
   depth = g_value_get_int (gimp_value_array_index (args, 6));
@@ -831,8 +831,8 @@ plug_in_bump_map_tiled_invoker (GimpProcedure         *procedure,
   gboolean invert;
   gint type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  bumpmap = gimp_value_get_drawable (gimp_value_array_index (args, 3), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
+  bumpmap = g_value_get_object (gimp_value_array_index (args, 3));
   azimuth = g_value_get_double (gimp_value_array_index (args, 4));
   elevation = g_value_get_double (gimp_value_array_index (args, 5));
   depth = g_value_get_int (gimp_value_array_index (args, 6));
@@ -878,7 +878,7 @@ plug_in_c_astretch_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -918,7 +918,7 @@ plug_in_cartoon_invoker (GimpProcedure         *procedure,
   gdouble mask_radius;
   gdouble pct_black;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   mask_radius = g_value_get_double (gimp_value_array_index (args, 3));
   pct_black = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -969,7 +969,7 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
   gdouble bg_gain;
   gdouble bb_gain;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   monochrome = g_value_get_int (gimp_value_array_index (args, 3));
   rr_gain = g_value_get_double (gimp_value_array_index (args, 4));
   rg_gain = g_value_get_double (gimp_value_array_index (args, 5));
@@ -1039,7 +1039,7 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   GimpRGB color;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   gimp_value_get_rgb (gimp_value_array_index (args, 3), &color);
 
   if (success)
@@ -1090,7 +1090,7 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
   const gint32 *channels;
   gint bmode;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   argc_matrix = g_value_get_int (gimp_value_array_index (args, 3));
   matrix = gimp_value_get_float_array (gimp_value_array_index (args, 4));
   alpha_alg = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -1211,7 +1211,7 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
   gdouble tile_saturation;
   gint bg_color;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   tile_size = g_value_get_double (gimp_value_array_index (args, 3));
   tile_saturation = g_value_get_double (gimp_value_array_index (args, 4));
   bg_color = g_value_get_int (gimp_value_array_index (args, 5));
@@ -1271,7 +1271,7 @@ plug_in_deinterlace_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint evenodd;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   evenodd = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
@@ -1327,7 +1327,7 @@ plug_in_diffraction_invoker (GimpProcedure         *procedure,
   gdouble scattering;
   gdouble polarization;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   lam_r = g_value_get_double (gimp_value_array_index (args, 3));
   lam_g = g_value_get_double (gimp_value_array_index (args, 4));
   lam_b = g_value_get_double (gimp_value_array_index (args, 5));
@@ -1401,13 +1401,13 @@ plug_in_displace_invoker (GimpProcedure         *procedure,
   GimpDrawable *displace_map_y;
   gint displace_type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   amount_x = g_value_get_double (gimp_value_array_index (args, 3));
   amount_y = g_value_get_double (gimp_value_array_index (args, 4));
   do_x = g_value_get_boolean (gimp_value_array_index (args, 5));
   do_y = g_value_get_boolean (gimp_value_array_index (args, 6));
-  displace_map_x = gimp_value_get_drawable (gimp_value_array_index (args, 7), gimp);
-  displace_map_y = gimp_value_get_drawable (gimp_value_array_index (args, 8), gimp);
+  displace_map_x = g_value_get_object (gimp_value_array_index (args, 7));
+  displace_map_y = g_value_get_object (gimp_value_array_index (args, 8));
   displace_type = g_value_get_int (gimp_value_array_index (args, 9));
 
   if (success)
@@ -1447,13 +1447,13 @@ plug_in_displace_polar_invoker (GimpProcedure         *procedure,
   GimpDrawable *displace_map_y;
   gint displace_type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   amount_x = g_value_get_double (gimp_value_array_index (args, 3));
   amount_y = g_value_get_double (gimp_value_array_index (args, 4));
   do_x = g_value_get_boolean (gimp_value_array_index (args, 5));
   do_y = g_value_get_boolean (gimp_value_array_index (args, 6));
-  displace_map_x = gimp_value_get_drawable (gimp_value_array_index (args, 7), gimp);
-  displace_map_y = gimp_value_get_drawable (gimp_value_array_index (args, 8), gimp);
+  displace_map_x = g_value_get_object (gimp_value_array_index (args, 7));
+  displace_map_y = g_value_get_object (gimp_value_array_index (args, 8));
   displace_type = g_value_get_int (gimp_value_array_index (args, 9));
 
   if (success)
@@ -1491,8 +1491,8 @@ plug_in_dog_invoker (GimpProcedure         *procedure,
   gboolean normalize;
   gboolean invert;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   inner = g_value_get_double (gimp_value_array_index (args, 3));
   outer = g_value_get_double (gimp_value_array_index (args, 4));
   normalize = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -1568,7 +1568,7 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
   gint warpmode;
   gint edgemode;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   amount = g_value_get_double (gimp_value_array_index (args, 3));
   warpmode = g_value_get_int (gimp_value_array_index (args, 4));
   edgemode = g_value_get_int (gimp_value_array_index (args, 5));
@@ -1636,7 +1636,7 @@ plug_in_emboss_invoker (GimpProcedure         *procedure,
   gint depth;
   gboolean emboss;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   azimuth = g_value_get_double (gimp_value_array_index (args, 3));
   elevation = g_value_get_double (gimp_value_array_index (args, 4));
   depth = g_value_get_int (gimp_value_array_index (args, 5));
@@ -1685,7 +1685,7 @@ plug_in_engrave_invoker (GimpProcedure         *procedure,
   gint height;
   gboolean limit;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   height = g_value_get_int (gimp_value_array_index (args, 3));
   limit = g_value_get_boolean (gimp_value_array_index (args, 4));
 
@@ -1735,7 +1735,7 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
   guchar green_threshold;
   guchar blue_threshold;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   from_red = g_value_get_uchar (gimp_value_array_index (args, 3));
   from_green = g_value_get_uchar (gimp_value_array_index (args, 4));
   from_blue = g_value_get_uchar (gimp_value_array_index (args, 5));
@@ -1802,7 +1802,7 @@ plug_in_flarefx_invoker (GimpProcedure         *procedure,
   gint pos_x;
   gint pos_y;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   pos_x = g_value_get_int (gimp_value_array_index (args, 3));
   pos_y = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -1854,7 +1854,7 @@ plug_in_fractal_trace_invoker (GimpProcedure         *procedure,
   gint depth;
   gint outside_type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   xmin = g_value_get_double (gimp_value_array_index (args, 3));
   xmax = g_value_get_double (gimp_value_array_index (args, 4));
   ymin = g_value_get_double (gimp_value_array_index (args, 5));
@@ -1915,7 +1915,7 @@ plug_in_gauss_invoker (GimpProcedure         *procedure,
   gdouble horizontal;
   gdouble vertical;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   horizontal = g_value_get_double (gimp_value_array_index (args, 3));
   vertical = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -1942,7 +1942,7 @@ plug_in_gauss_iir_invoker (GimpProcedure         *procedure,
   gboolean horizontal;
   gboolean vertical;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   radius = g_value_get_double (gimp_value_array_index (args, 3));
   horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
   vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -1972,7 +1972,7 @@ plug_in_gauss_iir2_invoker (GimpProcedure         *procedure,
   gdouble horizontal;
   gdouble vertical;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   horizontal = g_value_get_double (gimp_value_array_index (args, 3));
   vertical = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -1999,7 +1999,7 @@ plug_in_gauss_rle_invoker (GimpProcedure         *procedure,
   gboolean horizontal;
   gboolean vertical;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   radius = g_value_get_double (gimp_value_array_index (args, 3));
   horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
   vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -2029,7 +2029,7 @@ plug_in_gauss_rle2_invoker (GimpProcedure         *procedure,
   gdouble horizontal;
   gdouble vertical;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   horizontal = g_value_get_double (gimp_value_array_index (args, 3));
   vertical = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -2055,7 +2055,7 @@ plug_in_glasstile_invoker (GimpProcedure         *procedure,
   gint tilex;
   gint tiley;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   tilex = g_value_get_int (gimp_value_array_index (args, 3));
   tiley = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -2101,7 +2101,7 @@ plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
   gint saturation_distance;
   gint value_distance;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   holdness = g_value_get_int (gimp_value_array_index (args, 3));
   hue_distance = g_value_get_int (gimp_value_array_index (args, 4));
   saturation_distance = g_value_get_int (gimp_value_array_index (args, 5));
@@ -2152,7 +2152,7 @@ plug_in_illusion_invoker (GimpProcedure         *procedure,
   gint division;
   gint type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   division = g_value_get_int (gimp_value_array_index (args, 3));
   type = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -2193,7 +2193,7 @@ plug_in_laplace_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -2236,7 +2236,7 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
   gdouble rescale;
   gdouble brighten;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   offset_x = g_value_get_double (gimp_value_array_index (args, 3));
   offset_y = g_value_get_double (gimp_value_array_index (args, 4));
   main_adjust = g_value_get_double (gimp_value_array_index (args, 5));
@@ -2307,7 +2307,7 @@ plug_in_make_seamless_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -2351,7 +2351,7 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
   guchar algorithm;
   gint seed;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   width = g_value_get_int (gimp_value_array_index (args, 3));
   height = g_value_get_int (gimp_value_array_index (args, 4));
   tileable = g_value_get_uchar (gimp_value_array_index (args, 5));
@@ -2418,7 +2418,7 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
   gdouble center_x;
   gdouble center_y;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   type = g_value_get_int (gimp_value_array_index (args, 3));
   length = g_value_get_double (gimp_value_array_index (args, 4));
   angle = g_value_get_double (gimp_value_array_index (args, 5));
@@ -2505,7 +2505,7 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
   gdouble center_x;
   gdouble center_y;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   type = g_value_get_int (gimp_value_array_index (args, 3));
   length = g_value_get_double (gimp_value_array_index (args, 4));
   angle = g_value_get_double (gimp_value_array_index (args, 5));
@@ -2596,7 +2596,7 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
   gint tile_surface;
   gint grout_color;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   tile_size = g_value_get_double (gimp_value_array_index (args, 3));
   tile_height = g_value_get_double (gimp_value_array_index (args, 4));
   tile_spacing = g_value_get_double (gimp_value_array_index (args, 5));
@@ -2683,7 +2683,7 @@ plug_in_neon_invoker (GimpProcedure         *procedure,
   gdouble radius;
   gdouble amount;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   radius = g_value_get_double (gimp_value_array_index (args, 3));
   amount = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -2737,7 +2737,7 @@ plug_in_newsprint_invoker (GimpProcedure         *procedure,
   gint blu_spotfn;
   gint oversample;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   cell_width = g_value_get_int (gimp_value_array_index (args, 3));
   colorspace = g_value_get_int (gimp_value_array_index (args, 4));
   k_pullout = g_value_get_int (gimp_value_array_index (args, 5));
@@ -2813,7 +2813,7 @@ plug_in_normalize_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -2859,7 +2859,7 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
   gint nspoke;
   gint randomhue;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   xcenter = g_value_get_int (gimp_value_array_index (args, 3));
   ycenter = g_value_get_int (gimp_value_array_index (args, 4));
   gimp_value_get_rgb (gimp_value_array_index (args, 5), &color);
@@ -2917,7 +2917,7 @@ plug_in_oilify_invoker (GimpProcedure         *procedure,
   gint mask_size;
   gint mode;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   mask_size = g_value_get_int (gimp_value_array_index (args, 3));
   mode = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -2964,12 +2964,12 @@ plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
   gint exponent;
   GimpDrawable *exponent_map;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   mode = g_value_get_int (gimp_value_array_index (args, 3));
   mask_size = g_value_get_int (gimp_value_array_index (args, 4));
-  mask_size_map = gimp_value_get_drawable (gimp_value_array_index (args, 5), gimp);
+  mask_size_map = g_value_get_object (gimp_value_array_index (args, 5));
   exponent = g_value_get_int (gimp_value_array_index (args, 6));
-  exponent_map = gimp_value_get_drawable (gimp_value_array_index (args, 7), gimp);
+  exponent_map = g_value_get_object (gimp_value_array_index (args, 7));
 
   if (success)
     {
@@ -3031,7 +3031,7 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
   gint background_type;
   GimpRGB background_color;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   tile_size = g_value_get_int (gimp_value_array_index (args, 3));
   move_max = g_value_get_double (gimp_value_array_index (args, 4));
   fractional_type = g_value_get_int (gimp_value_array_index (args, 5));
@@ -3118,7 +3118,7 @@ plug_in_photocopy_invoker (GimpProcedure         *procedure,
   gdouble pct_black;
   gdouble pct_white;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   mask_radius = g_value_get_double (gimp_value_array_index (args, 3));
   sharpness = g_value_get_double (gimp_value_array_index (args, 4));
   pct_black = g_value_get_double (gimp_value_array_index (args, 5));
@@ -3164,7 +3164,7 @@ plug_in_pixelize_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint pixel_width;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
@@ -3206,7 +3206,7 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
   gint pixel_width;
   gint pixel_height;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
   pixel_height = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -3249,7 +3249,7 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
   gint seed;
   gdouble turbulence;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   seed = g_value_get_int (gimp_value_array_index (args, 3));
   turbulence = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -3303,7 +3303,7 @@ plug_in_polar_coords_invoker (GimpProcedure         *procedure,
   gboolean inverse;
   gboolean polrec;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   circle = g_value_get_double (gimp_value_array_index (args, 3));
   angle = g_value_get_double (gimp_value_array_index (args, 4));
   backwards = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -3353,7 +3353,7 @@ plug_in_red_eye_removal_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint threshold;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   threshold = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
@@ -3396,7 +3396,7 @@ plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
   gboolean randomize;
   gint seed;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
   rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
   randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -3449,7 +3449,7 @@ plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
   gboolean randomize;
   gint seed;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
   rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
   randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -3502,7 +3502,7 @@ plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
   gboolean randomize;
   gint seed;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
   rndm_rcount = g_value_get_double (gimp_value_array_index (args, 4));
   randomize = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -3557,7 +3557,7 @@ plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
   gdouble noise_3;
   gdouble noise_4;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   independent = g_value_get_boolean (gimp_value_array_index (args, 3));
   correlated = g_value_get_boolean (gimp_value_array_index (args, 4));
   noise_1 = g_value_get_double (gimp_value_array_index (args, 5));
@@ -3633,7 +3633,7 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
   gboolean antialias;
   gboolean tile;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   period = g_value_get_int (gimp_value_array_index (args, 3));
   amplitude = g_value_get_int (gimp_value_array_index (args, 4));
   orientation = g_value_get_int (gimp_value_array_index (args, 5));
@@ -3701,8 +3701,8 @@ plug_in_rotate_invoker (GimpProcedure         *procedure,
   gint angle;
   gboolean everything;
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  image = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   angle = g_value_get_int (gimp_value_array_index (args, 3));
   everything = g_value_get_boolean (gimp_value_array_index (args, 4));
 
@@ -3753,7 +3753,7 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
   gdouble noise_3;
   gdouble noise_4;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   independent = g_value_get_boolean (gimp_value_array_index (args, 3));
   noise_1 = g_value_get_double (gimp_value_array_index (args, 4));
   noise_2 = g_value_get_double (gimp_value_array_index (args, 5));
@@ -3823,7 +3823,7 @@ plug_in_sel_gauss_invoker (GimpProcedure         *procedure,
   gdouble radius;
   gint max_delta;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   radius = g_value_get_double (gimp_value_array_index (args, 3));
   max_delta = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -3865,7 +3865,7 @@ plug_in_semiflatten_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -3911,7 +3911,7 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
   gint shift_amount;
   gint orientation;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   shift_amount = g_value_get_int (gimp_value_array_index (args, 3));
   orientation = g_value_get_int (gimp_value_array_index (args, 4));
 
@@ -3965,7 +3965,7 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
   gint blend;
   gdouble blend_power;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   xscale = g_value_get_double (gimp_value_array_index (args, 3));
   yscale = g_value_get_double (gimp_value_array_index (args, 4));
   complex = g_value_get_double (gimp_value_array_index (args, 5));
@@ -4058,7 +4058,7 @@ plug_in_sobel_invoker (GimpProcedure         *procedure,
   gboolean vertical;
   gboolean keep_sign;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   horizontal = g_value_get_boolean (gimp_value_array_index (args, 3));
   vertical = g_value_get_boolean (gimp_value_array_index (args, 4));
   keep_sign = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -4106,7 +4106,7 @@ plug_in_softglow_invoker (GimpProcedure         *procedure,
   gdouble brightness;
   gdouble sharpness;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   glow_radius = g_value_get_double (gimp_value_array_index (args, 3));
   brightness = g_value_get_double (gimp_value_array_index (args, 4));
   sharpness = g_value_get_double (gimp_value_array_index (args, 5));
@@ -4157,7 +4157,7 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
   gdouble xsize;
   gdouble ysize;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   tileable = g_value_get_boolean (gimp_value_array_index (args, 3));
   turbulent = g_value_get_boolean (gimp_value_array_index (args, 4));
   seed = g_value_get_int (gimp_value_array_index (args, 5));
@@ -4214,7 +4214,7 @@ plug_in_spread_invoker (GimpProcedure         *procedure,
   gdouble spread_amount_x;
   gdouble spread_amount_y;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   spread_amount_x = g_value_get_double (gimp_value_array_index (args, 3));
   spread_amount_y = g_value_get_double (gimp_value_array_index (args, 4));
 
@@ -4257,7 +4257,7 @@ plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint threshold;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   threshold = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
@@ -4300,7 +4300,7 @@ plug_in_unsharp_mask_invoker (GimpProcedure         *procedure,
   gdouble amount;
   gint threshold;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   radius = g_value_get_double (gimp_value_array_index (args, 3));
   amount = g_value_get_double (gimp_value_array_index (args, 4));
   threshold = g_value_get_int (gimp_value_array_index (args, 5));
@@ -4346,7 +4346,7 @@ plug_in_video_invoker (GimpProcedure         *procedure,
   gboolean additive;
   gboolean rotated;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   pattern_number = g_value_get_int (gimp_value_array_index (args, 3));
   additive = g_value_get_boolean (gimp_value_array_index (args, 4));
   rotated = g_value_get_boolean (gimp_value_array_index (args, 5));
@@ -4389,7 +4389,7 @@ plug_in_vinvert_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -4432,7 +4432,7 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
   gint lower_limit;
   gint upper_limit;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   propagate_mode = g_value_get_int (gimp_value_array_index (args, 3));
   propagating_channel = g_value_get_int (gimp_value_array_index (args, 4));
   propagating_rate = g_value_get_double (gimp_value_array_index (args, 5));
@@ -4530,7 +4530,7 @@ plug_in_dilate_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -4577,7 +4577,7 @@ plug_in_erode_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -4628,7 +4628,7 @@ plug_in_waves_invoker (GimpProcedure         *procedure,
   gdouble wavelength;
   gboolean type;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   amplitude = g_value_get_double (gimp_value_array_index (args, 3));
   phase = g_value_get_double (gimp_value_array_index (args, 4));
   wavelength = g_value_get_double (gimp_value_array_index (args, 5));
@@ -4690,7 +4690,7 @@ plug_in_whirl_pinch_invoker (GimpProcedure         *procedure,
   gdouble pinch;
   gdouble radius;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   whirl = g_value_get_double (gimp_value_array_index (args, 3));
   pinch = g_value_get_double (gimp_value_array_index (args, 4));
   radius = g_value_get_double (gimp_value_array_index (args, 5));
@@ -4740,7 +4740,7 @@ plug_in_wind_invoker (GimpProcedure         *procedure,
   gint algorithm;
   gint edge;
 
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
   threshold = g_value_get_int (gimp_value_array_index (args, 3));
   direction = g_value_get_int (gimp_value_array_index (args, 4));
   strength = g_value_get_int (gimp_value_array_index (args, 5));
@@ -4802,17 +4802,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("redfrequency",
                                                     "redfrequency",
@@ -4897,17 +4897,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4932,17 +4932,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("direction",
                                                  "direction",
@@ -4979,17 +4979,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("refraction",
                                                     "refraction",
@@ -5038,17 +5038,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5073,17 +5073,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5108,17 +5108,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5143,23 +5143,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("bumpmap",
-                                                            "bumpmap",
-                                                            "Bump map drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("bumpmap",
+                                                         "bumpmap",
+                                                         "Bump map drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("azimuth",
                                                     "azimuth",
@@ -5244,23 +5244,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("bumpmap",
-                                                            "bumpmap",
-                                                            "Bump map drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("bumpmap",
+                                                         "bumpmap",
+                                                         "Bump map drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("azimuth",
                                                     "azimuth",
@@ -5345,17 +5345,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5381,17 +5381,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("mask-radius",
                                                     "mask radius",
@@ -5428,17 +5428,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("monochrome",
                                                  "monochrome",
@@ -5523,17 +5523,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("color",
                                                     "color",
@@ -5565,17 +5565,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("argc-matrix",
                                                  "argc matrix",
@@ -5646,17 +5646,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-size",
                                                     "tile size",
@@ -5699,17 +5699,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("evenodd",
                                                  "evenodd",
@@ -5740,17 +5740,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("lam-r",
                                                     "lam r",
@@ -5847,17 +5847,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("amount-x",
                                                     "amount x",
@@ -5883,17 +5883,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("displace-map-x",
-                                                            "displace map x",
-                                                            "Displacement map for x direction",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("displace-map-x",
+                                                         "displace map x",
+                                                         "Displacement map for x direction",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("displace-map-y",
-                                                            "displace map y",
-                                                            "Displacement map for y direction",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("displace-map-y",
+                                                         "displace map y",
+                                                         "Displacement map for y direction",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("displace-type",
                                                  "displace type",
@@ -5924,17 +5924,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("amount-x",
                                                     "amount x",
@@ -5960,17 +5960,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("displace-map-x",
-                                                            "displace map x",
-                                                            "Displacement map for radial direction",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("displace-map-x",
+                                                         "displace map x",
+                                                         "Displacement map for radial direction",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("displace-map-y",
-                                                            "displace map y",
-                                                            "Displacement map for tangent direction",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("displace-map-y",
+                                                         "displace map y",
+                                                         "Displacement map for tangent direction",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("displace-type",
                                                  "displace type",
@@ -6001,17 +6001,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("inner",
                                                     "inner",
@@ -6060,17 +6060,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("amount",
                                                     "amount",
@@ -6113,17 +6113,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("azimuth",
                                                     "azimuth",
@@ -6172,17 +6172,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
@@ -6219,17 +6219,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uchar ("from-red",
                                                    "from red",
@@ -6308,17 +6308,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("pos-x",
                                                  "pos x",
@@ -6355,17 +6355,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("xmin",
                                                     "xmin",
@@ -6426,17 +6426,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("horizontal",
                                                     "horizontal",
@@ -6479,17 +6479,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
@@ -6532,17 +6532,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("horizontal",
                                                     "horizontal",
@@ -6579,17 +6579,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
@@ -6632,17 +6632,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("horizontal",
                                                     "horizontal",
@@ -6679,17 +6679,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("tilex",
                                                  "tilex",
@@ -6726,17 +6726,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("holdness",
                                                  "holdness",
@@ -6785,17 +6785,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("division",
                                                  "division",
@@ -6832,17 +6832,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6867,17 +6867,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("offset-x",
                                                     "offset x",
@@ -6938,17 +6938,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6973,17 +6973,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
@@ -7050,17 +7050,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("type",
                                                  "type",
@@ -7115,17 +7115,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("type",
                                                  "type",
@@ -7180,17 +7180,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("tile-size",
                                                     "tile size",
@@ -7287,17 +7287,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
@@ -7334,17 +7334,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("cell-width",
                                                  "cell width",
@@ -7441,17 +7441,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7476,17 +7476,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("xcenter",
                                                  "xcenter",
@@ -7548,17 +7548,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("mask-size",
                                                  "mask size",
@@ -7595,17 +7595,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("mode",
                                                  "mode",
@@ -7619,11 +7619,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  1, 200, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("mask-size-map",
-                                                            "mask size map",
-                                                            "Mask size control map",
-                                                            pdb->gimp, TRUE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("mask-size-map",
+                                                         "mask size map",
+                                                         "Mask size control map",
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("exponent",
                                                  "exponent",
@@ -7631,11 +7631,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  1, 20, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("exponent-map",
-                                                            "exponent map",
-                                                            "Exponent control map",
-                                                            pdb->gimp, TRUE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("exponent-map",
+                                                         "exponent map",
+                                                         "Exponent control map",
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7660,17 +7660,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("tile-size",
                                                  "tile size",
@@ -7745,17 +7745,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("mask-radius",
                                                     "mask radius",
@@ -7804,17 +7804,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("pixel-width",
                                                  "pixel width",
@@ -7845,17 +7845,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("pixel-width",
                                                  "pixel width",
@@ -7892,17 +7892,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("seed",
                                                  "seed",
@@ -7939,17 +7939,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("circle",
                                                     "circle",
@@ -8004,17 +8004,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("threshold",
                                                  "threshold",
@@ -8045,17 +8045,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-pct",
                                                     "rndm pct",
@@ -8104,17 +8104,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-pct",
                                                     "rndm pct",
@@ -8163,17 +8163,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("rndm-pct",
                                                     "rndm pct",
@@ -8222,17 +8222,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("independent",
                                                      "independent",
@@ -8293,17 +8293,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("period",
                                                  "period",
@@ -8370,17 +8370,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("angle",
                                                  "angle",
@@ -8417,17 +8417,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("independent",
                                                      "independent",
@@ -8482,17 +8482,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
@@ -8529,17 +8529,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -8564,17 +8564,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("shift-amount",
                                                  "shift amount",
@@ -8611,17 +8611,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("xscale",
                                                     "xscale",
@@ -8726,17 +8726,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("horizontal",
                                                      "horizontal",
@@ -8779,17 +8779,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("glow-radius",
                                                     "glow radius",
@@ -8832,17 +8832,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("tileable",
                                                      "tileable",
@@ -8903,17 +8903,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spread-amount-x",
                                                     "spread amount x",
@@ -8950,17 +8950,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("threshold",
                                                  "threshold",
@@ -8991,17 +8991,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
@@ -9044,17 +9044,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("pattern-number",
                                                  "pattern number",
@@ -9097,17 +9097,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -9132,17 +9132,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("propagate-mode",
                                                  "propagate mode",
@@ -9203,17 +9203,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("propagate-mode",
                                                  "propagate mode",
@@ -9274,17 +9274,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("propagate-mode",
                                                  "propagate mode",
@@ -9345,17 +9345,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("amplitude",
                                                     "amplitude",
@@ -9410,17 +9410,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("whirl",
                                                     "whirl",
@@ -9463,17 +9463,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                   GIMP_RUN_INTERACTIVE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "Input image (unused)",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "Input image (unused)",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "Input drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "Input drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("threshold",
                                                  "threshold",
