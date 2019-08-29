@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __GIMP_VERSION_H__
+#define __GIMP_VERSION_H__
 
 /* gimpversion.h.in -> gimpversion.h
  * This file is configured by Meson. Please modify meson.build files.
@@ -63,3 +64,5 @@ G_BEGIN_DECLS
 
 
 G_END_DECLS
+
+#endif /* __GIMP_VERSION_H__ */
