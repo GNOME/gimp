@@ -228,9 +228,6 @@ struct _GimpDisplayShell
   GimpMotionBuffer  *motion_buffer;
 
   GQueue            *zoom_focus_pointer_queue;
-
-  gboolean           blink;
-  guint              blink_timeout_id;
 };
 
 struct _GimpDisplayShellClass
