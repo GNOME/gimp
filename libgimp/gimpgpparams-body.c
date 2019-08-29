@@ -162,6 +162,62 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_param_def.type_name =
         (gchar *) g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec));
     }
+  else if (pspec_type == G_TYPE_PARAM_OBJECT)
+    {
+      GType        value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
+      const gchar *type_name  = NULL;
+
+      if (! strcmp (g_type_name (value_type), "GimpDisplay"))
+        {
+          /* strcmp() because GimpDisplay is not visible from app/plug-in */
+          type_name = "GimpParamDisplay";
+        }
+      else if (value_type == GIMP_TYPE_IMAGE)
+        {
+          type_name = "GimpParamImage";
+        }
+      else if (value_type == GIMP_TYPE_ITEM)
+        {
+          type_name = "GimpParamItem";
+        }
+      else if (value_type == GIMP_TYPE_DRAWABLE)
+        {
+          type_name = "GimpParamDrawable";
+        }
+      else if (g_type_is_a (value_type, GIMP_TYPE_LAYER))
+        {
+          /* g_type_is_a() because the core has layer subclasses */
+          type_name = "GimpParamLayer";
+        }
+      else if (value_type == GIMP_TYPE_CHANNEL)
+        {
+          type_name = "GimpParamChannel";
+        }
+      else if (value_type == GIMP_TYPE_LAYER_MASK)
+        {
+          type_name = "GimpParamLayerMask";
+        }
+      else if (value_type == GIMP_TYPE_SELECTION)
+        {
+          type_name = "GimpParamSelection";
+        }
+      else if (value_type == GIMP_TYPE_VECTORS)
+        {
+          type_name = "GimpParamVectors";
+        }
+
+      if (type_name)
+        {
+          param_def->param_def_type    = GP_PARAM_DEF_TYPE_ID;
+          param_def->type_name         = (gchar *) type_name;
+          param_def->meta.m_id.none_ok = TRUE;
+        }
+      else
+        {
+          g_printerr ("%s: GParamSpecObject for unsupported object type '%s'\n",
+                      G_STRFUNC, param_def->type_name);
+        }
+    }
 }
 
 static GimpImage *
