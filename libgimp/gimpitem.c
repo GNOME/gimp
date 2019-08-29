@@ -163,10 +163,45 @@ gimp_item_get_by_id (gint32 item_id)
 {
   if (item_id > 0)
     {
-      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+      GimpPlugIn *plug_in = gimp_get_plug_in ();
 
-      return _gimp_procedure_get_item (procedure, item_id);
+      if (plug_in)
+        {
+          GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+
+          return _gimp_procedure_get_item (procedure, item_id);
+        }
+
+      if (gimp_item_id_is_layer (item_id))
+        {
+          return g_object_new (GIMP_TYPE_LAYER,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (gimp_item_id_is_layer_mask (item_id))
+        {
+          return g_object_new (GIMP_TYPE_LAYER_MASK,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (gimp_item_id_is_selection (item_id))
+        {
+          return g_object_new (GIMP_TYPE_SELECTION,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (gimp_item_id_is_channel (item_id))
+        {
+          return g_object_new (GIMP_TYPE_CHANNEL,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (gimp_item_id_is_vectors (item_id))
+        {
+          return g_object_new (GIMP_TYPE_VECTORS,
+                               "id", item_id,
+                               NULL);
+        }
     }
 
   return NULL;

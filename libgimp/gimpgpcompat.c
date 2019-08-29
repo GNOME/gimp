@@ -457,31 +457,38 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_ITEM:
-          g_value_set_int (&value, params[i].data.d_item);
+          g_value_set_object (&value,
+                              gimp_item_get_by_id (params[i].data.d_item));
           break;
 
         case GIMP_PDB_DISPLAY:
-          g_value_set_int (&value, params[i].data.d_display);
+          g_value_set_object (&value,
+                              gimp_display_get_by_id (params[i].data.d_display));
           break;
 
         case GIMP_PDB_IMAGE:
-          g_value_set_int (&value, params[i].data.d_image);
+          g_value_set_object (&value,
+                              gimp_image_get_by_id (params[i].data.d_image));
           break;
 
         case GIMP_PDB_LAYER:
-          g_value_set_int (&value, params[i].data.d_layer);
+          g_value_set_object (&value,
+                              gimp_item_get_by_id (params[i].data.d_layer));
           break;
 
         case GIMP_PDB_CHANNEL:
-          g_value_set_int (&value, params[i].data.d_channel);
+          g_value_set_object (&value,
+                              gimp_item_get_by_id (params[i].data.d_channel));
           break;
 
         case GIMP_PDB_DRAWABLE:
-          g_value_set_int (&value, params[i].data.d_drawable);
+          g_value_set_object (&value,
+                              gimp_item_get_by_id (params[i].data.d_drawable));
           break;
 
         case GIMP_PDB_SELECTION:
-          g_value_set_int (&value, params[i].data.d_selection);
+          g_value_set_object (&value,
+                              gimp_item_get_by_id (params[i].data.d_selection));
           break;
 
         case GIMP_PDB_COLORARRAY:
@@ -538,7 +545,8 @@ _gimp_value_array_to_params (GimpValueArray *args,
 
   for (i = 0; i < length; i++)
     {
-      GValue *value = gimp_value_array_index (args, i);
+      GValue  *value = gimp_value_array_index (args, i);
+      GObject *object;
 
       params[i].type = _gimp_pdb_gtype_to_arg_type (G_VALUE_TYPE (value));
 
@@ -620,31 +628,45 @@ _gimp_value_array_to_params (GimpValueArray *args,
           break;
 
         case GIMP_PDB_ITEM:
-          params[i].data.d_item = g_value_get_int (value);
+          object = g_value_get_object (value);
+          params[i].data.d_item =
+            object ? gimp_item_get_id (GIMP_ITEM (object)) : -1;
           break;
 
         case GIMP_PDB_DISPLAY:
-          params[i].data.d_display = g_value_get_int (value);
+          object = g_value_get_object (value);
+          params[i].data.d_display =
+            object ? gimp_display_get_id (GIMP_DISPLAY (object)) : -1;
           break;
 
         case GIMP_PDB_IMAGE:
-          params[i].data.d_image = g_value_get_int (value);
+          object = g_value_get_object (value);
+          params[i].data.d_image =
+            object ? gimp_image_get_id (GIMP_IMAGE (object)) : -1;
           break;
 
         case GIMP_PDB_LAYER:
-          params[i].data.d_layer = g_value_get_int (value);
+          object = g_value_get_object (value);
+          params[i].data.d_layer =
+            object ? gimp_item_get_id (GIMP_ITEM (object)) : -1;
           break;
 
         case GIMP_PDB_CHANNEL:
-          params[i].data.d_channel = g_value_get_int (value);
+          object = g_value_get_object (value);
+          params[i].data.d_channel =
+            object ? gimp_item_get_id (GIMP_ITEM (object)) : -1;
           break;
 
         case GIMP_PDB_DRAWABLE:
-          params[i].data.d_drawable = g_value_get_int (value);
+          object = g_value_get_object (value);
+          params[i].data.d_drawable =
+            object ? gimp_item_get_id (GIMP_ITEM (object)) : -1;
           break;
 
         case GIMP_PDB_SELECTION:
-          params[i].data.d_selection = g_value_get_int (value);
+          object = g_value_get_object (value);
+          params[i].data.d_selection =
+            object ? gimp_item_get_id (GIMP_ITEM (object)) : -1;
           break;
 
         case GIMP_PDB_COLORARRAY:
