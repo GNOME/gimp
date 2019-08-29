@@ -1366,7 +1366,7 @@ gimp_procedure_run (GimpProcedure  *procedure,
     {
       g_warning ("%s: no return values, shouldn't happen", G_STRFUNC);
 
-      error = g_error_new (0, 0, 0,
+      error = g_error_new (0, 0,
                            _("Procedure '%s' returned no return values"),
                            gimp_procedure_get_name (procedure));
 
