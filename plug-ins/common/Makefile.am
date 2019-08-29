@@ -388,8 +388,6 @@ colormap_remap_LDADD = \
 	$(INTLLIBS)		\
 	$(colormap_remap_RC)
 
-compose_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 compose_SOURCES = \
 	compose.c
 
