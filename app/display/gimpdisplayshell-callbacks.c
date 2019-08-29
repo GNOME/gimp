@@ -557,7 +557,7 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
 
   gimp_display_shell_draw_background (shell, cr);
 
-  gimp_cairo_draw_drop_wilber (shell->canvas, cr, shell->blink);
+  gimp_cairo_draw_drop_wilber (shell->canvas, cr);
 
   cairo_restore (cr);
 

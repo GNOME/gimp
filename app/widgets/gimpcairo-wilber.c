@@ -110,8 +110,7 @@ gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
 
 void
 gimp_cairo_draw_drop_wilber (GtkWidget *widget,
-                             cairo_t   *cr,
-                             gboolean   blink)
+                             cairo_t   *cr)
 {
   GtkStyleContext *context;
   GtkAllocation    allocation;
@@ -162,21 +161,6 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
   gdk_cairo_set_source_rgba (cr, &color);
 
   cairo_fill (cr);
-
-  if (blink)
-    {
-      gimp_cairo_eyes (widget, cr,
-                       - wilber_width * 0.6,
-                       allocation.height / factor - wilber_height * 1.1,
-                       factor, 50.0 * G_PI / 180.0);
-
-      cairo_set_source_rgba (cr,
-                             color.red,
-                             0,
-                             0,
-                             1.0);
-      cairo_fill (cr);
-    }
 }
 
 
