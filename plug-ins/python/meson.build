@@ -2,16 +2,15 @@ if have_python
 
 plugins = [
   { 'name': 'file-openraster' },
+  { 'name': 'foggify' },
   { 'name': 'palette-offset' },
   { 'name': 'palette-to-gradient' },
-
+  { 'name': 'py-slice' },
 
   # { 'name': 'colorxhtml' },
-  # { 'name': 'foggify' },
   # { 'name': 'gradients-save-as-css' },
   # { 'name': 'histogram-export' },
   # { 'name': 'palette-sort' },
-  # { 'name': 'py-slice' },
   # { 'name': 'python-eval' },
   # { 'name': 'spyro_plus' },
 ]

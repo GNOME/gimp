@@ -1,6 +1,6 @@
 
 common_plugins_list = [
-  { 'name': 'align-layers',       'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
+  { 'name': 'align-layers', },
   { 'name': 'animation-optimize', 'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
   { 'name': 'animation-play', },
   { 'name': 'blinds', },
@@ -46,7 +46,7 @@ common_plugins_list = [
   { 'name': 'file-jp2-load',
     'deps': [ gtk3, gegl, gdk_pixbuf, openjpeg, ],
   },
-  { 'name': 'file-mng',           'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
+  { 'name': 'file-mng',
     'deps': [ gtk3, gegl, libmng, libpng, ],
   },
   { 'name': 'file-pat', },
@@ -54,7 +54,7 @@ common_plugins_list = [
   { 'name': 'file-pdf-load',
     'deps': [ gtk3, gegl, gdk_pixbuf, poppler ],
   },
-  { 'name': 'file-pdf-save',      'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
+  { 'name': 'file-pdf-save',
     'deps': [ gtk3, gegl, gdk_pixbuf, poppler, cairo ],
   },
   { 'name': 'file-pix', },

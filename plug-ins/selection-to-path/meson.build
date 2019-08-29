@@ -44,7 +44,6 @@ selection_to_path = executable(plugin_name,
   include_directories: [ rootInclude, ],
   link_with:    plugin_selection_to_path_link,
   dependencies: plugin_selection_to_path_deps,
-  c_args: '-DGIMP_DEPRECATED_REPLACE_NEW_API',
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
