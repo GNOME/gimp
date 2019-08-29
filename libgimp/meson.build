@@ -315,6 +315,7 @@ libgimpui = library('gimpui-'+ gimp_api_version,
 
 install_headers(
   libgimp_headers,
+  libgimpui_headers_introspectable,
   subdir: gimp_api_name / 'libgimp',
 )
 
