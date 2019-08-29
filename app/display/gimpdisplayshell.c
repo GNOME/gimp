@@ -787,12 +787,6 @@ gimp_display_shell_dispose (GObject *object)
 
   g_clear_pointer (&shell->nav_popup, gtk_widget_destroy);
 
-  if (shell->blink_timeout_id)
-    {
-      g_source_remove (shell->blink_timeout_id);
-      shell->blink_timeout_id = 0;
-    }
-
   shell->display = NULL;
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -1339,28 +1333,6 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
   gimp_display_shell_render_invalidate_full (shell);
 }
 
-static gboolean
-gimp_display_shell_blink (GimpDisplayShell *shell)
-{
-  shell->blink_timeout_id = 0;
-
-  if (shell->blink)
-    {
-      shell->blink = FALSE;
-    }
-  else
-    {
-      shell->blink = TRUE;
-
-      shell->blink_timeout_id =
-        g_timeout_add (100, (GSourceFunc) gimp_display_shell_blink, shell);
-    }
-
-  gimp_display_shell_expose_full (shell);
-
-  return FALSE;
-}
-
 void
 gimp_display_shell_empty (GimpDisplayShell *shell)
 {
@@ -1408,9 +1380,6 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   if (shell->display == gimp_context_get_display (user_context))
     gimp_ui_manager_update (shell->popup_manager, shell->display);
-
-  shell->blink_timeout_id =
-    g_timeout_add (1403230, (GSourceFunc) gimp_display_shell_blink, shell);
 }
 
 static gboolean
@@ -1471,12 +1440,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
    * become visible forcing the canvas to become smaller
    */
   shell->size_allocate_center_image = TRUE;
-
-  if (shell->blink_timeout_id)
-    {
-      g_source_remove (shell->blink_timeout_id);
-      shell->blink_timeout_id = 0;
-    }
 
   shell->fill_idle_id =
     g_idle_add_full (GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE,

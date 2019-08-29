@@ -31,8 +31,7 @@ void   gimp_cairo_wilber_toggle_pointer_eyes (void);
 void   gimp_cairo_draw_toolbox_wilber        (GtkWidget *widget,
                                               cairo_t   *cr);
 void   gimp_cairo_draw_drop_wilber           (GtkWidget *widget,
-                                              cairo_t   *cr,
-                                              gboolean   blink);
+                                              cairo_t   *cr);
 
 void   gimp_cairo_wilber                     (cairo_t   *cr,
                                               gdouble    x,
