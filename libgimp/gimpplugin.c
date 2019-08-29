@@ -1159,15 +1159,15 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
   GimpValueArray *arguments;
   GimpValueArray *return_values = NULL;
 
+  gimp_plug_in_push_procedure (plug_in, procedure);
+
   arguments = _gimp_gp_params_to_value_array (NULL,
                                               NULL, 0,
                                               proc_run->params,
                                               proc_run->nparams,
                                               FALSE, FALSE);
 
-  gimp_plug_in_push_procedure (plug_in, procedure);
   return_values = gimp_procedure_run (procedure, arguments);
-  gimp_plug_in_pop_procedure (plug_in, procedure);
 
   gimp_value_array_unref (arguments);
 
@@ -1176,6 +1176,8 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
   proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
 
   gimp_value_array_unref (return_values);
+
+  gimp_plug_in_pop_procedure (plug_in, procedure);
 }
 
 static gboolean
