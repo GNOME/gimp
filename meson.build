@@ -12,6 +12,8 @@ project_url_issues = project_url + '/issues/new'
 
 conf = configuration_data()
 
+warnings = []
+
 ################################################################################
 # Project info
 
@@ -142,12 +144,14 @@ endif
 
 
 if cc.get_id() == 'gcc' and cc.version() == '7.2.0'
-  warning('''
+  gcc_warning = '''
     GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
     against using this version of the compiler (previous and
     further versions are fine).
     See https://bugzilla.gnome.org/show_bug.cgi?id=787222
-  ''')
+  '''
+  warning(gcc_warning)
+  warnings += gcc_warning
 endif
 
 
@@ -362,14 +366,16 @@ glib_networking_works =(glib_networking_works_run.compiled()
 
 if not glib_networking_works
   if meson.is_cross_build()
-    warning('''
+    glib_warning = '''
       Test for glib-networking cannot be performed while cross-compiling.
       Make sure glib-networking is installed, otherwise GIMP will not be able
       to display the remote help pages through the help browser, nor will it
       be able to open remote HTTPS (or other protocol using SSL/TLS) files.
       HTTPS is becoming the expected standard and should not be considered
       optional anymore.
-    ''')
+    '''
+    warning(glib_warning)
+    warnings += glib_warning
   else
     error('Test for glib-networking failed. This is required.')
   endif
@@ -389,7 +395,7 @@ pango_check =(pango_check_run.compiled()
           and pango_check_run.returncode() == 0)
 
 if not pango_check
-  warning('\n  *** '.join([
+  pango_warning = '\n  *** '.join([
   'You have a fontconfig >= fontconfig_required_version installed on your',
   'system, but your Pango library is using an older version. This old version',
   'is probably in /usr/X11R6. Look at the above output, and note that the',
@@ -400,7 +406,9 @@ if not pango_check
   'The easiest way be sure of this is to simply get rid of the old',
   'fontconfig. When you rebuild pango, make sure the result for',
   'FONTCONFIG_CFLAGS is the same as the result here.',
-  ]))
+  ])
+  warning(pango_warning)
+  warnings += pango_warning
 endif
 
 ################################################################################
@@ -710,9 +718,9 @@ if not [ '', 'false', 'no', ].contains(sendmail_choice)
   if sendmail.found()
     sendmail_path = sendmail.path()
   else
-    warning(
-      'Sendmail specified but not found. It should be installed at runtime!'
-    )
+    mail_warning = 'Sendmail specified but not found. It should be installed at runtime!'
+    warning(mail_warning)
+    warnings += mail_warning
   endif
 
   email_message = '@0@ (@1@)'.format(true, sendmail_path)
@@ -723,9 +731,9 @@ else
   if xdg_email.found()
     xdg_email_path = xdg_email.path()
   else
-    warning(
-      'Xdg-email not found, but required at runtime for email sending.'
-    )
+    mail_warning = 'Xdg-email not found, but required at runtime for email sending.'
+    warning(mail_warning)
+    warnings += mail_warning
   endif
 
   email_message = '@0@ (@1@)'.format(true, xdg_email_path)
@@ -759,13 +767,15 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 python3_required_version = '>=3.6.0'
 
 if get_option('python') == 'never'
-  warning('''
+  python_warning = '''
     You disabled the installation of core Python plug-ins. This is discouraged
     as it won't provide the full GIMP experience.
     Note that you may install the Python plug-ins even if you have no Python
     interpreter at build-time by passing the configure option -Dpython=always.
     Just make sure that a Python @0@ interpreter is available at run-time.
-  '''.format(python3_required_version))
+  '''.format(python3_required_version)
+  warning(python_warning)
+  warnings += python_warning
 
   have_python = false
 
@@ -800,12 +810,14 @@ else
   endif
 
   if (not python_found) and (always_install)
-    warning('''
+    python_warning = '''
     Python @0@ or PyGObject was not found.
     Python plug-ins will be installed anyway but you should make sure that
     a compatible Python interpreter is available at installation, otherwise
     installed plug-ins won't be usable.
-    '''.format(python3_required_version))
+    '''.format(python3_required_version)
+    warning(python_warning)
+    warnings += python_warning
   endif
 
   have_python = python_found or always_install
@@ -814,13 +826,15 @@ endif
 ## Javascript
 
 if get_option('javascript') == 'never'
-  warning('''
+  js_warning = '''
     You disabled the installation of core Javascript plug-ins. This is
     discouraged as it won't provide the full GIMP experience.
     Note that you may install the Javascript plug-ins even if you have no GJS
     interpreter at build-time by passing the configure option -Djavascript=always.
     Just make sure that the GJS interpreter is available at run-time.
-  ''')
+  '''
+  warning(js_warning)
+  warnings += js_warning
   have_javascript = false
 
 else
@@ -838,12 +852,14 @@ else
   endif
 
   if (not gjs.found()) and (always_install)
-    warning('''
+    js_warning = '''
     GJS was not found.
     JavaScript plug-ins will be installed anyway but you should make sure that
     the JavaScript interpreter GJS is available at installation, otherwise
     installed plug-ins won't be usable.
-    ''')
+    '''
+    warning(js_warning)
+    warnings += js_warning
   endif
 
   have_javascript = gjs.found() or always_install
@@ -852,13 +868,15 @@ endif
 ## Lua
 
 if get_option('lua') == 'never'
-  warning('''
+  lua_warning = '''
     You disabled the installation of core Lua plug-ins. This is discouraged
     as it won't provide the full GIMP experience.
     Note that you may install the Lua plug-ins even if you have no Lua LGI
     interpreter at build-time by passing the configure option -Dlua=always.
     Just make sure that the Lua LGI interpreter is available at run-time.
-  ''')
+  '''
+  warning(lua_warning)
+  warnings += lua_warning
   have_lua = false
 
 else
@@ -876,12 +894,14 @@ else
   endif
 
   if (not lua.found()) and always_install
-    warning('''
+    lua_warning = '''
     Luajit was not found.
     Lua plug-ins will be installed anyway but you should make sure that
     luajit and LGI are available at installation, otherwise
     installed plug-ins won't be usable.
-    ''')
+    '''
+    warning(lua_warning)
+    warnings += lua_warning
   endif
 
   have_lua = lua.found() or always_install
@@ -912,12 +932,14 @@ if have_vector_icons
   # shared-mime-info is needed to correctly detect SVG files
   # (except on Windows, apparently).
   if platform_win32
-    warning('''
+    vec_warning = '''
       You enabled vector icons on Win32. Make sure to run:
       $ gdk-pixbuf-query-loaders.exe --update-cache
       on the target machine (this command generates loaders.cache)
       so that GdkPixbuf knows where to find the SVG loader.
-    ''')
+    '''
+    warning(vec_warning)
+    warnings += vec_warning
   else
     shared_mime_info = dependency('shared-mime-info')
   endif
@@ -1575,3 +1597,10 @@ final_message = [
 ]
 
 message('\n'.join(final_message))
+
+if warnings.length() > 0
+  warning('Warnings occured during configuration')
+  foreach warning : warnings
+    warning(warning)
+  endforeach
+endif
