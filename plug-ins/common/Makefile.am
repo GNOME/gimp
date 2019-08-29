@@ -1566,8 +1566,6 @@ warp_LDADD = \
 	$(INTLLIBS)		\
 	$(warp_RC)
 
-wavelet_decompose_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 wavelet_decompose_SOURCES = \
 	wavelet-decompose.c
 
