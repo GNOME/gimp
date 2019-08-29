@@ -242,11 +242,11 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_UINT8_ARRAY(args, n) \
   gimp_value_dup_uint8_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_UINT8_ARRAY(args, n, value) \
-  gimp_value_set_uint8_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_SET_UINT8_ARRAY(args, n, value, length) \
+  gimp_value_set_uint8_array (gimp_value_array_index (args, n), value, length)
 
-#define GIMP_VALUES_TAKE_UINT8_ARRAY(args, n, value) \
-  gimp_value_take_uint8_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_TAKE_UINT8_ARRAY(args, n, value, length) \
+  gimp_value_take_uint8_array (gimp_value_array_index (args, n), value, length)
 
 
 /*  int16 array  */
@@ -267,11 +267,11 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_INT16_ARRAY(args, n)                    \
   gimp_value_dup_int16_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_INT16_ARRAY(args, n, value) \
-  gimp_value_set_int16_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_SET_INT16_ARRAY(args, n, value, length) \
+  gimp_value_set_int16_array (gimp_value_array_index (args, n), value, length)
 
-#define GIMP_VALUES_TAKE_INT16_ARRAY(args, n, value) \
-  gimp_value_take_int16_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_TAKE_INT16_ARRAY(args, n, value, length) \
+  gimp_value_take_int16_array (gimp_value_array_index (args, n), value, length)
 
 
 /*  int32 array  */
@@ -292,11 +292,11 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_INT32_ARRAY(args, n) \
   gimp_value_dup_int32_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_INT32_ARRAY(args, n, value) \
-  gimp_value_set_int32_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_SET_INT32_ARRAY(args, n, value, length) \
+  gimp_value_set_int32_array (gimp_value_array_index (args, n), value, length)
 
-#define GIMP_VALUES_TAKE_INT32_ARRAY(args, n, value) \
-  gimp_value_take_int32_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_TAKE_INT32_ARRAY(args, n, value, length) \
+  gimp_value_take_int32_array (gimp_value_array_index (args, n), value, length)
 
 
 /*  float array  */
@@ -317,11 +317,11 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_FLOAT_ARRAY(args, n) \
   gimp_value_dup_float_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_FLOAT_ARRAY(args, n, value) \
-  gimp_value_set_float_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_SET_FLOAT_ARRAY(args, n, value, length) \
+  gimp_value_set_float_array (gimp_value_array_index (args, n), value, length)
 
-#define GIMP_VALUES_TAKE_FLOAT_ARRAY(args, n, value) \
-  gimp_value_take_float_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_TAKE_FLOAT_ARRAY(args, n, value, length) \
+  gimp_value_take_float_array (gimp_value_array_index (args, n), value, length)
 
 
 /*  string array  */
@@ -342,11 +342,11 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_STRING_ARRAY(args, n) \
   gimp_value_dup_string_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_STRING_ARRAY(args, n, value) \
-  gimp_value_set_string_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_SET_STRING_ARRAY(args, n, value, length) \
+  gimp_value_set_string_array (gimp_value_array_index (args, n), value, length)
 
-#define GIMP_VALUES_TAKE_STRING_ARRAY(args, n, value) \
-  gimp_value_take_string_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_TAKE_STRING_ARRAY(args, n, value, length) \
+  gimp_value_take_string_array (gimp_value_array_index (args, n), value, length)
 
 
 /*  rgb array  */
@@ -367,11 +367,11 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_RGB_ARRAY(args, n) \
   gimp_value_dup_rgb_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_RGB_ARRAY(args, n, value) \
-  gimp_value_set_rgb_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_SET_RGB_ARRAY(args, n, value, length) \
+  gimp_value_set_rgb_array (gimp_value_array_index (args, n), value, length)
 
-#define GIMP_VALUES_TAKE_RGB_ARRAY(args, n, value) \
-  gimp_value_take_rgb_array (gimp_value_array_index (args, n), value)
+#define GIMP_VALUES_TAKE_RGB_ARRAY(args, n, value, length) \
+  gimp_value_take_rgb_array (gimp_value_array_index (args, n), value, length)
 
 
 /*  display  */
