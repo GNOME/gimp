@@ -462,8 +462,6 @@ curve_bend_LDADD = \
 	$(INTLLIBS)		\
 	$(curve_bend_RC)
 
-decompose_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 decompose_SOURCES = \
 	decompose.c
 
