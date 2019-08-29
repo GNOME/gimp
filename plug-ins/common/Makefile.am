@@ -1247,8 +1247,6 @@ grid_LDADD = \
 	$(INTLLIBS)		\
 	$(grid_RC)
 
-guillotine_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 guillotine_SOURCES = \
 	guillotine.c
 
