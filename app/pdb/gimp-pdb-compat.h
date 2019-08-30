@@ -19,10 +19,8 @@
 #define __GIMP_PDB_COMPAT_H__
 
 
-GimpPDBArgType   gimp_pdb_compat_arg_type_from_gtype (GType type);
-
-void             gimp_pdb_compat_procs_register (GimpPDB           *pdb,
-                                                 GimpPDBCompatMode  compat_mode);
+void   gimp_pdb_compat_procs_register (GimpPDB           *pdb,
+                                       GimpPDBCompatMode  compat_mode);
 
 
 #endif  /*  __GIMP_PDB_COMPAT_H__  */

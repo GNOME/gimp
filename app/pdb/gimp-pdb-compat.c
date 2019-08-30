@@ -21,93 +21,13 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-
 #include "pdb-types.h"
-
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimpselection.h"
-#include "core/gimpparamspecs.h"
-
-#include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
 #include "gimp-pdb-compat.h"
 
 
 /*  public functions  */
-
-GimpPDBArgType
-gimp_pdb_compat_arg_type_from_gtype (GType type)
-{
-  static GQuark  pdb_type_quark = 0;
-  GimpPDBArgType pdb_type;
-
-  if (! pdb_type_quark)
-    {
-      struct
-      {
-        GType          g_type;
-        GimpPDBArgType pdb_type;
-      }
-      type_mapping[] =
-      {
-        { G_TYPE_INT,                GIMP_PDB_INT32       },
-        { G_TYPE_UINT,               GIMP_PDB_INT32       },
-        { G_TYPE_ENUM,               GIMP_PDB_INT32       },
-        { G_TYPE_BOOLEAN,            GIMP_PDB_INT32       },
-
-        { G_TYPE_UCHAR,              GIMP_PDB_INT8        },
-        { G_TYPE_DOUBLE,             GIMP_PDB_FLOAT       },
-
-        { G_TYPE_STRING,             GIMP_PDB_STRING      },
-
-        { GIMP_TYPE_RGB,             GIMP_PDB_COLOR       },
-
-        { GIMP_TYPE_INT32_ARRAY,     GIMP_PDB_INT32ARRAY  },
-        { GIMP_TYPE_INT16_ARRAY,     GIMP_PDB_INT16ARRAY  },
-        { GIMP_TYPE_UINT8_ARRAY,     GIMP_PDB_INT8ARRAY   },
-        { GIMP_TYPE_FLOAT_ARRAY,     GIMP_PDB_FLOATARRAY  },
-        { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
-        { GIMP_TYPE_RGB_ARRAY,       GIMP_PDB_COLORARRAY  },
-
-        { GIMP_TYPE_ITEM,            GIMP_PDB_ITEM        },
-        { GIMP_TYPE_IMAGE,           GIMP_PDB_IMAGE       },
-        { GIMP_TYPE_LAYER,           GIMP_PDB_LAYER       },
-        { GIMP_TYPE_CHANNEL,         GIMP_PDB_CHANNEL     },
-        { GIMP_TYPE_DRAWABLE,        GIMP_PDB_DRAWABLE    },
-        { GIMP_TYPE_SELECTION,       GIMP_PDB_SELECTION   },
-        { GIMP_TYPE_LAYER_MASK,      GIMP_PDB_CHANNEL     },
-        { GIMP_TYPE_VECTORS,         GIMP_PDB_VECTORS     },
-
-        { GIMP_TYPE_PARASITE,        GIMP_PDB_PARASITE    },
-
-        { GIMP_TYPE_PDB_STATUS_TYPE, GIMP_PDB_STATUS      }
-      };
-
-      GType type;
-      gint  i;
-
-      pdb_type_quark = g_quark_from_static_string ("gimp-pdb-type");
-
-      for (i = 0; i < G_N_ELEMENTS (type_mapping); i++)
-        g_type_set_qdata (type_mapping[i].g_type, pdb_type_quark,
-                          GINT_TO_POINTER (type_mapping[i].pdb_type));
-
-      type = g_type_from_name ("GimpDisplay");
-      if (type)
-        g_type_set_qdata (type, pdb_type_quark,
-                          GINT_TO_POINTER (GIMP_PDB_DISPLAY));
-    }
-
-  pdb_type = GPOINTER_TO_INT (g_type_get_qdata (type, pdb_type_quark));
-
-  return pdb_type;
-}
 
 void
 gimp_pdb_compat_procs_register (GimpPDB           *pdb,

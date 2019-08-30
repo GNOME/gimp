@@ -90,6 +90,7 @@ test_config_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
+	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_procs_register	\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
 	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
 	-Wl,-u,$(SYMPREFIX)gimp_async_set_new			\

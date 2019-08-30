@@ -32,7 +32,6 @@
 #include "gimppdb.h"
 #include "gimppdb-query.h"
 #include "gimppdberror.h"
-#include "gimp-pdb-compat.h"
 #include "gimpprocedure.h"
 
 #include "gimp-intl.h"
@@ -452,7 +451,6 @@ gimp_pdb_print_entry (gpointer key,
     {
       GimpProcedure      *procedure = list->data;
       PDBStrings          strings;
-      GEnumValue         *arg_value;
       const GimpEnumDesc *type_desc;
       gint                i;
 
@@ -484,34 +482,24 @@ gimp_pdb_print_entry (gpointer key,
 
       for (i = 0; i < procedure->num_args; i++)
         {
-          GParamSpec     *pspec = procedure->args[i];
-          GimpPDBArgType  arg_type;
-
-          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
-
-          arg_value = g_enum_get_value (arg_class, arg_type);
+          GParamSpec *pspec = procedure->args[i];
 
           if (i > 0)
             g_string_append_printf (string, " ");
 
-          output_string (string, arg_value->value_name);
+          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec));
         }
 
       g_string_append_printf (string, ") (");
 
       for (i = 0; i < procedure->num_values; i++)
         {
-          GParamSpec     *pspec = procedure->values[i];
-          GimpPDBArgType  arg_type;
-
-          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
-
-          arg_value = g_enum_get_value (arg_class, arg_type);
+          GParamSpec *pspec = procedure->values[i];
 
           if (i > 0)
             g_string_append_printf (string, " ");
 
-          output_string (string, arg_value->value_name);
+          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec))
         }
 
       g_string_append_printf (string, "))\n");
@@ -540,21 +528,16 @@ gimp_pdb_print_entry (gpointer key,
 
       for (i = 0; i < procedure->num_args; i++)
         {
-          GParamSpec     *pspec = procedure->args[i];
-          GimpPDBArgType  arg_type;
-          gchar          *desc  = gimp_param_spec_get_desc (pspec);
+          GParamSpec *pspec = procedure->args[i];
+          gchar      *desc  = gimp_param_spec_get_desc (pspec);
 
           g_string_append_printf (string, "\n    (\n");
-
-          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
-
-          arg_value = g_enum_get_value (arg_class, arg_type);
 
           g_string_append_printf (string, "      ");
           output_string (string, g_param_spec_get_name (pspec));
 
           g_string_append_printf (string, "      ");
-          output_string (string, arg_value->value_name);
+          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec));
 
           g_string_append_printf (string, "      ");
           output_string (string, desc);
@@ -570,21 +553,16 @@ gimp_pdb_print_entry (gpointer key,
 
       for (i = 0; i < procedure->num_values; i++)
         {
-          GParamSpec     *pspec = procedure->values[i];
-          GimpPDBArgType  arg_type;
-          gchar          *desc  = gimp_param_spec_get_desc (pspec);
+          GParamSpec *pspec = procedure->values[i];
+          gchar      *desc  = gimp_param_spec_get_desc (pspec);
 
           g_string_append_printf (string, "\n    (\n");
-
-          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
-
-          arg_value = g_enum_get_value (arg_class, arg_type);
 
           g_string_append_printf (string, "      ");
           output_string (string, g_param_spec_get_name (pspec));
 
           g_string_append_printf (string, "      ");
-          output_string (string, arg_value->value_name);
+          output_string (string, G_PARAM_SPEC_TYPE_NAME (pspec));
 
           g_string_append_printf (string, "      ");
           output_string (string, desc);

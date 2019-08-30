@@ -148,6 +148,7 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
+	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_procs_register	\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
 	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
 	-Wl,-u,$(SYMPREFIX)gimp_parallel_init			\
