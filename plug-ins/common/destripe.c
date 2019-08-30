@@ -31,10 +31,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/*
- * Constants...
- */
-
 #define PLUG_IN_PROC    "plug-in-destripe"
 #define PLUG_IN_BINARY  "destripe"
 #define PLUG_IN_ROLE    "gimp-destripe"
@@ -43,42 +39,56 @@
 #define MAX_AVG         100
 
 
-/*
- * Local functions...
- */
-
-static void      query (void);
-static void      run   (const gchar      *name,
-                        gint              nparams,
-                        const GimpParam  *param,
-                        gint             *nreturn_vals,
-                        GimpParam       **return_vals);
-
-static void      destripe         (GimpDrawable *drawable,
-                                   GimpPreview  *preview);
-static void      destripe_preview (GimpDrawable *drawable,
-                                   GimpPreview  *preview);
-
-static gboolean  destripe_dialog  (GimpDrawable *drawable);
-
-/*
- * Globals...
- */
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run    /* run_proc   */
-};
-
 typedef struct
 {
   gboolean histogram;
   gint     avg_width;
   gboolean preview;
 } DestripeValues;
+
+
+typedef struct _Destripe      Destripe;
+typedef struct _DestripeClass DestripeClass;
+
+struct _Destripe
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _DestripeClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define DESTRIPE_TYPE  (destripe_get_type ())
+#define DESTRIPE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESTRIPE_TYPE, Destripe))
+
+GType                   destripe_get_type         (void) G_GNUC_CONST;
+
+static GList          * destripe_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * destripe_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * destripe_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static void             destripe                  (GimpDrawable         *drawable,
+                                                   GimpPreview          *preview);
+static void             destripe_preview          (GimpDrawable         *drawable,
+                                                   GimpPreview          *preview);
+
+static gboolean         destripe_dialog           (GimpDrawable         *drawable);
+
+
+G_DEFINE_TYPE (Destripe, destripe, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (DESTRIPE_TYPE)
+
 
 static DestripeValues vals =
 {
@@ -88,136 +98,116 @@ static DestripeValues vals =
 };
 
 
-MAIN ()
-
 static void
-query (void)
+destripe_class_init (DestripeClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"          },
-    { GIMP_PDB_IMAGE,    "image",     "Input image"                           },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"                        },
-    { GIMP_PDB_INT32,    "avg-width", "Averaging filter width (default = 36)" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Remove vertical stripe artifacts from the image"),
-                          "This plug-in tries to remove vertical stripes from "
-                          "an image.",
-                          "Marc Lehmann <pcg@goof.com>",
-                          "Marc Lehmann <pcg@goof.com>",
-                          PLUG_IN_VERSION,
-                          N_("Des_tripe..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
+  plug_in_class->query_procedures = destripe_query_procedures;
+  plug_in_class->create_procedure = destripe_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+destripe_init (Destripe *destripe)
 {
-  static GimpParam   values[1];  /* Return values */
-  GimpPDBStatusType  status;     /* Return status */
-  GimpRunMode        run_mode;   /* Current run mode */
-  GimpDrawable      *drawable;
-  gint32             drawable_ID;
+}
 
+static GList *
+destripe_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+destripe_create_procedure (GimpPlugIn  *plug_in,
+                               const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            destripe_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("Des_tripe..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Tone Mapping");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Remove vertical stripe artifacts "
+                                           "from the image"),
+                                        "This plug-in tries to remove vertical "
+                                        "stripes from an image.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Marc Lehmann <pcg@goof.com>",
+                                      "Marc Lehmann <pcg@goof.com>",
+                                      PLUG_IN_VERSION);
+
+      GIMP_PROC_ARG_INT (procedure, "avg-width",
+                         "Avg width",
+                         "Averaging filter width",
+                         2, MAX_AVG, 36,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+destripe_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  status   = GIMP_PDB_SUCCESS;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  run_mode    = param[0].data.d_int32;
-  drawable_ID = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      /*
-       * Possibly retrieve data...
-       */
       gimp_get_data (PLUG_IN_PROC, &vals);
 
-      /*
-       * Get information from the dialog...
-       */
       if (! destripe_dialog (drawable))
-        return;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*
-       * Make sure all the arguments are present...
-       */
-      if (nparams != 4)
-        status = GIMP_PDB_CALLING_ERROR;
-      else
-        vals.avg_width = param[3].data.d_int32;
+      vals.avg_width = GIMP_VALUES_GET_INT (args, 0);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS :
-      /*
-       * Possibly retrieve data...
-       */
       gimp_get_data (PLUG_IN_PROC, &vals);
       break;
-
-    default :
-      status = GIMP_PDB_CALLING_ERROR;
-      break;
     };
 
-  /*
-   * Destripe the image...
-   */
-
-  if (status == GIMP_PDB_SUCCESS)
+  if (gimp_drawable_is_rgb  (drawable) ||
+      gimp_drawable_is_gray (drawable))
     {
-      if ((gimp_drawable_is_rgb (drawable) ||
-           gimp_drawable_is_gray (drawable)))
-        {
-          /*
-           * Run!
-           */
-          destripe (drawable, NULL);
+      destripe (drawable, NULL);
 
-          /*
-           * If run mode is interactive, flush displays...
-           */
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_displays_flush ();
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
 
-          /*
-           * Store data...
-           */
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_PROC, &vals, sizeof (vals));
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-    };
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_set_data (PLUG_IN_PROC, &vals, sizeof (vals));
+    }
+  else
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
+    }
 
-  /*
-   * Reset the current run status...
-   */
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static void
