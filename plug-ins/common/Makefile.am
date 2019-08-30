@@ -474,8 +474,6 @@ decompose_LDADD = \
 	$(INTLLIBS)		\
 	$(decompose_RC)
 
-depth_merge_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 depth_merge_SOURCES = \
 	depth-merge.c
 
