@@ -650,7 +650,7 @@ run (const gchar      *name,
   image_id = param[1].data.d_int32;
   layer_id = param[2].data.d_drawable;
 
-  if (! gimp_item_is_layer (layer_id))
+  if (! gimp_item_is_layer (GIMP_ITEM (layer_id)))
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Can operate on layers only "
