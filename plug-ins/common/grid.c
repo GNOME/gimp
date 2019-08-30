@@ -53,37 +53,6 @@
 #define COLOR_BUTTON_WIDTH  55
 
 
-/* Declare local functions. */
-static void   query  (void);
-static void   run    (const gchar      *name,
-                      gint              nparams,
-                      const GimpParam  *param,
-                      gint             *nreturn_vals,
-                      GimpParam       **return_vals);
-
-static guchar      best_cmap_match (const guchar  *cmap,
-                                    gint           ncolors,
-                                    const GimpRGB *color);
-static void        grid            (GimpImage     *image,
-                                    GimpDrawable  *drawable,
-                                    GimpPreview   *preview);
-static gint        dialog          (GimpImage     *image,
-                                    GimpDrawable  *drawable);
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-static gint sx1, sy1, sx2, sy2;
-
-static GtkWidget *main_dialog    = NULL;
-static GtkWidget *hcolor_button  = NULL;
-static GtkWidget *vcolor_button  = NULL;
-
 typedef struct
 {
   gint    hwidth;
@@ -100,6 +69,58 @@ typedef struct
   GimpRGB icolor;
 } Config;
 
+
+typedef struct _Grid      Grid;
+typedef struct _GridClass GridClass;
+
+struct _Grid
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _GridClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define GRID_TYPE  (grid_get_type ())
+#define GRID (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GRID_TYPE, Grid))
+
+GType                   grid_get_type         (void) G_GNUC_CONST;
+
+static GList          * grid_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * grid_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * grid_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static guchar           best_cmap_match       (const guchar         *cmap,
+                                               gint                  ncolors,
+                                               const GimpRGB        *color);
+static void             grid                  (GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               GimpPreview          *preview);
+static gint             dialog                (GimpImage            *image,
+                                               GimpDrawable         *drawable);
+
+
+G_DEFINE_TYPE (Grid, grid, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GRID_TYPE)
+
+
+static gint sx1, sy1, sx2, sy2;
+
+static GtkWidget *main_dialog    = NULL;
+static GtkWidget *hcolor_button  = NULL;
+static GtkWidget *vcolor_button  = NULL;
+
 static Config grid_cfg =
 {
   1, 16, 8, { 0.0, 0.0, 0.0, 1.0 },    /* horizontal   */
@@ -108,122 +129,167 @@ static Config grid_cfg =
 };
 
 
-MAIN ()
-
-static
-void query (void)
+static void
+grid_class_init (GridClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"   },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"                    },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                 },
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-    { GIMP_PDB_INT32,    "hwidth",   "Horizontal Width   (>= 0)"      },
-    { GIMP_PDB_INT32,    "hspace",   "Horizontal Spacing (>= 1)"      },
-    { GIMP_PDB_INT32,    "hoffset",  "Horizontal Offset  (>= 0)"      },
-    { GIMP_PDB_COLOR,    "hcolor",   "Horizontal Colour"              },
-    { GIMP_PDB_INT8,     "hopacity", "Horizontal Opacity (0...255)"   },
-
-    { GIMP_PDB_INT32,    "vwidth",   "Vertical Width   (>= 0)"        },
-    { GIMP_PDB_INT32,    "vspace",   "Vertical Spacing (>= 1)"        },
-    { GIMP_PDB_INT32,    "voffset",  "Vertical Offset  (>= 0)"        },
-    { GIMP_PDB_COLOR,    "vcolor",   "Vertical Colour"                },
-    { GIMP_PDB_INT8,     "vopacity", "Vertical Opacity (0...255)"     },
-
-    { GIMP_PDB_INT32,    "iwidth",   "Intersection Width   (>= 0)"    },
-    { GIMP_PDB_INT32,    "ispace",   "Intersection Spacing (>= 0)"    },
-    { GIMP_PDB_INT32,    "ioffset",  "Intersection Offset  (>= 0)"    },
-    { GIMP_PDB_COLOR,    "icolor",   "Intersection Colour"            },
-    { GIMP_PDB_INT8,     "iopacity", "Intersection Opacity (0...255)" }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Draw a grid on the image"),
-                          "Draws a grid using the specified colors. "
-                          "The grid origin is the upper left corner.",
-                          "Tim Newsome",
-                          "Tim Newsome, Sven Neumann, Tom Rathborne, TC",
-                          "1997 - 2000",
-                          N_("_Grid (legacy)..."),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
+  plug_in_class->query_procedures = grid_query_procedures;
+  plug_in_class->create_procedure = grid_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+grid_init (Grid *grid)
 {
-  static GimpParam   values[1];
-  GimpImage         *image;
-  GimpDrawable      *drawable;
-  gint32             image_ID;
-  gint32             drawable_ID;
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+}
 
+static GList *
+grid_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+grid_create_procedure (GimpPlugIn  *plug_in,
+                               const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      const GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
+
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            grid_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Grid (legacy)..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Render/Pattern");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Draw a grid on the image"),
+                                        "Draws a grid using the specified "
+                                        "colors. The grid origin is the "
+                                        "upper left corner.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Tim Newsome",
+                                      "Tim Newsome, Sven Neumann, "
+                                      "Tom Rathborne, TC",
+                                      "1997 - 2000");
+
+      GIMP_PROC_ARG_INT (procedure, "hwidth",
+                         "H width",
+                         "Horizontal width",
+                         0, GIMP_MAX_IMAGE_SIZE, 1,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "hspace",
+                         "H space",
+                         "Horizontal spacing",
+                         1, GIMP_MAX_IMAGE_SIZE, 16,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "hoffset",
+                         "H offset",
+                         "Horizontal offset",
+                         0, GIMP_MAX_IMAGE_SIZE, 8,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_RGB (procedure, "hcolor",
+                         "H color",
+                         "Horizontal color",
+                         TRUE, &black,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "vwidth",
+                         "V width",
+                         "Vertical width",
+                         0, GIMP_MAX_IMAGE_SIZE, 1,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "vspace",
+                         "V space",
+                         "Vertical spacing",
+                         1, GIMP_MAX_IMAGE_SIZE, 16,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "voffset",
+                         "V offset",
+                         "Vertical offset",
+                         0, GIMP_MAX_IMAGE_SIZE, 8,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_RGB (procedure, "vcolor",
+                         "V color",
+                         "Vertical color",
+                         TRUE, &black,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "iwidth",
+                         "I width",
+                         "Intersection width",
+                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "ispace",
+                         "I space",
+                         "Intersection spacing",
+                         1, GIMP_MAX_IMAGE_SIZE, 2,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "ioffset",
+                         "I offset",
+                         "Intersection offset",
+                         0, GIMP_MAX_IMAGE_SIZE, 6,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_RGB (procedure, "icolor",
+                         "I color",
+                         "Intersection color",
+                         TRUE, &black,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+grid_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  run_mode    = param[0].data.d_int32;
-  image_ID    = param[1].data.d_int32;
-  drawable_ID = param[2].data.d_drawable;
-  image       = gimp_image_get_by_id (image_ID);
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
-
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
-      if (n_params != 18)
-        status = GIMP_PDB_CALLING_ERROR;
+      grid_cfg.hwidth  = GIMP_VALUES_GET_INT (args, 0);
+      grid_cfg.hspace  = GIMP_VALUES_GET_INT (args, 1);
+      grid_cfg.hoffset = GIMP_VALUES_GET_INT (args, 2);
+      GIMP_VALUES_GET_RGB (args, 3, &grid_cfg.hcolor);
 
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          grid_cfg.hwidth  = MAX (0, param[3].data.d_int32);
-          grid_cfg.hspace  = MAX (1, param[4].data.d_int32);
-          grid_cfg.hoffset = MAX (0, param[5].data.d_int32);
-          grid_cfg.hcolor  = param[6].data.d_color;
+      grid_cfg.vwidth  = GIMP_VALUES_GET_INT (args, 4);
+      grid_cfg.vspace  = GIMP_VALUES_GET_INT (args, 5);
+      grid_cfg.voffset = GIMP_VALUES_GET_INT (args, 6);
+      GIMP_VALUES_GET_RGB (args, 7, &grid_cfg.vcolor);
 
-          gimp_rgb_set_alpha (&(grid_cfg.hcolor),
-                              ((double) param[7].data.d_int8) / 255.0);
-
-
-          grid_cfg.vwidth  = MAX (0, param[8].data.d_int32);
-          grid_cfg.vspace  = MAX (1, param[9].data.d_int32);
-          grid_cfg.voffset = MAX (0, param[10].data.d_int32);
-          grid_cfg.vcolor  = param[11].data.d_color;
-
-          gimp_rgb_set_alpha (&(grid_cfg.vcolor),
-                              ((double) param[12].data.d_int8) / 255.0);
-
-
-
-          grid_cfg.iwidth  = MAX (0, param[13].data.d_int32);
-          grid_cfg.ispace  = MAX (0, param[14].data.d_int32);
-          grid_cfg.ioffset = MAX (0, param[15].data.d_int32);
-          grid_cfg.icolor  = param[16].data.d_color;
-
-          gimp_rgb_set_alpha (&(grid_cfg.icolor),
-                              ((double) (guint) param[17].data.d_int8) / 255.0);
-
-
-        }
+      grid_cfg.iwidth  = GIMP_VALUES_GET_INT (args, 8);
+      grid_cfg.ispace  = GIMP_VALUES_GET_INT (args, 9);
+      grid_cfg.ioffset = GIMP_VALUES_GET_INT (args, 10);
+      GIMP_VALUES_GET_RGB (args, 11, &grid_cfg.icolor);
     }
   else
     {
       gimp_context_get_foreground (&grid_cfg.hcolor);
       grid_cfg.vcolor = grid_cfg.icolor = grid_cfg.hcolor;
 
-      /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_PROC, &grid_cfg);
     }
 
@@ -231,31 +297,23 @@ run (const gchar      *name,
     {
       if (! dialog (image, drawable))
         {
-          /* The dialog was closed, or something similarly evil happened. */
-          status = GIMP_PDB_EXECUTION_ERROR;
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
         }
     }
 
-  if (grid_cfg.hspace <= 0 || grid_cfg.vspace <= 0)
-    {
-      status = GIMP_PDB_EXECUTION_ERROR;
-    }
+  gimp_progress_init (_("Drawing grid"));
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      gimp_progress_init (_("Drawing grid"));
+  grid (image, drawable, NULL);
 
-      grid (image, drawable, NULL);
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_set_data (PLUG_IN_PROC, &grid_cfg, sizeof (grid_cfg));
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &grid_cfg, sizeof (grid_cfg));
-    }
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 
