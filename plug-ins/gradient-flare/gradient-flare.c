@@ -554,8 +554,8 @@ static const gchar *gflare_menu_modes[] =
   N_("Screen")
 };
 
-static gint32              image_ID;
-static gint32              drawable_ID;
+static GimpImage          *image;
+static GimpDrawable       *drawable;
 static DrawableInfo        dinfo;
 static GFlareDialog       *dlg = NULL;
 static GFlareEditor       *ed = NULL;
@@ -811,7 +811,7 @@ plugin_query (void)
                           "1997",
                           N_("_Gradient Flare..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -840,12 +840,12 @@ plugin_run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  run_mode    = param[0].data.d_int32;
-  image_ID    = param[1].data.d_image;
-  drawable_ID = param[2].data.d_drawable;
+  run_mode = param[0].data.d_int32;
+  image    = gimp_image_get_by_id (param[1].data.d_image);
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
-  dinfo.is_color  = gimp_drawable_is_rgb (drawable_ID);
-  dinfo.has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  dinfo.is_color  = gimp_drawable_is_rgb (drawable);
+  dinfo.has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (dinfo.is_color)
     {
@@ -864,7 +864,7 @@ plugin_run (const gchar      *name,
 
   dinfo.bpp = babl_format_get_bytes_per_pixel (dinfo.format);
 
-  if (! gimp_drawable_mask_intersect (drawable_ID,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &dinfo.x, &dinfo.y, &dinfo.w, &dinfo.h))
     return;
 
@@ -952,8 +952,8 @@ plugin_run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable_ID) ||
-          gimp_drawable_is_gray (drawable_ID))
+      if (gimp_drawable_is_rgb  (drawable) ||
+          gimp_drawable_is_gray (drawable))
         {
           gimp_progress_init (_("Gradient Flare"));
           plugin_do ();
@@ -1004,8 +1004,8 @@ plugin_do (void)
                     pvals.vangle, pvals.vlength);
   while (calc_init_progress ()) ;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   /* Render it ! */
   if (pvals.use_asupsample)
@@ -1021,8 +1021,8 @@ plugin_do (void)
   /* Clean up */
   calc_deinit ();
 
-  gimp_drawable_merge_shadow (drawable_ID, TRUE);
-  gimp_drawable_update (drawable_ID, dinfo.x, dinfo.y, dinfo.w, dinfo.h);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, dinfo.x, dinfo.y, dinfo.w, dinfo.h);
 }
 
 /* these routines should be almost rewritten anyway */
@@ -2454,7 +2454,7 @@ dlg_run (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  src_buffer = gimp_drawable_get_buffer (drawable_ID);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   dlg->preview = preview_new (DLG_PREVIEW_WIDTH, DLG_PREVIEW_HEIGHT,
                               dlg_preview_init_func, NULL,
@@ -2546,8 +2546,8 @@ dlg_setup_gflare (void)
 void
 dlg_preview_calc_window (void)
 {
-  gint     width  = gimp_drawable_width  (drawable_ID);
-  gint     height = gimp_drawable_height (drawable_ID);
+  gint     width  = gimp_drawable_width  (drawable);
+  gint     height = gimp_drawable_height (drawable);
   gint     is_wide;
   gdouble  offx, offy;
 
@@ -2577,8 +2577,8 @@ dlg_preview_calc_window (void)
 void
 ed_preview_calc_window (void)
 {
-  gint     width  = gimp_drawable_width  (drawable_ID);
-  gint     height = gimp_drawable_height (drawable_ID);
+  gint     width  = gimp_drawable_width  (drawable);
+  gint     height = gimp_drawable_height (drawable);
   gint     is_wide;
   gdouble  offx, offy;
 
@@ -2695,8 +2695,8 @@ dlg_preview_render_func (Preview  *preview,
                          gpointer  data)
 {
   GeglBuffer *src_buffer = data;
-  gint        width      = gimp_drawable_width  (drawable_ID);
-  gint        height     = gimp_drawable_height (drawable_ID);
+  gint        width      = gimp_drawable_width  (drawable);
+  gint        height     = gimp_drawable_height (drawable);
   gint        x;
   gint        dx, dy;         /* drawable x, y */
   guchar     *src_row, *src;
@@ -2785,21 +2785,21 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gimp_image_get_resolution (image_ID, &xres, &yres);
+  gimp_image_get_resolution (image, &xres, &yres);
 
   center = dlg->sizeentry =
-    gimp_coordinates_new (gimp_image_get_unit (image_ID), "%a",
+    gimp_coordinates_new (gimp_image_get_unit (image), "%a",
                           TRUE, TRUE, 75, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
                           FALSE, FALSE,
 
                           _("_X:"), pvals.xcenter, xres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_width (drawable_ID),
+                          0, gimp_drawable_width (drawable),
 
                           _("_Y:"), pvals.ycenter, yres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_height (drawable_ID));
+                          0, gimp_drawable_height (drawable));
 
   chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
 
@@ -2828,7 +2828,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   adj = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
                               _("_Radius:"), SCALE_WIDTH, 6,
                               pvals.radius, 0.0,
-                              gimp_drawable_width (drawable_ID) / 2,
+                              gimp_drawable_width (drawable) / 2,
                               1.0, 10.0, 1,
                               FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
