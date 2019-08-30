@@ -218,7 +218,7 @@ gimp_item_get_by_id (gint32 item_id)
  *
  * Returns: Whether the item is valid.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_valid (GimpItem *item)
@@ -236,7 +236,7 @@ gimp_item_is_valid (GimpItem *item)
  *
  * Returns: TRUE if the item is a drawable, FALSE otherwise.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_drawable (GimpItem *item)
@@ -254,7 +254,7 @@ gimp_item_is_drawable (GimpItem *item)
  *
  * Returns: TRUE if the item is a layer, FALSE otherwise.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_layer (GimpItem *item)
@@ -273,7 +273,7 @@ gimp_item_is_layer (GimpItem *item)
  *
  * Returns: TRUE if the item is a text layer, FALSE otherwise.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_text_layer (GimpItem *item)
@@ -291,7 +291,7 @@ gimp_item_is_text_layer (GimpItem *item)
  *
  * Returns: TRUE if the item is a channel, FALSE otherwise.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_channel (GimpItem *item)
@@ -310,7 +310,7 @@ gimp_item_is_channel (GimpItem *item)
  *
  * Returns: TRUE if the item is a layer mask, FALSE otherwise.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_layer_mask (GimpItem *item)
@@ -328,7 +328,7 @@ gimp_item_is_layer_mask (GimpItem *item)
  *
  * Returns: TRUE if the item is a selection, FALSE otherwise.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_selection (GimpItem *item)
@@ -346,7 +346,7 @@ gimp_item_is_selection (GimpItem *item)
  *
  * Returns: TRUE if the item is a vectors, FALSE otherwise.
  *
- * Since: 2.8
+ * Since: 3.0
  **/
 gboolean
 gimp_item_is_vectors (GimpItem *item)
@@ -368,6 +368,8 @@ gimp_item_is_vectors (GimpItem *item)
  *          The item's list of children.
  *          The returned array must be freed with g_free(). Item
  *          elements belong to libgimp and must not be unrefed.
+ *
+ * Since: 3.0
  **/
 GimpItem **
 gimp_item_get_children (GimpItem *item,
