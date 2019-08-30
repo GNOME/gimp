@@ -82,8 +82,8 @@
 
 typedef struct
 {
-  gint32  dst_id;
-  gint32  sample_id;
+  GimpDrawable *dst;
+  gint32        sample_id;
 
   gint32 hold_inten;       /* TRUE or FALSE */
   gint32 orig_inten;       /* TRUE or FALSE */
@@ -149,7 +149,7 @@ typedef struct
 
 typedef struct
 {
-  gint32        drawable_id;
+  GimpDrawable *drawable;
   GeglBuffer   *buffer;
   const Babl   *format;
   gint          width;
@@ -173,7 +173,7 @@ typedef struct
  */
 
 static t_samp_interface  g_di;  /* global dialog interface variables */
-static t_values          g_values = { -1, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
+static t_values          g_values = { NULL, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
 static t_samp_table_elem g_lum_tab[256];
 static guchar            g_lvl_trans_tab[256];
 static guchar            g_out_trans_tab[256];
@@ -199,7 +199,7 @@ static void   get_filevalues            (void);
 static void   smp_dialog                (void);
 static void   refresh_dst_preview       (GtkWidget    *preview,
                                          guchar       *src_buffer);
-static void   update_preview            (gint32       *id_ptr);
+static void   update_preview            (GimpDrawable *drawable);
 static void   clear_tables              (void);
 static void   free_colors               (void);
 static void   levels_update             (gint          update);
@@ -217,10 +217,9 @@ static void   get_pixel                 (t_GDRW       *gdrw,
                                          gint32        y,
                                          guchar       *pixel);
 static void   init_gdrw                 (t_GDRW       *gdrw,
-                                         gint32        drawable_id,
+                                         GimpDrawable *drawable,
                                          gboolean      shadow);
 static void   end_gdrw                  (t_GDRW       *gdrw);
-static gint32 is_layer_alive            (gint32        drawable_id);
 static void   remap_pixel               (guchar       *pixel,
                                          const guchar *original,
                                          gint          bpp2);
@@ -302,7 +301,7 @@ query (void)
                           "02/2000",
                           N_("_Sample Colorize..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -320,7 +319,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   const gchar       *env;
   GimpRunMode        run_mode;
-  gint32             drawable_id;
+  GimpDrawable      *drawable;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -333,8 +332,8 @@ run (const gchar      *name,
     g_printf ("sample colorize run\n");
   g_show_progress = FALSE;
 
-  run_mode    = param[0].data.d_int32;
-  drawable_id = param[2].data.d_drawable;
+  run_mode = param[0].data.d_int32;
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -358,13 +357,13 @@ run (const gchar      *name,
   g_values.tol_col_err = 5.5;
 
   /*  Get the specified dst_drawable  */
-  g_values.dst_id = drawable_id;
+  g_values.dst = drawable;
 
   clear_tables ();
 
   /*  Make sure that the drawable is gray or RGB color        */
-  if (gimp_drawable_is_rgb (drawable_id) ||
-      gimp_drawable_is_gray (drawable_id))
+  if (gimp_drawable_is_rgb  (drawable) ||
+      gimp_drawable_is_gray (drawable))
     {
       switch (run_mode)
         {
@@ -471,14 +470,14 @@ smp_toggle_callback (GtkWidget *widget,
   if ((data == &g_di.sample_show_selection) ||
       (data == &g_di.sample_show_color))
     {
-      update_preview (&g_values.sample_id);
+      update_preview (GIMP_DRAWABLE (gimp_item_get_by_id (g_values.sample_id)));
       return;
     }
 
   if ((data == &g_di.dst_show_selection) ||
       (data == &g_di.dst_show_color))
     {
-       update_preview (&g_values.dst_id);
+       update_preview (g_values.dst);
        return;
     }
 
@@ -525,7 +524,7 @@ smp_sample_combo_callback (GtkWidget *widget)
     }
   else
     {
-      update_preview (&g_values.sample_id);
+      update_preview (GIMP_DRAWABLE (gimp_item_get_by_id (g_values.sample_id)));
 
       gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
                                          RESPONSE_GET_COLORS, TRUE);
@@ -535,25 +534,25 @@ smp_sample_combo_callback (GtkWidget *widget)
 static void
 smp_dest_combo_callback (GtkWidget *widget)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 &g_values.dst_id);
+  gint id;
 
-  update_preview (&g_values.dst_id);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &id);
+
+  g_values.dst = GIMP_DRAWABLE (gimp_item_get_by_id (id));
+
+  update_preview (g_values.dst);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
                                      RESPONSE_GET_COLORS, TRUE);
 }
 
 static gint
-smp_constrain (gint32   image_id,
-               gint32   drawable_id,
-               gpointer data)
+smp_constrain (GimpImage *image,
+               GimpItem  *item,
+               gpointer   data)
 {
-  if (image_id < 0)
-    return FALSE;
-
   /* don't accept layers from indexed images */
-  if (gimp_drawable_is_indexed (drawable_id))
+  if (gimp_drawable_is_indexed (GIMP_DRAWABLE (item)))
     return FALSE;
 
   return TRUE;
@@ -825,7 +824,7 @@ update_pv (GtkWidget *preview,
     {
       for (x = 0; x < PREVIEW_SIZE_X; x++)
         {
-          if (gdrw->drawable_id > 0)
+          if (gdrw->drawable)
             {
               x2 = ofx + (x * scale_x);
               y2 = ofy + (y * scale_y);
@@ -883,48 +882,34 @@ update_pv (GtkWidget *preview,
 }
 
 static void
-update_preview (gint32 *id_ptr)
+update_preview (GimpDrawable *drawable)
 {
   t_GDRW   gdrw;
-  gboolean drawable = FALSE;
+  gboolean is_drawable = FALSE;
 
-  if (g_Sdebug)
-    g_printf ("UPD PREVIEWS   ID:%d ENABLE_UPD:%d\n",
-              id_ptr ? (int) *id_ptr : -1, (int)g_di.enable_preview_update);
-
-  if (id_ptr == NULL || !g_di.enable_preview_update)
+  if (! drawable || !g_di.enable_preview_update)
     return;
-  if (is_layer_alive (*id_ptr) < 0)
-    {
-      /* clear preview on invalid drawable id
-       * (SMP_GRADIENT and SMP_INV_GRADIENT)
-       */
-      if (id_ptr == &g_values.sample_id)
-          clear_preview (g_di.sample_preview);
-      if (id_ptr == &g_values.dst_id)
-        clear_preview (g_di.dst_preview);
-      return;
-    }
 
-  if (id_ptr == &g_values.sample_id)
+  if (gimp_item_get_id (GIMP_ITEM (drawable)) == g_values.sample_id)
     {
-      drawable = TRUE;
+      is_drawable = TRUE;
 
-      init_gdrw (&gdrw, *id_ptr, FALSE);
+      init_gdrw (&gdrw, drawable, FALSE);
       update_pv (g_di.sample_preview, g_di.sample_show_selection, &gdrw,
                  NULL, g_di.sample_show_color);
     }
-  else if (id_ptr == &g_values.dst_id)
+  else if (gimp_item_get_id (GIMP_ITEM (drawable)) ==
+           gimp_item_get_id (GIMP_ITEM (g_values.dst)))
     {
-      drawable = TRUE;
+      is_drawable = TRUE;
 
-      init_gdrw (&gdrw, *id_ptr, FALSE);
+      init_gdrw (&gdrw, drawable, FALSE);
       update_pv (g_di.dst_preview, g_di.dst_show_selection, &gdrw,
                  &g_dst_preview_buffer[0], g_di.dst_show_color);
       refresh_dst_preview (g_di.dst_preview,  &g_dst_preview_buffer[0]);
     }
 
-  if (drawable)
+  if (is_drawable)
     end_gdrw (&gdrw);
 }
 
@@ -952,7 +937,7 @@ smp_get_colors (GtkWidget *dialog)
   gint   i;
   guchar buffer[3 * DA_WIDTH * GRADIENT_HEIGHT];
 
-  update_preview (&g_values.sample_id);
+  update_preview (GIMP_DRAWABLE (gimp_item_get_by_id (g_values.sample_id)));
 
   if (dialog && main_colorize (MC_GET_SAMPLE_COLORS) >= 0)  /* do not colorize, just analyze sample colors */
     gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
@@ -960,7 +945,7 @@ smp_get_colors (GtkWidget *dialog)
   for (i = 0; i < GRADIENT_HEIGHT; i++)
     memcpy (buffer + i * 3 * DA_WIDTH, g_sample_color_tab, 3 * DA_WIDTH);
 
-  update_preview (&g_values.dst_id);
+  update_preview (g_values.dst);
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (g_di.sample_colortab_preview),
                           0, 0, DA_WIDTH, GRADIENT_HEIGHT,
@@ -1357,7 +1342,8 @@ smp_dialog (void)
   gtk_widget_show (label);
 
   combo = gimp_layer_combo_box_new (smp_constrain, NULL, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), g_values.dst_id,
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              gimp_item_get_id (GIMP_ITEM (g_values.dst)),
                               G_CALLBACK (smp_dest_combo_callback),
                               NULL, NULL);
 
@@ -1710,7 +1696,7 @@ smp_dialog (void)
   /* set old_id's different (to force updates of the previews) */
   g_di.enable_preview_update = TRUE;
   smp_get_colors (NULL);
-  update_preview (&g_values.dst_id);
+  update_preview (g_values.dst);
   levels_update (INPUT_SLIDERS | INPUT_LEVELS | DRAW);
 
   gtk_main ();
@@ -2421,23 +2407,6 @@ get_gradient (gint mode)
   g_free (f_samples);
 }
 
-static gint32
-is_layer_alive (gint32 drawable_id)
-{
-  /* return -1 if layer has become invalid */
-  if (drawable_id < 0)
-    return -1;
-
-  if (gimp_item_get_image (drawable_id) < 0)
-    {
-      g_printf ("sample colorize: unknown layer_id %d (Image closed?)\n",
-                (int)drawable_id);
-      return -1;
-    }
-
-  return drawable_id;
-}
-
 static void
 end_gdrw (t_GDRW *gdrw)
 {
@@ -2454,54 +2423,51 @@ end_gdrw (t_GDRW *gdrw)
 }
 
 static void
-init_gdrw (t_GDRW   *gdrw,
-           gint32    drawable_id,
-           gboolean  shadow)
+init_gdrw (t_GDRW       *gdrw,
+           GimpDrawable *drawable,
+           gboolean      shadow)
 {
-  gint32  image_id;
-  gint32  sel_channel_id;
-  gint32  x1, x2, y1, y2;
-  gint    offsetx, offsety;
-  gint    w, h;
-  gint    sel_offsetx, sel_offsety;
-  t_GDRW *sel_gdrw;
-  gint32  non_empty;
+  GimpImage    *image;
+  GimpDrawable *sel_channel;
+  gint32        x1, x2, y1, y2;
+  gint          offsetx, offsety;
+  gint          w, h;
+  gint          sel_offsetx, sel_offsety;
+  t_GDRW       *sel_gdrw;
+  gint32        non_empty;
 
-  if (g_Sdebug)
-    g_printf ("\np_init_gdrw: drawable_ID: %d\n", drawable_id);
-
-  gdrw->drawable_id = drawable_id;
+  gdrw->drawable = drawable;
 
   if (shadow)
-    gdrw->buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+    gdrw->buffer = gimp_drawable_get_shadow_buffer (drawable);
   else
-    gdrw->buffer = gimp_drawable_get_buffer (drawable_id);
+    gdrw->buffer = gimp_drawable_get_buffer (drawable);
 
-  gdrw->width = gimp_drawable_width (drawable_id);
-  gdrw->height = gimp_drawable_height (drawable_id);
+  gdrw->width = gimp_drawable_width (drawable);
+  gdrw->height = gimp_drawable_height (drawable);
   gdrw->tile_width = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
   gdrw->shadow = shadow;
   gdrw->seldeltax = 0;
   gdrw->seldeltay = 0;
   /* get offsets within the image */
-  gimp_drawable_offsets (gdrw->drawable_id, &offsetx, &offsety);
+  gimp_drawable_offsets (gdrw->drawable, &offsetx, &offsety);
 
-  if (! gimp_drawable_mask_intersect (gdrw->drawable_id,
+  if (! gimp_drawable_mask_intersect (gdrw->drawable,
                                       &gdrw->x1, &gdrw->y1, &w, &h))
     return;
 
   gdrw->x2 = gdrw->x1 + w;
   gdrw->y2 = gdrw->y1 + h;
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     gdrw->format = babl_format ("R'G'B'A u8");
   else
     gdrw->format = babl_format ("R'G'B' u8");
 
   gdrw->bpp = babl_format_get_bytes_per_pixel (gdrw->format);
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     {
       /* index of the alpha channelbyte {1|3} */
       gdrw->index_alpha = gdrw->bpp -1;
@@ -2511,34 +2477,24 @@ init_gdrw (t_GDRW   *gdrw,
       gdrw->index_alpha = 0;      /* there is no alpha channel */
     }
 
-  image_id = gimp_item_get_image (gdrw->drawable_id);
+  image = gimp_item_get_image (GIMP_ITEM (gdrw->drawable));
 
   /* check and see if we have a selection mask */
-  sel_channel_id  = gimp_image_get_selection (image_id);
+  sel_channel  = GIMP_DRAWABLE (gimp_image_get_selection (image));
 
-  if (g_Sdebug)
-    {
-      g_printf ("init_gdrw: image_id %d sel_channel_id: %d\n",
-                (int)image_id, (int)sel_channel_id);
-      g_printf ("init_gdrw: BOUNDS     x1: %d y1: %d x2:%d y2: %d\n",
-                (int)gdrw->x1,  (int)gdrw->y1, (int)gdrw->x2,(int)gdrw->y2);
-      g_printf ("init_gdrw: OFFS       x: %d y: %d\n",
-                (int)offsetx, (int)offsety );
-    }
+  gimp_selection_bounds (image, &non_empty, &x1, &y1, &x2, &y2);
 
-  gimp_selection_bounds (image_id, &non_empty, &x1, &y1, &x2, &y2);
-
-  if (non_empty && (sel_channel_id >= 0))
+  if (non_empty && sel_channel)
     {
       /* selection is TRUE */
       sel_gdrw = g_new0 (t_GDRW, 1);
-      sel_gdrw->drawable_id = sel_channel_id;
+      sel_gdrw->drawable = sel_channel;
 
-      sel_gdrw->buffer = gimp_drawable_get_buffer (sel_channel_id);
+      sel_gdrw->buffer = gimp_drawable_get_buffer (sel_channel);
       sel_gdrw->format = babl_format ("Y u8");
 
-      sel_gdrw->width = gimp_drawable_width (sel_channel_id);
-      sel_gdrw->height = gimp_drawable_height (sel_channel_id);
+      sel_gdrw->width = gimp_drawable_width (sel_channel);
+      sel_gdrw->height = gimp_drawable_height (sel_channel);
 
       sel_gdrw->tile_width = gimp_tile_width ();
       sel_gdrw->tile_height = gimp_tile_height ();
@@ -2556,7 +2512,7 @@ init_gdrw (t_GDRW   *gdrw,
       /* offset delta between drawable and selection
        * (selection always has image size and should always have offsets of 0 )
        */
-      gimp_drawable_offsets (sel_channel_id, &sel_offsetx, &sel_offsety);
+      gimp_drawable_offsets (sel_channel, &sel_offsetx, &sel_offsety);
       gdrw->seldeltax = offsetx - sel_offsetx;
       gdrw->seldeltay = offsety - sel_offsety;
 
@@ -2971,7 +2927,7 @@ colorize_func (const guchar *src,
 }
 
 static void
-colorize_drawable (gint32 drawable_id)
+colorize_drawable (GimpDrawable *drawable)
 {
   GeglBuffer         *src_buffer;
   GeglBuffer         *dest_buffer;
@@ -2983,13 +2939,13 @@ colorize_drawable (gint32 drawable_id)
   gint                total_area;
   gint                area_so_far;
 
-  if (! gimp_drawable_mask_intersect (drawable_id, &x, &y, &w, &h))
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     return;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_id);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
-  has_alpha = gimp_drawable_has_alpha (drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (has_alpha)
     format = babl_format ("R'G'B'A u8");
@@ -3048,8 +3004,8 @@ colorize_drawable (gint32 drawable_id)
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (drawable_id, TRUE);
-  gimp_drawable_update (drawable_id, x, y, w, h);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, x, y, w, h);
 
   out:
   if (g_show_progress)
@@ -3085,12 +3041,10 @@ main_colorize (gint mc_flags)
         }
       else
         {
-          if (is_layer_alive (id) < 0)
-            return -1;
-
           sample_drawable = TRUE;
 
-          init_gdrw (&sample_gdrw, id, FALSE);
+          init_gdrw (&sample_gdrw, GIMP_DRAWABLE (gimp_item_get_by_id (id)),
+                     FALSE);
           free_colors ();
           rc = sample_analyze (&sample_gdrw);
         }
@@ -3098,16 +3052,13 @@ main_colorize (gint mc_flags)
 
   if ((mc_flags & MC_DST_REMAP) && (rc == 0))
     {
-      if (is_layer_alive (g_values.dst_id) < 0)
-        return -1;
-
-      if (gimp_drawable_is_gray (g_values.dst_id) &&
+      if (gimp_drawable_is_gray (g_values.dst) &&
           (mc_flags & MC_DST_REMAP))
         {
-          gimp_image_convert_rgb (gimp_item_get_image (g_values.dst_id));
+          gimp_image_convert_rgb (gimp_item_get_image (GIMP_ITEM (g_values.dst)));
         }
 
-      colorize_drawable (g_values.dst_id);
+      colorize_drawable (g_values.dst);
     }
 
   if (sample_drawable)

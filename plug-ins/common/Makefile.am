@@ -1387,8 +1387,6 @@ qbist_LDADD = \
 	$(INTLLIBS)		\
 	$(qbist_RC)
 
-sample_colorize_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 sample_colorize_SOURCES = \
 	sample-colorize.c
 
