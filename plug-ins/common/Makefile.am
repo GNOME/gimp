@@ -1453,8 +1453,6 @@ sphere_designer_LDADD = \
 	$(INTLLIBS)		\
 	$(sphere_designer_RC)
 
-tile_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 tile_SOURCES = \
 	tile.c
 
