@@ -66,8 +66,6 @@ gimp_channel_init (GimpChannel *channel)
  *
  * Returns: (transfer none): The newly created channel.
  *          The object belongs to libgimp and you should not free it.
- *
- * Since: 3.0
  */
 GimpChannel *
 gimp_channel_new (GimpImage     *image,

@@ -62,8 +62,6 @@ gimp_selection_init (GimpSelection *selection)
  * positioning of the new floating selection.
  *
  * Returns: (transfer none): The floated layer.
- *
- * Since: 3.0
  */
 GimpLayer *
 gimp_selection_float (GimpImage    *image,

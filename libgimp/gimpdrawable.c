@@ -64,8 +64,6 @@ gimp_drawable_init (GimpDrawable *drawable)
  *
  * Returns: (transfer full) (nullable): thumbnail data or %NULL if
  *          @drawable is invalid.
- *
- * Since: 3.0
  **/
 guchar *
 gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
@@ -106,7 +104,7 @@ gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
  *
  * Returns: (transfer full): a new #GdkPixbuf
  *
- * Since: 3.0
+ * Since: 2.2
  **/
 GdkPixbuf *
 gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
@@ -135,25 +133,6 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
   return NULL;
 }
 
-/**
- * gimp_drawable_get_sub_thumbnail_data:
- * @drawable:             the drawable ID
- * @src_x:                the x coordinate of the area
- * @src_y:                the y coordinate of the area
- * @src_width:            the width of the area
- * @src_height:           the height of the area
- * @dest_width: (inout):  the requested thumbnail width  (<= 1024 pixels)
- * @dest_height: (inout): the requested thumbnail height (<= 1024 pixels)
- * @bpp: (out):           the bytes per pixel of the returned thumbnail data
- *
- * Retrieves thumbnail data for the drawable identified by @drawable.
- * The thumbnail will be not larger than the requested size.
- *
- * Returns: (transfer full) (nullable): thumbnail data or %NULL if
- *          @drawable is invalid.
- *
- * Since: 3.0
- **/
 guchar *
 gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
                                       gint          src_x,
@@ -203,7 +182,7 @@ gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
  *
  * Returns: (transfer full): a new #GdkPixbuf
  *
- * Since: 3.0
+ * Since: 2.2
  **/
 GdkPixbuf *
 gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
@@ -255,7 +234,7 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
  *
  * See Also: gimp_drawable_get_shadow_buffer()
  *
- * Since: 3.0
+ * Since: 2.10
  */
 GeglBuffer *
 gimp_drawable_get_buffer (GimpDrawable *drawable)
@@ -288,7 +267,7 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
  *
  * See Also: gimp_drawable_get_shadow_buffer()
  *
- * Since: 3.0
+ * Since: 2.10
  */
 GeglBuffer *
 gimp_drawable_get_shadow_buffer (GimpDrawable *drawable)
@@ -316,7 +295,7 @@ gimp_drawable_get_shadow_buffer (GimpDrawable *drawable)
  *
  * Returns: The #Babl format.
  *
- * Since: 3.0
+ * Since: 2.10
  */
 const Babl *
 gimp_drawable_get_format (GimpDrawable *drawable)
@@ -394,7 +373,6 @@ gimp_drawable_get_format (GimpDrawable *drawable)
 
   return format;
 }
-
 /**
  * gimp_drawable_get_thumbnail_format:
  * @drawable: the ID of the #GimpDrawable to get the thumbnail format for.
@@ -403,7 +381,7 @@ gimp_drawable_get_format (GimpDrawable *drawable)
  *
  * Returns: The #Babl thumbnail format.
  *
- * Since: 3.0
+ * Since: 2.10.14
  */
 const Babl *
 gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)

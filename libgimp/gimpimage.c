@@ -186,7 +186,7 @@ gimp_image_get_by_id (gint32 image_id)
  *
  * Returns: Whether the image is valid.
  *
- * Since: 3.0
+ * Since: 2.4
  **/
 gboolean
 gimp_image_is_valid (GimpImage *image)
@@ -275,8 +275,6 @@ gimp_list_images (void)
  *          The list of layers contained in the image.
  *          The returned array must be freed with g_free(). Layer
  *          elements belong to libgimp and must not be freed.
- *
- * Since: 3.0
  **/
 GimpLayer **
 gimp_image_get_layers (GimpImage *image,
@@ -315,8 +313,6 @@ gimp_image_get_layers (GimpImage *image,
  *          The list of channels contained in the image.
  *          The returned array must be freed with g_free(). Channel
  *          elements belong to libgimp and must not be freed.
- *
- * Since: 3.0
  **/
 GimpChannel **
 gimp_image_get_channels (GimpImage *image,
@@ -352,8 +348,6 @@ gimp_image_get_channels (GimpImage *image,
  *          The list of vectors contained in the image.
  *          The returned array must be freed with g_free(). Vectors
  *          elements belong to libgimp and must not be freed.
- *
- * Since: 3.0
  **/
 GimpVectors **
 gimp_image_get_vectors (GimpImage *image,
@@ -495,8 +489,6 @@ gimp_image_list_vectors (GimpImage *image)
  * is not of base type INDEXED, this pointer will be NULL.
  *
  * Returns: The image's colormap.
- *
- * Since: 3.0
  */
 guchar *
 gimp_image_get_colormap (GimpImage *image,
@@ -527,8 +519,6 @@ gimp_image_get_colormap (GimpImage *image,
  * in the "cmap" array.
  *
  * Returns: TRUE on success.
- *
- * Since: 3.0
  */
 gboolean
 gimp_image_set_colormap (GimpImage    *image,
@@ -553,8 +543,6 @@ gimp_image_set_colormap (GimpImage    *image,
  * gives the number of bytes per pixel in the image.
  *
  * Returns: (transfer full): the thumbnail data.
- *
- * Since: 3.0
  **/
 guchar *
 gimp_image_get_thumbnail_data (GimpImage *image,
@@ -594,7 +582,7 @@ gimp_image_get_thumbnail_data (GimpImage *image,
  *
  * Returns: (transfer full): a new #GdkPixbuf
  *
- * Since: 3.0
+ * Since: 2.2
  **/
 GdkPixbuf *
 gimp_image_get_thumbnail (GimpImage              *image,
@@ -633,7 +621,7 @@ gimp_image_get_thumbnail (GimpImage              *image,
  * Returns: (nullable) (transfer full): The exif/ptc/xmp metadata,
  *          or %NULL if there is none.
  *
- * Since: 3.0
+ * Since: 2.10
  **/
 GimpMetadata *
 gimp_image_get_metadata (GimpImage *image)
@@ -663,7 +651,7 @@ gimp_image_get_metadata (GimpImage *image)
  *
  * Returns: TRUE on success.
  *
- * Since: 3.0
+ * Since: 2.10
  **/
 gboolean
 gimp_image_set_metadata (GimpImage    *image,

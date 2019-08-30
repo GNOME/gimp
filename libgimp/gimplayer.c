@@ -136,7 +136,7 @@ gimp_layer_copy (GimpLayer *layer)
  * Returns: (transfer none): The newly created layer.
  *          The object belongs to libgimp and you should not free it.
  *
- * Since: 3.0
+ * Since: 2.2
  */
 GimpLayer *
 gimp_layer_new_from_pixbuf (GimpImage     *image,
@@ -215,14 +215,14 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
  * Returns: (transfer none): The newly created layer.
  *          The object belongs to libgimp and you should not free it.
  *
- * Since: 3.0
+ * Since: 2.8
  */
 GimpLayer *
-gimp_layer_new_from_surface (GimpImage       *image,
-                             const gchar     *name,
-                             cairo_surface_t *surface,
-                             gdouble          progress_start,
-                             gdouble          progress_end)
+gimp_layer_new_from_surface (GimpImage            *image,
+                             const gchar          *name,
+                             cairo_surface_t      *surface,
+                             gdouble               progress_start,
+                             gdouble               progress_end)
 {
   GeglBuffer    *src_buffer;
   GeglBuffer    *dest_buffer;
@@ -278,7 +278,7 @@ gimp_layer_new_from_surface (GimpImage       *image,
 }
 
 
-/* Deprecated API. */
+/* Deprecate API. */
 
 
 /**

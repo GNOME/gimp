@@ -188,7 +188,7 @@ gimp_display_get_by_id (gint32 display_id)
  *
  * Returns: Whether the display is valid.
  *
- * Since: 3.0
+ * Since: 2.4
  **/
 gboolean
 gimp_display_is_valid (GimpDisplay *display)
