@@ -62,12 +62,159 @@ typedef enum
 } bump_t;
 
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
+#define XFACTOR2 0.0833
+#define XFACTOR3 0.2083
+#define XFACTOR4 0.2500
+
+#define XFACTOR5 0.2500
+#define XFACTOR6 0.2083
+#define XFACTOR7 0.0833
+
+#define YFACTOR2 0.1000
+#define YFACTOR3 0.2200
+#define YFACTOR4 0.1000
+
+#define YFACTOR5 0.1000
+#define YFACTOR6 0.4666
+#define YFACTOR7 0.1000
+#define YFACTOR8 0.2000
+
+#define MAX_VALUE 255
+#define MIN_VALUE 0
+#define DELTA 0.15
+
+#define BLACK_R 30
+#define BLACK_G 30
+#define BLACK_B 30
+
+#define WALL_XFACTOR2 0.05
+#define WALL_XFACTOR3 0.05
+#define WALL_YFACTOR2 0.05
+#define WALL_YFACTOR3 0.05
+
+#define WALL_XCONS2 0.2
+#define WALL_XCONS3 0.3
+#define WALL_YCONS2 0.2
+#define WALL_YCONS3 0.3
+
+#define FUDGE 1.2
+
+#define MIN_XTILES 1
+#define MAX_XTILES 20
+#define MIN_YTILES 1
+#define MAX_YTILES 20
+#define MIN_BLEND_LINES 0
+#define MAX_BLEND_LINES 10
+#define MIN_BLEND_AMOUNT 0
+#define MAX_BLEND_AMOUNT 1.0
+
+#define SCALE_WIDTH 200
+
+#define DRAW_POINT(buffer, bufsize, index)         \
+  do                                               \
+    {                                              \
+      if ((index) >= 0 && (index) + 2 < (bufsize)) \
+        {                                          \
+          buffer[(index) + 0] = BLACK_R;           \
+          buffer[(index) + 1] = BLACK_G;           \
+          buffer[(index) + 2] = BLACK_B;           \
+        }                                          \
+    }                                              \
+  while (0)
+
+#define DARKEN_POINT(buffer, bufsize, index, delta, temp)                \
+  do                                                                     \
+    {                                                                    \
+      if ((index) >= 0 && (index) + 2 < (bufsize))                       \
+        {                                                                \
+          temp = MAX (buffer[(index) + 0] * (1.0 - (delta)), MIN_VALUE); \
+          buffer[(index) + 0] = temp;                                    \
+          temp = MAX (buffer[(index) + 1] * (1.0 - (delta)), MIN_VALUE); \
+          buffer[(index) + 1] = temp;                                    \
+          temp = MAX (buffer[(index) + 2] * (1.0 - (delta)), MIN_VALUE); \
+          buffer[(index) + 2] = temp;                                    \
+        }                                                                \
+    }                                                                    \
+  while (0)
+
+#define LIGHTEN_POINT(buffer, bufsize, index, delta, temp)               \
+  do                                                                     \
+    {                                                                    \
+      if ((index) >= 0 && (index) + 2 < (bufsize))                       \
+        {                                                                \
+          temp = MIN (buffer[(index) + 0] * (1.0 + (delta)), MAX_VALUE); \
+          buffer[(index) + 0] = temp;                                    \
+          temp = MIN (buffer[(index) + 1] * (1.0 + (delta)), MAX_VALUE); \
+          buffer[(index) + 1] = temp;                                    \
+          temp = MIN (buffer[(index) + 2] * (1.0 + (delta)), MAX_VALUE); \
+          buffer[(index) + 2] = temp;                                    \
+        }                                                                \
+    }                                                                    \
+  while (0)
+
+
+typedef struct config_tag config_t;
+
+struct config_tag
+{
+  gint     x;
+  gint     y;
+  style_t  style;
+  gint     blend_lines;
+  gdouble  blend_amount;
+};
+
+typedef struct globals_tag globals_t;
+
+struct globals_tag
+{
+  gint  *cachex1[4];
+  gint  *cachex2[4];
+  gint  *cachey1[4];
+  gint  *cachey2[4];
+  gint   steps[4];
+  gint  *gridx;
+  gint  *gridy;
+  gint **blend_outer_cachex1[4];
+  gint **blend_outer_cachex2[4];
+  gint **blend_outer_cachey1[4];
+  gint **blend_outer_cachey2[4];
+  gint **blend_inner_cachex1[4];
+  gint **blend_inner_cachex2[4];
+  gint **blend_inner_cachey1[4];
+  gint **blend_inner_cachey2[4];
+};
+
+
+typedef struct _Jigsaw      Jigsaw;
+typedef struct _JigsawClass JigsawClass;
+
+struct _Jigsaw
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _JigsawClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define JIGSAW_TYPE  (jigsaw_get_type ())
+#define JIGSAW (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JIGSAW_TYPE, Jigsaw))
+
+GType                   jigsaw_get_type         (void) G_GNUC_CONST;
+
+static GList          * jigsaw_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * jigsaw_create_procedure (GimpPlugIn           *plug_in,
+                                                 const gchar          *name);
+
+static GimpValueArray * jigsaw_run              (GimpProcedure        *procedure,
+                                                 GimpRunMode           run_mode,
+                                                 GimpImage            *image,
+                                                 GimpDrawable         *drawable,
+                                                 const GimpValueArray *args,
+                                                 gpointer              run_data);
 
 static void     jigsaw             (GimpDrawable *drawable,
                                     GimpPreview  *preview);
@@ -193,117 +340,10 @@ static void draw_bezier_horizontal_border (guchar *buffer, gint bufsize,
 static void check_config           (gint width, gint height);
 
 
+G_DEFINE_TYPE (Jigsaw, jigsaw, GIMP_TYPE_PLUG_IN)
 
-#define XFACTOR2 0.0833
-#define XFACTOR3 0.2083
-#define XFACTOR4 0.2500
+GIMP_MAIN (JIGSAW_TYPE)
 
-#define XFACTOR5 0.2500
-#define XFACTOR6 0.2083
-#define XFACTOR7 0.0833
-
-#define YFACTOR2 0.1000
-#define YFACTOR3 0.2200
-#define YFACTOR4 0.1000
-
-#define YFACTOR5 0.1000
-#define YFACTOR6 0.4666
-#define YFACTOR7 0.1000
-#define YFACTOR8 0.2000
-
-#define MAX_VALUE 255
-#define MIN_VALUE 0
-#define DELTA 0.15
-
-#define BLACK_R 30
-#define BLACK_G 30
-#define BLACK_B 30
-
-#define WALL_XFACTOR2 0.05
-#define WALL_XFACTOR3 0.05
-#define WALL_YFACTOR2 0.05
-#define WALL_YFACTOR3 0.05
-
-#define WALL_XCONS2 0.2
-#define WALL_XCONS3 0.3
-#define WALL_YCONS2 0.2
-#define WALL_YCONS3 0.3
-
-#define FUDGE 1.2
-
-#define MIN_XTILES 1
-#define MAX_XTILES 20
-#define MIN_YTILES 1
-#define MAX_YTILES 20
-#define MIN_BLEND_LINES 0
-#define MAX_BLEND_LINES 10
-#define MIN_BLEND_AMOUNT 0
-#define MAX_BLEND_AMOUNT 1.0
-
-#define SCALE_WIDTH 200
-
-#define DRAW_POINT(buffer, bufsize, index)         \
-  do                                               \
-    {                                              \
-      if ((index) >= 0 && (index) + 2 < (bufsize)) \
-        {                                          \
-          buffer[(index) + 0] = BLACK_R;           \
-          buffer[(index) + 1] = BLACK_G;           \
-          buffer[(index) + 2] = BLACK_B;           \
-        }                                          \
-    }                                              \
-  while (0)
-
-#define DARKEN_POINT(buffer, bufsize, index, delta, temp)                \
-  do                                                                     \
-    {                                                                    \
-      if ((index) >= 0 && (index) + 2 < (bufsize))                       \
-        {                                                                \
-          temp = MAX (buffer[(index) + 0] * (1.0 - (delta)), MIN_VALUE); \
-          buffer[(index) + 0] = temp;                                    \
-          temp = MAX (buffer[(index) + 1] * (1.0 - (delta)), MIN_VALUE); \
-          buffer[(index) + 1] = temp;                                    \
-          temp = MAX (buffer[(index) + 2] * (1.0 - (delta)), MIN_VALUE); \
-          buffer[(index) + 2] = temp;                                    \
-        }                                                                \
-    }                                                                    \
-  while (0)
-
-#define LIGHTEN_POINT(buffer, bufsize, index, delta, temp)               \
-  do                                                                     \
-    {                                                                    \
-      if ((index) >= 0 && (index) + 2 < (bufsize))                       \
-        {                                                                \
-          temp = MIN (buffer[(index) + 0] * (1.0 + (delta)), MAX_VALUE); \
-          buffer[(index) + 0] = temp;                                    \
-          temp = MIN (buffer[(index) + 1] * (1.0 + (delta)), MAX_VALUE); \
-          buffer[(index) + 1] = temp;                                    \
-          temp = MIN (buffer[(index) + 2] * (1.0 + (delta)), MAX_VALUE); \
-          buffer[(index) + 2] = temp;                                    \
-        }                                                                \
-    }                                                                    \
-  while (0)
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,
-  NULL,
-  query,
-  run
-};
-
-struct config_tag
-{
-  gint     x;
-  gint     y;
-  style_t  style;
-  gint     blend_lines;
-  gdouble  blend_amount;
-};
-
-
-typedef struct config_tag config_t;
 
 static config_t config =
 {
@@ -314,124 +354,139 @@ static config_t config =
   0.5
 };
 
-struct globals_tag
-{
-  gint  *cachex1[4];
-  gint  *cachex2[4];
-  gint  *cachey1[4];
-  gint  *cachey2[4];
-  gint   steps[4];
-  gint  *gridx;
-  gint  *gridy;
-  gint **blend_outer_cachex1[4];
-  gint **blend_outer_cachex2[4];
-  gint **blend_outer_cachey1[4];
-  gint **blend_outer_cachey2[4];
-  gint **blend_inner_cachex1[4];
-  gint **blend_inner_cachex2[4];
-  gint **blend_inner_cachey1[4];
-  gint **blend_inner_cachey2[4];
-};
-
-typedef struct globals_tag globals_t;
-
 static globals_t globals;
 
-MAIN ()
 
 static void
-query (void)
+jigsaw_class_init (JigsawClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
-    { GIMP_PDB_INT32,    "x",            "Number of tiles across > 0" },
-    { GIMP_PDB_INT32,    "y",            "Number of tiles down > 0" },
-    { GIMP_PDB_INT32,    "style",        "The style/shape of the jigsaw puzzle { 0, 1 }" },
-    { GIMP_PDB_INT32,    "blend-lines",  "Number of lines for shading bevels >= 0" },
-    { GIMP_PDB_FLOAT,    "blend-amount", "The power of the light highlights 0 =< 5" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Add a jigsaw-puzzle pattern to the image"),
-                          "Jigsaw puzzle look",
-                          "Nigel Wetten",
-                          "Nigel Wetten",
-                          "May 2000",
-                          N_("_Jigsaw..."),
-                          "RGB*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
+  plug_in_class->query_procedures = jigsaw_query_procedures;
+  plug_in_class->create_procedure = jigsaw_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+jigsaw_init (Jigsaw *jigsaw)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpDrawable      *drawable;
-  guint32            drawable_id;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+}
 
+static GList *
+jigsaw_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+jigsaw_create_procedure (GimpPlugIn  *plug_in,
+                               const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            jigsaw_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Jigsaw..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Render/Pattern");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Add a jigsaw-puzzle pattern "
+                                           "to the image"),
+                                        "Jigsaw puzzle look",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Nigel Wetten",
+                                      "Nigel Wetten",
+                                      "May 2000");
+
+      GIMP_PROC_ARG_INT (procedure, "x",
+                         "X",
+                         "Number of tiles across",
+                         1, GIMP_MAX_IMAGE_SIZE, 5,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "y",
+                         "Y",
+                         "Number of tiles down",
+                         1, GIMP_MAX_IMAGE_SIZE, 5,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "style",
+                         "Style",
+                         "The style/shape of the jigsaw puzzle { 0, 1 }",
+                         0, 1, BEZIER_1,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "blend-lines",
+                         "Blend lines",
+                         "Number of lines for shading bevels",
+                         1, GIMP_MAX_IMAGE_SIZE, 3,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "blend-amount",
+                            "Blend amount",
+                            "The power of the light highlights",
+                            0, 5, 0.5,
+                            G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+jigsaw_run (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            GimpDrawable         *drawable,
+            const GimpValueArray *args,
+            gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode    = param[0].data.d_int32;
-  drawable_id = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
-
   switch (run_mode)
     {
-    case GIMP_RUN_NONINTERACTIVE:
-      if (nparams == 8)
-        {
-          config.x = param[3].data.d_int32;
-          config.y = param[4].data.d_int32;
-          config.style = param[5].data.d_int32;
-          config.blend_lines = param[6].data.d_int32;
-          config.blend_amount = param[7].data.d_float;
-
-          jigsaw (drawable, NULL);
-        }
-      else
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      break;
-
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &config);
+
       if (! jigsaw_dialog (drawable))
         {
-          status = GIMP_PDB_CANCEL;
-          break;
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
         }
-      gimp_progress_init (_("Assembling jigsaw"));
-
-      jigsaw (drawable, NULL);
-      gimp_set_data (PLUG_IN_PROC, &config, sizeof(config_t));
-      gimp_displays_flush ();
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &config);
-      jigsaw (drawable, NULL);
-      gimp_displays_flush ();
-    }  /* switch */
+    case GIMP_RUN_NONINTERACTIVE:
+      config.x            = GIMP_VALUES_GET_INT    (args, 0);
+      config.y            = GIMP_VALUES_GET_INT    (args, 1);
+      config.style        = GIMP_VALUES_GET_INT    (args, 2);
+      config.blend_lines  = GIMP_VALUES_GET_INT    (args, 3);
+      config.blend_amount = GIMP_VALUES_GET_DOUBLE (args, 4);
+      break;
 
-  *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+    case GIMP_RUN_WITH_LAST_VALS :
+      gimp_get_data (PLUG_IN_PROC, &config);
+      break;
+    };
+
+  gimp_progress_init (_("Assembling jigsaw"));
+
+  jigsaw (drawable, NULL);
+
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static void
