@@ -69,7 +69,7 @@ static void      run               (const gchar      *name,
                                     const GimpParam  *param,
                                     gint             *nreturn_vals,
                                     GimpParam       **return_vals);
-static void      flame             (gint32            drawable_id);
+static void      flame             (GimpDrawable     *drawable);
 
 static gboolean  flame_dialog      (void);
 static void      set_flame_preview (void);
@@ -178,15 +178,15 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam  values[1];
-  gint32            drawable_id;
+  GimpDrawable     *drawable;
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  run_mode    = param[0].data.d_int32;
-  drawable_id = param[2].data.d_drawable;
+  run_mode = param[0].data.d_int32;
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -200,8 +200,8 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &config);
       maybe_init_cp ();
 
-      config.cp.width  = gimp_drawable_width  (drawable_id);
-      config.cp.height = gimp_drawable_height (drawable_id);
+      config.cp.width  = gimp_drawable_width  (drawable);
+      config.cp.height = gimp_drawable_height (drawable);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
@@ -212,7 +212,7 @@ run (const gchar      *name,
         }
       else
         {
-          /*  reusing a drawable_ID from the last run is a bad idea
+          /*  reusing a drawable from the last run is a bad idea
               since the drawable might have vanished  (bug #37761)   */
           if (config.cmap_drawable >= 0)
             config.cmap_drawable = GRADIENT_DRAWABLE;
@@ -221,11 +221,11 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (gimp_drawable_is_rgb (drawable_id))
+      if (gimp_drawable_is_rgb (drawable))
         {
           gimp_progress_init (_("Drawing flame"));
 
-          flame (drawable_id);
+          flame (drawable);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -277,17 +277,18 @@ drawable_to_cmap (control_point *cp)
     }
   else
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (config.cmap_drawable);
-      gint        width  = gegl_buffer_get_width  (buffer);
-      gint        height = gegl_buffer_get_height (buffer);
-      guchar      p[3];
+      GimpDrawable *drawable = GIMP_DRAWABLE (gimp_item_get_by_id (config.cmap_drawable));
+      GeglBuffer   *buffer   = gimp_drawable_get_buffer (drawable);
+      gint          width    = gegl_buffer_get_width  (buffer);
+      gint          height   = gegl_buffer_get_height (buffer);
+      guchar        p[3];
 
       for (i = 0; i < 256; i++)
         {
           gegl_buffer_sample (buffer,
                               i % width,
                               (i / width) % height,
-                              NULL, p, babl_format ("R'G'B'"),
+                              NULL, p, babl_format ("R'G'B' u8"),
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
           for (j = 0; j < 3; j++)
@@ -299,17 +300,17 @@ drawable_to_cmap (control_point *cp)
 }
 
 static void
-flame (gint32 drawable_id)
+flame (GimpDrawable *drawable)
 {
   const Babl *format;
   gint        width, height;
   guchar     *tmp;
   gint        bytes;
 
-  width  = gimp_drawable_width  (drawable_id);
-  height = gimp_drawable_height (drawable_id);
+  width  = gimp_drawable_width  (drawable);
+  height = gimp_drawable_height (drawable);
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");
   else
     format = babl_format ("R'G'B' u8");
@@ -331,7 +332,7 @@ flame (gint32 drawable_id)
   /* update destination */
   if (bytes == 4)
     {
-      GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+      GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        format, tmp,
@@ -341,8 +342,8 @@ flame (gint32 drawable_id)
     }
   else if (bytes == 3)
     {
-      GeglBuffer *src_buffer  = gimp_drawable_get_buffer (drawable_id);
-      GeglBuffer *dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+      GeglBuffer *src_buffer  = gimp_drawable_get_buffer (drawable);
+      GeglBuffer *dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
       gint        i, j;
       guchar     *sl;
 
@@ -385,8 +386,8 @@ flame (gint32 drawable_id)
 
   g_free (tmp);
 
-  gimp_drawable_merge_shadow (drawable_id, TRUE);
-  gimp_drawable_update (drawable_id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, 0, 0, width, height);
 }
 
 static void
@@ -951,11 +952,11 @@ cmap_callback (GtkWidget *widget,
 }
 
 static gboolean
-cmap_constrain (gint32   image_id,
-                gint32   drawable_id,
-                gpointer data)
+cmap_constrain (GimpImage *image,
+                GimpItem  *item,
+                gpointer   data)
 {
-  return ! gimp_drawable_is_indexed (drawable_id);
+  return ! item || ! gimp_drawable_is_indexed (GIMP_DRAWABLE (item));
 }
 
 
