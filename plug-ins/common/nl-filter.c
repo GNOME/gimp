@@ -57,109 +57,154 @@ typedef enum
   filter_edge_enhance
 } FilterType;
 
+
+typedef struct _Nlfilter      Nlfilter;
+typedef struct _NlfilterClass NlfilterClass;
+
+struct _Nlfilter
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _NlfilterClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define NLFILTER_TYPE  (nlfilter_get_type ())
+#define NLFILTER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), NLFILTER_TYPE, Nlfilter))
+
+GType                   nlfilter_get_type         (void) G_GNUC_CONST;
+
+static GList          * nlfilter_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * nlfilter_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * nlfilter_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static void             nlfilter                  (GimpDrawable     *drawable,
+                                                   GimpPreview      *preview);
+static void             nlfilter_preview          (GimpDrawable     *drawable,
+                                                   GimpPreview      *preview);
+
+static gboolean         nlfilter_dialog           (GimpDrawable     *drawable);
+
+static gint             nlfiltInit                (gdouble           alpha,
+                                                   gdouble           radius,
+                                                   FilterType        filter);
+
+static void             nlfiltRow                 (guchar           *srclast,
+                                                   guchar           *srcthis,
+                                                   guchar           *srcnext,
+                                                   guchar           *dst,
+                                                   gint              width,
+                                                   gint              bpp,
+                                                   gint              filtno);
+
+
+G_DEFINE_TYPE (Nlfilter, nlfilter, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (NLFILTER_TYPE)
+
+
 static NLFilterValues nlfvals =
 {
   0.3,
-  0.3,
+  1.0 / 3.0,
   0
 };
 
-/* function protos */
-
-static void     query            (void);
-static void     run              (const gchar      *name,
-                                  gint              nparam,
-                                  const GimpParam  *param,
-                                  gint             *nretvals,
-                                  GimpParam       **retvals);
-
-static void     nlfilter         (GimpDrawable     *drawable,
-                                  GimpPreview      *preview);
-static void     nlfilter_preview (GimpDrawable     *drawable,
-                                  GimpPreview      *preview);
-
-static gboolean nlfilter_dialog  (GimpDrawable     *drawable);
-
-static gint     nlfiltInit       (gdouble           alpha,
-                                  gdouble           radius,
-                                  FilterType        filter);
-
-static void     nlfiltRow        (guchar           *srclast,
-                                  guchar           *srcthis,
-                                  guchar           *srcnext,
-                                  guchar           *dst,
-                                  gint              width,
-                                  gint              bpp,
-                                  gint              filtno);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-MAIN ()
 
 static void
-query (void)
+nlfilter_class_init (NlfilterClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "img",      "The Image to Filter" },
-    { GIMP_PDB_DRAWABLE, "drw",      "The Drawable" },
-    { GIMP_PDB_FLOAT,    "alpha",    "The amount of the filter to apply" },
-    { GIMP_PDB_FLOAT,    "radius",   "The filter radius" },
-    { GIMP_PDB_INT32,    "filter",   "The Filter to Run, "
-                                     "0 - alpha trimmed mean; "
-                                     "1 - optimal estimation (alpha controls noise variance); "
-                                     "2 - edge enhancement" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Nonlinear swiss army knife filter"),
-                          "This is the pnmnlfilt, in gimp's clothing.  "
-                          "See the pnmnlfilt manpage for details.",
-                          "Graeme W. Gill, gimp 0.99 plug-in by Eric L. Hernes",
-                          "Graeme W. Gill, Eric L. Hernes",
-                          "1997",
-                          N_("_NL Filter..."),
-                          "RGB,GRAY",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
+  plug_in_class->query_procedures = nlfilter_query_procedures;
+  plug_in_class->create_procedure = nlfilter_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+nlfilter_init (Nlfilter *nlfilter)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpDrawable      *drawable;
-  gint32             drawable_id;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+}
 
+static GList *
+nlfilter_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+nlfilter_create_procedure (GimpPlugIn  *plug_in,
+                               const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            nlfilter_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB, GRAY");
+
+      gimp_procedure_set_menu_label (procedure, N_("_NL Filter..."));
+      gimp_procedure_add_menu_path (procedure,"<Image>/Filters/Enhance");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Nonlinear swiss army knife filter"),
+                                        "This is the pnmnlfilt, in gimp's "
+                                        "clothing. See the pnmnlfilt manpage "
+                                        "for details.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Graeme W. Gill, gimp 0.99 plug-in "
+                                      "by Eric L. Hernes",
+                                      "Graeme W. Gill, Eric L. Hernes",
+                                      "1997");
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "alpha",
+                            "Alpha",
+                            "The amount of the filter to apply",
+                            0, 1, 0.3,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "radius",
+                            "Radius",
+                            "The filter radius",
+                            1.0 / 3.0, 1, 1.0 / 3.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "filter",
+                         "Filter",
+                         "The Filter to Run, "
+                         "0 - alpha trimmed mean; "
+                         "1 - optimal estimation (alpha controls noise variance); "
+                         "2 - edge enhancement",
+                         0, 2, 0,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+nlfilter_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  run_mode    = param[0].data.d_int32;
-  drawable_id = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
 
   switch (run_mode)
     {
@@ -167,41 +212,33 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &nlfvals);
 
       if (! nlfilter_dialog (drawable))
-        return;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 6)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      else
-        {
-          nlfvals.alpha  = param[3].data.d_float;
-          nlfvals.radius = param[4].data.d_float;
-          nlfvals.filter = param[5].data.d_int32;
-        }
-
+      nlfvals.alpha  = GIMP_VALUES_GET_DOUBLE (args, 0);
+      nlfvals.radius = GIMP_VALUES_GET_DOUBLE (args, 1);
+      nlfvals.filter = GIMP_VALUES_GET_INT    (args, 2);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS :
       gimp_get_data (PLUG_IN_PROC, &nlfvals);
       break;
+    };
 
-    default:
-      break;
-  }
+  nlfilter (drawable, NULL);
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      nlfilter (drawable, NULL);
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
 
-      /* Store data */
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &nlfvals, sizeof (NLFilterValues));
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_set_data (PLUG_IN_PROC, &nlfvals, sizeof (NLFilterValues));
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter
