@@ -403,29 +403,6 @@ gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
 
 
 /**
- * gimp_drawable_get_thumbnail_data_deprecated: (skip)
- * @drawable_ID: the drawable ID
- * @width:       the requested thumbnail width  (<= 1024 pixels)
- * @height:      the requested thumbnail height (<= 1024 pixels)
- * @bpp:
- *
- * Retrieves thumbnail data for the drawable identified by @drawable_ID.
- * The thumbnail will be not larger than the requested size.
- *
- * Returns: (transfer full) (nullable): thumbnail data or %NULL if
- *          @drawable_ID is invalid.
- **/
-guchar *
-gimp_drawable_get_thumbnail_data_deprecated (gint32  drawable_ID,
-                                             gint   *width,
-                                             gint   *height,
-                                             gint   *bpp)
-{
-  return gimp_drawable_get_thumbnail_data (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
-                                           width, height, bpp);
-}
-
-/**
  * gimp_drawable_get_buffer_deprecated: (skip)
  * @drawable_ID: the ID of the #GimpDrawable to get the buffer for.
  *

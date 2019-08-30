@@ -215,7 +215,6 @@ EXPORTS
 	gimp_drawable_get_sub_thumbnail_data
 	gimp_drawable_get_thumbnail
 	gimp_drawable_get_thumbnail_data
-	gimp_drawable_get_thumbnail_data_deprecated
 	gimp_drawable_get_thumbnail_format
 	gimp_drawable_get_type
 	gimp_drawable_has_alpha

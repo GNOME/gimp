@@ -638,28 +638,6 @@ gimp_drawable_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constra
                                              constraint, data, data_destroy);
 }
 
-/**
- * gimp_layer_combo_box_new_deprecated: (skip)
- * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data
- *
- * Creates a new #GimpIntComboBox filled with all currently opened
- * layers. See gimp_drawable_combo_box_new() for more information.
- *
- * Returns: a new #GimpIntComboBox.
- *
- * Since: 2.2
- **/
-GtkWidget *
-gimp_layer_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
-                                     gpointer                         data,
-                                     GDestroyNotify                   data_destroy)
-{
-  return gimp_item_combo_box_new_deprecated (GIMP_TYPE_LAYER_COMBO_BOX,
-                                             constraint, data, data_destroy);
-}
-
 static GtkWidget *
 gimp_item_combo_box_new_deprecated (GType                            type,
                                     GimpItemConstraintDeprecatedFunc constraint,
