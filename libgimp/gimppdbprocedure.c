@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#define GIMP_DISABLE_COMPAT_CRUFT
-
 #include "gimp.h"
 
 #include "gimppdb-private.h"

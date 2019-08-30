@@ -27,8 +27,6 @@
 
 G_BEGIN_DECLS
 
-#ifndef GIMP_DISABLE_COMPAT_CRUFT
-
 
 #ifdef GIMP_DEPRECATED_REPLACE_NEW_API
 #define GIMP_PLUGIN GIMP_PDB_PROC_TYPE_PLUGIN
@@ -270,7 +268,6 @@ GimpValueArray * gimp_run_procedure_array (const gchar          *name,
 gboolean   gimp_plugin_menu_register        (const gchar   *procedure_name,
                                              const gchar   *menu_path);
 
-#endif /* GIMP_DISABLE_COMPAT_CRUFT */
 
 G_END_DECLS
 

@@ -26,8 +26,6 @@
 
 #include <glib.h>
 
-#define GIMP_DISABLE_COMPAT_CRUFT
-
 #include "libgimp/gimp.h"
 
 #include "gimphelp.h"
