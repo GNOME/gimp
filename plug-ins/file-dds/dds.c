@@ -148,7 +148,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            dds_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("DDS image"));
@@ -183,7 +184,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            dds_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB");
@@ -299,7 +301,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, DECODE_YCOCG_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             dds_decode, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");
@@ -318,7 +321,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, DECODE_YCOCG_SCALED_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             dds_decode, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");
@@ -339,7 +343,8 @@ dds_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, DECODE_ALPHA_EXP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             dds_decode, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");

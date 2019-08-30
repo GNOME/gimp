@@ -79,7 +79,7 @@ gimp_brush_select_new (const gchar          *title,
 
   procedure = gimp_procedure_new (plug_in,
                                   brush_callback,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   gimp_temp_brush_run,
                                   brush_data,
                                   (GDestroyNotify)

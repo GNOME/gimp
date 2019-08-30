@@ -275,7 +275,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            raw_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("Raw image data"));
@@ -296,7 +297,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_HGT_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            raw_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
@@ -332,7 +334,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            raw_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB, RGBA");
@@ -483,7 +486,8 @@ raw_load (GimpProcedure        *procedure,
           sample_spacing != 3)
         {
           g_set_error (&error,
-                       GIMP_PLUGIN_HGT_LOAD_ERROR, GIMP_PLUGIN_HGT_LOAD_ARGUMENT_ERROR,
+                       GIMP_PLUGIN_HGT_LOAD_ERROR,
+                       GIMP_PLUGIN_HGT_LOAD_ARGUMENT_ERROR,
                        _("%d is not a valid sample spacing. "
                          "Valid values are: 0 (auto-detect), 1 and 3."),
                        sample_spacing);

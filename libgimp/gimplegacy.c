@@ -142,24 +142,25 @@ gimp_main_legacy (const GimpPlugInInfo *info,
  * "*" for all image types. If the procedure doesn't need an image to
  * run, use the empty string.
  *
- * @type must be one of %GIMP_PLUGIN or %GIMP_EXTENSION. Note that
- * temporary procedures must be installed using
- * gimp_install_temp_proc().
+ * @type must be one of %GIMP_PDB_PROC_TYPE_PLUGIN or
+ * %GIMP_PDB_PROC_TYPE_EXTENSION. Note that temporary procedures must
+ * be installed using gimp_install_temp_proc().
  *
- * NOTE: Unlike the GIMP 1.2 API, %GIMP_EXTENSION no longer means
- * that the procedure's menu prefix is &lt;Toolbox&gt;, but that
- * it will install temporary procedures. Therefore, the GIMP core
- * will wait until the %GIMP_EXTENSION procedure has called
- * gimp_extension_ack(), which means that the procedure has done
- * its initialization, installed its temporary procedures and is
+ * NOTE: Unlike the GIMP 1.2 API, %GIMP_PDB_PROC_TYPE_EXTENSION no
+ * longer means that the procedure's menu prefix is &lt;Toolbox&gt;,
+ * but that it will install temporary procedures. Therefore, the GIMP
+ * core will wait until the %GIMP_PDB_PROC_TYPE_EXTENSION procedure
+ * has called gimp_extension_ack(), which means that the procedure has
+ * done its initialization, installed its temporary procedures and is
  * ready to run.
  *
- * <emphasis>Not calling gimp_extension_ack() from a %GIMP_EXTENSION
- * procedure will cause the GIMP core to lock up.</emphasis>
+ * <emphasis>Not calling gimp_extension_ack() from a
+ * %GIMP_PDB_PROC_TYPE_EXTENSION procedure will cause the GIMP core to
+ * lock up.</emphasis>
  *
- * Additionally, a %GIMP_EXTENSION procedure with no parameters
- * (@n_params == 0 and @params == %NULL) is an "automatic" extension
- * that will be automatically started on each GIMP startup.
+ * Additionally, a %GIMP_PDB_PROC_TYPE_EXTENSION procedure with no
+ * parameters (@n_params == 0 and @params == %NULL) is an "automatic"
+ * extension that will be automatically started on each GIMP startup.
  **/
 void
 gimp_install_procedure (const gchar        *name,
@@ -181,7 +182,7 @@ gimp_install_procedure (const gchar        *name,
   gint           i;
 
   g_return_if_fail (name != NULL);
-  g_return_if_fail (type != GIMP_INTERNAL);
+  g_return_if_fail (type != GIMP_PDB_PROC_TYPE_INTERNAL);
   g_return_if_fail ((n_params == 0 && params == NULL) ||
                     (n_params > 0  && params != NULL));
   g_return_if_fail ((n_return_vals == 0 && return_vals == NULL) ||

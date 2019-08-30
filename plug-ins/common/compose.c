@@ -398,7 +398,8 @@ compose_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, COMPOSE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             compose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "GRAY*");
@@ -449,7 +450,8 @@ compose_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, DRAWABLE_COMPOSE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             compose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "GRAY*");
@@ -497,7 +499,8 @@ compose_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, RECOMPOSE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             compose_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "GRAY*");

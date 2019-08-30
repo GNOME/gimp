@@ -121,7 +121,7 @@ query (void)
                           "1997",
                           N_("_Blinds..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 }

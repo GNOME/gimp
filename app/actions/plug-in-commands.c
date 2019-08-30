@@ -84,12 +84,12 @@ plug_in_run_cmd_callback (GimpAction *action,
 
   switch (procedure->proc_type)
     {
-    case GIMP_EXTENSION:
+    case GIMP_PDB_PROC_TYPE_EXTENSION:
       args = procedure_commands_get_run_mode_arg (procedure);
       break;
 
-    case GIMP_PLUGIN:
-    case GIMP_TEMPORARY:
+    case GIMP_PDB_PROC_TYPE_PLUGIN:
+    case GIMP_PDB_PROC_TYPE_TEMPORARY:
       if (GIMP_IS_DATA_FACTORY_VIEW (data) ||
           GIMP_IS_BUFFER_VIEW (data))
         {
@@ -138,7 +138,7 @@ plug_in_run_cmd_callback (GimpAction *action,
         }
       break;
 
-    case GIMP_INTERNAL:
+    case GIMP_PDB_PROC_TYPE_INTERNAL:
       g_warning ("Unhandled procedure type.");
       break;
     }

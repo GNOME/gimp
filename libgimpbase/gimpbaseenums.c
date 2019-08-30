@@ -1345,19 +1345,19 @@ gimp_pdb_proc_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_INTERNAL, "GIMP_INTERNAL", "internal" },
-    { GIMP_PLUGIN, "GIMP_PLUGIN", "plugin" },
-    { GIMP_EXTENSION, "GIMP_EXTENSION", "extension" },
-    { GIMP_TEMPORARY, "GIMP_TEMPORARY", "temporary" },
+    { GIMP_PDB_PROC_TYPE_INTERNAL, "GIMP_PDB_PROC_TYPE_INTERNAL", "internal" },
+    { GIMP_PDB_PROC_TYPE_PLUGIN, "GIMP_PDB_PROC_TYPE_PLUGIN", "plugin" },
+    { GIMP_PDB_PROC_TYPE_EXTENSION, "GIMP_PDB_PROC_TYPE_EXTENSION", "extension" },
+    { GIMP_PDB_PROC_TYPE_TEMPORARY, "GIMP_PDB_PROC_TYPE_TEMPORARY", "temporary" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_INTERNAL, NC_("pdb-proc-type", "Internal GIMP procedure"), NULL },
-    { GIMP_PLUGIN, NC_("pdb-proc-type", "GIMP Plug-In"), NULL },
-    { GIMP_EXTENSION, NC_("pdb-proc-type", "GIMP Extension"), NULL },
-    { GIMP_TEMPORARY, NC_("pdb-proc-type", "Temporary Procedure"), NULL },
+    { GIMP_PDB_PROC_TYPE_INTERNAL, NC_("pdb-proc-type", "Internal GIMP procedure"), NULL },
+    { GIMP_PDB_PROC_TYPE_PLUGIN, NC_("pdb-proc-type", "GIMP Plug-In"), NULL },
+    { GIMP_PDB_PROC_TYPE_EXTENSION, NC_("pdb-proc-type", "GIMP Extension"), NULL },
+    { GIMP_PDB_PROC_TYPE_TEMPORARY, NC_("pdb-proc-type", "Temporary Procedure"), NULL },
     { 0, NULL, NULL }
   };
 

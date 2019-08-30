@@ -840,13 +840,13 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   switch (proc_install->type)
     {
-    case GIMP_PLUGIN:
-    case GIMP_EXTENSION:
+    case GIMP_PDB_PROC_TYPE_PLUGIN:
+    case GIMP_PDB_PROC_TYPE_EXTENSION:
       procedure = gimp_plug_in_procedure_new (proc_install->type,
                                               plug_in->file);
       break;
 
-    case GIMP_TEMPORARY:
+    case GIMP_PDB_PROC_TYPE_TEMPORARY:
       procedure = gimp_temporary_procedure_new (plug_in);
       break;
     }
@@ -918,12 +918,12 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   switch (proc_install->type)
     {
-    case GIMP_PLUGIN:
-    case GIMP_EXTENSION:
+    case GIMP_PDB_PROC_TYPE_PLUGIN:
+    case GIMP_PDB_PROC_TYPE_EXTENSION:
       gimp_plug_in_def_add_procedure (plug_in->plug_in_def, proc);
       break;
 
-    case GIMP_TEMPORARY:
+    case GIMP_PDB_PROC_TYPE_TEMPORARY:
       gimp_plug_in_add_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
       break;
     }

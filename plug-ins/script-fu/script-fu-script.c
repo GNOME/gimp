@@ -183,7 +183,7 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
     menu_label = script->menu_label;
 
   procedure = gimp_procedure_new (plug_in, script->name,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   run_func, script, NULL);
 
   gimp_procedure_set_image_types (procedure, script->image_types);

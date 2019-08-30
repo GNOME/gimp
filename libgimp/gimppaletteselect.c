@@ -71,7 +71,7 @@ gimp_palette_select_new (const gchar            *title,
 
   procedure = gimp_procedure_new (plug_in,
                                   palette_callback,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   gimp_temp_palette_run,
                                   palette_data,
                                   (GDestroyNotify)

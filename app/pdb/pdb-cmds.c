@@ -684,7 +684,7 @@ register_pdb_procs (GimpPDB *pdb)
                                                       "proc type",
                                                       "The procedure type",
                                                       GIMP_TYPE_PDB_PROC_TYPE,
-                                                      GIMP_INTERNAL,
+                                                      GIMP_PDB_PROC_TYPE_INTERNAL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-args",

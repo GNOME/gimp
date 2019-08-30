@@ -911,16 +911,16 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
 
   switch (GIMP_PROCEDURE (proc)->proc_type)
     {
-    case GIMP_INTERNAL:
+    case GIMP_PDB_PROC_TYPE_INTERNAL:
       return FALSE;
 
-    case GIMP_PLUGIN:
-    case GIMP_EXTENSION:
+    case GIMP_PDB_PROC_TYPE_PLUGIN:
+    case GIMP_PDB_PROC_TYPE_EXTENSION:
       if (plug_in->call_mode != GIMP_PLUG_IN_CALL_QUERY &&
           plug_in->call_mode != GIMP_PLUG_IN_CALL_INIT)
         return FALSE;
 
-    case GIMP_TEMPORARY:
+    case GIMP_PDB_PROC_TYPE_TEMPORARY:
       break;
     }
 

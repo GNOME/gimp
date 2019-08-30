@@ -78,7 +78,7 @@ gimp_temporary_procedure_class_init (GimpTemporaryProcedureClass *klass)
 static void
 gimp_temporary_procedure_init (GimpTemporaryProcedure *proc)
 {
-  GIMP_PROCEDURE (proc)->proc_type = GIMP_TEMPORARY;
+  GIMP_PROCEDURE (proc)->proc_type = GIMP_PDB_PROC_TYPE_TEMPORARY;
 }
 
 static void

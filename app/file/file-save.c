@@ -280,7 +280,7 @@ file_save (Gimp                *gimp,
                                                g_slist_nth_data (file_proc->mime_types_list, 0));
 
       /* only save a thumbnail if we are saving as XCF, see bug #25272 */
-      if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_INTERNAL)
+      if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL)
         gimp_imagefile_save_thumbnail (imagefile,
                                        g_slist_nth_data (file_proc->mime_types_list, 0),
                                        image,

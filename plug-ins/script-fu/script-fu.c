@@ -115,7 +115,8 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, "extension-script-fu"))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_EXTENSION,
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_EXTENSION,
                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -130,7 +131,8 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-console"))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("_Console"));
@@ -157,7 +159,8 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-text-console"))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -180,7 +183,8 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-server"))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("_Start Server..."));
@@ -232,7 +236,8 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-eval"))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -414,7 +419,7 @@ script_fu_extension_init (GimpPlugIn *plug_in)
                                 N_("Alpha to _Logo"));
 
   procedure = gimp_procedure_new (plug_in, "script-fu-refresh",
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   script_fu_refresh_proc, NULL, NULL);
 
   gimp_procedure_set_menu_label (procedure, N_("_Refresh Scripts"));

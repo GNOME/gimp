@@ -116,7 +116,8 @@ map_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, GRADMAP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             map_run,
                                             GINT_TO_POINTER (GRADIENT_MODE),
                                             NULL);
@@ -149,7 +150,8 @@ map_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PALETTEMAP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             map_run,
                                             GINT_TO_POINTER (PALETTE_MODE),
                                             NULL);

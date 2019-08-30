@@ -183,7 +183,7 @@ query (void)
                           "Version 1.27, September 2003",
                           N_("_Sparkle..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 

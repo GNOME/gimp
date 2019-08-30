@@ -104,7 +104,7 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
 static void
 gimp_procedure_init (GimpProcedure *procedure)
 {
-  procedure->proc_type = GIMP_INTERNAL;
+  procedure->proc_type = GIMP_PDB_PROC_TYPE_INTERNAL;
 }
 
 static void

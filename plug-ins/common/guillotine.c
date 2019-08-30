@@ -96,7 +96,8 @@ guillotine_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             guillotine_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
@@ -105,10 +106,12 @@ guillotine_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_menu_path (procedure, "<Image>/Image/Crop");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Slice the image into subimages using guides"),
-                                        "This function takes an image and slices it along "
-                                        "its guides, creating new images. The original "
-                                        "image is not modified.",
+                                        N_("Slice the image into subimages "
+                                           "using guides"),
+                                        "This function takes an image and "
+                                        "slices it along its guides, creating "
+                                        "new images. The original image is "
+                                        "not modified.",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Adam D. Moss (adam@foxbox.org)",

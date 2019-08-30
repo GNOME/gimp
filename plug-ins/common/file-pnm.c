@@ -283,7 +283,8 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pnm_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("PNM Image"));
@@ -311,7 +312,8 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PNM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
@@ -343,7 +345,8 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PBM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
@@ -375,7 +378,8 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PGM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
@@ -407,7 +411,8 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PPM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
@@ -439,7 +444,8 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PFM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");

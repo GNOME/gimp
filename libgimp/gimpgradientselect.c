@@ -73,7 +73,7 @@ gimp_gradient_select_new (const gchar             *title,
 
   procedure = gimp_procedure_new (plug_in,
                                   gradient_callback,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   gimp_temp_gradient_run,
                                   gradient_data,
                                   (GDestroyNotify)

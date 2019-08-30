@@ -438,12 +438,14 @@ package Gimp::CodeGen::enums;
     GimpPDBProcType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_INTERNAL GIMP_PLUGIN GIMP_EXTENSION
-			  GIMP_TEMPORARY) ],
-	  mapping => { GIMP_INTERNAL => '0',
-		       GIMP_PLUGIN => '1',
-		       GIMP_EXTENSION => '2',
-		       GIMP_TEMPORARY => '3' }
+	  symbols => [ qw(GIMP_PDB_PROC_TYPE_INTERNAL
+			  GIMP_PDB_PROC_TYPE_PLUGIN
+			  GIMP_PDB_PROC_TYPE_EXTENSION
+			  GIMP_PDB_PROC_TYPE_TEMPORARY) ],
+	  mapping => { GIMP_PDB_PROC_TYPE_INTERNAL => '0',
+		       GIMP_PDB_PROC_TYPE_PLUGIN => '1',
+		       GIMP_PDB_PROC_TYPE_EXTENSION => '2',
+		       GIMP_PDB_PROC_TYPE_TEMPORARY => '3' }
 	},
     GimpPDBStatusType =>
 	{ contig => 1,

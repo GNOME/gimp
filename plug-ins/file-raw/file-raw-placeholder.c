@@ -124,7 +124,8 @@ placeholder_create_procedure (GimpPlugIn  *plug_in,
       load_blurb = g_strdup_printf (format->load_blurb_format, "placeholder");
       load_help  = g_strdup_printf (format->load_help_format,  "placeholder");
 
-      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            placeholder_load,
                                            (gpointer) format, NULL);
 

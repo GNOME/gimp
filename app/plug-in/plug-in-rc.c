@@ -406,8 +406,8 @@ plug_in_procedure_deserialize (GScanner             *scanner,
       return G_TOKEN_INT;
     }
 
-  if (proc_type != GIMP_PLUGIN &&
-      proc_type != GIMP_EXTENSION)
+  if (proc_type != GIMP_PDB_PROC_TYPE_PLUGIN &&
+      proc_type != GIMP_PDB_PROC_TYPE_EXTENSION)
     {
       g_free (str);
       g_scanner_error (scanner, "procedure type %d is out of range",

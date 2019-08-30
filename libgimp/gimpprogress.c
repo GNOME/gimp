@@ -100,7 +100,7 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
 
   procedure = gimp_procedure_new (plug_in,
                                   progress_callback,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   gimp_temp_progress_run,
                                   progress_data,
                                   (GDestroyNotify)

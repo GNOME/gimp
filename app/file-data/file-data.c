@@ -50,10 +50,10 @@ file_data_init (Gimp *gimp)
 
   /*  file-gbr-load  */
   file = g_file_new_for_path ("file-gbr-load");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = file_gbr_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
@@ -115,10 +115,10 @@ file_data_init (Gimp *gimp)
 
   /*  file-gbr-save-internal  */
   file = g_file_new_for_path ("file-gbr-save-internal");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = file_gbr_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
@@ -201,10 +201,10 @@ file_data_init (Gimp *gimp)
 
   /*  file-gih-load  */
   file = g_file_new_for_path ("file-gih-load");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = file_gih_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
@@ -263,10 +263,10 @@ file_data_init (Gimp *gimp)
 
   /*  file-gih-save-internal  */
   file = g_file_new_for_path ("file-gih-save-internal");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = file_gih_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
@@ -356,10 +356,10 @@ file_data_init (Gimp *gimp)
 
   /*  file-pat-load  */
   file = g_file_new_for_path ("file-pat-load");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = file_pat_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
@@ -417,10 +417,10 @@ file_data_init (Gimp *gimp)
 
   /*  file-pat-save-internal  */
   file = g_file_new_for_path ("file-pat-save-internal");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = file_pat_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
@@ -498,10 +498,10 @@ file_data_init (Gimp *gimp)
 
   /*  file-gex-load  */
   file = g_file_new_for_path ("file-gex-load");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = file_gex_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);

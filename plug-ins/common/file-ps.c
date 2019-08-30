@@ -367,7 +367,8 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   if (! strcmp (name, LOAD_PS_PROC) ||
       ! strcmp (name, LOAD_EPS_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            ps_load, NULL, NULL);
 
       if (! strcmp (name, LOAD_PS_PROC))
@@ -462,7 +463,8 @@ ps_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_PS_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_thumbnail_procedure_new (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
                                                 ps_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -478,7 +480,8 @@ ps_create_procedure (GimpPlugIn  *plug_in,
   else if (! strcmp (name, SAVE_PS_PROC) ||
            ! strcmp (name, SAVE_EPS_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            ps_save, NULL, NULL);
 
       if (! strcmp (name, SAVE_PS_PROC))

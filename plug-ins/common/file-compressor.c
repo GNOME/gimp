@@ -309,7 +309,8 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
 
       if (! strcmp (name, compressor->load_proc))
         {
-          procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+          procedure = gimp_load_procedure_new (plug_in, name,
+                                               GIMP_PDB_PROC_TYPE_PLUGIN,
                                                compressor_load,
                                                (gpointer) compressor, NULL);
 
@@ -323,7 +324,8 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
         }
       else if (! strcmp (name, compressor->save_proc))
         {
-          procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+          procedure = gimp_save_procedure_new (plug_in, name,
+                                               GIMP_PDB_PROC_TYPE_PLUGIN,
                                                compressor_save,
                                                (gpointer) compressor, NULL);
 

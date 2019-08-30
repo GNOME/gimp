@@ -140,7 +140,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
 static void
 gimp_plug_in_procedure_init (GimpPlugInProcedure *proc)
 {
-  GIMP_PROCEDURE (proc)->proc_type = GIMP_PLUGIN;
+  GIMP_PROCEDURE (proc)->proc_type = GIMP_PDB_PROC_TYPE_PLUGIN;
 
   proc->icon_data_length = -1;
 }
@@ -395,7 +395,7 @@ gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
       return return_vals;
     }
 
-  if (procedure->proc_type == GIMP_INTERNAL)
+  if (procedure->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL)
     return GIMP_PROCEDURE_CLASS (parent_class)->execute (procedure, gimp,
                                                          context, progress,
                                                          args, error);
@@ -518,8 +518,8 @@ gimp_plug_in_procedure_new (GimpPDBProcType  proc_type,
 {
   GimpPlugInProcedure *proc;
 
-  g_return_val_if_fail (proc_type == GIMP_PLUGIN ||
-                        proc_type == GIMP_EXTENSION, NULL);
+  g_return_val_if_fail (proc_type == GIMP_PDB_PROC_TYPE_PLUGIN ||
+                        proc_type == GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   proc = g_object_new (GIMP_TYPE_PLUG_IN_PROCEDURE, NULL);

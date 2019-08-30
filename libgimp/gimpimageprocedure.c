@@ -189,7 +189,8 @@ gimp_image_procedure_new (GimpPlugIn       *plug_in,
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
-  g_return_val_if_fail (proc_type != GIMP_INTERNAL, NULL);
+  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_INTERNAL, NULL);
+  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
 
   procedure = g_object_new (GIMP_TYPE_IMAGE_PROCEDURE,

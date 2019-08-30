@@ -114,15 +114,19 @@ busy_dialog_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_PLUGIN,
                                       busy_dialog_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Show a dialog while waiting for an operation to finish",
-                                        "Used by GIMP to display a dialog, containing a "
-                                        "spinner and a custom message, while waiting for an "
-                                        "ongoing operation to finish. Optionally, the dialog "
-                                        "may provide a \"Cancel\" button, which can be used "
+                                        "Show a dialog while waiting for an "
+                                        "operation to finish",
+                                        "Used by GIMP to display a dialog, "
+                                        "containing a spinner and a custom "
+                                        "message, while waiting for an "
+                                        "ongoing operation to finish. "
+                                        "Optionally, the dialog may provide "
+                                        "a \"Cancel\" button, which can be used "
                                         "to cancel the operation.",
                                         name);
       gimp_procedure_set_attribution (procedure,

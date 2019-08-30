@@ -413,8 +413,8 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  * @procedure_name: A procedure name.
  *
  * This functiond creates a new procedure and is called when a plug-in
- * instance is started by GIMP when one of the %GIMP_PLUGIN or
- * %GIMP_EXTENSION procedures it implements is invoked.
+ * instance is started by GIMP when one of the %GIMP_PDB_PROC_TYPE_PLUGIN or
+ * %GIMP_PDB_PROC_TYPE_EXTENSION procedures it implements is invoked.
  *
  * This function will only ever be called with names returned by
  * implementations of GimpPlugInClass::init_procedures() or
@@ -439,16 +439,17 @@ gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
 /**
  * gimp_plug_in_add_temp_procedure:
  * @plug_in:   A #GimpPlugIn
- * @procedure: A #GimpProcedure of type %GIMP_TEMPORARY.
+ * @procedure: A #GimpProcedure of type %GIMP_PDB_PROC_TYPE_TEMPORARY.
  *
  * This function adds a temporary procedure to @plug_in. It is usually
- * called from a %GIMP_EXTENSION procedure's GimpProcedure::run().
+ * called from a %GIMP_PDB_PROC_TYPE_EXTENSION procedure's
+ * GimpProcedure::run().
  *
  * A temporary procedure is a procedure which is only available while
  * one of your plug-in's "real" procedures is running.
  *
- * The procedure's type <emphasis>must</emphasis> be %GIMP_TEMPORARY
- * or the function will fail.
+ * The procedure's type <emphasis>must</emphasis> be
+ * %GIMP_PDB_PROC_TYPE_TEMPORARY or the function will fail.
  *
  * NOTE: Normally, plug-in communication is triggered by the plug-in
  * and the GIMP core only responds to the plug-in's requests. You must
@@ -466,7 +467,7 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (gimp_procedure_get_proc_type (procedure) ==
-                    GIMP_TEMPORARY);
+                    GIMP_PDB_PROC_TYPE_TEMPORARY);
 
   plug_in->priv->temp_procedures =
     g_list_prepend (plug_in->priv->temp_procedures,
@@ -580,8 +581,8 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * it has a GUI and is hanging around in a #GMainLoop, it must call
  * gimp_plug_in_extension_enable().
  *
- * Note that the plug-in does not need to be a #GIMP_EXTENSION to
- * register temporary procedures.
+ * Note that the plug-in does not need to be a
+ * #GIMP_PDB_PROC_TYPE_EXTENSION to register temporary procedures.
  *
  * See also: gimp_plug_in_add_temp_procedure().
  *

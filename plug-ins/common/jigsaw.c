@@ -362,7 +362,7 @@ query (void)
                           "May 2000",
                           N_("_Jigsaw..."),
                           "RGB*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 

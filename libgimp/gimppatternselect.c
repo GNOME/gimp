@@ -74,7 +74,7 @@ gimp_pattern_select_new (const gchar            *title,
 
   procedure = gimp_procedure_new (plug_in,
                                   pattern_callback,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   gimp_temp_pattern_run,
                                   pattern_data,
                                   (GDestroyNotify)

@@ -151,7 +151,8 @@ print_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PRINT_PROC_NAME))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             print_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
@@ -174,7 +175,8 @@ print_create_procedure (GimpPlugIn  *plug_in,
 #ifndef EMBED_PAGE_SETUP
   else if (! strcmp (name, PAGE_SETUP_PROC_NAME))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             print_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
@@ -519,7 +521,8 @@ print_temp_proc_install (GimpImage *image)
   gchar         *name    = print_temp_proc_name (image);
   GimpProcedure *procedure;
 
-  procedure = gimp_procedure_new (plug_in, name, GIMP_TEMPORARY,
+  procedure = gimp_procedure_new (plug_in, name,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   print_temp_proc_run, NULL, NULL);
 
   gimp_procedure_set_documentation (procedure,

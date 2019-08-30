@@ -177,7 +177,8 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_thumbnail_procedure_new (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
                                                 rawtherapee_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -214,7 +215,8 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
           load_blurb = g_strdup_printf (format->load_blurb_format, "rawtherapee");
           load_help  = g_strdup_printf (format->load_help_format,  "rawtherapee");
 
-          procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+          procedure = gimp_load_procedure_new (plug_in, name,
+                                               GIMP_PDB_PROC_TYPE_PLUGIN,
                                                rawtherapee_load,
                                                (gpointer) format, NULL);
 

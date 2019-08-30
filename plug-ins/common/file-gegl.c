@@ -181,7 +181,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
       if (! g_strcmp0 (name, format->load_proc))
         {
-          procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+          procedure = gimp_load_procedure_new (plug_in, name,
+                                               GIMP_PDB_PROC_TYPE_PLUGIN,
                                                goat_load,
                                                (gpointer) format, NULL);
 
@@ -201,7 +202,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
         }
       else if (! g_strcmp0 (name, format->save_proc))
         {
-          procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+          procedure = gimp_save_procedure_new (plug_in, name,
+                                               GIMP_PDB_PROC_TYPE_PLUGIN,
                                                goat_save,
                                                (gpointer) format, NULL);
 

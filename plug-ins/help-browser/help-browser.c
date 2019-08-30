@@ -115,7 +115,8 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, GIMP_HELP_BROWSER_EXT_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_EXTENSION,
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PDB_PROC_TYPE_EXTENSION,
                                       help_browser_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -200,7 +201,7 @@ temp_proc_install (GimpPlugIn *plug_in)
   GimpProcedure *procedure;
 
   procedure = gimp_procedure_new (plug_in, GIMP_HELP_BROWSER_TEMP_EXT_PROC,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   temp_proc_run, NULL, NULL);
 
   gimp_procedure_set_documentation (procedure,

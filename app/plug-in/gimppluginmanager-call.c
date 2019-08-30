@@ -261,7 +261,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       /* If this is an extension,
        * wait for an installation-confirmation message
        */
-      if (GIMP_PROCEDURE (procedure)->proc_type == GIMP_EXTENSION)
+      if (GIMP_PROCEDURE (procedure)->proc_type == GIMP_PDB_PROC_TYPE_EXTENSION)
         {
           plug_in->ext_main_loop = g_main_loop_new (NULL, FALSE);
 

@@ -569,8 +569,8 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if (proc->file                                         &&
-          GIMP_PROCEDURE (proc)->proc_type == GIMP_EXTENSION &&
+      if (proc->file                                                       &&
+          GIMP_PROCEDURE (proc)->proc_type == GIMP_PDB_PROC_TYPE_EXTENSION &&
           GIMP_PROCEDURE (proc)->num_args  == 0)
         {
           extensions = g_list_prepend (extensions, proc);

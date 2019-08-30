@@ -167,7 +167,7 @@ query (void)
                           "2003",
                           N_("Retine_x..."),
                           "RGB*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 

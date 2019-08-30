@@ -328,7 +328,8 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            xmc_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("X11 Mouse Cursor"));
@@ -356,7 +357,8 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_thumbnail_procedure_new (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
                                                 xmc_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -373,7 +375,8 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
                                            xmc_save, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGBA");

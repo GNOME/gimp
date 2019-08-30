@@ -104,10 +104,10 @@ xcf_init (Gimp *gimp)
 
   /*  gimp-xcf-save  */
   file = g_file_new_for_path ("gimp-xcf-save");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = xcf_save_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
@@ -175,10 +175,10 @@ xcf_init (Gimp *gimp)
 
   /*  gimp-xcf-load  */
   file = g_file_new_for_path ("gimp-xcf-load");
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  procedure = gimp_plug_in_procedure_new (GIMP_PDB_PROC_TYPE_PLUGIN, file);
   g_object_unref (file);
 
-  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->proc_type    = GIMP_PDB_PROC_TYPE_INTERNAL;
   procedure->marshal_func = xcf_load_invoker;
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);

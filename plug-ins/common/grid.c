@@ -147,7 +147,7 @@ void query (void)
                           "1997 - 2000",
                           N_("_Grid (legacy)..."),
                           "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 

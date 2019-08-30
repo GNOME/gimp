@@ -70,7 +70,7 @@ gimp_font_select_new (const gchar         *title,
 
   procedure = gimp_procedure_new (plug_in,
                                   font_callback,
-                                  GIMP_TEMPORARY,
+                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   gimp_temp_font_run,
                                   font_data,
                                   (GDestroyNotify)

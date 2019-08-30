@@ -119,7 +119,8 @@ remap_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC_REMAP))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             remap_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*");
@@ -154,7 +155,8 @@ remap_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PLUG_IN_PROC_SWAP))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                             remap_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "INDEXED*");

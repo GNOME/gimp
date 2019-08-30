@@ -158,7 +158,7 @@ query (void)
                           PLUG_IN_VERSION,
                           N_("Des_peckle..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
