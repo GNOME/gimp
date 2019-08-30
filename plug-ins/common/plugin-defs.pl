@@ -52,7 +52,7 @@
     'file-xpm' => { ui => 1, gegl => 1, optional => 1, libs => 'XPM_LIBS' },
     'file-xwd' => {  ui => 1, gegl => 1 },
     'film' => { ui => 1, gegl => 1 },
-    'gradient-map' => { gegl => 1, old_api => 1 },
+    'gradient-map' => { gegl => 1 },
     'grid' => { ui => 1, gegl => 1 },
     'guillotine' => { },
     'hot' => { ui => 1, gegl => 1, old_api => 1 },

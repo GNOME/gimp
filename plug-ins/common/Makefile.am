@@ -1211,8 +1211,6 @@ film_LDADD = \
 	$(INTLLIBS)		\
 	$(film_RC)
 
-gradient_map_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 gradient_map_SOURCES = \
 	gradient-map.c
 
