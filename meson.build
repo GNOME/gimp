@@ -1012,6 +1012,7 @@ generate_changelog  = find_program('tools'/'generate_changelog.sh')
 generate_news       = find_program('tools'/'generate-news')
 gimppath2svg        = find_program('tools'/'gimppath2svg.py')
 module_dependencies = find_program('tools'/'module-dependencies.py')
+meson_install_subdir= find_program('tools'/'meson_install_subdir.py')
 
 gimp_mkenums        = find_program('tools'/'gimp-mkenums')
 gimp_mkenums_custom_target_commonargs = [
@@ -1547,6 +1548,21 @@ pkgconfig.generate(libgimpui,
 )
 
 
+
+################################################################################
+# Subdir installations
+
+foreach dir : [
+    { 'dir': 'libgimp',   'deps': libgimp},
+    { 'dir': 'plug-ins', },
+  ]
+  run_target('install-' + dir.get('dir'),
+    command: [
+      meson_install_subdir, '-v', dir.get('dir')
+    ],
+    depends: dir.get('deps', [])
+  )
+endforeach
 
 ################################################################################
 
