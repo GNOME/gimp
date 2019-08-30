@@ -91,7 +91,7 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gboolean  tileit_dialog          (gint32         drawable_ID);
+static gboolean  tileit_dialog          (GimpDrawable  *drawable);
 
 static void      tileit_scale_update    (GtkAdjustment *adjustment,
                                          gpointer       data);
@@ -108,7 +108,7 @@ static void      tileit_radio_update    (GtkWidget     *widget,
 static void      tileit_hvtoggle_update (GtkWidget     *widget,
                                          gpointer       data);
 
-static void      do_tiles               (gint32         drawable_ID);
+static void      do_tiles               (GimpDrawable  *drawable);
 static gint      tiles_xy               (gint           width,
                                          gint           height,
                                          gint           x,
@@ -120,7 +120,7 @@ static void      alt_update             (void);
 static void      explicit_update        (gboolean);
 
 static void      dialog_update_preview  (void);
-static void      cache_preview          (gint32         drawable_ID);
+static void      cache_preview          (GimpDrawable  *drawable);
 static gboolean  tileit_preview_draw    (GtkWidget     *widget,
                                          cairo_t       *cr);
 static gboolean  tileit_preview_events  (GtkWidget     *widget,
@@ -224,7 +224,7 @@ query (void)
                           "1997",
                           N_("_Small Tiles..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
@@ -238,7 +238,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
-  gint32             drawable_ID;
+  GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               pwidth;
   gint               pheight;
@@ -252,12 +252,12 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  run_mode    = param[0].data.d_int32;
-  drawable_ID = param[2].data.d_drawable;
+  run_mode = param[0].data.d_int32;
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
-  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
-  if (! gimp_drawable_mask_intersect (drawable_ID,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &sel_x1,    &sel_y1,
                                       &sel_width, &sel_height))
     {
@@ -288,7 +288,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &itvals);
-      if (! tileit_dialog (drawable_ID))
+      if (! tileit_dialog (drawable))
         return;
       break;
 
@@ -311,14 +311,14 @@ run (const gchar      *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable_ID) ||
-      gimp_drawable_is_gray (drawable_ID))
+  if (gimp_drawable_is_rgb  (drawable) ||
+      gimp_drawable_is_gray (drawable))
     {
       /* Set the tile cache size */
 
       gimp_progress_init (_("Tiling"));
 
-      do_tiles (drawable_ID);
+      do_tiles (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -358,7 +358,7 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
 }
 
 static gboolean
-tileit_dialog (gint drawable_ID)
+tileit_dialog (GimpDrawable *drawable)
 {
   GtkWidget     *dlg;
   GtkWidget     *main_vbox;
@@ -378,7 +378,7 @@ tileit_dialog (gint drawable_ID)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  cache_preview (drawable_ID); /* Get the preview image */
+  cache_preview (drawable); /* Get the preview image */
 
   dlg = gimp_dialog_new (_("Small Tiles"), PLUG_IN_ROLE,
                          NULL, 0,
@@ -607,7 +607,7 @@ tileit_dialog (gint drawable_ID)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  gtk_widget_set_sensitive (grid2, gimp_drawable_has_alpha (drawable_ID));
+  gtk_widget_set_sensitive (grid2, gimp_drawable_has_alpha (drawable));
 
   scale = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                                 "_n²", SCALE_WIDTH, -1,
@@ -899,13 +899,13 @@ tileit_exp_update_f (GtkWidget *widget,
 /* The preview_cache will contain the small image */
 
 static void
-cache_preview (gint32 drawable_ID)
+cache_preview (GimpDrawable *drawable)
 {
-  GeglBuffer *buffer = gimp_drawable_get_buffer (drawable_ID);
+  GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
   const Babl *format;
   gdouble     scale;
 
-  if (gimp_drawable_has_alpha (drawable_ID))
+  if (gimp_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");
   else
     format = babl_format ("R'G'B' u8");
@@ -926,7 +926,7 @@ cache_preview (gint32 drawable_ID)
 }
 
 static void
-do_tiles (gint32 drawable_ID)
+do_tiles (GimpDrawable *drawable)
 {
   GeglBuffer         *src_buffer;
   GeglBuffer         *dest_buffer;
@@ -939,10 +939,10 @@ do_tiles (gint32 drawable_ID)
   gint                nc, nr;
   gint                i;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
-  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (has_alpha)
     format = babl_format ("R'G'B'A u8");
@@ -1005,8 +1005,8 @@ do_tiles (gint32 drawable_ID)
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (drawable_ID, TRUE);
-  gimp_drawable_update (drawable_ID,
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable,
                         sel_x1, sel_y1, sel_width, sel_height);
 }
 

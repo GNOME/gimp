@@ -1473,8 +1473,6 @@ tile_LDADD = \
 	$(INTLLIBS)		\
 	$(tile_RC)
 
-tile_small_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 tile_small_SOURCES = \
 	tile-small.c
 
