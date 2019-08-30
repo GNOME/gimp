@@ -52,9 +52,6 @@ static GimpProcedure  * glob_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
 static GimpValueArray * glob_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               GimpDrawable         *drawable,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -99,8 +96,8 @@ glob_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                            glob_run, NULL, NULL);
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      glob_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Returns a list of matching filenames",
@@ -149,9 +146,6 @@ glob_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 glob_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          GimpDrawable         *drawable,
           const GimpValueArray *args,
           gpointer              run_data)
 {
