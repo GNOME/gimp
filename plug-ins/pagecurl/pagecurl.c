@@ -229,7 +229,7 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         N_("Curl up one of the image corners"),
                                         "This plug-in creates a pagecurl-effect.",
-                                        PLUG_IN_PROC);
+                                        name);
       gimp_procedure_set_attribution (procedure,
                                       "Federico Mena Quintero and Simon Budig",
                                       "Federico Mena Quintero and Simon Budig",

@@ -58,18 +58,46 @@ typedef struct data
 } BlindVals;
 
 
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+typedef struct _Blinds      Blinds;
+typedef struct _BlindsClass BlindsClass;
 
-static gboolean  blinds_dialog         (GimpDrawable  *drawable);
+struct _Blinds
+{
+  GimpPlugIn parent_instance;
+};
 
-static void      dialog_update_preview (GimpDrawable  *drawable,
-                                        GimpPreview   *preview);
-static void      apply_blinds          (GimpDrawable  *drawable);
+struct _BlindsClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define BLINDS_TYPE  (blinds_get_type ())
+#define BLINDS (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BLINDS_TYPE, Blinds))
+
+GType                   blinds_get_type         (void) G_GNUC_CONST;
+
+static GList          * blinds_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * blinds_create_procedure (GimpPlugIn           *plug_in,
+                                                 const gchar          *name);
+
+static GimpValueArray * blinds_run              (GimpProcedure        *procedure,
+                                                 GimpRunMode           run_mode,
+                                                 GimpImage            *image,
+                                                 GimpDrawable         *drawable,
+                                                 const GimpValueArray *args,
+                                                 gpointer              run_data);
+
+static gboolean         blinds_dialog           (GimpDrawable         *drawable);
+
+static void             dialog_update_preview   (GimpDrawable         *drawable,
+                                                 GimpPreview          *preview);
+static void             apply_blinds            (GimpDrawable         *drawable);
+
+
+G_DEFINE_TYPE (Blinds, blinds, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (BLINDS_TYPE)
 
 
 /* Array to hold each size of fans. And no there are not each the
@@ -87,90 +115,110 @@ static BlindVals bvals =
   FALSE
 };
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
-};
-
-
-MAIN ()
-
 
 static void
-query (void)
+blinds_class_init (BlindsClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",       "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
-    { GIMP_PDB_INT32,    "angle-dsp",      "Angle of Displacement" },
-    { GIMP_PDB_INT32,    "num-segments",   "Number of segments in blinds" },
-    { GIMP_PDB_INT32,    "orientation",    "The orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }" },
-    { GIMP_PDB_INT32,    "bg-transparent", "Background transparent { FALSE, TRUE }" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Simulate an image painted on window blinds"),
-                          "More here later",
-                          "Andy Thomas",
-                          "Andy Thomas",
-                          "1997",
-                          N_("_Blinds..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+  plug_in_class->query_procedures = blinds_query_procedures;
+  plug_in_class->create_procedure = blinds_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+blinds_init (Blinds *blinds)
 {
-  static GimpParam  values[1];
-  GimpDrawable     *drawable;
-  gint32            drawable_id;
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+}
 
+static GList *
+blinds_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+blinds_create_procedure (GimpPlugIn  *plug_in,
+                         const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            blinds_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Blinds..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Distorts");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Simulate an image painted on "
+                                           "window blinds"),
+                                        "More here later",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Andy Thomas",
+                                      "Andy Thomas",
+                                      "1997");
+
+      GIMP_PROC_ARG_INT (procedure, "angle-dsp",
+                         "Angle dps",
+                         "Angle of Displacement",
+                         0, 360, 30,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "num-segments",
+                         "Num segments",
+                         "Number of segments in blinds",
+                         1, 1024, 3,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_ENUM (procedure, "orientation",
+                          "Orientation",
+                          "The orientation",
+                          GIMP_TYPE_ORIENTATION_TYPE,
+                          GIMP_ORIENTATION_HORIZONTAL,
+                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "bg-transparent",
+                             "BG transparent",
+                             "Background transparent",
+                             FALSE,
+                             G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+blinds_run (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            GimpDrawable         *drawable,
+            const GimpValueArray *args,
+            gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  run_mode    = param[0].data.d_int32;
-  drawable_id = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &bvals);
+
       if (! blinds_dialog (drawable))
-        return;
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 7)
-        status = GIMP_PDB_CALLING_ERROR;
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          bvals.angledsp    = param[3].data.d_int32;
-          bvals.numsegs     = param[4].data.d_int32;
-          bvals.orientation = param[5].data.d_int32;
-          bvals.bg_trans    = param[6].data.d_int32;
-        }
+      bvals.angledsp    = GIMP_VALUES_GET_INT     (args, 0);
+      bvals.numsegs     = GIMP_VALUES_GET_INT     (args, 1);
+      bvals.orientation = GIMP_VALUES_GET_ENUM    (args, 2);
+      bvals.bg_trans    = GIMP_VALUES_GET_BOOLEAN (args, 3);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -196,10 +244,12 @@ run (const gchar      *name,
     }
   else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 
