@@ -40,32 +40,52 @@ typedef struct data
 } CheckVals;
 
 
-static void      query  (void);
-static void      run    (const gchar       *name,
-                         gint               nparams,
-                         const GimpParam   *param,
-                         gint              *nreturn_vals,
-                         GimpParam        **return_vals);
+typedef struct _Checkerboard      Checkerboard;
+typedef struct _CheckerboardClass CheckerboardClass;
 
-static void      do_checkerboard_pattern    (GimpDrawable *drawable,
-                                             GimpPreview  *preview);
-static void      do_checkerboard_preview    (GimpDrawable *drawable,
-                                             GimpPreview  *preview);
-static gint      inblock                    (gint          pos,
-                                             gint          size);
-
-static gboolean  checkerboard_dialog        (GimpImage    *image,
-                                             GimpDrawable *drawable);
-static void      check_size_update_callback (GtkWidget    *widget);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Checkerboard
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn parent_instance;
 };
+
+struct _CheckerboardClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define CHECKERBOARD_TYPE  (checkerboard_get_type ())
+#define CHECKERBOARD (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CHECKERBOARD_TYPE, Checkerboard))
+
+GType                   checkerboard_get_type         (void) G_GNUC_CONST;
+
+static GList          * checkerboard_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * checkerboard_create_procedure (GimpPlugIn           *plug_in,
+                                                       const gchar          *name);
+
+static GimpValueArray * checkerboard_run              (GimpProcedure        *procedure,
+                                                       GimpRunMode           run_mode,
+                                                       GimpImage            *image,
+                                                       GimpDrawable         *drawable,
+                                                       const GimpValueArray *args,
+                                                       gpointer              run_data);
+
+static void             do_checkerboard_pattern       (GimpDrawable *drawable,
+                                                       GimpPreview  *preview);
+static void             do_checkerboard_preview       (GimpDrawable *drawable,
+                                                       GimpPreview  *preview);
+static gint             inblock                       (gint          pos,
+                                                       gint          size);
+
+static gboolean         checkerboard_dialog           (GimpImage    *image,
+                                                       GimpDrawable *drawable);
+static void             check_size_update_callback    (GtkWidget    *widget);
+
+
+G_DEFINE_TYPE (Checkerboard, checkerboard, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (CHECKERBOARD_TYPE)
+
 
 static CheckVals cvals =
 {
@@ -73,81 +93,98 @@ static CheckVals cvals =
   10         /* size */
 };
 
-MAIN ()
 
 static void
-query (void)
+checkerboard_class_init (CheckerboardClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",   "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"       },
-    { GIMP_PDB_INT32,    "check-mode", "Check mode { REGULAR (0), PSYCHOBILY (1) }" },
-    { GIMP_PDB_INT32,    "check-size", "Size of the checks"   }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create a checkerboard pattern"),
-                          "More here later",
-                          "Brent Burton & the Edward Blevins",
-                          "Brent Burton & the Edward Blevins",
-                          "1997",
-                          N_("_Checkerboard (legacy)..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
+  plug_in_class->query_procedures = checkerboard_query_procedures;
+  plug_in_class->create_procedure = checkerboard_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+checkerboard_init (Checkerboard *checkerboard)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpImage         *image;
-  GimpDrawable      *drawable;
-  gint32             image_ID;
-  gint32             drawable_ID;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+}
 
+static GList *
+checkerboard_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+checkerboard_create_procedure (GimpPlugIn  *plug_in,
+                               const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            checkerboard_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure,
+                                     N_("_Checkerboard (legacy)..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Render/Pattern");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Create a checkerboard pattern"),
+                                        "More here later",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Brent Burton & the Edward Blevins",
+                                      "Brent Burton & the Edward Blevins",
+                                      "1997");
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "psychobily",
+                             "Psychobily",
+                             "Render a psychobiliy checkerboard",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "check-size",
+                         "Check size",
+                         "Size of the checks",
+                         1, GIMP_MAX_IMAGE_SIZE, 10,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+checkerboard_run (GimpProcedure        *procedure,
+                  GimpRunMode           run_mode,
+                  GimpImage            *image,
+                  GimpDrawable         *drawable,
+                  const GimpValueArray *args,
+                  gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  run_mode    = param[0].data.d_int32;
-  image_ID    = param[1].data.d_int32;
-  drawable_ID = param[2].data.d_drawable;
-  image       = gimp_image_get_by_id (image_ID);
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &cvals);
+
       if (! checkerboard_dialog (image, drawable))
-        return;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 5)
-        status = GIMP_PDB_CALLING_ERROR;
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          cvals.mode = param[3].data.d_int32;
-          cvals.size = param[4].data.d_int32;
-        }
+      cvals.mode = GIMP_VALUES_GET_BOOLEAN (args, 0);
+      cvals.size = GIMP_VALUES_GET_INT     (args, 1);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -158,7 +195,7 @@ run (const gchar      *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable) ||
+  if (gimp_drawable_is_rgb  (drawable) ||
       gimp_drawable_is_gray (drawable))
     {
       do_checkerboard_pattern (drawable, NULL);
@@ -171,10 +208,12 @@ run (const gchar      *name,
     }
   else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 typedef struct
