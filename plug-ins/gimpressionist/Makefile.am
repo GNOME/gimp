@@ -22,7 +22,6 @@ gimpressionist_RC = gimpressionist.rc.o
 endif
 
 AM_CPPFLAGS = \
-	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"	\
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\

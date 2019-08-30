@@ -52,9 +52,9 @@ const GimpPlugInInfo PLUG_IN_INFO = {
         run     /* run_proc */
 }; /* PLUG_IN_INFO */
 
-static gint32 drawable_id;
-static ppm_t  infile =  {0, 0, NULL};
-static ppm_t  inalpha = {0, 0, NULL};
+static GimpDrawable *drawable;
+static ppm_t         infile  = { 0, 0, NULL };
+static ppm_t         inalpha = { 0, 0, NULL };
 
 
 void
@@ -144,8 +144,8 @@ run (const gchar      *name,
 
   /* Get the active drawable info */
 
-  drawable_id = param[2].data.d_drawable;
-  img_has_alpha = gimp_drawable_has_alpha (drawable_id);
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
+  img_has_alpha = gimp_drawable_has_alpha (drawable);
 
   random_generator = g_rand_new ();
 
@@ -156,7 +156,7 @@ run (const gchar      *name,
   {
     gint x1, y1, width, height; /* Not used. */
 
-    if (! gimp_drawable_mask_intersect (drawable_id,
+    if (! gimp_drawable_mask_intersect (drawable,
                                         &x1, &y1, &width, &height))
       {
         values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
@@ -192,8 +192,8 @@ run (const gchar      *name,
       break;
     }
   if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (drawable_id) ||
-       gimp_drawable_is_gray (drawable_id)))
+      (gimp_drawable_is_rgb  (drawable) ||
+       gimp_drawable_is_gray (drawable)))
     {
 
       if (with_specified_preset)
@@ -249,18 +249,18 @@ run (const gchar      *name,
 }
 
 static const Babl *
-get_u8_format (gint32 drawable_id)
+get_u8_format (GimpDrawable *drawable)
 {
-  if (gimp_drawable_is_rgb (drawable_id))
+  if (gimp_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_id))
+      if (gimp_drawable_has_alpha (drawable))
         return babl_format ("R'G'B'A u8");
       else
         return babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable_id))
+      if (gimp_drawable_has_alpha (drawable))
         return babl_format ("Y'A u8");
       else
         return babl_format ("Y' u8");
@@ -281,22 +281,22 @@ grabarea (void)
   gint                row, col;
   gint                rowstride;
 
-  if (! gimp_drawable_mask_intersect (drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &x1, &y1, &width, &height))
     return;
 
   ppm_new (&infile, width, height);
   p = &infile;
 
-  format = get_u8_format (drawable_id);
+  format = get_u8_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     ppm_new (&inalpha, width, height);
 
   rowstride = p->width * 3;
 
-  src_buffer = gimp_drawable_get_buffer (drawable_id);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    GEGL_RECTANGLE (x1, y1, width, height), 0,
@@ -409,13 +409,13 @@ gimpressionist_main (void)
   glong               done = 0;
   glong               total;
 
-  if (! gimp_drawable_mask_intersect (drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &x1, &y1, &width, &height))
     return;
 
   total = width * height;
 
-  format = get_u8_format (drawable_id);
+  format = get_u8_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
   gimp_progress_init (_("Painting"));
@@ -429,7 +429,7 @@ gimpressionist_main (void)
 
   rowstride = p->width * 3;
 
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   iter = gegl_buffer_iterator_new (dest_buffer,
                                    GEGL_RECTANGLE (x1, y1, width, height), 0,
@@ -530,6 +530,6 @@ gimpressionist_main (void)
 
   gimp_progress_update (1.0);
 
-  gimp_drawable_merge_shadow (drawable_id, TRUE);
-  gimp_drawable_update (drawable_id, x1, y1, width, height);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, x1, y1, width, height);
 }
