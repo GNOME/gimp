@@ -28,110 +28,158 @@
 #define PLUG_IN_PROC "file-glob"
 
 
-static void      query        (void);
-static void      run          (const gchar      *name,
-                               gint              nparams,
-                               const GimpParam  *param,
-                               gint             *nreturn_vals,
-                               GimpParam       **return_vals);
+typedef struct _Glob      Glob;
+typedef struct _GlobClass GlobClass;
 
-static gboolean  glob_match   (const gchar      *pattern,
-                               gboolean          filename_encoding,
-                               gint             *num_matches,
-                               gchar          ***matches);
-static gboolean  glob_fnmatch (const gchar      *pattern,
-                               const gchar      *string);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Glob
 {
-  NULL,
-  NULL,
-  query,
-  run,
+  GimpPlugIn parent_instance;
 };
 
-MAIN ()
+struct _GlobClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define GLOB_TYPE  (glob_get_type ())
+#define GLOB (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GLOB_TYPE, Glob))
+
+GType                   glob_get_type         (void) G_GNUC_CONST;
+
+static GList          * glob_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * glob_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * glob_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static gboolean         glob_match            (const gchar          *pattern,
+                                               gboolean              filename_encoding,
+                                               gint                 *num_matches,
+                                               gchar              ***matches);
+static gboolean         glob_fnmatch          (const gchar          *pattern,
+                                               const gchar          *string);
+
+
+G_DEFINE_TYPE (Glob, glob, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GLOB_TYPE)
+
 
 static void
-query (void)
+glob_class_init (GlobClass *klass)
 {
-  static const GimpParamDef glob_args[] =
-  {
-    { GIMP_PDB_STRING,  "pattern" ,  "The glob pattern (in UTF-8 encoding)" },
-    { GIMP_PDB_INT32,   "encoding",  "Encoding of the returned names: "
-                                     "{ UTF-8 (0), filename encoding (1) }" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef glob_return_vals[] =
-  {
-    { GIMP_PDB_INT32,       "num-files", "The number of returned names" },
-    { GIMP_PDB_STRINGARRAY, "files",     "The list of matching names"   }
-  };
-
-  /* FIXME filename encoding */
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          "Returns a list of matching filenames",
-                          "This can be useful in scripts and other plug-ins "
-                          "(e.g., batch-conversion). See the glob(7) manpage "
-                          "for more info. Note however that this isn't a "
-                          "full-featured glob implementation. It only handles "
-                          "simple patterns like \"/home/foo/bar/*.jpg\".",
-                          "Sven Neumann",
-                          "Sven Neumann",
-                          "2004",
-                          NULL,
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (glob_args),
-                          G_N_ELEMENTS (glob_return_vals),
-                          glob_args,
-                          glob_return_vals);
+  plug_in_class->query_procedures = glob_query_procedures;
+  plug_in_class->create_procedure = glob_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+glob_init (Glob *glob)
 {
-  static GimpParam values[3];
+}
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+static GList *
+glob_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+static GimpProcedure *
+glob_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
 
-  if (strcmp (name, PLUG_IN_PROC) == 0 && nparams >= 1)
+  if (! strcmp (name, PLUG_IN_PROC))
     {
-      gchar    **matches;
-      gint       num_matches;
-      gboolean   filename_encoding = FALSE;
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            glob_run, NULL, NULL);
 
-      if (nparams > 1)
-        filename_encoding = param[0].data.d_int32 ? TRUE : FALSE;
+      gimp_procedure_set_documentation (procedure,
+                                        "Returns a list of matching filenames",
+                                        "This can be useful in scripts and "
+                                        "other plug-ins (e.g., "
+                                        "batch-conversion). See the glob(7) "
+                                        "manpage for more info. Note however "
+                                        "that this isn't a full-featured glob "
+                                        "implementation. It only handles "
+                                        "simple patterns like "
+                                        "\"/home/foo/bar/*.jpg\".",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Sven Neumann",
+                                      "Sven Neumann",
+                                      "2004");
 
-      if (! glob_match (param[0].data.d_string, filename_encoding,
-                        &num_matches, &matches))
-        {
-          values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-          return;
-        }
+      GIMP_PROC_ARG_STRING (procedure, "pattern",
+                            "Pattern",
+                            "The glob pattern (in UTF-8 encoding)",
+                            NULL,
+                            G_PARAM_READWRITE);
 
-      *nreturn_vals = 3;
+      GIMP_PROC_ARG_BOOLEAN (procedure, "filename-encoding",
+                             "Filename encoding",
+                             "FALSE to return UTF-8 strings, TRUE to return "
+                             "strings in filename encoding",
+                             FALSE,
+                             G_PARAM_READWRITE);
 
-      values[0].type               = GIMP_PDB_STATUS;
-      values[0].data.d_status      = GIMP_PDB_SUCCESS;
+      GIMP_PROC_VAL_INT (procedure, "num-files",
+                         "Num files",
+                         "Number of returned filenames",
+                         0, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
 
-      values[1].type               = GIMP_PDB_INT32;
-      values[1].data.d_int32       = num_matches;
-
-      values[2].type               = GIMP_PDB_STRINGARRAY;
-      values[2].data.d_stringarray = matches;
+      GIMP_PROC_VAL_STRING_ARRAY (procedure, "files",
+                                  "Files",
+                                  "The list of matching filenames",
+                                  G_PARAM_READWRITE |
+                                  GIMP_PARAM_NO_VALIDATE);
     }
+
+  return procedure;
+}
+
+static GimpValueArray *
+glob_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  const gchar    *pattern;
+  gboolean        filename_encoding;
+  gchar         **matches;
+  gint            num_matches;
+
+  pattern           = GIMP_VALUES_GET_STRING  (args, 0);
+  filename_encoding = GIMP_VALUES_GET_BOOLEAN (args, 1);
+
+  if (! glob_match (pattern, filename_encoding,
+                    &num_matches, &matches))
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
+    }
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_INT           (return_vals, 0, num_matches);
+  GIMP_VALUES_TAKE_STRING_ARRAY (return_vals, 1, matches, num_matches);
+
+  return return_vals;
 }
 
 static gboolean
