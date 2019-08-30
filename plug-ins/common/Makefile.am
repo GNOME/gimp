@@ -242,8 +242,6 @@ align_layers_LDADD = \
 	$(INTLLIBS)		\
 	$(align_layers_RC)
 
-animation_optimize_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 animation_optimize_SOURCES = \
 	animation-optimize.c
 
@@ -350,8 +348,6 @@ checkerboard_LDADD = \
 	$(INTLLIBS)		\
 	$(checkerboard_RC)
 
-cml_explorer_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 cml_explorer_SOURCES = \
 	cml-explorer.c
 
@@ -423,8 +419,6 @@ contrast_retinex_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(contrast_retinex_RC)
-
-crop_zealous_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 crop_zealous_SOURCES = \
 	crop-zealous.c
@@ -1260,8 +1254,6 @@ guillotine_LDADD = \
 	$(INTLLIBS)		\
 	$(guillotine_RC)
 
-hot_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 hot_SOURCES = \
 	hot.c
 
@@ -1366,8 +1358,6 @@ procedure_browser_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(procedure_browser_RC)
-
-qbist_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 qbist_SOURCES = \
 	qbist.c

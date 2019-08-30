@@ -394,7 +394,7 @@ query (void)
                           PLUG_IN_VERSION,
                           N_("_Qbist..."),
                           "RGB*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -412,7 +412,7 @@ run (const gchar      *name,
   gint               sel_x1, sel_y1, sel_width, sel_height;
   gint               img_height, img_width;
   GimpRunMode        run_mode;
-  gint32             drawable_id;
+  GimpDrawable      *drawable;
   GimpPDBStatusType  status;
 
   *nreturn_vals = 1;
@@ -430,15 +430,15 @@ run (const gchar      *name,
   if (param[2].type != GIMP_PDB_DRAWABLE)
     status = GIMP_PDB_CALLING_ERROR;
 
-  drawable_id = param[2].data.d_drawable;
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
-  img_width = gimp_drawable_width (drawable_id);
-  img_height = gimp_drawable_height (drawable_id);
+  img_width = gimp_drawable_width (drawable);
+  img_height = gimp_drawable_height (drawable);
 
-  if (! gimp_drawable_is_rgb (drawable_id))
+  if (! gimp_drawable_is_rgb (drawable))
     status = GIMP_PDB_CALLING_ERROR;
 
-  if (! gimp_drawable_mask_intersect (drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &sel_x1, &sel_y1,
                                       &sel_width, &sel_height))
     {
@@ -494,7 +494,7 @@ run (const gchar      *name,
           gint                total_pixels = img_width * img_height;
           gint                done_pixels  = 0;
 
-          buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+          buffer = gimp_drawable_get_shadow_buffer (drawable);
 
           iter = gegl_buffer_iterator_new (buffer,
                                            GEGL_RECTANGLE (0, 0,
@@ -535,8 +535,8 @@ run (const gchar      *name,
 
           gimp_progress_update (1.0);
 
-          gimp_drawable_merge_shadow (drawable_id, TRUE);
-          gimp_drawable_update (drawable_id, sel_x1, sel_y1,
+          gimp_drawable_merge_shadow (drawable, TRUE);
+          gimp_drawable_update (drawable, sel_x1, sel_y1,
                                 sel_width, sel_height);
 
           gimp_displays_flush ();

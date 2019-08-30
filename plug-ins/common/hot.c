@@ -79,11 +79,11 @@
 
 typedef struct
 {
-  gint32 image;
-  gint32 drawable;
-  gint32 mode;
-  gint32 action;
-  gint32 new_layerp;
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  gint32        mode;
+  gint32        action;
+  gint32        new_layerp;
 } piArgs;
 
 typedef enum
@@ -216,7 +216,7 @@ query (void)
                           "1997",
                           N_("_Hot..."),
                           "RGB",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -244,8 +244,8 @@ run (const gchar      *name,
 
   gimp_get_data (PLUG_IN_PROC, &args);
 
-  args.image    = param[1].data.d_image;
-  args.drawable = param[2].data.d_drawable;
+  args.image    = gimp_image_get_by_id (param[1].data.d_image);
+  args.drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
   rvals[0].type          = GIMP_PDB_STATUS;
   rvals[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -314,7 +314,7 @@ pluginCore (piArgs *argp)
   gint        src_bpp;
   gint        dest_bpp;
   gboolean    success = TRUE;
-  gint        nl      = 0;
+  GimpLayer  *nl      = NULL;
   gint        y, i;
   gint        Y, I, Q;
   gint        width, height;
@@ -362,8 +362,8 @@ pluginCore (piArgs *argp)
                            100,
                            gimp_image_get_default_new_layer_mode (argp->image));
 
-      gimp_drawable_fill (nl, GIMP_FILL_TRANSPARENT);
-      gimp_image_insert_layer (argp->image, nl, -1, 0);
+      gimp_drawable_fill (GIMP_DRAWABLE (nl), GIMP_FILL_TRANSPARENT);
+      gimp_image_insert_layer (argp->image, nl, NULL, 0);
 
       dest_format = babl_format ("R'G'B'A u8");
     }
@@ -385,7 +385,7 @@ pluginCore (piArgs *argp)
 
   if (argp->new_layerp)
     {
-      dest_buffer = gimp_drawable_get_buffer (nl);
+      dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (nl));
     }
   else
     {
@@ -582,7 +582,7 @@ pluginCore (piArgs *argp)
 
   if (argp->new_layerp)
     {
-      gimp_drawable_update (nl, sel_x1, sel_y1, width, height);
+      gimp_drawable_update (GIMP_DRAWABLE (nl), sel_x1, sel_y1, width, height);
     }
   else
     {

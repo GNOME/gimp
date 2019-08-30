@@ -41,8 +41,9 @@ static inline gboolean colors_equal (const gfloat     *col1,
                                      const gfloat     *col2,
                                      gint              components,
                                      gboolean          has_alpha);
-static void            do_zcrop     (gint32    drawable_id,
-                                     gint32    image_id);
+static void            do_zcrop     (GimpDrawable     *drawable,
+                                     GimpImage        *image);
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -73,7 +74,7 @@ query (void)
                           "1997",
                           N_("_Zealous Crop"),
                           "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -90,8 +91,8 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             drawable_id;
-  gint32             image_id;
+  GimpDrawable      *drawable;
+  GimpImage         *image;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -112,17 +113,17 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Get the specified drawable  */
-      image_id    = param[1].data.d_int32;
-      drawable_id = param[2].data.d_int32;
+      image    = gimp_image_get_by_id (param[1].data.d_int32);
+      drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_int32));
 
       /*  Make sure that the drawable is gray or RGB or indexed  */
-      if (gimp_drawable_is_rgb (drawable_id) ||
-          gimp_drawable_is_gray (drawable_id) ||
-          gimp_drawable_is_indexed (drawable_id))
+      if (gimp_drawable_is_rgb (drawable) ||
+          gimp_drawable_is_gray (drawable) ||
+          gimp_drawable_is_indexed (drawable))
         {
           gimp_progress_init (_("Zealous cropping"));
 
-          do_zcrop (drawable_id, image_id);
+          do_zcrop (drawable, image);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -166,28 +167,28 @@ colors_equal (const gfloat   *col1,
 }
 
 static void
-do_zcrop (gint32  drawable_id,
-          gint32  image_id)
+do_zcrop (GimpDrawable *drawable,
+          GimpImage    *image)
 {
-  GeglBuffer  *drawable_buffer;
-  GeglBuffer  *shadow_buffer;
-  gfloat      *linear_buf;
-  const Babl  *format;
+  GeglBuffer   *drawable_buffer;
+  GeglBuffer   *shadow_buffer;
+  gfloat       *linear_buf;
+  const Babl   *format;
 
-  gint         x, y, width, height;
-  gint         components;
-  gint8       *killrows;
-  gint8       *killcols;
-  gint32       livingrows, livingcols, destrow, destcol;
-  gint32       selection_copy_id;
-  gboolean     has_alpha;
+  gint          x, y, width, height;
+  gint          components;
+  gint8        *killrows;
+  gint8        *killcols;
+  gint32        livingrows, livingcols, destrow, destcol;
+  GimpChannel  *selection_copy;
+  gboolean      has_alpha;
 
-  drawable_buffer = gimp_drawable_get_buffer (drawable_id);
-  shadow_buffer   = gimp_drawable_get_shadow_buffer (drawable_id);
+  drawable_buffer = gimp_drawable_get_buffer (drawable);
+  shadow_buffer   = gimp_drawable_get_shadow_buffer (drawable);
 
   width  = gegl_buffer_get_width (drawable_buffer);
   height = gegl_buffer_get_height (drawable_buffer);
-  has_alpha = gimp_drawable_has_alpha (drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (has_alpha)
     format = babl_format ("R'G'B'A float");
@@ -301,21 +302,22 @@ do_zcrop (gint32  drawable_id,
 
   gimp_progress_update (1.00);
 
-  gimp_image_undo_group_start (image_id);
+  gimp_image_undo_group_start (image);
 
-  selection_copy_id = gimp_selection_save (image_id);
-  gimp_selection_none (image_id);
+  selection_copy = GIMP_CHANNEL (gimp_selection_save (image));
+  gimp_selection_none (image);
 
   gegl_buffer_flush (shadow_buffer);
-  gimp_drawable_merge_shadow (drawable_id, TRUE);
+  gimp_drawable_merge_shadow (drawable, TRUE);
   gegl_buffer_flush (drawable_buffer);
 
-  gimp_image_select_item (image_id, GIMP_CHANNEL_OP_REPLACE, selection_copy_id);
-  gimp_image_remove_channel (image_id, selection_copy_id);
+  gimp_image_select_item (image, GIMP_CHANNEL_OP_REPLACE,
+                          GIMP_ITEM (selection_copy));
+  gimp_image_remove_channel (image, selection_copy);
 
-  gimp_image_crop (image_id, livingcols, livingrows, 0, 0);
+  gimp_image_crop (image, livingcols, livingrows, 0, 0);
 
-  gimp_image_undo_group_end (image_id);
+  gimp_image_undo_group_end (image);
 
   g_object_unref (shadow_buffer);
   g_object_unref (drawable_buffer);

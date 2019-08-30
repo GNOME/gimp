@@ -68,7 +68,7 @@ static  void run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static  gint32      do_optimizations    (GimpRunMode  run_mode,
+static  GimpImage * do_optimizations    (GimpRunMode  run_mode,
                                          gboolean     diff_only);
 
 /* tag util functions*/
@@ -99,10 +99,10 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 /* Global widgets'n'stuff */
 static  guint             width, height;
-static  gint32            image_id;
-static  gint32            new_image_id;
+static  GimpImage        *image;
+static  GimpImage        *new_image;
 static  gint32            total_frames;
-static  gint32           *layers;
+static  GimpLayer       **layers;
 static  GimpImageBaseType imagetype;
 static  GimpImageType     drawabletype_alpha;
 static  guchar            pixelstep;
@@ -142,7 +142,7 @@ query (void)
                           "1997-2003",
                           N_("Optimize (for _GIF)"),
                           "RGB*, INDEXED*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
                           args, return_args);
@@ -160,7 +160,7 @@ query (void)
                           "1997-2001",
                           N_("_Optimize (Difference)"),
                           "RGB*, INDEXED*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
                           args, return_args);
@@ -175,7 +175,7 @@ query (void)
                           "1997-2001",
                           N_("_Unoptimize"),
                           "RGB*, INDEXED*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
                           args, return_args);
@@ -195,7 +195,7 @@ query (void)
                           "2001",
                           N_("_Remove Backdrop"),
                           "RGB*, INDEXED*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
                           args, return_args);
@@ -211,7 +211,7 @@ query (void)
                           "2001",
                           N_("_Find Backdrop"),
                           "RGB*, INDEXED*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
                           args, return_args);
@@ -266,9 +266,9 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      image_id = param[1].data.d_image;
+      image = gimp_image_get_by_id (param[1].data.d_image);
 
-      new_image_id = do_optimizations (run_mode, diff_only);
+      new_image = do_optimizations (run_mode, diff_only);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush();
@@ -278,7 +278,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 
   values[1].type         = GIMP_PDB_IMAGE;
-  values[1].data.d_image = new_image_id;
+  values[1].data.d_image = gimp_image_get_id (new_image);
 }
 
 
@@ -297,24 +297,24 @@ total_alpha (guchar  *imdata,
 }
 
 static const Babl *
-get_format (gint32 drawable_ID)
+get_format (GimpDrawable *drawable)
 {
-  if (gimp_drawable_is_rgb (drawable_ID))
+  if (gimp_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         return babl_format ("R'G'B'A u8");
       else
         return babl_format ("R'G'B' u8");
     }
-  else if (gimp_drawable_is_gray (drawable_ID))
+  else if (gimp_drawable_is_gray (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         return babl_format ("Y'A u8");
       else
         return babl_format ("Y' u8");
     }
 
-  return gimp_drawable_get_format (drawable_ID);
+  return gimp_drawable_get_format (drawable);
 }
 
 static void
@@ -323,7 +323,7 @@ compose_row (gint          frame_num,
              gint          row_num,
              guchar       *dest,
              gint          dest_width,
-             gint32        drawable_ID,
+             GimpDrawable *drawable,
              gboolean      cleanup)
 {
   static guchar *line_buf = NULL;
@@ -350,19 +350,19 @@ compose_row (gint          frame_num,
       total_alpha (dest, dest_width, pixelstep);
     }
 
-  gimp_drawable_offsets (drawable_ID, &rawx, &rawy);
+  gimp_drawable_offsets (drawable, &rawx, &rawy);
 
-  rawwidth  = gimp_drawable_width (drawable_ID);
-  rawheight = gimp_drawable_height (drawable_ID);
+  rawwidth  = gimp_drawable_width (drawable);
+  rawheight = gimp_drawable_height (drawable);
 
   /* this frame has nothing to give us for this row; return */
   if (row_num >= rawheight + rawy ||
       row_num < rawy)
     return;
 
-  format = get_format (drawable_ID);
+  format = get_format (drawable);
 
-  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  has_alpha = gimp_drawable_has_alpha (drawable);
   rawbpp    = babl_format_get_bytes_per_pixel (format);
 
   if (line_buf)
@@ -374,7 +374,7 @@ compose_row (gint          frame_num,
 
   /* Initialise and fetch the raw new frame row */
 
-  src_buffer = gimp_drawable_get_buffer (drawable_ID);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, row_num - rawy,
                                                rawwidth, 1), 1.0,
@@ -409,7 +409,7 @@ compose_row (gint          frame_num,
 }
 
 
-static gint32
+static GimpImage *
 do_optimizations (GimpRunMode run_mode,
                   gboolean    diff_only)
 {
@@ -418,7 +418,7 @@ do_optimizations (GimpRunMode run_mode,
   guchar        *destptr;
   gint           row, this_frame_num;
   guint32        frame_sizebytes;
-  gint32         new_layer_id;
+  GimpLayer     *new_layer;
   DisposeType    dispose;
   guchar        *this_frame = NULL;
   guchar        *last_frame = NULL;
@@ -427,7 +427,7 @@ do_optimizations (GimpRunMode run_mode,
 
   gint           this_delay;
   gint           cumulated_delay = 0;
-  gint           last_true_frame = -1;
+  GimpLayer     *last_true_frame = NULL;
   gint           buflen;
 
   gchar         *oldlayer_name;
@@ -455,10 +455,10 @@ do_optimizations (GimpRunMode run_mode,
       break;
     }
 
-  width     = gimp_image_width (image_id);
-  height    = gimp_image_height (image_id);
-  layers    = gimp_image_get_layers (image_id, &total_frames);
-  imagetype = gimp_image_base_type (image_id);
+  width     = gimp_image_width (image);
+  height    = gimp_image_height (image);
+  layers    = gimp_image_get_layers (image, &total_frames);
+  imagetype = gimp_image_base_type (image);
   pixelstep = (imagetype == GIMP_RGB) ? 4 : 2;
 
   drawabletype_alpha = (imagetype == GIMP_RGB) ? GIMP_RGBA_IMAGE :
@@ -477,13 +477,13 @@ do_optimizations (GimpRunMode run_mode,
   total_alpha (this_frame, width*height, pixelstep);
   total_alpha (last_frame, width*height, pixelstep);
 
-  new_image_id = gimp_image_new(width, height, imagetype);
-  gimp_image_undo_disable (new_image_id);
+  new_image = gimp_image_new (width, height, imagetype);
+  gimp_image_undo_disable (new_image);
 
   if (imagetype == GIMP_INDEXED)
     {
-      palette = gimp_image_get_colormap (image_id, &ncolors);
-      gimp_image_set_colormap (new_image_id, palette, ncolors);
+      palette = gimp_image_get_colormap (image, &ncolors);
+      gimp_image_set_colormap (new_image, palette, ncolors);
     }
 
 #if 1
@@ -525,7 +525,8 @@ do_optimizations (GimpRunMode run_mode,
 
           for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
             {
-              gint32 drawable_ID = layers[total_frames-(this_frame_num+1)];
+              GimpDrawable *drawable =
+                GIMP_DRAWABLE (layers[total_frames-(this_frame_num+1)]);
 
               dispose = get_frame_disposal (this_frame_num);
 
@@ -534,7 +535,7 @@ do_optimizations (GimpRunMode run_mode,
                            row,
                            these_rows[this_frame_num],
                            width,
-                           drawable_ID,
+                           drawable,
                            FALSE);
             }
 
@@ -651,18 +652,18 @@ do_optimizations (GimpRunMode run_mode,
       GeglBuffer *buffer;
       const Babl *format;
 
-      new_layer_id = gimp_layer_new (new_image_id,
-                                     "Backgroundx",
-                                     width, height,
-                                     drawabletype_alpha,
-                                     100.0,
-                                     gimp_image_get_default_new_layer_mode (new_image_id));
+      new_layer = gimp_layer_new (new_image,
+                                  "Backgroundx",
+                                  width, height,
+                                  drawabletype_alpha,
+                                  100.0,
+                                  gimp_image_get_default_new_layer_mode (new_image));
 
-      gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
+      gimp_image_insert_layer (new_image, new_layer, NULL, 0);
 
-      buffer = gimp_drawable_get_buffer (new_layer_id);
+      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer));
 
-      format = get_format (new_layer_id);
+      format = get_format (GIMP_DRAWABLE (new_layer));
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        format, back_frame,
@@ -678,11 +679,12 @@ do_optimizations (GimpRunMode run_mode,
            * BUILD THIS FRAME into our 'this_frame' buffer.
            */
 
-          gint32 drawable_ID = layers[total_frames-(this_frame_num+1)];
+          GimpDrawable *drawable =
+            GIMP_DRAWABLE (layers[total_frames-(this_frame_num+1)]);
 
           /* Image has been closed/etc since we got the layer list? */
           /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-          if (gimp_drawable_width (drawable_ID) == 0)
+          if (gimp_drawable_width (drawable) == 0)
             {
               gimp_quit ();
             }
@@ -697,7 +699,7 @@ do_optimizations (GimpRunMode run_mode,
                            row,
                            &this_frame[pixelstep*width * row],
                            width,
-                           drawable_ID,
+                           drawable,
                            FALSE
                            );
             }
@@ -1011,7 +1013,7 @@ do_optimizations (GimpRunMode run_mode,
            */
 
           oldlayer_name =
-            gimp_item_get_name(layers[total_frames-(this_frame_num+1)]);
+            gimp_item_get_name (GIMP_ITEM (layers[total_frames-(this_frame_num+1)]));
 
           buflen = strlen(oldlayer_name) + 40;
 
@@ -1039,7 +1041,7 @@ do_optimizations (GimpRunMode run_mode,
 
               g_free (newlayer_name);
 
-              oldlayer_name = gimp_item_get_name (last_true_frame);
+              oldlayer_name = gimp_item_get_name (GIMP_ITEM (last_true_frame));
 
               buflen = strlen (oldlayer_name) + 40;
 
@@ -1057,7 +1059,7 @@ do_optimizations (GimpRunMode run_mode,
                           (this_frame_num ==  0) ? "" :
                           can_combine ? "(combine)" : "(replace)");
 
-              gimp_item_set_name (last_true_frame, newlayer_name);
+              gimp_item_set_name (GIMP_ITEM (last_true_frame), newlayer_name);
 
               g_free (newlayer_name);
             }
@@ -1069,20 +1071,20 @@ do_optimizations (GimpRunMode run_mode,
               cumulated_delay = this_delay;
 
               last_true_frame =
-                new_layer_id = gimp_layer_new (new_image_id,
-                                               newlayer_name,
-                                               bbox_right-bbox_left,
-                                               bbox_bottom-bbox_top,
-                                               drawabletype_alpha,
-                                               100.0,
-                                               gimp_image_get_default_new_layer_mode (new_image_id));
+                new_layer = gimp_layer_new (new_image,
+                                            newlayer_name,
+                                            bbox_right-bbox_left,
+                                            bbox_bottom-bbox_top,
+                                            drawabletype_alpha,
+                                            100.0,
+                                            gimp_image_get_default_new_layer_mode (new_image));
               g_free (newlayer_name);
 
-              gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
+              gimp_image_insert_layer (new_image, new_layer, NULL, 0);
 
-              buffer = gimp_drawable_get_buffer (new_layer_id);
+              buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer));
 
-              format = get_format (new_layer_id);
+              format = get_format (GIMP_DRAWABLE (new_layer));
 
               gegl_buffer_set (buffer,
                                GEGL_RECTANGLE (0, 0,
@@ -1101,10 +1103,10 @@ do_optimizations (GimpRunMode run_mode,
       gimp_progress_update (1.0);
     }
 
-  gimp_image_undo_enable (new_image_id);
+  gimp_image_undo_enable (new_image);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_display_new (new_image_id);
+    gimp_display_new (new_image);
 
   g_free (rawframe);
   rawframe = NULL;
@@ -1121,7 +1123,7 @@ do_optimizations (GimpRunMode run_mode,
   g_free (back_frame);
   back_frame = NULL;
 
-  return new_image_id;
+  return new_image;
 }
 
 /* Util. */
@@ -1132,9 +1134,9 @@ get_frame_disposal (guint whichframe)
   gchar       *layer_name;
   DisposeType  disposal;
 
-  layer_name = gimp_item_get_name(layers[total_frames-(whichframe+1)]);
-  disposal = parse_disposal_tag(layer_name);
-  g_free(layer_name);
+  layer_name = gimp_item_get_name (GIMP_ITEM (layers[total_frames-(whichframe+1)]));
+  disposal = parse_disposal_tag (layer_name);
+  g_free (layer_name);
 
   return disposal;
 }
@@ -1145,11 +1147,11 @@ get_frame_duration (guint whichframe)
   gchar* layer_name;
   gint   duration = 0;
 
-  layer_name = gimp_item_get_name(layers[total_frames-(whichframe+1)]);
+  layer_name = gimp_item_get_name (GIMP_ITEM (layers[total_frames-(whichframe+1)]));
   if (layer_name)
     {
-      duration = parse_ms_tag(layer_name);
-      g_free(layer_name);
+      duration = parse_ms_tag (layer_name);
+      g_free (layer_name);
     }
 
   if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */

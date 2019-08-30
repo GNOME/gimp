@@ -428,13 +428,13 @@ static CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
   { NULL, 0 }
 };
 
-static GRand    *gr;
-static gint      drawable_id = 0;
-static gint      copy_source = 0;
-static gint      copy_destination = 0;
-static gint      selective_load_source = 0;
-static gint      selective_load_destination = 0;
-static gboolean  CML_preview_defer = FALSE;
+static GRand        *gr;
+static GimpDrawable *drawable = NULL;
+static gint          copy_source = 0;
+static gint          copy_destination = 0;
+static gint          selective_load_source = 0;
+static gint          selective_load_destination = 0;
+static gboolean      CML_preview_defer = FALSE;
 
 static gdouble  *mem_chank0 = NULL;
 static gint      mem_chank0_size = 0;
@@ -470,7 +470,7 @@ query (void)
                           "1997",
                           N_("CML _Explorer..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -488,8 +488,8 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
   GimpRunMode       run_mode;
 
-  run_mode    = param[0].data.d_int32;
-  drawable_id = param[2].data.d_drawable;
+  run_mode = param[0].data.d_int32;
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
   INIT_I18N ();
 
@@ -559,13 +559,13 @@ CML_main_function (gboolean preview_p)
   gdouble    *newh, *news, *newv;
   gdouble    *haux, *saux, *vaux;
 
-  if (! gimp_drawable_mask_intersect (drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &x, &y,
                                       &width_by_pixel, &height_by_pixel))
     return GIMP_PDB_SUCCESS;
 
-  src_has_alpha = dest_has_alpha = gimp_drawable_has_alpha (drawable_id);
-  src_is_gray   = dest_is_gray   = gimp_drawable_is_gray (drawable_id);
+  src_has_alpha = dest_has_alpha = gimp_drawable_has_alpha (drawable);
+  src_is_gray   = dest_is_gray   = gimp_drawable_is_gray (drawable);
 
   if (src_is_gray)
     {
@@ -644,9 +644,9 @@ CML_main_function (gboolean preview_p)
   dest_buf = mem_chank2;
 
   if (! preview_p)
-    dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+    dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
-  src_buffer = gimp_drawable_get_buffer (drawable_id);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   gr = g_rand_new ();
   if (VALS.initial_value == CML_INITIAL_RANDOM_FROM_SEED)
@@ -948,8 +948,8 @@ CML_main_function (gboolean preview_p)
 
       g_object_unref (dest_buffer);
 
-      gimp_drawable_merge_shadow (drawable_id, TRUE);
-      gimp_drawable_update (drawable_id,
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable,
                             x, y, width_by_pixel, height_by_pixel);
     }
 
