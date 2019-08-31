@@ -68,15 +68,10 @@ typedef struct _DepthMergeInterface
 
 typedef struct _DepthMergeParams
 {
-  GimpDrawable *result;
   gint32        result_id;
-  GimpDrawable *source1;
   gint32        source1_id;
-  GimpDrawable *source2;
   gint32        source2_id;
-  GimpDrawable *depthMap1;
   gint32        depthMap1_id;
-  GimpDrawable *depthMap2;
   gint32        depthMap2_id;
   gfloat        overlap;
   gfloat        offset;
@@ -222,7 +217,7 @@ run (const gchar      *name,
       DepthMerge_initParams (&dm);
       gimp_get_data (PLUG_IN_PROC, &dm.params);
       dm.params.result_id = param[2].data.d_drawable;
-      dm.params.result = GIMP_DRAWABLE (gimp_item_get_by_id (dm.params.result_id));
+
       if (! DepthMerge_construct (&dm))
         return;
 
@@ -249,12 +244,6 @@ run (const gchar      *name,
           dm.params.offset       = param[ 8].data.d_float;
           dm.params.scale1       = param[ 9].data.d_float;
           dm.params.scale2       = param[10].data.d_float;
-
-          dm.params.result    = GIMP_DRAWABLE (gimp_item_get_by_id (dm.params.result_id));
-          dm.params.source1   = GIMP_DRAWABLE (gimp_item_get_by_id (dm.params.source1_id));
-          dm.params.source2   = GIMP_DRAWABLE (gimp_item_get_by_id (dm.params.source2_id));
-          dm.params.depthMap1 = GIMP_DRAWABLE (gimp_item_get_by_id (dm.params.depthMap1_id));
-          dm.params.depthMap2 = GIMP_DRAWABLE (gimp_item_get_by_id (dm.params.depthMap2_id));
         }
       if (!DepthMerge_construct (&dm))
         return;
@@ -298,15 +287,10 @@ run (const gchar      *name,
 static void
 DepthMerge_initParams (DepthMerge *dm)
 {
-  dm->params.result       = NULL;
   dm->params.result_id    = -1;
-  dm->params.source1      = NULL;
   dm->params.source1_id   = -1;
-  dm->params.source2      = NULL;
   dm->params.source2_id   = -1;
-  dm->params.depthMap1    = NULL;
   dm->params.depthMap1_id = -1;
-  dm->params.depthMap2    = NULL;
   dm->params.depthMap2_id = -1;
   dm->params.overlap      =  0;
   dm->params.offset       =  0;
@@ -319,7 +303,8 @@ DepthMerge_construct (DepthMerge *dm)
 {
   dm->interface = NULL;
 
-  dm->resultDrawable = dm->params.result;
+  dm->resultDrawable =
+    GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.result_id));
 
   if (! gimp_drawable_mask_intersect (dm->resultDrawable,
                                       &(dm->selectionX), &(dm->selectionY),
@@ -331,10 +316,17 @@ DepthMerge_construct (DepthMerge *dm)
 
   dm->resultHasAlpha = gimp_drawable_has_alpha (dm->resultDrawable);
 
-  dm->source1Drawable   = dm->params.source1;
-  dm->source2Drawable   = dm->params.source2;
-  dm->depthMap1Drawable = dm->params.depthMap1;
-  dm->depthMap2Drawable = dm->params.depthMap2;
+  dm->source1Drawable =
+    GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.source1_id));
+
+  dm->source2Drawable =
+    GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.source2_id));
+
+  dm->depthMap1Drawable =
+    GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.depthMap1_id));
+
+  dm->depthMap2Drawable =
+    GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.depthMap2_id));
 
   dm->params.overlap = CLAMP (dm->params.overlap, 0, 2);
   dm->params.offset  = CLAMP (dm->params.offset, -1, 1);
@@ -891,11 +883,11 @@ dm_constraint (GimpImage *image,
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
 
   return ((gimp_drawable_width (drawable) ==
-           gimp_drawable_width (dm->params.result)) &&
+           gimp_drawable_width (dm->resultDrawable)) &&
           (gimp_drawable_height (drawable) ==
-           gimp_drawable_height (dm->params.result)) &&
+           gimp_drawable_height (dm->resultDrawable)) &&
           ((gimp_drawable_is_rgb (drawable) &&
-            (gimp_drawable_is_rgb (dm->params.result))) ||
+            (gimp_drawable_is_rgb (dm->resultDrawable))) ||
            gimp_drawable_is_gray (drawable)));
 }
 
@@ -906,10 +898,8 @@ dialogSource1ChangedCallback (GtkWidget  *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &dm->params.source1_id);
 
-  dm->params.source1 =
+  dm->source1Drawable =
     GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.source1_id));
-
-  dm->source1Drawable = dm->params.source1;
 
   util_fillReducedBuffer (dm->interface->previewSource1,
                           babl_format ("R'G'B'A u8"),
@@ -929,10 +919,8 @@ dialogSource2ChangedCallback (GtkWidget  *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &dm->params.source2_id);
 
-  dm->params.source2 =
+  dm->source2Drawable =
     GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.source2_id));
-
-  dm->source2Drawable = dm->params.source2;
 
   util_fillReducedBuffer (dm->interface->previewSource2,
                           babl_format ("R'G'B'A u8"),
@@ -952,10 +940,8 @@ dialogDepthMap1ChangedCallback (GtkWidget  *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &dm->params.depthMap1_id);
 
-  dm->params.depthMap1 =
+  dm->depthMap1Drawable =
     GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.depthMap1_id));
-
-  dm->depthMap1Drawable = dm->params.depthMap1;
 
   util_fillReducedBuffer (dm->interface->previewDepthMap1,
                           babl_format ("Y' u8"),
@@ -975,10 +961,8 @@ dialogDepthMap2ChangedCallback (GtkWidget  *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &dm->params.depthMap2_id);
 
-  dm->params.depthMap2 =
+  dm->depthMap2Drawable =
     GIMP_DRAWABLE (gimp_item_get_by_id (dm->params.depthMap2_id));
-
-  dm->depthMap2Drawable = dm->params.depthMap2;;
 
   util_fillReducedBuffer (dm->interface->previewDepthMap2,
                           babl_format ("Y' u8"),
