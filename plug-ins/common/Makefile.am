@@ -1524,8 +1524,6 @@ van_gogh_lic_LDADD = \
 	$(INTLLIBS)		\
 	$(van_gogh_lic_RC)
 
-warp_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 warp_SOURCES = \
 	warp.c
 
