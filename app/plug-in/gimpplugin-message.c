@@ -306,9 +306,10 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n\n"
-                    "requested invalid tile (killing)",
+                    "requested invalid tile #%d for writing (killing)",
                     gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file));
+                    gimp_file_get_utf8_name (plug_in->file),
+                    tile_info->tile_num);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -397,9 +398,10 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n\n"
-                    "requested invalid tile (killing)",
+                    "requested invalid tile #%d for reading (killing)",
                     gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file));
+                    gimp_file_get_utf8_name (plug_in->file),
+                    request->tile_num);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
