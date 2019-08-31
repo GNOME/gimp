@@ -68,6 +68,7 @@
  *    Michael Sweet <mike@easysw.com>
  *
  */
+
 #include "config.h"
 
 #include <errno.h>
@@ -80,6 +81,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 #define PARAM_FILE_FORMAT_VERSION 1.0
 #define PLUG_IN_PROC              "plug-in-cml-explorer"
@@ -310,14 +312,38 @@ static const gchar *load_channel_names[] =
   N_("Value")
 };
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
 
-static GimpPDBStatusType CML_main_function     (gboolean   preview_p);
+typedef struct _Explorer      Explorer;
+typedef struct _ExplorerClass ExplorerClass;
+
+struct _Explorer
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _ExplorerClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define EXPLORER_TYPE  (explorer_get_type ())
+#define EXPLORER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXPLORER_TYPE, Explorer))
+
+GType                   explorer_get_type         (void) G_GNUC_CONST;
+
+static GList          * explorer_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * explorer_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * explorer_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static gboolean          CML_main_function     (gboolean   preview_p);
 static void              CML_compute_next_step (gint       size,
                                                 gdouble  **h,
                                                 gdouble  **s,
@@ -395,13 +421,10 @@ static gdouble parse_line_to_gdouble       (FILE             *file,
                                             gboolean         *flag);
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Explorer, explorer, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (EXPLORER_TYPE)
+
 
 static GtkWidget   *preview;
 static WidgetEntry  widget_pointers[4][CML_PARAM_NUM];
@@ -443,98 +466,144 @@ static gint      mem_chank1_size = 0;
 static guchar   *mem_chank2 = NULL;
 static gint      mem_chank2_size = 0;
 
-MAIN ()
 
 static void
-query (void)
+explorer_class_init (ExplorerClass *klass)
 {
-  static const GimpParamDef args [] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",           "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",              "Input image (not used)" },
-    { GIMP_PDB_DRAWABLE, "drawable",           "Input drawable"  },
-    { GIMP_PDB_STRING,   "parameter-filename", "The name of parameter file. CML_explorer makes an image with its settings." }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create abstract Coupled-Map Lattice patterns"),
-                          "Make an image of Coupled-Map Lattice (CML). CML is "
-                          "a kind of Cellula Automata on continuous (value) "
-                          "domain. In GIMP_RUN_NONINTERACTIVE, the name of a "
-                          "parameter file is passed as the 4th arg. You can "
-                          "control CML_explorer via parameter file.",
-                          /*  Or do you want to call me with over 50 args? */
-                          "Shuji Narazaki (narazaki@InetQ.or.jp); "
-                          "http://www.inetq.or.jp/~narazaki/TheGIMP/",
-                          "Shuji Narazaki",
-                          "1997",
-                          N_("CML _Explorer..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
+  plug_in_class->query_procedures = explorer_query_procedures;
+  plug_in_class->create_procedure = explorer_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+explorer_init (Explorer *explorer)
 {
-  static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode       run_mode;
+}
 
-  run_mode = param[0].data.d_int32;
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
+static GList *
+explorer_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
+static GimpProcedure *
+explorer_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            explorer_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("CML _Explorer..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Render/Pattern");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Create abstract Coupled-Map "
+                                           "Lattice patterns"),
+                                        "Make an image of Coupled-Map Lattice "
+                                        "(CML). CML is a kind of Cellula "
+                                        "Automata on continuous (value) "
+                                        "domain. In GIMP_RUN_NONINTERACTIVE, "
+                                        "the name of a parameter file is "
+                                        "passed as the 4th arg. You can "
+                                        "control CML_explorer via parameter "
+                                        "file.",
+                                        /*  Or do you want to call me
+                                         *  with over 50 args?
+                                         */
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Shuji Narazaki (narazaki@InetQ.or.jp); "
+                                      "http://www.inetq.or.jp/~narazaki/TheGIMP/",
+                                      "Shuji Narazaki",
+                                      "1997");
+
+      GIMP_PROC_ARG_STRING (procedure, "parameter-uri",
+                            "Parameter UTI",
+                            "The local file:// URI of parameter file. "
+                            "CML_explorer makes an image with its settings.",
+                            NULL,
+                            G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+explorer_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *_drawable,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
   INIT_I18N ();
 
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  drawable = _drawable;
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &VALS);
+
       if (! CML_explorer_dialog ())
-        return;
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
+
     case GIMP_RUN_NONINTERACTIVE:
       {
-        gchar *filename = param[3].data.d_string;
+        const gchar *uri      = GIMP_VALUES_GET_STRING (args, 0);
+        GFile       *file     = g_file_new_for_uri (uri);
+        gchar       *filename = g_file_get_path (file);
 
         if (! CML_load_parameter_file (filename, FALSE))
-          return;
-        break;
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CALLING_ERROR,
+                                                   NULL);
+
+        g_free (filename);
+        g_object_unref (file);
       }
+      break;
+
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
-  status = CML_main_function (FALSE);
+  if (CML_main_function (FALSE))
+    {
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush();
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush();
-  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-    gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
+    }
+  else
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
+    }
 
   g_free (mem_chank0);
   g_free (mem_chank1);
   g_free (mem_chank2);
 
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
-static GimpPDBStatusType
+static gboolean
 CML_main_function (gboolean preview_p)
 {
   GeglBuffer *src_buffer;
@@ -562,7 +631,7 @@ CML_main_function (gboolean preview_p)
   if (! gimp_drawable_mask_intersect (drawable,
                                       &x, &y,
                                       &width_by_pixel, &height_by_pixel))
-    return GIMP_PDB_SUCCESS;
+    return TRUE;
 
   src_has_alpha = dest_has_alpha = gimp_drawable_has_alpha (drawable);
   src_is_gray   = dest_is_gray   = gimp_drawable_is_gray (drawable);
@@ -605,7 +674,7 @@ CML_main_function (gboolean preview_p)
   total = height_by_pixel * width_by_pixel;
 
   if (total < 1)
-    return GIMP_PDB_EXECUTION_ERROR;
+    return FALSE;
 
   keep_height = VALS.scale;
 
@@ -955,7 +1024,7 @@ CML_main_function (gboolean preview_p)
 
   g_rand_free (gr);
 
-  return GIMP_PDB_SUCCESS;
+  return TRUE;
 }
 
 static void
