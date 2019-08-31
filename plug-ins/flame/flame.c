@@ -56,31 +56,58 @@ struct
 {
   gint          randomize;  /* superseded */
   gint          variation;
-  gint32        cmap_drawable;
+  gint32        cmap_drawable_id;
   control_point cp;
 } config;
 
 
-/* Declare local functions. */
+typedef struct _Flame      Flame;
+typedef struct _FlameClass FlameClass;
 
-static void      query             (void);
-static void      run               (const gchar      *name,
-                                    gint              nparams,
-                                    const GimpParam  *param,
-                                    gint             *nreturn_vals,
-                                    GimpParam       **return_vals);
-static void      flame             (GimpDrawable     *drawable);
+struct _Flame
+{
+  GimpPlugIn parent_instance;
+};
 
-static gboolean  flame_dialog      (void);
-static void      set_flame_preview (void);
-static void      load_callback     (GtkWidget        *widget,
-                                    gpointer          data);
-static void      save_callback     (GtkWidget        *widget,
-                                    gpointer          data);
-static void      set_edit_preview  (void);
-static void      combo_callback    (GtkWidget        *widget,
-                                    gpointer          data);
-static void      init_mutants      (void);
+struct _FlameClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define FLAME_TYPE  (flame_get_type ())
+#define FLAME (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FLAME_TYPE, Flame))
+
+GType                   flame_get_type         (void) G_GNUC_CONST;
+
+static GList          * flame_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * flame_create_procedure (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
+
+static GimpValueArray * flame_run              (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GimpImage            *image,
+                                                GimpDrawable         *drawable,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+
+static void             flame                  (GimpDrawable         *drawable);
+
+static gboolean         flame_dialog           (void);
+static void             set_flame_preview      (void);
+static void             load_callback          (GtkWidget            *widget,
+                                                gpointer              data);
+static void             save_callback          (GtkWidget            *widget,
+                                                gpointer              data);
+static void             set_edit_preview       (void);
+static void             combo_callback         (GtkWidget            *widget,
+                                                gpointer              data);
+static void             init_mutants           (void);
+
+
+G_DEFINE_TYPE (Flame, flame, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (FLAME_TYPE)
 
 
 static gchar      buffer[BUFFER_SIZE];
@@ -103,41 +130,56 @@ static gdouble        pick_speed = 0.2;
 static frame_spec f = { 0.0, &config.cp, 1, 0.0 };
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
+static void
+flame_class_init (FlameClass *klass)
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-
-MAIN ()
-
+  plug_in_class->query_procedures = flame_query_procedures;
+  plug_in_class->create_procedure = flame_create_procedure;
+}
 
 static void
-query (void)
+flame_init (Flame *flame)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
-  };
+}
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create cosmic recursive fractal flames"),
-                          "Create cosmic recursive fractal flames",
-                          "Scott Draves",
-                          "Scott Draves",
-                          "1997",
-                          N_("_Flame..."),
-                          "RGB*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+static GList *
+flame_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Fractals");
+static GimpProcedure *
+flame_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            flame_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Flame..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Render/Fractals");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Create cosmic recursive fractal "
+                                           "flames"),
+                                        "Create cosmic recursive fractal flames",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Scott Draves",
+                                      "Scott Draves",
+                                      "1997");
+    }
+
+  return procedure;
 }
 
 static void
@@ -145,9 +187,9 @@ maybe_init_cp (void)
 {
   if (0 == config.cp.spatial_oversample)
     {
-      config.randomize     = 0;
-      config.variation     = VARIATION_SAME;
-      config.cmap_drawable = GRADIENT_DRAWABLE;
+      config.randomize        = 0;
+      config.variation        = VARIATION_SAME;
+      config.cmap_drawable_id = GRADIENT_DRAWABLE;
 
       random_control_point (&config.cp, variation_random);
 
@@ -170,76 +212,65 @@ maybe_init_cp (void)
     }
 }
 
-static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpValueArray *
+flame_run (GimpProcedure        *procedure,
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
-  static GimpParam  values[1];
-  GimpDrawable     *drawable;
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  run_mode = param[0].data.d_int32;
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
-
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               NULL);
+    }
+
+  gimp_get_data (PLUG_IN_PROC, &config);
+  maybe_init_cp ();
+
+  config.cp.width  = gimp_drawable_width  (drawable);
+  config.cp.height = gimp_drawable_height (drawable);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! flame_dialog ())
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
+
+      /*  reusing a drawable from the last run is a bad idea
+       *  since the drawable might have vanished  (bug #37761)
+       */
+      if (config.cmap_drawable_id > 0)
+        config.cmap_drawable_id = GRADIENT_DRAWABLE;
+    }
+
+  if (gimp_drawable_is_rgb (drawable))
+    {
+      gimp_progress_init (_("Drawing flame"));
+
+      flame (drawable);
+
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
+
+      gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
     }
   else
     {
-      gimp_get_data (PLUG_IN_PROC, &config);
-      maybe_init_cp ();
-
-      config.cp.width  = gimp_drawable_width  (drawable);
-      config.cp.height = gimp_drawable_height (drawable);
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        {
-          if (! flame_dialog ())
-            {
-              status = GIMP_PDB_CANCEL;
-            }
-        }
-      else
-        {
-          /*  reusing a drawable from the last run is a bad idea
-              since the drawable might have vanished  (bug #37761)   */
-          if (config.cmap_drawable >= 0)
-            config.cmap_drawable = GRADIENT_DRAWABLE;
-        }
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      if (gimp_drawable_is_rgb (drawable))
-        {
-          gimp_progress_init (_("Drawing flame"));
-
-          flame (drawable);
-
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_displays_flush ();
-
-          gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-    }
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static void
@@ -247,18 +278,18 @@ drawable_to_cmap (control_point *cp)
 {
   gint i, j;
 
-  if (TABLE_DRAWABLE >= config.cmap_drawable)
+  if (TABLE_DRAWABLE >= config.cmap_drawable_id)
     {
-      i = TABLE_DRAWABLE - config.cmap_drawable;
+      i = TABLE_DRAWABLE - config.cmap_drawable_id;
       get_cmap (i, cp->cmap, 256);
     }
-  else if (BLACK_DRAWABLE == config.cmap_drawable)
+  else if (BLACK_DRAWABLE == config.cmap_drawable_id)
     {
       for (i = 0; i < 256; i++)
         for (j = 0; j < 3; j++)
           cp->cmap[i][j] = 0.0;
     }
-  else if (GRADIENT_DRAWABLE == config.cmap_drawable)
+  else if (GRADIENT_DRAWABLE == config.cmap_drawable_id)
     {
       gchar   *name = gimp_context_get_gradient ();
       gint     num;
@@ -277,7 +308,7 @@ drawable_to_cmap (control_point *cp)
     }
   else
     {
-      GimpDrawable *drawable = GIMP_DRAWABLE (gimp_item_get_by_id (config.cmap_drawable));
+      GimpDrawable *drawable = GIMP_DRAWABLE (gimp_item_get_by_id (config.cmap_drawable_id));
       GeglBuffer   *buffer   = gimp_drawable_get_buffer (drawable);
       gint          width    = gegl_buffer_get_width  (buffer);
       gint          height   = gegl_buffer_get_height (buffer);
@@ -944,7 +975,7 @@ cmap_callback (GtkWidget *widget,
                gpointer   data)
 {
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 &config.cmap_drawable);
+                                 &config.cmap_drawable_id);
 
   set_cmap_preview ();
   set_flame_preview ();
@@ -1217,7 +1248,7 @@ flame_dialog (void)
                                 -1);
 
     gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                config.cmap_drawable,
+                                config.cmap_drawable_id,
                                 G_CALLBACK (cmap_callback),
                                 NULL, NULL);
 
