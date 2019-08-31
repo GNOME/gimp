@@ -382,7 +382,6 @@ EXPORTS
 	gimp_image_get_channels
 	gimp_image_get_color_profile
 	gimp_image_get_colormap
-	gimp_image_get_colormap_deprecated
 	gimp_image_get_component_active
 	gimp_image_get_component_visible
 	gimp_image_get_default_new_layer_mode
@@ -398,7 +397,6 @@ EXPORTS
 	gimp_image_get_layer_by_name
 	gimp_image_get_layer_by_tattoo
 	gimp_image_get_layers
-	gimp_image_get_layers_deprecated
 	gimp_image_get_metadata
 	gimp_image_get_name
 	gimp_image_get_parasite
@@ -470,7 +468,6 @@ EXPORTS
 	gimp_image_set_color_profile
 	gimp_image_set_color_profile_from_file
 	gimp_image_set_colormap
-	gimp_image_set_colormap_deprecated
 	gimp_image_set_component_active
 	gimp_image_set_component_visible
 	gimp_image_set_filename

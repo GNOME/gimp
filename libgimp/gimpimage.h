@@ -74,8 +74,6 @@ gboolean       gimp_image_is_valid           (GimpImage    *image);
 GimpImage   ** gimp_get_images               (gint         *num_images);
 GList        * gimp_list_images              (void);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 GimpLayer   ** gimp_image_get_layers         (GimpImage    *image,
                                               gint          *num_layers);
 GimpChannel ** gimp_image_get_channels       (GimpImage    *image,
@@ -105,22 +103,6 @@ GdkPixbuf    * gimp_image_get_thumbnail      (GimpImage    *image,
 GimpMetadata * gimp_image_get_metadata       (GimpImage    *image);
 gboolean       gimp_image_set_metadata       (GimpImage    *image,
                                               GimpMetadata *metadata);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_image_get_layers         gimp_image_get_layers_deprecated
-#define gimp_image_get_colormap       gimp_image_get_colormap_deprecated
-#define gimp_image_set_colormap       gimp_image_set_colormap_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-gint         * gimp_image_get_layers_deprecated         (gint32         image_id,
-                                                         gint          *num_layers);
-guchar       * gimp_image_get_colormap_deprecated       (gint32        image_id,
-                                                         gint         *num_colors);
-gboolean       gimp_image_set_colormap_deprecated       (gint32        image_id,
-                                                         const guchar *colormap,
-                                                         gint          num_colors);
 
 
 G_END_DECLS
