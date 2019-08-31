@@ -81,10 +81,6 @@ struct _PlayClass
   GimpPlugInClass parent_class;
 };
 
-
-/* Declare local functions.
- */
-
 #define PLAY_TYPE  (play_get_type ())
 #define PLAY (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PLAY_TYPE, Play))
 

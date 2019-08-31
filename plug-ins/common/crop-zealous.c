@@ -22,122 +22,126 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define PLUG_IN_PROC "plug-in-zealouscrop"
 
 #define EPSILON (1e-5)
 #define FLOAT_IS_ZERO(value) (value > -EPSILON && value < EPSILON)
 #define FLOAT_EQUAL(v1, v2)  ((v1 - v2) > -EPSILON && (v1 - v2) < EPSILON)
 
-/* Declare local functions. */
 
-static void            query        (void);
-static void            run          (const gchar      *name,
-                                     gint              nparams,
-                                     const GimpParam  *param,
-                                     gint             *nreturn_vals,
-                                     GimpParam       **return_vals);
+typedef struct _Crop      Crop;
+typedef struct _CropClass CropClass;
 
-static inline gboolean colors_equal (const gfloat     *col1,
-                                     const gfloat     *col2,
-                                     gint              components,
-                                     gboolean          has_alpha);
-static void            do_zcrop     (GimpDrawable     *drawable,
-                                     GimpImage        *image);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Crop
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
 };
 
+struct _CropClass
+{
+  GimpPlugInClass parent_class;
+};
 
-MAIN ()
+#define CROP_TYPE  (crop_get_type ())
+#define CROP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CROP_TYPE, Crop))
+
+GType                   crop_get_type         (void) G_GNUC_CONST;
+
+static GList          * crop_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * crop_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * crop_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static inline gboolean  colors_equal          (const gfloat         *col1,
+                                               const gfloat         *col2,
+                                               gint                  components,
+                                               gboolean              has_alpha);
+static void             do_zcrop              (GimpDrawable         *drawable,
+                                               GimpImage            *image);
+
+
+G_DEFINE_TYPE (Crop, crop, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (CROP_TYPE)
+
 
 static void
-query (void)
+crop_class_init (CropClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"    },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Autocrop unused space from edges and middle"),
-                          "",
-                          "Adam D. Moss",
-                          "Adam D. Moss",
-                          "1997",
-                          N_("_Zealous Crop"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Crop");
+  plug_in_class->query_procedures = crop_query_procedures;
+  plug_in_class->create_procedure = crop_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+crop_init (Crop *crop)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpDrawable      *drawable;
-  GimpImage         *image;
+}
 
+static GList *
+crop_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+crop_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            crop_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Zealous Crop"));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Image/Crop");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Autocrop unused space from "
+                                           "edges and middle"),
+                                        NULL,
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Adam D. Moss",
+                                      "Adam D. Moss",
+                                      "1997");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+crop_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  gimp_progress_init (_("Zealous cropping"));
 
-  run_mode = param[0].data.d_int32;
+  do_zcrop (drawable, image);
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
-    {
-      if (n_params != 3)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-    }
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      /*  Get the specified drawable  */
-      image    = gimp_image_get_by_id (param[1].data.d_int32);
-      drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_int32));
-
-      /*  Make sure that the drawable is gray or RGB or indexed  */
-      if (gimp_drawable_is_rgb (drawable) ||
-          gimp_drawable_is_gray (drawable) ||
-          gimp_drawable_is_indexed (drawable))
-        {
-          gimp_progress_init (_("Zealous cropping"));
-
-          do_zcrop (drawable, image);
-
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_displays_flush ();
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-    }
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  gegl_exit ();
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static inline gboolean
