@@ -84,12 +84,35 @@ static TileItInterface tint =
 };
 
 
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+typedef struct _Tile      Tile;
+typedef struct _TileClass TileClass;
+
+struct _Tile
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _TileClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define TILE_TYPE  (tile_get_type ())
+#define TILE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TILE_TYPE, Tile))
+
+GType                   tile_get_type         (void) G_GNUC_CONST;
+
+static GList          * tile_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * tile_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * tile_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 
 static gboolean  tileit_dialog          (GimpDrawable  *drawable);
 
@@ -127,13 +150,10 @@ static gboolean  tileit_preview_events  (GtkWidget     *widget,
                                          GdkEvent      *event);
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Tile, tile, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (TILE_TYPE)
+
 
 /* Values when first invoked */
 static TileItVals itvals =
@@ -203,57 +223,77 @@ static gint     sel_width, sel_height;
 static gint     preview_width, preview_height;
 static gboolean has_alpha;
 
-MAIN ()
 
 static void
-query (void)
+tile_class_init (TileClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)"         },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
-    { GIMP_PDB_INT32,    "num-tiles", "Number of tiles to make"      }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Tile image into smaller versions of the original"),
-                          "More here later",
-                          "Andy Thomas",
-                          "Andy Thomas",
-                          "1997",
-                          N_("_Small Tiles..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+  plug_in_class->query_procedures = tile_query_procedures;
+  plug_in_class->create_procedure = tile_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+tile_init (Tile *tile)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpDrawable      *drawable;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint               pwidth;
-  gint               pheight;
+}
+
+static GList *
+tile_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+tile_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            tile_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Small Tiles..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Tile image into smaller "
+                                           "versions of the original"),
+                                        "More here later",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Andy Thomas",
+                                      "Andy Thomas",
+                                      "1997");
+
+      GIMP_PROC_ARG_INT (procedure, "num-tiles",
+                         "Num tiles",
+                         "Number of tiles to make",
+                         2, MAX_SEGS, 2,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+tile_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  gint pwidth;
+  gint pheight;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  run_mode = param[0].data.d_int32;
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
   has_alpha = gimp_drawable_has_alpha (drawable);
 
@@ -262,7 +302,10 @@ run (const gchar      *name,
                                       &sel_width, &sel_height))
     {
       g_message (_("Region selected for filter is empty."));
-      return;
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_SUCCESS,
+                                               NULL);
     }
 
   sel_x2 = sel_x1 + sel_width;
@@ -281,41 +324,34 @@ run (const gchar      *name,
       pwidth  = sel_width * pheight / sel_height;
     }
 
-  preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
+  preview_width  = MAX (pwidth,  2);  /* Min size is 2 */
   preview_height = MAX (pheight, 2);
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &itvals);
+
       if (! tileit_dialog (drawable))
-        return;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 4)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      else
-        {
-          itvals.numtiles = param[3].data.d_int32;
-        }
+      itvals.numtiles = GIMP_VALUES_GET_INT (args, 0);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_PROC, &itvals);
-      break;
-
-    default:
       break;
     }
 
   if (gimp_drawable_is_rgb  (drawable) ||
       gimp_drawable_is_gray (drawable))
     {
-      /* Set the tile cache size */
-
       gimp_progress_init (_("Tiling"));
 
       do_tiles (drawable);
@@ -328,10 +364,12 @@ run (const gchar      *name,
     }
   else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static GtkWidget *
@@ -597,7 +635,7 @@ tileit_dialog (GimpDrawable *drawable)
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
 
-  /* Lower frame saying howmany segments */
+  /* Lower frame saying how many segments */
   frame = gimp_frame_new (_("Number of Segments"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -914,10 +952,12 @@ cache_preview (GimpDrawable *drawable)
 
   tint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
 
-  scale = (gdouble) preview_width / (gdouble) sel_width;
+  scale = MIN ((gdouble) preview_width  / (gdouble) sel_width,
+               (gdouble) preview_height / (gdouble) sel_height);
 
-  gegl_buffer_get (buffer, GEGL_RECTANGLE (scale * sel_x1, scale * sel_y1,
-                                           preview_width, preview_height),
+  gegl_buffer_get (buffer,
+                   GEGL_RECTANGLE (scale * sel_x1, scale * sel_y1,
+                                   preview_width, preview_height),
                    scale,
                    format, tint.pv_cache,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
