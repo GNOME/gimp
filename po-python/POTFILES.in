@@ -15,8 +15,6 @@ plug-ins/pygimp/plug-ins/spyro_plus.py
 
 plug-ins/python/foggify.py
 plug-ins/python/palette-offset.py
-plug-ins/python/palette-offset/palette-offset.py
 plug-ins/python/palette-to-gradient.py
-plug-ins/python/palette-to-gradient/palette-to-gradient.py
 plug-ins/python/py-slice.py
 plug-ins/python/python-console/python-console.py
