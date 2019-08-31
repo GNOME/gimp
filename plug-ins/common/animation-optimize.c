@@ -60,225 +60,272 @@ typedef enum
 } operatingMode;
 
 
-/* Declare local functions. */
-static  void query (void);
-static  void run   (const gchar      *name,
-                    gint              nparams,
-                    const GimpParam  *param,
-                    gint             *nreturn_vals,
-                    GimpParam       **return_vals);
+typedef struct _Optimize      Optimize;
+typedef struct _OptimizeClass OptimizeClass;
 
-static  GimpImage * do_optimizations    (GimpRunMode  run_mode,
-                                         gboolean     diff_only);
+struct _Optimize
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _OptimizeClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define OPTIMIZE_TYPE  (optimize_get_type ())
+#define OPTIMIZE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), OPTIMIZE_TYPE, Optimize))
+
+GType                   optimize_get_type         (void) G_GNUC_CONST;
+
+static GList          * optimize_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * optimize_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * optimize_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static  GimpImage     * do_optimizations          (GimpRunMode  run_mode,
+                                                   GimpImage   *image,
+                                                   gboolean     diff_only);
 
 /* tag util functions*/
-static  gint        parse_ms_tag        (const gchar *str);
-static  DisposeType parse_disposal_tag  (const gchar *str);
-static  DisposeType get_frame_disposal  (guint        whichframe);
-static  guint32     get_frame_duration  (guint        whichframe);
-static  void        remove_disposal_tag (gchar       *dest,
-                                         gchar       *src);
-static  void        remove_ms_tag       (gchar       *dest,
-                                         gchar       *src);
-static  gboolean    is_disposal_tag     (const gchar *str,
-                                         DisposeType *disposal,
-                                         gint        *taglength);
-static  gboolean    is_ms_tag           (const gchar *str,
-                                         gint        *duration,
-                                         gint        *taglength);
+static  gint            parse_ms_tag              (const gchar *str);
+static  DisposeType     parse_disposal_tag        (const gchar *str);
+static  DisposeType     get_frame_disposal        (guint        whichframe);
+static  guint32         get_frame_duration        (guint        whichframe);
+static  void            remove_disposal_tag       (gchar       *dest,
+                                                   gchar       *src);
+static  void            remove_ms_tag             (gchar       *dest,
+                                                   gchar       *src);
+static  gboolean        is_disposal_tag           (const gchar *str,
+                                                   DisposeType *disposal,
+                                                   gint        *taglength);
+static  gboolean        is_ms_tag                 (const gchar *str,
+                                                   gint        *duration,
+                                                   gint        *taglength);
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Optimize, optimize, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (OPTIMIZE_TYPE)
 
 
 /* Global widgets'n'stuff */
 static  guint             width, height;
-static  GimpImage        *image;
-static  GimpImage        *new_image;
 static  gint32            total_frames;
 static  GimpLayer       **layers;
-static  GimpImageBaseType imagetype;
-static  GimpImageType     drawabletype_alpha;
 static  guchar            pixelstep;
 static  guchar           *palette;
 static  gint              ncolors;
 static  operatingMode     opmode;
 
 
-MAIN ()
-
 static void
-query (void)
+optimize_class_init (OptimizeClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"      }
-  };
-  static const GimpParamDef return_args[] =
-  {
-    { GIMP_PDB_IMAGE, "result", "Resulting image" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (OPTIMIZE_PROC,
-                          N_("Modify image to reduce size when saved as GIF animation"),
-                          "This procedure applies various optimizations to"
-                          " a GIMP layer-based animation in an attempt to"
-                          " reduce the final file size.  If a frame of the"
-                          " animation can use the 'combine' mode, this"
-                          " procedure attempts to maximize the number of"
-                          " ajdacent pixels having the same color, which"
-                          " improves the compression for some image formats"
-                          " such as GIF or MNG.",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "1997-2003",
-                          N_("Optimize (for _GIF)"),
-                          "RGB*, INDEXED*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_args),
-                          args, return_args);
-
-  gimp_install_procedure (OPTIMIZE_DIFF_PROC,
-                          N_("Reduce file size where combining layers is possible"),
-                          "This procedure applies various optimizations to"
-                          " a GIMP layer-based animation in an attempt to"
-                          " reduce the final file size.  If a frame of the"
-                          " animation can use the 'combine' mode, this"
-                          " procedure uses a simple difference between the"
-                          " frames.",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "1997-2001",
-                          N_("_Optimize (Difference)"),
-                          "RGB*, INDEXED*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_args),
-                          args, return_args);
-
-  gimp_install_procedure (UNOPTIMIZE_PROC,
-                          N_("Remove optimization to make editing easier"),
-                          "This procedure 'simplifies' a GIMP layer-based"
-                          " animation that has been optimized for animation. "
-                          "This makes editing the animation much easier.",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "1997-2001",
-                          N_("_Unoptimize"),
-                          "RGB*, INDEXED*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_args),
-                          args, return_args);
-
-  gimp_plugin_menu_register (OPTIMIZE_PROC,      "<Image>/Filters/Animation");
-  gimp_plugin_menu_register (OPTIMIZE_DIFF_PROC, "<Image>/Filters/Animation");
-  gimp_plugin_menu_register (UNOPTIMIZE_PROC,    "<Image>/Filters/Animation");
-
-#ifdef EXPERIMENTAL_BACKDROP_CODE
-  gimp_install_procedure (REMOVE_BACKDROP_PROC,
-                          "This procedure attempts to remove the backdrop"
-                          " from a GIMP layer-based animation, leaving"
-                          " the foreground animation over transparency.",
-                          "",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "2001",
-                          N_("_Remove Backdrop"),
-                          "RGB*, INDEXED*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_args),
-                          args, return_args);
-
-  gimp_install_procedure (FIND_BACKDROP_PROC,
-                          "This procedure attempts to remove the foreground"
-                          " from a GIMP layer-based animation, leaving"
-                          " a one-layered image containing only the"
-                          " constant backdrop image.",
-                          "",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "2001",
-                          N_("_Find Backdrop"),
-                          "RGB*, INDEXED*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_args),
-                          args, return_args);
-
-  gimp_plugin_menu_register (REMOVE_BACKDROP_PROC, "<Image>/Filters/Animation");
-  gimp_plugin_menu_register (FIND_BACKDROP_PROC,   "<Image>/Filters/Animation");
-#endif
+  plug_in_class->query_procedures = optimize_query_procedures;
+  plug_in_class->create_procedure = optimize_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+optimize_init (Optimize *optimize)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status    = GIMP_PDB_SUCCESS;
-  gboolean          diff_only = FALSE;
+}
 
-  *nreturn_vals = 2;
-  *return_vals  = values;
+static GList *
+optimize_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
 
-  run_mode = param[0].data.d_int32;
+  list = g_list_append (list, g_strdup (OPTIMIZE_PROC));
+  list = g_list_append (list, g_strdup (OPTIMIZE_DIFF_PROC));
+  list = g_list_append (list, g_strdup (UNOPTIMIZE_PROC));
+#ifdef EXPERIMENTAL_BACKDROP_CODE
+  list = g_list_append (list, g_strdup (REMOVE_BACKDROP_PROC));
+  list = g_list_append (list, g_strdup (FIND_BACKDROP_PROC));
+#endif
+
+  return list;
+}
+
+static GimpProcedure *
+optimize_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, OPTIMIZE_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            optimize_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("Optimize (for _GIF)"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Modify image to reduce size when "
+                                           "saved as GIF animation"),
+                                        "This procedure applies various "
+                                        "optimizations to a GIMP layer-based "
+                                        "animation in an attempt to reduce the "
+                                        "final file size.  If a frame of the"
+                                        "animation can use the 'combine' "
+                                        "mode, this procedure attempts to "
+                                        "maximize the number of ajdacent "
+                                        "pixels having the same color, which"
+                                        "improves the compression for some "
+                                        "image formats such as GIF or MNG.",
+                                        name);
+    }
+  else if (! strcmp (name, OPTIMIZE_DIFF_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            optimize_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("_Optimize (Difference)"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Reduce file size where "
+                                           "combining layers is possible"),
+                                        "This procedure applies various "
+                                        "optimizations to a GIMP layer-based "
+                                        "animation in an attempt to reduce "
+                                        "the final file size.  If a frame of "
+                                        "the animation can use the 'combine' "
+                                        "mode, this procedure uses a simple "
+                                        "difference between the frames.",
+                                        name);
+    }
+  else if (! strcmp (name, UNOPTIMIZE_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            optimize_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("_Unoptimize"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Remove optimization to make "
+                                           "editing easier"),
+                                        "This procedure 'simplifies' a GIMP "
+                                        "layer-based animation that has been "
+                                        "optimized for animation. This makes "
+                                        "editing the animation much easier.",
+                                        name);
+    }
+  else if (! strcmp (name, REMOVE_BACKDROP_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            optimize_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("_Remove Backdrop"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "This procedure attempts to remove "
+                                        "the backdrop from a GIMP layer-based "
+                                        "animation, leaving the foreground "
+                                        "animation over transparency.",
+                                        NULL,
+                                        name);
+    }
+  else if (! strcmp (name, FIND_BACKDROP_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            optimize_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("_Find Backdrop"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "This procedure attempts to remove "
+                                        "the foreground from a GIMP "
+                                        "layer-based animation, leaving"
+                                        " a one-layered image containing only "
+                                        "the constant backdrop image.",
+                                        NULL,
+                                        name);
+    }
+
+  if (procedure)
+    {
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Animation");
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Adam D. Moss <adam@gimp.org>",
+                                      "Adam D. Moss <adam@gimp.org>",
+                                      "1997-2003");
+
+      GIMP_PROC_VAL_IMAGE (procedure, "result",
+                           "Result",
+                           "Resultimg image",
+                           FALSE,
+                           G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+optimize_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  const gchar    *name      = gimp_procedure_get_name (procedure);
+  gboolean        diff_only = FALSE;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
+  if (! strcmp (name, OPTIMIZE_PROC))
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      opmode = OPOPTIMIZE;
     }
-
-  /* Check the procedure name we were called with, to decide
-     what needs to be done. */
-  if (strcmp (name, OPTIMIZE_PROC) == 0)
-    opmode = OPOPTIMIZE;
-  else if (strcmp (name, OPTIMIZE_DIFF_PROC) == 0)
+  else if (! strcmp (name, OPTIMIZE_DIFF_PROC))
     {
       opmode = OPOPTIMIZE;
       diff_only = TRUE;
     }
-  else if (strcmp (name, UNOPTIMIZE_PROC) == 0)
-    opmode = OPUNOPTIMIZE;
-  else if (strcmp (name, FIND_BACKDROP_PROC) == 0)
-    opmode = OPBACKGROUND;
-  else if (strcmp (name, REMOVE_BACKDROP_PROC) == 0)
-    opmode = OPFOREGROUND;
-  else
-    g_error("GAH!!!");
-
-  if (status == GIMP_PDB_SUCCESS)
+  else if (! strcmp (name, UNOPTIMIZE_PROC))
     {
-      image = gimp_image_get_by_id (param[1].data.d_image);
-
-      new_image = do_optimizations (run_mode, diff_only);
-
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush();
+      opmode = OPUNOPTIMIZE;
+    }
+  else if (strcmp (name, FIND_BACKDROP_PROC))
+    {
+      opmode = OPBACKGROUND;
+    }
+  else if (strcmp (name, REMOVE_BACKDROP_PROC))
+    {
+      opmode = OPFOREGROUND;
     }
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  image = do_optimizations (run_mode, image, diff_only);
 
-  values[1].type         = GIMP_PDB_IMAGE;
-  values[1].data.d_image = gimp_image_get_id (new_image);
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush();
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
 }
 
 
@@ -410,33 +457,37 @@ compose_row (gint          frame_num,
 
 
 static GimpImage *
-do_optimizations (GimpRunMode run_mode,
-                  gboolean    diff_only)
+do_optimizations (GimpRunMode  run_mode,
+                  GimpImage   *image,
+                  gboolean     diff_only)
 {
-  static guchar *rawframe = NULL;
-  guchar        *srcptr;
-  guchar        *destptr;
-  gint           row, this_frame_num;
-  guint32        frame_sizebytes;
-  GimpLayer     *new_layer;
-  DisposeType    dispose;
-  guchar        *this_frame = NULL;
-  guchar        *last_frame = NULL;
-  guchar        *opti_frame = NULL;
-  guchar        *back_frame = NULL;
+  GimpImage         *new_image;
+  GimpImageBaseType  imagetype;
+  GimpImageType      drawabletype_alpha;
+  static guchar     *rawframe = NULL;
+  guchar            *srcptr;
+  guchar            *destptr;
+  gint               row, this_frame_num;
+  guint32            frame_sizebytes;
+  GimpLayer         *new_layer;
+  DisposeType        dispose;
+  guchar            *this_frame = NULL;
+  guchar            *last_frame = NULL;
+  guchar            *opti_frame = NULL;
+  guchar            *back_frame = NULL;
 
-  gint           this_delay;
-  gint           cumulated_delay = 0;
-  GimpLayer     *last_true_frame = NULL;
-  gint           buflen;
+  gint               this_delay;
+  gint               cumulated_delay = 0;
+  GimpLayer         *last_true_frame = NULL;
+  gint               buflen;
 
-  gchar         *oldlayer_name;
-  gchar         *newlayer_name;
+  gchar             *oldlayer_name;
+  gchar             *newlayer_name;
 
-  gboolean       can_combine;
+  gboolean           can_combine;
 
-  gint32         bbox_top, bbox_bottom, bbox_left, bbox_right;
-  gint32         rbox_top, rbox_bottom, rbox_left, rbox_right;
+  gint32             bbox_top, bbox_bottom, bbox_left, bbox_right;
+  gint32             rbox_top, rbox_bottom, rbox_left, rbox_right;
 
   switch (opmode)
     {
