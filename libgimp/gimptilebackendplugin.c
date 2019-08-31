@@ -71,7 +71,7 @@ static gpointer   gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
                                                     gint             z,
                                                     gpointer         data);
 
-static void       gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
+static gboolean   gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
                                    gint                   x,
                                    gint                   y,
                                    GeglTile              *tile);
@@ -79,7 +79,7 @@ static GeglTile * gimp_tile_read  (GimpTileBackendPlugin *backend_plugin,
                                    gint                   x,
                                    gint                   y);
 
-static void       gimp_tile_init  (GimpTileBackendPlugin *backend_plugin,
+static gboolean   gimp_tile_init  (GimpTileBackendPlugin *backend_plugin,
                                    GimpTile              *tile,
                                    gint                   row,
                                    gint                   col);
@@ -221,11 +221,13 @@ gimp_tile_read (GimpTileBackendPlugin *backend_plugin,
   gint                          tile_size;
   guchar                       *tile_data;
 
+  if (! gimp_tile_init (backend_plugin, &gimp_tile, y, x))
+    return NULL;
+
   tile_size  = gegl_tile_backend_get_tile_size (backend);
   tile       = gegl_tile_new (tile_size);
   tile_data  = gegl_tile_get_data (tile);
 
-  gimp_tile_init (backend_plugin, &gimp_tile, y, x);
   gimp_tile_get (backend_plugin, &gimp_tile);
 
   if (gimp_tile.ewidth * gimp_tile.eheight * priv->bpp == tile_size)
@@ -251,7 +253,7 @@ gimp_tile_read (GimpTileBackendPlugin *backend_plugin,
   return tile;
 }
 
-static void
+static gboolean
 gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
                  gint                   x,
                  gint                   y,
@@ -263,10 +265,12 @@ gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
   gint                          tile_size;
   guchar                       *tile_data;
 
+  if (! gimp_tile_init (backend_plugin, &gimp_tile, y, x))
+    return FALSE;
+
   tile_size = gegl_tile_backend_get_tile_size (backend);
   tile_data = gegl_tile_get_data (tile);
 
-  gimp_tile_init (backend_plugin, &gimp_tile, y, x);
   gimp_tile.data = g_new (guchar,
                           gimp_tile.ewidth * gimp_tile.eheight *
                           priv->bpp);
@@ -291,15 +295,23 @@ gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
 
   gimp_tile_put (backend_plugin, &gimp_tile);
   gimp_tile_unset (backend_plugin, &gimp_tile);
+
+  return TRUE;
 }
 
-static void
+static gboolean
 gimp_tile_init (GimpTileBackendPlugin *backend_plugin,
                 GimpTile              *tile,
                 gint                   row,
                 gint                   col)
 {
   GimpTileBackendPluginPrivate *priv = backend_plugin->priv;
+
+  if (row > priv->ntile_rows - 1 ||
+      col > priv->ntile_cols - 1)
+    {
+      return FALSE;
+    }
 
   tile->tile_num = row * priv->ntile_cols + col;
 
@@ -314,6 +326,8 @@ gimp_tile_init (GimpTileBackendPlugin *backend_plugin,
     tile->eheight = TILE_HEIGHT;
 
   tile->data = NULL;
+
+  return TRUE;
 }
 
 static void
