@@ -39,8 +39,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/** qbist renderer ***********************************************************/
-
 #define MAX_TRANSFORMS  36
 #define NUM_REGISTERS    6
 #define PREVIEW_SIZE    64
@@ -50,7 +48,6 @@
 #define PLUG_IN_ROLE    "gimp-qbist"
 #define PLUG_IN_VERSION "January 2001, 1.12"
 
-/** types *******************************************************************/
 
 /* experiment with this */
 typedef gfloat vreg[3];
@@ -87,25 +84,245 @@ typedef struct
 } QbistInfo;
 
 
-/** prototypes **************************************************************/
+typedef struct _Qbist      Qbist;
+typedef struct _QbistClass QbistClass;
 
-static void      query                  (void);
-static void      run                    (const gchar      *name,
-                                         gint              nparams,
-                                         const GimpParam  *param,
-                                         gint             *nreturn_vals,
-                                         GimpParam       **return_vals);
+struct _Qbist
+{
+  GimpPlugIn parent_instance;
+};
 
-static gboolean  dialog_run             (void);
-static void      dialog_new_variations  (GtkWidget        *widget,
-                                         gpointer          data);
-static void      dialog_update_previews (GtkWidget        *widget,
-                                         gpointer          data);
-static void      dialog_select_preview  (GtkWidget        *widget,
-                                         ExpInfo          *n_info);
+struct _QbistClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define QBIST_TYPE  (qbist_get_type ())
+#define QBIST (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), QBIST_TYPE, Qbist))
+
+GType                   qbist_get_type         (void) G_GNUC_CONST;
+
+static GList          * qbist_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * qbist_create_procedure (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
+
+static GimpValueArray * qbist_run              (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GimpImage            *image,
+                                                GimpDrawable         *drawable,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+
+static gboolean         dialog_run             (void);
+static void             dialog_new_variations  (GtkWidget            *widget,
+                                                gpointer              data);
+static void             dialog_update_previews (GtkWidget            *widget,
+                                                gpointer              data);
+static void             dialog_select_preview  (GtkWidget            *widget,
+                                                ExpInfo              *n_info);
+
+static void             create_info            (ExpInfo              *info);
+static void             optimize               (ExpInfo              *info);
+static void             qbist                  (ExpInfo              *info,
+                                                gfloat               *buffer,
+                                                gint                  xp,
+                                                gint                  yp,
+                                                gint                  num,
+                                                gint                  width,
+                                                gint                  height,
+                                                gint                  oversampling);
+
+
+G_DEFINE_TYPE (Qbist, qbist, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (QBIST_TYPE)
+
 
 static QbistInfo  qbist_info;
 static GRand     *gr = NULL;
+
+
+static void
+qbist_class_init (QbistClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = qbist_query_procedures;
+  plug_in_class->create_procedure = qbist_create_procedure;
+}
+
+static void
+qbist_init (Qbist *qbist)
+{
+}
+
+static GList *
+qbist_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+qbist_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            qbist_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Qbist..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Render/Pattern");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Generate a huge variety of "
+                                           "abstract patterns"),
+                                        "This Plug-in is based on an article by "
+                                        "Jörn Loviscach (appeared in c't 10/95, "
+                                        "page 326). It generates modern art "
+                                        "pictures from a random genetic "
+                                        "formula.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Jörn Loviscach, Jens Ch. Restemeier",
+                                      "Jörn Loviscach, Jens Ch. Restemeier",
+                                      PLUG_IN_VERSION);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+qbist_run (GimpProcedure        *procedure,
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
+           const GimpValueArray *args,
+           gpointer              run_data)
+{
+  gint                sel_x1, sel_y1, sel_width, sel_height;
+  gint                img_height, img_width;
+  GeglBuffer         *buffer;
+  GeglBufferIterator *iter;
+  gint                total_pixels;
+  gint                done_pixels;
+
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  img_width  = gimp_drawable_width (drawable);
+  img_height = gimp_drawable_height (drawable);
+
+  if (! gimp_drawable_is_rgb (drawable))
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               NULL);
+    }
+
+  if (! gimp_drawable_mask_intersect (drawable,
+                                      &sel_x1, &sel_y1,
+                                      &sel_width, &sel_height))
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_SUCCESS,
+                                               NULL);
+    }
+
+  gr = g_rand_new ();
+
+  memset (&qbist_info, 0, sizeof (qbist_info));
+  create_info (&qbist_info.info);
+  qbist_info.oversampling = 4;
+
+  switch (run_mode)
+    {
+    case GIMP_RUN_INTERACTIVE:
+      gimp_get_data (PLUG_IN_PROC, &qbist_info);
+
+      if (! dialog_run ())
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
+
+      gimp_set_data (PLUG_IN_PROC, &qbist_info, sizeof (QbistInfo));
+      break;
+
+    case GIMP_RUN_NONINTERACTIVE:
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               NULL);
+      break;
+
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_get_data (PLUG_IN_PROC, &qbist_info);
+      break;
+    }
+
+  total_pixels = img_width * img_height;
+  done_pixels  = 0;
+
+  buffer = gimp_drawable_get_shadow_buffer (drawable);
+
+  iter = gegl_buffer_iterator_new (buffer,
+                                   GEGL_RECTANGLE (0, 0,
+                                                   img_width, img_height),
+                                   0, babl_format ("R'G'B'A float"),
+                                   GEGL_ACCESS_READWRITE,
+                                   GEGL_ABYSS_NONE, 1);
+
+  optimize (&qbist_info.info);
+
+  gimp_progress_init (_("Qbist"));
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      gfloat        *data = iter->items[0].data;
+      GeglRectangle  roi  = iter->items[0].roi;
+      gint           row;
+
+      for (row = 0; row < roi.height; row++)
+        {
+          qbist (&qbist_info.info,
+                 data + row * roi.width * 4,
+                 roi.x,
+                 roi.y + row,
+                 roi.width,
+                 sel_width,
+                 sel_height,
+                 qbist_info.oversampling);
+        }
+
+      done_pixels += roi.width * roi.height;
+
+      gimp_progress_update ((gdouble) done_pixels /
+                            (gdouble) total_pixels);
+    }
+
+  g_object_unref (buffer);
+
+  gimp_progress_update (1.0);
+
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, sel_x1, sel_y1,
+                        sel_width, sel_height);
+
+  gimp_displays_flush ();
+
+  g_rand_free (gr);
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+}
 
 
 /** qbist functions *********************************************************/
@@ -361,193 +578,6 @@ qbist (ExpInfo *info,
     }
 }
 
-/** Plugin interface *********************************************************/
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,                         /* init_proc  */
-  NULL,                         /* quit_proc  */
-  query,                        /* query_proc */
-  run                           /* run_proc   */
-};
-
-MAIN ()
-
-static void
-query (void)
-{
-  GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"       }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Generate a huge variety of abstract patterns"),
-                          "This Plug-in is based on an article by "
-                          "Jörn Loviscach (appeared in c't 10/95, page 326). "
-                          "It generates modern art pictures from a random "
-                          "genetic formula.",
-                          "Jörn Loviscach, Jens Ch. Restemeier",
-                          "Jörn Loviscach, Jens Ch. Restemeier",
-                          PLUG_IN_VERSION,
-                          N_("_Qbist..."),
-                          "RGB*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render/Pattern");
-}
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  static GimpParam   values[1];
-  gint               sel_x1, sel_y1, sel_width, sel_height;
-  gint               img_height, img_width;
-  GimpRunMode        run_mode;
-  GimpDrawable      *drawable;
-  GimpPDBStatusType  status;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  status = GIMP_PDB_SUCCESS;
-
-  if (param[0].type != GIMP_PDB_INT32)
-    status = GIMP_PDB_CALLING_ERROR;
-  run_mode = param[0].data.d_int32;
-
-  INIT_I18N ();
-  gegl_init (NULL, NULL);
-
-  if (param[2].type != GIMP_PDB_DRAWABLE)
-    status = GIMP_PDB_CALLING_ERROR;
-
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
-
-  img_width = gimp_drawable_width (drawable);
-  img_height = gimp_drawable_height (drawable);
-
-  if (! gimp_drawable_is_rgb (drawable))
-    status = GIMP_PDB_CALLING_ERROR;
-
-  if (! gimp_drawable_mask_intersect (drawable,
-                                      &sel_x1, &sel_y1,
-                                      &sel_width, &sel_height))
-    {
-      values[0].type          = GIMP_PDB_STATUS;
-      values[0].data.d_status = status;
-
-      return;
-    }
-
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      gr = g_rand_new ();
-
-      memset (&qbist_info, 0, sizeof (qbist_info));
-      create_info (&qbist_info.info);
-      qbist_info.oversampling = 4;
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          /* Possibly retrieve data */
-          gimp_get_data (PLUG_IN_PROC, &qbist_info);
-
-          /* Get information from the dialog */
-          if (dialog_run ())
-            {
-              status = GIMP_PDB_SUCCESS;
-              gimp_set_data (PLUG_IN_PROC, &qbist_info, sizeof (QbistInfo));
-            }
-          else
-            status = GIMP_PDB_EXECUTION_ERROR;
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          status = GIMP_PDB_CALLING_ERROR;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          /* Possibly retrieve data */
-          gimp_get_data (PLUG_IN_PROC, &qbist_info);
-          status = GIMP_PDB_SUCCESS;
-          break;
-
-        default:
-          status = GIMP_PDB_CALLING_ERROR;
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          GeglBuffer         *buffer;
-          GeglBufferIterator *iter;
-          gint                total_pixels = img_width * img_height;
-          gint                done_pixels  = 0;
-
-          buffer = gimp_drawable_get_shadow_buffer (drawable);
-
-          iter = gegl_buffer_iterator_new (buffer,
-                                           GEGL_RECTANGLE (0, 0,
-                                                           img_width, img_height),
-                                           0, babl_format ("R'G'B'A float"),
-                                           GEGL_ACCESS_READWRITE,
-                                           GEGL_ABYSS_NONE, 1);
-
-          optimize (&qbist_info.info);
-
-          gimp_progress_init (_("Qbist"));
-
-          while (gegl_buffer_iterator_next (iter))
-            {
-              gfloat        *data = iter->items[0].data;
-              GeglRectangle  roi  = iter->items[0].roi;
-              gint           row;
-
-              for (row = 0; row < roi.height; row++)
-                {
-                  qbist (&qbist_info.info,
-                         data + row * roi.width * 4,
-                         roi.x,
-                         roi.y + row,
-                         roi.width,
-                         sel_width,
-                         sel_height,
-                         qbist_info.oversampling);
-                }
-
-              done_pixels += roi.width * roi.height;
-
-              gimp_progress_update ((gdouble) done_pixels /
-                                    (gdouble) total_pixels);
-            }
-
-          g_object_unref (buffer);
-
-          gimp_progress_update (1.0);
-
-          gimp_drawable_merge_shadow (drawable, TRUE);
-          gimp_drawable_update (drawable, sel_x1, sel_y1,
-                                sel_width, sel_height);
-
-          gimp_displays_flush ();
-        }
-
-      g_rand_free (gr);
-    }
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-}
 
 /** User interface ***********************************************************/
 
