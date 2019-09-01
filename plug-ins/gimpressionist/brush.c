@@ -93,18 +93,18 @@ set_colorbrushes (const gchar *fn)
 }
 
 static const Babl *
-get_u8_format (gint32 drawable_id)
+get_u8_format (GimpDrawable *drawable)
 {
-  if (gimp_drawable_is_rgb (drawable_id))
+  if (gimp_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_id))
+      if (gimp_drawable_has_alpha (drawable))
         return babl_format ("R'G'B'A u8");
       else
         return babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable_id))
+      if (gimp_drawable_has_alpha (drawable))
         return babl_format ("Y'A u8");
       else
         return babl_format ("Y' u8");
@@ -115,21 +115,24 @@ static void
 brushdmenuselect (GtkWidget *widget,
                   gpointer   data)
 {
-  GeglBuffer *src_buffer;
-  const Babl *format;
-  guchar     *src_row;
-  guchar     *src;
-  gint        bpp;
-  gint        x, y;
-  ppm_t      *p;
-  gint        x1, y1, w, h;
-  gint        row;
-  gint32      drawable_id;
-  gint        rowstride;
+  GeglBuffer   *src_buffer;
+  const Babl   *format;
+  guchar       *src_row;
+  guchar       *src;
+  gint          bpp;
+  gint          x, y;
+  ppm_t        *p;
+  gint          x1, y1, w, h;
+  gint          row;
+  gint32        drawable_id = -1;
+  GimpDrawable *drawable;
+  gint          rowstride;
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &drawable_id);
 
-  if (drawable_id == -1)
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
+
+  if (! drawable)
     return;
 
   if (brush_from_file == 2)
@@ -146,10 +149,10 @@ brushdmenuselect (GtkWidget *widget,
   gtk_adjustment_set_value (brush_gamma_adjust, 1.0);
   gtk_adjustment_set_value (brush_aspect_adjust, 0.0);
 
-  if (! gimp_drawable_mask_intersect (drawable_id, &x1, &y1, &w, &h))
+  if (! gimp_drawable_mask_intersect (drawable, &x1, &y1, &w, &h))
     return;
 
-  format = get_u8_format (drawable_id);
+  format = get_u8_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
   ppm_kill (&brushppm);
@@ -160,7 +163,7 @@ brushdmenuselect (GtkWidget *widget,
 
   src_row = g_new (guchar, w * bpp);
 
-  src_buffer = gimp_drawable_get_buffer (drawable_id);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   if (bpp == 3)
     { /* RGB */
@@ -219,17 +222,6 @@ brushdmenuselect (GtkWidget *widget,
   brush_from_file = 0;
   update_brush_preview (NULL);
 }
-
-#if 0
-void
-dummybrushdmenuselect (GtkWidget *w, gpointer data)
-{
-  ppm_kill (&brushppm);
-  ppm_new (&brushppm, 10,10);
-  brush_from_file = 0;
-  update_brush_preview (NULL);
-}
-#endif
 
 static void
 brushlistrefresh (void)
@@ -306,12 +298,12 @@ savebrush (GtkWidget *wg,
 }
 
 static gboolean
-validdrawable (gint32    imageid,
-               gint32    drawableid,
-               gpointer  data)
+validdrawable (GimpImage *image,
+               GimpItem  *item,
+               gpointer   data)
 {
-  return (gimp_drawable_is_rgb (drawableid) ||
-          gimp_drawable_is_gray (drawableid));
+  return (gimp_drawable_is_rgb  (GIMP_DRAWABLE (item)) ||
+          gimp_drawable_is_gray (GIMP_DRAWABLE (item)));
 }
 
 /*
