@@ -171,7 +171,8 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
                                GimpRunFunc  run_func)
 {
   GimpProcedure *procedure;
-  const gchar   *menu_label = NULL;
+  const gchar   *menu_label            = NULL;
+  gint           arg_count[SF_DISPLAY] = { 0, };
   gint           i;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
@@ -209,77 +210,200 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
 
   for (i = 0; i < script->n_args; i++)
     {
-      GParamSpec *pspec = NULL;
+      GParamSpec  *pspec = NULL;
+      const gchar *name  = NULL;
+      const gchar *nick  = NULL;
+      gchar        numbered_name[64];
+      gchar        numbered_nick[64];
 
       switch (script->args[i].type)
         {
         case SF_IMAGE:
-          pspec = gimp_param_spec_image ("image",
-                                         "Image",
+          name = "image";
+          nick = "Image";
+          break;
+
+        case SF_DRAWABLE:
+          name = "drawable";
+          nick = "Drawable";
+          break;
+
+        case SF_LAYER:
+          name = "layer";
+          nick = "Layer";
+          break;
+
+        case SF_CHANNEL:
+          name = "channel";
+          nick = "Channel";
+          break;
+
+        case SF_VECTORS:
+          name = "vectors";
+          nick = "Vectors";
+          break;
+
+        case SF_DISPLAY:
+          name = "display";
+          nick = "Display";
+          break;
+
+        case SF_COLOR:
+          name = "color";
+          nick = "Color";
+          break;
+
+        case SF_TOGGLE:
+          name = "toggle";
+          nick = "Toggle";
+          break;
+
+        case SF_VALUE:
+          name = "value";
+          nick = "Value";
+          break;
+
+        case SF_STRING:
+        case SF_TEXT:
+          name = "string";
+          nick = "String";
+          break;
+
+        case SF_ADJUSTMENT:
+          name = "value";
+          nick = "Value";
+          break;
+
+        case SF_FILENAME:
+          name = "filename";
+          nick = "Filename";
+          break;
+
+        case SF_DIRNAME:
+          name = "dirname";
+          nick = "Dirname";
+          break;
+
+        case SF_FONT:
+          name = "font";
+          nick = "Font";
+          break;
+
+        case SF_PALETTE:
+          name = "palette";
+          nick = "Palette";
+          break;
+
+        case SF_PATTERN:
+          name = "pattern";
+          nick = "Pattern";
+          break;
+
+        case SF_BRUSH:
+          name = "brush";
+          nick = "Brush";
+          break;
+
+        case SF_GRADIENT:
+          name = "gradient";
+          nick = "Gradient";
+          break;
+
+        case SF_OPTION:
+          name = "option";
+          nick = "Option";
+          break;
+
+        case SF_ENUM:
+          name = "enum";
+          nick = "Enum";
+          break;
+        }
+
+      if (arg_count[script->args[i].type] == 0)
+        {
+          g_strlcpy (numbered_name, name, sizeof (numbered_name));
+          g_strlcpy (numbered_nick, nick, sizeof (numbered_nick));
+        }
+      else
+        {
+          g_snprintf (numbered_name, sizeof (numbered_name),
+                      "%s-%d", name, arg_count[script->args[i].type] + 1);
+          g_snprintf (numbered_nick, sizeof (numbered_nick),
+                      "%s %d", nick, arg_count[script->args[i].type] + 1);
+        }
+
+      arg_count[script->args[i].type]++;
+
+      switch (script->args[i].type)
+        {
+        case SF_IMAGE:
+          pspec = gimp_param_spec_image (numbered_name,
+                                         numbered_nick,
                                          script->args[i].label,
                                          TRUE,
                                          G_PARAM_READWRITE);
           break;
 
         case SF_DRAWABLE:
-          pspec = gimp_param_spec_drawable ("drawable",
-                                            "Drawable",
+          pspec = gimp_param_spec_drawable (numbered_name,
+                                            numbered_nick,
                                             script->args[i].label,
                                             TRUE,
                                             G_PARAM_READWRITE);
           break;
 
         case SF_LAYER:
-          pspec = gimp_param_spec_layer ("layer",
-                                         "Layer",
+          pspec = gimp_param_spec_layer (numbered_name,
+                                         numbered_nick,
                                          script->args[i].label,
                                          TRUE,
                                          G_PARAM_READWRITE);
           break;
 
         case SF_CHANNEL:
-          pspec = gimp_param_spec_channel ("channel",
-                                           "Channel",
+          pspec = gimp_param_spec_channel (numbered_name,
+                                           numbered_nick,
                                            script->args[i].label,
                                            TRUE,
                                            G_PARAM_READWRITE);
           break;
 
         case SF_VECTORS:
-          pspec = gimp_param_spec_vectors ("vectors",
-                                           "Vectors",
+          pspec = gimp_param_spec_vectors (numbered_name,
+                                           numbered_nick,
                                            script->args[i].label,
                                            TRUE,
                                            G_PARAM_READWRITE);
           break;
 
         case SF_DISPLAY:
-          pspec = gimp_param_spec_display ("display",
-                                           "Display",
+          pspec = gimp_param_spec_display (numbered_name,
+                                           numbered_nick,
                                            script->args[i].label,
                                            TRUE,
                                            G_PARAM_READWRITE);
           break;
 
         case SF_COLOR:
-          pspec = gimp_param_spec_rgb ("color",
-                                       "Color",
+          pspec = gimp_param_spec_rgb (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        TRUE, NULL,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_TOGGLE:
-          pspec = g_param_spec_boolean ("toggle",
-                                        "Toggle",
+          pspec = g_param_spec_boolean (numbered_name,
+                                        numbered_nick,
                                         script->args[i].label,
                                         FALSE,
                                         G_PARAM_READWRITE);
           break;
 
         case SF_VALUE:
-          pspec = g_param_spec_string ("value",
-                                       "Value",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE);
@@ -287,24 +411,24 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
 
         case SF_STRING:
         case SF_TEXT:
-          pspec = g_param_spec_string ("string",
-                                       "String",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_ADJUSTMENT:
-          pspec = g_param_spec_double ("value",
-                                       "Value",
+          pspec = g_param_spec_double (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_FILENAME:
-          pspec = g_param_spec_string ("filename",
-                                       "Filename",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE |
@@ -312,8 +436,8 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
           break;
 
         case SF_DIRNAME:
-          pspec = g_param_spec_string ("dirname",
-                                       "Dirname",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE |
@@ -321,56 +445,56 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
           break;
 
         case SF_FONT:
-          pspec = g_param_spec_string ("Font",
-                                       "font",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_PALETTE:
-          pspec = g_param_spec_string ("palette",
-                                       "Palette",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_PATTERN:
-          pspec = g_param_spec_string ("pattern",
-                                       "Pattern",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_BRUSH:
-          pspec = g_param_spec_string ("brush",
-                                       "Brush",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_GRADIENT:
-          pspec = g_param_spec_string ("gradient",
-                                       "Gradient",
+          pspec = g_param_spec_string (numbered_name,
+                                       numbered_nick,
                                        script->args[i].label,
                                        NULL,
                                        G_PARAM_READWRITE);
           break;
 
         case SF_OPTION:
-          pspec = g_param_spec_int ("option",
-                                    "Option",
+          pspec = g_param_spec_int (numbered_name,
+                                    numbered_nick,
                                     script->args[i].label,
                                     G_MININT, G_MAXINT, 0,
                                     G_PARAM_READWRITE);
           break;
 
         case SF_ENUM:
-          pspec = g_param_spec_int ("enum",
-                                    "Enum",
+          pspec = g_param_spec_int (numbered_name,
+                                    numbered_nick,
                                     script->args[i].label,
                                     G_MININT, G_MAXINT, 0,
                                     G_PARAM_READWRITE);
