@@ -291,7 +291,7 @@ item_id_is_vectors_invoker (GimpProcedure         *procedure,
     {
       GimpItem *item = gimp_item_get_by_id (gimp, item_id);
 
-      vectors = (GIMP_IS_DRAWABLE (item) &&
+      vectors = (GIMP_IS_VECTORS (item) &&
                  ! gimp_item_is_removed (item));
     }
 
