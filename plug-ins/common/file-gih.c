@@ -246,9 +246,9 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                  "Ranks of the dimensions",
                                  GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "dimension",
-                         "Dimension",
-                         "Dimension of the brush pipe",
+      GIMP_PROC_ARG_INT (procedure, "dimension-2",
+                         "Dimension 2",
+                         "Dimension of the brush pipe (same as dimension)",
                          1, 4, 1,
                          GIMP_PARAM_READWRITE);
 
