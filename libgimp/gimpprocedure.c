@@ -1033,8 +1033,20 @@ void
 gimp_procedure_add_argument (GimpProcedure *procedure,
                              GParamSpec    *pspec)
 {
+  gint i;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+  g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
+
+  for (i = 0; i < procedure->priv->n_args; i++)
+    if (! strcmp (pspec->name, procedure->priv->args[i]->name))
+      {
+        g_warning ("Argument with name '%s' already exists on procedure '%s'",
+                   pspec->name,
+                   gimp_procedure_get_name (procedure));
+        return;
+      }
 
   procedure->priv->args = g_renew (GParamSpec *, procedure->priv->args,
                                    procedure->priv->n_args + 1);
@@ -1095,8 +1107,20 @@ void
 gimp_procedure_add_return_value (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
 {
+  gint i;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+  g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
+
+  for (i = 0; i < procedure->priv->n_values; i++)
+    if (! strcmp (pspec->name, procedure->priv->values[i]->name))
+      {
+        g_warning ("Return value with name '%s' already exists on procedure '%s'",
+                   pspec->name,
+                   gimp_procedure_get_name (procedure));
+        return;
+      }
 
   procedure->priv->values = g_renew (GParamSpec *, procedure->priv->values,
                                      procedure->priv->n_values + 1);
