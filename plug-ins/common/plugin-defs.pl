@@ -69,7 +69,7 @@
     'tile' => { ui => 1, gegl => 1 },
     'tile-small' => { ui => 1, gegl => 1 },
     'unit-editor' => { ui => 1 },
-    'van-gogh-lic' => { ui => 1, gegl => 1, old_api => 1 },
+    'van-gogh-lic' => { ui => 1, gegl => 1 },
     'warp' => { ui => 1, gegl => 1 },
     'wavelet-decompose' => { ui => 1, gegl => 1 },
     'web-browser' => { ui => 1, ldflags => '$(framework_cocoa)', cppflags => '$(AM_CPPFLAGS) $(xobjective_c)' },

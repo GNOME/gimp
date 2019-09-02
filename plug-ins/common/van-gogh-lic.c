@@ -62,6 +62,57 @@ typedef enum
 } LICEffectChannel;
 
 
+typedef struct _Lic      Lic;
+typedef struct _LicClass LicClass;
+
+struct _Lic
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _LicClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define LIC_TYPE  (lic_get_type ())
+#define LIC (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIC_TYPE, Lic))
+
+GType                   lic_get_type         (void) G_GNUC_CONST;
+
+static GList          * lic_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * lic_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * lic_run              (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+
+G_DEFINE_TYPE (Lic, lic, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (LIC_TYPE)
+
+
+static void
+lic_class_init (LicClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = lic_query_procedures;
+  plug_in_class->create_procedure = lic_create_procedure;
+}
+
+static void
+lic_init (Lic *lic)
+{
+}
+
+
 /*****************************/
 /* Global variables and such */
 /*****************************/
@@ -428,7 +479,7 @@ lic_image (GeglBuffer *buffer,
 }
 
 static guchar *
-rgb_to_hsl (gint32            drawable_ID,
+rgb_to_hsl (GimpDrawable     *drawable,
             LICEffectChannel  effect_channel)
 {
   GeglBuffer *buffer;
@@ -442,9 +493,9 @@ rgb_to_hsl (gint32            drawable_ID,
 
   gr = g_rand_new ();
 
-  maxc = gimp_drawable_width (drawable_ID) * gimp_drawable_height (drawable_ID);
+  maxc = gimp_drawable_width (drawable) * gimp_drawable_height (drawable);
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   themap = g_new (guchar, maxc);
 
@@ -490,7 +541,7 @@ rgb_to_hsl (gint32            drawable_ID,
 
 
 static void
-compute_lic (gint32        drawable_ID,
+compute_lic (GimpDrawable *drawable,
              const guchar *scalarfield,
              gboolean      rotate)
 {
@@ -500,8 +551,8 @@ compute_lic (gint32        drawable_ID,
   GimpRGB     color;
   gdouble     vx, vy, tmp;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   for (ycount = 0; ycount < border_h; ycount++)
     {
@@ -561,13 +612,14 @@ compute_lic (gint32        drawable_ID,
 }
 
 static void
-compute_image (gint32 drawable_ID)
+compute_image (GimpDrawable *drawable)
 {
-  guchar *scalarfield = NULL;
+  GimpDrawable *effect_image;
+  guchar       *scalarfield = NULL;
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
-  if (! gimp_drawable_mask_intersect (drawable_ID,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &border_x, &border_y,
                                       &border_w, &border_h))
     return;
@@ -586,33 +638,35 @@ compute_image (gint32 drawable_ID)
   maxv = licvals.maxv / 10.0;
   isteps = licvals.intsteps;
 
-  source_drw_has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  source_drw_has_alpha = gimp_drawable_has_alpha (drawable);
 
-  effect_width =  gimp_drawable_width  (licvals.effect_image_id);
-  effect_height = gimp_drawable_height (licvals.effect_image_id);
+  effect_image = GIMP_DRAWABLE (gimp_item_get_by_id (licvals.effect_image_id));
+
+  effect_width =  gimp_drawable_width  (effect_image);
+  effect_height = gimp_drawable_height (effect_image);
 
   switch (licvals.effect_channel)
     {
     case 0:
-      scalarfield = rgb_to_hsl (licvals.effect_image_id, LIC_HUE);
+      scalarfield = rgb_to_hsl (effect_image, LIC_HUE);
       break;
     case 1:
-      scalarfield = rgb_to_hsl (licvals.effect_image_id, LIC_SATURATION);
+      scalarfield = rgb_to_hsl (effect_image, LIC_SATURATION);
       break;
     case 2:
-      scalarfield = rgb_to_hsl (licvals.effect_image_id, LIC_BRIGHTNESS);
+      scalarfield = rgb_to_hsl (effect_image, LIC_BRIGHTNESS);
       break;
     }
 
-  compute_lic (drawable_ID, scalarfield, licvals.effect_operator);
+  compute_lic (drawable, scalarfield, licvals.effect_operator);
 
   g_free (scalarfield);
 
   /* Update image */
   /* ============ */
 
-  gimp_drawable_merge_shadow (drawable_ID, TRUE);
-  gimp_drawable_update (drawable_ID, border_x, border_y, border_w, border_h);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, border_x, border_y, border_w, border_h);
 
   gimp_displays_flush ();
 }
@@ -622,11 +676,11 @@ compute_image (gint32 drawable_ID)
 /**************************/
 
 static gboolean
-effect_image_constrain (gint32    image_id,
-                        gint32    drawable_id,
-                        gpointer  data)
+effect_image_constrain (GimpImage *image,
+                        GimpItem  *item,
+                        gpointer   data)
 {
-  return gimp_drawable_is_rgb (drawable_id);
+  return gimp_drawable_is_rgb (GIMP_DRAWABLE (item));
 }
 
 static gboolean
@@ -798,54 +852,56 @@ set_default_settings (void)
   licvals.effect_channel   = 2;
   licvals.effect_operator  = 1;
   licvals.effect_convolve  = 1;
-  licvals.effect_image_id  = 0;
+  licvals.effect_image_id  = -1;
 }
 
-static void
-query (void)
+static GList *
+lic_query_procedures (GimpPlugIn *plug_in)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0) }"    },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"    },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Special effects that nobody understands"),
-                          "No help yet",
-                          "Tom Bech & Federico Mena Quintero",
-                          "Tom Bech & Federico Mena Quintero",
-                          "Version 0.14, September 24 1997",
-                          N_("_Van Gogh (LIC)..."),
-                          "RGB*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Artistic");
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpProcedure *
+lic_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  gint32             drawable_ID;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpProcedure *procedure = NULL;
 
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            lic_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Van Gogh (LIC)..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Artistic");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Special effects that nobody "
+                                           "understands"),
+                                        "No help yet",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Tom Bech & Federico Mena Quintero",
+                                      "Tom Bech & Federico Mena Quintero",
+                                      "Version 0.14, September 24 1997");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+lic_run (GimpProcedure        *procedure,
+         GimpRunMode           run_mode,
+         GimpImage            *image,
+         GimpDrawable         *drawable,
+         const GimpValueArray *args,
+         gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
 
   /* Set default values */
   /* ================== */
@@ -857,48 +913,43 @@ run (const gchar      *name,
 
   gimp_get_data (PLUG_IN_PROC, &licvals);
 
-  run_mode    = param[0].data.d_int32;
-  drawable_ID = param[2].data.d_drawable;
+  if (! gimp_item_id_is_valid (licvals.effect_image_id))
+    licvals.effect_image_id = -1;
 
-  if (status == GIMP_PDB_SUCCESS)
+  /* Make sure that the drawable is RGBA or RGB color */
+  /* ================================================ */
+
+  if (gimp_drawable_is_rgb (drawable))
     {
-      /* Make sure that the drawable is RGBA or RGB color */
-      /* ================================================ */
-
-      if (gimp_drawable_is_rgb (drawable_ID))
+      switch (run_mode)
         {
-          switch (run_mode)
+        case GIMP_RUN_INTERACTIVE:
+          if (! create_main_dialog ())
             {
-            case GIMP_RUN_INTERACTIVE:
-              if (create_main_dialog ())
-                compute_image (drawable_ID);
-
-              gimp_set_data (PLUG_IN_PROC, &licvals, sizeof (LicValues));
-              break;
-
-            case GIMP_RUN_WITH_LAST_VALS:
-              compute_image (drawable_ID);
-              break;
-
-            default:
-              break;
+              return gimp_procedure_new_return_values (procedure,
+                                                       GIMP_PDB_CANCEL,
+                                                       NULL);
             }
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
+
+          compute_image (drawable);
+
+          gimp_set_data (PLUG_IN_PROC, &licvals, sizeof (LicValues));
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          compute_image (drawable);
+          break;
+
+        default:
+          break;
         }
     }
+  else
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
+    }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-MAIN ()

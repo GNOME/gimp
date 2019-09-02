@@ -1504,8 +1504,6 @@ unit_editor_LDADD = \
 	$(INTLLIBS)		\
 	$(unit_editor_RC)
 
-van_gogh_lic_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 van_gogh_lic_SOURCES = \
 	van-gogh-lic.c
 
