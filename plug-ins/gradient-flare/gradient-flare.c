@@ -368,16 +368,36 @@ typedef void (* QueryFunc) (GtkWidget *,
                             gpointer,
                             gpointer);
 
-/***
- ***  Global Functions Prototypes
- **/
 
-static void    plugin_query (void);
-static void    plugin_run   (const gchar      *name,
-                             gint              nparams,
-                             const GimpParam  *param,
-                             gint             *nreturn_vals,
-                             GimpParam       **return_vals);
+typedef struct _Gflare      Gflare;
+typedef struct _GflareClass GflareClass;
+
+struct _Gflare
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _GflareClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define GFLARE_TYPE  (gflare_get_type ())
+#define GFLARE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GFLARE_TYPE, Gflare))
+
+GType                   gflare_get_type         (void) G_GNUC_CONST;
+
+static GList          * gflare_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * gflare_create_procedure (GimpPlugIn           *plug_in,
+                                                 const gchar          *name);
+
+static GimpValueArray * gflare_run              (GimpProcedure        *procedure,
+                                                 GimpRunMode           run_mode,
+                                                 GimpImage            *image,
+                                                 GimpDrawable         *drawable,
+                                                 const GimpValueArray *args,
+                                                 gpointer              run_data);
 
 static GFlare * gflare_new_with_default (const gchar *new_name);
 static GFlare * gflare_dup              (const GFlare      *src,
@@ -462,124 +482,6 @@ static void             gradient_get_values   (const gchar *gradient_name,
                                                guchar      *values,
                                                gint         nvalues);
 static void             gradient_cache_flush  (void);
-
-/* *** INSERT-FILE-END *** */
-
-/**
-***     Variables
-**/
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,         /* init_proc  */
-  NULL,         /* quit_proc  */
-  plugin_query, /* query_proc */
-  plugin_run,   /* run_proc   */
-};
-
-PluginValues pvals =
-{
-  128,          /* xcenter */
-  128,          /* ycenter */
-  100.0,        /* radius */
-  0.0,          /* rotation */
-  0.0,          /* hue */
-  60.0,         /* vangle */
-  400.0,        /* vlength */
-  FALSE,        /* use_asupsample */
-  3,            /* asupsample_max_depth */
-  0.2,          /* asupsample_threshold */
-  "Default"     /* gflare_name */
-};
-
-GFlare default_gflare =
-{
-  NULL,         /* name */
-  NULL,         /* filename */
-  100,          /* glow_opacity */
-  GF_NORMAL,    /* glow_mode */
-  100,          /* rays_opacity */
-  GF_NORMAL,    /* rays_mode */
-  100,          /* sflare_opacity */
-  GF_NORMAL,    /* sflare_mode */
-  "%red_grad",  /* glow_radial */
-  "%white",     /* glow_angular */
-  "%white",     /* glow_angular_size */
-  100.0,        /* glow_size */
-  0.0,          /* glow_rotation */
-  0.0,          /* glow_hue */
-  "%white_grad",/* rays_radial */
-  "%random",    /* rays_angular */
-  "%random",    /* rays_angular_size */
-  100.0,        /* rays_size */
-  0.0,          /* rays_rotation */
-  0.0,          /* rays_hue */
-  40,           /* rays_nspikes */
-  20.0,         /* rays_thickness */
-  "%white_grad",/* sflare_radial */
-  "%random",    /* sflare_sizefac */
-  "%random",    /* sflare_probability */
-  40.0,         /* sflare_size */
-  0.0,          /* sflare_rotation */
-  0.0,          /* sflare_hue */
-  GF_CIRCLE,    /* sflare_shape */
-  6,            /* sflare_nverts */
-  0,            /* sflare_seed */
-  TRUE,         /* random_seed */
-};
-
-/* These are keywords to be written to disk files specifying flares. */
-/* They are not translated since we want gflare files to be compatible
-   across languages. */
-static const gchar *gflare_modes[] =
-{
-  "NORMAL",
-  "ADDITION",
-  "OVERLAY",
-  "SCREEN"
-};
-
-static const gchar *gflare_shapes[] =
-{
-  "CIRCLE",
-  "POLYGON"
-};
-
-/* These are for menu entries, so they are translated. */
-static const gchar *gflare_menu_modes[] =
-{
-  N_("Normal"),
-  N_("Addition"),
-  N_("Overlay"),
-  N_("Screen")
-};
-
-static GimpImage          *image;
-static GimpDrawable       *drawable;
-static DrawableInfo        dinfo;
-static GFlareDialog       *dlg = NULL;
-static GFlareEditor       *ed = NULL;
-static GList              *gflares_list = NULL;
-static gint                num_gflares  = 0;
-static gchar              *gflare_path  = NULL;
-static CalcParams          calc;
-static GList              *gradient_menus;
-static gchar             **gradient_names = NULL;
-static gint                num_gradient_names = 0;
-static GradientCacheItem  *gradient_cache_head  = NULL;
-static gint                gradient_cache_count = 0;
-
-
-static const gchar *internal_gradients[] =
-{
-  "%white", "%white_grad", "%red_grad", "%blue_grad", "%yellow_grad", "%random"
-};
-
-#ifdef DEBUG
-static gint     get_values_external_count = 0;
-static clock_t  get_values_external_clock = 0;
-#endif
-
 
 /**
 ***     +++ Static Functions Prototypes
@@ -763,86 +665,261 @@ static GradientCacheItem *gradient_cache_lookup (const gchar *name,
                                                  gboolean    *found);
 static void gradient_cache_zorch                (void);
 
-/* *** INSERT-FILE-END *** */
+
+G_DEFINE_TYPE (Gflare, gflare, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GFLARE_TYPE)
 
 
-/*************************************************************************/
-/**                                                                     **/
-/**             +++ Plug-in Interfaces                                  **/
-/**                                                                     **/
-/*************************************************************************/
-
-MAIN ()
-
-void
-plugin_query (void)
+PluginValues pvals =
 {
-  static const GimpParamDef args[]=
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING,   "gflare-name", "The name of GFlare" },
-    { GIMP_PDB_INT32,    "xcenter",  "X coordinate of center of GFlare" },
-    { GIMP_PDB_INT32,    "ycenter",  "Y coordinate of center of GFlare" },
-    { GIMP_PDB_FLOAT,    "radius",   "Radius of GFlare (pixel)" },
-    { GIMP_PDB_FLOAT,    "rotation", "Rotation of GFlare (degree)" },
-    { GIMP_PDB_FLOAT,    "hue",      "Hue rotation of GFlare (degree)" },
-    { GIMP_PDB_FLOAT,    "vangle",   "Vector angle for second flares (degree)" },
-    { GIMP_PDB_FLOAT,    "vlength",  "Vector length for second flares (percentage to Radius)" },
-    { GIMP_PDB_INT32,    "use-asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
-    { GIMP_PDB_INT32,    "asupsample-max-depth", "Max depth for adaptive supersampling"},
-    { GIMP_PDB_FLOAT,    "asupsample-threshold", "Threshold for adaptive supersampling"}
-  };
+  128,          /* xcenter */
+  128,          /* ycenter */
+  100.0,        /* radius */
+  0.0,          /* rotation */
+  0.0,          /* hue */
+  60.0,         /* vangle */
+  400.0,        /* vlength */
+  FALSE,        /* use_asupsample */
+  3,            /* asupsample_max_depth */
+  0.2,          /* asupsample_threshold */
+  "Default"     /* gflare_name */
+};
 
-  const gchar *help_string =
-    "This plug-in produces a lense flare effect using custom gradients. "
-    "In interactive call, the user can edit his/her own favorite lense flare "
-    "(GFlare) and render it. Edited gflare is saved automatically to "
-    "the folder in gflare-path, if it is defined in gimprc. "
-    "In non-interactive call, the user can only render one of GFlare "
-    "which has been stored in gflare-path already.";
+GFlare default_gflare =
+{
+  NULL,         /* name */
+  NULL,         /* filename */
+  100,          /* glow_opacity */
+  GF_NORMAL,    /* glow_mode */
+  100,          /* rays_opacity */
+  GF_NORMAL,    /* rays_mode */
+  100,          /* sflare_opacity */
+  GF_NORMAL,    /* sflare_mode */
+  "%red_grad",  /* glow_radial */
+  "%white",     /* glow_angular */
+  "%white",     /* glow_angular_size */
+  100.0,        /* glow_size */
+  0.0,          /* glow_rotation */
+  0.0,          /* glow_hue */
+  "%white_grad",/* rays_radial */
+  "%random",    /* rays_angular */
+  "%random",    /* rays_angular_size */
+  100.0,        /* rays_size */
+  0.0,          /* rays_rotation */
+  0.0,          /* rays_hue */
+  40,           /* rays_nspikes */
+  20.0,         /* rays_thickness */
+  "%white_grad",/* sflare_radial */
+  "%random",    /* sflare_sizefac */
+  "%random",    /* sflare_probability */
+  40.0,         /* sflare_size */
+  0.0,          /* sflare_rotation */
+  0.0,          /* sflare_hue */
+  GF_CIRCLE,    /* sflare_shape */
+  6,            /* sflare_nverts */
+  0,            /* sflare_seed */
+  TRUE,         /* random_seed */
+};
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Produce a lense flare effect using gradients"),
-                          help_string,
-                          "Eiichi Takamori",
-                          "Eiichi Takamori, and a lot of GIMP people",
-                          "1997",
-                          N_("_Gradient Flare..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+/* These are keywords to be written to disk files specifying flares. */
+/* They are not translated since we want gflare files to be compatible
+   across languages. */
+static const gchar *gflare_modes[] =
+{
+  "NORMAL",
+  "ADDITION",
+  "OVERLAY",
+  "SCREEN"
+};
 
-  gimp_plugin_menu_register (PLUG_IN_PROC,
-                             "<Image>/Filters/Light and Shadow/Light");
+static const gchar *gflare_shapes[] =
+{
+  "CIRCLE",
+  "POLYGON"
+};
+
+/* These are for menu entries, so they are translated. */
+static const gchar *gflare_menu_modes[] =
+{
+  N_("Normal"),
+  N_("Addition"),
+  N_("Overlay"),
+  N_("Screen")
+};
+
+static GimpImage          *image;
+static GimpDrawable       *drawable;
+static DrawableInfo        dinfo;
+static GFlareDialog       *dlg = NULL;
+static GFlareEditor       *ed = NULL;
+static GList              *gflares_list = NULL;
+static gint                num_gflares  = 0;
+static gchar              *gflare_path  = NULL;
+static CalcParams          calc;
+static GList              *gradient_menus;
+static gchar             **gradient_names = NULL;
+static gint                num_gradient_names = 0;
+static GradientCacheItem  *gradient_cache_head  = NULL;
+static gint                gradient_cache_count = 0;
+
+
+static const gchar *internal_gradients[] =
+{
+  "%white", "%white_grad", "%red_grad", "%blue_grad", "%yellow_grad", "%random"
+};
+
+#ifdef DEBUG
+static gint     get_values_external_count = 0;
+static clock_t  get_values_external_clock = 0;
+#endif
+
+
+static void
+gflare_class_init (GflareClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = gflare_query_procedures;
+  plug_in_class->create_procedure = gflare_create_procedure;
 }
 
-void
-plugin_run (const gchar      *name,
-            gint              nparams,
-            const GimpParam  *param,
-            gint             *nreturn_vals,
-            GimpParam       **return_vals)
+static void
+gflare_init (Gflare *gflare)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gchar             *path;
+}
+
+static GList *
+gflare_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+gflare_create_procedure (GimpPlugIn  *plug_in,
+                         const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            gflare_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Gradient Flare..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Light and Shadow/Light");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Produce a lense flare effect "
+                                           "using gradients"),
+                                        "This plug-in produces a lense flare "
+                                        "effect using custom gradients. In "
+                                        "interactive call, the user can edit "
+                                        "his/her own favorite lense flare "
+                                        "(GFlare) and render it. Edited "
+                                        "gflare is saved automatically to "
+                                        "the folder in gflare-path, if it is "
+                                        "defined in gimprc. In "
+                                        "non-interactive call, the user can "
+                                        "only render one of GFlare "
+                                        "which has been stored in "
+                                        "gflare-path already.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Eiichi Takamori",
+                                      "Eiichi Takamori, and a lot of GIMP people",
+                                      "1997");
+
+      GIMP_PROC_ARG_STRING (procedure, "gflare-name",
+                            "GFlare name",
+                            "Name of the GFlare to render",
+                            "Default",
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "center-x",
+                         "Center X",
+                         "X coordinate of center of GFlare",
+                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "center-y",
+                         "Center Y",
+                         "Y coordinate of center of GFlare",
+                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "radius",
+                            "Radius",
+                            "Radius of GFlare (pixel)",
+                            1, GIMP_MAX_IMAGE_SIZE, 100,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "rotation",
+                            "Rotation",
+                            "Rotation of GFlare (degree)",
+                            0, 360, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "hue",
+                            "Hue",
+                            "Hue rotation of GFlare (degree)",
+                            0, 360, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
+                            "Vector angle",
+                            "Vector angle for second flares (degree)",
+                            0, 360, 60,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "vector-length",
+                            "Vector length",
+                            "Vector length for second flares "
+                            "(percentage of Radius)",
+                            0, 10000, 400,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "use-asupsample",
+                             "Use asupsample",
+                             "Use adaptive supersampling while rendering",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "asupsample-max-depth",
+                         "Asupsample max depth",
+                         "Max depth for adaptive supersampling",
+                         0, 10, 3,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "asupsample-threshold",
+                            "Asupsample threshold",
+                            "Threshold for adaptive supersampling",
+                            0.0, 1.0, 0.2,
+                            G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+gflare_run (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *_image,
+            GimpDrawable         *_drawable,
+            const GimpValueArray *args,
+            gpointer              run_data)
+{
+  gchar *path;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  run_mode = param[0].data.d_int32;
-  image    = gimp_image_get_by_id (param[1].data.d_image);
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
+  image   =  _image;
+  drawable = _drawable;
 
   dinfo.is_color  = gimp_drawable_is_rgb (drawable);
   dinfo.has_alpha = gimp_drawable_has_alpha (drawable);
@@ -866,7 +943,11 @@ plugin_run (const gchar      *name,
 
   if (! gimp_drawable_mask_intersect (drawable,
                                       &dinfo.x, &dinfo.y, &dinfo.w, &dinfo.h))
-    return;
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_SUCCESS,
+                                               NULL);
+    }
 
   /*
    *    Start gradient caching
@@ -907,79 +988,67 @@ plugin_run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-
-      /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_PROC, &pvals);
 
-      /*  First acquire information with a dialog  */
       if (! dlg_run ())
-        return;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 14)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      else
-        {
-          gflare_name_copy (pvals.gflare_name, param[3].data.d_string);
-          pvals.xcenter              = param[4].data.d_int32;
-          pvals.ycenter              = param[5].data.d_int32;
-          pvals.radius               = param[6].data.d_float;
-          pvals.rotation             = param[7].data.d_float;
-          pvals.hue                  = param[8].data.d_float;
-          pvals.vangle               = param[9].data.d_float;
-          pvals.vlength              = param[10].data.d_float;
-          pvals.use_asupsample       = param[11].data.d_int32;
-          pvals.asupsample_max_depth = param[12].data.d_int32;
-          pvals.asupsample_threshold = param[13].data.d_float;
+      gflare_name_copy (pvals.gflare_name,
+                        GIMP_VALUES_GET_STRING (args, 0));
 
-          if (pvals.radius <= 0)
-            status = GIMP_PDB_CALLING_ERROR;
-        }
+      pvals.xcenter              = GIMP_VALUES_GET_INT     (args, 1);
+      pvals.ycenter              = GIMP_VALUES_GET_INT     (args, 2);
+      pvals.radius               = GIMP_VALUES_GET_DOUBLE  (args, 3);
+      pvals.rotation             = GIMP_VALUES_GET_DOUBLE  (args, 4);
+      pvals.hue                  = GIMP_VALUES_GET_DOUBLE  (args, 5);
+      pvals.vangle               = GIMP_VALUES_GET_DOUBLE  (args, 6);
+      pvals.vlength              = GIMP_VALUES_GET_DOUBLE  (args, 7);
+      pvals.use_asupsample       = GIMP_VALUES_GET_BOOLEAN (args, 8);
+      pvals.asupsample_max_depth = GIMP_VALUES_GET_INT     (args, 9);
+      pvals.asupsample_threshold = GIMP_VALUES_GET_DOUBLE  (args, 10);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_PROC, &pvals);
       break;
-
-    default:
-      break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (gimp_drawable_is_rgb  (drawable) ||
+      gimp_drawable_is_gray (drawable))
     {
-      /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb  (drawable) ||
-          gimp_drawable_is_gray (drawable))
-        {
-          gimp_progress_init (_("Gradient Flare"));
-          plugin_do ();
+      gimp_progress_init (_("Gradient Flare"));
 
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_displays_flush ();
+      plugin_do ();
 
-          /*  Store data  */
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (PluginValues));
-        }
-      else
-        {
-          status        = GIMP_PDB_EXECUTION_ERROR;
-          *nreturn_vals = 2;
-          values[1].type          = GIMP_PDB_STRING;
-          values[1].data.d_string = _("Cannot operate on indexed color images.");
-        }
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_set_data (PLUG_IN_PROC, &pvals, sizeof (PluginValues));
     }
+  else
+    {
+      GError *error =
+        g_error_new_literal (0, 0,
+                             _("Cannot operate on indexed color images."));
 
-  values[0].data.d_status = status;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
+    }
 
   /*
    *    Deinitialization
    */
   gradient_free ();
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static void
