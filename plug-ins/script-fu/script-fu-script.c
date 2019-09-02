@@ -264,14 +264,18 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
           break;
 
         case SF_STRING:
-        case SF_TEXT:
           name = "string";
           nick = "String";
           break;
 
+        case SF_TEXT:
+          name = "text";
+          nick = "Text";
+          break;
+
         case SF_ADJUSTMENT:
-          name = "value";
-          nick = "Value";
+          name = "adjustment";
+          nick = "Adjustment";
           break;
 
         case SF_FILENAME:
