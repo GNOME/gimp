@@ -18,13 +18,15 @@ palette_to_gradient_SCRIPTS = palette-to-gradient.py
 py_slicedir = $(gimpplugindir)/plug-ins/py-slice
 py_slice_SCRIPTS = py-slice.py
 
+spyro_plusdir = $(gimpplugindir)/plug-ins/spyro-plus
+spyro_plus_SCRIPTS = spyro-plus.py
+
 # TODO: to be ported:
 ##	colorxhtml.py
 ##	gradients-save-as-css.py
 ##	histogram-export.py
 ##	palette-sort.py
 ##	python-eval.py
-##	spyro_plus.py
 
 if GIMP_UNSTABLE
 ##	benchmark-foreground-extract.py
@@ -39,7 +41,8 @@ EXTRA_DIST = \
 	foggify.py			\
 	palette-offset.py		\
 	palette-to-gradient.py		\
-	py-slice.py
+	py-slice.py			\
+	spyro-plus.py
 
 # Python interpreter file.
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Draw Spyrographs, Epitrochoids, and Lissajous curves with interactive feedback.
 #
@@ -15,29 +15,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from gimpshelf import shelf
-from gimpenums import *
-import gimp
-import gimpplugin
-import gimpui
-import gobject
-import gtk
+import gi
+gi.require_version('Gimp', '3.0')
+from gi.repository import Gimp
+from gi.repository import GObject
+from gi.repository import GLib
+from gi.repository import Gio
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+gi.require_version('Gdk', '3.0')
+from gi.repository import Gdk
+import time
+import sys
+
+import gettext
+_ = gettext.gettext
+def N_(message): return message
 
 from math import pi, sin, cos, atan, atan2, fmod, radians
 import gettext
-import fractions
+import math
 import time
 
-
-# i18n
-t = gettext.translation("gimp20-python", gimp.locale_directory, fallback=True)
-_ = t.ugettext
-
-def N_(message):
-    return message
-
-
-pdb = gimp.pdb
 
 two_pi, half_pi = 2 * pi, pi / 2
 layer_name = _("Spyro Layer")
@@ -328,9 +327,9 @@ class SelectionToPath:
 
     def convert_selection_to_path(self):
 
-        if pdb.gimp_selection_is_empty(self.image):
+        if Gimp.Selection.is_empty(self.image):
             selection_was_empty = True
-            pdb.gimp_selection_all(self.image)
+            Gimp.Selection.all(self.image)
         else:
             selection_was_empty = False
 
@@ -338,14 +337,14 @@ class SelectionToPath:
 
         self.path = self.image.vectors[0]
 
-        self.num_strokes, self.stroke_ids = pdb.gimp_vectors_get_strokes(self.path)
+        self.num_strokes, self.stroke_ids = self.path.get_strokes(self.path)
         self.stroke_ids = list(self.stroke_ids)
 
         # A path may contain several strokes. If so lets throw away a stroke that
         # simply describes the borders of the image, if one exists.
         if self.num_strokes > 1:
             # Lets compute what a stroke of the image borders should look like.
-            w, h = float(self.image.width), float(self.image.height)
+            w, h = float(self.image.width()), float(self.image.height())
             frame_strokes = [0.0] * 6 + [0.0, h] * 3 + [w, h] * 3 + [w, 0.0] * 3
 
             for stroke in range(self.num_strokes):
@@ -359,11 +358,11 @@ class SelectionToPath:
 
         if selection_was_empty:
             # Restore empty selection if it was empty.
-            pdb.gimp_selection_none(self.image)
+            Gimp.Selection.none(self.image)
 
     def compute_selection_hash(self):
-        px = self.image.selection.get_pixel_rgn(0, 0, self.image.width, self.image.height)
-        return px[0:self.image.width, 0:self.image.height].__hash__()
+        px = self.image.selection.get_pixel_rgn(0, 0, self.image.width(), self.image.height())
+        return px[0:self.image.width(), 0:self.image.height()].__hash__()
 
     def regenerate_path_if_selection_changed(self):
         current_selection_hash = self.compute_selection_hash()
@@ -376,13 +375,13 @@ class SelectionToPath:
 
     def set_current_stroke(self, stroke_id=0):
         # Compute path length.
-        self.path_length = pdb.gimp_vectors_stroke_get_length(self.path, self.stroke_ids[stroke_id], 1.0)
+        self.path_length = self.path.stroke_get_length(self.stroke_ids[stroke_id], 1.0)
         self.current_stroke = stroke_id
 
     def point_at_angle(self, oangle):
         oangle_mod = fmod(oangle, two_pi)
         dist = self.path_length * oangle_mod / two_pi
-        return pdb.gimp_vectors_stroke_get_point_at_dist(self.path, self.stroke_ids[self.current_stroke], dist, 1.0)
+        return self.path.stroke_get_point_at_dist(self.stroke_ids[self.current_stroke], dist, 1.0)
 
 
 class SelectionShape(Shape):
@@ -425,9 +424,9 @@ class SelectionShape(Shape):
         perpendicular_p, perpendicular_m = slope_angle + half_pi, slope_angle - half_pi
         step_size = 2   # The distance we are going to go in the direction of each angle.
         xp, yp = x + step_size * cos(perpendicular_p), y + step_size * sin(perpendicular_p)
-        value_plus = pdb.gimp_selection_value(self.image, xp, yp)
+        value_plus = Gimp.Selection.value(self.image, xp, yp)
         xp, yp = x + step_size * cos(perpendicular_m), y + step_size * sin(perpendicular_m)
-        value_minus = pdb.gimp_selection_value(self.image, xp, yp)
+        value_minus = Gimp.Selection.value(self.image, xp, yp)
 
         perpendicular = perpendicular_p if value_plus > value_minus else perpendicular_m
         return x + dist * cos(perpendicular), y + dist * sin(perpendicular)
@@ -443,34 +442,31 @@ shapes = [
 
 
 def get_gradient_samples(num_samples):
-    gradient_name = pdb.gimp_context_get_gradient()
-    reverse_mode = pdb.gimp_context_get_gradient_reverse()
-    repeat_mode = pdb.gimp_context_get_gradient_repeat_mode()
+    gradient_name = Gimp.context_get_gradient()
+    reverse_mode = Gimp.context_get_gradient_reverse()
+    repeat_mode = Gimp.context_get_gradient_repeat_mode()
 
     if repeat_mode == REPEAT_TRIANGULAR:
         # Get two uniform samples, which are reversed from each other, and connect them.
 
         samples = num_samples/2 + 1
-        num, color_samples = pdb.gimp_gradient_get_uniform_samples(gradient_name,
-             samples, reverse_mode)
+        success, color_samples = Gimp.gradient_get_uniform_samples(gradient_name,
+                                 samples, reverse_mode)
 
-        color_samples = list(color_samples)
         del color_samples[-4:]   # Delete last color because it will appear in the next sample
 
         # If num_samples is odd, lets get an extra sample this time.
         if num_samples % 2 == 1:
             samples += 1
 
-        num, color_samples2 = pdb.gimp_gradient_get_uniform_samples(gradient_name,
+        success, color_samples2 = Gimp.gradient_get_uniform_samples(gradient_name,
              samples, 1 - reverse_mode)
 
-        color_samples2 = list(color_samples2)
         del color_samples2[-4:]  # Delete last color because it will appear in the very first sample
 
-        color_samples.extend(color_samples2)
         color_samples = tuple(color_samples)
     else:
-        num, color_samples = pdb.gimp_gradient_get_uniform_samples(gradient_name, num_samples, reverse_mode)
+        success, color_samples = Gimp.gradient_get_uniform_samples(gradient_name, num_samples, reverse_mode)
 
     return color_samples
 
@@ -481,14 +477,14 @@ class PencilTool():
 
     def draw(self, layer, strokes, color=None):
         if color:
-            pdb.gimp_context_push()
-            pdb.gimp_context_set_dynamics('Dynamics Off')
-            pdb.gimp_context_set_foreground(color)
+            Gimp.context_push()
+            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_set_foreground(color)
 
-        pdb.gimp_pencil(layer, len(strokes), strokes)
+        Gimp.pencil(layer, strokes)
 
         if color:
-            pdb.gimp_context_pop()
+            Gimp.context_pop()
 
 
 class AirBrushTool():
@@ -497,14 +493,14 @@ class AirBrushTool():
 
     def draw(self, layer, strokes, color=None):
         if color:
-            pdb.gimp_context_push()
-            pdb.gimp_context_set_dynamics('Dynamics Off')
-            pdb.gimp_context_set_foreground(color)
+            Gimp.context_push()
+            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_set_foreground(color)
 
-        pdb.gimp_airbrush_default(layer, len(strokes), strokes)
+        Gimp.airbrush_default(layer, strokes)
 
         if color:
-            pdb.gimp_context_pop()
+            Gimp.context_pop()
 
 
 class AbstractStrokeTool():
@@ -517,23 +513,23 @@ class AbstractStrokeTool():
             control_points += [i, k] * 3
 
         # Create path
-        path = pdb.gimp_vectors_new(layer.image, 'temp_path')
-        pdb.gimp_image_add_vectors(layer.image, path, 0)
-        sid = pdb.gimp_vectors_stroke_new_from_points(path, 0, len(control_points),
-                                                      control_points, False)
+        path = Gimp.Vectors.new(layer.get_image(), 'temp_path')
+        layer.get_image().insert_vectors(path, None, 0)
+        sid = path.stroke_new_from_points(Gimp.VectorsStrokeType.BEZIER,
+                                          control_points, False)
 
         # Draw it.
 
-        pdb.gimp_context_push()
+        Gimp.context_push()
 
         # Call template method to set the kind of stroke to draw.
         self.prepare_stroke_context(color)
 
-        pdb.gimp_drawable_edit_stroke_item(layer, path)
-        pdb.gimp_context_pop()
+        layer.edit_stroke_item(path)
+        Gimp.context_pop()
 
         # Get rid of the path.
-        pdb.gimp_image_remove_vectors(layer.image, path)
+        layer.get_image().remove_vectors(path)
 
 
 # Drawing tool that should be quick, for purposes of previewing the pattern.
@@ -541,16 +537,16 @@ class PreviewTool:
 
     # Implementation using pencil.  (A previous implementation using stroke was slower, and thus removed).
     def draw(self, layer, strokes, color=None):
-        foreground = pdb.gimp_context_get_foreground()
-        pdb.gimp_context_push()
-        pdb.gimp_context_set_defaults()
-        pdb.gimp_context_set_foreground(foreground)
-        pdb.gimp_context_set_dynamics('Dynamics Off')
-        pdb.gimp_context_set_brush('1. Pixel')
-        pdb.gimp_context_set_brush_size(1.0)
-        pdb.gimp_context_set_brush_spacing(3.0)
-        pdb.gimp_pencil(layer, len(strokes), strokes)
-        pdb.gimp_context_pop()
+        success, foreground = Gimp.context_get_foreground()
+        Gimp.context_push()
+        Gimp.context_set_defaults()
+        Gimp.context_set_foreground(foreground)
+        Gimp.context_set_dynamics('Dynamics Off')
+        Gimp.context_set_brush('1. Pixel')
+        Gimp.context_set_brush_size(1.0)
+        Gimp.context_set_brush_spacing(3.0)
+        Gimp.pencil(layer, strokes)
+        Gimp.context_pop()
 
     name = _("Preview")
     can_color = False
@@ -562,10 +558,10 @@ class StrokeTool(AbstractStrokeTool):
 
     def prepare_stroke_context(self, color):
         if color:
-            pdb.gimp_context_set_dynamics('Dynamics Off')
-            pdb.gimp_context_set_foreground(color)
+            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_set_foreground(color)
 
-        pdb.gimp_context_set_stroke_method(STROKE_LINE)
+        Gimp.context_set_stroke_method(STROKE_LINE)
 
 
 class StrokePaintTool(AbstractStrokeTool):
@@ -576,11 +572,11 @@ class StrokePaintTool(AbstractStrokeTool):
 
     def prepare_stroke_context(self, color):
         if self.can_color and color is not None:
-            pdb.gimp_context_set_dynamics('Dynamics Off')
-            pdb.gimp_context_set_foreground(color)
+            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_set_foreground(color)
 
-        pdb.gimp_context_set_stroke_method(STROKE_PAINT_METHOD)
-        pdb.gimp_context_set_paint_method(self.paint_method)
+        Gimp.context_set_stroke_method(Gimp.StrokeMethod.PAINT_METHOD)
+        Gimp.context_set_paint_method(self.paint_method)
 
 
 tools = [
@@ -660,16 +656,20 @@ class PatternParameters:
 # Handle shelving of plugin parameters
 
 def unshelf_parameters():
-    if shelf.has_key("p"):
-        parameters = shelf["p"]
-        parameters.__init__()  # Fill in missing values with defaults.
-        return parameters
-
+    # TODO: we'd usually use Gimp.PDB.set_data() but this won't work on
+    # introspection bindings. We will need to work on this.
+    #if shelf.has_key("p"):
+        #parameters = shelf["p"]
+        #parameters.__init__()  # Fill in missing values with defaults.
+        #return parameters
     return PatternParameters()
 
 
 def shelf_parameters(pp):
-    shelf["p"] = pp
+    # TODO: see unshelf_parameters() which explains why we can't use
+    # Gimp.PDB.get_data().
+    pass
+    #shelf["p"] = pp
 
 
 class ComputedParameters:
@@ -683,7 +683,7 @@ class ComputedParameters:
 
         def lcm(a, b):
             """ Least common multiplier """
-            return a * b // fractions.gcd(a, b)
+            return a * b // math.gcd(a, b)
 
         def compute_gradients():
             self.use_gradient = self.pp.long_gradient and tools[self.pp.tool_index].can_color
@@ -790,7 +790,13 @@ class ComputedParameters:
         return radians(positive_degrees)
 
     def get_color(self, n):
-        return self.gradients[4*n:4*(n+1)]
+        colors = self.gradients[4*n:4*(n+1)]
+        color = Gimp.RGB()
+        color.r = colors[0]
+        color.g = colors[1]
+        color.b = colors[2]
+        color.a = colors[3]
+        return color
 
 
 ### Curve types
@@ -901,13 +907,13 @@ class DrawingEngine:
 
         if isinstance(shapes[self.p.shape_index], SelectionShape) and curve_types[self.p.curve_type].supports_shapes():
             shapes[self.p.shape_index].process_selection(self.img)
-            pdb.gimp_displays_flush()
+            Gimp.displays_flush()
             self.num_drawings = shapes[self.p.shape_index].get_num_drawings()
         else:
             self.num_drawings = 1
 
         # Get bounds. We don't care weather a selection exists or not.
-        exists, x1, y1, x2, y2 = pdb.gimp_selection_bounds(self.img)
+        success, exists, x1, y1, x2, y2 = Gimp.Selection.bounds(self.img)
 
         self.cp = ComputedParameters(self.p, x1, y1, x2, y2)
 
@@ -929,7 +935,7 @@ class DrawingEngine:
 
         self.img.undo_group_end()
 
-        pdb.gimp_displays_flush()
+        Gimp.displays_flush()
 
     # Methods for incremental drawing.
 
@@ -1000,14 +1006,12 @@ class DrawingEngine:
             self.chunk_size_lines = min(1000, self.chunk_size_lines)
 
 
-class SpyroWindow(gtk.Window):
+class SpyroWindow(Gtk.Window):
 
-    # Define signal to catch escape key.
-    __gsignals__ = dict(
-        myescape=(gobject.SIGNAL_RUN_LAST | gobject.SIGNAL_ACTION,
-                  None,  # return type
-                  (str,))  # arguments
-    )
+    def do_key_press_event(self, event):
+        # Quit the window on Escape key.
+        if event.keyval == Gdk.KEY_Escape:
+            self.cancel_window(self)
 
     class MyScale():
         """ Combintation of scale and spin that control the same adjuster. """
@@ -1021,12 +1025,12 @@ class SpyroWindow(gtk.Window):
     def __init__(self, img, layer):
 
         def add_horizontal_separator(vbox):
-            hsep = gtk.HSeparator()
+            hsep = Gtk.HSeparator()
             vbox.add(hsep)
             hsep.show()
 
         def add_vertical_space(vbox, height):
-            hbox = gtk.HBox()
+            hbox = Gtk.HBox()
             hbox.set_border_width(height/2)
             vbox.add(hbox)
             hbox.show()
@@ -1036,31 +1040,37 @@ class SpyroWindow(gtk.Window):
             w.show()
 
         def create_table(rows, columns, border_width):
-            table = gtk.Table(rows=rows, columns=columns, homogeneous=False)
+            # TODO: GtkTable is deprecated in GTK+3. This should be
+            # reimplemented as a GtkGrid.
+            table = Gtk.Table(n_rows=rows, n_columns=columns, homogeneous=False)
             table.set_border_width(border_width)
-            table.set_col_spacings(10)
-            table.set_row_spacings(10)
+            #table.set_col_spacings(10)
+            #table.set_row_spacings(10)
             return table
 
         def label_in_table(label_text, table, row, tooltip_text=None):
             """ Create a label and set it in first col of table. """
-            label = gtk.Label(label_text)
-            label.set_alignment(xalign=0.0, yalign=1.0)
+            label = Gtk.Label(label=label_text)
+            label.set_xalign(0.0)
+            label.set_yalign(1.0)
             if tooltip_text:
                 label.set_tooltip_text(tooltip_text)
-            table.attach(label, 0, 1, row, row + 1, xoptions=gtk.FILL, yoptions=0)
+            table.attach(label, 0, 1, row, row + 1, xoptions=Gtk.AttachOptions.FILL, yoptions=0)
             label.show()
 
         def hscale_in_table(adj, table, row, callback, digits=0):
             """ Create an hscale and a spinner using the same Adjustment, and set it in table. """
-            scale = gtk.HScale(adj)
+            scale = Gtk.Scale.new(Gtk.Orientation.HORIZONTAL, adj)
             scale.set_size_request(150, -1)
             scale.set_digits(digits)
-            scale.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
-            table.attach(scale, 1, 2, row, row + 1, xoptions=gtk.EXPAND|gtk.FILL, yoptions=0)
+            # TODO: gtk_range_set_update_policy() has been removed in
+            # GTK+3. If we want updates to happen when button is
+            # released, we must implement this ourselves.
+            #scale.set_update_policy(Gtk.UPDATE_DISCONTINUOUS)
+            table.attach(scale, 1, 2, row, row + 1, xoptions=Gtk.AttachOptions.EXPAND|Gtk.AttachOptions.FILL, yoptions=0)
             scale.show()
 
-            spin = gtk.SpinButton(adj, climb_rate=0.5, digits=digits)
+            spin = Gtk.SpinButton.new(adj, climb_rate=0.5, digits=digits)
             spin.set_numeric(True)
             spin.set_snap_to_ticks(True)
             spin.set_max_length(5)
@@ -1073,16 +1083,16 @@ class SpyroWindow(gtk.Window):
             return self.MyScale(scale, spin)
 
         def rotation_in_table(val, table, row, callback):
-            adj = gtk.Adjustment(val, -180.0, 180.0, 1.0)
+            adj = Gtk.Adjustment.new(val, -180.0, 180.0, 1.0, 10.0, 10.0)
             myscale = hscale_in_table(adj, table, row, callback, digits=1)
-            myscale.scale.add_mark(0.0, gtk.POS_BOTTOM, None)
+            myscale.scale.add_mark(0.0, Gtk.PositionType.BOTTOM, None)
             return adj, myscale
 
         def set_combo_in_table(txt_list, table, row, callback):
-            combo = gtk.combo_box_new_text()
+            combo = Gtk.ComboBoxText.new()
             for txt in txt_list:
                 combo.append_text(txt)
-            table.attach(combo, 1, 2, row, row + 1, xoptions=gtk.FILL, yoptions=0)
+            table.attach(combo, 1, 2, row, row + 1, xoptions=Gtk.AttachOptions.FILL, yoptions=0)
             combo.show()
             combo.connect("changed", callback)
             return combo
@@ -1107,7 +1117,7 @@ class SpyroWindow(gtk.Window):
             self.tool_combo = set_combo_in_table([tool.name for tool in tools], table, row,
                                                  self.tool_combo_changed)
 
-            self.long_gradient_checkbox = gtk.CheckButton(_("Long Gradient"))
+            self.long_gradient_checkbox = Gtk.CheckButton(label=_("Long Gradient"))
             self.long_gradient_checkbox.set_tooltip_text(
                 _("When unchecked, the current tool settings will be used. "
                   "When checked, will use a long gradient to match the length of the pattern, "
@@ -1122,28 +1132,28 @@ class SpyroWindow(gtk.Window):
 
         def pattern_notation_frame():
 
-            vbox = gtk.VBox(spacing=0, homogeneous=False)
+            vbox = Gtk.VBox(spacing=0, homogeneous=False)
 
             add_vertical_space(vbox, 14)
 
-            hbox = gtk.HBox(spacing=5)
+            hbox = Gtk.HBox(spacing=5)
             hbox.set_border_width(5)
 
-            label = gtk.Label(_("Specify pattern using one of the following tabs:"))
+            label = Gtk.Label(label=_("Specify pattern using one of the following tabs:"))
             label.set_tooltip_text(_(
                 "The pattern is specified only by the active tab. Toy Kit is similar to Gears, "
                 "but it uses gears and hole numbers which are found in toy kits. "
                 "If you follow the instructions from the toy kit manuals, results should be similar."))
-            hbox.pack_start(label)
+            hbox.pack_start(label, False, False, 0)
             label.show()
 
-            alignment = gtk.Alignment(xalign=0.0, yalign=0.0, xscale=0.0, yscale=0.0)
+            alignment = Gtk.Alignment(xalign=0.0, yalign=0.0, xscale=0.0, yscale=0.0)
             alignment.add(hbox)
             hbox.show()
             vbox.add(alignment)
             alignment.show()
 
-            self.pattern_notebook = gtk.Notebook()
+            self.pattern_notebook = Gtk.Notebook()
             self.pattern_notebook.set_border_width(0)
             self.pattern_notebook.connect('switch-page', self.pattern_notation_tab_changed)
 
@@ -1159,7 +1169,9 @@ class SpyroWindow(gtk.Window):
                 "proportional to the number of teeth."
             )
             label_in_table(_("Fixed Gear Teeth"), gear_table, row, fixed_gear_tooltip)
-            self.outer_teeth_adj = gtk.Adjustment(self.p.outer_teeth, 10, 180, 1)
+            self.outer_teeth_adj = Gtk.Adjustment(value=self.p.outer_teeth,
+                                                  lower=10, upper=180,
+                                                  step_increment=1)
             hscale_in_table(self.outer_teeth_adj, gear_table, row, self.outer_teeth_changed)
 
             row += 1
@@ -1168,14 +1180,14 @@ class SpyroWindow(gtk.Window):
                 "proportional to the number of teeth."
             )
             label_in_table(_("Moving Gear Teeth"), gear_table, row, moving_gear_tooltip)
-            self.inner_teeth_adj = gtk.Adjustment(self.p.inner_teeth, 2, 100, 1)
+            self.inner_teeth_adj = Gtk.Adjustment.new(self.p.inner_teeth, 2, 100, 1, 10, 10)
             hscale_in_table(self.inner_teeth_adj, gear_table, row, self.inner_teeth_changed)
 
             row += 1
             label_in_table(_("Hole percent"), gear_table, row,
                            _("How far is the hole from the center of the moving gear. "
                              "100% means that the hole is at the gear's edge."))
-            self.hole_percent_adj = gtk.Adjustment(self.p.hole_percent, 2.5, 100.0, 0.5)
+            self.hole_percent_adj = Gtk.Adjustment.new(self.p.hole_percent, 2.5, 100.0, 0.5, 10, 10)
             self.hole_percent_myscale = hscale_in_table(self.hole_percent_adj, gear_table,
                                                         row, self.hole_percent_changed, digits=1)
 
@@ -1198,26 +1210,28 @@ class SpyroWindow(gtk.Window):
                            _("Hole #1 is at the edge of the gear. "
                              "The maximum hole number is near the center. "
                              "The maximum hole number is different for each gear."))
-            self.kit_hole_adj = gtk.Adjustment(self.p.hole_number, 1, self.p.kit_max_hole_number(), 1)
+            self.kit_hole_adj = Gtk.Adjustment.new(self.p.hole_number, 1, self.p.kit_max_hole_number(), 1, 10, 10)
             self.kit_hole_myscale = hscale_in_table(self.kit_hole_adj, kit_table, row, self.kit_hole_changed)
 
             # Add tables as childs of the pattern notebook
 
             pattern_notation_page[TOY_KIT_NOTATION] = self.pattern_notebook.append_page(kit_table)
             self.pattern_notebook.set_tab_label_text(kit_table, _("Toy Kit"))
-            self.pattern_notebook.set_tab_label_packing(kit_table, 0, 0, gtk.PACK_END)
+            self.pattern_notebook.child_set_property(kit_table, 'tab-expand', False)
+            self.pattern_notebook.child_set_property(kit_table, 'tab-fill', False)
             kit_table.show()
 
             pattern_notation_page[GEAR_NOTATION] = self.pattern_notebook.append_page(gear_table)
             self.pattern_notebook.set_tab_label_text(gear_table, _("Gears"))
-            self.pattern_notebook.set_tab_label_packing(gear_table, 0, 0, gtk.PACK_END)
+            self.pattern_notebook.child_set_property(gear_table, 'tab-expand', False)
+            self.pattern_notebook.child_set_property(gear_table, 'tab-fill', False)
             gear_table.show()
 
             add_to_box(vbox, self.pattern_notebook)
 
             add_vertical_space(vbox, 14)
 
-            hbox = gtk.HBox(spacing=5)
+            hbox = Gtk.HBox(spacing=5)
             pattern_table = create_table(1, 3, 5)
 
             row = 0
@@ -1238,7 +1252,7 @@ class SpyroWindow(gtk.Window):
 
         def fixed_gear_page():
 
-            vbox = gtk.VBox(spacing=0, homogeneous=False)
+            vbox = Gtk.VBox(spacing=0, homogeneous=False)
 
             add_vertical_space(vbox, 14)
 
@@ -1256,12 +1270,12 @@ class SpyroWindow(gtk.Window):
 
             row += 1
             label_in_table(_("Sides"), table, row, _("Number of sides of the shape."))
-            self.sides_adj = gtk.Adjustment(self.p.sides, 3, 16, 1)
+            self.sides_adj = Gtk.Adjustment.new(self.p.sides, 3, 16, 1, 2, 2)
             self.sides_myscale = hscale_in_table(self.sides_adj, table, row, self.sides_changed)
 
             row += 1
             label_in_table(_("Morph"), table, row, _("Morph fixed gear shape. Only affects some of the shapes."))
-            self.morph_adj = gtk.Adjustment(self.p.morph, 0.0, 1.0, 0.01)
+            self.morph_adj = Gtk.Adjustment.new(self.p.morph, 0.0, 1.0, 0.01, 0.1, 0.1)
             self.morph_myscale = hscale_in_table(self.morph_adj, table, row, self.morph_changed, digits=2)
 
             row += 1
@@ -1275,17 +1289,17 @@ class SpyroWindow(gtk.Window):
 
         def size_page():
 
-            vbox = gtk.VBox(spacing=0, homogeneous=False)
+            vbox = Gtk.VBox(spacing=0, homogeneous=False)
             add_vertical_space(vbox, 14)
             table = create_table(2, 2, 10)
 
             row = 0
             label_in_table(_("Margin (px)"), table, row, _("Margin from edge of selection."))
-            self.margin_adj = gtk.Adjustment(self.p.margin_pixels, 0, max(img.height, img.width), 1)
+            self.margin_adj = Gtk.Adjustment.new(self.p.margin_pixels, 0, max(img.height(), img.width()), 1, 10, 10)
             hscale_in_table(self.margin_adj, table, row, self.margin_changed)
 
             row += 1
-            self.equal_w_h_checkbox = gtk.CheckButton(_("Make width and height equal"))
+            self.equal_w_h_checkbox = Gtk.CheckButton(label=_("Make width and height equal"))
             self.equal_w_h_checkbox.set_tooltip_text(
                 _("When unchecked, the pattern will fill the current image or selection. "
                   "When checked, the pattern will have same width and height, and will be centered.")
@@ -1300,7 +1314,7 @@ class SpyroWindow(gtk.Window):
             return vbox
 
         def add_button_to_box(box, text, callback, tooltip_text=None):
-            btn = gtk.Button(text)
+            btn = Gtk.Button(label=text)
             if tooltip_text:
                 btn.set_tooltip_text(tooltip_text)
             box.add(btn)
@@ -1309,7 +1323,7 @@ class SpyroWindow(gtk.Window):
             return btn
 
         def dialog_button_box():
-            hbox = gtk.HBox(homogeneous=True, spacing=20)
+            hbox = Gtk.HBox(homogeneous=True, spacing=20)
 
             add_button_to_box(hbox, _("Redraw"), self.redraw,
                               _("If you change the settings of a tool, change color, or change the selection, "
@@ -1318,7 +1332,7 @@ class SpyroWindow(gtk.Window):
             add_button_to_box(hbox, _("Cancel"), self.cancel_window)
             self.ok_btn = add_button_to_box(hbox, _("OK"), self.ok_window)
 
-            self.keep_separate_layer_checkbox = gtk.CheckButton(_("Keep\nLayer"))
+            self.keep_separate_layer_checkbox = Gtk.CheckButton(label=_("Keep\nLayer"))
             self.keep_separate_layer_checkbox.set_tooltip_text(
                 _("If checked, then once OK is pressed, the spyro layer is kept, and the plugin exits quickly. "
                   "If unchecked, the spyro layer is deleted, and the pattern is redrawn on the layer that was "
@@ -1333,36 +1347,36 @@ class SpyroWindow(gtk.Window):
         def create_ui():
 
             # Create the dialog
-            gtk.Window.__init__(self)
+            Gtk.Window.__init__(self)
             self.set_title(_("Spyrogimp"))
             self.set_default_size(350, -1)
             self.set_border_width(10)
             # self.set_keep_above(True) # keep the window on top
 
             # Vertical box in which we will add all the UI elements.
-            vbox = gtk.VBox(spacing=10, homogeneous=False)
+            vbox = Gtk.VBox(spacing=10, homogeneous=False)
             self.add(vbox)
 
-            box = gimpui.HintBox(_("Draw spyrographs using current tool settings and selection."))
-            vbox.pack_start(box, expand=False)
+            box = Gimp.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
+            vbox.pack_start(box, False, False, 0)
             box.show()
 
             add_horizontal_separator(vbox)
 
             add_to_box(vbox, top_table())
 
-            self.main_notebook = gtk.Notebook()
+            self.main_notebook = Gtk.Notebook()
             self.main_notebook.set_show_tabs(True)
             self.main_notebook.set_border_width(5)
 
             pattern_frame = pattern_notation_frame()
-            self.main_notebook.append_page(pattern_frame, gtk.Label(_("Curve Pattern")))
+            self.main_notebook.append_page(pattern_frame, Gtk.Label.new(_("Curve Pattern")))
             pattern_frame.show()
             fixed_g_page = fixed_gear_page()
-            self.main_notebook.append_page(fixed_g_page, gtk.Label(_("Fixed Gear")))
+            self.main_notebook.append_page(fixed_g_page, Gtk.Label.new(_("Fixed Gear")))
             fixed_g_page.show()
             size_p = size_page()
-            self.main_notebook.append_page(size_p, gtk.Label(_("Size")))
+            self.main_notebook.append_page(size_p, Gtk.Label.new(_("Size")))
             size_p.show()
 
             vbox.add(self.main_notebook)
@@ -1370,7 +1384,7 @@ class SpyroWindow(gtk.Window):
 
             add_horizontal_separator(vbox)
 
-            self.progress_bar = gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress error message.
+            self.progress_bar = Gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress error message.
             self.progress_bar.set_size_request(-1, 30)
             vbox.add(self.progress_bar)
             self.progress_bar.show()
@@ -1391,19 +1405,17 @@ class SpyroWindow(gtk.Window):
         self.engine = DrawingEngine(img, self.p)
 
         # Make a new GIMP layer to draw on
-        self.spyro_layer = gimp.Layer(img, layer_name, img.width, img.height, RGBA_IMAGE, 100, NORMAL_MODE)
-        img.add_layer(self.spyro_layer, 0)
+        self.spyro_layer = Gimp.Layer.new(img, layer_name, img.width(), img.height(), Gimp.ImageType.RGBA_IMAGE, 100, Gimp.LayerMode.NORMAL)
+        img.insert_layer(self.spyro_layer, None, 0)
 
         self.drawing_layer = self.spyro_layer
 
-        gimpui.gimp_ui_init()
+        Gimp.ui_init(sys.argv[0], False)
         create_ui()
         self.update_view()
 
         # Obey the window manager quit signal
         self.connect("destroy", self.cancel_window)
-        # Connect Escape key to quit the window as well.
-        self.connect('myescape', self.cancel_window)
 
         # Setup for Handling incremental/interactive drawing of pattern
         self.idle_task = None
@@ -1422,7 +1434,7 @@ class SpyroWindow(gtk.Window):
         shelf_parameters(self.p)
 
         if self.p.keep_separate_layer:
-            if self.spyro_layer in self.img.layers:
+            if self.spyro_layer in self.img.list_layers():
                 self.img.active_layer = self.spyro_layer
 
             # If we are in the middle of incremental draw, we want to complete it, and only then to exit.
@@ -1432,19 +1444,19 @@ class SpyroWindow(gtk.Window):
                     while self.idle_task:
                         yield True
 
-                    gtk.main_quit()  # This will quit the dialog.
+                    Gtk.main_quit()  # This will quit the dialog.
                     yield False
 
                 task = quit_dialog_on_completion()
-                gobject.idle_add(task.next)
+                GObject.idle_add(task.__next__)
             else:
-                gtk.main_quit()
+                Gtk.main_quit()
         else:
             # If there is an incremental drawing taking place, lets stop it.
             if self.idle_task:
-                gobject.source_remove(self.idle_task)
+                GLib.source_remove(self.idle_task)
 
-            if self.spyro_layer in self.img.layers:
+            if self.spyro_layer in self.img.list_layers():
                 self.img.remove_layer(self.spyro_layer)
                 self.img.active_layer = self.active_layer
 
@@ -1464,24 +1476,24 @@ class SpyroWindow(gtk.Window):
 
                 self.img.undo_group_end()
 
-                pdb.gimp_displays_flush()
+                Gimp.displays_flush()
 
-                gtk.main_quit()
+                Gtk.main_quit()
                 yield False
 
             task = draw_full()
-            gobject.idle_add(task.next)
+            GObject.idle_add(task.__next__)
 
     def cancel_window(self, widget, what=None):
 
-        # Note that once we call gtk.main_quit, the idle task is stopped automatically.
+        # Note that once we call Gtk.main_quit, the idle task is stopped automatically.
 
         # We want to delete the temporary layer, but as a precaution, lets ask first,
         # maybe it was already deleted by the user.
-        if self.spyro_layer in self.img.layers:
+        if self.spyro_layer in self.img.list_layers():
             self.img.remove_layer(self.spyro_layer)
-            pdb.gimp_displays_flush()
-        gtk.main_quit()
+            Gimp.displays_flush()
+        Gtk.main_quit()
 
     def update_view(self):
         """ Update the UI to reflect the values in the Pattern Parameters. """
@@ -1573,25 +1585,25 @@ class SpyroWindow(gtk.Window):
         self.redraw()
 
     def kit_hole_changed(self, val):
-        self.p.hole_number = val.value
+        self.p.hole_number = val.get_value()
         self.redraw()
 
     # Callbacks: pattern changes using the Gears notation.
 
     def outer_teeth_changed(self, val):
-        self.p.outer_teeth = val.value
+        self.p.outer_teeth = val.get_value()
         self.redraw()
 
     def inner_teeth_changed(self, val):
-        self.p.inner_teeth = val.value
+        self.p.inner_teeth = val.get_value()
         self.redraw()
 
     def hole_percent_changed(self, val):
-        self.p.hole_percent = val.value
+        self.p.hole_percent = val.get_value()
         self.redraw()
 
     def pattern_rotation_changed(self, val):
-        self.p.pattern_rotation = val.value
+        self.p.pattern_rotation = val.get_value()
         self.redraw()
 
     # Callbacks: Fixed gear
@@ -1608,11 +1620,11 @@ class SpyroWindow(gtk.Window):
         self.redraw()
 
     def sides_changed(self, val):
-        self.p.sides = val.value
+        self.p.sides = val.get_value()
         self.redraw()
 
     def morph_changed(self, val):
-        self.p.morph = val.value
+        self.p.morph = val.get_value()
         self.redraw()
 
     def equal_w_h_checkbox_changed(self, val):
@@ -1620,11 +1632,11 @@ class SpyroWindow(gtk.Window):
         self.redraw()
 
     def shape_rotation_changed(self, val):
-        self.p.shape_rotation = val.value
+        self.p.shape_rotation = val.get_value()
         self.redraw()
 
     def margin_changed(self, val) :
-        self.p.margin_pixels = val.value
+        self.p.margin_pixels = val.get_value()
         self.redraw()
 
     # Style callbacks
@@ -1649,7 +1661,7 @@ class SpyroWindow(gtk.Window):
     def progress_start(self):
         self.progress_bar.set_text(_("Rendering Pattern"))
         self.progress_bar.set_fraction(0.0)
-        pdb.gimp_displays_flush()
+        Gimp.displays_flush()
 
     def progress_end(self):
         self.progress_bar.set_text("")
@@ -1661,7 +1673,7 @@ class SpyroWindow(gtk.Window):
     def progress_unknown(self):
         self.progress_bar.set_text(_("Please wait : Rendering Pattern"))
         self.progress_bar.pulse()
-        pdb.gimp_displays_flush()
+        Gimp.displays_flush()
 
     # Incremental drawing.
 
@@ -1685,7 +1697,7 @@ class SpyroWindow(gtk.Window):
         else:
             self.progress_end()
 
-        pdb.gimp_displays_flush()
+        Gimp.displays_flush()
 
     def start_new_incremental_drawing(self):
         """
@@ -1707,16 +1719,16 @@ class SpyroWindow(gtk.Window):
 
         # Remove old idle task if exists.
         if self.idle_task:
-            gobject.source_remove(self.idle_task)
+            GLib.source_remove(self.idle_task)
 
         # Start new idle task to perform incremental drawing in the background.
         task = incremental_drawing()
-        self.idle_task = gobject.idle_add(task.next)
+        self.idle_task = GLib.idle_add(task.__next__)
 
     def clear(self):
         """ Clear current drawing. """
         # pdb.gimp_edit_clear(self.spyro_layer)
-        self.spyro_layer.fill(FILL_TRANSPARENT)
+        self.spyro_layer.fill(Gimp.FillType.TRANSPARENT)
 
     def redraw(self, data=None):
         if self.enable_incremental_drawing:
@@ -1724,21 +1736,139 @@ class SpyroWindow(gtk.Window):
             self.start_new_incremental_drawing()
 
 
-# Bind escape to the new signal we created, named "myescape".
-gobject.type_register(SpyroWindow)
-gtk.binding_entry_add_signal(SpyroWindow, gtk.keysyms.Escape, 0, 'myescape', str, 'escape')
+class SpyrogimpPlusPlugin(Gimp.PlugIn):
+    plugin_name = "plug-in-spyrogimp"
 
+    ## Parameters ##
+    __gproperties__ = {
+        "curve_type" : (int,
+                        "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }",
+                        "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }",
+                        0, 3, 0,
+                        GObject.ParamFlags.READWRITE),
+        "shape": (int,
+                  "Shape of fixed gear",
+                  "Shape of fixed gear",
+                  0, GLib.MAXINT, 0,
+                  GObject.ParamFlags.READWRITE),
+        "sides": (int,
+                  "Number of sides of fixed gear (3 or greater). Only used by some shapes.",
+                  "Number of sides of fixed gear (3 or greater). Only used by some shapes.",
+                  3, GLib.MAXINT, 3,
+                  GObject.ParamFlags.READWRITE),
+        "morph": (float,
+                  "Morph shape of fixed gear, between 0 and 1. Only used by some shapes.",
+                  "Morph shape of fixed gear, between 0 and 1. Only used by some shapes.",
+                  0.0, 1.0, 0.0,
+                  GObject.ParamFlags.READWRITE),
+        "fixed_teeth": (int,
+                        "Number of teeth for fixed gear",
+                        "Number of teeth for fixed gear",
+                        0, GLib.MAXINT, 96,
+                        GObject.ParamFlags.READWRITE),
+        "moving_teeth": (int,
+                         "Number of teeth for moving gear",
+                         "Number of teeth for moving gear",
+                         0, GLib.MAXINT, 36,
+                         GObject.ParamFlags.READWRITE),
+        "hole_percent": (float,
+                         "Location of hole in moving gear in percent, where 100 means that "
+                         "the hole is at the edge of the gear, and 0 means the hole is at the center",
+                         "Location of hole in moving gear in percent, where 100 means that "
+                         "the hole is at the edge of the gear, and 0 means the hole is at the center",
+                         0.0, 100.0, 100.0,
+                         GObject.ParamFlags.READWRITE),
+        "margin": (int,
+                   "Margin from selection, in pixels",
+                   "Margin from selection, in pixels",
+                   0, GLib.MAXINT, 0,
+                   GObject.ParamFlags.READWRITE),
+        "equal_w_h": (bool,
+                      "Make height and width equal",
+                      "Make height and width equal",
+                      False,
+                      GObject.ParamFlags.READWRITE),
+        "pattern_rotation": (float,
+                             "Pattern rotation, in degrees",
+                             "Pattern rotation, in degrees",
+                             -360.0, 360.0, 0.0,
+                             GObject.ParamFlags.READWRITE),
+        "shape_rotation": (float,
+                           "Shape rotation of fixed gear, in degrees",
+                           "Shape rotation of fixed gear, in degrees",
+                           -360.0, 360.0, 0.0,
+                           GObject.ParamFlags.READWRITE),
+        "tool": (int,
+                 "Tool to use for drawing the pattern.",
+                 "Tool to use for drawing the pattern.",
+                 0, GLib.MAXINT, 1,
+                 GObject.ParamFlags.READWRITE),
+        "long_gradient" : (bool,
+                           "Whether to apply a long gradient to match the length of the pattern. "
+                           "Only applicable to some of the tools.",
+                           "Whether to apply a long gradient to match the length of the pattern. "
+                           "Only applicable to some of the tools.",
+                           False,
+                           GObject.ParamFlags.READWRITE),
+    }
 
-class SpyrogimpPlusPlugin(gimpplugin.plugin):
+    ## GimpPlugIn virtual methods ##
+    def do_query_procedures(self):
+        # Localization
+        self.set_translation_domain("gimp30-python",
+                                    Gio.file_new_for_path(Gimp.locale_directory()))
+
+        return [ self.plugin_name ]
+
+    def do_create_procedure(self, name):
+        if name == self.plugin_name:
+            procedure = Gimp.ImageProcedure.new(self, name,
+                                                Gimp.PDBProcType.PLUGIN,
+                                                self.plug_in_spyrogimp, None)
+            procedure.set_image_types("*");
+            procedure.set_documentation (N_("Draw spyrographs using current tool settings and selection."),
+                                         "Uses current tool settings to draw Spyrograph patterns. "
+                                         "The size and location of the pattern is based on the current selection.",
+                                         name)
+            procedure.set_menu_label(N_("Spyrogimp..."))
+            procedure.set_attribution("Elad Shahar",
+                                      "Elad Shahar",
+                                      "2018")
+            procedure.add_menu_path ("<Image>/Filters/Render/")
+
+            procedure.add_argument_from_property(self, "curve_type")
+            procedure.add_argument_from_property(self, "shape")
+            procedure.add_argument_from_property(self, "sides")
+            procedure.add_argument_from_property(self, "morph")
+            procedure.add_argument_from_property(self, "fixed_teeth")
+            procedure.add_argument_from_property(self, "moving_teeth")
+            procedure.add_argument_from_property(self, "hole_percent")
+            procedure.add_argument_from_property(self, "margin")
+            procedure.add_argument_from_property(self, "equal_w_h")
+            procedure.add_argument_from_property(self, "pattern_rotation")
+            procedure.add_argument_from_property(self, "shape_rotation")
+            procedure.add_argument_from_property(self, "tool")
+            procedure.add_argument_from_property(self, "long_gradient")
+
+        return procedure
 
     # Implementation of plugin.
-    def plug_in_spyrogimp(self, run_mode, image, layer,
-                          curve_type=0, shape=0, sides=3, morph=0.0,
-                          fixed_teeth=96, moving_teeth=36, hole_percent=100.0,
-                          margin=0, equal_w_h=0,
-                          pattern_rotation=0.0, shape_rotation=0.0,
-                          tool=1, long_gradient=False):
-        if run_mode == RUN_NONINTERACTIVE:
+    def plug_in_spyrogimp(self, procedure, run_mode, image, layer, args, data):
+        curve_type=args.index(0)
+        shape=args.index(1)
+        sides=args.index(2)
+        morph=args.index(3)
+        fixed_teeth=args.index(4)
+        moving_teeth=args.index(5)
+        hole_percent=args.index(6)
+        margin=args.index(7)
+        equal_w_h=args.index(8)
+        pattern_rotation=args.index(9)
+        shape_rotation=args.index(10)
+        tool=args.index(11)
+        long_gradient=args.index(12)
+
+        if run_mode == Gimp.RunMode.NONINTERACTIVE:
             pp = PatternParameters()
             pp.curve_type = curve_type
             pp.shape_index = shape
@@ -1757,63 +1887,15 @@ class SpyrogimpPlusPlugin(gimpplugin.plugin):
             engine = DrawingEngine(image, pp)
             engine.draw_full(layer)
 
-        elif run_mode == RUN_INTERACTIVE:
+        elif run_mode == Gimp.RunMode.INTERACTIVE:
             window = SpyroWindow(image, layer)
-            gtk.main()
+            Gtk.main()
 
-        elif run_mode == RUN_WITH_LAST_VALS:
+        elif run_mode == Gimp.RunMode.WITH_LAST_VALS:
             pp = unshelf_parameters()
             engine = DrawingEngine(image, pp)
             engine.draw_full(layer)
 
-    def query(self):
-        plugin_name = "plug_in_spyrogimp"
-        label = N_("Spyrogimp...")
-        menu = "<Image>/Filters/Render/"
+        return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
-        params = [
-            # (type, name, description
-            (PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"),
-            (PDB_IMAGE, "image", "Input image"),
-            (PDB_DRAWABLE, "drawable", "Input drawable"),
-            (PDB_INT32, "curve_type",
-             "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
-            (PDB_INT32, "shape", "Shape of fixed gear"),
-            (PDB_INT32, "sides", "Number of sides of fixed gear (3 or greater). Only used by some shapes."),
-            (PDB_FLOAT, "morph", "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."),
-            (PDB_INT32, "fixed_teeth", "Number of teeth for fixed gear"),
-            (PDB_INT32, "moving_teeth", "Number of teeth for moving gear"),
-            (PDB_FLOAT, "hole_percent", "Location of hole in moving gear in percent, where 100 means that "
-             "the hole is at the edge of the gear, and 0 means the hole is at the center"),
-            (PDB_INT32, "margin", "Margin from selection, in pixels"),
-            (PDB_INT32, "equal_w_h", "Make height and width equal (TRUE or FALSE)"),
-            (PDB_FLOAT, "pattern_rotation", "Pattern rotation, in degrees"),
-            (PDB_FLOAT, "shape_rotation", "Shape rotation of fixed gear, in degrees"),
-            (PDB_INT32, "tool", "Tool to use for drawing the pattern."),
-            (PDB_INT32, "long_gradient",
-             "Whether to apply a long gradient to match the length of the pattern (TRUE or FALSE). "
-             "Only applicable to some of the tools.")
-        ]
-
-        gimp.domain_register("gimp20-python", gimp.locale_directory)
-
-        gimp.install_procedure(
-            plugin_name,
-            N_("Draw spyrographs using current tool settings and selection."),
-            "Uses current tool settings to draw Spyrograph patterns. "
-            "The size and location of the pattern is based on the current selection.",
-            "Elad Shahar",
-            "Elad Shahar",
-            "2018",
-            label,
-            "*",
-            PLUGIN,
-            params,
-            []
-        )
-
-        gimp.menu_register(plugin_name, menu)
-
-
-if __name__ == '__main__':
-    SpyrogimpPlusPlugin().start()
+Gimp.main(SpyrogimpPlusPlugin.__gtype__, sys.argv)
