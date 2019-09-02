@@ -4,17 +4,18 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-extern gint32      input_drawable_id;
-extern gint32      output_drawable_id;
-extern GeglBuffer *source_buffer;
-extern GeglBuffer *dest_buffer;
 
-extern gint32      bump_drawable_id;
-extern GeglBuffer *bump_buffer;
-extern const Babl *bump_format;
+extern GimpDrawable *input_drawable;
+extern GimpDrawable *output_drawable;
+extern GeglBuffer   *source_buffer;
+extern GeglBuffer   *dest_buffer;
 
-extern gint32      env_drawable_id;
-extern GeglBuffer *env_buffer;
+extern GimpDrawable *bump_drawable;
+extern GeglBuffer   *bump_buffer;
+extern const Babl   *bump_format;
+
+extern GimpDrawable *env_drawable;
+extern GeglBuffer   *env_buffer;
 
 extern guchar          *preview_rgb_data;
 extern gint             preview_rgb_stride;
@@ -27,6 +28,7 @@ extern GimpRGB background;
 extern gint   border_x1, border_y1, border_x2, border_y2;
 
 extern guchar sinemap[256], spheremap[256], logmap[256];
+
 
 guchar         peek_map        (GeglBuffer   *buffer,
                                 const Babl   *format,
@@ -61,9 +63,10 @@ gdouble        get_map_value   (GeglBuffer   *buffer,
 				gdouble       u,
 				gdouble       v,
 				gint         *inside);
-gint           image_setup     (gint32        drawable_id,
+gint           image_setup     (GimpDrawable *drawable,
 				gint          interactive);
-void           bumpmap_setup   (gint32        bumpmap_id);
-void           envmap_setup    (gint32        envmap_id);
+void           bumpmap_setup   (GimpDrawable *bumpmap);
+void           envmap_setup    (GimpDrawable *envmap);
+
 
 #endif  /* __LIGHTING_IMAGE_H__ */

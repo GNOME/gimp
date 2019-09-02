@@ -14,17 +14,17 @@
 #include "lighting-ui.h"
 
 
-gint32      input_drawable_id;
-gint32      output_drawable_id;
-GeglBuffer *source_buffer;
-GeglBuffer *dest_buffer;
+GimpDrawable *input_drawable;
+GimpDrawable *output_drawable;
+GeglBuffer   *source_buffer;
+GeglBuffer   *dest_buffer;
 
-gint32      bump_drawable_id;
-GeglBuffer *bump_buffer;
-const Babl *bump_format;
+GimpDrawable *bump_drawable;
+GeglBuffer   *bump_buffer;
+const Babl   *bump_format;
 
-gint32      env_drawable_id;
-GeglBuffer *env_buffer;
+GimpDrawable *env_drawable;
+GeglBuffer   *env_buffer;
 
 guchar          *preview_rgb_data = NULL;
 gint             preview_rgb_stride;
@@ -335,8 +335,8 @@ compute_maps (void)
 /****************************************/
 
 gint
-image_setup (gint32 drawable_id,
-	     gint   interactive)
+image_setup (GimpDrawable *drawable,
+	     gint          interactive)
 {
   gint	   w, h;
   gboolean ret;
@@ -346,10 +346,10 @@ image_setup (gint32 drawable_id,
   /* Get some useful info on the input drawable */
   /* ========================================== */
 
-  input_drawable_id  = drawable_id;
-  output_drawable_id = drawable_id;
+  input_drawable  = drawable;
+  output_drawable = drawable;
 
-  ret = gimp_drawable_mask_intersect (drawable_id,
+  ret = gimp_drawable_mask_intersect (drawable,
                                       &border_x1, &border_y1, &w, &h);
 
   border_x2 = border_x1 + w;
@@ -358,10 +358,10 @@ image_setup (gint32 drawable_id,
   if (! ret)
     return FALSE;
 
-  width  = gimp_drawable_width  (input_drawable_id);
-  height = gimp_drawable_height (input_drawable_id);
+  width  = gimp_drawable_width  (input_drawable);
+  height = gimp_drawable_height (input_drawable);
 
-  source_buffer = gimp_drawable_get_buffer (input_drawable_id);
+  source_buffer = gimp_drawable_get_buffer (input_drawable);
 
   maxcounter = (glong) width * (glong) height;
 
@@ -381,13 +381,13 @@ image_setup (gint32 drawable_id,
 }
 
 void
-bumpmap_setup (gint32 bumpmap_id)
+bumpmap_setup (GimpDrawable *bumpmap)
 {
-  if (bumpmap_id != -1 && ! bump_buffer)
+  if (bumpmap && ! bump_buffer)
     {
-      bump_buffer = gimp_drawable_get_buffer (bumpmap_id);
+      bump_buffer = gimp_drawable_get_buffer (bumpmap);
 
-      if (gimp_drawable_is_rgb (bumpmap_id))
+      if (gimp_drawable_is_rgb (bumpmap))
         bump_format = babl_format ("R'G'B' u8");
       else
         bump_format = babl_format ("Y' u8"); /* FIXME */
@@ -395,13 +395,13 @@ bumpmap_setup (gint32 bumpmap_id)
 }
 
 void
-envmap_setup (gint32 envmap_id)
+envmap_setup (GimpDrawable *envmap)
 {
-  if (envmap_id != -1 && ! env_buffer)
+  if (envmap && ! env_buffer)
     {
-      env_width  = gimp_drawable_width  (envmap_id);
-      env_height = gimp_drawable_height (envmap_id);
+      env_width  = gimp_drawable_width  (envmap);
+      env_height = gimp_drawable_height (envmap);
 
-      env_buffer = gimp_drawable_get_buffer (envmap_id);
+      env_buffer = gimp_drawable_get_buffer (envmap);
     }
 }

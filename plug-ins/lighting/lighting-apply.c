@@ -27,8 +27,8 @@ compute_image (void)
   GimpRGB      color;
   glong        progress_counter = 0;
   GimpVector3  p;
-  gint32       new_image_id = -1;
-  gint32       new_layer_id = -1;
+  GimpImage   *new_image = NULL;
+  GimpLayer   *new_layer = NULL;
   gint32       index;
   guchar      *row = NULL;
   guchar       obpp;
@@ -37,43 +37,43 @@ compute_image (void)
 
   if (mapvals.create_new_image == TRUE ||
       (mapvals.transparent_background == TRUE &&
-       ! gimp_drawable_has_alpha (input_drawable_id)))
+       ! gimp_drawable_has_alpha (input_drawable)))
     {
       /* Create a new image */
       /* ================== */
 
-      new_image_id = gimp_image_new (width, height, GIMP_RGB);
+      new_image = gimp_image_new (width, height, GIMP_RGB);
 
       if (mapvals.transparent_background == TRUE)
         {
           /* Add a layer with an alpha channel */
           /* ================================= */
 
-          new_layer_id = gimp_layer_new (new_image_id, "Background",
-					 width, height,
-					 GIMP_RGBA_IMAGE,
-					 100.0,
-					 gimp_image_get_default_new_layer_mode (new_image_id));
+          new_layer = gimp_layer_new (new_image, "Background",
+                                      width, height,
+                                      GIMP_RGBA_IMAGE,
+                                      100.0,
+                                      gimp_image_get_default_new_layer_mode (new_image));
         }
       else
         {
           /* Create a "normal" layer */
           /* ======================= */
 
-          new_layer_id = gimp_layer_new (new_image_id, "Background",
-					 width, height,
-					 GIMP_RGB_IMAGE,
-					 100.0,
-					 gimp_image_get_default_new_layer_mode (new_image_id));
+          new_layer = gimp_layer_new (new_image, "Background",
+                                      width, height,
+                                      GIMP_RGB_IMAGE,
+                                      100.0,
+                                      gimp_image_get_default_new_layer_mode (new_image));
         }
 
-      gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
-      output_drawable_id = new_layer_id;
+      gimp_image_insert_layer (new_image, new_layer, NULL, 0);
+      output_drawable = GIMP_DRAWABLE (new_layer);
     }
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
-      bumpmap_setup (mapvals.bumpmap_id);
+      bumpmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id)));
     }
 
   precompute_init (width, height);
@@ -84,17 +84,17 @@ compute_image (void)
     }
   else
     {
-      envmap_setup (mapvals.envmap_id);
+      envmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.envmap_id)));
 
       ray_func = get_ray_color_ref;
     }
 
-  dest_buffer = gimp_drawable_get_shadow_buffer (output_drawable_id);
+  dest_buffer = gimp_drawable_get_shadow_buffer (output_drawable);
 
-  has_alpha = gimp_drawable_has_alpha (output_drawable_id);
+  has_alpha = gimp_drawable_has_alpha (output_drawable);
 
   /* FIXME */
-  obpp = has_alpha ? 4 : 3; //gimp_drawable_bpp (output_drawable_id);
+  obpp = has_alpha ? 4 : 3; //gimp_drawable_bpp (output_drawable);
 
   row = g_new (guchar, obpp * width);
 
@@ -142,13 +142,12 @@ compute_image (void)
 
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (output_drawable_id, TRUE);
-  gimp_drawable_update (output_drawable_id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (output_drawable, TRUE);
+  gimp_drawable_update (output_drawable, 0, 0, width, height);
 
-  if (new_image_id!=-1)
+  if (new_image)
     {
-      gimp_display_new (new_image_id);
+      gimp_display_new (new_image);
       gimp_displays_flush ();
     }
-
 }

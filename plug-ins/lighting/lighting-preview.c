@@ -96,7 +96,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
-      bumpmap_setup (mapvals.bumpmap_id);
+      bumpmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id)));
     }
 
   imagey = 0;
@@ -108,7 +108,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 
   if (mapvals.env_mapped == TRUE && mapvals.envmap_id != -1)
     {
-      envmap_setup (mapvals.envmap_id);
+      envmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.envmap_id)));
 
       if (mapvals.previewquality)
         ray_func = get_ray_color_ref;

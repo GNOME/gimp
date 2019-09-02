@@ -65,11 +65,11 @@ static void toggle_update             (GtkWidget       *widget,
 static void     distance_update       (GtkAdjustment   *adj,
                                        gpointer         data);
 
-static gboolean  bumpmap_constrain    (gint32           image_id,
-                                       gint32           drawable_id,
+static gboolean  bumpmap_constrain    (GimpImage       *image,
+                                       GimpItem        *item,
                                        gpointer         data);
-static gboolean  envmap_constrain     (gint32           image_id,
-                                       gint32           drawable_id,
+static gboolean  envmap_constrain     (GimpImage       *image,
+                                       GimpItem        *item,
                                        gpointer         data);
 static void     envmap_combo_callback (GtkWidget       *widget,
                                        gpointer         data);
@@ -254,34 +254,40 @@ zoomin_callback (GtkWidget *widget)
 /**********************************************/
 
 static gint
-bumpmap_constrain (gint32   image_id,
-                   gint32   drawable_id,
-                   gpointer data)
+bumpmap_constrain (GimpImage *image,
+                   GimpItem  *item,
+                   gpointer   data)
 {
-  return  ((gimp_drawable_width (drawable_id) ==
-            gimp_drawable_width (mapvals.drawable_id)) &&
-           (gimp_drawable_height (drawable_id) ==
-            gimp_drawable_height (mapvals.drawable_id)));
+  GimpDrawable *dr = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.drawable_id));
+
+  return  ((gimp_drawable_width (GIMP_DRAWABLE (item)) ==
+            gimp_drawable_width (dr)) &&
+           (gimp_drawable_height (GIMP_DRAWABLE (item)) ==
+            gimp_drawable_height (dr)));
 }
 
 static gint
-envmap_constrain (gint32   image_id,
-                  gint32   drawable_id,
-                  gpointer data)
+envmap_constrain (GimpImage *image,
+                  GimpItem  *item,
+                  gpointer   data)
 {
-  return (!gimp_drawable_is_gray (drawable_id) &&
-          !gimp_drawable_has_alpha (drawable_id));
+  return (! gimp_drawable_is_gray   (GIMP_DRAWABLE (item)) &&
+          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)));
 }
 
 static void
 envmap_combo_callback (GtkWidget *widget,
                        gpointer   data)
 {
+  GimpDrawable *env;
+
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &mapvals.envmap_id);
 
-  env_width = gimp_drawable_width   (mapvals.envmap_id);
-  env_height = gimp_drawable_height (mapvals.envmap_id);
+  env = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.envmap_id));
+
+  env_width  = gimp_drawable_width  (env);
+  env_height = gimp_drawable_height (env);
 }
 
 /***********************/
@@ -1005,7 +1011,7 @@ create_main_notebook (GtkWidget *container)
 /********************************/
 
 gboolean
-main_dialog (gint32 drawable_id)
+main_dialog (GimpDrawable *drawable)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;
@@ -1129,7 +1135,7 @@ main_dialog (gint32 drawable_id)
     g_object_unref (cursor);
   }
 
-  if (image_setup (drawable_id, TRUE))
+  if (image_setup (drawable, TRUE))
     preview_compute ();
 
   if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)

@@ -118,40 +118,48 @@ set_default_settings (void)
 static void
 check_drawables (void)
 {
+  GimpDrawable *drawable;
+  GimpDrawable *map;
+
   if (mapvals.bump_mapped)
     {
-      if (mapvals.bumpmap_id != -1 &&
-          gimp_item_get_image (mapvals.bumpmap_id) == -1)
+      if (! gimp_item_id_is_drawable (mapvals.bumpmap_id))
         {
           mapvals.bump_mapped = FALSE;
           mapvals.bumpmap_id  = -1;
         }
-
-      if (gimp_drawable_is_indexed (mapvals.bumpmap_id) ||
-          (gimp_drawable_width (mapvals.drawable_id) !=
-           gimp_drawable_width (mapvals.bumpmap_id)) ||
-          (gimp_drawable_height (mapvals.drawable_id) !=
-           gimp_drawable_height (mapvals.bumpmap_id)))
+      else
         {
-          mapvals.bump_mapped = FALSE;
-          mapvals.bumpmap_id  = -1;
+          drawable = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.drawable_id));
+          map      = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id));
+
+          if (gimp_drawable_is_indexed (map) ||
+              (gimp_drawable_width  (drawable) != gimp_drawable_width  (map)) ||
+              (gimp_drawable_height (drawable) != gimp_drawable_height (map)))
+            {
+              mapvals.bump_mapped = FALSE;
+              mapvals.bumpmap_id  = -1;
+            }
         }
     }
 
   if (mapvals.env_mapped)
     {
-      if (mapvals.envmap_id != -1 &&
-          gimp_item_get_image (mapvals.envmap_id) == -1)
+      if (! gimp_item_id_is_drawable (mapvals.envmap_id))
         {
           mapvals.env_mapped = FALSE;
           mapvals.envmap_id  = -1;
         }
-
-      if (gimp_drawable_is_gray (mapvals.envmap_id) ||
-          gimp_drawable_has_alpha (mapvals.envmap_id))
+      else
         {
-          mapvals.env_mapped = FALSE;
-          mapvals.envmap_id  = -1;
+          map = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.envmap_id));
+
+          if (gimp_drawable_is_gray   (map) ||
+              gimp_drawable_has_alpha (map))
+            {
+              mapvals.env_mapped = FALSE;
+              mapvals.envmap_id  = -1;
+            }
         }
     }
 }
@@ -195,7 +203,7 @@ query (void)
                           "Version 0.2.0, March 15 1998",
                           N_("_Lighting Effects..."),
                           "RGB*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -212,7 +220,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
-  gint32             drawable_id;
+  GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
@@ -237,10 +245,10 @@ run (const gchar      *name,
   /* Get the specified drawable */
   /* ========================== */
 
-  run_mode    = param[0].data.d_int32;
-  drawable_id = param[2].data.d_drawable;
+  run_mode = param[0].data.d_int32;
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
 
-  mapvals.drawable_id = drawable_id;
+  mapvals.drawable_id = gimp_item_get_id (GIMP_ITEM (drawable));
 
   check_drawables ();
 
@@ -249,12 +257,12 @@ run (const gchar      *name,
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
 
-      if (gimp_drawable_is_rgb (drawable_id))
+      if (gimp_drawable_is_rgb (drawable))
         {
           switch (run_mode)
             {
               case GIMP_RUN_INTERACTIVE:
-                if (main_dialog (drawable_id))
+                if (main_dialog (drawable))
                   {
                     compute_image ();
 
@@ -265,7 +273,7 @@ run (const gchar      *name,
               break;
 
               case GIMP_RUN_WITH_LAST_VALS:
-                if (image_setup (drawable_id, FALSE))
+                if (image_setup (drawable, FALSE))
                   compute_image ();
                 gimp_displays_flush ();
                 break;
@@ -300,7 +308,7 @@ run (const gchar      *name,
                     mapvals.transparent_background     = (gint) param[23].data.d_int32;
 
                     check_drawables ();
-                    if (image_setup (drawable_id, FALSE))
+                    if (image_setup (drawable, FALSE))
                       compute_image ();
                   }
               default:
