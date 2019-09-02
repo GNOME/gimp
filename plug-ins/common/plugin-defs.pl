@@ -63,7 +63,7 @@
     'procedure-browser' => { ui => 1 },
     'qbist' => { ui => 1, gegl => 1 },
     'sample-colorize' => { ui => 1, gegl => 1 },
-    'smooth-palette' => { ui => 1, gegl => 1, old_api => 1 },
+    'smooth-palette' => { ui => 1, gegl => 1 },
     'sparkle' => { ui => 1, gegl => 1 },
     'sphere-designer' => { ui => 1, gegl => 1, old_api => 1 },
     'tile' => { ui => 1, gegl => 1 },

@@ -1393,8 +1393,6 @@ sample_colorize_LDADD = \
 	$(INTLLIBS)		\
 	$(sample_colorize_RC)
 
-smooth_palette_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 smooth_palette_SOURCES = \
 	smooth-palette.c
 
