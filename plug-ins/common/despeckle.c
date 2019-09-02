@@ -70,54 +70,67 @@ typedef struct
   gint       ymax; /* Source rect */
 } DespeckleHistogram;
 
+
+typedef struct _Despeckle      Despeckle;
+typedef struct _DespeckleClass DespeckleClass;
+
+struct _Despeckle
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _DespeckleClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define DESPECKLE_TYPE  (despeckle_get_type ())
+#define DESPECKLE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESPECKLE_TYPE, Despeckle))
+
+GType                   despeckle_get_type         (void) G_GNUC_CONST;
+
+static GList          * despeckle_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * despeckle_create_procedure (GimpPlugIn           *plug_in,
+                                                    const gchar          *name);
+
+static GimpValueArray * despeckle_run              (GimpProcedure        *procedure,
+                                                    GimpRunMode           run_mode,
+                                                    GimpImage            *image,
+                                                    GimpDrawable         *drawable,
+                                                    const GimpValueArray *args,
+                                                    gpointer              run_data);
+
+static void             despeckle                  (void);
+static void             despeckle_median           (guchar               *src,
+                                                    guchar               *dst,
+                                                    gint                  width,
+                                                    gint                  height,
+                                                    gint                  bpp,
+                                                    gint                  radius,
+                                                    gboolean              preview);
+
+static gboolean         despeckle_dialog           (void);
+
+static void             dialog_adaptive_callback   (GtkWidget            *widget,
+                                                    gpointer              data);
+static void             dialog_recursive_callback  (GtkWidget            *widget,
+                                                    gpointer              data);
+
+static void             preview_update             (GtkWidget            *preview);
+
+
+G_DEFINE_TYPE (Despeckle, despeckle, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (DESPECKLE_TYPE)
+
+
 /* Number of pixels in actual histogram falling into each category */
 static gint                hist0;    /* Less than min threshold */
 static gint                hist255;  /* More than max threshold */
 static gint                histrest; /* From min to max        */
 
 static DespeckleHistogram  histogram;
-
-
-/*
- * Local functions...
- */
-
-static void      query (void);
-static void      run   (const gchar      *name,
-                        gint              nparams,
-                        const GimpParam  *param,
-                        gint             *nreturn_vals,
-                        GimpParam       **return_vals);
-
-static void      despeckle                 (void);
-static void      despeckle_median          (guchar        *src,
-                                            guchar        *dst,
-                                            gint           width,
-                                            gint           height,
-                                            gint           bpp,
-                                            gint           radius,
-                                            gboolean       preview);
-
-static gboolean  despeckle_dialog          (void);
-
-static void      dialog_adaptive_callback  (GtkWidget     *widget,
-                                            gpointer       data);
-static void      dialog_recursive_callback (GtkWidget     *widget,
-                                            gpointer       data);
-
-static void      preview_update            (GtkWidget     *preview);
-
-/*
- * Globals...
- */
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init  */
-  NULL,  /* quit  */
-  query, /* query */
-  run    /* run   */
-};
 
 static GtkWidget    *preview;         /* Preview widget   */
 static GimpDrawable *drawable = NULL; /* Current drawable */
@@ -132,142 +145,145 @@ static gint despeckle_vals[4] =
 };
 
 
-MAIN ()
-
-
 static void
-query (void)
+despeckle_class_init (DespeckleClass *klass)
 {
-  static const GimpParamDef   args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32,    "radius",   "Filter box radius (default = 3)" },
-    { GIMP_PDB_INT32,    "type",     "Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }" },
-    { GIMP_PDB_INT32,    "black",    "Black level (-1 to 255)" },
-    { GIMP_PDB_INT32,    "white",    "White level (0 to 256)" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Remove speckle noise from the image"),
-                          "This plug-in selectively performs a median or "
-                          "adaptive box filter on an image.",
-                          "Michael Sweet <mike@easysw.com>",
-                          "Copyright 1997-1998 by Michael Sweet",
-                          PLUG_IN_VERSION,
-                          N_("Des_peckle..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Enhance");
+  plug_in_class->query_procedures = despeckle_query_procedures;
+  plug_in_class->create_procedure = despeckle_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+despeckle_init (Despeckle *despeckle)
 {
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  static GimpParam   values[1];
-  gint32             drawable_ID;
+}
 
+static GList *
+despeckle_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+despeckle_create_procedure (GimpPlugIn  *plug_in,
+                            const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            despeckle_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("Des_peckle..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Enhance");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Remove speckle noise from the "
+                                           "image"),
+                                        "This plug-in selectively performs "
+                                        "a median or adaptive box filter on "
+                                        "an image.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Michael Sweet <mike@easysw.com>",
+                                      "Copyright 1997-1998 by Michael Sweet",
+                                      PLUG_IN_VERSION);
+
+      GIMP_PROC_ARG_INT (procedure, "radius",
+                         "Radius",
+                         "Filter box radius",
+                         1, MAX_RADIUS, 3,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "type",
+                         "Type",
+                         "Filter type { MEDIAN (0), ADAPTIVE (1), "
+                         "RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }",
+                         0, 3, FILTER_ADAPTIVE,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "black",
+                         "Black",
+                         "Black level",
+                         -1, 255, 7,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "white",
+                         "White",
+                         "White level",
+                         0, 256, 248,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+despeckle_run (GimpProcedure        *procedure,
+               GimpRunMode           run_mode,
+               GimpImage            *image,
+               GimpDrawable         *_drawable,
+               const GimpValueArray *args,
+               gpointer              run_data)
+{
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  run_mode    = param[0].data.d_int32;
-  drawable_ID = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
+  drawable = _drawable;
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE :
       gimp_get_data (PLUG_IN_PROC, &despeckle_radius);
 
-      if (gimp_drawable_is_rgb (drawable) ||
+      if (gimp_drawable_is_rgb  (drawable) ||
           gimp_drawable_is_gray (drawable))
-       {
+        {
           if (! despeckle_dialog ())
-            return;
-       }
+            {
+              return gimp_procedure_new_return_values (procedure,
+                                                       GIMP_PDB_CANCEL,
+                                                       NULL);
+            }
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams < 4 || nparams > 9)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      else if (nparams == 4)
-        {
-          despeckle_radius = param[3].data.d_int32;
-          filter_type      = FILTER_ADAPTIVE;
-          black_level      = 7;
-          white_level      = 248;
-        }
-      else if (nparams == 5)
-        {
-          despeckle_radius = param[3].data.d_int32;
-          filter_type      = param[4].data.d_int32;
-          black_level      = 7;
-          white_level      = 248;
-        }
-      else if (nparams == 6)
-        {
-          despeckle_radius = param[3].data.d_int32;
-          filter_type      = param[4].data.d_int32;
-          black_level      = param[5].data.d_int32;
-          white_level      = 248;
-        }
-      else
-        {
-          despeckle_radius = param[3].data.d_int32;
-          filter_type      = param[4].data.d_int32;
-          black_level      = param[5].data.d_int32;
-          white_level      = param[6].data.d_int32;
-        }
+      despeckle_radius = GIMP_VALUES_GET_INT (args, 0);
+      filter_type      = GIMP_VALUES_GET_INT (args, 1);
+      black_level      = GIMP_VALUES_GET_INT (args, 2);
+      white_level      = GIMP_VALUES_GET_INT (args, 3);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_PROC, despeckle_vals);
-        break;
-
-    default:
-      status = GIMP_PDB_CALLING_ERROR;
       break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (gimp_drawable_is_rgb  (drawable) ||
+      gimp_drawable_is_gray (drawable))
     {
-      if (gimp_drawable_is_rgb (drawable) ||
-          gimp_drawable_is_gray (drawable))
-        {
-          despeckle ();
+      despeckle ();
 
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_displays_flush ();
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
 
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data (PLUG_IN_PROC,
-                           despeckle_vals, sizeof (despeckle_vals));
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_set_data (PLUG_IN_PROC, despeckle_vals, sizeof (despeckle_vals));
+    }
+  else
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static inline guchar
