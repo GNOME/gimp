@@ -1429,8 +1429,6 @@ sparkle_LDADD = \
 	$(INTLLIBS)		\
 	$(sparkle_RC)
 
-sphere_designer_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 sphere_designer_SOURCES = \
 	sphere-designer.c
 

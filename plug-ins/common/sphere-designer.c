@@ -310,7 +310,7 @@ static void      restartrender (void);
 static void      drawcolor1    (GtkWidget            *widget);
 static void      drawcolor2    (GtkWidget            *widget);
 static gboolean  render        (void);
-static void      realrender    (gint32                drawable_ID);
+static void      realrender    (GimpDrawable         *drawable);
 static void      fileselect    (GtkFileChooserAction  action,
                                 GtkWidget            *parent);
 static gint      traceray      (ray                  *r,
@@ -2936,7 +2936,7 @@ render (void)
 }
 
 static void
-realrender (gint32 drawable_ID)
+realrender (GimpDrawable *drawable)
 {
   GeglBuffer  *src_buffer;
   GeglBuffer  *dest_buffer;
@@ -2955,23 +2955,23 @@ realrender (gint32 drawable_ID)
   r.v1.z = -10.0;
   r.v2.z = 0.0;
 
-  if (! gimp_drawable_mask_intersect (drawable_ID,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &x1, &y1, &width, &height))
     return;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
-  if (gimp_drawable_is_rgb (drawable_ID))
+  if (gimp_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
@@ -3030,8 +3030,8 @@ realrender (gint32 drawable_ID)
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (drawable_ID, TRUE);
-  gimp_drawable_update (drawable_ID, x1, y1, width, height);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, x1, y1, width, height);
 }
 
 static void
@@ -3054,7 +3054,7 @@ query (void)
                           "1999",
                           N_("Sphere _Designer..."),
                           "RGB*, GRAY*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -3062,7 +3062,7 @@ query (void)
 }
 
 static gboolean
-sphere_main (gint32 drawable_ID)
+sphere_main (GimpDrawable *drawable)
 {
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -3104,7 +3104,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
-  gint32             drawable_ID;
+  GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, w, h;
 
@@ -3117,10 +3117,10 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  run_mode    = param[0].data.d_int32;
-  drawable_ID = param[2].data.d_drawable;
+  run_mode = param[0].data.d_int32;
+  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
 
-  if (! gimp_drawable_mask_intersect (drawable_ID, &x, &y, &w, &h))
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     {
       g_message (_("Region selected for plug-in is empty"));
       return;
@@ -3131,7 +3131,7 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_PROC, &s);
-      if (! sphere_main (drawable_ID))
+      if (! sphere_main (drawable))
         return;
       break;
 
@@ -3150,7 +3150,7 @@ run (const gchar      *name,
 
   gimp_set_data (PLUG_IN_PROC, &s, sizeof (s));
 
-  realrender (drawable_ID);
+  realrender (drawable);
   gimp_displays_flush ();
 
   values[0].data.d_status = status;
