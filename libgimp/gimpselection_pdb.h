@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 gboolean                   gimp_selection_bounds    (GimpImage    *image,
                                                      gboolean     *non_empty,
                                                      gint         *x1,
@@ -66,58 +62,6 @@ gboolean                   gimp_selection_shrink    (GimpImage    *image,
                                                      gint          steps);
 gboolean                   gimp_selection_flood     (GimpImage    *image);
 GimpChannel*               gimp_selection_save      (GimpImage    *image);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_selection_bounds _gimp_selection_bounds
-#define gimp_selection_value _gimp_selection_value
-#define gimp_selection_is_empty _gimp_selection_is_empty
-#define gimp_selection_translate _gimp_selection_translate
-#define gimp_selection_invert _gimp_selection_invert
-#define gimp_selection_sharpen _gimp_selection_sharpen
-#define gimp_selection_all _gimp_selection_all
-#define gimp_selection_none _gimp_selection_none
-#define gimp_selection_feather _gimp_selection_feather
-#define gimp_selection_border _gimp_selection_border
-#define gimp_selection_grow _gimp_selection_grow
-#define gimp_selection_shrink _gimp_selection_shrink
-#define gimp_selection_flood _gimp_selection_flood
-#define gimp_selection_save _gimp_selection_save
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gboolean _gimp_selection_bounds    (gint32    image_ID,
-                                    gboolean *non_empty,
-                                    gint     *x1,
-                                    gint     *y1,
-                                    gint     *x2,
-                                    gint     *y2);
-gint     _gimp_selection_value     (gint32    image_ID,
-                                    gint      x,
-                                    gint      y);
-gboolean _gimp_selection_is_empty  (gint32    image_ID);
-gboolean _gimp_selection_translate (gint32    image_ID,
-                                    gint      offx,
-                                    gint      offy);
-gboolean _gimp_selection_invert    (gint32    image_ID);
-gboolean _gimp_selection_sharpen   (gint32    image_ID);
-gboolean _gimp_selection_all       (gint32    image_ID);
-gboolean _gimp_selection_none      (gint32    image_ID);
-gboolean _gimp_selection_feather   (gint32    image_ID,
-                                    gdouble   radius);
-gboolean _gimp_selection_border    (gint32    image_ID,
-                                    gint      radius);
-gboolean _gimp_selection_grow      (gint32    image_ID,
-                                    gint      steps);
-gboolean _gimp_selection_shrink    (gint32    image_ID,
-                                    gint      steps);
-gboolean _gimp_selection_flood     (gint32    image_ID);
-gint32   _gimp_selection_save      (gint32    image_ID);
 
 
 G_END_DECLS

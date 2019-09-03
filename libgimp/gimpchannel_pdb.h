@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 G_GNUC_INTERNAL GimpChannel* _gimp_channel_new               (GimpImage       *image,
                                                               gint             width,
                                                               gint             height,
@@ -61,45 +57,6 @@ gboolean                     gimp_channel_get_color          (GimpChannel     *c
                                                               GimpRGB         *color);
 gboolean                     gimp_channel_set_color          (GimpChannel     *channel,
                                                               const GimpRGB   *color);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_channel_new_from_component _gimp_channel_new_from_component
-#define gimp_channel_copy _gimp_channel_copy
-#define gimp_channel_combine_masks _gimp_channel_combine_masks
-#define gimp_channel_get_show_masked _gimp_channel_get_show_masked
-#define gimp_channel_set_show_masked _gimp_channel_set_show_masked
-#define gimp_channel_get_opacity _gimp_channel_get_opacity
-#define gimp_channel_set_opacity _gimp_channel_set_opacity
-#define gimp_channel_get_color _gimp_channel_get_color
-#define gimp_channel_set_color _gimp_channel_set_color
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gint32   _gimp_channel_new_from_component (gint32           image_ID,
-                                           GimpChannelType  component,
-                                           const gchar     *name);
-gint32   _gimp_channel_copy               (gint32           channel_ID);
-gboolean _gimp_channel_combine_masks      (gint32           channel1_ID,
-                                           gint32           channel2_ID,
-                                           GimpChannelOps   operation,
-                                           gint             offx,
-                                           gint             offy);
-gboolean _gimp_channel_get_show_masked    (gint32           channel_ID);
-gboolean _gimp_channel_set_show_masked    (gint32           channel_ID,
-                                           gboolean         show_masked);
-gdouble  _gimp_channel_get_opacity        (gint32           channel_ID);
-gboolean _gimp_channel_set_opacity        (gint32           channel_ID,
-                                           gdouble          opacity);
-gboolean _gimp_channel_get_color          (gint32           channel_ID,
-                                           GimpRGB         *color);
-gboolean _gimp_channel_set_color          (gint32           channel_ID,
-                                           const GimpRGB   *color);
 
 
 G_END_DECLS

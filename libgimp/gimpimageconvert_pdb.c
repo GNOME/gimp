@@ -76,47 +76,6 @@ gimp_image_convert_rgb (GimpImage *image)
 }
 
 /**
- * _gimp_image_convert_rgb: (skip)
- * @image_ID: The image.
- *
- * Convert specified image to RGB color
- *
- * This procedure converts the specified image to RGB color. This
- * process requires an image in Grayscale or Indexed color mode. No
- * image content is lost in this process aside from the colormap for an
- * indexed image.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_image_convert_rgb (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-rgb",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-rgb",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_convert_grayscale:
  * @image: The image.
  *
@@ -137,45 +96,6 @@ gimp_image_convert_grayscale (GimpImage *image)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-grayscale",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-grayscale",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_image_convert_grayscale: (skip)
- * @image_ID: The image.
- *
- * Convert specified image to grayscale
- *
- * This procedure converts the specified image to grayscale. This
- * process requires an image in RGB or Indexed color mode.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_image_convert_grayscale (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -238,74 +158,6 @@ gimp_image_convert_indexed (GimpImage              *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
-                                          GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
-                                          G_TYPE_INT, num_cols,
-                                          G_TYPE_BOOLEAN, alpha_dither,
-                                          G_TYPE_BOOLEAN, remove_unused,
-                                          G_TYPE_STRING, palette,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-indexed",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-indexed",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_image_convert_indexed: (skip)
- * @image_ID: The image.
- * @dither_type: The dither type to use.
- * @palette_type: The type of palette to use.
- * @num_cols: The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE).
- * @alpha_dither: Dither transparency to fake partial opacity.
- * @remove_unused: Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_CONVERT_PALETTE_GENERATE).
- * @palette: The name of the custom palette to use, ignored unless (palette_type == GIMP_CONVERT_PALETTE_CUSTOM).
- *
- * Convert specified image to and Indexed image
- *
- * This procedure converts the specified image to 'indexed' color. This
- * process requires an image in RGB or Grayscale mode. The
- * 'palette_type' specifies what kind of palette to use, A type of '0'
- * means to use an optimal palette of 'num_cols' generated from the
- * colors in the image. A type of '1' means to re-use the previous
- * palette (not currently implemented). A type of '2' means to use the
- * so-called WWW-optimized palette. Type '3' means to use only black
- * and white colors. A type of '4' means to use a palette from the gimp
- * palettes directories. The 'dither type' specifies what kind of
- * dithering to use. '0' means no dithering, '1' means standard
- * Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error
- * diffusion with reduced bleeding, '3' means dithering based on pixel
- * location ('Fixed' dithering).
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_image_convert_indexed (gint32                  image_ID,
-                             GimpConvertDitherType   dither_type,
-                             GimpConvertPaletteType  palette_type,
-                             gint                    num_cols,
-                             gboolean                alpha_dither,
-                             gboolean                remove_unused,
-                             const gchar            *palette)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
                                           GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
                                           G_TYPE_INT, num_cols,
@@ -407,51 +259,6 @@ gimp_image_convert_precision (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_PRECISION, precision,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-precision",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-precision",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_image_convert_precision: (skip)
- * @image_ID: The image.
- * @precision: The new precision.
- *
- * Convert the image to the specified precision
- *
- * This procedure converts the image to the specified precision. Note
- * that indexed images cannot be converted and are always in
- * GIMP_PRECISION_U8.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_image_convert_precision (gint32        image_ID,
-                               GimpPrecision precision)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           GIMP_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
 

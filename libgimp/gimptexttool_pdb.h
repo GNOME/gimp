@@ -32,49 +32,24 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_text_get_extents_fontname (const gchar  *text,
-                                         gdouble       size,
-                                         GimpSizeType  size_type,
-                                         const gchar  *fontname,
-                                         gint         *width,
-                                         gint         *height,
-                                         gint         *ascent,
-                                         gint         *descent);
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-GimpLayer* gimp_text_fontname (GimpImage    *image,
-                               GimpDrawable *drawable,
-                               gdouble       x,
-                               gdouble       y,
-                               const gchar  *text,
-                               gint          border,
-                               gboolean      antialias,
-                               gdouble       size,
-                               GimpSizeType  size_type,
-                               const gchar  *fontname);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_text_fontname _gimp_text_fontname
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gint32 _gimp_text_fontname (gint32        image_ID,
-                            gint32        drawable_ID,
-                            gdouble       x,
-                            gdouble       y,
-                            const gchar  *text,
-                            gint          border,
-                            gboolean      antialias,
-                            gdouble       size,
-                            GimpSizeType  size_type,
-                            const gchar  *fontname);
+GimpLayer* gimp_text_fontname             (GimpImage    *image,
+                                           GimpDrawable *drawable,
+                                           gdouble       x,
+                                           gdouble       y,
+                                           const gchar  *text,
+                                           gint          border,
+                                           gboolean      antialias,
+                                           gdouble       size,
+                                           GimpSizeType  size_type,
+                                           const gchar  *fontname);
+gboolean   gimp_text_get_extents_fontname (const gchar  *text,
+                                           gdouble       size,
+                                           GimpSizeType  size_type,
+                                           const gchar  *fontname,
+                                           gint         *width,
+                                           gint         *height,
+                                           gint         *ascent,
+                                           gint         *descent);
 
 
 G_END_DECLS

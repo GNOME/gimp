@@ -76,47 +76,6 @@ gimp_image_undo_group_start (GimpImage *image)
 }
 
 /**
- * _gimp_image_undo_group_start: (skip)
- * @image_ID: The ID of the image in which to open an undo group.
- *
- * Starts a group undo.
- *
- * This function is used to start a group undo--necessary for logically
- * combining two or more undo operations into a single operation. This
- * call must be used in conjunction with a gimp_image_undo_group_end()
- * call.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_image_undo_group_start (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-undo-group-start",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-undo-group-start",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_undo_group_end:
  * @image: The ID of the image in which to close an undo group.
  *
@@ -137,45 +96,6 @@ gimp_image_undo_group_end (GimpImage *image)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-undo-group-end",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-undo-group-end",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_image_undo_group_end: (skip)
- * @image_ID: The ID of the image in which to close an undo group.
- *
- * Finish a group undo.
- *
- * This function must be called once for each
- * gimp_image_undo_group_start() call that is made.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_image_undo_group_end (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -217,48 +137,6 @@ gimp_image_undo_is_enabled (GimpImage *image)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-undo-is-enabled",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-undo-is-enabled",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    enabled = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return enabled;
-}
-
-/**
- * _gimp_image_undo_is_enabled: (skip)
- * @image_ID: The image.
- *
- * Check if the image's undo stack is enabled.
- *
- * This procedure checks if the image's undo stack is currently enabled
- * or disabled. This is useful when several plug-ins or scripts call
- * each other and want to check if their caller has already used
- * gimp_image_undo_disable() or gimp_image_undo_freeze().
- *
- * Returns: TRUE if undo is enabled for this image.
- **/
-gboolean
-_gimp_image_undo_is_enabled (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean enabled = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -322,49 +200,6 @@ gimp_image_undo_disable (GimpImage *image)
 }
 
 /**
- * _gimp_image_undo_disable: (skip)
- * @image_ID: The image.
- *
- * Disable the image's undo stack.
- *
- * This procedure disables the image's undo stack, allowing subsequent
- * operations to ignore their undo steps. This is generally called in
- * conjunction with gimp_image_undo_enable() to temporarily disable an
- * image undo stack. This is advantageous because saving undo steps can
- * be time and memory intensive.
- *
- * Returns: TRUE if the image undo has been disabled.
- **/
-gboolean
-_gimp_image_undo_disable (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean disabled = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-undo-disable",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-undo-disable",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    disabled = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return disabled;
-}
-
-/**
  * gimp_image_undo_enable:
  * @image: The image.
  *
@@ -387,48 +222,6 @@ gimp_image_undo_enable (GimpImage *image)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-undo-enable",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-undo-enable",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    enabled = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return enabled;
-}
-
-/**
- * _gimp_image_undo_enable: (skip)
- * @image_ID: The image.
- *
- * Enable the image's undo stack.
- *
- * This procedure enables the image's undo stack, allowing subsequent
- * operations to store their undo steps. This is generally called in
- * conjunction with gimp_image_undo_disable() to temporarily disable an
- * image undo stack.
- *
- * Returns: TRUE if the image undo has been enabled.
- **/
-gboolean
-_gimp_image_undo_enable (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean enabled = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -498,55 +291,6 @@ gimp_image_undo_freeze (GimpImage *image)
 }
 
 /**
- * _gimp_image_undo_freeze: (skip)
- * @image_ID: The image.
- *
- * Freeze the image's undo stack.
- *
- * This procedure freezes the image's undo stack, allowing subsequent
- * operations to ignore their undo steps. This is generally called in
- * conjunction with gimp_image_undo_thaw() to temporarily disable an
- * image undo stack. This is advantageous because saving undo steps can
- * be time and memory intensive. gimp_image_undo_freeze() /
- * gimp_image_undo_thaw() and gimp_image_undo_disable() /
- * gimp_image_undo_enable() differ in that the former does not free up
- * all undo steps when undo is thawed, so is more suited to interactive
- * in-situ previews. It is important in this case that the image is
- * back to the same state it was frozen in before thawing, else 'undo'
- * behaviour is undefined.
- *
- * Returns: TRUE if the image undo has been frozen.
- **/
-gboolean
-_gimp_image_undo_freeze (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean frozen = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-undo-freeze",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-undo-freeze",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    frozen = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return frozen;
-}
-
-/**
  * gimp_image_undo_thaw:
  * @image: The image.
  *
@@ -575,54 +319,6 @@ gimp_image_undo_thaw (GimpImage *image)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-undo-thaw",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-undo-thaw",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    thawed = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return thawed;
-}
-
-/**
- * _gimp_image_undo_thaw: (skip)
- * @image_ID: The image.
- *
- * Thaw the image's undo stack.
- *
- * This procedure thaws the image's undo stack, allowing subsequent
- * operations to store their undo steps. This is generally called in
- * conjunction with gimp_image_undo_freeze() to temporarily freeze an
- * image undo stack. gimp_image_undo_thaw() does NOT free the undo
- * stack as gimp_image_undo_enable() does, so is suited for situations
- * where one wishes to leave the undo stack in the same state in which
- * one found it despite non-destructively playing with the image in the
- * meantime. An example would be in-situ plug-in previews. Balancing
- * freezes and thaws and ensuring image consistency is the
- * responsibility of the caller.
- *
- * Returns: TRUE if the image undo has been thawed.
- **/
-gboolean
-_gimp_image_undo_thaw (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean thawed = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

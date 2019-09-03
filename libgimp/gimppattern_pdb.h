@@ -43,22 +43,6 @@ gboolean gimp_pattern_get_pixels (const gchar  *name,
                                   gint         *num_color_bytes,
                                   guint8      **color_bytes);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-
-
 
 G_END_DECLS
 

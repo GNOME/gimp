@@ -36,22 +36,6 @@ gboolean gimp_palettes_refresh  (void);
 gchar**  gimp_palettes_get_list (const gchar *filter,
                                  gint        *num_palettes);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-
-
 
 G_END_DECLS
 

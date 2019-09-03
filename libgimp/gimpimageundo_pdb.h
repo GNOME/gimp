@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 gboolean gimp_image_undo_group_start (GimpImage *image);
 gboolean gimp_image_undo_group_end   (GimpImage *image);
 gboolean gimp_image_undo_is_enabled  (GimpImage *image);
@@ -43,31 +39,6 @@ gboolean gimp_image_undo_disable     (GimpImage *image);
 gboolean gimp_image_undo_enable      (GimpImage *image);
 gboolean gimp_image_undo_freeze      (GimpImage *image);
 gboolean gimp_image_undo_thaw        (GimpImage *image);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_image_undo_group_start _gimp_image_undo_group_start
-#define gimp_image_undo_group_end _gimp_image_undo_group_end
-#define gimp_image_undo_is_enabled _gimp_image_undo_is_enabled
-#define gimp_image_undo_disable _gimp_image_undo_disable
-#define gimp_image_undo_enable _gimp_image_undo_enable
-#define gimp_image_undo_freeze _gimp_image_undo_freeze
-#define gimp_image_undo_thaw _gimp_image_undo_thaw
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gboolean _gimp_image_undo_group_start (gint32 image_ID);
-gboolean _gimp_image_undo_group_end   (gint32 image_ID);
-gboolean _gimp_image_undo_is_enabled  (gint32 image_ID);
-gboolean _gimp_image_undo_disable     (gint32 image_ID);
-gboolean _gimp_image_undo_enable      (gint32 image_ID);
-gboolean _gimp_image_undo_freeze      (gint32 image_ID);
-gboolean _gimp_image_undo_thaw        (gint32 image_ID);
 
 
 G_END_DECLS

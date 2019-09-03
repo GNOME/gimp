@@ -42,22 +42,6 @@ gboolean               gimp_get_monitor_resolution   (gdouble     *xres,
 G_GNUC_INTERNAL gchar* _gimp_get_color_configuration (void);
 gchar*                 gimp_get_module_load_inhibit  (void);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-
-
 
 G_END_DECLS
 

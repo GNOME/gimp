@@ -84,55 +84,6 @@ gimp_image_add_sample_point (GimpImage *image,
 }
 
 /**
- * _gimp_image_add_sample_point: (skip)
- * @image_ID: The image.
- * @position_x: The guide'sample points x-offset from left of image.
- * @position_y: The guide'sample points y-offset from top of image.
- *
- * Add a sample point to an image.
- *
- * This procedure adds a sample point to an image. It takes the input
- * image and the position of the new sample points as parameters. It
- * returns the sample point ID of the new sample point.
- *
- * Returns: The new sample point.
- *
- * Since: 2.10
- **/
-gint32
-_gimp_image_add_sample_point (gint32 image_ID,
-                              gint   position_x,
-                              gint   position_y)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 sample_point_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_INT, position_x,
-                                          G_TYPE_INT, position_y,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-add-sample-point",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-add-sample-point",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    sample_point_ID = g_value_get_uint (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return sample_point_ID;
-}
-
-/**
  * gimp_image_delete_sample_point:
  * @image: The image.
  * @sample_point: The ID of the sample point to be removed.
@@ -158,50 +109,6 @@ gimp_image_delete_sample_point (GimpImage *image,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-delete-sample-point",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-delete-sample-point",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_image_delete_sample_point: (skip)
- * @image_ID: The image.
- * @sample_point_ID: The ID of the sample point to be removed.
- *
- * Deletes a sample point from an image.
- *
- * This procedure takes an image and a sample point ID as input and
- * removes the specified sample point from the specified image.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_image_delete_sample_point (gint32 image_ID,
-                                 gint32 sample_point_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -270,55 +177,6 @@ gimp_image_find_next_sample_point (GimpImage *image,
 }
 
 /**
- * _gimp_image_find_next_sample_point: (skip)
- * @image_ID: The image.
- * @sample_point_ID: The ID of the current sample point (0 if first invocation).
- *
- * Find next sample point on an image.
- *
- * This procedure takes an image and a sample point ID as input and
- * finds the sample point ID of the successor of the given sample point
- * ID in the image's sample point list. If the supplied sample point ID
- * is 0, the procedure will return the first sample point. The
- * procedure will return 0 if given the final sample point ID as an
- * argument or the image has no sample points.
- *
- * Returns: The next sample point's ID.
- *
- * Since: 2.10
- **/
-gint32
-_gimp_image_find_next_sample_point (gint32 image_ID,
-                                    gint32 sample_point_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 next_sample_point_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_UINT, sample_point_ID,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-find-next-sample-point",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-find-next-sample-point",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    next_sample_point_ID = g_value_get_uint (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return next_sample_point_ID;
-}
-
-/**
  * gimp_image_get_sample_point_position:
  * @image: The image.
  * @sample_point: The guide.
@@ -347,57 +205,6 @@ gimp_image_get_sample_point_position (GimpImage *image,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-get-sample-point-position",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-get-sample-point-position",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      position_x = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *position_y = g_value_get_int (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return position_x;
-}
-
-/**
- * _gimp_image_get_sample_point_position: (skip)
- * @image_ID: The image.
- * @sample_point_ID: The guide.
- * @position_y: (out): The sample points's position relative to top of image.
- *
- * Get position of a sample point on an image.
- *
- * This procedure takes an image and a sample point ID as input and
- * returns the position of the sample point relative to the top and
- * left of the image.
- *
- * Returns: The sample points's position relative to top of image.
- *
- * Since: 2.10
- **/
-gint
-_gimp_image_get_sample_point_position (gint32  image_ID,
-                                       gint32  sample_point_ID,
-                                       gint   *position_y)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint position_x = G_MININT;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 
   if (pdb)

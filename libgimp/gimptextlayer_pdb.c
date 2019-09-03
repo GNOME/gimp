@@ -93,64 +93,6 @@ gimp_text_layer_new (GimpImage   *image,
 }
 
 /**
- * _gimp_text_layer_new: (skip)
- * @image_ID: The image.
- * @text: The text to generate (in UTF-8 encoding).
- * @fontname: The name of the font.
- * @size: The size of text in either pixels or points.
- * @unit: The units of specified size.
- *
- * Creates a new text layer.
- *
- * This procedure creates a new text layer. The arguments are kept as
- * simple as necessary for the normal case. All text attributes,
- * however, can be modified with the appropriate
- * gimp_text_layer_set_*() procedures. The new layer still needs to be
- * added to the image, as this is not automatic. Add the new layer
- * using gimp_image_insert_layer().
- *
- * Returns: The new text layer.
- *
- * Since: 2.6
- **/
-gint32
-_gimp_text_layer_new (gint32       image_ID,
-                      const gchar *text,
-                      const gchar *fontname,
-                      gdouble      size,
-                      GimpUnit     unit)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_STRING, text,
-                                          G_TYPE_STRING, fontname,
-                                          G_TYPE_DOUBLE, size,
-                                          GIMP_TYPE_UNIT, unit,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-new",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-new",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_ID;
-}
-
-/**
  * gimp_text_layer_get_text:
  * @layer: The text layer.
  *
@@ -173,48 +115,6 @@ gimp_text_layer_get_text (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-text",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-text",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    text = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return text;
-}
-
-/**
- * _gimp_text_layer_get_text: (skip)
- * @layer_ID: The text layer.
- *
- * Get the text from a text layer as string.
- *
- * This procedure returns the text from a text layer as a string.
- *
- * Returns: The text from the specified text layer.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.6
- **/
-gchar *
-_gimp_text_layer_get_text (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *text = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -258,49 +158,6 @@ gimp_text_layer_set_text (GimpLayer   *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_STRING, text,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-text",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-text",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_text_layer_set_text: (skip)
- * @layer_ID: The text layer.
- * @text: The new text to set.
- *
- * Set the text of a text layer.
- *
- * This procedure changes the text of a text layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_text (gint32       layer_ID,
-                           const gchar *text)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_STRING, text,
                                           G_TYPE_NONE);
 
@@ -368,52 +225,6 @@ gimp_text_layer_get_markup (GimpLayer *layer)
 }
 
 /**
- * _gimp_text_layer_get_markup: (skip)
- * @layer_ID: The text layer.
- *
- * Get the markup from a text layer as string.
- *
- * This procedure returns the markup of the styles from a text layer.
- * The markup will be in the form of Pango's markup - See
- * https://www.pango.org/ for more information about Pango and its
- * markup. Note: Setting the markup of a text layer using Pango's
- * markup is not supported for now.
- *
- * Returns: The markup which represents the style of the specified text layer.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.8
- **/
-gchar *
-_gimp_text_layer_get_markup (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *markup = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-markup",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-markup",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    markup = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return markup;
-}
-
-/**
  * gimp_text_layer_get_font:
  * @layer: The text layer.
  *
@@ -437,48 +248,6 @@ gimp_text_layer_get_font (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-font",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-font",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    font = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return font;
-}
-
-/**
- * _gimp_text_layer_get_font: (skip)
- * @layer_ID: The text layer.
- *
- * Get the font from a text layer as string.
- *
- * This procedure returns the name of the font from a text layer.
- *
- * Returns: The font which is used in the specified text layer.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.6
- **/
-gchar *
-_gimp_text_layer_get_font (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *font = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -542,49 +311,6 @@ gimp_text_layer_set_font (GimpLayer   *layer,
 }
 
 /**
- * _gimp_text_layer_set_font: (skip)
- * @layer_ID: The text layer.
- * @font: The new font to use.
- *
- * Set the font of a text layer.
- *
- * This procedure modifies the font used in the specified text layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_font (gint32       layer_ID,
-                           const gchar *font)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_STRING, font,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-font",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-font",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_font_size:
  * @layer: The text layer.
  * @unit: (out) (transfer none): The unit used for the font size.
@@ -610,54 +336,6 @@ gimp_text_layer_get_font_size (GimpLayer *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-font-size",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-font-size",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      font_size = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *unit = g_value_get_int (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return font_size;
-}
-
-/**
- * _gimp_text_layer_get_font_size: (skip)
- * @layer_ID: The text layer.
- * @unit: (out): The unit used for the font size.
- *
- * Get the font size from a text layer.
- *
- * This procedure returns the size of the font which is used in a text
- * layer. You will receive the size as a float 'font-size' in 'unit'
- * units.
- *
- * Returns: The font size.
- *
- * Since: 2.6
- **/
-gdouble
-_gimp_text_layer_get_font_size (gint32    layer_ID,
-                                GimpUnit *unit)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gdouble font_size = 0.0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -728,53 +406,6 @@ gimp_text_layer_set_font_size (GimpLayer *layer,
 }
 
 /**
- * _gimp_text_layer_set_font_size: (skip)
- * @layer_ID: The text layer.
- * @font_size: The font size.
- * @unit: The unit to use for the font size.
- *
- * Set the font size.
- *
- * This procedure changes the font size of a text layer. The size of
- * your font will be a double 'font-size' of 'unit' units.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_font_size (gint32   layer_ID,
-                                gdouble  font_size,
-                                GimpUnit unit)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_DOUBLE, font_size,
-                                          GIMP_TYPE_UNIT, unit,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-font-size",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-font-size",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_antialias:
  * @layer: The text layer.
  *
@@ -797,48 +428,6 @@ gimp_text_layer_get_antialias (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-antialias",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-antialias",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    antialias = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return antialias;
-}
-
-/**
- * _gimp_text_layer_get_antialias: (skip)
- * @layer_ID: The text layer.
- *
- * Check if antialiasing is used in the text layer.
- *
- * This procedure checks if antialiasing is enabled in the specified
- * text layer.
- *
- * Returns: A flag which is true if antialiasing is used for rendering the font in the text layer.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_get_antialias (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean antialias = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -903,50 +492,6 @@ gimp_text_layer_set_antialias (GimpLayer *layer,
 }
 
 /**
- * _gimp_text_layer_set_antialias: (skip)
- * @layer_ID: The text layer.
- * @antialias: Enable/disable antialiasing of the text.
- *
- * Enable/disable anti-aliasing in a text layer.
- *
- * This procedure enables or disables anti-aliasing of the text in a
- * text layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_antialias (gint32   layer_ID,
-                                gboolean antialias)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_BOOLEAN, antialias,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-antialias",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-antialias",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_hint_style:
  * @layer: The text layer.
  *
@@ -970,49 +515,6 @@ gimp_text_layer_get_hint_style (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-hint-style",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-hint-style",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    style = g_value_get_enum (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return style;
-}
-
-/**
- * _gimp_text_layer_get_hint_style: (skip)
- * @layer_ID: The text layer.
- *
- * Get information about hinting in the specified text layer.
- *
- * This procedure provides information about the hinting that is being
- * used in a text layer. Hinting can be optimized for fidelity or
- * contrast or it can be turned entirely off.
- *
- * Returns: The hint style used for font outlines.
- *
- * Since: 2.8
- **/
-GimpTextHintStyle
-_gimp_text_layer_get_hint_style (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTextHintStyle style = 0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1078,51 +580,6 @@ gimp_text_layer_set_hint_style (GimpLayer         *layer,
 }
 
 /**
- * _gimp_text_layer_set_hint_style: (skip)
- * @layer_ID: The text layer.
- * @style: The new hint style.
- *
- * Control how font outlines are hinted in a text layer.
- *
- * This procedure sets the hint style for font outlines in a text
- * layer. This controls whether to fit font outlines to the pixel grid,
- * and if so, whether to optimize for fidelity or contrast.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.8
- **/
-gboolean
-_gimp_text_layer_set_hint_style (gint32            layer_ID,
-                                 GimpTextHintStyle style)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          GIMP_TYPE_TEXT_HINT_STYLE, style,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-hint-style",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-hint-style",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_kerning:
  * @layer: The text layer.
  *
@@ -1145,48 +602,6 @@ gimp_text_layer_get_kerning (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-kerning",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-kerning",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    kerning = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return kerning;
-}
-
-/**
- * _gimp_text_layer_get_kerning: (skip)
- * @layer_ID: The text layer.
- *
- * Check if kerning is used in the text layer.
- *
- * This procedure checks if kerning is enabled in the specified text
- * layer.
- *
- * Returns: A flag which is true if kerning is used in the text layer.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_get_kerning (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean kerning = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1250,49 +665,6 @@ gimp_text_layer_set_kerning (GimpLayer *layer,
 }
 
 /**
- * _gimp_text_layer_set_kerning: (skip)
- * @layer_ID: The text layer.
- * @kerning: Enable/disable kerning in the text.
- *
- * Enable/disable kerning in a text layer.
- *
- * This procedure enables or disables kerning in a text layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_kerning (gint32   layer_ID,
-                              gboolean kerning)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_BOOLEAN, kerning,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-kerning",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-kerning",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_language:
  * @layer: The text layer.
  *
@@ -1316,49 +688,6 @@ gimp_text_layer_get_language (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-language",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-language",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    language = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return language;
-}
-
-/**
- * _gimp_text_layer_get_language: (skip)
- * @layer_ID: The text layer.
- *
- * Get the language used in the text layer.
- *
- * This procedure returns the language string which is set for the text
- * in the text layer.
- *
- * Returns: The language used in the text layer.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.6
- **/
-gchar *
-_gimp_text_layer_get_language (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *language = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1423,50 +752,6 @@ gimp_text_layer_set_language (GimpLayer   *layer,
 }
 
 /**
- * _gimp_text_layer_set_language: (skip)
- * @layer_ID: The text layer.
- * @language: The new language to use for the text layer.
- *
- * Set the language of the text layer.
- *
- * This procedure sets the language of the text in text layer. For some
- * scripts the language has an influence of how the text is rendered.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_language (gint32       layer_ID,
-                               const gchar *language)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_STRING, language,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-language",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-language",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_base_direction:
  * @layer: The text layer.
  *
@@ -1489,48 +774,6 @@ gimp_text_layer_get_base_direction (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-base-direction",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-base-direction",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    direction = g_value_get_enum (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return direction;
-}
-
-/**
- * _gimp_text_layer_get_base_direction: (skip)
- * @layer_ID: The text layer.
- *
- * Get the base direction used for rendering the text layer.
- *
- * This procedure returns the base direction used for rendering the
- * text in the text layer
- *
- * Returns: The based direction used for the text layer.
- *
- * Since: 2.6
- **/
-GimpTextDirection
-_gimp_text_layer_get_base_direction (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTextDirection direction = 0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1595,50 +838,6 @@ gimp_text_layer_set_base_direction (GimpLayer         *layer,
 }
 
 /**
- * _gimp_text_layer_set_base_direction: (skip)
- * @layer_ID: The text layer.
- * @direction: The base direction of the text.
- *
- * Set the base direction in the text layer.
- *
- * This procedure sets the base direction used in applying the Unicode
- * bidirectional algorithm when rendering the text.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_base_direction (gint32            layer_ID,
-                                     GimpTextDirection direction)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          GIMP_TYPE_TEXT_DIRECTION, direction,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-base-direction",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-base-direction",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_justification:
  * @layer: The text layer.
  *
@@ -1661,48 +860,6 @@ gimp_text_layer_get_justification (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-justification",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-justification",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    justify = g_value_get_enum (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return justify;
-}
-
-/**
- * _gimp_text_layer_get_justification: (skip)
- * @layer_ID: The text layer.
- *
- * Get the text justification information of the text layer.
- *
- * This procedure returns the alignment of the lines in the text layer
- * relative to each other.
- *
- * Returns: The justification used in the text layer.
- *
- * Since: 2.6
- **/
-GimpTextJustification
-_gimp_text_layer_get_justification (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpTextJustification justify = 0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1747,50 +904,6 @@ gimp_text_layer_set_justification (GimpLayer             *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_TEXT_JUSTIFICATION, justify,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-justification",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-justification",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_text_layer_set_justification: (skip)
- * @layer_ID: The text layer.
- * @justify: The justification for your text.
- *
- * Set the justification of the text in a text layer.
- *
- * This procedure sets the alignment of the lines in the text layer
- * relative to each other.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_justification (gint32                layer_ID,
-                                    GimpTextJustification justify)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           GIMP_TYPE_TEXT_JUSTIFICATION, justify,
                                           G_TYPE_NONE);
 
@@ -1856,51 +969,6 @@ gimp_text_layer_get_color (GimpLayer *layer,
 }
 
 /**
- * _gimp_text_layer_get_color: (skip)
- * @layer_ID: The text layer.
- * @color: (out caller-allocates): The color of the text.
- *
- * Get the color of the text in a text layer.
- *
- * This procedure returns the color of the text in a text layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_get_color (gint32   layer_ID,
-                            GimpRGB *color)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-color",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-color",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_set_color:
  * @layer: The text layer.
  * @color: The color to use for the text.
@@ -1944,49 +1012,6 @@ gimp_text_layer_set_color (GimpLayer     *layer,
 }
 
 /**
- * _gimp_text_layer_set_color: (skip)
- * @layer_ID: The text layer.
- * @color: The color to use for the text.
- *
- * Set the color of the text in the text layer.
- *
- * This procedure sets the text color in the text layer 'layer'.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_color (gint32         layer_ID,
-                            const GimpRGB *color)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          GIMP_TYPE_RGB, color,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-color",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-color",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_indent:
  * @layer: The text layer.
  *
@@ -2009,48 +1034,6 @@ gimp_text_layer_get_indent (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-indent",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-indent",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    indent = g_value_get_double (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return indent;
-}
-
-/**
- * _gimp_text_layer_get_indent: (skip)
- * @layer_ID: The text layer.
- *
- * Get the line indentation of text layer.
- *
- * This procedure returns the indentation of the first line in a text
- * layer.
- *
- * Returns: The indentation value of the first line.
- *
- * Since: 2.6
- **/
-gdouble
-_gimp_text_layer_get_indent (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gdouble indent = 0.0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2115,50 +1098,6 @@ gimp_text_layer_set_indent (GimpLayer *layer,
 }
 
 /**
- * _gimp_text_layer_set_indent: (skip)
- * @layer_ID: The text layer.
- * @indent: The indentation for the first line.
- *
- * Set the indentation of the first line in a text layer.
- *
- * This procedure sets the indentation of the first line in the text
- * layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_indent (gint32  layer_ID,
-                             gdouble indent)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_DOUBLE, indent,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-indent",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-indent",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_line_spacing:
  * @layer: The text layer.
  *
@@ -2181,48 +1120,6 @@ gimp_text_layer_get_line_spacing (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-line-spacing",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-line-spacing",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    line_spacing = g_value_get_double (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return line_spacing;
-}
-
-/**
- * _gimp_text_layer_get_line_spacing: (skip)
- * @layer_ID: The text layer.
- *
- * Get the spacing between lines of text.
- *
- * This procedure returns the line-spacing between lines of text in a
- * text layer.
- *
- * Returns: The line-spacing value.
- *
- * Since: 2.6
- **/
-gdouble
-_gimp_text_layer_get_line_spacing (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gdouble line_spacing = 0.0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2287,50 +1184,6 @@ gimp_text_layer_set_line_spacing (GimpLayer *layer,
 }
 
 /**
- * _gimp_text_layer_set_line_spacing: (skip)
- * @layer_ID: The text layer.
- * @line_spacing: The additional line spacing to use.
- *
- * Adjust the line spacing in a text layer.
- *
- * This procedure sets the additional spacing used between lines a text
- * layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_line_spacing (gint32  layer_ID,
-                                   gdouble line_spacing)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_DOUBLE, line_spacing,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-line-spacing",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-line-spacing",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_get_letter_spacing:
  * @layer: The text layer.
  *
@@ -2353,48 +1206,6 @@ gimp_text_layer_get_letter_spacing (GimpLayer *layer)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-get-letter-spacing",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-letter-spacing",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    letter_spacing = g_value_get_double (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return letter_spacing;
-}
-
-/**
- * _gimp_text_layer_get_letter_spacing: (skip)
- * @layer_ID: The text layer.
- *
- * Get the letter spacing used in a text layer.
- *
- * This procedure returns the additional spacing between the single
- * glyphs in a text layer.
- *
- * Returns: The letter-spacing value.
- *
- * Since: 2.6
- **/
-gdouble
-_gimp_text_layer_get_letter_spacing (gint32 layer_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gdouble letter_spacing = 0.0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2459,50 +1270,6 @@ gimp_text_layer_set_letter_spacing (GimpLayer *layer,
 }
 
 /**
- * _gimp_text_layer_set_letter_spacing: (skip)
- * @layer_ID: The text layer.
- * @letter_spacing: The additional letter spacing to use.
- *
- * Adjust the letter spacing in a text layer.
- *
- * This procedure sets the additional spacing between the single glyphs
- * in a text layer.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-_gimp_text_layer_set_letter_spacing (gint32  layer_ID,
-                                     gdouble letter_spacing)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          G_TYPE_DOUBLE, letter_spacing,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-set-letter-spacing",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-letter-spacing",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_text_layer_resize:
  * @layer: The text layer.
  * @width: The new box width in pixels.
@@ -2530,54 +1297,6 @@ gimp_text_layer_resize (GimpLayer *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
-                                          G_TYPE_DOUBLE, width,
-                                          G_TYPE_DOUBLE, height,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-layer-resize",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-layer-resize",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_text_layer_resize: (skip)
- * @layer_ID: The text layer.
- * @width: The new box width in pixels.
- * @height: The new box height in pixels.
- *
- * Resize the box of a text layer.
- *
- * This procedure changes the width and height of a text layer while
- * keeping it as a text layer and not converting it to a bitmap like
- * gimp_layer_resize() would do.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.8
- **/
-gboolean
-_gimp_text_layer_resize (gint32  layer_ID,
-                         gdouble width,
-                         gdouble height)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
                                           G_TYPE_DOUBLE, width,
                                           G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);

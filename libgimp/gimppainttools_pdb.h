@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 gboolean gimp_airbrush           (GimpDrawable             *drawable,
                                   gdouble                   pressure,
                                   gint                      num_strokes,
@@ -106,104 +102,6 @@ gboolean gimp_smudge             (GimpDrawable             *drawable,
 gboolean gimp_smudge_default     (GimpDrawable             *drawable,
                                   gint                      num_strokes,
                                   const gdouble            *strokes);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_airbrush _gimp_airbrush
-#define gimp_airbrush_default _gimp_airbrush_default
-#define gimp_clone _gimp_clone
-#define gimp_clone_default _gimp_clone_default
-#define gimp_convolve _gimp_convolve
-#define gimp_convolve_default _gimp_convolve_default
-#define gimp_dodgeburn _gimp_dodgeburn
-#define gimp_dodgeburn_default _gimp_dodgeburn_default
-#define gimp_eraser _gimp_eraser
-#define gimp_eraser_default _gimp_eraser_default
-#define gimp_heal _gimp_heal
-#define gimp_heal_default _gimp_heal_default
-#define gimp_paintbrush _gimp_paintbrush
-#define gimp_paintbrush_default _gimp_paintbrush_default
-#define gimp_pencil _gimp_pencil
-#define gimp_smudge _gimp_smudge
-#define gimp_smudge_default _gimp_smudge_default
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gboolean _gimp_airbrush           (gint32                    drawable_ID,
-                                   gdouble                   pressure,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_airbrush_default   (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_clone              (gint32                    drawable_ID,
-                                   gint32                    src_drawable_ID,
-                                   GimpCloneType             clone_type,
-                                   gdouble                   src_x,
-                                   gdouble                   src_y,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_clone_default      (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_convolve           (gint32                    drawable_ID,
-                                   gdouble                   pressure,
-                                   GimpConvolveType          convolve_type,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_convolve_default   (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_dodgeburn          (gint32                    drawable_ID,
-                                   gdouble                   exposure,
-                                   GimpDodgeBurnType         dodgeburn_type,
-                                   GimpTransferMode          dodgeburn_mode,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_dodgeburn_default  (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_eraser             (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes,
-                                   GimpBrushApplicationMode  hardness,
-                                   GimpPaintApplicationMode  method);
-gboolean _gimp_eraser_default     (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_heal               (gint32                    drawable_ID,
-                                   gint32                    src_drawable_ID,
-                                   gdouble                   src_x,
-                                   gdouble                   src_y,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_heal_default       (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_paintbrush         (gint32                    drawable_ID,
-                                   gdouble                   fade_out,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes,
-                                   GimpPaintApplicationMode  method,
-                                   gdouble                   gradient_length);
-gboolean _gimp_paintbrush_default (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_pencil             (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_smudge             (gint32                    drawable_ID,
-                                   gdouble                   pressure,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
-gboolean _gimp_smudge_default     (gint32                    drawable_ID,
-                                   gint                      num_strokes,
-                                   const gdouble            *strokes);
 
 
 G_END_DECLS

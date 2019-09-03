@@ -84,54 +84,6 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
 }
 
 /**
- * _gimp_drawable_brightness_contrast: (skip)
- * @drawable_ID: The drawable.
- * @brightness: Brightness adjustment.
- * @contrast: Contrast adjustment.
- *
- * Modify brightness/contrast in the specified drawable.
- *
- * This procedures allows the brightness and contrast of the specified
- * drawable to be modified. Both 'brightness' and 'contrast' parameters
- * are defined between -0.5 and 0.5.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_brightness_contrast (gint32  drawable_ID,
-                                    gdouble brightness,
-                                    gdouble contrast)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          G_TYPE_DOUBLE, brightness,
-                                          G_TYPE_DOUBLE, contrast,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-brightness-contrast",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-brightness-contrast",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_color_balance:
  * @drawable: The drawable.
  * @transfer_mode: Transfer mode.
@@ -170,68 +122,6 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_TRANSFER_MODE, transfer_mode,
-                                          G_TYPE_BOOLEAN, preserve_lum,
-                                          G_TYPE_DOUBLE, cyan_red,
-                                          G_TYPE_DOUBLE, magenta_green,
-                                          G_TYPE_DOUBLE, yellow_blue,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-color-balance",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-color-balance",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_color_balance: (skip)
- * @drawable_ID: The drawable.
- * @transfer_mode: Transfer mode.
- * @preserve_lum: Preserve luminosity values at each pixel.
- * @cyan_red: Cyan-Red color balance.
- * @magenta_green: Magenta-Green color balance.
- * @yellow_blue: Yellow-Blue color balance.
- *
- * Modify the color balance of the specified drawable.
- *
- * Modify the color balance of the specified drawable. There are three
- * axis which can be modified: cyan-red, magenta-green, and
- * yellow-blue. Negative values increase the amount of the former,
- * positive values increase the amount of the latter. Color balance can
- * be controlled with the 'transfer_mode' setting, which allows
- * shadows, mid-tones, and highlights in an image to be affected
- * differently. The 'preserve-lum' parameter, if TRUE, ensures that the
- * luminosity of each pixel remains fixed.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_color_balance (gint32           drawable_ID,
-                              GimpTransferMode transfer_mode,
-                              gboolean         preserve_lum,
-                              gdouble          cyan_red,
-                              gdouble          magenta_green,
-                              gdouble          yellow_blue)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_TRANSFER_MODE, transfer_mode,
                                           G_TYPE_BOOLEAN, preserve_lum,
                                           G_TYPE_DOUBLE, cyan_red,
@@ -308,58 +198,6 @@ gimp_drawable_colorize_hsl (GimpDrawable *drawable,
 }
 
 /**
- * _gimp_drawable_colorize_hsl: (skip)
- * @drawable_ID: The drawable.
- * @hue: Hue in degrees.
- * @saturation: Saturation in percent.
- * @lightness: Lightness in percent.
- *
- * Render the drawable as a grayscale image seen through a colored
- * glass.
- *
- * Desaturates the drawable, then tints it with the specified color.
- * This tool is only valid on RGB color images. It will not operate on
- * grayscale drawables.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_colorize_hsl (gint32  drawable_ID,
-                             gdouble hue,
-                             gdouble saturation,
-                             gdouble lightness)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          G_TYPE_DOUBLE, hue,
-                                          G_TYPE_DOUBLE, saturation,
-                                          G_TYPE_DOUBLE, lightness,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-colorize-hsl",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-colorize-hsl",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_curves_explicit:
  * @drawable: The drawable.
  * @channel: The channel to modify.
@@ -392,61 +230,6 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          G_TYPE_INT, num_values,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
-                                          G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), values, num_values);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-curves-explicit",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-curves-explicit",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_curves_explicit: (skip)
- * @drawable_ID: The drawable.
- * @channel: The channel to modify.
- * @num_values: The number of values in the new curve.
- * @values: (array length=num_values) (element-type gdouble): The explicit curve.
- *
- * Modifies the intensity curve(s) for specified drawable.
- *
- * Modifies the intensity mapping for one channel in the specified
- * drawable. The channel can be either an intensity component, or the
- * value. The 'values' parameter is an array of doubles which
- * explicitly defines how each pixel value in the drawable will be
- * modified. Use the gimp_curves_spline() function to modify intensity
- * levels with Catmull Rom splines.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_curves_explicit (gint32                drawable_ID,
-                                GimpHistogramChannel  channel,
-                                gint                  num_values,
-                                const gdouble        *values)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_INT, num_values,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -525,61 +308,6 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
 }
 
 /**
- * _gimp_drawable_curves_spline: (skip)
- * @drawable_ID: The drawable.
- * @channel: The channel to modify.
- * @num_points: The number of values in the control point array.
- * @points: (array length=num_points) (element-type gdouble): The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
- *
- * Modifies the intensity curve(s) for specified drawable.
- *
- * Modifies the intensity mapping for one channel in the specified
- * drawable. The channel can be either an intensity component, or the
- * value. The 'points' parameter is an array of doubles which define a
- * set of control points which describe a Catmull Rom spline which
- * yields the final intensity curve. Use the gimp_curves_explicit()
- * function to explicitly modify intensity levels.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_curves_spline (gint32                drawable_ID,
-                              GimpHistogramChannel  channel,
-                              gint                  num_points,
-                              const gdouble        *points)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          G_TYPE_INT, num_points,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
-                                          G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), points, num_points);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-curves-spline",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-curves-spline",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_desaturate:
  * @drawable: The drawable.
  * @desaturate_mode: The formula to use to desaturate.
@@ -606,52 +334,6 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_DESATURATE_MODE, desaturate_mode,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-desaturate",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-desaturate",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_desaturate: (skip)
- * @drawable_ID: The drawable.
- * @desaturate_mode: The formula to use to desaturate.
- *
- * Desaturate the contents of the specified drawable, with the
- * specified formula.
- *
- * This procedure desaturates the contents of the specified drawable,
- * with the specified formula. This procedure only works on drawables
- * of type RGB color.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_desaturate (gint32             drawable_ID,
-                           GimpDesaturateMode desaturate_mode)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_DESATURATE_MODE, desaturate_mode,
                                           G_TYPE_NONE);
 
@@ -701,55 +383,6 @@ gimp_drawable_equalize (GimpDrawable *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_BOOLEAN, mask_only,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-equalize",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-equalize",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_equalize: (skip)
- * @drawable_ID: The drawable.
- * @mask_only: Equalization option.
- *
- * Equalize the contents of the specified drawable.
- *
- * This procedure equalizes the contents of the specified drawable.
- * Each intensity channel is equalized independently. The equalized
- * intensity is given as inten' = (255 - inten). The 'mask_only' option
- * specifies whether to adjust only the area of the image within the
- * selection bounds, or the entire image based on the histogram of the
- * selected area. If there is no selection, the entire image is
- * adjusted based on the histogram for the entire image.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_equalize (gint32   drawable_ID,
-                         gboolean mask_only)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_BOOLEAN, mask_only,
                                           G_TYPE_NONE);
 
@@ -863,99 +496,6 @@ gimp_drawable_histogram (GimpDrawable         *drawable,
 }
 
 /**
- * _gimp_drawable_histogram: (skip)
- * @drawable_ID: The drawable.
- * @channel: The channel to query.
- * @start_range: Start of the intensity measurement range.
- * @end_range: End of the intensity measurement range.
- * @mean: (out): Mean intensity value.
- * @std_dev: (out): Standard deviation of intensity values.
- * @median: (out): Median intensity value.
- * @pixels: (out): Alpha-weighted pixel count for entire image.
- * @count: (out): Alpha-weighted pixel count for range.
- * @percentile: (out): Percentile that range falls under.
- *
- * Returns information on the intensity histogram for the specified
- * drawable.
- *
- * This tool makes it possible to gather information about the
- * intensity histogram of a drawable. A channel to examine is first
- * specified. This can be either value, red, green, or blue, depending
- * on whether the drawable is of type color or grayscale. Second, a
- * range of intensities are specified. The gimp_drawable_histogram()
- * function returns statistics based on the pixels in the drawable that
- * fall under this range of values. Mean, standard deviation, median,
- * number of pixels, and percentile are all returned. Additionally, the
- * total count of pixels in the image is returned. Counts of pixels are
- * weighted by any associated alpha values and by the current selection
- * mask. That is, pixels that lie outside an active selection mask will
- * not be counted. Similarly, pixels with transparent alpha values will
- * not be counted. The returned mean, std_dev and median are in the
- * range (0..255) for 8-bit images or if the plug-in is not
- * precision-aware, and in the range (0.0..1.0) otherwise.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_histogram (gint32                drawable_ID,
-                          GimpHistogramChannel  channel,
-                          gdouble               start_range,
-                          gdouble               end_range,
-                          gdouble              *mean,
-                          gdouble              *std_dev,
-                          gdouble              *median,
-                          gdouble              *pixels,
-                          gdouble              *count,
-                          gdouble              *percentile)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          G_TYPE_DOUBLE, start_range,
-                                          G_TYPE_DOUBLE, end_range,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-histogram",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-histogram",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *mean = 0.0;
-  *std_dev = 0.0;
-  *median = 0.0;
-  *pixels = 0.0;
-  *count = 0.0;
-  *percentile = 0.0;
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      *mean = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *std_dev = g_value_get_double (gimp_value_array_index (return_vals, 2));
-      *median = g_value_get_double (gimp_value_array_index (return_vals, 3));
-      *pixels = g_value_get_double (gimp_value_array_index (return_vals, 4));
-      *count = g_value_get_double (gimp_value_array_index (return_vals, 5));
-      *percentile = g_value_get_double (gimp_value_array_index (return_vals, 6));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_hue_saturation:
  * @drawable: The drawable.
  * @hue_range: Range of affected hues.
@@ -1015,65 +555,6 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
 }
 
 /**
- * _gimp_drawable_hue_saturation: (skip)
- * @drawable_ID: The drawable.
- * @hue_range: Range of affected hues.
- * @hue_offset: Hue offset in degrees.
- * @lightness: Lightness modification.
- * @saturation: Saturation modification.
- * @overlap: Overlap other hue channels.
- *
- * Modify hue, lightness, and saturation in the specified drawable.
- *
- * This procedure allows the hue, lightness, and saturation in the
- * specified drawable to be modified. The 'hue-range' parameter
- * provides the capability to limit range of affected hues. The
- * 'overlap' parameter provides blending into neighboring hue channels
- * when rendering.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_hue_saturation (gint32       drawable_ID,
-                               GimpHueRange hue_range,
-                               gdouble      hue_offset,
-                               gdouble      lightness,
-                               gdouble      saturation,
-                               gdouble      overlap)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          GIMP_TYPE_HUE_RANGE, hue_range,
-                                          G_TYPE_DOUBLE, hue_offset,
-                                          G_TYPE_DOUBLE, lightness,
-                                          G_TYPE_DOUBLE, saturation,
-                                          G_TYPE_DOUBLE, overlap,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-hue-saturation",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-hue-saturation",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_invert:
  * @drawable: The drawable.
  * @linear: Whether to invert in linear space.
@@ -1100,52 +581,6 @@ gimp_drawable_invert (GimpDrawable *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_BOOLEAN, linear,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-invert",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-invert",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_invert: (skip)
- * @drawable_ID: The drawable.
- * @linear: Whether to invert in linear space.
- *
- * Invert the contents of the specified drawable.
- *
- * This procedure inverts the contents of the specified drawable. Each
- * intensity channel is inverted independently. The inverted intensity
- * is given as inten' = (255 - inten). If 'linear' is TRUE, the
- * drawable is inverted in linear space.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_invert (gint32   drawable_ID,
-                       gboolean linear)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_BOOLEAN, linear,
                                           G_TYPE_NONE);
 
@@ -1241,81 +676,6 @@ gimp_drawable_levels (GimpDrawable         *drawable,
 }
 
 /**
- * _gimp_drawable_levels: (skip)
- * @drawable_ID: The drawable.
- * @channel: The channel to modify.
- * @low_input: Intensity of lowest input.
- * @high_input: Intensity of highest input.
- * @clamp_input: Clamp input values before applying output levels.
- * @gamma: Gamma adjustment factor.
- * @low_output: Intensity of lowest output.
- * @high_output: Intensity of highest output.
- * @clamp_output: Clamp final output values.
- *
- * Modifies intensity levels in the specified drawable.
- *
- * This tool allows intensity levels in the specified drawable to be
- * remapped according to a set of parameters. The low/high input levels
- * specify an initial mapping from the source intensities. The gamma
- * value determines how intensities between the low and high input
- * intensities are interpolated. A gamma value of 1.0 results in a
- * linear interpolation. Higher gamma values result in more high-level
- * intensities. Lower gamma values result in more low-level
- * intensities. The low/high output levels constrain the final
- * intensity mapping--that is, no final intensity will be lower than
- * the low output level and no final intensity will be higher than the
- * high output level. This tool is only valid on RGB color and
- * grayscale images.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_levels (gint32               drawable_ID,
-                       GimpHistogramChannel channel,
-                       gdouble              low_input,
-                       gdouble              high_input,
-                       gboolean             clamp_input,
-                       gdouble              gamma,
-                       gdouble              low_output,
-                       gdouble              high_output,
-                       gboolean             clamp_output)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          G_TYPE_DOUBLE, low_input,
-                                          G_TYPE_DOUBLE, high_input,
-                                          G_TYPE_BOOLEAN, clamp_input,
-                                          G_TYPE_DOUBLE, gamma,
-                                          G_TYPE_DOUBLE, low_output,
-                                          G_TYPE_DOUBLE, high_output,
-                                          G_TYPE_BOOLEAN, clamp_output,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-levels",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-levels",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_levels_stretch:
  * @drawable: The drawable.
  *
@@ -1339,48 +699,6 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-levels-stretch",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-levels-stretch",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_levels_stretch: (skip)
- * @drawable_ID: The drawable.
- *
- * Automatically modifies intensity levels in the specified drawable.
- *
- * This procedure allows intensity levels in the specified drawable to
- * be remapped according to a set of guessed parameters. It is
- * equivalent to clicking the \"Auto\" button in the Levels tool.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_levels_stretch (gint32 drawable_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1444,50 +762,6 @@ gimp_drawable_posterize (GimpDrawable *drawable,
 }
 
 /**
- * _gimp_drawable_posterize: (skip)
- * @drawable_ID: The drawable.
- * @levels: Levels of posterization.
- *
- * Posterize the specified drawable.
- *
- * This procedures reduces the number of shades allows in each
- * intensity channel to the specified 'levels' parameter.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_posterize (gint32 drawable_ID,
-                          gint   levels)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          G_TYPE_INT, levels,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-posterize",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-posterize",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_threshold:
  * @drawable: The drawable.
  * @channel: The channel to base the threshold on.
@@ -1518,58 +792,6 @@ gimp_drawable_threshold (GimpDrawable         *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          G_TYPE_DOUBLE, low_threshold,
-                                          G_TYPE_DOUBLE, high_threshold,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-threshold",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-threshold",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_threshold: (skip)
- * @drawable_ID: The drawable.
- * @channel: The channel to base the threshold on.
- * @low_threshold: The low threshold value.
- * @high_threshold: The high threshold value.
- *
- * Threshold the specified drawable.
- *
- * This procedures generates a threshold map of the specified drawable.
- * All pixels between the values of 'low_threshold' and
- * 'high_threshold', on the scale of 'channel' are replaced with white,
- * and all other pixels with black.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_threshold (gint32               drawable_ID,
-                          GimpHistogramChannel channel,
-                          gdouble              low_threshold,
-                          gdouble              high_threshold)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, low_threshold,
                                           G_TYPE_DOUBLE, high_threshold,

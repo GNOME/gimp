@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 guint               gimp_image_add_hguide            (GimpImage *image,
                                                       gint       yposition);
 guint               gimp_image_add_vguide            (GimpImage *image,
@@ -48,35 +44,6 @@ GimpOrientationType gimp_image_get_guide_orientation (GimpImage *image,
                                                       guint      guide);
 gint                gimp_image_get_guide_position    (GimpImage *image,
                                                       guint      guide);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_image_add_hguide _gimp_image_add_hguide
-#define gimp_image_add_vguide _gimp_image_add_vguide
-#define gimp_image_delete_guide _gimp_image_delete_guide
-#define gimp_image_find_next_guide _gimp_image_find_next_guide
-#define gimp_image_get_guide_orientation _gimp_image_get_guide_orientation
-#define gimp_image_get_guide_position _gimp_image_get_guide_position
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gint32              _gimp_image_add_hguide            (gint32 image_ID,
-                                                       gint   yposition);
-gint32              _gimp_image_add_vguide            (gint32 image_ID,
-                                                       gint   xposition);
-gboolean            _gimp_image_delete_guide          (gint32 image_ID,
-                                                       gint32 guide_ID);
-gint32              _gimp_image_find_next_guide       (gint32 image_ID,
-                                                       gint32 guide_ID);
-GimpOrientationType _gimp_image_get_guide_orientation (gint32 image_ID,
-                                                       gint32 guide_ID);
-gint                _gimp_image_get_guide_position    (gint32 image_ID,
-                                                       gint32 guide_ID);
 
 
 G_END_DECLS

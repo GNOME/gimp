@@ -39,22 +39,6 @@ gboolean gimp_fonts_close_popup (const gchar *font_callback);
 gboolean gimp_fonts_set_popup   (const gchar *font_callback,
                                  const gchar *font_name);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-
-
 
 G_END_DECLS
 

@@ -80,51 +80,6 @@ gimp_drawable_edit_clear (GimpDrawable *drawable)
 }
 
 /**
- * _gimp_drawable_edit_clear: (skip)
- * @drawable_ID: The drawable to clear from.
- *
- * Clear selected area of drawable.
- *
- * This procedure clears the specified drawable. If the drawable has an
- * alpha channel, the cleared pixels will become transparent. If the
- * drawable does not have an alpha channel, cleared pixels will be set
- * to the background color. This procedure only affects regions within
- * a selection if there is a selection active.
- *
- * This procedure is affected by the following context setters:
- * gimp_context_set_background().
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_drawable_edit_clear (gint32 drawable_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-edit-clear",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-edit-clear",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_edit_fill:
  * @drawable: The drawable to fill to.
  * @fill_type: The type of fill.
@@ -154,55 +109,6 @@ gimp_drawable_edit_fill (GimpDrawable *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_FILL_TYPE, fill_type,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-edit-fill",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-edit-fill",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_edit_fill: (skip)
- * @drawable_ID: The drawable to fill to.
- * @fill_type: The type of fill.
- *
- * Fill selected area of drawable.
- *
- * This procedure fills the specified drawable according to fill mode.
- * This procedure only affects regions within a selection if there is a
- * selection active. If you want to fill the whole drawable, regardless
- * of the selection, use gimp_drawable_fill().
- *
- * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_foreground(), gimp_context_set_background(),
- * gimp_context_set_pattern().
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_drawable_edit_fill (gint32       drawable_ID,
-                          GimpFillType fill_type)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_NONE);
 
@@ -262,67 +168,6 @@ gimp_drawable_edit_bucket_fill (GimpDrawable *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_FILL_TYPE, fill_type,
-                                          G_TYPE_DOUBLE, x,
-                                          G_TYPE_DOUBLE, y,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-edit-bucket-fill",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-edit-bucket-fill",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_edit_bucket_fill: (skip)
- * @drawable_ID: The affected drawable.
- * @fill_type: The type of fill.
- * @x: The x coordinate of this bucket fill's application.
- * @y: The y coordinate of this bucket fill's application.
- *
- * Fill the area by a seed fill starting at the specified coordinates.
- *
- * This procedure does a seed fill at the specified coordinates, using
- * various parameters from the current context.
- * In the case of merged sampling, the x and y coordinates are relative
- * to the image's origin; otherwise, they are relative to the
- * drawable's origin.
- *
- * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_foreground(), gimp_context_set_background(),
- * gimp_context_set_pattern(), gimp_context_set_sample_threshold(),
- * gimp_context_set_sample_merged(),
- * gimp_context_set_sample_criterion(),
- * gimp_context_set_diagonal_neighbors(), gimp_context_set_antialias().
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_edit_bucket_fill (gint32       drawable_ID,
-                                 GimpFillType fill_type,
-                                 gdouble      x,
-                                 gdouble      y)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           GIMP_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -426,87 +271,6 @@ gimp_drawable_edit_gradient_fill (GimpDrawable     *drawable,
 }
 
 /**
- * _gimp_drawable_edit_gradient_fill: (skip)
- * @drawable_ID: The affected drawable.
- * @gradient_type: The type of gradient.
- * @offset: Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent.
- * @supersample: Do adaptive supersampling.
- * @supersample_max_depth: Maximum recursion levels for supersampling.
- * @supersample_threshold: Supersampling threshold.
- * @dither: Use dithering to reduce banding.
- * @x1: The x coordinate of this gradient's starting point.
- * @y1: The y coordinate of this gradient's starting point.
- * @x2: The x coordinate of this gradient's ending point.
- * @y2: The y coordinate of this gradient's ending point.
- *
- * Draw a gradient between the starting and ending coordinates with the
- * specified gradient type.
- *
- * This tool requires information on the gradient type. It creates the
- * specified variety of gradient using the starting and ending
- * coordinates as defined for each gradient type. For shapeburst
- * gradient types, the context's distance metric is also relevant and
- * can be updated with gimp_context_set_distance_metric().
- *
- * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_foreground(), gimp_context_set_background(),
- * gimp_context_set_gradient() and all gradient property settings,
- * gimp_context_set_distance_metric().
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
-                                   GimpGradientType gradient_type,
-                                   gdouble          offset,
-                                   gboolean         supersample,
-                                   gint             supersample_max_depth,
-                                   gdouble          supersample_threshold,
-                                   gboolean         dither,
-                                   gdouble          x1,
-                                   gdouble          y1,
-                                   gdouble          x2,
-                                   gdouble          y2)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          GIMP_TYPE_GRADIENT_TYPE, gradient_type,
-                                          G_TYPE_DOUBLE, offset,
-                                          G_TYPE_BOOLEAN, supersample,
-                                          G_TYPE_INT, supersample_max_depth,
-                                          G_TYPE_DOUBLE, supersample_threshold,
-                                          G_TYPE_BOOLEAN, dither,
-                                          G_TYPE_DOUBLE, x1,
-                                          G_TYPE_DOUBLE, y1,
-                                          G_TYPE_DOUBLE, x2,
-                                          G_TYPE_DOUBLE, y2,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-edit-gradient-fill",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-edit-gradient-fill",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_edit_stroke_selection:
  * @drawable: The drawable to stroke to.
  *
@@ -537,55 +301,6 @@ gimp_drawable_edit_stroke_selection (GimpDrawable *drawable)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-edit-stroke-selection",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-edit-stroke-selection",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_edit_stroke_selection: (skip)
- * @drawable_ID: The drawable to stroke to.
- *
- * Stroke the current selection
- *
- * This procedure strokes the current selection, painting along the
- * selection boundary with the active paint method and brush, or using
- * a plain line with configurable properties. The paint is applied to
- * the specified drawable regardless of the active selection.
- *
- * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
- * gimp_context_set_foreground(), gimp_context_set_brush() and all
- * brush property settings, gimp_context_set_gradient() and all
- * gradient property settings, gimp_context_set_line_width() and all
- * line property settings, gimp_context_set_antialias().
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_drawable_edit_stroke_selection (gint32 drawable_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -640,60 +355,6 @@ gimp_drawable_edit_stroke_item (GimpDrawable *drawable,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_ITEM, item,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-edit-stroke-item",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-edit-stroke-item",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_drawable_edit_stroke_item: (skip)
- * @drawable_ID: The drawable to stroke to.
- * @item_ID: The item to stroke.
- *
- * Stroke the specified item
- *
- * This procedure strokes the specified item, painting along its
- * outline (e.g. along a path, or along a channel's boundary), with the
- * active paint method and brush, or using a plain line with
- * configurable properties.
- *
- * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
- * gimp_context_set_foreground(), gimp_context_set_brush() and all
- * brush property settings, gimp_context_set_gradient() and all
- * gradient property settings, gimp_context_set_line_width() and all
- * line property settings, gimp_context_set_antialias().
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_drawable_edit_stroke_item (gint32 drawable_ID,
-                                 gint32 item_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          GIMP_TYPE_ITEM, gimp_item_get_by_id (item_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

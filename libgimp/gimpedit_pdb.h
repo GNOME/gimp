@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 gboolean   gimp_edit_cut                      (GimpDrawable *drawable);
 gboolean   gimp_edit_copy                     (GimpDrawable *drawable);
 gboolean   gimp_edit_copy_visible             (GimpImage    *image);
@@ -52,43 +48,6 @@ GimpLayer* gimp_edit_named_paste              (GimpDrawable *drawable,
                                                const gchar  *buffer_name,
                                                gboolean      paste_into);
 GimpImage* gimp_edit_named_paste_as_new_image (const gchar  *buffer_name);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_edit_cut _gimp_edit_cut
-#define gimp_edit_copy _gimp_edit_copy
-#define gimp_edit_copy_visible _gimp_edit_copy_visible
-#define gimp_edit_paste _gimp_edit_paste
-#define gimp_edit_paste_as_new_image _gimp_edit_paste_as_new_image
-#define gimp_edit_named_cut _gimp_edit_named_cut
-#define gimp_edit_named_copy _gimp_edit_named_copy
-#define gimp_edit_named_copy_visible _gimp_edit_named_copy_visible
-#define gimp_edit_named_paste _gimp_edit_named_paste
-#define gimp_edit_named_paste_as_new_image _gimp_edit_named_paste_as_new_image
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gboolean _gimp_edit_cut                      (gint32       drawable_ID);
-gboolean _gimp_edit_copy                     (gint32       drawable_ID);
-gboolean _gimp_edit_copy_visible             (gint32       image_ID);
-gint32   _gimp_edit_paste                    (gint32       drawable_ID,
-                                              gboolean     paste_into);
-gint32   _gimp_edit_paste_as_new_image       (void);
-gchar*   _gimp_edit_named_cut                (gint32       drawable_ID,
-                                              const gchar *buffer_name);
-gchar*   _gimp_edit_named_copy               (gint32       drawable_ID,
-                                              const gchar *buffer_name);
-gchar*   _gimp_edit_named_copy_visible       (gint32       image_ID,
-                                              const gchar *buffer_name);
-gint32   _gimp_edit_named_paste              (gint32       drawable_ID,
-                                              const gchar *buffer_name,
-                                              gboolean     paste_into);
-gint32   _gimp_edit_named_paste_as_new_image (const gchar *buffer_name);
 
 
 G_END_DECLS

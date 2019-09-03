@@ -32,6 +32,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+G_GNUC_INTERNAL gboolean _gimp_progress_init             (const gchar *message,
+                                                          GimpDisplay *gdisplay);
 G_GNUC_INTERNAL gboolean _gimp_progress_update           (gdouble      percentage);
 gboolean                 gimp_progress_pulse             (void);
 gboolean                 gimp_progress_set_text          (const gchar *message);
@@ -40,23 +42,6 @@ gint                     gimp_progress_get_window_handle (void);
 G_GNUC_INTERNAL gboolean _gimp_progress_install          (const gchar *progress_callback);
 G_GNUC_INTERNAL gboolean _gimp_progress_uninstall        (const gchar *progress_callback);
 gboolean                 gimp_progress_cancel            (const gchar *progress_callback);
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-G_GNUC_INTERNAL gboolean _gimp_progress_init (const gchar *message,
-                                              GimpDisplay *gdisplay);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-
 
 
 G_END_DECLS

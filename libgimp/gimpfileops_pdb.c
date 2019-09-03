@@ -86,57 +86,6 @@ gimp_file_load (GimpRunMode  run_mode,
 }
 
 /**
- * _gimp_file_load: (skip)
- * @run_mode: The run mode.
- * @filename: The name of the file to load.
- * @raw_filename: The name as entered by the user.
- *
- * Loads an image file by invoking the right load handler.
- *
- * This procedure invokes the correct file load handler using magic if
- * possible, and falling back on the file's extension and/or prefix if
- * not. The name of the file to load is typically a full pathname, and
- * the name entered is what the user actually typed before prepending a
- * directory path. The reason for this is that if the user types
- * https://www.gimp.org/foo.png he wants to fetch a URL, and the full
- * pathname will not look like a URL.
- *
- * Returns: The output image.
- **/
-gint32
-_gimp_file_load (GimpRunMode  run_mode,
-                 const gchar *filename,
-                 const gchar *raw_filename)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 image_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
-                                          G_TYPE_STRING, filename,
-                                          G_TYPE_STRING, raw_filename,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-file-load",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-file-load",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image_ID = gimp_image_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
-
-  gimp_value_array_unref (return_vals);
-
-  return image_ID;
-}
-
-/**
  * gimp_file_load_layer:
  * @run_mode: The run mode.
  * @image: Destination image.
@@ -187,56 +136,6 @@ gimp_file_load_layer (GimpRunMode  run_mode,
 }
 
 /**
- * _gimp_file_load_layer: (skip)
- * @run_mode: The run mode.
- * @image_ID: Destination image.
- * @filename: The name of the file to load.
- *
- * Loads an image file as a layer for an existing image.
- *
- * This procedure behaves like the file-load procedure but opens the
- * specified image as a layer for an existing image. The returned layer
- * needs to be added to the existing image with
- * gimp_image_insert_layer().
- *
- * Returns: The layer created when loading the image file.
- *
- * Since: 2.4
- **/
-gint32
-_gimp_file_load_layer (GimpRunMode  run_mode,
-                       gint32       image_ID,
-                       const gchar *filename)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_STRING, filename,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-file-load-layer",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-file-load-layer",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_item_get_id (g_value_get_object (gimp_value_array_index (return_vals, 1)));
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_ID;
-}
-
-/**
  * gimp_file_load_layers:
  * @run_mode: The run mode.
  * @image: Destination image.
@@ -270,64 +169,6 @@ gimp_file_load_layers (GimpRunMode  run_mode,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-file-load-layers",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-file-load-layers",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *num_layers = 0;
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      *num_layers = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      layer_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_ids;
-}
-
-/**
- * _gimp_file_load_layers: (skip)
- * @run_mode: The run mode.
- * @image_ID: Destination image.
- * @filename: The name of the file to load.
- * @num_layers: (out): The number of loaded layers.
- *
- * Loads an image file as layers for an existing image.
- *
- * This procedure behaves like the file-load procedure but opens the
- * specified image as layers for an existing image. The returned layers
- * needs to be added to the existing image with
- * gimp_image_insert_layer().
- *
- * Returns: (array length=num_layers): The list of loaded layers.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.4
- **/
-gint *
-_gimp_file_load_layers (GimpRunMode  run_mode,
-                        gint32       image_ID,
-                        const gchar *filename,
-                        gint        *num_layers)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint *layer_ids = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -410,62 +251,6 @@ gimp_file_save (GimpRunMode   run_mode,
 }
 
 /**
- * _gimp_file_save: (skip)
- * @run_mode: The run mode.
- * @image_ID: Input image.
- * @drawable_ID: Drawable to save.
- * @filename: The name of the file to save the image in.
- * @raw_filename: The name as entered by the user.
- *
- * Saves a file by extension.
- *
- * This procedure invokes the correct file save handler according to
- * the file's extension and/or prefix. The name of the file to save is
- * typically a full pathname, and the name entered is what the user
- * actually typed before prepending a directory path. The reason for
- * this is that if the user types https://www.gimp.org/foo.png she
- * wants to fetch a URL, and the full pathname will not look like a
- * URL.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_file_save (GimpRunMode  run_mode,
-                 gint32       image_ID,
-                 gint32       drawable_ID,
-                 const gchar *filename,
-                 const gchar *raw_filename)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
-                                          G_TYPE_STRING, filename,
-                                          G_TYPE_STRING, raw_filename,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-file-save",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-file-save",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_file_save_thumbnail:
  * @image: The image.
  * @filename: The name of the file the thumbnail belongs to.
@@ -492,52 +277,6 @@ gimp_file_save_thumbnail (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-file-save-thumbnail",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-file-save-thumbnail",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_file_save_thumbnail: (skip)
- * @image_ID: The image.
- * @filename: The name of the file the thumbnail belongs to.
- *
- * Saves a thumbnail for the given image
- *
- * This procedure saves a thumbnail for the given image according to
- * the Free Desktop Thumbnail Managing Standard. The thumbnail is saved
- * so that it belongs to the file with the given filename. This means
- * you have to save the image under this name first, otherwise this
- * procedure will fail. This procedure may become useful if you want to
- * explicitly save a thumbnail with a file.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_file_save_thumbnail (gint32       image_ID,
-                           const gchar *filename)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 

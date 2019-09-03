@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 gboolean gimp_drawable_brightness_contrast (GimpDrawable         *drawable,
                                             gdouble               brightness,
                                             gdouble               contrast);
@@ -95,90 +91,6 @@ gboolean gimp_drawable_threshold           (GimpDrawable         *drawable,
                                             GimpHistogramChannel  channel,
                                             gdouble               low_threshold,
                                             gdouble               high_threshold);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_drawable_brightness_contrast _gimp_drawable_brightness_contrast
-#define gimp_drawable_color_balance _gimp_drawable_color_balance
-#define gimp_drawable_colorize_hsl _gimp_drawable_colorize_hsl
-#define gimp_drawable_curves_explicit _gimp_drawable_curves_explicit
-#define gimp_drawable_curves_spline _gimp_drawable_curves_spline
-#define gimp_drawable_desaturate _gimp_drawable_desaturate
-#define gimp_drawable_equalize _gimp_drawable_equalize
-#define gimp_drawable_histogram _gimp_drawable_histogram
-#define gimp_drawable_hue_saturation _gimp_drawable_hue_saturation
-#define gimp_drawable_invert _gimp_drawable_invert
-#define gimp_drawable_levels _gimp_drawable_levels
-#define gimp_drawable_levels_stretch _gimp_drawable_levels_stretch
-#define gimp_drawable_posterize _gimp_drawable_posterize
-#define gimp_drawable_threshold _gimp_drawable_threshold
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gboolean _gimp_drawable_brightness_contrast (gint32                drawable_ID,
-                                             gdouble               brightness,
-                                             gdouble               contrast);
-gboolean _gimp_drawable_color_balance       (gint32                drawable_ID,
-                                             GimpTransferMode      transfer_mode,
-                                             gboolean              preserve_lum,
-                                             gdouble               cyan_red,
-                                             gdouble               magenta_green,
-                                             gdouble               yellow_blue);
-gboolean _gimp_drawable_colorize_hsl        (gint32                drawable_ID,
-                                             gdouble               hue,
-                                             gdouble               saturation,
-                                             gdouble               lightness);
-gboolean _gimp_drawable_curves_explicit     (gint32                drawable_ID,
-                                             GimpHistogramChannel  channel,
-                                             gint                  num_values,
-                                             const gdouble        *values);
-gboolean _gimp_drawable_curves_spline       (gint32                drawable_ID,
-                                             GimpHistogramChannel  channel,
-                                             gint                  num_points,
-                                             const gdouble        *points);
-gboolean _gimp_drawable_desaturate          (gint32                drawable_ID,
-                                             GimpDesaturateMode    desaturate_mode);
-gboolean _gimp_drawable_equalize            (gint32                drawable_ID,
-                                             gboolean              mask_only);
-gboolean _gimp_drawable_histogram           (gint32                drawable_ID,
-                                             GimpHistogramChannel  channel,
-                                             gdouble               start_range,
-                                             gdouble               end_range,
-                                             gdouble              *mean,
-                                             gdouble              *std_dev,
-                                             gdouble              *median,
-                                             gdouble              *pixels,
-                                             gdouble              *count,
-                                             gdouble              *percentile);
-gboolean _gimp_drawable_hue_saturation      (gint32                drawable_ID,
-                                             GimpHueRange          hue_range,
-                                             gdouble               hue_offset,
-                                             gdouble               lightness,
-                                             gdouble               saturation,
-                                             gdouble               overlap);
-gboolean _gimp_drawable_invert              (gint32                drawable_ID,
-                                             gboolean              linear);
-gboolean _gimp_drawable_levels              (gint32                drawable_ID,
-                                             GimpHistogramChannel  channel,
-                                             gdouble               low_input,
-                                             gdouble               high_input,
-                                             gboolean              clamp_input,
-                                             gdouble               gamma,
-                                             gdouble               low_output,
-                                             gdouble               high_output,
-                                             gboolean              clamp_output);
-gboolean _gimp_drawable_levels_stretch      (gint32                drawable_ID);
-gboolean _gimp_drawable_posterize           (gint32                drawable_ID,
-                                             gint                  levels);
-gboolean _gimp_drawable_threshold           (gint32                drawable_ID,
-                                             GimpHistogramChannel  channel,
-                                             gdouble               low_threshold,
-                                             gdouble               high_threshold);
 
 
 G_END_DECLS

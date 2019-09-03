@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 GimpItem* gimp_item_transform_translate     (GimpItem            *item,
                                              gdouble              off_x,
                                              gdouble              off_y);
@@ -93,84 +89,6 @@ GimpItem* gimp_item_transform_matrix        (GimpItem            *item,
                                              gdouble              coeff_2_0,
                                              gdouble              coeff_2_1,
                                              gdouble              coeff_2_2);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_item_transform_translate _gimp_item_transform_translate
-#define gimp_item_transform_flip_simple _gimp_item_transform_flip_simple
-#define gimp_item_transform_flip _gimp_item_transform_flip
-#define gimp_item_transform_perspective _gimp_item_transform_perspective
-#define gimp_item_transform_rotate_simple _gimp_item_transform_rotate_simple
-#define gimp_item_transform_rotate _gimp_item_transform_rotate
-#define gimp_item_transform_scale _gimp_item_transform_scale
-#define gimp_item_transform_shear _gimp_item_transform_shear
-#define gimp_item_transform_2d _gimp_item_transform_2d
-#define gimp_item_transform_matrix _gimp_item_transform_matrix
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gint32 _gimp_item_transform_translate     (gint32              item_ID,
-                                           gdouble             off_x,
-                                           gdouble             off_y);
-gint32 _gimp_item_transform_flip_simple   (gint32              item_ID,
-                                           GimpOrientationType flip_type,
-                                           gboolean            auto_center,
-                                           gdouble             axis);
-gint32 _gimp_item_transform_flip          (gint32              item_ID,
-                                           gdouble             x0,
-                                           gdouble             y0,
-                                           gdouble             x1,
-                                           gdouble             y1);
-gint32 _gimp_item_transform_perspective   (gint32              item_ID,
-                                           gdouble             x0,
-                                           gdouble             y0,
-                                           gdouble             x1,
-                                           gdouble             y1,
-                                           gdouble             x2,
-                                           gdouble             y2,
-                                           gdouble             x3,
-                                           gdouble             y3);
-gint32 _gimp_item_transform_rotate_simple (gint32              item_ID,
-                                           GimpRotationType    rotate_type,
-                                           gboolean            auto_center,
-                                           gdouble             center_x,
-                                           gdouble             center_y);
-gint32 _gimp_item_transform_rotate        (gint32              item_ID,
-                                           gdouble             angle,
-                                           gboolean            auto_center,
-                                           gdouble             center_x,
-                                           gdouble             center_y);
-gint32 _gimp_item_transform_scale         (gint32              item_ID,
-                                           gdouble             x0,
-                                           gdouble             y0,
-                                           gdouble             x1,
-                                           gdouble             y1);
-gint32 _gimp_item_transform_shear         (gint32              item_ID,
-                                           GimpOrientationType shear_type,
-                                           gdouble             magnitude);
-gint32 _gimp_item_transform_2d            (gint32              item_ID,
-                                           gdouble             source_x,
-                                           gdouble             source_y,
-                                           gdouble             scale_x,
-                                           gdouble             scale_y,
-                                           gdouble             angle,
-                                           gdouble             dest_x,
-                                           gdouble             dest_y);
-gint32 _gimp_item_transform_matrix        (gint32              item_ID,
-                                           gdouble             coeff_0_0,
-                                           gdouble             coeff_0_1,
-                                           gdouble             coeff_0_2,
-                                           gdouble             coeff_1_0,
-                                           gdouble             coeff_1_1,
-                                           gdouble             coeff_1_2,
-                                           gdouble             coeff_2_0,
-                                           gdouble             coeff_2_1,
-                                           gdouble             coeff_2_2);
 
 
 G_END_DECLS

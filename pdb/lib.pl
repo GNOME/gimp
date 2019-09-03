@@ -46,21 +46,16 @@ sub desc_wrap {
 }
 
 sub generate_fun {
-    my ($proc, $out, $api_deprecated, $has_id_arg) = @_;
+    my ($proc, $out) = @_;
     my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
     my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
     sub libtype {
 	my $arg = shift;
 	my $outarg = shift;
-	my $api_deprecated = shift;
 	my ($type, $name) = &arg_parse($arg->{type});
 	my $argtype = $arg_types{$type};
 	my $rettype = '';
-
-	if ($api_deprecated && exists $argtype->{id}) {
-	    return 'gint32 ';
-	}
 
 	if ($type eq 'enum') {
 	    return "$name ";
@@ -89,19 +84,10 @@ sub generate_fun {
     my $func_annotations = "";
 
     if ($proc->{lib_private}) {
-        if ($api_deprecated) {
-            # No need to create deprecated versions of private libs.
-            return '';
-        }
         $wrapped = '_';
     }
 
-    if ($api_deprecated) {
-        $new_funcname = "$wrapped$funcname";
-        #push @{$out->{protos_deprecated}}, "GIMP_DEPRECATED_FOR($new_funcname)\n";
-        $func_annotations .= " (skip)";
-    }
-    elsif ($proc->{deprecated}) {
+    if ($proc->{deprecated}) {
         if ($proc->{deprecated} eq 'NONE') {
             push @{$out->{protos}}, "GIMP_DEPRECATED\n";
         }
@@ -111,12 +97,6 @@ sub generate_fun {
 
             push @{$out->{protos}}, "GIMP_DEPRECATED_FOR($underscores)\n";
         }
-    }
-
-    # Add an underscore for deprecated API. If the original was already
-    # private, this will be 2 underscores.
-    if ($api_deprecated) {
-        $wrapped .= '_';
     }
 
     # Find the return argument (defaults to the first arg if not
@@ -144,7 +124,7 @@ sub generate_fun {
         my ($type) = &arg_parse($retarg->{type});
         my $argtype = $arg_types{$type};
         my $annotate = "";
-        $rettype = &libtype($retarg, 1, $api_deprecated);
+        $rettype = &libtype($retarg, 1);
         chop $rettype unless $rettype =~ /\*$/;
 
         $retarg->{retval} = 1;
@@ -156,12 +136,7 @@ sub generate_fun {
             $annotate .= " (nullable)";
         }
 
-        if ($api_deprecated) {
-            if (exists $argtype->{out_annotate_d}) {
-                $annotate .= " $argtype->{out_annotate_d}";
-            }
-        }
-        elsif (exists $argtype->{out_annotate}) {
+        if (exists $argtype->{out_annotate}) {
             $annotate .= " $argtype->{out_annotate}";
         }
 
@@ -214,9 +189,6 @@ sub generate_fun {
         my $desc = exists $_->{desc} ? $_->{desc} : "";
         my $var_len;
         my $value;
-        my $is_id = $arg->{id} && $api_deprecated;
-
-        $var .= '_ID' if $is_id;
 
         # This gets passed to gimp_value_array_new_with_types()
         if ($type eq 'enum') {
@@ -235,9 +207,6 @@ sub generate_fun {
 
         if (exists $_->{array}) {
             $value_array .= "NULL";
-        }
-        elsif (exists $arg->{convert_func} && $api_deprecated) {
-            $value_array .= eval qq/"$arg->{convert_func}"/;
         }
         else {
             $value_array .= "$var";
@@ -263,13 +232,11 @@ sub generate_fun {
 
         $usednames{$_->{name}}++;
 
-        $arglist .= &libtype($_, 0, $api_deprecated);
+        $arglist .= &libtype($_, 0);
         $arglist .= $_->{name};
-        $arglist .= '_ID' if $is_id;
         $arglist .= ', ';
 
         $argdesc .= " * \@$_->{name}";
-        $argdesc .= '_ID' if $is_id;
         $argdesc .= ":";
 
         if (exists $arg->{array}) {
@@ -315,7 +282,6 @@ sub generate_fun {
             my ($type) = &arg_parse($_->{type});
             my $arg = $arg_types{$type};
             my $var;
-            my $is_id = $arg->{id} && $api_deprecated;
 
             $return_marshal = "" unless $once++;
 
@@ -329,21 +295,16 @@ sub generate_fun {
             }
             elsif (exists $_->{retval}) {
                 $return_args .= "\n" . ' ' x 2;
-                $return_args .= &libtype($_, 1, $api_deprecated);
+                $return_args .= &libtype($_, 1);
 
                 # The return value variable
                 $var = $_->{libname};
-                $var .= '_ID' if $is_id;
                 $return_args .= $var;
 
                 # Save the first var to "return" it
                 $firstvar = $var unless defined $firstvar;
 
-                if ($is_id) {
-                    # Initialize all IDs to -1
-                    $return_args .= " = -1";
-                }
-                elsif ($_->{libdef}) {
+                if ($_->{libdef}) {
                     $return_args .= " = $_->{libdef}";
                 }
                 else {
@@ -396,7 +357,6 @@ CODE
             my ($type) = &arg_parse($_->{type});
             my $desc = exists $_->{desc} ? $_->{desc} : "";
             my $arg = $arg_types{$type};
-            my $is_id = $arg->{id} && $api_deprecated;
             my $var;
 
             # The return value variable
@@ -407,11 +367,9 @@ CODE
                 $arglist .= &libtype($_, 1);
                 $arglist .= '*' unless exists $arg->{struct};
                 $arglist .= "$_->{libname}";
-                $arglist .= '_ID' if $is_id;
                 $arglist .= ', ';
 
                 $argdesc .= " * \@$_->{libname}";
-                $argdesc .= '_ID' if $is_id;
 
                 if ($arg->{name} eq 'COLOR') {
                     $argdesc .= ": (out caller-allocates)";
@@ -424,12 +382,7 @@ CODE
                     $argdesc .= " (array length=@outargs[$argc - 2]->{name})";
                 }
 
-                if ($api_deprecated) {
-                    if (exists $arg->{out_annotate_d}) {
-                        $argdesc .= " $arg->{out_annotate_d}";
-                    }
-                }
-                elsif (exists $arg->{out_annotate}) {
+                if (exists $arg->{out_annotate}) {
                     $argdesc .= " $arg->{out_annotate}";
                 }
 
@@ -438,17 +391,11 @@ CODE
 
             $var = exists $_->{retval} ? "" : '*';
             $var .= $_->{libname};
-            $var .= '_ID' if $is_id;
 
             $value = "gimp_value_array_index (return_vals, $argc)";
 
             $return_marshal .= ' ' x 2 if $#outargs;
-            if ($api_deprecated && $arg->{dup_value_func_d}) {
-                $return_marshal .= eval qq/"    $arg->{dup_value_func_d};\n"/;
-            }
-            else {
-                $return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;
-            }
+            $return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;
 
             if ($argdesc) {
                 unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
@@ -522,17 +469,7 @@ CODE
     my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
     $proto =~ s/ +/ /g;
 
-    if ($api_deprecated) {
-        my $define_dep = "#define $new_funcname $wrapped$funcname";
-        push @{$out->{protos_deprecated}}, $proto;
-        push @{$out->{defines_deprecated}}, $define_dep;
-    }
-    elsif (! $has_id_arg){
-        push @{$out->{protos_no_alt}}, $proto;
-    }
-    else {
-        push @{$out->{protos}}, $proto;
-    }
+    push @{$out->{protos}}, $proto;
 
     my $clist = $arglist;
     my $padlen = length($wrapped) + length($funcname) + 2;
@@ -608,11 +545,11 @@ CODE
 }
 
 sub generate_hbody {
-    my ($out, $extra, $protoname) = @_;
+    my ($out, $extra) = @_;
 
-    if (exists $extra->{${protoname}}) {
+    if (exists $extra->{protos}) {
         my $proto = "";
-        foreach (split(/\n/, $extra->{${protoname}})) {
+        foreach (split(/\n/, $extra->{protos})) {
             next if /^\s*$/;
 
             if (/^\t/ && length($proto)) {
@@ -620,7 +557,7 @@ sub generate_hbody {
                 $proto .= $_ . "\n";
             }
             else {
-                push @{$out->{${protoname}}}, $proto if length($proto);
+                push @{$out->{protos}}, $proto if length($proto);
 
                 s/\s+/ /g; s/^ //; s/ $//;
                 $proto = $_ . "\n";
@@ -629,7 +566,7 @@ sub generate_hbody {
     }
 
     my @longest = (0, 0, 0); my @arglist = (); my $seen = 0;
-    foreach (@{$out->{${protoname}}}) {
+    foreach (@{$out->{protos}}) {
         my $arglist;
 
         if (!/^GIMP_DEPRECATED/) {
@@ -637,7 +574,7 @@ sub generate_hbody {
 
             $arglist = [ split(' ', $_, 3) ];
 
-            if ($arglist->[1] =~ /^_/ && $protoname ne 'protos_deprecated') {
+            if ($arglist->[1] =~ /^_/) {
                 $arglist->[0] = "G_GNUC_INTERNAL ".$arglist->[0];
             }
 
@@ -663,7 +600,7 @@ sub generate_hbody {
 
     $longest[2] += $seen;
 
-    @{$out->{${protoname}}} = ();
+    @{$out->{protos}} = ();
     foreach (@arglist) {
         my $arg;
 
@@ -699,12 +636,12 @@ sub generate_hbody {
             $arg = $_;
         }
 
-        push @{$out->{${protoname}}}, $arg;
+        push @{$out->{protos}}, $arg;
     }
 
     my $body = '';
     $body = $extra->{decls} if exists $extra->{decls};
-    foreach (@{$out->{${protoname}}}) { $body .= $_ }
+    foreach (@{$out->{protos}}) { $body .= $_ }
     if ($out->{deprecated}) {
         $body .= "#endif /* GIMP_DISABLE_DEPRECATED */\n";
     }
@@ -725,30 +662,7 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
 	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
-        # Check if any of the argument or returned value is an image.
-        $has_id_arg = 0;
-	foreach (@outargs) {
-	    my ($type, @typeinfo) = &arg_parse($_->{type});
-	    my $arg = $arg_types{$type};
-            if (exists $arg->{id}) {
-                $has_id_arg = 1;
-                last;
-            }
-	}
-        unless ($has_id_arg) {
-            foreach (@inargs) {
-                my ($type, @typeinfo) = &arg_parse($_->{type});
-                my $arg = $arg_types{$type};
-                if (exists $arg->{id}) {
-                    $has_id_arg = 1;
-                    last;
-                }
-            }
-        }
-        $out->{code} .= generate_fun($proc, $out, 0, $has_id_arg);
-        if ($has_id_arg) {
-            $out->{code} .= generate_fun($proc, $out, 1, $has_id_arg);
-        }
+        $out->{code} .= generate_fun($proc, $out);
     }
 
     my $lgpl_top = <<'LGPL';
@@ -792,9 +706,6 @@ LGPL
 	my $hfile = "$builddir/$hname$FILE_EXT";
 	my $cfile = "$builddir/$cname$FILE_EXT";
         my $body;
-        my $body_deprecated;
-        my $body_no_alt;
-        my $defines_deprecated = '';
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{lib}) {
@@ -802,11 +713,6 @@ LGPL
 	}
 
         $body = generate_hbody($out, $extra, "protos");
-        $body_deprecated = generate_hbody($out, $extra, "protos_deprecated");
-        $body_no_alt = generate_hbody($out, $extra, "protos_no_alt");
-        foreach (@{$out->{defines_deprecated}}) {
-            $defines_deprecated .= "$_" . "\n";
-        }
 
 	open HFILE, "> $hfile" or die "Can't open $hfile: $!\n";
         print HFILE $lgpl_top;
@@ -826,23 +732,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-$body_no_alt
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 $body
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-$defines_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-$body_deprecated
 
 
 G_END_DECLS

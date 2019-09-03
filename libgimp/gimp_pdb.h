@@ -40,22 +40,6 @@ GimpParasite* gimp_get_parasite      (const gchar        *name);
 gchar**       gimp_get_parasite_list (gint               *num_parasites);
 gchar*        gimp_temp_name         (const gchar        *extension);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-
-
 
 G_END_DECLS
 

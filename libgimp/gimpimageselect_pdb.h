@@ -32,10 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 gboolean gimp_image_select_color            (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              GimpDrawable   *drawable,
@@ -72,60 +68,6 @@ gboolean gimp_image_select_polygon          (GimpImage      *image,
 gboolean gimp_image_select_item             (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              GimpItem       *item);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_image_select_color _gimp_image_select_color
-#define gimp_image_select_contiguous_color _gimp_image_select_contiguous_color
-#define gimp_image_select_rectangle _gimp_image_select_rectangle
-#define gimp_image_select_round_rectangle _gimp_image_select_round_rectangle
-#define gimp_image_select_ellipse _gimp_image_select_ellipse
-#define gimp_image_select_polygon _gimp_image_select_polygon
-#define gimp_image_select_item _gimp_image_select_item
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gboolean _gimp_image_select_color            (gint32          image_ID,
-                                              GimpChannelOps  operation,
-                                              gint32          drawable_ID,
-                                              const GimpRGB  *color);
-gboolean _gimp_image_select_contiguous_color (gint32          image_ID,
-                                              GimpChannelOps  operation,
-                                              gint32          drawable_ID,
-                                              gdouble         x,
-                                              gdouble         y);
-gboolean _gimp_image_select_rectangle        (gint32          image_ID,
-                                              GimpChannelOps  operation,
-                                              gdouble         x,
-                                              gdouble         y,
-                                              gdouble         width,
-                                              gdouble         height);
-gboolean _gimp_image_select_round_rectangle  (gint32          image_ID,
-                                              GimpChannelOps  operation,
-                                              gdouble         x,
-                                              gdouble         y,
-                                              gdouble         width,
-                                              gdouble         height,
-                                              gdouble         corner_radius_x,
-                                              gdouble         corner_radius_y);
-gboolean _gimp_image_select_ellipse          (gint32          image_ID,
-                                              GimpChannelOps  operation,
-                                              gdouble         x,
-                                              gdouble         y,
-                                              gdouble         width,
-                                              gdouble         height);
-gboolean _gimp_image_select_polygon          (gint32          image_ID,
-                                              GimpChannelOps  operation,
-                                              gint            num_segs,
-                                              const gdouble  *segs);
-gboolean _gimp_image_select_item             (gint32          image_ID,
-                                              GimpChannelOps  operation,
-                                              gint32          item_ID);
 
 
 G_END_DECLS

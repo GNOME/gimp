@@ -75,46 +75,6 @@ gimp_floating_sel_remove (GimpLayer *floating_sel)
 }
 
 /**
- * _gimp_floating_sel_remove: (skip)
- * @floating_sel_ID: The floating selection.
- *
- * Remove the specified floating selection from its associated
- * drawable.
- *
- * This procedure removes the floating selection completely, without
- * any side effects. The associated drawable is then set to active.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_floating_sel_remove (gint32 floating_sel_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (floating_sel_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-remove",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-remove",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_floating_sel_anchor:
  * @floating_sel: The floating selection.
  *
@@ -137,47 +97,6 @@ gimp_floating_sel_anchor (GimpLayer *floating_sel)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, floating_sel,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-anchor",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-anchor",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_floating_sel_anchor: (skip)
- * @floating_sel_ID: The floating selection.
- *
- * Anchor the specified floating selection to its associated drawable.
- *
- * This procedure anchors the floating selection to its associated
- * drawable. This is similar to merging with a merge type of
- * ClipToBottomLayer. The floating selection layer is no longer valid
- * after this operation.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_floating_sel_anchor (gint32 floating_sel_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (floating_sel_ID),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -242,51 +161,6 @@ gimp_floating_sel_to_layer (GimpLayer *floating_sel)
 }
 
 /**
- * _gimp_floating_sel_to_layer: (skip)
- * @floating_sel_ID: The floating selection.
- *
- * Transforms the specified floating selection into a layer.
- *
- * This procedure transforms the specified floating selection into a
- * layer with the same offsets and extents. The composited image will
- * look precisely the same, but the floating selection layer will no
- * longer be clipped to the extents of the drawable it was attached to.
- * The floating selection will become the active layer. This procedure
- * will not work if the floating selection has a different base type
- * from the underlying image. This might be the case if the floating
- * selection is above an auxiliary channel or a layer mask.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_floating_sel_to_layer (gint32 floating_sel_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (floating_sel_ID),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-to-layer",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-to-layer",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_floating_sel_attach:
  * @layer: The layer (is attached as floating selection).
  * @drawable: The drawable (where to attach the floating selection).
@@ -310,48 +184,6 @@ gimp_floating_sel_attach (GimpLayer    *layer,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER, layer,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-attach",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-attach",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_floating_sel_attach: (skip)
- * @layer_ID: The layer (is attached as floating selection).
- * @drawable_ID: The drawable (where to attach the floating selection).
- *
- * Attach the specified layer as floating to the specified drawable.
- *
- * This procedure attaches the layer as floating selection to the
- * drawable.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_floating_sel_attach (gint32 layer_ID,
-                           gint32 drawable_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, gimp_item_get_by_id (layer_ID),
-                                          GIMP_TYPE_DRAWABLE, gimp_item_get_by_id (drawable_ID),
                                           G_TYPE_NONE);
 
   if (pdb)

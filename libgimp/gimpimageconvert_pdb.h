@@ -32,50 +32,21 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_image_convert_set_dither_matrix (gint          width,
-                                               gint          height,
-                                               gint          matrix_length,
-                                               const guint8 *matrix);
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-gboolean gimp_image_convert_rgb       (GimpImage              *image);
-gboolean gimp_image_convert_grayscale (GimpImage              *image);
-gboolean gimp_image_convert_indexed   (GimpImage              *image,
-                                       GimpConvertDitherType   dither_type,
-                                       GimpConvertPaletteType  palette_type,
-                                       gint                    num_cols,
-                                       gboolean                alpha_dither,
-                                       gboolean                remove_unused,
-                                       const gchar            *palette);
-gboolean gimp_image_convert_precision (GimpImage              *image,
-                                       GimpPrecision           precision);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_image_convert_rgb _gimp_image_convert_rgb
-#define gimp_image_convert_grayscale _gimp_image_convert_grayscale
-#define gimp_image_convert_indexed _gimp_image_convert_indexed
-#define gimp_image_convert_precision _gimp_image_convert_precision
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-gboolean _gimp_image_convert_rgb       (gint32                  image_ID);
-gboolean _gimp_image_convert_grayscale (gint32                  image_ID);
-gboolean _gimp_image_convert_indexed   (gint32                  image_ID,
-                                        GimpConvertDitherType   dither_type,
-                                        GimpConvertPaletteType  palette_type,
-                                        gint                    num_cols,
-                                        gboolean                alpha_dither,
-                                        gboolean                remove_unused,
-                                        const gchar            *palette);
-gboolean _gimp_image_convert_precision (gint32                  image_ID,
-                                        GimpPrecision           precision);
+gboolean gimp_image_convert_rgb               (GimpImage              *image);
+gboolean gimp_image_convert_grayscale         (GimpImage              *image);
+gboolean gimp_image_convert_indexed           (GimpImage              *image,
+                                               GimpConvertDitherType   dither_type,
+                                               GimpConvertPaletteType  palette_type,
+                                               gint                    num_cols,
+                                               gboolean                alpha_dither,
+                                               gboolean                remove_unused,
+                                               const gchar            *palette);
+gboolean gimp_image_convert_set_dither_matrix (gint                    width,
+                                               gint                    height,
+                                               gint                    matrix_length,
+                                               const guint8           *matrix);
+gboolean gimp_image_convert_precision         (GimpImage              *image,
+                                               GimpPrecision           precision);
 
 
 G_END_DECLS

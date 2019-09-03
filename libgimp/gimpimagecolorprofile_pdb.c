@@ -239,54 +239,6 @@ gimp_image_set_color_profile_from_file (GimpImage   *image,
 }
 
 /**
- * _gimp_image_set_color_profile_from_file: (skip)
- * @image_ID: The image.
- * @uri: The URI of the file containing the new color profile.
- *
- * Sets the image's color profile from an ICC file
- *
- * This procedure sets the image's color profile from a file containing
- * an ICC profile, or unsets it if NULL is passed as 'uri'. This
- * procedure does no color conversion. However, it will change the
- * pixel format of all layers to contain the babl space matching the
- * profile. You must call this procedure before adding layers to the
- * image.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_image_set_color_profile_from_file (gint32       image_ID,
-                                         const gchar *uri)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
-                                          G_TYPE_STRING, uri,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-set-color-profile-from-file",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-set-color-profile-from-file",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * _gimp_image_convert_color_profile:
  * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.
@@ -373,58 +325,6 @@ gimp_image_convert_color_profile_from_file (GimpImage                *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, uri,
-                                          GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
-                                          G_TYPE_BOOLEAN, bpc,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-color-profile-from-file",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-color-profile-from-file",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_image_convert_color_profile_from_file: (skip)
- * @image_ID: The image.
- * @uri: The URI of the file containing the new color profile.
- * @intent: Rendering intent.
- * @bpc: Black point compensation.
- *
- * Convert the image's layers to a color profile
- *
- * This procedure converts from the image's color profile (or the
- * default RGB or grayscale profile if none is set) to an ICC profile
- * specified by 'uri'. Only RGB and grayscale color profiles are
- * accepted, according to the image's type.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-_gimp_image_convert_color_profile_from_file (gint32                    image_ID,
-                                             const gchar              *uri,
-                                             GimpColorRenderingIntent  intent,
-                                             gboolean                  bpc)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, gimp_image_get_by_id (image_ID),
                                           G_TYPE_STRING, uri,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,

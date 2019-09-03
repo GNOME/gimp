@@ -42,22 +42,6 @@ gint              gimp_buffer_get_height     (const gchar *buffer_name);
 gint              gimp_buffer_get_bytes      (const gchar *buffer_name);
 GimpImageBaseType gimp_buffer_get_image_type (const gchar *buffer_name);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-/* Below API are deprecated and should not be used by new plug-ins.
- * They are not marked internal as a trick to keep the old API alive for now.
- */
-
-
-
 
 G_END_DECLS
 
