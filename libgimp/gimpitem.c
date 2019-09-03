@@ -422,27 +422,3 @@ gimp_item_list_children (GimpItem *item)
 
   return g_list_reverse (children);
 }
-
-/**
- * gimp_item_get_children_deprecated: (skip)
- * @item_id: The item.
- * @num_children: (out): The item's number of children.
- *
- * Returns the item's list of children.
- *
- * This procedure returns the list of items which are children of the
- * specified item. The order is topmost to bottommost.
- *
- * Returns: (array length=num_children) (element-type gint32) (transfer full):
- *          The item's list of children.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.8
- **/
-gint *
-gimp_item_get_children_deprecated (gint32    item_id,
-                                   gint     *num_children)
-{
-  return _gimp_item_get_children (gimp_item_get_by_id (item_id),
-                                  num_children);
-}

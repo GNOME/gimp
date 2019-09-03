@@ -485,19 +485,3 @@ gimp_drawable_get_shadow_buffer_deprecated (gint32 drawable_ID)
 {
   return gimp_drawable_get_shadow_buffer (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
 }
-
-/**
- * gimp_drawable_get_format_deprecated: (skip)
- * @drawable_ID: the ID of the #GimpDrawable to get the format for.
- *
- * Returns the #Babl format of the drawable.
- *
- * Returns: The #Babl format.
- *
- * Since: 2.10
- */
-const Babl *
-gimp_drawable_get_format_deprecated (gint32 drawable_ID)
-{
-  return gimp_drawable_get_format (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
-}

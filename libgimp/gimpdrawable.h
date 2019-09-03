@@ -109,15 +109,12 @@ GdkPixbuf    * gimp_drawable_get_sub_thumbnail      (GimpDrawable  *drawable,
 
 #define gimp_drawable_get_buffer             gimp_drawable_get_buffer_deprecated
 #define gimp_drawable_get_shadow_buffer      gimp_drawable_get_shadow_buffer_deprecated
-#define gimp_drawable_get_format             gimp_drawable_get_format_deprecated
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
 
 GeglBuffer * gimp_drawable_get_buffer_deprecated             (gint32         drawable_ID);
 GeglBuffer * gimp_drawable_get_shadow_buffer_deprecated      (gint32         drawable_ID);
-
-const Babl * gimp_drawable_get_format_deprecated             (gint32         drawable_ID);
 
 
 G_END_DECLS

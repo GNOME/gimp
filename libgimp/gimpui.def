@@ -9,7 +9,6 @@ EXPORTS
 	gimp_channel_combo_box_new
 	gimp_drawable_combo_box_get_type
 	gimp_drawable_combo_box_new
-	gimp_drawable_combo_box_new_deprecated
 	gimp_drawable_preview_get_drawable
 	gimp_drawable_preview_get_type
 	gimp_drawable_preview_new_from_drawable
