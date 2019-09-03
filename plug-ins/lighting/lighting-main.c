@@ -37,13 +37,227 @@
 
 LightingValues mapvals;
 
-/******************/
-/* Implementation */
-/******************/
 
-/*************************************/
-/* Set parameters to standard values */
-/*************************************/
+typedef struct _Lighting      Lighting;
+typedef struct _LightingClass LightingClass;
+
+struct _Lighting
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _LightingClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define LIGHTING_TYPE  (lighting_get_type ())
+#define LIGHTING (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGHTING_TYPE, Lighting))
+
+GType                   lighting_get_type         (void) G_GNUC_CONST;
+
+static GList          * lighting_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * lighting_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * lighting_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static void             set_default_settings      (void);
+static void             check_drawables           (void);
+
+
+G_DEFINE_TYPE (Lighting, lighting, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (LIGHTING_TYPE)
+
+
+static void
+lighting_class_init (LightingClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = lighting_query_procedures;
+  plug_in_class->create_procedure = lighting_create_procedure;
+}
+
+static void
+lighting_init (Lighting *lighting)
+{
+}
+
+static GList *
+lighting_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+lighting_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      GimpRGB white = { 1.0, 1.0, 1.0, 1.0 };
+
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            lighting_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Lighting Effects..."));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Light and Shadow/Light");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Apply various lighting effects "
+                                           "to an image"),
+                                        "No help yet",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Tom Bech & Federico Mena Quintero",
+                                      "Tom Bech & Federico Mena Quintero",
+                                      "Version 0.2.0, March 15 1998");
+
+      GIMP_PROC_ARG_DRAWABLE (procedure, "bump-drawable",
+                              "Bump drawable",
+                              "Bumpmap drawable (set to NULL if disabled)",
+                              TRUE,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DRAWABLE (procedure, "env-drawable",
+                              "Env drawable",
+                              "Environmentmap drawable (set to NULL if disabled",
+                              TRUE,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "do-bumpmap",
+                             "Do bumpmap",
+                             "Enable bumpmapping",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "do-envmap",
+                             "Do envmap",
+                             "Enable envmapping",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "bumpmap-type",
+                         "Bumpmap type",
+                         "Type of mapping (0=linear, 1=log, 2=sinusoidal, "
+                         "3=spherical)",
+                         0, 2, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "light-type",
+                         "Light type",
+                         "Type of lightsource (0=point, 1=directional, "
+                         "3=spot, 4=none)",
+                         0 ,4, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_RGB (procedure, "light-color",
+                         "Light color",
+                         "Light source color",
+                         TRUE, &white,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-x",
+                            "Light position X",
+                            "Light source position (x,y,z)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, -1,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-y",
+                            "Light position Y",
+                            "Light source position (x,y,z)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, -1,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-z",
+                            "Light position Z",
+                            "Light source position (x,y,z)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, -1,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-x",
+                            "Light direction X",
+                            "Light source direction (x,y,z)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, -1,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-y",
+                            "Light direction Y",
+                            "Light source direction (x,y,z)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, -1,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-z",
+                            "Light direction Z",
+                            "Light source direction (x,y,z)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 1,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "ambient-intensity",
+                            "Ambient intensity",
+                            "Material ambient intensity",
+                            0, 1, 0.2,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-intensity",
+                            "Diffuse intensity",
+                            "Material diffuse intensity",
+                            0, 1, 0.5,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-reflectivity",
+                            "Diffuse reflectivity",
+                            "Material diffuse reflectivity",
+                            0, 1, 0.4,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "specular-reflectivity",
+                            "Specular reflectivity",
+                            "Material specular reflectivity",
+                            0, 1, 0.5,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "highlight",
+                            "Highlight",
+                            "Material highlight (note, it's exponential)",
+                            0, G_MAXDOUBLE, 27.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "antialiasing",
+                             "Antialiasing",
+                             "Apply antialiasing",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
+                             "New image",
+                             "Create a new image",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-background",
+                             "Transparent background",
+                             "Make background transparent",
+                             FALSE,
+                             G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
 
 static void
 set_default_settings (void)
@@ -164,175 +378,95 @@ check_drawables (void)
     }
 }
 
-static void
-query (void)
+static GimpValueArray *
+lighting_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              const GimpValueArray *args,
+              gpointer              run_data)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",              "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",                 "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",              "Input drawable" },
-    { GIMP_PDB_DRAWABLE, "bumpdrawable",          "Bumpmap drawable (set to 0 if disabled)" },
-    { GIMP_PDB_DRAWABLE, "envdrawable",           "Environmentmap drawable (set to 0 if disabled)" },
-    { GIMP_PDB_INT32,    "dobumpmap",             "Enable bumpmapping (TRUE/FALSE)" },
-    { GIMP_PDB_INT32,    "doenvmap",              "Enable envmapping (TRUE/FALSE)" },
-    { GIMP_PDB_INT32,    "bumpmaptype",           "Type of mapping (0=linear,1=log, 2=sinusoidal, 3=spherical)" },
-    { GIMP_PDB_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=spot,4=none)" },
-    { GIMP_PDB_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
-    { GIMP_PDB_FLOAT,    "lightposition-x",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightposition-y",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightposition-z",       "Lightsource position (x,y,z)" },
-    { GIMP_PDB_FLOAT,    "lightdirection-x",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "lightdirection-y",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "lightdirection-z",      "Lightsource direction [x,y,z]" },
-    { GIMP_PDB_FLOAT,    "ambient-intensity",     "Material ambient intensity (0..1)" },
-    { GIMP_PDB_FLOAT,    "diffuse-intensity",     "Material diffuse intensity (0..1)" },
-    { GIMP_PDB_FLOAT,    "diffuse-reflectivity",  "Material diffuse reflectivity (0..1)" },
-    { GIMP_PDB_FLOAT,    "specular-reflectivity", "Material specular reflectivity (0..1)" },
-    { GIMP_PDB_FLOAT,    "highlight",             "Material highlight (0..->), note: it's exponential" },
-    { GIMP_PDB_INT32,    "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
-    { GIMP_PDB_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
-    { GIMP_PDB_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Apply various lighting effects to an image"),
-                          "No help yet",
-                          "Tom Bech & Federico Mena Quintero",
-                          "Tom Bech & Federico Mena Quintero",
-                          "Version 0.2.0, March 15 1998",
-                          N_("_Lighting Effects..."),
-                          "RGB*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC,
-                             "<Image>/Filters/Light and Shadow/Light");
-}
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpDrawable      *drawable;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpDrawable *map;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  /* Set default values */
-  /* ================== */
-
   set_default_settings ();
 
-  /* Possibly retrieve data */
-  /* ====================== */
-
   gimp_get_data (PLUG_IN_PROC, &mapvals);
-
-  /* Get the specified drawable */
-  /* ========================== */
-
-  run_mode = param[0].data.d_int32;
-  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
 
   mapvals.drawable_id = gimp_item_get_id (GIMP_ITEM (drawable));
 
   check_drawables ();
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (gimp_drawable_is_rgb (drawable))
     {
-      /* Make sure that the drawable is RGBA or RGB color */
-      /* ================================================ */
-
-      if (gimp_drawable_is_rgb (drawable))
+      switch (run_mode)
         {
-          switch (run_mode)
+        case GIMP_RUN_INTERACTIVE:
+          if (! main_dialog (drawable))
             {
-              case GIMP_RUN_INTERACTIVE:
-                if (main_dialog (drawable))
-                  {
-                    compute_image ();
-
-                    gimp_set_data (PLUG_IN_PROC,
-                                   &mapvals, sizeof (LightingValues));
-                    gimp_displays_flush ();
-                  }
-              break;
-
-              case GIMP_RUN_WITH_LAST_VALS:
-                if (image_setup (drawable, FALSE))
-                  compute_image ();
-                gimp_displays_flush ();
-                break;
-
-              case GIMP_RUN_NONINTERACTIVE:
-                if (nparams != 24)
-                  {
-                    status = GIMP_PDB_CALLING_ERROR;
-                  }
-                else
-                  {
-                    mapvals.bumpmap_id                 = param[3].data.d_drawable;
-                    mapvals.envmap_id                  = param[4].data.d_drawable;
-                    mapvals.bump_mapped                = (gint) param[5].data.d_int32;
-                    mapvals.env_mapped                 = (gint) param[6].data.d_int32;
-                    mapvals.bumpmaptype                = (gint) param[7].data.d_int32;
-                    mapvals.lightsource[0].type        = (LightType) param[8].data.d_int32;
-                    mapvals.lightsource[0].color       = param[9].data.d_color;
-                    mapvals.lightsource[0].position.x  = param[10].data.d_float;
-                    mapvals.lightsource[0].position.y  = param[11].data.d_float;
-                    mapvals.lightsource[0].position.z  = param[12].data.d_float;
-                    mapvals.lightsource[0].direction.x = param[13].data.d_float;
-                    mapvals.lightsource[0].direction.y = param[14].data.d_float;
-                    mapvals.lightsource[0].direction.z = param[15].data.d_float;
-                    mapvals.material.ambient_int       = param[16].data.d_float;
-                    mapvals.material.diffuse_int       = param[17].data.d_float;
-                    mapvals.material.diffuse_ref       = param[18].data.d_float;
-                    mapvals.material.specular_ref      = param[19].data.d_float;
-                    mapvals.material.highlight         = param[20].data.d_float;
-                    mapvals.antialiasing               = (gint) param[21].data.d_int32;
-                    mapvals.create_new_image           = (gint) param[22].data.d_int32;
-                    mapvals.transparent_background     = (gint) param[23].data.d_int32;
-
-                    check_drawables ();
-                    if (image_setup (drawable, FALSE))
-                      compute_image ();
-                  }
-              default:
-                break;
+              return gimp_procedure_new_return_values (procedure,
+                                                       GIMP_PDB_CANCEL,
+                                                       NULL);
             }
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
+
+          compute_image ();
+
+          gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (LightingValues));
+          gimp_displays_flush ();
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          if (image_setup (drawable, FALSE))
+            compute_image ();
+          gimp_displays_flush ();
+          break;
+
+        case GIMP_RUN_NONINTERACTIVE:
+          map = GIMP_VALUES_GET_DRAWABLE (args, 0);
+          mapvals.bumpmap_id                 = gimp_item_get_id (GIMP_ITEM (map));
+
+          map = GIMP_VALUES_GET_DRAWABLE (args, 1);
+          mapvals.envmap_id                  = gimp_item_get_id (GIMP_ITEM (map));
+          mapvals.bump_mapped                = GIMP_VALUES_GET_BOOLEAN (args, 2);
+          mapvals.env_mapped                 = GIMP_VALUES_GET_BOOLEAN (args, 3);
+          mapvals.bumpmaptype                = GIMP_VALUES_GET_INT     (args, 4);
+          mapvals.lightsource[0].type        = GIMP_VALUES_GET_INT     (args, 5);
+
+          GIMP_VALUES_GET_RGB (args, 6, &mapvals.lightsource[0].color);
+
+          mapvals.lightsource[0].position.x  = GIMP_VALUES_GET_DOUBLE  (args, 7);
+          mapvals.lightsource[0].position.y  = GIMP_VALUES_GET_DOUBLE  (args, 8);
+          mapvals.lightsource[0].position.z  = GIMP_VALUES_GET_DOUBLE  (args, 9);
+          mapvals.lightsource[0].direction.x = GIMP_VALUES_GET_DOUBLE  (args, 10);
+          mapvals.lightsource[0].direction.y = GIMP_VALUES_GET_DOUBLE  (args, 11);
+          mapvals.lightsource[0].direction.z = GIMP_VALUES_GET_DOUBLE  (args, 12);
+          mapvals.material.ambient_int       = GIMP_VALUES_GET_DOUBLE  (args, 13);
+          mapvals.material.diffuse_int       = GIMP_VALUES_GET_DOUBLE  (args, 14);
+          mapvals.material.diffuse_ref       = GIMP_VALUES_GET_DOUBLE  (args, 15);
+          mapvals.material.specular_ref      = GIMP_VALUES_GET_DOUBLE  (args, 16);
+          mapvals.material.highlight         = GIMP_VALUES_GET_DOUBLE  (args, 17);
+          mapvals.antialiasing               = GIMP_VALUES_GET_BOOLEAN (args, 18);
+          mapvals.create_new_image           = GIMP_VALUES_GET_BOOLEAN (args, 19);
+          mapvals.transparent_background     = GIMP_VALUES_GET_BOOLEAN (args, 20);
+
+          check_drawables ();
+          if (image_setup (drawable, FALSE))
+            compute_image ();
+        default:
+          break;
         }
     }
-
-  values[0].data.d_status = status;
+  else
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
+    }
 
   g_free (xpostab);
   g_free (ypostab);
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-MAIN ()
