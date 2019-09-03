@@ -32,7 +32,6 @@ twain = executable(plugin_name,
     libgimpcolor,
     libgimpbase,
   ],
-  c_args: '-DGIMP_DEPRECATED_REPLACE_NEW_API',
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
