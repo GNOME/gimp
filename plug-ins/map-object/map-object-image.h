@@ -4,15 +4,17 @@
 /* Externally visible variables */
 /* ============================ */
 
-extern gint32        input_drawable_id;
-extern gint32        output_drawable_id;
+extern GimpImage    *image;
+
+extern GimpDrawable *input_drawable;
+extern GimpDrawable *output_drawable;
 extern GeglBuffer   *source_buffer;
 extern GeglBuffer   *dest_buffer;
 
-extern gint32        box_drawable_ids[6];
+extern GimpDrawable *box_drawables[6];
 extern GeglBuffer   *box_buffers[6];
 
-extern gint32        cylinder_drawable_ids[2];
+extern GimpDrawable *cylinder_drawables[2];
 extern GeglBuffer   *cylinder_buffers[2];
 
 extern guchar          *preview_rgb_data;
@@ -20,7 +22,7 @@ extern gint             preview_rgb_stride;
 extern cairo_surface_t *preview_surface;
 
 extern glong    maxcounter, old_depth, max_depth;
-extern gint     width, height, image_id;
+extern gint     width, height;
 extern GimpRGB  background;
 
 extern gint border_x1, border_y1, border_x2, border_y2;
@@ -28,7 +30,7 @@ extern gint border_x1, border_y1, border_x2, border_y2;
 /* Externally visible functions */
 /* ============================ */
 
-extern gint        image_setup              (gint32        drawable_id,
+extern gint        image_setup              (GimpDrawable *drawable,
                                              gint          interactive);
 extern glong       in_xy_to_index           (gint          x,
                                              gint          y);

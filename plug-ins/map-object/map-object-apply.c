@@ -133,9 +133,9 @@ init_compute (void)
 
         for (i = 0; i < 6; i++)
           {
-            box_drawable_ids[i] = mapvals.boxmap_id[i];
+            box_drawables[i] = gimp_drawable_get_by_id (mapvals.boxmap_id[i]);
 
-            box_buffers[i] = gimp_drawable_get_buffer (box_drawable_ids[i]);
+            box_buffers[i] = gimp_drawable_get_buffer (box_drawables[i]);
           }
 
         break;
@@ -170,9 +170,9 @@ init_compute (void)
 
         for (i = 0; i < 2; i++)
           {
-            cylinder_drawable_ids[i] = mapvals.cylindermap_id[i];
+            cylinder_drawables[i] = gimp_drawable_get_by_id (mapvals.cylindermap_id[i]);;
 
-            cylinder_buffers[i] = gimp_drawable_get_buffer (cylinder_drawable_ids[i]);
+            cylinder_buffers[i] = gimp_drawable_get_buffer (cylinder_drawables[i]);
           }
         break;
     }
@@ -216,27 +216,27 @@ compute_image (void)
   GimpRGB      color;
   glong        progress_counter = 0;
   GimpVector3  p;
-  gint32       new_image_id = -1;
-  gint32       new_layer_id = -1;
+  GimpImage   *new_image    = NULL;
+  GimpLayer   *new_layer    = NULL;
   gboolean     insert_layer = FALSE;
 
   init_compute ();
 
   if (mapvals.create_new_image)
     {
-      new_image_id = gimp_image_new (width, height, GIMP_RGB);
+      new_image = gimp_image_new (width, height, GIMP_RGB);
     }
   else
     {
-      new_image_id = image_id;
+      new_image = image;
     }
 
-  gimp_image_undo_group_start (new_image_id);
+  gimp_image_undo_group_start (new_image);
 
   if (mapvals.create_new_image ||
       mapvals.create_new_layer ||
       (mapvals.transparent_background &&
-       ! gimp_drawable_has_alpha (output_drawable_id)))
+       ! gimp_drawable_has_alpha (output_drawable)))
     {
       gchar *layername[] = {_("Map to plane"),
                             _("Map to sphere"),
@@ -244,36 +244,36 @@ compute_image (void)
                             _("Map to cylinder"),
                             _("Background")};
 
-      new_layer_id = gimp_layer_new (new_image_id,
-                                     layername[mapvals.create_new_image ? 4 :
-                                               mapvals.maptype],
-                                     width, height,
-                                     mapvals.transparent_background ?
-                                     GIMP_RGBA_IMAGE :
-                                     GIMP_RGB_IMAGE,
-                                     100.0,
-                                     gimp_image_get_default_new_layer_mode (new_image_id));
+      new_layer = gimp_layer_new (new_image,
+                                  layername[mapvals.create_new_image ? 4 :
+                                            mapvals.maptype],
+                                  width, height,
+                                  mapvals.transparent_background ?
+                                  GIMP_RGBA_IMAGE :
+                                  GIMP_RGB_IMAGE,
+                                  100.0,
+                                  gimp_image_get_default_new_layer_mode (new_image));
 
       insert_layer = TRUE;
-      output_drawable_id = new_layer_id;
+      output_drawable = GIMP_DRAWABLE (new_layer);
     }
 
-  dest_buffer = gimp_drawable_get_shadow_buffer (output_drawable_id);
+  dest_buffer = gimp_drawable_get_shadow_buffer (output_drawable);
 
   switch (mapvals.maptype)
     {
-      case MAP_PLANE:
-        gimp_progress_init (_("Map to plane"));
-        break;
-      case MAP_SPHERE:
-        gimp_progress_init (_("Map to sphere"));
-        break;
-      case MAP_BOX:
-        gimp_progress_init (_("Map to box"));
-        break;
-      case MAP_CYLINDER:
-        gimp_progress_init (_("Map to cylinder"));
-        break;
+    case MAP_PLANE:
+      gimp_progress_init (_("Map to plane"));
+      break;
+    case MAP_SPHERE:
+      gimp_progress_init (_("Map to sphere"));
+      break;
+    case MAP_BOX:
+      gimp_progress_init (_("Map to box"));
+      break;
+    case MAP_CYLINDER:
+      gimp_progress_init (_("Map to cylinder"));
+      break;
     }
 
   if (! mapvals.antialiasing)
@@ -313,16 +313,16 @@ compute_image (void)
   g_object_unref (dest_buffer);
 
   if (insert_layer)
-    gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
+    gimp_image_insert_layer (new_image, new_layer, NULL, 0);
 
-  gimp_drawable_merge_shadow (output_drawable_id, TRUE);
-  gimp_drawable_update (output_drawable_id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (output_drawable, TRUE);
+  gimp_drawable_update (output_drawable, 0, 0, width, height);
 
-  if (new_image_id != image_id)
+  if (new_image != image)
     {
-      gimp_display_new (new_image_id);
+      gimp_display_new (new_image);
       gimp_displays_flush ();
     }
 
-  gimp_image_undo_group_end (new_image_id);
+  gimp_image_undo_group_end (new_image);
 }

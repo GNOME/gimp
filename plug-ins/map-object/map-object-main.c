@@ -101,19 +101,20 @@ set_default_settings (void)
 }
 
 static void
-check_drawables (gint32 drawable_id)
+check_drawables (GimpDrawable *drawable)
 {
-  gint i;
+  GimpDrawable *map;
+  gint          i;
 
   /* Check that boxmap images are valid */
   /* ================================== */
 
   for (i = 0; i < 6; i++)
     {
-      if (mapvals.boxmap_id[i] == -1 ||
-          !gimp_item_is_valid (mapvals.boxmap_id[i]) ||
-          gimp_drawable_is_gray (mapvals.boxmap_id[i]))
-        mapvals.boxmap_id[i] = drawable_id;
+      map = gimp_drawable_get_by_id (mapvals.boxmap_id[i]);
+
+      if (! map || gimp_drawable_is_gray (map))
+        mapvals.boxmap_id[i] = gimp_item_get_id (GIMP_ITEM (drawable));
     }
 
   /* Check that cylindermap images are valid */
@@ -121,10 +122,10 @@ check_drawables (gint32 drawable_id)
 
   for (i = 0; i < 2; i++)
     {
-      if (mapvals.cylindermap_id[i] == -1 ||
-          !gimp_item_is_valid (mapvals.cylindermap_id[i]) ||
-          gimp_drawable_is_gray (mapvals.cylindermap_id[i]))
-        mapvals.cylindermap_id[i] = drawable_id;
+     map = gimp_drawable_get_by_id (mapvals.cylindermap_id[i]);
+
+     if (! map || gimp_drawable_is_gray (map))
+        mapvals.cylindermap_id[i] = gimp_item_get_id (GIMP_ITEM (drawable));
     }
 }
 
@@ -192,7 +193,7 @@ query (void)
                           "Version 1.2.0, July 16 1998",
                           N_("Map _Object..."),
                           "RGB*",
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -208,7 +209,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
-  gint32             drawable_id;
+  GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               i;
 
@@ -228,9 +229,9 @@ run (const gchar      *name,
   /* Get the specified drawable */
   /* ========================== */
 
-  run_mode    = param[0].data.d_int32;
-  image_id    = param[1].data.d_int32;
-  drawable_id = param[2].data.d_int32;
+  run_mode = param[0].data.d_int32;
+  image    = gimp_image_get_by_id (param[1].data.d_int32);
+  drawable = gimp_drawable_get_by_id (param[2].data.d_int32);
 
   switch (run_mode)
     {
@@ -240,8 +241,8 @@ run (const gchar      *name,
         /* ====================== */
 
         gimp_get_data (PLUG_IN_PROC, &mapvals);
-        check_drawables (drawable_id);
-        if (main_dialog (drawable_id))
+        check_drawables (drawable);
+        if (main_dialog (drawable))
           {
             compute_image ();
 
@@ -251,8 +252,8 @@ run (const gchar      *name,
 
       case GIMP_RUN_WITH_LAST_VALS:
         gimp_get_data (PLUG_IN_PROC, &mapvals);
-        check_drawables (drawable_id);
-        if (image_setup (drawable_id, FALSE))
+        check_drawables (drawable);
+        if (image_setup (drawable, FALSE))
           compute_image ();
         break;
 
@@ -309,8 +310,8 @@ run (const gchar      *name,
             for (i = 0; i < 2; i++)
               mapvals.cylindermap_id[i] = param[47+i].data.d_drawable;
 
-            check_drawables (drawable_id);
-            if (image_setup (drawable_id, FALSE))
+            check_drawables (drawable);
+            if (image_setup (drawable, FALSE))
               compute_image ();
           }
         break;

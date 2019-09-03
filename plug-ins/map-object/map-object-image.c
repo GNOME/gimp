@@ -23,23 +23,25 @@
 #include "map-object-image.h"
 
 
-gint32      input_drawable_id;
-gint32      output_drawable_id;
-GeglBuffer *source_buffer;
-GeglBuffer *dest_buffer;
+GimpImage    *image;
 
-gint32      box_drawable_ids[6];
-GeglBuffer *box_buffers[6];
+GimpDrawable *input_drawable;
+GimpDrawable *output_drawable;
+GeglBuffer   *source_buffer;
+GeglBuffer   *dest_buffer;
 
-gint32      cylinder_drawable_ids[2];
-GeglBuffer *cylinder_buffers[2];
+GimpDrawable *box_drawables[6];
+GeglBuffer   *box_buffers[6];
+
+GimpDrawable *cylinder_drawables[2];
+GeglBuffer   *cylinder_buffers[2];
 
 guchar          *preview_rgb_data = NULL;
 gint             preview_rgb_stride;
 cairo_surface_t *preview_surface = NULL;
 
 glong    maxcounter, old_depth, max_depth;
-gint     width, height, image_id;
+gint     width, height;
 GimpRGB  background;
 
 gint border_x, border_y, border_w, border_h;
@@ -309,20 +311,20 @@ get_cylinder_image_color (gint    image,
 /****************************************/
 
 gint
-image_setup (gint32 drawable_id,
-             gint   interactive)
+image_setup (GimpDrawable *drawable,
+             gint          interactive)
 {
-  input_drawable_id  = drawable_id;
-  output_drawable_id = drawable_id;
+  input_drawable  = drawable;
+  output_drawable = drawable;
 
-  if (! gimp_drawable_mask_intersect (drawable_id, &border_x, &border_y,
+  if (! gimp_drawable_mask_intersect (drawable, &border_x, &border_y,
                                       &border_w, &border_h))
     return FALSE;
 
-  width  = gimp_drawable_width  (input_drawable_id);
-  height = gimp_drawable_height (input_drawable_id);
+  width  = gimp_drawable_width  (input_drawable);
+  height = gimp_drawable_height (input_drawable);
 
-  source_buffer = gimp_drawable_get_buffer (input_drawable_id);
+  source_buffer = gimp_drawable_get_buffer (input_drawable);
 
   maxcounter = (glong) width * (glong) height;
 

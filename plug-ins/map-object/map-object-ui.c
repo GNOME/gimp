@@ -54,11 +54,11 @@ static void lightmenu_callback         (GtkWidget     *widget,
 static void preview_callback           (GtkWidget     *widget,
                                         gpointer       data);
 
-static gint box_constrain              (gint32         image_id,
-                                        gint32         drawable_id,
+static gint box_constrain              (GimpImage     *image,
+                                        GimpItem      *item,
                                         gpointer       data);
-static gint cylinder_constrain         (gint32         image_id,
-                                        gint32         drawable_id,
+static gint cylinder_constrain         (GimpImage     *image,
+                                        GimpItem      *item,
                                         gpointer       data);
 
 static GtkWidget * create_options_page     (void);
@@ -268,27 +268,21 @@ zoomed_callback (GimpZoomModel *model)
 /**********************************************/
 
 static gint
-box_constrain (gint32   image_id,
-               gint32   drawable_id,
-               gpointer data)
+box_constrain (GimpImage *image,
+               GimpItem  *item,
+               gpointer   data)
 {
-  if (drawable_id == -1)
-    return TRUE;
-
-  return (gimp_drawable_is_rgb (drawable_id) &&
-          !gimp_drawable_is_indexed (drawable_id));
+  return (gimp_drawable_is_rgb (GIMP_DRAWABLE (item)) &&
+          ! gimp_drawable_is_indexed (GIMP_DRAWABLE (item)));
 }
 
 static gint
-cylinder_constrain (gint32   image_id,
-                    gint32   drawable_id,
-                    gpointer data)
+cylinder_constrain (GimpImage *image,
+                    GimpItem  *item,
+                    gpointer   data)
 {
-  if (drawable_id == -1)
-    return TRUE;
-
-  return (gimp_drawable_is_rgb (drawable_id) &&
-          !gimp_drawable_is_indexed (drawable_id));
+  return (gimp_drawable_is_rgb (GIMP_DRAWABLE (item)) &&
+          ! gimp_drawable_is_indexed (GIMP_DRAWABLE (item)));
 }
 
 /******************************/
@@ -1295,7 +1289,7 @@ create_main_notebook (GtkWidget *container)
 /********************************/
 
 gboolean
-main_dialog (gint32 drawable_id)
+main_dialog (GimpDrawable *drawable)
 {
   GtkWidget     *main_hbox;
   GtkWidget     *vbox;
@@ -1426,7 +1420,7 @@ main_dialog (gint32 drawable_id)
     g_object_unref (cursor);
   }
 
-  image_setup (drawable_id, TRUE);
+  image_setup (drawable, TRUE);
 
   compute_preview_image ();
 
