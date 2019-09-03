@@ -63,7 +63,7 @@ gimp_image_convert_rgb (GimpImage *image)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -97,7 +97,7 @@ gimp_image_convert_grayscale (GimpImage *image)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -160,7 +160,7 @@ gimp_image_convert_indexed (GimpImage              *image,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -206,7 +206,7 @@ gimp_image_convert_set_dither_matrix (gint          width,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -246,7 +246,7 @@ gimp_image_convert_precision (GimpImage     *image,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 

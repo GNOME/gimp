@@ -69,7 +69,7 @@ gimp_buffers_get_list (const gchar *filter,
 
   *num_buffers = 0;
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_buffers = g_value_get_int (gimp_value_array_index (return_vals, 1));
       buffer_list = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
@@ -112,7 +112,7 @@ gimp_buffer_rename (const gchar *buffer_name,
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     real_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -148,7 +148,7 @@ gimp_buffer_delete (const gchar *buffer_name)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -183,7 +183,7 @@ gimp_buffer_get_width (const gchar *buffer_name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     width = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -219,7 +219,7 @@ gimp_buffer_get_height (const gchar *buffer_name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     height = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -255,7 +255,7 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -291,7 +291,7 @@ gimp_buffer_get_image_type (const gchar *buffer_name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     image_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);

@@ -72,7 +72,7 @@ gimp_file_load (GimpRunMode  run_mode,
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -117,7 +117,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -168,7 +168,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
 
   *num_layers = 0;
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_layers = g_value_get_int (gimp_value_array_index (return_vals, 1));
       layer_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
@@ -223,7 +223,7 @@ gimp_file_save (GimpRunMode   run_mode,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -264,7 +264,7 @@ gimp_file_save_thumbnail (GimpImage   *image,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -307,7 +307,7 @@ _gimp_register_magic_load_handler (const gchar *procedure_name,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -347,7 +347,7 @@ _gimp_register_load_handler (const gchar *procedure_name,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -387,7 +387,7 @@ _gimp_register_save_handler (const gchar *procedure_name,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -429,7 +429,7 @@ _gimp_register_file_handler_priority (const gchar *procedure_name,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -472,7 +472,7 @@ _gimp_register_file_handler_mime (const gchar *procedure_name,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -510,7 +510,7 @@ _gimp_register_file_handler_remote (const gchar *procedure_name)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -548,7 +548,7 @@ _gimp_register_file_handler_raw (const gchar *procedure_name)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -591,7 +591,7 @@ _gimp_register_thumbnail_loader (const gchar *load_proc,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 

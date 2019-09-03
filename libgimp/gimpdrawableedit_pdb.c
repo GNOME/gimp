@@ -67,7 +67,7 @@ gimp_drawable_edit_clear (GimpDrawable *drawable)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -111,7 +111,7 @@ gimp_drawable_edit_fill (GimpDrawable *drawable,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -167,7 +167,7 @@ gimp_drawable_edit_bucket_fill (GimpDrawable *drawable,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -243,7 +243,7 @@ gimp_drawable_edit_gradient_fill (GimpDrawable     *drawable,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -287,7 +287,7 @@ gimp_drawable_edit_stroke_selection (GimpDrawable *drawable)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -336,7 +336,7 @@ gimp_drawable_edit_stroke_item (GimpDrawable *drawable,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 

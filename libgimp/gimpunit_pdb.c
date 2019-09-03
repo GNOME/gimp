@@ -49,7 +49,7 @@ _gimp_unit_get_number_of_units (void)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     num_units = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -81,7 +81,7 @@ _gimp_unit_get_number_of_built_in_units (void)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     num_units = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -136,7 +136,7 @@ _gimp_unit_new (const gchar *identifier,
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     unit_id = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -172,7 +172,7 @@ _gimp_unit_get_deletion_flag (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     deletion_flag = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -211,7 +211,7 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -247,7 +247,7 @@ _gimp_unit_get_identifier (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     identifier = g_value_dup_string (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -283,7 +283,7 @@ _gimp_unit_get_factor (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     factor = g_value_get_double (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -320,7 +320,7 @@ _gimp_unit_get_digits (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     digits = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -355,7 +355,7 @@ _gimp_unit_get_symbol (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     symbol = g_value_dup_string (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -391,7 +391,7 @@ _gimp_unit_get_abbreviation (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     abbreviation = g_value_dup_string (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -426,7 +426,7 @@ _gimp_unit_get_singular (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     singular = g_value_dup_string (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -461,7 +461,7 @@ _gimp_unit_get_plural (GimpUnit unit_id)
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     plural = g_value_dup_string (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);

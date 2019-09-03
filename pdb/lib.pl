@@ -339,14 +339,14 @@ sub generate_fun {
 
         if ($rettype eq 'void') {
             $return_marshal .= <<CODE;
-success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
 CODE
         }
         else {
             $return_marshal .= <<CODE;
-if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
 CODE
         }
 
@@ -421,7 +421,7 @@ CODE
     }
     else {
         $return_marshal = <<CODE;
-success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   $return_marshal
 

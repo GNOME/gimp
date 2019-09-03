@@ -62,7 +62,7 @@ gimp_dynamics_refresh (void)
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -104,7 +104,7 @@ gimp_dynamics_get_list (const gchar *filter,
 
   *num_dynamics = 0;
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_dynamics = g_value_get_int (gimp_value_array_index (return_vals, 1));
       dynamics_list = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));

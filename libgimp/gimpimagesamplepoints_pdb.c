@@ -70,7 +70,7 @@ gimp_image_add_sample_point (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     sample_point = g_value_get_uint (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -110,7 +110,7 @@ gimp_image_delete_sample_point (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 
@@ -153,7 +153,7 @@ gimp_image_find_next_sample_point (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     next_sample_point = g_value_get_uint (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
@@ -196,7 +196,7 @@ gimp_image_get_sample_point_position (GimpImage *image,
                                               args);
   gimp_value_array_unref (args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       position_x = g_value_get_int (gimp_value_array_index (return_vals, 1));
       *position_y = g_value_get_int (gimp_value_array_index (return_vals, 2));
