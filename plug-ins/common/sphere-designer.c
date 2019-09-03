@@ -66,21 +66,6 @@
 #define MAXATMOS 1
 #define MAXCOLPERGRADIENT 5
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,   /* init_proc  */
-  NULL,   /* quit_proc  */
-  query,  /* query_proc */
-  run,    /* run_proc   */
-};
-
 enum
 {
   TRIANGLE,
@@ -271,6 +256,62 @@ struct camera_t
   double fov, tilt;
 };
 
+
+typedef struct _Designer      Designer;
+typedef struct _DesignerClass DesignerClass;
+
+struct _Designer
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _DesignerClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define DESIGNER_TYPE  (designer_get_type ())
+#define DESIGNER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESIGNER_TYPE, Designer))
+
+GType                   designer_get_type         (void) G_GNUC_CONST;
+
+static GList          * designer_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * designer_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * designer_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static inline void vset          (GimpVector4          *v,
+                                  gdouble               a,
+                                  gdouble               b,
+                                  gdouble               c);
+static void        restartrender (void);
+static void        drawcolor1    (GtkWidget            *widget);
+static void        drawcolor2    (GtkWidget            *widget);
+static gboolean    render        (void);
+static void        realrender    (GimpDrawable         *drawable);
+static void        fileselect    (GtkFileChooserAction  action,
+                                  GtkWidget            *parent);
+static gint        traceray      (ray                  *r,
+                                  GimpVector4          *col,
+                                  gint                  level,
+                                  gdouble               imp);
+static gdouble     turbulence    (gdouble              *point,
+                                  gdouble               lofreq,
+                                  gdouble               hifreq);
+
+
+G_DEFINE_TYPE (Designer, designer, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (DESIGNER_TYPE)
+
+
 static GtkWidget *drawarea = NULL;
 
 static guchar          *img;
@@ -302,26 +343,6 @@ static struct textures_t textures[] =
   { 0, NULL,          0       }
 };
 
-static inline void vset        (GimpVector4          *v,
-                                gdouble               a,
-                                gdouble               b,
-                                gdouble               c);
-static void      restartrender (void);
-static void      drawcolor1    (GtkWidget            *widget);
-static void      drawcolor2    (GtkWidget            *widget);
-static gboolean  render        (void);
-static void      realrender    (GimpDrawable         *drawable);
-static void      fileselect    (GtkFileChooserAction  action,
-                                GtkWidget            *parent);
-static gint      traceray      (ray                  *r,
-                                GimpVector4          *col,
-                                gint                  level,
-                                gdouble               imp);
-static gdouble   turbulence    (gdouble              *point,
-                                gdouble               lofreq,
-                                gdouble               hifreq);
-
-
 #define COLORBUTTONWIDTH  30
 #define COLORBUTTONHEIGHT 20
 
@@ -346,6 +367,61 @@ static gdouble   g[B + B + 2][3];
 static gboolean  start = TRUE;
 static GRand    *gr;
 
+
+static void
+designer_class_init (DesignerClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = designer_query_procedures;
+  plug_in_class->create_procedure = designer_create_procedure;
+}
+
+static void
+designer_init (Designer *designer)
+{
+}
+
+static GList *
+designer_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+designer_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            designer_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("Sphere _Designer..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Render");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Create an image of a textured "
+                                           "sphere"),
+                                        "This plug-in can be used to create "
+                                        "textured and/or bumpmapped spheres, "
+                                        "and uses a small lightweight "
+                                        "raytracer to perform the task with "
+                                        "good quality",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Vidar Madsen",
+                                      "Vidar Madsen",
+                                      "1999");
+    }
+
+  return procedure;
+}
 
 static void
 init (void)
@@ -3034,33 +3110,6 @@ realrender (GimpDrawable *drawable)
   gimp_drawable_update (drawable, x1, y1, width, height);
 }
 
-static void
-query (void)
-{
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create an image of a textured sphere"),
-                          "This plug-in can be used to create textured and/or "
-                          "bumpmapped spheres, and uses a small lightweight "
-                          "raytracer to perform the task with good quality",
-                          "Vidar Madsen",
-                          "Vidar Madsen",
-                          "1999",
-                          N_("Sphere _Designer..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Render");
-}
-
 static gboolean
 sphere_main (GimpDrawable *drawable)
 {
@@ -3095,35 +3144,26 @@ sphere_main (GimpDrawable *drawable)
   return do_run;
 }
 
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpValueArray *
+designer_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              const GimpValueArray *args,
+              gpointer              run_data)
 {
-  static GimpParam   values[1];
-  GimpRunMode        run_mode;
-  GimpDrawable      *drawable;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint               x, y, w, h;
+  gint x, y, w, h;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  run_mode = param[0].data.d_int32;
-  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
-
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     {
       g_message (_("Region selected for plug-in is empty"));
-      return;
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_SUCCESS,
+                                               NULL);
     }
 
   switch (run_mode)
@@ -3131,21 +3171,29 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_PROC, &s);
+
       if (! sphere_main (drawable))
-        return;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_PROC, &s);
+
       if (s.com.numtexture == 0)
-        return;
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_EXECUTION_ERROR,
+                                                 NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-    default:
-      /* Not implemented yet... */
-      return;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
   gimp_set_data (PLUG_IN_PROC, &s, sizeof (s));
@@ -3153,7 +3201,5 @@ run (const gchar      *name,
   realrender (drawable);
   gimp_displays_flush ();
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
-
-MAIN ()
