@@ -253,8 +253,7 @@ gimp_list_images (void)
   ids = _gimp_image_list (&num_images);
 
   for (i = 0; i < num_images; i++)
-    images = g_list_prepend (images,
-                             gimp_image_get_by_id (ids[i]));
+    images = g_list_prepend (images, gimp_image_get_by_id (ids[i]));
 
   g_free (ids);
 
@@ -289,7 +288,7 @@ gimp_image_get_layers (GimpImage *image,
   layers = g_new (GimpLayer *, *num_layers);
 
   for (i = 0; i < *num_layers; i++)
-    layers[i] = GIMP_LAYER (gimp_item_get_by_id (ids[i]));
+    layers[i] = gimp_layer_get_by_id (ids[i]);
 
   g_free (ids);
 
@@ -327,7 +326,7 @@ gimp_image_get_channels (GimpImage *image,
   channels = g_new (GimpChannel *, *num_channels);
 
   for (i = 0; i < *num_channels; i++)
-    channels[i] = GIMP_CHANNEL (gimp_item_get_by_id (ids[i]));
+    channels[i] = gimp_channel_get_by_id (ids[i]);
 
   g_free (ids);
 
@@ -362,7 +361,7 @@ gimp_image_get_vectors (GimpImage *image,
   vectors = g_new (GimpVectors *, *num_vectors);
 
   for (i = 0; i < *num_vectors; i++)
-    vectors[i] = GIMP_VECTORS (gimp_item_get_by_id (ids[i]));
+    vectors[i] = gimp_vectors_get_by_id (ids[i]);
 
   g_free (ids);
 
@@ -396,8 +395,7 @@ gimp_image_list_layers (GimpImage *image)
   ids = _gimp_image_get_layers (image, &num_layers);
 
   for (i = 0; i < num_layers; i++)
-    layers = g_list_prepend (layers,
-                             GIMP_LAYER (gimp_item_get_by_id (ids[i])));
+    layers = g_list_prepend (layers, gimp_layer_get_by_id (ids[i]));
 
   g_free (ids);
 
@@ -434,8 +432,7 @@ gimp_image_list_channels (GimpImage *image)
   ids = _gimp_image_get_channels (image, &num_channels);
 
   for (i = 0; i < num_channels; i++)
-    channels = g_list_prepend (channels,
-                               GIMP_CHANNEL (gimp_item_get_by_id (ids[i])));
+    channels = g_list_prepend (channels, gimp_channel_get_by_id (ids[i]));
 
   g_free (ids);
 
@@ -469,8 +466,7 @@ gimp_image_list_vectors (GimpImage *image)
   ids = _gimp_image_get_vectors (image, &num_vectors);
 
   for (i = 0; i < num_vectors; i++)
-    vectors = g_list_prepend (vectors,
-                              GIMP_VECTORS (gimp_item_get_by_id (ids[i])));
+    vectors = g_list_prepend (vectors, gimp_vectors_get_by_id (ids[i]));
 
   g_free (ids);
 
