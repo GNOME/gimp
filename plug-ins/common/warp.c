@@ -106,71 +106,84 @@ typedef struct
 } WarpVals;
 
 
-/*
- * Function prototypes.
- */
+typedef struct _Warp      Warp;
+typedef struct _WarpClass WarpClass;
 
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
-
-static void      blur16           (GimpDrawable *drawable);
-
-static void      diff             (GimpDrawable  *drawable,
-                                   GimpDrawable **xl,
-                                   GimpDrawable **yl);
-
-static void      diff_prepare_row (GeglBuffer   *buffer,
-                                   const Babl   *format,
-                                   guchar       *data,
-                                   gint          x,
-                                   gint          y,
-                                   gint          w);
-
-static void      warp_one         (GimpDrawable  *draw,
-                                   GimpDrawable  *newid,
-                                   GimpDrawable  *map_x,
-                                   GimpDrawable  *map_y,
-                                   GimpDrawable  *mag_draw,
-                                   gboolean      first_time,
-                                   gint          step);
-
-static void      warp        (GimpDrawable *drawable);
-
-static gboolean  warp_dialog (GimpDrawable *drawable);
-static void      warp_pixel  (GeglBuffer   *buffer,
-                              const Babl   *format,
-                              gint          width,
-                              gint          height,
-                              gint          x1,
-                              gint          y1,
-                              gint          x2,
-                              gint          y2,
-                              gint          x,
-                              gint          y,
-                              guchar       *pixel);
-
-static gboolean  warp_map_constrain       (GimpImage *image,
-                                           GimpItem  *item,
-                                           gpointer   data);
-static gdouble   warp_map_mag_give_value  (guchar    *pt,
-                                           gint       alpha,
-                                           gint       bytes);
-
-/* -------------------------------------------------------------------------- */
-/*   Variables global over entire plug-in scope                               */
-/* -------------------------------------------------------------------------- */
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Warp
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn parent_instance;
 };
+
+struct _WarpClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define WARP_TYPE  (warp_get_type ())
+#define WARP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WARP_TYPE, Warp))
+
+GType                   warp_get_type         (void) G_GNUC_CONST;
+
+static GList          * warp_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * warp_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * warp_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static void             blur16                (GimpDrawable   *drawable);
+
+static void             diff                  (GimpDrawable   *drawable,
+                                               GimpDrawable  **xl,
+                                               GimpDrawable  **yl);
+
+static void             diff_prepare_row      (GeglBuffer     *buffer,
+                                               const Babl     *format,
+                                               guchar         *data,
+                                               gint            x,
+                                               gint            y,
+                                               gint            w);
+
+static void             warp_one              (GimpDrawable   *draw,
+                                               GimpDrawable   *newid,
+                                               GimpDrawable   *map_x,
+                                               GimpDrawable   *map_y,
+                                               GimpDrawable   *mag_draw,
+                                               gboolean        first_time,
+                                               gint            step);
+
+static void             warp                  (GimpDrawable   *drawable);
+
+static gboolean         warp_dialog           (GimpDrawable   *drawable);
+static void             warp_pixel            (GeglBuffer     *buffer,
+                                               const Babl     *format,
+                                               gint            width,
+                                               gint            height,
+                                               gint            x1,
+                                               gint            y1,
+                                               gint            x2,
+                                               gint            y2,
+                                               gint            x,
+                                               gint            y,
+                                               guchar         *pixel);
+
+static gboolean      warp_map_constrain       (GimpImage      *image,
+                                               GimpItem       *item,
+                                               gpointer        data);
+static gdouble       warp_map_mag_give_value  (guchar         *pt,
+                                               gint            alpha,
+                                               gint            bytes);
+
+
+G_DEFINE_TYPE (Warp, warp, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (WARP_TYPE)
+
 
 static WarpVals dvals =
 {
@@ -190,71 +203,161 @@ static WarpVals dvals =
   0.0     /* vector_angle  */
 };
 
-/* -------------------------------------------------------------------------- */
-
 static gint         progress = 0;              /* progress indicator bar      */
 static GimpRunMode  run_mode;                  /* interactive, non-, etc.     */
 static guchar       color_pixel[4] = {0, 0, 0, 255};  /* current fg color     */
 
-/* -------------------------------------------------------------------------- */
-
-/***** Functions *****/
-
-MAIN ()
 
 static void
-query (void)
+warp_class_init (WarpClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
-    { GIMP_PDB_FLOAT,    "amount",       "Pixel displacement multiplier" },
-    { GIMP_PDB_DRAWABLE, "warp-map",     "Displacement control map" },
-    { GIMP_PDB_INT32,    "iter",         "Iteration count (last required argument)" },
-    { GIMP_PDB_FLOAT,    "dither",       "Random dither amount (first optional argument)" },
-    { GIMP_PDB_FLOAT,    "angle",        "Angle of gradient vector rotation" },
-    { GIMP_PDB_INT32,    "wrap-type",    "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2), COLOR (3) }" },
-    { GIMP_PDB_DRAWABLE, "mag-map",      "Magnitude control map" },
-    { GIMP_PDB_INT32,    "mag-use",      "Use magnitude map: { FALSE (0), TRUE (1) }" },
-    { GIMP_PDB_INT32,    "substeps",     "Substeps between image updates" },
-    { GIMP_PDB_INT32,    "grad-map",     "Gradient control map" },
-    { GIMP_PDB_FLOAT,    "grad-scale",   "Scaling factor for gradient map (0=don't use)" },
-    { GIMP_PDB_INT32,    "vector-map",   "Fixed vector control map" },
-    { GIMP_PDB_FLOAT,    "vector-scale", "Scaling factor for fixed vector map (0=don't use)" },
-    { GIMP_PDB_FLOAT,    "vector-angle", "Angle for fixed vector map" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Twist or smear image in many different ways"),
-                          "Smears an image along vector paths calculated as "
-                          "the gradient of a separate control matrix. The "
-                          "effect can look like brushstrokes of acrylic or "
-                          "watercolor paint, in some cases.",
-                          "John P. Beale",
-                          "John P. Beale",
-                          "1997",
-                          N_("_Warp..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
+  plug_in_class->query_procedures = warp_query_procedures;
+  plug_in_class->create_procedure = warp_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+warp_init (Warp *warp)
 {
-  static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpDrawable     *drawable;
-  GimpRGB           color;
+}
+
+static GList *
+warp_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+warp_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            warp_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Warp..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Twist or smear image in many "
+                                           "different ways"),
+                                        "Smears an image along vector paths "
+                                        "calculated as the gradient of a "
+                                        "separate control matrix. The effect "
+                                        "can look like brushstrokes of acrylic "
+                                        "or watercolor paint, in some cases.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "John P. Beale",
+                                      "John P. Beale",
+                                      "1997");
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "amount",
+                            "Amount",
+                            "Pixel displacement multiplier",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 10.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DRAWABLE (procedure, "warp-map",
+                              "Warp map",
+                              "Displacement control map",
+                              TRUE,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "iter",
+                         "Iter",
+                         "Iteration count",
+                         1, 100, 5,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "dither",
+                            "Dither",
+                            "Random dither amount",
+                            0, 100, 0.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "angle",
+                            "Angle",
+                            "Angle of gradient vector rotation",
+                            0, 360, 90.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "wrap-type",
+                         "Wrap type",
+                         "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2), "
+                         "COLOR (3) }",
+                         0, 3, WRAP,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DRAWABLE (procedure, "mag-map",
+                              "Mag map",
+                              "Magnitude control map",
+                              TRUE,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "mag-use",
+                             "Mag use",
+                             "Use magnitude map",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "substeps",
+                         "Substeps",
+                         "Substeps between image updates",
+                         1, 100, 1,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DRAWABLE (procedure, "grad-map",
+                              "Grad map",
+                              "Gradient control map",
+                              TRUE,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "grad-scale",
+                            "Grad scale",
+                            "Scaling factor for gradient map (0=don't use)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DRAWABLE (procedure, "vector-map",
+                              "Vector map",
+                              "Fixed vector control map",
+                              TRUE,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "vector-scale",
+                            "Vector scale",
+                            "Scaling factor for fixed vector map (0=don't use)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
+                            "Vector angle",
+                            "Angle for fixed vector map",
+                            0, 360, 0.0,
+                            G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+warp_run (GimpProcedure        *procedure,
+          GimpRunMode           _run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpDrawable *map;
+  GimpRGB       color;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -266,14 +369,7 @@ run (const gchar      *name,
                       &color_pixel[1],
                       &color_pixel[2]);
 
-  run_mode = param[0].data.d_int32;
-  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  run_mode = _run_mode;
 
   switch (run_mode)
     {
@@ -281,59 +377,56 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &dvals);
 
       if (! warp_dialog (drawable))
-        return;
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Make sure minimum args
-       *  (mode, image, draw, amount, warp_map, iter) are there
-       */
-      if (nparams < MIN_ARGS)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      else
-        {
-          gint  pcnt = MIN_ARGS;
+      dvals.amount        = GIMP_VALUES_GET_DOUBLE (args, 0);
 
-          dvals.amount      = param[3].data.d_float;
-          dvals.warp_map_id = param[4].data.d_int32;
-          dvals.iter        = param[5].data.d_int32;
+      map = GIMP_VALUES_GET_DRAWABLE (args, 1);
+      dvals.warp_map_id   = gimp_item_get_id (GIMP_ITEM (map));
 
-          if (nparams > pcnt++) dvals.dither        = param[6].data.d_float;
-          if (nparams > pcnt++) dvals.angle         = param[7].data.d_float;
-          if (nparams > pcnt++) dvals.wrap_type     = param[8].data.d_int32;
-          if (nparams > pcnt++) dvals.mag_map_id    = param[9].data.d_int32;
-          if (nparams > pcnt++) dvals.mag_use       = param[10].data.d_int32;
-          if (nparams > pcnt++) dvals.substeps      = param[11].data.d_int32;
-          if (nparams > pcnt++) dvals.grad_map_id   = param[12].data.d_int32;
-          if (nparams > pcnt++) dvals.grad_scale    = param[13].data.d_float;
-          if (nparams > pcnt++) dvals.vector_map_id = param[14].data.d_int32;
-          if (nparams > pcnt++) dvals.vector_scale  = param[15].data.d_float;
-          if (nparams > pcnt++) dvals.vector_angle  = param[16].data.d_float;
-        }
+      dvals.iter          = GIMP_VALUES_GET_INT    (args, 2);
+      dvals.dither        = GIMP_VALUES_GET_DOUBLE (args, 3);
+      dvals.angle         = GIMP_VALUES_GET_DOUBLE (args, 4);
+      dvals.wrap_type     = GIMP_VALUES_GET_INT    (args, 5);
+
+      map = GIMP_VALUES_GET_DRAWABLE (args, 6);
+      dvals.mag_map_id    = gimp_item_get_id (GIMP_ITEM (map));
+
+      dvals.mag_use       = GIMP_VALUES_GET_BOOLEAN (args, 7);
+      dvals.substeps      = GIMP_VALUES_GET_INT     (args, 8);
+
+      map = GIMP_VALUES_GET_DRAWABLE (args, 9);
+      dvals.grad_map_id   = gimp_item_get_id (GIMP_ITEM (map));
+
+      dvals.grad_scale    = GIMP_VALUES_GET_DOUBLE (args, 10);
+
+      map = GIMP_VALUES_GET_DRAWABLE (args, 11);
+      dvals.vector_map_id = gimp_item_get_id (GIMP_ITEM (map));
+
+      dvals.vector_scale  = GIMP_VALUES_GET_DOUBLE (args, 12);
+      dvals.vector_angle  = GIMP_VALUES_GET_DOUBLE (args, 13);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_PROC, &dvals);
       break;
-
-    default:
-      break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      warp (drawable);
+  warp (drawable);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &dvals, sizeof (WarpVals));
-    }
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_set_data (PLUG_IN_PROC, &dvals, sizeof (WarpVals));
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static GtkWidget *
