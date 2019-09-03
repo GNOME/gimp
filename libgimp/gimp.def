@@ -206,12 +206,10 @@ EXPORTS
 	gimp_drawable_foreground_extract
 	gimp_drawable_free_shadow
 	gimp_drawable_get_buffer
-	gimp_drawable_get_buffer_deprecated
 	gimp_drawable_get_by_id
 	gimp_drawable_get_format
 	gimp_drawable_get_pixel
 	gimp_drawable_get_shadow_buffer
-	gimp_drawable_get_shadow_buffer_deprecated
 	gimp_drawable_get_sub_thumbnail
 	gimp_drawable_get_sub_thumbnail_data
 	gimp_drawable_get_thumbnail
@@ -549,7 +547,6 @@ EXPORTS
 	gimp_layer_color_space_get_type
 	gimp_layer_composite_mode_get_type
 	gimp_layer_copy
-	gimp_layer_copy_deprecated
 	gimp_layer_create_mask
 	gimp_layer_flatten
 	gimp_layer_from_mask
@@ -571,7 +568,6 @@ EXPORTS
 	gimp_layer_mask_get_type
 	gimp_layer_mode_get_type
 	gimp_layer_new
-	gimp_layer_new_deprecated
 	gimp_layer_new_from_drawable
 	gimp_layer_new_from_pixbuf
 	gimp_layer_new_from_surface

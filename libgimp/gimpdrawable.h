@@ -71,8 +71,6 @@ GType          gimp_drawable_get_type               (void) G_GNUC_CONST;
 
 GimpDrawable * gimp_drawable_get_by_id              (gint32        drawable_id);
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 GeglBuffer   * gimp_drawable_get_buffer             (GimpDrawable  *drawable);
 GeglBuffer   * gimp_drawable_get_shadow_buffer      (GimpDrawable  *drawable);
 
@@ -104,17 +102,6 @@ GdkPixbuf    * gimp_drawable_get_sub_thumbnail      (GimpDrawable  *drawable,
                                                      gint           dest_width,
                                                      gint           dest_height,
                                                      GimpPixbufTransparency alpha);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_drawable_get_buffer             gimp_drawable_get_buffer_deprecated
-#define gimp_drawable_get_shadow_buffer      gimp_drawable_get_shadow_buffer_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-GeglBuffer * gimp_drawable_get_buffer_deprecated             (gint32         drawable_ID);
-GeglBuffer * gimp_drawable_get_shadow_buffer_deprecated      (gint32         drawable_ID);
 
 
 G_END_DECLS
