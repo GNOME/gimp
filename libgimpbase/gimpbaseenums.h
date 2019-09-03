@@ -829,66 +829,6 @@ typedef enum
 
 
 /**
- * GimpPDBArgType:
- * @GIMP_PDB_INT32:       32-bit integer
- * @GIMP_PDB_INT16:       16-bit integer
- * @GIMP_PDB_INT8:        8-bit integer
- * @GIMP_PDB_FLOAT:       Float
- * @GIMP_PDB_STRING:      String
- * @GIMP_PDB_INT32ARRAY:  Array of INT32
- * @GIMP_PDB_INT16ARRAY:  Array of INT16
- * @GIMP_PDB_INT8ARRAY:   Array of INT8
- * @GIMP_PDB_FLOATARRAY:  Array of floats
- * @GIMP_PDB_STRINGARRAY: Array of strings
- * @GIMP_PDB_COLOR:       Color
- * @GIMP_PDB_ITEM:        Item ID
- * @GIMP_PDB_DISPLAY:     Display ID
- * @GIMP_PDB_IMAGE:       Image ID
- * @GIMP_PDB_LAYER:       Layer ID
- * @GIMP_PDB_CHANNEL:     Channel ID
- * @GIMP_PDB_DRAWABLE:    Drawable ID
- * @GIMP_PDB_SELECTION:   Selection ID
- * @GIMP_PDB_COLORARRAY:  Array of colors
- * @GIMP_PDB_VECTORS:     Vectors (psath) ID
- * @GIMP_PDB_PARASITE:    Parasite
- * @GIMP_PDB_STATUS:      Procedure return status
- * @GIMP_PDB_END:         Marker for last enum value
- *
- * Parameter types of the PDB.
- **/
-#define GIMP_TYPE_PDB_ARG_TYPE (gimp_pdb_arg_type_get_type ())
-
-GType gimp_pdb_arg_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_PDB_INT32,
-  GIMP_PDB_INT16,
-  GIMP_PDB_INT8,
-  GIMP_PDB_FLOAT,
-  GIMP_PDB_STRING,
-  GIMP_PDB_INT32ARRAY,
-  GIMP_PDB_INT16ARRAY,
-  GIMP_PDB_INT8ARRAY,
-  GIMP_PDB_FLOATARRAY,
-  GIMP_PDB_STRINGARRAY,
-  GIMP_PDB_COLOR,
-  GIMP_PDB_ITEM,
-  GIMP_PDB_DISPLAY,
-  GIMP_PDB_IMAGE,
-  GIMP_PDB_LAYER,
-  GIMP_PDB_CHANNEL,
-  GIMP_PDB_DRAWABLE,
-  GIMP_PDB_SELECTION,
-  GIMP_PDB_COLORARRAY,
-  GIMP_PDB_VECTORS,
-  GIMP_PDB_PARASITE,
-  GIMP_PDB_STATUS,
-  GIMP_PDB_END
-} GimpPDBArgType;
-
-
-/**
  * GimpPDBErrorHandler:
  * @GIMP_PDB_ERROR_HANDLER_INTERNAL: Internal
  * @GIMP_PDB_ERROR_HANDLER_PLUGIN:   Plug-In

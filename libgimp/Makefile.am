@@ -110,13 +110,8 @@ libgimp_private_sources = \
 	gimp-private.h		\
 	gimp-shm.c		\
 	gimp-shm.h		\
-	gimpgpcompat.c		\
-	gimpgpcompat.h		\
 	gimpgpparams.c		\
 	gimpgpparams.h		\
-	gimplegacy.c		\
-	gimplegacy.h		\
-	gimplegacy-private.h	\
 	gimppdb-private.h	\
 	gimppdbprocedure.c	\
 	gimppdbprocedure.h	\
@@ -154,7 +149,6 @@ libgimpui_@GIMP_API_VERSION@_la_SOURCES = \
 
 gimpinclude_HEADERS = \
 	$(libgimp_introspectable_headers)	\
-	gimplegacy.h				\
 	gimpprocedure-params.h			\
 	$(libgimpui_introspectable_headers)
 

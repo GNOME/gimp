@@ -50,7 +50,6 @@
 gboolean
 gimp_image_convert_rgb (GimpImage *image)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -59,13 +58,9 @@ gimp_image_convert_rgb (GimpImage *image)
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-rgb",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-rgb",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-convert-rgb",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -89,7 +84,6 @@ gimp_image_convert_rgb (GimpImage *image)
 gboolean
 gimp_image_convert_grayscale (GimpImage *image)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -98,13 +92,9 @@ gimp_image_convert_grayscale (GimpImage *image)
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-grayscale",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-grayscale",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-convert-grayscale",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -151,7 +141,6 @@ gimp_image_convert_indexed (GimpImage              *image,
                             gboolean                remove_unused,
                             const gchar            *palette)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -166,13 +155,9 @@ gimp_image_convert_indexed (GimpImage              *image,
                                           G_TYPE_STRING, palette,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-indexed",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-indexed",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-convert-indexed",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -204,7 +189,6 @@ gimp_image_convert_set_dither_matrix (gint          width,
                                       gint          matrix_length,
                                       const guint8 *matrix)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -217,13 +201,9 @@ gimp_image_convert_set_dither_matrix (gint          width,
                                           G_TYPE_NONE);
   gimp_value_set_uint8_array (gimp_value_array_index (args, 3), matrix, matrix_length);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-set-dither-matrix",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-set-dither-matrix",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-convert-set-dither-matrix",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -252,7 +232,6 @@ gboolean
 gimp_image_convert_precision (GimpImage     *image,
                               GimpPrecision  precision)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -262,13 +241,9 @@ gimp_image_convert_precision (GimpImage     *image,
                                           GIMP_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-convert-precision",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-convert-precision",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-convert-precision",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

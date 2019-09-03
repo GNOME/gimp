@@ -24,11 +24,7 @@
 G_BEGIN_DECLS
 
 
-gint   _gimp_main_internal (GType                 plug_in_type,
-                            const GimpPlugInInfo *info,
-                            gint                  argc,
-                            gchar                *argv[]);
-void   _gimp_config        (GPConfig             *config);
+void   _gimp_config (GPConfig *config);
 
 
 G_END_DECLS

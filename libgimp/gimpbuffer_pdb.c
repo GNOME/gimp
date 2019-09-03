@@ -54,7 +54,6 @@ gchar **
 gimp_buffers_get_list (const gchar *filter,
                        gint        *num_buffers)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar **buffer_list = NULL;
@@ -63,13 +62,9 @@ gimp_buffers_get_list (const gchar *filter,
                                           G_TYPE_STRING, filter,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-buffers-get-list",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-buffers-get-list",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-buffers-get-list",
+                                              args);
   gimp_value_array_unref (args);
 
   *num_buffers = 0;
@@ -103,7 +98,6 @@ gchar *
 gimp_buffer_rename (const gchar *buffer_name,
                     const gchar *new_name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *real_name = NULL;
@@ -113,13 +107,9 @@ gimp_buffer_rename (const gchar *buffer_name,
                                           G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-buffer-rename",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-buffer-rename",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-buffer-rename",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -145,7 +135,6 @@ gimp_buffer_rename (const gchar *buffer_name,
 gboolean
 gimp_buffer_delete (const gchar *buffer_name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -154,13 +143,9 @@ gimp_buffer_delete (const gchar *buffer_name)
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-buffer-delete",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-buffer-delete",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-buffer-delete",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -185,7 +170,6 @@ gimp_buffer_delete (const gchar *buffer_name)
 gint
 gimp_buffer_get_width (const gchar *buffer_name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint width = 0;
@@ -194,13 +178,9 @@ gimp_buffer_get_width (const gchar *buffer_name)
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-buffer-get-width",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-buffer-get-width",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-buffer-get-width",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -226,7 +206,6 @@ gimp_buffer_get_width (const gchar *buffer_name)
 gint
 gimp_buffer_get_height (const gchar *buffer_name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint height = 0;
@@ -235,13 +214,9 @@ gimp_buffer_get_height (const gchar *buffer_name)
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-buffer-get-height",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-buffer-get-height",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-buffer-get-height",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -267,7 +242,6 @@ gimp_buffer_get_height (const gchar *buffer_name)
 gint
 gimp_buffer_get_bytes (const gchar *buffer_name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint bytes = 0;
@@ -276,13 +250,9 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-buffer-get-bytes",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-buffer-get-bytes",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-buffer-get-bytes",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -308,7 +278,6 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
 GimpImageBaseType
 gimp_buffer_get_image_type (const gchar *buffer_name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpImageBaseType image_type = 0;
@@ -317,13 +286,9 @@ gimp_buffer_get_image_type (const gchar *buffer_name)
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-buffer-get-image-type",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-buffer-get-image-type",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-buffer-get-image-type",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

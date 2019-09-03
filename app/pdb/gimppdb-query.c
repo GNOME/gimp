@@ -425,7 +425,6 @@ gimp_pdb_print_entry (gpointer key,
   GOutputStream *output   = pdb_dump->output;
   const gchar   *proc_name;
   GList         *list;
-  GEnumClass    *arg_class;
   GEnumClass    *proc_class;
   GString       *buf;
   GString       *string;
@@ -441,7 +440,6 @@ gimp_pdb_print_entry (gpointer key,
   else
     list = value;
 
-  arg_class  = g_type_class_ref (GIMP_TYPE_PDB_ARG_TYPE);
   proc_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
 
   buf    = g_string_new (NULL);
@@ -586,7 +584,6 @@ gimp_pdb_print_entry (gpointer key,
   g_string_free (string, TRUE);
   g_string_free (buf, TRUE);
 
-  g_type_class_unref (arg_class);
   g_type_class_unref (proc_class);
 }
 

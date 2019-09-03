@@ -53,7 +53,6 @@ GimpVectors *
 gimp_vectors_new (GimpImage   *image,
                   const gchar *name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpVectors *vectors = NULL;
@@ -63,13 +62,9 @@ gimp_vectors_new (GimpImage   *image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-new",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-new",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-new",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -98,7 +93,6 @@ GimpVectors *
 gimp_vectors_new_from_text_layer (GimpImage *image,
                                   GimpLayer *layer)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpVectors *vectors = NULL;
@@ -108,13 +102,9 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
                                           GIMP_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-new-from-text-layer",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-new-from-text-layer",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-new-from-text-layer",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -141,7 +131,6 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
 GimpVectors *
 gimp_vectors_copy (GimpVectors *vectors)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpVectors *vectors_copy = NULL;
@@ -150,13 +139,9 @@ gimp_vectors_copy (GimpVectors *vectors)
                                           GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-copy",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-copy",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-copy",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -187,7 +172,6 @@ gint *
 gimp_vectors_get_strokes (GimpVectors *vectors,
                           gint        *num_strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint *stroke_ids = NULL;
@@ -196,13 +180,9 @@ gimp_vectors_get_strokes (GimpVectors *vectors,
                                           GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-get-strokes",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-get-strokes",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-get-strokes",
+                                              args);
   gimp_value_array_unref (args);
 
   *num_strokes = 0;
@@ -237,7 +217,6 @@ gimp_vectors_stroke_get_length (GimpVectors *vectors,
                                 gint         stroke_id,
                                 gdouble      precision)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble length = 0.0;
@@ -248,13 +227,9 @@ gimp_vectors_stroke_get_length (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-get-length",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-get-length",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-get-length",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -299,7 +274,6 @@ gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
                                        gdouble     *slope,
                                        gboolean    *valid)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -311,13 +285,9 @@ gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-get-point-at-dist",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-get-point-at-dist",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-get-point-at-dist",
+                                              args);
   gimp_value_array_unref (args);
 
   *x_point = 0.0;
@@ -357,7 +327,6 @@ gboolean
 gimp_vectors_remove_stroke (GimpVectors *vectors,
                             gint         stroke_id)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -367,13 +336,9 @@ gimp_vectors_remove_stroke (GimpVectors *vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-remove-stroke",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-remove-stroke",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-remove-stroke",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -400,7 +365,6 @@ gboolean
 gimp_vectors_stroke_close (GimpVectors *vectors,
                            gint         stroke_id)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -410,13 +374,9 @@ gimp_vectors_stroke_close (GimpVectors *vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-close",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-close",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-close",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -447,7 +407,6 @@ gimp_vectors_stroke_translate (GimpVectors *vectors,
                                gint         off_x,
                                gint         off_y)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -459,13 +418,9 @@ gimp_vectors_stroke_translate (GimpVectors *vectors,
                                           G_TYPE_INT, off_y,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-translate",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-translate",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-translate",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -496,7 +451,6 @@ gimp_vectors_stroke_scale (GimpVectors *vectors,
                            gdouble      scale_x,
                            gdouble      scale_y)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -508,13 +462,9 @@ gimp_vectors_stroke_scale (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, scale_y,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-scale",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-scale",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-scale",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -547,7 +497,6 @@ gimp_vectors_stroke_rotate (GimpVectors *vectors,
                             gdouble      center_y,
                             gdouble      angle)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -560,13 +509,9 @@ gimp_vectors_stroke_rotate (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-rotate",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-rotate",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-rotate",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -597,7 +542,6 @@ gimp_vectors_stroke_flip (GimpVectors         *vectors,
                           GimpOrientationType  flip_type,
                           gdouble              axis)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -609,13 +553,9 @@ gimp_vectors_stroke_flip (GimpVectors         *vectors,
                                           G_TYPE_DOUBLE, axis,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-flip",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-flip",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-flip",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -652,7 +592,6 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
                                gdouble      x2,
                                gdouble      y2)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -666,13 +605,9 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-flip-free",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-flip-free",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-flip-free",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -708,7 +643,6 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
                                 gdouble     **controlpoints,
                                 gboolean     *closed)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpVectorsStrokeType type = 0;
@@ -718,13 +652,9 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-get-points",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-get-points",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-get-points",
+                                              args);
   gimp_value_array_unref (args);
 
   *num_points = 0;
@@ -772,7 +702,6 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
                                      const gdouble         *controlpoints,
                                      gboolean               closed)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint stroke_id = 0;
@@ -786,13 +715,9 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), controlpoints, num_points);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-new-from-points",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-new-from-points",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-new-from-points",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -828,7 +753,6 @@ gimp_vectors_stroke_interpolate (GimpVectors *vectors,
                                  gint        *num_coords,
                                  gboolean    *closed)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble *coords = NULL;
@@ -839,13 +763,9 @@ gimp_vectors_stroke_interpolate (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-stroke-interpolate",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-stroke-interpolate",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-interpolate",
+                                              args);
   gimp_value_array_unref (args);
 
   *num_coords = 0;
@@ -881,7 +801,6 @@ gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
                                        gdouble      x0,
                                        gdouble      y0)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint stroke_id = 0;
@@ -892,13 +811,9 @@ gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-bezier-stroke-new-moveto",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-bezier-stroke-new-moveto",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-bezier-stroke-new-moveto",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -930,7 +845,6 @@ gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
                                    gdouble      x0,
                                    gdouble      y0)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -942,13 +856,9 @@ gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-bezier-stroke-lineto",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-bezier-stroke-lineto",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-bezier-stroke-lineto",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -985,7 +895,6 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
                                     gdouble      x1,
                                     gdouble      y1)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -999,13 +908,9 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y1,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-bezier-stroke-conicto",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-bezier-stroke-conicto",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-bezier-stroke-conicto",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1044,7 +949,6 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
                                     gdouble      x2,
                                     gdouble      y2)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -1060,13 +964,9 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-bezier-stroke-cubicto",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-bezier-stroke-cubicto",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-bezier-stroke-cubicto",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1101,7 +1001,6 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
                                         gdouble      radius_y,
                                         gdouble      angle)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint stroke_id = 0;
@@ -1115,13 +1014,9 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
                                           G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-bezier-stroke-new-ellipse",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-bezier-stroke-new-ellipse",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-bezier-stroke-new-ellipse",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1158,7 +1053,6 @@ gimp_vectors_import_from_file (GimpImage    *image,
                                gint         *num_vectors,
                                gint        **vectors_ids)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -1170,13 +1064,9 @@ gimp_vectors_import_from_file (GimpImage    *image,
                                           G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-import-from-file",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-import-from-file",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-import-from-file",
+                                              args);
   gimp_value_array_unref (args);
 
   *num_vectors = 0;
@@ -1224,7 +1114,6 @@ gimp_vectors_import_from_string (GimpImage    *image,
                                  gint         *num_vectors,
                                  gint        **vectors_ids)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -1237,13 +1126,9 @@ gimp_vectors_import_from_string (GimpImage    *image,
                                           G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-import-from-string",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-import-from-string",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-import-from-string",
+                                              args);
   gimp_value_array_unref (args);
 
   *num_vectors = 0;
@@ -1284,7 +1169,6 @@ gimp_vectors_export_to_file (GimpImage   *image,
                              const gchar *filename,
                              GimpVectors *vectors)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -1295,13 +1179,9 @@ gimp_vectors_export_to_file (GimpImage   *image,
                                           GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-export-to-file",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-export-to-file",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-export-to-file",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1333,7 +1213,6 @@ gchar *
 gimp_vectors_export_to_string (GimpImage   *image,
                                GimpVectors *vectors)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *string = NULL;
@@ -1343,13 +1222,9 @@ gimp_vectors_export_to_string (GimpImage   *image,
                                           GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-vectors-export-to-string",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-vectors-export-to-string",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-export-to-string",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

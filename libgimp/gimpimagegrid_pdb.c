@@ -54,7 +54,6 @@ gimp_image_grid_get_spacing (GimpImage *image,
                              gdouble   *xspacing,
                              gdouble   *yspacing)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -63,13 +62,9 @@ gimp_image_grid_get_spacing (GimpImage *image,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-get-spacing",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-spacing",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-get-spacing",
+                                              args);
   gimp_value_array_unref (args);
 
   *xspacing = 0.0;
@@ -108,7 +103,6 @@ gimp_image_grid_set_spacing (GimpImage *image,
                              gdouble    xspacing,
                              gdouble    yspacing)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -119,13 +113,9 @@ gimp_image_grid_set_spacing (GimpImage *image,
                                           G_TYPE_DOUBLE, yspacing,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-set-spacing",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-spacing",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-set-spacing",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -155,7 +145,6 @@ gimp_image_grid_get_offset (GimpImage *image,
                             gdouble   *xoffset,
                             gdouble   *yoffset)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -164,13 +153,9 @@ gimp_image_grid_get_offset (GimpImage *image,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-get-offset",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-offset",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-get-offset",
+                                              args);
   gimp_value_array_unref (args);
 
   *xoffset = 0.0;
@@ -209,7 +194,6 @@ gimp_image_grid_set_offset (GimpImage *image,
                             gdouble    xoffset,
                             gdouble    yoffset)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -220,13 +204,9 @@ gimp_image_grid_set_offset (GimpImage *image,
                                           G_TYPE_DOUBLE, yoffset,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-set-offset",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-offset",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-set-offset",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -253,7 +233,6 @@ gboolean
 gimp_image_grid_get_foreground_color (GimpImage *image,
                                       GimpRGB   *fgcolor)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -262,13 +241,9 @@ gimp_image_grid_get_foreground_color (GimpImage *image,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-get-foreground-color",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-foreground-color",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-get-foreground-color",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -298,7 +273,6 @@ gboolean
 gimp_image_grid_set_foreground_color (GimpImage     *image,
                                       const GimpRGB *fgcolor)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -308,13 +282,9 @@ gimp_image_grid_set_foreground_color (GimpImage     *image,
                                           GIMP_TYPE_RGB, fgcolor,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-set-foreground-color",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-foreground-color",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-set-foreground-color",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -341,7 +311,6 @@ gboolean
 gimp_image_grid_get_background_color (GimpImage *image,
                                       GimpRGB   *bgcolor)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -350,13 +319,9 @@ gimp_image_grid_get_background_color (GimpImage *image,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-get-background-color",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-background-color",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-get-background-color",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -386,7 +351,6 @@ gboolean
 gimp_image_grid_set_background_color (GimpImage     *image,
                                       const GimpRGB *bgcolor)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -396,13 +360,9 @@ gimp_image_grid_set_background_color (GimpImage     *image,
                                           GIMP_TYPE_RGB, bgcolor,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-set-background-color",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-background-color",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-set-background-color",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -427,7 +387,6 @@ gimp_image_grid_set_background_color (GimpImage     *image,
 GimpGridStyle
 gimp_image_grid_get_style (GimpImage *image)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpGridStyle style = 0;
@@ -436,13 +395,9 @@ gimp_image_grid_get_style (GimpImage *image)
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-get-style",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-style",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-get-style",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -471,7 +426,6 @@ gboolean
 gimp_image_grid_set_style (GimpImage     *image,
                            GimpGridStyle  style)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -481,13 +435,9 @@ gimp_image_grid_set_style (GimpImage     *image,
                                           GIMP_TYPE_GRID_STYLE, style,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-grid-set-style",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-style",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-grid-set-style",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

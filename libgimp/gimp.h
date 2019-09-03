@@ -49,7 +49,6 @@
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimplayermask.h>
 #include <libgimp/gimploadprocedure.h>
-#include <libgimp/gimplegacy.h>
 #include <libgimp/gimppaletteselect.h>
 #include <libgimp/gimpparamspecs.h>
 #include <libgimp/gimppatternselect.h>

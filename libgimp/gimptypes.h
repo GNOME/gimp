@@ -32,11 +32,6 @@ typedef struct _GimpPDB         GimpPDB;
 typedef struct _GimpPlugIn      GimpPlugIn;
 typedef struct _GimpProcedure   GimpProcedure;
 
-typedef struct _GimpPlugInInfo  GimpPlugInInfo;
-typedef struct _GimpParamDef    GimpParamDef;
-typedef union  _GimpParamData   GimpParamData;
-typedef struct _GimpParam       GimpParam;
-
 typedef struct _GimpImage       GimpImage;
 typedef struct _GimpItem        GimpItem;
 typedef struct _GimpDrawable    GimpDrawable;

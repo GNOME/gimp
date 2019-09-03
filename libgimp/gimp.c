@@ -99,9 +99,7 @@
 #include "gimp-debug.h"
 #include "gimp-private.h"
 #include "gimp-shm.h"
-#include "gimpgpcompat.h"
 #include "gimpgpparams.h"
-#include "gimplegacy-private.h"
 #include "gimppdb-private.h"
 #include "gimpplugin-private.h"
 #include "gimpunitcache.h"
@@ -177,15 +175,6 @@ gimp_main (GType  plug_in_type,
            gint   argc,
            gchar *argv[])
 {
-  return _gimp_main_internal (plug_in_type, NULL, argc, argv);
-}
-
-gint
-_gimp_main_internal (GType                 plug_in_type,
-                     const GimpPlugInInfo *info,
-                     gint                  argc,
-                     gchar                *argv[])
-{
   enum
   {
     ARG_PROGNAME,
@@ -220,8 +209,9 @@ _gimp_main_internal (GType                 plug_in_type,
   }
 
   /* On Windows, set DLL search path to $INSTALLDIR/bin so that GEGL
-     file operations can find their respective file library DLLs (such
-     as jasper, etc.) without needing to set external PATH. */
+   * file operations can find their respective file library DLLs (such
+   * as jasper, etc.) without needing to set external PATH.
+   */
   {
     const gchar *install_dir;
     gchar       *bin_dir;
@@ -260,8 +250,9 @@ _gimp_main_internal (GType                 plug_in_type,
     gchar  *dir;
 
     /* This has to be the non-roaming directory (i.e., the local
-       directory) as backtraces correspond to the binaries on this
-       system. */
+     * directory) as backtraces correspond to the binaries on this
+     * system.
+     */
     dir = g_build_filename (g_get_user_data_dir (),
                             GIMPDIR, GIMP_USER_VERSION, "CrashLog",
                             NULL);
@@ -313,7 +304,6 @@ _gimp_main_internal (GType                 plug_in_type,
    * by buggy NT C runtime, or something. I don't know why this happens
    * on NT (including w2k), but not on w95/98.
    */
-
   for (i = 1; i < argc; i++)
     {
       k = strlen (argv[i]);
@@ -351,8 +341,7 @@ _gimp_main_internal (GType                 plug_in_type,
 
 #endif /* G_OS_WIN32 */
 
-  g_assert ((plug_in_type != G_TYPE_NONE && info == NULL) ||
-            (plug_in_type == G_TYPE_NONE && info != NULL));
+  g_assert (plug_in_type != G_TYPE_NONE);
 
   if ((argc != N_ARGS) || (strcmp (argv[ARG_GIMP], "-gimp") != 0))
     {
@@ -559,31 +548,19 @@ _gimp_main_internal (GType                 plug_in_type,
                          NULL);
     }
 
-  if (plug_in_type != G_TYPE_NONE)
-    {
-      PLUG_IN = g_object_new (plug_in_type,
-                              "read-channel",  read_channel,
-                              "write-channel", write_channel,
-                              NULL);
+  PLUG_IN = g_object_new (plug_in_type,
+                          "read-channel",  read_channel,
+                          "write-channel", write_channel,
+                          NULL);
 
-      g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
-    }
-  else
-    {
-      _gimp_legacy_initialize (info,
-                               read_channel,
-                               write_channel);
-    }
+  g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
     {
       if (_gimp_debug_flags () & GIMP_DEBUG_QUERY)
         _gimp_debug_stop ();
 
-      if (PLUG_IN)
-        _gimp_plug_in_query (PLUG_IN);
-      else
-        _gimp_legacy_query ();
+      _gimp_plug_in_query (PLUG_IN);
 
       gimp_close ();
 
@@ -595,10 +572,7 @@ _gimp_main_internal (GType                 plug_in_type,
       if (_gimp_debug_flags () & GIMP_DEBUG_INIT)
         _gimp_debug_stop ();
 
-      if (PLUG_IN)
-        _gimp_plug_in_init (PLUG_IN);
-      else
-        _gimp_legacy_init ();
+      _gimp_plug_in_init (PLUG_IN);
 
       gimp_close ();
 
@@ -610,10 +584,7 @@ _gimp_main_internal (GType                 plug_in_type,
   else if (_gimp_debug_flags () & GIMP_DEBUG_PID)
     g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!");
 
-  if (PLUG_IN)
-    _gimp_plug_in_run (PLUG_IN);
-  else
-    _gimp_legacy_run ();
+  _gimp_plug_in_run (PLUG_IN);
 
   gimp_close ();
 
@@ -650,10 +621,7 @@ GimpPDB *
 gimp_get_pdb (void)
 {
   if (! PDB)
-    {
-      if (PLUG_IN)
-        PDB = _gimp_pdb_new (PLUG_IN);
-    }
+    PDB = _gimp_pdb_new (PLUG_IN);
 
   return PDB;
 }
@@ -948,10 +916,7 @@ gimp_close (void)
   if (_gimp_debug_flags () & GIMP_DEBUG_QUIT)
     _gimp_debug_stop ();
 
-  if (PLUG_IN)
-    _gimp_plug_in_quit (PLUG_IN);
-  else
-    _gimp_legacy_quit ();
+  _gimp_plug_in_quit (PLUG_IN);
 }
 
 static void

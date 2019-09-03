@@ -30,7 +30,6 @@
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp-shm.h"
-#include "gimplegacy-private.h"
 #include "gimpplugin-private.h"
 #include "gimptilebackendplugin.h"
 
@@ -96,9 +95,6 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
 
 #define parent_class _gimp_tile_backend_plugin_parent_class
 
-
-extern GIOChannel *_gimp_readchannel;
-extern GIOChannel *_gimp_writechannel;
 
 static GMutex backend_plugin_mutex;
 
@@ -351,22 +347,11 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
   tile_req.tile_num    = tile->tile_num;
   tile_req.shadow      = priv->shadow;
 
+  if (! gp_tile_req_write (_gimp_plug_in_get_write_channel (plug_in),
+                           &tile_req, plug_in))
+    gimp_quit ();
 
-  if (plug_in)
-    {
-      if (! gp_tile_req_write (_gimp_plug_in_get_write_channel (plug_in),
-                               &tile_req, plug_in))
-        gimp_quit ();
-
-      _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
-    }
-  else
-    {
-      if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
-        gimp_quit ();
-
-      _gimp_legacy_read_expect_msg (&msg, GP_TILE_DATA);
-    }
+  _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
 
   tile_data = msg.data;
   if (tile_data->drawable_id != priv->drawable_id ||
@@ -407,17 +392,9 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
       tile_data->data = NULL;
     }
 
-  if (plug_in)
-    {
-      if (! gp_tile_ack_write (_gimp_plug_in_get_write_channel (plug_in),
-                               plug_in))
-        gimp_quit ();
-    }
-  else
-    {
-      if (! gp_tile_ack_write (_gimp_writechannel, NULL))
-        gimp_quit ();
-    }
+  if (! gp_tile_ack_write (_gimp_plug_in_get_write_channel (plug_in),
+                           plug_in))
+    gimp_quit ();
 
   gimp_wire_destroy (&msg);
 }
@@ -437,21 +414,11 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
   tile_req.tile_num    = 0;
   tile_req.shadow      = 0;
 
-  if (plug_in)
-    {
-      if (! gp_tile_req_write (_gimp_plug_in_get_write_channel (plug_in),
-                               &tile_req, plug_in))
-        gimp_quit ();
+  if (! gp_tile_req_write (_gimp_plug_in_get_write_channel (plug_in),
+                           &tile_req, plug_in))
+    gimp_quit ();
 
-      _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
-    }
-  else
-    {
-      if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
-        gimp_quit ();
-
-      _gimp_legacy_read_expect_msg (&msg, GP_TILE_DATA);
-    }
+  _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
 
   tile_info = msg.data;
 
@@ -475,27 +442,16 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
       tile_data.data = tile->data;
     }
 
-  if (plug_in)
-    {
-      if (! gp_tile_data_write (_gimp_plug_in_get_write_channel (plug_in),
-                                &tile_data, plug_in))
-        gimp_quit ();
-    }
-  else
-    {
-      if (! gp_tile_data_write (_gimp_writechannel, &tile_data, NULL))
-        gimp_quit ();
-    }
+  if (! gp_tile_data_write (_gimp_plug_in_get_write_channel (plug_in),
+                            &tile_data, plug_in))
+    gimp_quit ();
 
   if (! tile_info->use_shm)
     tile_data.data = NULL;
 
   gimp_wire_destroy (&msg);
 
-  if (plug_in)
-    _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_ACK);
-  else
-    _gimp_legacy_read_expect_msg (&msg, GP_TILE_ACK);
+  _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_ACK);
 
   gimp_wire_destroy (&msg);
 }

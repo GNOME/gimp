@@ -49,7 +49,6 @@
 gboolean
 gimp_floating_sel_remove (GimpLayer *floating_sel)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -58,13 +57,9 @@ gimp_floating_sel_remove (GimpLayer *floating_sel)
                                           GIMP_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-remove",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-remove",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-floating-sel-remove",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -90,7 +85,6 @@ gimp_floating_sel_remove (GimpLayer *floating_sel)
 gboolean
 gimp_floating_sel_anchor (GimpLayer *floating_sel)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -99,13 +93,9 @@ gimp_floating_sel_anchor (GimpLayer *floating_sel)
                                           GIMP_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-anchor",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-anchor",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-floating-sel-anchor",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -135,7 +125,6 @@ gimp_floating_sel_anchor (GimpLayer *floating_sel)
 gboolean
 gimp_floating_sel_to_layer (GimpLayer *floating_sel)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -144,13 +133,9 @@ gimp_floating_sel_to_layer (GimpLayer *floating_sel)
                                           GIMP_TYPE_LAYER, floating_sel,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-to-layer",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-to-layer",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-floating-sel-to-layer",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -176,7 +161,6 @@ gboolean
 gimp_floating_sel_attach (GimpLayer    *layer,
                           GimpDrawable *drawable)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -186,13 +170,9 @@ gimp_floating_sel_attach (GimpLayer    *layer,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-floating-sel-attach",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-floating-sel-attach",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-floating-sel-attach",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -79,7 +79,6 @@ gimp_text_fontname (GimpImage    *image,
                     GimpSizeType  size_type,
                     const gchar  *fontname)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpLayer *text_layer = NULL;
@@ -97,13 +96,9 @@ gimp_text_fontname (GimpImage    *image,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-fontname",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-fontname",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-text-fontname",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -147,7 +142,6 @@ gimp_text_get_extents_fontname (const gchar  *text,
                                 gint         *ascent,
                                 gint         *descent)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -159,13 +153,9 @@ gimp_text_get_extents_fontname (const gchar  *text,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-text-get-extents-fontname",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-text-get-extents-fontname",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-text-get-extents-fontname",
+                                              args);
   gimp_value_array_unref (args);
 
   *width = 0;

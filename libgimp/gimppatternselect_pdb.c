@@ -51,7 +51,6 @@ gimp_patterns_popup (const gchar *pattern_callback,
                      const gchar *popup_title,
                      const gchar *initial_pattern)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -62,13 +61,9 @@ gimp_patterns_popup (const gchar *pattern_callback,
                                           G_TYPE_STRING, initial_pattern,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-patterns-popup",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-patterns-popup",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-patterns-popup",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -91,7 +86,6 @@ gimp_patterns_popup (const gchar *pattern_callback,
 gboolean
 gimp_patterns_close_popup (const gchar *pattern_callback)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -100,13 +94,9 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
                                           G_TYPE_STRING, pattern_callback,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-patterns-close-popup",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-patterns-close-popup",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-patterns-close-popup",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -131,7 +121,6 @@ gboolean
 gimp_patterns_set_popup (const gchar *pattern_callback,
                          const gchar *pattern_name)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -141,13 +130,9 @@ gimp_patterns_set_popup (const gchar *pattern_callback,
                                           G_TYPE_STRING, pattern_name,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-patterns-set-popup",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-patterns-set-popup",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-patterns-set-popup",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

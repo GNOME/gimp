@@ -486,7 +486,6 @@ EXPORTS
 	gimp_image_undo_thaw
 	gimp_image_unset_active_channel
 	gimp_image_width
-	gimp_install_procedure
 	gimp_item_attach_parasite
 	gimp_item_delete
 	gimp_item_detach_parasite
@@ -594,7 +593,6 @@ EXPORTS
 	gimp_load_procedure_set_handles_raw
 	gimp_load_procedure_set_thumbnail_loader
 	gimp_main
-	gimp_main_legacy
 	gimp_message
 	gimp_message_get_handler
 	gimp_message_set_handler
@@ -678,7 +676,6 @@ EXPORTS
 	gimp_plug_in_set_help_domain
 	gimp_plug_in_set_pdb_error_handler
 	gimp_plug_in_set_translation_domain
-	gimp_plugin_menu_register
 	gimp_procedure_add_argument
 	gimp_procedure_add_argument_from_property
 	gimp_procedure_add_menu_path
@@ -727,7 +724,6 @@ EXPORTS
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
-	gimp_run_procedure_array
 	gimp_save_procedure_get_type
 	gimp_save_procedure_new
 	gimp_selection_all

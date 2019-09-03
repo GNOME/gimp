@@ -9,7 +9,6 @@ libgimp/gimpexport.c
 libgimp/gimpfontselectbutton.c
 libgimp/gimpgradientselectbutton.c
 libgimp/gimpimagemetadata.c
-libgimp/gimplegacy.c
 libgimp/gimppaletteselectbutton.c
 libgimp/gimppatternselectbutton.c
 libgimp/gimppdb.c

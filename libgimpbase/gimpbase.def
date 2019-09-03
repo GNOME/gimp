@@ -143,7 +143,6 @@ EXPORTS
 	gimp_path_get_user_writable_dir
 	gimp_path_parse
 	gimp_path_to_str
-	gimp_pdb_arg_type_get_type
 	gimp_pdb_error_handler_get_type
 	gimp_pdb_proc_type_get_type
 	gimp_pdb_status_type_get_type

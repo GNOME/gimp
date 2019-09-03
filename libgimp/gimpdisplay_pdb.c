@@ -50,7 +50,6 @@
 gboolean
 gimp_display_id_is_valid (gint display_id)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean valid = FALSE;
@@ -59,13 +58,9 @@ gimp_display_id_is_valid (gint display_id)
                                           G_TYPE_INT, display_id,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-display-id-is-valid",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-display-id-is-valid",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-display-id-is-valid",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -94,7 +89,6 @@ gimp_display_id_is_valid (gint display_id)
 GimpDisplay *
 gimp_display_new (GimpImage *image)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpDisplay *display = NULL;
@@ -103,13 +97,9 @@ gimp_display_new (GimpImage *image)
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-display-new",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-display-new",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-display-new",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -137,7 +127,6 @@ gimp_display_new (GimpImage *image)
 gboolean
 gimp_display_delete (GimpDisplay *display)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -146,13 +135,9 @@ gimp_display_delete (GimpDisplay *display)
                                           GIMP_TYPE_DISPLAY, display,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-display-delete",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-display-delete",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-display-delete",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -181,7 +166,6 @@ gimp_display_delete (GimpDisplay *display)
 gint
 gimp_display_get_window_handle (GimpDisplay *display)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint window = 0;
@@ -190,13 +174,9 @@ gimp_display_get_window_handle (GimpDisplay *display)
                                           GIMP_TYPE_DISPLAY, display,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-display-get-window-handle",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-display-get-window-handle",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-display-get-window-handle",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -222,7 +202,6 @@ gimp_display_get_window_handle (GimpDisplay *display)
 gboolean
 gimp_displays_flush (void)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -230,13 +209,9 @@ gimp_displays_flush (void)
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-displays-flush",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-displays-flush",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-displays-flush",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -264,7 +239,6 @@ gboolean
 gimp_displays_reconnect (GimpImage *old_image,
                          GimpImage *new_image)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -274,13 +248,9 @@ gimp_displays_reconnect (GimpImage *old_image,
                                           GIMP_TYPE_IMAGE, new_image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-displays-reconnect",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-displays-reconnect",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-displays-reconnect",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

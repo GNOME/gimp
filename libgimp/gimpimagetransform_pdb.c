@@ -61,7 +61,6 @@ gimp_image_resize (GimpImage *image,
                    gint       offx,
                    gint       offy)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -74,13 +73,9 @@ gimp_image_resize (GimpImage *image,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-resize",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-resize",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-resize",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -108,7 +103,6 @@ gimp_image_resize (GimpImage *image,
 gboolean
 gimp_image_resize_to_layers (GimpImage *image)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -117,13 +111,9 @@ gimp_image_resize_to_layers (GimpImage *image)
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-resize-to-layers",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-resize-to-layers",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-resize-to-layers",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -154,7 +144,6 @@ gimp_image_scale (GimpImage *image,
                   gint       new_width,
                   gint       new_height)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -165,13 +154,9 @@ gimp_image_scale (GimpImage *image,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-scale",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-scale",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-scale",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -207,7 +192,6 @@ gimp_image_crop (GimpImage *image,
                  gint       offx,
                  gint       offy)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -220,13 +204,9 @@ gimp_image_crop (GimpImage *image,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-crop",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-crop",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-crop",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -251,7 +231,6 @@ gboolean
 gimp_image_flip (GimpImage           *image,
                  GimpOrientationType  flip_type)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -261,13 +240,9 @@ gimp_image_flip (GimpImage           *image,
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-flip",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-flip",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-flip",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -292,7 +267,6 @@ gboolean
 gimp_image_rotate (GimpImage        *image,
                    GimpRotationType  rotate_type)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -302,13 +276,9 @@ gimp_image_rotate (GimpImage        *image,
                                           GIMP_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-rotate",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-rotate",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-rotate",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -523,20 +523,15 @@ $retdesc$sincedesc
 $rettype
 $wrapped$funcname ($clist)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;$return_args
 
   args = gimp_value_array_new_from_types (NULL,
                                           ${value_array}G_TYPE_NONE);
 $arg_array
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-$proc->{canonical_name}",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-$proc->{canonical_name}",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-$proc->{canonical_name}",
+                                              args);
   gimp_value_array_unref (args);
 
   $return_marshal

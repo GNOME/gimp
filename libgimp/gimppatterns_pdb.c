@@ -47,7 +47,6 @@
 gboolean
 gimp_patterns_refresh (void)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -55,13 +54,9 @@ gimp_patterns_refresh (void)
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-patterns-refresh",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-patterns-refresh",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-patterns-refresh",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -90,7 +85,6 @@ gchar **
 gimp_patterns_get_list (const gchar *filter,
                         gint        *num_patterns)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar **pattern_list = NULL;
@@ -99,13 +93,9 @@ gimp_patterns_get_list (const gchar *filter,
                                           G_TYPE_STRING, filter,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-patterns-get-list",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-patterns-get-list",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-patterns-get-list",
+                                              args);
   gimp_value_array_unref (args);
 
   *num_patterns = 0;

@@ -57,7 +57,6 @@ gimp_airbrush (GimpDrawable  *drawable,
                gint           num_strokes,
                const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -70,13 +69,9 @@ gimp_airbrush (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-airbrush",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-airbrush",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-airbrush",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -107,7 +102,6 @@ gimp_airbrush_default (GimpDrawable  *drawable,
                        gint           num_strokes,
                        const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -119,13 +113,9 @@ gimp_airbrush_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-airbrush-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-airbrush-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-airbrush-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -171,7 +161,6 @@ gimp_clone (GimpDrawable  *drawable,
             gint           num_strokes,
             const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -187,13 +176,9 @@ gimp_clone (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 6), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-clone",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-clone",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-clone",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -225,7 +210,6 @@ gimp_clone_default (GimpDrawable  *drawable,
                     gint           num_strokes,
                     const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -237,13 +221,9 @@ gimp_clone_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-clone-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-clone-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-clone-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -277,7 +257,6 @@ gimp_convolve (GimpDrawable     *drawable,
                gint              num_strokes,
                const gdouble    *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -291,13 +270,9 @@ gimp_convolve (GimpDrawable     *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 4), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-convolve",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-convolve",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-convolve",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -328,7 +303,6 @@ gimp_convolve_default (GimpDrawable  *drawable,
                        gint           num_strokes,
                        const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -340,13 +314,9 @@ gimp_convolve_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-convolve-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-convolve-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-convolve-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -379,7 +349,6 @@ gimp_dodgeburn (GimpDrawable      *drawable,
                 gint               num_strokes,
                 const gdouble     *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -394,13 +363,9 @@ gimp_dodgeburn (GimpDrawable      *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-dodgeburn",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-dodgeburn",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-dodgeburn",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -430,7 +395,6 @@ gimp_dodgeburn_default (GimpDrawable  *drawable,
                         gint           num_strokes,
                         const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -442,13 +406,9 @@ gimp_dodgeburn_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-dodgeburn-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-dodgeburn-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-dodgeburn-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -483,7 +443,6 @@ gimp_eraser (GimpDrawable             *drawable,
              GimpBrushApplicationMode  hardness,
              GimpPaintApplicationMode  method)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -497,13 +456,9 @@ gimp_eraser (GimpDrawable             *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-eraser",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-eraser",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-eraser",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -534,7 +489,6 @@ gimp_eraser_default (GimpDrawable  *drawable,
                      gint           num_strokes,
                      const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -546,13 +500,9 @@ gimp_eraser_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-eraser-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-eraser-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-eraser-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -592,7 +542,6 @@ gimp_heal (GimpDrawable  *drawable,
            gint           num_strokes,
            const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -607,13 +556,9 @@ gimp_heal (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-heal",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-heal",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-heal",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -647,7 +592,6 @@ gimp_heal_default (GimpDrawable  *drawable,
                    gint           num_strokes,
                    const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -659,13 +603,9 @@ gimp_heal_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-heal-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-heal-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-heal-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -707,7 +647,6 @@ gimp_paintbrush (GimpDrawable             *drawable,
                  GimpPaintApplicationMode  method,
                  gdouble                   gradient_length)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -722,13 +661,9 @@ gimp_paintbrush (GimpDrawable             *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-paintbrush",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-paintbrush",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-paintbrush",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -768,7 +703,6 @@ gimp_paintbrush_default (GimpDrawable  *drawable,
                          gint           num_strokes,
                          const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -780,13 +714,9 @@ gimp_paintbrush_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-paintbrush-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-paintbrush-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-paintbrush-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -818,7 +748,6 @@ gimp_pencil (GimpDrawable  *drawable,
              gint           num_strokes,
              const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -830,13 +759,9 @@ gimp_pencil (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-pencil",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-pencil",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pencil",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -867,7 +792,6 @@ gimp_smudge (GimpDrawable  *drawable,
              gint           num_strokes,
              const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -880,13 +804,9 @@ gimp_smudge (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-smudge",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-smudge",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-smudge",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -916,7 +836,6 @@ gimp_smudge_default (GimpDrawable  *drawable,
                      gint           num_strokes,
                      const gdouble *strokes)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -928,13 +847,9 @@ gimp_smudge_default (GimpDrawable  *drawable,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-smudge-default",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-smudge-default",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-smudge-default",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

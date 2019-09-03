@@ -391,42 +391,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_PAINT_CONSTANT => '0',
 		       GIMP_PAINT_INCREMENTAL => '1' }
 	},
-    GimpPDBArgType =>
-	{ contig => 1,
-	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_PDB_INT32 GIMP_PDB_INT16 GIMP_PDB_INT8
-			  GIMP_PDB_FLOAT GIMP_PDB_STRING GIMP_PDB_INT32ARRAY
-			  GIMP_PDB_INT16ARRAY GIMP_PDB_INT8ARRAY
-			  GIMP_PDB_FLOATARRAY GIMP_PDB_STRINGARRAY
-			  GIMP_PDB_COLOR GIMP_PDB_ITEM GIMP_PDB_DISPLAY
-			  GIMP_PDB_IMAGE GIMP_PDB_LAYER GIMP_PDB_CHANNEL
-			  GIMP_PDB_DRAWABLE GIMP_PDB_SELECTION
-			  GIMP_PDB_COLORARRAY GIMP_PDB_VECTORS
-			  GIMP_PDB_PARASITE GIMP_PDB_STATUS GIMP_PDB_END) ],
-	  mapping => { GIMP_PDB_INT32 => '0',
-		       GIMP_PDB_INT16 => '1',
-		       GIMP_PDB_INT8 => '2',
-		       GIMP_PDB_FLOAT => '3',
-		       GIMP_PDB_STRING => '4',
-		       GIMP_PDB_INT32ARRAY => '5',
-		       GIMP_PDB_INT16ARRAY => '6',
-		       GIMP_PDB_INT8ARRAY => '7',
-		       GIMP_PDB_FLOATARRAY => '8',
-		       GIMP_PDB_STRINGARRAY => '9',
-		       GIMP_PDB_COLOR => '10',
-		       GIMP_PDB_ITEM => '11',
-		       GIMP_PDB_DISPLAY => '12',
-		       GIMP_PDB_IMAGE => '13',
-		       GIMP_PDB_LAYER => '14',
-		       GIMP_PDB_CHANNEL => '15',
-		       GIMP_PDB_DRAWABLE => '16',
-		       GIMP_PDB_SELECTION => '17',
-		       GIMP_PDB_COLORARRAY => '18',
-		       GIMP_PDB_VECTORS => '19',
-		       GIMP_PDB_PARASITE => '20',
-		       GIMP_PDB_STATUS => '21',
-		       GIMP_PDB_END => '22' }
-	},
     GimpPDBErrorHandler =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

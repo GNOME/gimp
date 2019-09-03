@@ -54,7 +54,6 @@
 gboolean
 gimp_debug_timer_start (void)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -62,13 +61,9 @@ gimp_debug_timer_start (void)
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-debug-timer-start",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-debug-timer-start",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-debug-timer-start",
+                                              args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -97,7 +92,6 @@ gimp_debug_timer_start (void)
 gdouble
 gimp_debug_timer_end (void)
 {
-  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble elapsed = 0.0;
@@ -105,13 +99,9 @@ gimp_debug_timer_end (void)
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-debug-timer-end",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-debug-timer-end",
-                                            args);
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-debug-timer-end",
+                                              args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

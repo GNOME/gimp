@@ -28,8 +28,6 @@
 
 G_BEGIN_DECLS
 
-/* For information look into the C source or the html documentation */
-
 
 GimpDisplay * _gimp_procedure_get_display     (GimpProcedure *procedure,
                                                gint32         display_id);
