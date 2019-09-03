@@ -436,8 +436,6 @@ crop_zealous_LDADD = \
 	$(INTLLIBS)		\
 	$(crop_zealous_RC)
 
-curve_bend_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 curve_bend_SOURCES = \
 	curve-bend.c
 

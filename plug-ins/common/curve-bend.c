@@ -136,10 +136,10 @@ struct _BenderDialog
 
   GdkCursor *cursor_busy;
 
-  gint32     drawable_id;
-  int        color;
-  int        outline;
-  gint       preview;
+  GimpDrawable *drawable;
+  int           color;
+  int           outline;
+  gint          preview;
 
   int        grab_point;
   int        last;
@@ -162,9 +162,9 @@ struct _BenderDialog
   gboolean   work_on_copy;
   gdouble    rotation;
 
-  gint32     preview_image_id;
-  gint32     preview_layer_id1;
-  gint32     preview_layer_id2;
+  GimpImage *preview_image;
+  GimpLayer *preview_layer1;
+  GimpLayer *preview_layer2;
 
   BenderValues  *bval_from;
   BenderValues  *bval_to;
@@ -206,19 +206,19 @@ typedef double CRMatrix[4][4];
 
 typedef struct
 {
-  guint32     drawable_id;
-  gint        width;
-  gint        height;
-  GeglBuffer *buffer;
-  const Babl *format;
-  gint        x1;
-  gint        y1;
-  gint        x2;
-  gint        y2;
-  gint        index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
-  gint        bpp;
-  gint        tile_width;
-  gint        tile_height;
+  GimpDrawable *drawable;
+  gint          width;
+  gint          height;
+  GeglBuffer   *buffer;
+  const Babl   *format;
+  gint          x1;
+  gint          y1;
+  gint          x2;
+  gint          y2;
+  gint          index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
+  gint          bpp;
+  gint          tile_width;
+  gint          tile_height;
 } t_GDRW;
 
 typedef struct
@@ -236,7 +236,7 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static BenderDialog *  bender_new_dialog              (gint32 drawable_id);
+static BenderDialog *  bender_new_dialog              (GimpDrawable *drawable);
 static void            bender_update                  (BenderDialog *,
                                                        int);
 static void            bender_plot_curve              (BenderDialog *,
@@ -293,18 +293,18 @@ static void            bender_CR_compose              (CRMatrix,
                                                        CRMatrix);
 static void            bender_init_min_max            (BenderDialog *,
                                                        gint32);
-static BenderDialog *  do_dialog                      (gint32        drawable_id);
+static BenderDialog *  do_dialog                      (GimpDrawable *drawable);
 static void            p_init_gdrw                    (t_GDRW       *gdrw,
-                                                       gint32        drawable_id,
+                                                       GimpDrawable *drawable,
                                                        int           shadow);
 static void            p_end_gdrw                     (t_GDRW       *gdrw);
-static gint32          p_main_bend                    (BenderDialog *cd,
-                                                       guint32,
+static GimpLayer     * p_main_bend                    (BenderDialog *cd,
+                                                       GimpDrawable *,
                                                        gint);
-static gint32          p_create_pv_image              (gint32        src_drawable_id,
-                                                       gint32       *layer_id);
+static GimpImage     * p_create_pv_image              (GimpDrawable *src_drawable,
+                                                       GimpLayer   **layer);
 static void            p_render_preview               (BenderDialog *cd,
-                                                       gint32        layer_id);
+                                                       GimpLayer    *layer);
 static void            p_get_pixel                    (t_GDRW       *gdrw,
                                                        gint32        x,
                                                        gint32        y,
@@ -377,14 +377,14 @@ static int gb_debug = FALSE;
 /* Functions */
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX PDB_STUFF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
-static gint
-p_gimp_rotate (gint32  image_id,
-               gint32  drawable_id,
-               gint32  interpolation,
-               gdouble angle_deg)
+static GimpItem *
+p_gimp_rotate (GimpImage    *image,
+               GimpDrawable *drawable,
+               gint32        interpolation,
+               gdouble       angle_deg)
 {
-  gdouble       angle_rad;
-  gint          rc;
+  gdouble   angle_rad;
+  GimpItem *rc;
 
   angle_rad = (angle_deg * G_PI) / 180.0;
 
@@ -392,14 +392,14 @@ p_gimp_rotate (gint32  image_id,
   if (! interpolation)
     gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
   gimp_context_set_transform_resize (GIMP_TRANSFORM_RESIZE_ADJUST);
-  rc = gimp_item_transform_rotate (drawable_id,
+  rc = gimp_item_transform_rotate (GIMP_ITEM (drawable),
                                    angle_rad,
                                    TRUE /*auto_center*/,
                                    -1.0 /*center_x*/,
                                    -1.0 /*center_y*/);
   gimp_context_pop ();
 
-  if (rc == -1)
+  if (! rc)
     g_printerr ("Error: gimp_drawable_transform_rotate_default call failed\n");
 
   return rc;
@@ -410,37 +410,37 @@ p_gimp_rotate (gint32  image_id,
  * ============================================================================
  */
 
-static gint32
-p_if_selection_float_it (gint32 image_id,
-                         gint32 layer_id)
+static GimpLayer *
+p_if_selection_float_it (GimpImage *image,
+                         GimpLayer *layer)
 {
-  if (! gimp_layer_is_floating_sel (layer_id))
+  if (! gimp_layer_is_floating_sel (layer))
     {
-      gint32   sel_channel_id;
-      gint32   x1, x2, y1, y2;
-      gint32   non_empty;
+      GimpSelection *sel_channel;
+      gint32         x1, x2, y1, y2;
+      gint32         non_empty;
 
       /* check and see if we have a selection mask */
-      sel_channel_id  = gimp_image_get_selection (image_id);
+      sel_channel  = gimp_image_get_selection (image);
 
-      gimp_selection_bounds (image_id, &non_empty, &x1, &y1, &x2, &y2);
+      gimp_selection_bounds (image, &non_empty, &x1, &y1, &x2, &y2);
 
-      if (non_empty && sel_channel_id >= 0)
+      if (non_empty && sel_channel)
         {
           /* selection is TRUE, make a layer (floating selection) from
              the selection  */
-          if (gimp_edit_copy (layer_id))
+          if (gimp_edit_copy (GIMP_DRAWABLE (layer)))
             {
-              layer_id = gimp_edit_paste (layer_id, FALSE);
+              layer = gimp_edit_paste (GIMP_DRAWABLE (layer), FALSE);
             }
           else
             {
-              return -1;
+              return NULL;
             }
         }
     }
 
-  return layer_id;
+  return layer;
 }
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX END_PDB_STUFF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
@@ -520,7 +520,7 @@ query (void)
                           PLUG_IN_VERSION,
                           N_("_Curve Bend..."),
                           PLUG_IN_IMAGE_TYPES,
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
                           args,
@@ -539,7 +539,7 @@ query (void)
                           PLUG_IN_VERSION,
                           NULL,    /* do not appear in menus */
                           NULL,
-                          GIMP_PLUGIN,
+                          GIMP_PDB_PROC_TYPE_PLUGIN,
                           G_N_ELEMENTS (args_iter), 0,
                           args_iter, NULL);
 }
@@ -553,9 +553,9 @@ run (const gchar      *name,
 {
   const gchar  *env;
   BenderDialog *cd;
-  gint32        active_drawable_id = -1;
-  gint32        image_id           = -1;
-  gint32        layer_id           = -1;
+  GimpDrawable *active_drawable = NULL;
+  GimpImage    *image           = NULL;
+  GimpLayer    *layer           = NULL;
   GError       *error              = NULL;
 
   /* Get the runmode from the in-parameters */
@@ -647,10 +647,10 @@ run (const gchar      *name,
     }
 
   /* get image and drawable */
-  image_id = param[1].data.d_int32;
-  layer_id = param[2].data.d_drawable;
+  image = gimp_image_get_by_id (param[1].data.d_int32);
+  layer = (GimpLayer *) gimp_drawable_get_by_id (param[2].data.d_drawable);
 
-  if (! gimp_item_is_layer (GIMP_ITEM (layer_id)))
+  if (! gimp_item_is_layer (GIMP_ITEM (layer)))
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Can operate on layers only "
@@ -659,7 +659,7 @@ run (const gchar      *name,
     }
 
   /* check for layermask */
-  if (gimp_layer_get_mask (layer_id) > 0)
+  if (gimp_layer_get_mask (layer) > 0)
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Cannot operate on layers with masks."));
@@ -667,8 +667,8 @@ run (const gchar      *name,
     }
 
   /* if there is a selection, make it the floating selection layer */
-  active_drawable_id = p_if_selection_float_it (image_id, layer_id);
-  if (active_drawable_id < 0)
+  active_drawable = GIMP_DRAWABLE (p_if_selection_float_it (image, layer));
+  if (! active_drawable)
     {
       /* could not float the selection because selection rectangle
        * is completely empty return GIMP_PDB_EXECUTION_ERROR
@@ -689,7 +689,7 @@ run (const gchar      *name,
           /* gimp_get_data (PLUG_IN_PROC, &g_bndvals); */
 
           /* Get information from the dialog */
-          cd = do_dialog (active_drawable_id);
+          cd = do_dialog (active_drawable);
           cd->show_progress = TRUE;
           break;
 
@@ -700,7 +700,7 @@ run (const gchar      *name,
               cd = g_new (BenderDialog, 1);
               cd->run = TRUE;
               cd->show_progress = TRUE;
-              cd->drawable_id = active_drawable_id;
+              cd->drawable = active_drawable;
 
               cd->rotation      = param[3].data.d_float;
               cd->smoothing     = param[4].data.d_int32 != 0;
@@ -738,7 +738,7 @@ run (const gchar      *name,
           cd = g_new (BenderDialog, 1);
           cd->run = TRUE;
           cd->show_progress = TRUE;
-          cd->drawable_id = active_drawable_id;
+          cd->drawable = active_drawable;
           p_retrieve_values (cd);  /* Possibly retrieve data from a previous run */
           break;
 
@@ -758,14 +758,14 @@ run (const gchar      *name,
 
       if (cd->run)
         {
-          gint32 bent_layer_id;
+          GimpLayer *bent_layer;
 
-          gimp_image_undo_group_start (image_id);
+          gimp_image_undo_group_start (image);
 
-          bent_layer_id = p_main_bend (cd, cd->drawable_id,
-                                       cd->work_on_copy);
+          bent_layer = p_main_bend (cd, cd->drawable,
+                                    cd->work_on_copy);
 
-          gimp_image_undo_group_end (image_id);
+          gimp_image_undo_group_end (image);
 
           /* Store variable states for next run */
           if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -774,7 +774,7 @@ run (const gchar      *name,
             }
 
           /* return the id of handled layer */
-          values[1].data.d_int32 = bent_layer_id;
+          values[1].data.d_int32 = gimp_item_get_id (GIMP_ITEM (bent_layer));
         }
       else
         {
@@ -1107,7 +1107,7 @@ p_copy_yval (BenderDialog *cd,
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
 static BenderDialog *
-do_dialog (gint32 drawable_id)
+do_dialog (GimpDrawable *drawable)
 {
   BenderDialog *cd;
 
@@ -1115,12 +1115,12 @@ do_dialog (gint32 drawable_id)
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   /*  The curve_bend dialog  */
-  cd = bender_new_dialog (drawable_id);
+  cd = bender_new_dialog (drawable);
 
   /* create temporary image (with a small copy of drawable) for the preview */
-  cd->preview_image_id = p_create_pv_image (drawable_id,
-                                            &cd->preview_layer_id1);
-  cd->preview_layer_id2 = -1;
+  cd->preview_image = p_create_pv_image (drawable,
+                                         &cd->preview_layer1);
+  cd->preview_layer2 = NULL;
 
   if (! gtk_widget_get_visible (cd->shell))
     gtk_widget_show (cd->shell);
@@ -1129,10 +1129,10 @@ do_dialog (gint32 drawable_id)
 
   gtk_main ();
 
-  gimp_image_delete(cd->preview_image_id);
-  cd->preview_image_id = -1;
-  cd->preview_layer_id1 = -1;
-  cd->preview_layer_id2 = -1;
+  gimp_image_delete (cd->preview_image);
+  cd->preview_image  = NULL;
+  cd->preview_layer1 = NULL;
+  cd->preview_layer2 = NULL;
 
   return cd;
 }
@@ -1142,7 +1142,7 @@ do_dialog (gint32 drawable_id)
 /**************************/
 
 static BenderDialog *
-bender_new_dialog (gint32 drawable_id)
+bender_new_dialog (GimpDrawable *drawable)
 {
   BenderDialog *cd;
   GtkWidget    *main_hbox;
@@ -1171,9 +1171,9 @@ bender_new_dialog (gint32 drawable_id)
   cd->work_on_copy = FALSE;
   cd->rotation = 0.0;       /* vertical bend */
 
-  cd->drawable_id = drawable_id;
+  cd->drawable = drawable;
 
-  cd->color = gimp_drawable_is_rgb (drawable_id);
+  cd->color = gimp_drawable_is_rgb (drawable);
 
   cd->run = FALSE;
   cd->bval_from = NULL;
@@ -1503,11 +1503,12 @@ bender_update (BenderDialog *cd,
                              cd->cursor_busy);
       gdk_display_flush (gtk_widget_get_display (cd->shell));
 
-      if (cd->preview_layer_id2 >= 0)
-         gimp_image_remove_layer(cd->preview_image_id, cd->preview_layer_id2);
+      if (cd->preview_layer2)
+         gimp_image_remove_layer (cd->preview_image, cd->preview_layer2);
 
-      cd->preview_layer_id2 = p_main_bend(cd, cd->preview_layer_id1, TRUE /* work_on_copy*/ );
-      p_render_preview(cd, cd->preview_layer_id2);
+      cd->preview_layer2 = p_main_bend (cd, GIMP_DRAWABLE (cd->preview_layer1),
+                                        TRUE /* work_on_copy*/ );
+      p_render_preview (cd, cd->preview_layer2);
 
       if (update & UP_DRAW)
         gtk_widget_queue_draw (cd->pv_widget);
@@ -1517,12 +1518,13 @@ bender_update (BenderDialog *cd,
     }
   if (update & UP_PREVIEW_EXPOSE)
     {
-      /* on expose just redraw cd->preview_layer_id2
+      /* on expose just redraw cd->preview_layer2
        * that holds the bent version of the preview (if there is one)
        */
-      if (cd->preview_layer_id2 < 0)
-         cd->preview_layer_id2 = p_main_bend(cd, cd->preview_layer_id1, TRUE /* work_on_copy*/ );
-      p_render_preview(cd, cd->preview_layer_id2);
+      if (! cd->preview_layer2)
+        cd->preview_layer2 = p_main_bend (cd, GIMP_DRAWABLE (cd->preview_layer1),
+                                          TRUE /* work_on_copy*/ );
+      p_render_preview (cd, cd->preview_layer2);
 
       if (update & UP_DRAW)
         gtk_widget_queue_draw (cd->pv_widget);
@@ -2342,7 +2344,7 @@ bender_CR_compose (CRMatrix a,
 
 static void
 p_render_preview (BenderDialog *cd,
-                  gint32        layer_id)
+                  GimpLayer    *layer)
 {
    guchar  pixel[4];
    guchar *buf, *ptr;
@@ -2352,12 +2354,12 @@ p_render_preview (BenderDialog *cd,
    t_GDRW  l_gdrw;
    t_GDRW *gdrw;
 
-   width  = gimp_drawable_width  (layer_id);
-   height = gimp_drawable_height (layer_id);
+   width  = gimp_drawable_width  (GIMP_DRAWABLE (layer));
+   height = gimp_drawable_height (GIMP_DRAWABLE (layer));
 
    ptr = buf = g_new (guchar, PREVIEW_BPP * PREVIEW_SIZE_X * PREVIEW_SIZE_Y);
    gdrw = &l_gdrw;
-   p_init_gdrw(gdrw, layer_id, FALSE);
+   p_init_gdrw (gdrw, GIMP_DRAWABLE (layer), FALSE);
 
   /* offsets to set bend layer to preview center */
   ofx = (width / 2) - (PREVIEW_SIZE_X / 2);
@@ -2530,26 +2532,26 @@ p_end_gdrw (t_GDRW *gdrw)
 }
 
 static void
-p_init_gdrw (t_GDRW *gdrw,
-             gint32  drawable_id,
-             int     shadow)
+p_init_gdrw (t_GDRW       *gdrw,
+             GimpDrawable *drawable,
+             int           shadow)
 {
   gint w, h;
 
-  gdrw->drawable_id = drawable_id;
+  gdrw->drawable = drawable;
 
   if (shadow)
-    gdrw->buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+    gdrw->buffer = gimp_drawable_get_shadow_buffer (drawable);
   else
-    gdrw->buffer = gimp_drawable_get_buffer (drawable_id);
+    gdrw->buffer = gimp_drawable_get_buffer (drawable);
 
-  gdrw->width  = gimp_drawable_width  (gdrw->drawable_id);
-  gdrw->height = gimp_drawable_height (gdrw->drawable_id);
+  gdrw->width  = gimp_drawable_width  (gdrw->drawable);
+  gdrw->height = gimp_drawable_height (gdrw->drawable);
 
   gdrw->tile_width  = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
 
-  if (! gimp_drawable_mask_intersect (gdrw->drawable_id,
+  if (! gimp_drawable_mask_intersect (gdrw->drawable,
                                       &gdrw->x1, &gdrw->y1, &w, &h))
     {
       w = 0;
@@ -2559,14 +2561,14 @@ p_init_gdrw (t_GDRW *gdrw,
   gdrw->x2 = gdrw->x1 + w;
   gdrw->y2 = gdrw->y1 + h;
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     gdrw->format = babl_format ("R'G'B'A u8");
   else
     gdrw->format = babl_format ("R'G'B' u8");
 
   gdrw->bpp = babl_format_get_bytes_per_pixel (gdrw->format);
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     {
       /* index of the alpha channelbyte {1|3} */
       gdrw->index_alpha = gdrw->bpp - 1;
@@ -2658,11 +2660,11 @@ p_put_mix_pixel (t_GDRW *gdrw,
  * p_create_pv_image
  * ============================================================================
  */
-static gint32
-p_create_pv_image (gint32  src_drawable_id,
-                   gint32 *layer_id)
+static GimpImage *
+p_create_pv_image (GimpDrawable  *src_drawable,
+                   GimpLayer    **layer)
 {
-  gint32        new_image_id;
+  GimpImage    *new_image;
   guint         new_width;
   guint         new_height;
   GimpImageType type;
@@ -2674,14 +2676,14 @@ p_create_pv_image (gint32  src_drawable_id,
   gint          src_width;
   gint          src_height;
 
-  src_width  = gimp_drawable_width  (src_drawable_id);
-  src_height = gimp_drawable_height (src_drawable_id);
+  src_width  = gimp_drawable_width  (src_drawable);
+  src_height = gimp_drawable_height (src_drawable);
 
-  new_image_id = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
-                                 gimp_image_base_type (gimp_item_get_image (src_drawable_id)));
-  gimp_image_undo_disable (new_image_id);
+  new_image = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
+                              gimp_image_base_type (gimp_item_get_image (GIMP_ITEM (src_drawable))));
+  gimp_image_undo_disable (new_image);
 
-  type = gimp_drawable_type (src_drawable_id);
+  type = gimp_drawable_type (src_drawable);
   if (src_height > src_width)
     {
       new_height = PV_IMG_HEIGHT;
@@ -2695,21 +2697,21 @@ p_create_pv_image (gint32  src_drawable_id,
       scale = (float) src_width / PV_IMG_WIDTH;
     }
 
-  *layer_id = gimp_layer_new(new_image_id, "preview_original",
-                             new_width, new_height,
-                             type,
-                             100.0,    /* opacity */
-                             0);       /* mode NORMAL */
-  if (! gimp_drawable_has_alpha(*layer_id))
+  *layer = gimp_layer_new (new_image, "preview_original",
+                           new_width, new_height,
+                           type,
+                           100.0,    /* opacity */
+                           0);       /* mode NORMAL */
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (*layer)))
     {
       /* always add alpha channel */
-      gimp_layer_add_alpha(*layer_id);
+      gimp_layer_add_alpha (*layer);
     }
 
-  gimp_image_insert_layer(new_image_id, *layer_id, -1, 0);
+  gimp_image_insert_layer (new_image, *layer, NULL, 0);
 
-  p_init_gdrw (&src_gdrw, src_drawable_id, FALSE);
-  p_init_gdrw (&dst_gdrw, *layer_id,       FALSE);
+  p_init_gdrw (&src_gdrw, src_drawable,           FALSE);
+  p_init_gdrw (&dst_gdrw, GIMP_DRAWABLE (*layer), FALSE);
 
   for (y = 0; y < new_height; y++)
     {
@@ -2723,62 +2725,62 @@ p_create_pv_image (gint32  src_drawable_id,
   p_end_gdrw (&src_gdrw);
   p_end_gdrw (&dst_gdrw);
 
-  return new_image_id;
+  return new_image;
 }
 
 /* ============================================================================
  * p_add_layer
  * ============================================================================
  */
-static gint32
-p_add_layer (gint   width,
-             gint   height,
-             gint32 src_drawable_id)
+static GimpLayer *
+p_add_layer (gint          width,
+             gint          height,
+             GimpDrawable *src_drawable)
 {
   GimpImageType  type;
-  gint32         new_layer_id;
+  GimpLayer     *new_layer;
   char          *name;
   char          *name2;
   gdouble        opacity;
   GimpLayerMode  mode;
   gint           visible;
-  gint32         image_id;
+  GimpImage     *image;
   gint           stack_position;
 
-  image_id = gimp_item_get_image (src_drawable_id);
+  image = gimp_item_get_image (GIMP_ITEM (src_drawable));
   stack_position = 0;                                  /* TODO:  should be same as src_layer */
 
   /* copy type, name, opacity and mode from src_drawable */
-  type   = gimp_drawable_type (src_drawable_id);
-  visible  = gimp_item_get_visible (src_drawable_id);
+  type   = gimp_drawable_type (src_drawable);
+  visible  = gimp_item_get_visible (GIMP_ITEM (src_drawable));
 
-  name2 = gimp_item_get_name (src_drawable_id);
+  name2 = gimp_item_get_name (GIMP_ITEM (src_drawable));
   name = g_strdup_printf ("%s_b", name2);
   g_free (name2);
 
-  mode = gimp_layer_get_mode (src_drawable_id);
-  opacity = gimp_layer_get_opacity (src_drawable_id);  /* full opacity */
+  mode = gimp_layer_get_mode (GIMP_LAYER (src_drawable));
+  opacity = gimp_layer_get_opacity (GIMP_LAYER (src_drawable));  /* full opacity */
 
-  new_layer_id = gimp_layer_new (image_id, name,
-                                 width, height,
-                                 type,
-                                 opacity,
-                                 mode);
+  new_layer = gimp_layer_new (image, name,
+                              width, height,
+                              type,
+                              opacity,
+                              mode);
 
   g_free (name);
-  if (!gimp_drawable_has_alpha (new_layer_id))
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (new_layer)))
     {
       /* always add alpha channel */
-      gimp_layer_add_alpha (new_layer_id);
+      gimp_layer_add_alpha (new_layer);
     }
 
   /* add the copied layer to the temp. working image */
-  gimp_image_insert_layer (image_id, new_layer_id, -1, stack_position);
+  gimp_image_insert_layer (image, new_layer, NULL, stack_position);
 
   /* copy visibility state */
-  gimp_item_set_visible (new_layer_id, visible);
+  gimp_item_set_visible (GIMP_ITEM (new_layer), visible);
 
-  return new_layer_id;
+  return new_layer;
 }
 
 /* ============================================================================
@@ -3067,7 +3069,7 @@ p_vertical_bend (BenderDialog *cd,
                         {
                           guchar alpha_lo = 20;
 
-                          if (gimp_drawable_has_alpha (src_gdrw->drawable_id))
+                          if (gimp_drawable_has_alpha (src_gdrw->drawable))
                             {
                               alpha_lo = MIN (20, mixcolor[src_gdrw->index_alpha]);
                             }
@@ -3191,55 +3193,57 @@ p_vertical_bend (BenderDialog *cd,
  * ============================================================================
  */
 
-static gint32
+static GimpLayer *
 p_main_bend (BenderDialog *cd,
-             guint32       original_drawable_id,
+             GimpDrawable *original_drawable,
              gint          work_on_copy)
 {
-   t_GDRW  src_gdrw;
-   t_GDRW  dst_gdrw;
-   gint32  src_drawable_id;
-   gint32  dst_drawable_id;
-   gint    src_width;
-   gint    src_height;
-   gint32  dst_height;
-   gint32  image_id;
-   gint32  tmp_layer_id;
-   gint32  interpolation;
-   gint    offset_x, offset_y;
-   gint    center_x, center_y;
-   gint32  xmax, ymax;
+   t_GDRW        src_gdrw;
+   t_GDRW        dst_gdrw;
+   GimpDrawable *src_drawable;
+   GimpDrawable *dst_drawable;
+   gint          src_width;
+   gint          src_height;
+   gint32        dst_height;
+   GimpImage    *image;
+   GimpLayer    *tmp_layer;
+   gint32        interpolation;
+   gint          offset_x, offset_y;
+   gint          center_x, center_y;
+   gint32        xmax, ymax;
 
    interpolation = cd->smoothing;
-   image_id = gimp_item_get_image (original_drawable_id);
-   gimp_drawable_offsets(original_drawable_id, &offset_x, &offset_y);
+   image = gimp_item_get_image (GIMP_ITEM (original_drawable));
+   gimp_drawable_offsets (original_drawable, &offset_x, &offset_y);
 
-   center_x = offset_x + (gimp_drawable_width  (original_drawable_id) / 2 );
-   center_y = offset_y + (gimp_drawable_height (original_drawable_id) / 2 );
+   center_x = offset_x + (gimp_drawable_width  (original_drawable) / 2 );
+   center_y = offset_y + (gimp_drawable_height (original_drawable) / 2 );
 
    /* always copy original_drawable to a tmp src_layer */
-   tmp_layer_id = gimp_layer_copy(original_drawable_id);
+   tmp_layer = gimp_layer_copy (GIMP_LAYER (original_drawable));
    /* set layer invisible and dummyname and
     * add at top of the image while working
     * (for the case of undo GIMP must know,
     *  that the layer was part of the image)
     */
-   gimp_image_insert_layer (image_id, tmp_layer_id, -1, 0);
-   gimp_item_set_visible (tmp_layer_id, FALSE);
-   gimp_item_set_name (tmp_layer_id, "curve_bend_dummylayer");
+   gimp_image_insert_layer (image, tmp_layer, NULL, 0);
+   gimp_item_set_visible (GIMP_ITEM (tmp_layer), FALSE);
+   gimp_item_set_name (GIMP_ITEM (tmp_layer), "curve_bend_dummylayer");
 
-   if(gb_debug) g_printf("p_main_bend  tmp_layer_id %d\n", (int)tmp_layer_id);
+   if(gb_debug) g_printf("p_main_bend  tmp_layer_id %d\n",
+                         (int) gimp_item_get_id (GIMP_ITEM (tmp_layer)));
 
    if (cd->rotation != 0.0)
      {
        if(gb_debug) g_printf("p_main_bend rotate: %f\n", (float)cd->rotation);
-       p_gimp_rotate(image_id, tmp_layer_id, interpolation, cd->rotation);
+       p_gimp_rotate (image, GIMP_DRAWABLE (tmp_layer),
+                      interpolation, cd->rotation);
      }
 
-   src_drawable_id = tmp_layer_id;
+   src_drawable = GIMP_DRAWABLE (tmp_layer);
 
-   src_width  = gimp_drawable_width  (tmp_layer_id);
-   src_height = gimp_drawable_height (tmp_layer_id);
+   src_width  = gimp_drawable_width  (GIMP_DRAWABLE (tmp_layer));
+   src_height = gimp_drawable_height (GIMP_DRAWABLE (tmp_layer));
 
    xmax = ymax = src_width -1;
    cd->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
@@ -3256,31 +3260,31 @@ p_main_bend (BenderDialog *cd,
 
    if (work_on_copy)
      {
-       dst_drawable_id = p_add_layer (src_width, dst_height,
-                                      src_drawable_id);
+       dst_drawable = GIMP_DRAWABLE (p_add_layer (src_width, dst_height,
+                                                  src_drawable));
        if (gb_debug) g_printf("p_main_bend: DONE add layer\n");
      }
    else
      {
        /* work on the original */
-       gimp_layer_resize (original_drawable_id,
+       gimp_layer_resize (GIMP_LAYER (original_drawable),
                           src_width,
                           dst_height,
                           offset_x, offset_y);
        if (gb_debug) g_printf("p_main_bend: DONE layer resize\n");
-       if (! gimp_drawable_has_alpha (original_drawable_id))
+       if (! gimp_drawable_has_alpha (original_drawable))
          {
            /* always add alpha channel */
-           gimp_layer_add_alpha (original_drawable_id);
+           gimp_layer_add_alpha (GIMP_LAYER (original_drawable));
          }
 
-       dst_drawable_id = original_drawable_id;
+       dst_drawable = original_drawable;
      }
 
-   gimp_drawable_fill (dst_drawable_id, GIMP_FILL_TRANSPARENT);
+   gimp_drawable_fill (dst_drawable, GIMP_FILL_TRANSPARENT);
 
-   p_init_gdrw (&src_gdrw, src_drawable_id, FALSE);
-   p_init_gdrw (&dst_gdrw, dst_drawable_id, FALSE);
+   p_init_gdrw (&src_gdrw, src_drawable, FALSE);
+   p_init_gdrw (&dst_gdrw, dst_drawable, FALSE);
 
    p_vertical_bend (cd, &src_gdrw, &dst_gdrw);
 
@@ -3291,7 +3295,7 @@ p_main_bend (BenderDialog *cd,
 
    if (cd->rotation != 0.0)
      {
-       p_gimp_rotate (image_id, dst_drawable_id,
+       p_gimp_rotate (image, dst_drawable,
                       interpolation, (gdouble)(360.0 - cd->rotation));
 
        /* TODO: here we should crop dst_drawable to cut off full transparent borderpixels */
@@ -3300,17 +3304,17 @@ p_main_bend (BenderDialog *cd,
    /* set offsets of the resulting new layer
     *(center == center of original_drawable)
     */
-   offset_x = center_x - (gimp_drawable_width  (dst_drawable_id) / 2 );
-   offset_y = center_y - (gimp_drawable_height  (dst_drawable_id) / 2 );
-   gimp_layer_set_offsets (dst_drawable_id, offset_x, offset_y);
+   offset_x = center_x - (gimp_drawable_width  (dst_drawable) / 2 );
+   offset_y = center_y - (gimp_drawable_height (dst_drawable) / 2 );
+   gimp_layer_set_offsets (GIMP_LAYER (dst_drawable), offset_x, offset_y);
 
    /* delete the temp layer */
-   gimp_image_remove_layer (image_id, tmp_layer_id);
+   gimp_image_remove_layer (image, tmp_layer);
 
    g_free (cd->curve_ptr[OUTLINE_UPPER]);
    g_free (cd->curve_ptr[OUTLINE_LOWER]);
 
    if (gb_debug) g_printf("p_main_bend: DONE bend main\n");
 
-   return dst_drawable_id;
+   return GIMP_LAYER (dst_drawable);
 }
