@@ -100,6 +100,7 @@
 #define OUTLINE_LOWER    1
 
 typedef struct _BenderValues BenderValues;
+
 struct _BenderValues
 {
   guchar  curve[2][256];    /* for curve_type freehand mode   0   <= curve  <= 255 */
@@ -228,18 +229,40 @@ typedef struct
 } t_Last;
 
 
-/*  curves action functions  */
-static void  query (void);
-static void  run   (const gchar      *name,
-                    gint              nparams,
-                    const GimpParam  *param,
-                    gint             *nreturn_vals,
-                    GimpParam       **return_vals);
+typedef struct _Bender      Bender;
+typedef struct _BenderClass BenderClass;
 
-static BenderDialog *  bender_new_dialog              (GimpDrawable *drawable);
-static void            bender_update                  (BenderDialog *,
+struct _Bender
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _BenderClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define BENDER_TYPE  (bender_get_type ())
+#define BENDER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BENDER_TYPE, Bender))
+
+GType                   bender_get_type         (void) G_GNUC_CONST;
+
+static GList          * bender_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * bender_create_procedure (GimpPlugIn           *plug_in,
+                                                 const gchar          *name);
+
+static GimpValueArray * bender_run              (GimpProcedure        *procedure,
+                                                 GimpRunMode           run_mode,
+                                                 GimpImage            *image,
+                                                 GimpDrawable         *drawable,
+                                                 const GimpValueArray *args,
+                                                 gpointer              run_data);
+
+static BenderDialog *   bender_new_dialog             (GimpDrawable *drawable);
+static void             bender_update                 (BenderDialog *,
                                                        int);
-static void            bender_plot_curve              (BenderDialog *,
+static void             bender_plot_curve             (BenderDialog *,
                                                        int,
                                                        int,
                                                        int,
@@ -247,122 +270,113 @@ static void            bender_plot_curve              (BenderDialog *,
                                                        gint32,
                                                        gint32,
                                                        gint);
-static void            bender_calculate_curve         (BenderDialog *,
+static void             bender_calculate_curve        (BenderDialog *,
                                                        gint32,
                                                        gint32,
                                                        gint);
-static void            bender_rotate_adj_callback     (GtkAdjustment *,
+static void             bender_rotate_adj_callback    (GtkAdjustment *,
                                                        gpointer);
-static void            bender_border_callback         (GtkWidget *,
+static void             bender_border_callback        (GtkWidget *,
                                                        gpointer);
-static void            bender_type_callback           (GtkWidget *,
+static void             bender_type_callback          (GtkWidget *,
                                                        gpointer);
-static void            bender_reset_callback          (GtkWidget *,
+static void             bender_reset_callback         (GtkWidget *,
                                                        gpointer);
-static void            bender_copy_callback           (GtkWidget *,
+static void             bender_copy_callback          (GtkWidget *,
                                                        gpointer);
-static void            bender_copy_inv_callback       (GtkWidget *,
+static void             bender_copy_inv_callback      (GtkWidget *,
                                                        gpointer);
-static void            bender_swap_callback           (GtkWidget *,
+static void             bender_swap_callback          (GtkWidget *,
                                                        gpointer);
-static void            bender_response                (GtkWidget *,
+static void             bender_response               (GtkWidget *,
                                                        gint,
                                                        BenderDialog *);
-static void            bender_smoothing_callback      (GtkWidget *,
+static void             bender_smoothing_callback     (GtkWidget *,
                                                        gpointer);
-static void            bender_antialias_callback      (GtkWidget *,
+static void             bender_antialias_callback     (GtkWidget *,
                                                        gpointer);
-static void            bender_work_on_copy_callback   (GtkWidget *,
+static void             bender_work_on_copy_callback  (GtkWidget *,
                                                        gpointer);
-static void            bender_preview_update          (GtkWidget *,
+static void             bender_preview_update         (GtkWidget *,
                                                        gpointer);
-static void            bender_preview_update_once     (GtkWidget *,
+static void             bender_preview_update_once    (GtkWidget *,
                                                        gpointer);
-static void            bender_load_callback           (GtkWidget *,
+static void             bender_load_callback          (GtkWidget *,
                                                        BenderDialog *);
-static void            bender_save_callback           (GtkWidget *,
+static void             bender_save_callback          (GtkWidget *,
                                                        BenderDialog *);
-static gint            bender_graph_events            (GtkWidget *,
+static gint             bender_graph_events           (GtkWidget *,
                                                        GdkEvent *,
                                                        BenderDialog *);
-static gint            bender_graph_draw              (GtkWidget *,
+static gint             bender_graph_draw             (GtkWidget *,
                                                        cairo_t *,
                                                        BenderDialog *);
-static void            bender_CR_compose              (CRMatrix,
+static void             bender_CR_compose             (CRMatrix,
                                                        CRMatrix,
                                                        CRMatrix);
-static void            bender_init_min_max            (BenderDialog *,
+static void             bender_init_min_max           (BenderDialog *,
                                                        gint32);
-static BenderDialog *  do_dialog                      (GimpDrawable *drawable);
-static void            p_init_gdrw                    (t_GDRW       *gdrw,
-                                                       GimpDrawable *drawable,
-                                                       int           shadow);
-static void            p_end_gdrw                     (t_GDRW       *gdrw);
-static GimpLayer     * p_main_bend                    (BenderDialog *cd,
-                                                       GimpDrawable *,
+static BenderDialog   * do_dialog                     (GimpDrawable  *drawable);
+static void             p_init_gdrw                   (t_GDRW        *gdrw,
+                                                       GimpDrawable  *drawable,
+                                                       int            shadow);
+static void             p_end_gdrw                    (t_GDRW        *gdrw);
+static GimpLayer      * p_main_bend                   (BenderDialog  *cd,
+                                                       GimpDrawable  *,
                                                        gint);
-static GimpImage     * p_create_pv_image              (GimpDrawable *src_drawable,
-                                                       GimpLayer   **layer);
-static void            p_render_preview               (BenderDialog *cd,
-                                                       GimpLayer    *layer);
-static void            p_get_pixel                    (t_GDRW       *gdrw,
-                                                       gint32        x,
-                                                       gint32        y,
-                                                       guchar       *pixel);
-static void            p_put_pixel                    (t_GDRW       *gdrw,
-                                                       gint32        x,
-                                                       gint32        y,
-                                                       guchar       *pixel);
-static void            p_put_mix_pixel                (t_GDRW       *gdrw,
-                                                       gint32        x,
-                                                       gint32        y,
-                                                       guchar       *color,
-                                                       gint32        nb_curvy,
-                                                       gint32        nb2_curvy,
-                                                       gint32        curvy);
-static void            p_stretch_curves               (BenderDialog *cd,
-                                                       gint32        xmax,
-                                                       gint32        ymax);
-static void            p_cd_to_bval                   (BenderDialog *cd,
-                                                       BenderValues *bval);
-static void            p_cd_from_bval                 (BenderDialog *cd,
-                                                       BenderValues *bval);
-static void            p_store_values                 (BenderDialog *cd);
-static void            p_retrieve_values              (BenderDialog *cd);
-static void            p_bender_calculate_iter_curve  (BenderDialog *cd,
-                                                       gint32        xmax,
-                                                       gint32        ymax);
-static void            p_delta_gdouble                (double       *val,
-                                                       double        val_from,
-                                                       double        val_to,
-                                                       gint32        total_steps,
-                                                       gdouble       current_step);
-static void            p_delta_gint32                 (gint32       *val,
-                                                       gint32        val_from,
-                                                       gint32        val_to,
-                                                       gint32        total_steps,
-                                                       gdouble       current_step);
-static void            p_copy_points                  (BenderDialog *cd,
-                                                       int           outline,
-                                                       int           xy,
-                                                       int           argc,
-                                                       gdouble      *floatarray);
-static void            p_copy_yval                    (BenderDialog *cd,
-                                                       int           outline,
-                                                       int           argc,
-                                                       guint8       *int8array);
-static int             p_save_pointfile               (BenderDialog *cd,
-                                                       const gchar  *filename);
+static GimpImage      * p_create_pv_image             (GimpDrawable  *src_drawable,
+                                                       GimpLayer    **layer);
+static void             p_render_preview              (BenderDialog  *cd,
+                                                       GimpLayer     *layer);
+static void             p_get_pixel                   (t_GDRW        *gdrw,
+                                                       gint32         x,
+                                                       gint32         y,
+                                                       guchar        *pixel);
+static void             p_put_pixel                   (t_GDRW        *gdrw,
+                                                       gint32         x,
+                                                       gint32         y,
+                                                       guchar        *pixel);
+static void             p_put_mix_pixel               (t_GDRW        *gdrw,
+                                                       gint32         x,
+                                                       gint32         y,
+                                                       guchar        *color,
+                                                       gint32         nb_curvy,
+                                                       gint32         nb2_curvy,
+                                                       gint32         curvy);
+static void             p_stretch_curves              (BenderDialog  *cd,
+                                                       gint32         xmax,
+                                                       gint32         ymax);
+static void             p_cd_to_bval                  (BenderDialog  *cd,
+                                                       BenderValues  *bval);
+static void             p_cd_from_bval                (BenderDialog  *cd,
+                                                       BenderValues  *bval);
+static void             p_store_values                (BenderDialog  *cd);
+static void             p_retrieve_values             (BenderDialog  *cd);
+static void             p_bender_calculate_iter_curve (BenderDialog  *cd,
+                                                       gint32         xmax,
+                                                       gint32         ymax);
+static void             p_delta_gint32                (gint32        *val,
+                                                       gint32         val_from,
+                                                       gint32         val_to,
+                                                       gint32         total_steps,
+                                                       gdouble        current_step);
+static void             p_copy_points                 (BenderDialog  *cd,
+                                                       int            outline,
+                                                       int            xy,
+                                                       int            argc,
+                                                       const gdouble *floatarray);
+static void             p_copy_yval                   (BenderDialog  *cd,
+                                                       int            outline,
+                                                       int            argc,
+                                                       const guint8  *int8array);
+static int              p_save_pointfile              (BenderDialog  *cd,
+                                                       const gchar   *filename);
 
 
-/* Global Variables */
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,   /* init_proc  */
-  NULL,   /* quit_proc  */
-  query,  /* query_proc */
-  run     /* run_proc   */
-};
+G_DEFINE_TYPE (Bender, bender, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (BENDER_TYPE)
+
 
 static CRMatrix CR_basis =
 {
@@ -374,7 +388,184 @@ static CRMatrix CR_basis =
 
 static int gb_debug = FALSE;
 
-/* Functions */
+
+static void
+bender_class_init (BenderClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = bender_query_procedures;
+  plug_in_class->create_procedure = bender_create_procedure;
+}
+
+static void
+bender_init (Bender *bender)
+{
+}
+
+static GList *
+bender_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+bender_create_procedure (GimpPlugIn  *plug_in,
+                         const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            bender_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, PLUG_IN_IMAGE_TYPES);
+
+      gimp_procedure_set_menu_label (procedure, N_("_Curve Bend..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Distorts");
+
+      gimp_procedure_set_documentation
+        (procedure,
+         N_("Bend the image using two control curves"),
+         "This plug-in does bend the active layer "
+         "If there is a current selection it is copied to "
+         "floating selection and the curve_bend distortion "
+         "is done on the floating selection. If "
+         "work_on_copy parameter is TRUE, the curve_bend "
+         "distortion is done on a copy of the active layer "
+         "(or floating selection). The upper and lower edges "
+         "are bent in shape of 2 spline curves. both (upper "
+         "and lower) curves are determined by upto 17 points "
+         "or by 256 Y-Values if curve_type == 1 (freehand "
+         "mode) If rotation is not 0, the layer is rotated "
+         "before and rotated back after the bend operation. "
+         "This enables bending in other directions than "
+         "vertical. bending usually changes the size of "
+         "the handled layer. this plug-in sets the offsets "
+         "of the handled layer to keep its center at the "
+         "same position",
+         name);
+      gimp_procedure_set_attribution (procedure,
+                                      PLUG_IN_AUTHOR,
+                                      PLUG_IN_COPYRIGHT,
+                                      PLUG_IN_VERSION);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "rotation",
+                            "Rotation",
+                            "Direction {angle 0 to 360 degree } "
+                            "of the bend effect",
+                            0, 360, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "smoothing",
+                             "Smoothing",
+                             "Smoothing",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "antialias",
+                             "Antialias",
+                             "Antialias",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "work-on-copy",
+                             "Work on copy",
+                             "Copy the drawable and bend the copy",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "curve-type",
+                         "Curve type",
+                         "{ 0 == smooth (use 17 points), "
+                         "1 == freehand (use 256 val_y) }",
+                         0, 1, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "argc-upper-point-x",
+                         "Argc upper point X",
+                         "Argc upper point X",
+                         2, 17, 2,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "upper-point-x",
+                                 "Upper point X",
+                                 "Array of 17 x point coords "
+                                 "{ 0.0 <= x <= 1.0 or -1 for unused point }",
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "argc-upper-point-y",
+                         "Argc upper point Y",
+                         "Argc upper point Y",
+                         2, 17, 2,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "upper-point-y",
+                                 "Upper point Y",
+                                 "Array of 17 y point coords "
+                                 "{ 0.0 <= y <= 1.0 or -1 for unused point }",
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "argc-lower-point-x",
+                         "Argc lower point X",
+                         "Argc lower point X",
+                         2, 17, 2,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "lower-point-x",
+                                 "Lower point X",
+                                 "Array of 17 x point coords "
+                                 "{ 0.0 <= x <= 1.0 or -1 for unused point }",
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "argc-lower-point-y",
+                         "Argc lower point Y",
+                         "Argc lower point Y",
+                         2, 17, 2,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "lower-point-y",
+                                 "Lower point Y",
+                                 "Array of 17 y point coords "
+                                 "{ 0.0 <= y <= 1.0 or -1 for unused point }",
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "argc-upper-val-y",
+                         "Argc upper val Y",
+                         "Argc upper val Y",
+                         256, 256, 256,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "upper-val-y",
+                                 "Upper val Y",
+                                 "Array of 256 y freehand coords "
+                                 "{ 0 <= y <= 255 }",
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "argc-lower-val-y",
+                         "Argc lower val Y",
+                         "Argc lower val Y",
+                         256, 256, 256,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "lower-val-y",
+                                 "Lower val Y",
+                                 "Array of 256 y freehand coords "
+                                 "{ 0 <= y <= 255 }",
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_LAYER (procedure, "bent-layer",
+                           "Bent layer",
+                           "The transformed layer",
+                           FALSE,
+                           G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX PDB_STUFF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
 static GimpItem *
@@ -445,225 +636,51 @@ p_if_selection_float_it (GimpImage *image,
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX END_PDB_STUFF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
-/*
- *    M      M    AAAAA    IIIIII    N     N
- *    M M  M M   A     A     II      NN    N
- *    M  M   M   AAAAAAA     II      N  N  N
- *    M      M   A     A     II      N    NN
- *    M      M   A     A   IIIIII    N     N
- */
-
-MAIN ()
-
-static void
-query (void)
+static GimpValueArray *
+bender_run (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            GimpDrawable         *drawable,
+            const GimpValueArray *args,
+            gpointer              run_data)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,      "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"},
-    { GIMP_PDB_IMAGE,      "image", "Input image" },
-    { GIMP_PDB_DRAWABLE,   "drawable", "Input drawable (must be a layer without layermask)"},
-    { GIMP_PDB_FLOAT,      "rotation", "Direction {angle 0 to 360 degree } of the bend effect"},
-    { GIMP_PDB_INT32,      "smoothing", "Smoothing { TRUE, FALSE }"},
-    { GIMP_PDB_INT32,      "antialias", "Antialias { TRUE, FALSE }"},
-    { GIMP_PDB_INT32,      "work-on-copy", "{ TRUE, FALSE } TRUE: copy the drawable and bend the copy"},
-    { GIMP_PDB_INT32,      "curve-type", " { 0, 1 } 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) "},
-    { GIMP_PDB_INT32,      "argc-upper-point-x", "{2 <= argc <= 17} "},
-    { GIMP_PDB_FLOATARRAY, "upper-point-x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc-upper-point-y", "{2 <= argc <= 17} "},
-    { GIMP_PDB_FLOATARRAY, "upper-point-y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc-lower_point-x", "{2 <= argc <= 17} "},
-    { GIMP_PDB_FLOATARRAY, "lower-point-x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc-lower-point-y", "{2 <= argc <= 17} "},
-    { GIMP_PDB_FLOATARRAY, "lower_point_y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
-    { GIMP_PDB_INT32,      "argc-upper-val-y", "{ 256 } "},
-    { GIMP_PDB_INT8ARRAY,  "upper-val-y",   "array of 256 y freehand koord { 0 <= y <= 255 }"},
-    { GIMP_PDB_INT32,      "argc-lower-val-y", "{ 256 } "},
-    { GIMP_PDB_INT8ARRAY,  "lower-val-y",   "array of 256 y freehand koord { 0 <= y <= 255 }"}
-  };
-
-  static const GimpParamDef return_vals[] =
-  {
-    { GIMP_PDB_LAYER, "bent-layer", "the handled layer" }
-  };
-
-  static const GimpParamDef args_iter[] =
-  {
-    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_INT32, "total-steps", "total number of steps (# of layers-1 to apply the related plug-in)" },
-    { GIMP_PDB_FLOAT, "current-step", "current (for linear iterations this is the layerstack position, otherwise some value in between)" },
-    { GIMP_PDB_INT32, "len-struct", "length of stored data structure with id is equal to the plug_in  proc_name" },
-  };
-
-  /* the actual installation of the bend plugin */
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Bend the image using two control curves"),
-                          "This plug-in does bend the active layer "
-                          "If there is a current selection it is copied to "
-                          "floating selection and the curve_bend distortion "
-                          "is done on the floating selection. If "
-                          "work_on_copy parameter is TRUE, the curve_bend "
-                          "distortion is done on a copy of the active layer "
-                          "(or floating selection). The upper and lower edges "
-                          "are bent in shape of 2 spline curves. both (upper "
-                          "and lower) curves are determined by upto 17 points "
-                          "or by 256 Y-Values if curve_type == 1 (freehand "
-                          "mode) If rotation is not 0, the layer is rotated "
-                          "before and rotated back after the bend operation. "
-                          "This enables bending in other directions than "
-                          "vertical. bending usually changes the size of "
-                          "the handled layer. this plug-in sets the offsets "
-                          "of the handled layer to keep its center at the "
-                          "same position",
-                          PLUG_IN_AUTHOR,
-                          PLUG_IN_COPYRIGHT,
-                          PLUG_IN_VERSION,
-                          N_("_Curve Bend..."),
-                          PLUG_IN_IMAGE_TYPES,
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_vals),
-                          args,
-                          return_vals);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
-
-   /* the installation of the Iterator procedure for the bend plugin */
-  gimp_install_procedure (PLUG_IN_ITER_NAME,
-                          "This procedure calculates the modified values "
-                          "for one iterationstep for the call of "
-                          "plug_in_curve_bend",
-                          "",
-                          PLUG_IN_AUTHOR,
-                          PLUG_IN_COPYRIGHT,
-                          PLUG_IN_VERSION,
-                          NULL,    /* do not appear in menus */
-                          NULL,
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args_iter), 0,
-                          args_iter, NULL);
-}
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  const gchar  *env;
-  BenderDialog *cd;
-  GimpDrawable *active_drawable = NULL;
-  GimpImage    *image           = NULL;
-  GimpLayer    *layer           = NULL;
-  GError       *error              = NULL;
-
-  /* Get the runmode from the in-parameters */
-  GimpRunMode run_mode = param[0].data.d_int32;
-
-  /* status variable, use it to check for errors in invocation usually only
-     during non-interactive calling */
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-
-  /*always return at least the status to the caller. */
-  static GimpParam values[2];
+  const gchar    *env;
+  GimpValueArray *return_vals;
+  BenderDialog   *cd              = NULL;
+  GimpDrawable   *active_drawable = NULL;
+  GimpLayer      *layer           = NULL;
+  GimpLayer      *bent_layer      = NULL;
+  GError         *error           = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  cd = NULL;
-
   env = g_getenv ("BEND_DEBUG");
   if (env != NULL)
-    {
-      if ((*env != 'n') && (*env != 'N')) gb_debug = 1;
-    }
+    if ((*env != 'n') && (*env != 'N')) gb_debug = 1;
 
-  if (gb_debug) g_printerr ("\n\nDEBUG: run %s\n", name);
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  values[1].type         = GIMP_PDB_LAYER;
-  values[1].data.d_int32 = -1;
-
-  *nreturn_vals = 2;
-  *return_vals  = values;
-
-  if (strcmp (name, PLUG_IN_ITER_NAME) == 0)
-    {
-      gint32       len_struct;
-      gint32       total_steps;
-      gdouble      current_step;
-      BenderValues bval;                  /* current values while iterating */
-      BenderValues bval_from, bval_to;    /* start and end values */
-
-      /* Iterator procedure for animated calls is usually called from
-       * "plug_in_gap_layers_run_animfilter"
-       * (always run noninteractive)
-       */
-      if ((run_mode == GIMP_RUN_NONINTERACTIVE) && (nparams == 4))
-        {
-          total_steps  =  param[1].data.d_int32;
-          current_step =  param[2].data.d_float;
-          len_struct   =  param[3].data.d_int32;
-
-          if (len_struct == sizeof (bval))
-            {
-              /* get _FROM and _TO data,
-               * This data was stored by plug_in_gap_layers_run_animfilter
-               */
-              gimp_get_data (PLUG_IN_DATA_ITER_FROM, &bval_from);
-              gimp_get_data (PLUG_IN_DATA_ITER_TO,   &bval_to);
-              bval = bval_from;
-
-              p_delta_gdouble (&bval.rotation, bval_from.rotation,
-                               bval_to.rotation, total_steps, current_step);
-              /* note: iteration of curve and points arrays would not
-               *       give useful results.  (there might be different
-               *       number of points in the from/to bender values )
-               *       the iteration is done later, (see
-               *       p_bender_calculate_iter_curve) when the curve
-               *       is calculated.
-               */
-
-              bval.total_steps = total_steps;
-              bval.current_step = current_step;
-
-              gimp_set_data (PLUG_IN_PROC, &bval, sizeof (bval));
-            }
-          else
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-        }
-      else
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-
-      values[0].data.d_status = status;
-      return;
-    }
-
-  /* get image and drawable */
-  image = gimp_image_get_by_id (param[1].data.d_int32);
-  layer = (GimpLayer *) gimp_drawable_get_by_id (param[2].data.d_drawable);
-
-  if (! gimp_item_is_layer (GIMP_ITEM (layer)))
+  if (! GIMP_IS_LAYER (drawable))
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Can operate on layers only "
                      "(but was called on channel or mask)."));
-      status = GIMP_PDB_EXECUTION_ERROR;
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
     }
 
+  layer = GIMP_LAYER (drawable);
+
   /* check for layermask */
-  if (gimp_layer_get_mask (layer) > 0)
+  if (gimp_layer_get_mask (layer))
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Cannot operate on layers with masks."));
-      status = GIMP_PDB_EXECUTION_ERROR;
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
     }
 
   /* if there is a selection, make it the floating selection layer */
@@ -675,124 +692,104 @@ run (const gchar      *name,
        */
       g_set_error (&error, 0, 0, "%s",
                    _("Cannot operate on empty selections."));
-       status = GIMP_PDB_EXECUTION_ERROR;
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
     }
 
-  /* how are we running today? */
-  if (status == GIMP_PDB_SUCCESS)
+  switch (run_mode)
     {
-      /* how are we running today? */
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          /* Possibly retrieve data from a previous run */
-          /* gimp_get_data (PLUG_IN_PROC, &g_bndvals); */
+    case GIMP_RUN_INTERACTIVE:
+      /* gimp_get_data (PLUG_IN_PROC, &g_bndvals); */
 
-          /* Get information from the dialog */
-          cd = do_dialog (active_drawable);
-          cd->show_progress = TRUE;
-          break;
+      /* Get information from the dialog */
+      cd = do_dialog (active_drawable);
+      cd->show_progress = TRUE;
+      break;
 
-        case GIMP_RUN_NONINTERACTIVE:
-          /* check to see if invoked with the correct number of parameters */
-          if (nparams >= 20)
-            {
-              cd = g_new (BenderDialog, 1);
-              cd->run = TRUE;
-              cd->show_progress = TRUE;
-              cd->drawable = active_drawable;
+    case GIMP_RUN_NONINTERACTIVE:
+      cd = g_new (BenderDialog, 1);
 
-              cd->rotation      = param[3].data.d_float;
-              cd->smoothing     = param[4].data.d_int32 != 0;
-              cd->antialias     = param[5].data.d_int32 != 0;
-              cd->work_on_copy  = param[6].data.d_int32 != 0;
-              cd->curve_type    = param[7].data.d_int32 != 0;
+      cd->run           = TRUE;
+      cd->show_progress = TRUE;
+      cd->drawable      = active_drawable;
 
-              p_copy_points (cd, OUTLINE_UPPER, 0,
-                             param[8].data.d_int32,
-                             param[9].data.d_floatarray);
-              p_copy_points (cd, OUTLINE_UPPER, 1,
-                             param[10].data.d_int32,
-                             param[11].data.d_floatarray);
-              p_copy_points (cd, OUTLINE_LOWER, 0,
-                             param[12].data.d_int32,
-                             param[13].data.d_floatarray);
-              p_copy_points (cd, OUTLINE_LOWER, 1,
-                             param[14].data.d_int32,
-                             param[15].data.d_floatarray);
+      cd->rotation      = GIMP_VALUES_GET_DOUBLE  (args, 0);
+      cd->smoothing     = GIMP_VALUES_GET_BOOLEAN (args, 1);
+      cd->antialias     = GIMP_VALUES_GET_BOOLEAN (args, 2);
+      cd->work_on_copy  = GIMP_VALUES_GET_BOOLEAN (args, 3);
+      cd->curve_type    = GIMP_VALUES_GET_INT     (args, 4);
 
-              p_copy_yval (cd, OUTLINE_UPPER,
-                           param[16].data.d_int32,
-                           param[17].data.d_int8array);
-              p_copy_yval (cd, OUTLINE_LOWER,
-                           param[18].data.d_int32,
-                           param[19].data.d_int8array);
-            }
-          else
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          break;
+      p_copy_points (cd, OUTLINE_UPPER, 0,
+                     GIMP_VALUES_GET_INT         (args, 5),
+                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 6));
+      p_copy_points (cd, OUTLINE_UPPER, 1,
+                     GIMP_VALUES_GET_INT         (args, 7),
+                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 8));
+      p_copy_points (cd, OUTLINE_LOWER, 0,
+                     GIMP_VALUES_GET_INT         (args, 9),
+                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 10));
+      p_copy_points (cd, OUTLINE_LOWER, 1,
+                     GIMP_VALUES_GET_INT         (args, 11),
+                     GIMP_VALUES_GET_FLOAT_ARRAY (args, 12));
 
-        case GIMP_RUN_WITH_LAST_VALS:
-          cd = g_new (BenderDialog, 1);
-          cd->run = TRUE;
-          cd->show_progress = TRUE;
-          cd->drawable = active_drawable;
-          p_retrieve_values (cd);  /* Possibly retrieve data from a previous run */
-          break;
+      p_copy_yval (cd, OUTLINE_UPPER,
+                   GIMP_VALUES_GET_INT         (args, 13),
+                   GIMP_VALUES_GET_UINT8_ARRAY (args, 14));
+      p_copy_yval (cd, OUTLINE_LOWER,
+                   GIMP_VALUES_GET_INT         (args, 15),
+                   GIMP_VALUES_GET_UINT8_ARRAY (args, 16));
+      break;
 
-        default:
-          break;
-        }
+    case GIMP_RUN_WITH_LAST_VALS:
+      cd = g_new (BenderDialog, 1);
+
+      cd->run           = TRUE;
+      cd->show_progress = TRUE;
+      cd->drawable      = active_drawable;
+
+      p_retrieve_values (cd);  /* Possibly retrieve data from a previous run */
+      break;
     }
 
   if (! cd)
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (cd->run)
     {
-      /* Run the main function */
+      gimp_image_undo_group_start (image);
 
-      if (cd->run)
-        {
-          GimpLayer *bent_layer;
+      bent_layer = p_main_bend (cd, cd->drawable,
+                                cd->work_on_copy);
 
-          gimp_image_undo_group_start (image);
+      gimp_image_undo_group_end (image);
 
-          bent_layer = p_main_bend (cd, cd->drawable,
-                                    cd->work_on_copy);
-
-          gimp_image_undo_group_end (image);
-
-          /* Store variable states for next run */
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            {
-              p_store_values (cd);
-            }
-
-          /* return the id of handled layer */
-          values[1].data.d_int32 = gimp_item_get_id (GIMP_ITEM (bent_layer));
-        }
-      else
-        {
-          status = GIMP_PDB_CANCEL;
-        }
-
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      /* Store variable states for next run */
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        p_store_values (cd);
     }
-
-  if (status != GIMP_PDB_SUCCESS && error)
+  else
     {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CANCEL,
+                                               NULL);
     }
 
-  values[0].data.d_status = status;
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_LAYER (return_vals, 1, bent_layer);
+
+  return return_vals;
 }
 
 static int
@@ -1027,22 +1024,6 @@ p_retrieve_values (BenderDialog *cd)
 }
 
 static void
-p_delta_gdouble (double  *val,
-                 double   val_from,
-                 double   val_to,
-                 gint32   total_steps,
-                 gdouble  current_step)
-{
-  double delta;
-
-  if (total_steps < 1)
-    return;
-
-  delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
-  *val  = val_from + delta;
-}
-
-static void
 p_delta_gint32 (gint32  *val,
                 gint32   val_from,
                 gint32   val_to,
@@ -1059,11 +1040,11 @@ p_delta_gint32 (gint32  *val,
 }
 
 static void
-p_copy_points (BenderDialog *cd,
-               int           outline,
-               int           xy,
-               int           argc,
-               gdouble      *floatarray)
+p_copy_points (BenderDialog  *cd,
+               int            outline,
+               int            xy,
+               int            argc,
+               const gdouble *floatarray)
 {
   int j;
 
@@ -1082,7 +1063,7 @@ static void
 p_copy_yval (BenderDialog *cd,
              int           outline,
              int           argc,
-             guint8       *int8array)
+             const guint8 *int8array)
 {
    int j;
    guchar fill;
