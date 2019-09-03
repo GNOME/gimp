@@ -187,22 +187,10 @@ EOT
 
     if (exists $plugins{$_}->{cppflags}) {
 	my $cppflags = $plugins{$_}->{cppflags};
-	my $oldapiflags = '';
-        if (exists $plugins{$_}->{old_api}) {
-            $oldapiflags = ' -DGIMP_DEPRECATED_REPLACE_NEW_API';
-        }
 
 	print MK <<EOT;
 
-${makename}_CPPFLAGS = $cppflags$oldapiflags
-EOT
-    }
-    elsif (exists $plugins{$_}->{old_api}) {
-	my $oldapiflags = '-DGIMP_DEPRECATED_REPLACE_NEW_API';
-
-	print MK <<EOT;
-
-${makename}_CPPFLAGS = \$(AM_CPPFLAGS) $oldapiflags
+${makename}_CPPFLAGS = $cppflags
 EOT
     }
 
