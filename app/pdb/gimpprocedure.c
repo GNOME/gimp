@@ -355,6 +355,14 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
 }
 
 const gchar *
+gimp_procedure_get_help (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return procedure->help;
+}
+
+const gchar *
 gimp_procedure_get_help_id (GimpProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);

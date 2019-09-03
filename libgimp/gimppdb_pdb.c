@@ -210,11 +210,6 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
 /**
  * _gimp_pdb_proc_info:
  * @procedure_name: The procedure name.
- * @blurb: (out) (transfer full): A short blurb.
- * @help: (out) (transfer full): Detailed procedure help.
- * @authors: (out) (transfer full): Authors of the procedure.
- * @copyright: (out) (transfer full): The copyright.
- * @date: (out) (transfer full): Copyright date.
  * @proc_type: (out): The procedure type.
  * @num_args: (out): The number of input arguments.
  * @num_values: (out): The number of return values.
@@ -222,8 +217,7 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
  * Queries the procedural database for information on the specified
  * procedure.
  *
- * This procedure returns information on the specified procedure. A
- * short blurb, detailed help, authors, copyright information,
+ * This procedure returns information on the specified procedure. The
  * procedure type, number of input, and number of return values are
  * returned. For specific information on each input argument and return
  * value, use the gimp_pdb_db_proc_argument() and
@@ -232,15 +226,10 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_pdb_proc_info (const gchar      *procedure_name,
-                     gchar           **blurb,
-                     gchar           **help,
-                     gchar           **authors,
-                     gchar           **copyright,
-                     gchar           **date,
-                     GimpPDBProcType  *proc_type,
-                     gint             *num_args,
-                     gint             *num_values)
+_gimp_pdb_proc_info (const gchar     *procedure_name,
+                     GimpPDBProcType *proc_type,
+                     gint            *num_args,
+                     gint            *num_values)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -255,11 +244,6 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
                                               args);
   gimp_value_array_unref (args);
 
-  *blurb = NULL;
-  *help = NULL;
-  *authors = NULL;
-  *copyright = NULL;
-  *date = NULL;
   *proc_type = 0;
   *num_args = 0;
   *num_values = 0;
@@ -268,14 +252,117 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
 
   if (success)
     {
+      *proc_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+      *num_args = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *num_values = g_value_get_int (gimp_value_array_index (return_vals, 3));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_proc_documentation:
+ * @procedure_name: The procedure name.
+ * @blurb: (out) (transfer full): A short blurb.
+ * @help: (out) (transfer full): Detailed procedure help.
+ * @help_id: (out) (transfer full): The procedure help_id.
+ *
+ * Queries the procedural database for documentation on the specified
+ * procedure.
+ *
+ * This procedure returns documentation on the specified procedure. A
+ * short blurb, detailed help and help_id.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_proc_documentation (const gchar  *procedure_name,
+                              gchar       **blurb,
+                              gchar       **help,
+                              gchar       **help_id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-proc-documentation",
+                                              args);
+  gimp_value_array_unref (args);
+
+  *blurb = NULL;
+  *help = NULL;
+  *help_id = NULL;
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
       *blurb = g_value_dup_string (gimp_value_array_index (return_vals, 1));
       *help = g_value_dup_string (gimp_value_array_index (return_vals, 2));
-      *authors = g_value_dup_string (gimp_value_array_index (return_vals, 3));
-      *copyright = g_value_dup_string (gimp_value_array_index (return_vals, 4));
-      *date = g_value_dup_string (gimp_value_array_index (return_vals, 5));
-      *proc_type = g_value_get_enum (gimp_value_array_index (return_vals, 6));
-      *num_args = g_value_get_int (gimp_value_array_index (return_vals, 7));
-      *num_values = g_value_get_int (gimp_value_array_index (return_vals, 8));
+      *help_id = g_value_dup_string (gimp_value_array_index (return_vals, 3));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_proc_attribution:
+ * @procedure_name: The procedure name.
+ * @authors: (out) (transfer full): Authors of the procedure.
+ * @copyright: (out) (transfer full): The copyright.
+ * @date: (out) (transfer full): Copyright date.
+ *
+ * Queries the procedural database for attribution information on the
+ * specified procedure.
+ *
+ * This procedure returns attribution information on the specified
+ * procedure. The authors, copyright information and date are returned.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_proc_attribution (const gchar  *procedure_name,
+                            gchar       **authors,
+                            gchar       **copyright,
+                            gchar       **date)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-proc-attribution",
+                                              args);
+  gimp_value_array_unref (args);
+
+  *authors = NULL;
+  *copyright = NULL;
+  *date = NULL;
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *authors = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+      *copyright = g_value_dup_string (gimp_value_array_index (return_vals, 2));
+      *date = g_value_dup_string (gimp_value_array_index (return_vals, 3));
     }
 
   gimp_value_array_unref (return_vals);

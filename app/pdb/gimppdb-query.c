@@ -262,67 +262,6 @@ gimp_pdb_query (GimpPDB       *pdb,
   return success;
 }
 
-gboolean
-gimp_pdb_proc_info (GimpPDB          *pdb,
-                    const gchar      *proc_name,
-                    gchar           **blurb,
-                    gchar           **help,
-                    gchar           **authors,
-                    gchar           **copyright,
-                    gchar           **date,
-                    GimpPDBProcType  *proc_type,
-                    gint             *num_args,
-                    gint             *num_values,
-                    GError          **error)
-{
-  GimpProcedure *procedure;
-  PDBStrings     strings;
-
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
-  g_return_val_if_fail (proc_name != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  procedure = gimp_pdb_lookup_procedure (pdb, proc_name);
-
-  if (procedure)
-    {
-      gimp_pdb_get_strings (&strings, procedure, FALSE);
-    }
-  else
-    {
-      const gchar *compat_name;
-
-      compat_name = gimp_pdb_lookup_compat_proc_name (pdb, proc_name);
-
-      if (compat_name)
-        {
-          procedure = gimp_pdb_lookup_procedure (pdb, compat_name);
-
-          if (procedure)
-            gimp_pdb_get_strings (&strings, procedure, TRUE);
-        }
-    }
-
-  if (procedure)
-    {
-      *blurb      = strings.compat ? strings.blurb : g_strdup (strings.blurb);
-      *help       = strings.compat ? strings.help : g_strdup (strings.help);
-      *authors    = strings.compat ? strings.authors : g_strdup (strings.authors);
-      *copyright  = strings.compat ? strings.copyright : g_strdup (strings.copyright);
-      *date       = strings.compat ? strings.date : g_strdup (strings.date);
-      *proc_type  = procedure->proc_type;
-      *num_args   = procedure->num_args;
-      *num_values = procedure->num_values;
-
-      return TRUE;
-    }
-
-  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
-               _("Procedure '%s' not found"), proc_name);
-
-  return FALSE;
-}
-
 
 /*  private functions  */
 

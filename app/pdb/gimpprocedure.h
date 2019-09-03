@@ -120,6 +120,7 @@ void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
 const gchar    * gimp_procedure_get_label          (GimpProcedure    *procedure);
 const gchar    * gimp_procedure_get_menu_label     (GimpProcedure    *procedure);
 const gchar    * gimp_procedure_get_blurb          (GimpProcedure    *procedure);
+const gchar    * gimp_procedure_get_help           (GimpProcedure    *procedure);
 const gchar    * gimp_procedure_get_help_id        (GimpProcedure    *procedure);
 gboolean         gimp_procedure_get_sensitive      (GimpProcedure    *procedure,
                                                     GimpObject       *object,

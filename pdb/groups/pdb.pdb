@@ -169,20 +169,19 @@ HELP
 {
   if (gimp_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *procedure;
+      GimpProcedure *proc = gimp_pdb_lookup_procedure (gimp->pdb,
+                                                       procedure_name);
 
-      procedure = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
-
-      if (! procedure)
+      if (! proc)
         {
           procedure_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb,
 	                                                     procedure_name);
 
           if (procedure_name)
-            procedure = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
+            proc = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
         }
 
-      exists = (procedure != NULL);
+      exists = (proc != NULL);
     }
   else
     success = FALSE;
@@ -197,12 +196,11 @@ Queries the procedural database for information on the specified procedure.
 BLURB
 
     $help = <<'HELP';
-This procedure returns information on the specified procedure. A short
-blurb, detailed help, authors, copyright information, procedure
-type, number of input, and number of return values are returned. For
-specific information on each input argument and return value, use the
-gimp_pdb_db_proc_argument() and gimp_pdb_db_proc_return_value()
-procedures.
+This procedure returns information on the specified procedure.  The
+procedure type, number of input, and number of return values are
+returned. For specific information on each input argument and return
+value, use the gimp_pdb_db_proc_argument() and
+gimp_pdb_db_proc_return_value() procedures.
 HELP
 
     &std_pdb_misc;
@@ -216,17 +214,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'blurb', type => 'string', void_ret => 1,
-	  desc => 'A short blurb' },
-	{ name => 'help', type => 'string',
-	  desc => 'Detailed procedure help' },
-	{ name => 'authors', type => 'string',
-	  desc => 'Authors of the procedure' },
-	{ name => 'copyright', type => 'string',
-	  desc => 'The copyright' },
-	{ name => 'date', type => 'string',
-	  desc => 'Copyright date' },
-        { name => 'proc_type', type => 'enum GimpPDBProcType',
+        { name => 'proc_type', type => 'enum GimpPDBProcType', void_ret => 1,
 	  desc => 'The procedure type' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
@@ -239,14 +227,122 @@ HELP
 {
   if (gimp_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpPDBProcType  ptype;
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
 
-      success = gimp_pdb_proc_info (gimp->pdb, procedure_name,
-                                    &blurb, &help, &authors,
-                                    &copyright, &date, &ptype,
-                                    &num_args, &num_values,
-                                    error);
-      proc_type = ptype;
+      if (proc)
+        {
+          proc_type  = proc->proc_type;
+          num_args   = proc->num_args;
+          num_values = proc->num_values;
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_proc_documentation {
+    $blurb = <<'BLURB';
+Queries the procedural database for documentation on the specified procedure.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns documentation on the specified procedure. A
+short blurb, detailed help and help_id.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc  => 'The procedure name' }
+    );
+
+    @outargs = (
+	{ name => 'blurb', type => 'string', void_ret => 1,
+	  desc => 'A short blurb' },
+	{ name => 'help', type => 'string',
+	  desc => 'Detailed procedure help' },
+	{ name => 'help_id', type => 'string',
+	  desc => 'The procedure help_id' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
+
+      if (proc)
+        {
+          blurb   = g_strdup (gimp_procedure_get_blurb   (proc));
+          help    = g_strdup (gimp_procedure_get_help    (proc));
+          help_id = g_strdup (gimp_procedure_get_help_id (proc));
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_proc_attribution {
+    $blurb = <<'BLURB';
+Queries the procedural database for attribution information on the
+specified procedure.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns attribution information on the specified
+procedure.  The authors, copyright information and date are returned.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc  => 'The procedure name' }
+    );
+
+    @outargs = (
+	{ name => 'authors', type => 'string', void_ret => 1,
+	  desc => 'Authors of the procedure' },
+	{ name => 'copyright', type => 'string',
+	  desc => 'The copyright' },
+	{ name => 'date', type => 'string',
+	  desc => 'Copyright date' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
+
+      if (proc)
+        {
+          authors   = g_strdup (proc->authors);
+          copyright = g_strdup (proc->copyright);
+          date      = g_strdup (proc->date);
+        }
+      else
+        success = FALSE;
     }
   else
     success = FALSE;
@@ -288,20 +384,8 @@ HELP
 {
   if (gimp_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc;
-
-      proc = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
-
-      if (! proc)
-        {
-          const gchar *compat_name;
-
-          compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb,
-	                                                  procedure_name);
-
-          if (compat_name)
-            proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
-        }
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
 
       if (proc && (arg_num >= 0 && arg_num < proc->num_args))
         {
@@ -350,20 +434,8 @@ HELP
 {
   if (gimp_pdb_is_canonical_procedure (procedure_name, error))
     {
-      GimpProcedure *proc;
-
-      proc = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
-
-      if (! proc)
-        {
-          const gchar *compat_name;
-
-          compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb,
-	                                                  procedure_name);
-
-          if (compat_name)
-            proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
-        }
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
 
       if (proc && (val_num >= 0 && val_num < proc->num_values))
         {
@@ -503,6 +575,30 @@ CODE
     );
 }
 
+$extra{app}->{code} = <<'CODE';
+static GimpProcedure *
+lookup_procedure (GimpPDB          *pdb,
+                  const gchar      *proc_name,
+                  GError          **error)
+{
+  GimpProcedure *proc = gimp_pdb_lookup_procedure (pdb, proc_name);
+
+  if (! proc)
+    {
+      const gchar *compat_name = gimp_pdb_lookup_compat_proc_name (pdb,
+                                                                   proc_name);
+
+      if (compat_name)
+        proc = gimp_pdb_lookup_procedure (pdb, compat_name);
+    }
+
+  if (! proc)
+    g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
+                 _("Procedure '%s' not found"), proc_name);
+
+  return proc;
+}
+CODE
 
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimp.h"
@@ -510,13 +606,17 @@ CODE
               "plug-in/gimppluginmanager-data.h"
               "gimppdb-query.h"
               "gimppdb-utils.h"
-              "gimp-pdb-compat.h");
+              "gimppdberror.h"
+              "gimp-pdb-compat.h"
+              "gimp-intl.h");
 
 @procs = qw(pdb_temp_name
             pdb_dump
             pdb_query
             pdb_proc_exists
             pdb_proc_info
+            pdb_proc_documentation
+            pdb_proc_attribution
             pdb_proc_argument
             pdb_proc_return_value
 	    pdb_get_data

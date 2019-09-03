@@ -180,25 +180,14 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
   gchar           *copyright;
   gchar           *date;
   GimpPDBProcType  type;
-  gint             n_params;
+  gint             n_args;
   gint             n_return_vals;
   gint             i;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
 
-  _gimp_pdb_proc_info (name,
-                       &blurb,
-                       &help,
-                       /* FIXME &help_id, */
-                       &authors,
-                       &copyright,
-                       &date,
-                       &type,
-                       &n_params,
-                       &n_return_vals);
-
-  help_id = g_strdup (name); /* FIXME */
+  _gimp_pdb_proc_info (name, &type, &n_args, &n_return_vals);
 
   procedure = g_object_new (GIMP_TYPE_PDB_PROCEDURE,
                             "plug-in",        _gimp_pdb_get_plug_in (pdb),
@@ -207,17 +196,19 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
                             "pdb",            pdb,
                             NULL);
 
-  gimp_procedure_set_documentation (procedure, blurb, help, help_id);
-  gimp_procedure_set_attribution (procedure, authors, copyright, date);
-
+  _gimp_pdb_proc_documentation     (name,      &blurb, &help, &help_id);
+  gimp_procedure_set_documentation (procedure,  blurb,  help,  help_id);
   g_free (blurb);
   g_free (help);
   g_free (help_id);
+
+  _gimp_pdb_proc_attribution     (name,      &authors, &copyright, &date);
+  gimp_procedure_set_attribution (procedure,  authors,  copyright,  date);
   g_free (authors);
   g_free (copyright);
   g_free (date);
 
-  for (i = 0; i < n_params; i++)
+  for (i = 0; i < n_args; i++)
     {
       GParamSpec *pspec = _gimp_pdb_proc_argument (name, i);
 
