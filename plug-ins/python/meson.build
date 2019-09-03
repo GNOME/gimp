@@ -6,13 +6,13 @@ plugins = [
   { 'name': 'palette-offset' },
   { 'name': 'palette-to-gradient' },
   { 'name': 'py-slice' },
+  { 'name': 'spyro_plus' },
 
   # { 'name': 'colorxhtml' },
   # { 'name': 'gradients-save-as-css' },
   # { 'name': 'histogram-export' },
   # { 'name': 'palette-sort' },
   # { 'name': 'python-eval' },
-  # { 'name': 'spyro_plus' },
 ]
 
 if not stable
