@@ -46,6 +46,32 @@ gimp_channel_init (GimpChannel *channel)
 }
 
 /**
+ * gimp_channel_get_by_id:
+ * @channel_id: The channel id.
+ *
+ * Returns a #GimpChannel representing @channel_id. This function
+ * calls gimp_item_get_by_id() and returns the item if it is channel
+ * or %NULL otherwise.
+ *
+ * Returns: (nullable) (transfer none): a #GimpChannel for @channel_id
+ *          or %NULL if @channel_id does not represent a valid
+ *          channel. The object belongs to libgimp and you must not
+ *          modify or unref it.
+ *
+ * Since: 3.0
+ **/
+GimpChannel *
+gimp_channel_get_by_id (gint32 channel_id)
+{
+  GimpItem *item = gimp_item_get_by_id (channel_id);
+
+  if (GIMP_IS_CHANNEL (item))
+    return (GimpChannel *) item;
+
+  return NULL;
+}
+
+/**
  * gimp_channel_new:
  * @image:   The image to which to add the channel.
  * @name:    The channel name.

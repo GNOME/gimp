@@ -51,6 +51,31 @@ gimp_drawable_init (GimpDrawable *drawable)
 
 /* Public API. */
 
+/**
+ * gimp_drawable_get_by_id:
+ * @drawable_id: The drawable id.
+ *
+ * Returns a #GimpDrawable representing @drawable_id. This function
+ * calls gimp_item_get_by_id() and returns the item if it is drawable
+ * or %NULL otherwise.
+ *
+ * Returns: (nullable) (transfer none): a #GimpDrawable for
+ *          @drawable_id or %NULL if @drawable_id does not represent a
+ *          valid drawable. The object belongs to libgimp and you must
+ *          not modify or unref it.
+ *
+ * Since: 3.0
+ **/
+GimpDrawable *
+gimp_drawable_get_by_id (gint32 drawable_id)
+{
+  GimpItem *item = gimp_item_get_by_id (drawable_id);
+
+  if (GIMP_IS_DRAWABLE (item))
+    return (GimpDrawable *) item;
+
+  return NULL;
+}
 
 /**
  * gimp_drawable_get_thumbnail_data:

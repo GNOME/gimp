@@ -45,3 +45,29 @@ gimp_layer_mask_init (GimpLayerMask *layer_mask)
 {
   layer_mask->priv = gimp_layer_mask_get_instance_private (layer_mask);
 }
+
+/**
+ * gimp_layer_mask_get_by_id:
+ * @layer_mask_id: The layer_mask id.
+ *
+ * Returns a #GimpLayerMask representing @layer_mask_id. This function
+ * calls gimp_item_get_by_id() and returns the item if it is
+ * layer_mask or %NULL otherwise.
+ *
+ * Returns: (nullable) (transfer none): a #GimpLayerMask for
+ *          @layer_mask_id or %NULL if @layer_mask_id does not
+ *          represent a valid layer_mask. The object belongs to
+ *          libgimp and you must not modify or unref it.
+ *
+ * Since: 3.0
+ **/
+GimpLayerMask *
+gimp_layer_mask_get_by_id (gint32 layer_mask_id)
+{
+  GimpItem *item = gimp_item_get_by_id (layer_mask_id);
+
+  if (GIMP_IS_LAYER_MASK (item))
+    return (GimpLayerMask *) item;
+
+  return NULL;
+}

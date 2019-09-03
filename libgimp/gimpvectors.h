@@ -65,7 +65,9 @@ struct _GimpVectorsClass
 };
 
 
-GType   gimp_vectors_get_type (void) G_GNUC_CONST;
+GType         gimp_vectors_get_type  (void) G_GNUC_CONST;
+
+GimpVectors * gimp_vectors_get_by_id (gint32 vectors_id);
 
 
 G_END_DECLS

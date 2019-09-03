@@ -51,6 +51,32 @@ gimp_layer_init (GimpLayer *layer)
 /* Public API. */
 
 /**
+ * gimp_layer_get_by_id:
+ * @layer_id: The layer id.
+ *
+ * Returns a #GimpLayer representing @layer_id. This function calls
+ * gimp_item_get_by_id() and returns the item if it is layer or %NULL
+ * otherwise.
+ *
+ * Returns: (nullable) (transfer none): a #GimpLayer for @layer_id or
+ *          %NULL if @layer_id does not represent a valid layer. The
+ *          object belongs to libgimp and you must not modify or unref
+ *          it.
+ *
+ * Since: 3.0
+ **/
+GimpLayer *
+gimp_layer_get_by_id (gint32 layer_id)
+{
+  GimpItem *item = gimp_item_get_by_id (layer_id);
+
+  if (GIMP_IS_LAYER (item))
+    return (GimpLayer *) item;
+
+  return NULL;
+}
+
+/**
  * gimp_layer_new:
  * @image:   The image to which to add the layer.
  * @name:    The layer name.

@@ -64,7 +64,9 @@ struct _GimpLayerMaskClass
   void (*_gimp_reserved8) (void);
 };
 
-GType   gimp_layer_mask_get_type (void) G_GNUC_CONST;
+GType           gimp_layer_mask_get_type  (void) G_GNUC_CONST;
+
+GimpLayerMask * gimp_layer_mask_get_by_id (gint32 layer_mask_id);
 
 
 G_END_DECLS

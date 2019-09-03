@@ -64,12 +64,14 @@ struct _GimpSelectionClass
 };
 
 
-GType       gimp_selection_get_type (void) G_GNUC_CONST;
+GType           gimp_selection_get_type (void) G_GNUC_CONST;
 
-GimpLayer * gimp_selection_float    (GimpImage    *image,
-                                     GimpDrawable *drawable,
-                                     gint          offx,
-                                     gint          offy);
+GimpSelection * gimp_selection_get_by_id (gint32        selection_id);
+
+GimpLayer     * gimp_selection_float     (GimpImage    *image,
+                                          GimpDrawable *drawable,
+                                          gint          offx,
+                                          gint          offy);
 
 
 G_END_DECLS

@@ -66,6 +66,8 @@ struct _GimpLayerClass
 
 GType       gimp_layer_get_type           (void) G_GNUC_CONST;
 
+GimpLayer * gimp_layer_get_by_id          (gint32           layer_id);
+
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
 GimpLayer * gimp_layer_new                (GimpImage       *image,

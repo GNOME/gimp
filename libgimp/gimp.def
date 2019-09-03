@@ -41,6 +41,7 @@ EXPORTS
 	gimp_buffers_get_list
 	gimp_channel_combine_masks
 	gimp_channel_copy
+	gimp_channel_get_by_id
 	gimp_channel_get_color
 	gimp_channel_get_opacity
 	gimp_channel_get_show_masked
@@ -206,6 +207,7 @@ EXPORTS
 	gimp_drawable_free_shadow
 	gimp_drawable_get_buffer
 	gimp_drawable_get_buffer_deprecated
+	gimp_drawable_get_by_id
 	gimp_drawable_get_format
 	gimp_drawable_get_format_deprecated
 	gimp_drawable_get_pixel
@@ -555,6 +557,7 @@ EXPORTS
 	gimp_layer_from_mask
 	gimp_layer_get_apply_mask
 	gimp_layer_get_blend_space
+	gimp_layer_get_by_id
 	gimp_layer_get_composite_mode
 	gimp_layer_get_composite_space
 	gimp_layer_get_edit_mask
@@ -566,6 +569,7 @@ EXPORTS
 	gimp_layer_get_type
 	gimp_layer_group_new
 	gimp_layer_is_floating_sel
+	gimp_layer_mask_get_by_id
 	gimp_layer_mask_get_type
 	gimp_layer_mode_get_type
 	gimp_layer_new
@@ -738,6 +742,7 @@ EXPORTS
 	gimp_selection_feather
 	gimp_selection_float
 	gimp_selection_flood
+	gimp_selection_get_by_id
 	gimp_selection_get_type
 	gimp_selection_grow
 	gimp_selection_invert
@@ -796,6 +801,7 @@ EXPORTS
 	gimp_vectors_copy
 	gimp_vectors_export_to_file
 	gimp_vectors_export_to_string
+	gimp_vectors_get_by_id
 	gimp_vectors_get_strokes
 	gimp_vectors_get_type
 	gimp_vectors_import_from_file

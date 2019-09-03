@@ -46,6 +46,32 @@ gimp_selection_init (GimpSelection *selection)
 }
 
 /**
+ * gimp_selection_get_by_id:
+ * @selection_id: The selection id.
+ *
+ * Returns a #GimpSelection representing @selection_id. This function
+ * calls gimp_item_get_by_id() and returns the item if it is selection
+ * or %NULL otherwise.
+ *
+ * Returns: (nullable) (transfer none): a #GimpSelection for
+ *          @selection_id or %NULL if @selection_id does not represent
+ *          a valid selection. The object belongs to libgimp and you
+ *          must not modify or unref it.
+ *
+ * Since: 3.0
+ **/
+GimpSelection *
+gimp_selection_get_by_id (gint32 selection_id)
+{
+  GimpItem *item = gimp_item_get_by_id (selection_id);
+
+  if (GIMP_IS_SELECTION (item))
+    return (GimpSelection *) item;
+
+  return NULL;
+}
+
+/**
  * gimp_selection_float:
  * @image:    ignored
  * @drawable: The drawable from which to float selection.
