@@ -130,8 +130,8 @@ check_drawables (void)
         }
       else
         {
-          drawable = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.drawable_id));
-          map      = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id));
+          drawable = gimp_drawable_get_by_id (mapvals.drawable_id);
+          map      = gimp_drawable_get_by_id (mapvals.bumpmap_id);
 
           if (gimp_drawable_is_indexed (map) ||
               (gimp_drawable_width  (drawable) != gimp_drawable_width  (map)) ||
@@ -152,7 +152,7 @@ check_drawables (void)
         }
       else
         {
-          map = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.envmap_id));
+          map = gimp_drawable_get_by_id (mapvals.envmap_id);
 
           if (gimp_drawable_is_gray   (map) ||
               gimp_drawable_has_alpha (map))
@@ -246,7 +246,7 @@ run (const gchar      *name,
   /* ========================== */
 
   run_mode = param[0].data.d_int32;
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
+  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
 
   mapvals.drawable_id = gimp_item_get_id (GIMP_ITEM (drawable));
 

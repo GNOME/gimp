@@ -159,7 +159,7 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! tile_dialog (gimp_image_get_by_id (param[1].data.d_image),
-                         GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable))))
+                         gimp_drawable_get_by_id (param[2].data.d_drawable)))
         return;
       break;
 
@@ -197,7 +197,7 @@ run (const gchar      *name,
       gimp_progress_init (_("Tiling"));
 
       tile (gimp_image_get_by_id (param[1].data.d_image),
-            GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable)),
+            gimp_drawable_get_by_id (param[2].data.d_drawable),
             &new_image,
             &new_layer);
 

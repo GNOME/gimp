@@ -140,8 +140,7 @@ precompute_init (gint w,
 
   if (mapvals.bumpmap_id != -1)
     {
-      GimpDrawable *drawable =
-        GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id));
+      GimpDrawable *drawable = gimp_drawable_get_by_id (mapvals.bumpmap_id);
 
       bpp = gimp_drawable_bpp (drawable);
     }
@@ -186,7 +185,7 @@ interpol_row (gint x1,
 
   if (mapvals.bumpmap_id != -1)
     {
-      bumpmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id)));
+      bumpmap_setup (gimp_drawable_get_by_id (mapvals.bumpmap_id));
 
       bpp = babl_format_get_bytes_per_pixel (bump_format);
     }
@@ -316,7 +315,7 @@ precompute_normals (gint x1,
 
   if (mapvals.bumpmap_id != -1)
     {
-      bumpmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id)));
+      bumpmap_setup (gimp_drawable_get_by_id (mapvals.bumpmap_id));
 
       bpp = babl_format_get_bytes_per_pixel (bump_format);
     }

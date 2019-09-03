@@ -590,7 +590,7 @@ compose_run (GimpProcedure        *procedure,
           compose_by_drawable = TRUE;
 
           composevals.do_recompose = TRUE;
-          composevals.source_layer = GIMP_LAYER (gimp_item_get_by_id (source));
+          composevals.source_layer = gimp_layer_get_by_id (source);
 
           if (! composevals.source_layer)
             {
@@ -606,7 +606,7 @@ compose_run (GimpProcedure        *procedure,
           for (i = 0; i < MAX_COMPOSE_IMAGES; i++)
             {
               composevals.inputs[i].is_object   = TRUE;
-              composevals.inputs[i].comp.object = gimp_item_get_by_id (input[i]);
+              composevals.inputs[i].comp.object = gimp_drawable_get_by_id (input[i]);
 
               /* fourth input is optional */
               if (i == 2 && nret == 5)
@@ -1431,7 +1431,7 @@ combo_callback (GimpIntComboBox *widget,
       gtk_widget_set_sensitive (composeint.color_spins[n],  FALSE);
 
       composeint.selected[n].is_object   = TRUE;
-      composeint.selected[n].comp.object = gimp_item_get_by_id (id);
+      composeint.selected[n].comp.object = gimp_drawable_get_by_id (id);
     }
 }
 

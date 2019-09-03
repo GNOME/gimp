@@ -258,7 +258,7 @@ bumpmap_constrain (GimpImage *image,
                    GimpItem  *item,
                    gpointer   data)
 {
-  GimpDrawable *dr = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.drawable_id));
+  GimpDrawable *dr = gimp_drawable_get_by_id (mapvals.drawable_id);
 
   return  ((gimp_drawable_width (GIMP_DRAWABLE (item)) ==
             gimp_drawable_width (dr)) &&
@@ -284,7 +284,7 @@ envmap_combo_callback (GtkWidget *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  &mapvals.envmap_id);
 
-  env = GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.envmap_id));
+  env = gimp_drawable_get_by_id (mapvals.envmap_id);
 
   env_width  = gimp_drawable_width  (env);
   env_height = gimp_drawable_height (env);

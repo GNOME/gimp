@@ -216,7 +216,7 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
+  drawable    = gimp_drawable_get_by_id (drawable_ID);
 
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     {

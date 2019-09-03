@@ -640,7 +640,7 @@ compute_image (GimpDrawable *drawable)
 
   source_drw_has_alpha = gimp_drawable_has_alpha (drawable);
 
-  effect_image = GIMP_DRAWABLE (gimp_item_get_by_id (licvals.effect_image_id));
+  effect_image = gimp_drawable_get_by_id (licvals.effect_image_id);
 
   effect_width =  gimp_drawable_width  (effect_image);
   effect_height = gimp_drawable_height (effect_image);

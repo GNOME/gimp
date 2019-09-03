@@ -333,7 +333,7 @@ run (const gchar      *name,
   g_show_progress = FALSE;
 
   run_mode = param[0].data.d_int32;
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
+  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -470,7 +470,7 @@ smp_toggle_callback (GtkWidget *widget,
   if ((data == &g_di.sample_show_selection) ||
       (data == &g_di.sample_show_color))
     {
-      update_preview (GIMP_DRAWABLE (gimp_item_get_by_id (g_values.sample_id)));
+      update_preview (gimp_drawable_get_by_id (g_values.sample_id));
       return;
     }
 
@@ -524,7 +524,7 @@ smp_sample_combo_callback (GtkWidget *widget)
     }
   else
     {
-      update_preview (GIMP_DRAWABLE (gimp_item_get_by_id (g_values.sample_id)));
+      update_preview (gimp_drawable_get_by_id (g_values.sample_id));
 
       gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
                                          RESPONSE_GET_COLORS, TRUE);
@@ -538,7 +538,7 @@ smp_dest_combo_callback (GtkWidget *widget)
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &id);
 
-  g_values.dst = GIMP_DRAWABLE (gimp_item_get_by_id (id));
+  g_values.dst = gimp_drawable_get_by_id (id);
 
   update_preview (g_values.dst);
 
@@ -937,7 +937,7 @@ smp_get_colors (GtkWidget *dialog)
   gint   i;
   guchar buffer[3 * DA_WIDTH * GRADIENT_HEIGHT];
 
-  update_preview (GIMP_DRAWABLE (gimp_item_get_by_id (g_values.sample_id)));
+  update_preview (gimp_drawable_get_by_id (g_values.sample_id));
 
   if (dialog && main_colorize (MC_GET_SAMPLE_COLORS) >= 0)  /* do not colorize, just analyze sample colors */
     gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
@@ -3043,8 +3043,7 @@ main_colorize (gint mc_flags)
         {
           sample_drawable = TRUE;
 
-          init_gdrw (&sample_gdrw, GIMP_DRAWABLE (gimp_item_get_by_id (id)),
-                     FALSE);
+          init_gdrw (&sample_gdrw, gimp_drawable_get_by_id (id), FALSE);
           free_colors ();
           rc = sample_analyze (&sample_gdrw);
         }

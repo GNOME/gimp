@@ -267,7 +267,7 @@ run (const gchar      *name,
                       &color_pixel[2]);
 
   run_mode = param[0].data.d_int32;
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (param[2].data.d_drawable));
+  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -1084,7 +1084,7 @@ diff (GimpDrawable  *drawable,
 
   if (do_vecmap)
     {
-      vdraw = GIMP_DRAWABLE (gimp_item_get_by_id (dvals.vector_map_id));
+      vdraw = gimp_drawable_get_by_id (dvals.vector_map_id);
 
       /* bytes per pixel in SOURCE drawable */
       vformat = get_u8_format (vdraw);
@@ -1099,7 +1099,7 @@ diff (GimpDrawable  *drawable,
 
   if (do_gradmap)
     {
-      gdraw = GIMP_DRAWABLE (gimp_item_get_by_id (dvals.grad_map_id));
+      gdraw = gimp_drawable_get_by_id (dvals.grad_map_id);
 
       gformat = get_u8_format (gdraw);
       gbytes  = babl_format_get_bytes_per_pixel (gformat);
@@ -1116,7 +1116,7 @@ diff (GimpDrawable  *drawable,
 
   if (do_magmap)
     {
-      mdraw = GIMP_DRAWABLE (gimp_item_get_by_id (dvals.mag_map_id));
+      mdraw = gimp_drawable_get_by_id (dvals.mag_map_id);
 
       mformat = get_u8_format (mdraw);
       mbytes  = babl_format_get_bytes_per_pixel (mformat);
@@ -1321,8 +1321,8 @@ warp (GimpDrawable *orig_draw)
   /* index var. over all "warp" Displacement iterations */
   gint          warp_iter;
 
-  disp_map = GIMP_DRAWABLE (gimp_item_get_by_id (dvals.warp_map_id));
-  mag_draw = GIMP_DRAWABLE (gimp_item_get_by_id (dvals.mag_map_id));
+  disp_map = gimp_drawable_get_by_id (dvals.warp_map_id);
+  mag_draw = gimp_drawable_get_by_id (dvals.mag_map_id);
 
   /* calculate new X,Y Displacement image maps */
 

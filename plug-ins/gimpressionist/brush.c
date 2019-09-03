@@ -130,7 +130,7 @@ brushdmenuselect (GtkWidget *widget,
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &drawable_id);
 
-  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
+  drawable = gimp_drawable_get_by_id (drawable_id);
 
   if (! drawable)
     return;

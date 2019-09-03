@@ -73,7 +73,7 @@ compute_image (void)
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
-      bumpmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.bumpmap_id)));
+      bumpmap_setup (gimp_drawable_get_by_id (mapvals.bumpmap_id));
     }
 
   precompute_init (width, height);
@@ -84,7 +84,7 @@ compute_image (void)
     }
   else
     {
-      envmap_setup (GIMP_DRAWABLE (gimp_item_get_by_id (mapvals.envmap_id)));
+      envmap_setup (gimp_drawable_get_by_id (mapvals.envmap_id));
 
       ray_func = get_ray_color_ref;
     }

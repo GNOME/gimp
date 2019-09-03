@@ -308,7 +308,7 @@ drawable_to_cmap (control_point *cp)
     }
   else
     {
-      GimpDrawable *drawable = GIMP_DRAWABLE (gimp_item_get_by_id (config.cmap_drawable_id));
+      GimpDrawable *drawable = gimp_drawable_get_by_id (config.cmap_drawable_id);
       GeglBuffer   *buffer   = gimp_drawable_get_buffer (drawable);
       gint          width    = gegl_buffer_get_width  (buffer);
       gint          height   = gegl_buffer_get_height (buffer);
