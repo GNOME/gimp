@@ -484,8 +484,8 @@ run (const gchar      *name,
  */
 typedef struct
 {
-  gint32        image_id;
-  gint32        layer_id;
+  GimpImage    *image;
+  GimpLayer    *layer;
   GeglBuffer   *buffer;
   const Babl   *format;
   pTW_PALETTE8  paletteData;
@@ -589,27 +589,27 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
     }
 
   /* Create the GIMP image */
-  theClientData->image_id = gimp_image_new (imageInfo->ImageWidth,
-                                            imageInfo->ImageLength,
-                                            imageType);
+  theClientData->image = gimp_image_new (imageInfo->ImageWidth,
+                                         imageInfo->ImageLength,
+                                         imageType);
 
   /* Set the actual resolution */
-  gimp_image_set_resolution (theClientData->image_id,
+  gimp_image_set_resolution (theClientData->image,
                              FIX32ToFloat (imageInfo->XResolution),
                              FIX32ToFloat (imageInfo->YResolution));
-  gimp_image_set_unit (theClientData->image_id, GIMP_UNIT_INCH);
+  gimp_image_set_unit (theClientData->image, GIMP_UNIT_INCH);
 
   /* Create a layer */
-  theClientData->layer_id = gimp_layer_new (theClientData->image_id,
-                                            _("Background"),
-                                            imageInfo->ImageWidth,
-                                            imageInfo->ImageLength,
-                                            layerType, 100,
-                                            GIMP_LAYER_MODE_NORMAL);
+  theClientData->layer = gimp_layer_new (theClientData->image,
+                                         _("Background"),
+                                         imageInfo->ImageWidth,
+                                         imageInfo->ImageLength,
+                                         layerType, 100,
+                                         GIMP_LAYER_MODE_NORMAL);
 
   /* Add the layer to the image */
-  gimp_image_insert_layer (theClientData->image_id,
-                           theClientData->layer_id, -1, 0);
+  gimp_image_insert_layer (theClientData->image,
+                           theClientData->layer, NULL, 0);
 
   /* Update the progress dialog */
   theClientData->totalPixels     = imageInfo->ImageWidth * imageInfo->ImageLength;
@@ -617,7 +617,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
 
   gimp_progress_update (0.0);
 
-  theClientData->buffer = gimp_drawable_get_buffer (theClientData->layer_id);
+  theClientData->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (theClientData->layer));
   theClientData->format = format;
 
   /* Store our client data for the data transfer callbacks */
@@ -992,17 +992,18 @@ endTransferCallback (int   completionState,
       /* We have a completed image transfer */
       values[2].type = GIMP_PDB_INT32ARRAY;
       values[2].data.d_int32array[values[1].data.d_int32++] =
-        theClientData->image_id;
+        gimp_image_get_id (theClientData->image);
 
       /* Display the image */
-      LogMessage ("Displaying image %d\n", theClientData->image_id);
-      gimp_display_new (theClientData->image_id);
+      LogMessage ("Displaying image %d\n",
+                  gimp_image_get_id (theClientData->image));
+      gimp_display_new (theClientData->image);
     }
   else
     {
       /* The transfer did not complete successfully */
       LogMessage ("Deleting image\n");
-      gimp_image_delete (theClientData->image_id);
+      gimp_image_delete (theClientData->image);
     }
 
   /* Shut down if we have received all of the possible images */
