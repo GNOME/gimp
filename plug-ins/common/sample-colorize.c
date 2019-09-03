@@ -168,9 +168,77 @@ typedef struct
   gint32        seldeltay;
 } t_GDRW;
 
-/*
- * Some globals
- */
+
+typedef struct _Colorize      Colorize;
+typedef struct _ColorizeClass ColorizeClass;
+
+struct _Colorize
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _ColorizeClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define COLORIZE_TYPE  (colorize_get_type ())
+#define COLORIZE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORIZE_TYPE, Colorize))
+
+GType                   colorize_get_type         (void) G_GNUC_CONST;
+
+static GList          * colorize_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * colorize_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * colorize_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static gint             main_colorize             (gint          mc_flags);
+static void             get_filevalues            (void);
+static void             smp_dialog                (void);
+static void             refresh_dst_preview       (GtkWidget    *preview,
+                                                   guchar       *src_buffer);
+static void             update_preview            (GimpDrawable *drawable);
+static void             clear_tables              (void);
+static void             free_colors               (void);
+static void             levels_update             (gint          update);
+static gint             level_in_events           (GtkWidget    *widget,
+                                                   GdkEvent     *event);
+static gint             level_in_draw             (GtkWidget    *widget,
+                                                   cairo_t      *cr);
+static gint             level_out_events          (GtkWidget    *widget,
+                                                   GdkEvent     *event);
+static gint             level_out_draw            (GtkWidget    *widget,
+                                                   cairo_t      *cr);
+static void             calculate_level_transfers (void);
+static void             get_pixel                 (t_GDRW       *gdrw,
+                                                   gint32        x,
+                                                   gint32        y,
+                                                   guchar       *pixel);
+static void             init_gdrw                 (t_GDRW       *gdrw,
+                                                   GimpDrawable *drawable,
+                                                   gboolean      shadow);
+static void             end_gdrw                  (t_GDRW       *gdrw);
+static void             remap_pixel               (guchar       *pixel,
+                                                   const guchar *original,
+                                                   gint          bpp2);
+static void             guess_missing_colors      (void);
+static void             fill_missing_colors       (void);
+static void             smp_get_colors            (GtkWidget    *dialog);
+static void             get_gradient              (gint          mode);
+static void             clear_preview             (GtkWidget    *preview);
+
+
+G_DEFINE_TYPE (Colorize, colorize, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (COLORIZE_TYPE)
+
 
 static t_samp_interface  g_di;  /* global dialog interface variables */
 static t_values          g_values = { NULL, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
@@ -185,141 +253,166 @@ static gint32  g_max_col_err;
 static gint    g_Sdebug = FALSE;
 static gint    g_show_progress = FALSE;
 
-/* Declare a local function.
- */
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint            *nreturn_vals,
-                         GimpParam       **return_vals);
-
-static gint   main_colorize             (gint          mc_flags);
-static void   get_filevalues            (void);
-static void   smp_dialog                (void);
-static void   refresh_dst_preview       (GtkWidget    *preview,
-                                         guchar       *src_buffer);
-static void   update_preview            (GimpDrawable *drawable);
-static void   clear_tables              (void);
-static void   free_colors               (void);
-static void   levels_update             (gint          update);
-static gint   level_in_events           (GtkWidget    *widget,
-                                         GdkEvent     *event);
-static gint   level_in_draw             (GtkWidget    *widget,
-                                         cairo_t      *cr);
-static gint   level_out_events          (GtkWidget    *widget,
-                                         GdkEvent     *event);
-static gint   level_out_draw            (GtkWidget    *widget,
-                                         cairo_t      *cr);
-static void   calculate_level_transfers (void);
-static void   get_pixel                 (t_GDRW       *gdrw,
-                                         gint32        x,
-                                         gint32        y,
-                                         guchar       *pixel);
-static void   init_gdrw                 (t_GDRW       *gdrw,
-                                         GimpDrawable *drawable,
-                                         gboolean      shadow);
-static void   end_gdrw                  (t_GDRW       *gdrw);
-static void   remap_pixel               (guchar       *pixel,
-                                         const guchar *original,
-                                         gint          bpp2);
-static void   guess_missing_colors      (void);
-static void   fill_missing_colors       (void);
-static void   smp_get_colors            (GtkWidget *dialog);
-static void   get_gradient              (gint mode);
-static void   clear_preview             (GtkWidget *preview);
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run    /* run_proc   */
-};
-
-MAIN ()
 
 static void
-query (void)
+colorize_class_init (ColorizeClass *klass)
 {
-  static const GimpParamDef args[]=
-  {
-    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "dst-drawable", "The drawable to be colorized (Type GRAY* or RGB*)" },
-    { GIMP_PDB_DRAWABLE, "sample-drawable", "Sample drawable (should be of Type RGB or RGBA)" },
-    { GIMP_PDB_INT32, "hold-inten", "hold brightness intensity levels (TRUE, FALSE)" },
-    { GIMP_PDB_INT32, "orig-inten", "TRUE: hold brightness of original intensity levels. FALSE: Hold Intensity of input levels" },
-    { GIMP_PDB_INT32, "rnd-subcolors", "TRUE: Use all subcolors of same intensity, FALSE: use only one color per intensity" },
-    { GIMP_PDB_INT32, "guess-missing", "TRUE: guess samplecolors for the missing intensity values FALSE: use only colors found in the sample" },
-    { GIMP_PDB_INT32, "in-low",   "intensity of lowest input (0 <= in_low <= 254)" },
-    { GIMP_PDB_INT32, "in-high",  "intensity of highest input (1 <= in_high <= 255)" },
-    { GIMP_PDB_FLOAT, "gamma",  "gamma adjustment factor (0.1 <= gamma <= 10) where 1.0 is linear" },
-    { GIMP_PDB_INT32, "out-low",   "lowest sample color intensity (0 <= out_low <= 254)" },
-    { GIMP_PDB_INT32, "out-high",  "highest sample color intensity (1 <= out_high <= 255)" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static gchar *help_string =
-    "This plug-in colorizes the contents of the specified (gray) layer"
-    " with the help of a  sample (color) layer."
-    " It analyzes all colors in the sample layer."
-    " The sample colors are sorted by brightness (== intentisty) and amount"
-    " and stored in a sample colortable (where brightness is the index)"
-    " The pixels of the destination layer are remapped with the help of the"
-    " sample colortable. If use_subcolors is TRUE, the remapping process uses"
-    " all sample colors of the corresponding brightness-intensity and"
-    " distributes the subcolors according to their amount in the sample"
-    " (If the sample has 5 green, 3 yellow, and 1 red pixel of the "
-    " intensity value 105, the destination pixels at intensity value 105"
-    " are randomly painted in green, yellow and red in a relation of 5:3:1"
-    " If use_subcolors is FALSE only one sample color per intensity is used."
-    " (green will be used in this example)"
-    " The brightness intensity value is transformed at the remapping process"
-    " according to the levels: out_lo, out_hi, in_lo, in_high and gamma"
-    " The in_low / in_high levels specify an initial mapping of the intensity."
-    " The gamma value determines how intensities are interpolated between"
-    " the in_lo and in_high levels. A gamma value of 1.0 results in linear"
-    " interpolation. Higher gamma values results in more high-level intensities"
-    " Lower gamma values results in more low-level intensities"
-    " The out_low/out_high levels constrain the resulting intensity index"
-    " The intensity index is used to pick the corresponding color"
-    " in the sample colortable. If hold_inten is FALSE the picked color"
-    " is used 1:1 as resulting remap_color."
-    " If hold_inten is TRUE The brightness of the picked color is adjusted"
-    " back to the origial intensity value (only hue and saturation are"
-    " taken from the picked sample color)"
-    " (or to the input level, if orig_inten is set FALSE)"
-    " Works on both Grayscale and RGB image with/without alpha channel."
-    " (the image with the dst_drawable is converted to RGB if necessary)"
-    " The sample_drawable should be of type RGB or RGBA";
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Colorize image using a sample image as a guide"),
-                          help_string,
-                          "Wolfgang Hofer",
-                          "hof@hotbot.com",
-                          "02/2000",
-                          N_("_Sample Colorize..."),
-                          "RGB*, GRAY*",
-                          GIMP_PDB_PROC_TYPE_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Map");
+  plug_in_class->query_procedures = colorize_query_procedures;
+  plug_in_class->create_procedure = colorize_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+colorize_init (Colorize *colorize)
 {
-  static GimpParam   values[1];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  const gchar       *env;
-  GimpRunMode        run_mode;
-  GimpDrawable      *drawable;
+}
+
+static GList *
+colorize_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+colorize_create_procedure (GimpPlugIn  *plug_in,
+                          const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      static gchar *help_string =
+        "This plug-in colorizes the contents of the specified (gray) layer"
+        " with the help of a  sample (color) layer."
+        " It analyzes all colors in the sample layer."
+        " The sample colors are sorted by brightness (== intentisty) and amount"
+        " and stored in a sample colortable (where brightness is the index)"
+        " The pixels of the destination layer are remapped with the help of the"
+        " sample colortable. If use_subcolors is TRUE, the remapping process uses"
+        " all sample colors of the corresponding brightness-intensity and"
+        " distributes the subcolors according to their amount in the sample"
+        " (If the sample has 5 green, 3 yellow, and 1 red pixel of the "
+        " intensity value 105, the destination pixels at intensity value 105"
+        " are randomly painted in green, yellow and red in a relation of 5:3:1"
+        " If use_subcolors is FALSE only one sample color per intensity is used."
+        " (green will be used in this example)"
+        " The brightness intensity value is transformed at the remapping process"
+        " according to the levels: out_lo, out_hi, in_lo, in_high and gamma"
+        " The in_low / in_high levels specify an initial mapping of the intensity."
+        " The gamma value determines how intensities are interpolated between"
+        " the in_lo and in_high levels. A gamma value of 1.0 results in linear"
+        " interpolation. Higher gamma values results in more high-level intensities"
+        " Lower gamma values results in more low-level intensities"
+        " The out_low/out_high levels constrain the resulting intensity index"
+        " The intensity index is used to pick the corresponding color"
+        " in the sample colortable. If hold_inten is FALSE the picked color"
+        " is used 1:1 as resulting remap_color."
+        " If hold_inten is TRUE The brightness of the picked color is adjusted"
+        " back to the origial intensity value (only hue and saturation are"
+        " taken from the picked sample color)"
+        " (or to the input level, if orig_inten is set FALSE)"
+        " Works on both Grayscale and RGB image with/without alpha channel."
+        " (the image with the dst_drawable is converted to RGB if necessary)"
+        " The sample_drawable should be of type RGB or RGBA";
+
+      procedure = gimp_image_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            colorize_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Sample Colorize..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Map");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Colorize image using a sample "
+                                           "image as a guide"),
+                                        help_string,
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Wolfgang Hofer",
+                                      "hof@hotbot.com",
+                                      "02/2000");
+
+      GIMP_PROC_ARG_DRAWABLE (procedure, "sample-drawable",
+                              "Sample drawable",
+                              "Sample drawable (should be of Type RGB or RGBA)",
+                              TRUE,
+                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "hold-inten",
+                             "Hold inten",
+                             "Hold brightness intensity levels",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "orig-inten",
+                             "Orig inten",
+                             "TRUE: hold brightness of original intensity "
+                             "levels, "
+                             "FALSE: Hold Intensity of input levels",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "rnd-subcolors",
+                             "Rnd subcolors",
+                             "TRUE: Use all subcolors of same intensity, "
+                             "FALSE: Use only one color per intensity",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "guess-missing",
+                             "Guess missing",
+                             "TRUE: guess samplecolors for the missing "
+                             "intensity values, "
+                             "FALSE: use only colors found in the sample",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "in-low",
+                         "In low",
+                         "Intensity of lowest input",
+                         0, 254, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "in-high",
+                         "In high",
+                         "Intensity of highest input",
+                         1, 255, 255,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "gamma",
+                            "Gamma",
+                            "Gamma adjustment factor, 1.0 is linear",
+                            0.1, 1.0, 1.0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "out-low",
+                         "out low",
+                         "Lowest sample color intensity",
+                         0, 254, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "ouz-high",
+                         "Out high",
+                         "Highest sample color intensity",
+                         1, 255, 255,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+colorize_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
+  const gchar *env;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -332,20 +425,11 @@ run (const gchar      *name,
     g_printf ("sample colorize run\n");
   g_show_progress = FALSE;
 
-  run_mode = param[0].data.d_int32;
-  drawable = gimp_drawable_get_by_id (param[2].data.d_drawable);
-
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  g_values.lvl_out_min = 0;
-  g_values.lvl_out_max = 255;
-  g_values.lvl_in_min = 0;
-  g_values.lvl_in_max = 255;
+  g_values.lvl_out_min  = 0;
+  g_values.lvl_out_max  = 255;
   g_values.lvl_in_gamma = 1.0;
+  g_values.lvl_in_min   = 0;
+  g_values.lvl_in_max   = 255;
 
   /* Possibly retrieve data from a previous run */
   gimp_get_data (PLUG_IN_PROC, &g_values);
@@ -361,10 +445,12 @@ run (const gchar      *name,
 
   clear_tables ();
 
-  /*  Make sure that the drawable is gray or RGB color        */
+  /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_is_rgb  (drawable) ||
       gimp_drawable_is_gray (drawable))
     {
+      GimpDrawable *sample;
+
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -375,31 +461,28 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          if (nparams == NUMBER_IN_ARGS)
+          sample = GIMP_VALUES_GET_DRAWABLE (args, 0);
+          g_values.sample_id     = gimp_item_get_id (GIMP_ITEM (sample));
+
+          g_values.hold_inten    = GIMP_VALUES_GET_BOOLEAN (args, 1);
+          g_values.orig_inten    = GIMP_VALUES_GET_BOOLEAN (args, 2);
+          g_values.rnd_subcolors = GIMP_VALUES_GET_BOOLEAN (args, 3);
+          g_values.guess_missing = GIMP_VALUES_GET_BOOLEAN (args, 4);
+          g_values.lvl_in_min    = GIMP_VALUES_GET_INT     (args, 5);
+          g_values.lvl_in_max    = GIMP_VALUES_GET_INT     (args, 6);
+          g_values.lvl_in_gamma  = GIMP_VALUES_GET_DOUBLE  (args, 7);
+          g_values.lvl_out_min   = GIMP_VALUES_GET_INT     (args, 8);
+          g_values.lvl_out_max   = GIMP_VALUES_GET_INT     (args, 9);
+
+          if (main_colorize (MC_GET_SAMPLE_COLORS) >= 0)
             {
-              g_values.sample_id     = param[3].data.d_drawable;
-              g_values.hold_inten    = param[4].data.d_int32;
-              g_values.orig_inten    = param[5].data.d_int32;
-              g_values.rnd_subcolors = param[6].data.d_int32;
-              g_values.guess_missing = param[7].data.d_int32;
-              g_values.lvl_in_min    = param[8].data.d_int32;
-              g_values.lvl_in_max    = param[9].data.d_int32;
-              g_values.lvl_in_gamma  = param[10].data.d_float;
-              g_values.lvl_out_min   = param[11].data.d_int32;
-              g_values.lvl_out_max   = param[12].data.d_int32;
-              if (main_colorize (MC_GET_SAMPLE_COLORS) >= 0)
-                {
-                  main_colorize (MC_DST_REMAP);
-                  status = GIMP_PDB_SUCCESS;
-                }
-              else
-                {
-                  status = GIMP_PDB_EXECUTION_ERROR;
-                }
+              main_colorize (MC_DST_REMAP);
             }
           else
             {
-              status = GIMP_PDB_CALLING_ERROR;
+              return gimp_procedure_new_return_values (procedure,
+                                                       GIMP_PDB_EXECUTION_ERROR,
+                                                       NULL);
             }
           break;
 
@@ -409,10 +492,12 @@ run (const gchar      *name,
     }
   else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 /* ============================================================================
