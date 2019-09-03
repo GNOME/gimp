@@ -134,6 +134,7 @@ gimp_buffer_get_image_type
 <SECTION>
 <FILE>gimpchannel</FILE>
 <TITLE>GimpChannel</TITLE>
+gimp_channel_get_by_id
 gimp_channel_new
 gimp_channel_new_from_component
 gimp_channel_copy
@@ -308,6 +309,7 @@ gimp_display_get_type
 <SECTION>
 <FILE>gimpdrawable</FILE>
 <TITLE>GimpDrawable</TITLE>
+gimp_drawable_get_by_id
 gimp_drawable_get_buffer
 gimp_drawable_get_shadow_buffer
 gimp_drawable_get_format
@@ -769,6 +771,7 @@ gimp_item_transform_matrix
 <SECTION>
 <FILE>gimplayer</FILE>
 <TITLE>GimpLayer</TITLE>
+gimp_layer_get_by_id
 gimp_layer_new
 gimp_layer_new_from_drawable
 gimp_layer_new_from_visible
@@ -822,6 +825,7 @@ gimp_layer_get_type
 <SECTION>
 <FILE>gimplayermask</FILE>
 <TITLE>GimpLayerMask</TITLE>
+gimp_layer_mask_get_by_id
 <SUBSECTION Standard>
 GIMP_IS_LAYER_MASK
 GIMP_IS_LAYER_MASK_CLASS
@@ -1305,6 +1309,7 @@ gimp_progress_cancel
 <SECTION>
 <FILE>gimpselection</FILE>
 <TITLE>GimpSelection</TITLE>
+gimp_selection_get_by_id
 gimp_selection_bounds
 gimp_selection_all
 gimp_selection_none
@@ -1396,6 +1401,7 @@ gimp_smudge_default
 <SECTION>
 <FILE>gimpvectors</FILE>
 <TITLE>GimpVectors</TITLE>
+gimp_vectors_get_by_id
 gimp_vectors_new
 gimp_vectors_new_from_text_layer
 gimp_vectors_copy

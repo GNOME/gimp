@@ -51,7 +51,6 @@ GimpMergeType
 GimpMessageHandlerType
 GimpOffsetType
 GimpOrientationType
-GimpPDBArgType
 GimpPDBErrorHandler
 GimpPDBProcType
 GimpPDBStatusType
@@ -108,7 +107,6 @@ GIMP_TYPE_MESSAGE_HANDLER_TYPE
 GIMP_TYPE_OFFSET_TYPE
 GIMP_TYPE_ORIENTATION_TYPE
 GIMP_TYPE_PAINT_APPLICATION_MODE
-GIMP_TYPE_PDB_ARG_TYPE
 GIMP_TYPE_PDB_ERROR_HANDLER
 GIMP_TYPE_PDB_PROC_TYPE
 GIMP_TYPE_PDB_STATUS_TYPE
@@ -166,7 +164,6 @@ gimp_image_type_get_type
 gimp_interpolation_type_get_type
 gimp_message_handler_type_get_type
 gimp_paint_application_mode_get_type
-gimp_pdb_arg_type_get_type
 gimp_pdb_error_handler_get_type
 gimp_pdb_proc_type_get_type
 gimp_pdb_status_type_get_type
