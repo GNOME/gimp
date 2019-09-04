@@ -394,13 +394,19 @@ gimp_projection_get_pixel_at (GimpPickable *pickable,
                               const Babl   *format,
                               gpointer      pixel)
 {
-  GeglBuffer *buffer = gimp_projection_get_buffer (pickable);
+  GimpProjection *proj   = GIMP_PROJECTION (pickable);
+  GeglBuffer     *buffer = gimp_projection_get_buffer (pickable);
+  GeglRectangle   bounding_box;
 
-  if (x <  0                               ||
-      y <  0                               ||
-      x >= gegl_buffer_get_width  (buffer) ||
-      y >= gegl_buffer_get_height (buffer))
-    return FALSE;
+  bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
+
+  if (x <  bounding_box.x                      ||
+      y <  bounding_box.y                      ||
+      x >= bounding_box.x + bounding_box.width ||
+      y >= bounding_box.y + bounding_box.height)
+    {
+      return FALSE;
+    }
 
   gegl_buffer_sample (buffer, x, y, NULL, pixel, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
