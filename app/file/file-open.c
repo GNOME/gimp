@@ -773,9 +773,7 @@ file_open_sanitize_image (GimpImage *image,
    * layers, this is needed in case something triggers projection or
    * image preview creation before all layers are loaded, see bug #767663.
    */
-  gimp_image_invalidate (image, 0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
+  gimp_image_invalidate_all (image);
 
   /* Make sure all image states are up-to-date */
   gimp_image_flush (image);

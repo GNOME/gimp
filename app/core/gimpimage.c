@@ -1351,10 +1351,7 @@ gimp_image_real_colormap_changed (GimpImage *image,
   if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     {
       /* A colormap alteration affects the whole image */
-      gimp_image_invalidate (image,
-                             0, 0,
-                             gimp_image_get_width  (image),
-                             gimp_image_get_height (image));
+      gimp_image_invalidate_all (image);
 
       gimp_item_stack_invalidate_previews (GIMP_ITEM_STACK (private->layers->container));
     }
@@ -3066,10 +3063,7 @@ gimp_image_set_component_visible (GimpImage       *image,
                      gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
                      channel);
 
-      gimp_image_invalidate (image,
-                             0, 0,
-                             gimp_image_get_width  (image),
-                             gimp_image_get_height (image));
+      gimp_image_invalidate_all (image);
     }
 }
 
@@ -3176,6 +3170,20 @@ gimp_image_invalidate (GimpImage *image,
                                x, y, width, height);
 
   GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.preview_invalidated = TRUE;
+}
+
+void
+gimp_image_invalidate_all (GimpImage *image)
+{
+  const GeglRectangle *bounding_box;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  bounding_box = &GIMP_IMAGE_GET_PRIVATE (image)->bounding_box;
+
+  gimp_image_invalidate (image,
+                         bounding_box->x,     bounding_box->y,
+                         bounding_box->width, bounding_box->height);
 }
 
 void
