@@ -84,7 +84,7 @@ _gimp_layer_new (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -130,7 +130,7 @@ gimp_layer_new_from_visible (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -171,7 +171,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer_copy = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -213,7 +213,7 @@ gimp_layer_group_new (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_group = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer_group = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -255,7 +255,7 @@ _gimp_layer_copy (GimpLayer *layer,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer_copy = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -556,7 +556,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mask = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    mask = GIMP_VALUES_GET_LAYER_MASK (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -591,7 +591,7 @@ gimp_layer_get_mask (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mask = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    mask = GIMP_VALUES_GET_LAYER_MASK (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -628,7 +628,7 @@ gimp_layer_from_mask (GimpLayerMask *mask)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -743,7 +743,7 @@ gimp_layer_is_floating_sel (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_floating_sel = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    is_floating_sel = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -778,7 +778,7 @@ gimp_layer_get_lock_alpha (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    lock_alpha = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    lock_alpha = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -851,7 +851,7 @@ gimp_layer_get_apply_mask (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    apply_mask = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    apply_mask = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -927,7 +927,7 @@ gimp_layer_get_show_mask (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    show_mask = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    show_mask = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1002,7 +1002,7 @@ gimp_layer_get_edit_mask (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    edit_mask = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    edit_mask = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1075,7 +1075,7 @@ gimp_layer_get_opacity (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    opacity = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1145,7 +1145,7 @@ gimp_layer_get_mode (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mode = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1217,7 +1217,7 @@ gimp_layer_get_blend_space (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    blend_space = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    blend_space = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1291,7 +1291,7 @@ gimp_layer_get_composite_space (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    composite_space = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    composite_space = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1365,7 +1365,7 @@ gimp_layer_get_composite_mode (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    composite_mode = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    composite_mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

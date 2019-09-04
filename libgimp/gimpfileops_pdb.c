@@ -73,7 +73,7 @@ gimp_file_load (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -118,7 +118,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -170,8 +170,8 @@ gimp_file_load_layers (GimpRunMode  run_mode,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_layers = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      layer_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
+      layer_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

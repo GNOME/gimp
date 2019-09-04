@@ -134,7 +134,7 @@ gimp_image_undo_is_enabled (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    enabled = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    enabled = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -172,7 +172,7 @@ gimp_image_undo_disable (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    disabled = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    disabled = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -209,7 +209,7 @@ gimp_image_undo_enable (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    enabled = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    enabled = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -253,7 +253,7 @@ gimp_image_undo_freeze (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    frozen = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    frozen = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -296,7 +296,7 @@ gimp_image_undo_thaw (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    thawed = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    thawed = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

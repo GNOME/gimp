@@ -52,7 +52,7 @@ _gimp_pdb_temp_name (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    temp_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    temp_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -161,8 +161,8 @@ _gimp_pdb_query (const gchar   *name,
 
   if (success)
     {
-      *num_matches = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *procedure_names = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
+      *num_matches = GIMP_VALUES_GET_INT (return_vals, 1);
+      *procedure_names = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -200,7 +200,7 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    exists = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    exists = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -252,9 +252,9 @@ _gimp_pdb_proc_info (const gchar     *procedure_name,
 
   if (success)
     {
-      *proc_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
-      *num_args = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *num_values = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *proc_type = GIMP_VALUES_GET_ENUM (return_vals, 1);
+      *num_args = GIMP_VALUES_GET_INT (return_vals, 2);
+      *num_values = GIMP_VALUES_GET_INT (return_vals, 3);
     }
 
   gimp_value_array_unref (return_vals);
@@ -306,9 +306,9 @@ _gimp_pdb_proc_documentation (const gchar  *procedure_name,
 
   if (success)
     {
-      *blurb = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-      *help = g_value_dup_string (gimp_value_array_index (return_vals, 2));
-      *help_id = g_value_dup_string (gimp_value_array_index (return_vals, 3));
+      *blurb = GIMP_VALUES_DUP_STRING (return_vals, 1);
+      *help = GIMP_VALUES_DUP_STRING (return_vals, 2);
+      *help_id = GIMP_VALUES_DUP_STRING (return_vals, 3);
     }
 
   gimp_value_array_unref (return_vals);
@@ -360,9 +360,9 @@ _gimp_pdb_proc_attribution (const gchar  *procedure_name,
 
   if (success)
     {
-      *authors = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-      *copyright = g_value_dup_string (gimp_value_array_index (return_vals, 2));
-      *date = g_value_dup_string (gimp_value_array_index (return_vals, 3));
+      *authors = GIMP_VALUES_DUP_STRING (return_vals, 1);
+      *copyright = GIMP_VALUES_DUP_STRING (return_vals, 2);
+      *date = GIMP_VALUES_DUP_STRING (return_vals, 3);
     }
 
   gimp_value_array_unref (return_vals);
@@ -404,7 +404,7 @@ _gimp_pdb_proc_argument (const gchar *procedure_name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    param_spec = g_value_dup_param (gimp_value_array_index (return_vals, 1));
+    param_spec = GIMP_VALUES_DUP_PARAM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -446,7 +446,7 @@ _gimp_pdb_proc_return_value (const gchar *procedure_name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    param_spec = g_value_dup_param (gimp_value_array_index (return_vals, 1));
+    param_spec = GIMP_VALUES_DUP_PARAM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -493,8 +493,8 @@ _gimp_pdb_get_data (const gchar  *identifier,
 
   if (success)
     {
-      *bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
+      *bytes = GIMP_VALUES_GET_INT (return_vals, 1);
+      *data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -531,7 +531,7 @@ _gimp_pdb_get_data_size (const gchar *identifier)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    bytes = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

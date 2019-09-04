@@ -65,7 +65,7 @@ gimp_version (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    version = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    version = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -99,7 +99,7 @@ gimp_getpid (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    pid = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    pid = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -206,7 +206,7 @@ gimp_get_parasite (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    parasite = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
+    parasite = GIMP_VALUES_DUP_PARASITE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -246,8 +246,8 @@ gimp_get_parasite_list (gint *num_parasites)
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_parasites = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      parasites = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
+      *num_parasites = GIMP_VALUES_GET_INT (return_vals, 1);
+      parasites = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -284,7 +284,7 @@ gimp_temp_name (const gchar *extension)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

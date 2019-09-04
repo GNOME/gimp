@@ -70,7 +70,7 @@ gimp_gimprc_query (const gchar *token)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    value = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    value = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -143,7 +143,7 @@ gimp_get_default_comment (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    comment = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    comment = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -177,7 +177,7 @@ gimp_get_default_unit (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit_id = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    unit_id = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -221,8 +221,8 @@ gimp_get_monitor_resolution (gdouble *xres,
 
   if (success)
     {
-      *xres = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *yres = g_value_get_double (gimp_value_array_index (return_vals, 2));
+      *xres = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *yres = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -259,7 +259,7 @@ _gimp_get_color_configuration (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    config = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    config = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -292,7 +292,7 @@ gimp_get_module_load_inhibit (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    load_inhibit = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    load_inhibit = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

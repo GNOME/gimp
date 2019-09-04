@@ -64,7 +64,7 @@ gimp_brush_new (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -101,7 +101,7 @@ gimp_brush_duplicate (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -137,7 +137,7 @@ gimp_brush_is_generated (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    generated = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    generated = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -177,7 +177,7 @@ gimp_brush_rename (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -248,7 +248,7 @@ gimp_brush_is_editable (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    editable = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    editable = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -301,10 +301,10 @@ gimp_brush_get_info (const gchar *name,
 
   if (success)
     {
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *mask_bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *color_bpp = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *mask_bpp = GIMP_VALUES_GET_INT (return_vals, 3);
+      *color_bpp = GIMP_VALUES_GET_INT (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);
@@ -370,14 +370,14 @@ gimp_brush_get_pixels (const gchar  *name,
 
   if (success)
     {
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *mask_bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *num_mask_bytes = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *mask_bytes = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
-      *color_bpp = g_value_get_int (gimp_value_array_index (return_vals, 6));
-      *num_color_bytes = g_value_get_int (gimp_value_array_index (return_vals, 7));
-      *color_bytes = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 8));
+      *width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *mask_bpp = GIMP_VALUES_GET_INT (return_vals, 3);
+      *num_mask_bytes = GIMP_VALUES_GET_INT (return_vals, 4);
+      *mask_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *color_bpp = GIMP_VALUES_GET_INT (return_vals, 6);
+      *num_color_bytes = GIMP_VALUES_GET_INT (return_vals, 7);
+      *color_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 8);
     }
 
   gimp_value_array_unref (return_vals);
@@ -422,7 +422,7 @@ gimp_brush_get_spacing (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *spacing = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    *spacing = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -502,7 +502,7 @@ gimp_brush_get_shape (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    shape = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    shape = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -546,7 +546,7 @@ gimp_brush_set_shape (const gchar             *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    shape_out = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    shape_out = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -583,7 +583,7 @@ gimp_brush_get_radius (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    radius = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    radius = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -623,7 +623,7 @@ gimp_brush_set_radius (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    radius_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    radius_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -660,7 +660,7 @@ gimp_brush_get_spikes (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spikes = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    spikes = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -700,7 +700,7 @@ gimp_brush_set_spikes (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spikes_out = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    spikes_out = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -739,7 +739,7 @@ gimp_brush_get_hardness (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    hardness = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -780,7 +780,7 @@ gimp_brush_set_hardness (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    hardness_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -818,7 +818,7 @@ gimp_brush_get_aspect_ratio (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect_ratio = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    aspect_ratio = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -859,7 +859,7 @@ gimp_brush_set_aspect_ratio (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect_ratio_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    aspect_ratio_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -896,7 +896,7 @@ gimp_brush_get_angle (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -936,7 +936,7 @@ gimp_brush_set_angle (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    angle_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

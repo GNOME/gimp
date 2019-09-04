@@ -102,7 +102,7 @@ gimp_text_fontname (GimpImage    *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    text_layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    text_layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -167,10 +167,10 @@ gimp_text_get_extents_fontname (const gchar  *text,
 
   if (success)
     {
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *ascent = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *descent = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *ascent = GIMP_VALUES_GET_INT (return_vals, 3);
+      *descent = GIMP_VALUES_GET_INT (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);

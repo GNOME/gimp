@@ -65,7 +65,7 @@ gimp_image_id_is_valid (gint image_id)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -103,8 +103,8 @@ _gimp_image_list (gint *num_images)
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_images = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      image_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_images = GIMP_VALUES_GET_INT (return_vals, 1);
+      image_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -154,7 +154,7 @@ gimp_image_new (gint              width,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -203,7 +203,7 @@ gimp_image_new_with_precision (gint              width,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -238,7 +238,7 @@ gimp_image_duplicate (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    new_image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    new_image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -311,7 +311,7 @@ gimp_image_base_type (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    base_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    base_type = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -347,7 +347,7 @@ gimp_image_get_precision (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    precision = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    precision = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -383,7 +383,7 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mode = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -418,7 +418,7 @@ gimp_image_width (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    width = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -453,7 +453,7 @@ gimp_image_height (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    height = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    height = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -495,8 +495,8 @@ _gimp_image_get_layers (GimpImage *image,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_layers = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      layer_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
+      layer_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -542,8 +542,8 @@ _gimp_image_get_channels (GimpImage *image,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_channels = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      channel_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
+      channel_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -588,8 +588,8 @@ _gimp_image_get_vectors (GimpImage *image,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_vectors = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      vector_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
+      vector_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -629,7 +629,7 @@ gimp_image_get_active_drawable (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    drawable = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    drawable = GIMP_VALUES_GET_DRAWABLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -700,7 +700,7 @@ gimp_image_get_floating_sel (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    floating_sel = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    floating_sel = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -737,7 +737,7 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    drawable = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    drawable = GIMP_VALUES_GET_DRAWABLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -803,7 +803,7 @@ gimp_image_pick_color (GimpImage    *image,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
 
   gimp_value_array_unref (return_vals);
 
@@ -847,7 +847,7 @@ gimp_image_pick_correlate_layer (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1393,7 +1393,7 @@ gimp_image_get_item_position (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    position = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    position = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1631,7 +1631,7 @@ gimp_image_flatten (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1673,7 +1673,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1719,7 +1719,7 @@ gimp_image_merge_down (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1764,8 +1764,8 @@ _gimp_image_get_colormap (GimpImage *image,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      colormap = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
+      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
+      colormap = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -1845,7 +1845,7 @@ _gimp_image_get_metadata (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    metadata_string = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    metadata_string = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1956,7 +1956,7 @@ gimp_image_is_dirty (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    dirty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    dirty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2018,11 +2018,11 @@ _gimp_image_thumbnail (GimpImage  *image,
 
   if (success)
     {
-      *actual_width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *actual_height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
+      *actual_width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *actual_height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
+      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
+      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
   gimp_value_array_unref (return_vals);
@@ -2059,7 +2059,7 @@ gimp_image_get_active_layer (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    active_layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    active_layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2133,7 +2133,7 @@ gimp_image_get_active_channel (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    active_channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    active_channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2206,7 +2206,7 @@ gimp_image_get_active_vectors (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    active_vectors = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    active_vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2277,7 +2277,7 @@ gimp_image_get_selection (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    selection = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    selection = GIMP_VALUES_GET_SELECTION (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2317,7 +2317,7 @@ gimp_image_get_component_active (GimpImage       *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    active = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    active = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2400,7 +2400,7 @@ gimp_image_get_component_visible (GimpImage       *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    visible = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    visible = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2481,7 +2481,7 @@ gimp_image_get_filename (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    filename = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    filename = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2561,7 +2561,7 @@ gimp_image_get_uri (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2599,7 +2599,7 @@ gimp_image_get_xcf_uri (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2639,7 +2639,7 @@ gimp_image_get_imported_uri (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2678,7 +2678,7 @@ gimp_image_get_exported_uri (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2719,7 +2719,7 @@ gimp_image_get_name (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2764,8 +2764,8 @@ gimp_image_get_resolution (GimpImage *image,
 
   if (success)
     {
-      *xresolution = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *yresolution = g_value_get_double (gimp_value_array_index (return_vals, 2));
+      *xresolution = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *yresolution = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -2844,7 +2844,7 @@ gimp_image_get_unit (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    unit = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2920,7 +2920,7 @@ gimp_image_get_tattoo_state (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    tattoo_state = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+    tattoo_state = GIMP_VALUES_GET_UINT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3005,7 +3005,7 @@ gimp_image_get_layer_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3043,7 +3043,7 @@ gimp_image_get_channel_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3083,7 +3083,7 @@ gimp_image_get_vectors_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3123,7 +3123,7 @@ gimp_image_get_layer_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3163,7 +3163,7 @@ gimp_image_get_channel_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3203,7 +3203,7 @@ gimp_image_get_vectors_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3321,7 +3321,7 @@ gimp_image_get_parasite (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    parasite = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
+    parasite = GIMP_VALUES_DUP_PARASITE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3364,8 +3364,8 @@ gimp_image_get_parasite_list (GimpImage *image,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_parasites = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      parasites = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
+      *num_parasites = GIMP_VALUES_GET_INT (return_vals, 1);
+      parasites = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

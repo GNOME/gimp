@@ -102,8 +102,8 @@ gimp_palettes_get_list (const gchar *filter,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_palettes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      palette_list = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
+      *num_palettes = GIMP_VALUES_GET_INT (return_vals, 1);
+      palette_list = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

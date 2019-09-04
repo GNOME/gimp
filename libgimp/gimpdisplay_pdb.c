@@ -64,7 +64,7 @@ gimp_display_id_is_valid (gint display_id)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -103,7 +103,7 @@ gimp_display_new (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    display = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    display = GIMP_VALUES_GET_DISPLAY (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -180,7 +180,7 @@ gimp_display_get_window_handle (GimpDisplay *display)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    window = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    window = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

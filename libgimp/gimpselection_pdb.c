@@ -87,11 +87,11 @@ gimp_selection_bounds (GimpImage *image,
 
   if (success)
     {
-      *non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-      *x1 = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *y1 = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *x2 = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *y2 = g_value_get_int (gimp_value_array_index (return_vals, 5));
+      *non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+      *x1 = GIMP_VALUES_GET_INT (return_vals, 2);
+      *y1 = GIMP_VALUES_GET_INT (return_vals, 3);
+      *x2 = GIMP_VALUES_GET_INT (return_vals, 4);
+      *y2 = GIMP_VALUES_GET_INT (return_vals, 5);
     }
 
   gimp_value_array_unref (return_vals);
@@ -133,7 +133,7 @@ gimp_selection_value (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    value = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    value = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -168,7 +168,7 @@ gimp_selection_is_empty (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    is_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -256,7 +256,7 @@ _gimp_selection_float (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -618,7 +618,7 @@ gimp_selection_save (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

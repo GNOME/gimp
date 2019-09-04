@@ -179,8 +179,8 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
 
   if (success)
     {
-      *num_paint_methods = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *paint_methods = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
+      *num_paint_methods = GIMP_VALUES_GET_INT (return_vals, 1);
+      *paint_methods = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -217,7 +217,7 @@ gimp_context_get_paint_method (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -291,7 +291,7 @@ gimp_context_get_stroke_method (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_method = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    stroke_method = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -367,7 +367,7 @@ gimp_context_get_foreground (GimpRGB *foreground)
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*foreground);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*foreground);
 
   gimp_value_array_unref (return_vals);
 
@@ -443,7 +443,7 @@ gimp_context_get_background (GimpRGB *background)
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*background);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*background);
 
   gimp_value_array_unref (return_vals);
 
@@ -586,7 +586,7 @@ gimp_context_get_opacity (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    opacity = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -658,7 +658,7 @@ gimp_context_get_paint_mode (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    paint_mode = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    paint_mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -727,7 +727,7 @@ gimp_context_get_line_width (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    line_width = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    line_width = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -800,7 +800,7 @@ gimp_context_get_line_width_unit (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    line_width_unit = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    line_width_unit = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -874,7 +874,7 @@ gimp_context_get_line_cap_style (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    cap_style = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    cap_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -948,7 +948,7 @@ gimp_context_get_line_join_style (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    join_style = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    join_style = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1022,7 +1022,7 @@ gimp_context_get_line_miter_limit (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    miter_limit = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    miter_limit = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1099,7 +1099,7 @@ gimp_context_get_line_dash_offset (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    dash_offset = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    dash_offset = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1182,8 +1182,8 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
 
   if (success)
     {
-      *num_dashes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *dashes = gimp_value_dup_float_array (gimp_value_array_index (return_vals, 2));
+      *num_dashes = GIMP_VALUES_GET_INT (return_vals, 1);
+      *dashes = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -1269,7 +1269,7 @@ gimp_context_get_brush (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1342,7 +1342,7 @@ gimp_context_get_brush_size (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    size = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1445,7 +1445,7 @@ gimp_context_get_brush_aspect_ratio (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    aspect = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1514,7 +1514,7 @@ gimp_context_get_brush_angle (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1584,7 +1584,7 @@ gimp_context_get_brush_spacing (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spacing = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    spacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1688,7 +1688,7 @@ gimp_context_get_brush_hardness (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    hardness = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1791,7 +1791,7 @@ gimp_context_get_brush_force (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    force = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    force = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1863,7 +1863,7 @@ gimp_context_get_dynamics (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1939,7 +1939,7 @@ gimp_context_get_mypaint_brush (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2016,7 +2016,7 @@ gimp_context_get_pattern (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2091,7 +2091,7 @@ gimp_context_get_gradient (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2306,7 +2306,7 @@ gimp_context_get_gradient_blend_color_space (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    blend_color_space = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    blend_color_space = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2376,7 +2376,7 @@ gimp_context_get_gradient_repeat_mode (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    repeat_mode = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    repeat_mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2446,7 +2446,7 @@ gimp_context_get_gradient_reverse (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    reverse = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    reverse = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2517,7 +2517,7 @@ gimp_context_get_palette (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2592,7 +2592,7 @@ gimp_context_get_font (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2665,7 +2665,7 @@ gimp_context_get_antialias (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    antialias = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    antialias = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2745,7 +2745,7 @@ gimp_context_get_feather (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    feather = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    feather = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2832,8 +2832,8 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
 
   if (success)
     {
-      *feather_radius_x = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *feather_radius_y = g_value_get_double (gimp_value_array_index (return_vals, 2));
+      *feather_radius_x = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *feather_radius_y = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -2909,7 +2909,7 @@ gimp_context_get_sample_merged (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_merged = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    sample_merged = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2988,7 +2988,7 @@ gimp_context_get_sample_criterion (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_criterion = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    sample_criterion = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3065,7 +3065,7 @@ gimp_context_get_sample_threshold (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_threshold = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    sample_threshold = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3144,7 +3144,7 @@ gimp_context_get_sample_threshold_int (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_threshold = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    sample_threshold = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3214,7 +3214,7 @@ gimp_context_get_sample_transparent (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_transparent = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    sample_transparent = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3291,7 +3291,7 @@ gimp_context_get_diagonal_neighbors (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    diagonal_neighbors = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    diagonal_neighbors = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3370,7 +3370,7 @@ gimp_context_get_distance_metric (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    metric = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    metric = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3449,7 +3449,7 @@ gimp_context_get_interpolation (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    interpolation = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    interpolation = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3527,7 +3527,7 @@ gimp_context_get_transform_direction (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    transform_direction = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    transform_direction = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3604,7 +3604,7 @@ gimp_context_get_transform_resize (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    transform_resize = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    transform_resize = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3683,7 +3683,7 @@ gimp_context_get_ink_size (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    size = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3752,7 +3752,7 @@ gimp_context_get_ink_angle (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3821,7 +3821,7 @@ gimp_context_get_ink_size_sensitivity (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    size = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3890,7 +3890,7 @@ gimp_context_get_ink_tilt_sensitivity (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    tilt = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    tilt = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3959,7 +3959,7 @@ gimp_context_get_ink_speed_sensitivity (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    speed = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    speed = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -4028,7 +4028,7 @@ gimp_context_get_ink_blob_type (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    type = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -4097,7 +4097,7 @@ gimp_context_get_ink_blob_aspect_ratio (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    aspect = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -4166,7 +4166,7 @@ gimp_context_get_ink_blob_angle (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

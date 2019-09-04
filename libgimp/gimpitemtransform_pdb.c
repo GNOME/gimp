@@ -77,7 +77,7 @@ gimp_item_transform_translate (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -140,7 +140,7 @@ gimp_item_transform_flip_simple (GimpItem            *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -206,7 +206,7 @@ gimp_item_transform_flip (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -293,7 +293,7 @@ gimp_item_transform_perspective (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -362,7 +362,7 @@ gimp_item_transform_rotate_simple (GimpItem         *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -433,7 +433,7 @@ gimp_item_transform_rotate (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -501,7 +501,7 @@ gimp_item_transform_scale (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -565,7 +565,7 @@ gimp_item_transform_shear (GimpItem            *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -645,7 +645,7 @@ gimp_item_transform_2d (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -729,7 +729,7 @@ gimp_item_transform_matrix (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    ret_item = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    ret_item = GIMP_VALUES_GET_ITEM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

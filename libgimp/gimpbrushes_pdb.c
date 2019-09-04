@@ -102,8 +102,8 @@ gimp_brushes_get_list (const gchar *filter,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_brushes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      brush_list = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
+      *num_brushes = GIMP_VALUES_GET_INT (return_vals, 1);
+      brush_list = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

@@ -102,8 +102,8 @@ gimp_fonts_get_list (const gchar *filter,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_fonts = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      font_list = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
+      *num_fonts = GIMP_VALUES_GET_INT (return_vals, 1);
+      font_list = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

@@ -80,7 +80,7 @@ gimp_text_layer_new (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -117,7 +117,7 @@ gimp_text_layer_get_text (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    text = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    text = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -197,7 +197,7 @@ gimp_text_layer_get_markup (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    markup = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    markup = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -235,7 +235,7 @@ gimp_text_layer_get_font (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    font = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    font = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -314,8 +314,8 @@ gimp_text_layer_get_font_size (GimpLayer *layer,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      font_size = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *unit = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      font_size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *unit = GIMP_VALUES_GET_INT (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -395,7 +395,7 @@ gimp_text_layer_get_antialias (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    antialias = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    antialias = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -472,7 +472,7 @@ gimp_text_layer_get_hint_style (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    style = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    style = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -549,7 +549,7 @@ gimp_text_layer_get_kerning (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    kerning = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    kerning = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -625,7 +625,7 @@ gimp_text_layer_get_language (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    language = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    language = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -701,7 +701,7 @@ gimp_text_layer_get_base_direction (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    direction = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    direction = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -777,7 +777,7 @@ gimp_text_layer_get_justification (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    justify = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    justify = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -856,7 +856,7 @@ gimp_text_layer_get_color (GimpLayer *layer,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
 
   gimp_value_array_unref (return_vals);
 
@@ -931,7 +931,7 @@ gimp_text_layer_get_indent (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    indent = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    indent = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1007,7 +1007,7 @@ gimp_text_layer_get_line_spacing (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    line_spacing = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    line_spacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1083,7 +1083,7 @@ gimp_text_layer_get_letter_spacing (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    letter_spacing = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    letter_spacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

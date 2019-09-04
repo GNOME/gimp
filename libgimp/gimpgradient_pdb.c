@@ -64,7 +64,7 @@ gimp_gradient_new (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -101,7 +101,7 @@ gimp_gradient_duplicate (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -137,7 +137,7 @@ gimp_gradient_is_editable (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    editable = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    editable = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -177,7 +177,7 @@ gimp_gradient_rename (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -249,7 +249,7 @@ gimp_gradient_get_number_of_segments (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    num_segments = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    num_segments = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -307,8 +307,8 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
 
   if (success)
     {
-      *num_color_samples = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *color_samples = gimp_value_dup_float_array (gimp_value_array_index (return_vals, 2));
+      *num_color_samples = GIMP_VALUES_GET_INT (return_vals, 1);
+      *color_samples = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -370,8 +370,8 @@ gimp_gradient_get_custom_samples (const gchar    *name,
 
   if (success)
     {
-      *num_color_samples = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *color_samples = gimp_value_dup_float_array (gimp_value_array_index (return_vals, 2));
+      *num_color_samples = GIMP_VALUES_GET_INT (return_vals, 1);
+      *color_samples = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -421,8 +421,8 @@ gimp_gradient_segment_get_left_color (const gchar *name,
 
   if (success)
     {
-      gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
-      *opacity = g_value_get_double (gimp_value_array_index (return_vals, 2));
+      GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+      *opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -517,8 +517,8 @@ gimp_gradient_segment_get_right_color (const gchar *name,
 
   if (success)
     {
-      gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
-      *opacity = g_value_get_double (gimp_value_array_index (return_vals, 2));
+      GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+      *opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -610,7 +610,7 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    *pos = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -662,7 +662,7 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *final_pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    *final_pos = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -708,7 +708,7 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    *pos = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -759,7 +759,7 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *final_pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    *final_pos = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -805,7 +805,7 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    *pos = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -857,7 +857,7 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *final_pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    *final_pos = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -903,7 +903,7 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *blend_func = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    *blend_func = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -949,7 +949,7 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *coloring_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    *coloring_type = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1432,7 +1432,7 @@ gimp_gradient_segment_range_move (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    final_delta = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    final_delta = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

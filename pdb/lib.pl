@@ -392,7 +392,7 @@ CODE
             $var = exists $_->{retval} ? "" : '*';
             $var .= $_->{libname};
 
-            $value = "gimp_value_array_index (return_vals, $argc)";
+            $value = "return_vals, $argc";
 
             $return_marshal .= ' ' x 2 if $#outargs;
             $return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;

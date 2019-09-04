@@ -442,12 +442,12 @@ gimp_drawable_histogram (GimpDrawable         *drawable,
 
   if (success)
     {
-      *mean = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *std_dev = g_value_get_double (gimp_value_array_index (return_vals, 2));
-      *median = g_value_get_double (gimp_value_array_index (return_vals, 3));
-      *pixels = g_value_get_double (gimp_value_array_index (return_vals, 4));
-      *count = g_value_get_double (gimp_value_array_index (return_vals, 5));
-      *percentile = g_value_get_double (gimp_value_array_index (return_vals, 6));
+      *mean = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *std_dev = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *median = GIMP_VALUES_GET_DOUBLE (return_vals, 3);
+      *pixels = GIMP_VALUES_GET_DOUBLE (return_vals, 4);
+      *count = GIMP_VALUES_GET_DOUBLE (return_vals, 5);
+      *percentile = GIMP_VALUES_GET_DOUBLE (return_vals, 6);
     }
 
   gimp_value_array_unref (return_vals);

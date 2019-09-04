@@ -243,7 +243,7 @@ gimp_progress_get_window_handle (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    window = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    window = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

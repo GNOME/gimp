@@ -77,9 +77,9 @@ gimp_pattern_get_info (const gchar *name,
 
   if (success)
     {
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
     }
 
   gimp_value_array_unref (return_vals);
@@ -137,11 +137,11 @@ gimp_pattern_get_pixels (const gchar  *name,
 
   if (success)
     {
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *num_color_bytes = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *color_bytes = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
+      *width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
+      *num_color_bytes = GIMP_VALUES_GET_INT (return_vals, 4);
+      *color_bytes = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
   gimp_value_array_unref (return_vals);

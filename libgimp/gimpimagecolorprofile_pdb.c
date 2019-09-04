@@ -71,8 +71,8 @@ _gimp_image_get_color_profile (GimpImage *image,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      profile_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
+      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
+      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -120,8 +120,8 @@ _gimp_image_get_effective_color_profile (GimpImage *image,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      profile_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
+      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
+      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

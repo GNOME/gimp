@@ -67,7 +67,7 @@ _gimp_drawable_get_format (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    format = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    format = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -106,7 +106,7 @@ _gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    format = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    format = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -140,7 +140,7 @@ gimp_drawable_type (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    type = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -177,7 +177,7 @@ gimp_drawable_type_with_alpha (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    type_with_alpha = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    type_with_alpha = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -213,7 +213,7 @@ gimp_drawable_has_alpha (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    has_alpha = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    has_alpha = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -248,7 +248,7 @@ gimp_drawable_is_rgb (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_rgb = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    is_rgb = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -283,7 +283,7 @@ gimp_drawable_is_gray (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_gray = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    is_gray = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -318,7 +318,7 @@ gimp_drawable_is_indexed (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_indexed = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    is_indexed = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -352,7 +352,7 @@ gimp_drawable_bpp (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    bpp = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    bpp = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -386,7 +386,7 @@ gimp_drawable_width (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    width = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -420,7 +420,7 @@ gimp_drawable_height (GimpDrawable *drawable)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    height = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    height = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -466,8 +466,8 @@ gimp_drawable_offsets (GimpDrawable *drawable,
 
   if (success)
     {
-      *offset_x = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *offset_y = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *offset_x = GIMP_VALUES_GET_INT (return_vals, 1);
+      *offset_y = GIMP_VALUES_GET_INT (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -523,11 +523,11 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-      *x1 = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *y1 = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *x2 = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *y2 = g_value_get_int (gimp_value_array_index (return_vals, 5));
+      non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+      *x1 = GIMP_VALUES_GET_INT (return_vals, 2);
+      *y1 = GIMP_VALUES_GET_INT (return_vals, 3);
+      *x2 = GIMP_VALUES_GET_INT (return_vals, 4);
+      *y2 = GIMP_VALUES_GET_INT (return_vals, 5);
     }
 
   gimp_value_array_unref (return_vals);
@@ -578,11 +578,11 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
-      *x = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *y = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 5));
+      non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+      *x = GIMP_VALUES_GET_INT (return_vals, 2);
+      *y = GIMP_VALUES_GET_INT (return_vals, 3);
+      *width = GIMP_VALUES_GET_INT (return_vals, 4);
+      *height = GIMP_VALUES_GET_INT (return_vals, 5);
     }
 
   gimp_value_array_unref (return_vals);
@@ -757,8 +757,8 @@ gimp_drawable_get_pixel (GimpDrawable *drawable,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_channels = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      pixel = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
+      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
+      pixel = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -968,11 +968,11 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
 
   if (success)
     {
-      *actual_width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *actual_height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
+      *actual_width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *actual_height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
+      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
+      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
   gimp_value_array_unref (return_vals);
@@ -1049,11 +1049,11 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
 
   if (success)
     {
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
+      *width = GIMP_VALUES_GET_INT (return_vals, 1);
+      *height = GIMP_VALUES_GET_INT (return_vals, 2);
+      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
+      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
+      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
   gimp_value_array_unref (return_vals);

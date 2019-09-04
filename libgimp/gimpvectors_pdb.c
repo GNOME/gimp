@@ -68,7 +68,7 @@ gimp_vectors_new (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -108,7 +108,7 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -145,7 +145,7 @@ gimp_vectors_copy (GimpVectors *vectors)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    vectors_copy = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -189,8 +189,8 @@ gimp_vectors_get_strokes (GimpVectors *vectors,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_strokes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      stroke_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_strokes = GIMP_VALUES_GET_INT (return_vals, 1);
+      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -233,7 +233,7 @@ gimp_vectors_stroke_get_length (GimpVectors *vectors,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    length = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    length = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -299,10 +299,10 @@ gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
 
   if (success)
     {
-      *x_point = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *y_point = g_value_get_double (gimp_value_array_index (return_vals, 2));
-      *slope = g_value_get_double (gimp_value_array_index (return_vals, 3));
-      *valid = g_value_get_boolean (gimp_value_array_index (return_vals, 4));
+      *x_point = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *y_point = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *slope = GIMP_VALUES_GET_DOUBLE (return_vals, 3);
+      *valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);
@@ -661,10 +661,10 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
-      *num_points = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *controlpoints = gimp_value_dup_float_array (gimp_value_array_index (return_vals, 3));
-      *closed = g_value_get_boolean (gimp_value_array_index (return_vals, 4));
+      type = GIMP_VALUES_GET_ENUM (return_vals, 1);
+      *num_points = GIMP_VALUES_GET_INT (return_vals, 2);
+      *controlpoints = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 3);
+      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 4);
     }
 
   gimp_value_array_unref (return_vals);
@@ -721,7 +721,7 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_id = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    stroke_id = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -772,9 +772,9 @@ gimp_vectors_stroke_interpolate (GimpVectors *vectors,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_coords = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      coords = gimp_value_dup_float_array (gimp_value_array_index (return_vals, 2));
-      *closed = g_value_get_boolean (gimp_value_array_index (return_vals, 3));
+      *num_coords = GIMP_VALUES_GET_INT (return_vals, 1);
+      coords = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
+      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 3);
     }
 
   gimp_value_array_unref (return_vals);
@@ -817,7 +817,7 @@ gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_id = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    stroke_id = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1020,7 +1020,7 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    stroke_id = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    stroke_id = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -1076,8 +1076,8 @@ gimp_vectors_import_from_file (GimpImage    *image,
 
   if (success)
     {
-      *num_vectors = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *vectors_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
+      *vectors_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -1138,8 +1138,8 @@ gimp_vectors_import_from_string (GimpImage    *image,
 
   if (success)
     {
-      *num_vectors = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *vectors_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
+      *vectors_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -1228,7 +1228,7 @@ gimp_vectors_export_to_string (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    string = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    string = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

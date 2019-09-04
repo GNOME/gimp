@@ -82,7 +82,7 @@ _gimp_channel_new (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -128,7 +128,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -164,7 +164,7 @@ gimp_channel_copy (GimpChannel *channel)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel_copy = g_value_get_object (gimp_value_array_index (return_vals, 1));
+    channel_copy = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -246,7 +246,7 @@ gimp_channel_get_show_masked (GimpChannel *channel)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    show_masked = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    show_masked = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -318,7 +318,7 @@ gimp_channel_get_opacity (GimpChannel *channel)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    opacity = g_value_get_double (gimp_value_array_index (return_vals, 1));
+    opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -392,7 +392,7 @@ gimp_channel_get_color (GimpChannel *channel,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
 
   gimp_value_array_unref (return_vals);
 

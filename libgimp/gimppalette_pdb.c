@@ -64,7 +64,7 @@ gimp_palette_new (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -101,7 +101,7 @@ gimp_palette_duplicate (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -141,7 +141,7 @@ gimp_palette_rename (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -212,7 +212,7 @@ gimp_palette_is_editable (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    editable = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+    editable = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -255,7 +255,7 @@ gimp_palette_get_info (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *num_colors = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    *num_colors = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -298,8 +298,8 @@ gimp_palette_get_colors (const gchar *name,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_colors = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      colors = gimp_value_dup_rgb_array (gimp_value_array_index (return_vals, 2));
+      *num_colors = GIMP_VALUES_GET_INT (return_vals, 1);
+      colors = GIMP_VALUES_DUP_RGB_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -337,7 +337,7 @@ gimp_palette_get_columns (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    num_columns = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    num_columns = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -426,7 +426,7 @@ gimp_palette_add_entry (const gchar   *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *entry_num = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    *entry_num = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -510,7 +510,7 @@ gimp_palette_entry_get_color (const gchar *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
 
   gimp_value_array_unref (return_vals);
 
@@ -600,7 +600,7 @@ gimp_palette_entry_get_name (const gchar  *name,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *entry_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+    *entry_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

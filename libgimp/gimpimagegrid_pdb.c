@@ -74,8 +74,8 @@ gimp_image_grid_get_spacing (GimpImage *image,
 
   if (success)
     {
-      *xspacing = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *yspacing = g_value_get_double (gimp_value_array_index (return_vals, 2));
+      *xspacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *yspacing = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -165,8 +165,8 @@ gimp_image_grid_get_offset (GimpImage *image,
 
   if (success)
     {
-      *xoffset = g_value_get_double (gimp_value_array_index (return_vals, 1));
-      *yoffset = g_value_get_double (gimp_value_array_index (return_vals, 2));
+      *xoffset = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+      *yoffset = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -249,7 +249,7 @@ gimp_image_grid_get_foreground_color (GimpImage *image,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*fgcolor);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*fgcolor);
 
   gimp_value_array_unref (return_vals);
 
@@ -327,7 +327,7 @@ gimp_image_grid_get_background_color (GimpImage *image,
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*bgcolor);
+    GIMP_VALUES_GET_RGB (return_vals, 1, &*bgcolor);
 
   gimp_value_array_unref (return_vals);
 
@@ -401,7 +401,7 @@ gimp_image_grid_get_style (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    style = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    style = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

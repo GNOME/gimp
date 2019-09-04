@@ -66,7 +66,7 @@ gimp_image_add_hguide (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    guide = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+    guide = GIMP_VALUES_GET_UINT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -105,7 +105,7 @@ gimp_image_add_vguide (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    guide = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+    guide = GIMP_VALUES_GET_UINT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -183,7 +183,7 @@ gimp_image_find_next_guide (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    next_guide = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+    next_guide = GIMP_VALUES_GET_UINT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -221,7 +221,7 @@ gimp_image_get_guide_orientation (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    orientation = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+    orientation = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -259,7 +259,7 @@ gimp_image_get_guide_position (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    position = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    position = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
