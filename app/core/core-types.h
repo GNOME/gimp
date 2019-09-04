@@ -186,6 +186,7 @@ typedef struct _GimpEnvironTable                GimpEnvironTable;
 typedef struct _GimpHistogram                   GimpHistogram;
 typedef struct _GimpIdTable                     GimpIdTable;
 typedef struct _GimpImagefile                   GimpImagefile;
+typedef struct _GimpImageViewable               GimpImageViewable;
 typedef struct _GimpInterpreterDB               GimpInterpreterDB;
 typedef struct _GimpLineArt                     GimpLineArt;
 typedef struct _GimpObjectQueue                 GimpObjectQueue;
