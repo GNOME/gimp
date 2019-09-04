@@ -311,6 +311,36 @@ view_zoom_other_cmd_callback (GimpAction *action,
 }
 
 void
+view_show_all_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_display (display, data);
+
+  shell = gimp_display_get_shell (display);
+
+  active = g_variant_get_boolean (value);
+
+  if (active != shell->show_all)
+    {
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+      gimp_display_shell_set_show_all (shell, active);
+
+      if (window)
+        SET_ACTIVE (gimp_image_window_get_ui_manager (window),
+                    "view-show-all", shell->show_all);
+
+      if (IS_ACTIVE_DISPLAY (display))
+        SET_ACTIVE (shell->popup_manager, "view-show-all",
+                    shell->show_all);
+    }
+}
+
+void
 view_dot_for_dot_cmd_callback (GimpAction *action,
                                GVariant   *value,
                                gpointer    data)

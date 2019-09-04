@@ -82,6 +82,9 @@ void               gimp_display_fill            (GimpDisplay       *display,
                                                  GimpUnit           unit,
                                                  gdouble            scale);
 
+void               gimp_display_update_bounding_box
+                                                (GimpDisplay       *display);
+
 void               gimp_display_update_area     (GimpDisplay       *display,
                                                  gboolean           now,
                                                  gint               x,

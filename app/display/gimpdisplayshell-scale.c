@@ -275,6 +275,118 @@ gimp_display_shell_scale_get_image_bounds (GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_scale_get_image_bounding_box:
+ * @shell:
+ * @x:
+ * @y:
+ * @w:
+ * @h:
+ *
+ * Gets the screen-space boudning box of the image content, after it has
+ * been transformed (i.e., scaled, rotated, and scrolled).
+ **/
+void
+gimp_display_shell_scale_get_image_bounding_box (GimpDisplayShell *shell,
+                                                 gint             *x,
+                                                 gint             *y,
+                                                 gint             *w,
+                                                 gint             *h)
+{
+  GeglRectangle bounding_box;
+  gdouble       x1, y1;
+  gdouble       x2, y2;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  bounding_box = gimp_display_shell_get_bounding_box (shell);
+
+  gimp_display_shell_transform_bounds (shell,
+                                       bounding_box.x,
+                                       bounding_box.y,
+                                       bounding_box.x + bounding_box.width,
+                                       bounding_box.y + bounding_box.height,
+                                       &x1, &y1,
+                                       &x2, &y2);
+
+  if (! shell->show_all)
+    {
+      x1 = ceil  (x1);
+      y1 = ceil  (y1);
+      x2 = floor (x2);
+      y2 = floor (y2);
+    }
+  else
+    {
+      x1 = floor (x1);
+      y1 = floor (y1);
+      x2 = ceil  (x2);
+      y2 = ceil  (y2);
+    }
+
+  if (x) *x = x1 + shell->offset_x;
+  if (y) *y = y1 + shell->offset_y;
+  if (w) *w = x2 - x1;
+  if (h) *h = y2 - y1;
+}
+
+/**
+ * gimp_display_shell_scale_get_image_unrotated_bounding_box:
+ * @shell:
+ * @x:
+ * @y:
+ * @w:
+ * @h:
+ *
+ * Gets the screen-space boudning box of the image content, after it has
+ * been scaled and scrolled, but before it has been rotated.
+ **/
+void
+gimp_display_shell_scale_get_image_unrotated_bounding_box (GimpDisplayShell *shell,
+                                                           gint             *x,
+                                                           gint             *y,
+                                                           gint             *w,
+                                                           gint             *h)
+{
+  GeglRectangle bounding_box;
+  gdouble       x1, y1;
+  gdouble       x2, y2;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  bounding_box = gimp_display_shell_get_bounding_box (shell);
+
+  x1 = bounding_box.x * shell->scale_x -
+       shell->offset_x;
+  y1 = bounding_box.y * shell->scale_y -
+       shell->offset_y;
+
+  x2 = (bounding_box.x + bounding_box.width)  * shell->scale_x -
+       shell->offset_x;
+  y2 = (bounding_box.y + bounding_box.height) * shell->scale_y -
+       shell->offset_y;
+
+  if (! shell->show_all)
+    {
+      x1 = ceil  (x1);
+      y1 = ceil  (y1);
+      x2 = floor (x2);
+      y2 = floor (y2);
+    }
+  else
+    {
+      x1 = floor (x1);
+      y1 = floor (y1);
+      x2 = ceil  (x2);
+      y2 = ceil  (y2);
+    }
+
+  if (x) *x = x1;
+  if (y) *y = y1;
+  if (w) *w = x2 - x1;
+  if (h) *h = y2 - y1;
+}
+
+/**
  * gimp_display_shell_scale_image_is_within_viewport:
  * @shell:
  *

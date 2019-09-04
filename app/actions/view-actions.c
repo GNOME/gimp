@@ -173,6 +173,14 @@ static const GimpActionEntry view_actions[] =
 
 static const GimpToggleActionEntry view_toggle_actions[] =
 {
+
+  { "view-show-all", NULL,
+    NC_("view-action", "Show _All"), NULL,
+    NC_("view-action", "Show full image content"),
+    view_show_all_cmd_callback,
+    FALSE,
+    GIMP_HELP_VIEW_SHOW_ALL },
+
   { "view-dot-for-dot", NULL,
     NC_("view-action", "_Dot for Dot"), NULL,
     NC_("view-action", "A pixel on the screen represents an image pixel"),
@@ -252,7 +260,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_SHOW_SAMPLE_POINTS },
 
   { "view-snap-to-guides", NULL,
-    NC_("view-action", "Sn_ap to Guides"), NULL,
+    NC_("view-action", "Snap to Gu_ides"), NULL,
     NC_("view-action", "Tool operations snap to guides"),
     view_snap_to_guides_cmd_callback,
     TRUE,
@@ -899,6 +907,9 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-new",   image);
   SET_SENSITIVE ("view-close", image);
+
+  SET_SENSITIVE ("view-show-all", image);
+  SET_ACTIVE    ("view-show-all", display && shell->show_all);
 
   SET_SENSITIVE ("view-dot-for-dot", image);
   SET_ACTIVE    ("view-dot-for-dot", display && shell->dot_for_dot);

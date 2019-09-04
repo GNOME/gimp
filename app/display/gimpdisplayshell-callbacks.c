@@ -43,6 +43,7 @@
 #include "gimpdisplayshell-scrollbars.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
+#include "gimpdisplayshell-transform.h"
 #include "gimpdisplayxfer.h"
 #include "gimpimagewindow.h"
 #include "gimpnavigationeditor.h"
@@ -454,14 +455,18 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                                       cairo_t          *cr)
 {
   cairo_rectangle_list_t *clip_rectangles;
-  cairo_rectangle_int_t   image_rect;
+  GeglRectangle           image_rect;
+  GeglRectangle           rotated_image_rect;
   cairo_matrix_t          matrix;
+  gdouble                 x1, y1;
+  gdouble                 x2, y2;
 
-  image_rect.x = - shell->offset_x;
-  image_rect.y = - shell->offset_y;
-  gimp_display_shell_scale_get_image_size (shell,
-                                           &image_rect.width,
-                                           &image_rect.height);
+  gimp_display_shell_scale_get_image_unrotated_bounding_box (
+    shell,
+    &image_rect.x,
+    &image_rect.y,
+    &image_rect.width,
+    &image_rect.height);
 
 
   /*  the background has already been cleared by GdkWindow
@@ -479,6 +484,13 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
   if (shell->rotate_transform)
     cairo_transform (cr, shell->rotate_transform);
 
+  if (shell->show_all)
+    {
+      cairo_save (cr);
+      gimp_display_shell_draw_checkerboard (shell, cr);
+      cairo_restore (cr);
+    }
+
   cairo_rectangle (cr,
                    image_rect.x,
                    image_rect.y,
@@ -486,13 +498,28 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                    image_rect.height);
   cairo_clip (cr);
 
+  gimp_display_shell_rotate_bounds (shell,
+                                    image_rect.x,
+                                    image_rect.y,
+                                    image_rect.x + image_rect.width,
+                                    image_rect.y + image_rect.height,
+                                    &x1, &y1, &x2, &y2);
+
+  rotated_image_rect.x      = floor (x1);
+  rotated_image_rect.y      = floor (y1);
+  rotated_image_rect.width  = ceil  (x2) - rotated_image_rect.x;
+  rotated_image_rect.height = ceil  (y2) - rotated_image_rect.y;
+
   if (gdk_cairo_get_clip_rectangle (cr, NULL))
     {
       gint i;
 
-      cairo_save (cr);
-      gimp_display_shell_draw_checkerboard (shell, cr);
-      cairo_restore (cr);
+      if (! shell->show_all)
+        {
+          cairo_save (cr);
+          gimp_display_shell_draw_checkerboard (shell, cr);
+          cairo_restore (cr);
+        }
 
       if (shell->show_image)
         {
@@ -500,13 +527,20 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
 
           for (i = 0; i < clip_rectangles->num_rectangles; i++)
             {
-              cairo_rectangle_t rect = clip_rectangles->rectangles[i];
+              cairo_rectangle_t clip_rect = clip_rectangles->rectangles[i];
+              GeglRectangle     rect;
 
-              gimp_display_shell_draw_image (shell, cr,
-                                             floor (rect.x),
-                                             floor (rect.y),
-                                             ceil (rect.width),
-                                             ceil (rect.height));
+              rect.x      = floor (clip_rect.x);
+              rect.y      = floor (clip_rect.y);
+              rect.width  = ceil  (clip_rect.x + clip_rect.width)  - rect.x;
+              rect.height = ceil  (clip_rect.y + clip_rect.height) - rect.y;
+
+              if (gegl_rectangle_intersect (&rect, &rect, &rotated_image_rect))
+                {
+                  gimp_display_shell_draw_image (shell, cr,
+                                                 rect.x,     rect.y,
+                                                 rect.width, rect.height);
+                }
             }
         }
     }

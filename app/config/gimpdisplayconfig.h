@@ -47,6 +47,7 @@ struct _GimpDisplayConfig
   gint                marching_ants_speed;
   gboolean            resize_windows_on_zoom;
   gboolean            resize_windows_on_resize;
+  gboolean            default_show_all;
   gboolean            default_dot_for_dot;
   gboolean            initial_zoom_to_fit;
   GimpCursorMode      cursor_mode;

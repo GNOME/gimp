@@ -51,6 +51,7 @@ enum
   PROP_MARCHING_ANTS_SPEED,
   PROP_RESIZE_WINDOWS_ON_ZOOM,
   PROP_RESIZE_WINDOWS_ON_RESIZE,
+  PROP_DEFAULT_SHOW_ALL,
   PROP_DEFAULT_DOT_FOR_DOT,
   PROP_INITIAL_ZOOM_TO_FIT,
   PROP_CURSOR_MODE,
@@ -155,6 +156,13 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                             "resize-windows-on-resize",
                             "Resize windows on resize",
                             RESIZE_WINDOWS_ON_RESIZE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEFAULT_SHOW_ALL,
+                            "default-show-all",
+                            "Default show-all",
+                            DEFAULT_SHOW_ALL_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -401,6 +409,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_RESIZE_WINDOWS_ON_RESIZE:
       display_config->resize_windows_on_resize = g_value_get_boolean (value);
       break;
+    case PROP_DEFAULT_SHOW_ALL:
+      display_config->default_show_all = g_value_get_boolean (value);
+      break;
     case PROP_DEFAULT_DOT_FOR_DOT:
       display_config->default_dot_for_dot = g_value_get_boolean (value);
       break;
@@ -506,6 +517,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_RESIZE_WINDOWS_ON_RESIZE:
       g_value_set_boolean (value, display_config->resize_windows_on_resize);
+      break;
+    case PROP_DEFAULT_SHOW_ALL:
+      g_value_set_boolean (value, display_config->default_show_all);
       break;
     case PROP_DEFAULT_DOT_FOR_DOT:
       g_value_set_boolean (value, display_config->default_dot_for_dot);

@@ -2807,6 +2807,10 @@ prefs_dialog_new (Gimp       *gimp,
   /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
+  prefs_check_button_add (object, "default-show-all",
+                          _("Use \"Show _all\" by default"),
+                          GTK_BOX (vbox2));
+
   prefs_check_button_add (object, "default-dot-for-dot",
                           _("Use \"_Dot for dot\" by default"),
                           GTK_BOX (vbox2));
@@ -2814,7 +2818,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_spin_button_add (object, "marching-ants-speed", 1.0, 10.0, 0,
-                         _("Marching _ants speed:"),
+                         _("Marching ants s_peed:"),
                          GTK_TABLE (table), 0, size_group);
 
   /*  Zoom & Resize Behavior  */

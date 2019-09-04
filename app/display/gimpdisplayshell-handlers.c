@@ -386,6 +386,13 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 
   gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                         gimp_image_get_active_layer (image));
+
+  if (shell->show_all)
+    {
+      gimp_image_inc_show_all_count (image);
+
+      gimp_image_flush (image);
+    }
 }
 
 void
@@ -549,6 +556,13 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_clean_dirty_handler,
                                         shell);
+
+  if (shell->show_all)
+    {
+      gimp_image_dec_show_all_count (image);
+
+      gimp_image_flush (image);
+    }
 }
 
 

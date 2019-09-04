@@ -83,6 +83,7 @@
 #define GIMP_HELP_SELECTION_TO_PATH               "gimp-selection-to-path"
 
 #define GIMP_HELP_VIEW_NEW                        "gimp-view-new"
+#define GIMP_HELP_VIEW_SHOW_ALL                   "gimp-view-show-all"
 #define GIMP_HELP_VIEW_DOT_FOR_DOT                "gimp-view-dot-for-dot"
 #define GIMP_HELP_VIEW_SCROLL_CENTER              "gimp-view-scroll-center"
 #define GIMP_HELP_VIEW_ZOOM_REVERT                "gimp-view-zoom-revert"

@@ -53,6 +53,10 @@ void   view_zoom_explicit_cmd_callback              (GimpAction *action,
 void   view_zoom_other_cmd_callback                 (GimpAction *action,
                                                      gpointer    data);
 
+void   view_show_all_cmd_callback                   (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+
 void   view_dot_for_dot_cmd_callback                (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
