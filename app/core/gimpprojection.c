@@ -601,6 +601,8 @@ gimp_projection_free_buffer (GimpProjection  *proj)
 
       g_clear_object (&proj->priv->buffer);
       g_clear_object (&proj->priv->validate_handler);
+
+      g_object_notify (G_OBJECT (proj), "buffer");
     }
 }
 
