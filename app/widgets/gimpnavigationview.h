@@ -64,6 +64,12 @@ void    gimp_navigation_view_set_marker   (GimpNavigationView *view,
                                            gboolean            flip_horizontally,
                                            gboolean            flip_vertically,
                                            gdouble             rotate_angle);
+void    gimp_navigation_view_set_canvas   (GimpNavigationView *view,
+                                           gboolean            visible,
+                                           gdouble             x,
+                                           gdouble             y,
+                                           gdouble             width,
+                                           gdouble             height);
 void    gimp_navigation_view_set_motion_offset
                                           (GimpNavigationView *view,
                                            gint                motion_offset_x,
