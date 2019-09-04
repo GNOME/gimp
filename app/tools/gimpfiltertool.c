@@ -729,7 +729,7 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
           GimpItem         *item  = GIMP_ITEM (tool->drawable);
           gint              x, y, width, height;
 
-          gimp_display_shell_untransform_viewport (shell,
+          gimp_display_shell_untransform_viewport (shell, TRUE,
                                                    &x, &y, &width, &height);
 
           if (gimp_rectangle_intersect (gimp_item_get_offset_x (item),

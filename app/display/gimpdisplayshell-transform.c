@@ -956,6 +956,7 @@ gimp_display_shell_untransform_bounds_with_scale (GimpDisplayShell *shell,
 /**
  * gimp_display_shell_untransform_viewport:
  * @shell:  a #GimpDisplayShell
+ * @clip:   whether to clip the result to the image bounds
  * @x:      returns image x coordinate of display upper left corner
  * @y:      returns image y coordinate of display upper left corner
  * @width:  returns width of display measured in image coordinates
@@ -966,13 +967,13 @@ gimp_display_shell_untransform_bounds_with_scale (GimpDisplayShell *shell,
  **/
 void
 gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
+                                         gboolean          clip,
                                          gint             *x,
                                          gint             *y,
                                          gint             *width,
                                          gint             *height)
 {
-  GimpImage *image;
-  gdouble    x1, y1, x2, y2;
+  gdouble x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -987,19 +988,15 @@ gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
   x2 = ceil (x2);
   y2 = ceil (y2);
 
-  image = gimp_display_get_image (shell->display);
+  if (clip)
+    {
+      GimpImage *image = gimp_display_get_image (shell->display);
 
-  if (x1 < 0)
-    x1 = 0;
-
-  if (y1 < 0)
-    y1 = 0;
-
-  if (x2 > gimp_image_get_width (image))
-    x2 = gimp_image_get_width (image);
-
-  if (y2 > gimp_image_get_height (image))
-    y2 = gimp_image_get_height (image);
+      x1 = MAX (x1, 0);
+      y1 = MAX (y1, 0);
+      x2 = MIN (x2, gimp_image_get_width  (image));
+      y2 = MIN (y2, gimp_image_get_height (image));
+    }
 
   if (x)      *x      = x1;
   if (y)      *y      = y1;

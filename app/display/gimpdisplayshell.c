@@ -973,7 +973,8 @@ gimp_display_shell_set_priority_viewport (GimpDisplayShell *shell)
       gint            x, y;
       gint            width, height;
 
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+      gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
+                                               &x, &y, &width, &height);
       gimp_projection_set_priority_rect (projection, x, y, width, height);
     }
 }
@@ -1787,6 +1788,8 @@ gimp_display_shell_set_show_all (GimpDisplayShell *shell,
         }
 
       gimp_display_update_bounding_box (shell->display);
+
+      gimp_display_shell_set_priority_viewport (shell);
 
       gimp_display_shell_expose_full (shell);
 
