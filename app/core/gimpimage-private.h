@@ -49,6 +49,9 @@ struct _GimpImagePrivate
   GimpPrecision      precision;             /*  image's precision            */
   GimpLayerMode      new_layer_mode;        /*  default mode of new layers   */
 
+  gint               show_all;              /*  render full image content    */
+  GeglRectangle      bounding_box;          /*  image content bounding box   */
+
   guchar            *colormap;              /*  colormap (for indexed)       */
   gint               n_colors;              /*  # of colors (for indexed)    */
   GimpPalette       *palette;               /*  palette of colormap          */
@@ -103,6 +106,9 @@ struct _GimpImagePrivate
   GimpItemTree      *vectors;               /*  the tree of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
+  GQuark             layer_offset_x_handler;
+  GQuark             layer_offset_y_handler;
+  GQuark             layer_bounding_box_handler;
   GQuark             layer_alpha_handler;
   GQuark             channel_name_changed_handler;
   GQuark             channel_color_changed_handler;
