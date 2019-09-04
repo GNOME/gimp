@@ -97,6 +97,12 @@ G_BEGIN_DECLS
                                    min, max, default,\
                                    flags))
 
+#define GIMP_VALUES_GET_UINT(args, n) \
+  g_value_get_uint (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_UINT(args, n, value) \
+  g_value_set_uint (gimp_value_array_index (args, n), value)
+
 
 /* uchar  */
 
@@ -222,6 +228,56 @@ G_BEGIN_DECLS
 
 #define GIMP_VALUES_SET_RGB(args, n, value) \
   gimp_value_set_rgb (gimp_value_array_index (args, n), value)
+
+
+/*  parasite  */
+
+#define GIMP_PROC_ARG_PARASITE(class, name, nick, blurb, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_parasite (name, nick, blurb,\
+                               flags))
+
+#define GIMP_PROC_VAL_PARASITE(class, name, nick, blurb, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   gimp_param_spec_parasite (name, nick, blurb,\
+                                   flags))
+
+#define GIMP_VALUES_GET_PARASITE(args, n) \
+  g_value_get_boxed (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_DUP_PARASITE(args, n) \
+  g_value_dup_boxed (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_PARASITE(args, n, value) \
+  g_value_set_boxed (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_TAKE_PARASITE(args, n, value)                \
+  g_value_take_boxed (gimp_value_array_index (args, n), value)
+
+
+/*  param  */
+
+#define GIMP_PROC_ARG_PARAM(class, name, nick, blurb, param_type, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               g_param_spec_param (name, nick, blurb, param_type, \
+                               flags))
+
+#define GIMP_PROC_VAL_PARAM(class, name, nick, blurb, param_type, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   g_param_spec_param (name, nick, blurb, param_type, \
+                                   flags))
+
+#define GIMP_VALUES_GET_PARAM(args, n) \
+  g_value_get_param (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_DUP_PARAM(args, n) \
+  g_value_dup_param (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_PARAM(args, n, value) \
+  g_value_set_param (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_TAKE_PARAM(args, n, value)                \
+  g_value_take_param (gimp_value_array_index (args, n), value)
 
 
 /*  uint8 array  */
@@ -387,6 +443,12 @@ G_BEGIN_DECLS
                                    gimp_param_spec_display (name, nick, blurb,\
                                    none_ok, \
                                    flags))
+
+#define GIMP_VALUES_GET_DISPLAY(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_DISPLAY(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
 
 
 /*  image  */
