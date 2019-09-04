@@ -399,7 +399,6 @@ gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
                                                    gboolean         *horizontally,
                                                    gboolean         *vertically)
 {
-  gint     sw, sh;
   gboolean horizontally_dummy, vertically_dummy;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
@@ -407,15 +406,25 @@ gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
   if (! horizontally) horizontally = &horizontally_dummy;
   if (! vertically)   vertically   = &vertically_dummy;
 
-  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
+  if (! shell->show_all)
+    {
+      gint sx, sy;
+      gint sw, sh;
 
-  *horizontally = sw              <= shell->disp_width       &&
-                  shell->offset_x <= 0                       &&
-                  shell->offset_x >= sw - shell->disp_width;
+      gimp_display_shell_scale_get_image_bounding_box (shell,
+                                                       &sx, &sy, &sw, &sh);
 
-  *vertically   = sh              <= shell->disp_height      &&
-                  shell->offset_y <= 0                       &&
-                  shell->offset_y >= sh - shell->disp_height;
+      sx -= shell->offset_x;
+      sy -= shell->offset_y;
+
+      *horizontally = sx >= 0 && sx + sw <= shell->disp_width;
+      *vertically   = sy >= 0 && sy + sh <= shell->disp_height;
+    }
+  else
+    {
+      *horizontally = FALSE;
+      *vertically   = FALSE;
+    }
 
   return *vertically && *horizontally;
 }
@@ -1113,22 +1122,25 @@ static void
 gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
                                       gboolean          fill)
 {
-  GimpImage *image;
-  gdouble    image_x;
-  gdouble    image_y;
-  gdouble    image_width;
-  gdouble    image_height;
-  gdouble    current_scale;
-  gdouble    zoom_factor;
+  GeglRectangle bounding_box;
+  gdouble       image_x;
+  gdouble       image_y;
+  gdouble       image_width;
+  gdouble       image_height;
+  gdouble       current_scale;
+  gdouble       zoom_factor;
 
-  image = gimp_display_get_image (shell->display);
+  bounding_box = gimp_display_shell_get_bounding_box (shell);
 
   gimp_display_shell_transform_bounds (shell,
-                                       0, 0,
-                                       gimp_image_get_width  (image),
-                                       gimp_image_get_height (image),
-                                       &image_x, &image_y,
-                                       &image_width, &image_height);
+                                       bounding_box.x,
+                                       bounding_box.y,
+                                       bounding_box.x + bounding_box.width,
+                                       bounding_box.y + bounding_box.height,
+                                       &image_x,
+                                       &image_y,
+                                       &image_width,
+                                       &image_height);
 
   image_width  -= image_x;
   image_height -= image_y;
@@ -1151,7 +1163,7 @@ gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
                             zoom_factor * current_scale,
                             GIMP_ZOOM_FOCUS_BEST_GUESS);
 
-  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+  gimp_display_shell_scroll_center_content (shell, TRUE, TRUE);
 }
 
 static gboolean
@@ -1168,7 +1180,7 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
   if (! horizontally) horizontally = &horizontally_dummy;
 
   /* The image can only start to fit if we zoom out */
-  if (new_scale > current_scale)
+  if (new_scale > current_scale || shell->show_all)
     {
       *vertically   = FALSE;
       *horizontally = FALSE;
@@ -1229,16 +1241,19 @@ gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell
                                                          gboolean         *horizontally,
                                                          gboolean         *vertically)
 {
-  gboolean local_horizontally;
-  gboolean local_vertically;
-  gint     center_x = shell->disp_width  / 2;
-  gint     center_y = shell->disp_height / 2;
+  gboolean local_horizontally = FALSE;
+  gboolean local_vertically   = FALSE;
+  gint     center_x           = shell->disp_width  / 2;
+  gint     center_y           = shell->disp_height / 2;
 
-  local_horizontally = (x > center_x - ALMOST_CENTERED_THRESHOLD &&
-                        x < center_x + ALMOST_CENTERED_THRESHOLD);
+  if (! shell->show_all)
+    {
+      local_horizontally = (x > center_x - ALMOST_CENTERED_THRESHOLD &&
+                            x < center_x + ALMOST_CENTERED_THRESHOLD);
 
-  local_vertically   = (y > center_y - ALMOST_CENTERED_THRESHOLD &&
-                        y < center_y + ALMOST_CENTERED_THRESHOLD);
+      local_vertically   = (y > center_y - ALMOST_CENTERED_THRESHOLD &&
+                            y < center_y + ALMOST_CENTERED_THRESHOLD);
+    }
 
   if (horizontally) *horizontally = local_horizontally;
   if (vertically)   *vertically   = local_vertically;

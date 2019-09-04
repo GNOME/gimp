@@ -1420,14 +1420,12 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                gboolean         grow_only)
 {
   GimpDisplayShell *active_shell;
-  GimpImage        *image;
   GtkWidget        *widget;
   GtkAllocation     allocation;
   GdkMonitor       *monitor;
   GdkRectangle      rect;
   gint              disp_width, disp_height;
-  gdouble           x, y;
-  gdouble           width, height;
+  gint              width, height;
   gint              max_auto_width, max_auto_height;
   gint              border_width, border_height;
   gboolean          resize = FALSE;
@@ -1444,8 +1442,6 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   if (!active_shell)
     return;
 
-  image = gimp_display_get_image (active_shell->display);
-
   widget  = GTK_WIDGET (window);
   monitor = gimp_widget_get_monitor (widget);
 
@@ -1453,15 +1449,9 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   gdk_monitor_get_workarea (monitor, &rect);
 
-  gimp_display_shell_transform_bounds (active_shell,
-                                       0, 0,
-                                       gimp_image_get_width (image),
-                                       gimp_image_get_height (image),
-                                       &x, &y,
-                                       &width, &height);
-
-  width  = ceil (width  - x);
-  height = ceil (height - y);
+  gimp_display_shell_scale_get_image_bounding_box (active_shell,
+                                                   NULL,   NULL,
+                                                   &width, &height);
 
   disp_width  = active_shell->disp_width;
   disp_height = active_shell->disp_height;
@@ -1564,7 +1554,7 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
    * GimpDisplayShell::configure_event().
    */
   /* FIXME multiple shells */
-  gimp_display_shell_scroll_center_image (active_shell, TRUE, TRUE);
+  gimp_display_shell_scroll_center_content (active_shell, TRUE, TRUE);
 }
 
 static GtkWidget *
