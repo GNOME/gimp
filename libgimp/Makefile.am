@@ -128,7 +128,8 @@ libgimp_private_sources = \
 
 libgimp_extra_sources = \
 	gimpenums.c.tail	\
-	gimpgpparams-body.c
+	gimpgpparams-body.c	\
+	gimpparamspecs-body.c
 
 libgimp_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimp_private_sources)	\
