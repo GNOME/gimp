@@ -653,6 +653,7 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
   GimpTransformGridTool    *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (draw_tool);
   GimpTransformGridOptions *options    = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tool);
   GimpTransformOptions     *tr_options = GIMP_TRANSFORM_OPTIONS (options);
+  GimpDisplayShell         *shell      = gimp_display_get_shell (tool->display);
   GimpImage                *image      = gimp_display_get_image (tool->display);
   GimpMatrix3               matrix     = tr_tool->transform;
   GimpCanvasItem           *item;
@@ -666,9 +667,16 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
       gboolean      show_preview;
 
       if (tr_options->type == GIMP_TRANSFORM_TYPE_IMAGE)
-        pickable = GIMP_PICKABLE (image);
+        {
+          if (! shell->show_all)
+            pickable = GIMP_PICKABLE (image);
+          else
+            pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+        }
       else
-        pickable = GIMP_PICKABLE (tool->drawable);
+        {
+          pickable = GIMP_PICKABLE (tool->drawable);
+        }
 
       show_preview = gimp_transform_grid_options_show_preview (options) &&
                      tr_tool->transform_valid;

@@ -43,6 +43,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpmessagebox.h"
@@ -258,6 +259,11 @@ static void
 gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+
+  tr_tool->x1 = 0;
+  tr_tool->y1 = 0;
+  tr_tool->x2 = 0;
+  tr_tool->y2 = 0;
 
   if (tr_tool->restore_type)
     {
@@ -486,6 +492,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
                             GimpDisplay       *display)
 {
   GimpTransformOptions *options;
+  GimpDisplayShell     *shell;
   GimpImage            *image;
   gboolean              non_empty = TRUE;
 
@@ -493,6 +500,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 
   options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   image   = gimp_display_get_image (display);
+  shell   = gimp_display_get_shell (display);
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
@@ -568,10 +576,24 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_IMAGE:
-      tr_tool->x1 = 0;
-      tr_tool->y1 = 0;
-      tr_tool->x2 = gimp_image_get_width  (image);
-      tr_tool->y2 = gimp_image_get_height (image);
+      if (! shell->show_all)
+        {
+          tr_tool->x1 = 0;
+          tr_tool->y1 = 0;
+          tr_tool->x2 = gimp_image_get_width  (image);
+          tr_tool->y2 = gimp_image_get_height (image);
+        }
+      else
+        {
+          GeglRectangle bounding_box;
+
+          bounding_box = gimp_display_shell_get_bounding_box (shell);
+
+          tr_tool->x1 = bounding_box.x;
+          tr_tool->y1 = bounding_box.y;
+          tr_tool->x2 = bounding_box.x + bounding_box.width;
+          tr_tool->y2 = bounding_box.y + bounding_box.height;
+        }
       break;
     }
 
@@ -585,7 +607,8 @@ gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  gimp_transform_tool_bounds (tr_tool, display);
+  if (tr_tool->x1 == tr_tool->x2 && tr_tool->y1 == tr_tool->y2)
+    gimp_transform_tool_bounds (tr_tool, display);
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
     GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool);
