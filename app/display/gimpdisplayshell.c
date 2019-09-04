@@ -57,6 +57,7 @@
 #include "tools/tool_manager.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvascanvasboundary.h"
 #include "gimpcanvaslayerboundary.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -1849,6 +1850,8 @@ gimp_display_shell_set_show_all (GimpDisplayShell *shell,
 
       gimp_display_update_bounding_box (shell->display);
 
+      gimp_display_shell_update_show_canvas (shell);
+
       gimp_display_shell_scroll_clamp_and_update (shell);
       gimp_display_shell_scrollbars_update (shell);
 
@@ -1928,6 +1931,9 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 
       gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                             gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
+
+      gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
+                                             gimp_display_get_image (shell->display));
 
       if (window && gimp_image_window_get_active_shell (window) == shell)
         {

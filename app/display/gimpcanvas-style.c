@@ -68,6 +68,9 @@ static const GimpRGB layer_group_bg      = { 0.0, 1.0, 1.0, 1.0 };
 static const GimpRGB layer_mask_fg       = { 0.0, 0.0, 0.0, 1.0 };
 static const GimpRGB layer_mask_bg       = { 0.0, 1.0, 0.0, 1.0 };
 
+static const GimpRGB canvas_fg           = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB canvas_bg           = { 1.0, 0.5, 0.0, 1.0 };
+
 static const GimpRGB selection_out_fg    = { 1.0, 1.0, 1.0, 1.0 };
 static const GimpRGB selection_out_bg    = { 0.5, 0.5, 0.5, 1.0 };
 
@@ -285,6 +288,29 @@ gimp_canvas_set_layer_style (GtkWidget *canvas,
                                                    0,
                                                    offset_x, offset_y);
     }
+
+  cairo_set_source (cr, pattern);
+  cairo_pattern_destroy (pattern);
+}
+
+void
+gimp_canvas_set_canvas_style (GtkWidget *canvas,
+                              cairo_t   *cr,
+                              gdouble    offset_x,
+                              gdouble    offset_y)
+{
+  cairo_pattern_t *pattern;
+
+  g_return_if_fail (GTK_IS_WIDGET (canvas));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+
+  pattern = gimp_cairo_pattern_create_stipple (&canvas_fg,
+                                               &canvas_bg,
+                                               0,
+                                               offset_x, offset_y);
 
   cairo_set_source (cr, pattern);
   cairo_pattern_destroy (pattern);

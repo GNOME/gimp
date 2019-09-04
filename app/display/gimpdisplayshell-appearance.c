@@ -95,6 +95,8 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
                                              options->show_selection);
   gimp_display_shell_set_show_layer         (shell,
                                              options->show_layer_boundary);
+  gimp_display_shell_set_show_canvas        (shell,
+                                             options->show_canvas_boundary);
   gimp_display_shell_set_show_guides        (shell,
                                              options->show_guides);
   gimp_display_shell_set_show_grid          (shell,
@@ -269,6 +271,46 @@ gimp_display_shell_get_show_layer (GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
   return appearance_get_options (shell)->show_layer_boundary;
+}
+
+void
+gimp_display_shell_set_show_canvas (GimpDisplayShell *shell,
+                                    gboolean          show)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = appearance_get_options (shell);
+
+  g_object_set (options, "show-canvas-boundary", show, NULL);
+
+  gimp_canvas_item_set_visible (shell->canvas_boundary,
+                                show && shell->show_all);
+
+  gimp_display_shell_set_action_active (shell, "view-show-canvas-boundary", show);
+}
+
+gboolean
+gimp_display_shell_get_show_canvas (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return appearance_get_options (shell)->show_canvas_boundary;
+}
+
+void
+gimp_display_shell_update_show_canvas (GimpDisplayShell *shell)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = appearance_get_options (shell);
+
+  gimp_canvas_item_set_visible (shell->canvas_boundary,
+                                options->show_canvas_boundary &&
+                                shell->show_all);
 }
 
 void
