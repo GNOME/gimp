@@ -287,6 +287,7 @@ gimp_gegl_buffer_set_extent (GeglBuffer          *buffer,
 {
   GeglRectangle aligned_old_extent;
   GeglRectangle aligned_extent;
+  GeglRectangle old_extent_rem;
   GeglRectangle diff_rects[4];
   gint          n_diff_rects;
   gint          i;
@@ -302,10 +303,23 @@ gimp_gegl_buffer_set_extent (GeglBuffer          *buffer,
                                   GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
   n_diff_rects = gegl_rectangle_subtract (diff_rects,
-                                          &aligned_old_extent, &aligned_extent);
+                                          &aligned_old_extent,
+                                          &aligned_extent);
 
   for (i = 0; i < n_diff_rects; i++)
     gegl_buffer_clear (buffer, &diff_rects[i]);
+
+  if (gegl_rectangle_intersect (&old_extent_rem,
+                                gegl_buffer_get_extent (buffer),
+                                &aligned_extent))
+    {
+      n_diff_rects = gegl_rectangle_subtract (diff_rects,
+                                              &old_extent_rem,
+                                              extent);
+
+      for (i = 0; i < n_diff_rects; i++)
+        gegl_buffer_clear (buffer, &diff_rects[i]);
+    }
 
   return gegl_buffer_set_extent (buffer, extent);
 }
