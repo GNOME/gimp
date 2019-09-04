@@ -307,6 +307,9 @@ void            gimp_image_dec_display_count     (GimpImage          *image);
 gint            gimp_image_get_instance_count    (GimpImage          *image);
 void            gimp_image_inc_instance_count    (GimpImage          *image);
 
+void            gimp_image_inc_show_all_count    (GimpImage          *image);
+void            gimp_image_dec_show_all_count    (GimpImage          *image);
+
 
 /*  parasites  */
 

@@ -228,6 +228,12 @@ static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               width,
                                                   gint               height,
                                                   GimpImage         *image);
+static void     gimp_image_layer_offset_changed  (GimpDrawable      *drawable,
+                                                  const GParamSpec  *pspec,
+                                                  GimpImage         *image);
+static void     gimp_image_layer_bounding_box_changed
+                                                 (GimpDrawable      *drawable,
+                                                  GimpImage         *image);
 static void     gimp_image_layer_alpha_changed   (GimpDrawable      *drawable,
                                                   GimpImage         *image);
 static void     gimp_image_channel_add           (GimpContainer     *container,
@@ -249,6 +255,8 @@ static void     gimp_image_active_channel_notify (GimpItemTree      *tree,
 static void     gimp_image_active_vectors_notify (GimpItemTree      *tree,
                                                   const GParamSpec  *pspec,
                                                   GimpImage         *image);
+
+static void     gimp_image_update_bounding_box   (GimpImage         *image);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
@@ -710,6 +718,12 @@ gimp_image_init (GimpImage *image)
   private->precision           = GIMP_PRECISION_U8_NON_LINEAR;
   private->new_layer_mode      = -1;
 
+  private->show_all            = 0;
+  private->bounding_box.x      = 0;
+  private->bounding_box.y      = 0;
+  private->bounding_box.width  = 0;
+  private->bounding_box.height = 0;
+
   private->colormap            = NULL;
   private->n_colors            = 0;
   private->palette             = NULL;
@@ -761,6 +775,18 @@ gimp_image_init (GimpImage *image)
                             G_CALLBACK (gimp_image_invalidate),
                             image);
 
+  private->layer_offset_x_handler =
+    gimp_container_add_handler (private->layers->container, "notify::offset-x",
+                                G_CALLBACK (gimp_image_layer_offset_changed),
+                                image);
+  private->layer_offset_y_handler =
+    gimp_container_add_handler (private->layers->container, "notify::offset-y",
+                                G_CALLBACK (gimp_image_layer_offset_changed),
+                                image);
+  private->layer_bounding_box_handler =
+    gimp_container_add_handler (private->layers->container, "bounding-box-changed",
+                                G_CALLBACK (gimp_image_layer_bounding_box_changed),
+                                image);
   private->layer_alpha_handler =
     gimp_container_add_handler (private->layers->container, "alpha-changed",
                                 G_CALLBACK (gimp_image_layer_alpha_changed),
@@ -838,6 +864,8 @@ gimp_image_constructed (GObject *object)
   private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 
   private->quick_mask_color = config->quick_mask_color;
+
+  gimp_image_update_bounding_box (image);
 
   if (private->base_type == GIMP_INDEXED)
     gimp_image_colormap_init (image);
@@ -1003,6 +1031,12 @@ gimp_image_dispose (GObject *object)
                                         gimp_image_invalidate,
                                         image);
 
+  gimp_container_remove_handler (private->layers->container,
+                                 private->layer_offset_x_handler);
+  gimp_container_remove_handler (private->layers->container,
+                                 private->layer_offset_y_handler);
+  gimp_container_remove_handler (private->layers->container,
+                                 private->layer_bounding_box_handler);
   gimp_container_remove_handler (private->layers->container,
                                  private->layer_alpha_handler);
 
@@ -1223,7 +1257,7 @@ gimp_image_size_changed (GimpViewable *viewable)
 
   gimp_image_metadata_update_pixel_size (image);
 
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+  gimp_image_update_bounding_box (image);
 }
 
 static gchar *
@@ -1474,9 +1508,7 @@ gimp_image_get_bounding_box (GimpProjectable *projectable)
 {
   GimpImage *image = GIMP_IMAGE (projectable);
 
-  return *GEGL_RECTANGLE (0, 0,
-                          gimp_image_get_width  (image),
-                          gimp_image_get_height (image));
+  return GIMP_IMAGE_GET_PRIVATE (image)->bounding_box;
 }
 
 static GeglNode *
@@ -1536,6 +1568,21 @@ gimp_image_mask_update (GimpDrawable *drawable,
                         GimpImage    *image)
 {
   GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.mask_changed = TRUE;
+}
+
+static void
+gimp_image_layer_offset_changed (GimpDrawable     *drawable,
+                                 const GParamSpec *pspec,
+                                 GimpImage        *image)
+{
+  gimp_image_update_bounding_box (image);
+}
+
+static void
+gimp_image_layer_bounding_box_changed (GimpDrawable *drawable,
+                                       GimpImage    *image)
+{
+  gimp_image_update_bounding_box (image);
 }
 
 static void
@@ -1639,6 +1686,51 @@ gimp_image_active_vectors_notify (GimpItemTree     *tree,
                                   GimpImage        *image)
 {
   g_signal_emit (image, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
+}
+
+static void
+gimp_image_update_bounding_box (GimpImage *image)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GeglRectangle     bounding_box;
+
+  bounding_box.x      = 0;
+  bounding_box.y      = 0;
+  bounding_box.width  = gimp_image_get_width  (image);
+  bounding_box.height = gimp_image_get_height (image);
+
+  if (private->show_all)
+    {
+      GList *iter;
+
+      for (iter = gimp_image_get_layer_iter (image);
+           iter;
+           iter = g_list_next (iter))
+        {
+          GimpLayer     *layer = iter->data;
+          GeglRectangle  layer_bounding_box;
+          gint           offset_x;
+          gint           offset_y;
+
+          gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+
+          layer_bounding_box = gimp_drawable_get_bounding_box (
+            GIMP_DRAWABLE (layer));
+
+          layer_bounding_box.x += offset_x;
+          layer_bounding_box.y += offset_y;
+
+          gegl_rectangle_bounding_box (&bounding_box,
+                                       &bounding_box, &layer_bounding_box);
+        }
+    }
+
+  if (! gegl_rectangle_equal (&bounding_box, &private->bounding_box))
+    {
+      private->bounding_box = bounding_box;
+
+      gimp_projectable_bounds_changed (GIMP_PROJECTABLE (image), 0, 0);
+    }
 }
 
 
@@ -3461,6 +3553,36 @@ gimp_image_inc_instance_count (GimpImage *image)
   GIMP_IMAGE_GET_PRIVATE (image)->instance_count++;
 }
 
+void
+gimp_image_inc_show_all_count (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->show_all++;
+
+  if (GIMP_IMAGE_GET_PRIVATE (image)->show_all == 1)
+    {
+      g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
+
+      gimp_image_update_bounding_box (image);
+    }
+}
+
+void
+gimp_image_dec_show_all_count (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->show_all--;
+
+  if (GIMP_IMAGE_GET_PRIVATE (image)->show_all == 0)
+    {
+      g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
+
+      gimp_image_update_bounding_box (image);
+    }
+}
+
 
 /*  parasites  */
 
@@ -4381,6 +4503,8 @@ gimp_image_add_layer (GimpImage *image,
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
 
+  gimp_image_update_bounding_box (image);
+
   return TRUE;
 }
 
@@ -4497,6 +4621,8 @@ gimp_image_remove_layer (GimpImage *image,
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
+
+  gimp_image_update_bounding_box (image);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
