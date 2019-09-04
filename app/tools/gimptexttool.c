@@ -502,7 +502,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
         }
     }
 
-  if (gimp_image_coords_in_active_pickable (image, coords, FALSE, FALSE))
+  if (gimp_image_coords_in_active_pickable (image, coords, FALSE, FALSE, FALSE))
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
       GimpItem     *item     = GIMP_ITEM (drawable);
