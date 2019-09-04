@@ -253,6 +253,7 @@ void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
+void            gimp_image_invalidate_all        (GimpImage          *image);
 void            gimp_image_guide_added           (GimpImage          *image,
                                                   GimpGuide          *guide);
 void            gimp_image_guide_removed         (GimpImage          *image,
