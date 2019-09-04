@@ -67,6 +67,9 @@ _("Context-dependent mouse pointers are helpful.  They are enabled by " \
 "Specify a default tool preset.  The tool preset is searched for in the " \
 "specified tool prests path."
 
+#define DEFAULT_SHOW_ALL_BLURB \
+_("Show full image content by default.")
+
 #define DEFAULT_DOT_FOR_DOT_BLURB \
 _("When enabled, this will ensure that each pixel of an image gets " \
   "mapped to a pixel on the screen.")

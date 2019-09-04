@@ -70,6 +70,8 @@ struct _GimpDisplayImplPrivate
   gint            instance;     /*  the instance # of this display as
                                  *  taken from the image at creation    */
 
+  GeglRectangle   bounding_box;
+
   GtkWidget      *shell;
   cairo_region_t *update_region;
 };
@@ -385,6 +387,8 @@ gimp_display_new (Gimp              *gimp,
 
   shell = gimp_display_get_shell (display);
 
+  gimp_display_update_bounding_box (display);
+
   gimp_image_window_add_shell (window, shell);
   gimp_display_shell_present (shell);
 
@@ -579,6 +583,8 @@ gimp_display_set_image (GimpDisplay *display,
   if (old_image)
     g_object_unref (old_image);
 
+  gimp_display_update_bounding_box (display);
+
   if (shell)
     {
       if (image)
@@ -651,6 +657,48 @@ gimp_display_fill (GimpDisplay *display,
 
   gimp_display_shell_fill (gimp_display_get_shell (display),
                            image, unit, scale);
+}
+
+void
+gimp_display_update_bounding_box (GimpDisplay *display)
+{
+  GimpDisplayImplPrivate *private;
+  GimpDisplayShell       *shell;
+  GeglRectangle           bounding_box = {};
+
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  private = GIMP_DISPLAY_IMPL (display)->priv;
+  shell   = gimp_display_get_shell (display);
+
+  if (shell)
+    {
+      bounding_box = gimp_display_shell_get_bounding_box (shell);
+
+      if (! gegl_rectangle_equal (&bounding_box, &private->bounding_box))
+        {
+          GeglRectangle diff_rects[4];
+          gint          n_diff_rects;
+          gint          i;
+
+          n_diff_rects = gegl_rectangle_subtract (diff_rects,
+                                                  &private->bounding_box,
+                                                  &bounding_box);
+
+          for (i = 0; i < n_diff_rects; i++)
+            {
+              gimp_display_paint_area (display,
+                                       diff_rects[i].x,     diff_rects[i].y,
+                                       diff_rects[i].width, diff_rects[i].height);
+            }
+
+          private->bounding_box = bounding_box;
+        }
+    }
+  else
+    {
+      private->bounding_box = bounding_box;
+    }
 }
 
 void
@@ -748,27 +796,25 @@ gimp_display_paint_area (GimpDisplay *display,
                          gint         w,
                          gint         h)
 {
-  GimpDisplayImplPrivate *private      = GIMP_DISPLAY_IMPL (display)->priv;
-  GimpDisplayShell       *shell        = gimp_display_get_shell (display);
-  gint                    image_width  = gimp_image_get_width  (private->image);
-  gint                    image_height = gimp_image_get_height (private->image);
+  GimpDisplayImplPrivate *private = GIMP_DISPLAY_IMPL (display)->priv;
+  GimpDisplayShell       *shell   = gimp_display_get_shell (display);
+  GeglRectangle           rect;
   gint                    x1, y1, x2, y2;
   gdouble                 x1_f, y1_f, x2_f, y2_f;
 
-  /*  Bounds check  */
-  x1 = CLAMP (x,     0, image_width);
-  y1 = CLAMP (y,     0, image_height);
-  x2 = CLAMP (x + w, 0, image_width);
-  y2 = CLAMP (y + h, 0, image_height);
-
-  x = x1;
-  y = y1;
-  w = (x2 - x1);
-  h = (y2 - y1);
+  if (! gegl_rectangle_intersect (&rect,
+                                  &private->bounding_box,
+                                  GEGL_RECTANGLE (x, y, w, h)))
+    {
+      return;
+    }
 
   /*  display the area  */
   gimp_display_shell_transform_bounds (shell,
-                                       x, y, x + w, y + h,
+                                       rect.x,
+                                       rect.y,
+                                       rect.x + rect.width,
+                                       rect.y + rect.height,
                                        &x1_f, &y1_f, &x2_f, &y2_f);
 
   /*  make sure to expose a superset of the transformed sub-pixel expose

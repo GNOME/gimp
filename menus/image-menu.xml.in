@@ -261,6 +261,7 @@
 
     <menu action="view-menu" name="View">
       <menuitem action="view-new" />
+      <menuitem action="view-show-all" />
       <menuitem action="view-dot-for-dot" />
       <menu action="view-zoom-menu" name="Zoom">
         <menuitem action="view-zoom-revert" />

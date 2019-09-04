@@ -143,6 +143,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gint               y;
   gint               width;
   gint               height;
+  GeglAbyssPolicy    abyss_policy;
   gint               filter = GEGL_BUFFER_FILTER_AUTO;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -166,13 +167,19 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   display_config = shell->display->config;
 
+  if (shell->show_all)
+    abyss_policy = GEGL_ABYSS_NONE;
+  else
+    abyss_policy = GEGL_ABYSS_CLAMP;
+
   if (display_config->zoom_quality != GIMP_ZOOM_QUALITY_HIGH)
     {
       filter = GEGL_BUFFER_FILTER_NEAREST;
     }
 
   image  = gimp_display_get_image (shell->display);
-  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
+  buffer = gimp_pickable_get_buffer (
+    gimp_display_shell_get_pickable (shell));
 #ifdef USE_NODE_BLIT
   node   = gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
 
@@ -265,7 +272,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GEGL_RECTANGLE (x, y, width, height), scale,
                            gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
                            shell->profile_data, shell->profile_stride,
-                           GEGL_ABYSS_CLAMP | filter);
+                           abyss_policy | filter);
 #else
           gegl_node_blit (node,
                           scale, GEGL_RECTANGLE (x, y, width, height),
@@ -283,7 +290,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GEGL_RECTANGLE (x, y, width, height), scale,
                            shell->filter_format,
                            shell->filter_data, shell->filter_stride,
-                           GEGL_ABYSS_CLAMP | filter);
+                           abyss_policy | filter);
 #else
           gegl_node_blit (node,
                           scale, GEGL_RECTANGLE (x, y, width, height),
@@ -396,7 +403,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GEGL_RECTANGLE (0, 0, width, height), 1.0,
                            babl_format ("cairo-ARGB32"),
                            cairo_data, cairo_stride,
-                           GEGL_ABYSS_CLAMP);
+                           GEGL_ABYSS_NONE);
         }
     }
   else
@@ -409,7 +416,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        GEGL_RECTANGLE (x, y, width, height), scale,
                        babl_format ("cairo-ARGB32"),
                        cairo_data, cairo_stride,
-                       GEGL_ABYSS_CLAMP | filter);
+                       abyss_policy | filter);
 #else
       gegl_node_blit (node,
                       scale, GEGL_RECTANGLE (x, y, width, height),

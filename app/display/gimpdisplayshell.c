@@ -45,6 +45,8 @@
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-snap.h"
+#include "core/gimppickable.h"
+#include "core/gimpprojectable.h"
 #include "core/gimpprojection.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptemplate.h"
@@ -99,7 +101,8 @@ enum
   PROP_UNIT,
   PROP_TITLE,
   PROP_STATUS,
-  PROP_ICON
+  PROP_ICON,
+  PROP_SHOW_ALL
 };
 
 enum
@@ -289,6 +292,12 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                         GDK_TYPE_PIXBUF,
                                                         GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_SHOW_ALL,
+                                   g_param_spec_boolean ("show-all",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+
   gtk_widget_class_set_css_name (widget_class, "GimpDisplayShell");
 }
 
@@ -315,6 +324,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scale_y     = 1.0;
 
   shell->show_image  = TRUE;
+
+  shell->show_all    = FALSE;
 
   gimp_display_shell_items_init (shell);
 
@@ -714,6 +725,8 @@ gimp_display_shell_constructed (GObject *object)
 
   /* make sure the information is up-to-date */
   gimp_display_shell_scale_update (shell);
+
+  gimp_display_shell_set_show_all (shell, config->default_show_all);
 }
 
 static void
@@ -836,6 +849,9 @@ gimp_display_shell_set_property (GObject      *object,
         g_object_unref (shell->icon);
       shell->icon = g_value_dup_object (value);
       break;
+    case PROP_SHOW_ALL:
+      gimp_display_shell_set_show_all (shell, g_value_get_boolean (value));
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -873,6 +889,9 @@ gimp_display_shell_get_property (GObject    *object,
       break;
     case PROP_ICON:
       g_value_set_object (value, shell->icon);
+      break;
+    case PROP_SHOW_ALL:
+      g_value_set_boolean (value, shell->show_all);
       break;
 
     default:
@@ -1441,6 +1460,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   config = shell->display->config;
   window = gimp_display_shell_get_window (shell);
 
+  shell->show_image  = TRUE;
+
   shell->dot_for_dot = config->default_dot_for_dot;
 
   gimp_display_shell_set_unit (shell, unit);
@@ -1475,6 +1496,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
     g_idle_add_full (GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE,
                      (GSourceFunc) gimp_display_shell_fill_idle, shell,
                      NULL);
+
+  gimp_display_shell_set_show_all (shell, config->default_show_all);
 }
 
 void
@@ -1739,6 +1762,84 @@ gimp_display_shell_set_show_image (GimpDisplayShell *shell,
 
       gimp_display_shell_expose_full (shell);
     }
+}
+
+void
+gimp_display_shell_set_show_all (GimpDisplayShell *shell,
+                                 gboolean          show_all)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (show_all != shell->show_all)
+    {
+      GimpImage *image = gimp_display_get_image (shell->display);
+
+      shell->show_all = show_all;
+
+      if (image)
+        {
+          if (show_all)
+            gimp_image_inc_show_all_count (image);
+          else
+            gimp_image_dec_show_all_count (image);
+
+          gimp_image_flush (image);
+        }
+
+      gimp_display_update_bounding_box (shell->display);
+
+      gimp_display_shell_expose_full (shell);
+
+      g_object_notify (G_OBJECT (shell), "show-all");
+    }
+}
+
+
+GimpPickable *
+gimp_display_shell_get_pickable (GimpDisplayShell *shell)
+{
+  GimpImage *image;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      if (! shell->show_all)
+        return GIMP_PICKABLE (image);
+      else
+        return GIMP_PICKABLE (gimp_image_get_projection (image));
+    }
+
+  return NULL;
+}
+
+GeglRectangle
+gimp_display_shell_get_bounding_box (GimpDisplayShell *shell)
+{
+  GeglRectangle  bounding_box = {};
+  GimpImage     *image;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), bounding_box);
+
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      if (! shell->show_all)
+        {
+          bounding_box.width  = gimp_image_get_width  (image);
+          bounding_box.height = gimp_image_get_height (image);
+        }
+      else
+        {
+          bounding_box = gimp_projectable_get_bounding_box (
+            GIMP_PROJECTABLE (image));
+        }
+    }
+
+  return bounding_box;
 }
 
 void

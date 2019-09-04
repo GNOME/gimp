@@ -34,6 +34,18 @@ void     gimp_display_shell_scale_get_image_bounds   (GimpDisplayShell *shell,
                                                       gint             *y,
                                                       gint             *w,
                                                       gint             *h);
+void     gimp_display_shell_scale_get_image_bounding_box
+                                                     (GimpDisplayShell *shell,
+                                                      gint             *x,
+                                                      gint             *y,
+                                                      gint             *w,
+                                                      gint             *h);
+void     gimp_display_shell_scale_get_image_unrotated_bounding_box
+                                                     (GimpDisplayShell *shell,
+                                                      gint             *x,
+                                                      gint             *y,
+                                                      gint             *w,
+                                                      gint             *h);
 gboolean gimp_display_shell_scale_image_is_within_viewport
                                                      (GimpDisplayShell *shell,
                                                       gboolean         *horizontally,

@@ -30,16 +30,21 @@
 
 /*  local function prototypes  */
 
-static void   gimp_display_update_handler (GimpProjection *projection,
-                                           gboolean        now,
-                                           gint            x,
-                                           gint            y,
-                                           gint            w,
-                                           gint            h,
-                                           GimpDisplay    *display);
-static void   gimp_display_flush_handler  (GimpImage      *image,
-                                           gboolean        invalidate_preview,
-                                           GimpDisplay    *display);
+static void   gimp_display_update_handler         (GimpProjection *projection,
+                                                   gboolean        now,
+                                                   gint            x,
+                                                   gint            y,
+                                                   gint            w,
+                                                   gint            h,
+                                                   GimpDisplay    *display);
+
+static void   gimp_display_bounds_changed_handler (GimpImage      *image,
+                                                   gint            old_x,
+                                                   gint            old_y,
+                                                   GimpDisplay    *display);
+static void   gimp_display_flush_handler          (GimpImage      *image,
+                                                   gboolean        invalidate_preview,
+                                                   GimpDisplay    *display);
 
 
 /*  public functions  */
@@ -59,6 +64,9 @@ gimp_display_connect (GimpDisplay *display)
                     G_CALLBACK (gimp_display_update_handler),
                     display);
 
+  g_signal_connect (image, "bounds-changed",
+                    G_CALLBACK (gimp_display_bounds_changed_handler),
+                    display);
   g_signal_connect (image, "flush",
                     G_CALLBACK (gimp_display_flush_handler),
                     display);
@@ -77,6 +85,9 @@ gimp_display_disconnect (GimpDisplay *display)
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_flush_handler,
+                                        display);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_bounds_changed_handler,
                                         display);
 
   g_signal_handlers_disconnect_by_func (gimp_image_get_projection (image),
@@ -97,6 +108,15 @@ gimp_display_update_handler (GimpProjection *projection,
                              GimpDisplay    *display)
 {
   gimp_display_update_area (display, now, x, y, w, h);
+}
+
+static void
+gimp_display_bounds_changed_handler (GimpImage   *image,
+                                     gint         old_x,
+                                     gint         old_y,
+                                     GimpDisplay *display)
+{
+  gimp_display_update_bounding_box (display);
 }
 
 static void
