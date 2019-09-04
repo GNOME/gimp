@@ -30,6 +30,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
+#include "core/gimpimageviewable.h"
 #include "core/gimplayer.h"
 #include "core/gimppalette.h"
 
@@ -62,7 +63,8 @@ gimp_view_renderer_type_from_viewable_type (GType viewable_type)
     {
       type = GIMP_TYPE_VIEW_RENDERER_BUFFER;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE) ||
+           g_type_is_a (viewable_type, GIMP_TYPE_IMAGE_VIEWABLE))
     {
       type = GIMP_TYPE_VIEW_RENDERER_IMAGE;
     }

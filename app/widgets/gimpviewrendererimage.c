@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpimageviewable.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpviewrendererimage.h"
@@ -62,8 +63,26 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
   GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
-  GimpImage             *image         = GIMP_IMAGE (renderer->viewable);
+  GimpImage             *image;
   const gchar           *icon_name;
+  gint                   width;
+  gint                   height;
+
+  if (GIMP_IS_IMAGE (renderer->viewable))
+    {
+      image = GIMP_IMAGE (renderer->viewable);
+    }
+  else if (GIMP_IS_IMAGE_VIEWABLE (renderer->viewable))
+    {
+      image = gimp_image_viewable_get_image (
+        GIMP_IMAGE_VIEWABLE (renderer->viewable));
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
+
+  gimp_viewable_get_size (renderer->viewable, &width, &height);
 
   /* The conditions checked here are mostly a hack to hide the fact that
    * we are creating the channel preview from the image preview and turning
@@ -82,8 +101,8 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
       gimp_image_get_resolution (image, &xres, &yres);
 
-      gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
-                                       gimp_image_get_height (image),
+      gimp_viewable_calc_preview_size (width,
+                                       height,
                                        renderer->width,
                                        renderer->height,
                                        renderer->dot_for_dot,
@@ -99,8 +118,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                     renderer->context,
-                                                    gimp_image_get_width  (image),
-                                                    gimp_image_get_height (image));
+                                                    width, height);
 
           if (temp_buf)
             {
