@@ -407,6 +407,74 @@ void            gimp_value_take_rgb_array       (GValue        *value,
                                                  gsize          length);
 
 
+/*
+ * GIMP_TYPE_OBJECT_ARRAY
+ */
+
+typedef struct _GimpObjectArray GimpObjectArray;
+
+struct _GimpObjectArray
+{
+  GType     object_type;
+  GObject **data;
+  gsize     length;
+  gboolean  static_data;
+};
+
+GimpObjectArray * gimp_object_array_new  (GType                  object_type,
+                                          GObject              **data,
+                                          gsize                  length,
+                                          gboolean               static_data);
+GimpObjectArray * gimp_object_array_copy (const GimpObjectArray  *array);
+void              gimp_object_array_free (GimpObjectArray        *array);
+
+#define GIMP_TYPE_OBJECT_ARRAY               (gimp_object_array_get_type ())
+#define GIMP_VALUE_HOLDS_OBJECT_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_OBJECT_ARRAY))
+
+GType   gimp_object_array_get_type           (void) G_GNUC_CONST;
+
+
+/*
+ * GIMP_TYPE_PARAM_OBJECT_ARRAY
+ */
+
+#define GIMP_TYPE_PARAM_OBJECT_ARRAY           (gimp_param_object_array_get_type ())
+#define GIMP_PARAM_SPEC_OBJECT_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_OBJECT_ARRAY, GimpParamSpecObjectArray))
+#define GIMP_IS_PARAM_SPEC_OBJECT_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_OBJECT_ARRAY))
+
+typedef struct _GimpParamSpecObjectArray GimpParamSpecObjectArray;
+
+struct _GimpParamSpecObjectArray
+{
+  GParamSpecBoxed parent_instance;
+
+  GType           object_type;
+};
+
+GType         gimp_param_object_array_get_type   (void) G_GNUC_CONST;
+
+GParamSpec  * gimp_param_spec_object_array       (const gchar   *name,
+                                                  const gchar   *nick,
+                                                  const gchar   *blurb,
+                                                  GType          object_type,
+                                                  GParamFlags    flags);
+
+GObject    ** gimp_value_get_object_array        (const GValue  *value);
+GObject    ** gimp_value_dup_object_array        (const GValue  *value);
+void          gimp_value_set_object_array        (GValue        *value,
+                                                  GType          object_type,
+                                                  GObject      **array,
+                                                  gsize          length);
+void          gimp_value_set_static_object_array (GValue        *value,
+                                                  GType          object_type,
+                                                  GObject      **array,
+                                                  gsize          length);
+void          gimp_value_take_object_array       (GValue        *value,
+                                                  GType          object_type,
+                                                  GObject      **array,
+                                                  gsize          length);
+
+
 G_END_DECLS
 
 #endif  /*  __GIMP_PARAM_SPECS_H__  */
