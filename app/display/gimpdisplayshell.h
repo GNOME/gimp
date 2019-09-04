@@ -123,6 +123,7 @@ struct _GimpDisplayShell
   GimpCanvasItem    *grid;             /*  item proxy of the grid             */
   GimpCanvasItem    *guides;           /*  item proxies of guides             */
   GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
+  GimpCanvasItem    *canvas_boundary;  /*  item for the cabvas boundary       */
   GimpCanvasItem    *layer_boundary;   /*  item for the layer boundary        */
   GimpCanvasItem    *tool_items;       /*  tools items, below the cursor      */
   GimpCanvasItem    *cursor;           /*  item for the software cursor       */

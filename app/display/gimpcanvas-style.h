@@ -45,6 +45,10 @@ void   gimp_canvas_set_layer_style         (GtkWidget     *canvas,
                                             GimpLayer     *layer,
                                             gdouble        offset_x,
                                             gdouble        offset_y);
+void   gimp_canvas_set_canvas_style        (GtkWidget     *canvas,
+                                            cairo_t       *cr,
+                                            gdouble        offset_x,
+                                            gdouble        offset_y);
 void   gimp_canvas_set_selection_out_style (GtkWidget     *canvas,
                                             cairo_t       *cr,
                                             gdouble        offset_x,

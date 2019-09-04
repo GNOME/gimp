@@ -47,6 +47,7 @@ enum
   PROP_SHOW_SCROLLBARS,
   PROP_SHOW_SELECTION,
   PROP_SHOW_LAYER_BOUNDARY,
+  PROP_SHOW_CANVAS_BOUNDARY,
   PROP_SHOW_GUIDES,
   PROP_SHOW_GRID,
   PROP_SHOW_SAMPLE_POINTS,
@@ -145,6 +146,13 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                             "show-layer-boundary",
                             "Show layer boundary",
                             SHOW_LAYER_BOUNDARY_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
+                            "show-canvas-boundary",
+                            "Show canvas boundary",
+                            SHOW_CANVAS_BOUNDARY_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -266,6 +274,13 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
+                            "show-canvas-boundary",
+                            "Show canvas boundary",
+                            SHOW_CANVAS_BOUNDARY_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                             "show-guides",
                             "Show guides",
@@ -367,6 +382,13 @@ gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
+                            "show-canvas-boundary",
+                            "Show canvas boundary",
+                            SHOW_CANVAS_BOUNDARY_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                             "show-guides",
                             "Show guides",
@@ -451,6 +473,9 @@ gimp_display_options_set_property (GObject      *object,
     case PROP_SHOW_LAYER_BOUNDARY:
       options->show_layer_boundary = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_CANVAS_BOUNDARY:
+      options->show_canvas_boundary = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_GUIDES:
       options->show_guides = g_value_get_boolean (value);
       break;
@@ -512,6 +537,9 @@ gimp_display_options_get_property (GObject    *object,
       break;
     case PROP_SHOW_LAYER_BOUNDARY:
       g_value_set_boolean (value, options->show_layer_boundary);
+      break;
+    case PROP_SHOW_CANVAS_BOUNDARY:
+      g_value_set_boolean (value, options->show_canvas_boundary);
       break;
     case PROP_SHOW_GUIDES:
       g_value_set_boolean (value, options->show_guides);

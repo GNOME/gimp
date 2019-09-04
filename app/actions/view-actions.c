@@ -237,6 +237,13 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY },
 
+  { "view-show-canvas-boundary", NULL,
+    NC_("view-action", "Show Canvas Bounda_ry"), NULL,
+    NC_("view-action", "Draw a border around the canvas"),
+    view_toggle_canvas_boundary_cmd_callback,
+    TRUE,
+    GIMP_HELP_VIEW_SHOW_CANVAS_BOUNDARY },
+
   { "view-show-guides", NULL,
     NC_("view-action", "Show _Guides"), "<primary><shift>T",
     NC_("view-action", "Display the image's guides"),
@@ -1004,25 +1011,27 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-softproof-gamut-check",                  gammut);
   SET_SENSITIVE ("view-color-management-reset",                 image);
 
-  SET_SENSITIVE ("view-show-selection",      image);
-  SET_ACTIVE    ("view-show-selection",      display && options->show_selection);
-  SET_SENSITIVE ("view-show-layer-boundary", image);
-  SET_ACTIVE    ("view-show-layer-boundary", display && options->show_layer_boundary);
-  SET_SENSITIVE ("view-show-guides",         image);
-  SET_ACTIVE    ("view-show-guides",         display && options->show_guides);
-  SET_SENSITIVE ("view-show-grid",           image);
-  SET_ACTIVE    ("view-show-grid",           display && options->show_grid);
-  SET_SENSITIVE ("view-show-sample-points",  image);
-  SET_ACTIVE    ("view-show-sample-points",  display && options->show_sample_points);
+  SET_SENSITIVE ("view-show-selection",       image);
+  SET_ACTIVE    ("view-show-selection",       display && options->show_selection);
+  SET_SENSITIVE ("view-show-layer-boundary",  image);
+  SET_ACTIVE    ("view-show-layer-boundary",  display && options->show_layer_boundary);
+  SET_SENSITIVE ("view-show-canvas-boundary", image);
+  SET_ACTIVE    ("view-show-canvas-boundary", display && options->show_canvas_boundary);
+  SET_SENSITIVE ("view-show-guides",          image);
+  SET_ACTIVE    ("view-show-guides",          display && options->show_guides);
+  SET_SENSITIVE ("view-show-grid",            image);
+  SET_ACTIVE    ("view-show-grid",            display && options->show_grid);
+  SET_SENSITIVE ("view-show-sample-points",   image);
+  SET_ACTIVE    ("view-show-sample-points",   display && options->show_sample_points);
 
-  SET_SENSITIVE ("view-snap-to-guides",      image);
-  SET_ACTIVE    ("view-snap-to-guides",      display && options->snap_to_guides);
-  SET_SENSITIVE ("view-snap-to-grid",        image);
-  SET_ACTIVE    ("view-snap-to-grid",        display && options->snap_to_grid);
-  SET_SENSITIVE ("view-snap-to-canvas",      image);
-  SET_ACTIVE    ("view-snap-to-canvas",      display && options->snap_to_canvas);
-  SET_SENSITIVE ("view-snap-to-vectors",     image);
-  SET_ACTIVE    ("view-snap-to-vectors",     display && options->snap_to_path);
+  SET_SENSITIVE ("view-snap-to-guides",       image);
+  SET_ACTIVE    ("view-snap-to-guides",       display && options->snap_to_guides);
+  SET_SENSITIVE ("view-snap-to-grid",         image);
+  SET_ACTIVE    ("view-snap-to-grid",         display && options->snap_to_grid);
+  SET_SENSITIVE ("view-snap-to-canvas",       image);
+  SET_ACTIVE    ("view-snap-to-canvas",       display && options->snap_to_canvas);
+  SET_SENSITIVE ("view-snap-to-vectors",      image);
+  SET_ACTIVE    ("view-snap-to-vectors",      display && options->snap_to_path);
 
   if (display && options->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
     SET_COLOR ("view-padding-color-menu", &options->padding_color);

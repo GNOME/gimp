@@ -105,6 +105,7 @@
 #define GIMP_HELP_VIEW_COLOR_MANAGEMENT           "gimp-view-color-management"
 #define GIMP_HELP_VIEW_SHOW_SELECTION             "gimp-view-show-selection"
 #define GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY        "gimp-view-show-layer-boundary"
+#define GIMP_HELP_VIEW_SHOW_CANVAS_BOUNDARY       "gimp-view-show-canvas-boundary"
 #define GIMP_HELP_VIEW_SHOW_GUIDES                "gimp-view-show-guides"
 #define GIMP_HELP_VIEW_SHOW_GRID                  "gimp-view-show-grid"
 #define GIMP_HELP_VIEW_SHOW_SAMPLE_POINTS         "gimp-view-show-sample-points"

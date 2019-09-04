@@ -48,6 +48,7 @@ struct _GimpDisplayOptions
   gboolean               show_scrollbars;
   gboolean               show_selection;
   gboolean               show_layer_boundary;
+  gboolean               show_canvas_boundary;
   gboolean               show_guides;
   gboolean               show_grid;
   gboolean               show_sample_points;

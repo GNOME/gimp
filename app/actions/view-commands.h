@@ -126,6 +126,9 @@ void   view_toggle_selection_cmd_callback           (GimpAction *action,
 void   view_toggle_layer_boundary_cmd_callback      (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
+void   view_toggle_canvas_boundary_cmd_callback     (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 void   view_toggle_menubar_cmd_callback             (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);

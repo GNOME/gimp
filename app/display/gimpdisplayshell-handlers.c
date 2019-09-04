@@ -48,6 +48,7 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpcanvascanvasboundary.h"
 #include "gimpcanvasguide.h"
 #include "gimpcanvaslayerboundary.h"
 #include "gimpcanvaspath.h"
@@ -388,6 +389,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                         gimp_image_get_active_layer (image));
 
+  gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
+                                         image);
+
   if (shell->show_all)
     {
       gimp_image_inc_show_all_count (image);
@@ -421,6 +425,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                         NULL);
+
+  gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
+                                         NULL);
 
   g_signal_handlers_disconnect_by_func (color_config,
                                         gimp_display_shell_color_config_notify_handler,

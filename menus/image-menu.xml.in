@@ -335,6 +335,7 @@
       <separator />
       <menuitem action="view-show-selection" />
       <menuitem action="view-show-layer-boundary" />
+      <menuitem action="view-show-canvas-boundary" />
       <menuitem action="view-show-guides" />
       <menuitem action="view-show-grid" />
       <menuitem action="view-show-sample-points" />

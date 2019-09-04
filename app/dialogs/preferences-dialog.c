@@ -962,6 +962,9 @@ prefs_display_options_frame_add (Gimp         *gimp,
   prefs_check_button_add (object, "show-layer-boundary",
                           _("Show _layer boundary"),
                           GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "show-canvas-boundary",
+                          _("Show can_vas boundary"),
+                          GTK_BOX (checks_vbox));
   prefs_check_button_add (object, "show-guides",
                           _("Show _guides"),
                           GTK_BOX (checks_vbox));

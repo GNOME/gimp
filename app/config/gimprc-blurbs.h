@@ -406,6 +406,10 @@ _("When enabled, the selection is visible by default. This can also be " \
 _("When enabled, the layer boundary is visible by default. This can also " \
   "be toggled with the \"View->Show Layer Boundary\" command.")
 
+#define SHOW_CANVAS_BOUNDARY_BLURB \
+_("When enabled, the canvas boundary is visible by default. This can also " \
+  "be toggled with the \"View->Show Canvas Boundary\" command.")
+
 #define SHOW_GUIDES_BLURB \
 _("When enabled, the guides are visible by default. This can also be " \
   "toggled with the \"View->Show Guides\" command.")

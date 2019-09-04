@@ -40,6 +40,8 @@ libappdisplay_a_sources = \
 	gimpcanvasboundary.h			\
 	gimpcanvasbufferpreview.c		\
 	gimpcanvasbufferpreview.h		\
+	gimpcanvascanvasboundary.c		\
+	gimpcanvascanvasboundary.h		\
 	gimpcanvascorner.c			\
 	gimpcanvascorner.h			\
 	gimpcanvascursor.c			\
