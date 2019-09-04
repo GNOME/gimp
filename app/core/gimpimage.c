@@ -37,6 +37,7 @@
 #include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimp.h"
 #include "gimp-memsize.h"
@@ -222,6 +223,10 @@ static void         gimp_image_srgb_to_pixel     (GimpPickable      *pickable,
                                                   const Babl        *format,
                                                   gpointer           pixel);
 
+static void     gimp_image_projection_buffer_notify
+                                                 (GimpProjection    *projection,
+                                                  const GParamSpec  *pspec,
+                                                  GimpImage         *image);
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
                                                   gint               y,
@@ -734,6 +739,7 @@ gimp_image_init (GimpImage *image)
   private->bounding_box.y      = 0;
   private->bounding_box.width  = 0;
   private->bounding_box.height = 0;
+  private->pickable_buffer     = NULL;
 
   private->colormap            = NULL;
   private->n_colors            = 0;
@@ -773,6 +779,10 @@ gimp_image_init (GimpImage *image)
                                                      GIMP_TYPE_ITEM_STACK,
                                                      GIMP_TYPE_VECTORS);
   private->layer_stack         = NULL;
+
+  g_signal_connect (private->projection, "notify::buffer",
+                    G_CALLBACK (gimp_image_projection_buffer_notify),
+                    image);
 
   g_signal_connect (private->layers, "notify::active-item",
                     G_CALLBACK (gimp_image_active_layer_notify),
@@ -1092,6 +1102,7 @@ gimp_image_finalize (GObject *object)
   if (private->color_profile)
     _gimp_image_free_color_profile (image);
 
+  g_clear_object (&private->pickable_buffer);
   g_clear_object (&private->metadata);
   g_clear_object (&private->file);
   g_clear_object (&private->imported_file);
@@ -1270,6 +1281,8 @@ gimp_image_size_changed (GimpViewable *viewable)
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
 
   gimp_image_metadata_update_pixel_size (image);
+
+  g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
 
   gimp_image_update_bounding_box (image);
 }
@@ -1464,9 +1477,30 @@ gimp_image_pickable_flush (GimpPickable *pickable)
 static GeglBuffer *
 gimp_image_get_buffer (GimpPickable *pickable)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+  GimpImage        *image   = GIMP_IMAGE (pickable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
+  if (! private->pickable_buffer)
+    {
+      GeglBuffer *buffer;
+
+      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
+
+      if (! private->show_all)
+        {
+          private->pickable_buffer = g_object_ref (buffer);
+        }
+      else
+        {
+          private->pickable_buffer = gegl_buffer_create_sub_buffer (
+            buffer,
+            GEGL_RECTANGLE (0, 0,
+                            gimp_image_get_width  (image),
+                            gimp_image_get_height (image)));
+        }
+    }
+
+  return private->pickable_buffer;
 }
 
 static gboolean
@@ -1476,10 +1510,19 @@ gimp_image_get_pixel_at (GimpPickable *pickable,
                          const Babl   *format,
                          gpointer      pixel)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+  GimpImage        *image   = GIMP_IMAGE (pickable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return gimp_pickable_get_pixel_at (GIMP_PICKABLE (private->projection),
-                                     x, y, format, pixel);
+  if (x >= 0                            &&
+      y >= 0                            &&
+      x < gimp_image_get_width  (image) &&
+      y < gimp_image_get_height (image))
+    {
+      return gimp_pickable_get_pixel_at (GIMP_PICKABLE (private->projection),
+                                         x, y, format, pixel);
+    }
+
+  return FALSE;
 }
 
 static gdouble
@@ -1487,10 +1530,19 @@ gimp_image_get_opacity_at (GimpPickable *pickable,
                            gint          x,
                            gint          y)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+  GimpImage        *image   = GIMP_IMAGE (pickable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return gimp_pickable_get_opacity_at (GIMP_PICKABLE (private->projection),
-                                       x, y);
+  if (x >= 0                            &&
+      y >= 0                            &&
+      x < gimp_image_get_width  (image) &&
+      y < gimp_image_get_height (image))
+    {
+      return gimp_pickable_get_opacity_at (GIMP_PICKABLE (private->projection),
+                                           x, y);
+    }
+
+  return FALSE;
 }
 
 static void
@@ -1499,10 +1551,10 @@ gimp_image_get_pixel_average (GimpPickable        *pickable,
                               const Babl          *format,
                               gpointer             pixel)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+  GeglBuffer *buffer = gimp_pickable_get_buffer (pickable);
 
-  return gimp_pickable_get_pixel_average (GIMP_PICKABLE (private->projection),
-                                          rect, format, pixel);
+  return gimp_gegl_average_color (buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
+                                  pixel);
 }
 
 static void
@@ -1579,6 +1631,14 @@ gimp_image_get_graph (GimpProjectable *projectable)
                         output,        "input");
 
   return private->graph;
+}
+
+static void
+gimp_image_projection_buffer_notify (GimpProjection   *projection,
+                                     const GParamSpec *pspec,
+                                     GimpImage        *image)
+{
+  g_clear_object (&GIMP_IMAGE_GET_PRIVATE (image)->pickable_buffer);
 }
 
 static void
