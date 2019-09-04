@@ -711,6 +711,108 @@ script_fu_marshal_procedure_call (scheme   *sc,
 #endif
             }
         }
+      else if (GIMP_VALUE_HOLDS_DISPLAY (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpDisplay *display =
+                gimp_display_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, display);
+#if DEBUG_MARSHALL
+              g_printerr ("      display arg is '%d'\n",
+                          gimp_display_get_id (display));
+#endif
+            }
+        }
+      else if (GIMP_VALUE_HOLDS_IMAGE (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpImage *image =
+                gimp_image_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, image);
+#if DEBUG_MARSHALL
+              g_printerr ("      image arg is '%d'\n",
+                          gimp_image_get_id (image));
+#endif
+            }
+        }
+      else if (GIMP_VALUE_HOLDS_LAYER (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpLayer *layer =
+                gimp_layer_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, layer);
+#if DEBUG_MARSHALL
+              g_printerr ("      layer arg is '%d'\n",
+                          gimp_item_get_id (GIMP_ITEM (layer)));
+#endif
+            }
+        }
+      else if (GIMP_VALUE_HOLDS_CHANNEL (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpChannel *channel =
+                gimp_channel_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, channel);
+#if DEBUG_MARSHALL
+              g_printerr ("      channel arg is '%d'\n",
+                          gimp_item_get_id (GIMP_ITEM (channel)));
+#endif
+            }
+        }
+      else if (GIMP_VALUE_HOLDS_DRAWABLE (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpDrawable *drawable =
+                gimp_drawable_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, drawable);
+#if DEBUG_MARSHALL
+              g_printerr ("      drawable arg is '%d'\n",
+                          gimp_item_get_id (GIMP_ITEM (drawable)));
+#endif
+            }
+        }
+      else if (GIMP_VALUE_HOLDS_VECTORS (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpVectors *vectors =
+                gimp_vectors_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, vectors);
+#if DEBUG_MARSHALL
+              g_printerr ("      vectors arg is '%d'\n",
+                          gimp_item_get_id (GIMP_ITEM (vectors)));
+#endif
+            }
+        }
       else if (GIMP_VALUE_HOLDS_INT32_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
