@@ -651,6 +651,33 @@ gimp_canvas_item_transform_distance_square (GimpCanvasItem   *item,
   return SQR (tx2 - tx1) + SQR (ty2 - ty1);
 }
 
+void
+gimp_canvas_item_untransform_viewport (GimpCanvasItem *item,
+                                       gint           *x,
+                                       gint           *y,
+                                       gint           *w,
+                                       gint           *h)
+{
+  GimpDisplayShell *shell;
+  gdouble           x1, y1;
+  gdouble           x2, y2;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  shell = item->private->shell;
+
+  gimp_display_shell_unrotate_bounds (shell,
+                                      0.0,               0.0,
+                                      shell->disp_width, shell->disp_height,
+                                      &x1,               &y1,
+                                      &x2,               &y2);
+
+  *x = floor (x1);
+  *y = floor (y1);
+  *w = ceil  (x2) - *x;
+  *h = ceil  (y2) - *y;
+}
+
 
 /*  protected functions  */
 
