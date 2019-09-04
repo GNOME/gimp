@@ -29,6 +29,7 @@
 
 #include "core/gimp-cairo.h"
 #include "core/gimp-utils.h"
+#include "core/gimpimage.h"
 
 #include "gimpcanvas.h"
 #include "gimpcanvas-style.h"
@@ -95,8 +96,12 @@ void
 gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
                                       cairo_t          *cr)
 {
+  GimpImage *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
+
+  image = gimp_display_get_image (shell->display);
 
   if (G_UNLIKELY (! shell->checkerboard))
     {
@@ -122,7 +127,12 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
     }
 
   cairo_translate (cr, - shell->offset_x, - shell->offset_y);
-  cairo_set_source (cr, shell->checkerboard);
+
+  if (gimp_image_get_component_visible (image, GIMP_CHANNEL_ALPHA))
+    cairo_set_source (cr, shell->checkerboard);
+  else
+    cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+
   cairo_paint (cr);
 }
 

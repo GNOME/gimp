@@ -91,6 +91,10 @@ static void   gimp_display_shell_name_changed_handler       (GimpImage        *i
 static void   gimp_display_shell_selection_invalidate_handler
                                                             (GimpImage        *image,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_component_visibility_changed_handler
+                                                            (GimpImage        *image,
+                                                             GimpChannelType   channel,
+                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_size_changed_detailed_handler
                                                             (GimpImage        *image,
                                                              gint              previous_origin_x,
@@ -220,6 +224,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
   g_signal_connect (image, "selection-invalidate",
                     G_CALLBACK (gimp_display_shell_selection_invalidate_handler),
+                    shell);
+  g_signal_connect (image, "component-visibility-changed",
+                    G_CALLBACK (gimp_display_shell_component_visibility_changed_handler),
                     shell);
   g_signal_connect (image, "size-changed-detailed",
                     G_CALLBACK (gimp_display_shell_size_changed_detailed_handler),
@@ -547,6 +554,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_resolution_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_component_visibility_changed_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_size_changed_detailed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
@@ -798,6 +808,15 @@ gimp_display_shell_sample_point_move_handler (GimpImage        *image,
   gimp_sample_point_get_position (sample_point, &x, &y);
 
   gimp_canvas_sample_point_set (item, x, y);
+}
+
+static void
+gimp_display_shell_component_visibility_changed_handler (GimpImage        *image,
+                                                         GimpChannelType   channel,
+                                                         GimpDisplayShell *shell)
+{
+  if (channel == GIMP_CHANNEL_ALPHA && shell->show_all)
+    gimp_display_shell_expose_full (shell);
 }
 
 static void
