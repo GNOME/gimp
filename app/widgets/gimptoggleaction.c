@@ -74,7 +74,7 @@ gimp_toggle_action_connect_proxy (GtkAction *action,
 static void
 gimp_toggle_action_toggled (GtkToggleAction *action)
 {
-  gboolean value = gimp_toggle_action_get_active (action);
+  gboolean value = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   gimp_action_emit_change_state (GIMP_ACTION (action),
                                  g_variant_new_boolean (value));

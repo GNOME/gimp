@@ -139,7 +139,9 @@ window_move_to_screen_cmd_callback (GimpAction *action,
                                     gpointer    data)
 {
   GtkWidget *widget;
+#if 0
   GdkScreen *screen;
+#endif
   return_if_no_widget (widget, data);
 
 #if 0
