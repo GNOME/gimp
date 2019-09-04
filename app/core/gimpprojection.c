@@ -676,7 +676,7 @@ gimp_projection_flush_whenever (GimpProjection *proj,
           gimp_projection_chunk_render_start (proj);
         }
     }
-  else if (! now && proj->priv->invalidate_preview)
+  else if (! now && ! proj->priv->iter && proj->priv->invalidate_preview)
     {
       /* invalidate the preview here since it is constructed from
        * the projection
