@@ -417,7 +417,13 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
     }
 
   for (list = edit_select->live_items; list; list = g_list_next (list))
-    gimp_item_start_transform (GIMP_ITEM (list->data), TRUE);
+    {
+      GimpItem *item = list->data;
+
+      gimp_viewable_preview_freeze (GIMP_VIEWABLE (item));
+
+      gimp_item_start_transform (item, TRUE);
+    }
 
   tool_manager_push_tool (display->gimp, tool);
 
@@ -471,7 +477,13 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
                                   TRUE);
 
   for (list = edit_select->live_items; list; list = g_list_next (list))
-    gimp_item_end_transform (GIMP_ITEM (list->data), TRUE);
+    {
+      GimpItem *item = list->data;
+
+      gimp_item_end_transform (item, TRUE);
+
+      gimp_viewable_preview_thaw (GIMP_VIEWABLE (item));
+    }
 
   gimp_image_undo_group_end (image);
 
