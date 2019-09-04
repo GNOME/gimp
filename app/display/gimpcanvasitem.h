@@ -125,6 +125,12 @@ gdouble          gimp_canvas_item_transform_distance_square
                                                     gdouble           y1,
                                                     gdouble           x2,
                                                     gdouble           y2);
+void             gimp_canvas_item_untransform_viewport
+                                                   (GimpCanvasItem   *item,
+                                                    gint             *x,
+                                                    gint             *y,
+                                                    gint             *w,
+                                                    gint             *h);
 
 
 /*  protected  */
