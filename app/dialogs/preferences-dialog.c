@@ -968,6 +968,9 @@ prefs_display_options_frame_add (Gimp         *gimp,
   prefs_check_button_add (object, "show-grid",
                           _("Show gri_d"),
                           GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "show-sample-points",
+                          _("Show _sample points"),
+                          GTK_BOX (checks_vbox));
 
   checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
