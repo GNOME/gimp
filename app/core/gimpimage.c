@@ -4979,6 +4979,7 @@ gimp_image_remove_vectors (GimpImage   *image,
 gboolean
 gimp_image_coords_in_active_pickable (GimpImage        *image,
                                       const GimpCoords *coords,
+                                      gboolean          show_all,
                                       gboolean          sample_merged,
                                       gboolean          selected_only)
 {
@@ -4992,9 +4993,11 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
 
   if (sample_merged)
     {
-      if (x >= 0 && x < gimp_image_get_width  (image) &&
-          y >= 0 && y < gimp_image_get_height (image))
-        in_pickable = TRUE;
+      if (show_all || (x >= 0 && x < gimp_image_get_width  (image) &&
+                       y >= 0 && y < gimp_image_get_height (image)))
+        {
+          in_pickable = TRUE;
+        }
     }
   else
     {

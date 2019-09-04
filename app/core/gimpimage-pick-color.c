@@ -20,7 +20,11 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "core-types.h"
+
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
@@ -35,6 +39,7 @@ gimp_image_pick_color (GimpImage     *image,
                        GimpDrawable  *drawable,
                        gint           x,
                        gint           y,
+                       gboolean       show_all,
                        gboolean       sample_merged,
                        gboolean       sample_average,
                        gdouble        average_radius,
@@ -43,6 +48,7 @@ gimp_image_pick_color (GimpImage     *image,
                        GimpRGB       *color)
 {
   GimpPickable *pickable;
+  gboolean      result;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -80,7 +86,10 @@ gimp_image_pick_color (GimpImage     *image,
 
   if (sample_merged)
     {
-      pickable = GIMP_PICKABLE (image);
+      if (! show_all)
+        pickable = GIMP_PICKABLE (image);
+      else
+        pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
     }
   else
     {
@@ -101,7 +110,38 @@ gimp_image_pick_color (GimpImage     *image,
   if (sample_format)
     *sample_format = gimp_pickable_get_format (pickable);
 
-  return gimp_pickable_pick_color (pickable, x, y,
-                                   sample_average, average_radius,
-                                   pixel, color);
+  result = gimp_pickable_pick_color (pickable, x, y,
+                                     sample_average &&
+                                     ! (show_all && sample_merged),
+                                     average_radius,
+                                     pixel, color);
+
+  if (show_all && sample_merged)
+    {
+      const Babl *format    = babl_format ("RaGaBaA double");
+      gdouble     sample[4] = {};
+
+      if (! result)
+        memset (pixel, 0, babl_format_get_bytes_per_pixel (*sample_format));
+
+      if (sample_average)
+        {
+          GeglBuffer *buffer = gimp_pickable_get_buffer (pickable);
+          gint        radius = floor (average_radius);
+
+          gimp_gegl_average_color (buffer,
+                                   GEGL_RECTANGLE (x - radius,
+                                                   y - radius,
+                                                   2 * radius + 1,
+                                                   2 * radius + 1),
+                                   FALSE, GEGL_ABYSS_NONE, format, sample);
+        }
+
+      if (! result || sample_average)
+        gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
+
+      result = TRUE;
+    }
+
+  return result;
 }

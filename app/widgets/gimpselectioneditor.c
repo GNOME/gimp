@@ -275,7 +275,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   y = gimp_image_get_height (image_editor->image) * bevent->y / renderer->height;
 
   if (gimp_image_pick_color (image_editor->image, drawable, x, y,
-                             options->sample_merged,
+                             FALSE, options->sample_merged,
                              FALSE, 0.0,
                              NULL,
                              NULL, &color))

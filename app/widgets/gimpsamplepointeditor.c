@@ -561,6 +561,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 
           if (gimp_image_pick_color (image_editor->image, NULL,
                                      x, y,
+                                     FALSE,
                                      editor->sample_merged,
                                      FALSE, 0.0,
                                      &format,

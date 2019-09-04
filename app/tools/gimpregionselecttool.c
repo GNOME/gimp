@@ -283,7 +283,8 @@ gimp_region_select_tool_cursor_update (GimpTool         *tool,
   GimpImage               *image    = gimp_display_get_image (display);
 
   if (! gimp_image_coords_in_active_pickable (image, coords,
-                                              options->sample_merged, FALSE))
+                                              FALSE, options->sample_merged,
+                                              FALSE))
     modifier = GIMP_CURSOR_MODIFIER_BAD;
 
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);

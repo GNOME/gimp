@@ -447,6 +447,7 @@ void            gimp_image_remove_vectors        (GimpImage          *image,
 
 gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   const GimpCoords   *coords,
+                                                  gboolean            show_all,
                                                   gboolean            sample_merged,
                                                   gboolean            selected_only);
 

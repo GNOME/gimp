@@ -443,9 +443,11 @@ gimp_color_tool_real_can_pick (GimpColorTool    *color_tool,
                                const GimpCoords *coords,
                                GimpDisplay      *display)
 {
-  GimpImage *image = gimp_display_get_image (display);
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
+  GimpImage        *image = gimp_display_get_image (display);
 
   return gimp_image_coords_in_active_pickable (image, coords,
+                                               shell->show_all,
                                                color_tool->options->sample_merged,
                                                FALSE);
 }
@@ -458,13 +460,15 @@ gimp_color_tool_real_pick (GimpColorTool     *color_tool,
                            gpointer           pixel,
                            GimpRGB           *color)
 {
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpDisplayShell *shell    = gimp_display_get_shell (display);
+  GimpImage        *image    = gimp_display_get_image (display);
+  GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
 
   g_return_val_if_fail (drawable != NULL, FALSE);
 
   return gimp_image_pick_color (image, drawable,
                                 coords->x, coords->y,
+                                shell->show_all,
                                 color_tool->options->sample_merged,
                                 color_tool->options->sample_average,
                                 color_tool->options->average_radius,

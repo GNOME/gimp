@@ -763,6 +763,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
 
       if (gimp_image_pick_color (image, NULL,
                                  int_x, int_y,
+                                 view->priv->shell->show_all,
                                  view->priv->sample_merged,
                                  FALSE, 0.0,
                                  &sample_format, pixel, &color))

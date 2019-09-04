@@ -479,6 +479,7 @@ HELP
       success = gimp_image_pick_color (image,
                                        drawable,
                                        (gint) x, (gint) y,
+                                       FALSE,
                                        sample_merged,
                                        sample_average,
                                        average_radius,

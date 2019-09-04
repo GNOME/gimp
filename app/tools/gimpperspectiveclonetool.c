@@ -526,7 +526,7 @@ gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
   image = gimp_display_get_image (display);
 
   if (gimp_image_coords_in_active_pickable (image, coords,
-                                            FALSE, TRUE))
+                                            FALSE, FALSE, TRUE))
     {
       cursor = GIMP_CURSOR_MOUSE;
     }

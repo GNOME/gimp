@@ -521,7 +521,8 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
                    options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED :
                    options->sample_merged);
   if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
-      gimp_image_coords_in_active_pickable (image, coords, sample_merged, TRUE))
+      gimp_image_coords_in_active_pickable (image, coords,
+                                            FALSE, sample_merged, TRUE))
     {
       GimpContext     *context  = GIMP_CONTEXT (options);
       GimpFillOptions *fill_options;
@@ -588,7 +589,8 @@ gimp_bucket_fill_tool_motion (GimpTool         *tool,
   sample_merged = (options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
                    options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED :
                    options->sample_merged);
-  if (gimp_image_coords_in_active_pickable (image, coords, sample_merged, TRUE) &&
+  if (gimp_image_coords_in_active_pickable (image, coords,
+                                            FALSE, sample_merged, TRUE) &&
       /* Fill selection only needs to happen once. */
       options->fill_area != GIMP_BUCKET_FILL_SELECTION)
     {
@@ -770,7 +772,8 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   sample_merged = (options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
                    options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED :
                    options->sample_merged);
-  if (gimp_image_coords_in_active_pickable (image, coords, sample_merged, TRUE))
+  if (gimp_image_coords_in_active_pickable (image, coords,
+                                            FALSE, sample_merged, TRUE))
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
