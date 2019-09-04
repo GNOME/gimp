@@ -792,7 +792,8 @@ gimp_seamless_clone_tool_filter_update (GimpSeamlessCloneTool *sc)
 
   /* Find out at which x,y is the top left corner of the currently
    * displayed part */
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+  gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
+                                           &x, &y, &w, &h);
 
   /* Find out where is our drawable positioned */
   gimp_item_get_offset (item, &off_x, &off_y);

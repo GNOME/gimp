@@ -190,6 +190,7 @@ void  gimp_display_shell_untransform_bounds_with_scale (GimpDisplayShell   *shel
                                                         gdouble            *ny2);
 
 void  gimp_display_shell_untransform_viewport          (GimpDisplayShell   *shell,
+                                                        gboolean            clip,
                                                         gint               *x,
                                                         gint               *y,
                                                         gint               *width,

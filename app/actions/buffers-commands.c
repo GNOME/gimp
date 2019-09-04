@@ -74,7 +74,7 @@ buffers_paste_cmd_callback (GimpAction *action,
         {
           GimpDisplayShell *shell = gimp_display_get_shell (display);
 
-          gimp_display_shell_untransform_viewport (shell,
+          gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
                                                    &x, &y, &width, &height);
 
           image = gimp_display_get_image (display);
