@@ -957,6 +957,23 @@ prefs_display_options_frame_add (Gimp         *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
   gtk_widget_show (checks_vbox);
 
+  prefs_check_button_add (object, "show-selection",
+                          _("Show s_election"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "show-layer-boundary",
+                          _("Show _layer boundary"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "show-guides",
+                          _("Show _guides"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object, "show-grid",
+                          _("Show gri_d"),
+                          GTK_BOX (checks_vbox));
+
+  checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (checks_vbox);
+
 #ifndef GDK_WINDOWING_QUARTZ
   prefs_check_button_add (object, "show-menubar",
                           _("Show _menubar"),
@@ -970,23 +987,6 @@ prefs_display_options_frame_add (Gimp         *gimp,
                           GTK_BOX (checks_vbox));
   prefs_check_button_add (object, "show-statusbar",
                           _("Show s_tatusbar"),
-                          GTK_BOX (checks_vbox));
-
-  checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (checks_vbox);
-
-  prefs_check_button_add (object, "show-selection",
-                          _("Show s_election"),
-                          GTK_BOX (checks_vbox));
-  prefs_check_button_add (object, "show-layer-boundary",
-                          _("Show _layer boundary"),
-                          GTK_BOX (checks_vbox));
-  prefs_check_button_add (object, "show-guides",
-                          _("Show _guides"),
-                          GTK_BOX (checks_vbox));
-  prefs_check_button_add (object, "show-grid",
-                          _("Show gri_d"),
                           GTK_BOX (checks_vbox));
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox));
