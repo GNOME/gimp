@@ -192,7 +192,7 @@ gimp_param_item_validate (GParamSpec *pspec,
   if (! ispec->none_ok && item == NULL)
     return TRUE;
 
-  if (item && (! GIMP_IS_ITEM (item) ||
+  if (item && (! g_type_is_a (G_OBJECT_TYPE (item), pspec->value_type) ||
                ! gimp_item_is_valid (item)))
     {
       g_object_unref (item);
@@ -242,10 +242,8 @@ gimp_param_spec_item (const gchar *name,
  * GIMP_TYPE_PARAM_DRAWABLE
  */
 
-static void       gimp_param_drawable_class_init (GParamSpecClass *klass);
-static void       gimp_param_drawable_init       (GParamSpec      *pspec);
-static gboolean   gimp_param_drawable_validate   (GParamSpec      *pspec,
-                                                  GValue          *value);
+static void   gimp_param_drawable_class_init (GParamSpecClass *klass);
+static void   gimp_param_drawable_init       (GParamSpec      *pspec);
 
 GType
 gimp_param_drawable_get_type (void)
@@ -275,34 +273,12 @@ gimp_param_drawable_get_type (void)
 static void
 gimp_param_drawable_class_init (GParamSpecClass *klass)
 {
-  klass->value_type     = GIMP_TYPE_DRAWABLE;
-  klass->value_validate = gimp_param_drawable_validate;
+  klass->value_type = GIMP_TYPE_DRAWABLE;
 }
 
 static void
 gimp_param_drawable_init (GParamSpec *pspec)
 {
-}
-
-static gboolean
-gimp_param_drawable_validate (GParamSpec *pspec,
-                              GValue     *value)
-{
-  GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
-  GimpItem          *item  = value->data[0].v_pointer;
-
-  if (! ispec->none_ok && item == NULL)
-    return TRUE;
-
-  if (item && (! GIMP_IS_DRAWABLE (item) ||
-               ! gimp_item_is_drawable (item)))
-    {
-      g_object_unref (item);
-      value->data[0].v_pointer = NULL;
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**
@@ -344,10 +320,8 @@ gimp_param_spec_drawable (const gchar *name,
  * GIMP_TYPE_PARAM_LAYER
  */
 
-static void       gimp_param_layer_class_init (GParamSpecClass *klass);
-static void       gimp_param_layer_init       (GParamSpec      *pspec);
-static gboolean   gimp_param_layer_validate   (GParamSpec      *pspec,
-                                               GValue          *value);
+static void   gimp_param_layer_class_init (GParamSpecClass *klass);
+static void   gimp_param_layer_init       (GParamSpec      *pspec);
 
 GType
 gimp_param_layer_get_type (void)
@@ -377,34 +351,12 @@ gimp_param_layer_get_type (void)
 static void
 gimp_param_layer_class_init (GParamSpecClass *klass)
 {
-  klass->value_type     = GIMP_TYPE_LAYER;
-  klass->value_validate = gimp_param_layer_validate;
+  klass->value_type = GIMP_TYPE_LAYER;
 }
 
 static void
 gimp_param_layer_init (GParamSpec *pspec)
 {
-}
-
-static gboolean
-gimp_param_layer_validate (GParamSpec *pspec,
-                           GValue     *value)
-{
-  GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
-  GimpItem          *item  = value->data[0].v_pointer;
-
-  if (! ispec->none_ok && item == NULL)
-    return TRUE;
-
-  if (item && (! GIMP_IS_LAYER (item) ||
-               ! gimp_item_is_layer (item)))
-    {
-      g_object_unref (item);
-      value->data[0].v_pointer = NULL;
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**
@@ -446,10 +398,8 @@ gimp_param_spec_layer (const gchar *name,
  * GIMP_TYPE_PARAM_CHANNEL
  */
 
-static void       gimp_param_channel_class_init (GParamSpecClass *klass);
-static void       gimp_param_channel_init       (GParamSpec      *pspec);
-static gboolean   gimp_param_channel_validate   (GParamSpec      *pspec,
-                                                 GValue          *value);
+static void   gimp_param_channel_class_init (GParamSpecClass *klass);
+static void   gimp_param_channel_init       (GParamSpec      *pspec);
 
 GType
 gimp_param_channel_get_type (void)
@@ -479,34 +429,12 @@ gimp_param_channel_get_type (void)
 static void
 gimp_param_channel_class_init (GParamSpecClass *klass)
 {
-  klass->value_type     = GIMP_TYPE_CHANNEL;
-  klass->value_validate = gimp_param_channel_validate;
+  klass->value_type = GIMP_TYPE_CHANNEL;
 }
 
 static void
 gimp_param_channel_init (GParamSpec *pspec)
 {
-}
-
-static gboolean
-gimp_param_channel_validate (GParamSpec *pspec,
-                             GValue     *value)
-{
-  GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
-  GimpItem          *item  = value->data[0].v_pointer;
-
-  if (! ispec->none_ok && item == NULL)
-    return TRUE;
-
-  if (item && (! GIMP_IS_CHANNEL (item) ||
-               ! gimp_item_is_channel (item)))
-    {
-      g_object_unref (item);
-      value->data[0].v_pointer = NULL;
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**
@@ -548,10 +476,8 @@ gimp_param_spec_channel (const gchar *name,
  * GIMP_TYPE_PARAM_LAYER_MASK
  */
 
-static void       gimp_param_layer_mask_class_init (GParamSpecClass *klass);
-static void       gimp_param_layer_mask_init       (GParamSpec      *pspec);
-static gboolean   gimp_param_layer_mask_validate   (GParamSpec      *pspec,
-                                                    GValue          *value);
+static void   gimp_param_layer_mask_class_init (GParamSpecClass *klass);
+static void   gimp_param_layer_mask_init       (GParamSpec      *pspec);
 
 GType
 gimp_param_layer_mask_get_type (void)
@@ -581,34 +507,12 @@ gimp_param_layer_mask_get_type (void)
 static void
 gimp_param_layer_mask_class_init (GParamSpecClass *klass)
 {
-  klass->value_type     = GIMP_TYPE_LAYER_MASK;
-  klass->value_validate = gimp_param_layer_mask_validate;
+  klass->value_type = GIMP_TYPE_LAYER_MASK;
 }
 
 static void
 gimp_param_layer_mask_init (GParamSpec *pspec)
 {
-}
-
-static gboolean
-gimp_param_layer_mask_validate (GParamSpec *pspec,
-                                GValue     *value)
-{
-  GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
-  GimpItem          *item  = value->data[0].v_pointer;
-
-  if (! ispec->none_ok && item == NULL)
-    return TRUE;
-
-  if (item && (! GIMP_IS_LAYER_MASK (item) ||
-               ! gimp_item_is_layer_mask (item)))
-    {
-      g_object_unref (item);
-      value->data[0].v_pointer = NULL;
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**
@@ -650,10 +554,8 @@ gimp_param_spec_layer_mask (const gchar *name,
  * GIMP_TYPE_PARAM_SELECTION
  */
 
-static void       gimp_param_selection_class_init (GParamSpecClass *klass);
-static void       gimp_param_selection_init       (GParamSpec      *pspec);
-static gboolean   gimp_param_selection_validate   (GParamSpec      *pspec,
-                                                   GValue          *value);
+static void   gimp_param_selection_class_init (GParamSpecClass *klass);
+static void   gimp_param_selection_init       (GParamSpec      *pspec);
 
 GType
 gimp_param_selection_get_type (void)
@@ -683,34 +585,12 @@ gimp_param_selection_get_type (void)
 static void
 gimp_param_selection_class_init (GParamSpecClass *klass)
 {
-  klass->value_type     = GIMP_TYPE_SELECTION;
-  klass->value_validate = gimp_param_selection_validate;
+  klass->value_type = GIMP_TYPE_SELECTION;
 }
 
 static void
 gimp_param_selection_init (GParamSpec *pspec)
 {
-}
-
-static gboolean
-gimp_param_selection_validate (GParamSpec *pspec,
-                               GValue     *value)
-{
-  GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
-  GimpItem          *item  = value->data[0].v_pointer;
-
-  if (! ispec->none_ok && item == NULL)
-    return TRUE;
-
-  if (item && (! GIMP_IS_SELECTION (item) ||
-               ! gimp_item_is_selection (item)))
-    {
-      g_object_unref (item);
-      value->data[0].v_pointer = NULL;
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**
@@ -752,10 +632,8 @@ gimp_param_spec_selection (const gchar *name,
  * GIMP_TYPE_PARAM_VECTORS
  */
 
-static void       gimp_param_vectors_class_init (GParamSpecClass *klass);
-static void       gimp_param_vectors_init       (GParamSpec      *pspec);
-static gboolean   gimp_param_vectors_validate   (GParamSpec      *pspec,
-                                                 GValue          *value);
+static void   gimp_param_vectors_class_init (GParamSpecClass *klass);
+static void   gimp_param_vectors_init       (GParamSpec      *pspec);
 
 GType
 gimp_param_vectors_get_type (void)
@@ -785,34 +663,12 @@ gimp_param_vectors_get_type (void)
 static void
 gimp_param_vectors_class_init (GParamSpecClass *klass)
 {
-  klass->value_type     = GIMP_TYPE_VECTORS;
-  klass->value_validate = gimp_param_vectors_validate;
+  klass->value_type = GIMP_TYPE_VECTORS;
 }
 
 static void
 gimp_param_vectors_init (GParamSpec *pspec)
 {
-}
-
-static gboolean
-gimp_param_vectors_validate (GParamSpec *pspec,
-                             GValue     *value)
-{
-  GimpParamSpecItem *ispec = GIMP_PARAM_SPEC_ITEM (pspec);
-  GimpItem          *item  = value->data[0].v_pointer;
-
-  if (! ispec->none_ok && item == NULL)
-    return TRUE;
-
-  if (item && (! GIMP_IS_VECTORS (item) ||
-               ! gimp_item_is_vectors (item)))
-    {
-      g_object_unref (item);
-      value->data[0].v_pointer = NULL;
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**
