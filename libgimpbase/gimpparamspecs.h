@@ -306,7 +306,14 @@ void            gimp_value_take_float_array       (GValue        *value,
  * GIMP_TYPE_STRING_ARRAY
  */
 
-typedef struct _GimpArray GimpStringArray;
+typedef struct _GimpStringArray GimpStringArray;
+
+struct _GimpStringArray
+{
+  gchar   **data;
+  gsize     length;
+  gboolean  static_data;
+};
 
 GimpStringArray * gimp_string_array_new  (const gchar          **data,
                                           gsize                  length,

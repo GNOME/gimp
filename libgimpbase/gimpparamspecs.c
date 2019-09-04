@@ -860,11 +860,11 @@ gimp_string_array_new (const gchar **data,
       for (i = 0; i < length; i++)
         tmp[i] = g_strdup (data[i]);
 
-      array->data = (guint8 *) tmp;
+      array->data = tmp;
     }
   else
     {
-      array->data = (guint8 *) data;
+      array->data = (gchar **) data;
     }
 
   array->length      = length;
@@ -898,7 +898,7 @@ gimp_string_array_free (GimpStringArray *array)
     {
       if (! array->static_data)
         {
-          gchar **tmp = (gchar **) array->data;
+          gchar **tmp = array->data;
           gint    i;
 
           for (i = 0; i < array->length; i++)
