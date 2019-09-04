@@ -45,7 +45,7 @@ GimpValueArray * gimp_plug_in_manager_call_run      (GimpPlugInManager      *man
                                                      GimpPlugInProcedure    *procedure,
                                                      GimpValueArray         *args,
                                                      gboolean                synchronous,
-                                                     GimpObject             *display);
+                                                     GimpDisplay            *display);
 
 /*  Run a temp plug-in proc as if it were a procedure database procedure
  */

@@ -343,7 +343,7 @@ procedure_commands_run_procedure_async (GimpProcedure  *procedure,
   gimp_procedure_execute_async (procedure, gimp,
                                 gimp_get_user_context (gimp),
                                 progress, args,
-                                GIMP_OBJECT (display), &error);
+                                display, &error);
 
   if (error)
     {

@@ -53,23 +53,20 @@ struct _GimpGui
   GFile        * (* get_icon_theme_dir)     (Gimp                *gimp);
 
   GimpObject   * (* get_window_strategy)    (Gimp                *gimp);
-  GimpObject   * (* get_empty_display)      (Gimp                *gimp);
-  GimpObject   * (* display_get_by_id)      (Gimp                *gimp,
-                                             gint                 ID);
-  gint           (* display_get_id)         (GimpObject          *display);
-  guint32        (* display_get_window_id)  (GimpObject          *display);
-  GimpObject   * (* display_create)         (Gimp                *gimp,
+  GimpDisplay  * (* get_empty_display)      (Gimp                *gimp);
+  guint32        (* display_get_window_id)  (GimpDisplay         *display);
+  GimpDisplay  * (* display_create)         (Gimp                *gimp,
                                              GimpImage           *image,
                                              GimpUnit             unit,
                                              gdouble              scale,
                                              GObject             *monitor);
-  void           (* display_delete)         (GimpObject          *display);
+  void           (* display_delete)         (GimpDisplay         *display);
   void           (* displays_reconnect)     (Gimp                *gimp,
                                              GimpImage           *old_image,
                                              GimpImage           *new_image);
 
   GimpProgress * (* progress_new)           (Gimp                *gimp,
-                                             GimpObject          *display);
+                                             GimpDisplay         *display);
   void           (* progress_free)          (Gimp                *gimp,
                                              GimpProgress        *progress);
 
@@ -114,20 +111,20 @@ void           gimp_gui_init               (Gimp                *gimp);
 void           gimp_gui_ungrab             (Gimp                *gimp);
 
 GimpObject   * gimp_get_window_strategy    (Gimp                *gimp);
-GimpObject   * gimp_get_empty_display      (Gimp                *gimp);
-GimpObject   * gimp_get_display_by_id      (Gimp                *gimp,
+GimpDisplay  * gimp_get_empty_display      (Gimp                *gimp);
+GimpDisplay  * gimp_get_display_by_id      (Gimp                *gimp,
                                             gint                 ID);
 gint           gimp_get_display_id         (Gimp                *gimp,
-                                            GimpObject          *display);
+                                            GimpDisplay         *display);
 guint32        gimp_get_display_window_id  (Gimp                *gimp,
-                                            GimpObject          *display);
-GimpObject   * gimp_create_display         (Gimp                *gimp,
+                                            GimpDisplay         *display);
+GimpDisplay  * gimp_create_display         (Gimp                *gimp,
                                             GimpImage           *image,
                                             GimpUnit             unit,
                                             gdouble              scale,
                                             GObject             *monitor);
 void           gimp_delete_display         (Gimp                *gimp,
-                                            GimpObject          *display);
+                                            GimpDisplay         *display);
 void           gimp_reconnect_displays     (Gimp                *gimp,
                                             GimpImage           *old_image,
                                             GimpImage           *new_image);
@@ -152,7 +149,7 @@ void           gimp_wait                   (Gimp                *gimp,
                                             ...) G_GNUC_PRINTF (3, 4);
 
 GimpProgress * gimp_new_progress           (Gimp                *gimp,
-                                            GimpObject          *display);
+                                            GimpDisplay         *display);
 void           gimp_free_progress          (Gimp                *gimp,
                                             GimpProgress        *progress);
 

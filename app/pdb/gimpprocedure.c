@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimp-memsize.h"
 #include "core/gimpchannel.h"
+#include "core/gimpdisplay.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
@@ -66,7 +67,7 @@ static void        gimp_procedure_real_execute_async    (GimpProcedure   *proced
                                                          GimpContext     *context,
                                                          GimpProgress    *progress,
                                                          GimpValueArray  *args,
-                                                         GimpObject      *display);
+                                                         GimpDisplay     *display);
 
 static void          gimp_procedure_free_strings        (GimpProcedure   *procedure);
 static gboolean      gimp_procedure_validate_args       (GimpProcedure   *procedure,
@@ -220,7 +221,7 @@ gimp_procedure_real_execute_async (GimpProcedure  *procedure,
                                    GimpContext    *context,
                                    GimpProgress   *progress,
                                    GimpValueArray *args,
-                                   GimpObject     *display)
+                                   GimpDisplay    *display)
 {
   GimpValueArray *return_vals;
   GError         *error = NULL;
@@ -496,7 +497,7 @@ gimp_procedure_execute_async (GimpProcedure  *procedure,
                               GimpContext    *context,
                               GimpProgress   *progress,
                               GimpValueArray *args,
-                              GimpObject     *display,
+                              GimpDisplay    *display,
                               GError        **error)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
@@ -504,7 +505,7 @@ gimp_procedure_execute_async (GimpProcedure  *procedure,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (args != NULL);
-  g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
+  g_return_if_fail (display == NULL || GIMP_IS_DISPLAY (display));
   g_return_if_fail (error == NULL || *error == NULL);
 
   if (gimp_procedure_validate_args (procedure,

@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpdisplay.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 
@@ -54,7 +55,7 @@ display_id_is_valid_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      valid = (gimp_get_display_by_id (gimp, display_id) != NULL);
+      valid = (gimp_display_get_by_id (gimp, display_id) != NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -77,7 +78,7 @@ display_new_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpObject *display = NULL;
+  GimpDisplay *display = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -117,7 +118,7 @@ display_delete_invoker (GimpProcedure         *procedure,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpObject *display;
+  GimpDisplay *display;
 
   display = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -140,7 +141,7 @@ display_get_window_handle_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpObject *display;
+  GimpDisplay *display;
   gint window = 0;
 
   display = g_value_get_object (gimp_value_array_index (args, 0));

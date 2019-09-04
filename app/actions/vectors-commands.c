@@ -410,7 +410,7 @@ vectors_selection_to_vectors_cmd_callback (GimpAction *action,
   gimp_procedure_execute_async (procedure, image->gimp,
                                 action_data_get_context (data),
                                 GIMP_PROGRESS (display), args,
-                                GIMP_OBJECT (display), &error);
+                                display, &error);
 
   gimp_value_array_unref (args);
 

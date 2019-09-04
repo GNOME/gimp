@@ -27,6 +27,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdisplay.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppdbprogress.h"
 #include "core/gimpprogress.h"
@@ -91,12 +92,12 @@ gimp_plug_in_progress_detach (GimpProgress *progress)
 void
 gimp_plug_in_progress_start (GimpPlugIn  *plug_in,
                              const gchar *message,
-                             GimpObject  *display)
+                             GimpDisplay *display)
 {
   GimpPlugInProcFrame *proc_frame;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
+  g_return_if_fail (display == NULL || GIMP_IS_DISPLAY (display));
 
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 

@@ -139,7 +139,7 @@ static GimpAlignmentType
                                                                    GimpDock                   *dock);
 static gboolean        gimp_dock_window_should_add_to_recent      (GimpDockWindow             *dock_window);
 static void            gimp_dock_window_display_changed           (GimpDockWindow             *dock_window,
-                                                                   GimpObject                 *display,
+                                                                   GimpDisplay                *display,
                                                                    GimpContext                *context);
 static void            gimp_dock_window_image_changed             (GimpDockWindow             *dock_window,
                                                                    GimpImage                  *image,
@@ -155,7 +155,7 @@ static void            gimp_dock_window_dock_removed              (GimpDockWindo
                                                                    GimpDock                   *dock,
                                                                    GimpDockColumns            *dock_columns);
 static void            gimp_dock_window_factory_display_changed   (GimpContext                *context,
-                                                                   GimpObject                 *display,
+                                                                   GimpDisplay                *display,
                                                                    GimpDock                   *dock);
 static void            gimp_dock_window_factory_image_changed     (GimpContext                *context,
                                                                    GimpImage                  *image,
@@ -844,7 +844,7 @@ gimp_dock_window_image_flush (GimpImage      *image,
 {
   if (image == gimp_context_get_image (dock_window->p->context))
     {
-      GimpObject *display = gimp_context_get_display (dock_window->p->context);
+      GimpDisplay *display = gimp_context_get_display (dock_window->p->context);
 
       if (display)
         gimp_ui_manager_update (dock_window->p->ui_manager, display);
@@ -919,7 +919,7 @@ gimp_dock_window_dock_removed (GimpDockWindow  *dock_window,
 
 static void
 gimp_dock_window_factory_display_changed (GimpContext *context,
-                                          GimpObject  *display,
+                                          GimpDisplay *display,
                                           GimpDock    *dock)
 {
   GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock);
@@ -942,7 +942,7 @@ gimp_dock_window_factory_image_changed (GimpContext *context,
 
 static void
 gimp_dock_window_display_changed (GimpDockWindow *dock_window,
-                                  GimpObject     *display,
+                                  GimpDisplay    *display,
                                   GimpContext    *context)
 {
   /*  make sure auto-follow-active works both ways  */
@@ -991,9 +991,9 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
     }
   else if (image != NULL && ! gimp_container_is_empty (display_container))
     {
-      GimpObject *display;
-      GimpImage  *display_image;
-      gboolean    find_display = TRUE;
+      GimpDisplay *display;
+      GimpImage   *display_image;
+      gboolean     find_display = TRUE;
 
       display = gimp_context_get_display (context);
 
@@ -1018,7 +1018,7 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
                list;
                list = g_list_next (list))
             {
-              display = GIMP_OBJECT (list->data);
+              display = list->data;
 
               g_object_get (display, "image", &display_image, NULL);
 

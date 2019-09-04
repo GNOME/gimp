@@ -38,14 +38,13 @@
 #include "core/gimp-memsize.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdisplay.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpimage.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
-
-#include "display/gimpdisplay.h"
 
 #include "tools/gimpoperationtool.h"
 #include "tools/tool_manager.h"
@@ -80,7 +79,7 @@ static void     gimp_gegl_procedure_execute_async       (GimpProcedure  *procedu
                                                          GimpContext    *context,
                                                          GimpProgress   *progress,
                                                          GimpValueArray *args,
-                                                         GimpObject     *display);
+                                                         GimpDisplay    *display);
 
 
 G_DEFINE_TYPE (GimpGeglProcedure, gimp_gegl_procedure,
@@ -269,7 +268,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                    GimpContext    *context,
                                    GimpProgress   *progress,
                                    GimpValueArray *args,
-                                   GimpObject     *display)
+                                   GimpDisplay    *display)
 {
   GimpGeglProcedure *gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
   GimpRunMode        run_mode;
@@ -396,7 +395,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                              gimp_procedure_get_help_id (procedure));
         }
 
-      tool_manager_initialize_active (gimp, GIMP_DISPLAY (display));
+      tool_manager_initialize_active (gimp, display);
 
       if (settings)
         gimp_filter_tool_set_config (GIMP_FILTER_TOOL (active_tool),

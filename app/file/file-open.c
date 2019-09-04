@@ -682,7 +682,7 @@ file_open_from_command_line (Gimp     *gimp,
 
 {
   GimpImage         *image;
-  GimpObject        *display;
+  GimpDisplay       *display;
   GimpPDBStatusType  status;
   gboolean           success = FALSE;
   GError            *error   = NULL;

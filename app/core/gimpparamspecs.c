@@ -25,6 +25,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpdisplay.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -383,7 +384,7 @@ gimp_param_image_init (GParamSpec *pspec)
 
 static gboolean
 gimp_param_image_validate (GParamSpec *pspec,
-                              GValue     *value)
+                           GValue     *value)
 {
   GimpParamSpecImage *ispec = GIMP_PARAM_SPEC_IMAGE (pspec);
   GimpImage          *image = value->data[0].v_pointer;
@@ -876,10 +877,10 @@ gimp_param_spec_vectors (const gchar *name,
  * GIMP_TYPE_PARAM_DISPLAY
  */
 
-static void       gimp_param_display_class_init  (GParamSpecClass *klass);
-static void       gimp_param_display_init        (GParamSpec      *pspec);
-static gboolean   gimp_param_display_validate    (GParamSpec      *pspec,
-                                                     GValue          *value);
+static void       gimp_param_display_class_init (GParamSpecClass *klass);
+static void       gimp_param_display_init       (GParamSpec      *pspec);
+static gboolean   gimp_param_display_validate   (GParamSpec      *pspec,
+                                                 GValue          *value);
 
 GType
 gimp_param_display_get_type (void)
@@ -909,33 +910,29 @@ gimp_param_display_get_type (void)
 static void
 gimp_param_display_class_init (GParamSpecClass *klass)
 {
-  klass->value_type = g_type_from_name ("GimpDisplay");
-
-  g_assert (klass->value_type != G_TYPE_NONE);
-
+  klass->value_type     = GIMP_TYPE_DISPLAY;
   klass->value_validate = gimp_param_display_validate;
 }
 
 static void
 gimp_param_display_init (GParamSpec *pspec)
 {
-  GimpParamSpecDisplay *ispec = GIMP_PARAM_SPEC_DISPLAY (pspec);
+  GimpParamSpecDisplay *dspec = GIMP_PARAM_SPEC_DISPLAY (pspec);
 
-  ispec->none_ok = FALSE;
+  dspec->none_ok = FALSE;
 }
 
 static gboolean
 gimp_param_display_validate (GParamSpec *pspec,
                              GValue     *value)
 {
-  GimpParamSpecDisplay *ispec   = GIMP_PARAM_SPEC_DISPLAY (pspec);
-  GObject              *display = value->data[0].v_pointer;
+  GimpParamSpecDisplay *dspec   = GIMP_PARAM_SPEC_DISPLAY (pspec);
+  GimpDisplay          *display = value->data[0].v_pointer;
 
-  if (! ispec->none_ok && display == NULL)
+  if (! dspec->none_ok && display == NULL)
     return TRUE;
 
-  if (display && ! g_value_type_compatible (G_OBJECT_TYPE (display),
-                                            G_PARAM_SPEC_VALUE_TYPE (pspec)))
+  if (display && ! GIMP_IS_DISPLAY (display))
     {
       g_object_unref (display);
       value->data[0].v_pointer = NULL;
@@ -952,12 +949,12 @@ gimp_param_spec_display (const gchar *name,
                          gboolean     none_ok,
                          GParamFlags  flags)
 {
-  GimpParamSpecDisplay *ispec;
+  GimpParamSpecDisplay *dspec;
 
-  ispec = g_param_spec_internal (GIMP_TYPE_PARAM_DISPLAY,
+  dspec = g_param_spec_internal (GIMP_TYPE_PARAM_DISPLAY,
                                  name, nick, blurb, flags);
 
-  ispec->none_ok = none_ok ? TRUE : FALSE;
+  dspec->none_ok = none_ok ? TRUE : FALSE;
 
-  return G_PARAM_SPEC (ispec);
+  return G_PARAM_SPEC (dspec);
 }

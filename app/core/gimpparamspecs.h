@@ -210,13 +210,13 @@ struct _GimpParamSpecChannel
   GimpParamSpecDrawable parent_instance;
 };
 
-GType         gimp_param_channel_get_type (void) G_GNUC_CONST;
+GType        gimp_param_channel_get_type (void) G_GNUC_CONST;
 
-GParamSpec  * gimp_param_spec_channel     (const gchar  *name,
-                                           const gchar  *nick,
-                                           const gchar  *blurb,
-                                           gboolean      none_ok,
-                                           GParamFlags   flags);
+GParamSpec * gimp_param_spec_channel     (const gchar  *name,
+                                          const gchar  *nick,
+                                          const gchar  *blurb,
+                                          gboolean      none_ok,
+                                          GParamFlags   flags);
 
 
 /*
@@ -305,7 +305,7 @@ GParamSpec * gimp_param_spec_vectors     (const gchar  *name,
  */
 
 #define GIMP_VALUE_HOLDS_DISPLAY(value)   (G_TYPE_CHECK_VALUE_TYPE ((value),\
-                                           GIMP_TYPE_OBJECT))
+                                           GIMP_TYPE_DISPLAY))
 
 #define GIMP_TYPE_PARAM_DISPLAY           (gimp_param_display_get_type ())
 #define GIMP_PARAM_SPEC_DISPLAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_DISPLAY, GimpParamSpecDisplay))

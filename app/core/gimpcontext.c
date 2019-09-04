@@ -39,6 +39,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
+#include "gimpdisplay.h"
 #include "gimpdynamics.h"
 #include "gimpimagefile.h"
 #include "gimpgradient.h"
@@ -121,10 +122,10 @@ static void gimp_context_real_set_image      (GimpContext      *context,
 
 /*  display  */
 static void gimp_context_display_removed     (GimpContainer    *container,
-                                              gpointer          display,
+                                              GimpDisplay      *display,
                                               GimpContext      *context);
 static void gimp_context_real_set_display    (GimpContext      *context,
-                                              gpointer          display);
+                                              GimpDisplay      *display);
 
 /*  tool  */
 static void gimp_context_tool_dirty          (GimpToolInfo     *tool_info,
@@ -420,7 +421,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_STRUCT_OFFSET (GimpContextClass, display_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_OBJECT);
+                  GIMP_TYPE_DISPLAY);
 
   gimp_context_signals[TOOL_CHANGED] =
     g_signal_new ("tool-changed",
@@ -644,7 +645,7 @@ gimp_context_class_init (GimpContextClass *klass)
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_DISPLAY,
                                    g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_DISPLAY],
                                                         NULL, NULL,
-                                                        GIMP_TYPE_OBJECT,
+                                                        GIMP_TYPE_DISPLAY,
                                                         GIMP_PARAM_READWRITE));
 
   GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL,
@@ -1940,7 +1941,7 @@ gimp_context_real_set_image (GimpContext *context,
 /*****************************************************************************/
 /*  display  *****************************************************************/
 
-gpointer
+GimpDisplay *
 gimp_context_get_display (GimpContext *context)
 {
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -1950,10 +1951,10 @@ gimp_context_get_display (GimpContext *context)
 
 void
 gimp_context_set_display (GimpContext *context,
-                          gpointer     display)
+                          GimpDisplay *display)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
+  g_return_if_fail (display == NULL || GIMP_IS_DISPLAY (display));
 
   context_find_defined (context, GIMP_CONTEXT_PROP_DISPLAY);
 
@@ -1972,7 +1973,7 @@ gimp_context_display_changed (GimpContext *context)
 
 static void
 gimp_context_display_removed (GimpContainer *container,
-                              gpointer       display,
+                              GimpDisplay   *display,
                               GimpContext   *context)
 {
   if (context->display == display)
@@ -1981,9 +1982,9 @@ gimp_context_display_removed (GimpContainer *container,
 
 static void
 gimp_context_real_set_display (GimpContext *context,
-                               gpointer     display)
+                               GimpDisplay *display)
 {
-  GimpObject *old_display;
+  GimpDisplay *old_display;
 
   if (context->display == display)
     {

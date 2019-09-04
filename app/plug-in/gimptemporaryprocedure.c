@@ -49,7 +49,7 @@ static void        gimp_temporary_procedure_execute_async (GimpProcedure  *proce
                                                            GimpContext    *context,
                                                            GimpProgress   *progress,
                                                            GimpValueArray *args,
-                                                           GimpObject     *display);
+                                                           GimpDisplay    *display);
 
 static GFile     * gimp_temporary_procedure_get_file      (GimpPlugInProcedure *procedure);
 
@@ -109,7 +109,7 @@ gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
                                         GimpContext    *context,
                                         GimpProgress   *progress,
                                         GimpValueArray *args,
-                                        GimpObject     *display)
+                                        GimpDisplay    *display)
 {
   GimpTemporaryProcedure *temp_procedure = GIMP_TEMPORARY_PROCEDURE (procedure);
   GimpValueArray         *return_vals;

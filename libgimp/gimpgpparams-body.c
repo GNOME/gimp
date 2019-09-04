@@ -341,9 +341,9 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       GType        value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
       const gchar *type_name  = NULL;
 
-      if (! strcmp (g_type_name (value_type), "GimpDisplay"))
+      if (g_type_is_a (value_type, GIMP_TYPE_DISPLAY))
         {
-          /* strcmp() because GimpDisplay is not visible from app/plug-in */
+          /* g_type_is_a() because the core has a GimpDisplay subclasses */
           type_name = "GimpParamDisplay";
         }
       else if (value_type == GIMP_TYPE_IMAGE)
@@ -416,14 +416,14 @@ get_item_by_id (gpointer gimp,
 #endif
 }
 
-static GObject *
+static GimpDisplay *
 get_display_by_id (gpointer gimp,
                    gint     id)
 {
 #ifdef LIBGIMP_COMPILATION
-  return (GObject *) gimp_display_get_by_id (id);
+  return gimp_display_get_by_id (id);
 #else
-  return (GObject *) gimp_get_display_by_id (gimp, id);
+  return gimp_display_get_by_id (gimp, id);
 #endif
 }
 
@@ -835,25 +835,11 @@ _gimp_value_to_gp_param (const GValue *value,
     }
   else if (GIMP_VALUE_HOLDS_DISPLAY (value))
     {
-      GObject *display = g_value_get_object (value);
-      gint     id      = -1;
-
-#if 0
-      if (full_copy)
-        {
-          g_free (param->type_name);
-          param->type_name = "GObject";
-        }
-      else
-        param->type_name = (gchar *) "GObject";
-#endif
+      GimpDisplay *display = g_value_get_object (value);
 
       param->param_type = GP_PARAM_TYPE_INT;
 
-      if (display)
-        g_object_get (display, "id", &id, NULL);
-
-      param->data.d_int = id;
+      param->data.d_int = display ? gimp_display_get_id (display) : -1;
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {

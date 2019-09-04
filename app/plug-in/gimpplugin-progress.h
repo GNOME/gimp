@@ -26,7 +26,7 @@ gint       gimp_plug_in_progress_detach        (GimpProgress        *progress);
 
 void       gimp_plug_in_progress_start         (GimpPlugIn          *plug_in,
                                                 const gchar         *message,
-                                                GimpObject          *display);
+                                                GimpDisplay         *display);
 void       gimp_plug_in_progress_end           (GimpPlugIn          *plug_in,
                                                 GimpPlugInProcFrame *proc_frame);
 void       gimp_plug_in_progress_set_text      (GimpPlugIn          *plug_in,

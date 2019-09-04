@@ -82,7 +82,7 @@ static void     gimp_plug_in_procedure_execute_async   (GimpProcedure  *procedur
                                                         GimpContext    *context,
                                                         GimpProgress   *progress,
                                                         GimpValueArray *args,
-                                                        GimpObject     *display);
+                                                        GimpDisplay    *display);
 
 static GFile  * gimp_plug_in_procedure_real_get_file   (GimpPlugInProcedure *procedure);
 
@@ -412,7 +412,7 @@ gimp_plug_in_procedure_execute_async (GimpProcedure  *procedure,
                                       GimpContext    *context,
                                       GimpProgress   *progress,
                                       GimpValueArray *args,
-                                      GimpObject     *display)
+                                      GimpDisplay    *display)
 {
   GimpPlugInProcedure *plug_in_procedure = GIMP_PLUG_IN_PROCEDURE (procedure);
   GError              *error             = NULL;

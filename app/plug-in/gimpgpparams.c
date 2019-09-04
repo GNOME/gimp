@@ -31,6 +31,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdisplay.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"

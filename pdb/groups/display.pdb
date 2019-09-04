@@ -39,7 +39,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  valid = (gimp_get_display_by_id (gimp, display_id) != NULL);
+  valid = (gimp_display_get_by_id (gimp, display_id) != NULL);
 }
 CODE
     );
@@ -210,7 +210,8 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h");
+@headers = qw("core/gimp.h"
+              "core/gimpdisplay.h");
 
 @procs = qw(display_id_is_valid
             display_new

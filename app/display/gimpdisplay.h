@@ -15,39 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_H__
-#define __GIMP_DISPLAY_H__
+#ifndef __GIMP_DISPLAY_IMPL_H__
+#define __GIMP_DISPLAY_IMPL_H__
 
 
-#include "core/gimpobject.h"
+#include "core/gimpdisplay.h"
 
 
-#define GIMP_TYPE_DISPLAY            (gimp_display_get_type ())
-#define GIMP_DISPLAY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY, GimpDisplay))
-#define GIMP_DISPLAY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY, GimpDisplayClass))
-#define GIMP_IS_DISPLAY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY))
-#define GIMP_IS_DISPLAY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY))
-#define GIMP_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY, GimpDisplayClass))
+#define GIMP_TYPE_DISPLAY_IMPL            (gimp_display_impl_get_type ())
+#define GIMP_DISPLAY_IMPL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_IMPL, GimpDisplayImpl))
+#define GIMP_DISPLAY_IMPL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_IMPL, GimpDisplayImplClass))
+#define GIMP_IS_DISPLAY_IMPL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY_IMPL))
+#define GIMP_IS_DISPLAY_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY_IMPL))
+#define GIMP_DISPLAY_IMPL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY_IMPL, GimpDisplayImplClass))
 
 
-typedef struct _GimpDisplayClass GimpDisplayClass;
+typedef struct _GimpDisplayImpl        GimpDisplayImpl;
+typedef struct _GimpDisplayImplClass   GimpDisplayImplClass;
+typedef struct _GimpDisplayImplPrivate GimpDisplayImplPrivate;
 
-struct _GimpDisplay
+
+struct _GimpDisplayImpl
 {
-  GimpObject         parent_instance;
+  GimpDisplay             parent_instance;
 
-  Gimp              *gimp;
-  GimpDisplayConfig *config;
+  GimpDisplayImplPrivate *priv;
 
 };
 
-struct _GimpDisplayClass
+struct _GimpDisplayImplClass
 {
-  GimpObjectClass  parent_class;
+  GimpDisplayClass  parent_class;
 };
 
 
-GType              gimp_display_get_type        (void) G_GNUC_CONST;
+GType              gimp_display_impl_get_type   (void) G_GNUC_CONST;
 
 GimpDisplay      * gimp_display_new             (Gimp              *gimp,
                                                  GimpImage         *image,
@@ -59,13 +61,7 @@ GimpDisplay      * gimp_display_new             (Gimp              *gimp,
 void               gimp_display_delete          (GimpDisplay       *display);
 void               gimp_display_close           (GimpDisplay       *display);
 
-gint               gimp_display_get_id          (GimpDisplay       *display);
-GimpDisplay      * gimp_display_get_by_id       (Gimp              *gimp,
-                                                 gint               id);
-
 gchar            * gimp_display_get_action_name (GimpDisplay       *display);
-
-Gimp             * gimp_display_get_gimp        (GimpDisplay       *display);
 
 GimpImage        * gimp_display_get_image       (GimpDisplay       *display);
 void               gimp_display_set_image       (GimpDisplay       *display,
@@ -92,4 +88,4 @@ void               gimp_display_flush           (GimpDisplay       *display);
 void               gimp_display_flush_now       (GimpDisplay       *display);
 
 
-#endif /*  __GIMP_DISPLAY_H__  */
+#endif /*  __GIMP_DISPLAY_IMPL_H__  */

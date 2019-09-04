@@ -56,7 +56,7 @@ struct _GimpContext
   guint32               serialize_props;
 
   GimpImage            *image;
-  gpointer              display;
+  GimpDisplay          *display;
 
   GimpToolInfo         *tool_info;
   gchar                *tool_name;
@@ -111,7 +111,7 @@ struct _GimpContextClass
   void (* image_changed)      (GimpContext          *context,
                                GimpImage            *image);
   void (* display_changed)    (GimpContext          *context,
-                               gpointer              display);
+                               GimpDisplay          *display);
 
   void (* tool_changed)       (GimpContext          *context,
                                GimpToolInfo         *tool_info);
@@ -222,9 +222,9 @@ void             gimp_context_image_changed       (GimpContext     *context);
 
 
 /*  display  */
-gpointer         gimp_context_get_display         (GimpContext     *context);
+GimpDisplay    * gimp_context_get_display         (GimpContext     *context);
 void             gimp_context_set_display         (GimpContext     *context,
-                                                   gpointer         display);
+                                                   GimpDisplay     *display);
 void             gimp_context_display_changed     (GimpContext     *context);
 
 

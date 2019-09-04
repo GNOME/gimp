@@ -28,6 +28,7 @@
 #include "gimp-gui.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpdisplay.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
 #include "gimpwaitable.h"
@@ -52,8 +53,6 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.get_user_time          = NULL;
   gimp->gui.get_theme_dir          = NULL;
   gimp->gui.get_icon_theme_dir     = NULL;
-  gimp->gui.display_get_by_id      = NULL;
-  gimp->gui.display_get_id         = NULL;
   gimp->gui.display_get_window_id  = NULL;
   gimp->gui.display_create         = NULL;
   gimp->gui.display_delete         = NULL;
@@ -310,7 +309,7 @@ gimp_get_window_strategy (Gimp *gimp)
   return NULL;
 }
 
-GimpObject *
+GimpDisplay *
 gimp_get_empty_display (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -321,37 +320,12 @@ gimp_get_empty_display (Gimp *gimp)
   return NULL;
 }
 
-GimpObject *
-gimp_get_display_by_id (Gimp *gimp,
-                        gint  id)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (gimp->gui.display_get_by_id)
-    return gimp->gui.display_get_by_id (gimp, id);
-
-  return NULL;
-}
-
-gint
-gimp_get_display_id (Gimp       *gimp,
-                     GimpObject *display)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
-  g_return_val_if_fail (GIMP_IS_OBJECT (display), -1);
-
-  if (gimp->gui.display_get_id)
-    return gimp->gui.display_get_id (display);
-
-  return -1;
-}
-
 guint32
-gimp_get_display_window_id (Gimp       *gimp,
-                            GimpObject *display)
+gimp_get_display_window_id (Gimp        *gimp,
+                            GimpDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
-  g_return_val_if_fail (GIMP_IS_OBJECT (display), -1);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), -1);
 
   if (gimp->gui.display_get_window_id)
     return gimp->gui.display_get_window_id (display);
@@ -359,7 +333,7 @@ gimp_get_display_window_id (Gimp       *gimp,
   return -1;
 }
 
-GimpObject *
+GimpDisplay *
 gimp_create_display (Gimp      *gimp,
                      GimpImage *image,
                      GimpUnit   unit,
@@ -377,11 +351,11 @@ gimp_create_display (Gimp      *gimp,
 }
 
 void
-gimp_delete_display (Gimp       *gimp,
-                     GimpObject *display)
+gimp_delete_display (Gimp        *gimp,
+                     GimpDisplay *display)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_OBJECT (display));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   if (gimp->gui.display_delete)
     gimp->gui.display_delete (display);
@@ -401,11 +375,11 @@ gimp_reconnect_displays (Gimp      *gimp,
 }
 
 GimpProgress *
-gimp_new_progress (Gimp       *gimp,
-                   GimpObject *display)
+gimp_new_progress (Gimp        *gimp,
+                   GimpDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (display == NULL || GIMP_IS_OBJECT (display), NULL);
+  g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
 
   if (gimp->gui.progress_new)
     return gimp->gui.progress_new (gimp, display);

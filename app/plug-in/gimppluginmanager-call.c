@@ -37,6 +37,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpdisplay.h"
 #include "core/gimpprogress.h"
 
 #include "pdb/gimppdbcontext.h"
@@ -151,7 +152,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                GimpPlugInProcedure *procedure,
                                GimpValueArray      *args,
                                gboolean             synchronous,
-                               GimpObject          *display)
+                               GimpDisplay         *display)
 {
   GimpValueArray *return_vals = NULL;
   GimpPlugIn     *plug_in;
@@ -161,7 +162,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
-  g_return_val_if_fail (display == NULL || GIMP_IS_OBJECT (display), NULL);
+  g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
 
   plug_in = gimp_plug_in_new (manager, context, progress, procedure, NULL);
 
@@ -194,7 +195,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           return return_vals;
         }
 
-      display_id = display ? gimp_get_display_id (manager->gimp, display) : -1;
+      display_id = display ? gimp_display_get_id (display) : -1;
 
       icon_theme_dir = gimp_get_icon_theme_dir (manager->gimp);
 

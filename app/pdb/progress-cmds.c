@@ -48,7 +48,7 @@ progress_init_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *message;
-  GimpObject *gdisplay;
+  GimpDisplay *gdisplay;
 
   message = g_value_get_string (gimp_value_array_index (args, 0));
   gdisplay = g_value_get_object (gimp_value_array_index (args, 1));

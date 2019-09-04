@@ -87,7 +87,7 @@ struct _GimpProcedureClass
                                        GimpContext     *context,
                                        GimpProgress    *progress,
                                        GimpValueArray  *args,
-                                       GimpObject      *display);
+                                       GimpDisplay     *display);
 };
 
 
@@ -150,7 +150,7 @@ void             gimp_procedure_execute_async      (GimpProcedure    *procedure,
                                                     GimpContext      *context,
                                                     GimpProgress     *progress,
                                                     GimpValueArray   *args,
-                                                    GimpObject       *display,
+                                                    GimpDisplay      *display,
                                                     GError          **error);
 
 gint             gimp_procedure_name_compare       (GimpProcedure    *proc1,

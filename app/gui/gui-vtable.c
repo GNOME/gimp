@@ -128,17 +128,14 @@ static guint32        gui_get_user_time          (Gimp                *gimp);
 static GFile        * gui_get_theme_dir          (Gimp                *gimp);
 static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
 static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
-static GimpObject   * gui_get_empty_display      (Gimp                *gimp);
-static GimpObject   * gui_display_get_by_id      (Gimp                *gimp,
-                                                  gint                 ID);
-static gint           gui_display_get_id         (GimpObject          *display);
-static guint32        gui_display_get_window_id  (GimpObject          *display);
-static GimpObject   * gui_display_create         (Gimp                *gimp,
+static GimpDisplay  * gui_get_empty_display      (Gimp                *gimp);
+static guint32        gui_display_get_window_id  (GimpDisplay         *display);
+static GimpDisplay  * gui_display_create         (Gimp                *gimp,
                                                   GimpImage           *image,
                                                   GimpUnit             unit,
                                                   gdouble              scale,
                                                   GObject             *monitor);
-static void           gui_display_delete         (GimpObject          *display);
+static void           gui_display_delete         (GimpDisplay         *display);
 static void           gui_displays_reconnect     (Gimp                *gimp,
                                                   GimpImage           *old_image,
                                                   GimpImage           *new_image);
@@ -146,7 +143,7 @@ static gboolean       gui_wait                   (Gimp                *gimp,
                                                   GimpWaitable        *waitable,
                                                   const gchar         *message);
 static GimpProgress * gui_new_progress           (Gimp                *gimp,
-                                                  GimpObject          *display);
+                                                  GimpDisplay         *display);
 static void           gui_free_progress          (Gimp                *gimp,
                                                   GimpProgress        *progress);
 static gboolean       gui_pdb_dialog_new         (Gimp                *gimp,
@@ -203,8 +200,6 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.get_icon_theme_dir     = gui_get_icon_theme_dir;
   gimp->gui.get_window_strategy    = gui_get_window_strategy;
   gimp->gui.get_empty_display      = gui_get_empty_display;
-  gimp->gui.display_get_by_id      = gui_display_get_by_id;
-  gimp->gui.display_get_id         = gui_display_get_id;
   gimp->gui.display_get_window_id  = gui_display_get_window_id;
   gimp->gui.display_create         = gui_display_create;
   gimp->gui.display_delete         = gui_display_delete;
@@ -345,16 +340,16 @@ gui_get_window_strategy (Gimp *gimp)
     return gimp_multi_window_strategy_get_singleton ();
 }
 
-static GimpObject *
+static GimpDisplay *
 gui_get_empty_display (Gimp *gimp)
 {
-  GimpObject *display = NULL;
+  GimpDisplay *display = NULL;
 
   if (gimp_container_get_n_children (gimp->displays) == 1)
     {
-      display = gimp_container_get_first_child (gimp->displays);
+      display = (GimpDisplay *) gimp_container_get_first_child (gimp->displays);
 
-      if (gimp_display_get_image (GIMP_DISPLAY (display)))
+      if (gimp_display_get_image (display))
         {
           /* The display was not empty */
           display = NULL;
@@ -364,21 +359,8 @@ gui_get_empty_display (Gimp *gimp)
   return display;
 }
 
-static GimpObject *
-gui_display_get_by_id (Gimp *gimp,
-                       gint  id)
-{
-  return (GimpObject *) gimp_display_get_by_id (gimp, id);
-}
-
-static gint
-gui_display_get_id (GimpObject *display)
-{
-  return gimp_display_get_id (GIMP_DISPLAY (display));
-}
-
 static guint32
-gui_display_get_window_id (GimpObject *display)
+gui_display_get_window_id (GimpDisplay *display)
 {
   GimpDisplay      *disp  = GIMP_DISPLAY (display);
   GimpDisplayShell *shell = gimp_display_get_shell (disp);
@@ -394,7 +376,7 @@ gui_display_get_window_id (GimpObject *display)
   return 0;
 }
 
-static GimpObject *
+static GimpDisplay *
 gui_display_create (Gimp      *gimp,
                     GimpImage *image,
                     GimpUnit   unit,
@@ -433,13 +415,13 @@ gui_display_create (Gimp      *gimp,
       gimp_context_set_display (context, display);
     }
 
-  return GIMP_OBJECT (display);
+  return display;
 }
 
 static void
-gui_display_delete (GimpObject *display)
+gui_display_delete (GimpDisplay *display)
 {
-  gimp_display_close (GIMP_DISPLAY (display));
+  gimp_display_close (display);
 }
 
 static void
@@ -563,8 +545,8 @@ gui_wait (Gimp         *gimp,
 }
 
 static GimpProgress *
-gui_new_progress (Gimp       *gimp,
-                  GimpObject *display)
+gui_new_progress (Gimp        *gimp,
+                  GimpDisplay *display)
 {
   g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
 

@@ -222,10 +222,10 @@ gimp_param_item_validate (GParamSpec *pspec,
  **/
 GParamSpec *
 gimp_param_spec_item (const gchar *name,
-                         const gchar *nick,
-                         const gchar *blurb,
-                         gboolean     none_ok,
-                         GParamFlags  flags)
+                      const gchar *nick,
+                      const gchar *blurb,
+                      gboolean     none_ok,
+                      GParamFlags  flags)
 {
   GimpParamSpecItem *ispec;
 
@@ -894,9 +894,9 @@ gimp_param_display_class_init (GParamSpecClass *klass)
 static void
 gimp_param_display_init (GParamSpec *pspec)
 {
-  GimpParamSpecDisplay *ispec = GIMP_PARAM_SPEC_DISPLAY (pspec);
+  GimpParamSpecDisplay *dspec = GIMP_PARAM_SPEC_DISPLAY (pspec);
 
-  ispec->none_ok = FALSE;
+  dspec->none_ok = FALSE;
 }
 
 static gboolean
@@ -944,12 +944,12 @@ gimp_param_spec_display (const gchar *name,
                          gboolean     none_ok,
                          GParamFlags  flags)
 {
-  GimpParamSpecDisplay *ispec;
+  GimpParamSpecDisplay *dspec;
 
-  ispec = g_param_spec_internal (GIMP_TYPE_PARAM_DISPLAY,
+  dspec = g_param_spec_internal (GIMP_TYPE_PARAM_DISPLAY,
                                  name, nick, blurb, flags);
 
-  ispec->none_ok = none_ok ? TRUE : FALSE;
+  dspec->none_ok = none_ok ? TRUE : FALSE;
 
-  return G_PARAM_SPEC (ispec);
+  return G_PARAM_SPEC (dspec);
 }

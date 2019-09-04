@@ -183,9 +183,9 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
         {
           Gimp        *gimp    = image->gimp;
           GimpContext *context = gimp_get_user_context (gimp);
-          GObject     *display = gimp_context_get_display (context);
+          GimpDisplay *display = gimp_context_get_display (context);
 
-          gimp_message_literal (gimp, display, GIMP_MESSAGE_WARNING,
+          gimp_message_literal (gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
                                 _("Cannot select item while a floating "
                                   "selection is active."));
         }
