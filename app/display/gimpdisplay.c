@@ -44,6 +44,8 @@
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
+#include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-scrollbars.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 
@@ -807,6 +809,9 @@ gimp_display_update_bounding_box (GimpDisplay *display)
             }
 
           private->bounding_box = bounding_box;
+
+          gimp_display_shell_scroll_clamp_and_update (shell);
+          gimp_display_shell_scrollbars_update (shell);
         }
     }
   else

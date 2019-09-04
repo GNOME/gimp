@@ -75,6 +75,7 @@
 #include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-scrollbars.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-tool-events.h"
@@ -1847,6 +1848,9 @@ gimp_display_shell_set_show_all (GimpDisplayShell *shell,
         }
 
       gimp_display_update_bounding_box (shell->display);
+
+      gimp_display_shell_scroll_clamp_and_update (shell);
+      gimp_display_shell_scrollbars_update (shell);
 
       gimp_display_shell_set_priority_viewport (shell);
 

@@ -207,9 +207,18 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           center_horizontally = sw <= shell->disp_width;
           center_vertically   = sh <= shell->disp_height;
 
-          gimp_display_shell_scroll_center_image (shell,
-                                                  center_horizontally,
-                                                  center_vertically);
+          if (! shell->show_all)
+            {
+              gimp_display_shell_scroll_center_image (shell,
+                                                      center_horizontally,
+                                                      center_vertically);
+            }
+          else
+            {
+              gimp_display_shell_scroll_center_content (shell,
+                                                        center_horizontally,
+                                                        center_vertically);
+            }
 
           /* This is basically the best we can do before we get an
            * API for storing the image offset at the start of an

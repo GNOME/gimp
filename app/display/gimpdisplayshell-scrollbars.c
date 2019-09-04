@@ -93,6 +93,10 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
 {
   gint    bounds_x;
   gint    bounds_width;
+  gint    bounding_box_x;
+  gint    bounding_box_width;
+  gint    x1;
+  gint    x2;
   gdouble lower;
   gdouble upper;
   gdouble scale_x;
@@ -103,17 +107,21 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
     return;
 
   gimp_display_shell_scale_get_image_bounds (shell,
-                                             &bounds_x, NULL,
+                                             &bounds_x,     NULL,
                                              &bounds_width, NULL);
 
-  if (shell->disp_width > bounds_width)
-    {
-      bounds_x     -= (shell->disp_width - bounds_width) / 2;
-      bounds_width  = shell->disp_width;
-    }
+  gimp_display_shell_scale_get_image_bounding_box (shell,
+                                                   &bounding_box_x,     NULL,
+                                                   &bounding_box_width, NULL);
 
-  lower = MIN (value, bounds_x);
-  upper = MAX (value + shell->disp_width, bounds_x + bounds_width);
+  x1 = bounding_box_x;
+  x2 = bounding_box_x + bounding_box_width;
+
+  x1 = MIN (x1, bounds_x + bounds_width / 2 - shell->disp_width       / 2);
+  x2 = MAX (x2, bounds_x + bounds_width / 2 + (shell->disp_width + 1) / 2);
+
+  lower = MIN (value,                     x1);
+  upper = MAX (value + shell->disp_width, x2);
 
   gimp_display_shell_get_rotated_scale (shell, &scale_x, NULL);
 
@@ -137,6 +145,10 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
 {
   gint    bounds_y;
   gint    bounds_height;
+  gint    bounding_box_y;
+  gint    bounding_box_height;
+  gint    y1;
+  gint    y2;
   gdouble lower;
   gdouble upper;
   gdouble scale_y;
@@ -150,14 +162,18 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
                                              NULL, &bounds_y,
                                              NULL, &bounds_height);
 
-  if (shell->disp_height > bounds_height)
-    {
-      bounds_y      -= (shell->disp_height - bounds_height) / 2;
-      bounds_height  = shell->disp_height;
-    }
+  gimp_display_shell_scale_get_image_bounding_box (shell,
+                                                   NULL, &bounding_box_y,
+                                                   NULL, &bounding_box_height);
 
-  lower = MIN (value, bounds_y);
-  upper = MAX (value + shell->disp_height, bounds_y + bounds_height);
+  y1 = bounding_box_y;
+  y2 = bounding_box_y + bounding_box_height;
+
+  y1 = MIN (y1, bounds_y + bounds_height / 2 - shell->disp_height       / 2);
+  y2 = MAX (y2, bounds_y + bounds_height / 2 + (shell->disp_height + 1) / 2);
+
+  lower = MIN (value,                      y1);
+  upper = MAX (value + shell->disp_height, y2);
 
   gimp_display_shell_get_rotated_scale (shell, NULL, &scale_y);
 

@@ -841,7 +841,11 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
                                             shell->offset_x + scaled_previous_origin_x,
                                             shell->offset_y + scaled_previous_origin_y);
 
-      gimp_display_shell_scroll_center_image (shell, horizontally, vertically);
+      if (! shell->show_all)
+        {
+          gimp_display_shell_scroll_center_image (shell,
+                                                  horizontally, vertically);
+        }
 
       /* The above calls might not lead to a call to
        * gimp_display_shell_scroll_clamp_and_update() and
