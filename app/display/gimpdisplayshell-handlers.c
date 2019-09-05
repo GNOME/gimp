@@ -179,6 +179,9 @@ static void   gimp_display_shell_quality_notify_handler     (GObject          *c
 static void  gimp_display_shell_color_config_notify_handler (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
+static void  gimp_display_shell_display_changed_handler     (GimpContext      *context,
+                                                             GimpDisplay      *display,
+                                                             GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -190,6 +193,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   GimpContainer     *vectors;
   GimpDisplayConfig *config;
   GimpColorConfig   *color_config;
+  GimpContext       *user_context;
   GList             *list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -203,6 +207,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 
   config       = shell->display->config;
   color_config = GIMP_CORE_CONFIG (config)->color_management;
+
+  user_context = gimp_get_user_context (shell->display->gimp);
 
   g_signal_connect (image, "clean",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
@@ -384,6 +390,10 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_color_config_notify_handler),
                     shell);
 
+  g_signal_connect (user_context, "display-changed",
+                    G_CALLBACK (gimp_display_shell_display_changed_handler),
+                    shell);
+
   gimp_display_shell_active_vectors_handler     (image, shell);
   gimp_display_shell_invalidate_preview_handler (image, shell);
   gimp_display_shell_quick_mask_changed_handler (image, shell);
@@ -414,6 +424,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   GimpContainer     *vectors;
   GimpDisplayConfig *config;
   GimpColorConfig   *color_config;
+  GimpContext       *user_context;
   GList             *list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -428,6 +439,8 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   config       = shell->display->config;
   color_config = GIMP_CORE_CONFIG (config)->color_management;
 
+  user_context = gimp_get_user_context (shell->display->gimp);
+
   gimp_display_shell_icon_update_stop (shell);
 
   gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
@@ -435,6 +448,10 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
                                          NULL);
+
+  g_signal_handlers_disconnect_by_func (user_context,
+                                        gimp_display_shell_display_changed_handler,
+                                        shell);
 
   g_signal_handlers_disconnect_by_func (color_config,
                                         gimp_display_shell_color_config_notify_handler,
@@ -1213,4 +1230,13 @@ gimp_display_shell_color_config_notify_handler (GObject          *config,
                         0);
       shell->color_config_set = FALSE;
     }
+}
+
+static void
+gimp_display_shell_display_changed_handler (GimpContext      *context,
+                                            GimpDisplay      *display,
+                                            GimpDisplayShell *shell)
+{
+  if (shell->display == display)
+    gimp_display_shell_update_priority_rect (shell);
 }

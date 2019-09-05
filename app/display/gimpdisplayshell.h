@@ -318,6 +318,9 @@ GimpPickable    * gimp_display_shell_get_pickable  (GimpDisplayShell   *shell);
 GeglRectangle     gimp_display_shell_get_bounding_box
                                                    (GimpDisplayShell   *shell);
 
+void              gimp_display_shell_update_priority_rect
+                                                   (GimpDisplayShell *shell);
+
 void              gimp_display_shell_flush         (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_pause         (GimpDisplayShell   *shell);
