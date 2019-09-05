@@ -1015,7 +1015,7 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-show-selection",       display && options->show_selection);
   SET_SENSITIVE ("view-show-layer-boundary",  image);
   SET_ACTIVE    ("view-show-layer-boundary",  display && options->show_layer_boundary);
-  SET_SENSITIVE ("view-show-canvas-boundary", image);
+  SET_SENSITIVE ("view-show-canvas-boundary", image && shell->show_all);
   SET_ACTIVE    ("view-show-canvas-boundary", display && options->show_canvas_boundary);
   SET_SENSITIVE ("view-show-guides",          image);
   SET_ACTIVE    ("view-show-guides",          display && options->show_guides);
