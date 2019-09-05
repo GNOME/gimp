@@ -1133,6 +1133,13 @@ _gp_param_def_read (GIOChannel *channel,
         return FALSE;
       break;
 
+    case GP_PARAM_DEF_TYPE_ID_ARRAY:
+      if (! _gimp_wire_read_string (channel,
+                                    &param_def->meta.m_id_array.type_name, 1,
+                                    user_data))
+        return FALSE;
+      break;
+
     case GP_PARAM_DEF_TYPE_PARAM_DEF:
       if (! _gimp_wire_read_string (channel,
                                     &param_def->meta.m_param_def.type_name, 1,
@@ -1173,6 +1180,10 @@ _gp_param_def_destroy (GPParamDef *param_def)
 
     case GP_PARAM_DEF_TYPE_COLOR:
     case GP_PARAM_DEF_TYPE_ID:
+      break;
+
+    case GP_PARAM_DEF_TYPE_ID_ARRAY:
+      g_free (param_def->meta.m_id_array.type_name);
       break;
 
     case GP_PARAM_DEF_TYPE_PARAM_DEF:
@@ -1408,6 +1419,13 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_id.none_ok, 1,
                                     user_data))
+        return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_ID_ARRAY:
+      if (! _gimp_wire_write_string (channel,
+                                     &param_def->meta.m_id_array.type_name, 1,
+                                     user_data))
         return FALSE;
       break;
 
@@ -1704,6 +1722,31 @@ _gp_params_read (GIOChannel  *channel,
             }
           break;
 
+        case GP_PARAM_TYPE_ID_ARRAY:
+          if (! _gimp_wire_read_string (channel,
+                                        &(*params)[i].data.d_id_array.type_name, 1,
+                                        user_data))
+            goto cleanup;
+
+          if (! _gimp_wire_read_int32 (channel,
+                                       &(*params)[i].data.d_id_array.size, 1,
+                                       user_data))
+            goto cleanup;
+
+          (*params)[i].data.d_id_array.data = g_new0 (gint32,
+                                                      (*params)[i].data.d_id_array.size);
+
+          if (! _gimp_wire_read_int32 (channel,
+                                       (guint32 *) (*params)[i].data.d_id_array.data,
+                                       (*params)[i].data.d_id_array.size,
+                                       user_data))
+            {
+              g_free ((*params)[i].data.d_id_array.data);
+              (*params)[i].data.d_id_array.data = NULL;
+              goto cleanup;
+            }
+          break;
+
         case GP_PARAM_TYPE_PARASITE:
           if (! _gimp_wire_read_string (channel,
                                         &(*params)[i].data.d_parasite.name, 1,
@@ -1833,6 +1876,20 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
+        case GP_PARAM_TYPE_ID_ARRAY:
+          if (! _gimp_wire_write_string (channel,
+                                         &params[i].data.d_id_array.type_name, 1,
+                                         user_data) ||
+              ! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_id_array.size, 1,
+                                        user_data) ||
+              ! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) params[i].data.d_id_array.data,
+                                        params[i].data.d_id_array.size,
+                                        user_data))
+            return;
+          break;
+
         case GP_PARAM_TYPE_PARASITE:
           {
             GimpParasite *p = &params[i].data.d_parasite;
@@ -1907,6 +1964,11 @@ _gp_params_destroy (GPParam *params,
 
               g_free (params[i].data.d_string_array.data);
             }
+          break;
+
+        case GP_PARAM_TYPE_ID_ARRAY:
+          g_free (params[i].data.d_id_array.type_name);
+          g_free (params[i].data.d_id_array.data);
           break;
 
         case GP_PARAM_TYPE_PARASITE:

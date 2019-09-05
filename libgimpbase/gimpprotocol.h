@@ -57,6 +57,7 @@ typedef enum
   GP_PARAM_DEF_TYPE_STRING,
   GP_PARAM_DEF_TYPE_COLOR,
   GP_PARAM_DEF_TYPE_ID,
+  GP_PARAM_DEF_TYPE_ID_ARRAY,
   GP_PARAM_DEF_TYPE_PARAM_DEF
 } GPParamDefType;
 
@@ -69,6 +70,7 @@ typedef enum
   GP_PARAM_TYPE_PARASITE,
   GP_PARAM_TYPE_ARRAY,
   GP_PARAM_TYPE_STRING_ARRAY,
+  GP_PARAM_TYPE_ID_ARRAY,
   GP_PARAM_TYPE_PARAM_DEF
 } GPParamType;
 
@@ -86,10 +88,12 @@ typedef struct _GPParamDefFloat    GPParamDefFloat;
 typedef struct _GPParamDefString   GPParamDefString;
 typedef struct _GPParamDefColor    GPParamDefColor;
 typedef struct _GPParamDefID       GPParamDefID;
+typedef struct _GPParamDefIDArray  GPParamDefIDArray;
 typedef struct _GPParamDefParamDef GPParamDefParamDef;
 typedef struct _GPParam            GPParam;
 typedef struct _GPParamArray       GPParamArray;
 typedef struct _GPParamStringArray GPParamStringArray;
+typedef struct _GPParamIDArray     GPParamIDArray;
 typedef struct _GPProcRun          GPProcRun;
 typedef struct _GPProcReturn       GPProcReturn;
 typedef struct _GPProcInstall      GPProcInstall;
@@ -175,7 +179,7 @@ struct _GPParamDefFloat
 
 struct _GPParamDefString
 {
-  gchar  *default_val;
+  gchar *default_val;
 };
 
 struct _GPParamDefColor
@@ -187,6 +191,11 @@ struct _GPParamDefColor
 struct _GPParamDefID
 {
   gint32 none_ok;
+};
+
+struct _GPParamDefIDArray
+{
+  gchar *type_name;
 };
 
 struct _GPParamDefParamDef
@@ -213,6 +222,7 @@ struct _GPParamDef
     GPParamDefString   m_string;
     GPParamDefColor    m_color;
     GPParamDefID       m_id;
+    GPParamDefIDArray  m_id_array;
     GPParamDefParamDef m_param_def;
   } meta;
 };
@@ -229,6 +239,13 @@ struct _GPParamStringArray
   gchar   **data;
 };
 
+struct _GPParamIDArray
+{
+  gchar   *type_name;
+  guint32  size;
+  gint32  *data;
+};
+
 struct _GPParam
 {
   GPParamType  param_type;
@@ -243,6 +260,7 @@ struct _GPParam
     GimpParasite        d_parasite;
     GPParamArray        d_array;
     GPParamStringArray  d_string_array;
+    GPParamIDArray      d_id_array;
     GPParamDef          d_param_def;
   } data;
 };
