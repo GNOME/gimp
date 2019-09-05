@@ -200,7 +200,7 @@ layer_options_dialog_new (GimpImage                *image,
 
   private->blend_space_combo = combo =
     gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (space_model));
-  item_options_dialog_add_widget (dialog, _("Blend space:"), combo);
+  item_options_dialog_add_widget (dialog, _("_Blend space:"), combo);
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                        "gimp-layer-color-space");
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
@@ -210,7 +210,7 @@ layer_options_dialog_new (GimpImage                *image,
 
   private->composite_space_combo = combo =
     gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (space_model));
-  item_options_dialog_add_widget (dialog, _("Composite space:"), combo);
+  item_options_dialog_add_widget (dialog, _("Compos_ite space:"), combo);
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                        "gimp-layer-color-space");
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
@@ -222,7 +222,7 @@ layer_options_dialog_new (GimpImage                *image,
 
   private->composite_mode_combo = combo =
     gimp_enum_combo_box_new (GIMP_TYPE_LAYER_COMPOSITE_MODE);
-  item_options_dialog_add_widget (dialog, _("Composite mode:"), combo);
+  item_options_dialog_add_widget (dialog, _("Composite mo_de:"), combo);
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                        "gimp-layer-composite");
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
