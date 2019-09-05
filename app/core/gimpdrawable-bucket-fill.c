@@ -74,7 +74,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   buffer = gimp_drawable_get_bucket_fill_buffer (drawable, options,
                                                  fill_transparent, fill_criterion,
-                                                 threshold, sample_merged,
+                                                 threshold, FALSE, sample_merged,
                                                  diagonal_neighbors,
                                                  seed_x, seed_y, NULL,
                                                  &mask_x, &mask_y, &width, &height);
@@ -107,6 +107,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
  * @fill_transparent:
  * @fill_criterion:
  * @threshold:
+ * @show_all:
  * @sample_merged:
  * @diagonal_neighbors:
  * @seed_x: X coordinate to start the fill.
@@ -135,6 +136,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
                                       gboolean              fill_transparent,
                                       GimpSelectCriterion   fill_criterion,
                                       gdouble               threshold,
+                                      gboolean              show_all,
                                       gboolean              sample_merged,
                                       gboolean              diagonal_neighbors,
                                       gdouble               seed_x,
@@ -181,9 +183,16 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
   gimp_set_busy (image->gimp);
 
   if (sample_merged)
-    pickable = GIMP_PICKABLE (image);
+    {
+      if (! show_all)
+        pickable = GIMP_PICKABLE (image);
+      else
+        pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+    }
   else
-    pickable = GIMP_PICKABLE (drawable);
+    {
+      pickable = GIMP_PICKABLE (drawable);
+    }
 
   antialias = gimp_fill_options_get_antialias (options);
 

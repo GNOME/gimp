@@ -33,6 +33,7 @@ GeglBuffer * gimp_drawable_get_bucket_fill_buffer   (GimpDrawable         *drawa
                                                      gboolean              fill_transparent,
                                                      GimpSelectCriterion   fill_criterion,
                                                      gdouble               threshold,
+                                                     gboolean              show_all,
                                                      gboolean              sample_merged,
                                                      gboolean              diagonal_neighbors,
                                                      gdouble               seed_x,
