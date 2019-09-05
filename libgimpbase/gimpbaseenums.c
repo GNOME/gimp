@@ -414,10 +414,10 @@ gimp_convert_palette_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CONVERT_PALETTE_GENERATE, NC_("convert-palette-type", "_Generate optimum palette"), NULL },
-    { GIMP_CONVERT_PALETTE_WEB, NC_("convert-palette-type", "Use _web-optimized palette"), NULL },
-    { GIMP_CONVERT_PALETTE_MONO, NC_("convert-palette-type", "Use _black and white (1-bit) palette"), NULL },
-    { GIMP_CONVERT_PALETTE_CUSTOM, NC_("convert-palette-type", "Use c_ustom palette"), NULL },
+    { GIMP_CONVERT_PALETTE_GENERATE, NC_("convert-palette-type", "Generate optimum palette"), NULL },
+    { GIMP_CONVERT_PALETTE_WEB, NC_("convert-palette-type", "Use web-optimized palette"), NULL },
+    { GIMP_CONVERT_PALETTE_MONO, NC_("convert-palette-type", "Use black and white (1-bit) palette"), NULL },
+    { GIMP_CONVERT_PALETTE_CUSTOM, NC_("convert-palette-type", "Use custom palette"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -1092,9 +1092,9 @@ gimp_merge_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_EXPAND_AS_NECESSARY, NC_("merge-type", "_Expanded as necessary"), NULL },
-    { GIMP_CLIP_TO_IMAGE, NC_("merge-type", "Clipped to _image"), NULL },
-    { GIMP_CLIP_TO_BOTTOM_LAYER, NC_("merge-type", "Clipped to _bottom layer"), NULL },
+    { GIMP_EXPAND_AS_NECESSARY, NC_("merge-type", "Expanded as necessary"), NULL },
+    { GIMP_CLIP_TO_IMAGE, NC_("merge-type", "Clipped to image"), NULL },
+    { GIMP_CLIP_TO_BOTTOM_LAYER, NC_("merge-type", "Clipped to bottom layer"), NULL },
     { GIMP_FLATTEN_IMAGE, NC_("merge-type", "Flatten"), NULL },
     { 0, NULL, NULL }
   };
@@ -1670,8 +1670,8 @@ gimp_stroke_method_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_STROKE_LINE, NC_("stroke-method", "S_troke line"), NULL },
-    { GIMP_STROKE_PAINT_METHOD, NC_("stroke-method", "Stroke _with a paint tool"), NULL },
+    { GIMP_STROKE_LINE, NC_("stroke-method", "Stroke line"), NULL },
+    { GIMP_STROKE_PAINT_METHOD, NC_("stroke-method", "Stroke with a paint tool"), NULL },
     { 0, NULL, NULL }
   };
 
