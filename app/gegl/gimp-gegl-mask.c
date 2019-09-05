@@ -123,6 +123,8 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
                                                                              \
                                 if (y < ty1) ty1 = y;                        \
                                 if (y > ty2) ty2 = y;                        \
+                                                                             \
+                                break;                                       \
                               }                                              \
                           }                                                  \
                                                                              \
