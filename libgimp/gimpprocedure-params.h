@@ -439,7 +439,7 @@ G_BEGIN_DECLS
 
 #define GIMP_PROC_VAL_OBJECT_ARRAY(class, name, nick, blurb, object_type, flags) \
   gimp_procedure_add_return_value (procedure,\
-                                   gimp_param_spec_string_array (name, nick, blurb,\
+                                   gimp_param_spec_object_array (name, nick, blurb,\
                                                                  object_type, flags))
 
 #define GIMP_VALUES_GET_OBJECT_ARRAY(args, n) \
@@ -448,13 +448,13 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_DUP_OBJECT_ARRAY(args, n) \
   (gpointer) gimp_value_dup_object_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_SET_OBJECT_ARRAY(args, n, value, length) \
+#define GIMP_VALUES_SET_OBJECT_ARRAY(args, n, object_type, value, length) \
   gimp_value_set_object_array (gimp_value_array_index (args, n),\
-                               (gpointer) value, length)
+                               object_type, (gpointer) value, length)
 
-#define GIMP_VALUES_TAKE_OBJECT_ARRAY(args, n, value, length) \
+#define GIMP_VALUES_TAKE_OBJECT_ARRAY(args, n, object_type, value, length) \
   gimp_value_take_object_array (gimp_value_array_index (args, n),\
-                                (gpointer) value, length)
+                                object_type, (gpointer) value, length)
 
 
 /*  display  */
