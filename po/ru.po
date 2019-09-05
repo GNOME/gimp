@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-05 14:03+0300\n"
-"PO-Revision-Date: 2019-09-05 14:41+0300\n"
+"PO-Revision-Date: 2019-09-05 15:04+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -5053,10 +5053,9 @@ msgid "_Desaturate..."
 msgstr "_Обесцвечивание..."
 
 #: ../app/actions/filters-actions.c:288
-#, fuzzy
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
-msgstr "Разница по Гауссу..."
+msgstr "Ра_зница по Гауссу..."
 
 #: ../app/actions/filters-actions.c:293
 #, fuzzy
@@ -5065,10 +5064,9 @@ msgid "D_iffraction Patterns..."
 msgstr "Дифракционные узоры..."
 
 #: ../app/actions/filters-actions.c:298
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Displace..."
-msgstr "_Смещение..."
+msgstr "Сме_щение..."
 
 #: ../app/actions/filters-actions.c:303
 #, fuzzy
@@ -5177,10 +5175,9 @@ msgid "_Kaleidoscope..."
 msgstr "Ка_лейдоскоп..."
 
 #: ../app/actions/filters-actions.c:408
-#, fuzzy
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
-msgstr "Искажения оптики..."
+msgstr "Иска_жения оптики..."
 
 #: ../app/actions/filters-actions.c:413
 #, fuzzy
@@ -5281,7 +5278,6 @@ msgid "_Hurl..."
 msgstr "_Бросок..."
 
 #: ../app/actions/filters-actions.c:508
-#, fuzzy
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "_Перлинов шум..."
@@ -12170,10 +12166,9 @@ msgid "Rotate image"
 msgstr "Повернуть изображение"
 
 #: ../app/core/core-enums.c:1136
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform image"
-msgstr "Преобразование"
+msgstr "Преобразование изображения"
 
 #: ../app/core/core-enums.c:1137
 msgctxt "undo-type"
@@ -13802,62 +13797,62 @@ msgstr "Идёт преобразование в индексированные 
 #: ../app/core/gimpimage-convert-precision.c:77
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit linear integer"
-msgstr "Преобразование в индексированное"
+msgstr "Преобразование в 8-разрядное линейное целочисленное"
 
 #: ../app/core/gimpimage-convert-precision.c:80
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit gamma integer"
-msgstr "Преобразование в индексированное"
+msgstr "Преобразование в 8-разрядное нелинейное целочисленное"
 
 #: ../app/core/gimpimage-convert-precision.c:83
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear integer"
-msgstr "Преобразование в индексированное"
+msgstr "Преобразование в 16-разрядное линейное целочисленное"
 
 #: ../app/core/gimpimage-convert-precision.c:86
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma integer"
-msgstr "Преобразование в индексированное"
+msgstr "Преобразование в 16-разрядное нелинейное целочисленное"
 
 #: ../app/core/gimpimage-convert-precision.c:89
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear integer"
-msgstr "Преобразование в индексированное"
+msgstr "Преобразование в 32-разрядное линейное целочисленное"
 
 #: ../app/core/gimpimage-convert-precision.c:92
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma integer"
-msgstr "Преобразование в индексированное"
+msgstr "Преобразование в 32-разрядное нелинейное целочисленное"
 
 #: ../app/core/gimpimage-convert-precision.c:95
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
-msgstr "Преобразовать изображение в индексированное"
+msgstr "Преобразование в 16-разрядное линейное с плавающей точкой"
 
 #: ../app/core/gimpimage-convert-precision.c:98
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
-msgstr "Преобразовать изображение в индексированное"
+msgstr "Преобразование в 16-разрядное нелинейное с плавающей точкой"
 
 #: ../app/core/gimpimage-convert-precision.c:101
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
-msgstr "Преобразовать изображение в индексированное"
+msgstr "Преобразование в 32-разрядное линейное с плавающей точкой"
 
 #: ../app/core/gimpimage-convert-precision.c:104
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
-msgstr "Преобразовать изображение в индексированное"
+msgstr "Преобразование в 32-разрядное нелинейное с плавающей точкой"
 
 #: ../app/core/gimpimage-convert-precision.c:107
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
-msgstr "Преобразовать изображение в индексированное"
+msgstr "Преобразование в 64-разрядное линейное с плавающей точкой"
 
 #: ../app/core/gimpimage-convert-precision.c:110
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
-msgstr "Преобразовать изображение в индексированное"
+msgstr "Преобразование в 64-разрядное нелинейное с плавающей точкой"
 
 #. dithering
 #: ../app/core/gimpimage-convert-precision.c:268
@@ -13891,12 +13886,12 @@ msgstr "Смена размера изображения"
 #: ../app/core/gimpimage-guides.c:53
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
-msgstr "Новая горизонтальная направляющая"
+msgstr "Новая гор. направляющая"
 
 #: ../app/core/gimpimage-guides.c:77
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
-msgstr "Новая вертикальная направляющая"
+msgstr "Новая верт. направляющая"
 
 #: ../app/core/gimpimage-guides.c:121
 msgctxt "undo-type"
@@ -21246,11 +21241,13 @@ msgstr ""
 "Да, но фальшивый экземпляръ!"
 
 #: ../app/text/gimpfontfactory.c:398
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Some fonts failed to load:\n"
 "%s"
-msgstr "Не удалось загрузить некоторые шрифты."
+msgstr ""
+"Не удалось загрузить некоторые шрифты:\n"
+"%s"
 
 #: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
 msgid "Add Text Layer"
@@ -22560,10 +22557,9 @@ msgid "Gradient Step"
 msgstr "Градиент"
 
 #: ../app/tools/gimpguidetool.c:191
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Guides"
-msgstr "Удаление направляющей"
+msgstr "Удаление направляющих"
 
 #: ../app/tools/gimpguidetool.c:192
 msgctxt "undo-type"
@@ -22571,9 +22567,8 @@ msgid "Move Guides"
 msgstr "Перемещение направляющих"
 
 #: ../app/tools/gimpguidetool.c:433
-#, fuzzy
 msgid "Remove Guides"
-msgstr "Удалить направляющую"
+msgstr "Удаление направляющих"
 
 #: ../app/tools/gimpguidetool.c:434
 msgid "Remove Guide"
@@ -22588,9 +22583,8 @@ msgid "Move Guide: "
 msgstr "Переместить направляющую:"
 
 #: ../app/tools/gimpguidetool.c:482
-#, fuzzy
 msgid "Move Guides: "
-msgstr "Переместить направляющую:"
+msgstr "Переместить на: "
 
 #: ../app/tools/gimpguidetool.c:493
 msgid "Add Guide: "
@@ -24284,7 +24278,6 @@ msgid "Path"
 msgstr "Контур"
 
 #: ../app/tools/tools-enums.c:124
-#, fuzzy
 msgctxt "transform-type"
 msgid "Image"
 msgstr "Изображение"
