@@ -142,7 +142,7 @@ static void       gimp_plug_in_pop_procedure     (GimpPlugIn      *plug_in,
                                                   GimpProcedure   *procedure);
 static void       gimp_plug_in_destroy_hashes    (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_destroy_proxies   (GHashTable      *hash_table,
-                                                  gboolean         finalize);
+                                                  gboolean         destroy_all);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
@@ -1225,7 +1225,13 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
   gimp_plug_in_destroy_proxies (plug_in->priv->items,    FALSE);
 
   if (! plug_in->priv->procedure_stack)
-    gimp_plug_in_destroy_hashes (plug_in);
+    {
+      gimp_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
+      gimp_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
+
+      gimp_plug_in_destroy_hashes (plug_in);
+    }
 }
 
 GimpDisplay *
@@ -1362,7 +1368,7 @@ gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 
 static void
 gimp_plug_in_destroy_proxies (GHashTable *hash_table,
-                              gboolean    finalize)
+                              gboolean    destroy_all)
 {
   GHashTableIter iter;
   gpointer       key, value;
@@ -1400,7 +1406,7 @@ gimp_plug_in_destroy_proxies (GHashTable *hash_table,
 
           g_hash_table_iter_remove (&iter);
         }
-      else if (finalize)
+      else if (destroy_all)
         {
           /* this is debug code, a plug-in MUST NOT ref a proxy */
 
