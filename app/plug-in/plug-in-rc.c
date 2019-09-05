@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 11
+#define PLUG_IN_RC_FILE_VERSION 12
 
 
 /*
@@ -877,6 +877,24 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
           goto error;
         }
       break;
+
+    case GP_PARAM_DEF_TYPE_ID_ARRAY:
+      if (! gimp_scanner_parse_string (scanner,
+                                       &param_def.meta.m_id_array.type_name))
+        {
+          token = G_TOKEN_STRING;
+          goto error;
+        }
+      break;
+
+    case GP_PARAM_DEF_TYPE_PARAM_DEF:
+      if (! gimp_scanner_parse_string (scanner,
+                                       &param_def.meta.m_param_def.type_name))
+        {
+          token = G_TOKEN_STRING;
+          goto error;
+        }
+      break;
     }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
@@ -922,6 +940,14 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
     case GP_PARAM_DEF_TYPE_COLOR:
     case GP_PARAM_DEF_TYPE_ID:
+      break;
+
+    case GP_PARAM_DEF_TYPE_ID_ARRAY:
+      g_free (param_def.meta.m_id_array.type_name);
+      break;
+
+    case GP_PARAM_DEF_TYPE_PARAM_DEF:
+      g_free (param_def.meta.m_param_def.type_name);
       break;
     }
 
@@ -1079,6 +1105,16 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
     case GP_PARAM_DEF_TYPE_ID:
       gimp_config_writer_printf (writer, "%d",
                                  param_def.meta.m_id.none_ok);
+      break;
+
+    case GP_PARAM_DEF_TYPE_ID_ARRAY:
+      gimp_config_writer_string (writer,
+                                 param_def.meta.m_id_array.type_name);
+      break;
+
+    case GP_PARAM_DEF_TYPE_PARAM_DEF:
+      gimp_config_writer_string (writer,
+                                 param_def.meta.m_param_def.type_name);
       break;
     }
 
