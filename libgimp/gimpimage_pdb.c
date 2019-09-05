@@ -104,7 +104,7 @@ gimp_get_images (gint *num_images)
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_images = GIMP_VALUES_GET_INT (return_vals, 1);
-      images = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) images = g_memdup (a->data, a->length * sizeof (gpointer)); };
     }
 
   gimp_value_array_unref (return_vals);
@@ -496,7 +496,7 @@ gimp_image_get_layers (GimpImage *image,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      layers = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup (a->data, a->length * sizeof (gpointer)); };
     }
 
   gimp_value_array_unref (return_vals);
@@ -543,7 +543,7 @@ gimp_image_get_channels (GimpImage *image,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      channels = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) channels = g_memdup (a->data, a->length * sizeof (gpointer)); };
     }
 
   gimp_value_array_unref (return_vals);
@@ -589,7 +589,7 @@ gimp_image_get_vectors (GimpImage *image,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      vectors = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) vectors = g_memdup (a->data, a->length * sizeof (gpointer)); };
     }
 
   gimp_value_array_unref (return_vals);
