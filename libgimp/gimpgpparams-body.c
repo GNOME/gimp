@@ -601,6 +601,9 @@ _gimp_gp_param_to_value (gpointer        gimp,
             {
               objects[i] = (GObject *) get_display_by_id (gimp, id);
             }
+
+          if (objects[i])
+            g_object_ref (objects[i]);
         }
 
       gimp_value_take_object_array (value, object_type, objects,
