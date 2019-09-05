@@ -272,8 +272,8 @@ svg_load (GimpProcedure        *procedure,
                                              error);
   if (load_vals.import)
     {
-      gint32 *vectors;
-      gint    num_vectors;
+      GimpVectors **vectors;
+      gint          num_vectors;
 
       gimp_vectors_import_from_file (image, filename,
                                      load_vals.merge, TRUE,
