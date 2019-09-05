@@ -1170,7 +1170,7 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
                                               NULL, 0,
                                               proc_run->params,
                                               proc_run->nparams,
-                                              FALSE, FALSE);
+                                              FALSE);
 
   return_values = gimp_procedure_run (procedure, arguments);
 

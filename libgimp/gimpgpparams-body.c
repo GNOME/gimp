@@ -442,8 +442,7 @@ static void
 gimp_gp_param_to_value (gpointer        gimp,
                         const GPParam  *param,
                         GType           type,
-                        GValue         *value,
-                        gboolean        full_copy)
+                        GValue         *value)
 {
   g_return_if_fail (param != NULL);
   g_return_if_fail (value != NULL);
@@ -476,10 +475,7 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (G_VALUE_HOLDS_STRING (value))
     {
-      if (full_copy)
-        g_value_set_string (value, param->data.d_string);
-      else
-        g_value_set_static_string (value, param->data.d_string);
+      g_value_set_string (value, param->data.d_string);
     }
   else if (GIMP_VALUE_HOLDS_RGB (value))
     {
@@ -487,92 +483,51 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (GIMP_VALUE_HOLDS_PARASITE (value))
     {
-      if (full_copy)
-        g_value_set_boxed (value, &param->data.d_parasite);
-      else
-        g_value_set_static_boxed (value, &param->data.d_parasite);
+      g_value_set_boxed (value, &param->data.d_parasite);
     }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
     {
-      if (full_copy)
-        gimp_value_set_int32_array (value,
-                                    (gint32 *) param->data.d_array.data,
-                                    param->data.d_array.size /
-                                    sizeof (gint32));
-      else
-        gimp_value_set_static_int32_array (value,
-                                           (gint32 *) param->data.d_array.data,
-                                           param->data.d_array.size /
-                                           sizeof (gint32));
+      gimp_value_set_int32_array (value,
+                                  (gint32 *) param->data.d_array.data,
+                                  param->data.d_array.size /
+                                  sizeof (gint32));
     }
   else if (GIMP_VALUE_HOLDS_INT16_ARRAY (value))
     {
-      if (full_copy)
-        gimp_value_set_int16_array (value,
-                                    (gint16 *) param->data.d_array.data,
-                                    param->data.d_array.size /
-                                    sizeof (gint16));
-      else
-        gimp_value_set_static_int16_array (value,
-                                           (gint16 *) param->data.d_array.data,
-                                           param->data.d_array.size /
-                                           sizeof (gint16));
+      gimp_value_set_int16_array (value,
+                                  (gint16 *) param->data.d_array.data,
+                                  param->data.d_array.size /
+                                  sizeof (gint16));
     }
   else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
     {
-      if (full_copy)
-        gimp_value_set_uint8_array (value,
-                                    param->data.d_array.data,
-                                    param->data.d_array.size /
-                                    sizeof (guint8));
-      else
-        gimp_value_set_static_uint8_array (value,
-                                           param->data.d_array.data,
-                                           param->data.d_array.size /
-                                           sizeof (guint8));
+      gimp_value_set_uint8_array (value,
+                                  param->data.d_array.data,
+                                  param->data.d_array.size /
+                                  sizeof (guint8));
     }
   else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
     {
-      if (full_copy)
-        gimp_value_set_float_array (value,
-                                    (const gdouble *)
-                                    param->data.d_array.data,
-                                    param->data.d_array.size /
-                                    sizeof (gdouble));
-      else
-        gimp_value_set_static_float_array (value,
-                                           (const gdouble *)
-                                           param->data.d_array.data,
-                                           param->data.d_array.size /
-                                           sizeof (gdouble));
+      gimp_value_set_float_array (value,
+                                  (const gdouble *)
+                                  param->data.d_array.data,
+                                  param->data.d_array.size /
+                                  sizeof (gdouble));
     }
   else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
     {
-      if (full_copy)
-        gimp_value_set_string_array (value,
-                                     (const gchar **)
-                                     param->data.d_string_array.data,
-                                     param->data.d_string_array.size);
-      else
-        gimp_value_set_static_string_array (value,
-                                            (const gchar **)
-                                            param->data.d_string_array.data,
-                                            param->data.d_string_array.size);
+      gimp_value_set_string_array (value,
+                                   (const gchar **)
+                                   param->data.d_string_array.data,
+                                   param->data.d_string_array.size);
     }
   else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
     {
-      if (full_copy)
-        gimp_value_set_rgb_array (value,
-                                  (GimpRGB *)
-                                  param->data.d_array.data,
-                                  param->data.d_array.size /
-                                  sizeof (GimpRGB));
-      else
-        gimp_value_set_static_rgb_array (value,
-                                         (GimpRGB *)
-                                         param->data.d_array.data,
-                                         param->data.d_array.size /
-                                         sizeof (GimpRGB));
+      gimp_value_set_rgb_array (value,
+                                (GimpRGB *)
+                                param->data.d_array.data,
+                                param->data.d_array.size /
+                                sizeof (GimpRGB));
     }
   else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
     {
@@ -635,8 +590,7 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
                                 gint            n_pspecs,
                                 const GPParam  *params,
                                 gint            n_params,
-                                gboolean        return_values,
-                                gboolean        full_copy)
+                                gboolean        return_values)
 {
   GimpValueArray *args;
   gint            i;
@@ -702,7 +656,7 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
             }
         }
 
-      gimp_gp_param_to_value (gimp, &params[i], type, &value, full_copy);
+      gimp_gp_param_to_value (gimp, &params[i], type, &value);
 
       gimp_value_array_append (args, &value);
       g_value_unset (&value);

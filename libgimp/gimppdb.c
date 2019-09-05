@@ -313,7 +313,7 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
                                                   NULL, 0,
                                                   proc_return->params,
                                                   proc_return->nparams,
-                                                  TRUE, FALSE);
+                                                  TRUE);
 
   gimp_wire_destroy (&msg);
 

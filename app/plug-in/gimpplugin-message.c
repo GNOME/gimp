@@ -574,7 +574,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
                                          procedure ? procedure->num_args : 0,
                                          proc_run->params,
                                          proc_run->nparams,
-                                         FALSE, FALSE);
+                                         FALSE);
 
   /*  Execute the procedure even if gimp_pdb_lookup_procedure()
    *  returned NULL, gimp_pdb_execute_procedure_by_name_args() will
@@ -645,7 +645,7 @@ gimp_plug_in_handle_proc_return (GimpPlugIn   *plug_in,
                                     proc_frame->procedure->num_values,
                                     proc_return->params,
                                     proc_return->nparams,
-                                    TRUE, TRUE);
+                                    TRUE);
 
   if (proc_frame->main_loop)
     {
@@ -681,7 +681,7 @@ gimp_plug_in_handle_temp_proc_return (GimpPlugIn   *plug_in,
                                         proc_frame->procedure->num_values,
                                         proc_return->params,
                                         proc_return->nparams,
-                                        TRUE, TRUE);
+                                        TRUE);
 
       gimp_plug_in_main_loop_quit (plug_in);
       gimp_plug_in_proc_frame_pop (plug_in);
