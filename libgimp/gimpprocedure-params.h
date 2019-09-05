@@ -430,6 +430,33 @@ G_BEGIN_DECLS
   gimp_value_take_rgb_array (gimp_value_array_index (args, n), value, length)
 
 
+/*  object array  */
+
+#define GIMP_PROC_ARG_OBJECT_ARRAY(class, name, nick, blurb, object_type, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_object_array (name, nick, blurb,\
+                                                             object_type, flags))
+
+#define GIMP_PROC_VAL_OBJECT_ARRAY(class, name, nick, blurb, object_type, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   gimp_param_spec_string_array (name, nick, blurb,\
+                                                                 object_type, flags))
+
+#define GIMP_VALUES_GET_OBJECT_ARRAY(args, n) \
+  (gpointer) gimp_value_get_object_array (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_DUP_OBJECT_ARRAY(args, n) \
+  (gpointer) gimp_value_dup_object_array (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_OBJECT_ARRAY(args, n, value, length) \
+  gimp_value_set_object_array (gimp_value_array_index (args, n),\
+                               (gpointer) value, length)
+
+#define GIMP_VALUES_TAKE_OBJECT_ARRAY(args, n, value, length) \
+  gimp_value_take_object_array (gimp_value_array_index (args, n),\
+                                (gpointer) value, length)
+
+
 /*  display  */
 
 #define GIMP_PROC_ARG_DISPLAY(class, name, nick, blurb, none_ok, flags)  \
