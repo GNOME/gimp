@@ -160,6 +160,7 @@ libappcore_sources = [
   'gimpimage.c',
   'gimpimagefile.c',
   'gimpimageundo.c',
+  'gimpimageviewable.c',
   'gimpitem-exclusive.c',
   'gimpitem-linked.c',
   'gimpitem-preview.c',
