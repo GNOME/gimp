@@ -1775,30 +1775,38 @@ gimp_display_shell_set_show_all (GimpDisplayShell *shell,
 
   if (show_all != shell->show_all)
     {
-      GimpImage *image = gimp_display_get_image (shell->display);
-
       shell->show_all = show_all;
 
-      if (image)
+      if (shell->display && gimp_display_get_image (shell->display))
         {
+          GimpImage   *image = gimp_display_get_image (shell->display);
+          GimpContext *user_context;
+
           if (show_all)
             gimp_image_inc_show_all_count (image);
           else
             gimp_image_dec_show_all_count (image);
 
           gimp_image_flush (image);
+
+          gimp_display_update_bounding_box (shell->display);
+
+          gimp_display_shell_update_show_canvas (shell);
+
+          gimp_display_shell_scroll_clamp_and_update (shell);
+          gimp_display_shell_scrollbars_update (shell);
+
+          gimp_display_shell_expose_full (shell);
+
+          user_context = gimp_get_user_context (shell->display->gimp);
+
+          if (shell->display == gimp_context_get_display (user_context))
+            {
+              gimp_display_shell_set_priority_viewport (shell);
+
+              gimp_ui_manager_update (shell->popup_manager, shell->display);
+            }
         }
-
-      gimp_display_update_bounding_box (shell->display);
-
-      gimp_display_shell_update_show_canvas (shell);
-
-      gimp_display_shell_scroll_clamp_and_update (shell);
-      gimp_display_shell_scrollbars_update (shell);
-
-      gimp_display_shell_set_priority_viewport (shell);
-
-      gimp_display_shell_expose_full (shell);
 
       g_object_notify (G_OBJECT (shell), "show-all");
     }
