@@ -139,13 +139,13 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * needs to be added to the existing image with
  * gimp_image_insert_layer().
  *
- * Returns: (array length=num_layers) (element-type gint32) (transfer full):
+ * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
  *          The list of loaded layers.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
-gint *
+GimpLayer **
 gimp_file_load_layers (GimpRunMode  run_mode,
                        GimpImage   *image,
                        const gchar *filename,
@@ -153,7 +153,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint *layer_ids = NULL;
+  GimpLayer **layers = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
@@ -171,12 +171,12 @@ gimp_file_load_layers (GimpRunMode  run_mode,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      layer_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      layers = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ids;
+  return layers;
 }
 
 /**

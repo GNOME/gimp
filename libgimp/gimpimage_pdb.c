@@ -73,29 +73,29 @@ gimp_image_id_is_valid (gint image_id)
 }
 
 /**
- * _gimp_image_list:
+ * gimp_get_images:
  * @num_images: (out): The number of images currently open.
  *
  * Returns the list of images currently open.
  *
  * This procedure returns the list of images currently open in GIMP.
  *
- * Returns: (array length=num_images) (element-type gint32) (transfer full):
+ * Returns: (array length=num_images) (element-type GimpImage) (transfer container):
  *          The list of images currently open.
  *          The returned value must be freed with g_free().
  **/
-gint *
-_gimp_image_list (gint *num_images)
+GimpImage **
+gimp_get_images (gint *num_images)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint *image_ids = NULL;
+  GimpImage **images = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-list",
+                                              "gimp-get-images",
                                               args);
   gimp_value_array_unref (args);
 
@@ -104,12 +104,12 @@ _gimp_image_list (gint *num_images)
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_images = GIMP_VALUES_GET_INT (return_vals, 1);
-      image_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      images = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
 
-  return image_ids;
+  return images;
 }
 
 /**
@@ -461,7 +461,7 @@ gimp_image_height (GimpImage *image)
 }
 
 /**
- * _gimp_image_get_layers:
+ * gimp_image_get_layers:
  * @image: The image.
  * @num_layers: (out): The number of layers contained in the image.
  *
@@ -470,17 +470,17 @@ gimp_image_height (GimpImage *image)
  * This procedure returns the list of layers contained in the specified
  * image. The order of layers is from topmost to bottommost.
  *
- * Returns: (array length=num_layers) (element-type gint32) (transfer full):
+ * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
  *          The list of layers contained in the image.
  *          The returned value must be freed with g_free().
  **/
-gint *
-_gimp_image_get_layers (GimpImage *image,
-                        gint      *num_layers)
+GimpLayer **
+gimp_image_get_layers (GimpImage *image,
+                       gint      *num_layers)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint *layer_ids = NULL;
+  GimpLayer **layers = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -496,16 +496,16 @@ _gimp_image_get_layers (GimpImage *image,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      layer_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      layers = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ids;
+  return layers;
 }
 
 /**
- * _gimp_image_get_channels:
+ * gimp_image_get_channels:
  * @image: The image.
  * @num_channels: (out): The number of channels contained in the image.
  *
@@ -517,17 +517,17 @@ _gimp_image_get_layers (GimpImage *image,
  * \"channels\" are custom channels and do not include the image's
  * color components.
  *
- * Returns: (array length=num_channels) (element-type gint32) (transfer full):
+ * Returns: (array length=num_channels) (element-type GimpChannel) (transfer container):
  *          The list of channels contained in the image.
  *          The returned value must be freed with g_free().
  **/
-gint *
-_gimp_image_get_channels (GimpImage *image,
-                          gint      *num_channels)
+GimpChannel **
+gimp_image_get_channels (GimpImage *image,
+                         gint      *num_channels)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint *channel_ids = NULL;
+  GimpChannel **channels = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -543,16 +543,16 @@ _gimp_image_get_channels (GimpImage *image,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      channel_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      channels = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
 
-  return channel_ids;
+  return channels;
 }
 
 /**
- * _gimp_image_get_vectors:
+ * gimp_image_get_vectors:
  * @image: The image.
  * @num_vectors: (out): The number of vectors contained in the image.
  *
@@ -561,19 +561,19 @@ _gimp_image_get_channels (GimpImage *image,
  * This procedure returns the list of vectors contained in the
  * specified image.
  *
- * Returns: (array length=num_vectors) (element-type gint32) (transfer full):
+ * Returns: (array length=num_vectors) (element-type GimpVectors) (transfer container):
  *          The list of vectors contained in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
-gint *
-_gimp_image_get_vectors (GimpImage *image,
-                         gint      *num_vectors)
+GimpVectors **
+gimp_image_get_vectors (GimpImage *image,
+                        gint      *num_vectors)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint *vector_ids = NULL;
+  GimpVectors **vectors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -589,12 +589,12 @@ _gimp_image_get_vectors (GimpImage *image,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      vector_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      vectors = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
 
-  return vector_ids;
+  return vectors;
 }
 
 /**

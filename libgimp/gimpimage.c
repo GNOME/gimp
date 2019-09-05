@@ -187,40 +187,6 @@ gimp_image_is_valid (GimpImage *image)
 }
 
 /**
- * gimp_get_images:
- * @num_images: (out): The number of images in the returned array.
- *
- * Returns the list of images currently open.
- *
- * This procedure returns the list of images currently open in GIMP.
- *
- * Returns: (array length=num_images) (transfer container):
- *          The list of images currently open.
- *          The returned array must be freed with g_free(). Image
- *          elements belong to libgimp and must not be freed.
- *
- * Since: 3.0
- **/
-GimpImage **
-gimp_get_images (gint *num_images)
-{
-  GimpImage **images;
-  gint       *ids;
-  gint        i;
-
-  ids = _gimp_image_list (num_images);
-
-  images = g_new (GimpImage *, *num_images);
-
-  for (i = 0; i < *num_images; i++)
-    images[i] = gimp_image_get_by_id (ids[i]);
-
-  g_free (ids);
-
-  return images;
-}
-
-/**
  * gimp_list_images:
  *
  * Returns the list of images currently open.
@@ -237,127 +203,19 @@ gimp_get_images (gint *num_images)
 GList *
 gimp_list_images (void)
 {
-  GList *images = NULL;
-  gint  *ids;
-  gint   num_images;
-  gint   i;
-
-  ids = _gimp_image_list (&num_images);
-
-  for (i = 0; i < num_images; i++)
-    images = g_list_prepend (images, gimp_image_get_by_id (ids[i]));
-
-  g_free (ids);
-
-  return g_list_reverse (images);
-}
-
-/**
- * gimp_image_get_layers:
- * @image:      The image.
- * @num_layers: (out): The number of layers in the returned array.
- *
- * Returns the list of layers contained in the specified image.
- *
- * This procedure returns the list of layers contained in the specified
- * image. The order of layers is from topmost to bottommost.
- *
- * Returns: (array length=num_layers) (transfer container):
- *          The list of layers contained in the image.
- *          The returned array must be freed with g_free(). Layer
- *          elements belong to libgimp and must not be freed.
- **/
-GimpLayer **
-gimp_image_get_layers (GimpImage *image,
-                       gint      *num_layers)
-{
-  GimpLayer **layers;
-  gint       *ids;
+  GimpImage **images;
+  gint        num_images;
+  GList      *list = NULL;
   gint        i;
 
-  ids = _gimp_image_get_layers (image, num_layers);
+  images = gimp_get_images (&num_images);
 
-  layers = g_new (GimpLayer *, *num_layers);
+  for (i = 0; i < num_images; i++)
+    list = g_list_prepend (list, images[i]);
 
-  for (i = 0; i < *num_layers; i++)
-    layers[i] = gimp_layer_get_by_id (ids[i]);
+  g_free (images);
 
-  g_free (ids);
-
-  return layers;
-}
-
-/**
- * gimp_image_get_channels:
- * @image:        The image.
- * @num_channels: (out): The number of channels in the returned array.
- *
- * Returns the list of channels contained in the specified image.
- *
- * This procedure returns the list of channels contained in the
- * specified image. This does not include the selection mask, or layer
- * masks. The order is from topmost to bottommost. Note that
- * "channels" are custom channels and do not include the image's color
- * components.
- *
- * Returns: (array length=num_channels) (transfer container):
- *          The list of channels contained in the image.
- *          The returned array must be freed with g_free(). Channel
- *          elements belong to libgimp and must not be freed.
- **/
-GimpChannel **
-gimp_image_get_channels (GimpImage *image,
-                         gint      *num_channels)
-{
-  GimpChannel **channels;
-  gint         *ids;
-  gint          i;
-
-  ids = _gimp_image_get_channels (image, num_channels);
-
-  channels = g_new (GimpChannel *, *num_channels);
-
-  for (i = 0; i < *num_channels; i++)
-    channels[i] = gimp_channel_get_by_id (ids[i]);
-
-  g_free (ids);
-
-  return channels;
-}
-
-/**
- * gimp_image_get_vectors:
- * @image:        The image.
- * @num_vectors: (out): The number of vectors in the returned array.
- *
- * Returns the list of vectors contained in the specified image.
- *
- * This procedure returns the list of vectors contained in the
- * specified image.
- *
- * Returns: (array length=num_vectors) (transfer container):
- *          The list of vectors contained in the image.
- *          The returned array must be freed with g_free(). Vectors
- *          elements belong to libgimp and must not be freed.
- **/
-GimpVectors **
-gimp_image_get_vectors (GimpImage *image,
-                        gint      *num_vectors)
-{
-  GimpVectors **vectors;
-  gint         *ids;
-  gint          i;
-
-  ids = _gimp_image_get_vectors (image, num_vectors);
-
-  vectors = g_new (GimpVectors *, *num_vectors);
-
-  for (i = 0; i < *num_vectors; i++)
-    vectors[i] = gimp_vectors_get_by_id (ids[i]);
-
-  g_free (ids);
-
-  return vectors;
+  return g_list_reverse (list);
 }
 
 /**
@@ -379,19 +237,19 @@ gimp_image_get_vectors (GimpImage *image,
 GList *
 gimp_image_list_layers (GimpImage *image)
 {
-  GList *layers = NULL;
-  gint  *ids;
-  gint   num_layers;
-  gint   i;
+  GimpLayer **layers;
+  gint        num_layers;
+  GList      *list = NULL;
+  gint        i;
 
-  ids = _gimp_image_get_layers (image, &num_layers);
+  layers = gimp_image_get_layers (image, &num_layers);
 
   for (i = 0; i < num_layers; i++)
-    layers = g_list_prepend (layers, gimp_layer_get_by_id (ids[i]));
+    list = g_list_prepend (list, layers[i]);
 
-  g_free (ids);
+  g_free (layers);
 
-  return g_list_reverse (layers);
+  return g_list_reverse (list);
 }
 
 /**
@@ -416,19 +274,19 @@ gimp_image_list_layers (GimpImage *image)
 GList *
 gimp_image_list_channels (GimpImage *image)
 {
-  GList *channels = NULL;
-  gint  *ids;
-  gint   num_channels;
-  gint   i;
+  GimpChannel **channels;
+  gint          num_channels;
+  GList        *list = NULL;
+  gint          i;
 
-  ids = _gimp_image_get_channels (image, &num_channels);
+  channels = gimp_image_get_channels (image, &num_channels);
 
   for (i = 0; i < num_channels; i++)
-    channels = g_list_prepend (channels, gimp_channel_get_by_id (ids[i]));
+    list = g_list_prepend (list, channels[i]);
 
-  g_free (ids);
+  g_free (channels);
 
-  return g_list_reverse (channels);
+  return g_list_reverse (list);
 }
 
 /**
@@ -450,19 +308,19 @@ gimp_image_list_channels (GimpImage *image)
 GList *
 gimp_image_list_vectors (GimpImage *image)
 {
-  GList *vectors = NULL;
-  gint  *ids;
-  gint   num_vectors;
-  gint   i;
+  GimpVectors **vectors;
+  gint          num_vectors;
+  GList        *list = NULL;
+  gint          i;
 
-  ids = _gimp_image_get_vectors (image, &num_vectors);
+  vectors = gimp_image_get_vectors (image, &num_vectors);
 
   for (i = 0; i < num_vectors; i++)
-    vectors = g_list_prepend (vectors, gimp_vectors_get_by_id (ids[i]));
+    list = g_list_prepend (list, vectors[i]);
 
-  g_free (ids);
+  g_free (vectors);
 
-  return g_list_reverse (vectors);
+  return g_list_reverse (list);
 }
 
 /**

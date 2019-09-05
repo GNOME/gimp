@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 
 gboolean                 gimp_image_id_is_valid                (gint                 image_id);
-G_GNUC_INTERNAL gint*    _gimp_image_list                      (gint                *num_images);
+GimpImage**              gimp_get_images                       (gint                *num_images);
 GimpImage*               gimp_image_new                        (gint                 width,
                                                                 gint                 height,
                                                                 GimpImageBaseType    type);
@@ -48,11 +48,11 @@ GimpPrecision            gimp_image_get_precision              (GimpImage       
 GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage           *image);
 gint                     gimp_image_width                      (GimpImage           *image);
 gint                     gimp_image_height                     (GimpImage           *image);
-G_GNUC_INTERNAL gint*    _gimp_image_get_layers                (GimpImage           *image,
+GimpLayer**              gimp_image_get_layers                 (GimpImage           *image,
                                                                 gint                *num_layers);
-G_GNUC_INTERNAL gint*    _gimp_image_get_channels              (GimpImage           *image,
+GimpChannel**            gimp_image_get_channels               (GimpImage           *image,
                                                                 gint                *num_channels);
-G_GNUC_INTERNAL gint*    _gimp_image_get_vectors               (GimpImage           *image,
+GimpVectors**            gimp_image_get_vectors                (GimpImage           *image,
                                                                 gint                *num_vectors);
 GimpDrawable*            gimp_image_get_active_drawable        (GimpImage           *image);
 gboolean                 gimp_image_unset_active_channel       (GimpImage           *image);

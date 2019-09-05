@@ -45,7 +45,7 @@ CODE
     );
 }
 
-sub image_list {
+sub get_images {
     $blurb = 'Returns the list of images currently open.';
 
     $help = <<'HELP';
@@ -53,10 +53,9 @@ This procedure returns the list of images currently open in GIMP.
 HELP
 
     &std_pdb_misc;
-    $lib_private = 1;
 
     @outargs = (
-        { name => 'image_ids', type => 'int32array',
+        { name => 'images', type => 'imagearray',
           desc => 'The list of images currently open.',
           array => { name => 'num_images',
                      desc => 'The number of images currently open' } }
@@ -73,10 +72,10 @@ HELP
     {
       gint i;
 
-      image_ids = g_new (gint32, num_images);
+      images = g_new (GimpImage *, num_images);
 
       for (i = 0; i < num_images; i++, list = g_list_next (list))
-        image_ids[i] = gimp_image_get_id (GIMP_IMAGE (list->data));
+        images[i] = g_object_ref (list->data);
     }
 }
 CODE
@@ -247,7 +246,6 @@ The order of layers is from topmost to bottommost.
 HELP
 
     &std_pdb_misc;
-    $lib_private = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -255,7 +253,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'layer_ids', type => 'int32array',
+        { name => 'layers', type => 'layerarray',
           desc => 'The list of layers contained in the image.',
           array => { name => 'num_layers',
                      desc => 'The number of layers contained in the image' } }
@@ -272,10 +270,10 @@ HELP
     {
       gint i;
 
-      layer_ids = g_new (gint32, num_layers);
+      layers = g_new (GimpLayer *, num_layers);
 
       for (i = 0; i < num_layers; i++, list = g_list_next (list))
-        layer_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+        layers[i] = g_object_ref (list->data);
     }
 }
 CODE
@@ -293,7 +291,6 @@ include the image's color components.
 HELP
 
     &std_pdb_misc;
-    $lib_private = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -301,7 +298,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'channel_ids', type => 'int32array',
+        { name => 'channels', type => 'channelarray',
           desc => 'The list of channels contained in the image.',
           array => { name => 'num_channels',
                      desc => 'The number of channels contained in the image' } }
@@ -318,10 +315,10 @@ HELP
     {
       gint i;
 
-      channel_ids = g_new (gint32, num_channels);
+      channels = g_new (GimpChannel *, num_channels);
 
       for (i = 0; i < num_channels; i++, list = g_list_next (list))
-        channel_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+        channels[i] = g_object_ref (list->data);
     }
 }
 CODE
@@ -336,7 +333,6 @@ This procedure returns the list of vectors contained in the specified image.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
-    $lib_private = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -344,7 +340,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'vector_ids', type => 'int32array',
+        { name => 'vectors', type => 'vectorarray',
           desc => 'The list of vectors contained in the image.',
           array => { name => 'num_vectors',
                      desc => 'The number of vectors contained in the image' } }
@@ -361,10 +357,10 @@ HELP
     {
       gint i;
 
-      vector_ids = g_new (gint32, num_vectors);
+      vectors = g_new (GimpVectors *, num_vectors);
 
       for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-        vector_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+        vectors[i] = g_object_ref (list->data);
     }
 }
 CODE
@@ -2949,7 +2945,7 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(image_id_is_valid
-            image_list
+            get_images
             image_new image_new_with_precision
             image_duplicate image_delete
             image_base_type

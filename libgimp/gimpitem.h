@@ -79,8 +79,6 @@ gboolean    gimp_item_is_layer_mask (GimpItem *item);
 gboolean    gimp_item_is_selection  (GimpItem *item);
 gboolean    gimp_item_is_vectors    (GimpItem *item);
 
-GimpItem ** gimp_item_get_children  (GimpItem *item,
-                                     gint     *num_children);
 GList     * gimp_item_list_children (GimpItem *item);
 
 

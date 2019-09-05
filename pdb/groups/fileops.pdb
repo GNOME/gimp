@@ -202,7 +202,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'layer_ids', type => 'int32array',
+        { name => 'layers', type => 'layerarray',
           desc => 'The list of loaded layers',
           array => { name => 'num_layers',
                      desc => 'The number of loaded layers' } }
@@ -215,12 +215,12 @@ HELP
 
   if (file)
     {
-      GList             *layers;
+      GList             *layer_list;
       GimpPDBStatusType  status;
 
-      layers = file_open_layers (gimp, context, progress,
-                                 image, FALSE,
-                                 file, run_mode, NULL, &status, error);
+      layer_list = file_open_layers (gimp, context, progress,
+                                     image, FALSE,
+                                     file, run_mode, NULL, &status, error);
 
       g_object_unref (file);
 
@@ -229,16 +229,18 @@ HELP
           GList *list;
           gint i;
 
-          num_layers = g_list_length (layers);
+          num_layers = g_list_length (layer_list);
 
-          layer_ids = g_new (gint32, num_layers);
+          layers = g_new (GimpLayer *, num_layers);
 
-          for (i = 0, list = layers;
+          for (i = 0, list = layer_list;
                i < num_layers;
                i++, list = g_list_next (list))
-            layer_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+            {
+              layers[i] = g_object_ref (list->data);
+            }
 
-          g_list_free (layers);
+          g_list_free (layer_list);
         }
       else
         success = FALSE;

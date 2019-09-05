@@ -577,6 +577,51 @@ gimp_param_spec_rgb_array ("$name",
                            $flags)
 CODE
     }
+    elsif ($pdbtype eq 'imagearray') {
+	$pspec = <<CODE;
+gimp_param_spec_object_array ("$name",
+                              "$nick",
+                              "$blurb",
+                              GIMP_TYPE_IMAGE,
+                              $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'itemarray') {
+	$pspec = <<CODE;
+gimp_param_spec_object_array ("$name",
+                              "$nick",
+                              "$blurb",
+                              GIMP_TYPE_ITEM,
+                              $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'layerarray') {
+	$pspec = <<CODE;
+gimp_param_spec_object_array ("$name",
+                              "$nick",
+                              "$blurb",
+                              GIMP_TYPE_LAYER,
+                              $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'channelarray') {
+	$pspec = <<CODE;
+gimp_param_spec_object_array ("$name",
+                              "$nick",
+                              "$blurb",
+                              GIMP_TYPE_CHANNEL,
+                              $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'vectorarray') {
+	$pspec = <<CODE;
+gimp_param_spec_object_array ("$name",
+                              "$nick",
+                              "$blurb",
+                              GIMP_TYPE_VECTORS,
+                              $flags)
+CODE
+    }
     else {
 	warn "Unsupported PDB type: $arg->{name} ($arg->{type})";
 	exit -1;

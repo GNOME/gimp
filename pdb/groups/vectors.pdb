@@ -1097,7 +1097,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'vectors_ids', type => 'int32array', void_ret => 1,
+        { name => 'vectors', type => 'vectorarray', void_ret => 1,
           desc => 'The list of newly created vectors',
           array => { name => 'num_vectors',
                      desc => 'The number of newly created vectors' } }
@@ -1126,11 +1126,14 @@ HELP
           GList *list;
           gint   i;
       
-          vectors_ids = g_new (gint32, num_vectors);
-      
-	  list = vectors_list;
-          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+          vectors = g_new (GimpVectors *, num_vectors);
+
+          for (i = 0, list = vectors_list;
+               i < num_vectors;
+               i++, list = g_list_next (list))
+            {
+              vectors[i] = g_object_ref (list->data);
+            }
 
           g_list_free (vectors_list);
         }
@@ -1166,7 +1169,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'vectors_ids', type => 'int32array', void_ret => 1,
+        { name => 'vectors', type => 'vectorarray', void_ret => 1,
           desc => 'The list of newly created vectors',
           array => { name => 'num_vectors',
                      desc => 'The number of newly created vectors' } }
@@ -1176,7 +1179,7 @@ HELP
         headers => [ qw("vectors/gimpvectors-import.h") ],
         code    => <<'CODE'
 {
-  GList *list, *vectors_list = NULL;
+  GList *vectors_list = NULL;
 
   /* FIXME tree */
   success = gimp_vectors_import_buffer (image, string, length,
@@ -1189,13 +1192,17 @@ HELP
 
       if (num_vectors)
         {
-          gint i;
+          GList *list;
+          gint   i;
       
-          vectors_ids = g_new (gint32, num_vectors);
+          vectors = g_new (GimpVectors *, num_vectors);
       
-	  list = vectors_list;
-          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+          for (i = 0, list = vectors_list;
+               i < num_vectors;
+               i++, list = g_list_next (list))
+            {
+              vectors[i] = g_object_ref (list->data);
+            }
 
           g_list_free (vectors_list);
         }

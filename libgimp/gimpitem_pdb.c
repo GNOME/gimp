@@ -474,7 +474,7 @@ gimp_item_get_parent (GimpItem *item)
 }
 
 /**
- * _gimp_item_get_children:
+ * gimp_item_get_children:
  * @item: The item.
  * @num_children: (out): The item's number of children.
  *
@@ -483,19 +483,19 @@ gimp_item_get_parent (GimpItem *item)
  * This procedure returns the list of items which are children of the
  * specified item. The order is topmost to bottommost.
  *
- * Returns: (array length=num_children) (element-type gint32) (transfer full):
+ * Returns: (array length=num_children) (element-type GimpItem) (transfer container):
  *          The item's list of children.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.8
  **/
-gint *
-_gimp_item_get_children (GimpItem *item,
-                         gint     *num_children)
+GimpItem **
+gimp_item_get_children (GimpItem *item,
+                        gint     *num_children)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint *child_ids = NULL;
+  GimpItem **children = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_ITEM, item,
@@ -511,12 +511,12 @@ _gimp_item_get_children (GimpItem *item,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_children = GIMP_VALUES_GET_INT (return_vals, 1);
-      child_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      children = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
 
-  return child_ids;
+  return children;
 }
 
 /**

@@ -71,15 +71,7 @@ GimpImage    * gimp_image_get_by_id          (gint32        image_id);
 
 gboolean       gimp_image_is_valid           (GimpImage    *image);
 
-GimpImage   ** gimp_get_images               (gint         *num_images);
 GList        * gimp_list_images              (void);
-
-GimpLayer   ** gimp_image_get_layers         (GimpImage    *image,
-                                              gint          *num_layers);
-GimpChannel ** gimp_image_get_channels       (GimpImage    *image,
-                                              gint          *num_channels);
-GimpVectors ** gimp_image_get_vectors        (GimpImage    *image,
-                                              gint          *num_vectors);
 
 GList        * gimp_image_list_layers        (GimpImage    *image);
 GList        * gimp_image_list_channels      (GimpImage    *image);

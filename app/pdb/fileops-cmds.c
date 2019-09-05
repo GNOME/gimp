@@ -195,7 +195,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   const gchar *filename;
   gint num_layers = 0;
-  gint32 *layer_ids = NULL;
+  GimpLayer **layers = NULL;
 
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
   image = g_value_get_object (gimp_value_array_index (args, 1));
@@ -207,12 +207,12 @@ file_load_layers_invoker (GimpProcedure         *procedure,
 
       if (file)
         {
-          GList             *layers;
+          GList             *layer_list;
           GimpPDBStatusType  status;
 
-          layers = file_open_layers (gimp, context, progress,
-                                     image, FALSE,
-                                     file, run_mode, NULL, &status, error);
+          layer_list = file_open_layers (gimp, context, progress,
+                                         image, FALSE,
+                                         file, run_mode, NULL, &status, error);
 
           g_object_unref (file);
 
@@ -221,16 +221,18 @@ file_load_layers_invoker (GimpProcedure         *procedure,
               GList *list;
               gint i;
 
-              num_layers = g_list_length (layers);
+              num_layers = g_list_length (layer_list);
 
-              layer_ids = g_new (gint32, num_layers);
+              layers = g_new (GimpLayer *, num_layers);
 
-              for (i = 0, list = layers;
+              for (i = 0, list = layer_list;
                    i < num_layers;
                    i++, list = g_list_next (list))
-                layer_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+                {
+                  layers[i] = g_object_ref (list->data);
+                }
 
-              g_list_free (layers);
+              g_list_free (layer_list);
             }
           else
             success = FALSE;
@@ -245,7 +247,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), layer_ids, num_layers);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
     }
 
   return return_vals;
@@ -754,10 +756,11 @@ register_fileops_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("layer-ids",
-                                                                "layer ids",
-                                                                "The list of loaded layers",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_object_array ("layers",
+                                                                 "layers",
+                                                                 "The list of loaded layers",
+                                                                 GIMP_TYPE_LAYER,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -1034,7 +1034,7 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: (out): The number of newly created vectors.
- * @vectors_ids: (out) (array length=num_vectors) (element-type gint32) (transfer full): The list of newly created vectors.
+ * @vectors: (out) (array length=num_vectors) (element-type GimpVectors) (transfer container): The list of newly created vectors.
  *
  * Import paths from an SVG file.
  *
@@ -1046,12 +1046,12 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_file (GimpImage    *image,
-                               const gchar  *filename,
-                               gboolean      merge,
-                               gboolean      scale,
-                               gint         *num_vectors,
-                               gint        **vectors_ids)
+gimp_vectors_import_from_file (GimpImage     *image,
+                               const gchar   *filename,
+                               gboolean       merge,
+                               gboolean       scale,
+                               gint          *num_vectors,
+                               GimpVectors ***vectors)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1070,14 +1070,14 @@ gimp_vectors_import_from_file (GimpImage    *image,
   gimp_value_array_unref (args);
 
   *num_vectors = 0;
-  *vectors_ids = NULL;
+  *vectors = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
       *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      *vectors_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      *vectors = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -1093,7 +1093,7 @@ gimp_vectors_import_from_file (GimpImage    *image,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: (out): The number of newly created vectors.
- * @vectors_ids: (out) (array length=num_vectors) (element-type gint32) (transfer full): The list of newly created vectors.
+ * @vectors: (out) (array length=num_vectors) (element-type GimpVectors) (transfer container): The list of newly created vectors.
  *
  * Import paths from an SVG string.
  *
@@ -1106,13 +1106,13 @@ gimp_vectors_import_from_file (GimpImage    *image,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_string (GimpImage    *image,
-                                 const gchar  *string,
-                                 gint          length,
-                                 gboolean      merge,
-                                 gboolean      scale,
-                                 gint         *num_vectors,
-                                 gint        **vectors_ids)
+gimp_vectors_import_from_string (GimpImage     *image,
+                                 const gchar   *string,
+                                 gint           length,
+                                 gboolean       merge,
+                                 gboolean       scale,
+                                 gint          *num_vectors,
+                                 GimpVectors ***vectors)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1132,14 +1132,14 @@ gimp_vectors_import_from_string (GimpImage    *image,
   gimp_value_array_unref (args);
 
   *num_vectors = 0;
-  *vectors_ids = NULL;
+  *vectors = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
       *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      *vectors_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      *vectors = GIMP_VALUES_DUP_OBJECT_ARRAY (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

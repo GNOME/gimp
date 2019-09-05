@@ -38,7 +38,7 @@ GimpImage*               gimp_file_load                       (GimpRunMode   run
 GimpLayer*               gimp_file_load_layer                 (GimpRunMode   run_mode,
                                                                GimpImage    *image,
                                                                const gchar  *filename);
-gint*                    gimp_file_load_layers                (GimpRunMode   run_mode,
+GimpLayer**              gimp_file_load_layers                (GimpRunMode   run_mode,
                                                                GimpImage    *image,
                                                                const gchar  *filename,
                                                                gint         *num_layers);

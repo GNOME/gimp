@@ -108,7 +108,7 @@ image_id_is_valid_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_list_invoker (GimpProcedure         *procedure,
+get_images_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
                     GimpProgress          *progress,
@@ -117,7 +117,7 @@ image_list_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   gint num_images = 0;
-  gint32 *image_ids = NULL;
+  GimpImage **images = NULL;
 
   GList *list = gimp_get_image_iter (gimp);
 
@@ -127,16 +127,16 @@ image_list_invoker (GimpProcedure         *procedure,
     {
       gint i;
 
-      image_ids = g_new (gint32, num_images);
+      images = g_new (GimpImage *, num_images);
 
       for (i = 0; i < num_images; i++, list = g_list_next (list))
-        image_ids[i] = gimp_image_get_id (GIMP_IMAGE (list->data));
+        images[i] = g_object_ref (list->data);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (gimp_value_array_index (return_vals, 1), num_images);
-  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), image_ids, num_images);
+  gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_IMAGE, (GObject **) images, num_images);
 
   return return_vals;
 }
@@ -435,7 +435,7 @@ image_get_layers_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint num_layers = 0;
-  gint32 *layer_ids = NULL;
+  GimpLayer **layers = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -449,10 +449,10 @@ image_get_layers_invoker (GimpProcedure         *procedure,
         {
           gint i;
 
-          layer_ids = g_new (gint32, num_layers);
+          layers = g_new (GimpLayer *, num_layers);
 
           for (i = 0; i < num_layers; i++, list = g_list_next (list))
-            layer_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+            layers[i] = g_object_ref (list->data);
         }
     }
 
@@ -462,7 +462,7 @@ image_get_layers_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), layer_ids, num_layers);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
     }
 
   return return_vals;
@@ -480,7 +480,7 @@ image_get_channels_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint num_channels = 0;
-  gint32 *channel_ids = NULL;
+  GimpChannel **channels = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -494,10 +494,10 @@ image_get_channels_invoker (GimpProcedure         *procedure,
         {
           gint i;
 
-          channel_ids = g_new (gint32, num_channels);
+          channels = g_new (GimpChannel *, num_channels);
 
           for (i = 0; i < num_channels; i++, list = g_list_next (list))
-            channel_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+            channels[i] = g_object_ref (list->data);
         }
     }
 
@@ -507,7 +507,7 @@ image_get_channels_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
-      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), channel_ids, num_channels);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_CHANNEL, (GObject **) channels, num_channels);
     }
 
   return return_vals;
@@ -525,7 +525,7 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint num_vectors = 0;
-  gint32 *vector_ids = NULL;
+  GimpVectors **vectors = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -539,10 +539,10 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
         {
           gint i;
 
-          vector_ids = g_new (gint32, num_vectors);
+          vectors = g_new (GimpVectors *, num_vectors);
 
           for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vector_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+            vectors[i] = g_object_ref (list->data);
         }
     }
 
@@ -552,7 +552,7 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), vector_ids, num_vectors);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
     }
 
   return return_vals;
@@ -2800,11 +2800,11 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-list
+   * gimp-get-images
    */
-  procedure = gimp_procedure_new (image_list_invoker);
+  procedure = gimp_procedure_new (get_images_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-list");
+                               "gimp-get-images");
   gimp_procedure_set_static_strings (procedure,
                                      "Returns the list of images currently open.",
                                      "This procedure returns the list of images currently open in GIMP.",
@@ -2819,10 +2819,11 @@ register_image_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("image-ids",
-                                                                "image ids",
-                                                                "The list of images currently open.",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_object_array ("images",
+                                                                 "images",
+                                                                 "The list of images currently open.",
+                                                                 GIMP_TYPE_IMAGE,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3136,10 +3137,11 @@ register_image_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("layer-ids",
-                                                                "layer ids",
-                                                                "The list of layers contained in the image.",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_object_array ("layers",
+                                                                 "layers",
+                                                                 "The list of layers contained in the image.",
+                                                                 GIMP_TYPE_LAYER,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3169,10 +3171,11 @@ register_image_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("channel-ids",
-                                                                "channel ids",
-                                                                "The list of channels contained in the image.",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_object_array ("channels",
+                                                                 "channels",
+                                                                 "The list of channels contained in the image.",
+                                                                 GIMP_TYPE_CHANNEL,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3202,10 +3205,11 @@ register_image_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("vector-ids",
-                                                                "vector ids",
-                                                                "The list of vectors contained in the image.",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_object_array ("vectors",
+                                                                 "vectors",
+                                                                 "The list of vectors contained in the image.",
+                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

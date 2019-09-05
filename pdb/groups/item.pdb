@@ -399,7 +399,6 @@ item. The order is topmost to bottommost.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
-    $lib_private = 1;
 
     @inargs = (
 	{ name => 'item', type => 'item',
@@ -407,7 +406,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'child_ids', type => 'int32array',
+	{ name => 'children', type => 'itemarray',
 	  desc => "The item's list of children",
 	  array => { name => 'num_children',
 		     desc => "The item's number of children" } }
@@ -416,24 +415,24 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpContainer *children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+  GimpContainer *container = gimp_viewable_get_children (GIMP_VIEWABLE (item));
 
-  if (children)
+  if (container)
     {
-      num_children = gimp_container_get_n_children (children);
+      num_children = gimp_container_get_n_children (container);
 
       if (num_children)
         {
           GList *list;
           gint   i;
 
-          child_ids = g_new (gint32, num_children);
+          children = g_new (GimpItem *, num_children);
 
-          for (list = GIMP_LIST (children)->queue->head, i = 0;
+          for (list = GIMP_LIST (container)->queue->head, i = 0;
                list;
                list = g_list_next (list), i++)
             {
-              child_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+              children[i] = g_object_ref (list->data);
             }
         }
     }

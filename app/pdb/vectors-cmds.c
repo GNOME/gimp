@@ -1114,7 +1114,7 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
   gboolean merge;
   gboolean scale;
   gint num_vectors = 0;
-  gint32 *vectors_ids = NULL;
+  GimpVectors **vectors = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   filename = g_value_get_string (gimp_value_array_index (args, 1));
@@ -1142,11 +1142,14 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
               GList *list;
               gint   i;
 
-              vectors_ids = g_new (gint32, num_vectors);
+              vectors = g_new (GimpVectors *, num_vectors);
 
-              list = vectors_list;
-              for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-                vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+              for (i = 0, list = vectors_list;
+                   i < num_vectors;
+                   i++, list = g_list_next (list))
+                {
+                  vectors[i] = g_object_ref (list->data);
+                }
 
               g_list_free (vectors_list);
             }
@@ -1159,7 +1162,7 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), vectors_ids, num_vectors);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
     }
 
   return return_vals;
@@ -1181,7 +1184,7 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
   gboolean merge;
   gboolean scale;
   gint num_vectors = 0;
-  gint32 *vectors_ids = NULL;
+  GimpVectors **vectors = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   string = g_value_get_string (gimp_value_array_index (args, 1));
@@ -1191,7 +1194,7 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GList *list, *vectors_list = NULL;
+      GList *vectors_list = NULL;
 
       /* FIXME tree */
       success = gimp_vectors_import_buffer (image, string, length,
@@ -1204,13 +1207,17 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
 
           if (num_vectors)
             {
-              gint i;
+              GList *list;
+              gint   i;
 
-              vectors_ids = g_new (gint32, num_vectors);
+              vectors = g_new (GimpVectors *, num_vectors);
 
-              list = vectors_list;
-              for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-                vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
+              for (i = 0, list = vectors_list;
+                   i < num_vectors;
+                   i++, list = g_list_next (list))
+                {
+                  vectors[i] = g_object_ref (list->data);
+                }
 
               g_list_free (vectors_list);
             }
@@ -1223,7 +1230,7 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), vectors_ids, num_vectors);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
     }
 
   return return_vals;
@@ -2262,10 +2269,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("vectors-ids",
-                                                                "vectors ids",
-                                                                "The list of newly created vectors",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_object_array ("vectors",
+                                                                 "vectors",
+                                                                 "The list of newly created vectors",
+                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2320,10 +2328,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array ("vectors-ids",
-                                                                "vectors ids",
-                                                                "The list of newly created vectors",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_object_array ("vectors",
+                                                                 "vectors",
+                                                                 "The list of newly created vectors",
+                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
