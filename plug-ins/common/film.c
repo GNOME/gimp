@@ -61,7 +61,7 @@ typedef struct
   gint     number_pos[2];         /* flags where to draw numbers (top/bottom) */
   gint     keep_height;           /* flag if to keep max. image height */
   gint     num_images;            /* number of images */
-  GList   *images;                /* list of image IDs */
+  GList   *images;                /* list of images */
 } FilmVals;
 
 /* Data to use for the dialog */
@@ -285,10 +285,11 @@ film_create_procedure (GimpPlugIn  *plug_in,
                          1, MAX_FILM_PICTURES, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "image-ids",
-                                 "Image IDs",
-                                 "num-images image IDs to be used for film",
-                                 G_PARAM_READWRITE);
+      GIMP_PROC_ARG_OBJECT_ARRAY (procedure, "images",
+                                  "Images",
+                                  "num-images images to be used for film",
+                                  GIMP_TYPE_IMAGE,
+                                  G_PARAM_READWRITE);
 
       GIMP_PROC_VAL_IMAGE (procedure, "new-image",
                            "New image",
@@ -308,10 +309,10 @@ film_run (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray    *return_vals = NULL;
-  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-  const gint32      *ids;
-  gint               i;
+  GimpValueArray     *return_vals = NULL;
+  GimpPDBStatusType   status      = GIMP_PDB_SUCCESS;
+  GimpImage         **images;
+  gint                i;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -340,21 +341,19 @@ film_run (GimpProcedure        *procedure,
           filmvals.keep_height = FALSE;
         }
       GIMP_VALUES_GET_RGB (args, 1, &filmvals.film_color);
-      filmvals.number_start = GIMP_VALUES_GET_INT (args, 2);
-      g_strlcpy (filmvals.number_font,
-                 GIMP_VALUES_GET_STRING (args, 3),
-                 FONT_LEN);
+      filmvals.number_start = GIMP_VALUES_GET_INT           (args, 2);
+      g_strlcpy              (filmvals.number_font,
+                              GIMP_VALUES_GET_STRING        (args, 3),
+                              FONT_LEN);
       GIMP_VALUES_GET_RGB (args, 4, &filmvals.number_color);
-      filmvals.number_pos[0] = GIMP_VALUES_GET_INT (args, 5);
-      filmvals.number_pos[1] = GIMP_VALUES_GET_INT (args, 6);
+      filmvals.number_pos[0] = GIMP_VALUES_GET_INT          (args, 5);
+      filmvals.number_pos[1] = GIMP_VALUES_GET_INT          (args, 6);
+      filmvals.num_images    = GIMP_VALUES_GET_INT          (args, 7);
+      images                 = GIMP_VALUES_GET_OBJECT_ARRAY (args, 8);
 
-      filmvals.num_images    = GIMP_VALUES_GET_INT (args, 7);
-      ids = GIMP_VALUES_GET_INT32_ARRAY (args, 8);
       filmvals.images = NULL;
-
       for (i = 0; i < filmvals.num_images; i++)
-        filmvals.images = g_list_prepend (filmvals.images,
-                                          gimp_image_get_by_id (ids[i]));
+        filmvals.images = g_list_prepend (filmvals.images, images[i]);
       filmvals.images = g_list_reverse (filmvals.images);
       break;
 

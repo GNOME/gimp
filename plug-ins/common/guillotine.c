@@ -124,10 +124,11 @@ guillotine_create_procedure (GimpPlugIn  *plug_in,
                          0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT32_ARRAY (procedure, "image-ids",
-                                 "Output images IDs",
-                                 "Output images IDs",
-                                 G_PARAM_READWRITE);
+      GIMP_PROC_VAL_OBJECT_ARRAY (procedure, "images",
+                                  "Output images",
+                                  "Output images",
+                                  GIMP_TYPE_IMAGE,
+                                  G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -150,24 +151,30 @@ guillotine_run (GimpProcedure        *procedure,
                                                   NULL);
   if (status == GIMP_PDB_SUCCESS)
     {
-      GList  *images;
-      GList  *list;
-      gint32 *ids;
-      gint   i;
+      GList      *image_list;
+      GList      *list;
+      GimpImage **images;
+      gint        num_images;
+      gint        i;
 
       gimp_progress_init (_("Guillotine"));
 
-      images = guillotine (image, run_mode == GIMP_RUN_INTERACTIVE);
-      ids = g_new (gint32, g_list_length (images));
+      image_list = guillotine (image, run_mode == GIMP_RUN_INTERACTIVE);
 
-      for (list = images, i = 0; list; list = g_list_next (list), i++)
+      num_images = g_list_length (image_list);
+      images     = g_new (GimpImage *, num_images);
+
+      for (list = image_list, i = 0;
+           list;
+           list = g_list_next (list), i++)
         {
-          ids[i] = gimp_image_get_id (list->data);
+          images[i] = g_object_ref (list->data);
         }
-      g_list_free (images);
 
-      GIMP_VALUES_SET_INT (return_vals, 1, g_list_length (images));
-      GIMP_VALUES_TAKE_INT32_ARRAY (return_vals, 2, ids, g_list_length (images));
+      g_list_free (image_list);
+
+      GIMP_VALUES_SET_INT           (return_vals, 1, num_images);
+      GIMP_VALUES_TAKE_OBJECT_ARRAY (return_vals, 2, GIMP_TYPE_IMAGE, images, num_images);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_displays_flush ();
