@@ -1290,6 +1290,7 @@ gimp_value_take_rgb_array (GValue  *value,
 /**
  * gimp_object_array_new:
  * @data:        (array length=length) (transfer none): an array of objects.
+ * @object_type: the array will hold objects of this type
  * @length:      the length of @data.
  * @static_data: whether the objects in @data are static objects and don't
  *               need to be copied.
@@ -1505,10 +1506,11 @@ gimp_param_object_array_values_cmp (GParamSpec   *pspec,
 
 /**
  * gimp_param_spec_object_array:
- * @name:  Canonical name of the property specified.
- * @nick:  Nick name of the property specified.
- * @blurb: Description of the property specified.
- * @flags: Flags for the property specified.
+ * @name:        Canonical name of the property specified.
+ * @nick:        Nick name of the property specified.
+ * @blurb:       Description of the property specified.
+ * @object_type: GType of the array's elements.
+ * @flags:       Flags for the property specified.
  *
  * Creates a new #GimpParamSpecObjectArray specifying a
  * #GIMP_TYPE_OBJECT_ARRAY property.
