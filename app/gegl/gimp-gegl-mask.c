@@ -31,11 +31,12 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
                        gint        *x2,
                        gint        *y2)
 {
-  GeglBufferIterator *iter;
-  GeglRectangle      *roi;
-  const Babl         *format;
-  gint                bpp;
-  gint                tx1, tx2, ty1, ty2;
+  GeglBufferIterator  *iter;
+  const GeglRectangle *extent;
+  const GeglRectangle *roi;
+  const Babl          *format;
+  gint                 bpp;
+  gint                 tx1, tx2, ty1, ty2;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
   g_return_val_if_fail (x1 != NULL, FALSE);
@@ -43,11 +44,13 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
   g_return_val_if_fail (x2 != NULL, FALSE);
   g_return_val_if_fail (y2 != NULL, FALSE);
 
+  extent = gegl_buffer_get_extent (buffer);
+
   /*  go through and calculate the bounds  */
-  tx1 = gegl_buffer_get_width  (buffer);
-  ty1 = gegl_buffer_get_height (buffer);
-  tx2 = 0;
-  ty2 = 0;
+  tx1 = extent->x + extent->width;
+  ty1 = extent->y + extent->height;
+  tx2 = extent->x;
+  ty2 = extent->y;
 
   format = gegl_buffer_get_format (buffer);
   bpp    = babl_format_get_bytes_per_pixel (format);
