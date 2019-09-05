@@ -85,12 +85,12 @@ static void     pop_segment               (GQueue              *segment_queue,
 static gboolean find_contiguous_segment   (const gfloat        *col,
                                            GeglBuffer          *src_buffer,
                                            GeglSampler         *src_sampler,
+                                           const GeglRectangle *src_extent,
                                            GeglBuffer          *mask_buffer,
                                            const Babl          *src_format,
                                            const Babl          *mask_format,
                                            gint                 n_components,
                                            gboolean             has_alpha,
-                                           gint                 width,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion,
                                            gboolean             antialias,
@@ -884,12 +884,12 @@ static gboolean
 find_contiguous_segment (const gfloat        *col,
                          GeglBuffer          *src_buffer,
                          GeglSampler         *src_sampler,
+                         const GeglRectangle *src_extent,
                          GeglBuffer          *mask_buffer,
                          const Babl          *src_format,
                          const Babl          *mask_format,
                          gint                 n_components,
                          gboolean             has_alpha,
-                         gint                 width,
                          gboolean             select_transparent,
                          GimpSelectCriterion  select_criterion,
                          gboolean             antialias,
@@ -901,7 +901,8 @@ find_contiguous_segment (const gfloat        *col,
                          gfloat              *row)
 {
   gfloat *s;
-  gfloat  mask_row[width];
+  gfloat  mask_row_buf[src_extent->width];
+  gfloat *mask_row = mask_row_buf - src_extent->x;
   gfloat  diff;
 
 #ifdef FETCH_ROW
@@ -931,7 +932,7 @@ find_contiguous_segment (const gfloat        *col,
   s = row + *start * n_components;
 #endif
 
-  while (*start >= 0)
+  while (*start >= src_extent->x)
     {
 #ifndef FETCH_ROW
       gegl_sampler_get (src_sampler,
@@ -957,7 +958,7 @@ find_contiguous_segment (const gfloat        *col,
   s = row + *end * n_components;
 #endif
 
-  while (*end < width)
+  while (*end < src_extent->x + src_extent->width)
     {
 #ifndef FETCH_ROW
       gegl_sampler_get (src_sampler,
@@ -1001,20 +1002,24 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                         gint                 y,
                         const gfloat        *col)
 {
-  const Babl  *mask_format = babl_format ("Y float");
-  GeglSampler *src_sampler;
-  gint         old_y;
-  gint         start, end;
-  gint         new_start, new_end;
-  GQueue      *segment_queue;
-  gfloat      *row = NULL;
+  const Babl          *mask_format = babl_format ("Y float");
+  GeglSampler         *src_sampler;
+  const GeglRectangle *src_extent;
+  gint                 x1, x2;
+  gint                 old_y;
+  gint                 start, end;
+  gint                 new_start, new_end;
+  GQueue              *segment_queue;
+  gfloat              *row = NULL;
+
+  src_extent = gegl_buffer_get_extent (src_buffer);
 
 #ifdef FETCH_ROW
-  row = g_new (gfloat, gegl_buffer_get_width (src_buffer) * n_components);
+  row = g_new (gfloat, src_extent->width * n_components);
 #endif
 
   src_sampler = gegl_buffer_sampler_new (src_buffer,
-                                          format, GEGL_SAMPLER_NEAREST);
+                                         format, GEGL_SAMPLER_NEAREST);
 
   segment_queue = g_queue_new ();
 
@@ -1046,11 +1051,11 @@ find_contiguous_region (GeglBuffer          *src_buffer,
             }
 
           if (! find_contiguous_segment (col,
-                                         src_buffer, src_sampler, mask_buffer,
+                                         src_buffer, src_sampler, src_extent,
+                                         mask_buffer,
                                          format, mask_format,
                                          n_components,
                                          has_alpha,
-                                         gegl_buffer_get_width (src_buffer),
                                          select_transparent, select_criterion,
                                          antialias, threshold, x, y,
                                          &new_start, &new_end,
@@ -1067,21 +1072,21 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 
           if (diagonal_neighbors)
             {
-              if (new_start >= 0)
+              if (new_start >= src_extent->x)
                 new_start--;
 
-              if (new_end < gegl_buffer_get_width (src_buffer))
+              if (new_end < src_extent->x + src_extent->width)
                 new_end++;
             }
 
-          if (y + 1 < gegl_buffer_get_height (src_buffer))
+          if (y + 1 < src_extent->y + src_extent->height)
             {
               push_segment (segment_queue,
                             y, old_y, start, end,
                             y + 1, new_start, new_end);
             }
 
-          if (y - 1 >= 0)
+          if (y - 1 >= src_extent->y)
             {
               push_segment (segment_queue,
                             y, old_y, start, end,
