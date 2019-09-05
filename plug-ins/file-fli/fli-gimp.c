@@ -900,7 +900,7 @@ load_dialog (const gchar *filename)
   spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             C_("frame-range", "From:"), 0.0, 0.5,
+                             C_("frame-range", "_From:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -910,7 +910,7 @@ load_dialog (const gchar *filename)
   spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             C_("frame-range", "To:"), 0.0, 0.5,
+                             C_("frame-range", "_To:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -958,7 +958,7 @@ save_dialog (gint32 image_id)
   spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             C_("frame-range", "From:"), 0.0, 0.5,
+                             C_("frame-range", "_From:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -968,7 +968,7 @@ save_dialog (gint32 image_id)
   spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             C_("frame-range", "To:"), 0.0, 0.5,
+                             C_("frame-range", "_To:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
