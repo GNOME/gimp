@@ -766,7 +766,7 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
   /* Checkbox to show all files. */
   checkbox = gimp_prop_check_button_new (G_OBJECT (dialog),
                                          "show-all-files",
-                                         _("Show All Files"));
+                                         _("Show _All Files"));
   gtk_box_pack_end (GTK_BOX (box), checkbox, FALSE, FALSE, 1);
   gtk_widget_show (checkbox);
 }

@@ -1896,7 +1896,7 @@ load_dialog (TIFF              *tif,
          or keep as much empty space as possible.
          Note that there seems to be no way to keep the empty
          space on the right and bottom. */
-      crop_option = gtk_check_button_new_with_label (_("Keep empty space around imported layers"));
+      crop_option = gtk_check_button_new_with_mnemonic (_("_Keep empty space around imported layers"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_option),
                                     pages->keep_empty_space);
       gtk_box_pack_start (GTK_BOX (vbox), crop_option, TRUE, TRUE, 0);
@@ -1916,9 +1916,9 @@ load_dialog (TIFF              *tif,
       extra_radio = gimp_int_radio_group_new (TRUE, _("Process extra channel as:"),
                                               (GCallback) gimp_radio_button_update,
                                               default_extra, GIMP_TIFF_LOAD_UNASSALPHA,
-                                              _("Non-premultiplied alpha"), GIMP_TIFF_LOAD_UNASSALPHA, NULL,
-                                              _("Premultiplied alpha"),     GIMP_TIFF_LOAD_ASSOCALPHA, NULL,
-                                              _("Channel"),                 GIMP_TIFF_LOAD_CHANNEL,    NULL,
+                                              _("_Non-premultiplied alpha"), GIMP_TIFF_LOAD_UNASSALPHA, NULL,
+                                              _("Pre_multiplied alpha"),     GIMP_TIFF_LOAD_ASSOCALPHA, NULL,
+                                              _("Channe_l"),                 GIMP_TIFF_LOAD_CHANNEL,    NULL,
                                               NULL);
       gtk_box_pack_start (GTK_BOX (vbox), extra_radio, TRUE, TRUE, 0);
       gtk_widget_show (extra_radio);
