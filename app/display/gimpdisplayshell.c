@@ -1042,23 +1042,6 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
 }
 
 static void
-gimp_display_shell_set_priority_viewport (GimpDisplayShell *shell)
-{
-  GimpImage *image = gimp_display_get_image (shell->display);
-
-  if (image)
-    {
-      GimpProjection *projection = gimp_image_get_projection (image);
-      gint            x, y;
-      gint            width, height;
-
-      gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
-                                               &x, &y, &width, &height);
-      gimp_projection_set_priority_rect (projection, x, y, width, height);
-    }
-}
-
-static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
   GimpContext *user_context;
@@ -1072,7 +1055,7 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 
   if (shell->display == gimp_context_get_display (user_context))
     {
-      gimp_display_shell_set_priority_viewport (shell);
+      gimp_display_shell_update_priority_rect (shell);
 
       gimp_ui_manager_update (shell->popup_manager, shell->display);
     }
@@ -1092,7 +1075,7 @@ gimp_display_shell_real_scrolled (GimpDisplayShell *shell)
 
   if (shell->display == gimp_context_get_display (user_context))
     {
-      gimp_display_shell_set_priority_viewport (shell);
+      gimp_display_shell_update_priority_rect (shell);
 
     }
 }
@@ -1111,7 +1094,7 @@ gimp_display_shell_real_rotated (GimpDisplayShell *shell)
 
   if (shell->display == gimp_context_get_display (user_context))
     {
-      gimp_display_shell_set_priority_viewport (shell);
+      gimp_display_shell_update_priority_rect (shell);
 
       gimp_ui_manager_update (shell->popup_manager, shell->display);
     }
@@ -1861,7 +1844,7 @@ gimp_display_shell_set_show_all (GimpDisplayShell *shell,
 
           if (shell->display == gimp_context_get_display (user_context))
             {
-              gimp_display_shell_set_priority_viewport (shell);
+              gimp_display_shell_update_priority_rect (shell);
 
               gimp_ui_manager_update (shell->popup_manager, shell->display);
             }
@@ -1917,6 +1900,27 @@ gimp_display_shell_get_bounding_box (GimpDisplayShell *shell)
     }
 
   return bounding_box;
+}
+
+void
+gimp_display_shell_update_priority_rect (GimpDisplayShell *shell)
+{
+  GimpImage *image;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      GimpProjection *projection = gimp_image_get_projection (image);
+      gint            x, y;
+      gint            width, height;
+
+      gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
+                                               &x, &y, &width, &height);
+      gimp_projection_set_priority_rect (projection, x, y, width, height);
+    }
 }
 
 void
