@@ -81,17 +81,17 @@ image_properties_dialog_new (GimpImage   *image,
   view = gimp_image_prop_view_new (image);
   gtk_container_set_border_width (GTK_CONTAINER (view), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            view, gtk_label_new (_("Properties")));
+                            view, gtk_label_new_with_mnemonic (_("_Properties")));
   gtk_widget_show (view);
 
   view = gimp_image_profile_view_new (image);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            view, gtk_label_new (_("Color Profile")));
+                            view, gtk_label_new_with_mnemonic (_("C_olor Profile")));
   gtk_widget_show (view);
 
   view = gimp_image_comment_editor_new (image);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            view, gtk_label_new (_("Comment")));
+                            view, gtk_label_new_with_mnemonic (_("Co_mment")));
   gtk_widget_show (view);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);

@@ -1403,7 +1403,7 @@ smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show selection"));
+  check_button = gtk_check_button_new_with_mnemonic (_("Sho_w selection"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1414,7 +1414,7 @@ smp_dialog (void)
                                 g_di.dst_show_selection);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show color"));
+  check_button = gtk_check_button_new_with_mnemonic (_("Show co_lor"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1430,7 +1430,7 @@ smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show selection"));
+  check_button = gtk_check_button_new_with_mnemonic (_("Show selec_tion"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1441,7 +1441,7 @@ smp_dialog (void)
                                 g_di.sample_show_selection);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show color"));
+  check_button = gtk_check_button_new_with_mnemonic (_("Show c_olor"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1646,7 +1646,7 @@ smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Hold intensity"));
+  check_button = gtk_check_button_new_with_mnemonic (_("Hold _intensity"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1657,7 +1657,7 @@ smp_dialog (void)
                                 g_values.hold_inten);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Original intensity"));
+  check_button = gtk_check_button_new_with_mnemonic (_("Original i_ntensity"));
   g_di.orig_inten_button = check_button;
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (g_di.orig_inten_button, g_values.hold_inten);
@@ -1675,7 +1675,7 @@ smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Use subcolors"));
+  check_button = gtk_check_button_new_with_mnemonic (_("Us_e subcolors"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1686,7 +1686,7 @@ smp_dialog (void)
                                 g_values.rnd_subcolors);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Smooth samples"));
+  check_button = gtk_check_button_new_with_mnemonic (_("S_mooth samples"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
