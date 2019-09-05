@@ -1325,12 +1325,12 @@ class SpyroWindow(Gtk.Window):
         def dialog_button_box():
             hbox = Gtk.HBox(homogeneous=True, spacing=20)
 
-            add_button_to_box(hbox, _("Redraw"), self.redraw,
+            add_button_to_box(hbox, _("Re_draw"), self.redraw,
                               _("If you change the settings of a tool, change color, or change the selection, "
                                 "press this to preview how the pattern looks."))
-            add_button_to_box(hbox, _("Reset"), self.reset_params)
-            add_button_to_box(hbox, _("Cancel"), self.cancel_window)
-            self.ok_btn = add_button_to_box(hbox, _("OK"), self.ok_window)
+            add_button_to_box(hbox, _("_Reset"), self.reset_params)
+            add_button_to_box(hbox, _("_Cancel"), self.cancel_window)
+            self.ok_btn = add_button_to_box(hbox, _("_OK"), self.ok_window)
 
             self.keep_separate_layer_checkbox = Gtk.CheckButton(label=_("Keep\nLayer"))
             self.keep_separate_layer_checkbox.set_tooltip_text(

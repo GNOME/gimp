@@ -276,7 +276,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
 
 
   toggle =
-    gtk_check_button_new_with_mnemonic (_("Enable dithering of text layers"));
+    gtk_check_button_new_with_mnemonic (_("Enable dithering of text _layers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 private->dither_text_layers);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

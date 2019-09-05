@@ -144,8 +144,8 @@
   "*"
   SF-IMAGE       "Image"      0
   SF-DRAWABLE    "Drawable"   0
-  SF-ADJUSTMENT _"Radius (%)" '(50 0 100 1 10 0 0)
-  SF-TOGGLE     _"Concave"    FALSE
+  SF-ADJUSTMENT _"R_adius (%)" '(50 0 100 1 10 0 0)
+  SF-TOGGLE     _"Co_ncave"    FALSE
 )
 
 (script-fu-register "script-fu-selection-round"

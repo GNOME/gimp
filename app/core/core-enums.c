@@ -606,8 +606,8 @@ gimp_fill_style_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_FILL_STYLE_SOLID, NC_("fill-style", "Solid color"), NULL },
-    { GIMP_FILL_STYLE_PATTERN, NC_("fill-style", "Pattern"), NULL },
+    { GIMP_FILL_STYLE_SOLID, NC_("fill-style", "_Solid color"), NULL },
+    { GIMP_FILL_STYLE_PATTERN, NC_("fill-style", "_Pattern"), NULL },
     { 0, NULL, NULL }
   };
 
