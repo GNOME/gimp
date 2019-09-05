@@ -917,6 +917,9 @@ gimp_close (void)
     _gimp_debug_stop ();
 
   _gimp_plug_in_quit (PLUG_IN);
+
+  g_clear_object (&PDB);
+  g_clear_object (&PLUG_IN);
 }
 
 static void
