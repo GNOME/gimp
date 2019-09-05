@@ -246,8 +246,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           g_free (config.display_name);
           g_free (config.icon_theme_dir);
 
-          /* FIXME leaking object arrays */
-          g_free (proc_run.params);
+          _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
 
           g_object_unref (plug_in);
 
@@ -261,8 +260,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       g_free (config.display_name);
       g_free (config.icon_theme_dir);
 
-      /* FIXME leaking object arrays */
-      g_free (proc_run.params);
+      _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
 
       /* If this is an extension,
        * wait for an installation-confirmation message
@@ -341,8 +339,8 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
                                             _("Failed to run plug-in \"%s\""),
                                             name);
 
-          /* FIXME leaking object arrays */
-          g_free (proc_run.params);
+
+          _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
           gimp_plug_in_proc_frame_pop (plug_in);
 
           return_vals = gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure),
@@ -354,8 +352,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
 
       gimp_allow_set_foreground_window (plug_in);
 
-      /* FIXME leaking object arrays */
-      g_free (proc_run.params);
+      _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
 
       g_object_ref (plug_in);
       gimp_plug_in_proc_frame_ref (proc_frame);

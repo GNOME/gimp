@@ -37,6 +37,9 @@ GimpValueArray * _gimp_gp_params_to_value_array   (gpointer              gimp,
                                                    gboolean              return_values);
 GPParam        * _gimp_value_array_to_gp_params   (const GimpValueArray *args,
                                                    gboolean              full_copy);
+void             _gimp_gp_params_free             (GPParam              *params,
+                                                   gint                  n_params,
+                                                   gboolean              full_copy);
 
 
 G_END_DECLS

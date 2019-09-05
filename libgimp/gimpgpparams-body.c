@@ -835,7 +835,7 @@ gimp_value_to_gp_param (const GValue *value,
 
           param->data.d_id_array.size = array->length;
 
-          /* FIXME LEAK */
+          /* must be free'd also for full_copy == FALSE */
           param->data.d_id_array.data = g_new (gint32, array->length);
 
           for (i = 0; i < array->length; i++)
@@ -925,4 +925,72 @@ _gimp_value_array_to_gp_params (const GimpValueArray  *args,
     }
 
   return params;
+}
+
+void
+_gimp_gp_params_free (GPParam  *params,
+                      gint      n_params,
+                      gboolean  full_copy)
+{
+  gint i;
+
+  for (i = 0; i < n_params; i++)
+    {
+      if (full_copy)
+        g_free (params[i].type_name);
+
+      switch (params[i].param_type)
+        {
+        case GP_PARAM_TYPE_INT:
+        case GP_PARAM_TYPE_FLOAT:
+          break;
+
+        case GP_PARAM_TYPE_STRING:
+          if (full_copy)
+            g_free (params[i].data.d_string);
+          break;
+
+        case GP_PARAM_TYPE_COLOR:
+          break;
+
+        case GP_PARAM_TYPE_ARRAY:
+          if (full_copy)
+            g_free (params[i].data.d_array.data);
+          break;
+
+        case GP_PARAM_TYPE_STRING_ARRAY:
+          if (full_copy                              &&
+              params[i].data.d_string_array.size > 0 &&
+              params[i].data.d_string_array.data)
+            {
+              gint j;
+
+              for (j = 0; j < params[i].data.d_string_array.size; j++)
+                g_free (params[i].data.d_string_array.data[j]);
+
+              g_free (params[i].data.d_string_array.data);
+            }
+          break;
+
+        case GP_PARAM_TYPE_ID_ARRAY:
+          if (full_copy)
+            g_free (params[i].data.d_id_array.type_name);
+
+          /* always free the array */
+          g_free (params[i].data.d_id_array.data);
+          break;
+
+        case GP_PARAM_TYPE_PARASITE:
+          if (full_copy)
+            g_free (params[i].data.d_parasite.name);
+          if (params[i].data.d_parasite.data)
+            g_free (params[i].data.d_parasite.data);
+          break;
+
+        case GP_PARAM_TYPE_PARAM_DEF:
+          break;
+        }
+    }
+
+  g_free (params);
 }

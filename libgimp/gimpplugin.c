@@ -1127,8 +1127,7 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
                               &proc_return, plug_in))
     gimp_quit ();
 
-  /* FIXME leaking object arrays */
-  g_free (proc_return.params);
+  _gimp_gp_params_free (proc_return.params, proc_return.nparams, TRUE);
 }
 
 static void
@@ -1151,8 +1150,7 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
                                    &proc_return, plug_in))
     gimp_quit ();
 
-  /* FIXME leaking object arrays */
-  g_free (proc_return.params);
+  _gimp_gp_params_free (proc_return.params, proc_return.nparams, TRUE);
 }
 
 static void
