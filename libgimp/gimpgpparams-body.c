@@ -185,6 +185,12 @@ _gimp_gp_param_def_to_param_spec (gpointer          gimp,
                                         flags);
       break;
 
+    case GP_PARAM_DEF_TYPE_ID_ARRAY:
+      if (! strcmp (param_def->type_name, "GimpParamObjectArray"))
+        return gimp_param_spec_object_array (name, nick, blurb,
+                                             g_type_from_name (param_def->meta.m_id_array.type_name),
+                                             flags);
+
     case GP_PARAM_DEF_TYPE_PARAM_DEF:
       if (! strcmp (param_def->type_name, "GParamParam"))
         return g_param_spec_param (name, nick, blurb,
@@ -293,7 +299,6 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->param_def_type = GP_PARAM_DEF_TYPE_STRING;
 
       param_def->meta.m_string.default_val = gsspec->default_value;
-
     }
   else if (pspec_type == GIMP_TYPE_PARAM_RGB)
     {
@@ -328,6 +333,13 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
+    }
+  else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
+    {
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID_ARRAY;
+
+      param_def->meta.m_id_array.type_name =
+        (gchar *) g_type_name (GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type);
     }
   else if (G_IS_PARAM_SPEC_PARAM (pspec))
     {
@@ -563,6 +575,37 @@ _gimp_gp_param_to_value (gpointer        gimp,
                                          param->data.d_array.size /
                                          sizeof (GimpRGB));
     }
+  else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+    {
+      GType     object_type;
+      GObject **objects;
+      gint      i;
+
+      object_type = g_type_from_name (param->data.d_id_array.type_name);
+
+      objects = g_new (GObject *, param->data.d_id_array.size);
+
+      for (i = 0; i < param->data.d_id_array.size; i++)
+        {
+          gint id = param->data.d_id_array.data[i];
+
+          if (object_type == GIMP_TYPE_IMAGE)
+            {
+              objects[i] = (GObject *) get_image_by_id (gimp, id);
+            }
+          else if (g_type_is_a (object_type, GIMP_TYPE_ITEM))
+            {
+              objects[i] = (GObject *) get_item_by_id (gimp, id);
+            }
+          else if (g_type_is_a (object_type, GIMP_TYPE_DISPLAY))
+            {
+              objects[i] = (GObject *) get_display_by_id (gimp, id);
+            }
+        }
+
+      gimp_value_take_object_array (value, object_type, objects,
+                                    param->data.d_id_array.size);
+    }
   else if (GIMP_VALUE_HOLDS_IMAGE (value))
     {
       g_value_set_object (value, get_image_by_id (gimp, param->data.d_int));
@@ -797,7 +840,7 @@ _gimp_value_to_gp_param (const GValue *value,
     }
   else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
     {
-      GimpArray *array = g_value_get_boxed (value);
+      GimpStringArray *array = g_value_get_boxed (value);
 
       if (array)
         {
@@ -815,6 +858,56 @@ _gimp_value_to_gp_param (const GValue *value,
       else
         {
           param->data.d_string_array.data = NULL;
+        }
+    }
+  else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+    {
+      GimpObjectArray *array = g_value_get_boxed (value);
+
+      if (array)
+        {
+          gint i;
+
+          param->param_type = GP_PARAM_TYPE_ID_ARRAY;
+
+          if (full_copy)
+            param->data.d_id_array.type_name =
+              g_strdup (g_type_name (array->object_type));
+          else
+            param->data.d_id_array.type_name =
+              (gchar *) g_type_name (array->object_type);
+
+          param->data.d_id_array.size = array->length;
+
+          /* FIXME LEAK */
+          param->data.d_id_array.data = g_new (gint32, array->length);
+
+          for (i = 0; i < array->length; i++)
+            {
+              if (GIMP_IS_IMAGE (array->data[i]))
+                {
+                  param->data.d_id_array.data[i] =
+                    gimp_image_get_id (GIMP_IMAGE (array->data[i]));
+                }
+              else if (GIMP_IS_ITEM (array->data[i]))
+                {
+                  param->data.d_id_array.data[i] =
+                    gimp_item_get_id (GIMP_ITEM (array->data[i]));
+                }
+              else if (GIMP_IS_DISPLAY (array->data[i]))
+                {
+                  param->data.d_id_array.data[i] =
+                    gimp_display_get_id (GIMP_DISPLAY (array->data[i]));
+                }
+              else
+                {
+                  param->data.d_id_array.data[i] = -1;
+                }
+            }
+        }
+      else
+        {
+          param->data.d_id_array.data = NULL;
         }
     }
   else if (GIMP_VALUE_HOLDS_IMAGE (value))
