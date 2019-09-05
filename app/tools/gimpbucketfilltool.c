@@ -53,6 +53,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpbucketfilloptions.h"
 #include "gimpbucketfilltool.h"
@@ -120,6 +121,11 @@ static void     gimp_bucket_fill_tool_options_notify   (GimpTool              *t
 
 static void gimp_bucket_fill_tool_line_art_computing_start (GimpBucketFillTool *tool);
 static void gimp_bucket_fill_tool_line_art_computing_end   (GimpBucketFillTool *tool);
+
+static gboolean gimp_bucket_fill_tool_coords_in_active_pickable
+                                                       (GimpBucketFillTool    *tool,
+                                                        GimpDisplay           *display,
+                                                        const GimpCoords      *coords);
 
 static void     gimp_bucket_fill_tool_start            (GimpBucketFillTool    *tool,
                                                         const GimpCoords      *coords,
@@ -276,6 +282,37 @@ gimp_bucket_fill_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static gboolean
+gimp_bucket_fill_tool_coords_in_active_pickable (GimpBucketFillTool *tool,
+                                                 GimpDisplay        *display,
+                                                 const GimpCoords   *coords)
+{
+  GimpBucketFillOptions *options       = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell      *shell         = gimp_display_get_shell (display);
+  GimpImage             *image         = gimp_display_get_image (display);
+  gboolean               show_all      = FALSE;
+  gboolean               sample_merged = FALSE;
+
+  switch (options->fill_area)
+    {
+    case GIMP_BUCKET_FILL_SELECTION:
+      break;
+
+    case GIMP_BUCKET_FILL_SIMILAR_COLORS:
+      show_all      = shell->show_all;
+      sample_merged = options->sample_merged;
+      break;
+
+    case GIMP_BUCKET_FILL_LINE_ART:
+      sample_merged = options->line_art_source ==
+                      GIMP_LINE_ART_SOURCE_SAMPLE_MERGED;
+      break;
+    }
+
+  return gimp_image_coords_in_active_pickable (image, coords,
+                                               show_all, sample_merged, TRUE);
+}
+
 static void
 gimp_bucket_fill_tool_start (GimpBucketFillTool *tool,
                              const GimpCoords   *coords,
@@ -325,6 +362,7 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                GimpFillOptions    *fill_options)
 {
   GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell      *shell    = gimp_display_get_shell (display);
   GimpImage             *image    = gimp_display_get_image (display);
   GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
 
@@ -350,6 +388,7 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                        options->fill_transparent,
                                                        options->fill_criterion,
                                                        options->threshold / 255.0,
+                                                       shell->show_all,
                                                        options->sample_merged,
                                                        options->diagonal_neighbors,
                                                        x, y,
@@ -477,7 +516,6 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
   GimpGuiConfig         *config      = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage             *image       = gimp_display_get_image (display);
   GimpDrawable          *drawable    = gimp_image_get_active_drawable (image);
-  gboolean               sample_merged;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -517,12 +555,9 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  sample_merged = (options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
-                   options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED :
-                   options->sample_merged);
   if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
-      gimp_image_coords_in_active_pickable (image, coords,
-                                            FALSE, sample_merged, TRUE))
+      gimp_bucket_fill_tool_coords_in_active_pickable (bucket_tool,
+                                                       display, coords))
     {
       GimpContext     *context  = GIMP_CONTEXT (options);
       GimpFillOptions *fill_options;
@@ -579,18 +614,14 @@ gimp_bucket_fill_tool_motion (GimpTool         *tool,
   GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpImage             *image       = gimp_display_get_image (display);
-  gboolean               sample_merged;
 
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     return;
 
-  sample_merged = (options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
-                   options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED :
-                   options->sample_merged);
-  if (gimp_image_coords_in_active_pickable (image, coords,
-                                            FALSE, sample_merged, TRUE) &&
+  if (gimp_bucket_fill_tool_coords_in_active_pickable (bucket_tool,
+                                                       display, coords) &&
       /* Fill selection only needs to happen once. */
       options->fill_area != GIMP_BUCKET_FILL_SELECTION)
     {
@@ -763,17 +794,14 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
                                      GdkModifierType   state,
                                      GimpDisplay      *display)
 {
-  GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-  GimpGuiConfig         *config   = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
-  GimpImage             *image    = gimp_display_get_image (display);
-  gboolean               sample_merged;
+  GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+  GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig         *config      = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpCursorModifier     modifier    = GIMP_CURSOR_MODIFIER_BAD;
+  GimpImage             *image       = gimp_display_get_image (display);
 
-  sample_merged = (options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
-                   options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED :
-                   options->sample_merged);
-  if (gimp_image_coords_in_active_pickable (image, coords,
-                                            FALSE, sample_merged, TRUE))
+  if (gimp_bucket_fill_tool_coords_in_active_pickable (bucket_tool,
+                                                       display, coords))
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
