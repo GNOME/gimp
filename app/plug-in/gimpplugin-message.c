@@ -876,8 +876,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   for (i = 0; i < proc_install->nparams; i++)
     {
       GParamSpec *pspec =
-        _gimp_gp_param_def_to_param_spec (plug_in->manager->gimp,
-                                          &proc_install->params[i]);
+        _gimp_gp_param_def_to_param_spec (&proc_install->params[i]);
 
       if (pspec)
         {
@@ -909,8 +908,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   for (i = 0; i < proc_install->nreturn_vals; i++)
     {
       GParamSpec *pspec =
-        _gimp_gp_param_def_to_param_spec (plug_in->manager->gimp,
-                                          &proc_install->return_vals[i]);
+        _gimp_gp_param_def_to_param_spec (&proc_install->return_vals[i]);
 
       if (pspec)
         gimp_procedure_add_return_value (procedure, pspec);

@@ -887,7 +887,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  pspec = _gimp_gp_param_def_to_param_spec (gimp, &param_def);
+  pspec = _gimp_gp_param_def_to_param_spec (&param_def);
 
   if (return_value)
     gimp_procedure_add_return_value (procedure, pspec);

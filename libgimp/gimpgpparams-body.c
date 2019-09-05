@@ -26,8 +26,7 @@
  */
 
 GParamSpec *
-_gimp_gp_param_def_to_param_spec (gpointer          gimp,
-                                  const GPParamDef *param_def)
+_gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
 {
   const gchar *name  = param_def->name;
   const gchar *nick  = param_def->nick;
@@ -439,12 +438,12 @@ get_display_by_id (gpointer gimp,
 #endif
 }
 
-void
-_gimp_gp_param_to_value (gpointer        gimp,
-                         const GPParam  *param,
-                         GType           type,
-                         GValue         *value,
-                         gboolean        full_copy)
+static void
+gimp_gp_param_to_value (gpointer        gimp,
+                        const GPParam  *param,
+                        GType           type,
+                        GValue         *value,
+                        gboolean        full_copy)
 {
   g_return_if_fail (param != NULL);
   g_return_if_fail (value != NULL);
@@ -624,7 +623,7 @@ _gimp_gp_param_to_value (gpointer        gimp,
   else if (G_VALUE_HOLDS_PARAM (value))
     {
       GParamSpec *pspec =
-        _gimp_gp_param_def_to_param_spec (gimp, &param->data.d_param_def);
+        _gimp_gp_param_def_to_param_spec (&param->data.d_param_def);
 
       g_value_take_param (value, pspec);
     }
@@ -703,7 +702,7 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
             }
         }
 
-      _gimp_gp_param_to_value (gimp, &params[i], type, &value, full_copy);
+      gimp_gp_param_to_value (gimp, &params[i], type, &value, full_copy);
 
       gimp_value_array_append (args, &value);
       g_value_unset (&value);
@@ -712,10 +711,10 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
   return args;
 }
 
-void
-_gimp_value_to_gp_param (const GValue *value,
-                         GPParam      *param,
-                         gboolean      full_copy)
+static void
+gimp_value_to_gp_param (const GValue *value,
+                        GPParam      *param,
+                        gboolean      full_copy)
 {
   GType type;
 
@@ -968,7 +967,7 @@ _gimp_value_array_to_gp_params (const GimpValueArray  *args,
     {
       GValue *value = gimp_value_array_index (args, i);
 
-      _gimp_value_to_gp_param (value, &params[i], full_copy);
+      gimp_value_to_gp_param (value, &params[i], full_copy);
     }
 
   return params;
