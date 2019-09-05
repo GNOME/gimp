@@ -63,6 +63,7 @@ gimp_allow_set_foreground_window (GimpPlugIn *plug_in)
 #endif
 }
 
+
 /*  public functions  */
 
 void
@@ -244,6 +245,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
           g_free (config.display_name);
           g_free (config.icon_theme_dir);
+
+          /* FIXME leaking object arrays */
           g_free (proc_run.params);
 
           g_object_unref (plug_in);
@@ -257,6 +260,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       g_free (config.display_name);
       g_free (config.icon_theme_dir);
+
+      /* FIXME leaking object arrays */
       g_free (proc_run.params);
 
       /* If this is an extension,
@@ -336,6 +341,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
                                             _("Failed to run plug-in \"%s\""),
                                             name);
 
+          /* FIXME leaking object arrays */
           g_free (proc_run.params);
           gimp_plug_in_proc_frame_pop (plug_in);
 
@@ -345,8 +351,10 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
 
           return return_vals;
         }
+
       gimp_allow_set_foreground_window (plug_in);
 
+      /* FIXME leaking object arrays */
       g_free (proc_run.params);
 
       g_object_ref (plug_in);

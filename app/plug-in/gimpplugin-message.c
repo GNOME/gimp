@@ -624,6 +624,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
           gimp_plug_in_close (plug_in, TRUE);
         }
 
+      /* FIXME leaking object arrays */
       g_free (proc_return.params);
     }
 

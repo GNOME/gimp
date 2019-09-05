@@ -302,6 +302,7 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
                            &proc_run, pdb->priv->plug_in))
     gimp_quit ();
 
+  /* FIXME leaking object arrays */
   g_free (proc_run.params);
 
   _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);

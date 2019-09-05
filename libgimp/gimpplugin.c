@@ -1126,6 +1126,9 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
   if (! gp_proc_return_write (plug_in->priv->write_channel,
                               &proc_return, plug_in))
     gimp_quit ();
+
+  /* FIXME leaking object arrays */
+  g_free (proc_return.params);
 }
 
 static void
@@ -1147,6 +1150,9 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
   if (! gp_temp_proc_return_write (plug_in->priv->write_channel,
                                    &proc_return, plug_in))
     gimp_quit ();
+
+  /* FIXME leaking object arrays */
+  g_free (proc_return.params);
 }
 
 static void
