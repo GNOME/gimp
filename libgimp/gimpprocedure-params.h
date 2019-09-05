@@ -474,6 +474,9 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_GET_DISPLAY(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 
+#define GIMP_VALUES_GET_DISPLAY_ID(args, n) \
+  gimp_display_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
 #define GIMP_VALUES_SET_DISPLAY(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
 
@@ -494,6 +497,9 @@ G_BEGIN_DECLS
 
 #define GIMP_VALUES_GET_IMAGE(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_GET_IMAGE_ID(args, n) \
+  gimp_image_get_id (g_value_get_object (gimp_value_array_index (args, n)))
 
 #define GIMP_VALUES_SET_IMAGE(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
@@ -516,6 +522,9 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_GET_ITEM(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 
+#define GIMP_VALUES_GET_ITEM_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
 #define GIMP_VALUES_SET_ITEM(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
 
@@ -536,6 +545,9 @@ G_BEGIN_DECLS
 
 #define GIMP_VALUES_GET_DRAWABLE(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_GET_DRAWABLE_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
 
 #define GIMP_VALUES_SET_DRAWABLE(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
@@ -558,6 +570,9 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_GET_LAYER(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 
+#define GIMP_VALUES_GET_LAYER_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
 #define GIMP_VALUES_SET_LAYER(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
 
@@ -578,6 +593,9 @@ G_BEGIN_DECLS
 
 #define GIMP_VALUES_GET_CHANNEL(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_GET_CHANNEL_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
 
 #define GIMP_VALUES_SET_CHANNEL(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
@@ -600,6 +618,9 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_GET_LAYER_MASK(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 
+#define GIMP_VALUES_GET_LAYER_MASK_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
 #define GIMP_VALUES_SET_LAYER_MASK(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
 
@@ -621,6 +642,9 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_GET_SELECTION(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 
+#define GIMP_VALUES_GET_SELECTION_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
 #define GIMP_VALUES_SET_SELECTION(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
 
@@ -641,6 +665,9 @@ G_BEGIN_DECLS
 
 #define GIMP_VALUES_GET_VECTORS(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_GET_VECTORS_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
 
 #define GIMP_VALUES_SET_VECTORS(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
