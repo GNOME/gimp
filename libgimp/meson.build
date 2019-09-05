@@ -169,9 +169,7 @@ libgimp_sources = [
   libgimp_sources_introspectable,
   'gimp-debug.c',
   'gimp-shm.c',
-  'gimpgpcompat.c',
   'gimpgpparams.c',
-  'gimplegacy.c',
   'gimppdb_pdb.c',
   'gimppdbprocedure.c',
   'gimppixbuf.c',
@@ -214,7 +212,6 @@ libgimp_headers_introspectable = [
 
 libgimp_headers = [
   libgimp_headers_introspectable,
-  'gimplegacy.h',
   'gimpprocedure-params.h',
 ]
 
