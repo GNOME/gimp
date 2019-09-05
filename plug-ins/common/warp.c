@@ -356,8 +356,7 @@ warp_run (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpDrawable *map;
-  GimpRGB       color;
+  GimpRGB color;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -385,32 +384,20 @@ warp_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      dvals.amount        = GIMP_VALUES_GET_DOUBLE (args, 0);
-
-      map = GIMP_VALUES_GET_DRAWABLE (args, 1);
-      dvals.warp_map_id   = gimp_item_get_id (GIMP_ITEM (map));
-
-      dvals.iter          = GIMP_VALUES_GET_INT    (args, 2);
-      dvals.dither        = GIMP_VALUES_GET_DOUBLE (args, 3);
-      dvals.angle         = GIMP_VALUES_GET_DOUBLE (args, 4);
-      dvals.wrap_type     = GIMP_VALUES_GET_INT    (args, 5);
-
-      map = GIMP_VALUES_GET_DRAWABLE (args, 6);
-      dvals.mag_map_id    = gimp_item_get_id (GIMP_ITEM (map));
-
-      dvals.mag_use       = GIMP_VALUES_GET_BOOLEAN (args, 7);
-      dvals.substeps      = GIMP_VALUES_GET_INT     (args, 8);
-
-      map = GIMP_VALUES_GET_DRAWABLE (args, 9);
-      dvals.grad_map_id   = gimp_item_get_id (GIMP_ITEM (map));
-
-      dvals.grad_scale    = GIMP_VALUES_GET_DOUBLE (args, 10);
-
-      map = GIMP_VALUES_GET_DRAWABLE (args, 11);
-      dvals.vector_map_id = gimp_item_get_id (GIMP_ITEM (map));
-
-      dvals.vector_scale  = GIMP_VALUES_GET_DOUBLE (args, 12);
-      dvals.vector_angle  = GIMP_VALUES_GET_DOUBLE (args, 13);
+      dvals.amount        = GIMP_VALUES_GET_DOUBLE      (args, 0);
+      dvals.warp_map_id   = GIMP_VALUES_GET_DRAWABLE_ID (args, 1);
+      dvals.iter          = GIMP_VALUES_GET_INT         (args, 2);
+      dvals.dither        = GIMP_VALUES_GET_DOUBLE      (args, 3);
+      dvals.angle         = GIMP_VALUES_GET_DOUBLE      (args, 4);
+      dvals.wrap_type     = GIMP_VALUES_GET_INT         (args, 5);
+      dvals.mag_map_id    = GIMP_VALUES_GET_DRAWABLE_ID (args, 6);
+      dvals.mag_use       = GIMP_VALUES_GET_BOOLEAN     (args, 7);
+      dvals.substeps      = GIMP_VALUES_GET_INT         (args, 8);
+      dvals.grad_map_id   = GIMP_VALUES_GET_DRAWABLE_ID (args, 9);
+      dvals.grad_scale    = GIMP_VALUES_GET_DOUBLE      (args, 10);
+      dvals.vector_map_id = GIMP_VALUES_GET_DRAWABLE_ID (args, 11);
+      dvals.vector_scale  = GIMP_VALUES_GET_DOUBLE      (args, 12);
+      dvals.vector_angle  = GIMP_VALUES_GET_DOUBLE      (args, 13);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:

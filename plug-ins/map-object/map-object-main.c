@@ -475,8 +475,7 @@ map_run (GimpProcedure        *procedure,
          const GimpValueArray *args,
          gpointer              run_data)
 {
-  GimpDrawable *side;
-  gint          i;
+  gint i;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -562,16 +561,12 @@ map_run (GimpProcedure        *procedure,
 
       for (i = 0; i < 6; i++)
         {
-          side = GIMP_VALUES_GET_DRAWABLE (args, 38 + i);
-
-          mapvals.boxmap_id[i] = gimp_item_get_id (GIMP_ITEM (side));
+          mapvals.boxmap_id[i] = GIMP_VALUES_GET_DRAWABLE_ID (args, 38 + i);
         }
 
       for (i = 0; i < 2; i++)
         {
-          side = GIMP_VALUES_GET_DRAWABLE (args, 44 + i);
-
-          mapvals.cylindermap_id[i] = gimp_item_get_id (GIMP_ITEM (side));
+          mapvals.cylindermap_id[i] = GIMP_VALUES_GET_DRAWABLE_ID (args, 44 + i);
         }
 
       check_drawables (drawable);

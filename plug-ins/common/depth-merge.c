@@ -320,22 +320,14 @@ merge_run (GimpProcedure        *procedure,
     case GIMP_RUN_NONINTERACTIVE:
       dm.params.result_id    = gimp_item_get_id (GIMP_ITEM (drawable));
 
-      drawable = GIMP_VALUES_GET_DRAWABLE (args, 0);
-      dm.params.source1_id   = gimp_item_get_id (GIMP_ITEM (drawable));
-
-      drawable = GIMP_VALUES_GET_DRAWABLE (args, 1);
-      dm.params.source2_id   = gimp_item_get_id (GIMP_ITEM (drawable));
-
-      drawable = GIMP_VALUES_GET_DRAWABLE (args, 2);
-      dm.params.depthMap1_id = gimp_item_get_id (GIMP_ITEM (drawable));
-
-      drawable = GIMP_VALUES_GET_DRAWABLE (args, 3);
-      dm.params.depthMap2_id = gimp_item_get_id (GIMP_ITEM (drawable));
-
-      dm.params.overlap      = GIMP_VALUES_GET_DOUBLE (args, 4);
-      dm.params.offset       = GIMP_VALUES_GET_DOUBLE (args, 5);
-      dm.params.scale1       = GIMP_VALUES_GET_DOUBLE (args, 6);
-      dm.params.scale2       = GIMP_VALUES_GET_DOUBLE (args, 7);
+      dm.params.source1_id   = GIMP_VALUES_GET_DRAWABLE_ID (args, 0);
+      dm.params.source2_id   = GIMP_VALUES_GET_DRAWABLE_ID (args, 1);
+      dm.params.depthMap1_id = GIMP_VALUES_GET_DRAWABLE_ID (args, 2);
+      dm.params.depthMap2_id = GIMP_VALUES_GET_DRAWABLE_ID (args, 3);
+      dm.params.overlap      = GIMP_VALUES_GET_DOUBLE      (args, 4);
+      dm.params.offset       = GIMP_VALUES_GET_DOUBLE      (args, 5);
+      dm.params.scale1       = GIMP_VALUES_GET_DOUBLE      (args, 6);
+      dm.params.scale2       = GIMP_VALUES_GET_DOUBLE      (args, 7);
 
       if (! DepthMerge_construct (&dm))
         {

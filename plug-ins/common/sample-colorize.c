@@ -449,8 +449,6 @@ colorize_run (GimpProcedure        *procedure,
   if (gimp_drawable_is_rgb  (drawable) ||
       gimp_drawable_is_gray (drawable))
     {
-      GimpDrawable *sample;
-
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -461,18 +459,16 @@ colorize_run (GimpProcedure        *procedure,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          sample = GIMP_VALUES_GET_DRAWABLE (args, 0);
-          g_values.sample_id     = gimp_item_get_id (GIMP_ITEM (sample));
-
-          g_values.hold_inten    = GIMP_VALUES_GET_BOOLEAN (args, 1);
-          g_values.orig_inten    = GIMP_VALUES_GET_BOOLEAN (args, 2);
-          g_values.rnd_subcolors = GIMP_VALUES_GET_BOOLEAN (args, 3);
-          g_values.guess_missing = GIMP_VALUES_GET_BOOLEAN (args, 4);
-          g_values.lvl_in_min    = GIMP_VALUES_GET_INT     (args, 5);
-          g_values.lvl_in_max    = GIMP_VALUES_GET_INT     (args, 6);
-          g_values.lvl_in_gamma  = GIMP_VALUES_GET_DOUBLE  (args, 7);
-          g_values.lvl_out_min   = GIMP_VALUES_GET_INT     (args, 8);
-          g_values.lvl_out_max   = GIMP_VALUES_GET_INT     (args, 9);
+          g_values.sample_id     = GIMP_VALUES_GET_DRAWABLE_ID (args, 0);
+          g_values.hold_inten    = GIMP_VALUES_GET_BOOLEAN     (args, 1);
+          g_values.orig_inten    = GIMP_VALUES_GET_BOOLEAN     (args, 2);
+          g_values.rnd_subcolors = GIMP_VALUES_GET_BOOLEAN     (args, 3);
+          g_values.guess_missing = GIMP_VALUES_GET_BOOLEAN     (args, 4);
+          g_values.lvl_in_min    = GIMP_VALUES_GET_INT         (args, 5);
+          g_values.lvl_in_max    = GIMP_VALUES_GET_INT         (args, 6);
+          g_values.lvl_in_gamma  = GIMP_VALUES_GET_DOUBLE      (args, 7);
+          g_values.lvl_out_min   = GIMP_VALUES_GET_INT         (args, 8);
+          g_values.lvl_out_max   = GIMP_VALUES_GET_INT         (args, 9);
 
           if (main_colorize (MC_GET_SAMPLE_COLORS) >= 0)
             {
@@ -806,6 +802,7 @@ refresh_dst_preview (GtkWidget *preview,
           src_ptr += src_bpp;
         }
     }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           0, 0, PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
                           GIMP_RGB_IMAGE,
@@ -842,8 +839,7 @@ update_pv (GtkWidget *preview,
   gint    dstep;
   guchar  alpha;
 
-
-  if (!preview)
+  if (! preview)
     return;
 
   /* init gray pixel (if we are called without a sourceimage (gdwr == NULL) */

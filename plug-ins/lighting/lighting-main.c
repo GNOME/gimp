@@ -386,8 +386,6 @@ lighting_run (GimpProcedure        *procedure,
               const GimpValueArray *args,
               gpointer              run_data)
 {
-  GimpDrawable *map;
-
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
@@ -424,11 +422,8 @@ lighting_run (GimpProcedure        *procedure,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          map = GIMP_VALUES_GET_DRAWABLE (args, 0);
-          mapvals.bumpmap_id                 = gimp_item_get_id (GIMP_ITEM (map));
-
-          map = GIMP_VALUES_GET_DRAWABLE (args, 1);
-          mapvals.envmap_id                  = gimp_item_get_id (GIMP_ITEM (map));
+          mapvals.bumpmap_id             = GIMP_VALUES_GET_DRAWABLE_ID (args, 0);
+          mapvals.envmap_id              = GIMP_VALUES_GET_DRAWABLE_ID (args, 1);
           mapvals.bump_mapped                = GIMP_VALUES_GET_BOOLEAN (args, 2);
           mapvals.env_mapped                 = GIMP_VALUES_GET_BOOLEAN (args, 3);
           mapvals.bumpmaptype                = GIMP_VALUES_GET_INT     (args, 4);
