@@ -12,6 +12,7 @@ libappdisplay_sources = [
   'gimpcanvasarc.c',
   'gimpcanvasboundary.c',
   'gimpcanvasbufferpreview.c',
+  'gimpcanvascanvasboundary.c',
   'gimpcanvascorner.c',
   'gimpcanvascursor.c',
   'gimpcanvasgrid.c',
