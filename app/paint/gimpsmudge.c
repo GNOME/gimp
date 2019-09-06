@@ -208,7 +208,6 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   GimpSmudge        *smudge     = GIMP_SMUDGE (paint_core);
   GimpBrushCore     *brush_core = GIMP_BRUSH_CORE (paint_core);
   GimpSmudgeOptions *options    = GIMP_SMUDGE_OPTIONS (paint_options);
-  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpPickable      *dest_pickable;
   GeglBuffer        *pickable_buffer;
   GeglBuffer        *paint_buffer;
@@ -230,7 +229,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
 
   if (options->sample_merged)
     {
-      dest_pickable = GIMP_PICKABLE (image);
+      dest_pickable = gimp_paint_core_get_image_pickable (paint_core);
 
       gimp_item_get_offset (GIMP_ITEM (drawable),
                             &dest_pickable_off_x,
@@ -369,7 +368,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   if (options->sample_merged)
     {
-      dest_pickable = GIMP_PICKABLE (image);
+      dest_pickable = gimp_paint_core_get_image_pickable (paint_core);
 
       gimp_item_get_offset (GIMP_ITEM (drawable),
                             &dest_pickable_off_x,
