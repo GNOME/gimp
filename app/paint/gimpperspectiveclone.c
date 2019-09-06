@@ -407,7 +407,8 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
     case GIMP_CLONE_IMAGE:
       if (! gimp_rectangle_intersect (xmin, ymin,
                                       xmax - xmin, ymax - ymin,
-                                      0, 0,
+                                      gegl_buffer_get_x      (src_buffer),
+                                      gegl_buffer_get_y      (src_buffer),
                                       gegl_buffer_get_width  (src_buffer),
                                       gegl_buffer_get_height (src_buffer),
                                       NULL, NULL, NULL, NULL))
