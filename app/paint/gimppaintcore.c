@@ -394,12 +394,18 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   core->undo_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
+  /*  Set the image pickable  */
+  if (! core->show_all)
+    core->image_pickable = GIMP_PICKABLE (image);
+  else
+    core->image_pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+
   /*  Allocate the saved proj structure  */
   g_clear_object (&core->saved_proj_buffer);
 
   if (core->use_saved_proj)
     {
-      GeglBuffer *buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
+      GeglBuffer *buffer = gimp_pickable_get_buffer (core->image_pickable);
 
       core->saved_proj_buffer = gimp_gegl_buffer_dup (buffer);
     }
@@ -537,6 +543,8 @@ gimp_paint_core_finish (GimpPaintCore *core,
       gimp_image_undo_group_end (image);
     }
 
+  core->image_pickable = NULL;
+
   g_clear_object (&core->undo_buffer);
   g_clear_object (&core->saved_proj_buffer);
 
@@ -618,6 +626,23 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 
   GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawable,
                                                  paint_options, time);
+}
+
+void
+gimp_paint_core_set_show_all (GimpPaintCore *core,
+                              gboolean       show_all)
+{
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+
+  core->show_all = show_all;
+}
+
+gboolean
+gimp_paint_core_get_show_all (GimpPaintCore *core)
+{
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
+
+  return core->show_all;
 }
 
 void
@@ -742,6 +767,15 @@ gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
   core->paint_buffer_y = *paint_buffer_y;
 
   return paint_buffer;
+}
+
+GimpPickable *
+gimp_paint_core_get_image_pickable (GimpPaintCore *core)
+{
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
+  g_return_val_if_fail (core->image_pickable != NULL, NULL);
+
+  return core->image_pickable;
 }
 
 GeglBuffer *

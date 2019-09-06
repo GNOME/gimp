@@ -34,41 +34,45 @@ typedef struct _GimpPaintCoreClass GimpPaintCoreClass;
 
 struct _GimpPaintCore
 {
-  GimpObject   parent_instance;
+  GimpObject      parent_instance;
 
-  gint         ID;                /*  unique instance ID                  */
+  gint            ID;                /*  unique instance ID                  */
 
-  gchar       *undo_desc;         /*  undo description                    */
+  gchar          *undo_desc;         /*  undo description                    */
 
-  GimpCoords   start_coords;      /*  the last stroke's endpoint for undo */
+  gboolean        show_all;          /*  whether working in show-all mode    */
 
-  GimpCoords   cur_coords;        /*  current coords                      */
-  GimpCoords   last_coords;       /*  last coords                         */
+  GimpCoords      start_coords;      /*  the last stroke's endpoint for undo */
 
-  GimpVector2  last_paint;        /*  last point that was painted         */
+  GimpCoords      cur_coords;        /*  current coords                      */
+  GimpCoords      last_coords;       /*  last coords                         */
 
-  gdouble      distance;          /*  distance traveled by brush          */
-  gdouble      pixel_dist;        /*  distance in pixels                  */
+  GimpVector2     last_paint;        /*  last point that was painted         */
 
-  gint         x1, y1;            /*  undo extents in image coords        */
-  gint         x2, y2;            /*  undo extents in image coords        */
+  gdouble         distance;          /*  distance traveled by brush          */
+  gdouble         pixel_dist;        /*  distance in pixels                  */
 
-  gboolean     use_saved_proj;    /*  keep the unmodified proj around     */
+  gint            x1, y1;            /*  undo extents in image coords        */
+  gint            x2, y2;            /*  undo extents in image coords        */
 
-  GeglBuffer  *undo_buffer;       /*  pixels which have been modified     */
-  GeglBuffer  *saved_proj_buffer; /*  proj tiles which have been modified */
-  GeglBuffer  *canvas_buffer;     /*  the buffer to paint the mask to     */
-  GeglBuffer  *paint_buffer;      /*  the buffer to paint pixels to       */
-  gint         paint_buffer_x;
-  gint         paint_buffer_y;
+  gboolean        use_saved_proj;    /*  keep the unmodified proj around     */
 
-  GeglBuffer  *mask_buffer;       /*  the target drawable's mask          */
-  gint         mask_x_offset;
-  gint         mask_y_offset;
+  GimpPickable   *image_pickable;    /*  the image pickable                  */
+
+  GeglBuffer     *undo_buffer;       /*  pixels which have been modified     */
+  GeglBuffer     *saved_proj_buffer; /*  proj tiles which have been modified */
+  GeglBuffer     *canvas_buffer;     /*  the buffer to paint the mask to     */
+  GeglBuffer     *paint_buffer;      /*  the buffer to paint pixels to       */
+  gint            paint_buffer_x;
+  gint            paint_buffer_y;
+
+  GeglBuffer     *mask_buffer;       /*  the target drawable's mask          */
+  gint            mask_x_offset;
+  gint            mask_y_offset;
 
   GimpApplicator *applicator;
 
-  GArray      *stroke_buffer;
+  GArray         *stroke_buffer;
 };
 
 struct _GimpPaintCoreClass
@@ -146,6 +150,10 @@ void      gimp_paint_core_interpolate               (GimpPaintCore    *core,
                                                      const GimpCoords *coords,
                                                      guint32           time);
 
+void      gimp_paint_core_set_show_all              (GimpPaintCore    *core,
+                                                     gboolean          show_all);
+gboolean  gimp_paint_core_get_show_all              (GimpPaintCore    *core);
+
 void      gimp_paint_core_set_current_coords        (GimpPaintCore    *core,
                                                      const GimpCoords *coords);
 void      gimp_paint_core_get_current_coords        (GimpPaintCore    *core,
@@ -175,6 +183,8 @@ GeglBuffer * gimp_paint_core_get_paint_buffer       (GimpPaintCore    *core,
                                                      gint             *paint_buffer_y,
                                                      gint             *paint_width,
                                                      gint             *paint_height);
+
+GimpPickable * gimp_paint_core_get_image_pickable   (GimpPaintCore    *core);
 
 GeglBuffer * gimp_paint_core_get_orig_image         (GimpPaintCore    *core);
 GeglBuffer * gimp_paint_core_get_orig_proj          (GimpPaintCore    *core);
