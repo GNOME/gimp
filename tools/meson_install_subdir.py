@@ -82,10 +82,10 @@ def install_files(files, verbose):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('subdirs', nargs='+')
-    parser.add_argument('--verbose', '-v', action='count')
+    parser.add_argument('--verbose', '-v', action='store_true')
     args = parser.parse_args()
 
-    verbose = args.verbose > 0
+    verbose = args.verbose
 
     for subdir in args.subdirs:
         files = get_files_of_part(subdir)
