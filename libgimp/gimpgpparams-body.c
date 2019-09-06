@@ -982,9 +982,10 @@ _gimp_gp_params_free (GPParam  *params,
 
         case GP_PARAM_TYPE_PARASITE:
           if (full_copy)
-            g_free (params[i].data.d_parasite.name);
-          if (params[i].data.d_parasite.data)
-            g_free (params[i].data.d_parasite.data);
+            {
+              g_free (params[i].data.d_parasite.name);
+              g_free (params[i].data.d_parasite.data);
+            }
           break;
 
         case GP_PARAM_TYPE_PARAM_DEF:
