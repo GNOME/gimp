@@ -82,6 +82,7 @@ libappcore_sources = [
   'gimpdata.c',
   'gimpdatafactory.c',
   'gimpdataloaderfactory.c',
+  'gimpdisplay.c',
   'gimpdocumentlist.c',
   'gimpdrawable-bucket-fill.c',
   'gimpdrawable-combine.c',
