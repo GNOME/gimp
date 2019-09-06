@@ -283,7 +283,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="hexpand">True</property>
-                                <property name="hscrollbar_policy">never</property>
+                                <property name="hscrollbar_policy">automatic</property>
                                 <property name="shadow_type">in</property>
                                 <child>
                                   <object class="GtkTextView" id="Xmp.dc.description">
