@@ -53,7 +53,7 @@ static gboolean arithc_supported = FALSE;
 #define SCALE_WIDTH         125
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
-#define DEFAULT_IJG_QUALITY    90.0
+#define DEFAULT_IJG_QUALITY      90.0
 #define DEFAULT_SMOOTHING        0.0
 #define DEFAULT_OPTIMIZE         TRUE
 #define DEFAULT_ARITHMETIC_CODING FALSE
