@@ -408,10 +408,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
       if (options->sample_merged)
         {
-          GimpImage *src_image = gimp_pickable_get_image (src_pickable);
-          gint       off_x, off_y;
+          gint off_x, off_y;
 
-          src_pickable = GIMP_PICKABLE (src_image);
+          src_pickable = gimp_paint_core_get_image_pickable (paint_core);
 
           gimp_item_get_offset (GIMP_ITEM (source_core->src_drawable),
                                 &off_x, &off_y);
@@ -594,7 +593,8 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   paint_buffer_y + src_offset_y,
                                   gegl_buffer_get_width  (paint_buffer),
                                   gegl_buffer_get_height (paint_buffer),
-                                  0, 0,
+                                  gegl_buffer_get_x      (src_buffer),
+                                  gegl_buffer_get_y      (src_buffer),
                                   gegl_buffer_get_width  (src_buffer),
                                   gegl_buffer_get_height (src_buffer),
                                   &x, &y,
