@@ -1708,6 +1708,8 @@ gimp_image_merge_down (gint32        image_ID,
  * single normal layer, replacing the group.
  *
  * Returns: The resulting layer.
+ *
+ * Since: 2.10.14
  **/
 gint32
 gimp_image_merge_layer_group (gint32 image_ID,
