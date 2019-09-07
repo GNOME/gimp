@@ -193,8 +193,17 @@ export_apply_masks (GimpImage     *image,
       GimpLayerMask *mask;
 
       mask = gimp_layer_get_mask (iter->data);
+
       if (mask)
-        gimp_layer_remove_mask (iter->data, GIMP_MASK_APPLY);
+        {
+          /* we can't apply the mask directly to a layer group, so merge it
+           * first
+           */
+          if (gimp_item_is_group (iter->data))
+            iter->data = gimp_image_merge_layer_group (image, iter->data);
+
+          gimp_layer_remove_mask (iter->data, GIMP_MASK_APPLY);
+        }
     }
 
   g_list_free (layers);
