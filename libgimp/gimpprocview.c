@@ -55,6 +55,10 @@
 
 /*  local function prototypes  */
 
+static gint        gimp_proc_view_add_label   (GtkGrid       *grid,
+                                               gint           row,
+                                               const gchar   *left_label,
+                                               const gchar   *right_label);
 static GtkWidget * gimp_proc_view_create_args (GimpProcedure *procedure,
                                                gboolean       return_values,
                                                GtkSizeGroup  *name_group,
@@ -167,6 +171,35 @@ gimp_proc_view_new (const gchar *procedure_name,
       gtk_widget_show (label);
     }
 
+  if (type != GIMP_PDB_PROC_TYPE_INTERNAL)
+    {
+      GList *list;
+
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
+      gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+      gtk_widget_show (grid);
+
+      row = 0;
+
+      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+                                      _("Image types:"),
+                                      gimp_procedure_get_image_types (procedure));
+      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+                                      _("Menu label:"),
+                                      gimp_procedure_get_menu_label (procedure));
+
+      for (list = gimp_procedure_get_menu_paths (procedure);
+           list;
+           list = g_list_next (list))
+        {
+          row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+                                          _("Menu path:"),
+                                          list->data);
+        }
+    }
+
   name_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   type_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   desc_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -227,54 +260,25 @@ gimp_proc_view_new (const gchar *procedure_name,
 
   /* show the authors & the copyright */
 
-  if (! authors && ! date && ! copyright)
-    return main_vbox;
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
-  gtk_widget_show (grid);
-
-  row = 0;
-
-  if (authors)
+  if (authors || date || copyright)
     {
-      label = gtk_label_new (authors);
-      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
+      gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+      gtk_widget_show (grid);
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
-                                _("Authors:"), 0.0, 0.0,
-                                label, 3);
-    }
+      row = 0;
 
-  if (date)
-    {
-      label = gtk_label_new (date);
-      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
-                                _("Date:"), 0.0, 0.0,
-                                label, 3);
-    }
-
-  if (copyright)
-    {
-      label = gtk_label_new (copyright);
-      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
-                                _("Copyright:"), 0.0, 0.0,
-                                label, 3);
+      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+                                      _("Authors:"),
+                                      authors);
+      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+                                      _("Date:"),
+                                      date);
+      row = gimp_proc_view_add_label (GTK_GRID (grid), row,
+                                      _("Copyright:"),
+                                      copyright);
     }
 
   return main_vbox;
@@ -282,6 +286,30 @@ gimp_proc_view_new (const gchar *procedure_name,
 
 
 /*  private functions  */
+
+static gint
+gimp_proc_view_add_label (GtkGrid       *grid,
+                          gint           row,
+                          const gchar   *left_label,
+                          const gchar   *right_label)
+{
+  if (right_label && strlen (right_label))
+    {
+      GtkWidget *label;
+
+      label = gtk_label_new (right_label);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                left_label, 0.0, 0.0,
+                                label, 3);
+    }
+
+  return row;
+}
 
 static GtkWidget *
 gimp_proc_view_create_args (GimpProcedure *procedure,
