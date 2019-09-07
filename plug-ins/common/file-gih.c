@@ -618,7 +618,7 @@ gih_save_dialog (GimpImage *image)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("Description:"), 0.0, 0.5,
+                            _("_Description:"), 0.0, 0.5,
                             entry, 1);
 
   g_signal_connect (entry, "changed",
@@ -632,7 +632,7 @@ gih_save_dialog (GimpImage *image)
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Spacing (percent):"), 0.0, 0.5,
+                            _("_Spacing (percent):"), 0.0, 0.5,
                             spinbutton, 1);
 
   g_signal_connect (adjustment, "value-changed",
@@ -691,7 +691,7 @@ gih_save_dialog (GimpImage *image)
   gtk_widget_show (label);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("Cell size:"), 0.0, 0.5,
+                            _("Ce_ll size:"), 0.0, 0.5,
                             box, 1);
 
   g_list_free (layers);
@@ -703,7 +703,7 @@ gih_save_dialog (GimpImage *image)
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
-                            _("Number of cells:"), 0.0, 0.5,
+                            _("_Number of cells:"), 0.0, 0.5,
                             spinbutton, 1);
 
   g_signal_connect (adjustment, "value-changed",
@@ -764,7 +764,7 @@ gih_save_dialog (GimpImage *image)
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
-                            _("Dimension:"), 0.0, 0.5,
+                            _("Di_mension:"), 0.0, 0.5,
                             spinbutton, 1);
 
   g_signal_connect (adjustment, "value-changed",
