@@ -641,7 +641,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]))
         {
-          required = "ENUM GimpRunMode";
+          required = "GimpRunMode";
           goto failure;
         }
     }
@@ -655,7 +655,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
              G_TYPE_FROM_INSTANCE (procedure->args[2])
                                == GIMP_TYPE_PARAM_DRAWABLE))
         {
-          required = "ENUM GimpRunMode, IMAGE, (LAYER | DRAWABLE)";
+          required = "GimpRunMode, GimpImage, (GimpLayer | GimpDrawable)";
           goto failure;
         }
     }
@@ -669,7 +669,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
              G_TYPE_FROM_INSTANCE (procedure->args[2])
                                == GIMP_TYPE_PARAM_DRAWABLE))
         {
-          required = "ENUM GimpRunMode, IMAGE, (CHANNEL | DRAWABLE)";
+          required = "GimpRunMode, GimpImage, (GimpChannel | GimpDrawable)";
           goto failure;
         }
     }
@@ -680,7 +680,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
           ! GIMP_IS_PARAM_SPEC_VECTORS  (procedure->args[2]))
         {
-          required = "ENUM GimpRunMode, IMAGE, VECTORS";
+          required = "GimpRunMode, GimpImage, GimpVectors";
           goto failure;
         }
     }
@@ -690,7 +690,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]))
         {
-          required = "ENUM GimpRunMode, IMAGE";
+          required = "GimpRunMode, GimpImage";
           goto failure;
         }
     }
@@ -701,14 +701,14 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
           ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]))
         {
-          required = "ENUM GimpRunMode, STRING, STRING";
+          required = "GimpRunMode, String, String";
           goto failure;
         }
 
       if ((procedure->num_values < 1) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE (procedure->values[0]))
         {
-          required = "IMAGE";
+          required = "GimpImage";
           goto failure;
         }
     }
@@ -721,7 +721,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           ! G_IS_PARAM_SPEC_STRING      (procedure->args[3]) ||
           ! G_IS_PARAM_SPEC_STRING      (procedure->args[4]))
         {
-          required = "ENUM GimpRunMode, IMAGE, DRAWABLE, STRING, STRING";
+          required = "GimpRunMode, GimpImage, GimpDrawable, String, String";
           goto failure;
         }
     }
@@ -738,7 +738,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]))
         {
-          required = "ENUM GimpRunMode";
+          required = "GimpRunMode";
           goto failure;
         }
     }
