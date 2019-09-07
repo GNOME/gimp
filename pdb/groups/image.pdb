@@ -805,7 +805,7 @@ This procedure combines the layers of the passed layer group into
 a single normal layer, replacing the group.
 HELP
 
-    &ell_pdb_misc('2019');
+    &ell_pdb_misc('2019', '2.10.14');
 
     @inargs = (
         { name => 'image', type => 'image',

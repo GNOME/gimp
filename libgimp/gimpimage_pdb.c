@@ -1737,6 +1737,8 @@ gimp_image_merge_down (GimpImage     *image,
  * single normal layer, replacing the group.
  *
  * Returns: (transfer none): The resulting layer.
+ *
+ * Since: 2.10.14
  **/
 GimpLayer *
 gimp_image_merge_layer_group (GimpImage *image,
