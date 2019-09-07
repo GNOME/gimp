@@ -7,21 +7,21 @@
 # Laszlo Dvornik <dvornik at gnome dot hu>, 2004.
 # Arpad Biro <biro arpad  at gmail dot com>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2012.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2019.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-01 16:53+0000\n"
-"PO-Revision-Date: 2019-02-08 08:11+0100\n"
-"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
+"POT-Creation-Date: 2019-09-07 18:04+0000\n"
+"PO-Revision-Date: 2019-09-07 20:05+0200\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Lokalize 18.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
@@ -715,8 +715,9 @@ msgstr ""
 "magasságú lesz, valamint középre lesz igazítva."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Újrarajzolás"
+#| msgid "Redraw"
+msgid "Re_draw"
+msgstr "Újra_rajzolás"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -727,16 +728,19 @@ msgstr ""
 "kijelölésen, akkor nyomja ezt meg, hogy megnézze a minta előnézetet."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Visszaállítás"
+#| msgid "Reset"
+msgid "_Reset"
+msgstr "_Visszaállítás"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Mégse"
+#| msgid "Cancel"
+msgid "_Cancel"
+msgstr "_Mégse"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "Rendben"
+#| msgid "OK"
+msgid "_OK"
+msgstr "_Rendben"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
@@ -752,10 +756,10 @@ msgid ""
 "exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
 "redrawn on the layer that was active when the plugin was launched."
 msgstr ""
-"Ha be van jelölve, akkor a Rendben megnyomásakor a spiro réteg megmarad, "
-"és a bővítmény gyorsan kilép. Ha nincs bejelölve, akkor a spiro réteg "
-"törlésre kerül, és a minta újra lesz rajzolva azon a rétegen, amely aktív "
-"volt a bővítmény futtatásakor."
+"Ha be van jelölve, akkor a Rendben megnyomásakor a spiro réteg megmarad, és "
+"a bővítmény gyorsan kilép. Ha nincs bejelölve, akkor a spiro réteg törlésre "
+"kerül, és a minta újra lesz rajzolva azon a rétegen, amely aktív volt a "
+"bővítmény futtatásakor."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
 msgid "Spyrogimp"
