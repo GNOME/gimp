@@ -815,6 +815,48 @@ CODE
     );
 }
 
+sub image_merge_layer_group {
+    $blurb = 'Merge the passed layer group\'s layers into one normal layer.';
+
+    $help = <<'HELP';
+This procedure combines the layers of the passed layer group into
+a single normal layer, replacing the group.
+HELP
+
+    &ell_pdb_misc('2019');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'layer_group', type => 'layer',
+          desc => 'The layer group to merge' },
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The resulting layer' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpgrouplayer.h" "core/gimpimage-merge.h") ],
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer_group), image, 0, error) &&
+      gimp_pdb_item_is_group (GIMP_ITEM (layer_group), error))
+    {
+      layer = gimp_image_merge_group_layer (image,
+                                            GIMP_GROUP_LAYER (layer_group));
+
+      if (! layer)
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub image_flatten {
     $blurb = <<'BLURB';
 Flatten all visible layers into a single layer. Discard all invisible layers.
@@ -3121,6 +3163,7 @@ CODE
             image_raise_item_to_top image_lower_item_to_bottom
             image_reorder_item
             image_flatten image_merge_visible_layers image_merge_down
+            image_merge_layer_group
             image_add_layer_mask image_remove_layer_mask
             image_get_colormap image_set_colormap
             image_get_metadata image_set_metadata
@@ -3151,11 +3194,11 @@ CODE
             image_get_parasite
             image_get_parasite_list);
 
-# For the lib parameter EXCLUDE functions #45 and #46, which are
+# For the lib parameter EXCLUDE functions #46 and #47, which are
 # image_add_layer_mask and image_remove_layer_mask.
 # If adding or removing functions, make sure the range below is
 # updated correctly!
-%exports = (app => [@procs], lib => [@procs[0..44,47..87]]);
+%exports = (app => [@procs], lib => [@procs[0..45,48..88]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

@@ -37,6 +37,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-merge.h"
@@ -1561,6 +1562,47 @@ image_merge_down_invoker (GimpProcedure         *procedure,
         {
           layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
                                          progress, error);
+
+          if (! layer)
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_layer (gimp_value_array_index (return_vals, 1), layer);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_merge_layer_group_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  GimpLayer *layer_group;
+  GimpLayer *layer = NULL;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  layer_group = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer_group), image, 0, error) &&
+          gimp_pdb_item_is_group (GIMP_ITEM (layer_group), error))
+        {
+          layer = gimp_image_merge_group_layer (image,
+                                                GIMP_GROUP_LAYER (layer_group));
 
           if (! layer)
             success = FALSE;
@@ -4404,6 +4446,41 @@ register_image_procs (GimpPDB *pdb)
                                                      GIMP_PARAM_READWRITE));
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[2]),
                                       GIMP_FLATTEN_IMAGE);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_layer_id ("layer",
+                                                             "layer",
+                                                             "The resulting layer",
+                                                             pdb->gimp, FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-merge-layer-group
+   */
+  procedure = gimp_procedure_new (image_merge_layer_group_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-merge-layer-group");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-merge-layer-group",
+                                     "Merge the passed layer group's layers into one normal layer.",
+                                     "This procedure combines the layers of the passed layer group into a single normal layer, replacing the group.",
+                                     "Ell",
+                                     "Ell",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer-group",
+                                                         "layer group",
+                                                         "The layer group to merge",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_id ("layer",
                                                              "layer",
