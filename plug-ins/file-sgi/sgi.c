@@ -680,11 +680,11 @@ save_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &compression, compression,
 
-                                    _("No compression"),
+                                    _("_No compression"),
                                     SGI_COMP_NONE, NULL,
-                                    _("RLE compression"),
+                                    _("_RLE compression"),
                                     SGI_COMP_RLE, NULL,
-                                    _("Aggressive RLE\n(not supported by SGI)"),
+                                    _("_Aggressive RLE\n(not supported by SGI)"),
                                     SGI_COMP_ARLE, NULL,
 
                                     NULL);

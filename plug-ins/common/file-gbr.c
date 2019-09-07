@@ -346,7 +346,7 @@ save_dialog (void)
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("Description:"), 1.0, 0.5,
+                            _("_Description:"), 1.0, 0.5,
                             entry, 1);
 
   g_signal_connect (entry, "changed",
@@ -358,7 +358,7 @@ save_dialog (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("Spacing:"), 1.0, 0.5,
+                            _("_Spacing:"), 1.0, 0.5,
                             spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
