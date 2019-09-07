@@ -222,5 +222,26 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
       gimp_procedure_add_return_value (procedure, pspec);
     }
 
+  if (type != GIMP_PDB_PROC_TYPE_INTERNAL)
+    {
+      gchar  *string;
+      gchar **menu_paths;
+      gint    n_menu_paths;
+      gint    i;
+
+      string = _gimp_pdb_proc_image_types (name);
+      gimp_procedure_set_image_types (procedure, string);
+      g_free (string);
+
+      string = _gimp_pdb_proc_menu_label (name);
+      gimp_procedure_set_menu_label (procedure, string);
+      g_free (string);
+
+      menu_paths = _gimp_pdb_proc_menu_paths (name, &n_menu_paths);
+      for (i = 0; i < n_menu_paths; i++)
+        gimp_procedure_add_menu_path (procedure, menu_paths[i]);
+      g_strfreev (menu_paths);
+    }
+
   return procedure;
 }
