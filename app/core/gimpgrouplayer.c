@@ -1154,13 +1154,21 @@ gimp_group_layer_excludes_backdrop_changed (GimpLayer *layer)
 static void
 gimp_group_layer_mask_changed (GimpLayer *layer)
 {
-  GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayer        *group = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
 
   g_warn_if_fail (GET_PRIVATE (layer)->suspend_mask == 0);
 
   gimp_layer_update_effective_mode (layer);
 
-  gimp_group_layer_update_size (group);
+  /* if we've already computed a bounding box, update it now, since the mask
+   * limits the bounding box to the group's size.  if we haven't computed a
+   * bounding box yet we can skip this, and, in fact, we have to, or else the
+   * mask will be improperly clipped when the group is duplicated, discarding
+   * its data.
+   */
+  if (! gegl_rectangle_is_empty (&private->bounding_box))
+    gimp_group_layer_update (group);
 
   if (GIMP_LAYER_CLASS (parent_class)->mask_changed)
     GIMP_LAYER_CLASS (parent_class)->mask_changed (layer);
