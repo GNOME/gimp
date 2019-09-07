@@ -246,6 +246,161 @@ CODE
     );
 }
 
+sub pdb_proc_image_types {
+    $blurb = <<'BLURB';
+Queries the procedural database for the image types supported by the
+specified procedure.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the image types supported by the specified procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc  => 'The procedure name' }
+    );
+
+    @outargs = (
+	{ name => 'image_types', type => 'string',
+	  desc => 'The image types' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
+
+      if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+        {
+          image_types = g_strdup (GIMP_PLUG_IN_PROCEDURE (proc)->image_types);
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_proc_menu_label {
+    $blurb = <<'BLURB';
+Queries the procedural database for the procedure's menu label.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the menu label of the specified procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc  => 'The procedure name' }
+    );
+
+    @outargs = (
+	{ name => 'menu_label', type => 'string',
+	  desc => 'The menu_label' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
+
+      if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+        {
+          menu_label = g_strdup (GIMP_PLUG_IN_PROCEDURE (proc)->menu_label);
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_proc_menu_paths {
+    $blurb = <<'BLURB';
+Queries the procedural database for the procedure's menu paths.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the menu paths of the specified procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc  => 'The procedure name' }
+    );
+
+    @outargs = (
+	{ name  => 'menu_paths', type => 'stringarray',
+	  desc  => 'The menu paths of the plug-in',
+	  array => { name => 'num_menu_paths',
+		     desc => 'The number of menu paths' } },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
+
+      if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+        {
+	  GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
+
+          num_menu_paths = g_list_length (plug_in_proc->menu_paths);
+
+          if (num_menu_paths > 0)
+            {
+              GList *list;
+              gint   i;
+
+              menu_paths = g_new0 (gchar *, num_menu_paths + 1);
+
+              for (list = plug_in_proc->menu_paths, i = 0;
+                   list;
+                   list = g_list_next (list), i++)
+                {
+                  menu_paths[i] = g_strdup (list->data);
+                }
+            }
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_proc_documentation {
     $blurb = <<'BLURB';
 Queries the procedural database for documentation on the specified procedure.
@@ -604,6 +759,7 @@ CODE
               "core/gimp.h"
               "core/gimpparamspecs-desc.h"
               "plug-in/gimppluginmanager-data.h"
+              "plug-in/gimppluginprocedure.h"
               "gimppdb-query.h"
               "gimppdb-utils.h"
               "gimppdberror.h"
@@ -615,6 +771,9 @@ CODE
             pdb_query
             pdb_proc_exists
             pdb_proc_info
+            pdb_proc_image_types
+            pdb_proc_menu_label
+            pdb_proc_menu_paths
             pdb_proc_documentation
             pdb_proc_attribution
             pdb_proc_argument

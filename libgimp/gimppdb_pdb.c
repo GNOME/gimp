@@ -263,6 +263,127 @@ _gimp_pdb_proc_info (const gchar     *procedure_name,
 }
 
 /**
+ * _gimp_pdb_proc_image_types:
+ * @procedure_name: The procedure name.
+ *
+ * Queries the procedural database for the image types supported by the
+ * specified procedure.
+ *
+ * This procedure returns the image types supported by the specified
+ * procedure.
+ *
+ * Returns: (transfer full): The image types.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
+ **/
+gchar *
+_gimp_pdb_proc_image_types (const gchar *procedure_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *image_types = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-proc-image-types",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    image_types = GIMP_VALUES_DUP_STRING (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return image_types;
+}
+
+/**
+ * _gimp_pdb_proc_menu_label:
+ * @procedure_name: The procedure name.
+ *
+ * Queries the procedural database for the procedure's menu label.
+ *
+ * This procedure returns the menu label of the specified procedure.
+ *
+ * Returns: (transfer full): The menu_label.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
+ **/
+gchar *
+_gimp_pdb_proc_menu_label (const gchar *procedure_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *menu_label = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-proc-menu-label",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    menu_label = GIMP_VALUES_DUP_STRING (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return menu_label;
+}
+
+/**
+ * _gimp_pdb_proc_menu_paths:
+ * @procedure_name: The procedure name.
+ * @num_menu_paths: (out): The number of menu paths.
+ *
+ * Queries the procedural database for the procedure's menu paths.
+ *
+ * This procedure returns the menu paths of the specified procedure.
+ *
+ * Returns: (array length=num_menu_paths) (element-type gchar*) (transfer full):
+ *          The menu paths of the plug-in.
+ *          The returned value must be freed with g_strfreev().
+ *
+ * Since: 3.0
+ **/
+gchar **
+_gimp_pdb_proc_menu_paths (const gchar *procedure_name,
+                           gint        *num_menu_paths)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar **menu_paths = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-proc-menu-paths",
+                                              args);
+  gimp_value_array_unref (args);
+
+  *num_menu_paths = 0;
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      *num_menu_paths = GIMP_VALUES_GET_INT (return_vals, 1);
+      menu_paths = GIMP_VALUES_DUP_STRING_ARRAY (return_vals, 2);
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return menu_paths;
+}
+
+/**
  * _gimp_pdb_proc_documentation:
  * @procedure_name: The procedure name.
  * @blurb: (out) (transfer full): A short blurb.

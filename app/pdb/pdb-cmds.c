@@ -35,6 +35,7 @@
 #include "gimp-pdb-compat.h"
 #include "gimppdb-query.h"
 #include "plug-in/gimppluginmanager-data.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimppdb.h"
 #include "gimppdberror.h"
@@ -255,6 +256,153 @@ pdb_proc_info_invoker (GimpProcedure         *procedure,
       g_value_set_enum (gimp_value_array_index (return_vals, 1), proc_type);
       g_value_set_int (gimp_value_array_index (return_vals, 2), num_args);
       g_value_set_int (gimp_value_array_index (return_vals, 3), num_values);
+    }
+
+  return return_vals;
+}
+
+static GimpValueArray *
+pdb_proc_image_types_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *procedure_name;
+  gchar *image_types = NULL;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                                  error);
+
+          if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+            {
+              image_types = g_strdup (GIMP_PLUG_IN_PROCEDURE (proc)->image_types);
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), image_types);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+pdb_proc_menu_label_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *procedure_name;
+  gchar *menu_label = NULL;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                                  error);
+
+          if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+            {
+              menu_label = g_strdup (GIMP_PLUG_IN_PROCEDURE (proc)->menu_label);
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), menu_label);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+pdb_proc_menu_paths_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *procedure_name;
+  gint num_menu_paths = 0;
+  gchar **menu_paths = NULL;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                                  error);
+
+          if (GIMP_IS_PLUG_IN_PROCEDURE (proc))
+            {
+              GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
+
+              num_menu_paths = g_list_length (plug_in_proc->menu_paths);
+
+              if (num_menu_paths > 0)
+                {
+                  GList *list;
+                  gint   i;
+
+                  menu_paths = g_new0 (gchar *, num_menu_paths + 1);
+
+                  for (list = plug_in_proc->menu_paths, i = 0;
+                       list;
+                       list = g_list_next (list), i++)
+                    {
+                      menu_paths[i] = g_strdup (list->data);
+                    }
+                }
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_menu_paths);
+      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), menu_paths, num_menu_paths);
     }
 
   return return_vals;
@@ -757,6 +905,100 @@ register_pdb_procs (GimpPDB *pdb)
                                                      "The number of return values",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-proc-image-types
+   */
+  procedure = gimp_procedure_new (pdb_proc_image_types_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-proc-image-types");
+  gimp_procedure_set_static_strings (procedure,
+                                     "Queries the procedural database for the image types supported by the specified procedure.",
+                                     "This procedure returns the image types supported by the specified procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("image-types",
+                                                           "image types",
+                                                           "The image types",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-proc-menu-label
+   */
+  procedure = gimp_procedure_new (pdb_proc_menu_label_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-proc-menu-label");
+  gimp_procedure_set_static_strings (procedure,
+                                     "Queries the procedural database for the procedure's menu label.",
+                                     "This procedure returns the menu label of the specified procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("menu-label",
+                                                           "menu label",
+                                                           "The menu_label",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-proc-menu-paths
+   */
+  procedure = gimp_procedure_new (pdb_proc_menu_paths_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-proc-menu-paths");
+  gimp_procedure_set_static_strings (procedure,
+                                     "Queries the procedural database for the procedure's menu paths.",
+                                     "This procedure returns the menu paths of the specified procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("num-menu-paths",
+                                                     "num menu paths",
+                                                     "The number of menu paths",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string_array ("menu-paths",
+                                                                 "menu paths",
+                                                                 "The menu paths of the plug-in",
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
