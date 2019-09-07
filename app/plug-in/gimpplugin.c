@@ -928,23 +928,6 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n"
-                    "attempted to register the menu item \"%s\" "
-                    "for procedure \"%s\".\n"
-                    "The menu label given in gimp_install_procedure() "
-                    "already contained a path.  To make this work, "
-                    "pass just the menu's label to "
-                    "gimp_install_procedure().",
-                    gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file),
-                    menu_path, proc_name);
-
-      return FALSE;
-    }
-
-  if (! strlen (proc->menu_label))
-    {
-      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-in \"%s\"\n(%s)\n"
                     "attempted to register the procedure \"%s\" "
                     "in the menu \"%s\", but the procedure has no label.  "
                     "This is not allowed.",
