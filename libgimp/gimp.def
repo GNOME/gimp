@@ -437,6 +437,7 @@ EXPORTS
 	gimp_image_lower_item
 	gimp_image_lower_item_to_bottom
 	gimp_image_merge_down
+	gimp_image_merge_layer_group
 	gimp_image_merge_visible_layers
 	gimp_image_new
 	gimp_image_new_with_precision

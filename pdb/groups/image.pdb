@@ -797,6 +797,48 @@ CODE
     );
 }
 
+sub image_merge_layer_group {
+    $blurb = 'Merge the passed layer group\'s layers into one normal layer.';
+
+    $help = <<'HELP';
+This procedure combines the layers of the passed layer group into
+a single normal layer, replacing the group.
+HELP
+
+    &ell_pdb_misc('2019');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'layer_group', type => 'layer',
+          desc => 'The layer group to merge' },
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The resulting layer' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpgrouplayer.h" "core/gimpimage-merge.h") ],
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer_group), image, 0, error) &&
+      gimp_pdb_item_is_group (GIMP_ITEM (layer_group), error))
+    {
+      layer = gimp_image_merge_group_layer (image,
+                                            GIMP_GROUP_LAYER (layer_group));
+
+      if (! layer)
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub image_flatten {
     $blurb = <<'BLURB';
 Flatten all visible layers into a single layer. Discard all invisible layers.
@@ -2972,6 +3014,7 @@ CODE
             image_raise_item_to_top image_lower_item_to_bottom
             image_reorder_item
             image_flatten image_merge_visible_layers image_merge_down
+            image_merge_layer_group
             image_get_colormap image_set_colormap
             image_get_metadata image_set_metadata
             image_clean_all image_is_dirty

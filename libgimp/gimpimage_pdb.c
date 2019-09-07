@@ -1727,6 +1727,44 @@ gimp_image_merge_down (GimpImage     *image,
 }
 
 /**
+ * gimp_image_merge_layer_group:
+ * @image: The image.
+ * @layer_group: The layer group to merge.
+ *
+ * Merge the passed layer group's layers into one normal layer.
+ *
+ * This procedure combines the layers of the passed layer group into a
+ * single normal layer, replacing the group.
+ *
+ * Returns: (transfer none): The resulting layer.
+ **/
+GimpLayer *
+gimp_image_merge_layer_group (GimpImage *image,
+                              GimpLayer *layer_group)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpLayer *layer = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_LAYER, layer_group,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-merge-layer-group",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return layer;
+}
+
+/**
  * _gimp_image_get_colormap:
  * @image: The image.
  * @num_bytes: (out): Number of bytes in the colormap array.
