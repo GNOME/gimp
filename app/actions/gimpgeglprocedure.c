@@ -64,7 +64,6 @@ static gchar  * gimp_gegl_procedure_get_description     (GimpViewable   *viewabl
 
 static const gchar * gimp_gegl_procedure_get_label      (GimpProcedure  *procedure);
 static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
-static const gchar * gimp_gegl_procedure_get_help_id    (GimpProcedure  *procedure);
 static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
                                                          GimpObject     *object,
                                                          const gchar   **tooltip);
@@ -105,7 +104,6 @@ gimp_gegl_procedure_class_init (GimpGeglProcedureClass *klass)
 
   proc_class->get_label             = gimp_gegl_procedure_get_label;
   proc_class->get_menu_label        = gimp_gegl_procedure_get_menu_label;
-  proc_class->get_help_id           = gimp_gegl_procedure_get_help_id;
   proc_class->get_sensitive         = gimp_gegl_procedure_get_sensitive;
   proc_class->execute               = gimp_gegl_procedure_execute;
   proc_class->execute_async         = gimp_gegl_procedure_execute_async;
@@ -126,7 +124,6 @@ gimp_gegl_procedure_finalize (GObject *object)
   g_clear_pointer (&proc->operation,  g_free);
   g_clear_pointer (&proc->menu_label, g_free);
   g_clear_pointer (&proc->label,      g_free);
-  g_clear_pointer (&proc->help_id,    g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -192,14 +189,6 @@ gimp_gegl_procedure_get_menu_label (GimpProcedure *procedure)
     return proc->menu_label;
 
   return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
-}
-
-static const gchar *
-gimp_gegl_procedure_get_help_id (GimpProcedure *procedure)
-{
-  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
-
-  return proc->help_id;
 }
 
 static gboolean
@@ -436,7 +425,6 @@ gimp_gegl_procedure_new (Gimp        *gimp,
   gegl_procedure->operation        = g_strdup (operation);
   gegl_procedure->default_run_mode = default_run_mode;
   gegl_procedure->menu_label       = g_strdup (menu_label);
-  gegl_procedure->help_id          = g_strdup (help_id);
 
   if (default_settings)
     gegl_procedure->default_settings = g_object_ref (default_settings);
@@ -446,7 +434,7 @@ gimp_gegl_procedure_new (Gimp        *gimp,
   gimp_procedure_set_help (procedure,
                            tooltip,
                            tooltip,
-                           NULL);
+                           help_id);
   gimp_procedure_set_static_attribution (procedure,
                                          "author", "copyright", "date");
 

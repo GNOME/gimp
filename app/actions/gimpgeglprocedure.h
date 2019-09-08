@@ -47,7 +47,6 @@ struct _GimpGeglProcedure
 
   gchar         *menu_label;
   gchar         *label;
-  gchar         *help_id;
 };
 
 struct _GimpGeglProcedureClass
