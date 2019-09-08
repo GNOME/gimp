@@ -372,7 +372,6 @@ gimp_procedure_real_install (GimpProcedure *procedure)
   proc_install.copyright    = (gchar *) gimp_procedure_get_copyright (procedure);
   proc_install.date         = (gchar *) gimp_procedure_get_date (procedure);
   proc_install.menu_label   = (gchar *) gimp_procedure_get_menu_label (procedure);
-  proc_install.image_types  = (gchar *) gimp_procedure_get_image_types (procedure);
   proc_install.type         = gimp_procedure_get_proc_type (procedure);
   proc_install.nparams      = n_args;
   proc_install.nreturn_vals = n_return_vals;
@@ -401,6 +400,9 @@ gimp_procedure_real_install (GimpProcedure *procedure)
   g_free (proc_install.return_vals);
 
   gimp_procedure_install_icon (procedure);
+
+  _gimp_pdb_set_proc_image_types (gimp_procedure_get_name (procedure),
+                                  procedure->priv->image_types);
 
   for (list = gimp_procedure_get_menu_paths (procedure);
        list;
@@ -590,6 +592,10 @@ gimp_procedure_set_image_types (GimpProcedure *procedure,
 
   g_free (procedure->priv->image_types);
   procedure->priv->image_types = g_strdup (image_types);
+
+  if (procedure->priv->installed)
+    _gimp_pdb_set_proc_image_types (gimp_procedure_get_name (procedure),
+                                    procedure->priv->image_types);
 }
 
 /**

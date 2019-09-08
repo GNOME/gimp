@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0109
+#define GIMP_PROTOCOL_VERSION  0x010A
 
 
 enum
@@ -289,7 +289,6 @@ struct _GPProcInstall
   gchar      *copyright;
   gchar      *date;
   gchar      *menu_label;
-  gchar      *image_types;
   guint32     type;
   guint32     nparams;
   guint32     nreturn_vals;

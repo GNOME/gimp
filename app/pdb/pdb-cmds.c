@@ -264,6 +264,39 @@ pdb_get_proc_info_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+pdb_set_proc_image_types_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *image_types;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  image_types = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_proc_image_types (plug_in, procedure_name,
+                                                       image_types);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 pdb_get_proc_image_types_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
@@ -978,6 +1011,36 @@ register_pdb_procs (GimpPDB *pdb)
                                                      "The number of return values",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-proc-image-types
+   */
+  procedure = gimp_procedure_new (pdb_set_proc_image_types_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-proc-image-types");
+  gimp_procedure_set_static_strings (procedure,
+                                     "Set the supported image types for a plug-in procedure.",
+                                     "This procedure sets the supported images types for the given procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure for which to install the menu path",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("image-types",
+                                                       "image types",
+                                                       "The procedure's supported image types",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -1224,9 +1224,6 @@ _gp_proc_install_read (GIOChannel      *channel,
   if (! _gimp_wire_read_string (channel,
                                 &proc_install->menu_label, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_string (channel,
-                                &proc_install->image_types, 1, user_data))
-    goto cleanup;
 
   if (! _gimp_wire_read_int32 (channel,
                                &proc_install->type, 1, user_data))
@@ -1270,7 +1267,6 @@ _gp_proc_install_read (GIOChannel      *channel,
   g_free (proc_install->copyright);
   g_free (proc_install->date);
   g_free (proc_install->menu_label);
-  g_free (proc_install->image_types);
 
   if (proc_install->params)
     {
@@ -1472,9 +1468,6 @@ _gp_proc_install_write (GIOChannel      *channel,
   if (! _gimp_wire_write_string (channel,
                                  &proc_install->menu_label, 1, user_data))
     return;
-  if (! _gimp_wire_write_string (channel,
-                                 &proc_install->image_types, 1, user_data))
-    return;
 
   if (! _gimp_wire_write_int32 (channel,
                                 &proc_install->type, 1, user_data))
@@ -1520,7 +1513,6 @@ _gp_proc_install_destroy (GimpWireMessage *msg)
       g_free (proc_install->copyright);
       g_free (proc_install->date);
       g_free (proc_install->menu_label);
-      g_free (proc_install->image_types);
 
       for (i = 0; i < proc_install->nparams; i++)
         {

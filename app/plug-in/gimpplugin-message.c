@@ -870,7 +870,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   if (proc_install->menu_label && strlen (proc_install->menu_label))
     proc->menu_label = g_strdup (proc_install->menu_label);
 
-  gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
   gimp_plug_in_procedure_set_help_id (proc, proc_install->help_id);
 
   for (i = 0; i < proc_install->nparams; i++)

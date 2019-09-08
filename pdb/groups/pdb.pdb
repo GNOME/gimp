@@ -246,6 +246,42 @@ CODE
     );
 }
 
+sub pdb_set_proc_image_types {
+    $blurb = "Set the supported image types for a plug-in procedure.";
+
+    $help = <<HELP;
+This procedure sets the supported images types for the given procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
+	  desc => 'The procedure for which to install the menu path' },
+	{ name => 'image_types', type => 'string', null_ok => 1,
+	  desc => "The procedure's supported image types" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_proc_image_types (plug_in, procedure_name,
+                                                   image_types);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_get_proc_image_types {
     $blurb = <<'BLURB';
 Queries the procedural database for the image types supported by the
@@ -851,6 +887,7 @@ CODE
             pdb_query
             pdb_proc_exists
             pdb_get_proc_info
+            pdb_set_proc_image_types
             pdb_get_proc_image_types
             pdb_get_proc_menu_label
             pdb_add_proc_menu_path
