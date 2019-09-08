@@ -60,7 +60,8 @@ file_data_init (Gimp *gimp)
   proc->menu_label = g_strdup (N_("GIMP brush"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
-                                   strlen ("gimp-brush") + 1);
+                                   strlen ("gimp-brush") + 1,
+                                   NULL);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
   gimp_plug_in_procedure_set_file_proc (proc, "gbr, gbp", "",
                                         "20, string, GIMP");
@@ -125,7 +126,8 @@ file_data_init (Gimp *gimp)
   proc->menu_label = g_strdup (N_("GIMP brush"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
-                                   strlen ("gimp-brush") + 1);
+                                   strlen ("gimp-brush") + 1,
+                                   NULL);
 
 #if 0
   /* do not register as file procedure */
@@ -211,7 +213,8 @@ file_data_init (Gimp *gimp)
   proc->menu_label = g_strdup (N_("GIMP brush (animated)"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
-                                   strlen ("gimp-brush") + 1);
+                                   strlen ("gimp-brush") + 1,
+                                   NULL);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
   gimp_plug_in_procedure_set_file_proc (proc, "gih", "", "");
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gih");
@@ -273,7 +276,8 @@ file_data_init (Gimp *gimp)
   proc->menu_label = g_strdup (N_("GIMP brush (animated)"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-brush",
-                                   strlen ("gimp-brush") + 1);
+                                   strlen ("gimp-brush") + 1,
+                                   NULL);
 
 #if 0
   /* do not register as file procedure */
@@ -366,7 +370,8 @@ file_data_init (Gimp *gimp)
   proc->menu_label = g_strdup (N_("GIMP pattern"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-pattern",
-                                   strlen ("gimp-pattern") + 1);
+                                   strlen ("gimp-pattern") + 1,
+                                   NULL);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
   gimp_plug_in_procedure_set_file_proc (proc, "pat", "",
                                         "20,string,GPAT");
@@ -427,7 +432,8 @@ file_data_init (Gimp *gimp)
   proc->menu_label = g_strdup (N_("GIMP pattern"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-pattern",
-                                   strlen ("gimp-pattern") + 1);
+                                   strlen ("gimp-pattern") + 1,
+                                   NULL);
 
 #if 0
   /* do not register as file procedure */
@@ -508,7 +514,8 @@ file_data_init (Gimp *gimp)
   proc->menu_label = g_strdup (N_("GIMP extension"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-plugin",
-                                   strlen ("gimp-plugin") + 1);
+                                   strlen ("gimp-plugin") + 1,
+                                   NULL);
   gimp_plug_in_procedure_set_file_proc (proc, "gex", "",
                                         "20, string, GIMP");
   gimp_plug_in_procedure_set_generic_file_proc (proc, TRUE);

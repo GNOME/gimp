@@ -111,14 +111,16 @@ gboolean      gimp_plug_in_procedure_add_menu_path     (GimpPlugInProcedure *pro
                                                         const gchar         *menu_path,
                                                         GError             **error);
 
-void          gimp_plug_in_procedure_set_icon          (GimpPlugInProcedure *proc,
+gboolean      gimp_plug_in_procedure_set_icon          (GimpPlugInProcedure *proc,
                                                         GimpIconType         type,
                                                         const guint8        *data,
-                                                        gint                 data_length);
-void          gimp_plug_in_procedure_take_icon         (GimpPlugInProcedure *proc,
+                                                        gint                 data_length,
+                                                        GError             **error);
+gboolean      gimp_plug_in_procedure_take_icon         (GimpPlugInProcedure *proc,
                                                         GimpIconType         type,
                                                         guint8              *data,
-                                                        gint                 data_length);
+                                                        gint                 data_length,
+                                                        GError             **error);
 
 void          gimp_plug_in_procedure_set_image_types   (GimpPlugInProcedure *proc,
                                                         const gchar         *image_types);

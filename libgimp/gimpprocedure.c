@@ -289,6 +289,65 @@ gimp_procedure_get_property (GObject    *object,
 }
 
 static void
+gimp_procedure_install_icon (GimpProcedure *procedure)
+{
+  GimpIconType  icon_type;
+  guint8       *icon_data        = NULL;
+  gsize         icon_data_length = 0;
+
+  icon_type = gimp_procedure_get_icon_type (procedure);
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      {
+        icon_data = (guint8 *) gimp_procedure_get_icon_name (procedure);
+        if (icon_data)
+          icon_data_length = strlen ((gchar *) icon_data) + 1;
+      }
+      break;
+
+    case GIMP_ICON_TYPE_PIXBUF:
+      {
+        GdkPixbuf *pixbuf = gimp_procedure_get_icon_pixbuf (procedure);
+
+        if (pixbuf)
+          gdk_pixbuf_save_to_buffer (pixbuf,
+                                     (gchar **) &icon_data, &icon_data_length,
+                                     "png", NULL, NULL);
+      }
+      break;
+
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      {
+        GFile *file = gimp_procedure_get_icon_file (procedure);
+
+        if (file)
+          {
+            icon_data        = (guchar *) g_file_get_uri (file);
+            icon_data_length = strlen ((gchar *) icon_data) + 1;
+          }
+      }
+      break;
+    }
+
+  if (icon_data)
+    _gimp_pdb_set_proc_icon (gimp_procedure_get_name (procedure),
+                             icon_type, icon_data_length, icon_data);
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      break;
+
+    case GIMP_ICON_TYPE_PIXBUF:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      g_free (icon_data);
+      break;
+    }
+}
+
+static void
 gimp_procedure_real_install (GimpProcedure *procedure)
 {
   GParamSpec   **args;
@@ -298,9 +357,6 @@ gimp_procedure_real_install (GimpProcedure *procedure)
   GList         *list;
   GimpPlugIn    *plug_in;
   GPProcInstall  proc_install;
-  GimpIconType   icon_type;
-  guint8        *icon_data        = NULL;
-  gsize          icon_data_length = 0;
   gint           i;
 
   g_return_if_fail (procedure->priv->installed == FALSE);
@@ -341,59 +397,10 @@ gimp_procedure_real_install (GimpProcedure *procedure)
                                &proc_install, plug_in))
     gimp_quit ();
 
-  icon_type = gimp_procedure_get_icon_type (procedure);
-
-  switch (icon_type)
-    {
-    case GIMP_ICON_TYPE_ICON_NAME:
-      {
-        icon_data = (guint8 *) gimp_procedure_get_icon_name (procedure);
-        if (icon_data)
-          icon_data_length = strlen ((gchar *) icon_data) + 1;
-      }
-      break;
-
-    case GIMP_ICON_TYPE_PIXBUF:
-      {
-        GdkPixbuf *pixbuf = gimp_procedure_get_icon_pixbuf (procedure);
-
-        if (pixbuf)
-          gdk_pixbuf_save_to_buffer (pixbuf,
-                                     (gchar **) &icon_data, &icon_data_length,
-                                     "png", NULL, NULL);
-      }
-      break;
-
-    case GIMP_ICON_TYPE_IMAGE_FILE:
-      {
-        GFile *file = gimp_procedure_get_icon_file (procedure);
-
-        if (file)
-          {
-            icon_data        = (guchar *) g_file_get_uri (file);
-            icon_data_length = strlen ((gchar *) icon_data) + 1;
-          }
-      }
-      break;
-    }
-
-  if (icon_data)
-    _gimp_plugin_icon_register (gimp_procedure_get_name (procedure),
-                                icon_type, icon_data_length, icon_data);
-
-  switch (icon_type)
-    {
-    case GIMP_ICON_TYPE_ICON_NAME:
-      break;
-
-    case GIMP_ICON_TYPE_PIXBUF:
-    case GIMP_ICON_TYPE_IMAGE_FILE:
-      g_free (icon_data);
-      break;
-    }
-
   g_free (proc_install.params);
   g_free (proc_install.return_vals);
+
+  gimp_procedure_install_icon (procedure);
 
   for (list = gimp_procedure_get_menu_paths (procedure);
        list;
@@ -1642,6 +1649,9 @@ gimp_procedure_set_icon (GimpProcedure *procedure,
     default:
       g_return_if_reached ();
     }
+
+  if (procedure->priv->installed)
+    gimp_procedure_install_icon (procedure);
 }
 
 

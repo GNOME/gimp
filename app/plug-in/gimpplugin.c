@@ -924,21 +924,70 @@ gimp_plug_in_add_proc_menu_path (GimpPlugIn  *plug_in,
       break;
     }
 
-  if (! proc->menu_label)
+  if (! gimp_plug_in_procedure_add_menu_path (proc, menu_path, &error))
     {
-      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-in \"%s\"\n(%s)\n"
-                    "attempted to register the procedure \"%s\" "
-                    "in the menu \"%s\", but the procedure has no label. "
-                    "This is not allowed.",
-                    gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file),
-                    proc_name, menu_path);
+      gimp_message_literal (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                            error->message);
+      g_clear_error (&error);
 
       return FALSE;
     }
 
-  if (! gimp_plug_in_procedure_add_menu_path (proc, menu_path, &error))
+  return TRUE;
+}
+
+gboolean
+gimp_plug_in_set_proc_icon (GimpPlugIn   *plug_in,
+                            const gchar  *proc_name,
+                            GimpIconType  type,
+                            const guint8 *data,
+                            gint          data_length)
+{
+  GimpPlugInProcedure *proc  = NULL;
+  GError              *error = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (proc_name != NULL, FALSE);
+
+  if (plug_in->plug_in_def)
+    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
+                                        proc_name);
+
+  if (! proc)
+    proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
+
+  if (! proc)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n"
+                    "attempted to set the icon "
+                    "for the procedure \"%s\".\n"
+                    "It has however not installed that procedure. "
+                    "This is not allowed.",
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file),
+                    proc_name);
+
+      return FALSE;
+    }
+
+  switch (GIMP_PROCEDURE (proc)->proc_type)
+    {
+    case GIMP_PDB_PROC_TYPE_INTERNAL:
+      return FALSE;
+
+    case GIMP_PDB_PROC_TYPE_PLUGIN:
+    case GIMP_PDB_PROC_TYPE_EXTENSION:
+      if (plug_in->call_mode != GIMP_PLUG_IN_CALL_QUERY &&
+          plug_in->call_mode != GIMP_PLUG_IN_CALL_INIT)
+        return FALSE;
+
+    case GIMP_PDB_PROC_TYPE_TEMPORARY:
+      break;
+    }
+
+  if (! gimp_plug_in_procedure_set_icon (proc, type, data, data_length,
+                                         &error))
     {
       gimp_message_literal (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                             error->message);

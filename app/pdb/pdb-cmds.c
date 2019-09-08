@@ -444,6 +444,44 @@ pdb_get_proc_menu_paths_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+pdb_set_proc_icon_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  gint icon_type;
+  gint icon_data_length;
+  const guint8 *icon_data;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  icon_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  icon_data_length = g_value_get_int (gimp_value_array_index (args, 2));
+  icon_data = gimp_value_get_uint8_array (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_proc_icon (plug_in, procedure_name,
+                                                icon_type,
+                                                icon_data, icon_data_length);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 pdb_get_proc_documentation_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
@@ -1064,6 +1102,47 @@ register_pdb_procs (GimpPDB *pdb)
                                                                  "menu paths",
                                                                  "The menu paths of the plug-in",
                                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-proc-icon
+   */
+  procedure = gimp_procedure_new (pdb_set_proc_icon_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-proc-icon");
+  gimp_procedure_set_static_strings (procedure,
+                                     "Register an icon for a plug-in procedure.",
+                                     "This procedure installs an icon for the given procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure for which to install the icon",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("icon-type",
+                                                  "icon type",
+                                                  "The type of the icon",
+                                                  GIMP_TYPE_ICON_TYPE,
+                                                  GIMP_ICON_TYPE_ICON_NAME,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("icon-data-length",
+                                                 "icon data length",
+                                                 "The length of 'icon-data'",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_uint8_array ("icon-data",
+                                                            "icon data",
+                                                            "The procedure's icon. The format depends on the 'icon_type' parameter",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

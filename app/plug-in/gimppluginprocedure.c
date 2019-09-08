@@ -818,30 +818,31 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   return FALSE;
 }
 
-void
-gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
-                                 GimpIconType         icon_type,
-                                 const guint8        *icon_data,
-                                 gint                 icon_data_length)
+gboolean
+gimp_plug_in_procedure_set_icon (GimpPlugInProcedure  *proc,
+                                 GimpIconType          icon_type,
+                                 const guint8         *icon_data,
+                                 gint                  icon_data_length,
+                                 GError              **error)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
-  gimp_plug_in_procedure_take_icon (proc, icon_type,
-                                    g_memdup (icon_data, icon_data_length),
-                                    icon_data_length);
+  return gimp_plug_in_procedure_take_icon (proc, icon_type,
+                                           g_memdup (icon_data, icon_data_length),
+                                           icon_data_length, error);
 }
 
-void
-gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
-                                  GimpIconType         icon_type,
-                                  guint8              *icon_data,
-                                  gint                 icon_data_length)
+gboolean
+gimp_plug_in_procedure_take_icon (GimpPlugInProcedure  *proc,
+                                  GimpIconType          icon_type,
+                                  guint8               *icon_data,
+                                  gint                  icon_data_length,
+                                  GError              **error)
 {
   const gchar *icon_name   = NULL;
   GdkPixbuf   *icon_pixbuf = NULL;
-  GError      *error       = NULL;
+  gboolean     success     = TRUE;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (proc->icon_data)
     {
@@ -869,15 +870,26 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
 
       loader = gdk_pixbuf_loader_new ();
 
-      gdk_pixbuf_loader_write (loader,
-                               proc->icon_data,
-                               proc->icon_data_length,
-                               NULL);
-      gdk_pixbuf_loader_close (loader, NULL);
-      icon_pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+      if (! gdk_pixbuf_loader_write (loader,
+                                     proc->icon_data,
+                                     proc->icon_data_length,
+                                     error))
+        {
+          gdk_pixbuf_loader_close (loader, NULL);
+          success = FALSE;
+        }
+      else if (! gdk_pixbuf_loader_close (loader, error))
+        {
+          success = FALSE;
+        }
 
-      if (icon_pixbuf)
-        g_object_ref (icon_pixbuf);
+      if (success)
+        {
+          icon_pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+
+          if (icon_pixbuf)
+            g_object_ref (icon_pixbuf);
+        }
 
       g_object_unref (loader);
       break;
@@ -887,14 +899,11 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
       proc->icon_data        = icon_data;
 
       icon_pixbuf = gdk_pixbuf_new_from_file ((gchar *) proc->icon_data,
-                                              &error);
-      break;
-    }
+                                              error);
 
-  if (! icon_pixbuf && error)
-    {
-      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
-      g_clear_error (&error);
+      if (! icon_pixbuf)
+        success = FALSE;
+      break;
     }
 
   gimp_viewable_set_icon_name (GIMP_VIEWABLE (proc), icon_name);
@@ -902,6 +911,8 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
 
   if (icon_pixbuf)
     g_object_unref (icon_pixbuf);
+
+  return success;
 }
 
 static GimpPlugInImageType

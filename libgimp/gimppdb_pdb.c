@@ -423,6 +423,51 @@ _gimp_pdb_get_proc_menu_paths (const gchar *procedure_name,
 }
 
 /**
+ * _gimp_pdb_set_proc_icon:
+ * @procedure_name: The procedure for which to install the icon.
+ * @icon_type: The type of the icon.
+ * @icon_data_length: The length of 'icon-data'.
+ * @icon_data: (array length=icon_data_length) (element-type guint8): The procedure's icon. The format depends on the 'icon_type' parameter.
+ *
+ * Register an icon for a plug-in procedure.
+ *
+ * This procedure installs an icon for the given procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_set_proc_icon (const gchar  *procedure_name,
+                         GimpIconType  icon_type,
+                         gint          icon_data_length,
+                         const guint8 *icon_data)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          GIMP_TYPE_ICON_TYPE, icon_type,
+                                          G_TYPE_INT, icon_data_length,
+                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_uint8_array (gimp_value_array_index (args, 3), icon_data, icon_data_length);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-proc-icon",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_pdb_get_proc_documentation:
  * @procedure_name: The procedure name.
  * @blurb: (out) (transfer full): A short blurb.

@@ -108,6 +108,11 @@ const gchar * gimp_plug_in_get_undo_desc      (GimpPlugIn             *plug_in);
 gboolean      gimp_plug_in_add_proc_menu_path (GimpPlugIn             *plug_in,
                                                const gchar            *proc_name,
                                                const gchar            *menu_path);
+gboolean      gimp_plug_in_set_proc_icon      (GimpPlugIn             *plug_in,
+                                               const gchar            *proc_name,
+                                               GimpIconType            type,
+                                               const guint8           *data,
+                                               gint                    data_length);
 
 void          gimp_plug_in_add_temp_proc      (GimpPlugIn             *plug_in,
                                                GimpTemporaryProcedure *procedure);
