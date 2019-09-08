@@ -573,7 +573,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
                                          procedure ? procedure->args     : NULL,
                                          procedure ? procedure->num_args : 0,
                                          proc_run->params,
-                                         proc_run->nparams,
+                                         proc_run->n_params,
                                          FALSE);
 
   /*  Execute the procedure even if gimp_pdb_lookup_procedure()
@@ -613,9 +613,9 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
        *  since proc_name may have been remapped by gimp->procedural_compat_ht
        *  and canonical may be different too.
        */
-      proc_return.name    = proc_run->name;
-      proc_return.nparams = gimp_value_array_length (return_vals);
-      proc_return.params  = _gimp_value_array_to_gp_params (return_vals, FALSE);
+      proc_return.name     = proc_run->name;
+      proc_return.n_params = gimp_value_array_length (return_vals);
+      proc_return.params   = _gimp_value_array_to_gp_params (return_vals, FALSE);
 
       if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
         {
@@ -624,7 +624,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
           gimp_plug_in_close (plug_in, TRUE);
         }
 
-      _gimp_gp_params_free (proc_return.params, proc_return.nparams, FALSE);
+      _gimp_gp_params_free (proc_return.params, proc_return.n_params, FALSE);
     }
 
   gimp_value_array_unref (return_vals);
@@ -643,7 +643,7 @@ gimp_plug_in_handle_proc_return (GimpPlugIn   *plug_in,
                                     proc_frame->procedure->values,
                                     proc_frame->procedure->num_values,
                                     proc_return->params,
-                                    proc_return->nparams,
+                                    proc_return->n_params,
                                     TRUE);
 
   if (proc_frame->main_loop)
@@ -679,7 +679,7 @@ gimp_plug_in_handle_temp_proc_return (GimpPlugIn   *plug_in,
                                         proc_frame->procedure->values,
                                         proc_frame->procedure->num_values,
                                         proc_return->params,
-                                        proc_return->nparams,
+                                        proc_return->n_params,
                                         TRUE);
 
       gimp_plug_in_main_loop_quit (plug_in);
@@ -724,7 +724,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   /*  Sanity check for array arguments  */
 
-  for (i = 1; i < proc_install->nparams; i++)
+  for (i = 1; i < proc_install->n_params; i++)
     {
       GPParamDef *param_def      = &proc_install->params[i];
       GPParamDef *prev_param_def = &proc_install->params[i - 1];
@@ -754,7 +754,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
 #define VALIDATE(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
 
-  for (i = 0; i < proc_install->nparams && valid_utf8 && ! null_name; i++)
+  for (i = 0; i < proc_install->n_params && valid_utf8 && ! null_name; i++)
     {
       if (! proc_install->params[i].name)
         {
@@ -768,7 +768,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
         }
     }
 
-  for (i = 0; i < proc_install->nreturn_vals && valid_utf8 && !null_name; i++)
+  for (i = 0; i < proc_install->n_return_vals && valid_utf8 && !null_name; i++)
     {
       if (! proc_install->return_vals[i].name)
         {
@@ -830,7 +830,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   gimp_object_set_name (GIMP_OBJECT (procedure), proc_install->name);
 
-  for (i = 0; i < proc_install->nparams; i++)
+  for (i = 0; i < proc_install->n_params; i++)
     {
       GParamSpec *pspec =
         _gimp_gp_param_def_to_param_spec (&proc_install->params[i]);
@@ -839,7 +839,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
         gimp_procedure_add_argument (procedure, pspec);
     }
 
-  for (i = 0; i < proc_install->nreturn_vals; i++)
+  for (i = 0; i < proc_install->n_return_vals; i++)
     {
       GParamSpec *pspec =
         _gimp_gp_param_def_to_param_spec (&proc_install->return_vals[i]);

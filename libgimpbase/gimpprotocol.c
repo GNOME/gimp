@@ -126,14 +126,14 @@ static void _gp_extension_ack_destroy    (GimpWireMessage  *msg);
 
 static void _gp_params_read              (GIOChannel       *channel,
                                           GPParam         **params,
-                                          guint            *nparams,
+                                          guint            *n_params,
                                           gpointer          user_data);
 static void _gp_params_write             (GIOChannel       *channel,
                                           GPParam          *params,
-                                          gint              nparams,
+                                          gint              n_params,
                                           gpointer          user_data);
 static void _gp_params_destroy           (GPParam          *params,
-                                          gint              nparams);
+                                          gint              n_params);
 
 
 static void _gp_has_init_read            (GIOChannel       *channel,
@@ -873,7 +873,7 @@ _gp_proc_run_read (GIOChannel      *channel,
     goto cleanup;
 
   _gp_params_read (channel,
-                   &proc_run->params, (guint *) &proc_run->nparams,
+                   &proc_run->params, (guint *) &proc_run->n_params,
                    user_data);
 
   msg->data = proc_run;
@@ -894,7 +894,7 @@ _gp_proc_run_write (GIOChannel      *channel,
   if (! _gimp_wire_write_string (channel, &proc_run->name, 1, user_data))
     return;
 
-  _gp_params_write (channel, proc_run->params, proc_run->nparams, user_data);
+  _gp_params_write (channel, proc_run->params, proc_run->n_params, user_data);
 }
 
 static void
@@ -904,7 +904,7 @@ _gp_proc_run_destroy (GimpWireMessage *msg)
 
   if (proc_run)
     {
-      _gp_params_destroy (proc_run->params, proc_run->nparams);
+      _gp_params_destroy (proc_run->params, proc_run->n_params);
 
       g_free (proc_run->name);
       g_slice_free (GPProcRun, proc_run);
@@ -924,7 +924,7 @@ _gp_proc_return_read (GIOChannel      *channel,
     goto cleanup;
 
   _gp_params_read (channel,
-                   &proc_return->params, (guint *) &proc_return->nparams,
+                   &proc_return->params, (guint *) &proc_return->n_params,
                    user_data);
 
   msg->data = proc_return;
@@ -946,7 +946,7 @@ _gp_proc_return_write (GIOChannel      *channel,
     return;
 
   _gp_params_write (channel,
-                    proc_return->params, proc_return->nparams, user_data);
+                    proc_return->params, proc_return->n_params, user_data);
 }
 
 static void
@@ -956,7 +956,7 @@ _gp_proc_return_destroy (GimpWireMessage *msg)
 
   if (proc_return)
     {
-      _gp_params_destroy (proc_return->params, proc_return->nparams);
+      _gp_params_destroy (proc_return->params, proc_return->n_params);
 
       g_free (proc_return->name);
       g_slice_free (GPProcReturn, proc_return);
@@ -1201,18 +1201,18 @@ _gp_proc_install_read (GIOChannel      *channel,
   gint           i;
 
   if (! _gimp_wire_read_string (channel,
-                                &proc_install->name, 1, user_data)   ||
+                                &proc_install->name, 1, user_data)    ||
       ! _gimp_wire_read_int32 (channel,
-                               &proc_install->type, 1, user_data)    ||
+                               &proc_install->type, 1, user_data)     ||
       ! _gimp_wire_read_int32 (channel,
-                               &proc_install->nparams, 1, user_data) ||
+                               &proc_install->n_params, 1, user_data) ||
       ! _gimp_wire_read_int32 (channel,
-                               &proc_install->nreturn_vals, 1, user_data))
+                               &proc_install->n_return_vals, 1, user_data))
     goto cleanup;
 
-  proc_install->params = g_new0 (GPParamDef, proc_install->nparams);
+  proc_install->params = g_new0 (GPParamDef, proc_install->n_params);
 
-  for (i = 0; i < proc_install->nparams; i++)
+  for (i = 0; i < proc_install->n_params; i++)
     {
       if (! _gp_param_def_read (channel,
                                 &proc_install->params[i],
@@ -1220,9 +1220,9 @@ _gp_proc_install_read (GIOChannel      *channel,
         goto cleanup;
     }
 
-  proc_install->return_vals = g_new0 (GPParamDef, proc_install->nreturn_vals);
+  proc_install->return_vals = g_new0 (GPParamDef, proc_install->n_return_vals);
 
-  for (i = 0; i < proc_install->nreturn_vals; i++)
+  for (i = 0; i < proc_install->n_return_vals; i++)
     {
       if (! _gp_param_def_read (channel,
                                 &proc_install->return_vals[i],
@@ -1238,7 +1238,7 @@ _gp_proc_install_read (GIOChannel      *channel,
 
   if (proc_install->params)
     {
-      for (i = 0; i < proc_install->nparams; i++)
+      for (i = 0; i < proc_install->n_params; i++)
         {
           if (! proc_install->params[i].name)
             break;
@@ -1251,7 +1251,7 @@ _gp_proc_install_read (GIOChannel      *channel,
 
   if (proc_install->return_vals)
     {
-      for (i = 0; i < proc_install->nreturn_vals; i++)
+      for (i = 0; i < proc_install->n_return_vals; i++)
         {
           if (! proc_install->return_vals[i].name)
             break;
@@ -1413,16 +1413,16 @@ _gp_proc_install_write (GIOChannel      *channel,
   gint           i;
 
   if (! _gimp_wire_write_string (channel,
-                                 &proc_install->name, 1, user_data)   ||
+                                 &proc_install->name, 1, user_data)    ||
       ! _gimp_wire_write_int32 (channel,
-                                &proc_install->type, 1, user_data)    ||
+                                &proc_install->type, 1, user_data)     ||
       ! _gimp_wire_write_int32 (channel,
-                                &proc_install->nparams, 1, user_data) ||
+                                &proc_install->n_params, 1, user_data) ||
       ! _gimp_wire_write_int32 (channel,
-                                &proc_install->nreturn_vals, 1, user_data))
+                                &proc_install->n_return_vals, 1, user_data))
     return;
 
-  for (i = 0; i < proc_install->nparams; i++)
+  for (i = 0; i < proc_install->n_params; i++)
     {
       if (! _gp_param_def_write (channel,
                                  &proc_install->params[i],
@@ -1430,7 +1430,7 @@ _gp_proc_install_write (GIOChannel      *channel,
         return;
     }
 
-  for (i = 0; i < proc_install->nreturn_vals; i++)
+  for (i = 0; i < proc_install->n_return_vals; i++)
     {
       if (! _gp_param_def_write (channel,
                                  &proc_install->return_vals[i],
@@ -1450,12 +1450,12 @@ _gp_proc_install_destroy (GimpWireMessage *msg)
 
       g_free (proc_install->name);
 
-      for (i = 0; i < proc_install->nparams; i++)
+      for (i = 0; i < proc_install->n_params; i++)
         {
           _gp_param_def_destroy (&proc_install->params[i]);
         }
 
-      for (i = 0; i < proc_install->nreturn_vals; i++)
+      for (i = 0; i < proc_install->n_return_vals; i++)
         {
           _gp_param_def_destroy (&proc_install->return_vals[i]);
         }
@@ -1534,21 +1534,21 @@ _gp_extension_ack_destroy (GimpWireMessage *msg)
 static void
 _gp_params_read (GIOChannel  *channel,
                  GPParam    **params,
-                 guint       *nparams,
+                 guint       *n_params,
                  gpointer     user_data)
 {
   gint i;
 
-  if (! _gimp_wire_read_int32 (channel, (guint32 *) nparams, 1, user_data))
+  if (! _gimp_wire_read_int32 (channel, (guint32 *) n_params, 1, user_data))
     return;
 
-  if (*nparams == 0)
+  if (*n_params == 0)
     {
       *params = NULL;
       return;
     }
 
-  *params = g_try_new0 (GPParam, *nparams);
+  *params = g_try_new0 (GPParam, *n_params);
 
   /* We may read crap on the wire (and as a consequence try to allocate
    * far too much), which would be a plug-in error.
@@ -1559,12 +1559,12 @@ _gp_params_read (GIOChannel  *channel,
        * plug-in bug sending bogus data, not a core bug.
        */
       g_printerr ("%s: failed to allocate %u parameters\n",
-                  G_STRFUNC, *nparams);
-      *nparams = 0;
+                  G_STRFUNC, *n_params);
+      *n_params = 0;
       return;
     }
 
-  for (i = 0; i < *nparams; i++)
+  for (i = 0; i < *n_params; i++)
     {
       if (! _gimp_wire_read_int32 (channel,
                                    (guint32 *) &(*params)[i].param_type, 1,
@@ -1723,7 +1723,7 @@ _gp_params_read (GIOChannel  *channel,
   return;
 
  cleanup:
-  *nparams = 0;
+  *n_params = 0;
   g_free (*params);
   *params = NULL;
 }
@@ -1731,16 +1731,16 @@ _gp_params_read (GIOChannel  *channel,
 static void
 _gp_params_write (GIOChannel *channel,
                   GPParam    *params,
-                  gint        nparams,
+                  gint        n_params,
                   gpointer    user_data)
 {
   gint i;
 
   if (! _gimp_wire_write_int32 (channel,
-                                (const guint32 *) &nparams, 1, user_data))
+                                (const guint32 *) &n_params, 1, user_data))
     return;
 
-  for (i = 0; i < nparams; i++)
+  for (i = 0; i < n_params; i++)
     {
       if (! _gimp_wire_write_int32 (channel,
                                     (const guint32 *) &params[i].param_type, 1,
@@ -1856,11 +1856,11 @@ _gp_params_write (GIOChannel *channel,
 
 static void
 _gp_params_destroy (GPParam *params,
-                    gint     nparams)
+                    gint     n_params)
 {
   gint i;
 
-  for (i = 0; i < nparams; i++)
+  for (i = 0; i < n_params; i++)
     {
       g_free (params[i].type_name);
 

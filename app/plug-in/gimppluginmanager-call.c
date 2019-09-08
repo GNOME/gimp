@@ -229,9 +229,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.swap_path        = gegl_config->swap_path;
       config.num_processors   = gegl_config->num_processors;
 
-      proc_run.name    = (gchar *) gimp_object_get_name (procedure);
-      proc_run.nparams = gimp_value_array_length (args);
-      proc_run.params  = _gimp_value_array_to_gp_params (args, FALSE);
+      proc_run.name     = (gchar *) gimp_object_get_name (procedure);
+      proc_run.n_params = gimp_value_array_length (args);
+      proc_run.params   = _gimp_value_array_to_gp_params (args, FALSE);
 
       if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
@@ -246,7 +246,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           g_free (config.display_name);
           g_free (config.icon_theme_dir);
 
-          _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
+          _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 
           g_object_unref (plug_in);
 
@@ -260,7 +260,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       g_free (config.display_name);
       g_free (config.icon_theme_dir);
 
-      _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
+      _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 
       /* If this is an extension,
        * wait for an installation-confirmation message
@@ -326,9 +326,9 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
       proc_frame = gimp_plug_in_proc_frame_push (plug_in, context, progress,
                                                  procedure);
 
-      proc_run.name    = (gchar *) gimp_object_get_name (procedure);
-      proc_run.nparams = gimp_value_array_length (args);
-      proc_run.params  = _gimp_value_array_to_gp_params (args, FALSE);
+      proc_run.name     = (gchar *) gimp_object_get_name (procedure);
+      proc_run.n_params = gimp_value_array_length (args);
+      proc_run.params   = _gimp_value_array_to_gp_params (args, FALSE);
 
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
@@ -340,7 +340,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
                                             name);
 
 
-          _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
+          _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
           gimp_plug_in_proc_frame_pop (plug_in);
 
           return_vals = gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure),
@@ -352,7 +352,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
 
       gimp_allow_set_foreground_window (plug_in);
 
-      _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
+      _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 
       g_object_ref (plug_in);
       gimp_plug_in_proc_frame_ref (proc_frame);

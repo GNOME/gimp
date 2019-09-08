@@ -268,14 +268,14 @@ struct _GPParam
 struct _GPProcRun
 {
   gchar   *name;
-  guint32  nparams;
+  guint32  n_params;
   GPParam *params;
 };
 
 struct _GPProcReturn
 {
   gchar   *name;
-  guint32  nparams;
+  guint32  n_params;
   GPParam *params;
 };
 
@@ -283,8 +283,8 @@ struct _GPProcInstall
 {
   gchar      *name;
   guint32     type;
-  guint32     nparams;
-  guint32     nreturn_vals;
+  guint32     n_params;
+  guint32     n_return_vals;
   GPParamDef *params;
   GPParamDef *return_vals;
 };

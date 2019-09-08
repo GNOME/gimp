@@ -294,15 +294,15 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
   g_return_val_if_fail (arguments != NULL, NULL);
 
-  proc_run.name    = (gchar *) procedure_name;
-  proc_run.nparams = gimp_value_array_length (arguments);
-  proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
+  proc_run.name     = (gchar *) procedure_name;
+  proc_run.n_params = gimp_value_array_length (arguments);
+  proc_run.params   = _gimp_value_array_to_gp_params (arguments, FALSE);
 
   if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->priv->plug_in),
                            &proc_run, pdb->priv->plug_in))
     gimp_quit ();
 
-  _gimp_gp_params_free (proc_run.params, proc_run.nparams, FALSE);
+  _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 
   _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);
 
@@ -311,7 +311,7 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
   return_values = _gimp_gp_params_to_value_array (NULL,
                                                   NULL, 0,
                                                   proc_return->params,
-                                                  proc_return->nparams,
+                                                  proc_return->n_params,
                                                   TRUE);
 
   gimp_wire_destroy (&msg);

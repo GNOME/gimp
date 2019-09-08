@@ -364,12 +364,12 @@ gimp_procedure_real_install (GimpProcedure *procedure)
   args        = gimp_procedure_get_arguments (procedure, &n_args);
   return_vals = gimp_procedure_get_return_values (procedure, &n_return_vals);
 
-  proc_install.name         = (gchar *) gimp_procedure_get_name (procedure);
-  proc_install.type         = gimp_procedure_get_proc_type (procedure);
-  proc_install.nparams      = n_args;
-  proc_install.nreturn_vals = n_return_vals;
-  proc_install.params       = g_new0 (GPParamDef, n_args);
-  proc_install.return_vals  = g_new0 (GPParamDef, n_return_vals);
+  proc_install.name          = (gchar *) gimp_procedure_get_name (procedure);
+  proc_install.type          = gimp_procedure_get_proc_type (procedure);
+  proc_install.n_params      = n_args;
+  proc_install.n_return_vals = n_return_vals;
+  proc_install.params        = g_new0 (GPParamDef, n_args);
+  proc_install.return_vals   = g_new0 (GPParamDef, n_return_vals);
 
   for (i = 0; i < n_args; i++)
     {

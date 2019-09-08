@@ -1127,7 +1127,7 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
                               &proc_return, plug_in))
     gimp_quit ();
 
-  _gimp_gp_params_free (proc_return.params, proc_return.nparams, TRUE);
+  _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }
 
 static void
@@ -1150,7 +1150,7 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
                                    &proc_return, plug_in))
     gimp_quit ();
 
-  _gimp_gp_params_free (proc_return.params, proc_return.nparams, TRUE);
+  _gimp_gp_params_free (proc_return.params, proc_return.n_params, TRUE);
 }
 
 static void
@@ -1167,16 +1167,16 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
   arguments = _gimp_gp_params_to_value_array (NULL,
                                               NULL, 0,
                                               proc_run->params,
-                                              proc_run->nparams,
+                                              proc_run->n_params,
                                               FALSE);
 
   return_values = gimp_procedure_run (procedure, arguments);
 
   gimp_value_array_unref (arguments);
 
-  proc_return->name    = proc_run->name;
-  proc_return->nparams = gimp_value_array_length (return_values);
-  proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
+  proc_return->name     = proc_run->name;
+  proc_return->n_params = gimp_value_array_length (return_values);
+  proc_return->params   = _gimp_value_array_to_gp_params (return_values, TRUE);
 
   gimp_value_array_unref (return_values);
 
