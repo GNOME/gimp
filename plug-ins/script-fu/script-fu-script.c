@@ -189,7 +189,8 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
 
   gimp_procedure_set_image_types (procedure, script->image_types);
 
-  gimp_procedure_set_menu_label (procedure, menu_label);
+  if (menu_label)
+    gimp_procedure_set_menu_label (procedure, menu_label);
 
   gimp_procedure_set_documentation (procedure,
                                     script->blurb,
