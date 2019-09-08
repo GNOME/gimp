@@ -1356,11 +1356,12 @@ film_dialog (GimpImage *image)
                               -1);
 
           if ((image_id >= 0) && (num_images < MAX_FILM_PICTURES))
-            filmvals.images = g_list_append (filmvals.images,
-                                             gimp_image_get_by_id (image_id));
+            {
+              filmvals.images = g_list_append (filmvals.images,
+                                               gimp_image_get_by_id (image_id));
+              filmvals.num_images++;
+            }
         }
-
-      filmvals.num_images = num_images;
     }
 
   gtk_widget_destroy (dlg);
