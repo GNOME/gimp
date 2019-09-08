@@ -187,7 +187,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
 
-  _gimp_pdb_proc_info (name, &type, &n_args, &n_return_vals);
+  _gimp_pdb_get_proc_info (name, &type, &n_args, &n_return_vals);
 
   procedure = g_object_new (GIMP_TYPE_PDB_PROCEDURE,
                             "plug-in",        _gimp_pdb_get_plug_in (pdb),
@@ -196,13 +196,13 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
                             "pdb",            pdb,
                             NULL);
 
-  _gimp_pdb_proc_documentation     (name,      &blurb, &help, &help_id);
+  _gimp_pdb_get_proc_documentation (name,      &blurb, &help, &help_id);
   gimp_procedure_set_documentation (procedure,  blurb,  help,  help_id);
   g_free (blurb);
   g_free (help);
   g_free (help_id);
 
-  _gimp_pdb_proc_attribution     (name,      &authors, &copyright, &date);
+  _gimp_pdb_get_proc_attribution (name,      &authors, &copyright, &date);
   gimp_procedure_set_attribution (procedure,  authors,  copyright,  date);
   g_free (authors);
   g_free (copyright);
@@ -210,14 +210,14 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
 
   for (i = 0; i < n_args; i++)
     {
-      GParamSpec *pspec = _gimp_pdb_proc_argument (name, i);
+      GParamSpec *pspec = _gimp_pdb_get_proc_argument (name, i);
 
       gimp_procedure_add_argument (procedure, pspec);
     }
 
   for (i = 0; i < n_return_vals; i++)
     {
-      GParamSpec *pspec = _gimp_pdb_proc_return_value (name, i);
+      GParamSpec *pspec = _gimp_pdb_get_proc_return_value (name, i);
 
       gimp_procedure_add_return_value (procedure, pspec);
     }
@@ -229,15 +229,15 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
       gint    n_menu_paths;
       gint    i;
 
-      string = _gimp_pdb_proc_image_types (name);
+      string = _gimp_pdb_get_proc_image_types (name);
       gimp_procedure_set_image_types (procedure, string);
       g_free (string);
 
-      string = _gimp_pdb_proc_menu_label (name);
+      string = _gimp_pdb_get_proc_menu_label (name);
       gimp_procedure_set_menu_label (procedure, string);
       g_free (string);
 
-      menu_paths = _gimp_pdb_proc_menu_paths (name, &n_menu_paths);
+      menu_paths = _gimp_pdb_get_proc_menu_paths (name, &n_menu_paths);
       for (i = 0; i < n_menu_paths; i++)
         gimp_procedure_add_menu_path (procedure, menu_paths[i]);
       g_strfreev (menu_paths);

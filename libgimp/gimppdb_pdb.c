@@ -208,7 +208,7 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
 }
 
 /**
- * _gimp_pdb_proc_info:
+ * _gimp_pdb_get_proc_info:
  * @procedure_name: The procedure name.
  * @proc_type: (out): The procedure type.
  * @num_args: (out): The number of input arguments.
@@ -226,10 +226,10 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_pdb_proc_info (const gchar     *procedure_name,
-                     GimpPDBProcType *proc_type,
-                     gint            *num_args,
-                     gint            *num_values)
+_gimp_pdb_get_proc_info (const gchar     *procedure_name,
+                         GimpPDBProcType *proc_type,
+                         gint            *num_args,
+                         gint            *num_values)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -240,7 +240,7 @@ _gimp_pdb_proc_info (const gchar     *procedure_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-info",
+                                              "gimp-pdb-get-proc-info",
                                               args);
   gimp_value_array_unref (args);
 
@@ -263,7 +263,7 @@ _gimp_pdb_proc_info (const gchar     *procedure_name,
 }
 
 /**
- * _gimp_pdb_proc_image_types:
+ * _gimp_pdb_get_proc_image_types:
  * @procedure_name: The procedure name.
  *
  * Queries the procedural database for the image types supported by the
@@ -278,7 +278,7 @@ _gimp_pdb_proc_info (const gchar     *procedure_name,
  * Since: 3.0
  **/
 gchar *
-_gimp_pdb_proc_image_types (const gchar *procedure_name)
+_gimp_pdb_get_proc_image_types (const gchar *procedure_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -289,7 +289,7 @@ _gimp_pdb_proc_image_types (const gchar *procedure_name)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-image-types",
+                                              "gimp-pdb-get-proc-image-types",
                                               args);
   gimp_value_array_unref (args);
 
@@ -302,7 +302,7 @@ _gimp_pdb_proc_image_types (const gchar *procedure_name)
 }
 
 /**
- * _gimp_pdb_proc_menu_label:
+ * _gimp_pdb_get_proc_menu_label:
  * @procedure_name: The procedure name.
  *
  * Queries the procedural database for the procedure's menu label.
@@ -315,7 +315,7 @@ _gimp_pdb_proc_image_types (const gchar *procedure_name)
  * Since: 3.0
  **/
 gchar *
-_gimp_pdb_proc_menu_label (const gchar *procedure_name)
+_gimp_pdb_get_proc_menu_label (const gchar *procedure_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -326,7 +326,7 @@ _gimp_pdb_proc_menu_label (const gchar *procedure_name)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-menu-label",
+                                              "gimp-pdb-get-proc-menu-label",
                                               args);
   gimp_value_array_unref (args);
 
@@ -339,7 +339,7 @@ _gimp_pdb_proc_menu_label (const gchar *procedure_name)
 }
 
 /**
- * _gimp_pdb_proc_menu_paths:
+ * _gimp_pdb_get_proc_menu_paths:
  * @procedure_name: The procedure name.
  * @num_menu_paths: (out): The number of menu paths.
  *
@@ -354,8 +354,8 @@ _gimp_pdb_proc_menu_label (const gchar *procedure_name)
  * Since: 3.0
  **/
 gchar **
-_gimp_pdb_proc_menu_paths (const gchar *procedure_name,
-                           gint        *num_menu_paths)
+_gimp_pdb_get_proc_menu_paths (const gchar *procedure_name,
+                               gint        *num_menu_paths)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -366,7 +366,7 @@ _gimp_pdb_proc_menu_paths (const gchar *procedure_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-menu-paths",
+                                              "gimp-pdb-get-proc-menu-paths",
                                               args);
   gimp_value_array_unref (args);
 
@@ -384,7 +384,7 @@ _gimp_pdb_proc_menu_paths (const gchar *procedure_name,
 }
 
 /**
- * _gimp_pdb_proc_documentation:
+ * _gimp_pdb_get_proc_documentation:
  * @procedure_name: The procedure name.
  * @blurb: (out) (transfer full): A short blurb.
  * @help: (out) (transfer full): Detailed procedure help.
@@ -401,10 +401,10 @@ _gimp_pdb_proc_menu_paths (const gchar *procedure_name,
  * Since: 3.0
  **/
 gboolean
-_gimp_pdb_proc_documentation (const gchar  *procedure_name,
-                              gchar       **blurb,
-                              gchar       **help,
-                              gchar       **help_id)
+_gimp_pdb_get_proc_documentation (const gchar  *procedure_name,
+                                  gchar       **blurb,
+                                  gchar       **help,
+                                  gchar       **help_id)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -415,7 +415,7 @@ _gimp_pdb_proc_documentation (const gchar  *procedure_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-documentation",
+                                              "gimp-pdb-get-proc-documentation",
                                               args);
   gimp_value_array_unref (args);
 
@@ -438,7 +438,7 @@ _gimp_pdb_proc_documentation (const gchar  *procedure_name,
 }
 
 /**
- * _gimp_pdb_proc_attribution:
+ * _gimp_pdb_get_proc_attribution:
  * @procedure_name: The procedure name.
  * @authors: (out) (transfer full): Authors of the procedure.
  * @copyright: (out) (transfer full): The copyright.
@@ -455,10 +455,10 @@ _gimp_pdb_proc_documentation (const gchar  *procedure_name,
  * Since: 3.0
  **/
 gboolean
-_gimp_pdb_proc_attribution (const gchar  *procedure_name,
-                            gchar       **authors,
-                            gchar       **copyright,
-                            gchar       **date)
+_gimp_pdb_get_proc_attribution (const gchar  *procedure_name,
+                                gchar       **authors,
+                                gchar       **copyright,
+                                gchar       **date)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -469,7 +469,7 @@ _gimp_pdb_proc_attribution (const gchar  *procedure_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-attribution",
+                                              "gimp-pdb-get-proc-attribution",
                                               args);
   gimp_value_array_unref (args);
 
@@ -492,7 +492,7 @@ _gimp_pdb_proc_attribution (const gchar  *procedure_name,
 }
 
 /**
- * _gimp_pdb_proc_argument:
+ * _gimp_pdb_get_proc_argument:
  * @procedure_name: The procedure name.
  * @arg_num: The argument number.
  *
@@ -507,8 +507,8 @@ _gimp_pdb_proc_attribution (const gchar  *procedure_name,
  * Since: 3.0
  **/
 GParamSpec *
-_gimp_pdb_proc_argument (const gchar *procedure_name,
-                         gint         arg_num)
+_gimp_pdb_get_proc_argument (const gchar *procedure_name,
+                             gint         arg_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -520,7 +520,7 @@ _gimp_pdb_proc_argument (const gchar *procedure_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-argument",
+                                              "gimp-pdb-get-proc-argument",
                                               args);
   gimp_value_array_unref (args);
 
@@ -533,7 +533,7 @@ _gimp_pdb_proc_argument (const gchar *procedure_name,
 }
 
 /**
- * _gimp_pdb_proc_return_value:
+ * _gimp_pdb_get_proc_return_value:
  * @procedure_name: The procedure name.
  * @val_num: The return value number.
  *
@@ -549,8 +549,8 @@ _gimp_pdb_proc_argument (const gchar *procedure_name,
  * Since: 3.0
  **/
 GParamSpec *
-_gimp_pdb_proc_return_value (const gchar *procedure_name,
-                             gint         val_num)
+_gimp_pdb_get_proc_return_value (const gchar *procedure_name,
+                                 gint         val_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -562,7 +562,7 @@ _gimp_pdb_proc_return_value (const gchar *procedure_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-proc-return-value",
+                                              "gimp-pdb-get-proc-return-value",
                                               args);
   gimp_value_array_unref (args);
 

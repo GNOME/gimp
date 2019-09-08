@@ -190,7 +190,7 @@ CODE
     );
 }
 
-sub pdb_proc_info {
+sub pdb_get_proc_info {
     $blurb = <<'BLURB';
 Queries the procedural database for information on the specified procedure.
 BLURB
@@ -246,7 +246,7 @@ CODE
     );
 }
 
-sub pdb_proc_image_types {
+sub pdb_get_proc_image_types {
     $blurb = <<'BLURB';
 Queries the procedural database for the image types supported by the
 specified procedure.
@@ -292,7 +292,7 @@ CODE
     );
 }
 
-sub pdb_proc_menu_label {
+sub pdb_get_proc_menu_label {
     $blurb = <<'BLURB';
 Queries the procedural database for the procedure's menu label.
 BLURB
@@ -337,7 +337,7 @@ CODE
     );
 }
 
-sub pdb_proc_menu_paths {
+sub pdb_get_proc_menu_paths {
     $blurb = <<'BLURB';
 Queries the procedural database for the procedure's menu paths.
 BLURB
@@ -401,7 +401,7 @@ CODE
     );
 }
 
-sub pdb_proc_documentation {
+sub pdb_get_proc_documentation {
     $blurb = <<'BLURB';
 Queries the procedural database for documentation on the specified procedure.
 BLURB
@@ -453,7 +453,7 @@ CODE
     );
 }
 
-sub pdb_proc_attribution {
+sub pdb_get_proc_attribution {
     $blurb = <<'BLURB';
 Queries the procedural database for attribution information on the
 specified procedure.
@@ -506,7 +506,7 @@ CODE
     );
 }
 
-sub pdb_proc_argument {
+sub pdb_get_proc_argument {
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
 argument.
@@ -556,7 +556,7 @@ CODE
    );
 }
 
-sub pdb_proc_return_value {
+sub pdb_get_proc_return_value {
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
 return value.
@@ -770,14 +770,14 @@ CODE
             pdb_dump
             pdb_query
             pdb_proc_exists
-            pdb_proc_info
-            pdb_proc_image_types
-            pdb_proc_menu_label
-            pdb_proc_menu_paths
-            pdb_proc_documentation
-            pdb_proc_attribution
-            pdb_proc_argument
-            pdb_proc_return_value
+            pdb_get_proc_info
+            pdb_get_proc_image_types
+            pdb_get_proc_menu_label
+            pdb_get_proc_menu_paths
+            pdb_get_proc_documentation
+            pdb_get_proc_attribution
+            pdb_get_proc_argument
+            pdb_get_proc_return_value
 	    pdb_get_data
             pdb_get_data_size
 	    pdb_set_data);
