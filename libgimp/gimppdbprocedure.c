@@ -51,6 +51,9 @@ static void       gimp_pdb_procedure_get_property  (GObject              *object
                                                     guint                 property_id,
                                                     GValue               *value,
                                                     GParamSpec           *pspec);
+
+static void       gimp_pdb_procedure_install       (GimpProcedure        *procedure);
+static void       gimp_pdb_procedure_uninstall     (GimpProcedure        *procedure);
 static GimpValueArray *
                   gimp_pdb_procedure_run           (GimpProcedure        *procedure,
                                                     const GimpValueArray *args);
@@ -75,6 +78,8 @@ _gimp_pdb_procedure_class_init (GimpPDBProcedureClass *klass)
   object_class->set_property = gimp_pdb_procedure_set_property;
   object_class->get_property = gimp_pdb_procedure_get_property;
 
+  procedure_class->install   = gimp_pdb_procedure_install;
+  procedure_class->uninstall = gimp_pdb_procedure_uninstall;
   procedure_class->run       = gimp_pdb_procedure_run;
 
   props[PROP_PDB] =
@@ -152,6 +157,18 @@ gimp_pdb_procedure_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_pdb_procedure_install (GimpProcedure *procedure)
+{
+  g_warning ("Cannot install a GimpPDBProcedure");
+}
+
+static void
+gimp_pdb_procedure_uninstall (GimpProcedure *procedure)
+{
+  g_warning ("Cannot uninstall a GimpPDBProcedure");
 }
 
 static GimpValueArray *
