@@ -328,6 +328,42 @@ CODE
     );
 }
 
+sub pdb_set_proc_menu_label {
+    $blurb = "Set the menu label for a plug-in procedure.";
+
+    $help = <<HELP;
+This procedure sets the menu label for the given procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
+	  desc => 'The procedure for which to install the menu path' },
+	{ name => 'menu_label', type => 'string', non_empty => 1,
+	  desc => "The procedure's menu label" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_proc_menu_label (plug_in, procedure_name,
+                                                  menu_label);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_get_proc_menu_label {
     $blurb = <<'BLURB';
 Queries the procedural database for the procedure's menu label.
@@ -889,6 +925,7 @@ CODE
             pdb_get_proc_info
             pdb_set_proc_image_types
             pdb_get_proc_image_types
+            pdb_set_proc_menu_label
             pdb_get_proc_menu_label
             pdb_add_proc_menu_path
             pdb_get_proc_menu_paths

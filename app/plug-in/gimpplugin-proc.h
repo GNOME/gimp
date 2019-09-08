@@ -24,6 +24,9 @@
 gboolean   gimp_plug_in_set_proc_image_types (GimpPlugIn   *plug_in,
                                               const gchar  *proc_name,
                                               const gchar  *image_types);
+gboolean   gimp_plug_in_set_proc_menu_label  (GimpPlugIn   *plug_in,
+                                              const gchar  *proc_name,
+                                              const gchar  *menu_label);
 gboolean   gimp_plug_in_add_proc_menu_path   (GimpPlugIn   *plug_in,
                                               const gchar  *proc_name,
                                               const gchar  *menu_path);

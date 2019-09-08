@@ -107,6 +107,10 @@ const gchar * gimp_plug_in_procedure_get_help_domain   (GimpPlugInProcedure *pro
 void          gimp_plug_in_procedure_set_help_id       (GimpPlugInProcedure *proc,
                                                         const gchar         *help_id);
 
+gboolean      gimp_plug_in_procedure_set_menu_label    (GimpPlugInProcedure *proc,
+                                                        const gchar         *menu_label,
+                                                        GError             **error);
+
 gboolean      gimp_plug_in_procedure_add_menu_path     (GimpPlugInProcedure *proc,
                                                         const gchar         *menu_path,
                                                         GError             **error);

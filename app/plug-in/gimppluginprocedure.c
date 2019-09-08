@@ -603,6 +603,41 @@ gimp_plug_in_procedure_get_help_domain (GimpPlugInProcedure *proc)
 }
 
 gboolean
+gimp_plug_in_procedure_set_menu_label (GimpPlugInProcedure  *proc,
+                                       const gchar          *menu_label,
+                                       GError              **error)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
+  g_return_val_if_fail (menu_label != NULL && strlen (menu_label), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (menu_label[0] == '<')
+    {
+      gchar *basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
+
+      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                   "Plug-in \"%s\"\n(%s)\n\n"
+                   "attempted to install procedure \"%s\" with a full "
+                   "menu path \"%s\" as menu label, this is not supported "
+                   "any longer.",
+                   basename, gimp_file_get_utf8_name (proc->file),
+                   gimp_object_get_name (proc),
+                   menu_label);
+
+      g_free (basename);
+
+      return FALSE;
+    }
+
+  g_clear_pointer (&proc->label, g_free);
+
+  g_free (proc->menu_label);
+  proc->menu_label = g_strdup (menu_label);
+
+  return TRUE;
+}
+
+gboolean
 gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                                       const gchar          *menu_path,
                                       GError              **error)

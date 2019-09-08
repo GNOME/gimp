@@ -756,7 +756,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 #define VALIDATE_OR_NULL(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
 
   if (VALIDATE         (proc_install->name)       &&
-      VALIDATE_OR_NULL (proc_install->menu_label) &&
       VALIDATE_OR_NULL (proc_install->blurb)      &&
       VALIDATE_OR_NULL (proc_install->help)       &&
       VALIDATE_OR_NULL (proc_install->help_id)    &&
@@ -823,21 +822,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       return;
     }
 
-  if (proc_install->menu_label && strlen (proc_install->menu_label) &&
-      proc_install->menu_label[0] == '<')
-    {
-      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-in \"%s\"\n(%s)\n\n"
-                    "attempted to install procedure \"%s\" with a full "
-                    "menu path \"%s\" as menu label, this is not supported "
-                    "any longer.",
-                    gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file),
-                    proc_install->name,
-                    proc_install->menu_label);
-      return;
-    }
-
   /*  Create the procedure object  */
 
   switch (proc_install->type)
@@ -866,9 +850,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                               proc_install->copyright,
                               proc_install->date,
                               NULL);
-
-  if (proc_install->menu_label && strlen (proc_install->menu_label))
-    proc->menu_label = g_strdup (proc_install->menu_label);
 
   gimp_plug_in_procedure_set_help_id (proc, proc_install->help_id);
 
