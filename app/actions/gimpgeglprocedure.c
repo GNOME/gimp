@@ -62,7 +62,6 @@ static gint64   gimp_gegl_procedure_get_memsize         (GimpObject     *object,
 static gchar  * gimp_gegl_procedure_get_description     (GimpViewable   *viewable,
                                                          gchar         **tooltip);
 
-static const gchar * gimp_gegl_procedure_get_label      (GimpProcedure  *procedure);
 static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
 static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
                                                          GimpObject     *object,
@@ -102,7 +101,6 @@ gimp_gegl_procedure_class_init (GimpGeglProcedureClass *klass)
   viewable_class->default_icon_name = "gimp-gegl";
   viewable_class->get_description   = gimp_gegl_procedure_get_description;
 
-  proc_class->get_label             = gimp_gegl_procedure_get_label;
   proc_class->get_menu_label        = gimp_gegl_procedure_get_menu_label;
   proc_class->get_sensitive         = gimp_gegl_procedure_get_sensitive;
   proc_class->execute               = gimp_gegl_procedure_execute;
@@ -123,7 +121,6 @@ gimp_gegl_procedure_finalize (GObject *object)
 
   g_clear_pointer (&proc->operation,  g_free);
   g_clear_pointer (&proc->menu_label, g_free);
-  g_clear_pointer (&proc->label,      g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -137,7 +134,6 @@ gimp_gegl_procedure_get_memsize (GimpObject *object,
 
   memsize += gimp_string_get_memsize (proc->operation);
   memsize += gimp_string_get_memsize (proc->menu_label);
-  memsize += gimp_string_get_memsize (proc->label);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -153,31 +149,6 @@ gimp_gegl_procedure_get_description (GimpViewable  *viewable,
     *tooltip = g_strdup (gimp_procedure_get_blurb (procedure));
 
   return g_strdup (gimp_procedure_get_label (procedure));
-}
-
-static const gchar *
-gimp_gegl_procedure_get_label (GimpProcedure *procedure)
-{
-  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
-  gchar             *ellipsis;
-  gchar             *label;
-
-  if (proc->label)
-    return proc->label;
-
-  label = gimp_strip_uline (gimp_procedure_get_menu_label (procedure));
-
-  ellipsis = strstr (label, "...");
-
-  if (! ellipsis)
-    ellipsis = strstr (label, "\342\200\246" /* U+2026 HORIZONTAL ELLIPSIS */);
-
-  if (ellipsis && ellipsis == (label + strlen (label) - 3))
-    *ellipsis = '\0';
-
-  proc->label = label;
-
-  return proc->label;
 }
 
 static const gchar *

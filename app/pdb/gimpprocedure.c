@@ -120,6 +120,7 @@ gimp_procedure_finalize (GObject *object)
   gimp_procedure_free_attribution (procedure);
 
   g_clear_pointer (&procedure->deprecated, g_free);
+  g_clear_pointer (&procedure->label,      g_free);
 
   if (procedure->args)
     {
@@ -181,13 +182,31 @@ gimp_procedure_get_memsize (GimpObject *object,
 static const gchar *
 gimp_procedure_real_get_label (GimpProcedure *procedure)
 {
-  return gimp_object_get_name (procedure); /* lame fallback */
+  gchar *ellipsis;
+  gchar *label;
+
+  if (procedure->label)
+    return procedure->label;
+
+  label = gimp_strip_uline (gimp_procedure_get_menu_label (procedure));
+
+  ellipsis = strstr (label, "...");
+
+  if (! ellipsis)
+    ellipsis = strstr (label, "\342\200\246" /* U+2026 HORIZONTAL ELLIPSIS */);
+
+  if (ellipsis && ellipsis == (label + strlen (label) - 3))
+    *ellipsis = '\0';
+
+  procedure->label = label;
+
+  return procedure->label;
 }
 
 static const gchar *
 gimp_procedure_real_get_menu_label (GimpProcedure *procedure)
 {
-  return gimp_procedure_get_label (procedure);
+  return gimp_object_get_name (procedure); /* lame fallback */
 }
 
 static const gchar *

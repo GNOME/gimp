@@ -58,6 +58,8 @@ struct _GimpProcedure
 
   gchar            *deprecated;     /* Replacement if deprecated      */
 
+  gchar            *label;          /* Cached label string            */
+
   gint32            num_args;       /* Number of procedure arguments  */
   GParamSpec      **args;           /* Array of procedure arguments   */
 

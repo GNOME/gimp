@@ -46,7 +46,6 @@ struct _GimpGeglProcedure
   GimpObject    *default_settings;
 
   gchar         *menu_label;
-  gchar         *label;
 };
 
 struct _GimpGeglProcedureClass

@@ -155,7 +155,6 @@ gimp_plug_in_procedure_finalize (GObject *object)
 
   g_list_free_full (proc->menu_paths, (GDestroyNotify) g_free);
 
-  g_free (proc->label);
   g_free (proc->help_id_with_domain);
 
   g_free (proc->icon_data);
@@ -242,32 +241,11 @@ static const gchar *
 gimp_plug_in_procedure_get_label (GimpProcedure *procedure)
 {
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  const gchar         *translated;
-  gchar               *ellipsis;
-  gchar               *label;
-
-  if (proc->label)
-    return proc->label;
 
   if (! proc->menu_label)
     return NULL;
 
-  translated = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                         proc->menu_label);
-
-  label = gimp_strip_uline (translated);
-
-  ellipsis = strstr (label, "...");
-
-  if (! ellipsis)
-    ellipsis = strstr (label, "\342\200\246" /* U+2026 HORIZONTAL ELLIPSIS */);
-
-  if (ellipsis && ellipsis == (label + strlen (label) - 3))
-    *ellipsis = '\0';
-
-  proc->label = label;
-
-  return proc->label;
+  return GIMP_PROCEDURE_CLASS (parent_class)->get_label (procedure);
 }
 
 static const gchar *
@@ -616,7 +594,7 @@ gimp_plug_in_procedure_set_menu_label (GimpPlugInProcedure  *proc,
       return FALSE;
     }
 
-  g_clear_pointer (&proc->label, g_free);
+  g_clear_pointer (&GIMP_PROCEDURE (proc)->label, g_free);
 
   g_free (proc->menu_label);
   proc->menu_label = g_strdup (menu_label);

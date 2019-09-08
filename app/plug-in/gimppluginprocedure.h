@@ -44,7 +44,6 @@ struct _GimpPlugInProcedure
   GQuark               help_domain;
   gchar               *menu_label;
   GList               *menu_paths;
-  gchar               *label;
   gchar               *help_id_with_domain;
   GimpIconType         icon_type;
   gint                 icon_data_length;
