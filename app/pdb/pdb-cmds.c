@@ -34,7 +34,9 @@
 #include "core/gimpparamspecs.h"
 #include "gimp-pdb-compat.h"
 #include "gimppdb-query.h"
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager-data.h"
+#include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimppdb.h"
@@ -343,6 +345,39 @@ pdb_get_proc_menu_label_invoker (GimpProcedure         *procedure,
     g_value_take_string (gimp_value_array_index (return_vals, 1), menu_label);
 
   return return_vals;
+}
+
+static GimpValueArray *
+pdb_add_proc_menu_path_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *menu_path;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  menu_path = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_add_proc_menu_path (plug_in, procedure_name,
+                                                     menu_path);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -965,6 +1000,36 @@ register_pdb_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-add-proc-menu-path
+   */
+  procedure = gimp_procedure_new (pdb_add_proc_menu_path_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-add-proc-menu-path");
+  gimp_procedure_set_static_strings (procedure,
+                                     "Register an additional menu path for a plug-in procedure.",
+                                     "This procedure installs an additional menu entry for the given procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure for which to install the menu path",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("menu-path",
+                                                       "menu path",
+                                                       "The procedure's additional menu path",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

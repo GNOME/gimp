@@ -337,6 +337,42 @@ CODE
     );
 }
 
+sub pdb_add_proc_menu_path {
+    $blurb = "Register an additional menu path for a plug-in procedure.";
+
+    $help = <<HELP;
+This procedure installs an additional menu entry for the given procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
+	  desc => 'The procedure for which to install the menu path' },
+	{ name => 'menu_path', type => 'string',
+	  desc => "The procedure's additional menu path" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_add_proc_menu_path (plug_in, procedure_name,
+                                                 menu_path);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_get_proc_menu_paths {
     $blurb = <<'BLURB';
 Queries the procedural database for the procedure's menu paths.
@@ -758,6 +794,8 @@ CODE
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimp.h"
               "core/gimpparamspecs-desc.h"
+              "plug-in/gimpplugin.h"
+              "plug-in/gimppluginmanager.h"
               "plug-in/gimppluginmanager-data.h"
               "plug-in/gimppluginprocedure.h"
               "gimppdb-query.h"
@@ -773,6 +811,7 @@ CODE
             pdb_get_proc_info
             pdb_get_proc_image_types
             pdb_get_proc_menu_label
+            pdb_add_proc_menu_path
             pdb_get_proc_menu_paths
             pdb_get_proc_documentation
             pdb_get_proc_attribution

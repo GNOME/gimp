@@ -339,6 +339,45 @@ _gimp_pdb_get_proc_menu_label (const gchar *procedure_name)
 }
 
 /**
+ * _gimp_pdb_add_proc_menu_path:
+ * @procedure_name: The procedure for which to install the menu path.
+ * @menu_path: The procedure's additional menu path.
+ *
+ * Register an additional menu path for a plug-in procedure.
+ *
+ * This procedure installs an additional menu entry for the given
+ * procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_add_proc_menu_path (const gchar *procedure_name,
+                              const gchar *menu_path)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, menu_path,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-add-proc-menu-path",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_pdb_get_proc_menu_paths:
  * @procedure_name: The procedure name.
  * @num_menu_paths: (out): The number of menu paths.

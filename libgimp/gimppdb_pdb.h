@@ -50,6 +50,8 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_info          (const gchar       
                                                               gint              *num_values);
 G_GNUC_INTERNAL gchar*      _gimp_pdb_get_proc_image_types   (const gchar       *procedure_name);
 G_GNUC_INTERNAL gchar*      _gimp_pdb_get_proc_menu_label    (const gchar       *procedure_name);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_add_proc_menu_path     (const gchar       *procedure_name,
+                                                              const gchar       *menu_path);
 G_GNUC_INTERNAL gchar**     _gimp_pdb_get_proc_menu_paths    (const gchar       *procedure_name,
                                                               gint              *num_menu_paths);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_documentation (const gchar       *procedure_name,

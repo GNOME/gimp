@@ -183,38 +183,6 @@ plugin_menu_branch_register_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plugin_menu_register_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  gboolean success = TRUE;
-  const gchar *procedure_name;
-  const gchar *menu_path;
-
-  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
-  menu_path = g_value_get_string (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
-
-      if (plug_in &&
-          gimp_pdb_is_canonical_procedure (procedure_name, error))
-        {
-          success = gimp_plug_in_menu_register (plug_in, procedure_name, menu_path);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 plugin_icon_register_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -475,36 +443,6 @@ register_plug_in_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("menu-name",
                                                        "menu name",
                                                        "The name of the sub-menu",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plugin-menu-register
-   */
-  procedure = gimp_procedure_new (plugin_menu_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plugin-menu-register");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Register an additional menu path for a plug-in procedure.",
-                                     "This procedure installs an additional menu entry for the given procedure.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2004",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("procedure-name",
-                                                       "procedure name",
-                                                       "The procedure for which to install the menu path",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("menu-path",
-                                                       "menu path",
-                                                       "The procedure's additional menu path",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

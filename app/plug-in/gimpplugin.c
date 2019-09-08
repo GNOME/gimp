@@ -874,11 +874,11 @@ gimp_plug_in_get_undo_desc (GimpPlugIn *plug_in)
   return undo_desc ? undo_desc : gimp_object_get_name (plug_in);
 }
 
-/*  called from the PDB (gimp_plugin_menu_register)  */
+/*  called from the PDB (gimp_pdb_add_proc_menu_path)  */
 gboolean
-gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
-                            const gchar *proc_name,
-                            const gchar *menu_path)
+gimp_plug_in_add_proc_menu_path (GimpPlugIn  *plug_in,
+                                 const gchar *proc_name,
+                                 const gchar *menu_path)
 {
   GimpPlugInProcedure *proc  = NULL;
   GError              *error = NULL;
@@ -900,8 +900,8 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
                     "Plug-in \"%s\"\n(%s)\n"
                     "attempted to register the menu item \"%s\" "
                     "for the procedure \"%s\".\n"
-                    "It has however not installed that procedure.  This "
-                    "is not allowed.",
+                    "It has however not installed that procedure. "
+                    "This is not allowed.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
                     menu_path, proc_name);
@@ -929,7 +929,7 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n"
                     "attempted to register the procedure \"%s\" "
-                    "in the menu \"%s\", but the procedure has no label.  "
+                    "in the menu \"%s\", but the procedure has no label. "
                     "This is not allowed.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),

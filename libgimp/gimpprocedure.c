@@ -31,6 +31,7 @@
 #include "gimpgpparams.h"
 #include "gimppdb-private.h"
 #include "gimpplugin-private.h"
+#include "gimppdb_pdb.h"
 #include "gimpplugin_pdb.h"
 #include "gimpprocedure-private.h"
 
@@ -398,8 +399,8 @@ gimp_procedure_real_install (GimpProcedure *procedure)
        list;
        list = g_list_next (list))
     {
-      _gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
-                                  list->data);
+      _gimp_pdb_add_proc_menu_path (gimp_procedure_get_name (procedure),
+                                    list->data);
     }
 
   procedure->priv->installed = TRUE;
@@ -679,8 +680,8 @@ gimp_procedure_add_menu_path (GimpProcedure *procedure,
                                                g_strdup (menu_path));
 
   if (procedure->priv->installed)
-    _gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
-                                menu_path);
+    _gimp_pdb_add_proc_menu_path (gimp_procedure_get_name (procedure),
+                                  menu_path);
 }
 
 /**

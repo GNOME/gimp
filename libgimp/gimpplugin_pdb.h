@@ -38,8 +38,6 @@ G_GNUC_INTERNAL gboolean            _gimp_plugin_help_register         (const gc
                                                                         const gchar         *domain_uri);
 G_GNUC_INTERNAL gboolean            _gimp_plugin_menu_branch_register  (const gchar         *menu_path,
                                                                         const gchar         *menu_name);
-G_GNUC_INTERNAL gboolean            _gimp_plugin_menu_register         (const gchar         *procedure_name,
-                                                                        const gchar         *menu_path);
 G_GNUC_INTERNAL gboolean            _gimp_plugin_icon_register         (const gchar         *procedure_name,
                                                                         GimpIconType         icon_type,
                                                                         gint                 icon_data_length,

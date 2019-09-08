@@ -619,6 +619,24 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 
   procedure = GIMP_PROCEDURE (proc);
 
+  if (! proc->menu_label)
+    {
+      basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
+
+      g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
+                   "Plug-in \"%s\"\n(%s)\n"
+                   "attempted to register the procedure \"%s\" "
+                   "in the menu \"%s\", but the procedure has no label. "
+                   "This is not allowed.",
+                   basename, gimp_file_get_utf8_name (proc->file),
+                   gimp_object_get_name (proc),
+                   menu_path);
+
+      g_free (basename);
+
+      return FALSE;
+    }
+
   p = strchr (menu_path, '>');
   if (p == NULL || (*(++p) && *p != '/'))
     {
