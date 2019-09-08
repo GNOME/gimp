@@ -106,8 +106,7 @@ register_gradients_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2002",
-                                     NULL);
+                                     "2002");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -123,8 +122,7 @@ register_gradients_procs (GimpPDB *pdb)
                                      NULL,
                                      "Federico Mena Quintero",
                                      "Federico Mena Quintero",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

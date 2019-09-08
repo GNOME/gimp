@@ -1316,8 +1316,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -1352,8 +1351,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -1387,8 +1385,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Barak Itkin <lightningismyname@gmail.com>",
                                      "Barak Itkin",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1416,8 +1413,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1450,8 +1446,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1491,8 +1486,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1556,8 +1550,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1585,8 +1578,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1614,8 +1606,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1655,8 +1646,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1696,8 +1686,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1743,8 +1732,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1787,8 +1775,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1840,8 +1827,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1893,8 +1879,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1946,8 +1931,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -1998,8 +1982,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -2039,8 +2022,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -2080,8 +2062,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -2133,8 +2114,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -2198,8 +2178,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",
@@ -2257,8 +2236,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -2311,8 +2289,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -2371,8 +2348,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                      "Bill Skaggs",
-                                     "2007",
-                                     NULL);
+                                     "2007");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -2407,8 +2383,7 @@ register_vectors_procs (GimpPDB *pdb)
                                      NULL,
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                      "Bill Skaggs",
-                                     "2007",
-                                     NULL);
+                                     "2007");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

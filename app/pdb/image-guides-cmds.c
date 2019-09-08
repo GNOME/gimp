@@ -280,8 +280,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adam D. Moss",
                                      "Adam D. Moss",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -315,8 +314,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adam D. Moss",
                                      "Adam D. Moss",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -350,8 +348,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adam D. Moss",
                                      "Adam D. Moss",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -379,8 +376,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adam D. Moss",
                                      "Adam D. Moss",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -414,8 +410,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adam D. Moss",
                                      "Adam D. Moss",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -452,8 +447,7 @@ register_image_guides_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adam D. Moss",
                                      "Adam D. Moss",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

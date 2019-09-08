@@ -132,8 +132,7 @@ xcf_init (Gimp *gimp)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -206,8 +205,7 @@ xcf_init (Gimp *gimp)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",

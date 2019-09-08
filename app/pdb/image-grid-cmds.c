@@ -398,8 +398,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -433,8 +432,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -468,8 +466,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -503,8 +500,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -538,8 +534,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -568,8 +563,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -598,8 +592,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -628,8 +621,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -658,8 +650,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -688,8 +679,7 @@ register_image_grid_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sylvain Foret",
                                      "Sylvain Foret",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

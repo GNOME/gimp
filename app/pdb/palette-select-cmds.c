@@ -140,8 +140,7 @@ register_palette_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2002",
-                                     NULL);
+                                     "2002");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette-callback",
                                                        "palette callback",
@@ -178,8 +177,7 @@ register_palette_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2002",
-                                     NULL);
+                                     "2002");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette-callback",
                                                        "palette callback",
@@ -202,8 +200,7 @@ register_palette_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2002",
-                                     NULL);
+                                     "2002");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette-callback",
                                                        "palette callback",

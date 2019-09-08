@@ -1152,8 +1152,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -1209,8 +1208,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1239,8 +1237,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1269,8 +1266,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Barak Itkin <lightningismyname@gmail.com>",
                                      "Barak Itkin",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1299,8 +1295,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1329,8 +1324,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1359,8 +1353,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1396,8 +1389,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1433,8 +1425,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1462,8 +1453,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1491,8 +1481,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1521,8 +1510,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1551,8 +1539,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1580,8 +1567,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1609,8 +1595,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1639,8 +1624,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1669,8 +1653,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1699,8 +1682,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1729,8 +1711,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1759,8 +1740,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1789,8 +1769,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1819,8 +1798,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1849,8 +1827,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1878,8 +1855,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1907,8 +1883,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1936,8 +1911,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1965,8 +1939,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1994,8 +1967,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2023,8 +1995,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Barak Itkin <lightningismyname@gmail.com>",
                                      "Barak Itkin",
-                                     "2009",
-                                     NULL);
+                                     "2009");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",

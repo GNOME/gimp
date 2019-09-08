@@ -102,8 +102,7 @@ register_dynamics_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -119,8 +118,7 @@ register_dynamics_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

@@ -447,8 +447,7 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                               tooltip,
                               tooltip,
                               NULL,
-                              "author", "copyright", "date",
-                              NULL);
+                              "author", "copyright", "date");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",

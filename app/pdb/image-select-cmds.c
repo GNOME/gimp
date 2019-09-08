@@ -372,8 +372,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "David Gowers",
                                      "David Gowers",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -419,8 +418,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "David Gowers",
                                      "David Gowers",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -469,8 +467,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -525,8 +522,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Martin Nordholts",
                                      "Martin Nordholts",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -593,8 +589,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -649,8 +644,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -692,8 +686,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

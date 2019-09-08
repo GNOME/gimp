@@ -166,8 +166,7 @@ register_text_tool_procs (GimpPDB *pdb)
                                      NULL,
                                      "Martin Edlman & Sven Neumann",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1998- 2001",
-                                     NULL);
+                                     "1998- 2001");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -252,8 +251,7 @@ register_text_tool_procs (GimpPDB *pdb)
                                      NULL,
                                      "Martin Edlman & Sven Neumann",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1998- 2001",
-                                     NULL);
+                                     "1998- 2001");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("text",
                                                        "text",

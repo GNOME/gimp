@@ -107,8 +107,7 @@ register_brushes_procs (GimpPDB *pdb)
                                      NULL,
                                      "Seth Burgess",
                                      "Seth Burgess",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -124,8 +123,7 @@ register_brushes_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

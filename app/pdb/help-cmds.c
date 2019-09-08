@@ -87,8 +87,7 @@ register_help_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2000",
-                                     NULL);
+                                     "2000");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("help-domain",
                                                        "help domain",

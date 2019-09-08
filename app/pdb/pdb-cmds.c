@@ -866,8 +866,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("temp-name",
                                                            "temp name",
@@ -890,8 +889,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Josh MacDonald",
                                      "Spencer Kimball & Josh MacDonald & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",
@@ -914,8 +912,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -991,8 +988,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1021,8 +1017,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1064,8 +1059,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1095,8 +1089,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1126,8 +1119,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1157,8 +1149,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1188,8 +1179,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1219,8 +1209,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1254,8 +1243,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1296,8 +1284,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1341,8 +1328,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1386,8 +1372,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1422,8 +1407,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1458,8 +1442,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
@@ -1493,8 +1476,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Nick Lamb",
                                      "Nick Lamb",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
@@ -1523,8 +1505,7 @@ register_pdb_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",

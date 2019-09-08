@@ -228,8 +228,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("token",
                                                        "token",
@@ -259,8 +258,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                      NULL,
                                      "Seth Burgess",
                                      "Seth Burgess",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("token",
                                                        "token",
@@ -290,8 +288,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("comment",
                                                            "comment",
@@ -314,8 +311,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_unit ("unit-id",
                                                          "unit id",
@@ -339,8 +335,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("xres",
                                                         "xres",
@@ -368,8 +363,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("config",
                                                            "config",
@@ -392,8 +386,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("load-inhibit",
                                                            "load inhibit",

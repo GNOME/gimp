@@ -390,8 +390,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-units",
                                                      "num units",
@@ -413,8 +412,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-units",
                                                      "num units",
@@ -436,8 +434,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
@@ -508,8 +505,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -539,8 +535,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -570,8 +565,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -602,8 +596,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -633,8 +626,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -664,8 +656,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -696,8 +687,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -728,8 +718,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -760,8 +749,7 @@ register_unit_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",

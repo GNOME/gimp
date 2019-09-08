@@ -1263,8 +1263,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -1331,8 +1330,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -1373,8 +1371,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1409,8 +1406,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Barak Itkin <lightningismyname@gmail.com>",
                                      "Barak Itkin",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -1438,8 +1434,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1473,8 +1468,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1496,8 +1490,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2007",
-                                     NULL);
+                                     "2007");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1519,8 +1512,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1560,8 +1552,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1607,8 +1598,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Manish Singh",
                                      "Manish Singh",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1630,8 +1620,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1676,8 +1665,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1712,8 +1700,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1741,8 +1728,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Geert Jordaens",
                                      "Geert Jordaens",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_mask ("mask",
                                                            "mask",
@@ -1770,8 +1756,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1799,8 +1784,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1829,8 +1813,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1858,8 +1841,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1887,8 +1869,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1916,8 +1897,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1945,8 +1925,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1974,8 +1953,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2003,8 +1981,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2032,8 +2009,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2061,8 +2037,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2090,8 +2065,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2119,8 +2093,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2148,8 +2121,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2178,8 +2150,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2208,8 +2179,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2238,8 +2208,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2268,8 +2237,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2298,8 +2266,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2328,8 +2295,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -2358,8 +2324,7 @@ register_layer_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",

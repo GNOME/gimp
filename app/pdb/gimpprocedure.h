@@ -102,24 +102,24 @@ void             gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                     const gchar      *help_id,
                                                     const gchar      *authors,
                                                     const gchar      *copyright,
-                                                    const gchar      *date,
-                                                    const gchar      *deprecated);
+                                                    const gchar      *date);
 void             gimp_procedure_set_static_strings (GimpProcedure    *procedure,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
                                                     const gchar      *help_id,
                                                     const gchar      *authors,
                                                     const gchar      *copyright,
-                                                    const gchar      *date,
-                                                    const gchar      *deprecated);
+                                                    const gchar      *date);
 void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
                                                     gchar            *blurb,
                                                     gchar            *help,
                                                     gchar            *help_id,
                                                     gchar            *authors,
                                                     gchar            *copyright,
-                                                    gchar            *date,
-                                                    gchar            *deprecated);
+                                                    gchar            *date);
+
+void             gimp_procedure_set_deprecated     (GimpProcedure    *procedure,
+                                                    const gchar      *deprecated);
 
 const gchar    * gimp_procedure_get_label          (GimpProcedure    *procedure);
 const gchar    * gimp_procedure_get_menu_label     (GimpProcedure    *procedure);

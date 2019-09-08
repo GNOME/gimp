@@ -225,8 +225,7 @@ register_display_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2007",
-                                     NULL);
+                                     "2007");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("display-id",
                                                  "display id",
@@ -254,8 +253,7 @@ register_display_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -283,8 +281,7 @@ register_display_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_display ("display",
                                                         "display",
@@ -306,8 +303,7 @@ register_display_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_display ("display",
                                                         "display",
@@ -335,8 +331,7 @@ register_display_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -352,8 +347,7 @@ register_display_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("old-image",
                                                       "old image",

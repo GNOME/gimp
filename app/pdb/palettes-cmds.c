@@ -106,8 +106,7 @@ register_palettes_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adrian Likins <adrian@gimp.org>",
                                      "Adrian Likins",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -123,8 +122,7 @@ register_palettes_procs (GimpPDB *pdb)
                                      NULL,
                                      "Nathan Summers <rock@gimp.org>",
                                      "Nathan Summers",
-                                     "2001",
-                                     NULL);
+                                     "2001");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

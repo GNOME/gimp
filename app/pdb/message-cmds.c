@@ -126,8 +126,7 @@ register_message_procs (GimpPDB *pdb)
                                      NULL,
                                      "Manish Singh",
                                      "Manish Singh",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("message",
                                                        "message",
@@ -150,8 +149,7 @@ register_message_procs (GimpPDB *pdb)
                                      NULL,
                                      "Manish Singh",
                                      "Manish Singh",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("handler",
                                                       "handler",
@@ -174,8 +172,7 @@ register_message_procs (GimpPDB *pdb)
                                      NULL,
                                      "Manish Singh",
                                      "Manish Singh",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("handler",
                                                   "handler",

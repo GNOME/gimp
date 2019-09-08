@@ -107,8 +107,7 @@ register_debug_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -127,8 +126,7 @@ register_debug_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("elapsed",
                                                         "elapsed",

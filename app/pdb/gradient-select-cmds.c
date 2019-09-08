@@ -147,8 +147,7 @@ register_gradient_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
@@ -191,8 +190,7 @@ register_gradient_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
@@ -215,8 +213,7 @@ register_gradient_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",

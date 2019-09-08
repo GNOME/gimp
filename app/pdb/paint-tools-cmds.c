@@ -956,8 +956,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -996,8 +995,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1030,8 +1028,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1089,8 +1086,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1123,8 +1119,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1170,8 +1165,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1204,8 +1198,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1258,8 +1251,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1292,8 +1284,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1340,8 +1331,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1374,8 +1364,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Kevin Sookocheff",
                                      "Kevin Sookocheff",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1426,8 +1415,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Kevin Sookocheff",
                                      "Kevin Sookocheff",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1460,8 +1448,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1513,8 +1500,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1547,8 +1533,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1581,8 +1566,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1621,8 +1605,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",

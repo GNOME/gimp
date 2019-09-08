@@ -637,8 +637,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Josh MacDonald",
                                      "Josh MacDonald",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
@@ -683,8 +682,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
@@ -728,8 +726,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2006",
-                                     NULL);
+                                     "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
@@ -779,8 +776,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Josh MacDonald",
                                      "Josh MacDonald",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -829,8 +825,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Adam D. Moss, Sven Neumann",
                                      "Adam D. Moss, Sven Neumann",
-                                     "1999-2003",
-                                     NULL);
+                                     "1999-2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",
@@ -876,8 +871,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Josh MacDonald",
                                      "Josh MacDonald",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -906,8 +900,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -951,8 +944,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -989,8 +981,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1027,8 +1018,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1057,8 +1047,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1088,8 +1077,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1112,8 +1100,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2017",
-                                     NULL);
+                                     "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1136,8 +1123,7 @@ register_fileops_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("load-proc",
                                                        "load proc",

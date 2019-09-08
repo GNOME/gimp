@@ -4793,8 +4793,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:alien-map' for credits.",
                                      "Compatibility procedure. Please see 'gegl:alien-map' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -4889,8 +4888,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:antialias' for credits.",
                                      "Compatibility procedure. Please see 'gegl:antialias' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -4925,8 +4923,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:texturize-canvas' for credits.",
                                      "Compatibility procedure. Please see 'gegl:texturize-canvas' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -4973,8 +4970,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
                                      "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5033,8 +5029,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5069,8 +5064,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5105,8 +5099,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast-hsv' for credits.",
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast-hsv' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5141,8 +5134,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
                                      "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5243,8 +5235,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
                                      "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5345,8 +5336,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5382,8 +5372,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:cartoon' for credits.",
                                      "Compatibility procedure. Please see 'gegl:cartoon' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5430,8 +5419,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:channel-mixer' for credits.",
                                      "Compatibility procedure. Please see 'gegl:channel-mixer' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5526,8 +5514,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5569,8 +5556,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:convolution-matrix' for credits.",
                                      "Compatibility procedure. Please see 'gegl:convolution-matrix' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5651,8 +5637,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:cubism' for credits.",
                                      "Compatibility procedure. Please see 'gegl:cubism' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5705,8 +5690,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:deinterlace' for credits.",
                                      "Compatibility procedure. Please see 'gegl:deinterlace' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5747,8 +5731,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:diffraction-patterns' for credits.",
                                      "Compatibility procedure. Please see 'gegl:diffraction-patterns' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5855,8 +5838,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:displace' for credits.",
                                      "Compatibility procedure. Please see 'gegl:displace' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -5933,8 +5915,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:displace' for credits.",
                                      "Compatibility procedure. Please see 'gegl:displace' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6011,8 +5992,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:difference-of-gaussians' for credits.",
                                      "Compatibility procedure. Please see 'gegl:difference-of-gaussians' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6071,8 +6051,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:edge' for credits.",
                                      "Compatibility procedure. Please see 'gegl:edge' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6125,8 +6104,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:emboss' for credits.",
                                      "Compatibility procedure. Please see 'gegl:emboss' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6185,8 +6163,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:engrave' for credits.",
                                      "Compatibility procedure. Please see 'gegl:engrave' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6233,8 +6210,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:color-exchange' for credits.",
                                      "Compatibility procedure. Please see 'gegl:color-exchange' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6323,8 +6299,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:lens-flare' for credits.",
                                      "Compatibility procedure. Please see 'gegl:lens-flare' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6371,8 +6346,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:fractal-trace' for credits.",
                                      "Compatibility procedure. Please see 'gegl:fractal-trace' for credits.",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6443,8 +6417,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6497,8 +6470,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6551,8 +6523,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6599,8 +6570,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6653,8 +6623,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6701,8 +6670,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
                                      "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6749,8 +6717,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-hsv' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-hsv' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6809,8 +6776,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:illusion' for credits.",
                                      "Compatibility procedure. Please see 'gegl:illusion' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6857,8 +6823,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:edge-laplace' for credits.",
                                      "Compatibility procedure. Please see 'gegl:edge-laplace' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6893,8 +6858,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:lens-distortion' for credits.",
                                      "Compatibility procedure. Please see 'gegl:lens-distortion' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -6965,8 +6929,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:tile-seamless' for credits.",
                                      "Compatibility procedure. Please see 'gegl:tile-seamless' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7001,8 +6964,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:maze' for credits.",
                                      "Compatibility procedure. Please see 'gegl:maze' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7079,8 +7041,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
                                      "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7145,8 +7106,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
                                      "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7211,8 +7171,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:mosaic' for credits.",
                                      "Compatibility procedure. Please see 'gegl:mosaic' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7319,8 +7278,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:edge-neon' for credits.",
                                      "Compatibility procedure. Please see 'gegl:edge-neon' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7367,8 +7325,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:newsprint' for credits.",
                                      "Compatibility procedure. Please see 'gegl:newsprint' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7475,8 +7432,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7511,8 +7467,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:supernova' for credits.",
                                      "Compatibility procedure. Please see 'gegl:supernova' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7584,8 +7539,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7632,8 +7586,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7698,8 +7651,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:tile-paper' for credits.",
                                      "Compatibility procedure. Please see 'gegl:tile-paper' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7784,8 +7736,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:photocopy' for credits.",
                                      "Compatibility procedure. Please see 'gegl:photocopy' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7844,8 +7795,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7886,8 +7836,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7934,8 +7883,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:plasma' for credits.",
                                      "Compatibility procedure. Please see 'gegl:plasma' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -7982,8 +7930,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8048,8 +7995,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:red-eye-removal' for credits.",
                                      "Compatibility procedure. Please see 'gegl:red-eye-removal' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8090,8 +8036,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-hurl' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-hurl' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8150,8 +8095,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-pick' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-pick' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8210,8 +8154,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-slur' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-slur' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8270,8 +8213,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8342,8 +8284,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:ripple' for credits.",
                                      "Compatibility procedure. Please see 'gegl:ripple' for credits.",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8420,8 +8361,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8468,8 +8408,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8534,8 +8473,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur-selective' for credits.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur-selective' for credits.",
-                                     "2099",
-                                     NULL);
+                                     "2099");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8582,8 +8520,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8618,8 +8555,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:shift' for credits.",
                                      "Compatibility procedure. Please see 'gegl:shift' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8666,8 +8602,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:sinus' for credits.",
                                      "Compatibility procedure. Please see 'gegl:sinus' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8782,8 +8717,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:edge-sobel' for credits.",
                                      "Compatibility procedure. Please see 'gegl:edge-sobel' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8836,8 +8770,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:softglow' for credits.",
                                      "Compatibility procedure. Please see 'gegl:softglow' for credits.",
-                                     "2019",
-                                     NULL);
+                                     "2019");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8890,8 +8823,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-solid' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-solid' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -8962,8 +8894,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:noise-spread' for credits.",
                                      "Compatibility procedure. Please see 'gegl:noise-spread' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9010,8 +8941,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9052,8 +8982,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:unsharp-mask' for credits.",
                                      "Compatibility procedure. Please see 'gegl:unsharp-mask' for credits.",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9106,8 +9035,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:video-degradation' for credits.",
                                      "Compatibility procedure. Please see 'gegl:video-degradation' for credits.",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9160,8 +9088,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9196,8 +9123,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9268,8 +9194,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9340,8 +9265,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9412,8 +9336,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:waves' for credits.",
                                      "Compatibility procedure. Please see 'gegl:waves' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9478,8 +9401,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:whirl-pinch' for credits.",
                                      "Compatibility procedure. Please see 'gegl:whirl-pinch' for credits.",
-                                     "2013",
-                                     NULL);
+                                     "2013");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -9532,8 +9454,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      NULL,
                                      "Compatibility procedure. Please see 'gegl:wind' for credits.",
                                      "Compatibility procedure. Please see 'gegl:wind' for credits.",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",

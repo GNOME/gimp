@@ -3038,8 +3038,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3055,8 +3054,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3072,8 +3070,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Kevin Cozens <kcozens@svn.gnome.org>",
                                      "Kevin Cozens",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3089,8 +3086,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Simon Budig",
                                      "Simon Budig",
-                                     "2007",
-                                     NULL);
+                                     "2007");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-paint-methods",
                                                      "num paint methods",
@@ -3117,8 +3113,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -3141,8 +3136,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -3165,8 +3159,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("stroke-method",
                                                       "stroke method",
@@ -3189,8 +3182,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("stroke-method",
                                                   "stroke method",
@@ -3213,8 +3205,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("foreground",
                                                         "foreground",
@@ -3237,8 +3228,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("foreground",
                                                     "foreground",
@@ -3261,8 +3251,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("background",
                                                         "background",
@@ -3285,8 +3274,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("background",
                                                     "background",
@@ -3309,8 +3297,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3326,8 +3313,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3343,8 +3329,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
@@ -3366,8 +3351,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
@@ -3389,8 +3373,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("paint-mode",
                                                       "paint mode",
@@ -3413,8 +3396,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
@@ -3437,8 +3419,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("line-width",
                                                         "line width",
@@ -3462,8 +3443,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("line-width",
                                                     "line width",
@@ -3485,8 +3465,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_unit ("line-width-unit",
                                                          "line width unit",
@@ -3512,8 +3491,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("line-width-unit",
                                                      "line width unit",
@@ -3537,8 +3515,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("cap-style",
                                                       "cap style",
@@ -3563,8 +3540,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("cap-style",
                                                   "cap style",
@@ -3587,8 +3563,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("join-style",
                                                       "join style",
@@ -3613,8 +3588,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("join-style",
                                                   "join style",
@@ -3637,8 +3611,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("miter-limit",
                                                         "miter limit",
@@ -3663,8 +3636,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("miter-limit",
                                                     "miter limit",
@@ -3686,8 +3658,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("dash-offset",
                                                         "dash offset",
@@ -3711,8 +3682,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("dash-offset",
                                                     "dash offset",
@@ -3734,8 +3704,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-dashes",
                                                      "num dashes",
@@ -3766,8 +3735,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2015",
-                                     NULL);
+                                     "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-dashes",
                                                  "num dashes",
@@ -3794,8 +3762,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -3818,8 +3785,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -3842,8 +3808,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
@@ -3865,8 +3830,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
@@ -3888,8 +3852,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3905,8 +3868,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
@@ -3928,8 +3890,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
@@ -3951,8 +3912,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
@@ -3974,8 +3934,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
@@ -3997,8 +3956,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("spacing",
                                                         "spacing",
@@ -4020,8 +3978,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spacing",
                                                     "spacing",
@@ -4043,8 +4000,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4060,8 +4016,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("hardness",
                                                         "hardness",
@@ -4083,8 +4038,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hardness",
                                                     "hardness",
@@ -4106,8 +4060,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4123,8 +4076,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("force",
                                                         "force",
@@ -4146,8 +4098,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Alexia Death",
                                      "Alexia Death",
-                                     "2014",
-                                     NULL);
+                                     "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("force",
                                                     "force",
@@ -4169,8 +4120,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4193,8 +4143,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4217,8 +4166,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2016",
-                                     NULL);
+                                     "2016");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4241,8 +4189,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2016",
-                                     NULL);
+                                     "2016");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4265,8 +4212,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4289,8 +4235,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4313,8 +4258,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4337,8 +4281,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4361,8 +4304,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4378,8 +4320,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4395,8 +4336,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4412,8 +4352,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4429,8 +4368,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("blend-color-space",
                                                       "blend color space",
@@ -4453,8 +4391,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("blend-color-space",
                                                   "blend color space",
@@ -4477,8 +4414,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("repeat-mode",
                                                       "repeat mode",
@@ -4501,8 +4437,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("repeat-mode",
                                                   "repeat mode",
@@ -4525,8 +4460,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("reverse",
                                                          "reverse",
@@ -4548,8 +4482,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
@@ -4571,8 +4504,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4595,8 +4527,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4619,8 +4550,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4643,8 +4573,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4667,8 +4596,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("antialias",
                                                          "antialias",
@@ -4692,8 +4620,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
@@ -4715,8 +4642,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("feather",
                                                          "feather",
@@ -4740,8 +4666,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("feather",
                                                      "feather",
@@ -4763,8 +4688,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("feather-radius-x",
                                                         "feather radius x",
@@ -4794,8 +4718,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("feather-radius-x",
                                                     "feather radius x",
@@ -4823,8 +4746,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("sample-merged",
                                                          "sample merged",
@@ -4848,8 +4770,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-merged",
                                                      "sample merged",
@@ -4871,8 +4792,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("sample-criterion",
                                                       "sample criterion",
@@ -4897,8 +4817,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("sample-criterion",
                                                   "sample criterion",
@@ -4921,8 +4840,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("sample-threshold",
                                                         "sample threshold",
@@ -4946,8 +4864,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("sample-threshold",
                                                     "sample threshold",
@@ -4969,8 +4886,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("sample-threshold",
                                                      "sample threshold",
@@ -4992,8 +4908,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("sample-threshold",
                                                  "sample threshold",
@@ -5015,8 +4930,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("sample-transparent",
                                                          "sample transparent",
@@ -5040,8 +4954,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2011",
-                                     NULL);
+                                     "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-transparent",
                                                      "sample transparent",
@@ -5063,8 +4976,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2016",
-                                     NULL);
+                                     "2016");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("diagonal-neighbors",
                                                          "diagonal neighbors",
@@ -5088,8 +5000,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ell",
                                      "Ell",
-                                     "2016",
-                                     NULL);
+                                     "2016");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("diagonal-neighbors",
                                                      "diagonal neighbors",
@@ -5111,8 +5022,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jehan",
                                      "Jehan",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("metric",
                                                       "metric",
@@ -5137,8 +5047,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jehan",
                                      "Jehan",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("metric",
                                                   "metric",
@@ -5161,8 +5070,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("interpolation",
                                                       "interpolation",
@@ -5187,8 +5095,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("interpolation",
                                                   "interpolation",
@@ -5211,8 +5118,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("transform-direction",
                                                       "transform direction",
@@ -5237,8 +5143,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("transform-direction",
                                                   "transform direction",
@@ -5261,8 +5166,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("transform-resize",
                                                       "transform resize",
@@ -5287,8 +5191,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("transform-resize",
                                                   "transform resize",
@@ -5311,8 +5214,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
@@ -5334,8 +5236,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
@@ -5357,8 +5258,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
@@ -5380,8 +5280,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
@@ -5403,8 +5302,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
@@ -5426,8 +5324,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
@@ -5449,8 +5346,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("tilt",
                                                         "tilt",
@@ -5472,8 +5368,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("tilt",
                                                     "tilt",
@@ -5495,8 +5390,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("speed",
                                                         "speed",
@@ -5518,8 +5412,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("speed",
                                                     "speed",
@@ -5541,8 +5434,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("type",
                                                       "type",
@@ -5565,8 +5457,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
@@ -5589,8 +5480,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
@@ -5612,8 +5502,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
@@ -5635,8 +5524,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
@@ -5658,8 +5546,7 @@ register_context_procs (GimpPDB *pdb)
                                      NULL,
                                      "Ed Swartz",
                                      "Ed Swartz",
-                                     "2012",
-                                     NULL);
+                                     "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",

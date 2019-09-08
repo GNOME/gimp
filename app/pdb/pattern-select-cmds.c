@@ -140,8 +140,7 @@ register_pattern_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",
@@ -178,8 +177,7 @@ register_pattern_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",
@@ -202,8 +200,7 @@ register_pattern_select_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",

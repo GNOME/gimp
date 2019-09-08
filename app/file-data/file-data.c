@@ -78,8 +78,7 @@ file_data_init (Gimp *gimp)
                                      "Sven Neumann, Michael Natterer",
                                      "Tim Newsome, Jens Lautenbacher, "
                                      "Sven Neumann, Michael Natterer",
-                                     "1995-2019",
-                                     NULL);
+                                     "1995-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -146,8 +145,7 @@ file_data_init (Gimp *gimp)
                                      NULL,
                                      "Tim Newsome, Michael Natterer",
                                      "Tim Newsome, Michael Natterer",
-                                     "1995-2019",
-                                     NULL);
+                                     "1995-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -230,8 +228,7 @@ file_data_init (Gimp *gimp)
                                      NULL,
                                      "Tor Lillqvist, Michael Natterer",
                                      "Tor Lillqvist, Michael Natterer",
-                                     "1999-2019",
-                                     NULL);
+                                     "1999-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -298,8 +295,7 @@ file_data_init (Gimp *gimp)
                                      NULL,
                                      "Tor Lillqvist, Michael Natterer",
                                      "Tor Lillqvist, Michael Natterer",
-                                     "1999-2019",
-                                     NULL);
+                                     "1999-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -389,8 +385,7 @@ file_data_init (Gimp *gimp)
                                      NULL,
                                      "Tim Newsome, Michael Natterer",
                                      "Tim Newsome, Michael Natterer",
-                                     "1997-2019",
-                                     NULL);
+                                     "1997-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -456,8 +451,7 @@ file_data_init (Gimp *gimp)
                                      NULL,
                                      "Tim Newsome, Michael Natterer",
                                      "Tim Newsome, Michael Natterer",
-                                     "1995-2019",
-                                     NULL);
+                                     "1995-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -533,8 +527,7 @@ file_data_init (Gimp *gimp)
                                      "Loads GIMP extension",
                                      "Loads GIMP extension",
                                      NULL,
-                                     "Jehan", "Jehan", "2019",
-                                     NULL);
+                                     "Jehan", "Jehan", "2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",

@@ -849,8 +849,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                               proc_install->help_id,
                               proc_install->authors,
                               proc_install->copyright,
-                              proc_install->date,
-                              NULL);
+                              proc_install->date);
 
   for (i = 0; i < proc_install->nparams; i++)
     {

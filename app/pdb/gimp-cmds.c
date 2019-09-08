@@ -250,8 +250,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Manish Singh",
                                      "Manish Singh",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("version",
                                                            "version",
@@ -274,8 +273,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("pid",
                                                      "pid",
@@ -297,8 +295,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "1995-1996");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("force",
                                                      "force",
@@ -320,8 +317,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jay Cox",
                                      "Jay Cox",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_parasite ("parasite",
                                                          "parasite",
@@ -342,8 +338,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jay Cox",
                                      "Jay Cox",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -366,8 +361,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Jay Cox",
                                      "Jay Cox",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -395,8 +389,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Marc Lehmann",
                                      "Marc Lehmann",
-                                     "1999",
-                                     NULL);
+                                     "1999");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-parasites",
                                                      "num parasites",
@@ -423,8 +416,7 @@ register_gimp_procs (GimpPDB *pdb)
                                      NULL,
                                      "Josh MacDonald",
                                      "Josh MacDonald",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("extension",
                                                        "extension",

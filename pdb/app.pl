@@ -701,11 +701,17 @@ sub generate {
                                      NULL,
                                      "$proc->{author}",
                                      "$proc->{copyright}",
-                                     "$proc->{date}",
-                                     @{[$proc->{deprecated} ? "\"$proc->{deprecated}\"" : 'NULL']});
+                                     "$proc->{date}");
 CODE
 
-        $argc = 0;
+        if ($proc->{deprecated}) {
+	    $out->{register} .= <<CODE;
+  gimp_procedure_set_deprecated (procedure,
+                                 "\"$proc->{deprecated}\"");
+CODE
+	}
+
+	$argc = 0;
 
         foreach $arg (@inargs) {
 	    my ($pspec, $postproc) = &generate_pspec($arg);

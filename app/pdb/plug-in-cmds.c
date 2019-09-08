@@ -258,8 +258,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                      NULL,
                                      "Andy Thomas",
                                      "Andy Thomas",
-                                     "1998",
-                                     NULL);
+                                     "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("search-string",
                                                        "search string",
@@ -326,8 +325,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2000",
-                                     NULL);
+                                     "2000");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -357,8 +355,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2000",
-                                     NULL);
+                                     "2000");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -388,8 +385,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2005",
-                                     NULL);
+                                     "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
@@ -419,8 +415,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("handler",
                                                   "handler",
@@ -443,8 +438,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                      NULL,
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("handler",
                                                       "handler",

@@ -116,6 +116,8 @@ gimp_procedure_finalize (GObject *object)
 
   gimp_procedure_free_strings (procedure);
 
+  g_clear_pointer (&procedure->deprecated, g_free);
+
   if (procedure->args)
     {
       for (i = 0; i < procedure->num_args; i++)
@@ -151,8 +153,9 @@ gimp_procedure_get_memsize (GimpObject *object,
       memsize += gimp_string_get_memsize (procedure->authors);
       memsize += gimp_string_get_memsize (procedure->copyright);
       memsize += gimp_string_get_memsize (procedure->date);
-      memsize += gimp_string_get_memsize (procedure->deprecated);
     }
+
+  memsize += gimp_string_get_memsize (procedure->deprecated);
 
   memsize += procedure->num_args * sizeof (GParamSpec *);
 
@@ -273,20 +276,18 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
                             const gchar   *help_id,
                             const gchar   *authors,
                             const gchar   *copyright,
-                            const gchar   *date,
-                            const gchar   *deprecated)
+                            const gchar   *date)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->blurb      = g_strdup (blurb);
-  procedure->help       = g_strdup (help);
-  procedure->help_id    = g_strdup (help_id);
-  procedure->authors    = g_strdup (authors);
-  procedure->copyright  = g_strdup (copyright);
-  procedure->date       = g_strdup (date);
-  procedure->deprecated = g_strdup (deprecated);
+  procedure->blurb     = g_strdup (blurb);
+  procedure->help      = g_strdup (help);
+  procedure->help_id   = g_strdup (help_id);
+  procedure->authors   = g_strdup (authors);
+  procedure->copyright = g_strdup (copyright);
+  procedure->date      = g_strdup (date);
 
   procedure->static_strings = FALSE;
 }
@@ -298,20 +299,18 @@ gimp_procedure_set_static_strings (GimpProcedure *procedure,
                                    const gchar   *help_id,
                                    const gchar   *authors,
                                    const gchar   *copyright,
-                                   const gchar   *date,
-                                   const gchar   *deprecated)
+                                   const gchar   *date)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->blurb      = (gchar *) blurb;
-  procedure->help       = (gchar *) help;
-  procedure->help       = (gchar *) help_id;
-  procedure->authors    = (gchar *) authors;
-  procedure->copyright  = (gchar *) copyright;
-  procedure->date       = (gchar *) date;
-  procedure->deprecated = (gchar *) deprecated;
+  procedure->blurb     = (gchar *) blurb;
+  procedure->help      = (gchar *) help;
+  procedure->help      = (gchar *) help_id;
+  procedure->authors   = (gchar *) authors;
+  procedure->copyright = (gchar *) copyright;
+  procedure->date      = (gchar *) date;
 
   procedure->static_strings = TRUE;
 }
@@ -323,22 +322,30 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
                              gchar         *help_id,
                              gchar         *authors,
                              gchar         *copyright,
-                             gchar         *date,
-                             gchar         *deprecated)
+                             gchar         *date)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->blurb      = blurb;
-  procedure->help       = help;
-  procedure->help       = help_id;
-  procedure->authors    = authors;
-  procedure->copyright  = copyright;
-  procedure->date       = date;
-  procedure->deprecated = deprecated;
+  procedure->blurb     = blurb;
+  procedure->help      = help;
+  procedure->help      = help_id;
+  procedure->authors   = authors;
+  procedure->copyright = copyright;
+  procedure->date      = date;
 
   procedure->static_strings = FALSE;
+}
+
+void
+gimp_procedure_set_deprecated (GimpProcedure *procedure,
+                               const gchar   *deprecated)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  g_free (procedure->deprecated);
+  procedure->deprecated = g_strdup (deprecated);
 }
 
 const gchar *
@@ -727,16 +734,14 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
       g_free (procedure->authors);
       g_free (procedure->copyright);
       g_free (procedure->date);
-      g_free (procedure->deprecated);
     }
 
-  procedure->blurb      = NULL;
-  procedure->help       = NULL;
-  procedure->help_id    = NULL;
-  procedure->authors    = NULL;
-  procedure->copyright  = NULL;
-  procedure->date       = NULL;
-  procedure->deprecated = NULL;
+  procedure->blurb     = NULL;
+  procedure->help      = NULL;
+  procedure->help_id   = NULL;
+  procedure->authors   = NULL;
+  procedure->copyright = NULL;
+  procedure->date      = NULL;
 
   procedure->static_strings = FALSE;
 }

@@ -1462,8 +1462,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1493,8 +1492,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1524,8 +1522,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                      "Bill Skaggs",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1554,8 +1551,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1592,8 +1588,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1616,8 +1611,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Lars-Peter Clausen <lars@metafoo.de>",
                                      "Lars-Peter Clausen",
-                                     "2008",
-                                     NULL);
+                                     "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1646,8 +1640,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Federico Mena Quintero",
                                      "Federico Mena Quintero",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1693,8 +1686,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Federico Mena Quintero",
                                      "Federico Mena Quintero",
-                                     "1997",
-                                     NULL);
+                                     "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1745,8 +1737,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1788,8 +1779,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1831,8 +1821,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1874,8 +1863,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1917,8 +1905,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1954,8 +1941,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1996,8 +1982,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2033,8 +2018,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2075,8 +2059,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2112,8 +2095,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2154,8 +2136,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2191,8 +2172,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2228,8 +2208,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2271,8 +2250,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2314,8 +2292,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2350,8 +2327,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2392,8 +2368,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2428,8 +2403,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2470,8 +2444,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2506,8 +2479,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2542,8 +2514,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2578,8 +2549,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2614,8 +2584,7 @@ register_gradient_procs (GimpPDB *pdb)
                                      NULL,
                                      "Shlomi Fish <shlomif@iglu.org.il>",
                                      "Shlomi Fish",
-                                     "2003",
-                                     NULL);
+                                     "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",

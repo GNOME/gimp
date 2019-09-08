@@ -1036,8 +1036,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2018",
-                                     NULL);
+                                     "2018");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1083,8 +1082,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2004",
-                                     NULL);
+                                     "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1139,8 +1137,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1200,8 +1197,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1283,8 +1279,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1343,8 +1338,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1404,8 +1398,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1465,8 +1458,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1517,8 +1509,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1596,8 +1587,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
-                                     "2010",
-                                     NULL);
+                                     "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
