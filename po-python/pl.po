@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-02 14:40+0100\n"
-"PO-Revision-Date: 2019-02-02 14:42+0100\n"
+"POT-Creation-Date: 2019-09-08 11:40+0200\n"
+"PO-Revision-Date: 2019-09-08 11:42+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -709,8 +709,8 @@ msgstr ""
 "i będzie wyśrodkowany."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Ponowne rysowanie"
+msgid "Re_draw"
+msgstr "P_onowne rysowanie"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -721,16 +721,16 @@ msgstr ""
 "tego wyświetli podgląd, jak wzór będzie wyglądał."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Przywróć"
+msgid "_Reset"
+msgstr "_Przywróć"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Anuluj"
+msgid "_Cancel"
+msgstr "_Anuluj"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "OK"
+msgid "_OK"
+msgstr "_OK"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
