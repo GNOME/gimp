@@ -365,12 +365,6 @@ gimp_procedure_real_install (GimpProcedure *procedure)
   return_vals = gimp_procedure_get_return_values (procedure, &n_return_vals);
 
   proc_install.name         = (gchar *) gimp_procedure_get_name (procedure);
-  proc_install.blurb        = (gchar *) gimp_procedure_get_blurb (procedure);
-  proc_install.help         = (gchar *) gimp_procedure_get_help (procedure);
-  proc_install.help_id      = (gchar *) gimp_procedure_get_help_id (procedure);
-  proc_install.authors      = (gchar *) gimp_procedure_get_authors (procedure);
-  proc_install.copyright    = (gchar *) gimp_procedure_get_copyright (procedure);
-  proc_install.date         = (gchar *) gimp_procedure_get_date (procedure);
   proc_install.type         = gimp_procedure_get_proc_type (procedure);
   proc_install.nparams      = n_args;
   proc_install.nreturn_vals = n_return_vals;
@@ -400,12 +394,17 @@ gimp_procedure_real_install (GimpProcedure *procedure)
 
   gimp_procedure_install_icon (procedure);
 
-  _gimp_pdb_set_proc_image_types (gimp_procedure_get_name (procedure),
-                                  procedure->priv->image_types);
+  if (procedure->priv->image_types)
+    {
+      _gimp_pdb_set_proc_image_types (gimp_procedure_get_name (procedure),
+                                      procedure->priv->image_types);
+    }
 
   if (procedure->priv->menu_label)
-    _gimp_pdb_set_proc_menu_label (gimp_procedure_get_name (procedure),
-                                   procedure->priv->menu_label);
+    {
+      _gimp_pdb_set_proc_menu_label (gimp_procedure_get_name (procedure),
+                                     procedure->priv->menu_label);
+    }
 
   for (list = gimp_procedure_get_menu_paths (procedure);
        list;
@@ -413,6 +412,26 @@ gimp_procedure_real_install (GimpProcedure *procedure)
     {
       _gimp_pdb_add_proc_menu_path (gimp_procedure_get_name (procedure),
                                     list->data);
+    }
+
+  if (procedure->priv->blurb ||
+      procedure->priv->help  ||
+      procedure->priv->help_id)
+    {
+      _gimp_pdb_set_proc_documentation (gimp_procedure_get_name (procedure),
+                                        procedure->priv->blurb,
+                                        procedure->priv->help,
+                                        procedure->priv->help_id);
+    }
+
+  if (procedure->priv->authors   ||
+      procedure->priv->copyright ||
+      procedure->priv->date)
+    {
+      _gimp_pdb_set_proc_attribution (gimp_procedure_get_name (procedure),
+                                      procedure->priv->authors,
+                                      procedure->priv->copyright,
+                                      procedure->priv->date);
     }
 
   procedure->priv->installed = TRUE;
@@ -907,6 +926,12 @@ gimp_procedure_set_documentation (GimpProcedure *procedure,
   procedure->priv->blurb   = g_strdup (blurb);
   procedure->priv->help    = g_strdup (help);
   procedure->priv->help_id = g_strdup (help_id);
+
+  if (procedure->priv->installed)
+    _gimp_pdb_set_proc_documentation (gimp_procedure_get_name (procedure),
+                                      procedure->priv->blurb,
+                                      procedure->priv->help,
+                                      procedure->priv->help_id);
 }
 
 /**
@@ -986,6 +1011,12 @@ gimp_procedure_set_attribution (GimpProcedure *procedure,
   procedure->priv->authors   = g_strdup (authors);
   procedure->priv->copyright = g_strdup (copyright);
   procedure->priv->date      = g_strdup (date);
+
+  if (procedure->priv->installed)
+    _gimp_pdb_set_proc_attribution (gimp_procedure_get_name (procedure),
+                                    procedure->priv->authors,
+                                    procedure->priv->copyright,
+                                    procedure->priv->date);
 }
 
 /**

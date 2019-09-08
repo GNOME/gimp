@@ -202,6 +202,75 @@ gimp_plug_in_set_proc_icon (GimpPlugIn   *plug_in,
   return TRUE;
 }
 
+gboolean
+gimp_plug_in_set_proc_help (GimpPlugIn  *plug_in,
+                            const gchar *proc_name,
+                            const gchar *blurb,
+                            const gchar *help,
+                            const gchar *help_id)
+{
+  GimpPlugInProcedure *proc;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (proc_name != NULL, FALSE);
+
+  proc = gimp_plug_in_proc_find (plug_in, proc_name);
+
+  if (! proc)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n"
+                    "attempted to register help "
+                    "for procedure \"%s\".\n"
+                    "It has however not installed that procedure. "
+                    "This is not allowed.",
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file),
+                    proc_name);
+
+      return FALSE;
+    }
+
+  gimp_procedure_set_help (GIMP_PROCEDURE (proc),
+                           blurb, help, help_id);
+
+  return TRUE;
+}
+
+gboolean
+gimp_plug_in_set_proc_attribution (GimpPlugIn  *plug_in,
+                                   const gchar *proc_name,
+                                   const gchar *authors,
+                                   const gchar *copyright,
+                                   const gchar *date)
+{
+  GimpPlugInProcedure *proc;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (proc_name != NULL, FALSE);
+
+  proc = gimp_plug_in_proc_find (plug_in, proc_name);
+
+  if (! proc)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n"
+                    "attempted to register the attribution "
+                    "for procedure \"%s\".\n"
+                    "It has however not installed that procedure. "
+                    "This is not allowed.",
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file),
+                    proc_name);
+
+      return FALSE;
+    }
+
+  gimp_procedure_set_attribution (GIMP_PROCEDURE (proc),
+                                  authors, copyright, date);
+
+  return TRUE;
+}
 
 /*  private functions  */
 

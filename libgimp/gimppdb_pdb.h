@@ -62,10 +62,18 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_icon          (const gchar       
                                                               GimpIconType       icon_type,
                                                               gint               icon_data_length,
                                                               const guint8      *icon_data);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_documentation (const gchar       *procedure_name,
+                                                              const gchar       *blurb,
+                                                              const gchar       *help,
+                                                              const gchar       *help_id);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_documentation (const gchar       *procedure_name,
                                                               gchar            **blurb,
                                                               gchar            **help,
                                                               gchar            **help_id);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_attribution   (const gchar       *procedure_name,
+                                                              const gchar       *authors,
+                                                              const gchar       *copyright,
+                                                              const gchar       *date);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_attribution   (const gchar       *procedure_name,
                                                               gchar            **authors,
                                                               gchar            **copyright,

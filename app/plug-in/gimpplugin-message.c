@@ -704,7 +704,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   GimpPlugInProcedure *proc       = NULL;
   GimpProcedure       *procedure  = NULL;
   gboolean             null_name  = FALSE;
-  gboolean             valid_utf8 = FALSE;
+  gboolean             valid_utf8 = TRUE;
   gint                 i;
 
   g_return_if_fail (proc_install != NULL);
@@ -755,43 +755,31 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 #define VALIDATE(str)         (g_utf8_validate ((str), -1, NULL))
 #define VALIDATE_OR_NULL(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
 
-  if (VALIDATE         (proc_install->name)       &&
-      VALIDATE_OR_NULL (proc_install->blurb)      &&
-      VALIDATE_OR_NULL (proc_install->help)       &&
-      VALIDATE_OR_NULL (proc_install->help_id)    &&
-      VALIDATE_OR_NULL (proc_install->authors)    &&
-      VALIDATE_OR_NULL (proc_install->copyright)  &&
-      VALIDATE_OR_NULL (proc_install->date))
+  for (i = 0; i < proc_install->nparams && valid_utf8 && ! null_name; i++)
     {
-      null_name  = FALSE;
-      valid_utf8 = TRUE;
-
-      for (i = 0; i < proc_install->nparams && valid_utf8 && ! null_name; i++)
+      if (! proc_install->params[i].name)
         {
-          if (! proc_install->params[i].name)
-            {
-              null_name = TRUE;
-            }
-          else if (! (VALIDATE         (proc_install->params[i].name) &&
-                      VALIDATE_OR_NULL (proc_install->params[i].nick) &&
-                      VALIDATE_OR_NULL (proc_install->params[i].blurb)))
-            {
-              valid_utf8 = FALSE;
-            }
+          null_name = TRUE;
         }
-
-      for (i = 0; i < proc_install->nreturn_vals && valid_utf8 && !null_name; i++)
+      else if (! (VALIDATE         (proc_install->params[i].name) &&
+                  VALIDATE_OR_NULL (proc_install->params[i].nick) &&
+                  VALIDATE_OR_NULL (proc_install->params[i].blurb)))
         {
-          if (! proc_install->return_vals[i].name)
-            {
-              null_name = TRUE;
-            }
-          else if (! (VALIDATE         (proc_install->return_vals[i].name) &&
-                      VALIDATE_OR_NULL (proc_install->return_vals[i].nick) &&
-                      VALIDATE_OR_NULL (proc_install->return_vals[i].blurb)))
-            {
-              valid_utf8 = FALSE;
-            }
+          valid_utf8 = FALSE;
+        }
+    }
+
+  for (i = 0; i < proc_install->nreturn_vals && valid_utf8 && !null_name; i++)
+    {
+      if (! proc_install->return_vals[i].name)
+        {
+          null_name = TRUE;
+        }
+      else if (! (VALIDATE         (proc_install->return_vals[i].name) &&
+                  VALIDATE_OR_NULL (proc_install->return_vals[i].nick) &&
+                  VALIDATE_OR_NULL (proc_install->return_vals[i].blurb)))
+        {
+          valid_utf8 = FALSE;
         }
     }
 
@@ -843,14 +831,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   proc->installed_during_init = (plug_in->call_mode == GIMP_PLUG_IN_CALL_INIT);
 
   gimp_object_set_name (GIMP_OBJECT (procedure), proc_install->name);
-  gimp_procedure_set_help (procedure,
-                           proc_install->blurb,
-                           proc_install->help,
-                           proc_install->help_id);
-  gimp_procedure_set_attribution (procedure,
-                                  proc_install->authors,
-                                  proc_install->copyright,
-                                  proc_install->date);
 
   for (i = 0; i < proc_install->nparams; i++)
     {

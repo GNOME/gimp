@@ -35,6 +35,16 @@ gboolean   gimp_plug_in_set_proc_icon        (GimpPlugIn   *plug_in,
                                               GimpIconType  type,
                                               const guint8 *data,
                                               gint          data_length);
+gboolean   gimp_plug_in_set_proc_help        (GimpPlugIn   *plug_in,
+                                              const gchar  *proc_name,
+                                              const gchar  *blurb,
+                                              const gchar  *help,
+                                              const gchar  *help_id);
+gboolean   gimp_plug_in_set_proc_attribution (GimpPlugIn   *plug_in,
+                                              const gchar  *proc_name,
+                                              const gchar  *authors,
+                                              const gchar  *copyright,
+                                              const gchar  *date);
 
 
 #endif /* __GIMP_PLUG_IN_PROC_H__ */

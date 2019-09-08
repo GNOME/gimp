@@ -282,12 +282,6 @@ struct _GPProcReturn
 struct _GPProcInstall
 {
   gchar      *name;
-  gchar      *blurb;
-  gchar      *help;
-  gchar      *help_id;
-  gchar      *authors;
-  gchar      *copyright;
-  gchar      *date;
   guint32     type;
   guint32     nparams;
   guint32     nreturn_vals;

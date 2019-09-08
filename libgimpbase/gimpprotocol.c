@@ -1201,34 +1201,12 @@ _gp_proc_install_read (GIOChannel      *channel,
   gint           i;
 
   if (! _gimp_wire_read_string (channel,
-                                &proc_install->name, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_string (channel,
-                                &proc_install->blurb, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_string (channel,
-                                &proc_install->help, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_string (channel,
-                                &proc_install->help_id, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_string (channel,
-                                &proc_install->authors, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_string (channel,
-                                &proc_install->copyright, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_string (channel,
-                                &proc_install->date, 1, user_data))
-    goto cleanup;
-
-  if (! _gimp_wire_read_int32 (channel,
-                               &proc_install->type, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
-                               &proc_install->nparams, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+                                &proc_install->name, 1, user_data)   ||
+      ! _gimp_wire_read_int32 (channel,
+                               &proc_install->type, 1, user_data)    ||
+      ! _gimp_wire_read_int32 (channel,
+                               &proc_install->nparams, 1, user_data) ||
+      ! _gimp_wire_read_int32 (channel,
                                &proc_install->nreturn_vals, 1, user_data))
     goto cleanup;
 
@@ -1257,12 +1235,6 @@ _gp_proc_install_read (GIOChannel      *channel,
 
  cleanup:
   g_free (proc_install->name);
-  g_free (proc_install->blurb);
-  g_free (proc_install->help);
-  g_free (proc_install->help_id);
-  g_free (proc_install->authors);
-  g_free (proc_install->copyright);
-  g_free (proc_install->date);
 
   if (proc_install->params)
     {
@@ -1441,34 +1413,12 @@ _gp_proc_install_write (GIOChannel      *channel,
   gint           i;
 
   if (! _gimp_wire_write_string (channel,
-                                 &proc_install->name, 1, user_data))
-    return;
-  if (! _gimp_wire_write_string (channel,
-                                 &proc_install->blurb, 1, user_data))
-    return;
-  if (! _gimp_wire_write_string (channel,
-                                 &proc_install->help, 1, user_data))
-    return;
-  if (! _gimp_wire_write_string (channel,
-                                 &proc_install->help_id, 1, user_data))
-    return;
-  if (! _gimp_wire_write_string (channel,
-                                 &proc_install->authors, 1, user_data))
-    return;
-  if (! _gimp_wire_write_string (channel,
-                                 &proc_install->copyright, 1, user_data))
-    return;
-  if (! _gimp_wire_write_string (channel,
-                                 &proc_install->date, 1, user_data))
-    return;
-
-  if (! _gimp_wire_write_int32 (channel,
-                                &proc_install->type, 1, user_data))
-    return;
-  if (! _gimp_wire_write_int32 (channel,
-                                &proc_install->nparams, 1, user_data))
-    return;
-  if (! _gimp_wire_write_int32 (channel,
+                                 &proc_install->name, 1, user_data)   ||
+      ! _gimp_wire_write_int32 (channel,
+                                &proc_install->type, 1, user_data)    ||
+      ! _gimp_wire_write_int32 (channel,
+                                &proc_install->nparams, 1, user_data) ||
+      ! _gimp_wire_write_int32 (channel,
                                 &proc_install->nreturn_vals, 1, user_data))
     return;
 
@@ -1499,12 +1449,6 @@ _gp_proc_install_destroy (GimpWireMessage *msg)
       gint i;
 
       g_free (proc_install->name);
-      g_free (proc_install->blurb);
-      g_free (proc_install->help);
-      g_free (proc_install->help_id);
-      g_free (proc_install->authors);
-      g_free (proc_install->copyright);
-      g_free (proc_install->date);
 
       for (i = 0; i < proc_install->nparams; i++)
         {

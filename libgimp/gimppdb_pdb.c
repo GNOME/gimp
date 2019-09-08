@@ -545,6 +545,50 @@ _gimp_pdb_set_proc_icon (const gchar  *procedure_name,
 }
 
 /**
+ * _gimp_pdb_set_proc_documentation:
+ * @procedure_name: The procedure for which to install the menu path.
+ * @blurb: A short blurb.
+ * @help: Detailed procedure help.
+ * @help_id: The procedure help_id.
+ *
+ * Set the documentation for a plug-in procedure.
+ *
+ * This procedure sets the documentation for the given procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_set_proc_documentation (const gchar *procedure_name,
+                                  const gchar *blurb,
+                                  const gchar *help,
+                                  const gchar *help_id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, blurb,
+                                          G_TYPE_STRING, help,
+                                          G_TYPE_STRING, help_id,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-proc-documentation",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_pdb_get_proc_documentation:
  * @procedure_name: The procedure name.
  * @blurb: (out) (transfer full): A short blurb.
@@ -592,6 +636,50 @@ _gimp_pdb_get_proc_documentation (const gchar  *procedure_name,
       *help = GIMP_VALUES_DUP_STRING (return_vals, 2);
       *help_id = GIMP_VALUES_DUP_STRING (return_vals, 3);
     }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_set_proc_attribution:
+ * @procedure_name: The procedure for which to install the menu path.
+ * @authors: Authors of the procedure.
+ * @copyright: The copyright.
+ * @date: Copyright date.
+ *
+ * Set the attribution for a plug-in procedure.
+ *
+ * This procedure sets the attribution for the given procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_set_proc_attribution (const gchar *procedure_name,
+                                const gchar *authors,
+                                const gchar *copyright,
+                                const gchar *date)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, authors,
+                                          G_TYPE_STRING, copyright,
+                                          G_TYPE_STRING, date,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-proc-attribution",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   gimp_value_array_unref (return_vals);
 

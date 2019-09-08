@@ -551,6 +551,46 @@ CODE
     );
 }
 
+sub pdb_set_proc_documentation {
+    $blurb = "Set the documentation for a plug-in procedure.";
+
+    $help = <<HELP;
+This procedure sets the documentation for the given procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
+	  desc => 'The procedure for which to install the menu path' },
+	{ name => 'blurb', type => 'string', null_ok => 1,
+	  desc => 'A short blurb' },
+	{ name => 'help', type => 'string', null_ok => 1,
+	  desc => 'Detailed procedure help' },
+	{ name => 'help_id', type => 'string', null_ok => 1,
+	  desc => 'The procedure help_id' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_proc_help (plug_in, procedure_name,
+                                            blurb, help, help_id);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_get_proc_documentation {
     $blurb = <<'BLURB';
 Queries the procedural database for documentation on the specified procedure.
@@ -595,6 +635,46 @@ HELP
         }
       else
         success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_set_proc_attribution {
+    $blurb = "Set the attribution for a plug-in procedure.";
+
+    $help = <<HELP;
+This procedure sets the attribution for the given procedure.
+HELP
+
+    &mitch_pdb_misc('2019', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
+	  desc => 'The procedure for which to install the menu path' },
+	{ name => 'authors', type => 'string', null_ok => 1,
+	  desc => 'Authors of the procedure' },
+	{ name => 'copyright', type => 'string', null_ok => 1,
+	  desc => 'The copyright' },
+	{ name => 'date', type => 'string', null_ok => 1,
+	  desc => 'Copyright date' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_proc_attribution (plug_in, procedure_name,
+                                                   authors, copyright, date);
     }
   else
     success = FALSE;
@@ -930,7 +1010,9 @@ CODE
             pdb_add_proc_menu_path
             pdb_get_proc_menu_paths
             pdb_set_proc_icon
+            pdb_set_proc_documentation
             pdb_get_proc_documentation
+            pdb_set_proc_attribution
             pdb_get_proc_attribution
             pdb_get_proc_argument
             pdb_get_proc_return_value

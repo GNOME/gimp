@@ -548,6 +548,43 @@ pdb_set_proc_icon_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+pdb_set_proc_documentation_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *blurb;
+  const gchar *help;
+  const gchar *help_id;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  blurb = g_value_get_string (gimp_value_array_index (args, 1));
+  help = g_value_get_string (gimp_value_array_index (args, 2));
+  help_id = g_value_get_string (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_proc_help (plug_in, procedure_name,
+                                                blurb, help, help_id);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 pdb_get_proc_documentation_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
@@ -595,6 +632,43 @@ pdb_get_proc_documentation_invoker (GimpProcedure         *procedure,
     }
 
   return return_vals;
+}
+
+static GimpValueArray *
+pdb_set_proc_attribution_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *authors;
+  const gchar *copyright;
+  const gchar *date;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  authors = g_value_get_string (gimp_value_array_index (args, 1));
+  copyright = g_value_get_string (gimp_value_array_index (args, 2));
+  date = g_value_get_string (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_proc_attribution (plug_in, procedure_name,
+                                                       authors, copyright, date);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -1285,6 +1359,51 @@ register_pdb_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-pdb-set-proc-documentation
+   */
+  procedure = gimp_procedure_new (pdb_set_proc_documentation_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-proc-documentation");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the documentation for a plug-in procedure.",
+                                  "This procedure sets the documentation for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure for which to install the menu path",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("blurb",
+                                                       "blurb",
+                                                       "A short blurb",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("help",
+                                                       "help",
+                                                       "Detailed procedure help",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("help-id",
+                                                       "help id",
+                                                       "The procedure help_id",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-pdb-get-proc-documentation
    */
   procedure = gimp_procedure_new (pdb_get_proc_documentation_invoker);
@@ -1326,6 +1445,51 @@ register_pdb_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-proc-attribution
+   */
+  procedure = gimp_procedure_new (pdb_set_proc_attribution_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-proc-attribution");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the attribution for a plug-in procedure.",
+                                  "This procedure sets the attribution for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure for which to install the menu path",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("authors",
+                                                       "authors",
+                                                       "Authors of the procedure",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("copyright",
+                                                       "copyright",
+                                                       "The copyright",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("date",
+                                                       "date",
+                                                       "Copyright date",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
