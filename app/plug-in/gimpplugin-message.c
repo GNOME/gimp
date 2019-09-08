@@ -752,8 +752,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   /*  Sanity check strings for UTF-8 validity  */
 
-#define VALIDATE(str)         (g_utf8_validate ((str), -1, NULL))
-#define VALIDATE_OR_NULL(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
+#define VALIDATE(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
 
   for (i = 0; i < proc_install->nparams && valid_utf8 && ! null_name; i++)
     {
@@ -761,9 +760,9 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
         {
           null_name = TRUE;
         }
-      else if (! (VALIDATE         (proc_install->params[i].name) &&
-                  VALIDATE_OR_NULL (proc_install->params[i].nick) &&
-                  VALIDATE_OR_NULL (proc_install->params[i].blurb)))
+      else if (! (VALIDATE (proc_install->params[i].name) &&
+                  VALIDATE (proc_install->params[i].nick) &&
+                  VALIDATE (proc_install->params[i].blurb)))
         {
           valid_utf8 = FALSE;
         }
@@ -775,16 +774,15 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
         {
           null_name = TRUE;
         }
-      else if (! (VALIDATE         (proc_install->return_vals[i].name) &&
-                  VALIDATE_OR_NULL (proc_install->return_vals[i].nick) &&
-                  VALIDATE_OR_NULL (proc_install->return_vals[i].blurb)))
+      else if (! (VALIDATE (proc_install->return_vals[i].name) &&
+                  VALIDATE (proc_install->return_vals[i].nick) &&
+                  VALIDATE (proc_install->return_vals[i].blurb)))
         {
           valid_utf8 = FALSE;
         }
     }
 
 #undef VALIDATE
-#undef VALIDATE_OR_NULL
 
   if (null_name)
     {
@@ -838,30 +836,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
         _gimp_gp_param_def_to_param_spec (&proc_install->params[i]);
 
       if (pspec)
-        {
-          if (i == 0 &&
-              G_IS_PARAM_SPEC_INT (pspec) &&
-              (! strcmp ("run-mode", g_param_spec_get_name (pspec)) ||
-               ! strcmp ("run_mode", g_param_spec_get_name (pspec))))
-            {
-              GParamSpec *enum_spec =
-                g_param_spec_enum (g_param_spec_get_name (pspec),
-                                   g_param_spec_get_nick (pspec),
-                                   g_param_spec_get_blurb (pspec),
-                                   GIMP_TYPE_RUN_MODE,
-                                   G_PARAM_SPEC_INT (pspec)->default_value,
-                                   pspec->flags);
-
-              gimp_procedure_add_argument (procedure, enum_spec);
-
-              g_param_spec_ref_sink (pspec);
-              g_param_spec_unref (pspec);
-            }
-          else
-            {
-              gimp_procedure_add_argument (procedure, pspec);
-            }
-        }
+        gimp_procedure_add_argument (procedure, pspec);
     }
 
   for (i = 0; i < proc_install->nreturn_vals; i++)
