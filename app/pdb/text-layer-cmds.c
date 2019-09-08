@@ -1146,13 +1146,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_new_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-new");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Creates a new text layer.",
-                                     "This procedure creates a new text layer. The arguments are kept as simple as necessary for the normal case. All text attributes, however, can be modified with the appropriate gimp_text_layer_set_*() procedures. The new layer still needs to be added to the image, as this is not automatic. Add the new layer using 'gimp-image-insert-layer'.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Creates a new text layer.",
+                                  "This procedure creates a new text layer. The arguments are kept as simple as necessary for the normal case. All text attributes, however, can be modified with the appropriate gimp_text_layer_set_*() procedures. The new layer still needs to be added to the image, as this is not automatic. Add the new layer using 'gimp-image-insert-layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -1202,13 +1203,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_text_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-text");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the text from a text layer as string.",
-                                     "This procedure returns the text from a text layer as a string.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the text from a text layer as string.",
+                                  "This procedure returns the text from a text layer as a string.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1231,13 +1233,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_text_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-text");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the text of a text layer.",
-                                     "This procedure changes the text of a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the text of a text layer.",
+                                  "This procedure changes the text of a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1260,13 +1263,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_markup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-markup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the markup from a text layer as string.",
-                                     "This procedure returns the markup of the styles from a text layer. The markup will be in the form of Pango's markup - See https://www.pango.org/ for more information about Pango and its markup. Note: Setting the markup of a text layer using Pango's markup is not supported for now.",
-                                     NULL,
-                                     "Barak Itkin <lightningismyname@gmail.com>",
-                                     "Barak Itkin",
-                                     "2010");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the markup from a text layer as string.",
+                                  "This procedure returns the markup of the styles from a text layer. The markup will be in the form of Pango's markup - See https://www.pango.org/ for more information about Pango and its markup. Note: Setting the markup of a text layer using Pango's markup is not supported for now.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Barak Itkin <lightningismyname@gmail.com>",
+                                         "Barak Itkin",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1289,13 +1293,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_font_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-font");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the font from a text layer as string.",
-                                     "This procedure returns the name of the font from a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the font from a text layer as string.",
+                                  "This procedure returns the name of the font from a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1318,13 +1323,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_font_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-font");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the font of a text layer.",
-                                     "This procedure modifies the font used in the specified text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the font of a text layer.",
+                                  "This procedure modifies the font used in the specified text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1347,13 +1353,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_font_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-font-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the font size from a text layer.",
-                                     "This procedure returns the size of the font which is used in a text layer. You will receive the size as a float 'font-size' in 'unit' units.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the font size from a text layer.",
+                                  "This procedure returns the size of the font which is used in a text layer. You will receive the size as a float 'font-size' in 'unit' units.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1383,13 +1390,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_font_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-font-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the font size.",
-                                     "This procedure changes the font size of a text layer. The size of your font will be a double 'font-size' of 'unit' units.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the font size.",
+                                  "This procedure changes the font size of a text layer. The size of your font will be a double 'font-size' of 'unit' units.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1419,13 +1427,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_antialias_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-antialias");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Check if antialiasing is used in the text layer.",
-                                     "This procedure checks if antialiasing is enabled in the specified text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Check if antialiasing is used in the text layer.",
+                                  "This procedure checks if antialiasing is enabled in the specified text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1447,13 +1456,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_antialias_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-antialias");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Enable/disable anti-aliasing in a text layer.",
-                                     "This procedure enables or disables anti-aliasing of the text in a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Enable/disable anti-aliasing in a text layer.",
+                                  "This procedure enables or disables anti-aliasing of the text in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1475,13 +1485,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_hint_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-hint-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get information about hinting in the specified text layer.",
-                                     "This procedure provides information about the hinting that is being used in a text layer. Hinting can be optimized for fidelity or contrast or it can be turned entirely off.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get information about hinting in the specified text layer.",
+                                  "This procedure provides information about the hinting that is being used in a text layer. Hinting can be optimized for fidelity or contrast or it can be turned entirely off.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1504,13 +1515,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_hint_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-hint-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Control how font outlines are hinted in a text layer.",
-                                     "This procedure sets the hint style for font outlines in a text layer. This controls whether to fit font outlines to the pixel grid, and if so, whether to optimize for fidelity or contrast.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Control how font outlines are hinted in a text layer.",
+                                  "This procedure sets the hint style for font outlines in a text layer. This controls whether to fit font outlines to the pixel grid, and if so, whether to optimize for fidelity or contrast.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1533,13 +1545,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_kerning_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-kerning");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Check if kerning is used in the text layer.",
-                                     "This procedure checks if kerning is enabled in the specified text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Check if kerning is used in the text layer.",
+                                  "This procedure checks if kerning is enabled in the specified text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1561,13 +1574,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_kerning_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-kerning");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Enable/disable kerning in a text layer.",
-                                     "This procedure enables or disables kerning in a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Enable/disable kerning in a text layer.",
+                                  "This procedure enables or disables kerning in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1589,13 +1603,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_language_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-language");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the language used in the text layer.",
-                                     "This procedure returns the language string which is set for the text in the text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the language used in the text layer.",
+                                  "This procedure returns the language string which is set for the text in the text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1618,13 +1633,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_language_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-language");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the language of the text layer.",
-                                     "This procedure sets the language of the text in text layer. For some scripts the language has an influence of how the text is rendered.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the language of the text layer.",
+                                  "This procedure sets the language of the text in text layer. For some scripts the language has an influence of how the text is rendered.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1647,13 +1663,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_base_direction_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-base-direction");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the base direction used for rendering the text layer.",
-                                     "This procedure returns the base direction used for rendering the text in the text layer",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the base direction used for rendering the text layer.",
+                                  "This procedure returns the base direction used for rendering the text in the text layer",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1676,13 +1693,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_base_direction_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-base-direction");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the base direction in the text layer.",
-                                     "This procedure sets the base direction used in applying the Unicode bidirectional algorithm when rendering the text.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the base direction in the text layer.",
+                                  "This procedure sets the base direction used in applying the Unicode bidirectional algorithm when rendering the text.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1705,13 +1723,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_justification_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-justification");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the text justification information of the text layer.",
-                                     "This procedure returns the alignment of the lines in the text layer relative to each other.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the text justification information of the text layer.",
+                                  "This procedure returns the alignment of the lines in the text layer relative to each other.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1734,13 +1753,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_justification_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-justification");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the justification of the text in a text layer.",
-                                     "This procedure sets the alignment of the lines in the text layer relative to each other.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the justification of the text in a text layer.",
+                                  "This procedure sets the alignment of the lines in the text layer relative to each other.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1763,13 +1783,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the color of the text in a text layer.",
-                                     "This procedure returns the color of the text in a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the color of the text in a text layer.",
+                                  "This procedure returns the color of the text in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1792,13 +1813,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the color of the text in the text layer.",
-                                     "This procedure sets the text color in the text layer 'layer'.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the color of the text in the text layer.",
+                                  "This procedure sets the text color in the text layer 'layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1821,13 +1843,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_indent_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-indent");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line indentation of text layer.",
-                                     "This procedure returns the indentation of the first line in a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line indentation of text layer.",
+                                  "This procedure returns the indentation of the first line in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1849,13 +1872,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_indent_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-indent");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the indentation of the first line in a text layer.",
-                                     "This procedure sets the indentation of the first line in the text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the indentation of the first line in a text layer.",
+                                  "This procedure sets the indentation of the first line in the text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1877,13 +1901,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_line_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-line-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the spacing between lines of text.",
-                                     "This procedure returns the line-spacing between lines of text in a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the spacing between lines of text.",
+                                  "This procedure returns the line-spacing between lines of text in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1905,13 +1930,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_line_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-line-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Adjust the line spacing in a text layer.",
-                                     "This procedure sets the additional spacing used between lines a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Adjust the line spacing in a text layer.",
+                                  "This procedure sets the additional spacing used between lines a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1933,13 +1959,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_get_letter_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-get-letter-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the letter spacing used in a text layer.",
-                                     "This procedure returns the additional spacing between the single glyphs in a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the letter spacing used in a text layer.",
+                                  "This procedure returns the additional spacing between the single glyphs in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1961,13 +1988,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_set_letter_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-set-letter-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Adjust the letter spacing in a text layer.",
-                                     "This procedure sets the additional spacing between the single glyphs in a text layer.",
-                                     NULL,
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Adjust the letter spacing in a text layer.",
+                                  "This procedure sets the additional spacing between the single glyphs in a text layer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                         "Marcus Heese",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",
@@ -1989,13 +2017,14 @@ register_text_layer_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_layer_resize_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-layer-resize");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Resize the box of a text layer.",
-                                     "This procedure changes the width and height of a text layer while keeping it as a text layer and not converting it to a bitmap like 'gimp-layer-resize' would do.",
-                                     NULL,
-                                     "Barak Itkin <lightningismyname@gmail.com>",
-                                     "Barak Itkin",
-                                     "2009");
+  gimp_procedure_set_static_help (procedure,
+                                  "Resize the box of a text layer.",
+                                  "This procedure changes the width and height of a text layer while keeping it as a text layer and not converting it to a bitmap like 'gimp-layer-resize' would do.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Barak Itkin <lightningismyname@gmail.com>",
+                                         "Barak Itkin",
+                                         "2009");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer ("layer",
                                                       "layer",

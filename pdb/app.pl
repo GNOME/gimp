@@ -695,13 +695,14 @@ sub generate {
   procedure = gimp_procedure_new (${name}_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "$procedure_name");
-  gimp_procedure_set_static_strings (procedure,
-                                     @{[ &quotewrap($blurb, 2, 37) ]},
-                                     @{[ &quotewrap($help,  2, 37) ]},
-                                     NULL,
-                                     "$proc->{author}",
-                                     "$proc->{copyright}",
-                                     "$proc->{date}");
+  gimp_procedure_set_static_help (procedure,
+                                  @{[ &quotewrap($blurb, 2, 37) ]},
+                                  @{[ &quotewrap($help,  2, 37) ]},
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "$proc->{author}",
+                                         "$proc->{copyright}",
+                                         "$proc->{date}");
 CODE
 
         if ($proc->{deprecated}) {

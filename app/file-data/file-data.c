@@ -69,16 +69,17 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-gbr-load");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads GIMP brushes",
-                                     "Loads GIMP brushes (1 or 4 bpp "
-                                     "and old .gpb format)",
-                                     NULL,
-                                     "Tim Newsome, Jens Lautenbacher, "
-                                     "Sven Neumann, Michael Natterer",
-                                     "Tim Newsome, Jens Lautenbacher, "
-                                     "Sven Neumann, Michael Natterer",
-                                     "1995-2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads GIMP brushes",
+                                  "Loads GIMP brushes (1 or 4 bpp "
+                                  "and old .gpb format)",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Tim Newsome, Jens Lautenbacher, "
+                                         "Sven Neumann, Michael Natterer",
+                                         "Tim Newsome, Jens Lautenbacher, "
+                                         "Sven Neumann, Michael Natterer",
+                                         "1995-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -139,13 +140,14 @@ file_data_init (Gimp *gimp)
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "file-gbr-save-internal");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Exports Gimp brush file (.GBR)",
-                                     "Exports Gimp brush file (.GBR)",
-                                     NULL,
-                                     "Tim Newsome, Michael Natterer",
-                                     "Tim Newsome, Michael Natterer",
-                                     "1995-2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Exports Gimp brush file (.GBR)",
+                                  "Exports Gimp brush file (.GBR)",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Tim Newsome, Michael Natterer",
+                                         "Tim Newsome, Michael Natterer",
+                                         "1995-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -221,14 +223,15 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-gih-load");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads GIMP animated brushes",
-                                     "This procedure loads a GIMP brush "
-                                     "pipe as an image.",
-                                     NULL,
-                                     "Tor Lillqvist, Michael Natterer",
-                                     "Tor Lillqvist, Michael Natterer",
-                                     "1999-2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads GIMP animated brushes",
+                                  "This procedure loads a GIMP brush "
+                                  "pipe as an image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Tor Lillqvist, Michael Natterer",
+                                         "Tor Lillqvist, Michael Natterer",
+                                         "1999-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -289,13 +292,14 @@ file_data_init (Gimp *gimp)
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "file-gih-save-internal");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Exports Gimp animated brush file (.gih)",
-                                     "Exports Gimp animated brush file (.gih)",
-                                     NULL,
-                                     "Tor Lillqvist, Michael Natterer",
-                                     "Tor Lillqvist, Michael Natterer",
-                                     "1999-2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Exports Gimp animated brush file (.gih)",
+                                  "Exports Gimp animated brush file (.gih)",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Tor Lillqvist, Michael Natterer",
+                                         "Tor Lillqvist, Michael Natterer",
+                                         "1999-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -379,13 +383,14 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-pat-load");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads GIMP patterns",
-                                     "Loads GIMP patterns",
-                                     NULL,
-                                     "Tim Newsome, Michael Natterer",
-                                     "Tim Newsome, Michael Natterer",
-                                     "1997-2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads GIMP patterns",
+                                  "Loads GIMP patterns",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Tim Newsome, Michael Natterer",
+                                         "Tim Newsome, Michael Natterer",
+                                         "1997-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -445,13 +450,14 @@ file_data_init (Gimp *gimp)
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "file-pat-save-internal");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Exports Gimp pattern file (.PAT)",
-                                     "Exports Gimp pattern file (.PAT)",
-                                     NULL,
-                                     "Tim Newsome, Michael Natterer",
-                                     "Tim Newsome, Michael Natterer",
-                                     "1995-2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Exports Gimp pattern file (.PAT)",
+                                  "Exports Gimp pattern file (.PAT)",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Tim Newsome, Michael Natterer",
+                                         "Tim Newsome, Michael Natterer",
+                                         "1995-2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -523,11 +529,12 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-gex-load");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads GIMP extension",
-                                     "Loads GIMP extension",
-                                     NULL,
-                                     "Jehan", "Jehan", "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads GIMP extension",
+                                  "Loads GIMP extension",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan", "Jehan", "2019");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",

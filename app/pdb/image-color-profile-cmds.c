@@ -335,13 +335,14 @@ register_image_color_profile_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_get_color_profile_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-color-profile");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the image's color profile",
-                                     "This procedure returns the image's color profile, or NULL if the image has no color profile assigned.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the image's color profile",
+                                  "This procedure returns the image's color profile, or NULL if the image has no color profile assigned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -368,13 +369,14 @@ register_image_color_profile_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_get_effective_color_profile_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-effective-color-profile");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the color profile that is used for the image",
-                                     "This procedure returns the color profile that is actually used for this image, which is the profile returned by 'gimp-image-get-color-profile' if the image has a profile assigned, or a generated default RGB or grayscale profile, according to the image's type.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the color profile that is used for the image",
+                                  "This procedure returns the color profile that is actually used for this image, which is the profile returned by 'gimp-image-get-color-profile' if the image has a profile assigned, or a generated default RGB or grayscale profile, according to the image's type.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -401,13 +403,14 @@ register_image_color_profile_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_set_color_profile_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-color-profile");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the image's color profile",
-                                     "This procedure sets the image's color profile, or unsets it if NULL is passed as 'color_profile'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the image's color profile",
+                                  "This procedure sets the image's color profile, or unsets it if NULL is passed as 'color_profile'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -434,13 +437,14 @@ register_image_color_profile_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_set_color_profile_from_file_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-color-profile-from-file");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the image's color profile from an ICC file",
-                                     "This procedure sets the image's color profile from a file containing an ICC profile, or unsets it if NULL is passed as 'uri'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the image's color profile from an ICC file",
+                                  "This procedure sets the image's color profile from a file containing an ICC profile, or unsets it if NULL is passed as 'uri'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -463,13 +467,14 @@ register_image_color_profile_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_convert_color_profile_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-color-profile");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Convert the image's layers to a color profile",
-                                     "This procedure converts from the image's color profile (or the default RGB or grayscale profile if none is set) to the given color profile. Only RGB and grayscale color profiles are accepted, according to the image's type.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Convert the image's layers to a color profile",
+                                  "This procedure converts from the image's color profile (or the default RGB or grayscale profile if none is set) to the given color profile. Only RGB and grayscale color profiles are accepted, according to the image's type.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -509,13 +514,14 @@ register_image_color_profile_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_convert_color_profile_from_file_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-convert-color-profile-from-file");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Convert the image's layers to a color profile",
-                                     "This procedure converts from the image's color profile (or the default RGB or grayscale profile if none is set) to an ICC profile specified by 'uri'. Only RGB and grayscale color profiles are accepted, according to the image's type.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Convert the image's layers to a color profile",
+                                  "This procedure converts from the image's color profile (or the default RGB or grayscale profile if none is set) to an ICC profile specified by 'uri'. Only RGB and grayscale color profiles are accepted, according to the image's type.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

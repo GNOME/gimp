@@ -860,13 +860,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_temp_name_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-temp-name");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Generates a unique temporary PDB name.",
-                                     "This procedure generates a temporary PDB entry name that is guaranteed to be unique.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Generates a unique temporary PDB name.",
+                                  "This procedure generates a temporary PDB entry name that is guaranteed to be unique.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("temp-name",
                                                            "temp name",
@@ -883,13 +884,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_dump_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-dump");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Dumps the current contents of the procedural database",
-                                     "This procedure dumps the contents of the procedural database to the specified file. The file will contain all of the information provided for each registered procedure.",
-                                     NULL,
-                                     "Spencer Kimball & Josh MacDonald",
-                                     "Spencer Kimball & Josh MacDonald & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Dumps the current contents of the procedural database",
+                                  "This procedure dumps the contents of the procedural database to the specified file. The file will contain all of the information provided for each registered procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Josh MacDonald",
+                                         "Spencer Kimball & Josh MacDonald & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",
@@ -906,13 +908,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_query_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-query");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for its contents using regular expression matching.",
-                                     "This procedure queries the contents of the procedural database. It is supplied with seven arguments matching procedures on { name, blurb, help, authors, copyright, date, procedure type}. This is accomplished using regular expression matching. For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\". There are two return arguments for this procedure. The first is the number of procedures matching the query. The second is a concatenated list of procedure names corresponding to those matching the query. If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for its contents using regular expression matching.",
+                                  "This procedure queries the contents of the procedural database. It is supplied with seven arguments matching procedures on { name, blurb, help, authors, copyright, date, procedure type}. This is accomplished using regular expression matching. For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\". There are two return arguments for this procedure. The first is the number of procedures matching the query. The second is a concatenated list of procedure names corresponding to those matching the query. If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -982,13 +985,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_proc_exists_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-proc-exists");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Checks if the specified procedure exists in the procedural database",
-                                     "This procedure checks if the specified procedure is registered in the procedural database.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Checks if the specified procedure exists in the procedural database",
+                                  "This procedure checks if the specified procedure is registered in the procedural database.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1011,13 +1015,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_info_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-info");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for information on the specified procedure.",
-                                     "This procedure returns information on the specified procedure. The procedure type, number of input, and number of return values are returned. For specific information on each input argument and return value, use the 'gimp-pdb-db-proc-argument' and 'gimp-pdb-db-proc-return-value' procedures.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for information on the specified procedure.",
+                                  "This procedure returns information on the specified procedure. The procedure type, number of input, and number of return values are returned. For specific information on each input argument and return value, use the 'gimp-pdb-db-proc-argument' and 'gimp-pdb-db-proc-return-value' procedures.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1053,13 +1058,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_set_proc_image_types_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-image-types");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the supported image types for a plug-in procedure.",
-                                     "This procedure sets the supported images types for the given procedure.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the supported image types for a plug-in procedure.",
+                                  "This procedure sets the supported images types for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1083,13 +1089,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_image_types_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-image-types");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for the image types supported by the specified procedure.",
-                                     "This procedure returns the image types supported by the specified procedure.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for the image types supported by the specified procedure.",
+                                  "This procedure returns the image types supported by the specified procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1113,13 +1120,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_set_proc_menu_label_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-menu-label");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the menu label for a plug-in procedure.",
-                                     "This procedure sets the menu label for the given procedure.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the menu label for a plug-in procedure.",
+                                  "This procedure sets the menu label for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1143,13 +1151,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_menu_label_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-menu-label");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for the procedure's menu label.",
-                                     "This procedure returns the menu label of the specified procedure.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for the procedure's menu label.",
+                                  "This procedure returns the menu label of the specified procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1173,13 +1182,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_add_proc_menu_path_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-add-proc-menu-path");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Register an additional menu path for a plug-in procedure.",
-                                     "This procedure installs an additional menu entry for the given procedure.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Register an additional menu path for a plug-in procedure.",
+                                  "This procedure installs an additional menu entry for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1203,13 +1213,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_menu_paths_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-menu-paths");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for the procedure's menu paths.",
-                                     "This procedure returns the menu paths of the specified procedure.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for the procedure's menu paths.",
+                                  "This procedure returns the menu paths of the specified procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1237,13 +1248,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_set_proc_icon_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-proc-icon");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Register an icon for a plug-in procedure.",
-                                     "This procedure installs an icon for the given procedure.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Register an icon for a plug-in procedure.",
+                                  "This procedure installs an icon for the given procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1278,13 +1290,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_documentation_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-documentation");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for documentation on the specified procedure.",
-                                     "This procedure returns documentation on the specified procedure. A short blurb, detailed help and help_id.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for documentation on the specified procedure.",
+                                  "This procedure returns documentation on the specified procedure. A short blurb, detailed help and help_id.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1322,13 +1335,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_attribution_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-attribution");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for attribution information on the specified procedure.",
-                                     "This procedure returns attribution information on the specified procedure. The authors, copyright information and date are returned.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for attribution information on the specified procedure.",
+                                  "This procedure returns attribution information on the specified procedure. The authors, copyright information and date are returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1366,13 +1380,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_argument_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-argument");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for information on the specified procedure's argument.",
-                                     "This procedure returns the #GParamSpec of procedure_name's argument.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for information on the specified procedure's argument.",
+                                  "This procedure returns the #GParamSpec of procedure_name's argument.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1401,13 +1416,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_proc_return_value_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-proc-return-value");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the procedural database for information on the specified procedure's return value.",
-                                     "This procedure returns the #GParamSpec of procedure_name's return value.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the procedural database for information on the specified procedure's return value.",
+                                  "This procedure returns the #GParamSpec of procedure_name's return value.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1436,13 +1452,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_data_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-data");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns data associated with the specified identifier.",
-                                     "This procedure returns any data which may have been associated with the specified identifier. The data is a variable length array of bytes. If no data has been associated with the identifier, an error is returned.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns data associated with the specified identifier.",
+                                  "This procedure returns any data which may have been associated with the specified identifier. The data is a variable length array of bytes. If no data has been associated with the identifier, an error is returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
@@ -1470,13 +1487,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_get_data_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-data-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns size of data associated with the specified identifier.",
-                                     "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
-                                     NULL,
-                                     "Nick Lamb",
-                                     "Nick Lamb",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns size of data associated with the specified identifier.",
+                                  "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Nick Lamb",
+                                         "Nick Lamb",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
@@ -1499,13 +1517,14 @@ register_pdb_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pdb_set_data_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-data");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Associates the specified identifier with the supplied data.",
-                                     "This procedure associates the supplied data with the provided identifier. The data may be subsequently retrieved by a call to 'procedural-db-get-data'.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Associates the specified identifier with the supplied data.",
+                                  "This procedure associates the supplied data with the provided identifier. The data may be subsequently retrieved by a call to 'procedural-db-get-data'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",

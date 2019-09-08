@@ -46,14 +46,16 @@ struct _GimpProcedure
 
   GimpPDBProcType   proc_type;      /* Type of procedure              */
 
-  gboolean          static_strings; /* Are the strings allocated?     */
-
+  gboolean          static_help;    /* Are the strings allocated?     */
   gchar            *blurb;          /* Short procedure description    */
   gchar            *help;           /* Detailed help instructions     */
   gchar            *help_id;        /* Help ID                        */
+
+  gboolean          static_attribution;
   gchar            *authors;        /* Authors field                  */
   gchar            *copyright;      /* Copyright field                */
   gchar            *date;           /* Date field                     */
+
   gchar            *deprecated;     /* Replacement if deprecated      */
 
   gint32            num_args;       /* Number of procedure arguments  */
@@ -96,24 +98,29 @@ GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
 
 GimpProcedure  * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
 
-void             gimp_procedure_set_strings        (GimpProcedure    *procedure,
+void             gimp_procedure_set_help           (GimpProcedure    *procedure,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
-                                                    const gchar      *help_id,
-                                                    const gchar      *authors,
-                                                    const gchar      *copyright,
-                                                    const gchar      *date);
-void             gimp_procedure_set_static_strings (GimpProcedure    *procedure,
+                                                    const gchar      *help_id);
+void             gimp_procedure_set_static_help    (GimpProcedure    *procedure,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
-                                                    const gchar      *help_id,
-                                                    const gchar      *authors,
-                                                    const gchar      *copyright,
-                                                    const gchar      *date);
-void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
+                                                    const gchar      *help_id);
+void             gimp_procedure_take_help          (GimpProcedure    *procedure,
                                                     gchar            *blurb,
                                                     gchar            *help,
-                                                    gchar            *help_id,
+                                                    gchar            *help_id);
+
+void             gimp_procedure_set_attribution    (GimpProcedure    *procedure,
+                                                    const gchar      *authors,
+                                                    const gchar      *copyright,
+                                                    const gchar      *date);
+void             gimp_procedure_set_static_attribution
+                                                   (GimpProcedure    *procedure,
+                                                    const gchar      *authors,
+                                                    const gchar      *copyright,
+                                                    const gchar      *date);
+void             gimp_procedure_take_attribution   (GimpProcedure    *procedure,
                                                     gchar            *authors,
                                                     gchar            *copyright,
                                                     gchar            *date);

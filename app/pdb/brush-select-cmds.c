@@ -158,13 +158,14 @@ register_brush_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (brushes_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Invokes the Gimp brush selection.",
-                                     "This procedure opens the brush selection dialog.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Invokes the Gimp brush selection.",
+                                  "This procedure opens the brush selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
@@ -214,13 +215,14 @@ register_brush_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (brushes_close_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-close-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Close the brush selection dialog.",
-                                     "This procedure closes an opened brush selection dialog.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Close the brush selection dialog.",
+                                  "This procedure closes an opened brush selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
@@ -237,13 +239,14 @@ register_brush_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (brushes_set_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-set-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the current brush in a brush selection dialog.",
-                                     "Sets the current brush in a brush selection dialog.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the current brush in a brush selection dialog.",
+                                  "Sets the current brush in a brush selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",

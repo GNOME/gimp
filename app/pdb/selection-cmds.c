@@ -498,13 +498,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_bounds_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-bounds");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Find the bounding box of the current selection.",
-                                     "This procedure returns whether there is a selection for the specified image. If there is one, the upper left and lower right corners of the bounding box are returned. These coordinates are relative to the image. Please note that the pixel specified by the lower right coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Find the bounding box of the current selection.",
+                                  "This procedure returns whether there is a selection for the specified image. If there is one, the upper left and lower right corners of the bounding box are returned. These coordinates are relative to the image. Please note that the pixel specified by the lower right coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -550,13 +551,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_value_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-value");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Find the value of the selection at the specified coordinates.",
-                                     "This procedure returns the value of the selection at the specified coordinates. If the coordinates lie out of bounds, 0 is returned.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Find the value of the selection at the specified coordinates.",
+                                  "This procedure returns the value of the selection at the specified coordinates. If the coordinates lie out of bounds, 0 is returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -590,13 +592,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_is_empty_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-is-empty");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Determine whether the selection is empty.",
-                                     "This procedure returns TRUE if the selection for the specified image is empty.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Determine whether the selection is empty.",
+                                  "This procedure returns TRUE if the selection for the specified image is empty.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -618,13 +621,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_translate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-translate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Translate the selection by the specified offsets.",
-                                     "This procedure actually translates the selection for the specified image by the specified offsets. Regions that are translated from beyond the bounds of the image are set to empty. Valid regions of the selection which are translated beyond the bounds of the image because of this call are lost.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Translate the selection by the specified offsets.",
+                                  "This procedure actually translates the selection for the specified image by the specified offsets. Regions that are translated from beyond the bounds of the image are set to empty. Valid regions of the selection which are translated beyond the bounds of the image because of this call are lost.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -652,13 +656,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_float_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-float");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Float the selection from the specified drawable with initial offsets as specified.",
-                                     "This procedure determines the region of the specified drawable that lies beneath the current selection. The region is then cut from the drawable and the resulting data is made into a new layer which is instantiated as a floating selection. The offsets allow initial positioning of the new floating selection.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Float the selection from the specified drawable with initial offsets as specified.",
+                                  "This procedure determines the region of the specified drawable that lies beneath the current selection. The region is then cut from the drawable and the resulting data is made into a new layer which is instantiated as a floating selection. The offsets allow initial positioning of the new floating selection.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -692,13 +697,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_invert_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-invert");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Invert the selection mask.",
-                                     "This procedure inverts the selection mask. For every pixel in the selection channel, its new value is calculated as (255 - old-value).",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Invert the selection mask.",
+                                  "This procedure inverts the selection mask. For every pixel in the selection channel, its new value is calculated as (255 - old-value).",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -714,13 +720,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_sharpen_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-sharpen");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sharpen the selection mask.",
-                                     "This procedure sharpens the selection mask. For every pixel in the selection channel, if the value is > 127, the new pixel is assigned a value of 255. This removes any \"anti-aliasing\" that might exist in the selection mask's boundary.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sharpen the selection mask.",
+                                  "This procedure sharpens the selection mask. For every pixel in the selection channel, if the value is > 127, the new pixel is assigned a value of 255. This removes any \"anti-aliasing\" that might exist in the selection mask's boundary.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -736,13 +743,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_all_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-all");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Select all of the image.",
-                                     "This procedure sets the selection mask to completely encompass the image. Every pixel in the selection channel is set to 255.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Select all of the image.",
+                                  "This procedure sets the selection mask to completely encompass the image. Every pixel in the selection channel is set to 255.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -758,13 +766,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_none_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-none");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Deselect the entire image.",
-                                     "This procedure deselects the entire image. Every pixel in the selection channel is set to 0.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Deselect the entire image.",
+                                  "This procedure deselects the entire image. Every pixel in the selection channel is set to 0.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -780,13 +789,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_feather_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-feather");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Feather the image's selection",
-                                     "This procedure feathers the selection. Feathering is implemented using a gaussian blur.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Feather the image's selection",
+                                  "This procedure feathers the selection. Feathering is implemented using a gaussian blur.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -808,13 +818,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_border_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-border");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Border the image's selection",
-                                     "This procedure borders the selection. Bordering creates a new selection which is defined along the boundary of the previous selection at every point within the specified radius.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Border the image's selection",
+                                  "This procedure borders the selection. Bordering creates a new selection which is defined along the boundary of the previous selection at every point within the specified radius.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -836,13 +847,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_grow_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-grow");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Grow the image's selection",
-                                     "This procedure grows the selection. Growing involves expanding the boundary in all directions by the specified pixel amount.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Grow the image's selection",
+                                  "This procedure grows the selection. Growing involves expanding the boundary in all directions by the specified pixel amount.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -864,13 +876,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_shrink_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-shrink");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Shrink the image's selection",
-                                     "This procedure shrinks the selection. Shrinking involves trimming the existing selection boundary on all sides by the specified number of pixels.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Shrink the image's selection",
+                                  "This procedure shrinks the selection. Shrinking involves trimming the existing selection boundary on all sides by the specified number of pixels.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -892,13 +905,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_flood_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-flood");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Remove holes from the image's selection",
-                                     "This procedure removes holes from the selection, that can come from selecting a patchy area with the Fuzzy Select Tool. In technical terms this procedure floods the selection. See the Algorithms page in the developer wiki for details.",
-                                     NULL,
-                                     "Ell",
-                                     "Ell",
-                                     "2016");
+  gimp_procedure_set_static_help (procedure,
+                                  "Remove holes from the image's selection",
+                                  "This procedure removes holes from the selection, that can come from selecting a patchy area with the Fuzzy Select Tool. In technical terms this procedure floods the selection. See the Algorithms page in the developer wiki for details.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ell",
+                                         "Ell",
+                                         "2016");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -914,13 +928,14 @@ register_selection_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (selection_save_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-save");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Copy the selection mask to a new channel.",
-                                     "This procedure copies the selection mask and stores the content in a new channel. The new channel is automatically inserted into the image's list of channels.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Copy the selection mask to a new channel.",
+                                  "This procedure copies the selection mask and stores the content in a new channel. The new channel is automatically inserted into the image's list of channels.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

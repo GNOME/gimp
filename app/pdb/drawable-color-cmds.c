@@ -736,13 +736,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_brightness_contrast_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-brightness-contrast");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Modify brightness/contrast in the specified drawable.",
-                                     "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -0.5 and 0.5.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Modify brightness/contrast in the specified drawable.",
+                                  "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -0.5 and 0.5.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -770,13 +771,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_color_balance_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-color-balance");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Modify the color balance of the specified drawable.",
-                                     "Modify the color balance of the specified drawable. There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue. Negative values increase the amount of the former, positive values increase the amount of the latter. Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, mid-tones, and highlights in an image to be affected differently. The 'preserve-lum' parameter, if TRUE, ensures that the luminosity of each pixel remains fixed.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Modify the color balance of the specified drawable.",
+                                  "Modify the color balance of the specified drawable. There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue. Negative values increase the amount of the former, positive values increase the amount of the latter. Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, mid-tones, and highlights in an image to be affected differently. The 'preserve-lum' parameter, if TRUE, ensures that the luminosity of each pixel remains fixed.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -823,13 +825,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_colorize_hsl_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-colorize-hsl");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Render the drawable as a grayscale image seen through a colored glass.",
-                                     "Desaturates the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale drawables.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Render the drawable as a grayscale image seen through a colored glass.",
+                                  "Desaturates the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale drawables.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -863,13 +866,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_curves_explicit_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-curves-explicit");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Modifies the intensity curve(s) for specified drawable.",
-                                     "Modifies the intensity mapping for one channel in the specified drawable. The channel can be either an intensity component, or the value. The 'values' parameter is an array of doubles which explicitly defines how each pixel value in the drawable will be modified. Use the 'gimp-curves-spline' function to modify intensity levels with Catmull Rom splines.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Modifies the intensity curve(s) for specified drawable.",
+                                  "Modifies the intensity mapping for one channel in the specified drawable. The channel can be either an intensity component, or the value. The 'values' parameter is an array of doubles which explicitly defines how each pixel value in the drawable will be modified. Use the 'gimp-curves-spline' function to modify intensity levels with Catmull Rom splines.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -903,13 +907,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_curves_spline_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-curves-spline");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Modifies the intensity curve(s) for specified drawable.",
-                                     "Modifies the intensity mapping for one channel in the specified drawable. The channel can be either an intensity component, or the value. The 'points' parameter is an array of doubles which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Use the 'gimp-curves-explicit' function to explicitly modify intensity levels.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Modifies the intensity curve(s) for specified drawable.",
+                                  "Modifies the intensity mapping for one channel in the specified drawable. The channel can be either an intensity component, or the value. The 'points' parameter is an array of doubles which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Use the 'gimp-curves-explicit' function to explicitly modify intensity levels.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -943,13 +948,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_desaturate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-desaturate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Desaturate the contents of the specified drawable, with the specified formula.",
-                                     "This procedure desaturates the contents of the specified drawable, with the specified formula. This procedure only works on drawables of type RGB color.",
-                                     NULL,
-                                     "Karine Delvare",
-                                     "Karine Delvare",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Desaturate the contents of the specified drawable, with the specified formula.",
+                                  "This procedure desaturates the contents of the specified drawable, with the specified formula. This procedure only works on drawables of type RGB color.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Karine Delvare",
+                                         "Karine Delvare",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -972,13 +978,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_equalize_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-equalize");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Equalize the contents of the specified drawable.",
-                                     "This procedure equalizes the contents of the specified drawable. Each intensity channel is equalized independently. The equalized intensity is given as inten' = (255 - inten). The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area. If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Equalize the contents of the specified drawable.",
+                                  "This procedure equalizes the contents of the specified drawable. Each intensity channel is equalized independently. The equalized intensity is given as inten' = (255 - inten). The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area. If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1000,13 +1007,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_histogram_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-histogram");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns information on the intensity histogram for the specified drawable.",
-                                     "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. Second, a range of intensities are specified. The 'gimp-drawable-histogram' function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted. The returned mean, std_dev and median are in the range (0..255) for 8-bit images or if the plug-in is not precision-aware, and in the range (0.0..1.0) otherwise.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns information on the intensity histogram for the specified drawable.",
+                                  "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. Second, a range of intensities are specified. The 'gimp-drawable-histogram' function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted. The returned mean, std_dev and median are in the range (0..255) for 8-bit images or if the plug-in is not precision-aware, and in the range (0.0..1.0) otherwise.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1077,13 +1085,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_hue_saturation_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-hue-saturation");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Modify hue, lightness, and saturation in the specified drawable.",
-                                     "This procedure allows the hue, lightness, and saturation in the specified drawable to be modified. The 'hue-range' parameter provides the capability to limit range of affected hues. The 'overlap' parameter provides blending into neighboring hue channels when rendering.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Modify hue, lightness, and saturation in the specified drawable.",
+                                  "This procedure allows the hue, lightness, and saturation in the specified drawable to be modified. The 'hue-range' parameter provides the capability to limit range of affected hues. The 'overlap' parameter provides blending into neighboring hue channels when rendering.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1130,13 +1139,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_invert_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-invert");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Invert the contents of the specified drawable.",
-                                     "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten). If 'linear' is TRUE, the drawable is inverted in linear space.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Invert the contents of the specified drawable.",
+                                  "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten). If 'linear' is TRUE, the drawable is inverted in linear space.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1158,13 +1168,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_levels_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-levels");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Modifies intensity levels in the specified drawable.",
-                                     "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Modifies intensity levels in the specified drawable.",
+                                  "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1229,13 +1240,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_levels_stretch_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-levels-stretch");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Automatically modifies intensity levels in the specified drawable.",
-                                     "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool.",
-                                     NULL,
-                                     "Joao S.O. Bueno, Shawn Willden",
-                                     "Joao S.O. Bueno, Shawn Willden",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Automatically modifies intensity levels in the specified drawable.",
+                                  "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Joao S.O. Bueno, Shawn Willden",
+                                         "Joao S.O. Bueno, Shawn Willden",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1251,13 +1263,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_posterize_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-posterize");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Posterize the specified drawable.",
-                                     "This procedures reduces the number of shades allows in each intensity channel to the specified 'levels' parameter.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Posterize the specified drawable.",
+                                  "This procedures reduces the number of shades allows in each intensity channel to the specified 'levels' parameter.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1279,13 +1292,14 @@ register_drawable_color_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_threshold_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-threshold");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Threshold the specified drawable.",
-                                     "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold', on the scale of 'channel' are replaced with white, and all other pixels with black.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Threshold the specified drawable.",
+                                  "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold', on the scale of 'channel' are replaced with white, and all other pixels with black.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",

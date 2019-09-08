@@ -134,13 +134,14 @@ register_palette_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (palettes_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Invokes the Gimp palette selection.",
-                                     "This procedure opens the palette selection dialog.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2002");
+  gimp_procedure_set_static_help (procedure,
+                                  "Invokes the Gimp palette selection.",
+                                  "This procedure opens the palette selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2002");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette-callback",
                                                        "palette callback",
@@ -171,13 +172,14 @@ register_palette_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (palettes_close_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-close-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Close the palette selection dialog.",
-                                     "This procedure closes an opened palette selection dialog.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2002");
+  gimp_procedure_set_static_help (procedure,
+                                  "Close the palette selection dialog.",
+                                  "This procedure closes an opened palette selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2002");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette-callback",
                                                        "palette callback",
@@ -194,13 +196,14 @@ register_palette_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (palettes_set_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-set-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the current palette in a palette selection dialog.",
-                                     "Sets the current palette in a palette selection dialog.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2002");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the current palette in a palette selection dialog.",
+                                  "Sets the current palette in a palette selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2002");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette-callback",
                                                        "palette callback",

@@ -161,13 +161,14 @@ register_pattern_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pattern_get_info_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pattern-get-info");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve information about the specified pattern.",
-                                     "This procedure retrieves information about the specified pattern. This includes the pattern extents (width and height).",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve information about the specified pattern.",
+                                  "This procedure retrieves information about the specified pattern. This includes the pattern extents (width and height).",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -202,13 +203,14 @@ register_pattern_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (pattern_get_pixels_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pattern-get-pixels");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve information about the specified pattern (including pixels).",
-                                     "This procedure retrieves information about the specified. This includes the pattern extents (width and height), its bpp and its pixel data.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve information about the specified pattern (including pixels).",
+                                  "This procedure retrieves information about the specified. This includes the pattern extents (width and height), its bpp and its pixel data.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",

@@ -252,13 +252,14 @@ register_plug_in_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (plugins_query_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugins-query");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Queries the plug-in database for its contents.",
-                                     "This procedure queries the contents of the plug-in database.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries the plug-in database for its contents.",
+                                  "This procedure queries the contents of the plug-in database.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("search-string",
                                                        "search string",
@@ -319,13 +320,14 @@ register_plug_in_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (plugin_domain_register_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-domain-register");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Registers a textdomain for localisation.",
-                                     "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the 'gimp-std-plugins' domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2000");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a textdomain for localisation.",
+                                  "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the 'gimp-std-plugins' domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2000");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -349,13 +351,14 @@ register_plug_in_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (plugin_help_register_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-help-register");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Register a help path for a plug-in.",
-                                     "This procedure registers user documentation for the calling plug-in with the GIMP help system. The domain_uri parameter points to the root directory where the plug-in help is installed. For each supported language there should be a file called 'gimp-help.xml' that maps the help IDs to the actual help files.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2000");
+  gimp_procedure_set_static_help (procedure,
+                                  "Register a help path for a plug-in.",
+                                  "This procedure registers user documentation for the calling plug-in with the GIMP help system. The domain_uri parameter points to the root directory where the plug-in help is installed. For each supported language there should be a file called 'gimp-help.xml' that maps the help IDs to the actual help files.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2000");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -379,13 +382,14 @@ register_plug_in_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (plugin_menu_branch_register_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-menu-branch-register");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Register a sub-menu.",
-                                     "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. GIMP will look up the translation in the textdomain registered for the plug-in.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Register a sub-menu.",
+                                  "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. GIMP will look up the translation in the textdomain registered for the plug-in.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
@@ -409,13 +413,14 @@ register_plug_in_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (plugin_set_pdb_error_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-set-pdb-error-handler");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets an error handler for procedure calls.",
-                                     "This procedure changes the way that errors in procedure calls are handled. By default GIMP will raise an error dialog if a procedure call made by a plug-in fails. Using this procedure the plug-in can change this behavior. If the error handler is set to %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for calling 'gimp-get-pdb-error' and handling the error whenever one if its procedure calls fails. It can do this by displaying the error message or by forwarding it in its own return values.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets an error handler for procedure calls.",
+                                  "This procedure changes the way that errors in procedure calls are handled. By default GIMP will raise an error dialog if a procedure call made by a plug-in fails. Using this procedure the plug-in can change this behavior. If the error handler is set to %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for calling 'gimp-get-pdb-error' and handling the error whenever one if its procedure calls fails. It can do this by displaying the error message or by forwarding it in its own return values.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("handler",
                                                   "handler",
@@ -432,13 +437,14 @@ register_plug_in_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (plugin_get_pdb_error_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-get-pdb-error-handler");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the active error handler for procedure calls.",
-                                     "This procedure retrieves the currently active error handler for procedure calls made by the calling plug-in. See 'gimp-plugin-set-pdb-error-handler' for details.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the active error handler for procedure calls.",
+                                  "This procedure retrieves the currently active error handler for procedure calls made by the calling plug-in. See 'gimp-plugin-set-pdb-error-handler' for details.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2008");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("handler",
                                                       "handler",

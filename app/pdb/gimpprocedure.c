@@ -69,7 +69,9 @@ static void        gimp_procedure_real_execute_async    (GimpProcedure   *proced
                                                          GimpValueArray  *args,
                                                          GimpDisplay     *display);
 
-static void          gimp_procedure_free_strings        (GimpProcedure   *procedure);
+static void          gimp_procedure_free_help           (GimpProcedure   *procedure);
+static void          gimp_procedure_free_attribution    (GimpProcedure   *procedure);
+
 static gboolean      gimp_procedure_validate_args       (GimpProcedure   *procedure,
                                                          GParamSpec     **param_specs,
                                                          gint             n_param_specs,
@@ -114,7 +116,8 @@ gimp_procedure_finalize (GObject *object)
   GimpProcedure *procedure = GIMP_PROCEDURE (object);
   gint           i;
 
-  gimp_procedure_free_strings (procedure);
+  gimp_procedure_free_help        (procedure);
+  gimp_procedure_free_attribution (procedure);
 
   g_clear_pointer (&procedure->deprecated, g_free);
 
@@ -145,11 +148,15 @@ gimp_procedure_get_memsize (GimpObject *object,
   gint64         memsize   = 0;
   gint           i;
 
-  if (! procedure->static_strings)
+  if (! procedure->static_help)
     {
       memsize += gimp_string_get_memsize (procedure->blurb);
       memsize += gimp_string_get_memsize (procedure->help);
       memsize += gimp_string_get_memsize (procedure->help_id);
+    }
+
+  if (! procedure->static_attribution)
+    {
       memsize += gimp_string_get_memsize (procedure->authors);
       memsize += gimp_string_get_memsize (procedure->copyright);
       memsize += gimp_string_get_memsize (procedure->date);
@@ -270,72 +277,105 @@ gimp_procedure_new (GimpMarshalFunc marshal_func)
 }
 
 void
-gimp_procedure_set_strings (GimpProcedure *procedure,
-                            const gchar   *blurb,
-                            const gchar   *help,
-                            const gchar   *help_id,
-                            const gchar   *authors,
-                            const gchar   *copyright,
-                            const gchar   *date)
+gimp_procedure_set_help (GimpProcedure *procedure,
+                         const gchar   *blurb,
+                         const gchar   *help,
+                         const gchar   *help_id)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  gimp_procedure_free_strings (procedure);
+  gimp_procedure_free_help (procedure);
 
-  procedure->blurb     = g_strdup (blurb);
-  procedure->help      = g_strdup (help);
-  procedure->help_id   = g_strdup (help_id);
+  procedure->blurb   = g_strdup (blurb);
+  procedure->help    = g_strdup (help);
+  procedure->help_id = g_strdup (help_id);
+
+  procedure->static_help = FALSE;
+}
+
+void
+gimp_procedure_set_static_help (GimpProcedure *procedure,
+                                const gchar   *blurb,
+                                const gchar   *help,
+                                const gchar   *help_id)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  gimp_procedure_free_help (procedure);
+
+  procedure->blurb   = (gchar *) blurb;
+  procedure->help    = (gchar *) help;
+  procedure->help_id = (gchar *) help_id;
+
+  procedure->static_help = TRUE;
+}
+
+void
+gimp_procedure_take_help (GimpProcedure *procedure,
+                          gchar         *blurb,
+                          gchar         *help,
+                          gchar         *help_id)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  gimp_procedure_free_help (procedure);
+
+  procedure->blurb   = blurb;
+  procedure->help    = help;
+  procedure->help_id = help_id;
+
+  procedure->static_help = FALSE;
+}
+
+void
+gimp_procedure_set_attribution (GimpProcedure *procedure,
+                                const gchar   *authors,
+                                const gchar   *copyright,
+                                const gchar   *date)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  gimp_procedure_free_attribution (procedure);
+
   procedure->authors   = g_strdup (authors);
   procedure->copyright = g_strdup (copyright);
   procedure->date      = g_strdup (date);
 
-  procedure->static_strings = FALSE;
+  procedure->static_attribution = FALSE;
 }
 
 void
-gimp_procedure_set_static_strings (GimpProcedure *procedure,
-                                   const gchar   *blurb,
-                                   const gchar   *help,
-                                   const gchar   *help_id,
-                                   const gchar   *authors,
-                                   const gchar   *copyright,
-                                   const gchar   *date)
+gimp_procedure_set_static_attribution (GimpProcedure *procedure,
+                                       const gchar   *authors,
+                                       const gchar   *copyright,
+                                       const gchar   *date)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  gimp_procedure_free_strings (procedure);
+  gimp_procedure_free_attribution (procedure);
 
-  procedure->blurb     = (gchar *) blurb;
-  procedure->help      = (gchar *) help;
-  procedure->help      = (gchar *) help_id;
   procedure->authors   = (gchar *) authors;
   procedure->copyright = (gchar *) copyright;
   procedure->date      = (gchar *) date;
 
-  procedure->static_strings = TRUE;
+  procedure->static_attribution = TRUE;
 }
 
 void
-gimp_procedure_take_strings (GimpProcedure *procedure,
-                             gchar         *blurb,
-                             gchar         *help,
-                             gchar         *help_id,
-                             gchar         *authors,
-                             gchar         *copyright,
-                             gchar         *date)
+gimp_procedure_take_attribution (GimpProcedure *procedure,
+                                 gchar         *authors,
+                                 gchar         *copyright,
+                                 gchar         *date)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  gimp_procedure_free_strings (procedure);
+  gimp_procedure_free_attribution (procedure);
 
-  procedure->blurb     = blurb;
-  procedure->help      = help;
-  procedure->help      = help_id;
   procedure->authors   = authors;
   procedure->copyright = copyright;
   procedure->date      = date;
 
-  procedure->static_strings = FALSE;
+  procedure->static_attribution = FALSE;
 }
 
 void
@@ -724,26 +764,37 @@ gimp_procedure_name_compare (GimpProcedure *proc1,
 /*  private functions  */
 
 static void
-gimp_procedure_free_strings (GimpProcedure *procedure)
+gimp_procedure_free_help (GimpProcedure *procedure)
 {
-  if (! procedure->static_strings)
+  if (! procedure->static_help)
     {
       g_free (procedure->blurb);
       g_free (procedure->help);
       g_free (procedure->help_id);
+    }
+
+  procedure->blurb   = NULL;
+  procedure->help    = NULL;
+  procedure->help_id = NULL;
+
+  procedure->static_help = FALSE;
+}
+
+static void
+gimp_procedure_free_attribution (GimpProcedure *procedure)
+{
+  if (! procedure->static_attribution)
+    {
       g_free (procedure->authors);
       g_free (procedure->copyright);
       g_free (procedure->date);
     }
 
-  procedure->blurb     = NULL;
-  procedure->help      = NULL;
-  procedure->help_id   = NULL;
   procedure->authors   = NULL;
   procedure->copyright = NULL;
   procedure->date      = NULL;
 
-  procedure->static_strings = FALSE;
+  procedure->static_attribution = FALSE;
 }
 
 static gboolean

@@ -122,17 +122,18 @@ xcf_init (Gimp *gimp)
   gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-save");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Saves file in the .xcf file format",
-                                     "The XCF file format has been designed "
-                                     "specifically for loading and saving "
-                                     "tiled and layered images in GIMP. "
-                                     "This procedure will save the specified "
-                                     "image in the xcf file format.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Saves file in the .xcf file format",
+                                  "The XCF file format has been designed "
+                                  "specifically for loading and saving "
+                                  "tiled and layered images in GIMP. "
+                                  "This procedure will save the specified "
+                                  "image in the xcf file format.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",
@@ -195,17 +196,18 @@ xcf_init (Gimp *gimp)
   gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-load");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads file saved in the .xcf file format",
-                                     "The XCF file format has been designed "
-                                     "specifically for loading and saving "
-                                     "tiled and layered images in GIMP. "
-                                     "This procedure will load the specified "
-                                     "file.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads file saved in the .xcf file format",
+                                  "The XCF file format has been designed "
+                                  "specifically for loading and saving "
+                                  "tiled and layered images in GIMP. "
+                                  "This procedure will load the specified "
+                                  "file.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("dummy-param",

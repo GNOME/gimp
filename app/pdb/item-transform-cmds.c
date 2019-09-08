@@ -1028,15 +1028,16 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_translate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-translate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Translate the item by the specified offsets.",
-                                     "This procedure translates the item by the amounts specified in the off_x and off_y arguments. These can be negative, and are considered offsets from the current position. The offsets will be rounded to the nearest pixel unless the item is a path.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Translate the item by the specified offsets.",
+                                  "This procedure translates the item by the amounts specified in the off_x and off_y arguments. These can be negative, and are considered offsets from the current position. The offsets will be rounded to the nearest pixel unless the item is a path.\n"
                                      "\n"
                                      "If the item is attached to an image and has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be translated by the specified offsets.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1070,19 +1071,20 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_flip_simple_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-flip-simple");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Flip the specified item either vertically or horizontally.",
-                                     "This procedure flips the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Flip the specified item either vertically or horizontally.",
+                                  "This procedure flips the specified item.\n"
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to TRUE, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped floating selection.\n"
                                      "\n"
                                      "If there is no selection or the item is not a drawable, the entire item will be flipped around its center if auto_center is set to TRUE, otherwise the coordinate of the axis needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be flipped around the same axis. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2004");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1125,19 +1127,20 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_flip_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-flip");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Flip the specified item around a given line.",
-                                     "This procedure flips the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Flip the specified item around a given line.",
+                                  "This procedure flips the specified item.\n"
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped floating selection.\n"
                                      "\n"
                                      "If there is no selection or the item is not a drawable, the entire item will be flipped around the specified axis. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be flipped around the same axis. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1183,9 +1186,9 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_perspective_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-perspective");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Perform a possibly non-affine transformation on the specified item.",
-                                     "This procedure performs a possibly non-affine transformation on the specified item by allowing the corners of the original bounding box to be arbitrarily remapped to any values.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Perform a possibly non-affine transformation on the specified item.",
+                                  "This procedure performs a possibly non-affine transformation on the specified item by allowing the corners of the original bounding box to be arbitrarily remapped to any values.\n"
                                      "\n"
                                      "The 4 coordinates specify the new locations of each corner of the original bounding box. By specifying these values, any affine transformation (rotation, scaling, translation) can be affected. Additionally, these values can be specified such that the resulting transformed item will appear to have been projected via a perspective transform.\n"
                                      "\n"
@@ -1194,10 +1197,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified mapping. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1267,19 +1271,20 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_rotate_simple_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-rotate-simple");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Rotate the specified item about given coordinates through the specified angle.",
-                                     "This function rotates the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Rotate the specified item about given coordinates through the specified angle.",
+                                  "This function rotates the specified item.\n"
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. If auto_center is set to TRUE, the rotation is around the selection's center. Otherwise, the coordinate of the center point needs to be specified. The return value is the ID of the rotated floating selection.\n"
                                      "\n"
                                      "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be rotated around the same center point. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1326,19 +1331,20 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_rotate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-rotate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Rotate the specified item about given coordinates through the specified angle.",
-                                     "This function rotates the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Rotate the specified item about given coordinates through the specified angle.",
+                                  "This function rotates the specified item.\n"
                                      "\n"
                                      "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. If auto_center is set to TRUE, the rotation is around the selection's center. Otherwise, the coordinate of the center point needs to be specified. The return value is the ID of the rotated floating selection.\n"
                                      "\n"
                                      "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be rotated around the same center point. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1384,9 +1390,9 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_scale_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-scale");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Scale the specified item.",
-                                     "This procedure scales the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Scale the specified item.",
+                                  "This procedure scales the specified item.\n"
                                      "\n"
                                      "The 2 coordinates specify the new locations of the top-left and bottom-roght corners of the original bounding box.\n"
                                      "\n"
@@ -1395,10 +1401,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be scaled according to the specified coordinates. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be scaled the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1444,9 +1451,9 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_shear_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-shear");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Shear the specified item about its center by the specified magnitude.",
-                                     "This procedure shears the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Shear the specified item about its center by the specified magnitude.",
+                                  "This procedure shears the specified item.\n"
                                      "\n"
                                      "The shear type parameter indicates whether the shear will be applied horizontally or vertically. The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.\n"
                                      "\n"
@@ -1455,10 +1462,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be sheared according to the specified parameters. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be sheared the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1495,9 +1503,9 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_2d_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-2d");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Transform the specified item in 2d.",
-                                     "This procedure transforms the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Transform the specified item in 2d.",
+                                  "This procedure transforms the specified item.\n"
                                      "\n"
                                      "The transformation is done by scaling by the x and y scale factors about the point (source_x, source_y), then rotating around the same point, then translating that point to the new position (dest_x, dest_y).\n"
                                      "\n"
@@ -1506,10 +1514,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified parameters. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",
@@ -1573,9 +1582,9 @@ register_item_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (item_transform_matrix_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-matrix");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Transform the specified item in 2d.",
-                                     "This procedure transforms the specified item.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Transform the specified item in 2d.",
+                                  "This procedure transforms the specified item.\n"
                                      "\n"
                                      "The transformation is done by assembling a 3x3 matrix from the coefficients passed.\n"
                                      "\n"
@@ -1584,10 +1593,11 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified matrix. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_item ("item",
                                                      "item",

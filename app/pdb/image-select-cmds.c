@@ -362,17 +362,18 @@ register_image_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_select_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the current context settings. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold and criterion context values) are included in the selection. To select transparent regions, the color specified must also have minimum alpha.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
+                                  "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the current context settings. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold and criterion context values) are included in the selection. To select transparent regions, the color specified must also have minimum alpha.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent'.\n"
                                      "\n"
                                      "In the case of a merged sampling, the supplied drawable is ignored.",
-                                     NULL,
-                                     "David Gowers",
-                                     "David Gowers",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "David Gowers",
+                                         "David Gowers",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -408,17 +409,18 @@ register_image_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_select_contiguous_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-contiguous-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a selection by selecting all pixels around specified coordinates with the same (or similar) color to that at the coordinates.",
-                                     "This tool creates a contiguous selection over the specified image. A contiguous color selection is determined by a seed fill under the constraints of the current context settings. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold and criterion context settings). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a selection by selecting all pixels around specified coordinates with the same (or similar) color to that at the coordinates.",
+                                  "This tool creates a contiguous selection over the specified image. A contiguous color selection is determined by a seed fill under the constraints of the current context settings. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold and criterion context settings). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent', 'gimp-context-set-diagonal-neighbors'.\n"
                                      "\n"
                                      "In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
-                                     NULL,
-                                     "David Gowers",
-                                     "David Gowers",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "David Gowers",
+                                         "David Gowers",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -459,15 +461,16 @@ register_image_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_select_rectangle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-rectangle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a rectangular selection over the specified image;",
-                                     "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a rectangular selection over the specified image;",
+                                  "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -514,15 +517,16 @@ register_image_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_select_round_rectangle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-round-rectangle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a rectangular selection with round corners over the specified image;",
-                                     "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a rectangular selection with round corners over the specified image;",
+                                  "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
-                                     NULL,
-                                     "Martin Nordholts",
-                                     "Martin Nordholts",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Martin Nordholts",
+                                         "Martin Nordholts",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -581,15 +585,16 @@ register_image_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_select_ellipse_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-ellipse");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create an elliptical selection over the specified image.",
-                                     "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create an elliptical selection over the specified image.",
+                                  "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -636,15 +641,16 @@ register_image_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_select_polygon_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-polygon");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a polygonal selection over the specified image.",
-                                     "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a polygonal selection over the specified image.",
+                                  "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -678,15 +684,16 @@ register_image_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_select_item_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-select-item");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Transforms the specified item into a selection",
-                                     "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Transforms the specified item into a selection",
+                                  "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

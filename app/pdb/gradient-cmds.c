@@ -1456,13 +1456,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_new_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-new");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Creates a new gradient",
-                                     "This procedure creates a new, uninitialized gradient",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Creates a new gradient",
+                                  "This procedure creates a new, uninitialized gradient",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1486,13 +1487,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_duplicate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-duplicate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Duplicates a gradient",
-                                     "This procedure creates an identical gradient by a different name",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Duplicates a gradient",
+                                  "This procedure creates an identical gradient by a different name",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1516,13 +1518,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_is_editable_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-is-editable");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Tests if gradient can be edited",
-                                     "Returns TRUE if you have permission to change the gradient",
-                                     NULL,
-                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                                     "Bill Skaggs",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Tests if gradient can be edited",
+                                  "Returns TRUE if you have permission to change the gradient",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                         "Bill Skaggs",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1545,13 +1548,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_rename_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-rename");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Rename a gradient",
-                                     "This procedure renames a gradient",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Rename a gradient",
+                                  "This procedure renames a gradient",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1582,13 +1586,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_delete_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-delete");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Deletes a gradient",
-                                     "This procedure deletes a gradient",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Deletes a gradient",
+                                  "This procedure deletes a gradient",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1605,13 +1610,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_get_number_of_segments_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-get-number-of-segments");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the number of segments of the specified gradient",
-                                     "This procedure returns the number of segments of the specified gradient.",
-                                     NULL,
-                                     "Lars-Peter Clausen <lars@metafoo.de>",
-                                     "Lars-Peter Clausen",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the number of segments of the specified gradient",
+                                  "This procedure returns the number of segments of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Lars-Peter Clausen <lars@metafoo.de>",
+                                         "Lars-Peter Clausen",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1634,13 +1640,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_get_uniform_samples_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-get-uniform-samples");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sample the specified in uniform parts.",
-                                     "This procedure samples the active gradient in the specified number of uniform parts. It returns a list of floating-point values which correspond to the RGBA values for each sample. The minimum number of samples to take is 2, in which case the returned colors will correspond to the { 0.0, 1.0 } positions in the gradient. For example, if the number of samples is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.",
-                                     NULL,
-                                     "Federico Mena Quintero",
-                                     "Federico Mena Quintero",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sample the specified in uniform parts.",
+                                  "This procedure samples the active gradient in the specified number of uniform parts. It returns a list of floating-point values which correspond to the RGBA values for each sample. The minimum number of samples to take is 2, in which case the returned colors will correspond to the { 0.0, 1.0 } positions in the gradient. For example, if the number of samples is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Federico Mena Quintero",
+                                         "Federico Mena Quintero",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1680,13 +1687,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_get_custom_samples_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-get-custom-samples");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sample the specified gradient in custom positions.",
-                                     "This procedure samples the active gradient in the specified number of points. The procedure will sample the gradient in the specified positions from the list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. The procedure returns a list of floating-point values which correspond to the RGBA values for each sample.",
-                                     NULL,
-                                     "Federico Mena Quintero",
-                                     "Federico Mena Quintero",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sample the specified gradient in custom positions.",
+                                  "This procedure samples the active gradient in the specified number of points. The procedure will sample the gradient in the specified positions from the list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. The procedure returns a list of floating-point values which correspond to the RGBA values for each sample.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Federico Mena Quintero",
+                                         "Federico Mena Quintero",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1731,13 +1739,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_get_left_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-get-left-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the left endpoint color of the specified segment",
-                                     "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the left endpoint color of the specified segment",
+                                  "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1773,13 +1782,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_set_left_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-set-left-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the left endpoint color of the specified segment",
-                                     "This procedure sets the left endpoint color of the specified segment of the specified gradient.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the left endpoint color of the specified segment",
+                                  "This procedure sets the left endpoint color of the specified segment of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1815,13 +1825,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_get_right_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-get-right-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the right endpoint color of the specified segment",
-                                     "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the right endpoint color of the specified segment",
+                                  "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1857,13 +1868,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_set_right_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-set-right-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the right endpoint color of the specified segment",
-                                     "This procedure sets the right endpoint color of the specified segment of the specified gradient.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the right endpoint color of the specified segment",
+                                  "This procedure sets the right endpoint color of the specified segment of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1899,13 +1911,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_get_left_pos_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-get-left-pos");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the left endpoint position of the specified segment",
-                                     "This procedure retrieves the left endpoint position of the specified segment of the specified gradient.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the left endpoint position of the specified segment",
+                                  "This procedure retrieves the left endpoint position of the specified segment of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1934,14 +1947,15 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_set_left_pos_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-set-left-pos");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the left endpoint position of the specified segment",
-                                     "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segment.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the left endpoint position of the specified segment",
+                                  "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segment.\n"
                                      "This procedure returns the final position.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1976,13 +1990,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_get_middle_pos_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-get-middle-pos");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the middle point position of the specified segment",
-                                     "This procedure retrieves the middle point position of the specified segment of the specified gradient.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the middle point position of the specified segment",
+                                  "This procedure retrieves the middle point position of the specified segment of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2011,14 +2026,15 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_set_middle_pos_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-set-middle-pos");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the middle point position of the specified segment",
-                                     "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the middle point position of the specified segment",
+                                  "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment.\n"
                                      "This procedure returns the final position.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2053,13 +2069,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_get_right_pos_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-get-right-pos");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the right endpoint position of the specified segment",
-                                     "This procedure retrieves the right endpoint position of the specified segment of the specified gradient.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the right endpoint position of the specified segment",
+                                  "This procedure retrieves the right endpoint position of the specified segment of the specified gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2088,14 +2105,15 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_set_right_pos_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-set-right-pos");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the right endpoint position of the specified segment",
-                                     "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the right endpoint position of the specified segment",
+                                  "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right.\n"
                                      "This procedure returns the final position.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2130,13 +2148,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_get_blending_function_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-get-blending-function");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the gradient segment's blending function",
-                                     "This procedure retrieves the blending function of the segment at the specified gradient name and segment index.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the gradient segment's blending function",
+                                  "This procedure retrieves the blending function of the segment at the specified gradient name and segment index.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2166,13 +2185,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_get_coloring_type_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-get-coloring-type");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves the gradient segment's coloring type",
-                                     "This procedure retrieves the coloring type of the segment at the specified gradient name and segment index.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves the gradient segment's coloring type",
+                                  "This procedure retrieves the coloring type of the segment at the specified gradient name and segment index.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2202,13 +2222,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_set_blending_function_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-set-blending-function");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Change the blending function of a segments range",
-                                     "This function changes the blending function of a segment range to the specified blending function.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Change the blending function of a segments range",
+                                  "This function changes the blending function of a segment range to the specified blending function.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2244,13 +2265,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_set_coloring_type_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-set-coloring-type");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Change the coloring type of a segments range",
-                                     "This function changes the coloring type of a segment range to the specified coloring type.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Change the coloring type of a segments range",
+                                  "This function changes the coloring type of a segment range to the specified coloring type.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2286,13 +2308,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_flip_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-flip");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Flip the segment range",
-                                     "This function flips a segment range.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Flip the segment range",
+                                  "This function flips a segment range.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2321,13 +2344,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_replicate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-replicate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Replicate the segment range",
-                                     "This function replicates a segment range a given number of times. Instead of the original segment range, several smaller scaled copies of it will appear in equal widths.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Replicate the segment range",
+                                  "This function replicates a segment range a given number of times. Instead of the original segment range, several smaller scaled copies of it will appear in equal widths.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2362,13 +2386,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_split_midpoint_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-split-midpoint");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Splits each segment in the segment range at midpoint",
-                                     "This function splits each segment in the segment range at its midpoint.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Splits each segment in the segment range at midpoint",
+                                  "This function splits each segment in the segment range at its midpoint.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2397,13 +2422,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_split_uniform_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-split-uniform");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Splits each segment in the segment range uniformly",
-                                     "This function splits each segment in the segment range uniformly according to the number of times specified by the parameter.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Splits each segment in the segment range uniformly",
+                                  "This function splits each segment in the segment range uniformly according to the number of times specified by the parameter.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2438,13 +2464,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_delete_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-delete");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Delete the segment range",
-                                     "This function deletes a segment range.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Delete the segment range",
+                                  "This function deletes a segment range.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2473,13 +2500,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_redistribute_handles_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-redistribute-handles");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Uniformly redistribute the segment range's handles",
-                                     "This function redistributes the handles of the specified segment range of the specified gradient, so they'll be evenly spaced.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Uniformly redistribute the segment range's handles",
+                                  "This function redistributes the handles of the specified segment range of the specified gradient, so they'll be evenly spaced.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2508,13 +2536,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_blend_colors_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-blend-colors");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Blend the colors of the segment range.",
-                                     "This function blends the colors (but not the opacity) of the segments' range of the gradient. Using it, the colors' transition will be uniform across the range.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Blend the colors of the segment range.",
+                                  "This function blends the colors (but not the opacity) of the segments' range of the gradient. Using it, the colors' transition will be uniform across the range.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2543,13 +2572,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_blend_opacity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-blend-opacity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Blend the opacity of the segment range.",
-                                     "This function blends the opacity (but not the colors) of the segments' range of the gradient. Using it, the opacity's transition will be uniform across the range.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Blend the opacity of the segment range.",
+                                  "This function blends the opacity (but not the colors) of the segments' range of the gradient. Using it, the opacity's transition will be uniform across the range.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2578,13 +2608,14 @@ register_gradient_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradient_segment_range_move_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradient-segment-range-move");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Move the position of an entire segment range by a delta.",
-                                     "This function moves the position of an entire segment range by a delta. The actual delta (which is returned) will be limited by the control points of the neighboring segments.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Move the position of an entire segment range by a delta.",
+                                  "This function moves the position of an entire segment range by a delta. The actual delta (which is returned) will be limited by the control points of the neighboring segments.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",

@@ -978,14 +978,15 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_get_format_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-format");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the drawable's Babl format",
-                                     "This procedure returns the drawable's Babl format.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the drawable's Babl format",
+                                  "This procedure returns the drawable's Babl format.\n"
                                      "Note that the actual PDB procedure only transfers the format's encoding. In order to get to the real format, the libbgimp C wrapper must be used.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2012");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1008,14 +1009,15 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_get_thumbnail_format_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-thumbnail-format");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the drawable's thumbnail Babl format",
-                                     "This procedure returns the drawable's thumbnail Babl format.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the drawable's thumbnail Babl format",
+                                  "This procedure returns the drawable's thumbnail Babl format.\n"
                                      "Thumbnails are always 8-bit images, see 'gimp-drawable-thumbnail' and 'gimp-drawable-sub-thmbnail'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2019");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2019");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1038,13 +1040,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_type_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-type");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the drawable's type.",
-                                     "This procedure returns the drawable's type.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the drawable's type.",
+                                  "This procedure returns the drawable's type.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1067,13 +1070,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_type_with_alpha_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-type-with-alpha");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the drawable's type with alpha.",
-                                     "This procedure returns the drawable's type as if had an alpha channel. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the drawable's type with alpha.",
+                                  "This procedure returns the drawable's type as if had an alpha channel. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1102,13 +1106,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_has_alpha_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-has-alpha");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns TRUE if the drawable has an alpha channel.",
-                                     "This procedure returns whether the specified drawable has an alpha channel. This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns TRUE if the drawable has an alpha channel.",
+                                  "This procedure returns whether the specified drawable has an alpha channel. This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1130,13 +1135,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_is_rgb_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-is-rgb");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns whether the drawable is an RGB type.",
-                                     "This procedure returns TRUE if the specified drawable is of type { RGB, RGBA }.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns whether the drawable is an RGB type.",
+                                  "This procedure returns TRUE if the specified drawable is of type { RGB, RGBA }.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1158,13 +1164,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_is_gray_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-is-gray");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns whether the drawable is a grayscale type.",
-                                     "This procedure returns TRUE if the specified drawable is of type { Gray, GrayA }.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns whether the drawable is a grayscale type.",
+                                  "This procedure returns TRUE if the specified drawable is of type { Gray, GrayA }.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1186,13 +1193,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_is_indexed_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-is-indexed");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns whether the drawable is an indexed type.",
-                                     "This procedure returns TRUE if the specified drawable is of type { Indexed, IndexedA }.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns whether the drawable is an indexed type.",
+                                  "This procedure returns TRUE if the specified drawable is of type { Indexed, IndexedA }.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1214,13 +1222,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_bpp_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-bpp");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the bytes per pixel.",
-                                     "This procedure returns the number of bytes per pixel.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the bytes per pixel.",
+                                  "This procedure returns the number of bytes per pixel.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1242,13 +1251,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_width_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-width");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the width of the drawable.",
-                                     "This procedure returns the specified drawable's width in pixels.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the width of the drawable.",
+                                  "This procedure returns the specified drawable's width in pixels.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1270,13 +1280,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_height_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-height");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the height of the drawable.",
-                                     "This procedure returns the specified drawable's height in pixels.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the height of the drawable.",
+                                  "This procedure returns the specified drawable's height in pixels.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1298,13 +1309,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_offsets_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-offsets");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns the offsets for the drawable.",
-                                     "This procedure returns the specified drawable's offsets. This only makes sense if the drawable is a layer since channels are anchored. The offsets of a channel will be returned as 0.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the offsets for the drawable.",
+                                  "This procedure returns the specified drawable's offsets. This only makes sense if the drawable is a layer since channels are anchored. The offsets of a channel will be returned as 0.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1332,14 +1344,15 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_mask_bounds_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-mask-bounds");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Find the bounding box of the current selection in relation to the specified drawable.",
-                                     "This procedure returns whether there is a selection. If there is one, the upper left and lower right-hand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower right-hand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Find the bounding box of the current selection in relation to the specified drawable.",
+                                  "This procedure returns whether there is a selection. If there is one, the upper left and lower right-hand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower right-hand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).\n"
                                      "Note that the returned boolean does NOT correspond with the returned region being empty or not, it always returns whether the selection is non_empty. See 'gimp-drawable-mask-intersect' for a boolean return value which is more useful in most cases.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1385,14 +1398,15 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_mask_intersect_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-mask-intersect");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Find the bounding box of the current selection in relation to the specified drawable.",
-                                     "This procedure returns whether there is an intersection between the drawable and the selection. Unlike 'gimp-drawable-mask-bounds', the intersection's bounds are returned as x, y, width, height.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Find the bounding box of the current selection in relation to the specified drawable.",
+                                  "This procedure returns whether there is an intersection between the drawable and the selection. Unlike 'gimp-drawable-mask-bounds', the intersection's bounds are returned as x, y, width, height.\n"
                                      "If there is no selection this function returns TRUE and the returned bounds are the extents of the whole drawable.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2004");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1438,13 +1452,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_merge_shadow_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-merge-shadow");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Merge the shadow buffer with the specified drawable.",
-                                     "This procedure combines the contents of the drawable's shadow buffer (for temporary processing) with the specified drawable. The 'undo' parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Merge the shadow buffer with the specified drawable.",
+                                  "This procedure combines the contents of the drawable's shadow buffer (for temporary processing) with the specified drawable. The 'undo' parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1466,13 +1481,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_free_shadow_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-free-shadow");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Free the specified drawable's shadow data (if it exists).",
-                                     "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically when the drawable is removed from the image, or when the plug-in procedure which allocated it returns.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2008");
+  gimp_procedure_set_static_help (procedure,
+                                  "Free the specified drawable's shadow data (if it exists).",
+                                  "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically when the drawable is removed from the image, or when the plug-in procedure which allocated it returns.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2008");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1488,13 +1504,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_update_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-update");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Update the specified region of the drawable.",
-                                     "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated using (0, 0, width, height).",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Update the specified region of the drawable.",
+                                  "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated using (0, 0, width, height).",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1534,13 +1551,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_get_pixel_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-get-pixel");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Gets the value of the pixel at the specified coordinates.",
-                                     "This procedure gets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets the value of the pixel at the specified coordinates.",
+                                  "This procedure gets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1579,13 +1597,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_set_pixel_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-set-pixel");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the value of the pixel at the specified coordinates.",
-                                     "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the value of the pixel at the specified coordinates.",
+                                  "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1624,14 +1643,15 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_fill_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-fill");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Fill the drawable with the specified fill mode.",
-                                     "This procedure fills the drawable. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Fill the drawable with the specified fill mode.",
+                                  "This procedure fills the drawable. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined.\n"
                                      "This procedure is unlike 'gimp-edit-fill' or the bucket fill tool because it fills regardless of a selection. Its main purpose is to fill a newly created drawable before adding it to the image. This operation cannot be undone.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1654,13 +1674,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_offset_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-offset");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Offset the drawable by the specified amounts in the X and Y directions",
-                                     "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill-type' parameter.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Offset the drawable by the specified amounts in the X and Y directions",
+                                  "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill-type' parameter.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1701,13 +1722,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_thumbnail_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-thumbnail");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get a thumbnail of a drawable.",
-                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1999");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get a thumbnail of a drawable.",
+                                  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1999");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1764,13 +1786,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_sub_thumbnail_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-sub-thumbnail");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get a thumbnail of a sub-area of a drawable drawable.",
-                                     "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get a thumbnail of a sub-area of a drawable drawable.",
+                                  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -1851,13 +1874,14 @@ register_drawable_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (drawable_foreground_extract_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-foreground-extract");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Extract the foreground of a drawable using a given trimap.",
-                                     "Image Segmentation by Uniform Color Clustering, see https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf",
-                                     NULL,
-                                     "Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>",
-                                     "Gerald Friedland",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Extract the foreground of a drawable using a given trimap.",
+                                  "Image Segmentation by Uniform Color Clustering, see https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>",
+                                         "Gerald Friedland",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",

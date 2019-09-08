@@ -134,13 +134,14 @@ register_pattern_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (patterns_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Invokes the Gimp pattern selection.",
-                                     "This procedure opens the pattern selection dialog.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Invokes the Gimp pattern selection.",
+                                  "This procedure opens the pattern selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",
@@ -171,13 +172,14 @@ register_pattern_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (patterns_close_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-close-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Close the pattern selection dialog.",
-                                     "This procedure closes an opened pattern selection dialog.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Close the pattern selection dialog.",
+                                  "This procedure closes an opened pattern selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",
@@ -194,13 +196,14 @@ register_pattern_select_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (patterns_set_popup_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-set-popup");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the current pattern in a pattern selection dialog.",
-                                     "Sets the current pattern in a pattern selection dialog.",
-                                     NULL,
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the current pattern in a pattern selection dialog.",
+                                  "Sets the current pattern in a pattern selection dialog.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Andy Thomas",
+                                         "Andy Thomas",
+                                         "1998");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",

@@ -101,13 +101,14 @@ register_patterns_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (patterns_refresh_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-refresh");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Refresh current patterns. This function always succeeds.",
-                                     "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2002");
+  gimp_procedure_set_static_help (procedure,
+                                  "Refresh current patterns. This function always succeeds.",
+                                  "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2002");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -117,13 +118,14 @@ register_patterns_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (patterns_get_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-get-list");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve a complete listing of the available patterns.",
-                                     "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp-context-set-pattern'.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve a complete listing of the available patterns.",
+                                  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp-context-set-pattern'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

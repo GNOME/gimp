@@ -98,16 +98,17 @@ register_debug_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (debug_timer_start_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-debug-timer-start");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Starts measuring elapsed time.",
-                                     "This procedure starts a timer, measuring the elapsed time since the call. Each call to this procedure should be matched by a call to 'gimp-debug-timer-end', which returns the elapsed time.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Starts measuring elapsed time.",
+                                  "This procedure starts a timer, measuring the elapsed time since the call. Each call to this procedure should be matched by a call to 'gimp-debug-timer-end', which returns the elapsed time.\n"
                                      "If there is already an active timer, it is not affected by the call, however, a matching 'gimp-debug-timer-end' call is still required.\n"
                                      "\n"
                                      "This is a debug utility procedure. It is subject to change at any point, and should not be used in production.",
-                                     NULL,
-                                     "Ell",
-                                     "Ell",
-                                     "2017");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ell",
+                                         "Ell",
+                                         "2017");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -117,16 +118,17 @@ register_debug_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (debug_timer_end_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-debug-timer-end");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Finishes measuring elapsed time.",
-                                     "This procedure stops the timer started by a previous 'gimp-debug-timer-start' call, and prints and returns the elapsed time.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Finishes measuring elapsed time.",
+                                  "This procedure stops the timer started by a previous 'gimp-debug-timer-start' call, and prints and returns the elapsed time.\n"
                                      "If there was already an active timer at the time of corresponding call to 'gimp-debug-timer-start', a dummy value is returned.\n"
                                      "\n"
                                      "This is a debug utility procedure. It is subject to change at any point, and should not be used in production.",
-                                     NULL,
-                                     "Ell",
-                                     "Ell",
-                                     "2017");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ell",
+                                         "Ell",
+                                         "2017");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("elapsed",
                                                         "elapsed",

@@ -843,13 +843,14 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   proc->installed_during_init = (plug_in->call_mode == GIMP_PLUG_IN_CALL_INIT);
 
   gimp_object_set_name (GIMP_OBJECT (procedure), proc_install->name);
-  gimp_procedure_set_strings (procedure,
-                              proc_install->blurb,
-                              proc_install->help,
-                              proc_install->help_id,
-                              proc_install->authors,
-                              proc_install->copyright,
-                              proc_install->date);
+  gimp_procedure_set_help (procedure,
+                           proc_install->blurb,
+                           proc_install->help,
+                           proc_install->help_id);
+  gimp_procedure_set_attribution (procedure,
+                                  proc_install->authors,
+                                  proc_install->copyright,
+                                  proc_install->date);
 
   for (i = 0; i < proc_install->nparams; i++)
     {

@@ -96,13 +96,14 @@ register_dynamics_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (dynamics_refresh_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dynamics-refresh");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Refresh current paint dynamics. This function always succeeds.",
-                                     "This procedure retrieves all paint dynamics currently in the user's paint dynamics path and updates the paint dynamics dialogs accordingly.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Refresh current paint dynamics. This function always succeeds.",
+                                  "This procedure retrieves all paint dynamics currently in the user's paint dynamics path and updates the paint dynamics dialogs accordingly.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -112,13 +113,14 @@ register_dynamics_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (dynamics_get_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dynamics-get-list");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the list of loaded paint dynamics.",
-                                     "This procedure returns a list of the paint dynamics that are currently available.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the list of loaded paint dynamics.",
+                                  "This procedure returns a list of the paint dynamics that are currently available.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

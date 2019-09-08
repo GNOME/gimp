@@ -379,15 +379,16 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_new_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-new");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a new channel.",
-                                     "This procedure creates a new channel with the specified width, height, name, opacity and color.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a new channel.",
+                                  "This procedure creates a new channel with the specified width, height, name, opacity and color.\n"
                                      "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
                                      "The channel's contents are undefined initially.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -441,14 +442,15 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_new_from_component_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-new-from-component");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a new channel from a color component",
-                                     "This procedure creates a new channel from a color component.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a new channel from a color component",
+                                  "This procedure creates a new channel from a color component.\n"
                                      "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
-                                     NULL,
-                                     "Shlomi Fish <shlomif@iglu.org.il>",
-                                     "Shlomi Fish",
-                                     "2005");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Shlomi Fish <shlomif@iglu.org.il>",
+                                         "Shlomi Fish",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -484,14 +486,15 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_copy_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-copy");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Copy a channel.",
-                                     "This procedure copies the specified channel and returns the copy.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Copy a channel.",
+                                  "This procedure copies the specified channel and returns the copy.\n"
                                      "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel",
                                                         "channel",
@@ -513,13 +516,14 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_combine_masks_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-combine-masks");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Combine two channel masks.",
-                                     "This procedure combines two channel masks. The result is stored in the first channel.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Combine two channel masks.",
+                                  "This procedure combines two channel masks. The result is stored in the first channel.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel1",
                                                         "channel1",
@@ -560,13 +564,14 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_get_show_masked_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-show-masked");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the composite method of the specified channel.",
-                                     "This procedure returns the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the composite method of the specified channel.",
+                                  "This procedure returns the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel",
                                                         "channel",
@@ -588,13 +593,14 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_set_show_masked_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-show-masked");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the composite method of the specified channel.",
-                                     "This procedure sets the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the composite method of the specified channel.",
+                                  "This procedure sets the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel",
                                                         "channel",
@@ -616,13 +622,14 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_get_opacity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-opacity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the opacity of the specified channel.",
-                                     "This procedure returns the specified channel's opacity.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the opacity of the specified channel.",
+                                  "This procedure returns the specified channel's opacity.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel",
                                                         "channel",
@@ -644,13 +651,14 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_set_opacity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-opacity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the opacity of the specified channel.",
-                                     "This procedure sets the specified channel's opacity.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the opacity of the specified channel.",
+                                  "This procedure sets the specified channel's opacity.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel",
                                                         "channel",
@@ -672,13 +680,14 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_get_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the compositing color of the specified channel.",
-                                     "This procedure returns the specified channel's compositing color.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the compositing color of the specified channel.",
+                                  "This procedure returns the specified channel's compositing color.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel",
                                                         "channel",
@@ -701,13 +710,14 @@ register_channel_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (channel_set_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the compositing color of the specified channel.",
-                                     "This procedure sets the specified channel's compositing color.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the compositing color of the specified channel.",
+                                  "This procedure sets the specified channel's compositing color.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel ("channel",
                                                         "channel",

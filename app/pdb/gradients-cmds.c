@@ -100,13 +100,14 @@ register_gradients_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradients_refresh_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradients-refresh");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Refresh current gradients. This function always succeeds.",
-                                     "This procedure retrieves all gradients currently in the user's gradient path and updates the gradient dialogs accordingly.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2002");
+  gimp_procedure_set_static_help (procedure,
+                                  "Refresh current gradients. This function always succeeds.",
+                                  "This procedure retrieves all gradients currently in the user's gradient path and updates the gradient dialogs accordingly.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2002");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -116,13 +117,14 @@ register_gradients_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (gradients_get_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradients-get-list");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the list of loaded gradients.",
-                                     "This procedure returns a list of the gradients that are currently loaded. You can later use the 'gimp-context-set-gradient' function to set the active gradient.",
-                                     NULL,
-                                     "Federico Mena Quintero",
-                                     "Federico Mena Quintero",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the list of loaded gradients.",
+                                  "This procedure returns a list of the gradients that are currently loaded. You can later use the 'gimp-context-set-gradient' function to set the active gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Federico Mena Quintero",
+                                         "Federico Mena Quintero",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

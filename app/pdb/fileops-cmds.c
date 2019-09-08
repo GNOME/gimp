@@ -631,13 +631,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (file_load_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads an image file by invoking the right load handler.",
-                                     "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png he wants to fetch a URL, and the full pathname will not look like a URL.",
-                                     NULL,
-                                     "Josh MacDonald",
-                                     "Josh MacDonald",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads an image file by invoking the right load handler.",
+                                  "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png he wants to fetch a URL, and the full pathname will not look like a URL.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Josh MacDonald",
+                                         "Josh MacDonald",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
@@ -676,13 +677,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (file_load_layer_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-layer");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads an image file as a layer for an existing image.",
-                                     "This procedure behaves like the file-load procedure but opens the specified image as a layer for an existing image. The returned layer needs to be added to the existing image with 'gimp-image-insert-layer'.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads an image file as a layer for an existing image.",
+                                  "This procedure behaves like the file-load procedure but opens the specified image as a layer for an existing image. The returned layer needs to be added to the existing image with 'gimp-image-insert-layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
@@ -720,13 +722,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (file_load_layers_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-layers");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads an image file as layers for an existing image.",
-                                     "This procedure behaves like the file-load procedure but opens the specified image as layers for an existing image. The returned layers needs to be added to the existing image with 'gimp-image-insert-layer'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2006");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads an image file as layers for an existing image.",
+                                  "This procedure behaves like the file-load procedure but opens the specified image as layers for an existing image. The returned layers needs to be added to the existing image with 'gimp-image-insert-layer'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2006");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",
                                                      "run mode",
@@ -770,13 +773,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (file_save_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-save");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Saves a file by extension.",
-                                     "This procedure invokes the correct file save handler according to the file's extension and/or prefix. The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png she wants to fetch a URL, and the full pathname will not look like a URL.",
-                                     NULL,
-                                     "Josh MacDonald",
-                                     "Josh MacDonald",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Saves a file by extension.",
+                                  "This procedure invokes the correct file save handler according to the file's extension and/or prefix. The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png she wants to fetch a URL, and the full pathname will not look like a URL.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Josh MacDonald",
+                                         "Josh MacDonald",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
@@ -819,13 +823,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (file_load_thumbnail_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-thumbnail");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Loads the thumbnail for a file.",
-                                     "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
-                                     NULL,
-                                     "Adam D. Moss, Sven Neumann",
-                                     "Adam D. Moss, Sven Neumann",
-                                     "1999-2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Loads the thumbnail for a file.",
+                                  "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Adam D. Moss, Sven Neumann",
+                                         "Adam D. Moss, Sven Neumann",
+                                         "1999-2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "filename",
@@ -865,13 +870,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (file_save_thumbnail_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-save-thumbnail");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Saves a thumbnail for the given image",
-                                     "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the file with the given filename. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
-                                     NULL,
-                                     "Josh MacDonald",
-                                     "Josh MacDonald",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Saves a thumbnail for the given image",
+                                  "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the file with the given filename. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Josh MacDonald",
+                                         "Josh MacDonald",
+                                         "1997");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -894,13 +900,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_magic_load_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-magic-load-handler");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Registers a file load handler procedure.",
-                                     "Registers a procedural database procedure to be called to load files of a particular file format using magic file information.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file load handler procedure.",
+                                  "Registers a procedural database procedure to be called to load files of a particular file format using magic file information.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -938,13 +945,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_load_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-load-handler");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Registers a file load handler procedure.",
-                                     "Registers a procedural database procedure to be called to load files of a particular file format.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file load handler procedure.",
+                                  "Registers a procedural database procedure to be called to load files of a particular file format.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -975,13 +983,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_save_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-save-handler");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Registers a file save handler procedure.",
-                                     "Registers a procedural database procedure to be called to save files in a particular file format.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file save handler procedure.",
+                                  "Registers a procedural database procedure to be called to save files in a particular file format.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1012,13 +1021,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_file_handler_priority_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-priority");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the priority of a file handler procedure.",
-                                     "Sets the priority of a file handler procedure. When more than one procedure matches a given file, the procedure with the lowest priority is used; if more than one procedure has the lowest priority, it is unspecified which one of them is used. The default priority for file handler procedures is 0.",
-                                     NULL,
-                                     "Ell",
-                                     "Ell",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the priority of a file handler procedure.",
+                                  "Sets the priority of a file handler procedure. When more than one procedure matches a given file, the procedure with the lowest priority is used; if more than one procedure has the lowest priority, it is unspecified which one of them is used. The default priority for file handler procedures is 0.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ell",
+                                         "Ell",
+                                         "2018");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1041,13 +1051,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_file_handler_mime_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-mime");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Associates MIME types with a file handler procedure.",
-                                     "Registers MIME types for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure. It is recommended that only one MIME type is registered per file procedure; when registering more than one MIME type, GIMP will associate the first one with files opened or saved with this procedure.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Associates MIME types with a file handler procedure.",
+                                  "Registers MIME types for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure. It is recommended that only one MIME type is registered per file procedure; when registering more than one MIME type, GIMP will associate the first one with files opened or saved with this procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1071,13 +1082,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_file_handler_remote_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-remote");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Registers a file handler procedure as capable of handling remote URIs.",
-                                     "Registers a file handler procedure as capable of handling remote URIs. This allows GIMP to call the procedure directly for all kinds of URIs, not only on local file:// URIs.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file handler procedure as capable of handling remote URIs.",
+                                  "Registers a file handler procedure as capable of handling remote URIs. This allows GIMP to call the procedure directly for all kinds of URIs, not only on local file:// URIs.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1094,13 +1106,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_file_handler_raw_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-raw");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Registers a file handler procedure as capable of handling raw camera files.",
-                                     "Registers a file handler procedure as capable of handling raw digital camera files. Use this procedure only to register raw load handlers, calling it on a save handler will generate an error.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2017");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file handler procedure as capable of handling raw camera files.",
+                                  "Registers a file handler procedure as capable of handling raw digital camera files. Use this procedure only to register raw load handlers, calling it on a save handler will generate an error.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2017");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -1117,13 +1130,14 @@ register_fileops_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (register_thumbnail_loader_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-thumbnail-loader");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Associates a thumbnail loader with a file load procedure.",
-                                     "Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Associates a thumbnail loader with a file load procedure.",
+                                  "Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("load-proc",
                                                        "load proc",

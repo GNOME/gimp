@@ -511,13 +511,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_cut_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-cut");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Cut from the specified drawable.",
-                                     "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Cut from the specified drawable.",
+                                  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -539,13 +540,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_copy_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-copy");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Copy from the specified drawable.",
-                                     "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Copy from the specified drawable.",
+                                  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -567,13 +569,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_copy_visible_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-copy-visible");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Copy from the projection.",
-                                     "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal GIMP edit buffer.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Copy from the projection.",
+                                  "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal GIMP edit buffer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -595,13 +598,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_paste_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-paste");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Paste buffer to the specified drawable.",
-                                     "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted buffer will be a new layer in the image which is designated as the image floating selection. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added. This procedure returns the new floating layer. The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Paste buffer to the specified drawable.",
+                                  "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted buffer will be a new layer in the image which is designated as the image floating selection. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added. This procedure returns the new floating layer. The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -629,13 +633,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_paste_as_new_image_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-paste-as-new-image");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Paste buffer to a new image.",
-                                     "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image or -1 if the edit buffer was empty.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Paste buffer to a new image.",
+                                  "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image or -1 if the edit buffer was empty.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image ("image",
                                                           "image",
@@ -651,13 +656,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_named_cut_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-cut");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Cut into a named buffer.",
-                                     "This procedure works like 'gimp-edit-cut', but additionally stores the cut buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Cut into a named buffer.",
+                                  "This procedure works like 'gimp-edit-cut', but additionally stores the cut buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -687,13 +693,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_named_copy_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-copy");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Copy into a named buffer.",
-                                     "This procedure works like 'gimp-edit-copy', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Copy into a named buffer.",
+                                  "This procedure works like 'gimp-edit-copy', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -723,13 +730,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_named_copy_visible_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-copy-visible");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Copy from the projection into a named buffer.",
-                                     "This procedure works like 'gimp-edit-copy-visible', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Copy from the projection into a named buffer.",
+                                  "This procedure works like 'gimp-edit-copy-visible', but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -759,13 +767,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_named_paste_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-paste");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Paste named buffer to the specified drawable.",
-                                     "This procedure works like 'gimp-edit-paste' but pastes a named buffer instead of the global buffer.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Paste named buffer to the specified drawable.",
+                                  "This procedure works like 'gimp-edit-paste' but pastes a named buffer instead of the global buffer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("drawable",
                                                          "drawable",
@@ -800,13 +809,14 @@ register_edit_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (edit_named_paste_as_new_image_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-named-paste-as-new-image");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Paste named buffer to a new image.",
-                                     "This procedure works like 'gimp-edit-paste-as-new-image' but pastes a named buffer instead of the global buffer.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Paste named buffer to a new image.",
+                                  "This procedure works like 'gimp-edit-paste-as-new-image' but pastes a named buffer instead of the global buffer.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",

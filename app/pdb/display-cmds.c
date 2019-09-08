@@ -219,13 +219,14 @@ register_display_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (display_id_is_valid_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-id-is-valid");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Returns TRUE if the display ID is valid.",
-                                     "This procedure checks if the given display ID is valid and refers to an existing display.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2007");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns TRUE if the display ID is valid.",
+                                  "This procedure checks if the given display ID is valid and refers to an existing display.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2007");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("display-id",
                                                  "display id",
@@ -247,13 +248,14 @@ register_display_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (display_new_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-new");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Create a new display for the specified image.",
-                                     "Creates a new display for the specified image. If the image already has a display, another is added. Multiple displays are handled transparently by GIMP. The newly created display is returned and can be subsequently destroyed with a call to 'gimp-display-delete'. This procedure only makes sense for use with the GIMP UI, and will result in an execution error if called when GIMP has no UI.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a new display for the specified image.",
+                                  "Creates a new display for the specified image. If the image already has a display, another is added. Multiple displays are handled transparently by GIMP. The newly created display is returned and can be subsequently destroyed with a call to 'gimp-display-delete'. This procedure only makes sense for use with the GIMP UI, and will result in an execution error if called when GIMP has no UI.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -275,13 +277,14 @@ register_display_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (display_delete_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-delete");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Delete the specified display.",
-                                     "This procedure removes the specified display. If this is the last remaining display for the underlying image, then the image is deleted also. Note that the display is closed no matter if the image is dirty or not. Better save the image before calling this procedure.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Delete the specified display.",
+                                  "This procedure removes the specified display. If this is the last remaining display for the underlying image, then the image is deleted also. Note that the display is closed no matter if the image is dirty or not. Better save the image before calling this procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_display ("display",
                                                         "display",
@@ -297,13 +300,14 @@ register_display_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (display_get_window_handle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-display-get-window-handle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get a handle to the native window for an image display.",
-                                     "This procedure returns a handle to the native window for a given image display. For example in the X backend of GDK, a native window handle is an Xlib XID. A value of 0 is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
-                                     NULL,
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get a handle to the native window for an image display.",
+                                  "This procedure returns a handle to the native window for a given image display. For example in the X backend of GDK, a native window handle is an Xlib XID. A value of 0 is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_display ("display",
                                                         "display",
@@ -325,13 +329,14 @@ register_display_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (displays_flush_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-displays-flush");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Flush all internal changes to the user interface",
-                                     "This procedure takes no arguments and returns nothing except a success status. Its purpose is to flush all pending updates of image manipulations to the user interface. It should be called whenever appropriate.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Flush all internal changes to the user interface",
+                                  "This procedure takes no arguments and returns nothing except a success status. Its purpose is to flush all pending updates of image manipulations to the user interface. It should be called whenever appropriate.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -341,13 +346,14 @@ register_display_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (displays_reconnect_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-displays-reconnect");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Reconnect displays from one image to another image.",
-                                     "This procedure connects all displays of the old_image to the new_image. If the old_image has no display or new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Reconnect displays from one image to another image.",
+                                  "This procedure connects all displays of the old_image to the new_image. If the old_image has no display or new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("old-image",
                                                       "old image",

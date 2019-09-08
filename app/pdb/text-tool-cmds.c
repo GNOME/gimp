@@ -160,13 +160,14 @@ register_text_tool_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_fontname_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-fontname");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Add text at the specified location as a floating selection or a new layer.",
-                                     "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (%NULL), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the image's vertical resolution.",
-                                     NULL,
-                                     "Martin Edlman & Sven Neumann",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1998- 2001");
+  gimp_procedure_set_static_help (procedure,
+                                  "Add text at the specified location as a floating selection or a new layer.",
+                                  "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (%NULL), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the image's vertical resolution.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Martin Edlman & Sven Neumann",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1998- 2001");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -245,13 +246,14 @@ register_text_tool_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (text_get_extents_fontname_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-text-get-extents-fontname");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get extents of the bounding box for the specified text.",
-                                     "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the vertical resolution of the image you are taking into account.",
-                                     NULL,
-                                     "Martin Edlman & Sven Neumann",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1998- 2001");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get extents of the bounding box for the specified text.",
+                                  "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the vertical resolution of the image you are taking into account.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Martin Edlman & Sven Neumann",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1998- 2001");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("text",
                                                        "text",

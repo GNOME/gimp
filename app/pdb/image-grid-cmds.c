@@ -392,13 +392,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_get_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-get-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Gets the spacing of an image's grid.",
-                                     "This procedure retrieves the horizontal and vertical spacing of an image's grid. It takes the image as parameter.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets the spacing of an image's grid.",
+                                  "This procedure retrieves the horizontal and vertical spacing of an image's grid. It takes the image as parameter.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -426,13 +427,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_set_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-set-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the spacing of an image's grid.",
-                                     "This procedure sets the horizontal and vertical spacing of an image's grid.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the spacing of an image's grid.",
+                                  "This procedure sets the horizontal and vertical spacing of an image's grid.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -460,13 +462,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_get_offset_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-get-offset");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Gets the offset of an image's grid.",
-                                     "This procedure retrieves the horizontal and vertical offset of an image's grid. It takes the image as parameter.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets the offset of an image's grid.",
+                                  "This procedure retrieves the horizontal and vertical offset of an image's grid. It takes the image as parameter.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -494,13 +497,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_set_offset_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-set-offset");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the offset of an image's grid.",
-                                     "This procedure sets the horizontal and vertical offset of an image's grid.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the offset of an image's grid.",
+                                  "This procedure sets the horizontal and vertical offset of an image's grid.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -528,13 +532,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_get_foreground_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-get-foreground-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the foreground color of an image's grid.",
-                                     "This procedure gets the foreground color of an image's grid.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the foreground color of an image's grid.",
+                                  "This procedure gets the foreground color of an image's grid.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -557,13 +562,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_set_foreground_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-set-foreground-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Gets the foreground color of an image's grid.",
-                                     "This procedure sets the foreground color of an image's grid.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets the foreground color of an image's grid.",
+                                  "This procedure sets the foreground color of an image's grid.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -586,13 +592,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_get_background_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-get-background-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the background color of an image's grid.",
-                                     "This procedure gets the background color of an image's grid.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the background color of an image's grid.",
+                                  "This procedure gets the background color of an image's grid.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -615,13 +622,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_set_background_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-set-background-color");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Gets the background color of an image's grid.",
-                                     "This procedure sets the background color of an image's grid.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets the background color of an image's grid.",
+                                  "This procedure sets the background color of an image's grid.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -644,13 +652,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_get_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-get-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Gets the style of an image's grid.",
-                                     "This procedure retrieves the style of an image's grid.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Gets the style of an image's grid.",
+                                  "This procedure retrieves the style of an image's grid.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -673,13 +682,14 @@ register_image_grid_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_grid_set_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-grid-set-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the style unit of an image's grid.",
-                                     "This procedure sets the style of an image's grid. It takes the image and the new style as parameters.",
-                                     NULL,
-                                     "Sylvain Foret",
-                                     "Sylvain Foret",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the style unit of an image's grid.",
+                                  "This procedure sets the style of an image's grid. It takes the image and the new style as parameters.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sylvain Foret",
+                                         "Sylvain Foret",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",

@@ -3032,13 +3032,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_push_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-push");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Pushes a context to the top of the plug-in's context stack.",
-                                     "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again using 'gimp-context-pop'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Pushes a context to the top of the plug-in's context stack.",
+                                  "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again using 'gimp-context-pop'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3048,13 +3049,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_pop_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-pop");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Pops the topmost context from the plug-in's context stack.",
-                                     "This procedure removes the topmost context from the plug-in's context stack. The context that was active before the corresponding call to 'gimp-context-push' becomes the new current context of the plug-in.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Pops the topmost context from the plug-in's context stack.",
+                                  "This procedure removes the topmost context from the plug-in's context stack. The context that was active before the corresponding call to 'gimp-context-push' becomes the new current context of the plug-in.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3064,13 +3066,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_defaults_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-defaults");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Reset context settings to their default values.",
-                                     "This procedure resets context settings used by various procedures to their default value. This procedure will usually be called after a context push so that a script which calls procedures affected by context settings will not be affected by changes in the global context.",
-                                     NULL,
-                                     "Kevin Cozens <kcozens@svn.gnome.org>",
-                                     "Kevin Cozens",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Reset context settings to their default values.",
+                                  "This procedure resets context settings used by various procedures to their default value. This procedure will usually be called after a context push so that a script which calls procedures affected by context settings will not be affected by changes in the global context.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Kevin Cozens <kcozens@svn.gnome.org>",
+                                         "Kevin Cozens",
+                                         "2011");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3080,13 +3083,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_list_paint_methods_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-list-paint-methods");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Lists the available paint methods.",
-                                     "This procedure lists the names of the available paint methods. Any of the results can be used for 'gimp-context-set-paint-method'.",
-                                     NULL,
-                                     "Simon Budig",
-                                     "Simon Budig",
-                                     "2007");
+  gimp_procedure_set_static_help (procedure,
+                                  "Lists the available paint methods.",
+                                  "This procedure lists the names of the available paint methods. Any of the results can be used for 'gimp-context-set-paint-method'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Simon Budig",
+                                         "Simon Budig",
+                                         "2007");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-paint-methods",
                                                      "num paint methods",
@@ -3107,13 +3111,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_paint_method_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-paint-method");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active paint method.",
-                                     "This procedure returns the name of the currently active paint method.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active paint method.",
+                                  "This procedure returns the name of the currently active paint method.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -3130,13 +3135,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_paint_method_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-paint-method");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified paint method as the active paint method.",
-                                     "This procedure allows the active paint method to be set by specifying its name. The name is simply a string which corresponds to one of the names of the available paint methods. If there is no matching method found, this procedure will return an error. Otherwise, the specified method becomes active and will be used in all subsequent paint operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2005");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified paint method as the active paint method.",
+                                  "This procedure allows the active paint method to be set by specifying its name. The name is simply a string which corresponds to one of the names of the available paint methods. If there is no matching method found, this procedure will return an error. Otherwise, the specified method becomes active and will be used in all subsequent paint operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2005");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -3153,13 +3159,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_stroke_method_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-stroke-method");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active stroke method.",
-                                     "This procedure returns the currently active stroke method.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active stroke method.",
+                                  "This procedure returns the currently active stroke method.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("stroke-method",
                                                       "stroke method",
@@ -3176,13 +3183,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_stroke_method_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-stroke-method");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified stroke method as the active stroke method.",
-                                     "This procedure set the specified stroke method as the active stroke method. The new method will be used in all subsequent stroke operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified stroke method as the active stroke method.",
+                                  "This procedure set the specified stroke method as the active stroke method. The new method will be used in all subsequent stroke operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("stroke-method",
                                                   "stroke method",
@@ -3199,13 +3207,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_foreground_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-foreground");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the current GIMP foreground color.",
-                                     "This procedure returns the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the current GIMP foreground color.",
+                                  "This procedure returns the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("foreground",
                                                         "foreground",
@@ -3222,13 +3231,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_foreground_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-foreground");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the current GIMP foreground color.",
-                                     "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the current GIMP foreground color.",
+                                  "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("foreground",
                                                     "foreground",
@@ -3245,13 +3255,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_background_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-background");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the current GIMP background color.",
-                                     "This procedure returns the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the current GIMP background color.",
+                                  "This procedure returns the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("background",
                                                         "background",
@@ -3268,13 +3279,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_background_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-background");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the current GIMP background color.",
-                                     "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the current GIMP background color.",
+                                  "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("background",
                                                     "background",
@@ -3291,13 +3303,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_default_colors_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-default-colors");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the current GIMP foreground and background colors to black and white.",
-                                     "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the current GIMP foreground and background colors to black and white.",
+                                  "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3307,13 +3320,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_swap_colors_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-swap-colors");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Swap the current GIMP foreground and background colors.",
-                                     "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Swap the current GIMP foreground and background colors.",
+                                  "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3323,13 +3337,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_opacity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-opacity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the opacity.",
-                                     "This procedure returns the opacity setting. The return value is a floating point number between 0 and 100.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the opacity.",
+                                  "This procedure returns the opacity setting. The return value is a floating point number between 0 and 100.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
@@ -3345,13 +3360,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_opacity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-opacity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the opacity.",
-                                     "This procedure modifies the opacity setting. The value should be a floating point number between 0 and 100.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the opacity.",
+                                  "This procedure modifies the opacity setting. The value should be a floating point number between 0 and 100.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
@@ -3367,13 +3383,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_paint_mode_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-paint-mode");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the paint mode.",
-                                     "This procedure returns the paint-mode setting. The return value is an integer which corresponds to the values listed in the argument description.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the paint mode.",
+                                  "This procedure returns the paint-mode setting. The return value is an integer which corresponds to the values listed in the argument description.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("paint-mode",
                                                       "paint mode",
@@ -3390,13 +3407,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_paint_mode_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-paint-mode");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the paint mode.",
-                                     "This procedure modifies the paint_mode setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the paint mode.",
+                                  "This procedure modifies the paint_mode setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
@@ -3413,13 +3431,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_line_width_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-line-width");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line width setting.",
-                                     "This procedure returns the line width setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line width setting.",
+                                  "This procedure returns the line width setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("line-width",
                                                         "line width",
@@ -3435,15 +3454,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_line_width_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-line-width");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the line width setting.",
-                                     "This procedure modifies the line width setting for stroking lines.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the line width setting.",
+                                  "This procedure modifies the line width setting for stroking lines.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("line-width",
                                                     "line width",
@@ -3459,13 +3479,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_line_width_unit_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-line-width-unit");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line width unit setting.",
-                                     "This procedure returns the line width unit setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line width unit setting.",
+                                  "This procedure returns the line width unit setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_unit ("line-width-unit",
                                                          "line width unit",
@@ -3483,15 +3504,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_line_width_unit_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-line-width-unit");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the line width unit setting.",
-                                     "This procedure modifies the line width unit setting for stroking lines.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the line width unit setting.",
+                                  "This procedure modifies the line width unit setting for stroking lines.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("line-width-unit",
                                                      "line width unit",
@@ -3509,13 +3531,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_line_cap_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-line-cap-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line cap style setting.",
-                                     "This procedure returns the line cap style setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line cap style setting.",
+                                  "This procedure returns the line cap style setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("cap-style",
                                                       "cap style",
@@ -3532,15 +3555,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_line_cap_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-line-cap-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the line cap style setting.",
-                                     "This procedure modifies the line cap style setting for stroking lines.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the line cap style setting.",
+                                  "This procedure modifies the line cap style setting for stroking lines.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("cap-style",
                                                   "cap style",
@@ -3557,13 +3581,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_line_join_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-line-join-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line join style setting.",
-                                     "This procedure returns the line join style setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line join style setting.",
+                                  "This procedure returns the line join style setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("join-style",
                                                       "join style",
@@ -3580,15 +3605,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_line_join_style_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-line-join-style");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the line join style setting.",
-                                     "This procedure modifies the line join style setting for stroking lines.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the line join style setting.",
+                                  "This procedure modifies the line join style setting for stroking lines.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("join-style",
                                                   "join style",
@@ -3605,13 +3631,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_line_miter_limit_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-line-miter-limit");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line miter limit setting.",
-                                     "This procedure returns the line miter limit setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line miter limit setting.",
+                                  "This procedure returns the line miter limit setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("miter-limit",
                                                         "miter limit",
@@ -3627,16 +3654,17 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_line_miter_limit_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-line-miter-limit");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the line miter limit setting.",
-                                     "This procedure modifies the line miter limit setting for stroking lines.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the line miter limit setting.",
+                                  "This procedure modifies the line miter limit setting for stroking lines.\n"
                                      "A mitered join is converted to a bevelled join if the miter would extend to a distance of more than (miter-limit * line-width) from the actual join point.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("miter-limit",
                                                     "miter limit",
@@ -3652,13 +3680,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_line_dash_offset_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-line-dash-offset");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line dash offset setting.",
-                                     "This procedure returns the line dash offset setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line dash offset setting.",
+                                  "This procedure returns the line dash offset setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("dash-offset",
                                                         "dash offset",
@@ -3674,15 +3703,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_line_dash_offset_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-line-dash-offset");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the line dash offset setting.",
-                                     "This procedure modifies the line dash offset setting for stroking lines.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the line dash offset setting.",
+                                  "This procedure modifies the line dash offset setting for stroking lines.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("dash-offset",
                                                     "dash offset",
@@ -3698,13 +3728,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_line_dash_pattern_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-line-dash-pattern");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the line dash pattern setting.",
-                                     "This procedure returns the line dash pattern setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the line dash pattern setting.",
+                                  "This procedure returns the line dash pattern setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-dashes",
                                                      "num dashes",
@@ -3725,17 +3756,18 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_line_dash_pattern_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-line-dash-pattern");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the line dash pattern setting.",
-                                     "This procedure modifies the line dash pattern setting for stroking lines.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the line dash pattern setting.",
+                                  "This procedure modifies the line dash pattern setting for stroking lines.\n"
                                      "\n"
                                      "The unit of the dash pattern segments is the actual line width used for the stroke operation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2015");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2015");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-dashes",
                                                  "num dashes",
@@ -3756,13 +3788,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_brush_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-brush");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active brush.",
-                                     "This procedure returns the name of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active brush.",
+                                  "This procedure returns the name of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -3779,13 +3812,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified brush as the active brush.",
-                                     "This procedure allows the active brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified brush as the active brush.",
+                                  "This procedure allows the active brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -3802,13 +3836,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_brush_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-brush-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get brush size in pixels.",
-                                     "Get the brush size in pixels for brush based paint tools.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get brush size in pixels.",
+                                  "Get the brush size in pixels for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
@@ -3824,13 +3859,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush size in pixels.",
-                                     "Set the brush size in pixels for brush based paint tools.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush size in pixels.",
+                                  "Set the brush size in pixels for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
@@ -3846,13 +3882,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_default_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-default-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush size to its default.",
-                                     "Set the brush size to the default (max of width and height) for paintbrush, airbrush, or pencil tools.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush size to its default.",
+                                  "Set the brush size to the default (max of width and height) for paintbrush, airbrush, or pencil tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3862,13 +3899,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_brush_aspect_ratio_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-brush-aspect-ratio");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get brush aspect ratio.",
-                                     "Set the aspect ratio for brush based paint tools.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get brush aspect ratio.",
+                                  "Set the aspect ratio for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
@@ -3884,13 +3922,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_aspect_ratio_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-aspect-ratio");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush aspect ratio.",
-                                     "Set the aspect ratio for brush based paint tools.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush aspect ratio.",
+                                  "Set the aspect ratio for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
@@ -3906,13 +3945,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_brush_angle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-brush-angle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get brush angle in degrees.",
-                                     "Set the angle in degrees for brush based paint tools.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get brush angle in degrees.",
+                                  "Set the angle in degrees for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
@@ -3928,13 +3968,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_angle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-angle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush angle in degrees.",
-                                     "Set the angle in degrees for brush based paint tools.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush angle in degrees.",
+                                  "Set the angle in degrees for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
@@ -3950,13 +3991,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_brush_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-brush-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get brush spacing as percent of size.",
-                                     "Get the brush spacing as percent of size for brush based paint tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get brush spacing as percent of size.",
+                                  "Get the brush spacing as percent of size for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("spacing",
                                                         "spacing",
@@ -3972,13 +4014,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush spacing as percent of size.",
-                                     "Set the brush spacing as percent of size for brush based paint tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush spacing as percent of size.",
+                                  "Set the brush spacing as percent of size for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spacing",
                                                     "spacing",
@@ -3994,13 +4037,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_default_spacing_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-default-spacing");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush spacing to its default.",
-                                     "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush spacing to its default.",
+                                  "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4010,13 +4054,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_brush_hardness_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-brush-hardness");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get brush hardness in paint options.",
-                                     "Get the brush hardness for brush based paint tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get brush hardness in paint options.",
+                                  "Get the brush hardness for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("hardness",
                                                         "hardness",
@@ -4032,13 +4077,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_hardness_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-hardness");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush hardness.",
-                                     "Set the brush hardness for brush based paint tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush hardness.",
+                                  "Set the brush hardness for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hardness",
                                                     "hardness",
@@ -4054,13 +4100,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_default_hardness_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-default-hardness");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush spacing to its default.",
-                                     "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush spacing to its default.",
+                                  "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4070,13 +4117,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_brush_force_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-brush-force");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get brush force in paint options.",
-                                     "Get the brush application force for brush based paint tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get brush force in paint options.",
+                                  "Get the brush application force for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("force",
                                                         "force",
@@ -4092,13 +4140,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_brush_force_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-brush-force");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set brush application force.",
-                                     "Set the brush application force for brush based paint tools.",
-                                     NULL,
-                                     "Alexia Death",
-                                     "Alexia Death",
-                                     "2014");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set brush application force.",
+                                  "Set the brush application force for brush based paint tools.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alexia Death",
+                                         "Alexia Death",
+                                         "2014");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("force",
                                                     "force",
@@ -4114,13 +4163,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_dynamics_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-dynamics");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active paint dynamics.",
-                                     "This procedure returns the name of the currently active paint dynamics. All paint operations and stroke operations use this paint dynamics to control the application of paint to the image.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active paint dynamics.",
+                                  "This procedure returns the name of the currently active paint dynamics. All paint operations and stroke operations use this paint dynamics to control the application of paint to the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4137,13 +4187,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_dynamics_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-dynamics");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified paint dynamics as the active paint dynamics.",
-                                     "This procedure allows the active paint dynamics to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed paint dynamics. If there is no matching paint dynamics found, this procedure will return an error. Otherwise, the specified paint dynamics becomes active and will be used in all subsequent paint operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified paint dynamics as the active paint dynamics.",
+                                  "This procedure allows the active paint dynamics to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed paint dynamics. If there is no matching paint dynamics found, this procedure will return an error. Otherwise, the specified paint dynamics becomes active and will be used in all subsequent paint operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4160,13 +4211,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_mypaint_brush_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-mypaint-brush");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active MyPaint brush.",
-                                     "This procedure returns the name of the currently active MyPaint brush.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2016");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active MyPaint brush.",
+                                  "This procedure returns the name of the currently active MyPaint brush.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2016");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4183,13 +4235,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_mypaint_brush_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-mypaint-brush");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified MyPaint brush as the active MyPaint brush.",
-                                     "This procedure allows the active MyPaint brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed MyPaint brushes. If there is no matching MyPaint brush found, this procedure will return an error. Otherwise, the specified MyPaint brush becomes active and will be used in all subsequent MyPaint paint operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2016");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified MyPaint brush as the active MyPaint brush.",
+                                  "This procedure allows the active MyPaint brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed MyPaint brushes. If there is no matching MyPaint brush found, this procedure will return an error. Otherwise, the specified MyPaint brush becomes active and will be used in all subsequent MyPaint paint operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2016");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4206,13 +4259,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_pattern_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-pattern");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active pattern.",
-                                     "This procedure returns name of the the currently active pattern. All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active pattern.",
+                                  "This procedure returns name of the the currently active pattern. All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4229,13 +4283,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_pattern_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-pattern");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified pattern as the active pattern.",
-                                     "This procedure allows the active pattern to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified pattern as the active pattern.",
+                                  "This procedure allows the active pattern to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4252,13 +4307,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_gradient_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-gradient");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active gradient.",
-                                     "This procedure returns the name of the currently active gradient.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active gradient.",
+                                  "This procedure returns the name of the currently active gradient.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4275,13 +4331,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the specified gradient as the active gradient.",
-                                     "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the specified gradient as the active gradient.",
+                                  "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4298,13 +4355,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_fg_bg_rgb_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient-fg-bg-rgb");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the built-in FG-BG RGB gradient as the active gradient.",
-                                     "This procedure sets the built-in FG-BG RGB gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the built-in FG-BG RGB gradient as the active gradient.",
+                                  "This procedure sets the built-in FG-BG RGB gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4314,13 +4372,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_cw_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient-fg-bg-hsv-cw");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the built-in FG-BG HSV (cw) gradient as the active gradient.",
-                                     "This procedure sets the built-in FG-BG HSV (cw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the built-in FG-BG HSV (cw) gradient as the active gradient.",
+                                  "This procedure sets the built-in FG-BG HSV (cw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4330,13 +4389,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_ccw_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient-fg-bg-hsv-ccw");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.",
-                                     "This procedure sets the built-in FG-BG HSV (ccw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.",
+                                  "This procedure sets the built-in FG-BG HSV (ccw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4346,13 +4406,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_fg_transparent_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient-fg-transparent");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Sets the built-in FG-Transparent gradient as the active gradient.",
-                                     "This procedure sets the built-in FG-Transparent gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the built-in FG-Transparent gradient as the active gradient.",
+                                  "This procedure sets the built-in FG-Transparent gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4362,13 +4423,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_gradient_blend_color_space_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-gradient-blend-color-space");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the gradient blend color space.",
-                                     "Get the gradient blend color space for paint tools and the gradient tool.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the gradient blend color space.",
+                                  "Get the gradient blend color space for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("blend-color-space",
                                                       "blend color space",
@@ -4385,13 +4447,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_blend_color_space_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient-blend-color-space");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the gradient blend color space.",
-                                     "Set the gradient blend color space for paint tools and the gradient tool.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the gradient blend color space.",
+                                  "Set the gradient blend color space for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("blend-color-space",
                                                   "blend color space",
@@ -4408,13 +4471,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_gradient_repeat_mode_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-gradient-repeat-mode");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the gradient repeat mode.",
-                                     "Get the gradient repeat mode for paint tools and the gradient tool.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the gradient repeat mode.",
+                                  "Get the gradient repeat mode for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("repeat-mode",
                                                       "repeat mode",
@@ -4431,13 +4495,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_repeat_mode_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient-repeat-mode");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the gradient repeat mode.",
-                                     "Set the gradient repeat mode for paint tools and the gradient tool.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the gradient repeat mode.",
+                                  "Set the gradient repeat mode for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("repeat-mode",
                                                   "repeat mode",
@@ -4454,13 +4519,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_gradient_reverse_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-gradient-reverse");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the gradient reverse setting.",
-                                     "Get the gradient reverse setting for paint tools and the gradient tool.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the gradient reverse setting.",
+                                  "Get the gradient reverse setting for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("reverse",
                                                          "reverse",
@@ -4476,13 +4542,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_gradient_reverse_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-gradient-reverse");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the gradient reverse setting.",
-                                     "Set the gradient reverse setting for paint tools and the gradient tool.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the gradient reverse setting.",
+                                  "Set the gradient reverse setting for paint tools and the gradient tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
@@ -4498,13 +4565,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_palette_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-palette");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active palette.",
-                                     "This procedure returns the name of the the currently active palette.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active palette.",
+                                  "This procedure returns the name of the the currently active palette.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4521,13 +4589,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_palette_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-palette");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified palette as the active palette.",
-                                     "This procedure allows the active palette to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed palettes. If no matching palette is found, this procedure will return an error. Otherwise, the specified palette becomes active and will be used in all subsequent palette operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified palette as the active palette.",
+                                  "This procedure allows the active palette to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed palettes. If no matching palette is found, this procedure will return an error. Otherwise, the specified palette becomes active and will be used in all subsequent palette operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4544,13 +4613,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_font_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-font");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve the currently active font.",
-                                     "This procedure returns the name of the currently active font.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active font.",
+                                  "This procedure returns the name of the currently active font.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -4567,13 +4637,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_font_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-font");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the specified font as the active font.",
-                                     "This procedure allows the active font to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed fonts. If no matching font is found, this procedure will return an error. Otherwise, the specified font becomes active and will be used in all subsequent font operations.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-                                     "Michael Natterer & Sven Neumann",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified font as the active font.",
+                                  "This procedure allows the active font to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed fonts. If no matching font is found, this procedure will return an error. Otherwise, the specified font becomes active and will be used in all subsequent font operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                         "Michael Natterer & Sven Neumann",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -4590,13 +4661,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_antialias_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-antialias");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the antialias setting.",
-                                     "This procedure returns the antialias setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the antialias setting.",
+                                  "This procedure returns the antialias setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("antialias",
                                                          "antialias",
@@ -4612,15 +4684,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_antialias_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-antialias");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the antialias setting.",
-                                     "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the antialias setting.",
+                                  "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item', 'gimp-drawable-edit-bucket-fill', 'gimp-drawable-edit-stroke-item', 'gimp-drawable-edit-stroke-selection'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
@@ -4636,13 +4709,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_feather_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-feather");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the feather setting.",
-                                     "This procedure returns the feather setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the feather setting.",
+                                  "This procedure returns the feather setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("feather",
                                                          "feather",
@@ -4658,15 +4732,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_feather_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-feather");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the feather setting.",
-                                     "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the feather setting.",
+                                  "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-rectangle', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("feather",
                                                      "feather",
@@ -4682,13 +4757,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_feather_radius_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-feather-radius");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the feather radius setting.",
-                                     "This procedure returns the feather radius setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the feather radius setting.",
+                                  "This procedure returns the feather radius setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("feather-radius-x",
                                                         "feather radius x",
@@ -4710,15 +4786,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_feather_radius_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-feather-radius");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the feather radius setting.",
-                                     "This procedure modifies the feather radius setting.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the feather radius setting.",
+                                  "This procedure modifies the feather radius setting.\n"
                                      "\n"
                                      "This setting affects all procedures that are affected by 'gimp-context-set-feather'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("feather-radius-x",
                                                     "feather radius x",
@@ -4740,13 +4817,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_sample_merged_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-sample-merged");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the sample merged setting.",
-                                     "This procedure returns the sample merged setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the sample merged setting.",
+                                  "This procedure returns the sample merged setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("sample-merged",
                                                          "sample merged",
@@ -4762,15 +4840,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_sample_merged_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-sample-merged");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the sample merged setting.",
-                                     "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers).\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the sample merged setting.",
+                                  "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers).\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-merged",
                                                      "sample merged",
@@ -4786,13 +4865,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_sample_criterion_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-sample-criterion");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the sample criterion setting.",
-                                     "This procedure returns the sample criterion setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the sample criterion setting.",
+                                  "This procedure returns the sample criterion setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("sample-criterion",
                                                       "sample criterion",
@@ -4809,15 +4889,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_sample_criterion_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-sample-criterion");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the sample criterion setting.",
-                                     "This procedure modifies the sample criterion setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls how color similarity is determined. SELECT_CRITERION_COMPOSITE is the default value.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the sample criterion setting.",
+                                  "This procedure modifies the sample criterion setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls how color similarity is determined. SELECT_CRITERION_COMPOSITE is the default value.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("sample-criterion",
                                                   "sample criterion",
@@ -4834,13 +4915,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_sample_threshold_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-sample-threshold");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the sample threshold setting.",
-                                     "This procedure returns the sample threshold setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the sample threshold setting.",
+                                  "This procedure returns the sample threshold setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("sample-threshold",
                                                         "sample threshold",
@@ -4856,15 +4938,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_sample_threshold_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-sample-threshold");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the sample threshold setting.",
-                                     "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in gimprc will be used.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the sample threshold setting.",
+                                  "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in gimprc will be used.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("sample-threshold",
                                                     "sample threshold",
@@ -4880,13 +4963,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_sample_threshold_int_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-sample-threshold-int");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the sample threshold setting as an integer value.",
-                                     "This procedure returns the sample threshold setting as an integer value. See 'gimp-context-get-sample-threshold'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the sample threshold setting as an integer value.",
+                                  "This procedure returns the sample threshold setting as an integer value. See 'gimp-context-get-sample-threshold'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("sample-threshold",
                                                      "sample threshold",
@@ -4902,13 +4986,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_sample_threshold_int_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-sample-threshold-int");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the sample threshold setting as an integer value.",
-                                     "This procedure modifies the sample threshold setting as an integer value. See 'gimp-context-set-sample-threshold'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the sample threshold setting as an integer value.",
+                                  "This procedure modifies the sample threshold setting as an integer value. See 'gimp-context-set-sample-threshold'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("sample-threshold",
                                                  "sample threshold",
@@ -4924,13 +5009,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_sample_transparent_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-sample-transparent");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the sample transparent setting.",
-                                     "This procedure returns the sample transparent setting.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the sample transparent setting.",
+                                  "This procedure returns the sample transparent setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("sample-transparent",
                                                          "sample transparent",
@@ -4946,15 +5032,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_sample_transparent_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-sample-transparent");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the sample transparent setting.",
-                                     "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the sample transparent setting.",
+                                  "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2011");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2011");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-transparent",
                                                      "sample transparent",
@@ -4970,13 +5057,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_diagonal_neighbors_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-diagonal-neighbors");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the diagonal neighbors setting.",
-                                     "This procedure returns the diagonal neighbors setting.",
-                                     NULL,
-                                     "Ell",
-                                     "Ell",
-                                     "2016");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the diagonal neighbors setting.",
+                                  "This procedure returns the diagonal neighbors setting.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ell",
+                                         "Ell",
+                                         "2016");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("diagonal-neighbors",
                                                          "diagonal neighbors",
@@ -4992,15 +5080,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_diagonal_neighbors_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-diagonal-neighbors");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the diagonal neighbors setting.",
-                                     "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighbors of each pixel are considered.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the diagonal neighbors setting.",
+                                  "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighbors of each pixel are considered.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
-                                     NULL,
-                                     "Ell",
-                                     "Ell",
-                                     "2016");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ell",
+                                         "Ell",
+                                         "2016");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("diagonal-neighbors",
                                                      "diagonal neighbors",
@@ -5016,13 +5105,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_distance_metric_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-distance-metric");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the distance metric used in some computations.",
-                                     "This procedure returns the distance metric in the current context. See 'gimp-context-set-distance-metric' to know more about its usage.",
-                                     NULL,
-                                     "Jehan",
-                                     "Jehan",
-                                     "2018");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the distance metric used in some computations.",
+                                  "This procedure returns the distance metric in the current context. See 'gimp-context-set-distance-metric' to know more about its usage.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2018");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("metric",
                                                       "metric",
@@ -5039,15 +5129,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_distance_metric_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-distance-metric");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the distance metric used in some computations.",
-                                     "This procedure modifies the distance metric used in some computations, such as 'gimp-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the distance metric used in some computations.",
+                                  "This procedure modifies the distance metric used in some computations, such as 'gimp-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.\n"
                                      "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-gradient-fill'.",
-                                     NULL,
-                                     "Jehan",
-                                     "Jehan",
-                                     "2018");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2018");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("metric",
                                                   "metric",
@@ -5064,13 +5155,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_interpolation_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-interpolation");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the interpolation type.",
-                                     "This procedure returns the interpolation setting. The return value is an integer which corresponds to the values listed in the argument description. If the interpolation has not been set explicitly by 'gimp-context-set-interpolation', the default interpolation set in gimprc will be used.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the interpolation type.",
+                                  "This procedure returns the interpolation setting. The return value is an integer which corresponds to the values listed in the argument description. If the interpolation has not been set explicitly by 'gimp-context-set-interpolation', the default interpolation set in gimprc will be used.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("interpolation",
                                                       "interpolation",
@@ -5087,15 +5179,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_interpolation_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-interpolation");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the interpolation type.",
-                                     "This procedure modifies the interpolation setting.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the interpolation type.",
+                                  "This procedure modifies the interpolation setting.\n"
                                      "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix', 'gimp-image-scale', 'gimp-layer-scale'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("interpolation",
                                                   "interpolation",
@@ -5112,13 +5205,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_transform_direction_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-transform-direction");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the transform direction.",
-                                     "This procedure returns the transform direction. The return value is an integer which corresponds to the values listed in the argument description.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the transform direction.",
+                                  "This procedure returns the transform direction. The return value is an integer which corresponds to the values listed in the argument description.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("transform-direction",
                                                       "transform direction",
@@ -5135,15 +5229,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_transform_direction_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-transform-direction");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the transform direction.",
-                                     "This procedure modifies the transform direction setting.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the transform direction.",
+                                  "This procedure modifies the transform direction setting.\n"
                                      "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("transform-direction",
                                                   "transform direction",
@@ -5160,13 +5255,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_transform_resize_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-transform-resize");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get the transform resize type.",
-                                     "This procedure returns the transform resize setting. The return value is an integer which corresponds to the values listed in the argument description.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the transform resize type.",
+                                  "This procedure returns the transform resize setting. The return value is an integer which corresponds to the values listed in the argument description.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("transform-resize",
                                                       "transform resize",
@@ -5183,15 +5279,16 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_transform_resize_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-transform-resize");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set the transform resize type.",
-                                     "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized.\n"
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the transform resize type.",
+                                  "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized.\n"
                                      "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-flip-simple', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-rotate-simple', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010");
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2010");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("transform-resize",
                                                   "transform resize",
@@ -5208,13 +5305,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink blob size in pixels.",
-                                     "Get the ink blob size in pixels for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink blob size in pixels.",
+                                  "Get the ink blob size in pixels for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
@@ -5230,13 +5328,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-size");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink blob size in pixels.",
-                                     "Set the ink blob size in pixels for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink blob size in pixels.",
+                                  "Set the ink blob size in pixels for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
@@ -5252,13 +5351,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_angle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-angle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink angle in degrees.",
-                                     "Get the ink angle in degrees for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink angle in degrees.",
+                                  "Get the ink angle in degrees for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
@@ -5274,13 +5374,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_angle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-angle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink angle in degrees.",
-                                     "Set the ink angle in degrees for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink angle in degrees.",
+                                  "Set the ink angle in degrees for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
@@ -5296,13 +5397,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_size_sensitivity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-size-sensitivity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink size sensitivity.",
-                                     "Get the ink size sensitivity for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink size sensitivity.",
+                                  "Get the ink size sensitivity for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
@@ -5318,13 +5420,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_size_sensitivity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-size-sensitivity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink size sensitivity.",
-                                     "Set the ink size sensitivity for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink size sensitivity.",
+                                  "Set the ink size sensitivity for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
@@ -5340,13 +5443,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_tilt_sensitivity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-tilt-sensitivity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink tilt sensitivity.",
-                                     "Get the ink tilt sensitivity for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink tilt sensitivity.",
+                                  "Get the ink tilt sensitivity for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("tilt",
                                                         "tilt",
@@ -5362,13 +5466,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_tilt_sensitivity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-tilt-sensitivity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink tilt sensitivity.",
-                                     "Set the ink tilt sensitivity for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink tilt sensitivity.",
+                                  "Set the ink tilt sensitivity for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("tilt",
                                                     "tilt",
@@ -5384,13 +5489,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_speed_sensitivity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-speed-sensitivity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink speed sensitivity.",
-                                     "Get the ink speed sensitivity for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink speed sensitivity.",
+                                  "Get the ink speed sensitivity for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("speed",
                                                         "speed",
@@ -5406,13 +5512,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_speed_sensitivity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-speed-sensitivity");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink speed sensitivity.",
-                                     "Set the ink speed sensitivity for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink speed sensitivity.",
+                                  "Set the ink speed sensitivity for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("speed",
                                                     "speed",
@@ -5428,13 +5535,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_blob_type_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-blob-type");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink blob type.",
-                                     "Get the ink blob type for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink blob type.",
+                                  "Get the ink blob type for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("type",
                                                       "type",
@@ -5451,13 +5559,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_blob_type_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-blob-type");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink blob type.",
-                                     "Set the ink blob type for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink blob type.",
+                                  "Set the ink blob type for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
@@ -5474,13 +5583,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_blob_aspect_ratio_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-blob-aspect-ratio");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink blob aspect ratio.",
-                                     "Get the ink blob aspect ratio for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink blob aspect ratio.",
+                                  "Get the ink blob aspect ratio for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
@@ -5496,13 +5606,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_blob_aspect_ratio_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-blob-aspect-ratio");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink blob aspect ratio.",
-                                     "Set the ink blob aspect ratio for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink blob aspect ratio.",
+                                  "Set the ink blob aspect ratio for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
@@ -5518,13 +5629,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_get_ink_blob_angle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-get-ink-blob-angle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Get ink blob angle in degrees.",
-                                     "Get the ink blob angle in degrees for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get ink blob angle in degrees.",
+                                  "Get the ink blob angle in degrees for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
@@ -5540,13 +5652,14 @@ register_context_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (context_set_ink_blob_angle_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-context-set-ink-blob-angle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Set ink blob angle in degrees.",
-                                     "Set the ink blob angle in degrees for ink tool.",
-                                     NULL,
-                                     "Ed Swartz",
-                                     "Ed Swartz",
-                                     "2012");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set ink blob angle in degrees.",
+                                  "Set the ink blob angle in degrees for ink tool.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ed Swartz",
+                                         "Ed Swartz",
+                                         "2012");
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",

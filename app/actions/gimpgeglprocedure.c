@@ -443,11 +443,12 @@ gimp_gegl_procedure_new (Gimp        *gimp,
 
   gimp_object_set_name (GIMP_OBJECT (procedure), name);
   gimp_viewable_set_icon_name (GIMP_VIEWABLE (procedure), icon_name);
-  gimp_procedure_set_strings (procedure,
-                              tooltip,
-                              tooltip,
-                              NULL,
-                              "author", "copyright", "date");
+  gimp_procedure_set_help (procedure,
+                           tooltip,
+                           tooltip,
+                           NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "author", "copyright", "date");
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("run-mode",

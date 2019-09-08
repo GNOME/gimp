@@ -101,13 +101,14 @@ register_brushes_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (brushes_refresh_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-refresh");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Refresh current brushes. This function always succeeds.",
-                                     "This procedure retrieves all brushes currently in the user's brush path and updates the brush dialogs accordingly.",
-                                     NULL,
-                                     "Seth Burgess",
-                                     "Seth Burgess",
-                                     "1997");
+  gimp_procedure_set_static_help (procedure,
+                                  "Refresh current brushes. This function always succeeds.",
+                                  "This procedure retrieves all brushes currently in the user's brush path and updates the brush dialogs accordingly.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Seth Burgess",
+                                         "Seth Burgess",
+                                         "1997");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -117,13 +118,14 @@ register_brushes_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (brushes_get_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-get-list");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieve a complete listing of the available brushes.",
-                                     "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp-context-set-brush' procedure.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve a complete listing of the available brushes.",
+                                  "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp-context-set-brush' procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

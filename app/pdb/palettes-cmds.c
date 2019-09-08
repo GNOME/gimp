@@ -100,13 +100,14 @@ register_palettes_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (palettes_refresh_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-refresh");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Refreshes current palettes. This function always succeeds.",
-                                     "This procedure retrieves all palettes currently in the user's palette path and updates the palette dialogs accordingly.",
-                                     NULL,
-                                     "Adrian Likins <adrian@gimp.org>",
-                                     "Adrian Likins",
-                                     "1998");
+  gimp_procedure_set_static_help (procedure,
+                                  "Refreshes current palettes. This function always succeeds.",
+                                  "This procedure retrieves all palettes currently in the user's palette path and updates the palette dialogs accordingly.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Adrian Likins <adrian@gimp.org>",
+                                         "Adrian Likins",
+                                         "1998");
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -116,13 +117,14 @@ register_palettes_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (palettes_get_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-get-list");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Retrieves a list of all of the available palettes",
-                                     "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp-context-set-palette'.",
-                                     NULL,
-                                     "Nathan Summers <rock@gimp.org>",
-                                     "Nathan Summers",
-                                     "2001");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieves a list of all of the available palettes",
+                                  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp-context-set-palette'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Nathan Summers <rock@gimp.org>",
+                                         "Nathan Summers",
+                                         "2001");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",

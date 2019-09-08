@@ -236,13 +236,14 @@ register_image_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_resize_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-resize");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Resize the image to the specified extents.",
-                                     "This procedure resizes the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels within the image are resized according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Resize the image to the specified extents.",
+                                  "This procedure resizes the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels within the image are resized according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -282,13 +283,14 @@ register_image_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_resize_to_layers_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-resize-to-layers");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Resize the image to fit all layers.",
-                                     "This procedure resizes the image to the bounding box of all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
-                                     NULL,
-                                     "Simon Budig",
-                                     "Simon Budig",
-                                     "2004");
+  gimp_procedure_set_static_help (procedure,
+                                  "Resize the image to fit all layers.",
+                                  "This procedure resizes the image to the bounding box of all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Simon Budig",
+                                         "Simon Budig",
+                                         "2004");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -304,13 +306,14 @@ register_image_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_scale_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-scale");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Scale the image using the default interpolation method.",
-                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Scale the image using the default interpolation method.",
+                                  "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -338,13 +341,14 @@ register_image_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_crop_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-crop");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Crop the image to the specified extents.",
-                                     "This procedure crops the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels and layers within the image are cropped to the new image extents; this includes the image selection mask. If any parameters are out of range, an error is returned.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Crop the image to the specified extents.",
+                                  "This procedure crops the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels and layers within the image are cropped to the new image extents; this includes the image selection mask. If any parameters are out of range, an error is returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -384,13 +388,14 @@ register_image_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_flip_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-flip");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Flips the image horizontally or vertically.",
-                                     "This procedure flips (mirrors) the image.",
-                                     NULL,
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996");
+  gimp_procedure_set_static_help (procedure,
+                                  "Flips the image horizontally or vertically.",
+                                  "This procedure flips (mirrors) the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
@@ -415,13 +420,14 @@ register_image_transform_procs (GimpPDB *pdb)
   procedure = gimp_procedure_new (image_rotate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-rotate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "Rotates the image by the specified degrees.",
-                                     "This procedure rotates the image.",
-                                     NULL,
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2003");
+  gimp_procedure_set_static_help (procedure,
+                                  "Rotates the image by the specified degrees.",
+                                  "This procedure rotates the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2003");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
