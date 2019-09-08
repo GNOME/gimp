@@ -30,8 +30,8 @@ sub plugins_query {
     );
 
     @outargs = (
-	{ name => 'menu_path', type => 'stringarray',
-	  desc => 'The menu path of the plug-in',
+	{ name => 'plugin_procedure', type => 'stringarray',
+	  desc => 'The plug-in procedure name',
 	  array => { name => 'num_plugins',
 		     desc => 'The number of plug-ins' } },
 	{ name => 'plugin_accelerator', type => 'stringarray',
@@ -43,16 +43,8 @@ sub plugins_query {
 	  desc => 'Location of the plug-in program',
 	  array => { name => 'num_plugins', no_declare => 1,
 		     desc => 'The number of plug-ins' } },
-	{ name => 'plugin_image_type', type => 'stringarray',
-	  desc => 'Type of image that this plug-in will work on',
-	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plug-ins' } },
 	{ name => 'plugin_install_time', type => 'int32array',
 	  desc => 'Time that the plug-in was installed',
-	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plug-ins' } },
-	{ name => 'plugin_real_name', type => 'stringarray',
-	  desc => 'The internal name of the plug-in',
 	  array => { name => 'num_plugins', no_declare => 1,
 		     desc => 'The number of plug-ins' } }
     );
@@ -62,11 +54,9 @@ sub plugins_query {
 {
   num_plugins = gimp_plug_in_manager_query (gimp->plug_in_manager,
                                             search_string,
-                                            &menu_path,
+                                            &plugin_procedure,
                                             &plugin_accelerator,
                                             &plugin_location,
-                                            &plugin_image_type,
-                                            &plugin_real_name,
                                             &plugin_install_time);
 }
 CODE

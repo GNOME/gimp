@@ -43,33 +43,27 @@ match_string (GRegex *regex,
 gint
 gimp_plug_in_manager_query (GimpPlugInManager   *manager,
                             const gchar         *search_str,
-                            gchar             ***menu_strs,
+                            gchar             ***procedure_strs,
                             gchar             ***accel_strs,
                             gchar             ***prog_strs,
-                            gchar             ***types_strs,
-                            gchar             ***realname_strs,
                             gint32             **time_ints)
 {
-  gint32   num_plugins = 0;
-  GSList  *list;
-  GSList  *matched     = NULL;
-  gint     i           = 0;
+  gint     num_plugins = 0;
   GRegex  *sregex      = NULL;
+  GSList  *matched     = NULL;
+  GSList  *list;
+  gint     i;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), 0);
-  g_return_val_if_fail (menu_strs != NULL, 0);
+  g_return_val_if_fail (procedure_strs != NULL, 0);
   g_return_val_if_fail (accel_strs != NULL, 0);
   g_return_val_if_fail (prog_strs != NULL, 0);
-  g_return_val_if_fail (types_strs != NULL, 0);
-  g_return_val_if_fail (realname_strs != NULL, 0);
   g_return_val_if_fail (time_ints != NULL, 0);
 
-  *menu_strs     = NULL;
-  *accel_strs    = NULL;
-  *prog_strs     = NULL;
-  *types_strs    = NULL;
-  *realname_strs = NULL;
-  *time_ints     = NULL;
+  *procedure_strs = NULL;
+  *accel_strs     = NULL;
+  *prog_strs      = NULL;
+  *time_ints      = NULL;
 
   if (search_str && ! strlen (search_str))
     search_str = NULL;
@@ -92,21 +86,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
 
       if (proc->file && proc->menu_paths)
         {
-          gchar *name;
-
-          if (proc->menu_label)
-            {
-              name = proc->menu_label;
-            }
-          else
-            {
-              name = strrchr (proc->menu_paths->data, '/');
-
-              if (name)
-                name = name + 1;
-              else
-                name = proc->menu_paths->data;
-            }
+          gchar *name = proc->menu_label;
 
           name = gimp_strip_uline (name);
 
@@ -120,37 +100,23 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
         }
     }
 
-  *menu_strs     = g_new (gchar *, num_plugins);
-  *accel_strs    = g_new (gchar *, num_plugins);
-  *prog_strs     = g_new (gchar *, num_plugins);
-  *types_strs    = g_new (gchar *, num_plugins);
-  *realname_strs = g_new (gchar *, num_plugins);
-  *time_ints     = g_new (gint,    num_plugins);
+  *procedure_strs = g_new (gchar *, num_plugins);
+  *accel_strs     = g_new (gchar *, num_plugins);
+  *prog_strs      = g_new (gchar *, num_plugins);
+  *time_ints      = g_new (gint,    num_plugins);
 
   matched = g_slist_reverse (matched);
 
-  for (list = matched; list; list = g_slist_next (list))
+  for (list = matched, i = 0;
+       list;
+       list = g_slist_next (list), i++)
     {
       GimpPlugInProcedure *proc = list->data;
-      gchar               *name;
 
-      if (proc->menu_label)
-        name = g_strdup_printf ("%s/%s",
-                                (gchar *) proc->menu_paths->data,
-                                proc->menu_label);
-      else
-        name = g_strdup (proc->menu_paths->data);
-
-      (*menu_strs)[i]     = gimp_strip_uline (name);
-      (*accel_strs)[i]    = NULL;
-      (*prog_strs)[i]     = g_file_get_path (proc->file);
-      (*types_strs)[i]    = g_strdup (proc->image_types);
-      (*realname_strs)[i] = g_strdup (gimp_object_get_name (proc));
-      (*time_ints)[i]     = proc->mtime;
-
-      g_free (name);
-
-      i++;
+      (*procedure_strs)[i] = g_strdup (gimp_object_get_name (proc));
+      (*accel_strs)[i]     = NULL;
+      (*prog_strs)[i]      = g_file_get_path (proc->file);
+      (*time_ints)[i]      = proc->mtime;
     }
 
   g_slist_free (matched);

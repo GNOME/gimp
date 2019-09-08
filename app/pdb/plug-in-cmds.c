@@ -58,38 +58,30 @@ plugins_query_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   const gchar *search_string;
   gint num_plugins = 0;
-  gchar **menu_path = NULL;
+  gchar **plugin_procedure = NULL;
   gchar **plugin_accelerator = NULL;
   gchar **plugin_location = NULL;
-  gchar **plugin_image_type = NULL;
   gint32 *plugin_install_time = NULL;
-  gchar **plugin_real_name = NULL;
 
   search_string = g_value_get_string (gimp_value_array_index (args, 0));
 
   num_plugins = gimp_plug_in_manager_query (gimp->plug_in_manager,
                                             search_string,
-                                            &menu_path,
+                                            &plugin_procedure,
                                             &plugin_accelerator,
                                             &plugin_location,
-                                            &plugin_image_type,
-                                            &plugin_real_name,
                                             &plugin_install_time);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (gimp_value_array_index (return_vals, 1), num_plugins);
-  gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), menu_path, num_plugins);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), plugin_procedure, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 3), num_plugins);
   gimp_value_take_string_array (gimp_value_array_index (return_vals, 4), plugin_accelerator, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 5), num_plugins);
   gimp_value_take_string_array (gimp_value_array_index (return_vals, 6), plugin_location, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 7), num_plugins);
-  gimp_value_take_string_array (gimp_value_array_index (return_vals, 8), plugin_image_type, num_plugins);
-  g_value_set_int (gimp_value_array_index (return_vals, 9), num_plugins);
-  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 10), plugin_install_time, num_plugins);
-  g_value_set_int (gimp_value_array_index (return_vals, 11), num_plugins);
-  gimp_value_take_string_array (gimp_value_array_index (return_vals, 12), plugin_real_name, num_plugins);
+  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 8), plugin_install_time, num_plugins);
 
   return return_vals;
 }
@@ -359,9 +351,9 @@ register_plug_in_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("menu-path",
-                                                                 "menu path",
-                                                                 "The menu path of the plug-in",
+                                   gimp_param_spec_string_array ("plugin-procedure",
+                                                                 "plugin procedure",
+                                                                 "The plug-in procedure name",
                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-plugins",
@@ -392,32 +384,10 @@ register_plug_in_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("plugin-image-type",
-                                                                 "plugin image type",
-                                                                 "Type of image that this plug-in will work on",
-                                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plug-ins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("plugin-install-time",
                                                                 "plugin install time",
                                                                 "Time that the plug-in was installed",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plug-ins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string_array ("plugin-real-name",
-                                                                 "plugin real name",
-                                                                 "The internal name of the plug-in",
-                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

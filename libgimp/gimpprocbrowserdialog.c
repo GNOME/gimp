@@ -330,7 +330,7 @@ browser_selection_changed (GtkTreeSelection      *sel,
                           -1);
 
       gimp_browser_set_widget (GIMP_BROWSER (dialog->priv->browser),
-                               gimp_proc_view_new (proc_name, NULL));
+                               gimp_proc_view_new (proc_name));
 
       g_free (proc_name);
     }

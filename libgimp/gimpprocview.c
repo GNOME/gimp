@@ -72,7 +72,6 @@ static GtkWidget * gimp_proc_view_create_args (GimpProcedure *procedure,
 /**
  * gimp_proc_view_new:
  * @procedure_name: The name of a procedure.
- * @menu_path:      (nullable):  The procedure's menu path, or %NULL.
  *
  * Returns: (transfer full): a new widget providing a view on a
  *          GIMP procedure
@@ -80,8 +79,7 @@ static GtkWidget * gimp_proc_view_create_args (GimpProcedure *procedure,
  * Since: 2.4
  **/
 GtkWidget *
-gimp_proc_view_new (const gchar *procedure_name,
-                    const gchar *menu_path)
+gimp_proc_view_new (const gchar *procedure_name)
 {
   GimpProcedure   *procedure;
   GtkWidget       *main_vbox;
@@ -150,16 +148,6 @@ gimp_proc_view_new (const gchar *procedure_name,
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  if (menu_path)
-    {
-      label = gtk_label_new_with_mnemonic (menu_path);
-      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-    }
 
   if (blurb)
     {

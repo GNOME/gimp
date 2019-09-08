@@ -23,11 +23,9 @@
 
 gint   gimp_plug_in_manager_query (GimpPlugInManager   *manager,
                                    const gchar         *search_str,
-                                   gchar             ***menu_strs,
+                                   gchar             ***procedure_strs,
                                    gchar             ***accel_strs,
                                    gchar             ***prog_strs,
-                                   gchar             ***types_strs,
-                                   gchar             ***realname_strs,
                                    gint32             **time_ints);
 
 

@@ -31,8 +31,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GtkWidget * gimp_proc_view_new (const gchar *procedure_name,
-                                const gchar *menu_path);
+GtkWidget * gimp_proc_view_new (const gchar *procedure_name);
 
 
 G_END_DECLS

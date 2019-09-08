@@ -78,9 +78,8 @@ typedef struct
   gchar *menu;
   gchar *accel;
   gchar *prog;
-  gchar *types;
-  gchar *realname;
-  gint  instime;
+  gchar *procedure;
+  gint   instime;
 } PInfo;
 
 
@@ -335,7 +334,7 @@ insert_into_tree_view (PluginBrowser *browser,
                        const gchar   *name,
                        gint64         xtime,
                        const gchar   *xtimestr,
-                       const gchar   *menu_str,
+                       const gchar   *menu_path,
                        const gchar   *types_str,
                        PInfo         *pinfo)
 {
@@ -344,29 +343,12 @@ insert_into_tree_view (PluginBrowser *browser,
   GtkTreeIter   parent, iter;
   GtkTreeStore *tree_store;
 
-  /* Find all nodes */
-  /* Last one is the leaf part */
-
-  tmp_ptr = g_strdup (menu_str);
-
-  str_ptr = strrchr (tmp_ptr, '/');
-
-  if (str_ptr == NULL)
-  {
-    g_free (tmp_ptr);
-    return; /* No node */
-  }
-
-  *str_ptr = '\0';
-
-  /*   printf("inserting %s...\n",menu_str); */
-
-  get_parent (browser, tmp_ptr, &parent);
+  get_parent (browser, menu_path, &parent);
 
   tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
   gtk_tree_store_append (tree_store, &iter, &parent);
   gtk_tree_store_set (tree_store, &iter,
-                      TREE_COLUMN_MPATH,       menu_str,
+                      TREE_COLUMN_MPATH,       menu_path,
                       TREE_COLUMN_PATH_NAME,   name,
                       TREE_COLUMN_IMAGE_TYPES, types_str,
                       TREE_COLUMN_DATE,        xtime,
@@ -434,47 +416,48 @@ browser_search (GimpBrowser   *gimp_browser,
     {
       GtkTreeSelection  *sel;
       GtkTreeIter        iter;
-      const gchar      **menu_strs;
+      const gchar      **procedure_strs;
       const gchar      **accel_strs;
       const gchar      **prog_strs;
-      const gchar      **types_strs;
-      const gchar      **realname_strs;
       const gint        *time_ints;
       gint               i;
 
-      menu_strs     = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 2);
-      accel_strs    = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 4);
-      prog_strs     = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 6);
-      types_strs    = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 8);
-      time_ints     = GIMP_VALUES_GET_INT32_ARRAY  (return_vals, 10);
-      realname_strs = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 12);
+      procedure_strs = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 2);
+      accel_strs     = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 4);
+      prog_strs      = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 6);
+      time_ints      = GIMP_VALUES_GET_INT32_ARRAY  (return_vals, 8);
 
       for (i = 0; i < num_plugins; i++)
         {
-          PInfo      *pinfo;
-          gchar      *menu_str = g_strdup (menu_strs[i]);
-          gchar      *name;
-          gchar       xtimestr[50];
-          struct tm  *x;
-          time_t      tx;
-          gint        ret;
+          GimpProcedure *procedure;
+          const gchar   *types;
+          PInfo         *pinfo;
+          gchar         *menu_label;
+          gchar         *tmp;
+          GList         *menu_paths;
+          const gchar   *menu_path;
+          gchar          xtimestr[50];
+          struct tm     *x;
+          time_t         tx;
+          gint           ret;
+
+          procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                 procedure_strs[i]);
+
+          types      = gimp_procedure_get_image_types (procedure);
+          menu_label = g_strdup (gimp_procedure_get_menu_label (procedure));
+          menu_paths = gimp_procedure_get_menu_paths (procedure);
+
+          menu_path = menu_paths->data;
 
           /* Strip off trailing ellipsis */
-          name = strstr (menu_str, "...");
-          if (name && name == (menu_str + strlen (menu_str) - 3))
-            *name = '\0';
+          tmp = strstr (menu_label, "...");
+          if (tmp && tmp == (menu_label + strlen (menu_label) - 3))
+            *tmp = '\0';
 
-          name = strrchr (menu_str, '/');
-
-          if (name)
-            {
-              *name = '\0';
-              name = name + 1;
-            }
-          else
-            {
-              name = menu_str;
-            }
+          tmp = gimp_strip_uline (menu_label);
+          g_free (menu_label);
+          menu_label = tmp;
 
           tx = time_ints[i];
           if (tx)
@@ -499,33 +482,32 @@ browser_search (GimpBrowser   *gimp_browser,
 
           pinfo = g_new0 (PInfo, 1);
 
-          pinfo->menu     = g_strdup (menu_str);
-          pinfo->accel    = g_strdup (accel_strs[i]);
-          pinfo->prog     = g_strdup (prog_strs[i]);
-          pinfo->types    = g_strdup (types_strs[i]);
-          pinfo->instime  = time_ints[i];
-          pinfo->realname = g_strdup (realname_strs[i]);
+          pinfo->menu      = g_strdup (menu_path);
+          pinfo->accel     = g_strdup (accel_strs[i]);
+          pinfo->prog      = g_strdup (prog_strs[i]);
+          pinfo->instime   = time_ints[i];
+          pinfo->procedure = g_strdup (procedure_strs[i]);
 
           gtk_list_store_append (list_store, &iter);
           gtk_list_store_set (list_store, &iter,
-                              LIST_COLUMN_NAME,        name,
+                              LIST_COLUMN_NAME,        menu_label,
                               LIST_COLUMN_DATE,        (gint64) tx,
                               LIST_COLUMN_DATE_STRING, xtimestr,
-                              LIST_COLUMN_PATH,        menu_str,
-                              LIST_COLUMN_IMAGE_TYPES, types_strs[i],
+                              LIST_COLUMN_PATH,        menu_path,
+                              LIST_COLUMN_IMAGE_TYPES, types,
                               LIST_COLUMN_PINFO,       pinfo,
                               -1);
 
           /* Now do the tree view.... */
           insert_into_tree_view (browser,
-                                 name,
+                                 menu_label,
                                  (gint64) tx,
                                  xtimestr,
-                                 menu_str,
-                                 types_strs[i],
+                                 menu_path,
+                                 types,
                                  pinfo);
 
-          g_free (menu_str);
+          g_free (menu_label);
         }
 
       gtk_tree_view_columns_autosize (GTK_TREE_VIEW (browser->list_view));
@@ -815,8 +797,7 @@ browser_list_selection_changed (GtkTreeSelection *selection,
   g_free (mpath);
 
   gimp_browser_set_widget (GIMP_BROWSER (browser->browser),
-                           gimp_proc_view_new (pinfo->realname,
-                                               pinfo->menu));
+                           gimp_proc_view_new (pinfo->procedure));
 }
 
 static void
@@ -893,6 +874,5 @@ browser_tree_selection_changed (GtkTreeSelection *selection,
     }
 
   gimp_browser_set_widget (GIMP_BROWSER (browser->browser),
-                           gimp_proc_view_new (pinfo->realname,
-                                               pinfo->menu));
+                           gimp_proc_view_new (pinfo->procedure));
 }
