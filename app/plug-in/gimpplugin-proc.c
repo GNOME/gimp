@@ -37,29 +37,32 @@
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
+static GimpPlugInProcedure * gimp_plug_in_proc_find (GimpPlugIn  *plug_in,
+                                                     const gchar *proc_name);
+
+
+/*  public functions  */
+
 gboolean
 gimp_plug_in_set_proc_image_types (GimpPlugIn  *plug_in,
                                    const gchar *proc_name,
                                    const gchar *image_types)
 {
-  GimpPlugInProcedure *proc = NULL;
+  GimpPlugInProcedure *proc;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
 
-  if (plug_in->plug_in_def)
-    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
-                                        proc_name);
-
-  if (! proc)
-    proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
+  proc = gimp_plug_in_proc_find (plug_in, proc_name);
 
   if (! proc)
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n"
                     "attempted to register images types "
-                    "for the procedure \"%s\".\n"
+                    "for procedure \"%s\".\n"
                     "It has however not installed that procedure. "
                     "This is not allowed.",
                     gimp_object_get_name (plug_in),
@@ -67,21 +70,6 @@ gimp_plug_in_set_proc_image_types (GimpPlugIn  *plug_in,
                     proc_name);
 
       return FALSE;
-    }
-
-  switch (GIMP_PROCEDURE (proc)->proc_type)
-    {
-    case GIMP_PDB_PROC_TYPE_INTERNAL:
-      return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_PLUGIN:
-    case GIMP_PDB_PROC_TYPE_EXTENSION:
-      if (plug_in->call_mode != GIMP_PLUG_IN_CALL_QUERY &&
-          plug_in->call_mode != GIMP_PLUG_IN_CALL_INIT)
-        return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_TEMPORARY:
-      break;
     }
 
   gimp_plug_in_procedure_set_image_types (proc, image_types);
@@ -94,26 +82,21 @@ gimp_plug_in_set_proc_menu_label (GimpPlugIn  *plug_in,
                                   const gchar *proc_name,
                                   const gchar *menu_label)
 {
-  GimpPlugInProcedure *proc  = NULL;
+  GimpPlugInProcedure *proc;
   GError              *error = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
   g_return_val_if_fail (menu_label != NULL && strlen (menu_label), FALSE);
 
-  if (plug_in->plug_in_def)
-    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
-                                        proc_name);
-
-  if (! proc)
-    proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
+  proc = gimp_plug_in_proc_find (plug_in, proc_name);
 
   if (! proc)
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n"
                     "attempted to register the menu label \"%s\" "
-                    "for the procedure \"%s\".\n"
+                    "for procedure \"%s\".\n"
                     "It has however not installed that procedure. "
                     "This is not allowed.",
                     gimp_object_get_name (plug_in),
@@ -121,21 +104,6 @@ gimp_plug_in_set_proc_menu_label (GimpPlugIn  *plug_in,
                     menu_label, proc_name);
 
       return FALSE;
-    }
-
-  switch (GIMP_PROCEDURE (proc)->proc_type)
-    {
-    case GIMP_PDB_PROC_TYPE_INTERNAL:
-      return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_PLUGIN:
-    case GIMP_PDB_PROC_TYPE_EXTENSION:
-      if (plug_in->call_mode != GIMP_PLUG_IN_CALL_QUERY &&
-          plug_in->call_mode != GIMP_PLUG_IN_CALL_INIT)
-        return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_TEMPORARY:
-      break;
     }
 
   if (! gimp_plug_in_procedure_set_menu_label (proc, menu_label, &error))
@@ -155,26 +123,21 @@ gimp_plug_in_add_proc_menu_path (GimpPlugIn  *plug_in,
                                  const gchar *proc_name,
                                  const gchar *menu_path)
 {
-  GimpPlugInProcedure *proc  = NULL;
+  GimpPlugInProcedure *proc;
   GError              *error = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
   g_return_val_if_fail (menu_path != NULL, FALSE);
 
-  if (plug_in->plug_in_def)
-    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
-                                        proc_name);
-
-  if (! proc)
-    proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
+  proc = gimp_plug_in_proc_find (plug_in, proc_name);
 
   if (! proc)
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n"
                     "attempted to register the menu item \"%s\" "
-                    "for the procedure \"%s\".\n"
+                    "for procedure \"%s\".\n"
                     "It has however not installed that procedure. "
                     "This is not allowed.",
                     gimp_object_get_name (plug_in),
@@ -182,21 +145,6 @@ gimp_plug_in_add_proc_menu_path (GimpPlugIn  *plug_in,
                     menu_path, proc_name);
 
       return FALSE;
-    }
-
-  switch (GIMP_PROCEDURE (proc)->proc_type)
-    {
-    case GIMP_PDB_PROC_TYPE_INTERNAL:
-      return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_PLUGIN:
-    case GIMP_PDB_PROC_TYPE_EXTENSION:
-      if (plug_in->call_mode != GIMP_PLUG_IN_CALL_QUERY &&
-          plug_in->call_mode != GIMP_PLUG_IN_CALL_INIT)
-        return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_TEMPORARY:
-      break;
     }
 
   if (! gimp_plug_in_procedure_add_menu_path (proc, menu_path, &error))
@@ -218,25 +166,20 @@ gimp_plug_in_set_proc_icon (GimpPlugIn   *plug_in,
                             const guint8 *data,
                             gint          data_length)
 {
-  GimpPlugInProcedure *proc  = NULL;
+  GimpPlugInProcedure *proc;
   GError              *error = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
 
-  if (plug_in->plug_in_def)
-    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
-                                        proc_name);
-
-  if (! proc)
-    proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
+  proc = gimp_plug_in_proc_find (plug_in, proc_name);
 
   if (! proc)
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n"
                     "attempted to set the icon "
-                    "for the procedure \"%s\".\n"
+                    "for procedure \"%s\".\n"
                     "It has however not installed that procedure. "
                     "This is not allowed.",
                     gimp_object_get_name (plug_in),
@@ -244,21 +187,6 @@ gimp_plug_in_set_proc_icon (GimpPlugIn   *plug_in,
                     proc_name);
 
       return FALSE;
-    }
-
-  switch (GIMP_PROCEDURE (proc)->proc_type)
-    {
-    case GIMP_PDB_PROC_TYPE_INTERNAL:
-      return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_PLUGIN:
-    case GIMP_PDB_PROC_TYPE_EXTENSION:
-      if (plug_in->call_mode != GIMP_PLUG_IN_CALL_QUERY &&
-          plug_in->call_mode != GIMP_PLUG_IN_CALL_INIT)
-        return FALSE;
-
-    case GIMP_PDB_PROC_TYPE_TEMPORARY:
-      break;
     }
 
   if (! gimp_plug_in_procedure_set_icon (proc, type, data, data_length,
@@ -272,4 +200,23 @@ gimp_plug_in_set_proc_icon (GimpPlugIn   *plug_in,
     }
 
   return TRUE;
+}
+
+
+/*  private functions  */
+
+static GimpPlugInProcedure *
+gimp_plug_in_proc_find (GimpPlugIn  *plug_in,
+                        const gchar *proc_name)
+{
+  GimpPlugInProcedure *proc = NULL;
+
+  if (plug_in->plug_in_def)
+    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
+                                        proc_name);
+
+  if (! proc)
+    proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
+
+  return proc;
 }
