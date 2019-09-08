@@ -30,34 +30,37 @@ sub plugins_query {
     );
 
     @outargs = (
-	{ name => 'plugin_procedure', type => 'stringarray',
+	{ name => 'procedures', type => 'stringarray',
 	  desc => 'The plug-in procedure name',
-	  array => { name => 'num_plugins',
-		     desc => 'The number of plug-ins' } },
-	{ name => 'plugin_accelerator', type => 'stringarray',
+	  array => { name => 'num_procedures',
+		     desc => 'The number of matching procedures' } },
+	{ name => 'accelerators', type => 'stringarray',
 	  desc => 'String representing keyboard accelerator (could be empty
 		   string)',
-	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plug-ins' } },
-	{ name => 'plugin_location', type => 'stringarray',
+	  array => { name => 'num_accelerators',
+		     desc => 'The number of matching procedures' } },
+	{ name => 'locations', type => 'stringarray',
 	  desc => 'Location of the plug-in program',
-	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plug-ins' } },
-	{ name => 'plugin_install_time', type => 'int32array',
+	  array => { name => 'num_locations',
+		     desc => 'The number of matching procedures' } },
+	{ name => 'install_times', type => 'int32array',
 	  desc => 'Time that the plug-in was installed',
-	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plug-ins' } }
+	  array => { name => 'num_install_times',
+		     desc => 'The number of matching procedures' } }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  num_plugins = gimp_plug_in_manager_query (gimp->plug_in_manager,
-                                            search_string,
-                                            &plugin_procedure,
-                                            &plugin_accelerator,
-                                            &plugin_location,
-                                            &plugin_install_time);
+  num_procedures = gimp_plug_in_manager_query (gimp->plug_in_manager,
+                                               search_string,
+                                               &procedures,
+                                               &accelerators,
+                                               &locations,
+                                               &install_times);
+  num_accelerators  = num_procedures;
+  num_locations     = num_procedures;
+  num_install_times = num_procedures;
 }
 CODE
     );
