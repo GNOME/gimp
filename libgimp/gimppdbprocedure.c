@@ -230,12 +230,18 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
       gint    i;
 
       string = _gimp_pdb_get_proc_image_types (name);
-      gimp_procedure_set_image_types (procedure, string);
-      g_free (string);
+      if (string)
+        {
+          gimp_procedure_set_image_types (procedure, string);
+          g_free (string);
+        }
 
       string = _gimp_pdb_get_proc_menu_label (name);
-      gimp_procedure_set_menu_label (procedure, string);
-      g_free (string);
+      if (string)
+        {
+          gimp_procedure_set_menu_label (procedure, string);
+          g_free (string);
+        }
 
       menu_paths = _gimp_pdb_get_proc_menu_paths (name, &n_menu_paths);
       for (i = 0; i < n_menu_paths; i++)
