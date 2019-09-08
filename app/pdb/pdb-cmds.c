@@ -34,7 +34,7 @@
 #include "core/gimpparamspecs.h"
 #include "gimp-pdb-compat.h"
 #include "gimppdb-query.h"
-#include "plug-in/gimpplugin.h"
+#include "plug-in/gimpplugin-proc.h"
 #include "plug-in/gimppluginmanager-data.h"
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"

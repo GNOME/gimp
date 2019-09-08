@@ -836,7 +836,7 @@ CODE
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimp.h"
               "core/gimpparamspecs-desc.h"
-              "plug-in/gimpplugin.h"
+              "plug-in/gimpplugin-proc.h"
               "plug-in/gimppluginmanager.h"
               "plug-in/gimppluginmanager-data.h"
               "plug-in/gimppluginprocedure.h"

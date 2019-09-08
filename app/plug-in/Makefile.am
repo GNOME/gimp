@@ -33,6 +33,8 @@ libappplug_in_a_SOURCES = \
 	gimpplugin-context.h			\
 	gimpplugin-message.c			\
 	gimpplugin-message.h			\
+	gimpplugin-proc.c			\
+	gimpplugin-proc.h			\
 	gimpplugin-progress.c			\
 	gimpplugin-progress.h			\
 	gimpplugindef.c				\
