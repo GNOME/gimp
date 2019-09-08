@@ -698,6 +698,7 @@ sub generate {
   gimp_procedure_set_static_strings (procedure,
                                      @{[ &quotewrap($blurb, 2, 37) ]},
                                      @{[ &quotewrap($help,  2, 37) ]},
+                                     NULL,
                                      "$proc->{author}",
                                      "$proc->{copyright}",
                                      "$proc->{date}",

@@ -45,7 +45,6 @@ struct _GimpPlugInProcedure
   gchar               *menu_label;
   GList               *menu_paths;
   gchar               *label;
-  gchar               *help_id;
   gchar               *help_id_with_domain;
   GimpIconType         icon_type;
   gint                 icon_data_length;
@@ -103,9 +102,6 @@ const gchar * gimp_plug_in_procedure_get_locale_domain (GimpPlugInProcedure *pro
 void          gimp_plug_in_procedure_set_help_domain   (GimpPlugInProcedure *proc,
                                                         const gchar         *help_domain);
 const gchar * gimp_plug_in_procedure_get_help_domain   (GimpPlugInProcedure *proc);
-
-void          gimp_plug_in_procedure_set_help_id       (GimpPlugInProcedure *proc,
-                                                        const gchar         *help_id);
 
 gboolean      gimp_plug_in_procedure_set_menu_label    (GimpPlugInProcedure *proc,
                                                         const gchar         *menu_label,

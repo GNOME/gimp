@@ -50,6 +50,7 @@ struct _GimpProcedure
 
   gchar            *blurb;          /* Short procedure description    */
   gchar            *help;           /* Detailed help instructions     */
+  gchar            *help_id;        /* Help ID                        */
   gchar            *authors;        /* Authors field                  */
   gchar            *copyright;      /* Copyright field                */
   gchar            *date;           /* Date field                     */
@@ -98,6 +99,7 @@ GimpProcedure  * gimp_procedure_new                (GimpMarshalFunc   marshal_fu
 void             gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
+                                                    const gchar      *help_id,
                                                     const gchar      *authors,
                                                     const gchar      *copyright,
                                                     const gchar      *date,
@@ -105,6 +107,7 @@ void             gimp_procedure_set_strings        (GimpProcedure    *procedure,
 void             gimp_procedure_set_static_strings (GimpProcedure    *procedure,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
+                                                    const gchar      *help_id,
                                                     const gchar      *authors,
                                                     const gchar      *copyright,
                                                     const gchar      *date,
@@ -112,6 +115,7 @@ void             gimp_procedure_set_static_strings (GimpProcedure    *procedure,
 void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
                                                     gchar            *blurb,
                                                     gchar            *help,
+                                                    gchar            *help_id,
                                                     gchar            *authors,
                                                     gchar            *copyright,
                                                     gchar            *date,

@@ -104,6 +104,7 @@ register_debug_procs (GimpPDB *pdb)
                                      "If there is already an active timer, it is not affected by the call, however, a matching 'gimp-debug-timer-end' call is still required.\n"
                                      "\n"
                                      "This is a debug utility procedure. It is subject to change at any point, and should not be used in production.",
+                                     NULL,
                                      "Ell",
                                      "Ell",
                                      "2017",
@@ -123,6 +124,7 @@ register_debug_procs (GimpPDB *pdb)
                                      "If there was already an active timer at the time of corresponding call to 'gimp-debug-timer-start', a dummy value is returned.\n"
                                      "\n"
                                      "This is a debug utility procedure. It is subject to change at any point, and should not be used in production.",
+                                     NULL,
                                      "Ell",
                                      "Ell",
                                      "2017",

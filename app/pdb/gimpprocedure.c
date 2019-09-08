@@ -147,6 +147,7 @@ gimp_procedure_get_memsize (GimpObject *object,
     {
       memsize += gimp_string_get_memsize (procedure->blurb);
       memsize += gimp_string_get_memsize (procedure->help);
+      memsize += gimp_string_get_memsize (procedure->help_id);
       memsize += gimp_string_get_memsize (procedure->authors);
       memsize += gimp_string_get_memsize (procedure->copyright);
       memsize += gimp_string_get_memsize (procedure->date);
@@ -188,7 +189,10 @@ gimp_procedure_real_get_blurb (GimpProcedure *procedure)
 static const gchar *
 gimp_procedure_real_get_help_id (GimpProcedure *procedure)
 {
-  return NULL;
+  if (procedure->help_id)
+    return procedure->help_id;
+
+  return gimp_object_get_name (procedure);
 }
 
 static gboolean
@@ -266,6 +270,7 @@ void
 gimp_procedure_set_strings (GimpProcedure *procedure,
                             const gchar   *blurb,
                             const gchar   *help,
+                            const gchar   *help_id,
                             const gchar   *authors,
                             const gchar   *copyright,
                             const gchar   *date,
@@ -277,6 +282,7 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
 
   procedure->blurb      = g_strdup (blurb);
   procedure->help       = g_strdup (help);
+  procedure->help_id    = g_strdup (help_id);
   procedure->authors    = g_strdup (authors);
   procedure->copyright  = g_strdup (copyright);
   procedure->date       = g_strdup (date);
@@ -289,6 +295,7 @@ void
 gimp_procedure_set_static_strings (GimpProcedure *procedure,
                                    const gchar   *blurb,
                                    const gchar   *help,
+                                   const gchar   *help_id,
                                    const gchar   *authors,
                                    const gchar   *copyright,
                                    const gchar   *date,
@@ -300,6 +307,7 @@ gimp_procedure_set_static_strings (GimpProcedure *procedure,
 
   procedure->blurb      = (gchar *) blurb;
   procedure->help       = (gchar *) help;
+  procedure->help       = (gchar *) help_id;
   procedure->authors    = (gchar *) authors;
   procedure->copyright  = (gchar *) copyright;
   procedure->date       = (gchar *) date;
@@ -312,6 +320,7 @@ void
 gimp_procedure_take_strings (GimpProcedure *procedure,
                              gchar         *blurb,
                              gchar         *help,
+                             gchar         *help_id,
                              gchar         *authors,
                              gchar         *copyright,
                              gchar         *date,
@@ -323,6 +332,7 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
 
   procedure->blurb      = blurb;
   procedure->help       = help;
+  procedure->help       = help_id;
   procedure->authors    = authors;
   procedure->copyright  = copyright;
   procedure->date       = date;
@@ -713,6 +723,7 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
     {
       g_free (procedure->blurb);
       g_free (procedure->help);
+      g_free (procedure->help_id);
       g_free (procedure->authors);
       g_free (procedure->copyright);
       g_free (procedure->date);
@@ -721,6 +732,7 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
 
   procedure->blurb      = NULL;
   procedure->help       = NULL;
+  procedure->help_id    = NULL;
   procedure->authors    = NULL;
   procedure->copyright  = NULL;
   procedure->date       = NULL;

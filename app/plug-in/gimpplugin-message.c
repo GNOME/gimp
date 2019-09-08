@@ -846,12 +846,11 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   gimp_procedure_set_strings (procedure,
                               proc_install->blurb,
                               proc_install->help,
+                              proc_install->help_id,
                               proc_install->authors,
                               proc_install->copyright,
                               proc_install->date,
                               NULL);
-
-  gimp_plug_in_procedure_set_help_id (proc, proc_install->help_id);
 
   for (i = 0; i < proc_install->nparams; i++)
     {

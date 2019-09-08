@@ -446,6 +446,7 @@ gimp_gegl_procedure_new (Gimp        *gimp,
   gimp_procedure_set_strings (procedure,
                               tooltip,
                               tooltip,
+                              NULL,
                               "author", "copyright", "date",
                               NULL);
 

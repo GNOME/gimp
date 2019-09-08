@@ -156,7 +156,6 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_list_free_full (proc->menu_paths, (GDestroyNotify) g_free);
 
   g_free (proc->label);
-  g_free (proc->help_id);
   g_free (proc->help_id_with_domain);
 
   g_free (proc->icon_data);
@@ -308,8 +307,8 @@ gimp_plug_in_procedure_get_help_id (GimpProcedure *procedure)
 
   domain = gimp_plug_in_procedure_get_help_domain (proc);
 
-  if (proc->help_id)
-    help_id = proc->help_id;
+  if (procedure->help_id)
+    help_id = procedure->help_id;
   else
     help_id = gimp_object_get_name (procedure);
 
@@ -580,18 +579,6 @@ gimp_plug_in_procedure_set_help_domain (GimpPlugInProcedure *proc,
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   proc->help_domain = help_domain ? g_quark_from_string (help_domain) : 0;
-}
-
-void
-gimp_plug_in_procedure_set_help_id (GimpPlugInProcedure *proc,
-                                    const gchar         *help_id)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
-  g_clear_pointer (&proc->help_id_with_domain, g_free);
-
-  g_free (proc->help_id);
-  proc->help_id = g_strdup (help_id);
 }
 
 const gchar *

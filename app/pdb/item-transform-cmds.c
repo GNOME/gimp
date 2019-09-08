@@ -1033,6 +1033,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "This procedure translates the item by the amounts specified in the off_x and off_y arguments. These can be negative, and are considered offsets from the current position. The offsets will be rounded to the nearest pixel unless the item is a path.\n"
                                      "\n"
                                      "If the item is attached to an image and has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be translated by the specified offsets.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2018",
@@ -1079,6 +1080,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be flipped around its center if auto_center is set to TRUE, otherwise the coordinate of the axis needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be flipped around the same axis. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2004",
@@ -1134,6 +1136,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be flipped around the specified axis. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be flipped around the same axis. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1194,6 +1197,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified mapping. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1276,6 +1280,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be rotated around the same center point. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1335,6 +1340,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be rotated around the same center point. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1395,6 +1401,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be scaled according to the specified coordinates. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be scaled the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1455,6 +1462,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be sheared according to the specified parameters. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be sheared the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1506,6 +1514,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified parameters. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1584,6 +1593,7 @@ register_item_transform_procs (GimpPDB *pdb)
                                      "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified matrix. Additionally, if the item has its linked flag set to TRUE, all additional items contained in the image which have the linked flag set to TRUE will also be transformed the same way. The return value will be equal to the item ID supplied as input.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",

@@ -129,6 +129,7 @@ xcf_init (Gimp *gimp)
                                      "tiled and layered images in GIMP. "
                                      "This procedure will save the specified "
                                      "image in the xcf file format.",
+                                     NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -202,6 +203,7 @@ xcf_init (Gimp *gimp)
                                      "tiled and layered images in GIMP. "
                                      "This procedure will load the specified "
                                      "file.",
+                                     NULL,
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

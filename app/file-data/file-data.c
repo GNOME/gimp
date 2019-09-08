@@ -73,6 +73,7 @@ file_data_init (Gimp *gimp)
                                      "Loads GIMP brushes",
                                      "Loads GIMP brushes (1 or 4 bpp "
                                      "and old .gpb format)",
+                                     NULL,
                                      "Tim Newsome, Jens Lautenbacher, "
                                      "Sven Neumann, Michael Natterer",
                                      "Tim Newsome, Jens Lautenbacher, "
@@ -142,6 +143,7 @@ file_data_init (Gimp *gimp)
   gimp_procedure_set_static_strings (procedure,
                                      "Exports Gimp brush file (.GBR)",
                                      "Exports Gimp brush file (.GBR)",
+                                     NULL,
                                      "Tim Newsome, Michael Natterer",
                                      "Tim Newsome, Michael Natterer",
                                      "1995-2019",
@@ -225,6 +227,7 @@ file_data_init (Gimp *gimp)
                                      "Loads GIMP animated brushes",
                                      "This procedure loads a GIMP brush "
                                      "pipe as an image.",
+                                     NULL,
                                      "Tor Lillqvist, Michael Natterer",
                                      "Tor Lillqvist, Michael Natterer",
                                      "1999-2019",
@@ -292,6 +295,7 @@ file_data_init (Gimp *gimp)
   gimp_procedure_set_static_strings (procedure,
                                      "Exports Gimp animated brush file (.gih)",
                                      "Exports Gimp animated brush file (.gih)",
+                                     NULL,
                                      "Tor Lillqvist, Michael Natterer",
                                      "Tor Lillqvist, Michael Natterer",
                                      "1999-2019",
@@ -382,6 +386,7 @@ file_data_init (Gimp *gimp)
   gimp_procedure_set_static_strings (procedure,
                                      "Loads GIMP patterns",
                                      "Loads GIMP patterns",
+                                     NULL,
                                      "Tim Newsome, Michael Natterer",
                                      "Tim Newsome, Michael Natterer",
                                      "1997-2019",
@@ -448,6 +453,7 @@ file_data_init (Gimp *gimp)
   gimp_procedure_set_static_strings (procedure,
                                      "Exports Gimp pattern file (.PAT)",
                                      "Exports Gimp pattern file (.PAT)",
+                                     NULL,
                                      "Tim Newsome, Michael Natterer",
                                      "Tim Newsome, Michael Natterer",
                                      "1995-2019",
@@ -526,6 +532,7 @@ file_data_init (Gimp *gimp)
   gimp_procedure_set_static_strings (procedure,
                                      "Loads GIMP extension",
                                      "Loads GIMP extension",
+                                     NULL,
                                      "Jehan", "Jehan", "2019",
                                      NULL);
 

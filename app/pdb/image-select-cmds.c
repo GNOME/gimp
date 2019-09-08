@@ -369,6 +369,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent'.\n"
                                      "\n"
                                      "In the case of a merged sampling, the supplied drawable is ignored.",
+                                     NULL,
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -415,6 +416,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent', 'gimp-context-set-diagonal-neighbors'.\n"
                                      "\n"
                                      "In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
+                                     NULL,
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -464,6 +466,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -519,6 +522,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                     NULL,
                                      "Martin Nordholts",
                                      "Martin Nordholts",
                                      "2010",
@@ -586,6 +590,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -641,6 +646,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -683,6 +689,7 @@ register_image_select_procs (GimpPDB *pdb)
                                      "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape.\n"
                                      "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                     NULL,
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
