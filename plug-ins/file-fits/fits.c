@@ -1190,8 +1190,8 @@ load_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &plvals.replace, plvals.replace,
 
-                                    _("Black"), 0,   NULL,
-                                    _("White"), 255, NULL,
+                                    _("_Black"), 0,   NULL,
+                                    _("_White"), 255, NULL,
 
                                     NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1202,8 +1202,8 @@ load_dialog (void)
                               G_CALLBACK (gimp_radio_button_update),
                               &plvals.use_datamin, plvals.use_datamin,
 
-                              _("Automatic"),          FALSE, NULL,
-                              _("By DATAMIN/DATAMAX"), TRUE,  NULL,
+                              _("_Automatic"),          FALSE, NULL,
+                              _("By _DATAMIN/DATAMAX"), TRUE,  NULL,
 
                               NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1214,8 +1214,8 @@ load_dialog (void)
                               G_CALLBACK (gimp_radio_button_update),
                               &plvals.compose, plvals.compose,
 
-                              C_("composing", "None"),   FALSE, NULL,
-                              "NAXIS=3, NAXIS3=2,...,4", TRUE,  NULL,
+                              C_("composing", "_None"),   FALSE, NULL,
+                              "NA_XIS=3, NAXIS3=2,...,4", TRUE,  NULL,
 
                               NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
