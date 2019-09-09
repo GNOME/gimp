@@ -330,6 +330,7 @@ introspectable_files = [
   libgimpmodule_introspectable,
   libgimpthumb_introspectable,
   libgimpwidgets_introspectable,
+  'gimpparamspecs-body.c',
 ]
 
 libgimp_gir = gnome.generate_gir(

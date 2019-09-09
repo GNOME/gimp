@@ -14,6 +14,7 @@ libappplugin_sources = [
   'gimpplugin-cleanup.c',
   'gimpplugin-context.c',
   'gimpplugin-message.c',
+  'gimpplugin-proc.c',
   'gimpplugin-progress.c',
   'gimpplugin.c',
   'gimpplugindebug.c',
