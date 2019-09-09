@@ -286,7 +286,7 @@ pdb_set_proc_image_types_invoker (GimpProcedure         *procedure,
           gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
           success = gimp_plug_in_set_proc_image_types (plug_in, procedure_name,
-                                                       image_types);
+                                                       image_types, error);
         }
       else
         success = FALSE;
@@ -361,7 +361,7 @@ pdb_set_proc_menu_label_invoker (GimpProcedure         *procedure,
           gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
           success = gimp_plug_in_set_proc_menu_label (plug_in, procedure_name,
-                                                      menu_label);
+                                                      menu_label, error);
         }
       else
         success = FALSE;
@@ -436,7 +436,7 @@ pdb_add_proc_menu_path_invoker (GimpProcedure         *procedure,
           gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
           success = gimp_plug_in_add_proc_menu_path (plug_in, procedure_name,
-                                                     menu_path);
+                                                     menu_path, error);
         }
       else
         success = FALSE;
@@ -537,7 +537,8 @@ pdb_set_proc_icon_invoker (GimpProcedure         *procedure,
         {
           success = gimp_plug_in_set_proc_icon (plug_in, procedure_name,
                                                 icon_type,
-                                                icon_data, icon_data_length);
+                                                icon_data, icon_data_length,
+                                                error);
         }
       else
         success = FALSE;
@@ -574,7 +575,7 @@ pdb_set_proc_documentation_invoker (GimpProcedure         *procedure,
           gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
           success = gimp_plug_in_set_proc_help (plug_in, procedure_name,
-                                                blurb, help, help_id);
+                                                blurb, help, help_id, error);
         }
       else
         success = FALSE;
@@ -661,7 +662,8 @@ pdb_set_proc_attribution_invoker (GimpProcedure         *procedure,
           gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
           success = gimp_plug_in_set_proc_attribution (plug_in, procedure_name,
-                                                       authors, copyright, date);
+                                                       authors, copyright, date,
+                                                       error);
         }
       else
         success = FALSE;
