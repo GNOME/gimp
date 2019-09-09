@@ -49,73 +49,46 @@ struct _GimpPlugIn
   GimpPlugInPrivate *priv;
 };
 
+/**
+ * GimpPlugInClass:
+ * @query_procedures: This method can be overridden by all plug-ins to
+ *   return a newly allocated GList of allocated strings naming the
+ *   procedures registered by this plug-in. See documentation of
+ *   #GimpPlugInClass.init_procedures() for differences.
+ * @init_procedures: This method can be overridden by all plug-ins to
+ *   return a newly allocated #GList of allocated strings naming
+ *   procedures registered by this plug-in.
+ *   It is different from #GimpPlugInClass.query_procedures() in that
+ *   init happens at every startup, whereas query happens only once in
+ *   the life of a plug-in (right after installation or update). Hence
+ *   #GimpPlugInClass.init_procedures() typically returns procedures
+ *   dependent to runtime conditions (such as the presence of a
+ *   third-party tool), whereas #GimpPlugInClass.query_procedures()
+ *   would usually return unconditional and always available procedures.
+ *   Most of the time, you only want to override
+ *   #GimpPlugInClass.query_procedures() and leave
+ *   #GimpPlugInClass.init_procedures() untouched.
+ * @create_procedure: This method should be overridden by all plug-ins
+ *   and return a newly allocated #GimpProcedure named @name.  It will
+ *   be called for every @name as returned by
+ *   #GimpPlugInClass.query_procedures() and
+ *   #GimpPlugInClass.init_procedures() so care must be taken to handle
+ *   them all.
+ * @quit: This method can be overridden by a plug-in which needs to
+ *   perform some actions upon quitting.
+ *
+ * Since: 3.0
+ **/
 struct _GimpPlugInClass
 {
   GObjectClass  parent_class;
 
-  /**
-   * GimpPlugInClass::query_procedures:
-   * @plug_in: a #GimpPlugIn.
-   *
-   * This method can be overridden by all plug-ins to return a newly
-   * allocated GList of allocated strings naming the procedures
-   * registered by this plug-in.
-   *
-   * See documentation of GimpPlugInClass::init_procedures() for
-   * differences.
-   *
-   * Returns: (element-type gchar*) (transfer full):
-   *          the names of the procedures registered by @plug_in.
-   */
   GList          * (* query_procedures) (GimpPlugIn  *plug_in);
-
-  /**
-   * GimpPlugInClass::init_procedures:
-   * @plug_in: a #GimpPlugIn.
-   *
-   * This method can be overridden by all plug-ins to return a newly
-   * allocated #GList of allocated strings naming procedures registered
-   * by this plug-in.
-   *
-   * It is different from GimpPlugInClass::query_procedures() in that
-   * init happens at every startup, whereas query happens only once in
-   * the life of a plug-in (right after installation or update). Hence
-   * GimpPlugInClass::init_procedures() typically returns procedures
-   * dependent to runtime conditions (such as the presence of a
-   * third-party tool), whereas GimpPlugInClass::query_procedures()
-   * would usually return unconditional and always available
-   * procedures.  Most of the time, you only want to override
-   * GimpPlugInClass::query_procedures() and leave
-   * GimpPlugInClass::init_procedures() untouched.
-   *
-   * Returns: (element-type gchar*) (transfer full):
-   *          the names of the procedures registered by @plug_in.
-   */
   GList          * (* init_procedures)  (GimpPlugIn  *plug_in);
 
-  /**
-   * GimpPlugInClass::create_procedure:
-   * @plug_in:        a #GimpPlugIn.
-   * @procedure_name: procedure name.
-   *
-   * This method should be overridden by all plug-ins and return a newly
-   * allocated #GimpProcedure named @name.
-   * It will be called for every @name as returned by query_procedures()
-   * and init_procedures() so care must be taken to handle them all.
-   *
-   * Returns: (transfer full):
-   *          the procedure to be registered by @plug_in.
-   */
   GimpProcedure  * (* create_procedure) (GimpPlugIn  *plug_in,
                                          const gchar *procedure_name);
 
-  /**
-   * GimpPlugInClass::quit:
-   * @plug_in: a #GimpPlugIn.
-   *
-   * This method can be overridden by a plug-in which needs to perform
-   * some actions upon quitting.
-   */
   void             (* quit)             (GimpPlugIn  *plug_in);
 
   /* Padding for future expansion */

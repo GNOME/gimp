@@ -906,6 +906,8 @@ gimp_patterns_set_popup
 <SECTION>
 <FILE>gimpplugin</FILE>
 <TITLE>GimpPlugIn</TITLE>
+GimpPlugIn
+GimpPlugInClass
 gimp_plug_in_set_translation_domain
 gimp_plug_in_set_help_domain
 gimp_plug_in_add_menu_branch
@@ -925,8 +927,6 @@ GIMP_PLUG_IN
 GIMP_PLUG_IN_CLASS
 GIMP_PLUG_IN_GET_CLASS
 GIMP_TYPE_PLUG_IN
-GimpPlugIn
-GimpPlugInClass
 GimpPlugInPrivate
 gimp_plug_in_get_type
 </SECTION>

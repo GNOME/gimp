@@ -323,9 +323,11 @@ gimp_plug_in_get_property (GObject    *object,
  * included in the 'gimp-std-plugins' domain as that is used by
  * default. If the compiled message catalog is not in the standard
  * location, you may specify an absolute path to another
- * location. This function can only be called in the
- * GimpPlugIn::query() function of a plug-in and it has to be called
- * before any procedure is installed.
+ * location.
+ *
+ * This function can only be called in the #GimpPlugInClass.query()
+ * function of a plug-in and it has to be called before any procedure
+ * is installed.
  *
  * Since: 3.0
  **/
@@ -357,6 +359,9 @@ gimp_plug_in_set_translation_domain (GimpPlugIn  *plug_in,
  * root directory where the plug-in help is installed. For each
  * supported language there should be a file called 'gimp-help.xml'
  * that maps the help IDs to the actual help files.
+ *
+ * This function can only be called in the #GimpPlugInClass.query()
+ * function of a plug-in.
  *
  * Since: 3.0
  **/
@@ -425,8 +430,8 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  * %GIMP_PDB_PROC_TYPE_EXTENSION procedures it implements is invoked.
  *
  * This function will only ever be called with names returned by
- * implementations of GimpPlugInClass::init_procedures() or
- * GimpPlugInClass::query_procedures().
+ * implementations of #GimpPlugInClass.init_procedures() or
+ * #GimpPlugInClass.query_procedures().
  *
  * Returns: (transfer full): The newly created #GimpProcedure.
  **/
@@ -451,7 +456,7 @@ gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
  *
  * This function adds a temporary procedure to @plug_in. It is usually
  * called from a %GIMP_PDB_PROC_TYPE_EXTENSION procedure's
- * GimpProcedure::run().
+ * #GimpProcedureClass.run().
  *
  * A temporary procedure is a procedure which is only available while
  * one of your plug-in's "real" procedures is running.
