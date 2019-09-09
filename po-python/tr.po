@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-05-10 15:40+0000\n"
-"PO-Revision-Date: 2019-05-11 01:29+0300\n"
+"POT-Creation-Date: 2019-09-07 18:08+0000\n"
+"PO-Revision-Date: 2019-09-08 00:32+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -476,7 +476,7 @@ msgstr "Daire"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
 msgid "Polygon-Star"
-msgstr "Poligon-Yıldız"
+msgstr "Çokgen-Yıldız"
 
 #. Sine wave on a circle ring.
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
@@ -720,8 +720,8 @@ msgstr ""
 "İşaretlendiğinde, desen aynı genişliğe ve yükseklikte olur ve ortalanır."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Yeniden Çiz"
+msgid "Re_draw"
+msgstr "Yeni_den Çiz"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -732,16 +732,16 @@ msgstr ""
 "önizlemek için bu düğmeye basın."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Sıfırla"
+msgid "_Reset"
+msgstr "_Sıfırla"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "İptal"
+msgid "_Cancel"
+msgstr "İptal _Et"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "Tamam"
+msgid "_OK"
+msgstr "_Tamam"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
