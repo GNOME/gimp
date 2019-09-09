@@ -1,4 +1,4 @@
-if platform_win32
+if platform_windows
 
 plugin_name = 'twain'
 

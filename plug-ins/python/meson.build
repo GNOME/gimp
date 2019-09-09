@@ -37,7 +37,6 @@ endforeach
 
 if python.found()
   custom_target('pygimp.interp',
-    input : [],
     output: 'pygimp.interp',
     command: [ 'echo',
       'python=@0@\n'          .format(python.path()),

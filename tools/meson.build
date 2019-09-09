@@ -1,5 +1,5 @@
 
-if platform_win32
+if platform_windows
   gimp_debug_resume = executable('gimp-debug-resume',
     'gimp-debug-resume.c',
   )

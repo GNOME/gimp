@@ -8,8 +8,12 @@ plugin_sources = [
   'screenshot-win32.c',
   'screenshot-x11.c',
   'screenshot.c',
-  platform_win32 ? windows.compile_resources('screenshot-win32.rc') : [],
 ]
+
+if platform_windows
+  plugin_sources += windows.compile_resources('screenshot-win32.rc')
+endif
+
 
 screenshot = executable('screenshot',
   plugin_sources,

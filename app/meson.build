@@ -113,7 +113,7 @@ app_deps = [
 
 # Executables
 
-if platform_win32
+if platform_windows
   console_rc_name = 'gimp-console-'+ gimp_app_version
   gimp_app_console_rc = configure_file(
     input : gimp_plugins_rc,

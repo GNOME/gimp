@@ -99,7 +99,7 @@ common_plugins_list = [
   { 'name': 'web-browser', },
 ]
 
-if platform_win32
+if platform_windows
   common_plugins_list += { 'name': 'mail', }
 endif
 
@@ -140,7 +140,7 @@ foreach plugin : common_plugins_list
   plugin_deps = plugin.get('deps', [ gtk3, gegl, gdk_pixbuf, ])
   plugin_cflags = plugin.get('cflags', [])
 
-  if platform_win32
+  if platform_windows
     plugin_rc = configure_file(
       input : gimp_plugins_rc,
       output: plugin_name + '.rc',

@@ -57,7 +57,6 @@ pdb_names = [
 ]
 
 pdb_sources = []
-pdb_outputs = []
 foreach name : pdb_names
   pdb_sources += files('groups' / name + '.pdb')
 endforeach

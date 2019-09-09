@@ -121,7 +121,7 @@ platform_linux = (
   host_os.contains('linux')
 )
 
-platform_win32 = (
+platform_windows = (
   host_os.contains('mingw') or
   host_os.contains('cygwin') or
   host_os.contains('windows')
@@ -135,7 +135,7 @@ platform_osx = (
 
 conf.set('PLATFORM_OSX', platform_osx)
 
-if platform_win32
+if platform_windows
   windows = import('windows')
   # AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
   # AM_CONDITIONAL(MS_LIB_AVAILABLE, test "x$ms_librarian" = xyes)
@@ -255,7 +255,7 @@ add_project_arguments(cxx.get_supported_arguments(warning_cflags_cpp), language:
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
-if platform_win32 and cc.get_id() == 'gcc'
+if platform_windows and cc.get_id() == 'gcc'
   msvc_compat_args = cc.first_supported_argument([
     '-fnative-struct',
     '-mms-bitfields',
@@ -292,9 +292,10 @@ conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
 math              = cc.find_library('m')
-dl                = platform_win32 ? no_dep : cc.find_library('dl')
-rpc               = platform_win32 ? cc.find_library('rpcrt4') : no_dep
-dbghelp           = platform_win32 ? cc.find_library('dbghelp') : no_dep
+dl                = platform_windows ? no_dep : cc.find_library('dl')
+rpc               = platform_windows ? cc.find_library('rpcrt4') : no_dep
+dbghelp           = platform_windows ? cc.find_library('dbghelp') : no_dep
+winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
@@ -304,7 +305,7 @@ cairo             = dependency('cairo',              version: '>=1.12.2')
 
 dbus_glib         = dependency('dbus-glib-1')
 
-# fontconfig_name   = platform_win32 ? 'fontconfig_win32' : 'fontconfig'
+# fontconfig_name   = platform_windows ? 'fontconfig_win32' : 'fontconfig'
 fontconfig_name   = 'fontconfig'
 fontconfig        = dependency(fontconfig_name,      version: '>=2.12.4')
 
@@ -317,10 +318,10 @@ gegl              = dependency('gegl-0.4',           version: '>=0.4.17')
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
 gio               = dependency('gio-2.0')
-gio_specific_name = platform_win32 ? 'gio-windows-2.0' : 'gio-unix-2.0'
+gio_specific_name = platform_windows ? 'gio-windows-2.0' : 'gio-unix-2.0'
 gio_specific      = dependency(gio_specific_name)
 
-glib_version = platform_win32 ? '>=2.56.2' : '>=2.54.2'
+glib_version = platform_windows ? '>=2.56.2' : '>=2.54.2'
 glib              = dependency('glib-2.0',           version: glib_version)
 conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
 
@@ -428,14 +429,14 @@ libarchive = dependency('libarchive')
 ################################################################################
 # Check for debug console (Win32)
 
-if platform_win32
+if platform_windows
   conf.set('ENABLE_WIN32_DEBUG_CONSOLE', get_option('win32-debug-console'))
 endif
 
 ################################################################################
 # Check for 32-bit DLLs (Win32 64-bit)
 
-if platform_win32 and arch_x86_64
+if platform_windows and arch_x86_64
   conf.set_quoted('WIN32_32BIT_DLL_FOLDER', get_option('win32-32bits-dll-folder'))
 endif
 
@@ -460,7 +461,7 @@ conf.set('HAVE_LIBUNWIND', libunwind.found())
 
 ## Check for Dr. Mingw
 drmingw = no_dep
-if platform_win32
+if platform_windows
   exchndl = cc.find_library('exchndl')
   exchndl_fn = cc.has_function('ExcHndlSetLogFileNameA', dependencies: exchndl)
   if exchndl.found() and exchndl_fn
@@ -681,7 +682,7 @@ endif
 # DirectX DirectInput
 directx = no_dep
 directx_sdk_path = get_option('directx-sdk-dir')
-if directx_sdk_path != '' and platform_win32
+if directx_sdk_path != '' and platform_windows
   if directx_sdk_path.contains(' ') or directx_sdk_path.contains('\\')
     error('\n'.join([
       'The DirectX SDK path should be given :',
@@ -931,7 +932,7 @@ have_vector_icons = get_option('vec-icons')
 if have_vector_icons
   # shared-mime-info is needed to correctly detect SVG files
   # (except on Windows, apparently).
-  if platform_win32
+  if platform_windows
     vec_warning = '''
       You enabled vector icons on Win32. Make sure to run:
       $ gdk-pixbuf-query-loaders.exe --update-cache
@@ -974,7 +975,7 @@ conf.set_quoted('BUG_REPORT_URL', bug_report_url)
 # might mount the host system at a different root. This is for
 # instance the case of flatpak which mount the host root at /run/host/.
 
-# if not (platform_osx or platform_win32)
+# if not (platform_osx or platform_windows)
 
 icc_directory = get_option('icc-directory')
 if icc_directory == ''
@@ -1150,7 +1151,7 @@ if shmem_choice == 'auto'
   if platform_osx
     shmem_choice = 'posix'
   endif
-  if platform_win32
+  if platform_windows
     shmem_choice = 'win32'
   endif
 endif
@@ -1184,7 +1185,7 @@ endif
 
 
 conf.set('NO_FD_SET',
-  not platform_win32
+  not platform_windows
   and not cc.compiles('''
     #include <sys/types.h>
     int main() { fd_set readMask, writeMask; return 0; }
@@ -1431,7 +1432,7 @@ custom_target('Changelog',
 rootInclude = include_directories('.')
 appInclude  = include_directories('app')
 
-if platform_win32
+if platform_windows
   subdir('build/windows')
 
   if get_option('windows-installer')
@@ -1592,7 +1593,7 @@ final_message = [
 '''  Python 3 plug-ins:   @0@'''.format(have_python),
 '''  Javascript plug-ins: @0@'''.format(have_javascript),
 '''  Lua plug-ins:        @0@'''.format(have_lua),
-'''  TWAIN (Win32):       @0@'''.format(platform_win32),
+'''  TWAIN (Win32):       @0@'''.format(platform_windows),
 '''  Webpage:             @0@'''.format(webkit.found()),
 '''  WMF:                 @0@'''.format(wmf.found()),
 '''  X11 Mouse Cursor:    @0@'''.format(xmc.found()),

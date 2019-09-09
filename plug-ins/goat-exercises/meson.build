@@ -4,7 +4,7 @@ plugin_sources = [
   'goat-exercise-c.c',
 ]
 
-if platform_win32
+if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,
     args: [

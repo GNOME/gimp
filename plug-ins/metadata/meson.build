@@ -7,7 +7,7 @@ plugin_sources = [
   'metadata-xml.c',
 ]
 
-if platform_win32
+if platform_windows
   plugin_rc = configure_file(
     input : gimp_plugins_rc,
     output: plugin_name + '.rc',
@@ -53,7 +53,7 @@ plugin_sources = [
   'metadata-viewer.c',
 ]
 
-if platform_win32
+if platform_windows
   plugin_rc = configure_file(
     input : gimp_plugins_rc,
     output: plugin_name + '.rc',

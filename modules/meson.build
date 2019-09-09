@@ -69,7 +69,7 @@ if directx.found()
   }
 endif
 
-if not platform_win32
+if not platform_windows
   modules += {
     'name': 'controller-midi',
     'deps': alsa,

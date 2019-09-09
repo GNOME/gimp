@@ -12,7 +12,7 @@ foreach plugin_name : file_raw_exes
     'file-raw-utils.c',
   ]
 
-  if platform_win32
+  if platform_windows
     plugin_rc = configure_file(
       input : gimp_plugins_rc,
       output: plugin_name + '.rc',

@@ -128,10 +128,9 @@ install_data([
   install_dir: gimpplugindir / 'python',
 )
 
-path_separator = platform_win32 ? ';' : ':'
+path_separator = platform_windows ? ';' : ':'
 
 custom_target('pygimp.env',
-  input : [],
   output: [ 'pygimp.env' ],
   command: [
     'echo', path_separator + ' PYTHONPATH=${gimp_plug_in_dir}/python'
@@ -141,7 +140,6 @@ custom_target('pygimp.env',
   install_dir: gimpplugindir / 'environ',
 )
 custom_target('pygimp.interp',
-  input : [],
   output: [ 'pygimp.interp' ],
   command: [ 'echo',
     'python='          + python2.path() + '\n' +
