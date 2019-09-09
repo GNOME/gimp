@@ -92,6 +92,10 @@ static void      gimp_chain_button_get_property     (GObject         *object,
                                                      GValue          *value,
                                                      GParamSpec      *pspec);
 
+static void      gimp_chain_button_compute_expand   (GtkWidget       *widget,
+                                                     gboolean        *hexpand_p,
+                                                     gboolean        *vexpand_p);
+
 static void      gimp_chain_button_clicked_callback (GtkWidget       *widget,
                                                      GimpChainButton *button);
 static void      gimp_chain_button_update_image     (GimpChainButton *button);
@@ -118,11 +122,14 @@ static const gchar * const gimp_chain_icon_names[] =
 static void
 gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_chain_button_constructed;
-  object_class->set_property = gimp_chain_button_set_property;
-  object_class->get_property = gimp_chain_button_get_property;
+  object_class->constructed    = gimp_chain_button_constructed;
+  object_class->set_property   = gimp_chain_button_set_property;
+  object_class->get_property   = gimp_chain_button_get_property;
+
+  widget_class->compute_expand = gimp_chain_button_compute_expand;
 
   gimp_chain_button_signals[TOGGLED] =
     g_signal_new ("toggled",
@@ -299,6 +306,16 @@ gimp_chain_button_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_chain_button_compute_expand (GtkWidget *widget,
+                                  gboolean  *hexpand_p,
+                                  gboolean  *vexpand_p)
+{
+  /* don't inherit [hv]expand from the chain lines.  see issue #3876. */
+  *hexpand_p = FALSE;
+  *vexpand_p = FALSE;
 }
 
 /**
