@@ -2048,7 +2048,7 @@ save_dialog (GimpImage    *image,
 
   compress_opt = opt;
 
-  check = gtk_check_button_new_with_label (_("Use perceptual error metric"));
+  check = gtk_check_button_new_with_mnemonic (_("Use _perceptual error metric"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
                                 dds_write_vals.perceptual_metric);
   gtk_grid_attach (GTK_GRID (grid), check, 1, 1, 1, 1);
@@ -2193,7 +2193,7 @@ save_dialog (GimpImage    *image,
 
   mipmap_wrap_opt = opt;
 
-  check = gtk_check_button_new_with_label (_("Apply gamma correction"));
+  check = gtk_check_button_new_with_mnemonic (_("Appl_y gamma correction"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
                                 dds_write_vals.gamma_correct &&
                                 dds_write_vals.mipmaps);
@@ -2206,7 +2206,7 @@ save_dialog (GimpImage    *image,
 
   gamma_chk = check;
 
-  check = gtk_check_button_new_with_label (_("Use sRGB colorspace"));
+  check = gtk_check_button_new_with_mnemonic (_("Use s_RGB colorspace"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
                                 dds_write_vals.gamma_correct &&
                                 dds_write_vals.srgb);
@@ -2234,7 +2234,7 @@ save_dialog (GimpImage    *image,
 
   gamma_spin = spin;
 
-  check = gtk_check_button_new_with_label (_("Preserve alpha test coverage"));
+  check = gtk_check_button_new_with_mnemonic (_("Preserve alpha _test coverage"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
                                 dds_write_vals.preserve_alpha_coverage &&
                                 dds_write_vals.mipmaps);

@@ -1687,8 +1687,8 @@ save_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &psvals.raw, psvals.raw,
 
-                                    _("Raw"),   TRUE,  NULL,
-                                    _("ASCII"), FALSE, NULL,
+                                    _("_Raw"),   TRUE,  NULL,
+                                    _("_ASCII"), FALSE, NULL,
 
                                     NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
