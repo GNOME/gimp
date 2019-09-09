@@ -48,15 +48,16 @@
 
 struct _GimpPDBPrivate
 {
-  GimpPlugIn *plug_in;
+  GimpPlugIn         *plug_in;
 
-  GHashTable *procedures;
+  GHashTable         *procedures;
 
   GimpPDBStatusType   error_status;
   gchar              *error_message;
 };
 
 
+static void   gimp_pdb_dispose   (GObject        *object);
 static void   gimp_pdb_finalize  (GObject        *object);
 
 static void   gimp_pdb_set_error (GimpPDB        *pdb,
@@ -73,6 +74,7 @@ gimp_pdb_class_init (GimpPDBClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->dispose  = gimp_pdb_dispose;
   object_class->finalize = gimp_pdb_finalize;
 }
 
@@ -88,12 +90,21 @@ gimp_pdb_init (GimpPDB *pdb)
 }
 
 static void
+gimp_pdb_dispose (GObject *object)
+{
+  GimpPDB *pdb = GIMP_PDB (object);
+
+  g_clear_pointer (&pdb->priv->procedures, g_hash_table_unref);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_pdb_finalize (GObject *object)
 {
   GimpPDB *pdb = GIMP_PDB (object);
 
   g_clear_object (&pdb->priv->plug_in);
-  g_clear_pointer (&pdb->priv->procedures,    g_hash_table_unref);
   g_clear_pointer (&pdb->priv->error_message, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

@@ -167,8 +167,12 @@ static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
  * #GimpPlugIn subclass type and the 'argc' and 'argv' that are passed
  * to "main".
  *
+ * See also: GIMP_MAIN().
+ *
  * Returns: an exit status as defined by the C library,
  *          on success EXIT_SUCCESS.
+ *
+ * Since: 3.0
  **/
 gint
 gimp_main (GType  plug_in_type,
@@ -597,7 +601,7 @@ gimp_main (GType  plug_in_type,
  * This function returns the plug-in's #GimpPlugIn instance, which can
  * exist exactly once per running plug-in program.
  *
- * Returns: (transfer none) (nullable): The plug-in's #GimpPlugIn singleton, or %NULL.
+ * Returns: (transfer none) (nullable): The plug-in's #GimpPlugIn singleton.
  *
  * Since: 3.0
  **/
@@ -613,7 +617,7 @@ gimp_get_plug_in (void)
  * This function returns the plug-in's #GimpPDB instance, which can
  * exist exactly once per running plug-in program.
  *
- * Returns: (transfer none) (nullable): The plug-in's #GimpPDB singleton, or %NULL.
+ * Returns: (transfer none) (nullable): The plug-in's #GimpPDB singleton.
  *
  * Since: 3.0
  **/
@@ -918,7 +922,11 @@ gimp_close (void)
 
   _gimp_plug_in_quit (PLUG_IN);
 
+  if (PDB)
+    g_object_run_dispose (G_OBJECT (PDB));
   g_clear_object (&PDB);
+
+  g_object_run_dispose (G_OBJECT (PLUG_IN));
   g_clear_object (&PLUG_IN);
 }
 

@@ -89,6 +89,8 @@ G_BEGIN_DECLS
  * GIMP_MAIN (MY_TYPE_PLUG_IN)
  *
  * at the toplevel of your file. No semicolon should be used.
+ *
+ * Since: 3.0
  **/
 
 #ifdef G_OS_WIN32

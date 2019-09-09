@@ -96,19 +96,20 @@ struct _GimpPlugInPrivate
 };
 
 
-static void       gimp_plug_in_constructed       (GObject      *object);
-static void       gimp_plug_in_finalize          (GObject      *object);
-static void       gimp_plug_in_set_property      (GObject      *object,
-                                                  guint         property_id,
-                                                  const GValue *value,
-                                                  GParamSpec   *pspec);
-static void       gimp_plug_in_get_property      (GObject      *object,
-                                                  guint         property_id,
-                                                  GValue       *value,
-                                                  GParamSpec   *pspec);
+static void       gimp_plug_in_constructed       (GObject         *object);
+static void       gimp_plug_in_dispose           (GObject         *object);
+static void       gimp_plug_in_finalize          (GObject         *object);
+static void       gimp_plug_in_set_property      (GObject         *object,
+                                                  guint            property_id,
+                                                  const GValue    *value,
+                                                  GParamSpec      *pspec);
+static void       gimp_plug_in_get_property      (GObject         *object,
+                                                  guint            property_id,
+                                                  GValue          *value,
+                                                  GParamSpec      *pspec);
 
-static void       gimp_plug_in_register          (GimpPlugIn   *plug_in,
-                                                  GList        *procedures);
+static void       gimp_plug_in_register          (GimpPlugIn      *plug_in,
+                                                  GList           *procedures);
 
 static gboolean   gimp_plug_in_write             (GIOChannel      *channel,
                                                   const guint8    *buf,
@@ -158,6 +159,7 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed  = gimp_plug_in_constructed;
+  object_class->dispose      = gimp_plug_in_dispose;
   object_class->finalize     = gimp_plug_in_finalize;
   object_class->set_property = gimp_plug_in_set_property;
   object_class->get_property = gimp_plug_in_get_property;
@@ -204,10 +206,9 @@ gimp_plug_in_constructed (GObject *object)
 }
 
 static void
-gimp_plug_in_finalize (GObject *object)
+gimp_plug_in_dispose (GObject *object)
 {
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
-  GList      *list;
 
   if (plug_in->priv->extension_source_id)
     {
@@ -220,6 +221,15 @@ gimp_plug_in_finalize (GObject *object)
       g_list_free_full (plug_in->priv->temp_procedures, g_object_unref);
       plug_in->priv->temp_procedures = NULL;
     }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_plug_in_finalize (GObject *object)
+{
+  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  GList      *list;
 
   g_clear_pointer (&plug_in->priv->translation_domain_name, g_free);
   g_clear_object  (&plug_in->priv->translation_domain_path);
