@@ -42,6 +42,7 @@
 #include "gimppluginmanager.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
+#include "gimppluginmanager-file.h"
 #include "gimppluginmanager-help-domain.h"
 #include "gimppluginmanager-locale-domain.h"
 #include "gimppluginmanager-restore.h"
@@ -834,40 +835,23 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
 
   if (proc->file_proc)
     {
-      GimpValueArray *return_vals;
-      GError         *error = NULL;
-
       if (proc->image_types)
         {
-          return_vals =
-            gimp_pdb_execute_procedure_by_name (manager->gimp->pdb,
-                                                context, NULL, &error,
-                                                "gimp-register-save-handler",
-                                                G_TYPE_STRING, gimp_object_get_name (proc),
-                                                G_TYPE_STRING, proc->extensions,
-                                                G_TYPE_STRING, proc->prefixes,
-                                                G_TYPE_NONE);
+          gimp_plug_in_procedure_set_file_proc (proc,
+                                                proc->extensions,
+                                                proc->prefixes,
+                                                NULL);
+
+          gimp_plug_in_manager_add_save_procedure (manager, proc);
         }
       else
         {
-          return_vals =
-            gimp_pdb_execute_procedure_by_name (manager->gimp->pdb,
-                                                context, NULL, &error,
-                                                "gimp-register-load-handler",
-                                                G_TYPE_STRING, gimp_object_get_name (proc),
-                                                G_TYPE_STRING, proc->extensions,
-                                                G_TYPE_STRING, proc->prefixes,
-                                                G_TYPE_STRING, proc->magics,
-                                                G_TYPE_NONE);
-        }
+          gimp_plug_in_procedure_set_file_proc (proc,
+                                                proc->extensions,
+                                                proc->prefixes,
+                                                proc->magics);
 
-      gimp_value_array_unref (return_vals);
-
-      if (error)
-        {
-          gimp_message_literal (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                                error->message);
-          g_error_free (error);
+          gimp_plug_in_manager_add_load_procedure (manager, proc);
         }
     }
 }

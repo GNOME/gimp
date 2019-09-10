@@ -21,6 +21,11 @@
 #define __GIMP_PLUG_IN_MANAGER_FILE_H__
 
 
+void       gimp_plug_in_manager_add_load_procedure    (GimpPlugInManager      *manager,
+                                                       GimpPlugInProcedure    *proc);
+void       gimp_plug_in_manager_add_save_procedure    (GimpPlugInManager      *manager,
+                                                       GimpPlugInProcedure    *proc);
+
 GSList   * gimp_plug_in_manager_get_file_procedures   (GimpPlugInManager      *manager,
                                                        GimpFileProcedureGroup  group);
 

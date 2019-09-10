@@ -54,7 +54,10 @@ typedef enum
 
 /*  local function prototypes  */
 
-static GimpPlugInProcedure * file_procedure_find         (GSList       *procs,
+static gboolean              file_proc_in_group (GimpPlugInProcedure    *file_proc,
+                                                 GimpFileProcedureGroup  group);
+
+static GimpPlugInProcedure * file_proc_find              (GSList       *procs,
                                                           GFile        *file,
                                                           GError      **error);
 static GimpPlugInProcedure * file_proc_find_by_prefix    (GSList       *procs,
@@ -88,6 +91,37 @@ static FileMatchType         file_check_magic_list       (GSList       *magics_l
 
 
 /*  public functions  */
+
+void
+gimp_plug_in_manager_add_load_procedure (GimpPlugInManager   *manager,
+                                         GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  if (! g_slist_find (manager->load_procs, proc))
+    manager->load_procs = g_slist_prepend (manager->load_procs, proc);
+}
+
+void
+gimp_plug_in_manager_add_save_procedure (GimpPlugInManager   *manager,
+                                         GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  if (file_proc_in_group (proc, GIMP_FILE_PROCEDURE_GROUP_SAVE))
+    {
+      if (! g_slist_find (manager->save_procs, proc))
+        manager->save_procs = g_slist_prepend (manager->save_procs, proc);
+    }
+
+  if (file_proc_in_group (proc, GIMP_FILE_PROCEDURE_GROUP_EXPORT))
+    {
+      if (! g_slist_find (manager->export_procs, proc))
+        manager->export_procs = g_slist_prepend (manager->export_procs, proc);
+    }
+}
 
 GSList *
 gimp_plug_in_manager_get_file_procedures (GimpPlugInManager      *manager,
@@ -127,13 +161,13 @@ gimp_plug_in_manager_file_procedure_find (GimpPlugInManager      *manager,
   switch (group)
     {
     case GIMP_FILE_PROCEDURE_GROUP_OPEN:
-      return file_procedure_find (manager->load_procs, file, error);
+      return file_proc_find (manager->load_procs, file, error);
 
     case GIMP_FILE_PROCEDURE_GROUP_SAVE:
-      return file_procedure_find (manager->save_procs, file, error);
+      return file_proc_find (manager->save_procs, file, error);
 
     case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
-      return file_procedure_find (manager->export_procs, file, error);
+      return file_proc_find (manager->export_procs, file, error);
 
     default:
       g_return_val_if_reached (NULL);
@@ -215,10 +249,47 @@ gimp_plug_in_manager_file_procedure_find_by_mime_type (GimpPlugInManager      *m
 
 /*  private functions  */
 
+static gboolean
+file_proc_in_group (GimpPlugInProcedure    *file_proc,
+                    GimpFileProcedureGroup  group)
+{
+  const gchar *name        = gimp_object_get_name (file_proc);
+  gboolean     is_xcf_save = FALSE;
+  gboolean     is_filter   = FALSE;
+
+  is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
+
+  is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
+                 strcmp (name, "file-bz2-save") == 0 ||
+                 strcmp (name, "file-xz-save")  == 0);
+
+  switch (group)
+    {
+    case GIMP_FILE_PROCEDURE_GROUP_NONE:
+      return FALSE;
+
+    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
+      /* Only .xcf shall pass */
+      return is_xcf_save || is_filter;
+
+    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
+      /* Anything but .xcf shall pass */
+      return ! is_xcf_save;
+
+    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
+      /* No filter applied for Open */
+      return TRUE;
+
+    default:
+    case GIMP_FILE_PROCEDURE_GROUP_ANY:
+      return TRUE;
+    }
+}
+
 static GimpPlugInProcedure *
-file_procedure_find (GSList  *procs,
-                     GFile   *file,
-                     GError **error)
+file_proc_find (GSList  *procs,
+                GFile   *file,
+                GError **error)
 {
   GimpPlugInProcedure *file_proc;
   GimpPlugInProcedure *size_matched_proc = NULL;

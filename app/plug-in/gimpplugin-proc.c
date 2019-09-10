@@ -34,17 +34,16 @@
 #include "gimpplugin-proc.h"
 #include "gimpplugindef.h"
 #include "gimppluginmanager.h"
-#include "gimptemporaryprocedure.h"
+#include "gimppluginmanager-file.h"
+#include "gimppluginprocedure.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static GimpPlugInProcedure * gimp_plug_in_proc_find  (GimpPlugIn             *plug_in,
-                                                      const gchar            *proc_name);
-static gboolean              file_procedure_in_group (GimpPlugInProcedure    *file_proc,
-                                                      GimpFileProcedureGroup  group);
+static GimpPlugInProcedure * gimp_plug_in_proc_find (GimpPlugIn  *plug_in,
+                                                     const gchar *proc_name);
 
 
 /*  public functions  */
@@ -308,9 +307,7 @@ gimp_plug_in_set_file_proc_load_handler (GimpPlugIn   *plug_in,
 
   gimp_plug_in_procedure_set_file_proc (proc, extensions, prefixes, magics);
 
-  if (! g_slist_find (plug_in->manager->load_procs, proc))
-    plug_in->manager->load_procs =
-      g_slist_prepend (plug_in->manager->load_procs, proc);
+  gimp_plug_in_manager_add_load_procedure (plug_in->manager, proc);
 
   return TRUE;
 }
@@ -362,19 +359,7 @@ gimp_plug_in_set_file_proc_save_handler (GimpPlugIn   *plug_in,
 
   gimp_plug_in_procedure_set_file_proc (proc, extensions, prefixes, NULL);
 
-  if (file_procedure_in_group (proc, GIMP_FILE_PROCEDURE_GROUP_SAVE))
-    {
-      if (! g_slist_find (plug_in->manager->save_procs, proc))
-        plug_in->manager->save_procs =
-          g_slist_prepend (plug_in->manager->save_procs, proc);
-    }
-
-  if (file_procedure_in_group (proc, GIMP_FILE_PROCEDURE_GROUP_EXPORT))
-    {
-      if (! g_slist_find (plug_in->manager->export_procs, proc))
-        plug_in->manager->export_procs =
-          g_slist_prepend (plug_in->manager->export_procs, proc);
-    }
+  gimp_plug_in_manager_add_save_procedure (plug_in->manager, proc);
 
   return TRUE;
 }
@@ -577,41 +562,4 @@ gimp_plug_in_proc_find (GimpPlugIn  *plug_in,
     proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
 
   return proc;
-}
-
-static gboolean
-file_procedure_in_group (GimpPlugInProcedure    *file_proc,
-                         GimpFileProcedureGroup  group)
-{
-  const gchar *name        = gimp_object_get_name (file_proc);
-  gboolean     is_xcf_save = FALSE;
-  gboolean     is_filter   = FALSE;
-
-  is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
-
-  is_filter   = (strcmp (name, "file-gz-save")  == 0 ||
-                 strcmp (name, "file-bz2-save") == 0 ||
-                 strcmp (name, "file-xz-save")  == 0);
-
-  switch (group)
-    {
-    case GIMP_FILE_PROCEDURE_GROUP_NONE:
-      return FALSE;
-
-    case GIMP_FILE_PROCEDURE_GROUP_SAVE:
-      /* Only .xcf shall pass */
-      return is_xcf_save || is_filter;
-
-    case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
-      /* Anything but .xcf shall pass */
-      return ! is_xcf_save;
-
-    case GIMP_FILE_PROCEDURE_GROUP_OPEN:
-      /* No filter applied for Open */
-      return TRUE;
-
-    default:
-    case GIMP_FILE_PROCEDURE_GROUP_ANY:
-      return TRUE;
-    }
 }
