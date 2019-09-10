@@ -349,9 +349,9 @@ ps_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
+  list = g_list_append (list, g_strdup (LOAD_PS_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PS_PROC));
   list = g_list_append (list, g_strdup (LOAD_EPS_PROC));
-  list = g_list_append (list, g_strdup (LOAD_PS_THUMB_PROC));
   list = g_list_append (list, g_strdup (SAVE_PS_PROC));
   list = g_list_append (list, g_strdup (SAVE_EPS_PROC));
 

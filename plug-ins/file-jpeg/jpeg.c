@@ -113,8 +113,8 @@ jpeg_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
-  list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
+  list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (SAVE_PROC));
 
   return list;

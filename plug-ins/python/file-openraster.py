@@ -357,9 +357,9 @@ class FileOpenRaster (Gimp.PlugIn):
         self.set_translation_domain("gimp30-python",
                                     Gio.file_new_for_path(Gimp.locale_directory()))
 
-        return [ 'file-openraster-save',
+        return [ 'file-openraster-load-thumb',
                  'file-openraster-load',
-                 'file-openraster-load-thumb' ]
+                 'file-openraster-save' ]
 
     def do_create_procedure(self, name):
         if name == 'file-openraster-save':
