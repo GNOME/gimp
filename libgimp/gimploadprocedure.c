@@ -23,6 +23,7 @@
 #include "gimp.h"
 
 #include "gimploadprocedure.h"
+#include "gimppdb_pdb.h"
 
 
 struct _GimpLoadProcedurePrivate
@@ -119,30 +120,30 @@ gimp_load_procedure_install (GimpProcedure *procedure)
 
   GIMP_PROCEDURE_CLASS (parent_class)->install (procedure);
 
-  _gimp_register_load_handler (gimp_procedure_get_name (procedure),
-                               gimp_file_procedure_get_extensions (file_proc),
-                               gimp_file_procedure_get_prefixes (file_proc),
-                               gimp_file_procedure_get_magics (file_proc));
+  _gimp_pdb_set_file_proc_load_handler (gimp_procedure_get_name (procedure),
+                                        gimp_file_procedure_get_extensions (file_proc),
+                                        gimp_file_procedure_get_prefixes (file_proc),
+                                        gimp_file_procedure_get_magics (file_proc));
 
   if (gimp_file_procedure_get_handles_remote (file_proc))
-    _gimp_register_file_handler_remote (gimp_procedure_get_name (procedure));
+    _gimp_pdb_set_file_proc_handles_remote (gimp_procedure_get_name (procedure));
 
   mime_types = gimp_file_procedure_get_mime_types (file_proc);
   if (mime_types)
-    _gimp_register_file_handler_mime (gimp_procedure_get_name (procedure),
-                                      mime_types);
+    _gimp_pdb_set_file_proc_mime_types (gimp_procedure_get_name (procedure),
+                                        mime_types);
 
   priority = gimp_file_procedure_get_priority (file_proc);
   if (priority != 0)
-    _gimp_register_file_handler_priority (gimp_procedure_get_name (procedure),
-                                          priority);
+    _gimp_pdb_set_file_proc_priority (gimp_procedure_get_name (procedure),
+                                      priority);
 
   if (load_proc->priv->handles_raw)
-    _gimp_register_file_handler_raw (gimp_procedure_get_name (procedure));
+    _gimp_pdb_set_file_proc_handles_raw (gimp_procedure_get_name (procedure));
 
   if (load_proc->priv->thumbnail_proc)
-    _gimp_register_thumbnail_loader (gimp_procedure_get_name (procedure),
-                                     load_proc->priv->thumbnail_proc);
+    _gimp_pdb_set_file_proc_thumbnail_loader (gimp_procedure_get_name (procedure),
+                                              load_proc->priv->thumbnail_proc);
 }
 
 static GimpValueArray *

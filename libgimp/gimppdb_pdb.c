@@ -824,6 +824,293 @@ _gimp_pdb_get_proc_attribution (const gchar  *procedure_name,
 }
 
 /**
+ * _gimp_pdb_set_file_proc_load_handler:
+ * @procedure_name: The name of the procedure to be used for loading.
+ * @extensions: comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\").
+ * @prefixes: comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\").
+ * @magics: comma separated list of magic file information this handler can load (i.e. \"0,string,GIF\").
+ *
+ * Registers a file load handler procedure.
+ *
+ * Registers a procedural database procedure to be called to load files
+ * of a particular file format using magic file information.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+_gimp_pdb_set_file_proc_load_handler (const gchar *procedure_name,
+                                      const gchar *extensions,
+                                      const gchar *prefixes,
+                                      const gchar *magics)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, extensions,
+                                          G_TYPE_STRING, prefixes,
+                                          G_TYPE_STRING, magics,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-file-proc-load-handler",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_set_file_proc_save_handler:
+ * @procedure_name: The name of the procedure to be used for saving.
+ * @extensions: comma separated list of extensions this handler can save (i.e. \"jpg,jpeg\").
+ * @prefixes: comma separated list of prefixes this handler can save (i.e. \"http:,ftp:\").
+ *
+ * Registers a file save handler procedure.
+ *
+ * Registers a procedural database procedure to be called to save files
+ * in a particular file format.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+_gimp_pdb_set_file_proc_save_handler (const gchar *procedure_name,
+                                      const gchar *extensions,
+                                      const gchar *prefixes)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, extensions,
+                                          G_TYPE_STRING, prefixes,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-file-proc-save-handler",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_set_file_proc_priority:
+ * @procedure_name: The name of the procedure to set the priority of.
+ * @priority: The procedure priority.
+ *
+ * Sets the priority of a file handler procedure.
+ *
+ * Sets the priority of a file handler procedure. When more than one
+ * procedure matches a given file, the procedure with the lowest
+ * priority is used; if more than one procedure has the lowest
+ * priority, it is unspecified which one of them is used. The default
+ * priority for file handler procedures is 0.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10.6
+ **/
+gboolean
+_gimp_pdb_set_file_proc_priority (const gchar *procedure_name,
+                                  gint         priority)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_INT, priority,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-file-proc-priority",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_set_file_proc_mime_types:
+ * @procedure_name: The name of the procedure to associate a MIME type with.
+ * @mime_types: A comma-separated list of MIME types, such as \"image/jpeg\".
+ *
+ * Associates MIME types with a file handler procedure.
+ *
+ * Registers MIME types for a file handler procedure. This allows GIMP
+ * to determine the MIME type of the file opened or saved using this
+ * procedure. It is recommended that only one MIME type is registered
+ * per file procedure; when registering more than one MIME type, GIMP
+ * will associate the first one with files opened or saved with this
+ * procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.2
+ **/
+gboolean
+_gimp_pdb_set_file_proc_mime_types (const gchar *procedure_name,
+                                    const gchar *mime_types)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, mime_types,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-file-proc-mime-types",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_set_file_proc_handles_remote:
+ * @procedure_name: The name of the procedure to enable remote URIs for.
+ *
+ * Registers a file handler procedure as capable of handling remote
+ * URIs.
+ *
+ * Registers a file handler procedure as capable of handling remote
+ * URIs. This allows GIMP to call the procedure directly for all kinds
+ * of URIs, not only on local file:// URIs.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+_gimp_pdb_set_file_proc_handles_remote (const gchar *procedure_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-file-proc-handles-remote",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_set_file_proc_handles_raw:
+ * @procedure_name: The name of the procedure to enable raw handling for.
+ *
+ * Registers a file handler procedure as capable of handling raw camera
+ * files.
+ *
+ * Registers a file handler procedure as capable of handling raw
+ * digital camera files. Use this procedure only to register raw load
+ * handlers, calling it on a save handler will generate an error.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+_gimp_pdb_set_file_proc_handles_raw (const gchar *procedure_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-file-proc-handles-raw",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pdb_set_file_proc_thumbnail_loader:
+ * @load_proc: The name of the procedure the thumbnail loader with.
+ * @thumb_proc: The name of the thumbnail load procedure.
+ *
+ * Associates a thumbnail loader with a file load procedure.
+ *
+ * Some file formats allow for embedded thumbnails, other file formats
+ * contain a scalable image or provide the image data in different
+ * resolutions. A file plug-in for such a format may register a special
+ * procedure that allows GIMP to load a thumbnail preview of the image.
+ * This procedure is then associated with the standard load procedure
+ * using this function.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.2
+ **/
+gboolean
+_gimp_pdb_set_file_proc_thumbnail_loader (const gchar *load_proc,
+                                          const gchar *thumb_proc)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, load_proc,
+                                          G_TYPE_STRING, thumb_proc,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-file-proc-thumbnail-loader",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_pdb_get_data:
  * @identifier: The identifier associated with data.
  * @bytes: (out): The number of bytes in the data.

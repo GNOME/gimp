@@ -838,6 +838,293 @@ CODE
     );
 }
 
+sub pdb_set_file_proc_load_handler {
+    $blurb = 'Registers a file load handler procedure.';
+
+    $help = <<'HELP';
+Registers a procedural database procedure to be called to load files of a 
+particular file format using magic file information.
+HELP
+
+    &std_pdb_misc;
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => 'The name of the procedure to be used for loading' },
+        { name => 'extensions', type => 'string', no_validate => 1,
+          desc => 'comma separated list of extensions this handler
+                   can load (i.e. "jpg,jpeg")' },
+        { name => 'prefixes', type => 'string', no_validate => 1,
+          desc => 'comma separated list of prefixes this handler
+                   can load (i.e. "http:,ftp:")' },
+        { name => 'magics', type => 'string', no_validate => 1,
+          desc => 'comma separated list of magic file information
+                   this handler can load (i.e. "0,string,GIF")' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_file_proc_load_handler (plug_in,
+                                                         procedure_name,
+                                                         extensions, prefixes,
+                                                         magics, error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_set_file_proc_save_handler {
+    $blurb = 'Registers a file save handler procedure.';
+
+    $help = <<'HELP';
+Registers a procedural database procedure to be called to save files in a
+particular file format.
+HELP
+
+    &std_pdb_misc;
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => 'The name of the procedure to be used for saving' },
+        { name => 'extensions', type => 'string', no_validate => 1,
+          desc => 'comma separated list of extensions this handler
+                   can save (i.e. "jpg,jpeg")' },
+        { name => 'prefixes', type => 'string', no_validate => 1,
+          desc => 'comma separated list of prefixes this handler
+                   can save (i.e. "http:,ftp:")' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_file_proc_save_handler (plug_in,
+                                                         procedure_name,
+                                                         extensions, prefixes,
+                                                         error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_set_file_proc_priority {
+    $blurb = 'Sets the priority of a file handler procedure.';
+
+    $help = <<'HELP';
+Sets the priority of a file handler procedure. When more than one
+procedure matches a given file, the procedure with the lowest priority
+is used; if more than one procedure has the lowest priority, it is
+unspecified which one of them is used. The default priority for file
+handler procedures is 0.
+HELP
+
+    &ell_pdb_misc('2018', '2.10.6');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => "The name of the procedure to set the priority of." },
+        { name => 'priority', type => 'int32',
+          desc => "The procedure priority." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_file_proc_priority (plug_in,
+                                                     procedure_name,
+                                                     priority, error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_set_file_proc_mime_types {
+    $blurb = 'Associates MIME types with a file handler procedure.';
+
+    $help = <<'HELP';
+Registers MIME types for a file handler procedure. This allows GIMP to
+determine the MIME type of the file opened or saved using this
+procedure. It is recommended that only one MIME type is registered per
+file procedure; when registering more than one MIME type, GIMP will
+associate the first one with files opened or saved with this procedure.
+HELP
+
+    &neo_pdb_misc('2004', '2.2');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => "The name of the procedure to associate a MIME type with." },
+        { name => 'mime_types', type => 'string',
+          desc => 'A comma-separated list of MIME types, such as "image/jpeg".' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_file_proc_mime_types (plug_in,
+                                                       procedure_name,
+                                                       mime_types, error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_set_file_proc_handles_remote {
+    $blurb = 'Registers a file handler procedure as capable of handling remote URIs.';
+
+    $help = <<'HELP';
+Registers a file handler procedure as capable of handling remote
+URIs. This allows GIMP to call the procedure directly for all kinds of
+URIs, not only on local file:// URIs.
+HELP
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => "The name of the procedure to enable remote URIs for." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_file_proc_handles_remote (plug_in,
+                                                           procedure_name,
+                                                           error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_set_file_proc_handles_raw {
+    $blurb = 'Registers a file handler procedure as capable of handling raw camera files.';
+
+    $help = <<'HELP';
+Registers a file handler procedure as capable of handling raw digital
+camera files. Use this procedure only to register raw load handlers,
+calling it on a save handler will generate an error.
+HELP
+
+    &mitch_pdb_misc('2017', '2.10');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => "The name of the procedure to enable raw handling for." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_file_proc_handles_raw (plug_in,
+                                                        procedure_name,
+                                                        error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pdb_set_file_proc_thumbnail_loader {
+    $blurb = 'Associates a thumbnail loader with a file load procedure.';
+
+    $help = <<'HELP';
+Some file formats allow for embedded thumbnails, other file formats
+contain a scalable image or provide the image data in different
+resolutions. A file plug-in for such a format may register a special
+procedure that allows GIMP to load a thumbnail preview of the
+image. This procedure is then associated with the standard load
+procedure using this function.
+HELP
+
+    &neo_pdb_misc('2004', '2.2');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'load_proc', type => 'string', non_empty => 1,
+          desc => "The name of the procedure the thumbnail loader with." },
+        { name => 'thumb_proc', type => 'string', non_empty => 1,
+          desc => "The name of the thumbnail load procedure." }
+    );
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (load_proc, error) &&
+      gimp_pdb_is_canonical_procedure (thumb_proc, error))
+    {
+      success = gimp_plug_in_set_file_proc_thumb_loader (plug_in,
+                                                         load_proc, thumb_proc,
+                                                          error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_get_data {
     $blurb = 'Returns data associated with the specified identifier.';
 
@@ -1018,9 +1305,16 @@ CODE
             pdb_get_proc_documentation
             pdb_set_proc_attribution
             pdb_get_proc_attribution
-	    pdb_get_data
+            pdb_set_file_proc_load_handler
+            pdb_set_file_proc_save_handler
+            pdb_set_file_proc_priority
+            pdb_set_file_proc_mime_types
+            pdb_set_file_proc_handles_remote
+            pdb_set_file_proc_handles_raw
+            pdb_set_file_proc_thumbnail_loader
+            pdb_get_data
             pdb_get_data_size
-	    pdb_set_data);
+            pdb_set_data);
 
 %exports = (app => [@procs], lib => [@procs]);
 

@@ -812,6 +812,249 @@ pdb_get_proc_attribution_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+pdb_set_file_proc_load_handler_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *extensions;
+  const gchar *prefixes;
+  const gchar *magics;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  extensions = g_value_get_string (gimp_value_array_index (args, 1));
+  prefixes = g_value_get_string (gimp_value_array_index (args, 2));
+  magics = g_value_get_string (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_load_handler (plug_in,
+                                                             procedure_name,
+                                                             extensions, prefixes,
+                                                             magics, error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+pdb_set_file_proc_save_handler_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *extensions;
+  const gchar *prefixes;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  extensions = g_value_get_string (gimp_value_array_index (args, 1));
+  prefixes = g_value_get_string (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_save_handler (plug_in,
+                                                             procedure_name,
+                                                             extensions, prefixes,
+                                                             error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+pdb_set_file_proc_priority_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  gint priority;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  priority = g_value_get_int (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_priority (plug_in,
+                                                         procedure_name,
+                                                         priority, error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+pdb_set_file_proc_mime_types_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *mime_types;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  mime_types = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_mime_types (plug_in,
+                                                           procedure_name,
+                                                           mime_types, error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+pdb_set_file_proc_handles_remote_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_handles_remote (plug_in,
+                                                               procedure_name,
+                                                               error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+pdb_set_file_proc_handles_raw_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_handles_raw (plug_in,
+                                                            procedure_name,
+                                                            error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+pdb_set_file_proc_thumbnail_loader_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *load_proc;
+  const gchar *thumb_proc;
+
+  load_proc = g_value_get_string (gimp_value_array_index (args, 0));
+  thumb_proc = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (load_proc, error) &&
+          gimp_pdb_is_canonical_procedure (thumb_proc, error))
+        {
+          success = gimp_plug_in_set_file_proc_thumb_loader (plug_in,
+                                                             load_proc, thumb_proc,
+                                                              error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 pdb_get_data_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
@@ -1609,6 +1852,229 @@ register_pdb_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-file-proc-load-handler
+   */
+  procedure = gimp_procedure_new (pdb_set_file_proc_load_handler_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-file-proc-load-handler");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file load handler procedure.",
+                                  "Registers a procedural database procedure to be called to load files of a particular file format using magic file information.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to be used for loading",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("extensions",
+                                                       "extensions",
+                                                       "comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\")",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("prefixes",
+                                                       "prefixes",
+                                                       "comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\")",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("magics",
+                                                       "magics",
+                                                       "comma separated list of magic file information this handler can load (i.e. \"0,string,GIF\")",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-file-proc-save-handler
+   */
+  procedure = gimp_procedure_new (pdb_set_file_proc_save_handler_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-file-proc-save-handler");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file save handler procedure.",
+                                  "Registers a procedural database procedure to be called to save files in a particular file format.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to be used for saving",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("extensions",
+                                                       "extensions",
+                                                       "comma separated list of extensions this handler can save (i.e. \"jpg,jpeg\")",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("prefixes",
+                                                       "prefixes",
+                                                       "comma separated list of prefixes this handler can save (i.e. \"http:,ftp:\")",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-file-proc-priority
+   */
+  procedure = gimp_procedure_new (pdb_set_file_proc_priority_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-file-proc-priority");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the priority of a file handler procedure.",
+                                  "Sets the priority of a file handler procedure. When more than one procedure matches a given file, the procedure with the lowest priority is used; if more than one procedure has the lowest priority, it is unspecified which one of them is used. The default priority for file handler procedures is 0.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Ell",
+                                         "Ell",
+                                         "2018");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to set the priority of.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("priority",
+                                                 "priority",
+                                                 "The procedure priority.",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-file-proc-mime-types
+   */
+  procedure = gimp_procedure_new (pdb_set_file_proc_mime_types_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-file-proc-mime-types");
+  gimp_procedure_set_static_help (procedure,
+                                  "Associates MIME types with a file handler procedure.",
+                                  "Registers MIME types for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure. It is recommended that only one MIME type is registered per file procedure; when registering more than one MIME type, GIMP will associate the first one with files opened or saved with this procedure.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2004");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to associate a MIME type with.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("mime-types",
+                                                       "mime types",
+                                                       "A comma-separated list of MIME types, such as \"image/jpeg\".",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-file-proc-handles-remote
+   */
+  procedure = gimp_procedure_new (pdb_set_file_proc_handles_remote_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-file-proc-handles-remote");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file handler procedure as capable of handling remote URIs.",
+                                  "Registers a file handler procedure as capable of handling remote URIs. This allows GIMP to call the procedure directly for all kinds of URIs, not only on local file:// URIs.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2012");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to enable remote URIs for.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-file-proc-handles-raw
+   */
+  procedure = gimp_procedure_new (pdb_set_file_proc_handles_raw_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-file-proc-handles-raw");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a file handler procedure as capable of handling raw camera files.",
+                                  "Registers a file handler procedure as capable of handling raw digital camera files. Use this procedure only to register raw load handlers, calling it on a save handler will generate an error.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@gimp.org>",
+                                         "Michael Natterer",
+                                         "2017");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to enable raw handling for.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-file-proc-thumbnail-loader
+   */
+  procedure = gimp_procedure_new (pdb_set_file_proc_thumbnail_loader_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-file-proc-thumbnail-loader");
+  gimp_procedure_set_static_help (procedure,
+                                  "Associates a thumbnail loader with a file load procedure.",
+                                  "Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@gimp.org>",
+                                         "Sven Neumann",
+                                         "2004");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("load-proc",
+                                                       "load proc",
+                                                       "The name of the procedure the thumbnail loader with.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("thumb-proc",
+                                                       "thumb proc",
+                                                       "The name of the thumbnail load procedure.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
