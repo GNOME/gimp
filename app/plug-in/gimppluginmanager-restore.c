@@ -769,27 +769,6 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
 
   basename1 = g_path_get_basename (path1);
 
-  /*  If this is a file load or save plugin, make sure we have
-   *  something for one of the extensions, prefixes, or magic number.
-   *  Other bits of code rely on detecting file plugins by the
-   *  presence of one of these things, but the raw plug-in needs to be
-   *  able to register no extensions, prefixes or magics.
-   */
-  for (list = plug_in_def->procedures; list; list = list->next)
-    {
-      GimpPlugInProcedure *proc = list->data;
-
-      if (! proc->extensions &&
-          ! proc->prefixes   &&
-          ! proc->magics     &&
-          proc->menu_paths   &&
-          (g_str_has_prefix (proc->menu_paths->data, "<Load>") ||
-           g_str_has_prefix (proc->menu_paths->data, "<Save>")))
-        {
-          proc->extensions = g_strdup ("");
-        }
-    }
-
   /*  Check if the entry mentioned in pluginrc matches an executable
    *  found in the plug_in_path.
    */

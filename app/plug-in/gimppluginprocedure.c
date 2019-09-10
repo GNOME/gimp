@@ -712,37 +712,6 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
           goto failure;
         }
     }
-  else if (g_str_has_prefix (menu_path, "<Load>"))
-    {
-      if ((procedure->num_args < 3)                          ||
-          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-          ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
-          ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]))
-        {
-          required = "GimpRunMode, String, String";
-          goto failure;
-        }
-
-      if ((procedure->num_values < 1) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE (procedure->values[0]))
-        {
-          required = "GimpImage";
-          goto failure;
-        }
-    }
-  else if (g_str_has_prefix (menu_path, "<Save>"))
-    {
-      if ((procedure->num_args < 5)                          ||
-          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
-          ! GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[2]) ||
-          ! G_IS_PARAM_SPEC_STRING      (procedure->args[3]) ||
-          ! G_IS_PARAM_SPEC_STRING      (procedure->args[4]))
-        {
-          required = "GimpRunMode, GimpImage, GimpDrawable, String, String";
-          goto failure;
-        }
-    }
   else if (g_str_has_prefix (menu_path, "<Brushes>")        ||
            g_str_has_prefix (menu_path, "<Dynamics>")       ||
            g_str_has_prefix (menu_path, "<MyPaintBrushes>") ||
