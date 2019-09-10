@@ -192,7 +192,7 @@ gimp_navigation_editor_display_changed (GimpContext          *context,
 {
   GimpDisplayShell *shell = NULL;
 
-  if (display)
+  if (display && gimp_display_get_image (display))
     shell = gimp_display_get_shell (display);
 
   gimp_navigation_editor_set_shell (editor, shell);
@@ -217,6 +217,13 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
   if (editor->context)
     {
       g_signal_connect (context, "display-changed",
+                        G_CALLBACK (gimp_navigation_editor_display_changed),
+                        editor);
+      /* make sure to also run gimp_navigation_editor_display_changed() when\
+       * the last image is closed, but its display doesn't, so that the editor
+       * is properly cleared.
+       */
+      g_signal_connect (context, "image-changed",
                         G_CALLBACK (gimp_navigation_editor_display_changed),
                         editor);
 
