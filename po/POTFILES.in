@@ -376,7 +376,7 @@ app/plug-in/gimpplugin-message.c
 app/plug-in/gimpplugin-progress.c
 app/plug-in/gimppluginmanager.c
 app/plug-in/gimppluginmanager-call.c
-app/plug-in/gimppluginmanager-file-procedure.c
+app/plug-in/gimppluginmanager-file.c
 app/plug-in/gimppluginmanager-restore.c
 app/plug-in/gimppluginprocedure.c
 app/plug-in/gimppluginprocframe.c
