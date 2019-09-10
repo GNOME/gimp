@@ -338,10 +338,8 @@ insert_into_tree_view (PluginBrowser *browser,
                        const gchar   *types_str,
                        PInfo         *pinfo)
 {
-  gchar        *str_ptr;
-  gchar        *tmp_ptr;
-  GtkTreeIter   parent, iter;
   GtkTreeStore *tree_store;
+  GtkTreeIter   parent, iter;
 
   get_parent (browser, menu_path, &parent);
 
