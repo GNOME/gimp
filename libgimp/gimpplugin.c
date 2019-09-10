@@ -79,6 +79,14 @@
  * they depend on the presence of external tools, or hardware like
  * scanners, or online services, or whatever variable circumstances.
  *
+ * In order to register the plug-in's procedures with the main GIMP
+ * application in the plug-in's "query" and "init" modes, #GimpPlugIn
+ * calls #GimpPlugInClass.create_procedure() on all procedure names in
+ * the exact order of the #GList returned by
+ * #GimpPlugInClass.query_procedures() or
+ * #GimpPlugInClass.init_procedures() and then registers the returned
+ * #GimpProcedure using #GimpProcedureClass.register().
+ *
  * The plug-in is called in "run" mode whenever one of the procedures
  * it implements is called by either the main GIMP appliction or any
  * other plug-in. In "run" mode, one of the procedure names returned

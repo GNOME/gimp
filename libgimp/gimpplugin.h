@@ -73,8 +73,12 @@ struct _GimpPlugIn
  *   and return a newly allocated #GimpProcedure named @name. It will
  *   be called for every @name as returned by
  *   #GimpPlugInClass.query_procedures() and
- *   #GimpPlugInClass.init_procedures() so care must be taken to handle
- *   them all.
+ *   #GimpPlugInClass.init_procedures() so care must be taken to
+ *   handle them all.
+ *   Upon procedure registration, #GimpPlugInClass.create_procedure()
+ *   will be called in the order of the lists returned by
+ *   #GimpPlugInClass.query_procedures() and
+ *   #GimpPlugInClass.init_procedures()
  * @quit: This method can be overridden by a plug-in which needs to
  *   perform some actions upon quitting.
  *
@@ -93,44 +97,18 @@ struct _GimpPlugInClass
    * GimpPlugInClass::query_procedures:
    * @plug_in: a #GimpPlugIn.
    *
-   * This method can be overridden by all plug-ins to return a newly
-   * allocated GList of allocated strings naming the procedures
-   * registered by this plug-in.
-   *
-   * See documentation of GimpPlugInClass::init_procedures() for
-   * differences.
-   *
    * Returns: (element-type gchar*) (transfer full):
    *          the names of the procedures registered by @plug_in.
-   *
-   * Since: 3.0
-   */
+   **/
   GList          * (* query_procedures) (GimpPlugIn  *plug_in);
 
   /**
    * GimpPlugInClass::init_procedures:
    * @plug_in: a #GimpPlugIn.
    *
-   * This method can be overridden by all plug-ins to return a newly
-   * allocated #GList of allocated strings naming procedures registered
-   * by this plug-in.
-   *
-   * It is different from GimpPlugInClass::query_procedures() in that
-   * init happens at every startup, whereas query happens only once in
-   * the life of a plug-in (right after installation or update). Hence
-   * GimpPlugInClass::init_procedures() typically returns procedures
-   * dependent to runtime conditions (such as the presence of a
-   * third-party tool), whereas GimpPlugInClass::query_procedures()
-   * would usually return unconditional and always available
-   * procedures.  Most of the time, you only want to override
-   * GimpPlugInClass::query_procedures() and leave
-   * GimpPlugInClass::init_procedures() untouched.
-   *
    * Returns: (element-type gchar*) (transfer full):
    *          the names of the procedures registered by @plug_in.
-   *
-   * Since: 3.0
-   */
+   **/
   GList          * (* init_procedures)  (GimpPlugIn  *plug_in);
 
   /**
@@ -138,28 +116,16 @@ struct _GimpPlugInClass
    * @plug_in:        a #GimpPlugIn.
    * @procedure_name: procedure name.
    *
-   * This method should be overridden by all plug-ins and return a newly
-   * allocated #GimpProcedure named @name.
-   * It will be called for every @name as returned by query_procedures()
-   * and init_procedures() so care must be taken to handle them all.
-   *
    * Returns: (transfer full):
-   *          the procedure to be registered by @plug_in.
-   *
-   * Since: 3.0
-   */
+   *          the procedure to be registered or executed by @plug_in.
+   **/
   GimpProcedure  * (* create_procedure) (GimpPlugIn  *plug_in,
                                          const gchar *procedure_name);
 
   /**
    * GimpPlugInClass::quit:
    * @plug_in: a #GimpPlugIn.
-   *
-   * This method can be overridden by a plug-in which needs to perform
-   * some actions upon quitting.
-   *
-   * Since: 3.0
-   */
+   **/
   void             (* quit)             (GimpPlugIn  *plug_in);
 
   /* Padding for future expansion */
