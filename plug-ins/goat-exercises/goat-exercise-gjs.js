@@ -106,7 +106,7 @@ var Goat = GObject.registerClass({
             box.pack_start(label, false, false, 1);
             label.show();
 
-            let contents = String(GLib.file_get_contents(System.programInvocationName)[1]);
+            let contents = imports.byteArray.toString(GLib.file_get_contents(System.programInvocationName)[1]);
             if (contents) {
                 let scrolled = new Gtk.ScrolledWindow();
                 scrolled.set_vexpand (true);
