@@ -853,7 +853,7 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
           return_vals =
             gimp_pdb_execute_procedure_by_name (manager->gimp->pdb,
                                                 context, NULL, &error,
-                                                "gimp-register-magic-load-handler",
+                                                "gimp-register-load-handler",
                                                 G_TYPE_STRING, gimp_object_get_name (proc),
                                                 G_TYPE_STRING, proc->extensions,
                                                 G_TYPE_STRING, proc->prefixes,
