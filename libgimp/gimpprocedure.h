@@ -67,6 +67,21 @@ struct _GimpProcedure
   GimpProcedurePrivate *priv;
 };
 
+/**
+ * GimpProcedureClass:
+ * @install: called to install the procedure with the main GIMP
+ *   application. This is an implementation detail and must never
+ *   be called by any plug-in code.
+ * @uninstall: called to uninstall the procedure from the main GIMP
+ *   application. This is an implementation detail and must never
+ *   be called by any plug-in code.
+ * @run: called to when the procedure is executed via gimp_procedure_run().
+ *   the default implementation simply calls the procedure's #GimpRunFunc,
+ *   #GimpProcedure subclasses are free to modify the passed @args and
+ *   call their own, subclass-specific run functions.
+ *
+ * Since: 3.0
+ **/
 struct _GimpProcedureClass
 {
   GObjectClass parent_class;

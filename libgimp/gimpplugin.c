@@ -42,8 +42,55 @@
  * @title: GimpPlugIn
  * @short_description: The base class for plug-ins to derive from
  *
- * The base class for plug-ins to derive from. Manages the plug-in's
- * #GimpProcedure objects.
+ * The base class for plug-ins to derive from. #GimpPlugIn manages the
+ * plug-in's #GimpProcedure objects. The procedures a plug-in
+ * implements are registered with GIMP by returning a #GList of their
+ * names from either #GimpPlugInClass.query_procedures() or
+ * #GimpPlugInClass.init_procedures().
+ *
+ * Every GIMP plug-in has to implement a #GimpPlugIn subclass and make
+ * it known to the libgimp infrastructure and the main GIMP
+ * application by passing its #GType to GIMP_MAIN().
+ *
+ * GIMP_MAIN() passes the 'argc' and 'argv' of the platform's main()
+ * function, along with the #GType, to gimp_main(), which creates an
+ * instance of the plug-in's #GimpPlugIn subclass and calls its
+ * virtual functions, depending on how the plug-in was called by GIMP.
+ *
+ * There are three different ways GIMP calls a plug-in, "query",
+ * "init" and "run".
+ *
+ * The plug-in is called in "query" mode once after it was installed,
+ * or when the cached plug-in information in the config file
+ * "pluginrc" needs to be recreated. In "query" mode,
+ * #GimpPlugInClass.query_procedures() is called and returns a #GList
+ * of procedure names the plug-in implements. This is the "normal"
+ * place to register procedures, because the existence of most
+ * procedures doesn't depend on things that change between GIMP
+ * sessions.
+ *
+ * The plug-in is called in "init" mode at each GIMP startup, and
+ * #GimpPlugInClass.init_procedures() is called and returns a #GList
+ * of procedure names this plug-in implements. This only happens if
+ * the plug-in actually implements
+ * #GimpPlugInClass.init_procedures(). A plug-in only needs to
+ * implement #GimpPlugInClass.init_procedures() if the existence of
+ * its procedures can change between GIMP sessions, for example if
+ * they depend on the presence of external tools, or hardware like
+ * scanners, or online services, or whatever variable circumstances.
+ *
+ * The plug-in is called in "run" mode whenever one of the procedures
+ * it implements is called by either the main GIMP appliction or any
+ * other plug-in. In "run" mode, one of the procedure names returned
+ * by #GimpPlugInClass.query_procedures() or
+ * #GimpPlugInClass.init_procedures() is passed to
+ * #GimpPlugInClass.create_procedure() which must return a
+ * #GimpProcedure for the passed name. The procedure is then executed
+ * by calling gimp_procedure_run().
+ *
+ * In any of the three modes, #GimpPlugInClass.quit() is called before
+ * the plug-in process exits, so the plug-in can perform whatever
+ * cleanup neccessary.
  *
  * Since: 3.0
  **/
@@ -325,9 +372,8 @@ gimp_plug_in_get_property (GObject    *object,
  * location, you may specify an absolute path to another
  * location.
  *
- * This function can only be called in the #GimpPlugInClass.query()
- * function of a plug-in and it has to be called before any procedure
- * is installed.
+ * This function can only be called in the
+ * #GimpPlugInClass.query_procedures() function of a plug-in.
  *
  * Since: 3.0
  **/
@@ -360,8 +406,8 @@ gimp_plug_in_set_translation_domain (GimpPlugIn  *plug_in,
  * supported language there should be a file called 'gimp-help.xml'
  * that maps the help IDs to the actual help files.
  *
- * This function can only be called in the #GimpPlugInClass.query()
- * function of a plug-in.
+ * This function can only be called in the
+ * #GimpPlugInClass.query_procedures() function of a plug-in.
  *
  * Since: 3.0
  **/
@@ -386,13 +432,13 @@ gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
  * @menu_path:  The sub-menu's menu path.
  * @menu_label: The menu label of the sub-menu.
  *
- * Add a new sub-menu to thr GIMP menus.
+ * Add a new sub-menu to the GIMP menus.
  *
  * This function installs a sub-menu which does not belong to any
  * procedure at the location @menu_path.
  *
- * For translations of tooltips to work properly, @menu_label should
- * only be marked for translation but passed to this function
+ * For translations of @menu_label to work properly, @menu_label
+ * should only be marked for translation but passed to this function
  * untranslated, for example using N_("Submenu"). GIMP will look up
  * the translation in the textdomain registered for the plug-in.
  *
@@ -425,7 +471,7 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  * @plug_in:        A #GimpPlugIn
  * @procedure_name: A procedure name.
  *
- * This functiond creates a new procedure and is called when a plug-in
+ * This function creates a new procedure and is called when a plug-in
  * instance is started by GIMP when one of the %GIMP_PDB_PROC_TYPE_PLUGIN or
  * %GIMP_PDB_PROC_TYPE_EXTENSION procedures it implements is invoked.
  *

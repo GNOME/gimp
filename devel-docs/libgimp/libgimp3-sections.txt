@@ -964,6 +964,8 @@ gimp_pdb_get_type
 <FILE>gimpprocedure</FILE>
 <TITLE>GimpProcedure</TITLE>
 GimpRunFunc
+GimpProcedure
+GimpProcedureClass
 gimp_procedure_new
 gimp_procedure_get_plug_in
 gimp_procedure_get_name
@@ -1004,8 +1006,6 @@ GIMP_PROCEDURE
 GIMP_PROCEDURE_CLASS
 GIMP_PROCEDURE_GET_CLASS
 GIMP_TYPE_PROCEDURE
-GimpProcedure
-GimpProcedureClass
 GimpProcedurePrivate
 gimp_procedure_get_type
 </SECTION>

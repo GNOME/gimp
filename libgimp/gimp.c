@@ -163,11 +163,11 @@ static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
  * @argc:         the number of arguments
  * @argv:         (array length=argc): the arguments
  *
- * The main procedure that must be called with the plug-in's
- * #GimpPlugIn subclass type and the 'argc' and 'argv' that are passed
- * to "main".
+ * The main plug-in function that must be called with the plug-in's
+ * #GimpPlugIn subclass #GType and the 'argc' and 'argv' that are passed
+ * to the platform's main().
  *
- * See also: GIMP_MAIN().
+ * See also: GIMP_MAIN(), #GimpPlugIn.
  *
  * Returns: an exit status as defined by the C library,
  *          on success EXIT_SUCCESS.
@@ -598,8 +598,8 @@ gimp_main (GType  plug_in_type,
 /**
  * gimp_get_plug_in:
  *
- * This function returns the plug-in's #GimpPlugIn instance, which can
- * exist exactly once per running plug-in program.
+ * This function returns the plug-in's #GimpPlugIn instance, which is
+ * a a singleton that can exist exactly once per running plug-in.
  *
  * Returns: (transfer none) (nullable): The plug-in's #GimpPlugIn singleton.
  *
@@ -614,8 +614,8 @@ gimp_get_plug_in (void)
 /**
  * gimp_get_pdb:
  *
- * This function returns the plug-in's #GimpPDB instance, which can
- * exist exactly once per running plug-in program.
+ * This function returns the plug-in's #GimpPDB instance, which is a
+ * singleton that can exist exactly once per running plug-in.
  *
  * Returns: (transfer none) (nullable): The plug-in's #GimpPDB singleton.
  *
