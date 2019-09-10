@@ -402,12 +402,12 @@ file_save_thumbnail_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-register_magic_load_handler_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
+register_load_handler_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
@@ -427,36 +427,6 @@ register_magic_load_handler_invoker (GimpProcedure         *procedure,
                                                              procedure_name,
                                                              extensions, prefixes,
                                                              magics));
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-register_load_handler_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
-                               GError               **error)
-{
-  gboolean success = TRUE;
-  const gchar *procedure_name;
-  const gchar *extensions;
-  const gchar *prefixes;
-
-  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
-  extensions = g_value_get_string (gimp_value_array_index (args, 1));
-  prefixes = g_value_get_string (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
-                                                             procedure_name,
-                                                             extensions, prefixes,
-                                                             NULL));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -895,11 +865,11 @@ register_fileops_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-register-magic-load-handler
+   * gimp-register-load-handler
    */
-  procedure = gimp_procedure_new (register_magic_load_handler_invoker);
+  procedure = gimp_procedure_new (register_load_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-register-magic-load-handler");
+                               "gimp-register-load-handler");
   gimp_procedure_set_static_help (procedure,
                                   "Registers a file load handler procedure.",
                                   "Registers a procedural database procedure to be called to load files of a particular file format using magic file information.",
@@ -933,44 +903,6 @@ register_fileops_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("magics",
                                                        "magics",
                                                        "comma separated list of magic file information this handler can load (i.e. \"0,string,GIF\")",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-register-load-handler
-   */
-  procedure = gimp_procedure_new (register_load_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-register-load-handler");
-  gimp_procedure_set_static_help (procedure,
-                                  "Registers a file load handler procedure.",
-                                  "Registers a procedural database procedure to be called to load files of a particular file format.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Spencer Kimball & Peter Mattis",
-                                         "Spencer Kimball & Peter Mattis",
-                                         "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("procedure-name",
-                                                       "procedure name",
-                                                       "The name of the procedure to be used for loading",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("extensions",
-                                                       "extensions",
-                                                       "comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\")",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("prefixes",
-                                                       "prefixes",
-                                                       "comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\")",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));

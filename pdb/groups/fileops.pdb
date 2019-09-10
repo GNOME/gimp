@@ -436,7 +436,7 @@ CODE
     );
 }
 
-sub register_magic_load_handler {
+sub register_load_handler {
     $blurb = 'Registers a file load handler procedure.';
 
     $help = <<'HELP';
@@ -470,43 +470,6 @@ HELP
                                                          procedure_name,
                                                          extensions, prefixes,
                                                          magics));
-}
-CODE
-    );
-}
-
-sub register_load_handler {
-    $blurb = 'Registers a file load handler procedure.';
-
-    $help = <<'HELP';
-Registers a procedural database procedure to be called to load files of a
-particular file format.
-HELP
-
-    &std_pdb_misc;
-
-    $lib_private = 1;
-
-    @inargs = (
-        { name => 'procedure_name', type => 'string', non_empty => 1,
-          desc => 'The name of the procedure to be used for loading' },
-        { name => 'extensions', type => 'string', no_validate => 1,
-          desc => 'comma separated list of extensions this handler
-                   can load (i.e. "jpg,jpeg")' },
-        { name => 'prefixes', type => 'string', no_validate => 1,
-          desc => 'comma separated list of prefixes this handler
-                   can load (i.e. "http:,ftp:")' }
-    );
-
-
-    %invoke = (
-        code => <<'CODE'
-{
-  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-             gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
-                                                         procedure_name,
-                                                         extensions, prefixes,
-                                                         NULL));
 }
 CODE
     );
@@ -724,7 +687,6 @@ CODE
             file_save
             file_load_thumbnail
             file_save_thumbnail
-            register_magic_load_handler
             register_load_handler
             register_save_handler
             register_file_handler_priority
@@ -733,7 +695,7 @@ CODE
             register_file_handler_raw
             register_thumbnail_loader);
 
-%exports = (app => [@procs], lib => [@procs[0..3,5..13]]);
+%exports = (app => [@procs], lib => [@procs[0..3,5..12]]);
 
 $desc = 'File Operations';
 $doc_title = 'gimpfileops';

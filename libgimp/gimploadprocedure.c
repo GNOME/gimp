@@ -119,19 +119,10 @@ gimp_load_procedure_install (GimpProcedure *procedure)
 
   GIMP_PROCEDURE_CLASS (parent_class)->install (procedure);
 
-  if (gimp_file_procedure_get_magics (file_proc))
-    {
-      _gimp_register_magic_load_handler (gimp_procedure_get_name (procedure),
-                                         gimp_file_procedure_get_extensions (file_proc),
-                                         gimp_file_procedure_get_prefixes (file_proc),
-                                         gimp_file_procedure_get_magics (file_proc));
-    }
-  else
-    {
-      _gimp_register_load_handler (gimp_procedure_get_name (procedure),
-                                   gimp_file_procedure_get_extensions (file_proc),
-                                   gimp_file_procedure_get_prefixes (file_proc));
-    }
+  _gimp_register_load_handler (gimp_procedure_get_name (procedure),
+                               gimp_file_procedure_get_extensions (file_proc),
+                               gimp_file_procedure_get_prefixes (file_proc),
+                               gimp_file_procedure_get_magics (file_proc));
 
   if (gimp_file_procedure_get_handles_remote (file_proc))
     _gimp_register_file_handler_remote (gimp_procedure_get_name (procedure));

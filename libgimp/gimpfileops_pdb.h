@@ -49,13 +49,10 @@ gboolean                 gimp_file_save                       (GimpRunMode   run
                                                                const gchar  *raw_filename);
 gboolean                 gimp_file_save_thumbnail             (GimpImage    *image,
                                                                const gchar  *filename);
-G_GNUC_INTERNAL gboolean _gimp_register_magic_load_handler    (const gchar  *procedure_name,
+G_GNUC_INTERNAL gboolean _gimp_register_load_handler          (const gchar  *procedure_name,
                                                                const gchar  *extensions,
                                                                const gchar  *prefixes,
                                                                const gchar  *magics);
-G_GNUC_INTERNAL gboolean _gimp_register_load_handler          (const gchar  *procedure_name,
-                                                               const gchar  *extensions,
-                                                               const gchar  *prefixes);
 G_GNUC_INTERNAL gboolean _gimp_register_save_handler          (const gchar  *procedure_name,
                                                                const gchar  *extensions,
                                                                const gchar  *prefixes);

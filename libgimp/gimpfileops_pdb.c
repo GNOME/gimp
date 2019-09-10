@@ -272,7 +272,7 @@ gimp_file_save_thumbnail (GimpImage   *image,
 }
 
 /**
- * _gimp_register_magic_load_handler:
+ * _gimp_register_load_handler:
  * @procedure_name: The name of the procedure to be used for loading.
  * @extensions: comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\").
  * @prefixes: comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\").
@@ -286,10 +286,10 @@ gimp_file_save_thumbnail (GimpImage   *image,
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_register_magic_load_handler (const gchar *procedure_name,
-                                   const gchar *extensions,
-                                   const gchar *prefixes,
-                                   const gchar *magics)
+_gimp_register_load_handler (const gchar *procedure_name,
+                             const gchar *extensions,
+                             const gchar *prefixes,
+                             const gchar *magics)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -300,46 +300,6 @@ _gimp_register_magic_load_handler (const gchar *procedure_name,
                                           G_TYPE_STRING, extensions,
                                           G_TYPE_STRING, prefixes,
                                           G_TYPE_STRING, magics,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-register-magic-load-handler",
-                                              args);
-  gimp_value_array_unref (args);
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_register_load_handler:
- * @procedure_name: The name of the procedure to be used for loading.
- * @extensions: comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\").
- * @prefixes: comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\").
- *
- * Registers a file load handler procedure.
- *
- * Registers a procedural database procedure to be called to load files
- * of a particular file format.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_register_load_handler (const gchar *procedure_name,
-                             const gchar *extensions,
-                             const gchar *prefixes)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, procedure_name,
-                                          G_TYPE_STRING, extensions,
-                                          G_TYPE_STRING, prefixes,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
