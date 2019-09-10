@@ -21,36 +21,66 @@
 #define __GIMP_PLUG_IN_PROC_H__
 
 
-gboolean   gimp_plug_in_set_proc_image_types (GimpPlugIn    *plug_in,
-                                              const gchar   *proc_name,
-                                              const gchar   *image_types,
-                                              GError       **error);
-gboolean   gimp_plug_in_set_proc_menu_label  (GimpPlugIn    *plug_in,
-                                              const gchar   *proc_name,
-                                              const gchar   *menu_label,
-                                              GError       **error);
-gboolean   gimp_plug_in_add_proc_menu_path   (GimpPlugIn    *plug_in,
-                                              const gchar   *proc_name,
-                                              const gchar   *menu_path,
-                                              GError       **error);
-gboolean   gimp_plug_in_set_proc_icon        (GimpPlugIn    *plug_in,
-                                              const gchar   *proc_name,
-                                              GimpIconType   type,
-                                              const guint8  *data,
-                                              gint           data_length,
-                                              GError       **error);
-gboolean   gimp_plug_in_set_proc_help        (GimpPlugIn    *plug_in,
-                                              const gchar   *proc_name,
-                                              const gchar   *blurb,
-                                              const gchar   *help,
-                                              const gchar   *help_id,
-                                              GError       **error);
-gboolean   gimp_plug_in_set_proc_attribution (GimpPlugIn    *plug_in,
-                                              const gchar   *proc_name,
-                                              const gchar   *authors,
-                                              const gchar   *copyright,
-                                              const gchar   *date,
-                                              GError       **error);
+gboolean   gimp_plug_in_set_proc_image_types         (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *image_types,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_proc_menu_label          (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *menu_label,
+                                                      GError       **error);
+gboolean   gimp_plug_in_add_proc_menu_path           (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *menu_path,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_proc_icon                (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      GimpIconType   type,
+                                                      const guint8  *data,
+                                                      gint           data_length,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_proc_help                (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *blurb,
+                                                      const gchar   *help,
+                                                      const gchar   *help_id,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_proc_attribution         (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *authors,
+                                                      const gchar   *copyright,
+                                                      const gchar   *date,
+                                                      GError       **error);
+
+gboolean   gimp_plug_in_set_file_proc_load_handler   (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *extensions,
+                                                      const gchar   *prefixes,
+                                                      const gchar   *magics,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_file_proc_save_handler   (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *extensions,
+                                                      const gchar   *prefixes,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_file_proc_priority       (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      gint           priority,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_file_proc_mime_types     (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *mime_types,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_file_proc_handles_remote (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_file_proc_handles_raw    (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      GError       **error);
+gboolean   gimp_plug_in_set_file_proc_thumb_loader   (GimpPlugIn    *plug_in,
+                                                      const gchar   *proc_name,
+                                                      const gchar   *thumb_proc,
+                                                      GError       **error);
 
 
 #endif /* __GIMP_PLUG_IN_PROC_H__ */

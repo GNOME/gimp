@@ -21,36 +21,6 @@
 #define __GIMP_PLUG_IN_MANAGER_FILE_H__
 
 
-gboolean   gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
-                                                       const gchar       *name,
-                                                       const gchar       *extensions,
-                                                       const gchar       *prefixes,
-                                                       const gchar       *magics);
-gboolean   gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
-                                                       const gchar       *name,
-                                                       const gchar       *extensions,
-                                                       const gchar       *prefixes);
-
-gboolean   gimp_plug_in_manager_register_priority     (GimpPlugInManager *manager,
-                                                       const gchar       *name,
-                                                       gint               priority);
-
-
-gboolean   gimp_plug_in_manager_register_mime_types   (GimpPlugInManager *manager,
-                                                       const gchar       *name,
-                                                       const gchar       *mime_types);
-
-gboolean   gimp_plug_in_manager_register_handles_remote
-                                                      (GimpPlugInManager *manager,
-                                                       const gchar       *name);
-
-gboolean   gimp_plug_in_manager_register_handles_raw  (GimpPlugInManager *manager,
-                                                       const gchar       *name);
-
-gboolean   gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
-                                                       const gchar       *load_proc,
-                                                       const gchar       *thumb_proc);
-
 GSList   * gimp_plug_in_manager_get_file_procedures   (GimpPlugInManager      *manager,
                                                        GimpFileProcedureGroup  group);
 

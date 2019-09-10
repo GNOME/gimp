@@ -40,7 +40,9 @@
 #include "file/file-open.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
+#include "plug-in/gimpplugin-proc.h"
 #include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimppdb.h"
@@ -422,11 +424,18 @@ register_load_handler_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_load_handler (plug_in,
                                                              procedure_name,
                                                              extensions, prefixes,
-                                                             magics));
+                                                             magics, error);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -452,10 +461,18 @@ register_save_handler_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_save_handler (gimp->plug_in_manager,
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_save_handler (plug_in,
                                                              procedure_name,
-                                                             extensions, prefixes));
+                                                             extensions, prefixes,
+                                                             error);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -479,9 +496,17 @@ register_file_handler_priority_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_priority (gimp->plug_in_manager,
-                                                         procedure_name, priority));
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_priority (plug_in,
+                                                         procedure_name,
+                                                         priority, error);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -505,10 +530,17 @@ register_file_handler_mime_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_mime_types (gimp->plug_in_manager,
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_mime_types (plug_in,
                                                            procedure_name,
-                                                           mime_types));
+                                                           mime_types, error);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -530,9 +562,17 @@ register_file_handler_remote_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_handles_remote (gimp->plug_in_manager,
-                                                               procedure_name));
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_handles_remote (plug_in,
+                                                               procedure_name,
+                                                               error);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -554,9 +594,17 @@ register_file_handler_raw_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_handles_raw (gimp->plug_in_manager,
-                                                            procedure_name));
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_file_proc_handles_raw (plug_in,
+                                                            procedure_name,
+                                                            error);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -580,10 +628,18 @@ register_thumbnail_loader_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = (gimp_pdb_is_canonical_procedure (load_proc, error) &&
-                 gimp_pdb_is_canonical_procedure (thumb_proc, error) &&
-                 gimp_plug_in_manager_register_thumb_loader (gimp->plug_in_manager,
-                                                             load_proc, thumb_proc));
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (load_proc, error) &&
+          gimp_pdb_is_canonical_procedure (thumb_proc, error))
+        {
+          success = gimp_plug_in_set_file_proc_thumb_loader (plug_in,
+                                                             load_proc, thumb_proc,
+                                                              error);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
