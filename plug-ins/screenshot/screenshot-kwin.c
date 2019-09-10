@@ -168,8 +168,7 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
     {
       GimpColorProfile *profile;
 
-      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                                  filename, filename);
+      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, filename);
       gimp_image_set_filename (*image, "screenshot.png");
 
       /* This is very wrong in multi-display setups since we have no

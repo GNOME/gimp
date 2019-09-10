@@ -96,14 +96,6 @@ file_data_init (Gimp *gimp)
                                                        TRUE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image ("image",
@@ -178,14 +170,6 @@ file_data_init (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
-                                                       "The URI of the file "
-                                                       "to export",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("spacing",
                                                  "spacing",
                                                  "Spacing of the brush",
@@ -243,14 +227,6 @@ file_data_init (Gimp *gimp)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
                                                        "The URI of the file "
                                                        "to load",
                                                        TRUE, FALSE, TRUE,
@@ -330,14 +306,6 @@ file_data_init (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
-                                                       "The URI of the file "
-                                                       "to export",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("spacing",
                                                  "spacing",
                                                  "Spacing of the brush",
@@ -402,14 +370,6 @@ file_data_init (Gimp *gimp)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
                                                        "The URI of the file "
                                                        "to load",
                                                        TRUE, FALSE, TRUE,
@@ -487,14 +447,6 @@ file_data_init (Gimp *gimp)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
-                                                       "The URI of the file "
-                                                       "to export",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -546,14 +498,6 @@ file_data_init (Gimp *gimp)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
                                                        "The URI of the file "
                                                        "to load",
                                                        TRUE, FALSE, TRUE,

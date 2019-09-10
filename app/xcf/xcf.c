@@ -164,14 +164,6 @@ xcf_init (Gimp *gimp)
                                                        TRUE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-filename",
-                                                       "Raw filename",
-                                                       "The basename of the "
-                                                       "file, in UTF-8",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 
@@ -224,14 +216,6 @@ xcf_init (Gimp *gimp)
                                                        "on-disk character "
                                                        "set and encoding",
                                                        TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-filename",
-                                                       "Raw filename",
-                                                       "The basename of the "
-                                                       "file, in UTF-8",
-                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
 

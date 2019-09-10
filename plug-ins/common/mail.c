@@ -353,7 +353,6 @@ send_image (const gchar  *filename,
   if (! (gimp_file_save (run_mode,
                          image,
                          drawable,
-                         tmpname,
                          tmpname) && valid_file (tmpname)))
     {
       goto error;

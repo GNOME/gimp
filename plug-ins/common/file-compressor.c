@@ -450,7 +450,6 @@ save_image (const CompressorEntry  *compressor,
   if (! (gimp_file_save (run_mode,
                          image,
                          drawable,
-                         tmpname,
                          tmpname) && valid_file (tmpname)))
     {
       g_unlink (tmpname);
@@ -516,7 +515,7 @@ load_image (const CompressorEntry  *compressor,
 
   /* now that we uncompressed it, load the temp file */
 
-  image = gimp_file_load (run_mode, tmpname, tmpname);
+  image = gimp_file_load (run_mode, tmpname);
 
   g_unlink (tmpname);
   g_free (tmpname);

@@ -453,7 +453,6 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
       (procedure->num_values >= 1)                     &&
       GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
       G_IS_PARAM_SPEC_STRING      (procedure->args[1]) &&
-      G_IS_PARAM_SPEC_STRING      (procedure->args[2]) &&
       GIMP_IS_PARAM_SPEC_IMAGE    (procedure->values[0]))
     {
       uri_value = gimp_value_array_index (args, 1);
@@ -462,8 +461,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
            GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
            GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) &&
            GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[2]) &&
-           G_IS_PARAM_SPEC_STRING      (procedure->args[3]) &&
-           G_IS_PARAM_SPEC_STRING      (procedure->args[4]))
+           G_IS_PARAM_SPEC_STRING      (procedure->args[3]))
     {
       uri_value = gimp_value_array_index (args, 3);
     }

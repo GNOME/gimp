@@ -71,7 +71,6 @@ file_open_image (Gimp                *gimp,
                  GimpContext         *context,
                  GimpProgress        *progress,
                  GFile               *file,
-                 GFile               *entered_file,
                  gboolean             as_new,
                  GimpPlugInProcedure *file_proc,
                  GimpRunMode          run_mode,
@@ -83,7 +82,6 @@ file_open_image (Gimp                *gimp,
   GimpImage      *image       = NULL;
   GFile          *local_file  = NULL;
   gchar          *uri         = NULL;
-  gchar          *entered_uri = NULL;
   gboolean        mounted     = TRUE;
   GError         *my_error    = NULL;
 
@@ -91,7 +89,6 @@ file_open_image (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (G_IS_FILE (entered_file), NULL);
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
@@ -211,11 +208,6 @@ file_open_image (Gimp                *gimp,
   if (! uri)
     uri = g_file_get_uri (file);
 
-  entered_uri = g_file_get_uri (entered_file);
-
-  if (! entered_uri)
-    entered_uri = g_strdup (uri);
-
   if (progress)
     g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
@@ -225,14 +217,12 @@ file_open_image (Gimp                *gimp,
                                         gimp_object_get_name (file_proc),
                                         GIMP_TYPE_RUN_MODE, run_mode,
                                         G_TYPE_STRING,      uri,
-                                        G_TYPE_STRING,      entered_uri,
                                         G_TYPE_NONE);
 
   if (progress)
     g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
   g_free (uri);
-  g_free (entered_uri);
 
   *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
@@ -489,7 +479,7 @@ file_open_with_display (Gimp               *gimp,
                         GError            **error)
 {
   return file_open_with_proc_and_display (gimp, context, progress,
-                                          file, file, as_new, NULL,
+                                          file, as_new, NULL,
                                           monitor,
                                           status, error);
 }
@@ -499,7 +489,6 @@ file_open_with_proc_and_display (Gimp                *gimp,
                                  GimpContext         *context,
                                  GimpProgress        *progress,
                                  GFile               *file,
-                                 GFile               *entered_file,
                                  gboolean             as_new,
                                  GimpPlugInProcedure *file_proc,
                                  GObject             *monitor,
@@ -513,13 +502,11 @@ file_open_with_proc_and_display (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (G_IS_FILE (entered_file), NULL);
   g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), NULL);
   g_return_val_if_fail (status != NULL, NULL);
 
   image = file_open_image (gimp, context, progress,
                            file,
-                           entered_file,
                            as_new,
                            file_proc,
                            GIMP_RUN_INTERACTIVE,
@@ -619,7 +606,7 @@ file_open_layers (Gimp                *gimp,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   new_image = file_open_image (gimp, context, progress,
-                               file, file, FALSE,
+                               file, FALSE,
                                file_proc,
                                run_mode,
                                status, &mime_type, error);

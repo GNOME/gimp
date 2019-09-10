@@ -236,7 +236,6 @@ pat_save (GimpProcedure        *procedure,
                                 GIMP_TYPE_IMAGE,    image,
                                 GIMP_TYPE_DRAWABLE, drawable,
                                 G_TYPE_STRING,      uri,
-                                G_TYPE_STRING,      uri,
                                 G_TYPE_STRING,      description,
                                 G_TYPE_NONE);
 

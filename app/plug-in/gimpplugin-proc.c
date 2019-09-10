@@ -291,17 +291,23 @@ gimp_plug_in_set_file_proc_load_handler (GimpPlugIn   *plug_in,
 
   procedure = GIMP_PROCEDURE (proc);
 
-  if (((procedure->num_args   < 3)                        ||
+  if (((procedure->num_args   < 2)                        ||
        (procedure->num_values < 1)                        ||
        ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
        ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
        (! proc->generic_file_proc &&
         ! GIMP_IS_PARAM_SPEC_IMAGE (procedure->values[0]))))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_FAILED,
-                   "load handler \"%s\" does not take the standard "
-                   "load handler args", proc_name);
+                   "Plug-in \"%s\"\n(%s)\n"
+                   "attempted to register procedure \"%s\" "
+                   "as load handler which does not take the standard "
+                   "load procedure arguments: "
+                   "(GimpRunMode, String) -> (GimpImage)",
+                   gimp_object_get_name (plug_in),
+                   gimp_file_get_utf8_name (plug_in->file),
+                   proc_name);
+
       return FALSE;
     }
 
@@ -344,16 +350,22 @@ gimp_plug_in_set_file_proc_save_handler (GimpPlugIn   *plug_in,
 
   procedure = GIMP_PROCEDURE (proc);
 
-  if ((procedure->num_args < 5)                          ||
+  if ((procedure->num_args < 4)                          ||
       ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
       ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
       ! GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[2]) ||
-      ! G_IS_PARAM_SPEC_STRING      (procedure->args[3]) ||
-      ! G_IS_PARAM_SPEC_STRING      (procedure->args[4]))
+      ! G_IS_PARAM_SPEC_STRING      (procedure->args[3]))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_FAILED,
-                   "save handler \"%s\" does not take the standard "
-                   "save handler args", proc_name);
+                   "Plug-in \"%s\"\n(%s)\n"
+                   "attempted to register procedure \"%s\" "
+                   "as save handler which does not take the standard "
+                   "save procedure arguments: "
+                   "(GimpRunMode, GimpImage, GimpDrawable, String)",
+                   gimp_object_get_name (plug_in),
+                   gimp_file_get_utf8_name (plug_in->file),
+                   proc_name);
+
       return FALSE;
     }
 

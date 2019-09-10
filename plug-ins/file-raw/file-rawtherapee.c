@@ -362,7 +362,7 @@ load_image (const gchar  *filename,
                     NULL,
                     error))
     {
-      image = gimp_file_load (run_mode, filename_out, filename_out);
+      image = gimp_file_load (run_mode, filename_out);
       if (image)
         gimp_image_set_filename (image, filename);
     }
@@ -481,9 +481,7 @@ load_thumbnail_image (const gchar   *filename,
     {
       gimp_progress_update (0.5);
 
-      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                              filename_out,
-                              filename_out);
+      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, filename_out);
       if (image)
         {
           /* is this needed for thumbnails? */

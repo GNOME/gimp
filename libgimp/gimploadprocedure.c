@@ -84,12 +84,6 @@ gimp_load_procedure_constructed (GObject *object)
                         NULL,
                         GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "raw-uri",
-                        "Raw URI",
-                        "The URI of the file to load",
-                        NULL,
-                        GIMP_PARAM_READWRITE);
-
   GIMP_PROC_VAL_IMAGE (procedure, "image",
                        "Image",
                        "Output image",
@@ -160,13 +154,12 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
 
   run_mode   = GIMP_VALUES_GET_ENUM   (args, 0);
   uri        = GIMP_VALUES_GET_STRING (args, 1);
-  /* raw_uri = GIMP_VALUES_GET_STRING (args, 2); */
 
   file = g_file_new_for_uri (uri);
 
-  remaining = gimp_value_array_new (gimp_value_array_length (args) - 3);
+  remaining = gimp_value_array_new (gimp_value_array_length (args) - 2);
 
-  for (i = 3; i < gimp_value_array_length (args); i++)
+  for (i = 2; i < gimp_value_array_length (args); i++)
     {
       GValue *value = gimp_value_array_index (args, i);
 
@@ -207,7 +200,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
  *
  * It automatically adds the standard
  *
- * (run-mode, uri, raw-uri)
+ * (run-mode, uri)
  *
  * arguments and the standard
  *

@@ -92,12 +92,6 @@ gimp_save_procedure_constructed (GObject *object)
                         "The URI of the file to save to",
                         NULL,
                         GIMP_PARAM_READWRITE);
-
-  GIMP_PROC_ARG_STRING (procedure, "raw-uri",
-                        "Raw URI",
-                        "The URI of the file to save to",
-                        NULL,
-                        GIMP_PARAM_READWRITE);
 }
 
 static void
@@ -156,13 +150,12 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   image      = GIMP_VALUES_GET_IMAGE    (args, 1);
   drawable   = GIMP_VALUES_GET_DRAWABLE (args, 2);
   uri        = GIMP_VALUES_GET_STRING   (args, 3);
-  /* raw_uri = GIMP_VALUES_GET_STRING   (args, 4); */
 
   file = g_file_new_for_uri (uri);
 
-  remaining = gimp_value_array_new (gimp_value_array_length (args) - 5);
+  remaining = gimp_value_array_new (gimp_value_array_length (args) - 4);
 
-  for (i = 5; i < gimp_value_array_length (args); i++)
+  for (i = 4; i < gimp_value_array_length (args); i++)
     {
       GValue *value = gimp_value_array_index (args, i);
 
@@ -204,7 +197,7 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
  *
  * It automatically adds the standard
  *
- * (run-mode, image-id, drawable-id, uri, raw-uri)
+ * (run-mode, image-id, drawable-id, uri)
  *
  * arguments of a save procedure. It is possible to add additional
  * arguments.

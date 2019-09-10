@@ -195,7 +195,6 @@ file_save (Gimp                *gimp,
                                         GIMP_TYPE_IMAGE,    image,
                                         GIMP_TYPE_DRAWABLE, drawable,
                                         G_TYPE_STRING,      uri,
-                                        G_TYPE_STRING,      uri,
                                         G_TYPE_NONE);
 
   status = g_value_get_enum (gimp_value_array_index (return_vals, 0));

@@ -273,7 +273,6 @@ gbr_save (GimpProcedure        *procedure,
                                 GIMP_TYPE_IMAGE,    image,
                                 GIMP_TYPE_DRAWABLE, drawable,
                                 G_TYPE_STRING,      uri,
-                                G_TYPE_STRING,      uri,
                                 G_TYPE_INT,         info.spacing,
                                 G_TYPE_STRING,      info.description,
                                 G_TYPE_NONE);

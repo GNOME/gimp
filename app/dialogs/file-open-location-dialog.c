@@ -196,12 +196,6 @@ file_open_location_response (GtkDialog *dialog,
 
       if (file)
         {
-          GFile *entered_file = g_file_new_for_uri (text);
-
-          /* should not fail but does, see issue #3093 */
-          if (! entered_file)
-            entered_file = g_object_ref (file);
-
           gtk_widget_show (box);
 
           gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
@@ -210,15 +204,12 @@ file_open_location_response (GtkDialog *dialog,
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
                                                    GIMP_PROGRESS (box),
-                                                   file, entered_file,
-                                                   FALSE, NULL,
+                                                   file, FALSE, NULL,
                                                    G_OBJECT (gimp_widget_get_monitor (entry)),
                                                    &status, &error);
 
           gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);
           gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
-
-          g_object_unref (entered_file);
 
           if (image == NULL && status != GIMP_PDB_CANCEL)
             {

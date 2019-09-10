@@ -88,10 +88,7 @@ file_load_invoker (GimpProcedure         *procedure,
   g_value_take_string (gimp_value_array_index (new_args, 1),
                        g_file_get_uri (file));
 
-  g_value_transform (gimp_value_array_index (args, 2),
-                     gimp_value_array_index (new_args, 2));
-
-  for (i = 3; i < proc->num_args; i++)
+  for (i = 2; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
@@ -301,10 +298,7 @@ file_save_invoker (GimpProcedure         *procedure,
   g_value_take_string (gimp_value_array_index (new_args, 3),
                        g_file_get_uri (file));
 
-  g_value_transform (gimp_value_array_index (args, 4),
-                     gimp_value_array_index (new_args, 4));
-
-  for (i = 5; i < proc->num_args; i++)
+  for (i = 4; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
@@ -427,13 +421,6 @@ register_file_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("filename",
                                                        "filename",
                                                        "The name of the file to load",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-filename",
-                                                       "raw filename",
-                                                       "The name as entered by the user",
                                                        TRUE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -579,13 +566,6 @@ register_file_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("filename",
                                                        "filename",
                                                        "The name of the file to save the image in",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-filename",
-                                                       "raw filename",
-                                                       "The name as entered by the user",
                                                        TRUE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

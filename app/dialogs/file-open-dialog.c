@@ -217,7 +217,7 @@ file_open_dialog_open_image (GtkWidget           *dialog,
   image = file_open_with_proc_and_display (gimp,
                                            gimp_get_user_context (gimp),
                                            GIMP_PROGRESS (dialog),
-                                           file, file, FALSE,
+                                           file, FALSE,
                                            load_proc,
                                            G_OBJECT (gimp_widget_get_monitor (dialog)),
                                            &status, &error);

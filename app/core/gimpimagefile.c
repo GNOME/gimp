@@ -489,7 +489,6 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
            */
           image = file_open_image (private->gimp, context, progress,
                                    private->file,
-                                   private->file,
                                    FALSE, NULL, GIMP_RUN_NONINTERACTIVE,
                                    &status, &mime_type, NULL);
 

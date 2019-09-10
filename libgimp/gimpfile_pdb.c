@@ -38,7 +38,6 @@
  * gimp_file_load:
  * @run_mode: The run mode.
  * @filename: The name of the file to load.
- * @raw_filename: The name as entered by the user.
  *
  * Loads an image file by invoking the right load handler.
  *
@@ -54,8 +53,7 @@
  **/
 GimpImage *
 gimp_file_load (GimpRunMode  run_mode,
-                const gchar *filename,
-                const gchar *raw_filename)
+                const gchar *filename)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -64,7 +62,6 @@ gimp_file_load (GimpRunMode  run_mode,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           G_TYPE_STRING, filename,
-                                          G_TYPE_STRING, raw_filename,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -185,7 +182,6 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * @image: Input image.
  * @drawable: Drawable to save.
  * @filename: The name of the file to save the image in.
- * @raw_filename: The name as entered by the user.
  *
  * Saves a file by extension.
  *
@@ -203,8 +199,7 @@ gboolean
 gimp_file_save (GimpRunMode   run_mode,
                 GimpImage    *image,
                 GimpDrawable *drawable,
-                const gchar  *filename,
-                const gchar  *raw_filename)
+                const gchar  *filename)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -215,7 +210,6 @@ gimp_file_save (GimpRunMode   run_mode,
                                           GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_STRING, filename,
-                                          G_TYPE_STRING, raw_filename,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
