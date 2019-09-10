@@ -200,6 +200,20 @@ gimp_navigation_editor_display_changed (GimpContext          *context,
 }
 
 static void
+gimp_navigation_editor_image_chaged (GimpContext          *context,
+                                     GimpImage            *image,
+                                     GimpNavigationEditor *editor)
+{
+  GimpDisplay      *display = gimp_context_get_display (context);
+  GimpDisplayShell *shell   = NULL;
+
+  if (display && image)
+    shell = gimp_display_get_shell (display);
+
+  gimp_navigation_editor_set_shell (editor, shell);
+}
+
+static void
 gimp_navigation_editor_set_context (GimpDocked  *docked,
                                     GimpContext *context)
 {
@@ -211,6 +225,9 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
       g_signal_handlers_disconnect_by_func (editor->context,
                                             gimp_navigation_editor_display_changed,
                                             editor);
+      g_signal_handlers_disconnect_by_func (editor->context,
+                                            gimp_navigation_editor_image_chaged,
+                                            editor);
     }
 
   editor->context = context;
@@ -220,12 +237,12 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
       g_signal_connect (context, "display-changed",
                         G_CALLBACK (gimp_navigation_editor_display_changed),
                         editor);
-      /* make sure to also run gimp_navigation_editor_display_changed() when\
-       * the last image is closed, but its display doesn't, so that the editor
-       * is properly cleared.
+      /* make sure to also call gimp_navigation_editor_set_shell() when the
+       * last image is closed, even though the display isn't changed, so that
+       * the editor is properly cleared.
        */
       g_signal_connect (context, "image-changed",
-                        G_CALLBACK (gimp_navigation_editor_display_changed),
+                        G_CALLBACK (gimp_navigation_editor_image_chaged),
                         editor);
 
       display = gimp_context_get_display (context);
