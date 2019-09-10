@@ -37,6 +37,9 @@ void            _gimp_plug_in_read_expect_msg   (GimpPlugIn      *plug_in,
                                                  GimpWireMessage *msg,
                                                  gint             type);
 
+GimpProcedure * _gimp_plug_in_create_procedure  (GimpPlugIn      *plug_in,
+                                                 const gchar     *procedure_name);
+
 GimpProcedure * _gimp_plug_in_get_procedure     (GimpPlugIn      *plug_in);
 
 GimpDisplay   * _gimp_plug_in_get_display       (GimpPlugIn      *plug_in,

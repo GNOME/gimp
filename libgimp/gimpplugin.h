@@ -52,7 +52,7 @@ struct _GimpPlugIn
 /**
  * GimpPlugInClass:
  * @query_procedures: This method can be overridden by all plug-ins to
- *   return a newly allocated GList of allocated strings naming the
+ *   return a newly allocated #GList of allocated strings naming the
  *   procedures registered by this plug-in. See documentation of
  *   #GimpPlugInClass.init_procedures() for differences.
  * @init_procedures: This method can be overridden by all plug-ins to
@@ -64,12 +64,13 @@ struct _GimpPlugIn
  *   #GimpPlugInClass.init_procedures() typically returns procedures
  *   dependent to runtime conditions (such as the presence of a
  *   third-party tool), whereas #GimpPlugInClass.query_procedures()
- *   would usually return unconditional and always available procedures.
+ *   would usually return procedures that are always available
+ *   unconditionally.
  *   Most of the time, you only want to override
  *   #GimpPlugInClass.query_procedures() and leave
  *   #GimpPlugInClass.init_procedures() untouched.
- * @create_procedure: This method should be overridden by all plug-ins
- *   and return a newly allocated #GimpProcedure named @name.  It will
+ * @create_procedure: This method must be overridden by all plug-ins
+ *   and return a newly allocated #GimpProcedure named @name. It will
  *   be called for every @name as returned by
  *   #GimpPlugInClass.query_procedures() and
  *   #GimpPlugInClass.init_procedures() so care must be taken to handle
@@ -115,9 +116,6 @@ void            gimp_plug_in_set_help_domain        (GimpPlugIn    *plug_in,
 void            gimp_plug_in_add_menu_branch        (GimpPlugIn    *plug_in,
                                                      const gchar   *menu_path,
                                                      const gchar   *menu_label);
-
-GimpProcedure * gimp_plug_in_create_procedure       (GimpPlugIn    *plug_in,
-                                                     const gchar   *procedure_name);
 
 void            gimp_plug_in_add_temp_procedure     (GimpPlugIn    *plug_in,
                                                      GimpProcedure *procedure);

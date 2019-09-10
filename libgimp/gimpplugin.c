@@ -467,35 +467,6 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
 }
 
 /**
- * gimp_plug_in_create_procedure:
- * @plug_in:        A #GimpPlugIn
- * @procedure_name: A procedure name.
- *
- * This function creates a new procedure and is called when a plug-in
- * instance is started by GIMP when one of the %GIMP_PDB_PROC_TYPE_PLUGIN or
- * %GIMP_PDB_PROC_TYPE_EXTENSION procedures it implements is invoked.
- *
- * This function will only ever be called with names returned by
- * implementations of #GimpPlugInClass.init_procedures() or
- * #GimpPlugInClass.query_procedures().
- *
- * Returns: (transfer full): The newly created #GimpProcedure.
- **/
-GimpProcedure *
-gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
-                               const gchar *procedure_name)
-{
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
-
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
-    return GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
-                                                               procedure_name);
-
-  return NULL;
-}
-
-/**
  * gimp_plug_in_add_temp_procedure:
  * @plug_in:   A #GimpPlugIn
  * @procedure: A #GimpProcedure of type %GIMP_PDB_PROC_TYPE_TEMPORARY.
@@ -898,6 +869,20 @@ _gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
     }
 }
 
+GimpProcedure *
+_gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
+                                const gchar *procedure_name)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
+    return GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
+                                                               procedure_name);
+
+  return NULL;
+}
+
 
 /*  private functions  */
 
@@ -912,7 +897,7 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
       const gchar   *name = list->data;
       GimpProcedure *procedure;
 
-      procedure = gimp_plug_in_create_procedure (plug_in, name);
+      procedure = _gimp_plug_in_create_procedure (plug_in, name);
       if (procedure)
         {
           GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
@@ -1174,7 +1159,7 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
   GPProcReturn   proc_return;
   GimpProcedure *procedure;
 
-  procedure = gimp_plug_in_create_procedure (plug_in, proc_run->name);
+  procedure = _gimp_plug_in_create_procedure (plug_in, proc_run->name);
 
   if (procedure)
     {

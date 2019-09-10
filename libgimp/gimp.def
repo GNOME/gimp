@@ -666,7 +666,6 @@ EXPORTS
 	gimp_pencil
 	gimp_plug_in_add_menu_branch
 	gimp_plug_in_add_temp_procedure
-	gimp_plug_in_create_procedure
 	gimp_plug_in_extension_enable
 	gimp_plug_in_extension_process
 	gimp_plug_in_get_pdb_error_handler
