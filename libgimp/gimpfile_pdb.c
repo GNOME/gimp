@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpfileops_pdb.c
+ * gimpfile_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,8 +26,8 @@
 
 
 /**
- * SECTION: gimpfileops
- * @title: gimpfileops
+ * SECTION: gimpfile
+ * @title: gimpfile
  * @short_description: Image file operations (load, save, etc.)
  *
  * Image file operations (load, save, etc.)

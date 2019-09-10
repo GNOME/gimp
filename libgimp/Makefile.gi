@@ -15,7 +15,7 @@ PDB_WRAPPERS_C = \
 	../libgimp/gimpdrawableedit_pdb.c	\
 	../libgimp/gimpdynamics_pdb.c		\
 	../libgimp/gimpedit_pdb.c		\
-	../libgimp/gimpfileops_pdb.c		\
+	../libgimp/gimpfile_pdb.c		\
 	../libgimp/gimpfloatingsel_pdb.c	\
 	../libgimp/gimpfonts_pdb.c		\
 	../libgimp/gimpfontselect_pdb.c		\
@@ -66,7 +66,7 @@ PDB_WRAPPERS_H = \
 	../libgimp/gimpdrawableedit_pdb.h	\
 	../libgimp/gimpdynamics_pdb.h		\
 	../libgimp/gimpedit_pdb.h		\
-	../libgimp/gimpfileops_pdb.h		\
+	../libgimp/gimpfile_pdb.h		\
 	../libgimp/gimpfloatingsel_pdb.h	\
 	../libgimp/gimpfonts_pdb.h		\
 	../libgimp/gimpfontselect_pdb.h		\

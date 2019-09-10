@@ -53,7 +53,7 @@
       <xi:include href="xml/gimpdrawablecolor.xml" />
       <xi:include href="xml/gimpdrawableedit.xml" />
       <xi:include href="xml/gimpedit.xml" />
-      <xi:include href="xml/gimpfileops.xml" />
+      <xi:include href="xml/gimpfile.xml" />
       <xi:include href="xml/gimpfloatingsel.xml" />
       <xi:include href="xml/gimpimage.xml" />
       <xi:include href="xml/gimpimagecolorprofile.xml" />

@@ -396,7 +396,7 @@ file_save_thumbnail_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_fileops_procs (GimpPDB *pdb)
+register_file_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 

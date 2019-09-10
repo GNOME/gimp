@@ -48,7 +48,7 @@ internal_procs_init (GimpPDB *pdb)
   register_drawable_edit_procs (pdb);
   register_dynamics_procs (pdb);
   register_edit_procs (pdb);
-  register_fileops_procs (pdb);
+  register_file_procs (pdb);
   register_floating_sel_procs (pdb);
   register_font_select_procs (pdb);
   register_fonts_procs (pdb);

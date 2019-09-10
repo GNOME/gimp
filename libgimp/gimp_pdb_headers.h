@@ -41,7 +41,7 @@
 #include <libgimp/gimpdrawableedit_pdb.h>
 #include <libgimp/gimpdynamics_pdb.h>
 #include <libgimp/gimpedit_pdb.h>
-#include <libgimp/gimpfileops_pdb.h>
+#include <libgimp/gimpfile_pdb.h>
 #include <libgimp/gimpfloatingsel_pdb.h>
 #include <libgimp/gimpfonts_pdb.h>
 #include <libgimp/gimpfontselect_pdb.h>

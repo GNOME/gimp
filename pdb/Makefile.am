@@ -15,7 +15,7 @@ pdb_groups = \
 	groups/drawable_edit.pdb	\
 	groups/dynamics.pdb		\
 	groups/edit.pdb			\
-	groups/fileops.pdb		\
+	groups/file.pdb			\
 	groups/floating_sel.pdb		\
 	groups/font_select.pdb		\
 	groups/fonts.pdb		\

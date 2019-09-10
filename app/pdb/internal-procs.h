@@ -37,7 +37,7 @@ void   register_drawable_color_procs      (GimpPDB *pdb);
 void   register_drawable_edit_procs       (GimpPDB *pdb);
 void   register_dynamics_procs            (GimpPDB *pdb);
 void   register_edit_procs                (GimpPDB *pdb);
-void   register_fileops_procs             (GimpPDB *pdb);
+void   register_file_procs                (GimpPDB *pdb);
 void   register_floating_sel_procs        (GimpPDB *pdb);
 void   register_font_select_procs         (GimpPDB *pdb);
 void   register_fonts_procs               (GimpPDB *pdb);

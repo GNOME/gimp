@@ -13,7 +13,7 @@
     drawable_edit
     dynamics
     edit
-    fileops
+    file
     floating_sel
     font_select
     fonts

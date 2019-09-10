@@ -398,7 +398,7 @@ gimp_edit_named_paste_as_new_image
 </SECTION>
 
 <SECTION>
-<FILE>gimpfileops</FILE>
+<FILE>gimpfile</FILE>
 gimp_file_load
 gimp_file_load_layer
 gimp_file_load_layers
@@ -911,7 +911,6 @@ GimpPlugInClass
 gimp_plug_in_set_translation_domain
 gimp_plug_in_set_help_domain
 gimp_plug_in_add_menu_branch
-gimp_plug_in_create_procedure
 gimp_plug_in_add_temp_procedure
 gimp_plug_in_remove_temp_procedure
 gimp_plug_in_get_temp_procedures

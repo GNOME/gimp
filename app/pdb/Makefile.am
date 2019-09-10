@@ -47,7 +47,7 @@ libappinternal_procs_a_SOURCES = \
 	drawable-edit-cmds.c		\
 	dynamics-cmds.c			\
 	edit-cmds.c			\
-	fileops-cmds.c			\
+	file-cmds.c			\
 	floating-sel-cmds.c		\
 	font-select-cmds.c		\
 	fonts-cmds.c			\

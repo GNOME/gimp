@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpfileops_pdb.h
+ * gimpfile_pdb.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,8 +24,8 @@
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_FILEOPS_PDB_H__
-#define __GIMP_FILEOPS_PDB_H__
+#ifndef __GIMP_FILE_PDB_H__
+#define __GIMP_FILE_PDB_H__
 
 G_BEGIN_DECLS
 
@@ -53,4 +53,4 @@ gboolean    gimp_file_save_thumbnail (GimpImage    *image,
 
 G_END_DECLS
 
-#endif /* __GIMP_FILEOPS_PDB_H__ */
+#endif /* __GIMP_FILE_PDB_H__ */
