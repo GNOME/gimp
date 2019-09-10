@@ -48,6 +48,10 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_info          (const gchar       
                                                               GimpPDBProcType   *proc_type,
                                                               gint              *num_args,
                                                               gint              *num_values);
+G_GNUC_INTERNAL GParamSpec* _gimp_pdb_get_proc_argument      (const gchar       *procedure_name,
+                                                              gint               arg_num);
+G_GNUC_INTERNAL GParamSpec* _gimp_pdb_get_proc_return_value  (const gchar       *procedure_name,
+                                                              gint               val_num);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_proc_image_types   (const gchar       *procedure_name,
                                                               const gchar       *image_types);
 G_GNUC_INTERNAL gchar*      _gimp_pdb_get_proc_image_types   (const gchar       *procedure_name);
@@ -78,10 +82,6 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_get_proc_attribution   (const gchar       
                                                               gchar            **authors,
                                                               gchar            **copyright,
                                                               gchar            **date);
-G_GNUC_INTERNAL GParamSpec* _gimp_pdb_get_proc_argument      (const gchar       *procedure_name,
-                                                              gint               arg_num);
-G_GNUC_INTERNAL GParamSpec* _gimp_pdb_get_proc_return_value  (const gchar       *procedure_name,
-                                                              gint               val_num);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_data               (const gchar       *identifier,
                                                               gint              *bytes,
                                                               guint8           **data);

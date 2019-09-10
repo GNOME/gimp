@@ -246,6 +246,106 @@ CODE
     );
 }
 
+sub pdb_get_proc_argument {
+    $blurb = <<BLURB;
+Queries the procedural database for information on the specified procedure's
+argument.
+BLURB
+
+    $help = <<HELP;
+This procedure returns the #GParamSpec of procedure_name's argument.
+HELP
+
+    &mitch_pdb_misc;
+    $date = '2019';
+    $since = '3.0';
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc => 'The procedure name' },
+	{ name => 'arg_num', type => 'int32',
+	  desc => 'The argument number' }
+    );
+
+    @outargs = (
+	{ name => 'param_spec', type => 'param',
+	  desc => "The GParamSpec of the argument" }
+    );
+
+   %invoke = (
+	code => <<CODE
+{
+  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
+
+      if (proc && (arg_num >= 0 && arg_num < proc->num_args))
+        {
+          param_spec = g_param_spec_ref (proc->args[arg_num]);
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+   );
+}
+
+sub pdb_get_proc_return_value {
+    $blurb = <<BLURB;
+Queries the procedural database for information on the specified procedure's
+return value.
+BLURB
+
+    $help = <<HELP;
+This procedure returns the #GParamSpec of procedure_name's return value.
+HELP
+
+    &mitch_pdb_misc;
+    $date = '2019';
+    $since = '3.0';
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc => 'The procedure name' },
+	{ name => 'val_num', type => 'int32',
+	  desc => 'The return value number' }
+    );
+
+    @outargs = (
+	{ name => 'param_spec', type => 'param',
+	  desc => "The GParamSpec of the return value" }
+    );
+
+   %invoke = (
+	code => <<CODE
+{
+  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
+                                              error);
+
+      if (proc && (val_num >= 0 && val_num < proc->num_values))
+        {
+          param_spec = g_param_spec_ref (proc->values[val_num]);
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+   );
+}
+
 sub pdb_set_proc_image_types {
     $blurb = "Set the supported image types for a plug-in procedure.";
 
@@ -738,106 +838,6 @@ CODE
     );
 }
 
-sub pdb_get_proc_argument {
-    $blurb = <<BLURB;
-Queries the procedural database for information on the specified procedure's
-argument.
-BLURB
-
-    $help = <<HELP;
-This procedure returns the #GParamSpec of procedure_name's argument.
-HELP
-
-    &mitch_pdb_misc;
-    $date = '2019';
-    $since = '3.0';
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1,
-	  desc => 'The procedure name' },
-	{ name => 'arg_num', type => 'int32',
-	  desc => 'The argument number' }
-    );
-
-    @outargs = (
-	{ name => 'param_spec', type => 'param',
-	  desc => "The GParamSpec of the argument" }
-    );
-
-   %invoke = (
-	code => <<CODE
-{
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
-    {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
-                                              error);
-
-      if (proc && (arg_num >= 0 && arg_num < proc->num_args))
-        {
-          param_spec = g_param_spec_ref (proc->args[arg_num]);
-        }
-      else
-        success = FALSE;
-    }
-  else
-    success = FALSE;
-}
-CODE
-   );
-}
-
-sub pdb_get_proc_return_value {
-    $blurb = <<BLURB;
-Queries the procedural database for information on the specified procedure's
-return value.
-BLURB
-
-    $help = <<HELP;
-This procedure returns the #GParamSpec of procedure_name's return value.
-HELP
-
-    &mitch_pdb_misc;
-    $date = '2019';
-    $since = '3.0';
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1,
-	  desc => 'The procedure name' },
-	{ name => 'val_num', type => 'int32',
-	  desc => 'The return value number' }
-    );
-
-    @outargs = (
-	{ name => 'param_spec', type => 'param',
-	  desc => "The GParamSpec of the return value" }
-    );
-
-   %invoke = (
-	code => <<CODE
-{
-  if (gimp_pdb_is_canonical_procedure (procedure_name, error))
-    {
-      GimpProcedure *proc = lookup_procedure (gimp->pdb, procedure_name,
-                                              error);
-
-      if (proc && (val_num >= 0 && val_num < proc->num_values))
-        {
-          param_spec = g_param_spec_ref (proc->values[val_num]);
-        }
-      else
-        success = FALSE;
-    }
-  else
-    success = FALSE;
-}
-CODE
-   );
-}
-
 sub pdb_get_data {
     $blurb = 'Returns data associated with the specified identifier.';
 
@@ -1005,6 +1005,8 @@ CODE
             pdb_query
             pdb_proc_exists
             pdb_get_proc_info
+            pdb_get_proc_argument
+            pdb_get_proc_return_value
             pdb_set_proc_image_types
             pdb_get_proc_image_types
             pdb_set_proc_menu_label
@@ -1016,8 +1018,6 @@ CODE
             pdb_get_proc_documentation
             pdb_set_proc_attribution
             pdb_get_proc_attribution
-            pdb_get_proc_argument
-            pdb_get_proc_return_value
 	    pdb_get_data
             pdb_get_data_size
 	    pdb_set_data);

@@ -263,6 +263,89 @@ _gimp_pdb_get_proc_info (const gchar     *procedure_name,
 }
 
 /**
+ * _gimp_pdb_get_proc_argument:
+ * @procedure_name: The procedure name.
+ * @arg_num: The argument number.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's argument.
+ *
+ * This procedure returns the #GParamSpec of procedure_name's argument.
+ *
+ * Returns: (transfer full): The GParamSpec of the argument.
+ *          The returned value must be freed with g_param_spec_unref().
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+_gimp_pdb_get_proc_argument (const gchar *procedure_name,
+                             gint         arg_num)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GParamSpec *param_spec = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_INT, arg_num,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-get-proc-argument",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    param_spec = GIMP_VALUES_DUP_PARAM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return param_spec;
+}
+
+/**
+ * _gimp_pdb_get_proc_return_value:
+ * @procedure_name: The procedure name.
+ * @val_num: The return value number.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's return value.
+ *
+ * This procedure returns the #GParamSpec of procedure_name's return
+ * value.
+ *
+ * Returns: (transfer full): The GParamSpec of the return value.
+ *          The returned value must be freed with g_param_spec_unref().
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+_gimp_pdb_get_proc_return_value (const gchar *procedure_name,
+                                 gint         val_num)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GParamSpec *param_spec = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_INT, val_num,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-get-proc-return-value",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    param_spec = GIMP_VALUES_DUP_PARAM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return param_spec;
+}
+
+/**
  * _gimp_pdb_set_proc_image_types:
  * @procedure_name: The procedure for which to install the menu path.
  * @image_types: The procedure's supported image types.
@@ -738,89 +821,6 @@ _gimp_pdb_get_proc_attribution (const gchar  *procedure_name,
   gimp_value_array_unref (return_vals);
 
   return success;
-}
-
-/**
- * _gimp_pdb_get_proc_argument:
- * @procedure_name: The procedure name.
- * @arg_num: The argument number.
- *
- * Queries the procedural database for information on the specified
- * procedure's argument.
- *
- * This procedure returns the #GParamSpec of procedure_name's argument.
- *
- * Returns: (transfer full): The GParamSpec of the argument.
- *          The returned value must be freed with g_param_spec_unref().
- *
- * Since: 3.0
- **/
-GParamSpec *
-_gimp_pdb_get_proc_argument (const gchar *procedure_name,
-                             gint         arg_num)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GParamSpec *param_spec = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, procedure_name,
-                                          G_TYPE_INT, arg_num,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-get-proc-argument",
-                                              args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    param_spec = GIMP_VALUES_DUP_PARAM (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return param_spec;
-}
-
-/**
- * _gimp_pdb_get_proc_return_value:
- * @procedure_name: The procedure name.
- * @val_num: The return value number.
- *
- * Queries the procedural database for information on the specified
- * procedure's return value.
- *
- * This procedure returns the #GParamSpec of procedure_name's return
- * value.
- *
- * Returns: (transfer full): The GParamSpec of the return value.
- *          The returned value must be freed with g_param_spec_unref().
- *
- * Since: 3.0
- **/
-GParamSpec *
-_gimp_pdb_get_proc_return_value (const gchar *procedure_name,
-                                 gint         val_num)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GParamSpec *param_spec = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, procedure_name,
-                                          G_TYPE_INT, val_num,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-pdb-get-proc-return-value",
-                                              args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    param_spec = GIMP_VALUES_DUP_PARAM (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return param_spec;
 }
 
 /**
