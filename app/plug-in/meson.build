@@ -22,7 +22,6 @@ libappplugin_sources = [
   'gimppluginerror.c',
   'gimppluginmanager-call.c',
   'gimppluginmanager-data.c',
-  'gimppluginmanager-file-procedure.c',
   'gimppluginmanager-file.c',
   'gimppluginmanager-help-domain.c',
   'gimppluginmanager-locale-domain.c',
