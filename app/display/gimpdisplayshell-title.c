@@ -510,6 +510,27 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               }
               break;
 
+            case 'q': /* export status */
+              {
+                gchar *export_status = gimp_image_get_export_status (image);
+
+                if (export_status)
+                  i += print (title, title_len, i, "%s", export_status);
+              }
+              break;
+
+            case 'Q': /* export status flag */
+              if (format[1] == 0)
+                {
+                  /* format string ends within %Q-sequence, print literal '%Q' */
+                  i += print (title, title_len, i, "%%Q");
+                  break;
+                }
+              if (gimp_image_get_export_status (image))
+                title[i++] = format[1];
+              format++;
+              break;
+
             case '\xc3': /* utf-8 extended char */
               {
                 format ++;
