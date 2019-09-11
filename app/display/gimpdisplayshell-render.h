@@ -19,9 +19,8 @@
 #define __GIMP_DISPLAY_SHELL_RENDER_H__
 
 
-#define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1
-#define GIMP_DISPLAY_RENDER_MAX_SCALE      4.0
-
+void     gimp_display_shell_render_set_scale       (GimpDisplayShell *shell,
+                                                    gint              scale);
 
 void     gimp_display_shell_render_invalidate_full (GimpDisplayShell *shell);
 void     gimp_display_shell_render_invalidate_area (GimpDisplayShell *shell,

@@ -97,6 +97,11 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   shell->disp_width  = allocation.width;
   shell->disp_height = allocation.height;
 
+  gimp_display_shell_render_set_scale (
+    shell,
+    gdk_window_get_scale_factor (
+      gtk_widget_get_window (gtk_widget_get_toplevel (canvas))));
+
   /*  set up the scrollbar observers  */
   g_signal_connect (shell->hsbdata, "value-changed",
                     G_CALLBACK (gimp_display_shell_hadjustment_changed),

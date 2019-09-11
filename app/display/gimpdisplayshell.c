@@ -345,6 +345,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->filter_profile    = gimp_babl_get_builtin_color_profile (GIMP_RGB,
                                                                   GIMP_TRC_NON_LINEAR);
 
+  shell->render_scale      = 1;
+
   shell->render_buf_width  = 256;
   shell->render_buf_height = 256;
 

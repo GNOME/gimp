@@ -71,6 +71,8 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
+#include "gimpdisplayshell-expose.h"
+#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-tool-events.h"
@@ -136,6 +138,8 @@ struct _GimpImageWindowPrivate
   const gchar       *entry_id;
 
   GdkMonitor        *initial_monitor;
+
+  gint               scale_factor;
 
   gint               suspend_keep_pos;
 
@@ -636,10 +640,12 @@ static gboolean
 gimp_image_window_configure_event (GtkWidget         *widget,
                                    GdkEventConfigure *event)
 {
-  GimpImageWindow *window = GIMP_IMAGE_WINDOW (widget);
-  GtkAllocation    allocation;
-  gint             current_width;
-  gint             current_height;
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (widget);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GtkAllocation           allocation;
+  gint                    current_width;
+  gint                    current_height;
+  gint                    scale_factor;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -662,6 +668,23 @@ gimp_image_window_configure_event (GtkWidget         *widget,
 
       if (shell && gimp_display_get_image (shell->display))
         shell->size_allocate_from_configure_event = TRUE;
+    }
+
+  scale_factor = gdk_window_get_scale_factor (gtk_widget_get_window (widget));
+
+  if (scale_factor != private->scale_factor)
+    {
+      GList *list;
+
+      private->scale_factor = scale_factor;
+
+      for (list = private->shells; list; list = g_list_next (list))
+        {
+          GimpDisplayShell *shell = list->data;
+
+          gimp_display_shell_render_set_scale (shell, scale_factor);
+          gimp_display_shell_expose_full (shell);
+        }
     }
 
   return TRUE;

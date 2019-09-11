@@ -171,6 +171,8 @@ struct _GimpDisplayShell
   guchar             *filter_data;     /*  filter_buffer's pixels             */
   gint                filter_stride;   /*  filter_buffer's stride             */
 
+  gint               render_scale;
+
   cairo_surface_t   *render_cache;
   cairo_region_t    *render_cache_valid;
 

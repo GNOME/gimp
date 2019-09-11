@@ -40,6 +40,28 @@
 #include "gimpdisplayshell-render.h"
 
 
+#define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1
+#define GIMP_DISPLAY_RENDER_MAX_SCALE      4
+
+
+void
+gimp_display_shell_render_set_scale (GimpDisplayShell *shell,
+                                     gint              scale)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+#if GIMP_DISPLAY_RENDER_ENABLE_SCALING
+  scale = CLAMP (scale, 1, GIMP_DISPLAY_RENDER_MAX_SCALE);
+
+  if (scale != shell->render_scale)
+    {
+      shell->render_scale = scale;
+
+      gimp_display_shell_render_invalidate_full (shell);
+    }
+#endif
+}
+
 void
 gimp_display_shell_render_invalidate_full (GimpDisplayShell *shell)
 {
@@ -165,6 +187,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   g_return_if_fail (width  > 0 && width  <= shell->render_buf_width);
   g_return_if_fail (height > 0 && height <= shell->render_buf_height);
 
+  tx      *= shell->render_scale;
+  ty      *= shell->render_scale;
+  twidth  *= shell->render_scale;
+  theight *= shell->render_scale;
+
   display_config = shell->display->config;
 
   if (shell->show_all)
@@ -199,11 +226,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   if (! shell->render_cache)
     {
-      shell->render_cache =
-        cairo_surface_create_similar_image (cairo_get_target (cr),
-                                            CAIRO_FORMAT_ARGB32,
-                                            shell->disp_width,
-                                            shell->disp_height);
+      shell->render_cache = cairo_surface_create_similar_image (
+        cairo_get_target (cr),
+        CAIRO_FORMAT_ARGB32,
+        shell->disp_width  * shell->render_scale,
+        shell->disp_height * shell->render_scale);
     }
 
   if (! shell->render_cache_valid)
@@ -218,6 +245,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_clip (my_cr);
 
   /* transform to scaled image space, and apply uneven scaling */
+  cairo_scale (my_cr, shell->render_scale, shell->render_scale);
   if (shell->rotate_transform)
     cairo_transform (my_cr, shell->rotate_transform);
   cairo_translate (my_cr, -shell->offset_x, -shell->offset_y);

@@ -100,11 +100,11 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
           cairo_surface_t       *surface;
           cairo_t               *cr;
 
-          surface =
-            cairo_surface_create_similar_image (shell->render_cache,
-                                                CAIRO_FORMAT_ARGB32,
-                                                shell->disp_width,
-                                                shell->disp_height);
+          surface = cairo_surface_create_similar_image (
+            shell->render_cache,
+            CAIRO_FORMAT_ARGB32,
+            shell->disp_width  * shell->render_scale,
+            shell->disp_height * shell->render_scale);
 
           cr = cairo_create (surface);
           cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
@@ -115,7 +115,8 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
           cr = cairo_create (shell->render_cache);
           cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
           cairo_set_source_surface (cr, surface,
-                                    -x_offset, -y_offset);
+                                    -x_offset * shell->render_scale,
+                                    -y_offset * shell->render_scale);
           cairo_paint (cr);
           cairo_destroy (cr);
 

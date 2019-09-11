@@ -163,17 +163,12 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
   chunk_width  = shell->render_buf_width;
   chunk_height = shell->render_buf_height;
 
-#ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
   /* multiply the image scale-factor by the window scale-factor, and divide
    * the cairo scale-factor by the same amount (further down), so that we make
    * full use of the screen resolution, even on hidpi displays.
    */
-  scale *=
-    gdk_window_get_scale_factor (
-      gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
-#endif
+  scale *= shell->render_scale;
 
-  scale  = MIN (scale, GIMP_DISPLAY_RENDER_MAX_SCALE);
   scale *= MAX (shell->scale_x, shell->scale_y);
 
   if (scale != shell->scale_x)
@@ -220,6 +215,13 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
               gimp_display_shell_render_validate_area (shell,
                                                        x1, y1, x2 - x1, y2 - y1);
             }
+
+          /* divide the cairo scale-factor by the window scale-factor, since
+           * the render cache uses device pixels.  see comment further up.
+           */
+          cairo_scale (cr,
+                       1.0 / shell->render_scale,
+                       1.0 / shell->render_scale);
 
           /* render from the render cache to screen */
           cairo_set_source_surface (cr, shell->render_cache, 0, 0);
