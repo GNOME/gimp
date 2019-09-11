@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 12
+#define PLUG_IN_RC_FILE_VERSION 13
 
 
 /*
@@ -762,10 +762,11 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       goto error;
     }
 
-  if (! gimp_scanner_parse_string (scanner, &param_def.type_name) ||
-      ! gimp_scanner_parse_string (scanner, &param_def.name)      ||
-      ! gimp_scanner_parse_string (scanner, &param_def.nick)      ||
-      ! gimp_scanner_parse_string (scanner, &param_def.blurb)     ||
+  if (! gimp_scanner_parse_string (scanner, &param_def.type_name)       ||
+      ! gimp_scanner_parse_string (scanner, &param_def.value_type_name) ||
+      ! gimp_scanner_parse_string (scanner, &param_def.name)            ||
+      ! gimp_scanner_parse_string (scanner, &param_def.nick)            ||
+      ! gimp_scanner_parse_string (scanner, &param_def.blurb)           ||
       ! gimp_scanner_parse_int    (scanner, (gint *) &param_def.flags))
     {
       token = G_TOKEN_STRING;
@@ -804,12 +805,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       break;
 
     case GP_PARAM_DEF_TYPE_ENUM:
-      if (! gimp_scanner_parse_string (scanner,
-                                       &param_def.meta.m_enum.type_name))
-        {
-          token = G_TOKEN_STRING;
-          goto error;
-        }
       if (! gimp_scanner_parse_int (scanner,
                                     &param_def.meta.m_enum.default_val))
         {
@@ -887,15 +882,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
           goto error;
         }
       break;
-
-    case GP_PARAM_DEF_TYPE_PARAM_DEF:
-      if (! gimp_scanner_parse_string (scanner,
-                                       &param_def.meta.m_param_def.type_name))
-        {
-          token = G_TOKEN_STRING;
-          goto error;
-        }
-      break;
     }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
@@ -916,6 +902,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
  error:
 
   g_free (param_def.type_name);
+  g_free (param_def.value_type_name);
   g_free (param_def.name);
   g_free (param_def.nick);
   g_free (param_def.blurb);
@@ -925,10 +912,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
     case GP_PARAM_DEF_TYPE_DEFAULT:
     case GP_PARAM_DEF_TYPE_INT:
     case GP_PARAM_DEF_TYPE_UNIT:
-      break;
-
     case GP_PARAM_DEF_TYPE_ENUM:
-      g_free (param_def.meta.m_enum.type_name);
       break;
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:
@@ -945,10 +929,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
       g_free (param_def.meta.m_id_array.type_name);
-      break;
-
-    case GP_PARAM_DEF_TYPE_PARAM_DEF:
-      g_free (param_def.meta.m_param_def.type_name);
       break;
     }
 
@@ -1032,6 +1012,7 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
   gimp_config_writer_printf (writer, "%d", param_def.param_def_type);
 
   gimp_config_writer_string (writer, param_def.type_name);
+  gimp_config_writer_string (writer, param_def.value_type_name);
   gimp_config_writer_string (writer, g_param_spec_get_name (pspec));
   gimp_config_writer_string (writer, g_param_spec_get_nick (pspec));
   gimp_config_writer_string (writer, g_param_spec_get_blurb (pspec));
@@ -1062,8 +1043,6 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_ENUM:
-      gimp_config_writer_string (writer,
-                                 param_def.meta.m_enum.type_name);
       gimp_config_writer_printf (writer, "%d",
                                  param_def.meta.m_enum.default_val);
       break;
@@ -1111,11 +1090,6 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
       gimp_config_writer_string (writer,
                                  param_def.meta.m_id_array.type_name);
-      break;
-
-    case GP_PARAM_DEF_TYPE_PARAM_DEF:
-      gimp_config_writer_string (writer,
-                                 param_def.meta.m_param_def.type_name);
       break;
     }
 

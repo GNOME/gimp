@@ -58,6 +58,15 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
 
       if (! strcmp (param_def->type_name, "GimpParamParasite"))
         return gimp_param_spec_parasite (name, nick, blurb, flags);
+
+      if (! strcmp (param_def->type_name, "GParamParam"))
+        return g_param_spec_param (name, nick, blurb,
+                                   g_type_from_name (param_def->value_type_name),
+                                   flags);
+
+      if (! strcmp (param_def->type_name, "GParamObject") &&
+          ! strcmp (param_def->value_type_name, "GFile"))
+        return g_param_spec_object (name, nick, blurb, G_TYPE_FILE, flags);
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
@@ -95,14 +104,14 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
     case GP_PARAM_DEF_TYPE_ENUM:
       if (! strcmp (param_def->type_name, "GParamEnum"))
         return g_param_spec_enum (name, nick, blurb,
-                                  g_type_from_name (param_def->meta.m_enum.type_name),
+                                  g_type_from_name (param_def->value_type_name),
                                   param_def->meta.m_enum.default_val,
                                   flags);
 
       if (! strcmp (param_def->type_name, "GimpParamEnum"))
         /* FIXME GimpParamEnum */
         return g_param_spec_enum (name, nick, blurb,
-                                  g_type_from_name (param_def->meta.m_enum.type_name),
+                                  g_type_from_name (param_def->value_type_name),
                                   param_def->meta.m_enum.default_val,
                                   flags);
       break;
@@ -189,12 +198,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return gimp_param_spec_object_array (name, nick, blurb,
                                              g_type_from_name (param_def->meta.m_id_array.type_name),
                                              flags);
-
-    case GP_PARAM_DEF_TYPE_PARAM_DEF:
-      if (! strcmp (param_def->type_name, "GParamParam"))
-        return g_param_spec_param (name, nick, blurb,
-                                   g_type_from_name (param_def->meta.m_param_def.type_name),
-                                   flags);
       break;
     }
 
@@ -208,16 +211,16 @@ void
 _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
                                   GPParamDef *param_def)
 {
-  GType pspec_type;
+  GType pspec_type = G_PARAM_SPEC_TYPE (pspec);
+  GType value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
-  param_def->param_def_type = GP_PARAM_DEF_TYPE_DEFAULT;
-  param_def->type_name      = (gchar *) G_PARAM_SPEC_TYPE_NAME (pspec);
-  param_def->name           = (gchar *) g_param_spec_get_name (pspec);
-  param_def->nick           = (gchar *) g_param_spec_get_nick (pspec);
-  param_def->blurb          = (gchar *) g_param_spec_get_blurb (pspec);
-  param_def->flags          = pspec->flags;
-
-  pspec_type = G_PARAM_SPEC_TYPE (pspec);
+  param_def->param_def_type  = GP_PARAM_DEF_TYPE_DEFAULT;
+  param_def->type_name       = (gchar *) g_type_name (pspec_type);
+  param_def->value_type_name = (gchar *) g_type_name (value_type);
+  param_def->name            = (gchar *) g_param_spec_get_name (pspec);
+  param_def->nick            = (gchar *) g_param_spec_get_nick (pspec);
+  param_def->blurb           = (gchar *) g_param_spec_get_blurb (pspec);
+  param_def->flags           = pspec->flags;
 
   if (pspec_type == G_TYPE_PARAM_INT)
     {
@@ -262,12 +265,10 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
   else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
-      GParamSpecEnum *espec     = G_PARAM_SPEC_ENUM (pspec);
-      GType           enum_type = pspec->value_type;
+      GParamSpecEnum *espec = G_PARAM_SPEC_ENUM (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ENUM;
 
-      param_def->meta.m_enum.type_name    = (gchar *) g_type_name (enum_type);
       param_def->meta.m_enum.default_val = espec->default_value;
     }
   else if (pspec_type == G_TYPE_PARAM_BOOLEAN)
@@ -340,16 +341,9 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_id_array.type_name =
         (gchar *) g_type_name (GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type);
     }
-  else if (G_IS_PARAM_SPEC_PARAM (pspec))
+  else if (pspec_type == G_TYPE_PARAM_OBJECT &&
+           value_type != G_TYPE_FILE)
     {
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_PARAM_DEF;
-
-      param_def->meta.m_param_def.type_name =
-        (gchar *) g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec));
-    }
-  else if (pspec_type == G_TYPE_PARAM_OBJECT)
-    {
-      GType        value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
       const gchar *type_name  = NULL;
 
       if (g_type_is_a (value_type, GIMP_TYPE_DISPLAY))
@@ -476,6 +470,12 @@ gimp_gp_param_to_value (gpointer        gimp,
   else if (G_VALUE_HOLDS_STRING (value))
     {
       g_value_set_string (value, param->data.d_string);
+    }
+  else if (G_VALUE_TYPE (value) == G_TYPE_FILE)
+    {
+      g_value_take_object (value, (param->data.d_string ?
+                                   g_file_new_for_uri (param->data.d_string) :
+                                   NULL));
     }
   else if (GIMP_VALUE_HOLDS_RGB (value))
     {
@@ -730,6 +730,14 @@ gimp_value_to_gp_param (const GValue *value,
       else
         param->data.d_string = (gchar *) g_value_get_string (value);
     }
+  else if (G_VALUE_TYPE (value) == G_TYPE_FILE)
+    {
+      GFile *file = g_value_get_object (value);
+
+      param->param_type = GP_PARAM_TYPE_FILE;
+
+      param->data.d_string = file ? g_file_get_uri (file) : NULL;
+    }
   else if (GIMP_VALUE_HOLDS_RGB (value))
     {
       param->param_type = GP_PARAM_TYPE_COLOR;
@@ -948,6 +956,11 @@ _gimp_gp_params_free (GPParam  *params,
         case GP_PARAM_TYPE_STRING:
           if (full_copy)
             g_free (params[i].data.d_string);
+          break;
+
+        case GP_PARAM_TYPE_FILE:
+          /* always free the uri */
+          g_free (params[i].data.d_string);
           break;
 
         case GP_PARAM_TYPE_COLOR:

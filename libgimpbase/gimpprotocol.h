@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x010B
+#define GIMP_PROTOCOL_VERSION  0x010C
 
 
 enum
@@ -57,8 +57,7 @@ typedef enum
   GP_PARAM_DEF_TYPE_STRING,
   GP_PARAM_DEF_TYPE_COLOR,
   GP_PARAM_DEF_TYPE_ID,
-  GP_PARAM_DEF_TYPE_ID_ARRAY,
-  GP_PARAM_DEF_TYPE_PARAM_DEF
+  GP_PARAM_DEF_TYPE_ID_ARRAY
 } GPParamDefType;
 
 typedef enum
@@ -66,6 +65,7 @@ typedef enum
   GP_PARAM_TYPE_INT,
   GP_PARAM_TYPE_FLOAT,
   GP_PARAM_TYPE_STRING,
+  GP_PARAM_TYPE_FILE,
   GP_PARAM_TYPE_COLOR,
   GP_PARAM_TYPE_PARASITE,
   GP_PARAM_TYPE_ARRAY,
@@ -89,7 +89,6 @@ typedef struct _GPParamDefString   GPParamDefString;
 typedef struct _GPParamDefColor    GPParamDefColor;
 typedef struct _GPParamDefID       GPParamDefID;
 typedef struct _GPParamDefIDArray  GPParamDefIDArray;
-typedef struct _GPParamDefParamDef GPParamDefParamDef;
 typedef struct _GPParam            GPParam;
 typedef struct _GPParamArray       GPParamArray;
 typedef struct _GPParamStringArray GPParamStringArray;
@@ -161,8 +160,7 @@ struct _GPParamDefUnit
 
 struct _GPParamDefEnum
 {
-  gchar  *type_name;
-  gint32  default_val;
+  gint32 default_val;
 };
 
 struct _GPParamDefBoolean
@@ -198,15 +196,11 @@ struct _GPParamDefIDArray
   gchar *type_name;
 };
 
-struct _GPParamDefParamDef
-{
-  gchar *type_name;
-};
-
 struct _GPParamDef
 {
   GPParamDefType  param_def_type;
   gchar          *type_name;
+  gchar          *value_type_name;
   gchar          *name;
   gchar          *nick;
   gchar          *blurb;
@@ -214,16 +208,15 @@ struct _GPParamDef
 
   union
   {
-    GPParamDefInt      m_int;
-    GPParamDefUnit     m_unit;
-    GPParamDefEnum     m_enum;
-    GPParamDefBoolean  m_boolean;
-    GPParamDefFloat    m_float;
-    GPParamDefString   m_string;
-    GPParamDefColor    m_color;
-    GPParamDefID       m_id;
-    GPParamDefIDArray  m_id_array;
-    GPParamDefParamDef m_param_def;
+    GPParamDefInt     m_int;
+    GPParamDefUnit    m_unit;
+    GPParamDefEnum    m_enum;
+    GPParamDefBoolean m_boolean;
+    GPParamDefFloat   m_float;
+    GPParamDefString  m_string;
+    GPParamDefColor   m_color;
+    GPParamDefID      m_id;
+    GPParamDefIDArray m_id_array;
   } meta;
 };
 
