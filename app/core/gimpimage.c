@@ -2348,92 +2348,15 @@ gimp_image_set_save_a_copy_file (GimpImage *image,
   g_set_object (&private->save_a_copy_file, file);
 }
 
-static gchar *
-gimp_image_format_display_uri (GimpImage *image,
-                               gboolean   basename)
-{
-  const gchar *uri_format    = NULL;
-  const gchar *export_status = NULL;
-  GFile       *file          = NULL;
-  GFile       *source        = NULL;
-  GFile       *dest          = NULL;
-  GFile       *display_file  = NULL;
-  gboolean     is_imported;
-  gboolean     is_exported;
-  gchar       *display_uri   = NULL;
-  gchar       *format_string;
-  gchar       *tmp;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  file   = gimp_image_get_file (image);
-  source = gimp_image_get_imported_file (image);
-  dest   = gimp_image_get_exported_file (image);
-
-  is_imported = (source != NULL);
-  is_exported = (dest   != NULL);
-
-  if (file)
-    {
-      display_file = g_object_ref (file);
-      uri_format   = "%s";
-    }
-  else
-    {
-      if (is_imported)
-        display_file = source;
-
-      /* Calculate filename suffix */
-      if (! gimp_image_is_export_dirty (image))
-        {
-          if (is_exported)
-            {
-              display_file  = dest;
-              export_status = _(" (exported)");
-            }
-          else if (is_imported)
-            {
-              export_status = _(" (overwritten)");
-            }
-          else
-            {
-              g_warning ("Unexpected code path, Save+export implementation is buggy!");
-            }
-        }
-      else if (is_imported)
-        {
-          export_status = _(" (imported)");
-        }
-
-      if (display_file)
-        display_file = gimp_file_with_new_extension (display_file, NULL);
-
-      uri_format = "[%s]";
-    }
-
-  if (! display_file)
-    display_file = g_object_ref (gimp_image_get_untitled_file (image));
-
-  if (basename)
-    display_uri = g_path_get_basename (gimp_file_get_utf8_name (display_file));
-  else
-    display_uri = g_strdup (gimp_file_get_utf8_name (display_file));
-
-  g_object_unref (display_file);
-
-  format_string = g_strconcat (uri_format, export_status, NULL);
-
-  tmp = g_strdup_printf (format_string, display_uri);
-  g_free (display_uri);
-  display_uri = tmp;
-
-  g_free (format_string);
-
-  return display_uri;
-}
-
+/**
+ * gimp_image_get_export_status:
+ * @image: A #GimpImage.
+ *
+ * Returns: a string representing the image's export status, or NULL if the
+ * image is untitled or has an associated XCF file.
+ **/
 const gchar *
-gimp_image_get_display_name (GimpImage *image)
+gimp_image_get_export_status (GimpImage *image)
 {
   GimpImagePrivate *private;
 
@@ -2441,25 +2364,61 @@ gimp_image_get_display_name (GimpImage *image)
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (! private->display_name)
-    private->display_name = gimp_image_format_display_uri (image, TRUE);
+  if (gimp_image_get_file (image))
+    return NULL;
 
-  return private->display_name;
+  if (private->export_dirty <= private->dirty)
+    {
+      if (gimp_image_get_exported_file (image))
+        return _("Exported");
+      else if (gimp_image_get_imported_file (image))
+        return _("Overwritten");
+      else
+        g_warning ("Unexpected code path, Save+export implementation is buggy!");
+    }
+
+  if (gimp_image_get_imported_file (image))
+    return _("Imported");
+
+  return NULL;
 }
 
 const gchar *
 gimp_image_get_display_path (GimpImage *image)
 {
   GimpImagePrivate *private;
+  GFile            *file;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (! private->display_path)
-    private->display_path = gimp_image_format_display_uri (image, FALSE);
+    {
+      file = gimp_image_get_any_file (image);
+      if (! file)
+        file = gimp_image_get_untitled_file(image);
+
+      private->display_path = g_strdup (gimp_file_get_utf8_name (file));
+    }
 
   return private->display_path;
+}
+
+const gchar *
+gimp_image_get_display_name (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  GFile            *file;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (! private->display_name)
+    private->display_name = g_path_get_basename (gimp_image_get_display_path (image));
+
+  return private->display_name;
 }
 
 void
