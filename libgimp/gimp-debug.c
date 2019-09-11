@@ -50,7 +50,7 @@
 
 #  include <windows.h>
 #  include <tlhelp32.h>
-#  include <process.h>
+#  include <processthreadsapi.h>
 #  undef RGB
 #endif
 
@@ -137,7 +137,7 @@ _gimp_debug_stop (void)
 
   HANDLE        hThreadSnap = NULL;
   THREADENTRY32 te32        = { 0 };
-  pid_t         opid        = getpid ();
+  DWORD         opid        = GetCurrentProcessId();
 
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
          "Debugging (restart externally): %ld",
