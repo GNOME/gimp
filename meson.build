@@ -445,10 +445,39 @@ endif
 
 ## Check for libbacktrace
 
-libbacktrace = ( get_option('libbacktrace')
-  ? cc.find_library('backtrace', has_headers: 'backtrace.h', required: false)
-  : no_dep
-)
+if get_option('libbacktrace')
+  libbacktrace = cc.find_library('backtrace', required: false)
+
+  if libbacktrace.found()
+    libbacktrace_run = cc.run('''
+        #include <stddef.h>
+        #include <backtrace.h>
+        #include <backtrace-supported.h>
+
+        #if ! BACKTRACE_SUPPORTED
+        #   error ! BACKTRACE_SUPPORTED
+        #endif
+
+        int main() {
+          (void) backtrace_create_state (NULL, 0, NULL, NULL);
+          return 0;
+        }
+      ''',
+      dependencies: libbacktrace,
+    )
+
+    if not(libbacktrace_run.compiled() and libbacktrace_run.returncode() == 0)
+      warning(
+        'libbacktrace was found, but the test compilation failed.\n' +
+        'You can find more info in meson-logs/meson-logs.txt.'
+      )
+      libbacktrace = no_dep
+    endif
+
+  endif
+else
+  libbacktrace = no_dep
+endif
 conf.set('HAVE_LIBBACKTRACE', libbacktrace.found())
 
 ## Check for libunwind
@@ -1079,7 +1108,6 @@ conf.set10('ENABLE_MP', get_option('enable-multiproc'))
 # Check for available functions
 foreach fn : [
     { 'm': 'HAVE_ALLOCA',                   'v': 'alloca', },
-    { 'm': 'HAVE_BACKTRACE',                'v': 'backtrace', },
     { 'm': 'HAVE_DCGETTEXT',                'v': 'dcgettext', },
     { 'm': 'HAVE_DIFFTIME',                 'v': 'difftime', },
     { 'm': 'HAVE_FINITE',                   'v': 'finite', },
