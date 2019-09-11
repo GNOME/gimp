@@ -42,6 +42,10 @@
 
 #include "gimp-intl.h"
 
+#ifdef G_OS_WIN32
+#include <stdlib.h>
+#endif
+
 
 typedef enum
 {
