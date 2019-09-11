@@ -1,0 +1,53 @@
+plugin_name = 'help'
+
+plugin_sources = [
+  # 'gimp-help-lookup.c',
+  'gimphelp.c',
+  'gimphelpdomain.c',
+  'gimphelpitem.c',
+  'gimphelplocale.c',
+  'gimphelpprogress.c',
+]
+
+if platform_windows
+  plugin_sources += windows.compile_resources(
+    gimp_plugins_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
+endif
+
+help_plugin_lib = static_library('help_plugin',
+  plugin_sources,
+  include_directories: [ rootInclude, ],
+  dependencies: [
+    gtk3, gegl, cairo, gio, gdk_pixbuf,
+  ],
+  install: false,
+)
+
+executable(plugin_name,
+  'help.c',
+  include_directories: [ rootInclude, ],
+  dependencies: [
+    gtk3, gegl, cairo, gio, gdk_pixbuf,
+  ],
+  link_with: [
+    help_plugin_lib,
+    libgimp,
+    libgimpbase,
+    libgimpcolor,
+    libgimpconfig,
+    libgimpmath,
+    libgimpui,
+    libgimpwidgets,
+  ],
+  install: true,
+  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+)

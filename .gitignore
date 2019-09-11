@@ -1,3 +1,11 @@
+# Meson
+/_build
+/compile_commands.json
+
+# Atom editor
+/.vscode
+
+# Autotools
 *.la
 *.lo
 *.o

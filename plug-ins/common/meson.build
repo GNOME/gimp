@@ -1,0 +1,180 @@
+
+common_plugins_list = [
+  { 'name': 'align-layers', },
+  { 'name': 'animation-optimize', },
+  { 'name': 'animation-play', },
+  { 'name': 'blinds', },
+  { 'name': 'border-average', },
+  { 'name': 'busy-dialog', },
+  { 'name': 'checkerboard', },
+  { 'name': 'cml-explorer', },
+  { 'name': 'colormap-remap', },
+  { 'name': 'compose', },
+  { 'name': 'contrast-retinex', },
+  { 'name': 'crop-zealous',
+    'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
+  },
+  { 'name': 'curve-bend', },
+  { 'name': 'decompose', },
+  { 'name': 'depth-merge', },
+  { 'name': 'despeckle', },
+  { 'name': 'destripe', },
+  { 'name': 'file-cel', },
+  { 'name': 'file-compressor',
+    'deps': [ gegl, gdk_pixbuf, cairo, gio, liblzma, bz2, zlib, ],
+  },
+  { 'name': 'file-csource', },
+  { 'name': 'file-desktop-link',
+    'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
+  },
+  { 'name': 'file-dicom', },
+  { 'name': 'file-gbr', },
+  { 'name': 'file-gegl', },
+  { 'name': 'file-gif-load',
+    'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
+  },
+  { 'name': 'file-gif-save', },
+  { 'name': 'file-gih', },
+  { 'name': 'file-glob',
+    'deps': [ gtk3, gegl, gdk_pixbuf, cairo,  ],
+  },
+  { 'name': 'file-header', },
+  { 'name': 'file-heif',
+    'deps': [ gtk3, gegl, libheif, ],
+  },
+  { 'name': 'file-html-table', },
+  { 'name': 'file-jp2-load',
+    'deps': [ gtk3, gegl, gdk_pixbuf, openjpeg, ],
+  },
+  { 'name': 'file-mng',
+    'deps': [ gtk3, gegl, libmng, libpng, ],
+  },
+  { 'name': 'file-pat', },
+  { 'name': 'file-pcx', },
+  { 'name': 'file-pdf-load',
+    'deps': [ gtk3, gegl, gdk_pixbuf, poppler ],
+  },
+  { 'name': 'file-pdf-save',
+    'deps': [ gtk3, gegl, gdk_pixbuf, poppler, cairo ],
+  },
+  { 'name': 'file-pix', },
+  { 'name': 'file-png',
+    'deps': [ gtk3, gegl, libpng, ],
+  },
+  { 'name': 'file-pnm', },
+  { 'name': 'file-ps',
+    'deps': [ gtk3, gegl, gdk_pixbuf, ghostscript, ],
+  },
+  { 'name': 'file-psp',
+    'deps': [ gtk3, gegl, zlib, ],
+  },
+  { 'name': 'file-raw-data', },
+  { 'name': 'file-sunras', },
+  { 'name': 'file-svg',
+    'deps': [ gtk3, gegl, rsvg, ],
+  },
+  { 'name': 'file-tga', },
+  { 'name': 'file-xbm', },
+  { 'name': 'file-xwd', },
+  { 'name': 'film', },
+  { 'name': 'gradient-map', },
+  { 'name': 'grid', },
+  { 'name': 'guillotine', },
+  { 'name': 'hot', },
+  { 'name': 'jigsaw', },
+  { 'name': 'nl-filter', },
+  { 'name': 'plugin-browser', },
+  { 'name': 'procedure-browser', },
+  { 'name': 'qbist', },
+  { 'name': 'sample-colorize', },
+  { 'name': 'smooth-palette', },
+  { 'name': 'sparkle', },
+  { 'name': 'sphere-designer', },
+  { 'name': 'tile-small', },
+  { 'name': 'tile', },
+  { 'name': 'unit-editor', },
+  { 'name': 'van-gogh-lic', },
+  { 'name': 'warp', },
+  { 'name': 'wavelet-decompose', },
+  { 'name': 'web-browser', },
+]
+
+if platform_windows
+  common_plugins_list += { 'name': 'mail', }
+endif
+
+if wmf.found()
+  common_plugins_list += { 'name': 'file-wmf',
+    'deps': [ gtk3, gegl, wmf, ],
+  }
+endif
+
+if xmc.found()
+  common_plugins_list += { 'name': 'file-xmc',
+    'deps': [ gtk3, gegl, xmc, ],
+  }
+endif
+
+if libxpm.found()
+  common_plugins_list += { 'name': 'file-xpm',
+    'deps': [ gtk3, gegl, libxpm, ],
+  }
+endif
+
+if webkit.found()
+  common_plugins_list += { 'name': 'web-page',
+    'deps': [ gtk3, gegl, gdk_pixbuf, webkit, ],
+  }
+endif
+
+if libaa.found()
+  common_plugins_list += {
+    'name': 'file-aa',
+    'deps': [ gtk3, gegl, gdk_pixbuf, libaa, ],
+  }
+endif
+
+foreach plugin : common_plugins_list
+  plugin_name = plugin.get('name')
+  plugin_sources = [ plugin.get('sources', plugin_name + '.c') ]
+  plugin_deps = plugin.get('deps', [ gtk3, gegl, gdk_pixbuf, ])
+  plugin_cflags = plugin.get('cflags', [])
+
+  if platform_windows
+    plugin_rc = configure_file(
+      input : gimp_plugins_rc,
+      output: plugin_name + '.rc',
+      copy: true,
+    )
+
+    plugin_sources += windows.compile_resources(
+      plugin_rc,
+      args: [
+        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+        '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+      ],
+      include_directories: [
+        rootInclude, appInclude,
+      ],
+    )
+  endif
+
+  executable(plugin_name,
+    plugin_sources,
+    include_directories: [ rootInclude, ],
+    link_with : [
+      libgimp,
+      libgimpbase,
+      libgimpcolor,
+      libgimpconfig,
+      libgimpmath,
+      libgimpui,
+      libgimpwidgets,
+    ],
+    dependencies: [ plugin_deps, math ],
+    c_args: plugin_cflags,
+    install: true,
+    install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  )
+endforeach
