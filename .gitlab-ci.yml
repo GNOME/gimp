@@ -181,8 +181,6 @@ gegl-git:
 .gimp-meson:
   extends: .gimp-base
   script:
-      # Archlinux fix
-    - sed -i "s|'libmypaint'|'libmypaint-1.3'|g" meson.build
     - meson _build
       --prefix="${INSTALL_PREFIX}"
       -Dpython=always
