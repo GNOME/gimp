@@ -61,7 +61,7 @@ _gimp_pdb_temp_name (void)
 
 /**
  * _gimp_pdb_dump:
- * @filename: The dump filename.
+ * @file: The dump filename.
  *
  * Dumps the current contents of the procedural database
  *
@@ -72,14 +72,14 @@ _gimp_pdb_temp_name (void)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_pdb_dump (const gchar *filename)
+_gimp_pdb_dump (GFile *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

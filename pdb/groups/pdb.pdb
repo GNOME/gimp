@@ -60,19 +60,17 @@ HELP
     $lib_private = 1;
 
     @inargs = (
-	{ name => 'filename', type => 'string', allow_non_utf8 => 1,
-          non_empty => 1,
+	{ name => 'file', type => 'file',
 	  desc => 'The dump filename' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GFile *file = g_file_new_for_path (filename);
-
-  success = gimp_pdb_dump (gimp->pdb, file, error);
-
-  g_object_unref (file);
+  if (file)
+    success = gimp_pdb_dump (gimp->pdb, file, error);
+  else
+    success = FALSE;
 }
 CODE
     );

@@ -101,17 +101,16 @@ pdb_dump_invoker (GimpProcedure         *procedure,
                   GError               **error)
 {
   gboolean success = TRUE;
-  const gchar *filename;
+  GFile *file;
 
-  filename = g_value_get_string (gimp_value_array_index (args, 0));
+  file = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      GFile *file = g_file_new_for_path (filename);
-
-      success = gimp_pdb_dump (gimp->pdb, file, error);
-
-      g_object_unref (file);
+      if (file)
+        success = gimp_pdb_dump (gimp->pdb, file, error);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1212,12 +1211,11 @@ register_pdb_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Josh MacDonald & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The dump filename",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The dump filename",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

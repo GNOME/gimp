@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 
 G_GNUC_INTERNAL gchar*      _gimp_pdb_temp_name                      (void);
-G_GNUC_INTERNAL gboolean    _gimp_pdb_dump                           (const gchar       *filename);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_dump                           (GFile             *file);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_query                          (const gchar       *name,
                                                                       const gchar       *blurb,
                                                                       const gchar       *help,

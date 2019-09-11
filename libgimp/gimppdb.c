@@ -374,17 +374,10 @@ gboolean
 gimp_pdb_dump_to_file (GimpPDB *pdb,
                        GFile   *file)
 {
-  gchar    *path;
-  gboolean  success;
-
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (G_IS_FILE (pdb), FALSE);
 
-  path = g_file_get_path (file);
-  success = _gimp_pdb_dump (path);
-  g_free (path);
-
-  return success;
+  return _gimp_pdb_dump (file);
 }
 
 /**
