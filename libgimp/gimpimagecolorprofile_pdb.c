@@ -178,7 +178,7 @@ _gimp_image_set_color_profile (GimpImage    *image,
 /**
  * gimp_image_set_color_profile_from_file:
  * @image: The image.
- * @uri: The URI of the file containing the new color profile.
+ * @file: The file containing the new color profile.
  *
  * Sets the image's color profile from an ICC file
  *
@@ -194,8 +194,8 @@ _gimp_image_set_color_profile (GimpImage    *image,
  * Since: 2.10
  **/
 gboolean
-gimp_image_set_color_profile_from_file (GimpImage   *image,
-                                        const gchar *uri)
+gimp_image_set_color_profile_from_file (GimpImage *image,
+                                        GFile     *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -203,7 +203,7 @@ gimp_image_set_color_profile_from_file (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, uri,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -272,7 +272,7 @@ _gimp_image_convert_color_profile (GimpImage                *image,
 /**
  * gimp_image_convert_color_profile_from_file:
  * @image: The image.
- * @uri: The URI of the file containing the new color profile.
+ * @file: The file containing the new color profile.
  * @intent: Rendering intent.
  * @bpc: Black point compensation.
  *
@@ -280,7 +280,7 @@ _gimp_image_convert_color_profile (GimpImage                *image,
  *
  * This procedure converts from the image's color profile (or the
  * default RGB or grayscale profile if none is set) to an ICC profile
- * specified by 'uri'. Only RGB and grayscale color profiles are
+ * specified by 'file'. Only RGB and grayscale color profiles are
  * accepted, according to the image's type.
  *
  * Returns: TRUE on success.
@@ -289,7 +289,7 @@ _gimp_image_convert_color_profile (GimpImage                *image,
  **/
 gboolean
 gimp_image_convert_color_profile_from_file (GimpImage                *image,
-                                            const gchar              *uri,
+                                            GFile                    *file,
                                             GimpColorRenderingIntent  intent,
                                             gboolean                  bpc)
 {
@@ -299,7 +299,7 @@ gimp_image_convert_color_profile_from_file (GimpImage                *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, uri,
+                                          G_TYPE_FILE, file,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);

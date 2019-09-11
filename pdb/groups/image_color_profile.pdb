@@ -181,16 +181,15 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'uri', type => 'string',
-          desc => 'The URI of the file containing the new color profile' }
+        { name => 'file', type => 'file',
+          desc => 'The file containing the new color profile' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  if (uri)
+  if (file)
     {
-      GFile            *file = g_file_new_for_uri (uri);
       GimpColorProfile *profile;
 
       profile = gimp_color_profile_new_from_file (file, error);
@@ -203,8 +202,6 @@ HELP
         }
       else
         success = FALSE;
-
-      g_object_unref (file);
     }
   else
     {
@@ -277,7 +274,7 @@ sub image_convert_color_profile_from_file {
     $help = <<'HELP';
 This procedure converts from the image's color profile (or the default
 RGB or grayscale profile if none is set) to an ICC profile specified by
-'uri'.  Only RGB and grayscale color profiles are accepted, according to
+'file'.  Only RGB and grayscale color profiles are accepted, according to
 the image's type.
 HELP
 
@@ -286,8 +283,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'uri', type => 'string',
-          desc => 'The URI of the file containing the new color profile' },
+        { name => 'file', type => 'file',
+          desc => 'The file containing the new color profile' },
         { name => 'intent', type => 'enum GimpColorRenderingIntent',
           desc => 'Rendering intent' },
         { name => 'bpc', type => 'boolean',
@@ -297,9 +294,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (uri)
+  if (file)
     {
-      GFile            *file = g_file_new_for_uri (uri);
       GimpColorProfile *profile;
 
       profile = gimp_color_profile_new_from_file (file, error);
@@ -313,8 +309,6 @@ HELP
         }
       else
         success = FALSE;
-
-      g_object_unref (file);
     }
   else
     success = FALSE;

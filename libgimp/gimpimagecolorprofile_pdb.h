@@ -40,14 +40,14 @@ G_GNUC_INTERNAL gboolean _gimp_image_set_color_profile              (GimpImage  
                                                                      gint                      num_bytes,
                                                                      const guint8             *color_profile);
 gboolean                 gimp_image_set_color_profile_from_file     (GimpImage                *image,
-                                                                     const gchar              *uri);
+                                                                     GFile                    *file);
 G_GNUC_INTERNAL gboolean _gimp_image_convert_color_profile          (GimpImage                *image,
                                                                      gint                      num_bytes,
                                                                      const guint8             *color_profile,
                                                                      GimpColorRenderingIntent  intent,
                                                                      gboolean                  bpc);
 gboolean                 gimp_image_convert_color_profile_from_file (GimpImage                *image,
-                                                                     const gchar              *uri,
+                                                                     GFile                    *file,
                                                                      GimpColorRenderingIntent  intent,
                                                                      gboolean                  bpc);
 
