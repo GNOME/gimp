@@ -258,7 +258,7 @@ webp_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), FALSE, &error);
+  image = load_image (file, FALSE, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure, status, error);
@@ -376,9 +376,7 @@ webp_save (GimpProcedure        *procedure,
                                                  NULL);
     }
 
-  if (! save_image (g_file_get_path (file),
-                    image,
-                    drawable,
+  if (! save_image (file, image, drawable,
                     metadata, metadata_flags,
                     &params,
                     &error))

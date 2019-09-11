@@ -100,9 +100,9 @@ static GimpValueArray * fits_save             (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
-static GimpImage      * load_image            (const gchar        *filename,
+static GimpImage      * load_image            (GFile              *file,
                                                GError            **error);
-static gint             save_image            (const gchar        *filename,
+static gint             save_image            (GFile              *file,
                                                GimpImage          *image,
                                                GimpDrawable       *drawable,
                                                GError            **error);
@@ -117,7 +117,7 @@ static gint             save_fits             (FitsFile           *ofp,
                                                GimpImage          *image,
                                                GimpDrawable       *drawable);
 
-static GimpImage      * create_new_image      (const gchar        *filename,
+static GimpImage      * create_new_image      (GFile              *file,
                                                guint               pagenum,
                                                guint               width,
                                                guint               height,
@@ -129,7 +129,7 @@ static GimpImage      * create_new_image      (const gchar        *filename,
 
 static void             check_load_vals       (void);
 
-static GimpImage      * load_fits             (const gchar        *filename,
+static GimpImage      * load_fits             (GFile              *file,
                                                FitsFile           *ifp,
                                                guint               picnum,
                                                guint               ncompose);
@@ -277,7 +277,7 @@ fits_load (GimpProcedure        *procedure,
 
   check_load_vals ();
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   /* Write out error messages of FITS-Library */
   show_fits_errors ();
@@ -337,8 +337,7 @@ fits_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (! save_image (g_file_get_path (file),
-                    image, drawable,
+  if (! save_image (file, image, drawable,
                     &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
@@ -351,8 +350,8 @@ fits_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   GimpImage   *image;
   GimpImage  **image_list;
@@ -360,27 +359,36 @@ load_image (const gchar  *filename,
   guint        picnum;
   gint         k, n_images, max_images, hdu_picnum;
   gint         compose;
+  gchar       *filename;
   FILE        *fp;
   FitsFile    *ifp;
   FitsHduList *hdu;
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
-  if (!fp)
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
+
   fclose (fp);
 
+  filename = g_file_get_path (file);
   ifp = fits_open (filename, "r");
-  if (ifp == NULL)
+  g_free (filename);
+
+  if (! ifp)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", _("Error during open of FITS file"));
       return NULL;
     }
+
   if (ifp->n_pic <= 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -409,7 +417,7 @@ load_image (const gchar  *filename,
       else
         compose = 1;  /* Load as GRAY */
 
-      image = load_fits (filename, ifp, picnum, compose);
+      image = load_fits (file, ifp, picnum, compose);
 
       /* Write out error messages of FITS-Library */
       show_fits_errors ();
@@ -456,11 +464,12 @@ load_image (const gchar  *filename,
 }
 
 static gint
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
 {
+  gchar         *filename;
   FitsFile      *ofp;
   GimpImageType  drawable_type;
   gint           retval;
@@ -489,15 +498,18 @@ save_image (const gchar   *filename,
     }
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /* Open the output file. */
+  filename = g_file_get_path (file);
   ofp = fits_open (filename, "w");
-  if (!ofp)
+  g_free (filename);
+
+  if (! ofp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return (FALSE);
     }
 
@@ -519,7 +531,7 @@ check_load_vals (void)
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static GimpImage *
-create_new_image (const gchar        *filename,
+create_new_image (GFile              *file,
                   guint               pagenum,
                   guint               width,
                   guint               height,
@@ -530,18 +542,22 @@ create_new_image (const gchar        *filename,
                   GeglBuffer        **buffer)
 {
   GimpImage *image;
-  gchar     *tmp;
+  GFile     *new_file;
+  gchar     *uri;
+  gchar     *new_uri;
 
   image = gimp_image_new_with_precision (width, height, itype, iprecision);
 
-  if ((tmp = g_malloc (strlen (filename) + 64)) != NULL)
-    {
-      sprintf (tmp, "%s-img%ld", filename, (long)pagenum);
-      gimp_image_set_filename (image, tmp);
-      g_free (tmp);
-    }
-  else
-    gimp_image_set_filename (image, filename);
+  uri = g_file_get_uri (file);
+
+  new_uri = g_strdup_printf ("%s-img%d", uri, pagenum);
+  g_free (uri);
+
+  new_file = g_file_new_for_uri (new_uri);
+  g_free (new_uri);
+
+  gimp_image_set_file (image, new_file);
+  g_object_unref (new_file);
 
   gimp_image_undo_disable (image);
   *layer = gimp_layer_new (image, _("Background"), width, height,
@@ -560,10 +576,10 @@ create_new_image (const gchar        *filename,
  * 1: GRAY, 2: GRAYA, 3: RGB, 4: RGBA
  */
 static GimpImage *
-load_fits (const gchar *filename,
-           FitsFile    *ifp,
-           guint        picnum,
-           guint        ncompose)
+load_fits (GFile    *file,
+           FitsFile *ifp,
+           guint     picnum,
+           guint     ncompose)
 {
   register guchar   *dest, *src;
   guchar            *data, *data_end, *linebuf;
@@ -669,7 +685,7 @@ load_fits (const gchar *filename,
                                 NULL);
     }
 
-  image = create_new_image (filename, picnum, width, height,
+  image = create_new_image (file, picnum, width, height,
                             itype, dtype, iprecision,
                             &layer, &buffer);
 

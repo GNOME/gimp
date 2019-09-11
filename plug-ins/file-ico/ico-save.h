@@ -22,7 +22,7 @@
 #define __ICO_SAVE_H__
 
 
-GimpPDBStatusType ico_save_image          (const gchar   *file_name,
+GimpPDBStatusType ico_save_image          (GFile         *file,
                                            GimpImage     *image,
                                            gint32         run_mode,
                                            GError       **error);

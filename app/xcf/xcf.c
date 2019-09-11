@@ -155,15 +155,12 @@ xcf_init (Gimp *gimp)
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "Filename",
-                                                       "The name of the file "
-                                                       "to save the image in, "
-                                                       "in URI format and "
-                                                       "UTF-8 encoding",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file "
+                                                    "to save the image in",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 
@@ -209,15 +206,11 @@ xcf_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "Filename",
-                                                       "The name of the file "
-                                                       "to load, in the "
-                                                       "on-disk character "
-                                                       "set and encoding",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                  GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image ("image",
@@ -416,15 +409,13 @@ xcf_load_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image = NULL;
-  const gchar    *uri;
   GFile          *file;
   GInputStream   *input;
   GError         *my_error = NULL;
 
   gimp_set_busy (gimp);
 
-  uri  = g_value_get_string (gimp_value_array_index (args, 1));
-  file = g_file_new_for_uri (uri);
+  file = g_value_get_object (gimp_value_array_index (args, 1));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
@@ -440,8 +431,6 @@ xcf_load_invoker (GimpProcedure         *procedure,
                                   _("Could not open '%s' for reading: "),
                                   gimp_file_get_utf8_name (file));
     }
-
-  g_object_unref (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, image != NULL,
                                                   error ? *error : NULL);
@@ -464,7 +453,6 @@ xcf_save_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  const gchar    *uri;
   GFile          *file;
   GOutputStream  *output;
   gboolean        success  = FALSE;
@@ -473,8 +461,7 @@ xcf_save_invoker (GimpProcedure         *procedure,
   gimp_set_busy (gimp);
 
   image = g_value_get_object (gimp_value_array_index (args, 1));
-  uri   = g_value_get_string (gimp_value_array_index (args, 3));
-  file  = g_file_new_for_uri (uri);
+  file  = g_value_get_object (gimp_value_array_index (args, 3));
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
@@ -492,8 +479,6 @@ xcf_save_invoker (GimpProcedure         *procedure,
                                   _("Error creating '%s': "),
                                   gimp_file_get_utf8_name (file));
     }
-
-  g_object_unref (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);

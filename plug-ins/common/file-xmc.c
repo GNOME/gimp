@@ -185,10 +185,10 @@ static GimpValueArray * xmc_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar      *filename,
+static GimpImage      * load_image           (GFile            *file,
                                               GError          **error);
 
-static GimpImage      * load_thumbnail       (const gchar      *filename,
+static GimpImage      * load_thumbnail       (GFile            *file,
                                               gint32            thumb_size,
                                               gint32           *width,
                                               gint32           *height,
@@ -198,7 +198,7 @@ static GimpImage      * load_thumbnail       (const gchar      *filename,
 static guint32          read32               (FILE             *f,
                                               GError          **error);
 
-static gboolean         save_image           (const gchar      *filename,
+static gboolean         save_image           (GFile            *file,
                                               GimpImage        *image,
                                               GimpDrawable     *drawable,
                                               GimpImage        *orig_image,
@@ -472,18 +472,13 @@ xmc_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image = load_image (filename, &error);
-
-  g_free (filename);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -507,7 +502,6 @@ xmc_load_thumb (GimpProcedure        *procedure,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   gint            width;
   gint            height;
   gint            num_layers;
@@ -517,15 +511,11 @@ xmc_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image = load_thumbnail (filename, size,
+  image = load_thumbnail (file, size,
                           &width,
                           &height,
                           &num_layers,
                           &error);
-
-  g_free (filename);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -555,7 +545,6 @@ xmc_save (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
-  gchar             *filename;
   GimpImage         *orig_image;
   GimpExportReturn   export       = GIMP_EXPORT_CANCEL;
   GeglRectangle     *hotspotRange = NULL;
@@ -566,8 +555,6 @@ xmc_save (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   orig_image = image;
-
-  filename = g_file_get_path (file);
 
   hotspotRange = get_intersection_of_frames (image);
 
@@ -670,8 +657,7 @@ xmc_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (save_image (g_file_get_path (file),
-                  image, drawable, orig_image,
+  if (save_image (file, image, drawable, orig_image,
                   &error))
     {
       gimp_set_data (SAVE_PROC, &xmcvals, sizeof (XmcSaveVals));
@@ -692,8 +678,6 @@ xmc_save (GimpProcedure        *procedure,
       xmcparas.comments[i] = NULL;
     }
 
-  g_free (filename);
-
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
@@ -702,9 +686,10 @@ xmc_save (GimpProcedure        *procedure,
  */
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
+  gchar           *filename;
   FILE            *fp;
   GimpImage       *image;
   GimpLayer       *layer;
@@ -719,24 +704,26 @@ load_image (const gchar  *filename,
   gint             i, j;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /* Open the file and check it is a valid X cursor */
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
+  g_free (filename);
 
   if (fp == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
   if (! XcursorFileLoad (fp, &commentsp, &imagesp))
     {
       g_set_error (error, 0, 0, _("'%s' is not a valid X cursor."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -749,7 +736,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, 0, 0,
                        _("Frame %d of '%s' is too wide for an X cursor."),
-                       i + 1, gimp_filename_to_utf8 (filename));
+                       i + 1, gimp_file_get_utf8_name (file));
           fclose (fp);
           return NULL;
         }
@@ -757,7 +744,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, 0, 0,
                        _("Frame %d of '%s' is too high for an X cursor."),
-                       i + 1, gimp_filename_to_utf8 (filename));
+                       i + 1, gimp_file_get_utf8_name (file));
           fclose (fp);
           return NULL;
         }
@@ -772,7 +759,7 @@ load_image (const gchar  *filename,
 
   image = gimp_image_new (img_width, img_height, GIMP_RGB);
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   if (! set_hotspot_to_parasite (image))
     {
@@ -878,12 +865,12 @@ load_image (const gchar  *filename,
  */
 
 static GimpImage *
-load_thumbnail (const gchar *filename,
-                gint32       thumb_size,
-                gint32      *thumb_width,
-                gint32      *thumb_height,
-                gint32      *thumb_num_layers,
-                GError     **error)
+load_thumbnail (GFile   *file,
+                gint32   thumb_size,
+                gint32  *thumb_width,
+                gint32  *thumb_height,
+                gint32  *thumb_num_layers,
+                GError **error)
 {
   /* Return only one frame for thumbnail.
    * We select first frame of an animation sequence which nominal size is the
@@ -897,6 +884,7 @@ load_thumbnail (const gchar *filename,
   guint32        diff;         /* difference between thumb_size and current size */
   guint32        min_diff = XCURSOR_IMAGE_MAX_SIZE; /* minimum value of diff */
   guint32        type;         /* chunk type */
+  gchar         *filename;
   FILE          *fp    = NULL;
   GimpImage     *image = NULL;
   GimpLayer     *layer;
@@ -916,13 +904,15 @@ load_thumbnail (const gchar *filename,
   *thumb_height     = 0;
   *thumb_num_layers = 0;
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
+  g_free (file);
 
-  if (fp == NULL)
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -943,7 +933,7 @@ load_thumbnail (const gchar *filename,
     {
       g_set_error (error, 0, 0,
                    "'%s' seems to have an incorrect toc size.",
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -982,7 +972,7 @@ load_thumbnail (const gchar *filename,
     {
       g_set_error (error, 0, 0,
                    _("there is no image chunk in \"%s\"."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -1023,7 +1013,7 @@ load_thumbnail (const gchar *filename,
     {
       g_set_error (error, 0, 0,
                    _("'%s' is too wide for an X cursor."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -1032,7 +1022,7 @@ load_thumbnail (const gchar *filename,
     {
       g_set_error (error, 0, 0,
                    _("'%s' is too high for an X cursor."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -1511,12 +1501,13 @@ load_default_hotspot (GimpImage     *image,
  */
 
 static gboolean
-save_image (const gchar  *filename,
+save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
             GimpImage    *orig_image,
             GError      **error)
 {
+  gchar           *filename;
   FILE            *fp;                     /* File pointer */
   gboolean         dimension_warn = FALSE; /* become TRUE if even one
                                             * of the dimensions of the
@@ -1553,18 +1544,22 @@ save_image (const gchar  *filename,
                     NULL);
 
   gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /*
    * Open the file pointer.
    */
   DM_XMC ("Open the file pointer.\n");
+
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "wb");
-  if (fp == NULL)
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 

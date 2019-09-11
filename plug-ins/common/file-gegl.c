@@ -89,9 +89,9 @@ static GimpValueArray * goat_save             (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
-static GimpImage      * load_image            (const gchar          *filename,
+static GimpImage      * load_image            (GFile                *file,
                                                GError              **error);
-static gboolean         save_image            (const gchar          *filename,
+static gboolean         save_image            (GFile                *file,
                                                GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GError              **error);
@@ -240,7 +240,7 @@ goat_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -294,8 +294,7 @@ goat_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (! save_image (g_file_get_path (file),
-                    image, drawable,
+  if (! save_image (file, image, drawable,
                     &error))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
@@ -308,11 +307,12 @@ goat_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   GimpImage         *image;
   GimpLayer         *layer;
+  gchar             *filename;
   GimpImageType      image_type;
   GimpImageBaseType  base_type;
   GimpPrecision      precision;
@@ -325,8 +325,10 @@ load_image (const gchar  *filename,
   GeglBuffer        *dest_buf = NULL;
   const Babl        *format;
 
+  filename = g_file_get_path (file);
+
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   graph = gegl_node_new ();
 
@@ -350,7 +352,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -438,7 +440,7 @@ load_image (const gchar  *filename,
 
   image = gimp_image_new_with_precision (width, height,
                                          base_type, precision);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image,
                           _("Background"),
@@ -463,15 +465,18 @@ load_image (const gchar  *filename,
 }
 
 static gboolean
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
 {
+  gchar      *filename;
   GeglNode   *graph;
   GeglNode   *source;
   GeglNode   *sink;
   GeglBuffer *src_buf;
+
+  filename = g_file_get_path (file);
 
   src_buf = gimp_drawable_get_buffer (drawable);
 

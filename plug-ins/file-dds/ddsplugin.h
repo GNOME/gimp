@@ -57,10 +57,10 @@ typedef struct
 extern DDSWriteVals dds_write_vals;
 extern DDSReadVals dds_read_vals;
 
-extern GimpPDBStatusType read_dds  (gchar         *filename,
+extern GimpPDBStatusType read_dds  (GFile         *file,
                                     GimpImage    **image,
                                     gboolean       interactive_dds);
-extern GimpPDBStatusType write_dds (gchar         *filename,
+extern GimpPDBStatusType write_dds (GFile         *file,
                                     GimpImage     *image,
                                     GimpDrawable  *drawable,
                                     gboolean       interactive_dds);

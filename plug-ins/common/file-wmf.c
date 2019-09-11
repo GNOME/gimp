@@ -84,15 +84,15 @@ static GimpValueArray * wmf_load_thumb       (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
-static gboolean         load_wmf_size        (const gchar          *filename,
+static gboolean         load_wmf_size        (GFile                *file,
                                               WmfLoadVals          *vals);
-static gboolean         load_dialog          (const gchar          *filename);
-static guchar         * wmf_get_pixbuf       (const gchar          *filename,
+static gboolean         load_dialog          (GFile                *file);
+static guchar         * wmf_get_pixbuf       (GFile                *file,
                                               gint                 *width,
                                               gint                 *height);
-static guchar         * wmf_load_file        (const gchar          *filename,
+static guchar         * wmf_load_file        (GFile                *file,
                                               guint                *width,
                                               guint                *height,
                                               GError              **error);
@@ -217,14 +217,11 @@ wmf_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  filename = g_file_get_path (file);
 
   switch (run_mode)
     {
@@ -236,7 +233,7 @@ wmf_load (GimpProcedure        *procedure,
 
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (LOAD_PROC, &load_vals);
-      if (! load_dialog (filename))
+      if (! load_dialog (file))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
@@ -247,9 +244,7 @@ wmf_load (GimpProcedure        *procedure,
       break;
     }
 
-  image = load_image (filename, &error);
-
-  g_free (filename);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -273,7 +268,6 @@ wmf_load_thumb (GimpProcedure        *procedure,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   gint            width;
   gint            height;
@@ -282,10 +276,8 @@ wmf_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  if (load_wmf_size (filename, &load_vals) &&
-      load_vals.width  > 0                 &&
+  if (load_wmf_size (file, &load_vals) &&
+      load_vals.width  > 0             &&
       load_vals.height > 0)
     {
       width  = load_vals.width;
@@ -309,9 +301,7 @@ wmf_load_thumb (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  image = load_image (filename, &error);
-
-  g_free (filename);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -337,10 +327,11 @@ static GtkWidget *size_label = NULL;
 
 /*  This function retrieves the pixel size from a WMF file. */
 static gboolean
-load_wmf_size (const gchar *filename,
+load_wmf_size (GFile       *file,
                WmfLoadVals *vals)
 {
-  GMappedFile    *file;
+  gchar          *filename;
+  GMappedFile    *mapped;
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
   wmf_error_t     err;
   gulong          flags;
@@ -353,8 +344,11 @@ load_wmf_size (const gchar *filename,
   gboolean        success = TRUE;
   char*           wmffontdirs[2] = { NULL, NULL };
 
-  file = g_mapped_file_new (filename, FALSE, NULL);
-  if (! file)
+  filename = g_file_get_path (file);
+  mapped = g_mapped_file_new (filename, FALSE, NULL);
+  g_free (filename);
+
+  if (! mapped)
     return FALSE;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
@@ -377,8 +371,8 @@ load_wmf_size (const gchar *filename,
   ddata->type = wmf_gd_image;
 
   err = wmf_mem_open (API,
-                      (guchar *) g_mapped_file_get_contents (file),
-                      g_mapped_file_get_length (file));
+                      (guchar *) g_mapped_file_get_contents (mapped),
+                      g_mapped_file_get_length (mapped));
   if (err != wmf_E_None)
     success = FALSE;
 
@@ -392,7 +386,7 @@ load_wmf_size (const gchar *filename,
     success = FALSE;
 
   wmf_mem_close (API);
-  g_mapped_file_unref (file);
+  g_mapped_file_unref (mapped);
 
   if (width < 1 || height < 1)
     {
@@ -476,13 +470,13 @@ load_dialog_ratio_callback (GtkAdjustment *adj,
 
 static void
 load_dialog_resolution_callback (GimpSizeEntry *res,
-                                 const gchar   *filename)
+                                 GFile         *file)
 {
   WmfLoadVals  vals = { 0.0, 0, 0 };
 
   load_vals.resolution = vals.resolution = gimp_size_entry_get_refval (res, 0);
 
-  if (!load_wmf_size (filename, &vals))
+  if (! load_wmf_size (file, &vals))
     return;
 
   wmf_width  = vals.width;
@@ -527,7 +521,7 @@ load_dialog_set_ratio (gdouble x,
 }
 
 static gboolean
-load_dialog (const gchar *filename)
+load_dialog (GFile *file)
 {
   GtkWidget     *dialog;
   GtkWidget     *frame;
@@ -582,7 +576,7 @@ load_dialog (const gchar *filename)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  pixels = wmf_get_pixbuf (filename, &vals.width, &vals.height);
+  pixels = wmf_get_pixbuf (file, &vals.width, &vals.height);
   image = gimp_preview_area_new ();
   gtk_widget_set_size_request (image, vals.width, vals.height);
   gtk_container_add (GTK_CONTAINER (frame), image);
@@ -600,7 +594,7 @@ load_dialog (const gchar *filename)
   /*  query the initial size after the size label is created  */
   vals.resolution = load_vals.resolution;
 
-  load_wmf_size (filename, &vals);
+  load_wmf_size (file, &vals);
 
   wmf_width  = vals.width;
   wmf_height = vals.height;
@@ -743,7 +737,7 @@ load_dialog (const gchar *filename)
 
   g_signal_connect (res, "value-changed",
                     G_CALLBACK (load_dialog_resolution_callback),
-                    (gpointer) filename);
+                    file);
 
   gtk_widget_show (dialog);
 
@@ -800,11 +794,12 @@ pixbuf_gd_convert (const gint *gd_pixels,
 }
 
 static guchar *
-wmf_get_pixbuf (const gchar *filename,
-                gint        *width,
-                gint        *height)
+wmf_get_pixbuf (GFile *file,
+                gint  *width,
+                gint  *height)
 {
-  GMappedFile    *file;
+  gchar          *filename;
+  GMappedFile    *mapped;
   guchar         *pixels   = NULL;
 
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
@@ -819,8 +814,11 @@ wmf_get_pixbuf (const gchar *filename,
   gint           *gd_pixels = NULL;
   char*           wmffontdirs[2] = { NULL, NULL };
 
-  file = g_mapped_file_new (filename, FALSE, NULL);
-  if (! file)
+  filename = g_file_get_path (file);
+  mapped = g_mapped_file_new (filename, FALSE, NULL);
+  g_free (filename);
+
+  if (! mapped)
     return NULL;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
@@ -843,8 +841,8 @@ wmf_get_pixbuf (const gchar *filename,
   ddata->type = wmf_gd_image;
 
   err = wmf_mem_open (API,
-                      (guchar *) g_mapped_file_get_contents (file),
-                      g_mapped_file_get_length (file));
+                      (guchar *) g_mapped_file_get_contents (mapped),
+                      g_mapped_file_get_length (mapped));
   if (err != wmf_E_None)
     goto _wmf_error;
 
@@ -912,18 +910,19 @@ wmf_get_pixbuf (const gchar *filename,
       wmf_api_destroy (API);
     }
 
-  g_mapped_file_unref (file);
+  g_mapped_file_unref (mapped);
 
   return pixels;
 }
 
 static guchar *
-wmf_load_file (const gchar  *filename,
-               guint        *width,
-               guint        *height,
-               GError      **error)
+wmf_load_file (GFile   *file,
+               guint   *width,
+               guint   *height,
+               GError **error)
 {
-  GMappedFile    *file;
+  gchar          *filename;
+  GMappedFile    *mapped;
   guchar         *pixels   = NULL;
 
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
@@ -938,8 +937,11 @@ wmf_load_file (const gchar  *filename,
 
   *width = *height = -1;
 
-  file = g_mapped_file_new (filename, FALSE, error);
-  if (! file)
+  filename = g_file_get_path (file);
+  mapped = g_mapped_file_new (filename, FALSE, NULL);
+  g_free (filename);
+
+  if (! mapped)
     return NULL;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
@@ -962,8 +964,8 @@ wmf_load_file (const gchar  *filename,
   ddata->type = wmf_gd_image;
 
   err = wmf_mem_open (API,
-                      (guchar *) g_mapped_file_get_contents (file),
-                      g_mapped_file_get_length (file));
+                      (guchar *) g_mapped_file_get_contents (mapped),
+                      g_mapped_file_get_length (mapped));
   if (err != wmf_E_None)
     goto _wmf_error;
 
@@ -1007,12 +1009,12 @@ wmf_load_file (const gchar  *filename,
       wmf_api_destroy (API);
     }
 
-  g_mapped_file_unref (file);
+  g_mapped_file_unref (mapped);
 
   /* FIXME: improve error message */
   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                _("Could not open '%s' for reading"),
-               gimp_filename_to_utf8 (filename));
+               gimp_file_get_utf8_name (file));
 
   return pixels;
 }
@@ -1021,8 +1023,8 @@ wmf_load_file (const gchar  *filename,
  * 'load_image()' - Load a WMF image into a new image window.
  */
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   GimpImage   *image;
   GimpLayer   *layer;
@@ -1031,15 +1033,15 @@ load_image (const gchar  *filename,
   guint        width, height;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
-  pixels = wmf_load_file (filename, &width, &height, error);
+  pixels = wmf_load_file (file, &width, &height, error);
 
   if (! pixels)
     return NULL;
 
   image = gimp_image_new (width, height, GIMP_RGB);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
   gimp_image_set_resolution (image,
                              load_vals.resolution, load_vals.resolution);
 

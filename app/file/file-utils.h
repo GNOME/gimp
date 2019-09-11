@@ -25,9 +25,9 @@ GFile     * file_utils_filename_to_file  (Gimp         *gimp,
                                           const gchar  *filename,
                                           GError      **error);
 
-GdkPixbuf * file_utils_load_thumbnail    (const gchar  *filename);
+GdkPixbuf * file_utils_load_thumbnail    (GFile        *file);
 gboolean    file_utils_save_thumbnail    (GimpImage    *image,
-                                          const gchar  *filename);
+                                          GFile        *file);
 
 
 #endif /* __FILE_UTILS_H__ */

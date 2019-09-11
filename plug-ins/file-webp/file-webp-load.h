@@ -23,7 +23,7 @@
 #define __WEBP_LOAD_H__
 
 
-GimpImage * load_image (const gchar *filename,
+GimpImage * load_image (GFile       *file,
                         gboolean     interactive,
                         GError     **error);
 

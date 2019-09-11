@@ -673,6 +673,33 @@ G_BEGIN_DECLS
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
+/*  file  */
+
+#define GIMP_PROC_ARG_FILE(class, name, nick, blurb, flags)  \
+  gimp_procedure_add_argument (procedure,\
+                               g_param_spec_object (name, nick, blurb,\
+                                                    G_TYPE_FILE,\
+                                                    flags))
+
+#define GIMP_PROC_VAL_FILE(class, name, nick, blurb, none_ok, flags)  \
+  gimp_procedure_add_return_value (procedure,\
+                                   g_param_spec_object (name, nick, blurb,\
+                                                        G_TYPE_FILE,\
+                                                        flags))
+
+#define GIMP_VALUES_GET_FILE(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_DUP_FILE(args, n) \
+  g_value_dup_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_SET_FILE(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_TAKE_FILE(args, n, value) \
+  g_value_take_object (gimp_value_array_index (args, n), value)
+
+
 G_END_DECLS
 
 #endif /* __GIMP_PROCEDURE_PARAMS_H__ */

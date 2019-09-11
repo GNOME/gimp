@@ -103,8 +103,7 @@ static GimpValueArray * film_run              (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
-static GimpImage      * create_new_image      (const gchar          *filename,
-                                               guint                 width,
+static GimpImage      * create_new_image      (guint                 width,
                                                guint                 height,
                                                GimpImageType         gdtype,
                                                GimpLayer           **layer);
@@ -502,8 +501,7 @@ film (void)
   g_printerr ("Number of pictures = %d\n", num_pictures);
 #endif
 
-  image_dst = create_new_image (_("Untitled"),
-                                (guint) film_width, (guint) film_height,
+  image_dst = create_new_image ((guint) film_width, (guint) film_height,
                                 GIMP_RGB_IMAGE, &layer_dst);
 
   /* Fill film background */
@@ -762,8 +760,7 @@ draw_number (GimpLayer *layer,
 
 /* Create an image. Sets layer, drawable and rgn. Returns image */
 static GimpImage *
-create_new_image (const gchar    *filename,
-                  guint           width,
+create_new_image (guint           width,
                   guint           height,
                   GimpImageType   gdtype,
                   GimpLayer     **layer)
@@ -779,7 +776,6 @@ create_new_image (const gchar    *filename,
     gitype = GIMP_RGB;
 
   image = gimp_image_new (width, height, gitype);
-  gimp_image_set_filename (image, filename);
 
   gimp_image_undo_disable (image);
   *layer = gimp_layer_new (image, _("Background"), width, height,

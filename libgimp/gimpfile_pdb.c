@@ -37,7 +37,7 @@
 /**
  * gimp_file_load:
  * @run_mode: The run mode.
- * @filename: The name of the file to load.
+ * @file: The file to load.
  *
  * Loads an image file by invoking the right load handler.
  *
@@ -53,7 +53,7 @@
  **/
 GimpImage *
 gimp_file_load (GimpRunMode  run_mode,
-                const gchar *filename)
+                GFile       *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -61,7 +61,7 @@ gimp_file_load (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -81,7 +81,7 @@ gimp_file_load (GimpRunMode  run_mode,
  * gimp_file_load_layer:
  * @run_mode: The run mode.
  * @image: Destination image.
- * @filename: The name of the file to load.
+ * @file: The file to load.
  *
  * Loads an image file as a layer for an existing image.
  *
@@ -97,7 +97,7 @@ gimp_file_load (GimpRunMode  run_mode,
 GimpLayer *
 gimp_file_load_layer (GimpRunMode  run_mode,
                       GimpImage   *image,
-                      const gchar *filename)
+                      GFile       *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -106,7 +106,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -126,7 +126,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * gimp_file_load_layers:
  * @run_mode: The run mode.
  * @image: Destination image.
- * @filename: The name of the file to load.
+ * @file: The file to load.
  * @num_layers: (out): The number of loaded layers.
  *
  * Loads an image file as layers for an existing image.
@@ -145,7 +145,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
 GimpLayer **
 gimp_file_load_layers (GimpRunMode  run_mode,
                        GimpImage   *image,
-                       const gchar *filename,
+                       GFile       *file,
                        gint        *num_layers)
 {
   GimpValueArray *args;
@@ -155,7 +155,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -181,7 +181,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * @run_mode: The run mode.
  * @image: Input image.
  * @drawable: Drawable to save.
- * @filename: The name of the file to save the image in.
+ * @file: The file to save the image in.
  *
  * Saves a file by extension.
  *
@@ -199,7 +199,7 @@ gboolean
 gimp_file_save (GimpRunMode   run_mode,
                 GimpImage    *image,
                 GimpDrawable *drawable,
-                const gchar  *filename)
+                GFile        *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -209,7 +209,7 @@ gimp_file_save (GimpRunMode   run_mode,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_DRAWABLE, drawable,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -227,22 +227,22 @@ gimp_file_save (GimpRunMode   run_mode,
 /**
  * gimp_file_save_thumbnail:
  * @image: The image.
- * @filename: The name of the file the thumbnail belongs to.
+ * @file: The file the thumbnail belongs to.
  *
  * Saves a thumbnail for the given image
  *
  * This procedure saves a thumbnail for the given image according to
  * the Free Desktop Thumbnail Managing Standard. The thumbnail is saved
- * so that it belongs to the file with the given filename. This means
- * you have to save the image under this name first, otherwise this
+ * so that it belongs to the file with the given filen. This means you
+ * have to save the image under this name first, otherwise this
  * procedure will fail. This procedure may become useful if you want to
  * explicitly save a thumbnail with a file.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save_thumbnail (GimpImage   *image,
-                          const gchar *filename)
+gimp_file_save_thumbnail (GimpImage *image,
+                          GFile     *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -250,7 +250,7 @@ gimp_file_save_thumbnail (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

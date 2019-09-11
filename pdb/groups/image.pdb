@@ -2127,103 +2127,16 @@ CODE
     );
 }
 
-sub image_get_filename {
-    $blurb = "Returns the specified image's filename.";
+sub image_get_file {
+    $blurb = "Returns the file for the specified image.";
 
     $help = <<'HELP';
-This procedure returns the specified image's filename in the
-filesystem encoding. The image has a filename only if it was loaded or
-imported from a file or has since been saved or exported. Otherwise,
-this function returns %NULL. See also gimp_image_get_uri().
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' }
-    );
-
-    @outargs = (
-        { name => 'filename', type => 'string',
-          desc => 'The filename.' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  GFile *file = gimp_image_get_any_file (image);
-  if (file)
-    filename = g_file_get_path (file);
-}
-CODE
-    );
-}
-
-sub image_set_filename {
-    $blurb = "Sets the specified image's filename.";
-
-    $help = <<'HELP';
-This procedure sets the specified image's filename. The filename
-should be in the filesystem encoding.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'filename', type => 'string',
-          desc => 'The new image filename', allow_non_utf8 => 1 }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  /*  verify that the filename can be converted to UTF-8 and back  */
-  gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, error);
-
-  if (utf8)
-    {
-      gchar *tmp = g_filename_from_utf8 (utf8, -1, NULL, NULL, error);
-
-      if (tmp)
-        g_free (tmp);
-      else
-        success = FALSE;
-
-      g_free (utf8);
-    }
-  else
-    success = FALSE;
-
-  if (success)
-    {
-      GFile *file = NULL;
-
-      if (filename && strlen (filename))
-        file = file_utils_filename_to_file (image->gimp, filename, NULL);
-
-      gimp_image_set_file (image, file);
-
-      if (file)
-        g_object_unref (file);
-    }
-}
-CODE
-    );
-}
-
-sub image_get_uri {
-    $blurb = "Returns the URI for the specified image.";
-
-    $help = <<'HELP';
-This procedure returns the URI associated with the specified image.
-The image has an URI only if it was loaded or imported from a file or
+This procedure returns the file associated with the specified image.
+The image has a file only if it was loaded or imported from a file or
 has since been saved or exported. Otherwise, this function returns
-%NULL.  See also gimp-image-get-imported-uri to get the URI of the
+%NULL.  See also gimp-image-get-imported-file to get the
 current file if it was imported from a non-GIMP file format and not
-yet saved, or gimp-image-get-exported-uri if the image has been
+yet saved, or gimp-image-get-exported-file if the image has been
 exported to a non-GIMP file format.
 HELP
 
@@ -2235,27 +2148,50 @@ HELP
     );
 
     @outargs = (
-        { name => 'uri', type => 'string',
-          desc => 'The URI.' }
+        { name => 'file', type => 'file',
+          desc => 'The file.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GFile *file = gimp_image_get_any_file (image);
-  if (file)
-    uri = g_file_get_uri (file);
+  file = gimp_image_get_any_file (image);
 }
 CODE
     );
 }
 
-sub image_get_xcf_uri {
-    $blurb = "Returns the XCF URI for the specified image.";
+sub image_set_file {
+    $blurb = "Sets the specified image's file.";
 
     $help = <<'HELP';
-This procedure returns the XCF URI associated with the image. If
-there is no such URI, this procedure returns %NULL.
+This procedure sets the specified image's file.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'file', type => 'file',
+          desc => 'The new image file' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_image_set_file (image, file);
+}
+CODE
+    );
+}
+
+sub image_get_xcf_file {
+    $blurb = "Returns the XCF file for the specified image.";
+
+    $help = <<'HELP';
+This procedure returns the XCF file associated with the image. If
+there is no such file, this procedure returns %NULL.
 HELP
 
     $author = 'Eric Grivel <gimp@lumenssolutions.com>';
@@ -2269,26 +2205,24 @@ HELP
     );
 
     @outargs = (
-        { name => 'uri', type => 'string',
-          desc => 'The imported URI.' }
+        { name => 'file', type => 'file',
+          desc => 'The imported XCF file.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GFile *file = gimp_image_get_file (image);
-  if (file)
-    uri = g_file_get_uri (file);
+  file = gimp_image_get_file (image);
 }
 CODE
     );
 }
 
-sub image_get_imported_uri {
-    $blurb = "Returns the imported URI for the specified image.";
+sub image_get_imported_file {
+    $blurb = "Returns the imported file for the specified image.";
 
     $help = <<'HELP';
-This procedure returns the URI associated with the specified image
+This procedure returns the file associated with the specified image
 if the image was imported from a non-native Gimp format. If the
 image was not imported, or has since been saved in the native Gimp
 format, this procedure returns %NULL.
@@ -2305,26 +2239,24 @@ HELP
     );
 
     @outargs = (
-        { name => 'uri', type => 'string',
-          desc => 'The imported URI.' }
+        { name => 'file', type => 'file',
+          desc => 'The imported file.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GFile *file = gimp_image_get_imported_file (image);
-  if (file)
-    uri = g_file_get_uri (file);
+  file = gimp_image_get_imported_file (image);
 }
 CODE
     );
 }
 
-sub image_get_exported_uri {
-    $blurb = "Returns the exported URI for the specified image.";
+sub image_get_exported_file {
+    $blurb = "Returns the exported file for the specified image.";
 
     $help = <<'HELP';
-This procedure returns the URI associated with the specified image
+This procedure returns the file associated with the specified image
 if the image was exported a non-native GIMP format. If the
 image was not exported, this procedure returns %NULL.
 HELP
@@ -2340,16 +2272,14 @@ HELP
     );
 
     @outargs = (
-        { name => 'uri', type => 'string',
-          desc => 'The exported URI.' }
+        { name => 'file', type => 'file',
+          desc => 'The exported file.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GFile *file = gimp_image_get_exported_file (image);
-  if (file)
-    uri = g_file_get_uri (file);
+  file = gimp_image_get_exported_file (image);
 }
 CODE
     );
@@ -3025,11 +2955,11 @@ CODE
             image_get_selection
             image_get_component_active image_set_component_active
             image_get_component_visible image_set_component_visible
-            image_get_filename image_set_filename
-            image_get_uri
-            image_get_xcf_uri
-            image_get_imported_uri
-            image_get_exported_uri
+            image_get_file
+            image_set_file
+            image_get_xcf_file
+            image_get_imported_file
+            image_get_exported_file
             image_get_name
             image_get_resolution image_set_resolution
             image_get_unit image_set_unit

@@ -58,7 +58,7 @@ static GimpValueArray * exr_load             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               gboolean              interactive,
                                               GError              **error);
 static void             sanitize_comment     (gchar                *comment);
@@ -139,8 +139,7 @@ exr_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file),
-                      run_mode == GIMP_RUN_INTERACTIVE,
+  image = load_image (file, run_mode == GIMP_RUN_INTERACTIVE,
                       &error);
 
   if (! image)
@@ -158,10 +157,11 @@ exr_load (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
+load_image (GFile        *file,
             gboolean      interactive,
             GError      **error)
 {
+  gchar            *filename;
   EXRLoader        *loader;
   gint              width;
   gint              height;
@@ -186,15 +186,17 @@ load_image (const gchar  *filename,
   guint             xmp_size;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   loader = exr_loader_new (filename);
+  g_free (filename);
 
   if (! loader)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s' for reading"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -205,7 +207,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error querying image dimensions from '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -225,7 +227,7 @@ load_image (const gchar  *filename,
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error querying image precision from '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -242,7 +244,7 @@ load_image (const gchar  *filename,
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error querying image type from '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -252,12 +254,12 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, 0, 0,
                    _("Could not create new image for '%s': %s"),
-                   gimp_filename_to_utf8 (filename),
+                   gimp_file_get_utf8_name (file),
                    gimp_pdb_get_last_error (gimp_get_pdb ()));
       goto out;
     }
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   /* try to load an icc profile, it will be generated on the fly if
    * chromaticities are given
@@ -302,7 +304,7 @@ load_image (const gchar  *filename,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Error reading pixel data from '%s'"),
-                           gimp_filename_to_utf8 (filename));
+                           gimp_file_get_utf8_name (file));
               goto out;
             }
         }

@@ -319,6 +319,15 @@ gimp_param_spec_display ("$name",
                          $flags)
 CODE
     }
+    elsif ($pdbtype eq 'file') {
+	$pspec = <<CODE;
+g_param_spec_object ("$name",
+                     "$nick",
+                     "$blurb",
+                     G_TYPE_FILE,
+                     $flags)
+CODE
+    }
     elsif ($pdbtype eq 'tattoo') {
 	$pspec = <<CODE;
 g_param_spec_uint ("$name",

@@ -81,14 +81,14 @@ static GimpValueArray * faxg3_load             (GimpProcedure        *procedure,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
 
-static GimpImage      * load_image             (const gchar          *filename,
+static GimpImage      * load_image             (GFile                *file,
                                                 GError              **error);
 
 static GimpImage      *  emitgimp              (gint                  hcol,
                                                 gint                  row,
                                                 const gchar          *bitmap,
                                                 gint                  bperrow,
-                                                const gchar          *filename);
+                                                GFile                *file);
 
 
 G_DEFINE_TYPE (Faxg3, faxg3, GIMP_TYPE_PLUG_IN)
@@ -165,7 +165,7 @@ faxg3_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -214,13 +214,14 @@ static  int  rs;                /* read buffer size */
 
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   int             data;
   int             hibit;
   struct g3_tree *p;
   int             nr_pels;
+  gchar          *filename;
   int             fd;
   int             color;
   int             i, rr, rsize;
@@ -235,7 +236,7 @@ load_image (const gchar  *filename,
   gint            col, hcol;             /* column, highest column ever used */
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /* initialize lookup trees */
   build_tree (&white, t_white);
@@ -245,13 +246,15 @@ load_image (const gchar  *filename,
 
   init_byte_tab (0, byte_tab);
 
+  filename = g_file_get_path (file);
   fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
+  g_free (filename);
 
   if (fd < 0)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -501,7 +504,7 @@ load_image (const gchar  *filename,
   g_printerr ("consecutive EOLs: %d, max columns: %d\n", cons_eol, hcol);
 #endif
 
-  image = emitgimp (hcol, row, bitmap, bperrow, filename);
+  image = emitgimp (hcol, row, bitmap, bperrow, file);
 
   g_free (bitmap);
 
@@ -519,7 +522,7 @@ emitgimp (gint         hcol,
           gint         row,
           const gchar *bitmap,
           gint         bperrow,
-          const gchar *filename)
+          GFile       *file)
 {
   GeglBuffer *buffer;
   GimpImage  *image;
@@ -539,7 +542,7 @@ emitgimp (gint         hcol,
 #endif
 
   image = gimp_image_new (hcol, row, GIMP_GRAY);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image, _("Background"),
                           hcol,

@@ -1061,12 +1061,13 @@ ico_save_info_free (IcoSaveInfo  *info)
 }
 
 GimpPDBStatusType
-ico_save_image (const gchar  *filename,
-                GimpImage    *image,
-                gint32        run_mode,
-                GError      **error)
+ico_save_image (GFile      *file,
+                GimpImage  *image,
+                gint32      run_mode,
+                GError    **error)
 {
-  FILE *fp;
+  gchar *filename;
+  FILE  *fp;
 
   GList         *iter;
   gint           width;
@@ -1077,7 +1078,8 @@ ico_save_image (const gchar  *filename,
   gboolean       saved;
   gint           i;
 
-  D(("*** Exporting Microsoft icon file %s\n", filename));
+  D(("*** Exporting Microsoft icon file %s\n",
+     gimp_file_get_utf8_name (file)));
 
   ico_save_init (image, &info);
 
@@ -1089,22 +1091,26 @@ ico_save_image (const gchar  *filename,
     }
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
-  if (! (fp = g_fopen (filename, "wb")))
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename, "wb");
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
   header.reserved = 0;
   header.resource_type = 1;
   header.icon_count = info.num_icons;
-  if ( !ico_write_int16 (fp, &header.reserved, 1)
-       || !ico_write_int16 (fp, &header.resource_type, 1)
-       || !ico_write_int16 (fp, &header.icon_count, 1) )
+  if (! ico_write_int16 (fp, &header.reserved, 1)      ||
+      ! ico_write_int16 (fp, &header.resource_type, 1) ||
+      ! ico_write_int16 (fp, &header.icon_count, 1))
     {
       ico_save_info_free (&info);
       fclose (fp);

@@ -499,7 +499,6 @@ file_gex_load_invoker (GimpProcedure         *procedure,
                        GError               **error)
 {
   GimpValueArray *return_vals;
-  const gchar    *uri;
   GFile          *file;
   gchar          *ext_dir = NULL;
   AsApp          *appdata = NULL;
@@ -507,8 +506,7 @@ file_gex_load_invoker (GimpProcedure         *procedure,
 
   gimp_set_busy (gimp);
 
-  uri  = g_value_get_string (gimp_value_array_index (args, 1));
-  file = g_file_new_for_uri (uri);
+  file = g_value_get_object (gimp_value_array_index (args, 1));
 
   success = file_gex_validate (file, &appdata, error);
   if (success)
@@ -547,8 +545,6 @@ file_gex_load_invoker (GimpProcedure         *procedure,
     {
       success = FALSE;
     }
-
-  g_object_unref (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);

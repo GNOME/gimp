@@ -1030,7 +1030,7 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
 /**
  * gimp_vectors_import_from_file:
  * @image: The image.
- * @filename: The name of the SVG file to import.
+ * @file: The SVG file to import.
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: (out): The number of newly created vectors.
@@ -1047,7 +1047,7 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
  **/
 gboolean
 gimp_vectors_import_from_file (GimpImage     *image,
-                               const gchar   *filename,
+                               GFile         *file,
                                gboolean       merge,
                                gboolean       scale,
                                gint          *num_vectors,
@@ -1059,7 +1059,7 @@ gimp_vectors_import_from_file (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_BOOLEAN, merge,
                                           G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);
@@ -1150,7 +1150,7 @@ gimp_vectors_import_from_string (GimpImage     *image,
 /**
  * gimp_vectors_export_to_file:
  * @image: The image.
- * @filename: The name of the SVG file to create.
+ * @file: The SVG file to create.
  * @vectors: The vectors object to be saved, or 0 for all in the image.
  *
  * save a path as an SVG file.
@@ -1166,7 +1166,7 @@ gimp_vectors_import_from_string (GimpImage     *image,
  **/
 gboolean
 gimp_vectors_export_to_file (GimpImage   *image,
-                             const gchar *filename,
+                             GFile       *file,
                              GimpVectors *vectors)
 {
   GimpValueArray *args;
@@ -1175,7 +1175,7 @@ gimp_vectors_export_to_file (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 

@@ -20,7 +20,7 @@
 #define __BMP_SAVE_H__
 
 
-GimpPDBStatusType   save_image (const gchar   *filename,
+GimpPDBStatusType   save_image (GFile         *file,
                                 GimpImage     *image,
                                 GimpDrawable  *drawable,
                                 GimpRunMode    run_mode,

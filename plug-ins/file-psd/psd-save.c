@@ -621,7 +621,7 @@ save_resources (FILE      *fd,
 
   /* Get the image title from its filename */
 
-  fileName = gimp_image_get_filename (image);
+  fileName = g_file_get_path (gimp_image_get_file (image));
   IFDBG printf ("\tImage title: %s\n", fileName);
 
   /* Get the active layer number id */
@@ -1562,10 +1562,11 @@ clear_image_data (void)
 }
 
 gboolean
-save_image (const gchar  *filename,
-            GimpImage    *image,
-            GError      **error)
+save_image (GFile      *file,
+            GimpImage  *image,
+            GError    **error)
 {
+  gchar      *filename;
   FILE       *fd;
   GeglBuffer *buffer;
   GList      *iter;
@@ -1579,12 +1580,12 @@ save_image (const gchar  *filename,
                    _("Unable to export '%s'.  The PSD file format does not "
                      "support images that are more than 30,000 pixels wide "
                      "or tall."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return FALSE;
     }
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   get_image_data (image);
 
@@ -1604,7 +1605,7 @@ save_image (const gchar  *filename,
                            _("Unable to export '%s'.  The PSD file format does not "
                              "support images with layers that are more than 30,000 "
                              "pixels wide or tall."),
-                           gimp_filename_to_utf8 (filename));
+                           gimp_file_get_utf8_name (file));
               clear_image_data ();
               return FALSE;
             }
@@ -1613,18 +1614,21 @@ save_image (const gchar  *filename,
         }
     }
 
+  filename = g_file_get_path (file);
   fd = g_fopen (filename, "wb");
-  if (fd == NULL)
+  g_free (filename);
+
+  if (! fd)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       clear_image_data ();
       return FALSE;
     }
 
   IFDBG g_print ("\tFile '%s' has been opened\n",
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
 
   save_header (fd, image);
   save_color_mode_data (fd, image);

@@ -322,6 +322,17 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("vectors/gimpvectors.h") ] },
 
+    file        => { name            => 'FILE',
+		     gtype           => 'G_TYPE_FILE',
+		     type            => 'GFile *',
+		     const_type      => 'GFile *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer full)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_DUP_FILE ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)' },
+
     parasite    => { name            => 'PARASITE',
 		     gtype           => 'GIMP_TYPE_PARASITE',
 		     type            => 'GimpParasite *',

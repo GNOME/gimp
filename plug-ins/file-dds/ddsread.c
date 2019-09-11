@@ -98,7 +98,7 @@ static int           load_dialog       (void);
 static gboolean runme = FALSE;
 
 GimpPDBStatusType
-read_dds (gchar      *filename,
+read_dds (GFile      *file,
           GimpImage **ret_image,
           gboolean    interactive_dds)
 {
@@ -106,7 +106,7 @@ read_dds (gchar      *filename,
   unsigned char *buf;
   unsigned int l = 0;
   guchar *pixels;
-  gchar *tmp;
+  gchar *filename;
   FILE *fp;
   dds_header_t hdr;
   dds_header_dx10_t dx10hdr;
@@ -121,19 +121,17 @@ read_dds (gchar      *filename,
         return GIMP_PDB_CANCEL;
     }
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
-  if (fp == 0)
+  g_free (filename);
+
+  if (! fp)
     {
       g_message ("Error opening file.\n");
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (strrchr (filename, '/'))
-    tmp = g_strdup_printf ("Loading %s:", strrchr (filename, '/') + 1);
-  else
-    tmp = g_strdup_printf ("Loading %s:", filename);
-  gimp_progress_init (tmp);
-  g_free (tmp);
+  gimp_progress_init_printf ("Loading %s:", gimp_file_get_utf8_name (file));
 
   /* read header */
   read_header (&hdr, fp);
@@ -282,7 +280,7 @@ read_dds (gchar      *filename,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   if (hdr.pixelfmt.flags & DDPF_PALETTEINDEXED8)
     {

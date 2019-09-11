@@ -52,14 +52,14 @@ int           webp_file_progress    (int                percent,
                                      const WebPPicture *picture);
 const gchar * webp_error_string     (WebPEncodingError  error_code);
 
-gboolean      save_layer            (const gchar       *filename,
+gboolean      save_layer            (GFile             *file,
                                      gint32             nLayers,
                                      GimpImage         *image,
                                      GimpDrawable      *drawable,
                                      WebPSaveParams    *params,
                                      GError           **error);
 
-gboolean      save_animation        (const gchar       *filename,
+gboolean      save_animation        (GFile             *file,
                                      gint32             nLayers,
                                      GList             *layers,
                                      GimpImage         *image,
@@ -140,7 +140,7 @@ webp_error_string (WebPEncodingError error_code)
 }
 
 gboolean
-save_layer (const gchar    *filename,
+save_layer (GFile          *file,
             gint32          nLayers,
             GimpImage      *image,
             GimpDrawable   *drawable,
@@ -195,17 +195,23 @@ save_layer (const gchar    *filename,
 
   do
     {
+      gchar *filename;
+
       /* Begin displaying export progress */
       gimp_progress_init_printf (_("Saving '%s'"),
-                                 gimp_filename_to_utf8(filename));
+                                 gimp_file_get_utf8_name (file));
 
       /* Attempt to open the output file */
-      if ((outfile = g_fopen (filename, "w+b")) == NULL)
+      filename = g_file_get_path (file);
+      outfile = g_fopen (filename, "w+b");
+      g_free (filename);
+
+      if (! outfile)
         {
           g_set_error (error, G_FILE_ERROR,
                        g_file_error_from_errno (errno),
                        _("Unable to open '%s' for writing: %s"),
-                       gimp_filename_to_utf8 (filename),
+                       gimp_file_get_utf8_name (file),
                        g_strerror (errno));
           break;
         }
@@ -499,7 +505,7 @@ combine_buffers (GeglBuffer *layer_buffer,
 }
 
 gboolean
-save_animation (const gchar    *filename,
+save_animation (GFile          *file,
                 gint32          nLayers,
                 GList          *layers,
                 GimpImage      *image,
@@ -553,6 +559,7 @@ save_animation (const gchar    *filename,
 
   do
     {
+      gchar   *filename;
       GList   *list;
       gint     loop;
       gint     default_delay = params->delay;
@@ -560,15 +567,19 @@ save_animation (const gchar    *filename,
 
       /* Begin displaying export progress */
       gimp_progress_init_printf (_("Saving '%s'"),
-                                 gimp_filename_to_utf8 (filename));
+                                 gimp_file_get_utf8_name (file));
 
       /* Attempt to open the output file */
-      if ((outfile = g_fopen (filename, "wb")) == NULL)
+      filename = g_file_get_path (file);
+      outfile = g_fopen (filename, "wb");
+      g_free (file);
+
+      if (! outfile)
         {
           g_set_error (error, G_FILE_ERROR,
                        g_file_error_from_errno (errno),
                        _("Unable to open '%s' for writing: %s"),
-                       gimp_filename_to_utf8 (filename),
+                       gimp_file_get_utf8_name (file),
                        g_strerror (errno));
           status = FALSE;
           break;
@@ -807,7 +818,7 @@ save_animation (const gchar    *filename,
 
 
 gboolean
-save_image (const gchar            *filename,
+save_image (GFile                  *file,
             GimpImage              *image,
             GimpDrawable           *drawable,
             GimpMetadata           *metadata,
@@ -815,7 +826,6 @@ save_image (const gchar            *filename,
             WebPSaveParams         *params,
             GError                **error)
 {
-  GFile    *file;
   gboolean  status = FALSE;
   GList    *layers;
 
@@ -825,18 +835,18 @@ save_image (const gchar            *filename,
   if (! layers)
     return FALSE;
 
-  g_printerr ("Saving WebP file %s\n", filename);
+  g_printerr ("Saving WebP file %s\n", gimp_file_get_utf8_name (file));
 
   if (params->animation)
     {
-      status = save_animation (filename,
+      status = save_animation (file,
                                g_list_length (layers), layers,
                                image, drawable, params,
                                error);
     }
   else
     {
-      status = save_layer (filename,
+      status = save_layer (file,
                            g_list_length (layers),
                            image, drawable, params, error);
     }
@@ -870,12 +880,10 @@ save_image (const gchar            *filename,
       else
         metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
-      file = g_file_new_for_path (filename);
       gimp_image_metadata_save_finish (image,
                                        "image/webp",
                                        metadata, metadata_flags,
                                        file, NULL);
-      g_object_unref (file);
     }
 
   /* Return the status */

@@ -66,15 +66,13 @@ file_gbr_load_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image = NULL;
-  const gchar    *uri;
   GFile          *file;
   GInputStream   *input;
   GError         *my_error = NULL;
 
   gimp_set_busy (gimp);
 
-  uri  = g_value_get_string (gimp_value_array_index (args, 1));
-  file = g_file_new_for_uri (uri);
+  file = g_value_get_object (gimp_value_array_index (args, 1));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
@@ -96,8 +94,6 @@ file_gbr_load_invoker (GimpProcedure         *procedure,
                                   _("Could not open '%s' for reading: "),
                                   gimp_file_get_utf8_name (file));
     }
-
-  g_object_unref (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, image != NULL,
                                                   error ? *error : NULL);
@@ -122,7 +118,6 @@ file_gbr_save_invoker (GimpProcedure         *procedure,
   GimpImage      *image;
   GimpDrawable   *drawable;
   GimpBrush      *brush;
-  const gchar    *uri;
   const gchar    *name;
   GFile          *file;
   gint            spacing;
@@ -132,11 +127,9 @@ file_gbr_save_invoker (GimpProcedure         *procedure,
 
   image    = g_value_get_object (gimp_value_array_index (args, 1));
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  uri      = g_value_get_string (gimp_value_array_index (args, 3));
-  spacing  = g_value_get_int (gimp_value_array_index (args, 5));
-  name     = g_value_get_string (gimp_value_array_index (args, 6));
-
-  file = g_file_new_for_uri (uri);
+  file     = g_value_get_object (gimp_value_array_index (args, 3));
+  spacing  = g_value_get_int    (gimp_value_array_index (args, 4));
+  name     = g_value_get_string (gimp_value_array_index (args, 5));
 
   brush = file_gbr_image_to_brush (image, drawable, name, spacing);
 
@@ -145,7 +138,6 @@ file_gbr_save_invoker (GimpProcedure         *procedure,
   success = gimp_data_save (GIMP_DATA (brush), error);
 
   g_object_unref (brush);
-  g_object_unref (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);

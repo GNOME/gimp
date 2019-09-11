@@ -78,11 +78,10 @@ gimp_load_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_STRING (procedure, "uri",
-                        "URI",
-                        "The URI of the file to load",
-                        NULL,
-                        GIMP_PARAM_READWRITE);
+  GIMP_PROC_ARG_FILE (procedure, "file",
+                      "File",
+                      "The file to load",
+                      GIMP_PARAM_READWRITE);
 
   GIMP_PROC_VAL_IMAGE (procedure, "image",
                        "Image",
@@ -148,14 +147,11 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   GimpValueArray    *remaining;
   GimpValueArray    *return_values;
   GimpRunMode        run_mode;
-  const gchar       *uri;
   GFile             *file;
   gint               i;
 
-  run_mode   = GIMP_VALUES_GET_ENUM   (args, 0);
-  uri        = GIMP_VALUES_GET_STRING (args, 1);
-
-  file = g_file_new_for_uri (uri);
+  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  file     = GIMP_VALUES_GET_FILE (args, 1);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - 2);
 
@@ -173,7 +169,6 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
                                              load_proc->priv->run_data);
 
   gimp_value_array_unref (remaining);
-  g_object_unref (file);
 
   return return_values;
 }
@@ -200,11 +195,11 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
  *
  * It automatically adds the standard
  *
- * (run-mode, uri)
+ * (GimpRunMode, GFile)
  *
  * arguments and the standard
  *
- * (image-id)
+ * (GimpImage)
  *
  * return value of a load procedure. It is possible to add additional
  * arguments.

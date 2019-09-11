@@ -86,7 +86,7 @@ typedef struct
   guchar       *src;
   GeglBuffer   *buffer;
   const Babl   *format;
-  const gchar  *file_name;
+  GFile        *file;
   gboolean      abort_me;
   guint         source_id;
 } PreviewPersistent;
@@ -185,14 +185,13 @@ background_jpeg_save (PreviewPersistent *pp)
         g_object_unref (pp->buffer);
 
       /* display the preview stuff */
-      if (!pp->abort_me)
+      if (! pp->abort_me)
         {
-          GFile     *file = g_file_new_for_path (pp->file_name);
           GFileInfo *info;
           gchar     *text;
           GError    *error = NULL;
 
-          info = g_file_query_info (file,
+          info = g_file_query_info (pp->file,
                                     G_FILE_ATTRIBUTE_STANDARD_SIZE,
                                     G_FILE_QUERY_INFO_NONE,
                                     NULL, &error);
@@ -217,14 +216,13 @@ background_jpeg_save (PreviewPersistent *pp)
           gtk_label_set_text (GTK_LABEL (preview_size), text);
           g_free (text);
 
-          g_object_unref (file);
-
           /* and load the preview */
-          load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL, NULL);
+          load_image (pp->file, GIMP_RUN_NONINTERACTIVE,
+                      TRUE, NULL, NULL);
         }
 
       /* we cleanup here (load_image doesn't run in the background) */
-      g_unlink (pp->file_name);
+      g_file_delete (pp->file, NULL, NULL);
 
       g_free (pp);
       prev_p = NULL;
@@ -260,7 +258,7 @@ background_jpeg_save (PreviewPersistent *pp)
 }
 
 gboolean
-save_image (const gchar  *filename,
+save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
             GimpImage    *orig_image,
@@ -276,6 +274,7 @@ save_image (const gchar  *filename,
   const Babl       *format;
   const Babl       *space;
   JpegSubsampling   subsampling;
+  gchar            *filename;
   FILE             * volatile outfile;
   guchar           *data;
   guchar           *src;
@@ -291,7 +290,7 @@ save_image (const gchar  *filename,
 
   if (! preview)
     gimp_progress_init_printf (_("Exporting '%s'"),
-                               gimp_filename_to_utf8 (filename));
+                               gimp_file_get_utf8_name (file));
 
   /* Step 1: allocate and initialize JPEG compression object */
 
@@ -330,11 +329,15 @@ save_image (const gchar  *filename,
    * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
    * requires it in order to write binary files.
    */
-  if ((outfile = g_fopen (filename, "wb")) == NULL)
+  filename = g_file_get_path (file);
+  outfile = g_fopen (filename, "wb");
+  g_free (file);
+
+  if (! outfile)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -668,7 +671,7 @@ save_image (const gchar  *filename,
       pp->buffer      = buffer;
       pp->format      = format;
       pp->src         = NULL;
-      pp->file_name   = filename;
+      pp->file        = file;
       pp->abort_me    = FALSE;
 
       g_warn_if_fail (prev_p == NULL);
@@ -740,7 +743,10 @@ make_preview (void)
 
   if (jsvals.preview)
     {
-      gchar *tn = gimp_temp_name ("jpeg");
+      gchar *tn   = gimp_temp_name ("jpeg");
+      GFile *file = g_file_new_for_path (tn);
+
+      g_free (tn);
 
       if (! undo_touched)
         {
@@ -751,11 +757,13 @@ make_preview (void)
           undo_touched = TRUE;
         }
 
-      save_image (tn,
+      save_image (file,
                   preview_image,
                   drawable_global,
                   orig_image_global,
                   TRUE, NULL);
+
+      g_object_unref (file);
 
       if (! display)
         display = gimp_display_new (preview_image);

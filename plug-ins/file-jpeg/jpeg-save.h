@@ -44,7 +44,7 @@ extern GimpImage       *orig_image_global;
 extern GimpDrawable    *drawable_global;
 
 
-gboolean    save_image         (const gchar  *filename,
+gboolean    save_image         (GFile        *file,
                                 GimpImage    *image,
                                 GimpDrawable *drawable,
                                 GimpImage    *orig_image,

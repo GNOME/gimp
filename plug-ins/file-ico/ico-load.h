@@ -22,9 +22,9 @@
 #define __ICO_LOAD_H__
 
 
-GimpImage * ico_load_image           (const gchar   *filename,
+GimpImage * ico_load_image           (GFile         *file,
                                       GError       **error);
-GimpImage * ico_load_thumbnail_image (const gchar   *filename,
+GimpImage * ico_load_thumbnail_image (GFile         *file,
                                       gint          *width,
                                       gint          *height,
                                       GError       **error);

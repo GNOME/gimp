@@ -563,9 +563,9 @@ static GimpValueArray * psp_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
-static gboolean         save_image           (const gchar          *filename,
+static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
@@ -699,7 +699,7 @@ psp_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -777,7 +777,7 @@ psp_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (g_file_get_path (file), image, drawable,
+      if (save_image (file, image, drawable,
                       &error))
         {
           gimp_set_data (SAVE_PROC, &psvals, sizeof (PSPSaveVals));
@@ -1910,10 +1910,11 @@ compression_name (gint compression)
 /* The main function for loading PSP-images
  */
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
-  FILE *f;
+  gchar  *filename;
+  FILE   *f;
   struct stat st;
   char buf[32];
   PSPimage ia;
@@ -1924,15 +1925,23 @@ load_image (const gchar  *filename,
 
   GimpImage *image = NULL;
 
+  filename = g_file_get_path (file);
+
   if (g_stat (filename, &st) == -1)
-    return NULL;
+    {
+      g_free (filename);
+      return NULL;
+    }
 
   f = g_fopen (filename, "rb");
-  if (f == NULL)
+
+  g_free (filename);
+
+  if (! f)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -1986,7 +1995,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Could not open '%s' for reading: %s"),
-                       gimp_filename_to_utf8 (filename),
+                       gimp_file_get_utf8_name (file),
                        _("invalid block size"));
           goto error;
         }
@@ -2017,7 +2026,7 @@ load_image (const gchar  *filename,
               goto error;
             }
 
-          gimp_image_set_filename (image, filename);
+          gimp_image_set_file (image, file);
 
           gimp_image_set_resolution (image, ia.resolution, ia.resolution);
         }
@@ -2109,7 +2118,7 @@ load_image (const gchar  *filename,
 }
 
 static gint
-save_image (const gchar  *filename,
+save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
             GError      **error)

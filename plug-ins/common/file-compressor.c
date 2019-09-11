@@ -166,13 +166,13 @@ static GimpValueArray * compressor_load             (GimpProcedure        *proce
                                                      const GimpValueArray *args,
                                                      gpointer              run_data);
 
-static GimpImage      * load_image     (const CompressorEntry *compressor,
-                                        const gchar           *filename,
-                                        gint32                 run_mode,
-                                        GimpPDBStatusType     *status,
-                                        GError               **error);
+static GimpImage         * load_image     (const CompressorEntry *compressor,
+                                           GFile                 *file,
+                                           gint32                 run_mode,
+                                           GimpPDBStatusType     *status,
+                                           GError               **error);
 static GimpPDBStatusType   save_image     (const CompressorEntry *compressor,
-                                           const gchar           *filename,
+                                           GFile                 *file,
                                            GimpImage             *image,
                                            GimpDrawable          *drawable,
                                            gint32                 run_mode,
@@ -369,7 +369,6 @@ compressor_load (GimpProcedure        *procedure,
   const CompressorEntry *compressor = run_data;
   GimpValueArray        *return_vals;
   GimpPDBStatusType      status;
-  gchar                 *filename;
   GimpImage             *image;
   GError                *error = NULL;
 
@@ -379,12 +378,8 @@ compressor_load (GimpProcedure        *procedure,
   gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  filename = g_file_get_path (file);
-
-  image = load_image (compressor, filename, run_mode,
+  image = load_image (compressor, file, run_mode,
                       &status, &error);
-
-  g_free (filename);
 
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
@@ -405,7 +400,6 @@ compressor_save (GimpProcedure        *procedure,
 {
   const CompressorEntry *compressor = run_data;
   GimpPDBStatusType      status;
-  gchar                 *filename;
   GError                *error = NULL;
 
   /*  We handle PDB errors by forwarding them to the caller in
@@ -414,24 +408,21 @@ compressor_save (GimpProcedure        *procedure,
   gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  filename = g_file_get_path (file);
-
-  status = save_image (compressor, filename, image, drawable, run_mode,
+  status = save_image (compressor, file, image, drawable, run_mode,
                        &error);
-
-  g_free (filename);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static GimpPDBStatusType
 save_image (const CompressorEntry  *compressor,
-            const gchar            *filename,
+            GFile                  *file,
             GimpImage              *image,
             GimpDrawable           *drawable,
             gint32                  run_mode,
             GError                **error)
 {
+  gchar       *filename = g_file_get_path (file);
   const gchar *ext;
   gchar       *tmpname;
 
@@ -450,10 +441,12 @@ save_image (const CompressorEntry  *compressor,
   if (! (gimp_file_save (run_mode,
                          image,
                          drawable,
-                         tmpname) && valid_file (tmpname)))
+                         g_file_new_for_path (tmpname)) &&
+         valid_file (tmpname)))
     {
       g_unlink (tmpname);
       g_free (tmpname);
+      g_free (filename);
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
@@ -462,12 +455,13 @@ save_image (const CompressorEntry  *compressor,
     }
 
   gimp_progress_init_printf (_("Compressing '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name  (file));
 
-  if (!compressor->save_fn (tmpname, filename))
+  if (! compressor->save_fn (tmpname, filename))
     {
       g_unlink (tmpname);
       g_free (tmpname);
+      g_free (filename);
 
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -478,21 +472,26 @@ save_image (const CompressorEntry  *compressor,
 
   /* ask the core to save a thumbnail for compressed XCF files */
   if (strcmp (ext, ".xcf") == 0)
-    gimp_file_save_thumbnail (image, filename);
+    gimp_file_save_thumbnail (image, file);
+
+  g_free (filename);
 
   return GIMP_PDB_SUCCESS;
 }
 
 static GimpImage *
 load_image (const CompressorEntry  *compressor,
-            const gchar            *filename,
+            GFile                  *file,
             gint32                  run_mode,
             GimpPDBStatusType      *status,
             GError                **error)
 {
   GimpImage   *image;
+  gchar       *filename;
   const gchar *ext;
   gchar       *tmpname;
+
+  filename = g_file_get_path (file);
 
   ext = find_extension (compressor, filename);
 
@@ -506,16 +505,19 @@ load_image (const CompressorEntry  *compressor,
   /* find a temp name */
   tmpname = gimp_temp_name (ext + 1);
 
-  if (!compressor->load_fn (filename, tmpname))
+  if (! compressor->load_fn (filename, tmpname))
     {
       g_free (tmpname);
+      g_free (filename);
       *status = GIMP_PDB_EXECUTION_ERROR;
       return NULL;
     }
 
+  g_free (filename);
+
   /* now that we uncompressed it, load the temp file */
 
-  image = gimp_file_load (run_mode, tmpname);
+  image = gimp_file_load (run_mode, g_file_new_for_path (tmpname));
 
   g_unlink (tmpname);
   g_free (tmpname);
@@ -524,7 +526,7 @@ load_image (const CompressorEntry  *compressor,
     {
       *status = GIMP_PDB_SUCCESS;
 
-      gimp_image_set_filename (image, filename);
+      gimp_image_set_file (image, file);
     }
   else
     {

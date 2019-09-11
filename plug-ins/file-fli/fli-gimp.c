@@ -110,20 +110,20 @@ static GimpValueArray * fli_info             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               gint32                from_frame,
                                               gint32                to_frame,
                                               GError              **error);
-static gboolean         load_dialog          (const gchar          *filename);
+static gboolean         load_dialog          (GFile                *file);
 
-static gboolean         save_image           (const gchar          *filename,
+static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               gint32                from_frame,
                                               gint32                to_frame,
                                               GError              **error);
 static gboolean         save_dialog          (GimpImage            *image);
 
-static gboolean         get_info             (const gchar          *filename,
+static gboolean         get_info             (GFile                *file,
                                               gint32               *width,
                                               gint32               *height,
                                               gint32               *frames,
@@ -309,7 +309,7 @@ fli_load (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_INTERACTIVE:
-      if (! load_dialog (g_file_get_path (file)))
+      if (! load_dialog (file))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
@@ -322,8 +322,8 @@ fli_load (GimpProcedure        *procedure,
       break;
     }
 
-  image = load_image (g_file_get_path (file),
-                      from_frame, to_frame, &error);
+  image = load_image (file, from_frame, to_frame,
+                      &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -388,8 +388,8 @@ fli_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (g_file_get_path (file), image,
-                        from_frame, to_frame, &error))
+      if (! save_image (file, image, from_frame, to_frame,
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -415,8 +415,8 @@ fli_info (GimpProcedure        *procedure,
 
   file = g_file_new_for_uri (GIMP_VALUES_GET_STRING (args, 0));
 
-  if (! get_info (g_file_get_path (file),
-                  &width, &height, &frames, &error))
+  if (! get_info (file, &width, &height, &frames,
+                  &error))
     {
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
@@ -438,29 +438,32 @@ fli_info (GimpProcedure        *procedure,
  * Open FLI animation and return header-info
  */
 static gboolean
-get_info (const gchar  *filename,
-          gint32       *width,
-          gint32       *height,
-          gint32       *frames,
-          GError      **error)
+get_info (GFile   *file,
+          gint32  *width,
+          gint32  *height,
+          gint32  *frames,
+          GError **error)
 {
-  FILE         *file;
+  gchar        *filename;
+  FILE         *fp;
   s_fli_header  fli_header;
 
   *width = 0; *height = 0; *frames = 0;
 
-  file = g_fopen (filename ,"rb");
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename ,"rb");
+  g_free (filename);
 
-  if (!file)
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
-  fli_read_header (file, &fli_header);
-  fclose (file);
+  fli_read_header (fp, &fli_header);
+  fclose (fp);
 
   *width  = fli_header.width;
   *height = fli_header.height;
@@ -473,12 +476,13 @@ get_info (const gchar  *filename,
  * load fli animation and store as framestack
  */
 static GimpImage *
-load_image (const gchar  *filename,
-            gint32        from_frame,
-            gint32        to_frame,
-            GError      **error)
+load_image (GFile   *file,
+            gint32   from_frame,
+            gint32   to_frame,
+            GError **error)
 {
-  FILE         *file;
+  gchar        *filename;
+  FILE         *fp;
   GeglBuffer   *buffer;
   GimpImage    *image;
   GimpLayer    *layer;
@@ -488,26 +492,29 @@ load_image (const gchar  *filename,
   gint          cnt;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
-  file = g_fopen (filename ,"rb");
-  if (! file)
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename ,"rb");
+  g_free (file);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
-  fli_read_header (file, &fli_header);
+  fli_read_header (fp, &fli_header);
   if (fli_header.magic == NO_HEADER)
     {
-      fclose (file);
+      fclose (fp);
       return NULL;
     }
   else
     {
-      fseek (file, 128, SEEK_SET);
+      fseek (fp, 128, SEEK_SET);
     }
 
   /*
@@ -529,13 +536,13 @@ load_image (const gchar  *filename,
   if (to_frame < 1)
     {
       /* nothing to do ... */
-      fclose (file);
+      fclose (fp);
       return NULL;
     }
   if (from_frame >= fli_header.frames)
     {
       /* nothing to do ... */
-      fclose (file);
+      fclose (fp);
       return NULL;
     }
   if (to_frame > fli_header.frames)
@@ -544,7 +551,7 @@ load_image (const gchar  *filename,
     }
 
   image = gimp_image_new (fli_header.width, fli_header.height, GIMP_INDEXED);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   fb  = g_malloc (fli_header.width * fli_header.height);
   ofb = g_malloc (fli_header.width * fli_header.height);
@@ -554,7 +561,7 @@ load_image (const gchar  *filename,
    */
   for (cnt = 1; cnt < from_frame; cnt++)
     {
-      fli_read_frame (file, &fli_header, ofb, ocm, fb, cm);
+      fli_read_frame (fp, &fli_header, ofb, ocm, fb, cm);
       memcpy (ocm, cm, 768);
       fb_x = fb; fb = ofb; ofb = fb_x;
     }
@@ -574,7 +581,7 @@ load_image (const gchar  *filename,
 
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-      fli_read_frame (file, &fli_header, ofb, ocm, fb, cm);
+      fli_read_frame (fp, &fli_header, ofb, ocm, fb, cm);
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0,
                                                fli_header.width,
@@ -599,7 +606,7 @@ load_image (const gchar  *filename,
 
   gimp_image_set_colormap (image, cm, 256);
 
-  fclose (file);
+  fclose (fp);
 
   g_free (fb);
   g_free (ofb);
@@ -617,13 +624,14 @@ load_image (const gchar  *filename,
  * (some code was taken from the GIF plugin.)
  */
 static gboolean
-save_image (const gchar  *filename,
-            GimpImage    *image,
-            gint32        from_frame,
-            gint32        to_frame,
-            GError      **error)
+save_image (GFile      *file,
+            GimpImage  *image,
+            gint32      from_frame,
+            gint32      to_frame,
+            GError    **error)
 {
-  FILE         *file;
+  gchar        *filename;
+  FILE         *fp;
   GList        *framelist;
   GList        *iter;
   gint          nframes;
@@ -722,7 +730,7 @@ save_image (const gchar  *filename,
     }
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /*
    * First build the fli header.
@@ -749,15 +757,18 @@ save_image (const gchar  *filename,
   fli_header.aspect_y = 1;  /* ... as GIMP supports it. */
   fli_header.oframe1  = fli_header.oframe2 = 0; /* will be fixed during the write */
 
-  file = g_fopen (filename ,"wb");
-  if (!file)
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename , "wb");
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
-  fseek (file, 128, SEEK_SET);
+  fseek (fp, 128, SEEK_SET);
 
   fb = g_malloc (fli_header.width * fli_header.height);
   ofb = g_malloc (fli_header.width * fli_header.height);
@@ -823,12 +834,12 @@ save_image (const gchar  *filename,
       if (cnt > from_frame)
         {
           /* save frame, allow all codecs */
-          fli_write_frame (file, &fli_header, ofb, cm, fb, cm, W_ALL);
+          fli_write_frame (fp, &fli_header, ofb, cm, fb, cm, W_ALL);
         }
       else
         {
           /* save first frame, no delta information, allow all codecs */
-          fli_write_frame (file, &fli_header, NULL, NULL, fb, cm, W_ALL);
+          fli_write_frame (fp, &fli_header, NULL, NULL, fb, cm, W_ALL);
         }
 
       if (cnt < to_frame)
@@ -840,8 +851,8 @@ save_image (const gchar  *filename,
   /*
    * finish fli
    */
-  fli_write_header (file, &fli_header);
-  fclose (file);
+  fli_write_header (fp, &fli_header);
+  fclose (fp);
 
   g_free (fb);
   g_free (ofb);
@@ -856,7 +867,7 @@ save_image (const gchar  *filename,
  * Dialogs for interactive usage
  */
 static gboolean
-load_dialog (const gchar *filename)
+load_dialog (GFile *file)
 {
   GtkWidget     *dialog;
   GtkWidget     *grid;
@@ -865,7 +876,7 @@ load_dialog (const gchar *filename)
   gint32         width, height, nframes;
   gboolean       run;
 
-  get_info (filename, &width, &height, &nframes, NULL);
+  get_info (file, &width, &height, &nframes, NULL);
 
   from_frame = 1;
   to_frame   = nframes;

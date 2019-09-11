@@ -33,20 +33,20 @@ G_BEGIN_DECLS
 
 
 GimpImage*  gimp_file_load           (GimpRunMode   run_mode,
-                                      const gchar  *filename);
+                                      GFile        *file);
 GimpLayer*  gimp_file_load_layer     (GimpRunMode   run_mode,
                                       GimpImage    *image,
-                                      const gchar  *filename);
+                                      GFile        *file);
 GimpLayer** gimp_file_load_layers    (GimpRunMode   run_mode,
                                       GimpImage    *image,
-                                      const gchar  *filename,
+                                      GFile        *file,
                                       gint         *num_layers);
 gboolean    gimp_file_save           (GimpRunMode   run_mode,
                                       GimpImage    *image,
                                       GimpDrawable *drawable,
-                                      const gchar  *filename);
+                                      GFile        *file);
 gboolean    gimp_file_save_thumbnail (GimpImage    *image,
-                                      const gchar  *filename);
+                                      GFile        *file);
 
 
 G_END_DECLS

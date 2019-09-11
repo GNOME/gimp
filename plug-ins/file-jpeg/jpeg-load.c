@@ -56,7 +56,7 @@ GimpImage * volatile  preview_image;
 GimpLayer *           preview_layer;
 
 GimpImage *
-load_image (const gchar  *filename,
+load_image (GFile        *file,
             GimpRunMode   runmode,
             gboolean      preview,
             gboolean     *resolution_loaded,
@@ -67,6 +67,7 @@ load_image (const gchar  *filename,
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
   jpeg_saved_marker_ptr         marker;
+  gchar             *filename;
   FILE              *infile;
   guchar            *buf;
   guchar           **rowbuf;
@@ -88,14 +89,18 @@ load_image (const gchar  *filename,
       jerr.pub.output_message = my_output_message;
 
       gimp_progress_init_printf (_("Opening '%s'"),
-                                 gimp_filename_to_utf8 (filename));
+                                 gimp_file_get_utf8_name (file));
     }
 
-  if ((infile = g_fopen (filename, "rb")) == NULL)
+  filename = g_file_get_path (file);
+  infile = g_fopen (filename, "rb");
+  g_free (filename);
+
+  if (! infile)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -231,7 +236,7 @@ load_image (const gchar  *filename,
                                              GIMP_PRECISION_U8_NON_LINEAR);
 
       gimp_image_undo_disable (image);
-      gimp_image_set_filename (image, filename);
+      gimp_image_set_file (image, file);
 
       /* Step 5.0: save the original JPEG settings in a parasite */
       jpeg_detect_original_settings (&cinfo, image);

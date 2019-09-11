@@ -88,16 +88,16 @@ static GimpValueArray * svg_load_thumb       (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage         * load_image        (const gchar  *filename,
-                                              GError      **error);
-static GdkPixbuf         * load_rsvg_pixbuf  (const gchar  *filename,
-                                              SvgLoadVals  *vals,
-                                             GError      **error);
-static gboolean            load_rsvg_size    (const gchar  *filename,
-                                              SvgLoadVals  *vals,
-                                              GError      **error);
-static gboolean            load_dialog       (const gchar  *filename,
-                                              GError      **error);
+static GimpImage         * load_image        (GFile                *file,
+                                              GError              **error);
+static GdkPixbuf         * load_rsvg_pixbuf  (GFile                *file,
+                                              SvgLoadVals          *vals,
+                                              GError              **error);
+static gboolean            load_rsvg_size    (GFile                *file,
+                                              SvgLoadVals          *vals,
+                                              GError              **error);
+static gboolean            load_dialog       (GFile                *file,
+                                              GError              **error);
 
 
 
@@ -232,14 +232,11 @@ svg_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  filename = g_file_get_path (file);
 
   switch (run_mode)
     {
@@ -253,7 +250,7 @@ svg_load (GimpProcedure        *procedure,
 
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (LOAD_PROC, &load_vals);
-      if (! load_dialog (filename, &error))
+      if (! load_dialog (file, &error))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
@@ -264,7 +261,7 @@ svg_load (GimpProcedure        *procedure,
       break;
     }
 
-  image = load_image (filename, &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -275,7 +272,7 @@ svg_load (GimpProcedure        *procedure,
       GimpVectors **vectors;
       gint          num_vectors;
 
-      gimp_vectors_import_from_file (image, filename,
+      gimp_vectors_import_from_file (image, file,
                                      load_vals.merge, TRUE,
                                      &num_vectors, &vectors);
       if (num_vectors > 0)
@@ -284,8 +281,6 @@ svg_load (GimpProcedure        *procedure,
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_set_data (LOAD_PROC, &load_vals, sizeof (load_vals));
-
-  g_free (filename);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -312,8 +307,7 @@ svg_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  if (load_rsvg_size (g_file_get_path (file),
-                      &load_vals, NULL))
+  if (load_rsvg_size (file, &load_vals, NULL))
     {
       width  = load_vals.width;
       height = load_vals.height;
@@ -323,8 +317,7 @@ svg_load_thumb (GimpProcedure        *procedure,
   load_vals.width      = - size;
   load_vals.height     = - size;
 
-  image = load_image (g_file_get_path (file),
-                      &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -345,8 +338,8 @@ svg_load_thumb (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **load_error)
+load_image (GFile   *file,
+            GError **load_error)
 {
   GimpImage    *image;
   GimpLayer    *layer;
@@ -355,7 +348,7 @@ load_image (const gchar  *filename,
   gint          height;
   GError       *error = NULL;
 
-  pixbuf = load_rsvg_pixbuf (filename, &load_vals, &error);
+  pixbuf = load_rsvg_pixbuf (file, &load_vals, &error);
 
   if (! pixbuf)
     {
@@ -363,7 +356,7 @@ load_image (const gchar  *filename,
       g_set_error (load_error,
                    error ? error->domain : 0, error ? error->code : 0,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename),
+                   gimp_file_get_utf8_name (file),
                    error ? error->message : _("Unknown reason"));
       g_clear_error (&error);
 
@@ -378,7 +371,7 @@ load_image (const gchar  *filename,
   image = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_undo_disable (image);
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
   gimp_image_set_resolution (image,
                              load_vals.resolution, load_vals.resolution);
 
@@ -443,24 +436,18 @@ load_set_size_callback (gint     *width,
 
 /*  This function renders a pixbuf from an SVG file according to vals.  */
 static GdkPixbuf *
-load_rsvg_pixbuf (const gchar  *filename,
+load_rsvg_pixbuf (GFile        *file,
                   SvgLoadVals  *vals,
                   GError      **error)
 {
   GdkPixbuf  *pixbuf  = NULL;
   RsvgHandle *handle;
-  GFile      *file;
 
-  file = g_file_new_for_path (filename);
+  handle = rsvg_handle_new_from_gfile_sync (file, RSVG_HANDLE_FLAGS_NONE, NULL,
+                                            error);
 
-  handle = rsvg_handle_new_from_gfile_sync (file, RSVG_HANDLE_FLAGS_NONE, NULL, error);
-
-  g_object_unref (file);
-
-  if (!handle)
-    {
-      return NULL;
-    }
+  if (! handle)
+    return NULL;
 
   rsvg_handle_set_dpi (handle, vals->resolution);
   rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
@@ -476,25 +463,19 @@ static GtkWidget *size_label = NULL;
 
 /*  This function retrieves the pixel size from an SVG file.  */
 static gboolean
-load_rsvg_size (const gchar  *filename,
+load_rsvg_size (GFile        *file,
                 SvgLoadVals  *vals,
                 GError      **error)
 {
   RsvgHandle        *handle;
-  GFile             *file;
   RsvgDimensionData  dim;
   gboolean           has_size;
 
-  file = g_file_new_for_path (filename);
+  handle = rsvg_handle_new_from_gfile_sync (file, RSVG_HANDLE_FLAGS_NONE, NULL,
+                                            error);
 
-  handle = rsvg_handle_new_from_gfile_sync (file, RSVG_HANDLE_FLAGS_NONE, NULL, error);
-
-  g_object_unref (file);
-
-  if (!handle)
-    {
-      return FALSE;
-    }
+  if (! handle)
+    return FALSE;
 
   rsvg_handle_set_dpi (handle, vals->resolution);
 
@@ -593,13 +574,13 @@ load_dialog_ratio_callback (GtkAdjustment *adj,
 
 static void
 load_dialog_resolution_callback (GimpSizeEntry *res,
-                                 const gchar   *filename)
+                                 GFile         *file)
 {
   SvgLoadVals  vals = { 0.0, 0, 0 };
 
   load_vals.resolution = vals.resolution = gimp_size_entry_get_refval (res, 0);
 
-  if (!load_rsvg_size (filename, &vals, NULL))
+  if (! load_rsvg_size (file, &vals, NULL))
     return;
 
   g_signal_handlers_block_by_func (size, load_dialog_size_callback, NULL);
@@ -646,8 +627,8 @@ load_dialog_set_ratio (gdouble x,
 }
 
 static gboolean
-load_dialog (const gchar  *filename,
-             GError      **load_error)
+load_dialog (GFile   *file,
+             GError **load_error)
 {
   GtkWidget     *dialog;
   GtkWidget     *frame;
@@ -672,7 +653,7 @@ load_dialog (const gchar  *filename,
     - SVG_PREVIEW_SIZE
   };
 
-  preview = load_rsvg_pixbuf (filename, &vals, &error);
+  preview = load_rsvg_pixbuf (file, &vals, &error);
 
   if (! preview)
     {
@@ -680,7 +661,7 @@ load_dialog (const gchar  *filename,
       g_set_error (load_error,
                    error ? error->domain : 0, error ? error->code : 0,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename),
+                   gimp_file_get_utf8_name (file),
                    error ? error->message : _("Unknown reason"));
       g_clear_error (&error);
 
@@ -737,7 +718,7 @@ load_dialog (const gchar  *filename,
   /*  query the initial size after the size label is created  */
   vals.resolution = load_vals.resolution;
 
-  load_rsvg_size (filename, &vals, NULL);
+  load_rsvg_size (file, &vals, NULL);
 
   svg_width  = vals.width;
   svg_height = vals.height;
@@ -889,7 +870,7 @@ load_dialog (const gchar  *filename,
 
   g_signal_connect (res, "value-changed",
                     G_CALLBACK (load_dialog_resolution_callback),
-                    (gpointer) filename);
+                    file);
 
   /*  Path Import  */
   toggle = gtk_check_button_new_with_mnemonic (_("Import _paths"));

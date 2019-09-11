@@ -123,14 +123,14 @@ static GimpValueArray * jp2_load             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               OPJ_CODEC_FORMAT      format,
                                               OPJ_COLOR_SPACE       color_space,
                                               gboolean              interactive,
                                               gboolean             *profile_loaded,
                                               GError              **error);
 
-static OPJ_COLOR_SPACE  open_dialog          (const gchar         *filename,
+static OPJ_COLOR_SPACE  open_dialog          (GFile               *file,
                                               OPJ_CODEC_FORMAT     format,
                                               gint                 num_components,
                                               GError             **error);
@@ -304,13 +304,13 @@ jp2_load (GimpProcedure        *procedure,
 
   if (! strcmp (gimp_procedure_get_name (procedure), LOAD_JP2_PROC))
     {
-      image = load_image (g_file_get_path (file), OPJ_CODEC_JP2,
+      image = load_image (file, OPJ_CODEC_JP2,
                           color_space, interactive, &profile_loaded,
                           &error);
     }
   else
     {
-      image = load_image (g_file_get_path (file), OPJ_CODEC_J2K,
+      image = load_image (file, OPJ_CODEC_J2K,
                           color_space, interactive, &profile_loaded,
                           &error);
     }
@@ -948,7 +948,7 @@ get_image_precision (gint     precision,
 }
 
 static OPJ_COLOR_SPACE
-open_dialog (const gchar      *filename,
+open_dialog (GFile            *file,
              OPJ_CODEC_FORMAT  format,
              gint              num_components,
              GError          **error)
@@ -1017,7 +1017,7 @@ open_dialog (const gchar      *filename,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported JPEG 2000%s '%s' with %d components."),
                    (format == OPJ_CODEC_J2K) ? " codestream" : "",
-                   gimp_filename_to_utf8 (filename), num_components);
+                   gimp_file_get_utf8_name (file), num_components);
       color_space = OPJ_CLRSPC_UNKNOWN;
     }
 
@@ -1051,13 +1051,14 @@ open_dialog (const gchar      *filename,
 }
 
 static GimpImage *
-load_image (const gchar       *filename,
+load_image (GFile             *file,
             OPJ_CODEC_FORMAT   format,
             OPJ_COLOR_SPACE    color_space,
             gboolean           interactive,
             gboolean          *profile_loaded,
             GError           **error)
 {
+  gchar             *filename;
   opj_stream_t      *stream     = NULL;
   opj_codec_t       *codec      = NULL;
   opj_dparameters_t  parameters;
@@ -1082,14 +1083,17 @@ load_image (const gchar       *filename,
   unsigned char     *c      = NULL;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   stream = opj_stream_create_default_file_stream (filename, OPJ_TRUE);
+  g_free (filename);
+
   if (! stream)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for reading"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1100,7 +1104,7 @@ load_image (const gchar       *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't set parameters on decoder for '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1108,7 +1112,7 @@ load_image (const gchar       *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't read JP2 header from '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1116,7 +1120,7 @@ load_image (const gchar       *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't decode JP2 image in '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1124,7 +1128,7 @@ load_image (const gchar       *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't decompress JP2 image in '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1155,7 +1159,7 @@ load_image (const gchar       *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't decode CIELAB JP2 image in '%s'."),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
 
@@ -1197,7 +1201,7 @@ load_image (const gchar       *filename,
         }
       else if (interactive)
         {
-          image->color_space = open_dialog (filename, format,
+          image->color_space = open_dialog (file, format,
                                             num_components, error);
 
           if (image->color_space == OPJ_CLRSPC_UNKNOWN)
@@ -1212,7 +1216,7 @@ load_image (const gchar       *filename,
            */
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unknown color space in JP2 codestream '%s'."),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1223,7 +1227,7 @@ load_image (const gchar       *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't convert YCbCr JP2 image '%s' to RGB."),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1233,7 +1237,7 @@ load_image (const gchar       *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't convert CMYK JP2 image in '%s' to RGB."),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1243,7 +1247,7 @@ load_image (const gchar       *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't convert xvYCC JP2 image in '%s' to RGB."),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1270,7 +1274,7 @@ load_image (const gchar       *filename,
       /* If not gray or RGB, this is an image we cannot handle. */
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported color space in JP2 image '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1288,7 +1292,7 @@ load_image (const gchar       *filename,
   gimp_image = gimp_image_new_with_precision (width, height,
                                               base_type, image_precision);
 
-  gimp_image_set_filename (gimp_image, filename);
+  gimp_image_set_file (gimp_image, file);
 
   if (profile)
     gimp_image_set_color_profile (gimp_image, profile);

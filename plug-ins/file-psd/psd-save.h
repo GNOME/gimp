@@ -19,9 +19,9 @@
 #define __PSD_SAVE_H__
 
 
-gboolean   save_image (const gchar  *filename,
-                       GimpImage    *image,
-                       GError      **error);
+gboolean   save_image (GFile      *file,
+                       GimpImage  *image,
+                       GError    **error);
 
 
 #endif /* __PSD_SAVE_H__ */

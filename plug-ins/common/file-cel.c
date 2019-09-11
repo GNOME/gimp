@@ -73,18 +73,18 @@ static GimpValueArray * cel_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gint             load_palette         (const gchar          *file,
+static gint             load_palette         (GFile                *file,
                                               FILE                 *fp,
                                               guchar                palette[],
                                               GError              **error);
-static GimpImage      * load_image           (const gchar          *file,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
 static void             palette_dialog       (const gchar          *title);
-static gboolean         need_palette         (const gchar          *file,
+static gboolean         need_palette         (GFile                *file,
                                               GError              **error);
 
 
@@ -235,7 +235,7 @@ cel_load (GimpProcedure        *procedure,
   else if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       /* Let user choose KCF palette (cancel ignores) */
-      needs_palette = need_palette (g_file_get_path (file), &error);
+      needs_palette = need_palette (file, &error);
 
       if (! error)
         {
@@ -248,8 +248,7 @@ cel_load (GimpProcedure        *procedure,
 
   if (! error)
     {
-      image = load_image (g_file_get_path (file),
-                          &error);
+      image = load_image (file, &error);
     }
 
   if (! image)
@@ -324,19 +323,23 @@ cel_save (GimpProcedure        *procedure,
 
 /* Peek into the file to determine whether we need a palette */
 static gboolean
-need_palette (const gchar *file,
-              GError     **error)
+need_palette (GFile   *file,
+              GError **error)
 {
+  gchar  *filename;
   FILE   *fp;
   guchar  header[32];
   size_t  n_read;
 
-  fp = g_fopen (file, "rb");
-  if (fp == NULL)
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename, "rb");
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -357,9 +360,10 @@ need_palette (const gchar *file,
 /* Load CEL image into GIMP */
 
 static GimpImage *
-load_image (const gchar  *file,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
+  gchar      *filename;
   FILE       *fp;            /* Read file pointer */
   guchar      header[32],    /* File header */
               file_mark,     /* KiSS file type */
@@ -378,16 +382,18 @@ load_image (const gchar  *file,
   size_t      n_read;        /* Number of items read from file */
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (file));
+                             gimp_file_get_utf8_name (file));
 
   /* Open the file for reading */
-  fp = g_fopen (file, "r");
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename, "r");
+  g_free (filename);
 
   if (fp == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -477,7 +483,7 @@ load_image (const gchar  *file,
       return NULL;
     }
 
-  gimp_image_set_filename (image, file);
+  gimp_image_set_file (image, file);
 
   /* Create an indexed-alpha layer to hold the image... */
   if (bpp == 32)
@@ -635,7 +641,7 @@ load_image (const gchar  *file,
 
       if (fp != NULL)
         {
-          colors = load_palette (palette_file, fp, palette, error);
+          colors = load_palette (g_file_new_for_path (palette_file), fp, palette, error);
           fclose (fp);
           if (colors < 0 || *error)
             return NULL;
@@ -661,7 +667,7 @@ load_image (const gchar  *file,
 }
 
 static gint
-load_palette (const gchar *file,
+load_palette (GFile       *file,
               FILE        *fp,
               guchar       palette[],
               GError     **error)
@@ -678,7 +684,7 @@ load_palette (const gchar *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s': EOF or error while reading palette header"),
-                   gimp_filename_to_utf8 (file));
+                   gimp_file_get_utf8_name (file));
       return -1;
     }
 
@@ -690,7 +696,7 @@ load_palette (const gchar *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': EOF or error while reading palette header"),
-                       gimp_filename_to_utf8 (file));
+                       gimp_file_get_utf8_name (file));
           return -1;
         }
 
@@ -699,7 +705,7 @@ load_palette (const gchar *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': is not a KCF palette file"),
-                       gimp_filename_to_utf8 (file));
+                       gimp_file_get_utf8_name (file));
           return -1;
         }
 
@@ -708,7 +714,7 @@ load_palette (const gchar *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': illegal bpp value in palette: %hhu"),
-                       gimp_filename_to_utf8 (file), bpp);
+                       gimp_file_get_utf8_name (file), bpp);
           return -1;
         }
 
@@ -717,7 +723,7 @@ load_palette (const gchar *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s': illegal number of colors: %u"),
-                       gimp_filename_to_utf8 (file), colors);
+                       gimp_file_get_utf8_name (file), colors);
           return -1;
         }
 
@@ -733,7 +739,7 @@ load_palette (const gchar *file,
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("'%s': EOF or error while reading "
                                  "palette data"),
-                               gimp_filename_to_utf8 (file));
+                               gimp_file_get_utf8_name (file));
                   return -1;
                 }
 
@@ -749,7 +755,7 @@ load_palette (const gchar *file,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("'%s': EOF or error while reading palette data"),
-                           gimp_filename_to_utf8 (file));
+                           gimp_file_get_utf8_name (file));
               return -1;
             }
           break;
@@ -769,7 +775,7 @@ load_palette (const gchar *file,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("'%s': EOF or error while reading palette data"),
-                           gimp_filename_to_utf8 (file));
+                           gimp_file_get_utf8_name (file));
               return -1;
             }
 

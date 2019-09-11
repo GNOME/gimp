@@ -45,7 +45,7 @@
 
 
 static GimpImage * ReadImage (FILE                 *fd,
-                              const gchar          *filename,
+                              GFile                *file,
                               gint                  width,
                               gint                  height,
                               guchar                cmap[256][3],
@@ -201,9 +201,10 @@ ReadChannelMasks (guint32       *tmp,
 }
 
 GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile  *file,
+            GError **error)
 {
+  gchar          *filename;
   FILE           *fd;
   BitmapFileHead  bitmap_file_head;
   BitmapHead      bitmap_head;
@@ -216,15 +217,17 @@ load_image (const gchar  *filename,
   BitmapChannel   masks[4];
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fd = g_fopen (filename, "rb");
+  g_free (filename);
 
-  if (!fd)
+  if (! fd)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       goto out;
     }
 
@@ -240,7 +243,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -250,7 +253,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s' is not a valid BMP file"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
 
@@ -258,7 +261,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("'%s' is not a valid BMP file"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -267,7 +270,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -282,7 +285,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -296,7 +299,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
 
@@ -323,7 +326,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
 
@@ -355,7 +358,7 @@ load_image (const gchar  *filename,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Error reading BMP file header from '%s'"),
-                           gimp_filename_to_utf8 (filename));
+                           gimp_file_get_utf8_name (file));
               goto out;
             }
 
@@ -380,7 +383,7 @@ load_image (const gchar  *filename,
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unsupported compression (%u) in BMP file from '%s'"),
                        bitmap_head.biCompr,
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
         }
 
 #ifdef DEBUG
@@ -396,7 +399,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
 
@@ -427,7 +430,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto out;
         }
 
@@ -469,7 +472,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error reading BMP file header from '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -489,7 +492,7 @@ load_image (const gchar  *filename,
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -514,7 +517,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -525,7 +528,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -533,7 +536,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -542,7 +545,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -554,7 +557,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -590,7 +593,7 @@ load_image (const gchar  *filename,
 
   /* Get the Image and return the image or NULL on error*/
   image = ReadImage (fd,
-                     filename,
+                     file,
                      bitmap_head.biWidth,
                      ABS (bitmap_head.biHeight),
                      ColorMap,
@@ -636,7 +639,7 @@ out:
 
 static GimpImage *
 ReadImage (FILE                 *fd,
-           const gchar          *filename,
+           GFile                *file,
            gint                  width,
            gint                  height,
            guchar                cmap[256][3],
@@ -736,7 +739,7 @@ ReadImage (FILE                 *fd,
                           image_type, 100,
                           gimp_image_get_default_new_layer_mode (image));
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   gimp_image_insert_layer (image, layer, NULL, 0);
 

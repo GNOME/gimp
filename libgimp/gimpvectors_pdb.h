@@ -120,7 +120,7 @@ gint                  gimp_vectors_bezier_stroke_new_ellipse (GimpVectors       
                                                               gdouble                  radius_y,
                                                               gdouble                  angle);
 gboolean              gimp_vectors_import_from_file          (GimpImage               *image,
-                                                              const gchar             *filename,
+                                                              GFile                   *file,
                                                               gboolean                 merge,
                                                               gboolean                 scale,
                                                               gint                    *num_vectors,
@@ -133,7 +133,7 @@ gboolean              gimp_vectors_import_from_string        (GimpImage         
                                                               gint                    *num_vectors,
                                                               GimpVectors           ***vectors);
 gboolean              gimp_vectors_export_to_file            (GimpImage               *image,
-                                                              const gchar             *filename,
+                                                              GFile                   *file,
                                                               GimpVectors             *vectors);
 gchar*                gimp_vectors_export_to_string          (GimpImage               *image,
                                                               GimpVectors             *vectors);

@@ -115,7 +115,7 @@ static gint        decompose                   (GimpImage           *image,
                                                 GimpImage          **image_dst,
                                                 gint32              *num_layers,
                                                 GimpLayer          **layer_dst);
-static GimpImage * create_new_image            (const gchar         *filename,
+static GimpImage * create_new_image            (GFile               *file,
                                                 const gchar         *layername,
                                                 guint                width,
                                                 guint                height,
@@ -543,7 +543,8 @@ decompose (GimpImage    *image,
           layername = gettext (extract[extract_idx].component[j].channel_name);
 
           if (j == 0)
-            image_dst[j] = create_new_image (filename, layername,
+            image_dst[j] = create_new_image (g_file_new_for_path (filename),
+                                             layername,
                                              width, height, GIMP_GRAY, precision,
                                              xres, yres,
                                              layer_dst + j);
@@ -553,7 +554,8 @@ decompose (GimpImage    *image,
         }
       else
         {
-          image_dst[j] = create_new_image (filename, NULL,
+          image_dst[j] = create_new_image (g_file_new_for_path (filename),
+                                           NULL,
                                            width, height, GIMP_GRAY, precision,
                                            xres, yres,
                                            layer_dst + j);
@@ -587,7 +589,7 @@ decompose (GimpImage    *image,
 
 /* Create an image. Returns layer and image */
 static GimpImage *
-create_new_image (const gchar       *filename,
+create_new_image (GFile             *file,
                   const gchar       *layername,
                   guint              width,
                   guint              height,
@@ -602,7 +604,7 @@ create_new_image (const gchar       *filename,
   image = gimp_image_new_with_precision (width, height, type, precision);
 
   gimp_image_undo_disable (image);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
   gimp_image_set_resolution (image, xres, yres);
 
   *layer = create_new_layer (image, 0,
@@ -968,7 +970,7 @@ generate_filename (GimpImage *image,
   gchar   *filename;
   gchar   *extension;
 
-  fname = gimp_image_get_filename (image);
+  fname = g_file_get_path (gimp_image_get_file (image));
 
   if (fname)
     {

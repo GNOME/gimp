@@ -1110,28 +1110,25 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  const gchar *filename;
+  GFile *file;
   gboolean merge;
   gboolean scale;
   gint num_vectors = 0;
   GimpVectors **vectors = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  filename = g_value_get_string (gimp_value_array_index (args, 1));
+  file = g_value_get_object (gimp_value_array_index (args, 1));
   merge = g_value_get_boolean (gimp_value_array_index (args, 2));
   scale = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (success)
     {
-      GFile *file         = g_file_new_for_path (filename);
       GList *vectors_list = NULL;
 
       /* FIXME tree */
       success = gimp_vectors_import_file (image, file,
                                           merge, scale, NULL, -1,
                                           &vectors_list, error);
-
-      g_object_unref (file);
 
       if (success)
         {
@@ -1246,20 +1243,16 @@ vectors_export_to_file_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  const gchar *filename;
+  GFile *file;
   GimpVectors *vectors;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  filename = g_value_get_string (gimp_value_array_index (args, 1));
+  file = g_value_get_object (gimp_value_array_index (args, 1));
   vectors = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      GFile *file = g_file_new_for_path (filename);
-
       success = gimp_vectors_export_file (image, vectors, file, error);
-
-      g_object_unref (file);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -2266,12 +2259,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the SVG file to import.",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The SVG file to import.",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("merge",
                                                      "merge",
@@ -2380,12 +2372,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the SVG file to create.",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The SVG file to create.",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",

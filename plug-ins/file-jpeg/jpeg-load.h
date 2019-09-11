@@ -18,7 +18,7 @@
 #ifndef __JPEG_LOAD_H__
 #define __JPEG_LOAD_H__
 
-GimpImage * load_image           (const gchar  *filename,
+GimpImage * load_image           (GFile        *file,
                                   GimpRunMode   runmode,
                                   gboolean      preview,
                                   gboolean     *resolution_loaded,

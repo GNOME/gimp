@@ -201,17 +201,12 @@ bmp_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  gchar          *filename;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image = load_image (filename, &error);
-
-  g_free (filename);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -265,9 +260,7 @@ bmp_save (GimpProcedure        *procedure,
       break;
     }
 
-  status = save_image (g_file_get_path (file),
-                       image, drawable,
-                       run_mode,
+  status = save_image (file, image, drawable, run_mode,
                        &error);
 
   if (export == GIMP_EXPORT_EXPORT)

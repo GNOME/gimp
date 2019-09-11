@@ -54,7 +54,7 @@
     'film' => { ui => 1, gegl => 1 },
     'gradient-map' => { gegl => 1 },
     'grid' => { ui => 1, gegl => 1 },
-    'guillotine' => { },
+    'guillotine' => { gio => 1 },
     'hot' => { ui => 1, gegl => 1 },
     'jigsaw' => { ui => 1, gegl => 1 },
     'mail' => { ui => 1, optional => 1 },

@@ -255,7 +255,7 @@ psd_load (GimpProcedure        *procedure,
       break;
     }
 
-  image = load_image (g_file_get_path (file),
+  image = load_image (file,
                       strcmp (gimp_procedure_get_name (procedure),
                               LOAD_MERGED_PROC) == 0,
                       &resolution_loaded,
@@ -303,7 +303,6 @@ psd_load_thumb (GimpProcedure        *procedure,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   gint            width  = 0;
   gint            height = 0;
   GimpImage      *image;
@@ -312,9 +311,7 @@ psd_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image    = load_thumbnail_image (filename, &width, &height, &error);
+  image = load_thumbnail_image (file, &width, &height, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -379,7 +376,7 @@ psd_save (GimpProcedure        *procedure,
                                                "image/x-psd",
                                                &metadata_flags);
 
-  if (save_image (g_file_get_path (file), image, &error))
+  if (save_image (file, image, &error))
     {
       if (metadata)
         {

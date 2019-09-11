@@ -47,7 +47,7 @@ static gint    read_image_resource_block  (PSDimage     *img_a,
                                            GError      **error);
 
 static GimpImage * create_gimp_image      (PSDimage     *img_a,
-                                           const gchar  *filename);
+                                           GFile        *file);
 
 static gint    add_image_resources        (GimpImage    *image,
                                            PSDimage     *img_a,
@@ -56,31 +56,39 @@ static gint    add_image_resources        (GimpImage    *image,
 
 /* Main file load function */
 GimpImage *
-load_thumbnail_image (const gchar  *filename,
-                      gint         *width,
-                      gint         *height,
-                      GError      **load_error)
+load_thumbnail_image (GFile   *file,
+                      gint    *width,
+                      gint    *height,
+                      GError **load_error)
 {
+  gchar       *filename;
   FILE        *f;
   struct stat  st;
   PSDimage     img_a;
   GimpImage   *image = NULL;
   GError      *error = NULL;
 
+  filename = g_file_get_path (file);
+
   /* ----- Open PSD file ----- */
   if (g_stat (filename, &st) == -1)
-    return NULL;
+    {
+      g_free (filename);
+      return NULL;
+    }
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
-  IFDBG(1) g_debug ("Open file %s", gimp_filename_to_utf8 (filename));
+  IFDBG(1) g_debug ("Open file %s", gimp_file_get_utf8_name (file));
   f = g_fopen (filename, "rb");
-  if (f == NULL)
+  g_free (filename);
+
+  if (! f)
     {
       g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -104,7 +112,7 @@ load_thumbnail_image (const gchar  *filename,
 
   /* ----- Create GIMP image ----- */
   IFDBG(2) g_debug ("Create GIMP image");
-  image = create_gimp_image (&img_a, filename);
+  image = create_gimp_image (&img_a, file);
   if (! image)
     goto load_error;
 
@@ -255,8 +263,8 @@ read_image_resource_block (PSDimage  *img_a,
 }
 
 static GimpImage *
-create_gimp_image (PSDimage    *img_a,
-                   const gchar *filename)
+create_gimp_image (PSDimage *img_a,
+                   GFile    *file)
 {
   GimpImage *image = NULL;
 
@@ -266,7 +274,7 @@ create_gimp_image (PSDimage    *img_a,
   IFDBG(2) g_debug ("Create image");
   image = gimp_image_new (img_a->columns, img_a->rows, img_a->base_type);
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
   gimp_image_undo_disable (image);
 
   return image;

@@ -79,9 +79,9 @@ file_open_image (Gimp                *gimp,
                  GError             **error)
 {
   GimpValueArray *return_vals;
+  GFile          *orig_file;
   GimpImage      *image       = NULL;
   GFile          *local_file  = NULL;
-  gchar          *uri         = NULL;
   gboolean        mounted     = TRUE;
   GError         *my_error    = NULL;
 
@@ -93,6 +93,8 @@ file_open_image (Gimp                *gimp,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   *status = GIMP_PDB_EXECUTION_ERROR;
+
+  orig_file = file;
 
   /* FIXME enable these tests for remote files again, needs testing */
   if (g_file_is_native (file) &&
@@ -199,14 +201,11 @@ file_open_image (Gimp                *gimp,
               return NULL;
             }
 
-          uri = g_file_get_uri (local_file);
+          file = local_file;
         }
 
       g_free (my_path);
     }
-
-  if (! uri)
-    uri = g_file_get_uri (file);
 
   if (progress)
     g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
@@ -216,13 +215,11 @@ file_open_image (Gimp                *gimp,
                                         context, progress, error,
                                         gimp_object_get_name (file_proc),
                                         GIMP_TYPE_RUN_MODE, run_mode,
-                                        G_TYPE_STRING,      uri,
+                                        G_TYPE_FILE,        file,
                                         G_TYPE_NONE);
 
   if (progress)
     g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
-
-  g_free (uri);
 
   *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
@@ -232,7 +229,7 @@ file_open_image (Gimp                *gimp,
   if (local_file)
     {
       if (image)
-        gimp_image_set_file (image, file);
+        gimp_image_set_file (image, orig_file);
 
       g_file_delete (local_file, NULL, NULL);
       g_object_unref (local_file);
@@ -278,7 +275,7 @@ file_open_image (Gimp                *gimp,
 
       if (file_open_file_proc_is_import (file_proc))
         {
-          file_import_image (image, context, file,
+          file_import_image (image, context, orig_file,
                              run_mode == GIMP_RUN_INTERACTIVE,
                              progress);
         }

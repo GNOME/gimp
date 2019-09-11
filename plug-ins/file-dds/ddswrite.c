@@ -590,13 +590,13 @@ get_array_size (GimpImage *image)
 }
 
 GimpPDBStatusType
-write_dds (gchar        *filename,
+write_dds (GFile        *file,
            GimpImage    *image,
            GimpDrawable *drawable,
            gboolean      interactive_dds)
 {
+  gchar *filename;
   FILE  *fp;
-  gchar *tmp;
   int    rc = 0;
 
   is_mipmap_chain_valid = check_mipmaps (image, dds_write_vals.savetype);
@@ -643,19 +643,17 @@ write_dds (gchar        *filename,
         }
     }
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "wb");
-  if (fp == 0)
+  g_free (filename);
+
+  if (! fp)
     {
       g_message ("Error opening %s", filename);
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (strrchr (filename, '/'))
-    tmp = g_strdup_printf ("Saving %s:", strrchr (filename, '/') + 1);
-  else
-    tmp = g_strdup_printf ("Saving %s:", filename);
-  gimp_progress_init (tmp);
-  g_free (tmp);
+  gimp_progress_init_printf ("Saving %s:", gimp_file_get_utf8_name (file));
 
   rc = write_image (fp, image, drawable);
 

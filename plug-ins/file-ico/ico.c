@@ -197,18 +197,13 @@ ico_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image = ico_load_image (filename, &error);
-
-  g_free (filename);
+  image = ico_load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -232,7 +227,6 @@ ico_load_thumb (GimpProcedure        *procedure,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   gint            width;
   gint            height;
   GimpImage      *image;
@@ -241,11 +235,10 @@ ico_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-  width    = size;
-  height   = size;
+  width  = size;
+  height = size;
 
-  image = ico_load_thumbnail_image (filename,
+  image = ico_load_thumbnail_image (file,
                                     &width, &height, &error);
 
   if (image)
@@ -276,17 +269,12 @@ ico_save (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpPDBStatusType  status;
-  gchar             *filename;
   GError            *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  status = ico_save_image (filename, image, run_mode, &error);
-
-  g_free (filename);
+  status = ico_save_image (file, image, run_mode, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

@@ -117,7 +117,7 @@ static GimpValueArray * gif_load_thumb       (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               gboolean              thumbnail,
                                               GError              **error);
 
@@ -225,18 +225,13 @@ gif_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image = load_image (filename, FALSE, &error);
-
-  g_free (filename);
+  image = load_image (file, FALSE, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -284,7 +279,7 @@ gif_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), TRUE, &error);
+  image = load_image (file, TRUE, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -366,7 +361,7 @@ static gint     LZWReadByte  (FILE        *fd,
                               gint         just_reset_LZW,
                               gint         input_code_size);
 static gboolean ReadImage    (FILE        *fd,
-                              const gchar *filename,
+                              GFile       *file,
                               gint         len,
                               gint         height,
                               CMap         cmap,
@@ -382,11 +377,12 @@ static gboolean ReadImage    (FILE        *fd,
 
 
 static GimpImage *
-load_image (const gchar  *filename,
-            gboolean      thumbnail,
-            GError      **error)
+load_image (GFile     *file,
+            gboolean   thumbnail,
+            GError   **error)
 {
   FILE      *fd;
+  gchar     *filename;
   guchar     buf[16];
   guchar     c;
   CMap       localColorMap;
@@ -399,15 +395,17 @@ load_image (const gchar  *filename,
   gboolean   status;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fd = g_fopen (filename, "rb");
+  g_free (filename);
 
   if (! fd)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -528,7 +526,7 @@ load_image (const gchar  *filename,
               return image; /* will be NULL if failed on first image! */
             }
 
-          status = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
+          status = ReadImage (fd, file, LM_to_uint (buf[4], buf[5]),
                               LM_to_uint (buf[6], buf[7]),
                               localColorMap, bitPixel,
                               grayScale,
@@ -541,7 +539,7 @@ load_image (const gchar  *filename,
         }
       else
         {
-          status = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
+          status = ReadImage (fd, file, LM_to_uint (buf[4], buf[5]),
                               LM_to_uint (buf[6], buf[7]),
                               GifScreen.ColorMap, GifScreen.BitPixel,
                               GifScreen.GrayScale,
@@ -960,7 +958,7 @@ LZWReadByte (FILE *fd,
 
 static gboolean
 ReadImage (FILE        *fd,
-           const gchar *filename,
+           GFile       *file,
            gint         len,
            gint         height,
            CMap         cmap,
@@ -1024,7 +1022,7 @@ ReadImage (FILE        *fd,
         screenheight = height;
 
       *image = gimp_image_new (screenwidth, screenheight, GIMP_INDEXED);
-      gimp_image_set_filename (*image, filename);
+      gimp_image_set_file (*image, file);
 
       for (i = 0, j = 0; i < ncols; i++)
         {
@@ -1066,7 +1064,7 @@ ReadImage (FILE        *fd,
   else /* NOT FIRST FRAME */
     {
       gimp_progress_set_text_printf (_("Opening '%s' (frame %d)"),
-                                     gimp_filename_to_utf8 (filename),
+                                     gimp_file_get_utf8_name (file),
                                      frame_number);
       gimp_progress_pulse ();
 
@@ -1159,7 +1157,7 @@ ReadImage (FILE        *fd,
   if (len > (G_MAXSIZE / height / (alpha_frame ? (promote_to_rgb ? 4 : 2) : 1)))
     {
       g_message ("'%s' has a larger image size than GIMP can handle.",
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       gimp_image_delete (*image);
       *image = NULL;
       return FALSE;

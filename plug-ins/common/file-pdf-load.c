@@ -250,7 +250,7 @@ static GimpValueArray * pdf_load_thumb       (GimpProcedure        *procedure,
                                               gpointer              run_data);
 
 static GimpImage       * load_image          (PopplerDocument      *doc,
-                                              const gchar          *filename,
+                                              GFile                *file,
                                               GimpRunMode           run_mode,
                                               GimpPageSelectorTarget target,
                                               guint32               resolution,
@@ -260,7 +260,7 @@ static GimpImage       * load_image          (PopplerDocument      *doc,
 static GimpPDBStatusType load_dialog         (PopplerDocument      *doc,
                                               PdfSelectedPages     *pages);
 
-static PopplerDocument * open_document       (const gchar          *filename,
+static PopplerDocument * open_document       (GFile                *file,
                                               const gchar          *PDF_password,
                                               GimpRunMode           run_mode,
                                               GError              **error);
@@ -408,7 +408,7 @@ pdf_load (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (LOAD_PROC, &loadvals);
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
-      doc = open_document (g_file_get_path (file),
+      doc = open_document (file,
                            loadvals.PDF_password,
                            run_mode, &error);
 
@@ -431,7 +431,7 @@ pdf_load (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      doc = open_document (g_file_get_path (file),
+      doc = open_document (file,
                            GIMP_VALUES_GET_STRING (args, 0),
                            run_mode, &error);
 
@@ -506,7 +506,7 @@ pdf_load (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       image = load_image (doc,
-                          g_file_get_path (file),
+                          file,
                           run_mode,
                           loadvals.target,
                           loadvals.resolution,
@@ -553,7 +553,7 @@ pdf_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  doc = open_document (g_file_get_path (file),
+  doc = open_document (file,
                        NULL,
                        GIMP_RUN_NONINTERACTIVE,
                        &error);
@@ -614,17 +614,15 @@ pdf_load_thumb (GimpProcedure        *procedure,
   return return_vals;
 }
 
-static PopplerDocument*
-open_document (const gchar  *filename,
+static PopplerDocument *
+open_document (GFile        *file,
                const gchar  *PDF_password,
                GimpRunMode   run_mode,
                GError      **load_error)
 {
   PopplerDocument *doc;
-  GFile           *file;
   GError          *error = NULL;
 
-  file = g_file_new_for_path (filename);
   doc = poppler_document_new_from_gfile (file, PDF_password, NULL, &error);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -675,9 +673,9 @@ open_document (const gchar  *filename,
               break;
             }
         }
+
       gtk_widget_destroy (label);
     }
-  g_object_unref (file);
 
   /* We can't g_mapped_file_unref(mapped_file) as apparently doc has
    * references to data in there. No big deal, this is just a
@@ -687,7 +685,7 @@ open_document (const gchar  *filename,
     {
       g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not load '%s': %s"),
-                   gimp_filename_to_utf8 (filename),
+                   gimp_file_get_utf8_name (file),
                    error->message);
       g_error_free (error);
       return NULL;
@@ -784,7 +782,7 @@ render_page_to_pixbuf (PopplerPage *page,
 
 static GimpImage *
 load_image (PopplerDocument        *doc,
-            const gchar            *filename,
+            GFile                  *file,
             GimpRunMode             run_mode,
             GimpPageSelectorTarget  target,
             guint32                 resolution,
@@ -801,7 +799,7 @@ load_image (PopplerDocument        *doc,
     images = g_new0 (GimpImage *, pages->n_pages);
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   scale = resolution / gimp_unit_get_factor (GIMP_UNIT_POINT);
 
@@ -828,18 +826,29 @@ load_image (PopplerDocument        *doc,
 
       if (! image)
         {
-          gchar *name;
+          GFile *new_file;
+          gchar *uri;
+          gchar *new_uri;
 
           image = gimp_image_new (width, height, GIMP_RGB);
           gimp_image_undo_disable (image);
 
-          if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
-            name = g_strdup_printf (_("%s-%s"), filename, page_label);
-          else
-            name = g_strdup_printf (_("%s-pages"), filename);
+          uri = g_file_get_uri (file);
 
-          gimp_image_set_filename (image, name);
-          g_free (name);
+          if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+            new_uri = g_strdup_printf (_("%s-%s"), uri, page_label);
+          else
+            new_uri = g_strdup_printf (_("%s-pages"), uri);
+
+          g_free (uri);
+
+          new_file = g_file_new_for_uri (new_uri);
+
+          g_free (new_uri);
+
+          gimp_image_set_file (image, new_file);
+
+          g_object_unref (new_file);
 
           gimp_image_set_resolution (image, resolution, resolution);
         }

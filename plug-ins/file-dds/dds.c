@@ -398,7 +398,7 @@ dds_load (GimpProcedure        *procedure,
       break;
     }
 
-  status = read_dds (g_file_get_path (file), &image,
+  status = read_dds (file, &image,
                      run_mode == GIMP_RUN_INTERACTIVE);
 
   if (status == GIMP_PDB_SUCCESS &&
@@ -495,8 +495,7 @@ dds_save (GimpProcedure        *procedure,
      */
     dds_write_vals.gamma = 2.2;
 
-  status = write_dds (g_file_get_path (file),
-                      image, drawable,
+  status = write_dds (file, image, drawable,
                       run_mode == GIMP_RUN_INTERACTIVE);
 
   if (status == GIMP_PDB_SUCCESS)

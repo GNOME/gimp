@@ -1246,6 +1246,7 @@ guillotine_LDADD = \
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GIO_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(guillotine_RC)

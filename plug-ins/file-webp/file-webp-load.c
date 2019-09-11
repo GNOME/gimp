@@ -73,10 +73,11 @@ create_layer (GimpImage *image,
 }
 
 GimpImage *
-load_image (const gchar *filename,
-            gboolean     interactive,
-            GError      **error)
+load_image (GFile    *file,
+            gboolean  interactive,
+            GError   **error)
 {
+  gchar            *filename;
   uint8_t          *indata = NULL;
   gsize             indatalen;
   gint              width;
@@ -91,21 +92,26 @@ load_image (const gchar *filename,
   gboolean          exif      = FALSE;
   gboolean          xmp       = FALSE;
 
+  filename = g_file_get_path (file);
+
   /* Attempt to read the file contents from disk */
   if (! g_file_get_contents (filename,
                              (gchar **) &indata,
                              &indatalen,
                              error))
     {
+      g_free (filename);
       return NULL;
     }
+
+  g_free (filename);
 
   /* Validate WebP data */
   if (! WebPGetInfo (indata, indatalen, &width, &height))
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Invalid WebP file '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -198,7 +204,7 @@ load_image (const gchar *filename,
         {
           g_set_error (error, G_FILE_ERROR, 0,
                        _("Failed to decode animated WebP file '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto error;
         }
 
@@ -206,7 +212,7 @@ load_image (const gchar *filename,
         {
           g_set_error (error, G_FILE_ERROR, 0,
                        _("Failed to decode animated WebP information from '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           goto error;
         }
 
@@ -225,7 +231,7 @@ load_image (const gchar *filename,
             {
               g_set_error (error, G_FILE_ERROR, 0,
                            _("Failed to decode animated WebP frame from '%s'"),
-                           gimp_filename_to_utf8 (filename));
+                           gimp_file_get_utf8_name (file));
               goto error;
             }
 
@@ -285,7 +291,7 @@ load_image (const gchar *filename,
 
   WebPMuxDelete (mux);
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   if (profile)
     g_object_unref (profile);

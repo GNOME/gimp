@@ -162,7 +162,7 @@ static GimpImage * compose                (const gchar     *compose_type,
                                            ComposeInput    *inputs,
                                            gboolean         compose_by_drawable);
 
-static GimpImage * create_new_image       (const gchar     *filename,
+static GimpImage * create_new_image       (GFile           *file,
                                            guint            width,
                                            guint            height,
                                            GimpImageType    gdtype,
@@ -1035,7 +1035,7 @@ compose (const gchar  *compose_type,
       gdtype_dst = ((babl_model (compose_dsc[compose_idx].babl_model) == babl_model ("RGBA")) ?
                     GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE);
 
-      image_dst = create_new_image (compose_dsc[compose_idx].filename,
+      image_dst = create_new_image (g_file_new_for_path (compose_dsc[compose_idx].filename),
                                     width, height, gdtype_dst, precision,
                                     &layer_dst, &buffer_dst);
     }
@@ -1077,7 +1077,7 @@ compose (const gchar  *compose_type,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image */
 static GimpImage *
-create_new_image (const gchar    *filename,
+create_new_image (GFile          *file,
                   guint           width,
                   guint           height,
                   GimpImageType   gdtype,
@@ -1098,7 +1098,7 @@ create_new_image (const gchar    *filename,
   image = gimp_image_new_with_precision (width, height, gitype, precision);
 
   gimp_image_undo_disable (image);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   *layer = gimp_layer_new (image, _("Background"), width, height,
                            gdtype,

@@ -2490,59 +2490,61 @@ gimp_image_set_component_visible (GimpImage       *image,
 }
 
 /**
- * gimp_image_get_filename:
+ * gimp_image_get_file:
  * @image: The image.
  *
- * Returns the specified image's filename.
+ * Returns the file for the specified image.
  *
- * This procedure returns the specified image's filename in the
- * filesystem encoding. The image has a filename only if it was loaded
- * or imported from a file or has since been saved or exported.
- * Otherwise, this function returns %NULL. See also
- * gimp_image_get_uri().
+ * This procedure returns the file associated with the specified image.
+ * The image has a file only if it was loaded or imported from a file
+ * or has since been saved or exported. Otherwise, this function
+ * returns %NULL. See also gimp-image-get-imported-file to get the
+ * current file if it was imported from a non-GIMP file format and not
+ * yet saved, or gimp-image-get-exported-file if the image has been
+ * exported to a non-GIMP file format.
  *
- * Returns: (transfer full): The filename.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The file.
+ *
+ * Since: 2.8
  **/
-gchar *
-gimp_image_get_filename (GimpImage *image)
+GFile *
+gimp_image_get_file (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *filename = NULL;
+  GFile *file = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-filename",
+                                              "gimp-image-get-file",
                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    filename = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return filename;
+  return file;
 }
 
 /**
- * gimp_image_set_filename:
+ * gimp_image_set_file:
  * @image: The image.
- * @filename: The new image filename.
+ * @file: The new image file.
  *
- * Sets the specified image's filename.
+ * Sets the specified image's file.
  *
- * This procedure sets the specified image's filename. The filename
- * should be in the filesystem encoding.
+ * This procedure sets the specified image's file.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_filename (GimpImage   *image,
-                         const gchar *filename)
+gimp_image_set_file (GimpImage *image,
+                     GFile     *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -2550,11 +2552,11 @@ gimp_image_set_filename (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_STRING, filename,
+                                          G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-filename",
+                                              "gimp-image-set-file",
                                               args);
   gimp_value_array_unref (args);
 
@@ -2566,163 +2568,117 @@ gimp_image_set_filename (GimpImage   *image,
 }
 
 /**
- * gimp_image_get_uri:
+ * gimp_image_get_xcf_file:
  * @image: The image.
  *
- * Returns the URI for the specified image.
+ * Returns the XCF file for the specified image.
  *
- * This procedure returns the URI associated with the specified image.
- * The image has an URI only if it was loaded or imported from a file
- * or has since been saved or exported. Otherwise, this function
- * returns %NULL. See also gimp-image-get-imported-uri to get the URI
- * of the current file if it was imported from a non-GIMP file format
- * and not yet saved, or gimp-image-get-exported-uri if the image has
- * been exported to a non-GIMP file format.
+ * This procedure returns the XCF file associated with the image. If
+ * there is no such file, this procedure returns %NULL.
  *
- * Returns: (transfer full): The URI.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The imported XCF file.
  *
  * Since: 2.8
  **/
-gchar *
-gimp_image_get_uri (GimpImage *image)
+GFile *
+gimp_image_get_xcf_file (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *uri = NULL;
+  GFile *file = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-uri",
+                                              "gimp-image-get-xcf-file",
                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return uri;
+  return file;
 }
 
 /**
- * gimp_image_get_xcf_uri:
+ * gimp_image_get_imported_file:
  * @image: The image.
  *
- * Returns the XCF URI for the specified image.
+ * Returns the imported file for the specified image.
  *
- * This procedure returns the XCF URI associated with the image. If
- * there is no such URI, this procedure returns %NULL.
- *
- * Returns: (transfer full): The imported URI.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.8
- **/
-gchar *
-gimp_image_get_xcf_uri (GimpImage *image)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *uri = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-xcf-uri",
-                                              args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return uri;
-}
-
-/**
- * gimp_image_get_imported_uri:
- * @image: The image.
- *
- * Returns the imported URI for the specified image.
- *
- * This procedure returns the URI associated with the specified image
+ * This procedure returns the file associated with the specified image
  * if the image was imported from a non-native Gimp format. If the
  * image was not imported, or has since been saved in the native Gimp
  * format, this procedure returns %NULL.
  *
- * Returns: (transfer full): The imported URI.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The imported file.
  *
  * Since: 2.8
  **/
-gchar *
-gimp_image_get_imported_uri (GimpImage *image)
+GFile *
+gimp_image_get_imported_file (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *uri = NULL;
+  GFile *file = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-imported-uri",
+                                              "gimp-image-get-imported-file",
                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return uri;
+  return file;
 }
 
 /**
- * gimp_image_get_exported_uri:
+ * gimp_image_get_exported_file:
  * @image: The image.
  *
- * Returns the exported URI for the specified image.
+ * Returns the exported file for the specified image.
  *
- * This procedure returns the URI associated with the specified image
+ * This procedure returns the file associated with the specified image
  * if the image was exported a non-native GIMP format. If the image was
  * not exported, this procedure returns %NULL.
  *
- * Returns: (transfer full): The exported URI.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The exported file.
  *
  * Since: 2.8
  **/
-gchar *
-gimp_image_get_exported_uri (GimpImage *image)
+GFile *
+gimp_image_get_exported_file (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *uri = NULL;
+  GFile *file = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-exported-uri",
+                                              "gimp-image-get-exported-file",
                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    uri = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return uri;
+  return file;
 }
 
 /**

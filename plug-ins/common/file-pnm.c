@@ -748,7 +748,7 @@ load_image (GFile   *file,
                                          (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
                                          precision);
 
-  gimp_image_set_filename (image, g_file_get_uri (file));
+  gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image, _("Background"),
                           pnminfo->xres, pnminfo->yres,

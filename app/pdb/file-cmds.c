@@ -58,9 +58,7 @@ file_load_invoker (GimpProcedure         *procedure,
   GFile               *file;
   gint                 i;
 
-  file = file_utils_filename_to_file (gimp,
-                                      g_value_get_string (gimp_value_array_index (args, 1)),
-                                      error);
+  file = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (! file)
     return gimp_procedure_get_return_values (procedure, FALSE,
@@ -71,12 +69,8 @@ file_load_invoker (GimpProcedure         *procedure,
                                                         file, error);
 
   if (! file_proc)
-    {
-      g_object_unref (file);
-
-      return gimp_procedure_get_return_values (procedure, FALSE,
-                                               error ? *error : NULL);
-    }
+    return gimp_procedure_get_return_values (procedure, FALSE,
+                                             error ? *error : NULL);
 
   proc = GIMP_PROCEDURE (file_proc);
 
@@ -112,8 +106,6 @@ file_load_invoker (GimpProcedure         *procedure,
         }
     }
 
-  g_object_unref (file);
-
   return return_vals;
 }
 
@@ -129,35 +121,26 @@ file_load_layer_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   gint run_mode;
   GimpImage *image;
-  const gchar *filename;
+  GFile *file;
   GimpLayer *layer = NULL;
 
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
   image = g_value_get_object (gimp_value_array_index (args, 1));
-  filename = g_value_get_string (gimp_value_array_index (args, 2));
+  file = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      GFile *file = file_utils_filename_to_file (gimp, filename, error);
+      GList             *layers;
+      GimpPDBStatusType  status;
 
-      if (file)
+      layers = file_open_layers (gimp, context, progress,
+                                 image, FALSE,
+                                 file, run_mode, NULL, &status, error);
+
+      if (layers)
         {
-          GList             *layers;
-          GimpPDBStatusType  status;
-
-          layers = file_open_layers (gimp, context, progress,
-                                     image, FALSE,
-                                     file, run_mode, NULL, &status, error);
-
-          g_object_unref (file);
-
-          if (layers)
-            {
-              layer = layers->data;
-              g_list_free (layers);
-            }
-          else
-            success = FALSE;
+          layer = layers->data;
+          g_list_free (layers);
         }
       else
         success = FALSE;
@@ -184,49 +167,40 @@ file_load_layers_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   gint run_mode;
   GimpImage *image;
-  const gchar *filename;
+  GFile *file;
   gint num_layers = 0;
   GimpLayer **layers = NULL;
 
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
   image = g_value_get_object (gimp_value_array_index (args, 1));
-  filename = g_value_get_string (gimp_value_array_index (args, 2));
+  file = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      GFile *file = file_utils_filename_to_file (gimp, filename, error);
+      GList             *layer_list;
+      GimpPDBStatusType  status;
 
-      if (file)
+      layer_list = file_open_layers (gimp, context, progress,
+                                     image, FALSE,
+                                     file, run_mode, NULL, &status, error);
+
+      if (layers)
         {
-          GList             *layer_list;
-          GimpPDBStatusType  status;
+          GList *list;
+          gint i;
 
-          layer_list = file_open_layers (gimp, context, progress,
-                                         image, FALSE,
-                                         file, run_mode, NULL, &status, error);
+          num_layers = g_list_length (layer_list);
 
-          g_object_unref (file);
+          layers = g_new (GimpLayer *, num_layers);
 
-          if (layers)
+          for (i = 0, list = layer_list;
+               i < num_layers;
+               i++, list = g_list_next (list))
             {
-              GList *list;
-              gint i;
-
-              num_layers = g_list_length (layer_list);
-
-              layers = g_new (GimpLayer *, num_layers);
-
-              for (i = 0, list = layer_list;
-                   i < num_layers;
-                   i++, list = g_list_next (list))
-                {
-                  layers[i] = g_object_ref (list->data);
-                }
-
-              g_list_free (layer_list);
+              layers[i] = g_object_ref (list->data);
             }
-          else
-            success = FALSE;
+
+          g_list_free (layer_list);
         }
       else
         success = FALSE;
@@ -255,17 +229,11 @@ file_save_invoker (GimpProcedure         *procedure,
   GimpValueArray      *new_args;
   GimpValueArray      *return_vals;
   GimpPlugInProcedure *file_proc;
-  GimpProcedure       *proc;
   GFile               *file;
+  GimpProcedure       *proc;
   gint                 i;
 
-  file = file_utils_filename_to_file (gimp,
-                                      g_value_get_string (gimp_value_array_index (args, 3)),
-                                      error);
-
-  if (! file)
-    return gimp_procedure_get_return_values (procedure, FALSE,
-                                             error ? *error : NULL);
+  file = g_value_get_object (gimp_value_array_index (args, 3));
 
   file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
                                                         GIMP_FILE_PROCEDURE_GROUP_SAVE,
@@ -277,12 +245,8 @@ file_save_invoker (GimpProcedure         *procedure,
                                                           file, error);
 
   if (! file_proc)
-    {
-      g_object_unref (file);
-
-      return gimp_procedure_get_return_values (procedure, FALSE,
-                                               error ? *error : NULL);
-    }
+    return gimp_procedure_get_return_values (procedure, FALSE,
+                                             error ? *error : NULL);
 
   proc = GIMP_PROCEDURE (file_proc);
 
@@ -294,9 +258,8 @@ file_save_invoker (GimpProcedure         *procedure,
                      gimp_value_array_index (new_args, 1));
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
-
-  g_value_take_string (gimp_value_array_index (new_args, 3),
-                       g_file_get_uri (file));
+  g_value_transform (gimp_value_array_index (args, 3),
+                     gimp_value_array_index (new_args, 3));
 
   for (i = 4; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
@@ -309,8 +272,6 @@ file_save_invoker (GimpProcedure         *procedure,
                                              new_args);
 
   gimp_value_array_unref (new_args);
-
-  g_object_unref (file);
 
   return return_vals;
 }
@@ -325,17 +286,17 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const gchar *filename;
+  GFile *file;
   gint width = 0;
   gint height = 0;
   gint thumb_data_count = 0;
   guint8 *thumb_data = NULL;
 
-  filename = g_value_get_string (gimp_value_array_index (args, 0));
+  file = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      GdkPixbuf *pixbuf = file_utils_load_thumbnail (filename);
+      GdkPixbuf *pixbuf = file_utils_load_thumbnail (file);
 
       if (pixbuf)
         {
@@ -375,14 +336,14 @@ file_save_thumbnail_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  const gchar *filename;
+  GFile *file;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  filename = g_value_get_string (gimp_value_array_index (args, 1));
+  file = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      success = file_utils_save_thumbnail (image, filename);
+      success = file_utils_save_thumbnail (image, file);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -418,12 +379,11 @@ register_file_procs (GimpPDB *pdb)
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0]),
                                       GIMP_RUN_WITH_LAST_VALS);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the file to load",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image ("image",
                                                           "image",
@@ -463,12 +423,11 @@ register_file_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the file to load",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer ("layer",
                                                           "layer",
@@ -508,12 +467,11 @@ register_file_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the file to load",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-layers",
                                                      "num layers",
@@ -563,12 +521,11 @@ register_file_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the file to save the image in",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The file to save the image in",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -580,19 +537,18 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-load-thumbnail");
   gimp_procedure_set_static_help (procedure,
                                   "Loads the thumbnail for a file.",
-                                  "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
+                                  "This procedure tries to load a thumbnail that belongs to the file with the given file. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Adam D. Moss, Sven Neumann",
                                          "Adam D. Moss, Sven Neumann",
                                          "1999-2003");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the file that owns the thumbnail to load",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The file that owns the thumbnail to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
@@ -627,7 +583,7 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-save-thumbnail");
   gimp_procedure_set_static_help (procedure,
                                   "Saves a thumbnail for the given image",
-                                  "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the file with the given filename. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
+                                  "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the file with the given filen. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
@@ -640,12 +596,11 @@ register_file_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the file the thumbnail belongs to",
-                                                       TRUE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "file",
+                                                    "The file the thumbnail belongs to",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

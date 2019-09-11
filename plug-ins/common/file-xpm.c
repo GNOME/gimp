@@ -121,13 +121,13 @@ static GimpValueArray * xpm_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile               *file,
                                               GError              **error);
 static guchar         * parse_colors         (XpmImage             *xpm_image);
 static void             parse_image          (GimpImage            *image,
                                               XpmImage             *xpm_image,
                                               guchar               *cmap);
-static gboolean         save_image           (const gchar          *filename,
+static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
@@ -280,7 +280,7 @@ xpm_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -358,8 +358,7 @@ xpm_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (g_file_get_path (file),
-                      image, drawable,
+      if (save_image (file, image, drawable,
                       &error))
         {
           gimp_set_data (SAVE_PROC, &xpmvals, sizeof (XpmSaveVals));
@@ -377,18 +376,21 @@ xpm_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError  **error)
 {
+  gchar     *filename;
   XpmImage   xpm_image;
   guchar    *cmap;
   GimpImage *image;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
+
+  filename = g_file_get_path (file);
 
   /* read the raw file */
-  switch (XpmReadFileToXpmImage ((char *) filename, &xpm_image, NULL))
+  switch (XpmReadFileToXpmImage (filename, &xpm_image, NULL))
     {
     case XpmSuccess:
       break;
@@ -396,17 +398,22 @@ load_image (const gchar  *filename,
     case XpmOpenFailed:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
+      g_free (filename);
       return NULL;
 
     case XpmFileInvalid:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", _("XPM file invalid"));
+      g_free (filename);
       return NULL;
 
     default:
+      g_free (filename);
       return NULL;
     }
+
+  g_free (filename);
 
   cmap = parse_colors (&xpm_image);
 
@@ -414,7 +421,7 @@ load_image (const gchar  *filename,
                           xpm_image.height,
                           GIMP_RGB);
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   /* fill it */
   parse_image (image, &xpm_image, cmap);
@@ -622,7 +629,7 @@ create_colormap_from_hash (gpointer gkey,
 }
 
 static gboolean
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
@@ -636,6 +643,7 @@ save_image (const gchar   *filename,
   gboolean    indexed;
   gboolean    alpha;
   XpmColor   *colormap;
+  gchar      *filename;
   XpmImage   *xpm_image;
   guint      *ibuff   = NULL;
   guchar     *buf;
@@ -690,7 +698,7 @@ save_image (const gchar   *filename,
   hash = g_hash_table_new ((GHashFunc) rgbhash, (GCompareFunc) compare);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   ncolors = alpha ? 1 : 0;
 
@@ -817,8 +825,10 @@ save_image (const gchar   *filename,
   xpm_image->colorTable = colormap;
   xpm_image->data       = ibuff;
 
+  filename = g_file_get_path (file);
+
   /* do the save */
-  switch (XpmWriteFileFromXpmImage ((char *) filename, xpm_image, NULL))
+  switch (XpmWriteFileFromXpmImage (filename, xpm_image, NULL))
     {
     case XpmSuccess:
       success = TRUE;
@@ -827,7 +837,7 @@ save_image (const gchar   *filename,
     case XpmOpenFailed:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       break;
 
     case XpmFileInvalid:
@@ -838,6 +848,8 @@ save_image (const gchar   *filename,
     default:
       break;
     }
+
+  g_free (filename);
 
   g_object_unref (buffer);
   g_free (ibuff);

@@ -96,9 +96,9 @@ static GimpValueArray * dicom_save             (GimpProcedure        *procedure,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
 
-static GimpImage      * load_image             (const gchar          *filename,
+static GimpImage      * load_image             (GFile                *file,
                                                 GError              **error);
-static gboolean         save_image             (const gchar          *filename,
+static gboolean         save_image             (GFile                *file,
                                                 GimpImage            *image,
                                                 GimpDrawable         *drawable,
                                                 GError              **error);
@@ -240,7 +240,7 @@ dicom_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -293,8 +293,7 @@ dicom_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (g_file_get_path (file),
-                        image, drawable,
+      if (! save_image (file, image, drawable,
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -328,36 +327,39 @@ add_parasites_to_image (gpointer data,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
-  GimpImage *image = NULL;
-  GimpLayer *layer;
-  GeglBuffer*buffer;
-  GSList    *elements          = NULL;
-  FILE      *dicom;
-  gchar      buf[500];    /* buffer for random things like scanning */
-  DicomInfo *dicominfo;
-  guint      width             = 0;
-  guint      height            = 0;
-  gint       samples_per_pixel = 0;
-  gint       bpp               = 0;
-  gint       bits_stored       = 0;
-  gint       high_bit          = 0;
-  guint8    *pix_buf           = NULL;
-  gboolean   is_signed         = FALSE;
-  guint8     in_sequence       = 0;
+  GimpImage  *image = NULL;
+  GimpLayer  *layer;
+  GeglBuffer *buffer;
+  gchar      *filename;
+  GSList     *elements          = NULL;
+  FILE       *dicom;
+  gchar       buf[500];    /* buffer for random things like scanning */
+  DicomInfo  *dicominfo;
+  guint       width             = 0;
+  guint       height            = 0;
+  gint        samples_per_pixel = 0;
+  gint        bpp               = 0;
+  gint        bits_stored       = 0;
+  gint        high_bit          = 0;
+  guint8     *pix_buf           = NULL;
+  gboolean    is_signed         = FALSE;
+  guint8      in_sequence       = 0;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   dicom = g_fopen (filename, "rb");
+  g_free (filename);
 
   if (! dicom)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -372,7 +374,7 @@ load_image (const gchar  *filename,
     {
       g_message ("'%s' is a PAPYRUS DICOM file.\n"
                  "This plug-in does not support this type yet.",
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       g_free (dicominfo);
       fclose (dicom);
       return NULL;
@@ -383,7 +385,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a DICOM file."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       g_free (dicominfo);
       fclose (dicom);
       return NULL;
@@ -489,7 +491,7 @@ load_image (const gchar  *filename,
       if (element_length >= (G_MAXUINT - 6))
         {
           g_message ("'%s' seems to have an incorrect value field length.",
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           gimp_quit ();
         }
 
@@ -590,21 +592,21 @@ load_image (const gchar  *filename,
   if ((bpp != 8) && (bpp != 16))
     {
       g_message ("'%s' has a bpp of %d which GIMP cannot handle.",
-                 gimp_filename_to_utf8 (filename), bpp);
+                 gimp_file_get_utf8_name (file), bpp);
       gimp_quit ();
     }
 
   if ((width > GIMP_MAX_IMAGE_SIZE) || (height > GIMP_MAX_IMAGE_SIZE))
     {
       g_message ("'%s' has a larger image size (%d x %d) than GIMP can handle.",
-                 gimp_filename_to_utf8 (filename), width, height);
+                 gimp_file_get_utf8_name (file), width, height);
       gimp_quit ();
     }
 
   if (samples_per_pixel > 3)
     {
       g_message ("'%s' has samples per pixel of %d which GIMP cannot handle.",
-                 gimp_filename_to_utf8 (filename), samples_per_pixel);
+                 gimp_file_get_utf8_name (file), samples_per_pixel);
       gimp_quit ();
     }
 
@@ -623,7 +625,7 @@ load_image (const gchar  *filename,
   image = gimp_image_new (dicominfo->width, dicominfo->height,
                           (dicominfo->samples_per_pixel >= 3 ?
                            GIMP_RGB : GIMP_GRAY));
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image, _("Background"),
                           dicominfo->width, dicominfo->height,
@@ -1321,11 +1323,12 @@ dicom_ensure_required_elements_present (GSList *elements,
  * must just be filled with dummy values.
  */
 static gboolean
-save_image (const gchar  *filename,
+save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
             GError      **error)
 {
+  gchar         *filename;
   FILE          *dicom;
   GimpImageType  drawable_type;
   GeglBuffer    *buffer;
@@ -1380,13 +1383,15 @@ save_image (const gchar  *filename,
   g_date_free (date);
 
   /* Open the output file. */
+  filename = g_file_get_path (file);
   dicom = g_fopen (filename, "wb");
+  g_free (filename);
 
   if (! dicom)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 

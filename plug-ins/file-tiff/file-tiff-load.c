@@ -811,7 +811,7 @@ load_image (GFile        *file,
               gchar *fname = g_strdup_printf ("%s-%d", g_file_get_uri (file),
                                               ilayer);
 
-              gimp_image_set_filename (*image, fname);
+              gimp_image_set_file (*image, g_file_new_for_uri (fname));
               g_free (fname);
 
               images_list = g_list_prepend (images_list, *image);
@@ -822,12 +822,12 @@ load_image (GFile        *file,
                                               g_file_get_uri (file),
                                               pages.n_pages, pages.o_pages);
 
-              gimp_image_set_filename (*image, fname);
+              gimp_image_set_file (*image, g_file_new_for_uri (fname));
               g_free (fname);
             }
           else
             {
-              gimp_image_set_filename (*image, g_file_get_uri (file));
+              gimp_image_set_file (*image, file);
             }
         }
 

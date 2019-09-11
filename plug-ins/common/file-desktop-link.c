@@ -187,7 +187,7 @@ load_image (GFile        *file,
   value = g_key_file_get_value (key_file,
                                 group, G_KEY_FILE_DESKTOP_KEY_URL, &error);
   if (value)
-    image = gimp_file_load (run_mode, value);
+    image = gimp_file_load (run_mode, g_file_new_for_uri (value));
 
  out:
   if (error)

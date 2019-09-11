@@ -433,6 +433,13 @@ GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
           pspec->value_type == GIMP_TYPE_RUN_MODE);
 }
 
+static inline gboolean
+GIMP_IS_PARAM_SPEC_FILE (GParamSpec *pspec)
+{
+  return (G_IS_PARAM_SPEC_OBJECT (pspec) &&
+          pspec->value_type == G_TYPE_FILE);
+}
+
 static gboolean
 gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
                                       Gimp                *gimp,
@@ -445,6 +452,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
   if (! proc->file_proc)
     return TRUE;
 
+#if 0
   /*  make sure that the passed strings are actually URIs, not just a
    *  file path (bug 758685)
    */
@@ -452,7 +460,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
   if ((procedure->num_args   >= 3)                     &&
       (procedure->num_values >= 1)                     &&
       GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
-      G_IS_PARAM_SPEC_STRING      (procedure->args[1]) &&
+      GIMP_IS_PARAM_SPEC_FILE     (procedure->args[1]) &&
       GIMP_IS_PARAM_SPEC_IMAGE    (procedure->values[0]))
     {
       uri_value = gimp_value_array_index (args, 1);
@@ -461,7 +469,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
            GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
            GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) &&
            GIMP_IS_PARAM_SPEC_DRAWABLE (procedure->args[2]) &&
-           G_IS_PARAM_SPEC_STRING      (procedure->args[3]))
+           GIMP_IS_PARAM_SPEC_FILE     (procedure->args[3]))
     {
       uri_value = gimp_value_array_index (args, 3);
     }
@@ -480,6 +488,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
       g_value_take_string (uri_value, g_file_get_uri (file));
       g_object_unref (file);
     }
+#endif
 
   return TRUE;
 }

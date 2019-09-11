@@ -42,7 +42,7 @@ typedef struct
 } WebPSaveParams;
 
 
-gboolean   save_image (const gchar            *filename,
+gboolean   save_image (GFile                  *file,
                        GimpImage              *image,
                        GimpDrawable           *drawable,
                        GimpMetadata           *metadata,

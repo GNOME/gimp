@@ -83,9 +83,9 @@ static GimpValueArray * sgi_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
-static gint             save_image           (const gchar          *filename,
+static gint             save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
@@ -201,18 +201,13 @@ sgi_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image = load_image (filename, &error);
-
-  g_free (filename);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -289,9 +284,7 @@ sgi_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gchar *filename = g_file_get_path (file);
-
-      if (save_image (filename, image, drawable,
+      if (save_image (file, image, drawable,
                       &error))
         {
           gimp_set_data (SAVE_PROC, &compression, sizeof (compression));
@@ -300,8 +293,6 @@ sgi_save (GimpProcedure        *procedure,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
-
-      g_free (filename);
     }
 
   if (export == GIMP_EXPORT_EXPORT)
@@ -311,8 +302,8 @@ sgi_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   gint           i,           /* Looping var */
                  x,           /* Current X coordinate */
@@ -322,6 +313,7 @@ load_image (const gchar  *filename,
                  tile_height, /* Height of tile in GIMP */
                  count,       /* Count of rows to put in image */
                  bytes;       /* Number of channels to use */
+  gchar         *filename;
   sgi_t         *sgip;        /* File pointer */
   GimpImage     *image;       /* Image */
   GimpLayer     *layer;       /* Layer */
@@ -335,14 +327,17 @@ load_image (const gchar  *filename,
   */
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   sgip = sgiOpen (filename, SGI_READ, 0, 0, 0, 0, 0);
-  if (sgip == NULL)
+  g_free (filename);
+
+  if (! sgip)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for reading."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     };
 
@@ -414,7 +409,7 @@ load_image (const gchar  *filename,
       return NULL;
     }
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   /*
    * Create the "background" layer to hold the image...
@@ -522,7 +517,7 @@ load_image (const gchar  *filename,
 }
 
 static gint
-save_image (const gchar  *filename,
+save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
             GError      **error)
@@ -535,6 +530,7 @@ save_image (const gchar  *filename,
                tile_height, /* Height of tile in GIMP */
                count,       /* Count of rows to put in image */
                zsize;       /* Number of channels in file */
+  gchar       *filename;
   sgi_t       *sgip;        /* File pointer */
   GeglBuffer  *buffer;      /* Buffer for layer */
   const Babl  *format;
@@ -584,15 +580,18 @@ save_image (const gchar  *filename,
    */
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   sgip = sgiOpen (filename, SGI_WRITE, compression, 1,
                   width, height, zsize);
-  if (sgip == NULL)
+  g_free (filename);
+
+  if (! sgip)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for writing."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return FALSE;
     };
 

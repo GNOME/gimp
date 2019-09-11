@@ -176,8 +176,9 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
     {
       GimpColorProfile *profile;
 
-      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, filename);
-      gimp_image_set_filename (*image, "screenshot.png");
+      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                               g_file_new_for_path (filename));
+      gimp_image_set_file (*image, g_file_new_for_path ("screenshot.png"));
 
       profile = gimp_monitor_get_color_profile (monitor);
 

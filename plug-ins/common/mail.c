@@ -266,7 +266,7 @@ mail_run (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &mail_info);
       {
-        gchar *filename = gimp_image_get_filename (image);
+        gchar *filename = g_file_get_path (gimp_image_get_file (image));
 
         if (filename)
           {
@@ -353,7 +353,8 @@ send_image (const gchar  *filename,
   if (! (gimp_file_save (run_mode,
                          image,
                          drawable,
-                         tmpname) && valid_file (tmpname)))
+                         g_file_new_for_path (tmpname)) &&
+         valid_file (tmpname)))
     {
       goto error;
     }

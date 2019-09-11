@@ -178,10 +178,10 @@ static gboolean         raw_load_rgb565      (RawGimpData          *data,
                                               RawType               type);
 static gboolean         raw_load_planar      (RawGimpData          *data);
 static gboolean         raw_load_palette     (RawGimpData          *data,
-                                              const gchar          *palette_filename);
+                                              GFile                *palette_file);
 
 /* support functions */
-static goffset          get_file_info        (const gchar          *filename);
+static goffset          get_file_info        (GFile                *file);
 static void             raw_read_row         (FILE                 *fp,
                                               guchar               *buf,
                                               gint32                offset,
@@ -196,9 +196,9 @@ static void             rgb_565_to_888       (guint16              *in,
                                               gint32                num_pixels,
                                               RawType               type);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
-static gboolean         save_image           (const gchar          *filename,
+static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
@@ -207,7 +207,7 @@ static gboolean         save_image           (const gchar          *filename,
 static void             preview_update_size  (GimpPreviewArea      *preview);
 static void             preview_update       (GimpPreviewArea      *preview);
 static void             palette_update       (GimpPreviewArea      *preview);
-static gboolean         load_dialog          (const gchar          *filename,
+static gboolean         load_dialog          (GFile                *file,
                                               gboolean              is_hgt);
 static gboolean         save_dialog          (GimpImage            *image);
 static void             save_dialog_response (GtkWidget            *widget,
@@ -227,7 +227,7 @@ GIMP_MAIN (RAW_TYPE)
 
 
 static RawConfig *runtime             = NULL;
-static gchar     *palfile             = NULL;
+static GFile     *palfile             = NULL;
 static gint       preview_fd          = -1;
 static guchar     preview_cmap[1024];
 static gboolean   preview_cmap_update = TRUE;
@@ -471,7 +471,7 @@ raw_load (GimpProcedure        *procedure,
         }
       else
         {
-          if (! load_dialog (g_file_get_path (file), is_hgt))
+          if (! load_dialog (file, is_hgt))
             status = GIMP_PDB_CANCEL;
 
           close (preview_fd);
@@ -542,7 +542,7 @@ raw_load (GimpProcedure        *procedure,
   /* we are okay, and the user clicked OK in the load dialog */
   if (status == GIMP_PDB_SUCCESS)
     {
-      image = load_image (g_file_get_path (file), &error);
+      image = load_image (file, &error);
 
       if (image)
         {
@@ -631,8 +631,8 @@ raw_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (g_file_get_path (file),
-                      image, drawable, &error))
+      if (save_image (file, image, drawable,
+                      &error))
         {
           gimp_set_data (SAVE_PROC, &rawvals, sizeof (rawvals));
         }
@@ -648,11 +648,10 @@ raw_save (GimpProcedure        *procedure,
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
-/* get file size from a filename */
+/* get file size from a filen */
 static goffset
-get_file_info (const gchar *filename)
+get_file_info (GFile *file)
 {
-  GFile     *file = g_file_new_for_path (filename);
   GFileInfo *info;
   goffset    size = 0;
 
@@ -667,8 +666,6 @@ get_file_info (const gchar *filename)
 
       g_object_unref (info);
     }
-
-  g_object_unref (file);
 
   return size;
 }
@@ -1008,14 +1005,18 @@ raw_load_planar (RawGimpData *data)
 
 static gboolean
 raw_load_palette (RawGimpData *data,
-                  const gchar *palette_file)
+                  GFile       *palette_file)
 {
   guchar temp[1024];
   gint   fd, i, j;
 
   if (palette_file)
     {
-      fd = g_open (palette_file, O_RDONLY, 0);
+      gchar *filename;
+
+      filename = g_file_get_path (palette_file);
+      fd = g_open (filename, O_RDONLY, 0);
+      g_free (filename);
 
       if (! fd)
         return FALSE;
@@ -1060,12 +1061,13 @@ raw_load_palette (RawGimpData *data,
 /* end new image handle functions */
 
 static gboolean
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
 {
   GeglBuffer *buffer;
+  gchar      *filename;
   const Babl *format = NULL;
   guchar     *cmap   = NULL;  /* colormap for indexed images */
   guchar     *buf;
@@ -1121,13 +1123,15 @@ save_image (const gchar   *filename,
 
   g_object_unref (buffer);
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "wb");
 
   if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      g_free (filename);
       return FALSE;
     }
 
@@ -1156,6 +1160,7 @@ save_image (const gchar   *filename,
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Could not open '%s' for writing: %s"),
                            gimp_filename_to_utf8 (newfile), g_strerror (errno));
+              g_free (filename);
               return FALSE;
             }
 
@@ -1211,15 +1216,18 @@ save_image (const gchar   *filename,
       break;
     }
 
+  g_free (filename);
+
   return ret;
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   RawGimpData       *data;
   GimpLayer         *layer = NULL;
+  gchar             *filename;
   GimpImageType      ltype = GIMP_RGB_IMAGE;
   GimpImageBaseType  itype = GIMP_RGB;
   goffset            size;
@@ -1229,18 +1237,21 @@ load_image (const gchar  *filename,
   data = g_new0 (RawGimpData, 1);
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   data->fp = g_fopen (filename, "rb");
+  g_free (filename);
+
   if (! data->fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
-  size = get_file_info (filename);
+  size = get_file_info (file);
 
   switch (runtime->image_type)
     {
@@ -1325,7 +1336,7 @@ load_image (const gchar  *filename,
     data->image = gimp_image_new (runtime->image_width,
                                   runtime->image_height,
                                   itype);
-  gimp_image_set_filename (data->image, filename);
+  gimp_image_set_file (data->image, file);
   layer = gimp_layer_new (data->image, _("Background"),
                           runtime->image_width, runtime->image_height,
                           ltype,
@@ -1602,9 +1613,13 @@ preview_update (GimpPreviewArea *preview)
           {
             if (palfile)
               {
-                gint fd;
+                gchar *filename;
+                gint   fd;
 
-                fd = g_open (palfile, O_RDONLY, 0);
+                filename = g_file_get_path (palfile);
+                fd = g_open (filename, O_RDONLY, 0);
+                g_free (filename);
+
                 lseek (fd, runtime->palette_offset, SEEK_SET);
                 read (fd, preview_cmap,
                       (runtime->palette_type == RAW_PALETTE_RGB) ? 768 : 1024);
@@ -1747,8 +1762,8 @@ palette_update (GimpPreviewArea *preview)
 }
 
 static gboolean
-load_dialog (const gchar *filename,
-             gboolean     is_hgt)
+load_dialog (GFile    *file,
+             gboolean  is_hgt)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -1763,7 +1778,7 @@ load_dialog (const gchar *filename,
   goffset        file_size;
   gboolean       run;
 
-  file_size = get_file_info (filename);
+  file_size = get_file_info (file);
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -1999,7 +2014,7 @@ load_dialog (const gchar *filename,
   button = gtk_file_chooser_button_new (_("Select Palette File"),
                                         GTK_FILE_CHOOSER_ACTION_OPEN);
   if (palfile)
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (button), palfile);
+    gtk_file_chooser_set_file (GTK_FILE_CHOOSER (button), palfile, NULL);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("Pal_ette File:"), 0.0, 0.5,
@@ -2142,9 +2157,9 @@ palette_callback (GtkFileChooser  *button,
                   GimpPreviewArea *preview)
 {
   if (palfile)
-    g_free (palfile);
+    g_object_unref (palfile);
 
-  palfile = gtk_file_chooser_get_filename (button);
+  palfile = gtk_file_chooser_get_file (button);
 
   palette_update (preview);
 }

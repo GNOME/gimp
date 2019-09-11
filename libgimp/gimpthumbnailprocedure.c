@@ -72,11 +72,10 @@ gimp_thumbnail_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_STRING (procedure, "uri",
-                        "URI",
-                        "URI of the file to load the thumbnail from",
-                        NULL,
-                        GIMP_PARAM_READWRITE);
+  GIMP_PROC_ARG_FILE (procedure, "file",
+                      "File",
+                      "The file to load the thumbnail from",
+                      GIMP_PARAM_READWRITE);
 
   GIMP_PROC_ARG_INT (procedure, "thumb-size",
                      "Thumb Size",
@@ -134,15 +133,12 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
   GimpThumbnailProcedure *thumbnail_proc = GIMP_THUMBNAIL_PROCEDURE (procedure);
   GimpValueArray         *remaining;
   GimpValueArray         *return_values;
-  const gchar            *uri;
   GFile                  *file;
   gint                    size;
   gint                    i;
 
-  uri  = GIMP_VALUES_GET_STRING (args, 0);
-  size = GIMP_VALUES_GET_INT    (args, 1);
-
-  file = g_file_new_for_uri (uri);
+  file = GIMP_VALUES_GET_FILE (args, 0);
+  size = GIMP_VALUES_GET_INT  (args, 1);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - 2);
 
@@ -160,7 +156,6 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
                                                   thumbnail_proc->priv->run_data);
 
   gimp_value_array_unref (remaining);
-  g_object_unref (file);
 
   return return_values;
 }

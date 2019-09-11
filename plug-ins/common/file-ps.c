@@ -174,7 +174,7 @@ static GimpValueArray * ps_save             (GimpProcedure        *procedure,
                                              const GimpValueArray *args,
                                              gpointer              run_data);
 
-static GimpImage      * load_image          (const gchar          *filename,
+static GimpImage      * load_image          (GFile                *file,
                                              GError              **error);
 static gboolean         save_image          (GFile                *file,
                                              GimpImage            *image,
@@ -222,7 +222,7 @@ static gboolean  print            (GOutputStream     *output,
                                    const gchar       *format,
                                    ...) G_GNUC_PRINTF (3, 4);
 
-static GimpImage * create_new_image (const gchar       *filename,
+static GimpImage * create_new_image (GFile             *file,
                                      guint              pagenum,
                                      guint              width,
                                      guint              height,
@@ -235,13 +235,13 @@ static void      check_save_vals  (void);
 static gint      page_in_list     (gchar             *list,
                                    guint              pagenum);
 
-static gint      get_bbox         (const gchar       *filename,
+static gint      get_bbox         (GFile             *file,
                                    gint              *x0,
                                    gint              *y0,
                                    gint              *x1,
                                    gint              *y1);
 
-static FILE    * ps_open         (const gchar       *filename,
+static FILE    * ps_open         (GFile             *file,
                                   const PSLoadVals  *loadopt,
                                   gint              *llx,
                                   gint              *lly,
@@ -253,7 +253,7 @@ static void      ps_close         (FILE              *ifp);
 
 static gboolean  skip_ps          (FILE              *ifp);
 
-static GimpImage * load_ps        (const gchar       *filename,
+static GimpImage * load_ps        (GFile             *file,
                                    guint              pagenum,
                                    FILE              *ifp,
                                    gint               llx,
@@ -269,13 +269,13 @@ static void      dither_grey      (const guchar      *grey,
 
 /* Dialog-handling */
 
-static gint32    count_ps_pages             (const gchar *filename);
-static gboolean  load_dialog                (const gchar *filename);
+static gint32    count_ps_pages             (GFile       *file);
+static gboolean  load_dialog                (GFile       *file);
 static void      load_pages_entry_callback  (GtkWidget   *widget,
                                              gpointer     data);
 
 static gboolean  resolution_change_callback (GtkAdjustment *adjustment,
-                                             gpointer   data);
+                                             gpointer       data);
 
 typedef struct
 {
@@ -604,7 +604,6 @@ ps_load (GimpProcedure        *procedure,
          gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
@@ -613,14 +612,12 @@ ps_load (GimpProcedure        *procedure,
 
   l_run_mode = run_mode;
 
-  filename = g_file_get_path (file);
-
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (LOAD_PS_PROC, &plvals);
 
-      if (! load_dialog (filename))
+      if (! load_dialog (file))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
@@ -652,9 +649,7 @@ ps_load (GimpProcedure        *procedure,
 
   check_load_vals ();
 
-  image = load_image (filename, &error);
-
-  g_free (filename);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -697,7 +692,7 @@ ps_load_thumb (GimpProcedure        *procedure,
 
   check_load_vals ();
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -1102,11 +1097,12 @@ ps_end_data (GOutputStream  *output,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   GimpImage  *image = NULL;
   GimpImage **image_list, **nl;
+  gchar      *filename;
   guint       page_count;
   FILE       *ifp;
   gchar      *temp;
@@ -1124,25 +1120,28 @@ load_image (const gchar  *filename,
 #endif
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /* Try to see if PostScript file is available */
+  filename = g_file_get_path (file);
   ifp = g_fopen (filename, "r");
-  if (ifp == NULL)
+  g_free (filename);
+
+  if (! ifp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
   fclose (ifp);
 
-  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
+  ifp = ps_open (file, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR,
                    _("Could not interpret PostScript file '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -1178,7 +1177,7 @@ load_image (const gchar  *filename,
     {
       if (page_in_list (plvals.pages, page_count))
         {
-          image = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
+          image = load_ps (file, page_count, ifp, llx, lly, urx, ury);
           if (! image)
             break;
 
@@ -1210,20 +1209,30 @@ load_image (const gchar  *filename,
     {
       for (k = 0; k < n_images; k++)
         {
-          gchar *name;
-
           if (k == 0)
             {
+              GFile *new_file;
+              gchar *uri;
+              gchar *new_uri;
+
               image = image_list[0];
 
-              name = g_strdup_printf (_("%s-pages"), filename);
-              gimp_image_set_filename (image, name);
-              g_free (name);
+              uri = g_file_get_uri (file);
+
+              new_uri = g_strdup_printf (_("%s-pages"), uri);
+              g_free (uri);
+
+              new_file = g_file_new_for_uri (new_uri);
+              g_free (new_uri);
+
+              gimp_image_set_file (image, new_file);
+              g_object_unref (new_file);
             }
           else
             {
               GimpLayer    *current_layer;
               GimpDrawable *tmp_drawable;
+              gchar        *name;
 
               tmp_drawable = gimp_image_get_active_drawable (image_list[k]);
 
@@ -1626,18 +1635,22 @@ static char *psfgets (char *s, int size, FILE *stream)
 /* Get the BoundingBox of a PostScript file. On success, 0 is returned. */
 /* On failure, -1 is returned. */
 static gint
-get_bbox (const gchar *filename,
-          gint        *x0,
-          gint        *y0,
-          gint        *x1,
-          gint        *y1)
+get_bbox (GFile *file,
+          gint  *x0,
+          gint  *y0,
+          gint  *x1,
+          gint  *y1)
 {
-  char line[1024], *src;
-  FILE *ifp;
-  int retval = -1;
+  gchar *filename;
+  char   line[1024], *src;
+  FILE  *ifp;
+  int    retval = -1;
 
+  filename = g_file_get_path (file);
   ifp = g_fopen (filename, "rb");
-  if (ifp == NULL)
+  g_free (filename);
+
+  if (! ifp)
     return -1;
 
   for (;;)
@@ -1665,7 +1678,7 @@ static gchar *pnmfile;
 /* The filepointer returned will give a PNM-file generated */
 /* by the PostScript-interpreter. */
 static FILE *
-ps_open (const gchar      *filename,
+ps_open (GFile            *file,
          const PSLoadVals *loadopt,
          gint             *llx,
          gint             *lly,
@@ -1673,6 +1686,7 @@ ps_open (const gchar      *filename,
          gint             *ury,
          gboolean         *is_epsf)
 {
+  gchar        *filename;
   const gchar  *driver;
   GPtrArray    *cmdA;
   gchar       **pcmdA;
@@ -1701,9 +1715,11 @@ ps_open (const gchar      *filename,
   /* Check if it is a EPS-file */
   *is_epsf = FALSE;
 
+  filename = g_file_get_path (file);
+
   eps_file = g_fopen (filename, "rb");
 
-  if (eps_file != NULL)
+  if (eps_file)
     {
       gchar hdr[512];
 
@@ -1740,7 +1756,7 @@ ps_open (const gchar      *filename,
 
   if ((!is_pdf) && (loadopt->use_bbox))    /* Try the BoundingBox ? */
     {
-      if (get_bbox (filename, &x0, &y0, &x1, &y1) == 0)
+      if (get_bbox (file, &x0, &y0, &x1, &y1) == 0)
         {
           if (maybe_epsf && ((x0 < 0) || (y0 < 0)))
             *is_epsf = 1;
@@ -1838,6 +1854,8 @@ ps_open (const gchar      *filename,
   /* input file name */
   g_ptr_array_add (cmdA, g_strdup ("-f"));
   g_ptr_array_add (cmdA, g_strdup (filename));
+
+  g_free (filename);
 
   if (*is_epsf)
     {
@@ -1958,7 +1976,7 @@ read_pnmraw_type (FILE *ifp,
 
 /* Create an image. Sets layer, drawable and rgn. Returns image */
 static GimpImage *
-create_new_image (const gchar        *filename,
+create_new_image (GFile              *file,
                   guint               pagenum,
                   guint               width,
                   guint               height,
@@ -1967,6 +1985,9 @@ create_new_image (const gchar        *filename,
 {
   GimpImage     *image;
   GimpImageType  gdtype;
+  GFile         *new_file;
+  gchar         *uri;
+  gchar         *new_uri;
   gchar         *tmp;
 
   switch (type)
@@ -1986,9 +2007,16 @@ create_new_image (const gchar        *filename,
                                          GIMP_PRECISION_U8_NON_LINEAR);
   gimp_image_undo_disable (image);
 
-  tmp = g_strdup_printf ("%s-%d", filename, pagenum);
-  gimp_image_set_filename (image, tmp);
-  g_free (tmp);
+  uri = g_file_get_uri (file);
+
+  new_uri = g_strdup_printf ("%s-%d", uri, pagenum);
+  g_free (uri);
+
+  new_file = g_file_new_for_uri (new_uri);
+  g_free (new_uri);
+
+  gimp_image_set_file (image, new_file);
+  g_object_unref (new_file);
 
   tmp = g_strdup_printf (_("Page %d"), pagenum);
   *layer = gimp_layer_new (image, tmp, width, height,
@@ -2040,26 +2068,27 @@ skip_ps (FILE *ifp)
 
 /* Load PNM image generated from PostScript file */
 static GimpImage *
-load_ps (const gchar *filename,
-         guint        pagenum,
-         FILE        *ifp,
-         gint         llx,
-         gint         lly,
-         gint         urx,
-         gint         ury)
+load_ps (GFile *file,
+         guint  pagenum,
+         FILE  *ifp,
+         gint   llx,
+         gint   lly,
+         gint   urx,
+         gint   ury)
 {
   guchar *dest;
   guchar *data, *bitline = NULL, *byteline = NULL, *byteptr, *temp;
-  guchar bit2byte[256*8];
-  int width, height, tile_height, scan_lines, total_scan_lines;
-  int image_width, image_height;
-  int skip_left, skip_bottom;
-  int i, j, pnmtype, maxval, bpp, nread;
+  guchar  bit2byte[256*8];
+  int     width, height, tile_height, scan_lines, total_scan_lines;
+  int     image_width, image_height;
+  int     skip_left, skip_bottom;
+  int     i, j, pnmtype, maxval, bpp, nread;
   GimpImageBaseType imagetype;
-  GimpImage *image;
-  GimpLayer *layer;
+  GimpImage  *image;
+  GimpLayer  *layer;
   GeglBuffer *buffer = NULL;
-  int err = 0, e;
+  int         err = 0;
+  int         e;
 
   pnmtype = read_pnmraw_type (ifp, &width, &height, &maxval);
 
@@ -2106,7 +2135,7 @@ load_ps (const gchar *filename,
   else
     return NULL;
 
-  image = create_new_image (filename, pagenum,
+  image = create_new_image (file, pagenum,
                             image_width, image_height, imagetype,
                             &layer);
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
@@ -3421,13 +3450,16 @@ print (GOutputStream  *output,
 /*  Load interface functions  */
 
 static gint32
-count_ps_pages (const gchar *filename)
+count_ps_pages (GFile *file)
 {
+  gchar  *filename;
   FILE   *psfile;
   gchar  *extension;
   gchar   buf[1024];
   gint32  num_pages      = 0;
   gint32  showpage_count = 0;
+
+  filename = g_file_get_path (file);
 
   extension = strrchr (filename, '.');
   if (extension)
@@ -3437,6 +3469,7 @@ count_ps_pages (const gchar *filename)
       if (strcmp (extension, "eps") == 0)
         {
           g_free (extension);
+          g_free (filename);
           return 1;
         }
 
@@ -3445,10 +3478,12 @@ count_ps_pages (const gchar *filename)
 
   psfile = g_fopen (filename, "r");
 
+  g_free (filename);
+
   if (psfile == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+                 gimp_file_get_utf8_name (file), g_strerror (errno));
       return 0;
     }
 
@@ -3471,7 +3506,7 @@ count_ps_pages (const gchar *filename)
 }
 
 static gboolean
-load_dialog (const gchar *filename)
+load_dialog (GFile *file)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -3489,7 +3524,7 @@ load_dialog (const gchar *filename)
   gchar         *range    = NULL;
   gboolean       run;
 
-  page_count = count_ps_pages (filename);
+  page_count = count_ps_pages (file);
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 

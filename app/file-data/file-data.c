@@ -89,13 +89,11 @@ file_data_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image ("image",
@@ -162,13 +160,11 @@ file_data_init (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to export",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to export",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("spacing",
                                                  "spacing",
@@ -225,13 +221,11 @@ file_data_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image ("image",
@@ -298,13 +292,11 @@ file_data_init (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to export",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to export",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("spacing",
                                                  "spacing",
@@ -368,13 +360,11 @@ file_data_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image ("image",
                                                           "Image",
@@ -440,14 +430,11 @@ file_data_init (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to export",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to export",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -496,13 +483,11 @@ file_data_init (Gimp *gimp)
                                                      GIMP_RUN_INTERACTIVE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       TRUE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("file",
+                                                    "File",
+                                                    "The file to load",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("extension-id",

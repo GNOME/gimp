@@ -361,7 +361,7 @@ load_image (GFile   *file,
   gushort            width, height, depth;
   gint               i, j, tile_height, row;
 
-  PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
+  PIX_DEBUG_PRINT ("Opening file: %s\n", gimp_file_get_utf8_name (file));
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
@@ -404,7 +404,7 @@ load_image (GFile   *file,
     }
 
   image = gimp_image_new (width, height, imgtype);
-  gimp_image_set_filename (image, g_file_get_uri (file));
+  gimp_image_set_file (image, file);
 
   layer = gimp_layer_new (image, _("Background"),
                           width, height,

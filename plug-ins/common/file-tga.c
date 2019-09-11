@@ -191,9 +191,9 @@ static GimpValueArray * tga_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
-static gboolean         save_image           (const gchar          *filename,
+static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
@@ -202,7 +202,7 @@ static gboolean         save_dialog          (void);
 
 static GimpImage      * ReadImage            (FILE                 *fp,
                                               tga_info             *info,
-                                              const gchar          *filename);
+                                              GFile                *file);
 
 
 G_DEFINE_TYPE (Tga, tga, GIMP_TYPE_PLUG_IN)
@@ -333,7 +333,7 @@ tga_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -410,8 +410,7 @@ tga_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (g_file_get_path (file),
-                      image, drawable,
+      if (save_image (file, image, drawable,
                       &error))
         {
           gimp_set_data (SAVE_PROC, &tsvals, sizeof (tsvals));
@@ -429,9 +428,10 @@ tga_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
+  gchar     *filename;
   FILE      *fp;
   tga_info   info;
   guchar     header[18];
@@ -441,15 +441,17 @@ load_image (const gchar  *filename,
   GimpImage *image = NULL;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
+  g_free (filename);
 
   if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -459,7 +461,7 @@ load_image (const gchar  *filename,
       if (fread (footer, sizeof (footer), 1, fp) != 1)
         {
           g_message (_("Cannot read footer from '%s'"),
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           return NULL;
         }
       else if (memcmp (footer + 8, magic, sizeof (magic)) == 0)
@@ -477,7 +479,7 @@ load_image (const gchar  *filename,
                   fread (extension, sizeof (extension), 1, fp) != 1)
                 {
                   g_message (_("Cannot read extension from '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
                   return NULL;
                 }
               /* Eventually actually handle version 2 TGA here */
@@ -489,7 +491,7 @@ load_image (const gchar  *filename,
       fread (header, sizeof (header), 1, fp) != 1)
     {
       g_message (_("Cannot read header from '%s'"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -563,7 +565,7 @@ load_image (const gchar  *filename,
         if (info.bpp != 8)
           {
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
-                       gimp_filename_to_utf8 (filename),
+                       gimp_file_get_utf8_name (file),
                        info.imageType, info.bpp);
             return NULL;
           }
@@ -578,7 +580,7 @@ load_image (const gchar  *filename,
             (info.bpp == 32 && info.alphaBits != 8))
           {
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u, alpha = %u)",
-                       gimp_filename_to_utf8 (filename),
+                       gimp_file_get_utf8_name (file),
                        info.imageType, info.bpp, info.alphaBits);
             return NULL;
           }
@@ -588,7 +590,7 @@ load_image (const gchar  *filename,
             (info.alphaBits != 8 || (info.bpp != 16 && info.bpp != 15)))
           {
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
-                       gimp_filename_to_utf8 (filename),
+                       gimp_file_get_utf8_name (file),
                        info.imageType, info.bpp);
             return NULL;
           }
@@ -596,7 +598,7 @@ load_image (const gchar  *filename,
 
       default:
         g_message ("Unknown image type %u for '%s'",
-                   info.imageType, gimp_filename_to_utf8 (filename));
+                   info.imageType, gimp_file_get_utf8_name (file));
         return NULL;
     }
 
@@ -604,7 +606,7 @@ load_image (const gchar  *filename,
   if (info.bytes * 8 != info.bpp && info.bpp != 15)
     {
       g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
-                 gimp_filename_to_utf8 (filename),
+                 gimp_file_get_utf8_name (file),
                  info.imageType, info.bpp);
       return NULL;
     }
@@ -627,11 +629,11 @@ load_image (const gchar  *filename,
   if (info.idLength && fseek (fp, info.idLength, SEEK_CUR))
     {
       g_message ("File '%s' is truncated or corrupted",
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       return NULL;
     }
 
-  image = ReadImage (fp, &info, filename);
+  image = ReadImage (fp, &info, file);
 
   fclose (fp);
 
@@ -971,9 +973,9 @@ read_line (FILE         *fp,
 }
 
 static GimpImage *
-ReadImage (FILE        *fp,
-           tga_info    *info,
-           const gchar *filename)
+ReadImage (FILE     *fp,
+           tga_info *info,
+           GFile    *file)
 {
   GimpImage         *image;
   GimpLayer         *layer;
@@ -1087,13 +1089,13 @@ ReadImage (FILE        *fp,
       else
         {
           g_message ("File '%s' is truncated or corrupted",
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           return NULL;
         }
     }
 
   image = gimp_image_new (info->width, info->height, itype);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   if (gimp_cmap)
     gimp_image_set_colormap (image, gimp_cmap, info->colorMapLength);
@@ -1176,7 +1178,7 @@ ReadImage (FILE        *fp,
 
 
 static gboolean
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
@@ -1186,6 +1188,7 @@ save_image (const gchar   *filename,
   GimpImageType  dtype;
   gint           width;
   gint           height;
+  gchar         *filename;
   FILE          *fp;
   gint           out_bpp = 0;
   gboolean       status  = TRUE;
@@ -1205,13 +1208,17 @@ save_image (const gchar   *filename,
   height = gegl_buffer_get_height (buffer);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
-  if ((fp = g_fopen (filename, "wb")) == NULL)
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename, "wb");
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 

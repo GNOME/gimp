@@ -129,9 +129,9 @@ static GimpValueArray * sunras_save             (GimpProcedure        *procedure
                                                  const GimpValueArray *args,
                                                  gpointer              run_data);
 
-static GimpImage      * load_image              (const gchar          *filename,
+static GimpImage      * load_image              (GFile                *file,
                                                  GError              **error);
-static gboolean         save_image              (const gchar          *filename,
+static gboolean         save_image              (GFile                *file,
                                                  GimpImage            *image,
                                                  GimpDrawable         *drawable,
                                                  GError              **error);
@@ -139,26 +139,26 @@ static gboolean         save_image              (const gchar          *filename,
 static void             set_color_table         (GimpImage            *image,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  const guchar         *suncolmap);
-static GimpImage      * create_new_image        (const gchar          *filename,
+static GimpImage      * create_new_image        (GFile                *file,
                                                  guint                 width,
                                                  guint                 height,
                                                  GimpImageBaseType     type,
                                                  GimpLayer           **layer,
                                                  GeglBuffer          **buffer);
 
-static GimpImage      * load_sun_d1             (const gchar          *filename,
+static GimpImage      * load_sun_d1             (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
-static GimpImage      * load_sun_d8             (const gchar          *filename,
+static GimpImage      * load_sun_d8             (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
-static GimpImage      * load_sun_d24            (const gchar          *filename,
+static GimpImage      * load_sun_d24            (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
-static GimpImage      * load_sun_d32            (const gchar          *filename,
+static GimpImage      * load_sun_d32            (GFile                *file,
                                                  FILE                 *ifp,
                                                  L_SUNFILEHEADER      *sunhdr,
                                                  guchar               *suncolmap);
@@ -345,7 +345,7 @@ sunras_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -421,7 +421,7 @@ sunras_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (g_file_get_path (file), image, drawable,
+      if (save_image (file, image, drawable,
                       &error))
         {
           gimp_set_data (SAVE_PROC, &psvals, sizeof (SUNRASSaveVals));
@@ -439,23 +439,27 @@ sunras_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   GimpImage       *image;
+  gchar           *filename;
   FILE            *ifp;
   L_SUNFILEHEADER  sunhdr;
   guchar          *suncolmap = NULL;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   ifp = g_fopen (filename, "rb");
-  if (!ifp)
+  g_free (filename);
+
+  if (! ifp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -466,7 +470,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' as SUN-raster-file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -495,7 +499,7 @@ load_image (const gchar  *filename,
 #ifdef DEBUG
       {
         int j, ncols;
-        printf ("File %s\n",filename);
+        printf ("File %s\n", g_file_get_path (file));
         ncols = sunhdr.l_ras_maplength/3;
         for (j=0; j < ncols; j++)
           printf ("Entry 0x%08x: 0x%04x,  0x%04x, 0x%04x\n",
@@ -505,7 +509,7 @@ load_image (const gchar  *filename,
       if (sunhdr.l_ras_magic != RAS_MAGIC)
         {
           g_message (_("Could not read color entries from '%s'"),
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           fclose (ifp);
           g_free (suncolmap);
           return NULL;
@@ -521,7 +525,7 @@ load_image (const gchar  *filename,
   if (sunhdr.l_ras_width <= 0)
     {
       g_message (_("'%s':\nNo image width specified"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -529,7 +533,7 @@ load_image (const gchar  *filename,
   if (sunhdr.l_ras_width > GIMP_MAX_IMAGE_SIZE)
     {
       g_message (_("'%s':\nImage width is larger than GIMP can handle"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -537,7 +541,7 @@ load_image (const gchar  *filename,
   if (sunhdr.l_ras_height <= 0)
     {
       g_message (_("'%s':\nNo image height specified"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -545,7 +549,7 @@ load_image (const gchar  *filename,
   if (sunhdr.l_ras_height > GIMP_MAX_IMAGE_SIZE)
     {
       g_message (_("'%s':\nImage height is larger than GIMP can handle"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (ifp);
       return NULL;
     }
@@ -553,19 +557,19 @@ load_image (const gchar  *filename,
   switch (sunhdr.l_ras_depth)
     {
     case 1:    /* bitmap */
-      image = load_sun_d1 (filename, ifp, &sunhdr, suncolmap);
+      image = load_sun_d1 (file, ifp, &sunhdr, suncolmap);
       break;
 
     case 8:    /* 256 colors */
-      image = load_sun_d8 (filename, ifp, &sunhdr, suncolmap);
+      image = load_sun_d8 (file, ifp, &sunhdr, suncolmap);
       break;
 
     case 24:   /* True color */
-      image = load_sun_d24 (filename, ifp, &sunhdr, suncolmap);
+      image = load_sun_d24 (file, ifp, &sunhdr, suncolmap);
       break;
 
     case 32:   /* True color with extra byte */
-      image = load_sun_d32 (filename, ifp, &sunhdr, suncolmap);
+      image = load_sun_d32 (file, ifp, &sunhdr, suncolmap);
       break;
 
     default:
@@ -588,11 +592,12 @@ load_image (const gchar  *filename,
 }
 
 static gboolean
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
 {
+  gchar         *filename;
   FILE          *ofp;
   GimpImageType  drawable_type;
   gboolean       retval;
@@ -620,15 +625,18 @@ save_image (const gchar   *filename,
     }
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /* Open the output file. */
+  filename = g_file_get_path (file);
   ofp = g_fopen (filename, "wb");
+  g_free (filename);
+
   if (! ofp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -1044,7 +1052,7 @@ set_color_table (GimpImage       *image,
 
 /* Create an image. Sets layer, drawable and rgn. Returns image */
 static GimpImage *
-create_new_image (const gchar        *filename,
+create_new_image (GFile              *file,
                   guint               width,
                   guint               height,
                   GimpImageBaseType   type,
@@ -1071,7 +1079,7 @@ create_new_image (const gchar        *filename,
     }
 
   image = gimp_image_new (width, height, type);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   *layer = gimp_layer_new (image, _("Background"), width, height,
                            gdtype,
@@ -1087,7 +1095,7 @@ create_new_image (const gchar        *filename,
 
 /* Load SUN-raster-file with depth 1 */
 static GimpImage *
-load_sun_d1 (const gchar     *filename,
+load_sun_d1 (GFile           *file,
              FILE            *ifp,
              L_SUNFILEHEADER *sunhdr,
              guchar          *suncolmap)
@@ -1108,7 +1116,7 @@ load_sun_d1 (const gchar     *filename,
   width = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
-  image = create_new_image (filename, width, height, GIMP_INDEXED,
+  image = create_new_image (file, width, height, GIMP_INDEXED,
                             &layer, &buffer);
 
   tile_height = gimp_tile_height ();
@@ -1194,7 +1202,7 @@ load_sun_d1 (const gchar     *filename,
 /* Load SUN-raster-file with depth 8 */
 
 static GimpImage *
-load_sun_d8 (const gchar     *filename,
+load_sun_d8 (GFile           *file,
              FILE            *ifp,
              L_SUNFILEHEADER *sunhdr,
              guchar          *suncolmap)
@@ -1232,7 +1240,7 @@ load_sun_d8 (const gchar     *filename,
         }
     }
 
-  image = create_new_image (filename, width, height,
+  image = create_new_image (file, width, height,
                             grayscale ? GIMP_GRAY : GIMP_INDEXED,
                             &layer, &buffer);
 
@@ -1288,7 +1296,7 @@ load_sun_d8 (const gchar     *filename,
 
 /* Load SUN-raster-file with depth 24 */
 static GimpImage *
-load_sun_d24 (const gchar      *filename,
+load_sun_d24 (GFile            *file,
               FILE             *ifp,
               L_SUNFILEHEADER  *sunhdr,
               guchar           *suncolmap)
@@ -1306,7 +1314,7 @@ load_sun_d24 (const gchar      *filename,
   width  = sunhdr->l_ras_width;
   height = sunhdr->l_ras_height;
 
-  image = create_new_image (filename, width, height, GIMP_RGB,
+  image = create_new_image (file, width, height, GIMP_RGB,
                             &layer, &buffer);
 
   tile_height = gimp_tile_height ();
@@ -1373,7 +1381,7 @@ load_sun_d24 (const gchar      *filename,
 /* Load SUN-raster-file with depth 32 */
 
 static GimpImage *
-load_sun_d32 (const gchar     *filename,
+load_sun_d32 (GFile           *file,
               FILE            *ifp,
               L_SUNFILEHEADER *sunhdr,
               guchar          *suncolmap)
@@ -1396,7 +1404,7 @@ load_sun_d32 (const gchar     *filename,
 
   cerr = 0;
 
-  image = create_new_image (filename, width, height, GIMP_RGB,
+  image = create_new_image (file, width, height, GIMP_RGB,
                             &layer, &buffer);
 
   tile_height = gimp_tile_height ();

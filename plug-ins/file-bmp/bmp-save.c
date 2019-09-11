@@ -124,12 +124,13 @@ warning_dialog (const gchar *primary,
 }
 
 GimpPDBStatusType
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GimpRunMode    run_mode,
             GError       **error)
 {
+  gchar          *filename;
   FILE           *outfile;
   BitmapFileHead  bitmap_file_head;
   BitmapHead      bitmap_head;
@@ -308,15 +309,18 @@ save_image (const gchar   *filename,
 
   /* Let's begin the progress */
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   /* Let's take some file */
+  filename = g_file_get_path (file);
   outfile = g_fopen (filename, "wb");
-  if (!outfile)
+  g_free (filename);
+
+  if (! outfile)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 

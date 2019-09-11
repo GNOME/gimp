@@ -22,7 +22,7 @@
 #define __PSD_LOAD_H__
 
 
-GimpImage * load_image (const gchar  *filename,
+GimpImage * load_image (GFile        *file,
                         gboolean      merged_image_only,
                         gboolean     *resolution_loaded,
                         gboolean     *profile_loaded,

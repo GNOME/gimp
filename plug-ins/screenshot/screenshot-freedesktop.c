@@ -101,16 +101,14 @@ screenshot_freedesktop_dbus_signal (GDBusProxy  *proxy,
           if (g_variant_lookup (results, "uri", "s", &uri))
             {
               GFile *file = g_file_new_for_uri (uri);
-              gchar *path = g_file_get_path (file);
 
-              *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, path);
-              gimp_image_set_filename (*image, "screenshot.png");
+              *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file);
+              gimp_image_set_file (*image, g_file_new_for_path ("screenshot.png"));
 
               /* Delete the actual file. */
               g_file_delete (file, NULL, NULL);
 
               g_object_unref (file);
-              g_free (path);
               g_free (uri);
             }
         }

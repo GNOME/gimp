@@ -116,7 +116,7 @@ static GimpValueArray * xbm_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
                                               const gchar          *prefix,
@@ -313,7 +313,7 @@ xbm_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure, status, error);
@@ -328,12 +328,15 @@ xbm_load (GimpProcedure        *procedure,
 }
 
 static gchar *
-init_prefix (const gchar *filename)
+init_prefix (GFile *file)
 {
+  gchar *filename;
   gchar *p, *prefix;
-  gint len;
+  gint   len;
 
+  filename = g_file_get_path (file);
   prefix = g_path_get_basename (filename);
+  g_free (filename);
 
   memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
 
@@ -397,7 +400,7 @@ xbm_save (GimpProcedure        *procedure,
       gimp_get_data (SAVE_PROC, &xsvals);
 
       /* Always override the prefix with the filename. */
-      mask_basename = g_strdup (init_prefix (g_file_get_path (file)));
+      mask_basename = g_strdup (init_prefix (file));
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -409,7 +412,7 @@ xbm_save (GimpProcedure        *procedure,
       xsvals.y_hot      = GIMP_VALUES_GET_INT     (args, 3);
       xsvals.use_hot    = xsvals.x_hot != 0 || xsvals.y_hot != 0;
 
-      mask_basename = g_strdup (init_prefix (g_file_get_path (file)));
+      mask_basename = g_strdup (init_prefix (file));
 
       g_strlcpy (xsvals.prefix, GIMP_VALUES_GET_STRING (args, 4),
                  MAX_PREFIX);
@@ -743,9 +746,10 @@ get_int (FILE *fp)
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
+  gchar        *filename;
   FILE         *fp;
   GeglBuffer   *buffer;
   GimpImage    *image;
@@ -767,14 +771,17 @@ load_image (const gchar  *filename,
   };
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
+  g_free (filename);
+
   if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -854,7 +861,7 @@ load_image (const gchar  *filename,
   if (c == EOF)
     {
       g_message (_("'%s':\nCould not read header (ftell == %ld)"),
-                 gimp_filename_to_utf8 (filename), ftell (fp));
+                 gimp_file_get_utf8_name (file), ftell (fp));
       fclose (fp);
       return NULL;
     }
@@ -862,7 +869,7 @@ load_image (const gchar  *filename,
   if (width <= 0)
     {
       g_message (_("'%s':\nNo image width specified"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -870,7 +877,7 @@ load_image (const gchar  *filename,
   if (width > GIMP_MAX_IMAGE_SIZE)
     {
       g_message (_("'%s':\nImage width is larger than GIMP can handle"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -878,7 +885,7 @@ load_image (const gchar  *filename,
   if (height <= 0)
     {
       g_message (_("'%s':\nNo image height specified"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -886,7 +893,7 @@ load_image (const gchar  *filename,
   if (height > GIMP_MAX_IMAGE_SIZE)
     {
       g_message (_("'%s':\nImage height is larger than GIMP can handle"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -894,13 +901,13 @@ load_image (const gchar  *filename,
   if (intbits == 0)
     {
       g_message (_("'%s':\nNo image data type specified"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
 
   image = gimp_image_new (width, height, GIMP_INDEXED);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   if (comment)
     {

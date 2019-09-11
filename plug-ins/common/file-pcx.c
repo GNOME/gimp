@@ -74,7 +74,7 @@ static GimpValueArray * pcx_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
 
 static void             load_1               (FILE                 *fp,
@@ -108,7 +108,7 @@ static void             readline             (FILE                 *fp,
                                               guchar               *buf,
                                               gint                  bytes);
 
-static gboolean         save_image           (const gchar          *filename,
+static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
@@ -235,7 +235,7 @@ pcx_load (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image = load_image (g_file_get_path (file), &error);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -288,7 +288,7 @@ pcx_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (! save_image (g_file_get_path (file),
+  if (! save_image (file,
                     image, drawable,
                     &error))
     {
@@ -371,11 +371,12 @@ pcx_header_to_buffer (guint8 *buf)
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
   FILE         *fd;
   GeglBuffer   *buffer;
+  gchar        *filename;
   guint16       offset_x, offset_y, bytesperline;
   gint32        width, height;
   guint16       resolution_x, resolution_y;
@@ -385,15 +386,17 @@ load_image (const gchar  *filename,
   guint8        header_buf[128];
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fd = g_fopen (filename, "rb");
+  g_free (filename);
 
   if (! fd)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -401,7 +404,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not read header from '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (fd);
       return NULL;
     }
@@ -412,7 +415,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a PCX file"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       fclose (fd);
       return NULL;
     }
@@ -476,7 +479,7 @@ load_image (const gchar  *filename,
                               gimp_image_get_default_new_layer_mode (image));
     }
 
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
   gimp_image_set_resolution (image, resolution_x, resolution_y);
 
   gimp_image_insert_layer (image, layer, NULL, 0);
@@ -749,13 +752,14 @@ readline (FILE   *fp,
 }
 
 static gboolean
-save_image (const gchar   *filename,
+save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GError       **error)
 {
   FILE          *fp;
   GeglBuffer    *buffer;
+  gchar         *filename;
   const Babl    *format;
   GimpImageType  drawable_type;
   guchar        *cmap= NULL;
@@ -776,7 +780,7 @@ save_image (const gchar   *filename,
   height = gegl_buffer_get_height (buffer);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   pcx_header.manufacturer = 0x0a;
   pcx_header.version      = 5;
@@ -885,11 +889,15 @@ save_image (const gchar   *filename,
       return FALSE;
     }
 
-  if ((fp = g_fopen (filename, "wb")) == NULL)
+  filename = g_file_get_path (file);
+  fp = g_fopen (filename, "wb");
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -955,7 +963,7 @@ save_image (const gchar   *filename,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Writing to file '%s' failed: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 

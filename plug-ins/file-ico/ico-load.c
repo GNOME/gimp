@@ -650,9 +650,10 @@ ico_load_layer (FILE        *fp,
 
 
 GimpImage *
-ico_load_image (const gchar  *filename,
+ico_load_image (GFile        *file,
                 GError      **error)
 {
+  gchar       *filename;
   FILE        *fp;
   IcoLoadInfo *info;
   gint         max_width, max_height;
@@ -663,14 +664,17 @@ ico_load_image (const gchar  *filename,
   gint         maxsize;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
+  g_free (filename);
+
   if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -707,7 +711,7 @@ ico_load_image (const gchar  *filename,
   D(("image size: %ix%i\n", max_width, max_height));
 
   image = gimp_image_new (max_width, max_height, GIMP_RGB);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   maxsize = max_width * max_height * 4;
   buf = g_new (guchar, max_width * max_height * 4);
@@ -725,11 +729,12 @@ ico_load_image (const gchar  *filename,
 }
 
 GimpImage *
-ico_load_thumbnail_image (const gchar  *filename,
-                          gint         *width,
-                          gint         *height,
-                          GError      **error)
+ico_load_thumbnail_image (GFile   *file,
+                          gint    *width,
+                          gint    *height,
+                          GError **error)
 {
+  gchar       *filename;
   FILE        *fp;
   IcoLoadInfo *info;
   GimpImage   *image;
@@ -741,14 +746,17 @@ ico_load_thumbnail_image (const gchar  *filename,
   guchar      *buf;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
+  g_free (filename);
+
   if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -760,7 +768,7 @@ ico_load_thumbnail_image (const gchar  *filename,
     }
 
   D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
-     filename, icon_count));
+     gimp_file_get_utf8_name (file), icon_count));
 
   info = ico_read_info (fp, icon_count, error);
   if (! info)

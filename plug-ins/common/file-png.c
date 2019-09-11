@@ -176,12 +176,12 @@ static GimpValueArray * png_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage * load_image              (const gchar      *filename,
+static GimpImage * load_image              (GFile            *file,
                                             gboolean          interactive,
                                             gboolean         *resolution_loaded,
                                             gboolean         *profile_loaded,
                                             GError          **error);
-static gboolean  save_image                (const gchar      *filename,
+static gboolean  save_image                (GFile            *file,
                                             GimpImage        *image,
                                             GimpDrawable     *drawable,
                                             GimpImage        *orig_image,
@@ -416,7 +416,7 @@ png_load (GimpProcedure        *procedure,
       break;
     }
 
-  image = load_image (g_file_get_path (file),
+  image = load_image (file,
                       interactive,
                       &resolution_loaded,
                       &profile_loaded,
@@ -564,7 +564,7 @@ png_save (GimpProcedure        *procedure,
     {
       gboolean profile_saved = FALSE;
 
-      if (save_image (g_file_get_path (file),
+      if (save_image (file,
                       image, drawable, orig_image,
                       &profile_saved, &error))
         {
@@ -719,7 +719,7 @@ load_color_profile (png_structp   pp,
  * 'load_image()' - Load a PNG image into a new image window.
  */
 static GimpImage *
-load_image (const gchar  *filename,
+load_image (GFile        *file,
             gboolean      interactive,
             gboolean     *resolution_loaded,
             gboolean     *profile_loaded,
@@ -740,6 +740,7 @@ load_image (const gchar  *filename,
   GimpPrecision     image_precision;      /* Precision of image */
   GimpImageType     layer_type;           /* Type of drawable/layer */
   GimpColorProfile *profile      = NULL;  /* Color profile */
+  gchar            *filename;
   gchar            *profile_name = NULL;  /* Profile's name */
   gboolean          linear       = FALSE; /* Linear RGB */
   FILE             *fp;                   /* File pointer */
@@ -764,7 +765,7 @@ load_image (const gchar  *filename,
 
       g_set_error (error, 0, 0,
                    _("Error creating PNG read struct while loading '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -773,7 +774,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, 0, 0,
                    _("Error while reading '%s'. Could not create PNG header info structure."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -781,7 +782,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error while reading '%s'. File corrupted?"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return (GimpImage *) image;
     }
 
@@ -798,15 +799,17 @@ load_image (const gchar  *filename,
    */
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
+  g_free (filename);
 
   if (fp == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -940,7 +943,7 @@ load_image (const gchar  *filename,
     default:
       g_set_error (error, 0, 0,
                    _("Unknown color model in PNG file '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -953,7 +956,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, 0, 0,
                    _("Could not create new image for '%s': %s"),
-                   gimp_filename_to_utf8 (filename),
+                   gimp_file_get_utf8_name (file),
                    gimp_pdb_get_last_error (gimp_get_pdb ()));
       return NULL;
     }
@@ -1084,7 +1087,7 @@ load_image (const gchar  *filename,
 
     }
 
-  gimp_image_set_filename ((GimpImage *) image, filename);
+  gimp_image_set_file ((GimpImage *) image, file);
 
   /*
    * Load the colormap as necessary...
@@ -1323,7 +1326,7 @@ offsets_dialog (gint offset_x,
  */
 
 static gboolean
-save_image (const gchar  *filename,
+save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
             GimpImage    *orig_image,
@@ -1345,6 +1348,7 @@ save_image (const gchar  *filename,
   GimpColorProfile *profile = NULL;   /* Color profile */
   gboolean          out_linear;       /* Save linear RGB */
   GeglBuffer       *buffer;           /* GEGL buffer for layer */
+  gchar            *filename;
   const Babl       *file_format = NULL; /* BABL format of file */
   const gchar      *encoding;
   const Babl       *space;
@@ -1462,7 +1466,7 @@ save_image (const gchar  *filename,
        */
       g_set_error (error, 0, 0,
                    _("Error creating PNG write struct while exporting '%s'."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -1471,7 +1475,7 @@ save_image (const gchar  *filename,
     {
       g_set_error (error, 0, 0,
                    _("Error while exporting '%s'. Could not create PNG header info structure."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -1479,7 +1483,7 @@ save_image (const gchar  *filename,
     {
       g_set_error (error, 0, 0,
                    _("Error while exporting '%s'. Could not export image."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -1496,14 +1500,17 @@ save_image (const gchar  *filename,
    */
 
   gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   fp = g_fopen (filename, "wb");
-  if (fp == NULL)
+  g_free (filename);
+
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 

@@ -70,10 +70,10 @@ static GimpValueArray * rawtherapee_load_thumb       (GimpProcedure        *proc
                                                       const GimpValueArray *args,
                                                       gpointer              run_data);
 
-static GimpImage      * load_image                   (const gchar          *filename,
+static GimpImage      * load_image                   (GFile                *file,
                                                       GimpRunMode           run_mode,
                                                       GError              **error);
-static GimpImage      * load_thumbnail_image         (const gchar          *filename,
+static GimpImage      * load_thumbnail_image         (GFile                *file,
                                                       gint                  thumb_size,
                                                       GError              **error);
 
@@ -258,17 +258,12 @@ rawtherapee_load (GimpProcedure        *procedure,
                   gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
 
-  filename = g_file_get_path (file);
-
-  image = load_image (filename, run_mode, &error);
-
-  g_free (filename);
+  image = load_image (file, run_mode, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -297,8 +292,7 @@ rawtherapee_load_thumb (GimpProcedure        *procedure,
 
   INIT_I18N ();
 
-  image = load_thumbnail_image (g_file_get_path (file),
-                                size, &error);
+  image = load_thumbnail_image (file, size, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -321,11 +315,12 @@ rawtherapee_load_thumb (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
+load_image (GFile        *file,
             GimpRunMode   run_mode,
             GError      **error)
 {
   GimpImage *image              = NULL;
+  gchar     *filename           = g_file_get_path (file);
   gchar     *filename_out       = gimp_temp_name ("tif");
   gchar     *rawtherapee_stdout = NULL;
 
@@ -347,7 +342,7 @@ load_image (const gchar  *filename,
     };
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   if (g_spawn_sync (NULL,
                     argv,
@@ -362,9 +357,9 @@ load_image (const gchar  *filename,
                     NULL,
                     error))
     {
-      image = gimp_file_load (run_mode, filename_out);
+      image = gimp_file_load (run_mode, g_file_new_for_path (filename_out));
       if (image)
-        gimp_image_set_filename (image, filename);
+        gimp_image_set_file (image, file);
     }
 
   /*if (rawtherapee_stdout) printf ("%s\n", rawtherapee_stdout);*/
@@ -380,11 +375,12 @@ load_image (const gchar  *filename,
 }
 
 static GimpImage *
-load_thumbnail_image (const gchar   *filename,
-                      gint           thumb_size,
-                      GError       **error)
+load_thumbnail_image (GFile   *file,
+                      gint     thumb_size,
+                      GError **error)
 {
   GimpImage *image            = NULL;
+  gchar     *filename         = g_file_get_path (file);
   gchar     *filename_out     = gimp_temp_name ("jpg");
   gchar     *thumb_pp3        = gimp_temp_name ("pp3");
   FILE      *thumb_pp3_f      = fopen (thumb_pp3, "w");
@@ -464,7 +460,7 @@ load_thumbnail_image (const gchar   *filename,
     }
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
   if (thumb_pp3_f &&
       g_spawn_sync (NULL,
@@ -481,11 +477,12 @@ load_thumbnail_image (const gchar   *filename,
     {
       gimp_progress_update (0.5);
 
-      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, filename_out);
+      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                              g_file_new_for_path (filename_out));
       if (image)
         {
           /* is this needed for thumbnails? */
-          gimp_image_set_filename (image, filename);
+          gimp_image_set_file (image, file);
         }
     }
 

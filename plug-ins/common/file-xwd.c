@@ -172,13 +172,13 @@ static GimpValueArray * xwd_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (const gchar          *filename,
+static GimpImage      * load_image           (GFile                *file,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               GError              **error);
-static GimpImage      * create_new_image     (const gchar          *filename,
+static GimpImage      * create_new_image     (GFile                *file,
                                               guint                 width,
                                               guint                 height,
                                               GimpImageBaseType     type,
@@ -200,28 +200,28 @@ static void             set_color_table      (GimpImage            *image,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
 
-static GimpImage      * load_xwd_f2_d1_b1    (const gchar          *filename,
+static GimpImage      * load_xwd_f2_d1_b1    (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f2_d8_b8    (const gchar          *filename,
+static GimpImage      * load_xwd_f2_d8_b8    (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f2_d16_b16  (const gchar          *filename,
+static GimpImage      * load_xwd_f2_d16_b16  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f2_d24_b32  (const gchar          *filename,
+static GimpImage      * load_xwd_f2_d24_b32  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap,
                                               GError              **error);
-static GimpImage      * load_xwd_f2_d32_b32  (const gchar          *filename,
+static GimpImage      * load_xwd_f2_d32_b32  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f1_d24_b1   (const gchar          *filename,
+static GimpImage      * load_xwd_f1_d24_b1   (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap,
@@ -376,17 +376,12 @@ xwd_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  gchar          *filename;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_file_get_path (file);
-
-  image = load_image (filename, &error);
-
-  g_free (filename);
+  image = load_image (file, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -451,24 +446,28 @@ xwd_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (GFile   *file,
+            GError **error)
 {
-  FILE            *ifp = NULL;
+  gchar           *filename;
+  FILE            *ifp;
   gint             depth, bpp;
   GimpImage       *image = NULL;
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR      *xwdcolmap = NULL;
 
   gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   ifp = g_fopen (filename, "rb");
-  if (!ifp)
+  g_free (filename);
+
+  if (! ifp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       goto out;
     }
 
@@ -477,7 +476,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not read XWD header from '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -498,7 +497,7 @@ load_image (const gchar  *filename,
   if (xwdhdr.l_colormap_entries > 256)
     {
       g_message (_("'%s':\nIllegal number of colormap entries: %ld"),
-                 gimp_filename_to_utf8 (filename),
+                 gimp_file_get_utf8_name (file),
                  (long)xwdhdr.l_colormap_entries);
       goto out;
     }
@@ -508,7 +507,7 @@ load_image (const gchar  *filename,
       if (xwdhdr.l_colormap_entries < xwdhdr.l_ncolors)
         {
           g_message (_("'%s':\nNumber of colormap entries < number of colors"),
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
           goto out;
         }
 
@@ -519,7 +518,7 @@ load_image (const gchar  *filename,
 #ifdef XWD_COL_DEBUG
       {
         int j;
-        g_printf ("File %s\n",filename);
+        g_printf ("File %s\n", g_file_get_path (file));
         for (j = 0; j < xwdhdr.l_colormap_entries; j++)
           g_printf ("Entry 0x%08lx: 0x%04lx,  0x%04lx, 0x%04lx, %d\n",
                     (long)xwdcolmap[j].l_pixel,(long)xwdcolmap[j].l_red,
@@ -538,7 +537,7 @@ load_image (const gchar  *filename,
   if (xwdhdr.l_pixmap_width <= 0)
     {
       g_message (_("'%s':\nNo image width specified"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -546,21 +545,21 @@ load_image (const gchar  *filename,
       || xwdhdr.l_bytes_per_line > GIMP_MAX_IMAGE_SIZE * 3)
     {
       g_message (_("'%s':\nImage width is larger than GIMP can handle"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       goto out;
     }
 
   if (xwdhdr.l_pixmap_height <= 0)
     {
       g_message (_("'%s':\nNo image height specified"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       goto out;
     }
 
   if (xwdhdr.l_pixmap_height > GIMP_MAX_IMAGE_SIZE)
     {
       g_message (_("'%s':\nImage height is larger than GIMP can handle"),
-                 gimp_filename_to_utf8 (filename));
+                 gimp_file_get_utf8_name (file));
       goto out;
     }
 
@@ -574,14 +573,14 @@ load_image (const gchar  *filename,
     case 0:    /* Single plane bitmap */
       if ((depth == 1) && (bpp == 1))
         { /* Can be performed by format 2 loader */
-          image = load_xwd_f2_d1_b1 (filename, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d1_b1 (file, ifp, &xwdhdr, xwdcolmap);
         }
       break;
 
     case 1:    /* Single plane pixmap */
       if ((depth <= 24) && (bpp == 1))
         {
-          image = load_xwd_f1_d24_b1 (filename, ifp, &xwdhdr, xwdcolmap,
+          image = load_xwd_f1_d24_b1 (file, ifp, &xwdhdr, xwdcolmap,
                                       error);
         }
       break;
@@ -589,24 +588,24 @@ load_image (const gchar  *filename,
     case 2:    /* Multiplane pixmaps */
       if ((depth == 1) && (bpp == 1))
         {
-          image = load_xwd_f2_d1_b1 (filename, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d1_b1 (file, ifp, &xwdhdr, xwdcolmap);
         }
       else if ((depth <= 8) && (bpp == 8))
         {
-          image = load_xwd_f2_d8_b8 (filename, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d8_b8 (file, ifp, &xwdhdr, xwdcolmap);
         }
       else if ((depth <= 16) && (bpp == 16))
         {
-          image = load_xwd_f2_d16_b16 (filename, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d16_b16 (file, ifp, &xwdhdr, xwdcolmap);
         }
       else if ((depth <= 24) && ((bpp == 24) || (bpp == 32)))
         {
-          image = load_xwd_f2_d24_b32 (filename, ifp, &xwdhdr, xwdcolmap,
-                                          error);
+          image = load_xwd_f2_d24_b32 (file, ifp, &xwdhdr, xwdcolmap,
+                                       error);
         }
       else if ((depth <= 32) && (bpp == 32))
         {
-          image = load_xwd_f2_d32_b32 (filename, ifp, &xwdhdr, xwdcolmap);
+          image = load_xwd_f2_d32_b32 (file, ifp, &xwdhdr, xwdcolmap);
         }
       break;
     }
@@ -616,7 +615,7 @@ load_image (const gchar  *filename,
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                  _("XWD-file %s has format %d, depth %d and bits per pixel %d. "
                    "Currently this is not supported."),
-                 gimp_filename_to_utf8 (filename),
+                 gimp_file_get_utf8_name (file),
                  (gint) xwdhdr.l_pixmap_format, depth, bpp);
 
 out:
@@ -1278,7 +1277,7 @@ set_color_table (GimpImage       *image,
 
 /* Create an image. Sets layer, drawable and rgn. Returns image */
 static GimpImage *
-create_new_image (const gchar         *filename,
+create_new_image (GFile               *file,
                   guint                width,
                   guint                height,
                   GimpImageBaseType    type,
@@ -1289,7 +1288,7 @@ create_new_image (const gchar         *filename,
   GimpImage *image;
 
   image = gimp_image_new (width, height, type);
-  gimp_image_set_filename (image, filename);
+  gimp_image_set_file (image, file);
 
   *layer = gimp_layer_new (image, "Background", width, height,
                            gdtype,
@@ -1306,7 +1305,7 @@ create_new_image (const gchar         *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth 1, bits_per_pixel 1 */
 
 static GimpImage *
-load_xwd_f2_d1_b1 (const gchar     *filename,
+load_xwd_f2_d1_b1 (GFile           *file,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
                    L_XWDCOLOR      *xwdcolmap)
@@ -1331,7 +1330,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
-  image = create_new_image (filename, width, height, GIMP_INDEXED,
+  image = create_new_image (file, width, height, GIMP_INDEXED,
                             GIMP_INDEXED_IMAGE, &layer, &buffer);
 
   tile_height = gimp_tile_height ();
@@ -1450,7 +1449,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth 8, bits_per_pixel 8 */
 
 static GimpImage *
-load_xwd_f2_d8_b8 (const gchar     *filename,
+load_xwd_f2_d8_b8 (GFile           *file,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
                    L_XWDCOLOR      *xwdcolmap)
@@ -1487,7 +1486,7 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
       grayscale = (j == 256);
     }
 
-  image = create_new_image (filename, width, height,
+  image = create_new_image (file, width, height,
                             grayscale ? GIMP_GRAY : GIMP_INDEXED,
                             grayscale ? GIMP_GRAY_IMAGE : GIMP_INDEXED_IMAGE,
                             &layer, &buffer);
@@ -1554,7 +1553,7 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth up to 16, bits_per_pixel 16 */
 
 static GimpImage *
-load_xwd_f2_d16_b16 (const gchar     *filename,
+load_xwd_f2_d16_b16 (GFile           *file,
                      FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
                      L_XWDCOLOR      *xwdcolmap)
@@ -1580,7 +1579,7 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
-  image = create_new_image (filename, width, height, GIMP_RGB,
+  image = create_new_image (file, width, height, GIMP_RGB,
                             GIMP_RGB_IMAGE, &layer, &buffer);
 
   tile_height = gimp_tile_height ();
@@ -1714,7 +1713,7 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth up to 24, bits_per_pixel 24/32 */
 
 static GimpImage *
-load_xwd_f2_d24_b32 (const gchar      *filename,
+load_xwd_f2_d24_b32 (GFile            *file,
                      FILE             *ifp,
                      L_XWDFILEHEADER  *xwdhdr,
                      L_XWDCOLOR       *xwdcolmap,
@@ -1776,11 +1775,11 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("XWD-file %s is corrupt."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
-  image = create_new_image (filename, width, height, GIMP_RGB,
+  image = create_new_image (file, width, height, GIMP_RGB,
                             GIMP_RGB_IMAGE, &layer, &buffer);
 
   tile_height = gimp_tile_height ();
@@ -1929,7 +1928,7 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
 /* Load XWD with pixmap_format 2, pixmap_depth up to 32, bits_per_pixel 32 */
 
 static GimpImage *
-load_xwd_f2_d32_b32 (const gchar     *filename,
+load_xwd_f2_d32_b32 (GFile           *file,
                      FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
                      L_XWDCOLOR      *xwdcolmap)
@@ -1957,7 +1956,7 @@ load_xwd_f2_d32_b32 (const gchar     *filename,
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
-  image = create_new_image (filename, width, height, GIMP_RGB,
+  image = create_new_image (file, width, height, GIMP_RGB,
                             GIMP_RGBA_IMAGE, &layer, &buffer);
 
   tile_height = gimp_tile_height ();
@@ -2088,7 +2087,7 @@ load_xwd_f2_d32_b32 (const gchar     *filename,
 /* Load XWD with pixmap_format 1, pixmap_depth up to 24, bits_per_pixel 1 */
 
 static GimpImage *
-load_xwd_f1_d24_b1 (const gchar      *filename,
+load_xwd_f1_d24_b1 (GFile            *file,
                     FILE             *ifp,
                     L_XWDFILEHEADER  *xwdhdr,
                     L_XWDCOLOR       *xwdcolmap,
@@ -2176,7 +2175,7 @@ load_xwd_f1_d24_b1 (const gchar      *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("XWD-file %s is corrupt."),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           return NULL;
         }
 
@@ -2189,7 +2188,7 @@ load_xwd_f1_d24_b1 (const gchar      *filename,
         bluemap[blue] = (blue * 255) / maxblue;
     }
 
-  image = create_new_image (filename, width, height,
+  image = create_new_image (file, width, height,
                             indexed ? GIMP_INDEXED : GIMP_RGB,
                             indexed ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE,
                             &layer, &buffer);

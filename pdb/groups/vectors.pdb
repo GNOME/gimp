@@ -1087,9 +1087,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'filename', type => 'string', allow_non_utf8 => 1,
-          non_empty => 1,
-          desc => 'The name of the SVG file to import.' },
+        { name => 'file', type => 'file',
+          desc => 'The SVG file to import.' },
         { name => 'merge', type => 'boolean',
           desc => 'Merge paths into a single vectors object.' },
         { name => 'scale', type => 'boolean',
@@ -1107,15 +1106,12 @@ HELP
         headers => [ qw("vectors/gimpvectors-import.h") ],
         code    => <<'CODE'
 {
-  GFile *file         = g_file_new_for_path (filename);
   GList *vectors_list = NULL;
 
   /* FIXME tree */
   success = gimp_vectors_import_file (image, file,
                                       merge, scale, NULL, -1,
                                       &vectors_list, error);
-
-  g_object_unref (file);
 
   if (success)
     {
@@ -1227,9 +1223,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'filename', type => 'string', allow_non_utf8 => 1,
-          non_empty => 1,
-          desc => 'The name of the SVG file to create.' },
+        { name => 'file', type => 'file',
+          desc => 'The SVG file to create.' },
         { name => 'vectors', type => 'vectors', no_validate => 1,
           desc => 'The vectors object to be saved, or 0 for all in the image' }
     );
@@ -1238,11 +1233,7 @@ HELP
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  GFile *file = g_file_new_for_path (filename);
-
   success = gimp_vectors_export_file (image, vectors, file, error);
-
-  g_object_unref (file);
 }
 CODE
     );

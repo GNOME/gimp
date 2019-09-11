@@ -272,7 +272,6 @@ jpeg_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gchar          *filename;
   GimpImage      *image;
   gboolean        resolution_loaded = FALSE;
   GError         *error             = NULL;
@@ -287,8 +286,6 @@ jpeg_load (GimpProcedure        *procedure,
   orig_subsmp = JPEG_SUBSAMPLING_2x2_1x1_1x1;
   num_quant_tables = 0;
 
-  filename = g_file_get_path (file);
-
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -302,7 +299,7 @@ jpeg_load (GimpProcedure        *procedure,
       break;
     }
 
-  image = load_image (filename, run_mode, FALSE,
+  image = load_image (file, run_mode, FALSE,
                       &resolution_loaded, &error);
 
   if (image)
@@ -326,8 +323,6 @@ jpeg_load (GimpProcedure        *procedure,
           g_object_unref (metadata);
         }
     }
-
-  g_free (filename);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -399,7 +394,6 @@ jpeg_save (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  gchar                 *filename;
   GimpParasite          *parasite;
   GimpMetadata          *metadata;
   GimpMetadataSaveFlags  metadata_flags;
@@ -419,8 +413,6 @@ jpeg_save (GimpProcedure        *procedure,
 
   orig_image = image;
 
-  filename = g_file_get_path (file);
-
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -439,7 +431,9 @@ jpeg_save (GimpProcedure        *procedure,
                                                NULL, NULL, NULL);
             if (tmp)
               {
-                gimp_image_set_filename (image, tmp);
+                GFile *file = g_file_new_for_path (tmp);
+                gimp_image_set_file (image, file);
+                g_object_unref (file);
                 g_free (tmp);
               }
 
@@ -605,8 +599,7 @@ jpeg_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (filename,
-                        image, drawable, orig_image, FALSE,
+      if (! save_image (file, image, drawable, orig_image, FALSE,
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -687,8 +680,6 @@ jpeg_save (GimpProcedure        *procedure,
 
   if (metadata)
     g_object_unref (metadata);
-
-  g_free (filename);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

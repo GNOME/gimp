@@ -248,16 +248,16 @@ guillotine (GimpImage *image,
 
   if (guides_found)
     {
-      gchar *filename;
+      GFile *file;
       gint   h, v, hpad, vpad;
       gint   x, y;
       gchar *hformat;
       gchar *format;
 
-      filename = gimp_image_get_filename (image);
+      file = gimp_image_get_file (image);
 
-      if (! filename)
-        filename = g_strdup (_("Untitled"));
+      if (! file)
+        file = g_file_new_for_uri (_("Untitled"));
 
       /* get the number horizontal and vertical slices */
       h = g_list_length (hguides);
@@ -279,7 +279,8 @@ guillotine (GimpImage *image,
           for (x = 0, vg = vguides; vg && vg->next; x++, vg = vg->next)
             {
               GimpImage *new_image = gimp_image_duplicate (image);
-              GString   *new_filename;
+              GString   *new_uri;
+              GFile     *new_file;
               gchar     *fileextension;
               gchar     *fileindex;
               gint       pos;
@@ -303,21 +304,24 @@ guillotine (GimpImage *image,
                                GPOINTER_TO_INT (hg->data));
 
 
-              new_filename = g_string_new (filename);
+              new_uri = g_string_new (g_file_get_uri (file));
 
               /* show the rough coordinates of the image in the title */
               fileindex    = g_strdup_printf (format, x, y);
 
               /* get the position of the file extension - last . in filename */
-              fileextension = strrchr (new_filename->str, '.');
-              pos           = fileextension - new_filename->str;
+              fileextension = strrchr (new_uri->str, '.');
+              pos           = fileextension - new_uri->str;
 
               /* insert the coordinates before the extension */
-              g_string_insert (new_filename, pos, fileindex);
+              g_string_insert (new_uri, pos, fileindex);
               g_free (fileindex);
 
-              gimp_image_set_filename (new_image, new_filename->str);
-              g_string_free (new_filename, TRUE);
+              new_file = g_file_new_for_uri (new_uri->str);
+              g_string_free (new_uri, TRUE);
+
+              gimp_image_set_file (new_image, new_file);
+              g_object_unref (new_file);
 
               while ((guide = gimp_image_find_next_guide (new_image, 0)))
                 gimp_image_delete_guide (new_image, guide);
@@ -331,7 +335,7 @@ guillotine (GimpImage *image,
             }
         }
 
-      g_free (filename);
+      g_object_unref (file);
       g_free (hformat);
       g_free (format);
     }

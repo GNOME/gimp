@@ -153,13 +153,12 @@ gboolean                 gimp_image_get_component_visible      (GimpImage       
 gboolean                 gimp_image_set_component_visible      (GimpImage           *image,
                                                                 GimpChannelType      component,
                                                                 gboolean             visible);
-gchar*                   gimp_image_get_filename               (GimpImage           *image);
-gboolean                 gimp_image_set_filename               (GimpImage           *image,
-                                                                const gchar         *filename);
-gchar*                   gimp_image_get_uri                    (GimpImage           *image);
-gchar*                   gimp_image_get_xcf_uri                (GimpImage           *image);
-gchar*                   gimp_image_get_imported_uri           (GimpImage           *image);
-gchar*                   gimp_image_get_exported_uri           (GimpImage           *image);
+GFile*                   gimp_image_get_file                   (GimpImage           *image);
+gboolean                 gimp_image_set_file                   (GimpImage           *image,
+                                                                GFile               *file);
+GFile*                   gimp_image_get_xcf_file               (GimpImage           *image);
+GFile*                   gimp_image_get_imported_file          (GimpImage           *image);
+GFile*                   gimp_image_get_exported_file          (GimpImage           *image);
 gchar*                   gimp_image_get_name                   (GimpImage           *image);
 gboolean                 gimp_image_get_resolution             (GimpImage           *image,
                                                                 gdouble             *xresolution,
