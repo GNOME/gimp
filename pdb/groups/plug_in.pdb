@@ -16,7 +16,7 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub plugins_query {
+sub plug_ins_query {
     $blurb = 'Queries the plug-in database for its contents.';
     $help  = 'This procedure queries the contents of the plug-in database.';
 
@@ -66,7 +66,7 @@ CODE
     );
 }
 
-sub plugin_domain_register {
+sub plug_in_domain_register {
     $blurb = 'Registers a textdomain for localisation.';
 
     $help = <<'HELP';
@@ -112,7 +112,7 @@ CODE
     );
 }
 
-sub plugin_help_register {
+sub plug_in_help_register {
     $blurb = "Register a help path for a plug-in.";
 
     $help = <<HELP;
@@ -156,7 +156,7 @@ CODE
     );
 }
 
-sub plugin_menu_branch_register {
+sub plug_in_menu_branch_register {
     $blurb = "Register a sub-menu.";
 
     $help = <<HELP;
@@ -193,7 +193,7 @@ CODE
     );
 }
 
-sub plugin_set_pdb_error_handler {
+sub plug_in_set_pdb_error_handler {
     $blurb = "Sets an error handler for procedure calls.";
 
     $help = <<HELP;
@@ -232,7 +232,7 @@ CODE
     );
 }
 
-sub plugin_get_pdb_error_handler {
+sub plug_in_get_pdb_error_handler {
     $blurb = "Retrieves the active error handler for procedure calls.";
 
     $help = <<HELP;
@@ -278,12 +278,12 @@ CODE
               "plug-in/gimppluginprocedure.h"
               "gimppdb-utils.h");
 
-@procs = qw(plugins_query
-	    plugin_domain_register
-            plugin_help_register
-            plugin_menu_branch_register
-            plugin_set_pdb_error_handler
-            plugin_get_pdb_error_handler);
+@procs = qw(plug_ins_query
+	    plug_in_domain_register
+            plug_in_help_register
+            plug_in_menu_branch_register
+            plug_in_set_pdb_error_handler
+            plug_in_get_pdb_error_handler);
 
 %exports = (app => [@procs], lib => [@procs[1,2,3,4,5]]);
 

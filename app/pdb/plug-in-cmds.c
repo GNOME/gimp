@@ -48,12 +48,12 @@
 
 
 static GimpValueArray *
-plugins_query_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
-                       GError               **error)
+plug_ins_query_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   GimpValueArray *return_vals;
   const gchar *search_string;
@@ -93,12 +93,12 @@ plugins_query_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plugin_domain_register_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+plug_in_domain_register_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   const gchar *domain_name;
@@ -129,12 +129,12 @@ plugin_domain_register_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plugin_help_register_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+plug_in_help_register_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   const gchar *domain_name;
@@ -165,12 +165,12 @@ plugin_help_register_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plugin_menu_branch_register_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
+plug_in_menu_branch_register_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
   const gchar *menu_path;
@@ -197,12 +197,12 @@ plugin_menu_branch_register_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plugin_set_pdb_error_handler_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
-                                      GError               **error)
+plug_in_set_pdb_error_handler_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   gint handler;
@@ -226,12 +226,12 @@ plugin_set_pdb_error_handler_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plugin_get_pdb_error_handler_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
-                                      GError               **error)
+plug_in_get_pdb_error_handler_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -261,11 +261,11 @@ register_plug_in_procs (GimpPDB *pdb)
   GimpProcedure *procedure;
 
   /*
-   * gimp-plugins-query
+   * gimp-plug-ins-query
    */
-  procedure = gimp_procedure_new (plugins_query_invoker);
+  procedure = gimp_procedure_new (plug_ins_query_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plugins-query");
+                               "gimp-plug-ins-query");
   gimp_procedure_set_static_help (procedure,
                                   "Queries the plug-in database for its contents.",
                                   "This procedure queries the contents of the plug-in database.",
@@ -329,11 +329,11 @@ register_plug_in_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plugin-domain-register
+   * gimp-plug-in-domain-register
    */
-  procedure = gimp_procedure_new (plugin_domain_register_invoker);
+  procedure = gimp_procedure_new (plug_in_domain_register_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plugin-domain-register");
+                               "gimp-plug-in-domain-register");
   gimp_procedure_set_static_help (procedure,
                                   "Registers a textdomain for localisation.",
                                   "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the 'gimp-std-plugins' domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
@@ -359,11 +359,11 @@ register_plug_in_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plugin-help-register
+   * gimp-plug-in-help-register
    */
-  procedure = gimp_procedure_new (plugin_help_register_invoker);
+  procedure = gimp_procedure_new (plug_in_help_register_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plugin-help-register");
+                               "gimp-plug-in-help-register");
   gimp_procedure_set_static_help (procedure,
                                   "Register a help path for a plug-in.",
                                   "This procedure registers user documentation for the calling plug-in with the GIMP help system. The domain_uri parameter points to the root directory where the plug-in help is installed. For each supported language there should be a file called 'gimp-help.xml' that maps the help IDs to the actual help files.",
@@ -389,11 +389,11 @@ register_plug_in_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plugin-menu-branch-register
+   * gimp-plug-in-menu-branch-register
    */
-  procedure = gimp_procedure_new (plugin_menu_branch_register_invoker);
+  procedure = gimp_procedure_new (plug_in_menu_branch_register_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plugin-menu-branch-register");
+                               "gimp-plug-in-menu-branch-register");
   gimp_procedure_set_static_help (procedure,
                                   "Register a sub-menu.",
                                   "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. GIMP will look up the translation in the textdomain registered for the plug-in.",
@@ -420,11 +420,11 @@ register_plug_in_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plugin-set-pdb-error-handler
+   * gimp-plug-in-set-pdb-error-handler
    */
-  procedure = gimp_procedure_new (plugin_set_pdb_error_handler_invoker);
+  procedure = gimp_procedure_new (plug_in_set_pdb_error_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plugin-set-pdb-error-handler");
+                               "gimp-plug-in-set-pdb-error-handler");
   gimp_procedure_set_static_help (procedure,
                                   "Sets an error handler for procedure calls.",
                                   "This procedure changes the way that errors in procedure calls are handled. By default GIMP will raise an error dialog if a procedure call made by a plug-in fails. Using this procedure the plug-in can change this behavior. If the error handler is set to %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for calling 'gimp-get-pdb-error' and handling the error whenever one if its procedure calls fails. It can do this by displaying the error message or by forwarding it in its own return values.",
@@ -444,11 +444,11 @@ register_plug_in_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plugin-get-pdb-error-handler
+   * gimp-plug-in-get-pdb-error-handler
    */
-  procedure = gimp_procedure_new (plugin_get_pdb_error_handler_invoker);
+  procedure = gimp_procedure_new (plug_in_get_pdb_error_handler_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plugin-get-pdb-error-handler");
+                               "gimp-plug-in-get-pdb-error-handler");
   gimp_procedure_set_static_help (procedure,
                                   "Retrieves the active error handler for procedure calls.",
                                   "This procedure retrieves the currently active error handler for procedure calls made by the calling plug-in. See 'gimp-plugin-set-pdb-error-handler' for details.",

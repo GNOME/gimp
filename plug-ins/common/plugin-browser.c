@@ -371,7 +371,7 @@ browser_search (GimpBrowser   *gimp_browser,
                              _("Searching by name"));
 
   return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
-                                        "gimp-plugins-query",
+                                        "gimp-plug-ins-query",
                                         G_TYPE_STRING, search_text,
                                         G_TYPE_NONE);
 

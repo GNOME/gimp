@@ -747,7 +747,7 @@ gimp_plug_in_set_pdb_error_handler (GimpPlugIn          *plug_in,
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  _gimp_plugin_set_pdb_error_handler (handler);
+  _gimp_plug_in_set_pdb_error_handler (handler);
 }
 
 /**
@@ -770,7 +770,7 @@ gimp_plug_in_get_pdb_error_handler (GimpPlugIn *plug_in)
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
                         GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
-  return _gimp_plugin_get_pdb_error_handler ();
+  return _gimp_plug_in_get_pdb_error_handler ();
 }
 
 
@@ -921,22 +921,22 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
 
   if (plug_in->priv->translation_domain_name)
     {
-      _gimp_plugin_domain_register (plug_in->priv->translation_domain_name,
-                                    plug_in->priv->translation_domain_path);
+      _gimp_plug_in_domain_register (plug_in->priv->translation_domain_name,
+                                     plug_in->priv->translation_domain_path);
     }
 
   if (plug_in->priv->help_domain_name)
     {
-      _gimp_plugin_help_register (plug_in->priv->help_domain_name,
-                                  plug_in->priv->help_domain_uri);
+      _gimp_plug_in_help_register (plug_in->priv->help_domain_name,
+                                   plug_in->priv->help_domain_uri);
     }
 
   for (list = plug_in->priv->menu_branches; list; list = g_list_next (list))
     {
       GimpPlugInMenuBranch *branch = list->data;
 
-      _gimp_plugin_menu_branch_register (branch->menu_path,
-                                         branch->menu_label);
+      _gimp_plug_in_menu_branch_register (branch->menu_path,
+                                          branch->menu_label);
     }
 }
 

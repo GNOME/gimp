@@ -32,14 +32,14 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL gboolean            _gimp_plugin_domain_register       (const gchar         *domain_name,
-                                                                        GFile               *domain_file);
-G_GNUC_INTERNAL gboolean            _gimp_plugin_help_register         (const gchar         *domain_name,
-                                                                        GFile               *domain_file);
-G_GNUC_INTERNAL gboolean            _gimp_plugin_menu_branch_register  (const gchar         *menu_path,
-                                                                        const gchar         *menu_name);
-G_GNUC_INTERNAL gboolean            _gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler  handler);
-G_GNUC_INTERNAL GimpPDBErrorHandler _gimp_plugin_get_pdb_error_handler (void);
+G_GNUC_INTERNAL gboolean            _gimp_plug_in_domain_register       (const gchar         *domain_name,
+                                                                         GFile               *domain_file);
+G_GNUC_INTERNAL gboolean            _gimp_plug_in_help_register         (const gchar         *domain_name,
+                                                                         GFile               *domain_file);
+G_GNUC_INTERNAL gboolean            _gimp_plug_in_menu_branch_register  (const gchar         *menu_path,
+                                                                         const gchar         *menu_name);
+G_GNUC_INTERNAL gboolean            _gimp_plug_in_set_pdb_error_handler (GimpPDBErrorHandler  handler);
+G_GNUC_INTERNAL GimpPDBErrorHandler _gimp_plug_in_get_pdb_error_handler (void);
 
 
 G_END_DECLS

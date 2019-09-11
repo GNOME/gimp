@@ -26,7 +26,7 @@
 #include "gimpplugin_pdb.h"
 
 /**
- * _gimp_plugin_domain_register:
+ * _gimp_plug_in_domain_register:
  * @domain_name: The name of the textdomain (must be unique).
  * @domain_file: The path to the locally installed compiled message catalog (may be NULL).
  *
@@ -44,8 +44,8 @@
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_plugin_domain_register (const gchar *domain_name,
-                              GFile       *domain_file)
+_gimp_plug_in_domain_register (const gchar *domain_name,
+                               GFile       *domain_file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -57,7 +57,7 @@ _gimp_plugin_domain_register (const gchar *domain_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plugin-domain-register",
+                                              "gimp-plug-in-domain-register",
                                               args);
   gimp_value_array_unref (args);
 
@@ -69,7 +69,7 @@ _gimp_plugin_domain_register (const gchar *domain_name,
 }
 
 /**
- * _gimp_plugin_help_register:
+ * _gimp_plug_in_help_register:
  * @domain_name: The XML namespace of the plug-in's help pages.
  * @domain_file: The root URI of the plug-in's help pages.
  *
@@ -84,8 +84,8 @@ _gimp_plugin_domain_register (const gchar *domain_name,
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_plugin_help_register (const gchar *domain_name,
-                            GFile       *domain_file)
+_gimp_plug_in_help_register (const gchar *domain_name,
+                             GFile       *domain_file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -97,7 +97,7 @@ _gimp_plugin_help_register (const gchar *domain_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plugin-help-register",
+                                              "gimp-plug-in-help-register",
                                               args);
   gimp_value_array_unref (args);
 
@@ -109,7 +109,7 @@ _gimp_plugin_help_register (const gchar *domain_name,
 }
 
 /**
- * _gimp_plugin_menu_branch_register:
+ * _gimp_plug_in_menu_branch_register:
  * @menu_path: The sub-menu's menu path.
  * @menu_name: The name of the sub-menu.
  *
@@ -125,8 +125,8 @@ _gimp_plugin_help_register (const gchar *domain_name,
  * Since: 2.4
  **/
 gboolean
-_gimp_plugin_menu_branch_register (const gchar *menu_path,
-                                   const gchar *menu_name)
+_gimp_plug_in_menu_branch_register (const gchar *menu_path,
+                                    const gchar *menu_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -138,7 +138,7 @@ _gimp_plugin_menu_branch_register (const gchar *menu_path,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plugin-menu-branch-register",
+                                              "gimp-plug-in-menu-branch-register",
                                               args);
   gimp_value_array_unref (args);
 
@@ -150,7 +150,7 @@ _gimp_plugin_menu_branch_register (const gchar *menu_path,
 }
 
 /**
- * _gimp_plugin_set_pdb_error_handler:
+ * _gimp_plug_in_set_pdb_error_handler:
  * @handler: Who is responsible for handling procedure call errors.
  *
  * Sets an error handler for procedure calls.
@@ -169,7 +169,7 @@ _gimp_plugin_menu_branch_register (const gchar *menu_path,
  * Since: 2.6
  **/
 gboolean
-_gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
+_gimp_plug_in_set_pdb_error_handler (GimpPDBErrorHandler handler)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -180,7 +180,7 @@ _gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plugin-set-pdb-error-handler",
+                                              "gimp-plug-in-set-pdb-error-handler",
                                               args);
   gimp_value_array_unref (args);
 
@@ -192,7 +192,7 @@ _gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
 }
 
 /**
- * _gimp_plugin_get_pdb_error_handler:
+ * _gimp_plug_in_get_pdb_error_handler:
  *
  * Retrieves the active error handler for procedure calls.
  *
@@ -205,7 +205,7 @@ _gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
  * Since: 2.6
  **/
 GimpPDBErrorHandler
-_gimp_plugin_get_pdb_error_handler (void)
+_gimp_plug_in_get_pdb_error_handler (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -215,7 +215,7 @@ _gimp_plugin_get_pdb_error_handler (void)
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plugin-get-pdb-error-handler",
+                                              "gimp-plug-in-get-pdb-error-handler",
                                               args);
   gimp_value_array_unref (args);
 
