@@ -33,9 +33,9 @@ G_BEGIN_DECLS
 
 
 G_GNUC_INTERNAL gboolean            _gimp_plugin_domain_register       (const gchar         *domain_name,
-                                                                        const gchar         *domain_path);
+                                                                        GFile               *domain_file);
 G_GNUC_INTERNAL gboolean            _gimp_plugin_help_register         (const gchar         *domain_name,
-                                                                        const gchar         *domain_uri);
+                                                                        GFile               *domain_file);
 G_GNUC_INTERNAL gboolean            _gimp_plugin_menu_branch_register  (const gchar         *menu_path,
                                                                         const gchar         *menu_name);
 G_GNUC_INTERNAL gboolean            _gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler  handler);

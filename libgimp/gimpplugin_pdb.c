@@ -28,7 +28,7 @@
 /**
  * _gimp_plugin_domain_register:
  * @domain_name: The name of the textdomain (must be unique).
- * @domain_path: The absolute path to the compiled message catalog (may be NULL).
+ * @domain_file: The path to the locally installed compiled message catalog (may be NULL).
  *
  * Registers a textdomain for localisation.
  *
@@ -45,7 +45,7 @@
  **/
 gboolean
 _gimp_plugin_domain_register (const gchar *domain_name,
-                              const gchar *domain_path)
+                              GFile       *domain_file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -53,7 +53,7 @@ _gimp_plugin_domain_register (const gchar *domain_name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, domain_name,
-                                          G_TYPE_STRING, domain_path,
+                                          G_TYPE_FILE, domain_file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -71,7 +71,7 @@ _gimp_plugin_domain_register (const gchar *domain_name,
 /**
  * _gimp_plugin_help_register:
  * @domain_name: The XML namespace of the plug-in's help pages.
- * @domain_uri: The root URI of the plug-in's help pages.
+ * @domain_file: The root URI of the plug-in's help pages.
  *
  * Register a help path for a plug-in.
  *
@@ -85,7 +85,7 @@ _gimp_plugin_domain_register (const gchar *domain_name,
  **/
 gboolean
 _gimp_plugin_help_register (const gchar *domain_name,
-                            const gchar *domain_uri)
+                            GFile       *domain_file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -93,7 +93,7 @@ _gimp_plugin_help_register (const gchar *domain_name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, domain_name,
-                                          G_TYPE_STRING, domain_uri,
+                                          G_TYPE_FILE, domain_file,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

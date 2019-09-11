@@ -921,25 +921,14 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
 
   if (plug_in->priv->translation_domain_name)
     {
-      gchar *path = NULL;
-
-      if (plug_in->priv->translation_domain_path)
-        path = g_file_get_path (plug_in->priv->translation_domain_path);
-
       _gimp_plugin_domain_register (plug_in->priv->translation_domain_name,
-                                    path);
-
-      g_free (path);
+                                    plug_in->priv->translation_domain_path);
     }
 
   if (plug_in->priv->help_domain_name)
     {
-      gchar *uri = g_file_get_uri (plug_in->priv->help_domain_uri);
-
       _gimp_plugin_help_register (plug_in->priv->help_domain_name,
-                                  uri);
-
-      g_free (uri);
+                                  plug_in->priv->help_domain_uri);
     }
 
   for (list = plug_in->priv->menu_branches; list; list = g_list_next (list))

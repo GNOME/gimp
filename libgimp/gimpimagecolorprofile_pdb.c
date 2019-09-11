@@ -183,7 +183,7 @@ _gimp_image_set_color_profile (GimpImage    *image,
  * Sets the image's color profile from an ICC file
  *
  * This procedure sets the image's color profile from a file containing
- * an ICC profile, or unsets it if NULL is passed as 'uri'. This
+ * an ICC profile, or unsets it if NULL is passed as 'file'. This
  * procedure does no color conversion. However, it will change the
  * pixel format of all layers to contain the babl space matching the
  * profile. You must call this procedure before adding layers to the

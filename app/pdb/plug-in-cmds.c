@@ -102,10 +102,10 @@ plugin_domain_register_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *domain_name;
-  const gchar *domain_path;
+  GFile *domain_file;
 
   domain_name = g_value_get_string (gimp_value_array_index (args, 0));
-  domain_path = g_value_get_string (gimp_value_array_index (args, 1));
+  domain_file = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -113,8 +113,12 @@ plugin_domain_register_invoker (GimpProcedure         *procedure,
 
       if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
+          gchar *domain_path = domain_file ? g_file_get_path (domain_file) : NULL;
+
           gimp_plug_in_def_set_locale_domain (plug_in->plug_in_def,
                                               domain_name, domain_path);
+
+          g_free (domain_path);
         }
       else
         success = FALSE;
@@ -134,10 +138,10 @@ plugin_help_register_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *domain_name;
-  const gchar *domain_uri;
+  GFile *domain_file;
 
   domain_name = g_value_get_string (gimp_value_array_index (args, 0));
-  domain_uri = g_value_get_string (gimp_value_array_index (args, 1));
+  domain_file = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -145,8 +149,12 @@ plugin_help_register_invoker (GimpProcedure         *procedure,
 
       if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
+          gchar *domain_uri = domain_file ? g_file_get_uri (domain_file) : NULL;
+
           gimp_plug_in_def_set_help_domain (plug_in->plug_in_def,
                                             domain_name, domain_uri);
+
+          g_free (domain_uri);
         }
       else
         success = FALSE;
@@ -342,12 +350,11 @@ register_plug_in_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("domain-path",
-                                                       "domain path",
-                                                       "The absolute path to the compiled message catalog (may be NULL)",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               g_param_spec_object ("domain-file",
+                                                    "domain file",
+                                                    "The path to the locally installed compiled message catalog (may be NULL)",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -373,12 +380,11 @@ register_plug_in_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("domain-uri",
-                                                       "domain uri",
-                                                       "The root URI of the plug-in's help pages",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+                               g_param_spec_object ("domain-file",
+                                                    "domain file",
+                                                    "The root URI of the plug-in's help pages",
+                                                    G_TYPE_FILE,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

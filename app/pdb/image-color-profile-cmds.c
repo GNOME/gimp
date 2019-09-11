@@ -433,7 +433,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                "gimp-image-set-color-profile-from-file");
   gimp_procedure_set_static_help (procedure,
                                   "Sets the image's color profile from an ICC file",
-                                  "This procedure sets the image's color profile from a file containing an ICC profile, or unsets it if NULL is passed as 'uri'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
+                                  "This procedure sets the image's color profile from a file containing an ICC profile, or unsets it if NULL is passed as 'file'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
