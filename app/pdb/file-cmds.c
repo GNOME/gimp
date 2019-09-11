@@ -78,9 +78,8 @@ file_load_invoker (GimpProcedure         *procedure,
 
   g_value_transform (gimp_value_array_index (args, 0),
                      gimp_value_array_index (new_args, 0));
-
-  g_value_take_string (gimp_value_array_index (new_args, 1),
-                       g_file_get_uri (file));
+  g_value_transform (gimp_value_array_index (args, 1),
+                     gimp_value_array_index (new_args, 1));
 
   for (i = 2; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
