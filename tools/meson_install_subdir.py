@@ -34,14 +34,11 @@ class MesonStatus(metaclass = Singleton):
     def get_build_dir(self):
         self.buildroot = None
 
-        cwd = Path(os.getcwd())
+        # Set up by meson.
+        cwd = Path(os.environ['MESON_BUILD_ROOT'])
 
         if (cwd / 'meson-info').exists():
             self.buildroot = cwd
-
-        with cwd / '_build' as _build:
-            if (_build / 'meson-info').exists():
-                self.buildroot = _build
 
         if self.buildroot is None:
             print('Error: build directory was not detected. Are you in it ?')
