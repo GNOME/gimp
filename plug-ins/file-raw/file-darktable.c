@@ -382,7 +382,8 @@ load_image (GFile        *file,
   gchar     *lua_quoted         = g_shell_quote (lua_script_escaped);
   gchar     *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
   gchar     *filename           = g_file_get_path (file);
-  gchar     *filename_out       = gimp_temp_name ("exr");
+  GFile     *file_out           = gimp_temp_file ("exr");
+  gchar     *filename_out       = g_file_get_path (file_out);
   gchar     *export_filename    = g_strdup_printf ("lua/export_on_exit/export_filename=%s",
                                                    filename_out);
 
@@ -439,7 +440,7 @@ load_image (GFile        *file,
                     NULL,
                     error))
     {
-      image = gimp_file_load (run_mode, g_file_new_for_path (filename_out));
+      image = gimp_file_load (run_mode, file_out);
       if (image)
         gimp_image_set_file (image, file);
     }
@@ -477,7 +478,8 @@ load_thumbnail_image (GFile   *file,
   GimpImage *image           = NULL;
 
   gchar  *filename           = g_file_get_path (file);
-  gchar  *filename_out       = gimp_temp_name ("jpg");
+  GFile  *file_out           = gimp_temp_file ("jpg");
+  gchar  *filename_out       = g_file_get_path (file_out);
   gchar  *size               = g_strdup_printf ("%d", thumb_size);
   GFile  *lua_file           = gimp_data_directory_file ("file-raw",
                                                          "file-darktable-get-size.lua",
@@ -531,8 +533,7 @@ load_thumbnail_image (GFile   *file,
     {
       gimp_progress_update (0.5);
 
-      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                              g_file_new_for_path (filename_out));
+      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
       if (image)
         {
           /* the size reported by raw files isn't precise,

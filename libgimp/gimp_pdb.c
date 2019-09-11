@@ -256,37 +256,36 @@ gimp_get_parasite_list (gint *num_parasites)
 }
 
 /**
- * gimp_temp_name:
+ * gimp_temp_file:
  * @extension: The extension the file will have.
  *
- * Generates a unique filename.
+ * Generates a unique temporary file.
  *
- * Generates a unique filename using the temp path supplied in the
- * user's gimprc.
+ * Generates a unique file using the temp path supplied in the user's
+ * gimprc.
  *
- * Returns: (transfer full): The new temp filename.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The new temp file.
  **/
-gchar *
-gimp_temp_name (const gchar *extension)
+GFile *
+gimp_temp_file (const gchar *extension)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *name = NULL;
+  GFile *file = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, extension,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-temp-name",
+                                              "gimp-temp-file",
                                               args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return name;
+  return file;
 }

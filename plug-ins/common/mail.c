@@ -100,7 +100,7 @@ static GimpPDBStatusType  send_image              (const gchar      *filename,
 static gboolean           send_dialog             (void);
 static void               mail_entry_callback     (GtkWidget        *widget,
                                                    gchar            *data);
-static gboolean           valid_file              (const gchar      *filename);
+static gboolean           valid_file              (GFile            *file);
 static gchar            * find_extension          (const gchar      *filename);
 
 #ifdef SENDMAIL
@@ -328,6 +328,7 @@ send_image (const gchar  *filename,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gchar             *ext;
+  GFile             *tmpfile;
   gchar             *tmpname;
 #ifndef SENDMAIL /* xdg-email */
   gchar             *mailcmd[9];
@@ -348,13 +349,14 @@ send_image (const gchar  *filename,
     return GIMP_PDB_CALLING_ERROR;
 
   /* get a temp name with the right extension and save into it. */
-  tmpname = gimp_temp_name (ext + 1);
+  tmpfile = gimp_temp_file (ext + 1);
+  tmpname = g_file_get_path (tmpfile);
 
   if (! (gimp_file_save (run_mode,
                          image,
                          drawable,
-                         g_file_new_for_path (tmpname)) &&
-         valid_file (tmpname)))
+                         tmpfile) &&
+         valid_file (tmpfile)))
     {
       goto error;
     }
@@ -416,19 +418,17 @@ send_image (const gchar  *filename,
        * with g_rename().
        * On the other hand, g_file_move() seems to be more robust.
        */
-      GFile *source = g_file_new_for_path (tmpname);
+      GFile *source = tmpfile;
       GFile *target = g_file_new_for_path (filepath);
 
       if (! g_file_move (source, target, G_FILE_COPY_NONE, NULL, NULL, NULL, &error))
         {
           g_message ("%s", error->message);
           g_clear_error (&error);
-          g_object_unref (source);
           g_object_unref (target);
           goto error;
         }
 
-      g_object_unref (source);
       g_object_unref (target);
     }
 
@@ -521,6 +521,7 @@ cleanup:
 
   g_free (mailcmd[0]);
   g_free (tmpname);
+  g_object_unref (tmpfile);
 
   return status;
 }
@@ -671,11 +672,17 @@ send_dialog (void)
 }
 
 static gboolean
-valid_file (const gchar *filename)
+valid_file (GFile *file)
 {
-  struct stat buf;
+  gchar       *filename;
+  struct stat  buf;
+  gboolean     valid;
 
-  return g_stat (filename, &buf) == 0 && buf.st_size > 0;
+  filename = g_file_get_path (file);
+  valid = g_stat (filename, &buf) == 0 && buf.st_size > 0;
+  g_free (filename);
+
+  return valid;
 }
 
 static gchar *

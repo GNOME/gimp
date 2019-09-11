@@ -385,13 +385,13 @@ EXPORTS
 	gimp_image_get_component_visible
 	gimp_image_get_default_new_layer_mode
 	gimp_image_get_effective_color_profile
-	gimp_image_get_exported_uri
-	gimp_image_get_filename
+	gimp_image_get_exported_file
+	gimp_image_get_file
 	gimp_image_get_floating_sel
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
 	gimp_image_get_id
-	gimp_image_get_imported_uri
+	gimp_image_get_imported_file
 	gimp_image_get_item_position
 	gimp_image_get_layer_by_name
 	gimp_image_get_layer_by_tattoo
@@ -409,11 +409,10 @@ EXPORTS
 	gimp_image_get_thumbnail_data
 	gimp_image_get_type
 	gimp_image_get_unit
-	gimp_image_get_uri
 	gimp_image_get_vectors
 	gimp_image_get_vectors_by_name
 	gimp_image_get_vectors_by_tattoo
-	gimp_image_get_xcf_uri
+	gimp_image_get_xcf_file
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
 	gimp_image_grid_get_offset
@@ -470,7 +469,7 @@ EXPORTS
 	gimp_image_set_colormap
 	gimp_image_set_component_active
 	gimp_image_set_component_visible
-	gimp_image_set_filename
+	gimp_image_set_file
 	gimp_image_set_metadata
 	gimp_image_set_resolution
 	gimp_image_set_tattoo_state
@@ -746,7 +745,7 @@ EXPORTS
 	gimp_show_help_button
 	gimp_smudge
 	gimp_smudge_default
-	gimp_temp_name
+	gimp_temp_file
 	gimp_text_fontname
 	gimp_text_get_extents_fontname
 	gimp_text_layer_get_antialias

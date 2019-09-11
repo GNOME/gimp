@@ -743,10 +743,7 @@ make_preview (void)
 
   if (jsvals.preview)
     {
-      gchar *tn   = gimp_temp_name ("jpeg");
-      GFile *file = g_file_new_for_path (tn);
-
-      g_free (tn);
+      GFile *file = gimp_temp_file ("jpeg");
 
       if (! undo_touched)
         {

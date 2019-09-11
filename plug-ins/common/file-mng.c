@@ -1075,6 +1075,7 @@ mng_save_image (const gchar  *filename,
 
       gchar           frame_mode;
       int             frame_delay;
+      GFile          *temp_file;
       gchar          *temp_file_name;
       png_structp     pp;
       png_infop       info;
@@ -1218,19 +1219,21 @@ mng_save_image (const gchar  *filename,
             }
         }
 
-      if ((temp_file_name = gimp_temp_name ("mng")) == NULL)
+      if ((temp_file = gimp_temp_file ("mng")) == NULL)
         {
-          g_warning ("gimp_temp_name() failed in mng_save_image()");
+          g_warning ("gimp_temp_file() failed in mng_save_image()");
           goto err3;
         }
+
+      temp_file_name = g_file_get_path (temp_file);
 
       if ((outfile = g_fopen (temp_file_name, "wb")) == NULL)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not open '%s' for writing: %s"),
-                       gimp_filename_to_utf8 (temp_file_name),
+                       gimp_file_get_utf8_name (temp_file),
                        g_strerror (errno));
-          g_unlink (temp_file_name);
+          g_file_delete (temp_file, NULL, NULL);
           goto err3;
         }
 
@@ -1240,7 +1243,7 @@ mng_save_image (const gchar  *filename,
         {
           g_warning ("Unable to png_create_write_struct() in mng_save_image()");
           fclose (outfile);
-          g_unlink (temp_file_name);
+          g_file_delete (temp_file, NULL, NULL);
           goto err3;
         }
 
@@ -1251,7 +1254,7 @@ mng_save_image (const gchar  *filename,
             ("Unable to png_create_info_struct() in mng_save_image()");
           png_destroy_write_struct (&pp, NULL);
           fclose (outfile);
-          g_unlink (temp_file_name);
+          g_file_delete (temp_file, NULL, NULL);
           goto err3;
         }
 
@@ -1260,7 +1263,7 @@ mng_save_image (const gchar  *filename,
           g_warning ("HRM saving PNG in mng_save_image()");
           png_destroy_write_struct (&pp, &info);
           fclose (outfile);
-          g_unlink (temp_file_name);
+          g_file_delete (temp_file, NULL, NULL);
           goto err3;
         }
 
@@ -1300,7 +1303,7 @@ mng_save_image (const gchar  *filename,
           g_warning ("This can't be!\n");
           png_destroy_write_struct (&pp, &info);
           fclose (outfile);
-          g_unlink (temp_file_name);
+          g_file_delete (temp_file, NULL, NULL);
           goto err3;
         }
 
@@ -1397,13 +1400,14 @@ mng_save_image (const gchar  *filename,
       fclose (outfile);
 
       infile = g_fopen (temp_file_name, "rb");
-      if (NULL == infile)
+
+      if (! infile)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not open '%s' for reading: %s"),
-                       gimp_filename_to_utf8 (temp_file_name),
+                       gimp_file_get_utf8_name (temp_file),
                        g_strerror (errno));
-          g_unlink (temp_file_name);
+          g_file_delete (temp_file, NULL, NULL);
           goto err3;
         }
 
@@ -1530,7 +1534,7 @@ mng_save_image (const gchar  *filename,
         }
 
       fclose (infile);
-      g_unlink (temp_file_name);
+      g_file_delete (temp_file, NULL, NULL);
     }
 
   if (mng_putchunk_mend (handle) != MNG_NOERROR)

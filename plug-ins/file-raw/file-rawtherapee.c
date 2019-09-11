@@ -321,7 +321,8 @@ load_image (GFile        *file,
 {
   GimpImage *image              = NULL;
   gchar     *filename           = g_file_get_path (file);
-  gchar     *filename_out       = gimp_temp_name ("tif");
+  GFile     *file_out           = gimp_temp_file ("tif");
+  gchar     *filename_out       = g_file_get_path (file_out);
   gchar     *rawtherapee_stdout = NULL;
 
   gboolean   search_path        = FALSE;
@@ -357,7 +358,7 @@ load_image (GFile        *file,
                     NULL,
                     error))
     {
-      image = gimp_file_load (run_mode, g_file_new_for_path (filename_out));
+      image = gimp_file_load (run_mode, file_out);
       if (image)
         gimp_image_set_file (image, file);
     }
@@ -381,8 +382,10 @@ load_thumbnail_image (GFile   *file,
 {
   GimpImage *image            = NULL;
   gchar     *filename         = g_file_get_path (file);
-  gchar     *filename_out     = gimp_temp_name ("jpg");
-  gchar     *thumb_pp3        = gimp_temp_name ("pp3");
+  GFile     *file_out         = gimp_temp_file ("jpg");
+  gchar     *filename_out     = g_file_get_path (file_out);
+  GFile     *thumb_pp3_file   = gimp_temp_file ("pp3");
+  gchar     *thumb_pp3        = g_file_get_path (thumb_pp3_file);
   FILE      *thumb_pp3_f      = fopen (thumb_pp3, "w");
   gchar     *rawtherapee_stdout = NULL;
   const char *pp3_content =
@@ -477,8 +480,7 @@ load_thumbnail_image (GFile   *file,
     {
       gimp_progress_update (0.5);
 
-      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                              g_file_new_for_path (filename_out));
+      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
       if (image)
         {
           /* is this needed for thumbnails? */

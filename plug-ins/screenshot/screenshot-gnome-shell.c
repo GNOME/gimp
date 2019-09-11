@@ -81,13 +81,16 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
                               GimpImage        **image,
                               GError           **error)
 {
+  GFile       *file;
   gchar       *filename;
   const gchar *method = NULL;
   GVariant    *args   = NULL;
   GVariant    *retval;
   gboolean     success;
 
-  filename = gimp_temp_name ("png");
+  file = gimp_temp_file ("png");
+
+  filename = g_file_get_path (file);
 
   switch (shootvals->shoot_type)
     {
@@ -157,8 +160,8 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
       break;
     }
 
-  g_free (filename);
-  filename = NULL;
+  g_clear_pointer (&filename, g_free);
+  g_clear_object (&file);
 
   retval = g_dbus_proxy_call_sync (proxy, method, args,
                                    G_DBUS_CALL_FLAGS_NONE,

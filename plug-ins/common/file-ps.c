@@ -1672,7 +1672,7 @@ get_bbox (GFile *file,
   return retval;
 }
 
-static gchar *pnmfile;
+static gchar *pnmfilename;
 
 /* Open the PostScript file. On failure, NULL is returned. */
 /* The filepointer returned will give a PNM-file generated */
@@ -1802,7 +1802,7 @@ ps_open (GFile            *file,
    * using standard output as output file.
    * Thus, use a real output file.
    */
-  pnmfile = gimp_temp_name ("pnm");
+  pnmfilename = g_file_get_path (gimp_temp_file ("pnm"));
 
   /* Build command array */
   cmdA = g_ptr_array_new ();
@@ -1840,7 +1840,7 @@ ps_open (GFile            *file,
     g_ptr_array_add (cmdA, g_strdup ("-dSAFER"));
 
   /* Output file name */
-  g_ptr_array_add (cmdA, g_strdup_printf ("-sOutputFile=%s", pnmfile));
+  g_ptr_array_add (cmdA, g_strdup_printf ("-sOutputFile=%s", pnmfilename));
 
   /* Offset command for gs to get image part with negative x/y-coord. */
   if ((offx != 0) || (offy != 0))
@@ -1892,7 +1892,7 @@ ps_open (GFile            *file,
   /* Don't care about exit status of ghostscript. */
   /* Just try to read what it wrote. */
 
-  fd_popen = g_fopen (pnmfile, "rb");
+  fd_popen = g_fopen (pnmfilename, "rb");
 
   g_ptr_array_free (cmdA, FALSE);
   g_strfreev (pcmdA);
@@ -1907,7 +1907,7 @@ ps_close (FILE *ifp)
 {
  /* If a real outputfile was used, close the file and remove it. */
   fclose (ifp);
-  g_unlink (pnmfile);
+  g_unlink (pnmfilename);
 }
 
 

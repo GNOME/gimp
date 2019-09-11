@@ -102,10 +102,10 @@
  * that metric, I figure this plug-in is worth about $10,000 USD */
 /* But you got it free.   Magic of Gnu. */
 
-typedef gboolean (*LoadFn) (const char *infile,
-                            const char *outfile);
-typedef gboolean (*SaveFn) (const char *infile,
-                            const char *outfile);
+typedef gboolean (* LoadFn) (GFile *infile,
+                             GFile *outfile);
+typedef gboolean (* SaveFn) (GFile *infile,
+                             GFile *outfile);
 
 typedef struct _CompressorEntry CompressorEntry;
 
@@ -178,25 +178,25 @@ static GimpPDBStatusType   save_image     (const CompressorEntry *compressor,
                                            gint32                 run_mode,
                                            GError               **error);
 
-static gboolean            valid_file     (const gchar           *filename);
+static gboolean            valid_file     (GFile                 *file);
 static const gchar       * find_extension (const CompressorEntry *compressor,
                                            const gchar           *filename);
 
-static gboolean            gzip_load      (const char            *infile,
-                                           const char            *outfile);
-static gboolean            gzip_save      (const char            *infile,
-                                           const char            *outfile);
+static gboolean            gzip_load      (GFile                 *infile,
+                                           GFile                 *outfile);
+static gboolean            gzip_save      (GFile                 *infile,
+                                           GFile                 *outfile);
 
-static gboolean            bzip2_load     (const char            *infile,
-                                           const char            *outfile);
-static gboolean            bzip2_save     (const char            *infile,
-                                           const char            *outfile);
+static gboolean            bzip2_load     (GFile                 *infile,
+                                           GFile                 *outfile);
+static gboolean            bzip2_save     (GFile                 *infile,
+                                           GFile                 *outfile);
 
-static gboolean            xz_load        (const char            *infile,
-                                           const char            *outfile);
-static gboolean            xz_save        (const char            *infile,
-                                           const char            *outfile);
-static goffset             get_file_info  (const gchar           *filename);
+static gboolean            xz_load        (GFile                 *infile,
+                                           GFile                 *outfile);
+static gboolean            xz_save        (GFile                 *infile,
+                                           GFile                 *outfile);
+static goffset             get_file_info  (GFile                 *file);
 
 
 G_DEFINE_TYPE (Compressor, compressor, GIMP_TYPE_PLUG_IN)
@@ -424,7 +424,7 @@ save_image (const CompressorEntry  *compressor,
 {
   gchar       *filename = g_file_get_path (file);
   const gchar *ext;
-  gchar       *tmpname;
+  GFile       *tmp_file;
 
   ext = find_extension (compressor, filename);
 
@@ -436,16 +436,16 @@ save_image (const CompressorEntry  *compressor,
 
   /* get a temp name with the right extension and save into it. */
 
-  tmpname = gimp_temp_name (ext + 1);
+  tmp_file = gimp_temp_file (ext + 1);
 
   if (! (gimp_file_save (run_mode,
                          image,
                          drawable,
-                         g_file_new_for_path (tmpname)) &&
-         valid_file (tmpname)))
+                         tmp_file) &&
+         valid_file (tmp_file)))
     {
-      g_unlink (tmpname);
-      g_free (tmpname);
+      g_file_delete (tmp_file, NULL, NULL);
+      g_object_unref (tmp_file);
       g_free (filename);
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -457,18 +457,19 @@ save_image (const CompressorEntry  *compressor,
   gimp_progress_init_printf (_("Compressing '%s'"),
                              gimp_file_get_utf8_name  (file));
 
-  if (! compressor->save_fn (tmpname, filename))
+  if (! compressor->save_fn (tmp_file, file))
     {
-      g_unlink (tmpname);
-      g_free (tmpname);
+      g_file_delete (tmp_file, NULL, NULL);
+      g_object_unref (tmp_file);
       g_free (filename);
 
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  g_unlink (tmpname);
+  g_file_delete (tmp_file, NULL, NULL);
+  g_object_unref (tmp_file);
+
   gimp_progress_update (1.0);
-  g_free (tmpname);
 
   /* ask the core to save a thumbnail for compressed XCF files */
   if (strcmp (ext, ".xcf") == 0)
@@ -489,7 +490,7 @@ load_image (const CompressorEntry  *compressor,
   GimpImage   *image;
   gchar       *filename;
   const gchar *ext;
-  gchar       *tmpname;
+  GFile       *tmp_file;
 
   filename = g_file_get_path (file);
 
@@ -503,11 +504,11 @@ load_image (const CompressorEntry  *compressor,
     }
 
   /* find a temp name */
-  tmpname = gimp_temp_name (ext + 1);
+  tmp_file = gimp_temp_file (ext + 1);
 
-  if (! compressor->load_fn (filename, tmpname))
+  if (! compressor->load_fn (file, tmp_file))
     {
-      g_free (tmpname);
+      g_object_unref (tmp_file);
       g_free (filename);
       *status = GIMP_PDB_EXECUTION_ERROR;
       return NULL;
@@ -517,10 +518,10 @@ load_image (const CompressorEntry  *compressor,
 
   /* now that we uncompressed it, load the temp file */
 
-  image = gimp_file_load (run_mode, g_file_new_for_path (tmpname));
+  image = gimp_file_load (run_mode, tmp_file);
 
-  g_unlink (tmpname);
-  g_free (tmpname);
+  g_file_delete (tmp_file, NULL, NULL);
+  g_object_unref (tmp_file);
 
   if (image)
     {
@@ -543,11 +544,17 @@ load_image (const CompressorEntry  *compressor,
 }
 
 static gboolean
-valid_file (const gchar *filename)
+valid_file (GFile *file)
 {
-  struct stat buf;
+  gchar       *filename;
+  struct stat  buf;
+  gboolean     valid;
 
-  return g_stat (filename, &buf) == 0 && buf.st_size > 0;
+  filename = g_file_get_path (file);
+  valid = g_stat (filename, &buf) == 0 && buf.st_size > 0;
+  g_free (filename);
+
+  return valid;
 }
 
 static const gchar *
@@ -588,33 +595,35 @@ find_extension (const CompressorEntry *compressor,
 }
 
 static gboolean
-gzip_load (const char *infile,
-           const char *outfile)
+gzip_load (GFile *infile,
+           GFile *outfile)
 {
-  gboolean ret;
-  int      fd;
-  gzFile   in;
-  FILE    *out;
-  char     buf[16384];
-  int      len;
+  gchar    *in_filename  = g_file_get_path (infile);
+  gchar    *out_filename = g_file_get_path (outfile);
+  gboolean  ret;
+  int       fd;
+  gzFile    in;
+  FILE     *out;
+  char      buf[16384];
+  int       len;
 
   ret = FALSE;
   in = NULL;
   out = NULL;
 
-  fd = g_open (infile, O_RDONLY | _O_BINARY, 0);
+  fd = g_open (in_filename, O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
     goto out;
 
   in = gzdopen (fd, "rb");
-  if (!in)
+  if (! in)
     {
       close (fd);
       goto out;
     }
 
-  out = g_fopen (outfile, "wb");
-  if (!out)
+  out = g_fopen (out_filename, "wb");
+  if (! out)
     goto out;
 
   while (TRUE)
@@ -642,13 +651,18 @@ gzip_load (const char *infile,
   if (out)
     fclose (out);
 
+  g_free (in_filename);
+  g_free (out_filename);
+
   return ret;
 }
 
 static gboolean
-gzip_save (const char *infile,
-           const char *outfile)
+gzip_save (GFile *infile,
+           GFile *outfile)
 {
+  gchar    *in_filename  = g_file_get_path (infile);
+  gchar    *out_filename = g_file_get_path (outfile);
   gboolean  ret;
   FILE     *in;
   int       fd;
@@ -661,16 +675,16 @@ gzip_save (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (infile, "rb");
-  if (!in)
+  in = g_fopen (in_filename, "rb");
+  if (! in)
     goto out;
 
-  fd = g_open (outfile, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
+  fd = g_open (out_filename, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
   out = gzdopen (fd, "wb");
-  if (!out)
+  if (! out)
     {
       close (fd);
       goto out;
@@ -710,9 +724,11 @@ gzip_save (const char *infile,
 }
 
 static gboolean
-bzip2_load (const char *infile,
-            const char *outfile)
+bzip2_load (GFile *infile,
+           GFile  *outfile)
 {
+  gchar    *in_filename  = g_file_get_path (infile);
+  gchar    *out_filename = g_file_get_path (outfile);
   gboolean  ret;
   int       fd;
   BZFILE   *in;
@@ -724,7 +740,7 @@ bzip2_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  fd = g_open (infile, O_RDONLY | _O_BINARY, 0);
+  fd = g_open (in_filename, O_RDONLY | _O_BINARY, 0);
   if (fd == -1)
     goto out;
 
@@ -735,7 +751,7 @@ bzip2_load (const char *infile,
       goto out;
     }
 
-  out = g_fopen (outfile, "wb");
+  out = g_fopen (out_filename, "wb");
   if (!out)
     goto out;
 
@@ -764,13 +780,18 @@ bzip2_load (const char *infile,
   if (out)
     fclose (out);
 
+  g_free (in_filename);
+  g_free (out_filename);
+
   return ret;
 }
 
 static gboolean
-bzip2_save (const char *infile,
-            const char *outfile)
+bzip2_save (GFile *infile,
+            GFile *outfile)
 {
+  gchar    *in_filename  = g_file_get_path (infile);
+  gchar    *out_filename = g_file_get_path (outfile);
   gboolean  ret;
   FILE     *in;
   int       fd;
@@ -783,11 +804,11 @@ bzip2_save (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (infile, "rb");
+  in = g_fopen (in_filename, "rb");
   if (!in)
     goto out;
 
-  fd = g_open (outfile, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
+  fd = g_open (out_filename, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
@@ -828,13 +849,18 @@ bzip2_save (const char *infile,
   if (out)
     BZ2_bzclose (out);
 
+  g_free (in_filename);
+  g_free (out_filename);
+
   return ret;
 }
 
 static gboolean
-xz_load (const char *infile,
-         const char *outfile)
+xz_load (GFile *infile,
+         GFile *outfile)
 {
+  gchar       *in_filename  = g_file_get_path (infile);
+  gchar       *out_filename = g_file_get_path (outfile);
   gboolean     ret;
   FILE        *in;
   FILE        *out;
@@ -848,11 +874,11 @@ xz_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (infile, "rb");
+  in = g_fopen (in_filename, "rb");
   if (!in)
     goto out;
 
-  out = g_fopen (outfile, "wb");
+  out = g_fopen (out_filename, "wb");
   if (!out)
     goto out;
 
@@ -916,13 +942,18 @@ xz_load (const char *infile,
   if (out)
     fclose (out);
 
+  g_free (in_filename);
+  g_free (out_filename);
+
   return ret;
 }
 
 static gboolean
-xz_save (const char *infile,
-         const char *outfile)
+xz_save (GFile *infile,
+         GFile *outfile)
 {
+  gchar       *in_filename  = g_file_get_path (infile);
+  gchar       *out_filename = g_file_get_path (outfile);
   gboolean     ret;
   FILE        *in;
   FILE        *out;
@@ -937,12 +968,12 @@ xz_save (const char *infile,
   in = NULL;
   out = NULL;
 
-  in = g_fopen (infile, "rb");
+  in = g_fopen (in_filename, "rb");
   if (!in)
     goto out;
 
   file_size = get_file_info (infile);
-  out = g_fopen (outfile, "wb");
+  out = g_fopen (out_filename, "wb");
   if (!out)
     goto out;
 
@@ -1010,14 +1041,16 @@ xz_save (const char *infile,
   if (out)
     fclose (out);
 
+  g_free (in_filename);
+  g_free (out_filename);
+
   return ret;
 }
 
 /* get file size from a filename */
 static goffset
-get_file_info (const gchar *filename)
+get_file_info (GFile *file)
 {
-  GFile     *file = g_file_new_for_path (filename);
   GFileInfo *info;
   goffset    size = 1;
 
@@ -1032,8 +1065,6 @@ get_file_info (const gchar *filename)
 
       g_object_unref (info);
     }
-
-  g_object_unref (file);
 
   return size;
 }

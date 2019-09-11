@@ -770,8 +770,9 @@ gfig_save_as_parasite (void)
 GFigObj *
 gfig_load_from_parasite (void)
 {
-  FILE         *fp;
+  GFile        *file;
   gchar        *fname;
+  FILE         *fp;
   GimpParasite *parasite;
   GFigObj      *gfig;
 
@@ -780,14 +781,15 @@ gfig_load_from_parasite (void)
   if (! parasite)
     return NULL;
 
-  fname = gimp_temp_name ("gfigtmp");
+  file  = gimp_temp_file ("gfigtmp");
+  fname = g_file_get_path (file);
 
   fp = g_fopen (fname, "wb");
-  if (!fp)
+  if (! fp)
     {
       g_message (_("Error trying to open temporary file '%s' "
                    "for parasite loading: %s"),
-                 gimp_filename_to_utf8 (fname), g_strerror (errno));
+                 gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -804,6 +806,7 @@ gfig_load_from_parasite (void)
   g_unlink (fname);
 
   g_free (fname);
+  g_object_unref (file);
 
   return gfig;
 }
