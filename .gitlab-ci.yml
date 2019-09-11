@@ -161,9 +161,7 @@ gegl-git:
   script:
     - mkdir _build
     - cd _build
-    - LIBMYPAINT_CFLAGS="-I/usr/include/libmypaint-1.3 -I/usr/include/json-c"
-      LIBMYPAINT_LIBS="-lmypaint-1.3 -ljson-c"
-      ../autogen.sh
+    - ../autogen.sh
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
         --with-python=force
@@ -181,8 +179,6 @@ gegl-git:
 .gimp-meson:
   extends: .gimp-base
   script:
-      # Archlinux fix
-    - sed -i "s|'libmypaint'|'libmypaint-1.3'|g" meson.build
     - meson _build
       --prefix="${INSTALL_PREFIX}"
       -Dpython=always
