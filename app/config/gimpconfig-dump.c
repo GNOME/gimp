@@ -406,6 +406,8 @@ static const gchar display_format_description[] =
 "%z  zoom factor as a percentage\n"
 "%s  source scale factor\n"
 "%d  destination scale factor\n"
+"%q  whether the image is imported, exported, or overwritten\n"
+"%Qx expands to x if the image is imported or exported\n"
 "%Dx expands to x if the image is dirty, the empty string otherwise\n"
 "%Cx expands to x if the image is clean, the empty string otherwise\n"
 "%B  expands to (modified) if the image is dirty, the empty string otherwise\n"

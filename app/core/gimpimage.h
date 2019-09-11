@@ -162,8 +162,9 @@ void            gimp_image_set_exported_file     (GimpImage          *image,
 void            gimp_image_set_save_a_copy_file  (GimpImage          *image,
                                                   GFile              *file);
 
-const gchar   * gimp_image_get_display_name      (GimpImage          *image);
+const gchar   * gimp_image_get_export_status     (GimpImage          *image);
 const gchar   * gimp_image_get_display_path      (GimpImage          *image);
+const gchar   * gimp_image_get_display_name      (GimpImage          *image);
 
 void            gimp_image_set_load_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
