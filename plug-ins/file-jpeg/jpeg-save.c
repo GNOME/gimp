@@ -331,7 +331,7 @@ save_image (GFile        *file,
    */
   filename = g_file_get_path (file);
   outfile = g_fopen (filename, "wb");
-  g_free (file);
+  g_free (filename);
 
   if (! outfile)
     {
