@@ -1,9 +1,6 @@
 <SECTION>
 <FILE>gimp</FILE>
 <TITLE>Gimp</TITLE>
-gimp_get_data
-gimp_get_data_size
-gimp_set_data
 GIMP_MAIN
 gimp_main
 gimp_get_plug_in
@@ -31,7 +28,11 @@ gimp_attach_parasite
 gimp_detach_parasite
 gimp_get_parasite
 gimp_get_parasite_list
-gimp_temp_name
+gimp_temp_file
+gimp_get_data
+gimp_get_data_size
+gimp_set_data
+GimpPixbufTransparency
 </SECTION>
 
 <SECTION>
@@ -314,10 +315,12 @@ gimp_drawable_get_buffer
 gimp_drawable_get_shadow_buffer
 gimp_drawable_get_format
 gimp_drawable_get_thumbnail_format
+gimp_drawable_get_thumbnail_data
+gimp_drawable_get_thumbnail
 gimp_drawable_get_pixel
 gimp_drawable_set_pixel
-gimp_drawable_get_thumbnail_data
 gimp_drawable_get_sub_thumbnail_data
+gimp_drawable_get_sub_thumbnail
 gimp_drawable_merge_shadow
 gimp_drawable_free_shadow
 gimp_drawable_fill
@@ -506,10 +509,11 @@ gimp_image_get_by_id
 gimp_image_get_id
 gimp_image_new
 gimp_image_new_with_precision
-gimp_image_get_uri
-gimp_image_get_xcf_uri
-gimp_image_get_exported_uri
-gimp_image_get_imported_uri
+gimp_image_set_file
+gimp_image_get_file
+gimp_image_get_xcf_file
+gimp_image_get_exported_file
+gimp_image_get_imported_file
 gimp_image_duplicate
 gimp_image_delete
 gimp_image_is_valid
@@ -545,6 +549,7 @@ gimp_image_thaw_channels
 gimp_image_flatten
 gimp_image_merge_visible_layers
 gimp_image_merge_down
+gimp_image_merge_layer_group
 gimp_image_clean_all
 gimp_image_is_dirty
 gimp_image_get_active_layer
@@ -557,8 +562,6 @@ gimp_image_get_component_active
 gimp_image_set_component_active
 gimp_image_get_component_visible
 gimp_image_set_component_visible
-gimp_image_get_filename
-gimp_image_set_filename
 gimp_image_get_name
 gimp_image_get_resolution
 gimp_image_set_resolution
@@ -577,6 +580,7 @@ gimp_image_set_colormap
 gimp_image_get_vectors
 gimp_image_list_vectors
 gimp_image_get_thumbnail_data
+gimp_image_get_thumbnail
 gimp_image_get_metadata
 gimp_image_set_metadata
 gimp_image_attach_parasite
@@ -1146,6 +1150,13 @@ GIMP_PROC_VAL_VECTORS
 GIMP_VALUES_GET_VECTORS
 GIMP_VALUES_GET_VECTORS_ID
 GIMP_VALUES_SET_VECTORS
+GIMP_PROC_ARG_FILE
+GIMP_PROC_VAL_FILE
+GIMP_VALUES_GET_FILE
+GIMP_VALUES_DUP_FILE
+GIMP_VALUES_SET_FILE
+GIMP_VALUES_TAKE_FILE
+</SECTION>
 </SECTION>
 
 <SECTION>
@@ -1468,14 +1479,6 @@ GimpVectors
 GimpVectorsClass
 GimpVectorsPrivate
 gimp_vectors_get_type
-</SECTION>
-
-<SECTION>
-<FILE>gimppixbuf</FILE>
-GimpPixbufTransparency
-gimp_image_get_thumbnail
-gimp_drawable_get_thumbnail
-gimp_drawable_get_sub_thumbnail
 </SECTION>
 
 <SECTION>

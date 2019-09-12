@@ -69,7 +69,6 @@
       <xi:include href="xml/gimpitemtransform.xml" />
       <xi:include href="xml/gimplayer.xml" />
       <xi:include href="xml/gimplayermask.xml" />
-      <xi:include href="xml/gimppixbuf.xml" />
       <xi:include href="xml/gimpselection.xml" />
       <xi:include href="xml/gimptextlayer.xml" />
       <xi:include href="xml/gimptexttool.xml" />
