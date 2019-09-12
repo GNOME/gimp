@@ -2390,7 +2390,7 @@ WARNING: luajit not found.
 else
   with_lua="yes"
   AC_CHECK_PROGS(LUA, luajit, no)
-  if test "x$GJS" = xno; then
+  if test "x$LUA" = xno; then
     required_deps="$required_deps
     - luajit not found.
         *** Please install the Lua interpreter luajit.
