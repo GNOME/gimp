@@ -223,6 +223,7 @@ background_jpeg_save (PreviewPersistent *pp)
 
       /* we cleanup here (load_image doesn't run in the background) */
       g_file_delete (pp->file, NULL, NULL);
+      g_object_unref (pp->file);
 
       g_free (pp);
       prev_p = NULL;
@@ -671,7 +672,7 @@ save_image (GFile        *file,
       pp->buffer      = buffer;
       pp->format      = format;
       pp->src         = NULL;
-      pp->file        = file;
+      pp->file        = g_object_ref (file);
       pp->abort_me    = FALSE;
 
       g_warn_if_fail (prev_p == NULL);
