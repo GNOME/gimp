@@ -53,7 +53,7 @@ static gboolean arithc_supported = FALSE;
 #define SCALE_WIDTH         125
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
-#define DEFAULT_QUALITY          90.0
+#define DEFAULT_IJG_QUALITY      90.0
 #define DEFAULT_SMOOTHING        0.0
 #define DEFAULT_OPTIMIZE         TRUE
 #define DEFAULT_ARITHMETIC_CODING FALSE
@@ -1293,7 +1293,7 @@ save_dialog_response (GtkWidget *widget,
 void
 load_defaults (void)
 {
-  jsvals.quality          = DEFAULT_QUALITY;
+  jsvals.quality          = DEFAULT_IJG_QUALITY;
   jsvals.smoothing        = DEFAULT_SMOOTHING;
   jsvals.optimize         = DEFAULT_OPTIMIZE;
   jsvals.arithmetic_coding= DEFAULT_ARITHMETIC_CODING;
