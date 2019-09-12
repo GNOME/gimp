@@ -1006,7 +1006,6 @@ find_contiguous_region (GeglBuffer          *src_buffer,
   const Babl          *mask_format = babl_format ("Y float");
   GeglSampler         *src_sampler;
   const GeglRectangle *src_extent;
-  gint                 x1, x2;
   gint                 old_y;
   gint                 start, end;
   gint                 new_start, new_end;

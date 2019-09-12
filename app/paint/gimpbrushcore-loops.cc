@@ -435,7 +435,7 @@ public:
   {
     gint i;
 
-    for (i = 0; i < G_N_ELEMENTS (map); i++)
+    for (i = 0; i < (gint) G_N_ELEMENTS (map); i++)
       map[i] = pressure (T (i));
   }
 
@@ -485,7 +485,6 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 {
   const GimpTempBuf *subsample_mask;
   const Babl        *subsample_mask_format;
-  gint               i;
 
   /* Get the raw subsampled mask */
   subsample_mask = gimp_brush_core_subsample_mask (core,
@@ -542,7 +541,6 @@ gimp_brush_core_solidify_mask_impl (const GimpTempBuf *mask,
   gint mask_width  = gimp_temp_buf_get_width  (mask);
   gint mask_height = gimp_temp_buf_get_height (mask);
   gint dest_width  = gimp_temp_buf_get_width  (dest);
-  gint dest_height = gimp_temp_buf_get_height (dest);
 
   gegl_parallel_distribute_area (
     GEGL_RECTANGLE (0, 0, mask_width, mask_height),

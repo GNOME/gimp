@@ -237,13 +237,13 @@ warning_cflags_common = [
 
   # You can uncomment this to debug with less warning outputs
   '-Wno-deprecated-declarations',
-
-  '-Werror=implicit-function-declaration',
 ]
 warning_cflags_c = [
   '-Wdeclaration-after-statement',
   '-Wold-style-definition',
   '-Wno-strict-prototypes',
+
+  '-Werror=implicit-function-declaration',
 ]
 warning_cflags_cpp = [
 ]
