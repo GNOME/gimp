@@ -1465,9 +1465,17 @@ gimp_plug_in_destroy_proxies (GHashTable *hash_table,
                       "by plug-in, it MUST NOT do that!\n",
                       G_STRFUNC, G_OBJECT_TYPE_NAME (object), id);
 
+#if 0
+          /* the code used to do this, but it appears that some bindings
+           * keep references around until later, let's keep this for
+           * reference and as a reminder to figure if we can do anything
+           * generic about it that works for all bindings.
+           */
           while (object->ref_count > 1)
             g_object_unref (object);
-
+#else
+          g_object_unref (object);
+#endif
           g_hash_table_iter_remove (&iter);
         }
     }
