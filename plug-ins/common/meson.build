@@ -39,32 +39,17 @@ common_plugins_list = [
     'deps': [ gtk3, gegl, gdk_pixbuf, cairo,  ],
   },
   { 'name': 'file-header', },
-  { 'name': 'file-heif',
-    'deps': [ gtk3, gegl, libheif, ],
-  },
   { 'name': 'file-html-table', },
-  { 'name': 'file-jp2-load',
-    'deps': [ gtk3, gegl, gdk_pixbuf, openjpeg, ],
-  },
-  { 'name': 'file-mng',
-    'deps': [ gtk3, gegl, libmng, libpng, ],
-  },
   { 'name': 'file-pat', },
   { 'name': 'file-pcx', },
   { 'name': 'file-pdf-load',
     'deps': [ gtk3, gegl, gdk_pixbuf, poppler ],
-  },
-  { 'name': 'file-pdf-save',
-    'deps': [ gtk3, gegl, gdk_pixbuf, poppler, cairo ],
   },
   { 'name': 'file-pix', },
   { 'name': 'file-png',
     'deps': [ gtk3, gegl, libpng, ],
   },
   { 'name': 'file-pnm', },
-  { 'name': 'file-ps',
-    'deps': [ gtk3, gegl, gdk_pixbuf, ghostscript, ],
-  },
   { 'name': 'file-psp',
     'deps': [ gtk3, gegl, zlib, ],
   },
@@ -99,8 +84,41 @@ common_plugins_list = [
   { 'name': 'web-browser', },
 ]
 
-if platform_windows
-  common_plugins_list += { 'name': 'mail', }
+if libaa.found()
+  common_plugins_list += {
+    'name': 'file-aa',
+    'deps': [ gtk3, gegl, gdk_pixbuf, libaa, ],
+  }
+endif
+
+if libheif.found()
+  common_plugins_list += { 'name': 'file-heif',
+    'deps': [ gtk3, gegl, libheif, ],
+  }
+endif
+
+if openjpeg.found()
+  common_plugins_list += { 'name': 'file-jp2-load',
+    'deps': [ gtk3, gegl, gdk_pixbuf, openjpeg, ],
+  }
+endif
+
+if libmng.found()
+  common_plugins_list += { 'name': 'file-mng',
+    'deps': [ gtk3, gegl, libmng, libpng, ],
+  }
+endif
+
+if cairopdf.found()
+  common_plugins_list += { 'name': 'file-pdf-save',
+    'deps': [ gtk3, gegl, gdk_pixbuf, poppler, cairo, cairopdf ],
+  }
+endif
+
+if ghostscript.found()
+  common_plugins_list += { 'name': 'file-ps',
+    'deps': [ gtk3, gegl, gdk_pixbuf, ghostscript, ],
+  }
 endif
 
 if wmf.found()
@@ -121,16 +139,13 @@ if libxpm.found()
   }
 endif
 
+if not platform_windows
+  common_plugins_list += { 'name': 'mail', }
+endif
+
 if webkit.found()
   common_plugins_list += { 'name': 'web-page',
     'deps': [ gtk3, gegl, gdk_pixbuf, webkit, ],
-  }
-endif
-
-if libaa.found()
-  common_plugins_list += {
-    'name': 'file-aa',
-    'deps': [ gtk3, gegl, gdk_pixbuf, libaa, ],
   }
 endif
 
