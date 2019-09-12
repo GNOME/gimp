@@ -61,7 +61,7 @@ typedef struct
   gint     number_pos[2];         /* flags where to draw numbers (top/bottom) */
   gint     keep_height;           /* flag if to keep max. image height */
   gint     num_images;            /* number of images */
-  GList   *images;                /* list of images */
+  gint32   images[MAX_FILM_PICTURES]; /* list of image IDs */
 } FilmVals;
 
 /* Data to use for the dialog */
@@ -179,7 +179,7 @@ static FilmVals filmvals =
   { TRUE, TRUE },  /* Numbering on top and bottom */
   0,               /* Don't keep max. image height */
   0,               /* Number of images */
-  NULL             /* Input image list */
+  { 0 }            /* Input image list */
 };
 
 static FilmInterface filmint =
@@ -319,13 +319,13 @@ film_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_PROC, &filmvals);
 
-      /*  First acquire information with a dialog  */
       if (! film_dialog (image))
-        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                 NULL);
+        {
+          return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -350,14 +350,11 @@ film_run (GimpProcedure        *procedure,
       filmvals.num_images    = GIMP_VALUES_GET_INT          (args, 7);
       images                 = GIMP_VALUES_GET_OBJECT_ARRAY (args, 8);
 
-      filmvals.images = NULL;
       for (i = 0; i < filmvals.num_images; i++)
-        filmvals.images = g_list_prepend (filmvals.images, images[i]);
-      filmvals.images = g_list_reverse (filmvals.images);
+        filmvals.images[i] = gimp_image_get_id (images[i]);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_PROC, &filmvals);
       break;
 
@@ -425,21 +422,23 @@ film (void)
   GimpLayer    *new_layer;
   GimpLayer    *floating_sel;
 
-  GList        *images_src;
-  GList        *layers;
+  GList        *images_src = NULL;
+  GList        *layers     = NULL;
   GList        *iter;
   GList        *iter2;
+  gint          i;
 
-
-  /* initialize */
-
-  layers = NULL;
 
   num_images = filmvals.num_images;
-  images_src = filmvals.images;
 
   if (num_images <= 0)
     return NULL;
+
+  for (i = 0; i < filmvals.num_images; i++)
+    {
+      images_src = g_list_append (images_src,
+                                  gimp_image_get_by_id (filmvals.images[i]));
+    }
 
   gimp_context_push ();
   gimp_context_set_foreground (&filmvals.number_color);
@@ -609,6 +608,8 @@ film (void)
       gimp_image_delete (image_tmp);
     }
 
+  g_list_free (images_src);
+
   gimp_progress_update (1.0);
 
   gimp_image_flatten (image_dst);
@@ -628,6 +629,8 @@ film (void)
 static gboolean
 check_filmvals (void)
 {
+  gint i, j;
+
   if (filmvals.film_height < 10)
     filmvals.film_height = 10;
 
@@ -636,6 +639,17 @@ check_filmvals (void)
 
   if (filmvals.number_font[0] == '\0')
     strcpy (filmvals.number_font, "Monospace");
+
+  for (i = 0, j = 0; i < filmvals.num_images; i++)
+    {
+      if (gimp_image_id_is_valid (filmvals.images[i]))
+        {
+          filmvals.images[j] = filmvals.images[i];
+          j++;
+        }
+    }
+
+  filmvals.num_images = j;
 
   if (filmvals.num_images < 1)
     return FALSE;
@@ -1353,11 +1367,12 @@ film_dialog (GimpImage *image)
 
           if ((image_id >= 0) && (num_images < MAX_FILM_PICTURES))
             {
-              filmvals.images = g_list_append (filmvals.images,
-                                               gimp_image_get_by_id (image_id));
-              filmvals.num_images++;
+              filmvals.images[num_images] = image_id;
+              num_images++;
             }
         }
+
+      filmvals.num_images = num_images;
     }
 
   gtk_widget_destroy (dlg);
