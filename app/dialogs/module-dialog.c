@@ -333,7 +333,7 @@ dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
 
   if (module)
     {
-      gimp_module_set_load_inhibit (module, ! module->load_inhibit);
+      gimp_module_set_auto_load (module, ! gimp_module_get_auto_load (module));
       g_object_unref (module);
 
       private->gimp->write_modulerc = TRUE;
@@ -346,11 +346,14 @@ dialog_list_item_update (ModuleDialog *private,
                          GtkTreeIter  *iter,
                          GimpModule   *module)
 {
+  const GimpModuleInfo *info = gimp_module_get_info (module);
+  GFile                *file = gimp_module_get_file (module);
+
   gtk_list_store_set (private->list, iter,
-                      COLUMN_NAME,   (module->info ?
-                                      gettext (module->info->purpose) :
-                                      gimp_filename_to_utf8 (module->filename)),
-                      COLUMN_ENABLED, ! module->load_inhibit,
+                      COLUMN_NAME,   (info ?
+                                      gettext (info->purpose) :
+                                      gimp_file_get_utf8_name (file)),
+                      COLUMN_ENABLED, gimp_module_get_auto_load (module),
                       COLUMN_MODULE,  module,
                       -1);
 }
@@ -419,13 +422,14 @@ dialog_info_update (GimpModuleDB *db,
                     GimpModule   *module,
                     ModuleDialog *private)
 {
-  GtkTreeModel *model         = GTK_TREE_MODEL (private->list);
-  GtkTreeIter   iter;
-  const gchar  *text[N_INFOS] = { NULL, };
-  gchar        *location      = NULL;
-  gboolean      iter_valid;
-  gint          i;
-  gboolean      show_error;
+  GtkTreeModel         *model = GTK_TREE_MODEL (private->list);
+  const GimpModuleInfo *info;
+  GtkTreeIter           iter;
+  const gchar          *text[N_INFOS] = { NULL, };
+  const gchar          *location      = NULL;
+  gboolean              iter_valid;
+  gint                  i;
+  gboolean              show_error;
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -461,33 +465,35 @@ dialog_info_update (GimpModuleDB *db,
       return;
     }
 
-  if (module->on_disk)
-    location = g_filename_display_name (module->filename);
+  if (gimp_module_is_on_disk (module))
+    location = gimp_file_get_utf8_name (gimp_module_get_file (module));
 
-  if (module->info)
+  info = gimp_module_get_info (module);
+
+  if (info)
     {
-      text[INFO_AUTHOR]    = module->info->author;
-      text[INFO_VERSION]   = module->info->version;
-      text[INFO_DATE]      = module->info->date;
-      text[INFO_COPYRIGHT] = module->info->copyright;
-      text[INFO_LOCATION]  = module->on_disk ? location : _("Only in memory");
+      text[INFO_AUTHOR]    = info->author;
+      text[INFO_VERSION]   = info->version;
+      text[INFO_DATE]      = info->date;
+      text[INFO_COPYRIGHT] = info->copyright;
+      text[INFO_LOCATION]  = gimp_module_is_on_disk (module) ?
+                             location : _("Only in memory");
     }
   else
     {
-      text[INFO_LOCATION]  = (module->on_disk ?
-                              location : _("No longer available"));
+      text[INFO_LOCATION]  = gimp_module_is_on_disk (module) ?
+                             location : _("No longer available");
     }
 
   for (i = 0; i < N_INFOS; i++)
     gtk_label_set_text (GTK_LABEL (private->label[i]),
                         text[i] ? text[i] : "--");
-  g_free (location);
 
   /* Show errors */
-  show_error = (module->state == GIMP_MODULE_STATE_ERROR &&
-                module->last_module_error);
+  show_error = (gimp_module_get_state (module) == GIMP_MODULE_STATE_ERROR &&
+                gimp_module_get_last_error (module));
   gtk_label_set_text (GTK_LABEL (private->error_label),
-                      show_error ? module->last_module_error : NULL);
+                      show_error ? gimp_module_get_last_error (module) : NULL);
   gtk_widget_set_visible (private->error_box, show_error);
 }
 

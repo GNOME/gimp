@@ -160,47 +160,11 @@ G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module
 typedef struct _GimpModulePrivate GimpModulePrivate;
 typedef struct _GimpModuleClass   GimpModuleClass;
 
-/**
- * GimpModule:
- * @filename:
- * @verbose:
- * @state:
- * @on_disk:
- * @load_inhibit:
- * @info:
- * @last_module_error:
- *
- * #GimpModule is a generic mechanism to dynamically load modules into
- * GIMP.  It is a #GTypeModule subclass, implementing module loading
- * using #GModule.  #GimpModule does not know which functionality is
- * implemented by the modules, it just provides a framework to get
- * arbitrary #GType implementations loaded from disk.
- **/
 struct _GimpModule
 {
   GTypeModule        parent_instance;
 
   GimpModulePrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  /*< public >*/
-  gchar           *filename;     /* path to the module                       */
-  gboolean         verbose;      /* verbose error reporting                  */
-  GimpModuleState  state;        /* what's happened to the module            */
-  gboolean         on_disk;      /* TRUE if file still exists                */
-  gboolean         load_inhibit; /* user requests not to load at boot time   */
-
-  /* stuff from now on may be NULL depending on the state the module is in   */
-  /*< private >*/
-  GModule         *module;       /* handle on the module                     */
-
-  /*< public >*/
-  GimpModuleInfo  *info;         /* returned values from module_query        */
-  gchar           *last_module_error;
-
-  /*< private >*/
-  GimpModuleQueryFunc     query_module;
-  GimpModuleRegisterFunc  register_module;
 };
 
 struct _GimpModuleClass
@@ -221,31 +185,26 @@ struct _GimpModuleClass
 };
 
 
-GType         gimp_module_get_type         (void) G_GNUC_CONST;
+GType                  gimp_module_get_type       (void) G_GNUC_CONST;
 
-GimpModule  * gimp_module_new              (const gchar     *filename,
-                                            gboolean         load_inhibit,
-                                            gboolean         verbose);
+GimpModule           * gimp_module_new            (GFile           *file,
+                                                   gboolean         auto_load,
+                                                   gboolean         verbose);
 
-gboolean      gimp_module_query_module     (GimpModule      *module);
+GFile                * gimp_module_get_file       (GimpModule      *module);
 
-void          gimp_module_modified         (GimpModule      *module);
-void          gimp_module_set_load_inhibit (GimpModule      *module,
-                                            gboolean         load_inhibit);
+void                   gimp_module_set_auto_load  (GimpModule      *module,
+                                                   gboolean         auto_load);
+gboolean               gimp_module_get_auto_load  (GimpModule      *module);
 
-const gchar * gimp_module_state_name       (GimpModuleState  state);
+gboolean               gimp_module_is_on_disk     (GimpModule      *module);
+gboolean               gimp_module_is_loaded      (GimpModule      *module);
 
+const GimpModuleInfo * gimp_module_get_info       (GimpModule      *module);
+GimpModuleState        gimp_module_get_state      (GimpModule      *module);
+const gchar          * gimp_module_get_last_error (GimpModule      *module);
 
-/*  GimpModuleInfo functions  */
-
-GimpModuleInfo * gimp_module_info_new  (guint32               abi_version,
-                                        const gchar          *purpose,
-                                        const gchar          *author,
-                                        const gchar          *version,
-                                        const gchar          *copyright,
-                                        const gchar          *date);
-GimpModuleInfo * gimp_module_info_copy (const GimpModuleInfo *info);
-void             gimp_module_info_free (GimpModuleInfo       *info);
+gboolean               gimp_module_query_module   (GimpModule      *module);
 
 
 G_END_DECLS

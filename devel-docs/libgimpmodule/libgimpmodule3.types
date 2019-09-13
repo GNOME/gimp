@@ -1,4 +1,4 @@
-#include <glib-object.h>
+#include <gio/gio.h>
 #include <libgimpmodule/gimpmodule.h>
 
 gimp_module_get_type

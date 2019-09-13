@@ -9,12 +9,14 @@ EXPORTS
 	gimp_module_db_set_load_inhibit
 	gimp_module_db_set_verbose
 	gimp_module_error_quark
+	gimp_module_get_auto_load
+	gimp_module_get_file
+	gimp_module_get_info
+	gimp_module_get_last_error
+	gimp_module_get_state
 	gimp_module_get_type
-	gimp_module_info_copy
-	gimp_module_info_free
-	gimp_module_info_new
-	gimp_module_modified
+	gimp_module_is_loaded
+	gimp_module_is_on_disk
 	gimp_module_new
 	gimp_module_query_module
-	gimp_module_set_load_inhibit
-	gimp_module_state_name
+	gimp_module_set_auto_load

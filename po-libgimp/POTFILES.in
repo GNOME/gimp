@@ -34,6 +34,7 @@ libgimpconfig/gimpconfigwriter.c
 libgimpconfig/gimpscanner.c
 
 libgimpmodule/gimpmodule.c
+libgimpmodule/gimpmoduledb.c
 
 libgimpthumb/gimpthumb-utils.c
 libgimpthumb/gimpthumbnail.c

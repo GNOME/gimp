@@ -30,6 +30,8 @@
 #include "gimpmodule.h"
 #include "gimpmoduledb.h"
 
+#include "libgimp/libgimp-intl.h"
+
 
 /**
  * SECTION: gimpmoduledb
@@ -49,8 +51,6 @@ enum
   LAST_SIGNAL
 };
 
-#define DUMP_DB FALSE
-
 
 struct _GimpModuleDBPrivate
 {
@@ -60,8 +60,6 @@ struct _GimpModuleDBPrivate
   gboolean  verbose;
 };
 
-#define GET_PRIVATE(obj) (((GimpModuleDB *) (obj))->priv)
-
 
 static void         gimp_module_db_finalize            (GObject      *object);
 
@@ -70,14 +68,10 @@ static void         gimp_module_db_load_directory      (GimpModuleDB *db,
 static void         gimp_module_db_load_module         (GimpModuleDB *db,
                                                         GFile        *file);
 
-static GimpModule * gimp_module_db_module_find_by_path (GimpModuleDB *db,
-                                                        const char   *fullpath);
+static GimpModule * gimp_module_db_module_find_by_file (GimpModuleDB *db,
+                                                        GFile        *file);
 
 static void         gimp_module_db_module_dump_func    (gpointer      data,
-                                                        gpointer      user_data);
-static void         gimp_module_db_module_on_disk_func (gpointer      data,
-                                                        gpointer      user_data);
-static void         gimp_module_db_module_remove_func  (gpointer      data,
                                                         gpointer      user_data);
 
 static void         gimp_module_db_module_modified     (GimpModule   *module,
@@ -145,24 +139,18 @@ gimp_module_db_init (GimpModuleDB *db)
 static void
 gimp_module_db_finalize (GObject *object)
 {
-  GimpModuleDBPrivate *priv = GET_PRIVATE (object);
+  GimpModuleDB *db = GIMP_MODULE_DB (object);
+  GList        *list;
 
-  if (priv->modules)
+  for (list = db->priv->modules; list; list = g_list_next (list))
     {
-      GList *list;
-
-      for (list = priv->modules; list; list = g_list_next (list))
-        {
-          g_signal_handlers_disconnect_by_func (list->data,
-                                                gimp_module_db_module_modified,
-                                                object);
-        }
-
-      g_list_free (priv->modules);
-      priv->modules = NULL;
+      g_signal_handlers_disconnect_by_func (list->data,
+                                            gimp_module_db_module_modified,
+                                            object);
     }
 
-  g_clear_pointer (&priv->load_inhibit, g_free);
+  g_clear_pointer (&db->priv->modules,      g_list_free);
+  g_clear_pointer (&db->priv->load_inhibit, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -205,7 +193,7 @@ gimp_module_db_get_modules (GimpModuleDB *db)
 {
   g_return_val_if_fail (GIMP_IS_MODULE_DB (db), NULL);
 
-  return GET_PRIVATE (db)->modules;
+  return db->priv->modules;
 }
 
 /**
@@ -223,7 +211,7 @@ gimp_module_db_set_verbose (GimpModuleDB *db,
 {
   g_return_if_fail (GIMP_IS_MODULE_DB (db));
 
-  GET_PRIVATE (db)->verbose = verbose ? TRUE : FALSE;
+  db->priv->verbose = verbose ? TRUE : FALSE;
 }
 
 /**
@@ -241,13 +229,14 @@ gimp_module_db_get_verbose (GimpModuleDB *db)
 {
   g_return_val_if_fail (GIMP_IS_MODULE_DB (db), FALSE);
 
-  return GET_PRIVATE (db)->verbose;
+  return db->priv->verbose;
 }
 
 static gboolean
-is_in_inhibit_list (const gchar *filename,
+is_in_inhibit_list (GFile       *file,
                     const gchar *inhibit_list)
 {
+  gchar       *filename;
   gchar       *p;
   gint         pathlen;
   const gchar *start;
@@ -256,9 +245,14 @@ is_in_inhibit_list (const gchar *filename,
   if (! inhibit_list || ! strlen (inhibit_list))
     return FALSE;
 
+  filename = g_file_get_path (file);
+
   p = strstr (inhibit_list, filename);
-  if (!p)
-    return FALSE;
+  if (! p)
+    {
+      g_free (filename);
+      return FALSE;
+    }
 
   /* we have a substring, but check for colons either side */
   start = p;
@@ -273,6 +267,8 @@ is_in_inhibit_list (const gchar *filename,
     end = inhibit_list + strlen (inhibit_list);
 
   pathlen = strlen (filename);
+
+  g_free (filename);
 
   if ((end - start) == pathlen)
     return TRUE;
@@ -293,25 +289,24 @@ void
 gimp_module_db_set_load_inhibit (GimpModuleDB *db,
                                  const gchar  *load_inhibit)
 {
-  GimpModuleDBPrivate *priv;
-  GList               *list;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_MODULE_DB (db));
 
-  priv = GET_PRIVATE (db);
+  if (db->priv->load_inhibit)
+    g_free (db->priv->load_inhibit);
 
-  if (priv->load_inhibit)
-    g_free (priv->load_inhibit);
+  db->priv->load_inhibit = g_strdup (load_inhibit);
 
-  priv->load_inhibit = g_strdup (load_inhibit);
-
-  for (list = priv->modules; list; list = g_list_next (list))
+  for (list = db->priv->modules; list; list = g_list_next (list))
     {
       GimpModule *module = list->data;
+      gboolean    inhibit;
 
-      gimp_module_set_load_inhibit (module,
-                                    is_in_inhibit_list (module->filename,
-                                                        load_inhibit));
+      inhibit =is_in_inhibit_list (gimp_module_get_file (module),
+                                   load_inhibit);
+
+      gimp_module_set_auto_load (module, ! inhibit);
     }
 }
 
@@ -329,7 +324,7 @@ gimp_module_db_get_load_inhibit (GimpModuleDB *db)
 {
   g_return_val_if_fail (GIMP_IS_MODULE_DB (db), NULL);
 
-  return GET_PRIVATE (db)->load_inhibit;
+  return db->priv->load_inhibit;
 }
 
 /**
@@ -346,12 +341,8 @@ void
 gimp_module_db_load (GimpModuleDB *db,
                      const gchar  *module_path)
 {
-  GimpModuleDBPrivate *priv;
-
   g_return_if_fail (GIMP_IS_MODULE_DB (db));
   g_return_if_fail (module_path != NULL);
-
-  priv = GET_PRIVATE (db);
 
   if (g_module_supported ())
     {
@@ -368,8 +359,8 @@ gimp_module_db_load (GimpModuleDB *db,
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
-  if (DUMP_DB)
-    g_list_foreach (priv->modules, gimp_module_db_module_dump_func, NULL);
+  if (FALSE)
+    g_list_foreach (db->priv->modules, gimp_module_db_module_dump_func, NULL);
 }
 
 /**
@@ -389,22 +380,31 @@ void
 gimp_module_db_refresh (GimpModuleDB *db,
                         const gchar  *module_path)
 {
-  GimpModuleDBPrivate *priv;
-  GList               *kill_list = NULL;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_MODULE_DB (db));
   g_return_if_fail (module_path != NULL);
 
-  priv = GET_PRIVATE (db);
+  list = db->priv->modules;
 
-  /* remove modules we don't have on disk anymore */
-  g_list_foreach (priv->modules,
-                  gimp_module_db_module_on_disk_func,
-                  &kill_list);
-  g_list_foreach (kill_list,
-                  gimp_module_db_module_remove_func,
-                  db);
-  g_list_free (kill_list);
+  while (list)
+    {
+      GimpModule *module = list->data;
+
+      list = g_list_next (list);
+
+      if (! gimp_module_is_on_disk (module) &&
+          ! gimp_module_is_loaded (module))
+        {
+          g_signal_handlers_disconnect_by_func (module,
+                                                gimp_module_db_module_modified,
+                                                db);
+
+          db->priv->modules = g_list_remove (db->priv->modules, module);
+
+          g_signal_emit (db, db_signals[REMOVE], 0, module);
+        }
+    }
 
   /* walk filesystem and add new things we find */
   gimp_module_db_load (db, module_path);
@@ -452,52 +452,42 @@ static void
 gimp_module_db_load_module (GimpModuleDB *db,
                             GFile        *file)
 {
-  GimpModuleDBPrivate *priv = GET_PRIVATE (db);
-  GimpModule          *module;
-  gchar               *path;
-  gboolean             load_inhibit;
+  GimpModule *module;
+  gboolean   load_inhibit;
 
   if (! gimp_file_has_extension (file, "." G_MODULE_SUFFIX))
     return;
 
-  path = g_file_get_path (file);
-
   /* don't load if we already know about it */
-  if (gimp_module_db_module_find_by_path (db, path))
-    {
-      g_free (path);
-      return;
-    }
+  if (gimp_module_db_module_find_by_file (db, file))
+    return;
 
-  load_inhibit = is_in_inhibit_list (path, priv->load_inhibit);
+  load_inhibit = is_in_inhibit_list (file, db->priv->load_inhibit);
 
-  module = gimp_module_new (path,
-                            load_inhibit,
-                            priv->verbose);
-
-  g_free (path);
+  module = gimp_module_new (file,
+                            ! load_inhibit,
+                            db->priv->verbose);
 
   g_signal_connect (module, "modified",
                     G_CALLBACK (gimp_module_db_module_modified),
                     db);
 
-  priv->modules = g_list_append (priv->modules, module);
+  db->priv->modules = g_list_append (db->priv->modules, module);
 
   g_signal_emit (db, db_signals[ADD], 0, module);
 }
 
 static GimpModule *
-gimp_module_db_module_find_by_path (GimpModuleDB *db,
-                                    const char   *fullpath)
+gimp_module_db_module_find_by_file (GimpModuleDB *db,
+                                    GFile        *file)
 {
-  GimpModuleDBPrivate *priv = GET_PRIVATE (db);
-  GList               *list;
+  GList *list;
 
-  for (list = priv->modules; list; list = g_list_next (list))
+  for (list = db->priv->modules; list; list = g_list_next (list))
     {
       GimpModule *module = list->data;
 
-      if (! strcmp (module->filename, fullpath))
+      if (g_file_equal (file, gimp_module_get_file (module)))
         return module;
     }
 
@@ -508,73 +498,42 @@ static void
 gimp_module_db_module_dump_func (gpointer data,
                                  gpointer user_data)
 {
-  GimpModule *module = data;
+  static const gchar * const statenames[] =
+  {
+    N_("Module error"),
+    N_("Loaded"),
+    N_("Load failed"),
+    N_("Not loaded")
+  };
+
+  GimpModule           *module = data;
+  const GimpModuleInfo *info   = gimp_module_get_info (module);
 
   g_print ("\n%s: %s\n",
-           gimp_filename_to_utf8 (module->filename),
-           gimp_module_state_name (module->state));
+           gimp_file_get_utf8_name (gimp_module_get_file (module)),
+           gettext (statenames[gimp_module_get_state (module)]));
 
+#if 0
   g_print ("  module: %p  lasterr: %s  query: %p register: %p\n",
            module->module,
            module->last_module_error ? module->last_module_error : "NONE",
            module->query_module,
            module->register_module);
+#endif
 
-  if (module->info)
+  if (info)
     {
       g_print ("  purpose:   %s\n"
                "  author:    %s\n"
                "  version:   %s\n"
                "  copyright: %s\n"
                "  date:      %s\n",
-               module->info->purpose   ? module->info->purpose   : "NONE",
-               module->info->author    ? module->info->author    : "NONE",
-               module->info->version   ? module->info->version   : "NONE",
-               module->info->copyright ? module->info->copyright : "NONE",
-               module->info->date      ? module->info->date      : "NONE");
+               info->purpose   ? info->purpose   : "NONE",
+               info->author    ? info->author    : "NONE",
+               info->version   ? info->version   : "NONE",
+               info->copyright ? info->copyright : "NONE",
+               info->date      ? info->date      : "NONE");
     }
-}
-
-static void
-gimp_module_db_module_on_disk_func (gpointer data,
-                                    gpointer user_data)
-{
-  GimpModule  *module    = data;
-  GList      **kill_list = user_data;
-  gboolean     old_on_disk;
-
-  old_on_disk = module->on_disk;
-
-  module->on_disk = g_file_test (module->filename, G_FILE_TEST_IS_REGULAR);
-
-  /* if it's not on the disk, and it isn't in memory, mark it to be
-   * removed later.
-   */
-  if (! module->on_disk && ! module->module)
-    {
-      *kill_list = g_list_append (*kill_list, module);
-      module = NULL;
-    }
-
-  if (module && module->on_disk != old_on_disk)
-    gimp_module_modified (module);
-}
-
-static void
-gimp_module_db_module_remove_func (gpointer data,
-                                   gpointer user_data)
-{
-  GimpModule          *module = data;
-  GimpModuleDB        *db     = user_data;
-  GimpModuleDBPrivate *priv   = GET_PRIVATE (db);
-
-  g_signal_handlers_disconnect_by_func (module,
-                                        gimp_module_db_module_modified,
-                                        db);
-
-  priv->modules = g_list_remove (priv->modules, module);
-
-  g_signal_emit (db, db_signals[REMOVE], 0, module);
 }
 
 static void
