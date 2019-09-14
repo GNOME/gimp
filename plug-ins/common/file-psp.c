@@ -1913,15 +1913,15 @@ static GimpImage *
 load_image (GFile   *file,
             GError **error)
 {
-  gchar  *filename;
-  FILE   *f;
-  struct stat st;
-  char buf[32];
-  PSPimage ia;
-  guint32 block_init_len, block_total_len;
-  long block_start;
+  gchar     *filename;
+  FILE      *f;
+  GStatBuf   st;
+  char       buf[32];
+  PSPimage   ia;
+  guint32    block_init_len, block_total_len;
+  long       block_start;
   PSPBlockID id = -1;
-  gint block_number;
+  gint       block_number;
 
   GimpImage *image = NULL;
 
