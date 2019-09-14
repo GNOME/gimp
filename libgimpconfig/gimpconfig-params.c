@@ -62,10 +62,16 @@ GParamSpec *
 gimp_config_param_spec_duplicate (GParamSpec *pspec)
 {
   GParamSpec  *copy = NULL;
+  const gchar *name;
+  const gchar *nick;
+  const gchar *blurb;
   GParamFlags  flags;
 
   g_return_val_if_fail (pspec != NULL, NULL);
 
+  name  = pspec->name;
+  nick  = g_param_spec_get_nick (pspec);
+  blurb = g_param_spec_get_blurb (pspec);
   flags = pspec->flags;
 
   /*  this special case exists for the GEGL tool, we don't want this
@@ -80,18 +86,14 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
 
       if (GEGL_IS_PARAM_SPEC_FILE_PATH (pspec))
         {
-          copy = gimp_param_spec_config_path (pspec->name,
-                                              g_param_spec_get_nick (pspec),
-                                              g_param_spec_get_blurb (pspec),
+          copy = gimp_param_spec_config_path (name, nick, blurb,
                                               GIMP_CONFIG_PATH_FILE,
                                               spec->default_value,
                                               flags);
         }
       else
         {
-          copy = g_param_spec_string (pspec->name,
-                                      g_param_spec_get_nick (pspec),
-                                      g_param_spec_get_blurb (pspec),
+          copy = g_param_spec_string (name, nick, blurb,
                                       spec->default_value,
                                       flags);
         }
@@ -100,9 +102,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecBoolean *spec = G_PARAM_SPEC_BOOLEAN (pspec);
 
-      copy = g_param_spec_boolean (pspec->name,
-                                   g_param_spec_get_nick (pspec),
-                                   g_param_spec_get_blurb (pspec),
+      copy = g_param_spec_boolean (name, nick, blurb,
                                    spec->default_value,
                                    flags);
     }
@@ -110,9 +110,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecEnum *spec = G_PARAM_SPEC_ENUM (pspec);
 
-      copy = g_param_spec_enum (pspec->name,
-                                g_param_spec_get_nick (pspec),
-                                g_param_spec_get_blurb (pspec),
+      copy = g_param_spec_enum (name, nick, blurb,
                                 G_TYPE_FROM_CLASS (spec->enum_class),
                                 spec->default_value,
                                 flags);
@@ -122,9 +120,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
       GParamSpecDouble    *spec  = G_PARAM_SPEC_DOUBLE (pspec);
 
-      copy = gegl_param_spec_double (pspec->name,
-                                     g_param_spec_get_nick (pspec),
-                                     g_param_spec_get_blurb (pspec),
+      copy = gegl_param_spec_double (name, nick, blurb,
                                      spec->minimum,
                                      spec->maximum,
                                      spec->default_value,
@@ -142,9 +138,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecDouble *spec = G_PARAM_SPEC_DOUBLE (pspec);
 
-      copy = g_param_spec_double (pspec->name,
-                                  g_param_spec_get_nick (pspec),
-                                  g_param_spec_get_blurb (pspec),
+      copy = g_param_spec_double (name, nick, blurb,
                                   spec->minimum,
                                   spec->maximum,
                                   spec->default_value,
@@ -154,9 +148,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecFloat *spec = G_PARAM_SPEC_FLOAT (pspec);
 
-      copy = g_param_spec_float (pspec->name,
-                                 g_param_spec_get_nick (pspec),
-                                 g_param_spec_get_blurb (pspec),
+      copy = g_param_spec_float (name, nick, blurb,
                                  spec->minimum,
                                  spec->maximum,
                                  spec->default_value,
@@ -167,9 +159,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
       GParamSpecInt    *spec  = G_PARAM_SPEC_INT (pspec);
 
-      copy = gegl_param_spec_int (pspec->name,
-                                  g_param_spec_get_nick (pspec),
-                                  g_param_spec_get_blurb (pspec),
+      copy = gegl_param_spec_int (name, nick, blurb,
                                   spec->minimum,
                                   spec->maximum,
                                   spec->default_value,
@@ -186,9 +176,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       GParamSpecUInt    *spec  = G_PARAM_SPEC_UINT (pspec);
       GeglParamSpecSeed *gspec = GEGL_PARAM_SPEC_SEED (pspec);
 
-      copy = gegl_param_spec_seed (pspec->name,
-                                   g_param_spec_get_nick (pspec),
-                                   g_param_spec_get_blurb (pspec),
+      copy = gegl_param_spec_seed (name, nick, blurb,
                                    flags);
 
       G_PARAM_SPEC_UINT (copy)->minimum = spec->minimum;
@@ -201,9 +189,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecInt *spec = G_PARAM_SPEC_INT (pspec);
 
-      copy = g_param_spec_int (pspec->name,
-                               g_param_spec_get_nick (pspec),
-                               g_param_spec_get_blurb (pspec),
+      copy = g_param_spec_int (name, nick, blurb,
                                spec->minimum,
                                spec->maximum,
                                spec->default_value,
@@ -213,9 +199,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecUInt *spec = G_PARAM_SPEC_UINT (pspec);
 
-      copy = g_param_spec_uint (pspec->name,
-                                g_param_spec_get_nick (pspec),
-                                g_param_spec_get_blurb (pspec),
+      copy = g_param_spec_uint (name, nick, blurb,
                                 spec->minimum,
                                 spec->maximum,
                                 spec->default_value,
@@ -231,9 +215,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       gimp_value_get_rgb (&value, &color);
       g_value_unset (&value);
 
-      copy = gimp_param_spec_rgb (pspec->name,
-                                  g_param_spec_get_nick (pspec),
-                                  g_param_spec_get_blurb (pspec),
+      copy = gimp_param_spec_rgb (name, nick, blurb,
                                   gimp_param_spec_rgb_has_alpha (pspec),
                                   &color,
                                   flags);
@@ -259,9 +241,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
 
       g_value_unset (&value);
 
-      copy = gimp_param_spec_rgb (pspec->name,
-                                  g_param_spec_get_nick (pspec),
-                                  g_param_spec_get_blurb (pspec),
+      copy = gimp_param_spec_rgb (name, nick, blurb,
                                   TRUE,
                                   &gimp_color,
                                   flags);
