@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-08-18 14:05+0000\n"
-"PO-Revision-Date: 2019-08-23 11:56+0200\n"
+"POT-Creation-Date: 2019-09-13 17:11+0000\n"
+"PO-Revision-Date: 2019-09-14 22:49+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -72,8 +72,8 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddswrite.c:1956 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:877
+#: ../plug-ins/file-dds/ddsread.c:1276 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:1850 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -129,7 +129,8 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/sparkle.c:336 ../plug-ins/common/sphere-designer.c:2562
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
-#: ../plug-ins/common/wavelet-decompose.c:355 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/file-dds/ddsread.c:1277 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -340,7 +341,7 @@ msgid "Reset the speed of the animation"
 msgstr "Återställ hastigheten för animationen"
 
 #: ../plug-ins/common/animation-play.c:640
-#: ../plug-ins/common/animation-play.c:1363
+#: ../plug-ins/common/animation-play.c:1364
 msgid "Start playback"
 msgstr "Starta uppspelning"
 
@@ -396,12 +397,12 @@ msgstr "Minne kunde inte allokeras för rambehållaren."
 msgid "Invalid image. Did you close it?"
 msgstr "Ogiltig bild. Stängde du den?"
 
-#: ../plug-ins/common/animation-play.c:1224
+#: ../plug-ins/common/animation-play.c:1225
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Bildruta %d av %d"
 
-#: ../plug-ins/common/animation-play.c:1363
+#: ../plug-ins/common/animation-play.c:1364
 msgid "Stop playback"
 msgstr "Stoppa uppspelning"
 
@@ -453,7 +454,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1042
-#: ../plug-ins/file-psd/psd-load.c:1858 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1861 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:1033
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -690,7 +691,7 @@ msgstr "Min (x-d, -), (x < 0,5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0,5 < x)"
 
-#: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1759
+#: ../plug-ins/common/cml-explorer.c:200
 msgid "Standard"
 msgstr "Standard"
 
@@ -1031,6 +1032,7 @@ msgstr "Graf över de aktuella inställningarna"
 #: ../plug-ins/gfig/gfig-dialog.c:880 ../plug-ins/gfig/gfig-dialog.c:1246
 #: ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
+#: ../plug-ins/imagemap/imap_menu.c:156
 #: ../plug-ins/metadata/metadata-viewer.c:227
 msgid "_Close"
 msgstr "_Stäng"
@@ -1670,6 +1672,7 @@ msgstr "_Ledigt"
 #. The Copy button
 #: ../plug-ins/common/curve-bend.c:1501
 #: ../plug-ins/gradient-flare/gradient-flare.c:3006
+#: ../plug-ins/imagemap/imap_menu.c:168
 msgid "_Copy"
 msgstr "_Kopiera"
 
@@ -2386,14 +2389,13 @@ msgid "Brush"
 msgstr "Pensel"
 
 #: ../plug-ins/common/file-gbr.c:332 ../plug-ins/common/file-gih.c:567
-#: ../plug-ins/common/file-pat.c:302 ../plug-ins/gimpressionist/presets.c:665
-msgid "Description:"
-msgstr "Beskrivning:"
+#: ../plug-ins/common/file-pat.c:302 ../plug-ins/imagemap/imap_settings.c:106
+msgid "_Description:"
+msgstr "_Beskrivning:"
 
-#. attach labels
-#: ../plug-ins/common/file-gbr.c:344 ../plug-ins/common/grid.c:827
-msgid "Spacing:"
-msgstr "Mellanrum:"
+#: ../plug-ins/common/file-gbr.c:344
+msgid "_Spacing:"
+msgstr "_Mellanrum:"
 
 # Programvaran Radiance. https://www.radiance-online.org/about
 #: ../plug-ins/common/file-gegl.c:73
@@ -2544,20 +2546,20 @@ msgid "Brush Pipe"
 msgstr "Penselrör"
 
 #: ../plug-ins/common/file-gih.c:582
-msgid "Spacing (percent):"
-msgstr "Mellanrum (procent):"
+msgid "_Spacing (percent):"
+msgstr "_Mellanrum (procent):"
 
 #: ../plug-ins/common/file-gih.c:637
 msgid "Pixels"
 msgstr "Bildpunkter"
 
 #: ../plug-ins/common/file-gih.c:642
-msgid "Cell size:"
-msgstr "Cellstorlek:"
+msgid "Ce_ll size:"
+msgstr "Ce_llstorlek:"
 
 #: ../plug-ins/common/file-gih.c:655
-msgid "Number of cells:"
-msgstr "Antal celler:"
+msgid "_Number of cells:"
+msgstr "A_ntal celler:"
 
 #: ../plug-ins/common/file-gih.c:680
 msgid " Rows of "
@@ -2580,8 +2582,8 @@ msgid "Display as:"
 msgstr "Visa som:"
 
 #: ../plug-ins/common/file-gih.c:716
-msgid "Dimension:"
-msgstr "Dimension:"
+msgid "Di_mension:"
+msgstr "Di_mension:"
 
 #: ../plug-ins/common/file-gih.c:792
 msgid "Ranks:"
@@ -2656,7 +2658,9 @@ msgstr "Välj bild"
 msgid "HEIF"
 msgstr "HEIF"
 
+#. Create the lossless checkbox
 #: ../plug-ins/common/file-heif.c:1252
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "_Lossless"
 msgstr "För_lustfri"
 
@@ -2667,6 +2671,7 @@ msgstr "_Kvalitet:"
 #. Color profile
 #: ../plug-ins/common/file-heif.c:1274 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:386
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save color _profile"
 msgstr "Spara färg_profil"
 
@@ -2909,24 +2914,24 @@ msgid "MNG Options"
 msgstr "MNG-inställningar"
 
 #: ../plug-ins/common/file-mng.c:1350
-msgid "Interlace"
-msgstr "Fläta"
+msgid "_Interlace"
+msgstr "_Fläta"
 
-#: ../plug-ins/common/file-mng.c:1362
-msgid "Save background color"
-msgstr "Spara bakgrundsfärg"
+#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/ui/plug-in-file-png.ui.h:2
+msgid "Save _background color"
+msgstr "Spara _bakgrundsfärg"
 
-#: ../plug-ins/common/file-mng.c:1373 ../plug-ins/ui/plug-in-file-png.ui.h:3
-msgid "Save gamma"
-msgstr "Spara gamma"
+#: ../plug-ins/common/file-mng.c:1373
+msgid "Save _gamma"
+msgstr "Spara _gamma"
 
 #: ../plug-ins/common/file-mng.c:1383
 msgid "Save resolution"
 msgstr "Spara upplösning"
 
-#: ../plug-ins/common/file-mng.c:1394
-msgid "Save creation time"
-msgstr "Spara skapad tid"
+#: ../plug-ins/common/file-mng.c:1394 ../plug-ins/ui/plug-in-file-png.ui.h:6
+msgid "Save creation _time"
+msgstr "Spara skapad _tid"
 
 #. Dialog init
 #: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2399
@@ -2967,12 +2972,12 @@ msgid "Replace"
 msgstr "Ersätt"
 
 #: ../plug-ins/common/file-mng.c:1447
-msgid "Default frame disposal:"
-msgstr "Standard bildruteplacering:"
+msgid "Default _frame disposal:"
+msgstr "Standard _bildruteplacering:"
 
 #: ../plug-ins/common/file-mng.c:1459
-msgid "PNG compression level:"
-msgstr "PNG komprimeringsnivå:"
+msgid "_PNG compression level:"
+msgstr "_PNG komprimeringsnivå:"
 
 #: ../plug-ins/common/file-mng.c:1467 ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Choose a high compression level for small file size"
@@ -2991,8 +2996,8 @@ msgid "Animated MNG Options"
 msgstr "Alternativ för animerad MNG"
 
 #: ../plug-ins/common/file-mng.c:1514
-msgid "Loop"
-msgstr "Loop"
+msgid "_Loop"
+msgstr "_Loop"
 
 #: ../plug-ins/common/file-mng.c:1528
 msgid "Default frame delay:"
@@ -3205,18 +3210,18 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:823
 #: ../plug-ins/common/file-pdf-save.c:983
-msgid "Omit hidden layers and layers with zero opacity"
-msgstr "Utelämna gömda lager och lager med noll opacitet"
+msgid "_Omit hidden layers and layers with zero opacity"
+msgstr "Utelä_mna gömda lager och lager med noll opacitet"
 
 #: ../plug-ins/common/file-pdf-save.c:828
 #: ../plug-ins/common/file-pdf-save.c:988
-msgid "Convert bitmaps to vector graphics where possible"
-msgstr "Konvertera bitmap-bilder till vektorgrafik där det är möjligt"
+msgid "Convert _bitmaps to vector graphics where possible"
+msgstr "Konvertera _bitmap-bilder till vektorgrafik där det är möjligt"
 
 #: ../plug-ins/common/file-pdf-save.c:833
 #: ../plug-ins/common/file-pdf-save.c:993
-msgid "Apply layer masks before saving"
-msgstr "Tillämpa lagermasker innan du sparar"
+msgid "_Apply layer masks before saving"
+msgstr "_Tillämpa lagermasker innan du sparar"
 
 #: ../plug-ins/common/file-pdf-save.c:837
 #: ../plug-ins/common/file-pdf-save.c:997
@@ -3224,10 +3229,9 @@ msgid "Keeping the masks will not change the output"
 msgstr "Att behålla maskerna kommer inte att ändra utdatan"
 
 #: ../plug-ins/common/file-pdf-save.c:843
-#: ../plug-ins/common/file-pdf-save.c:1042
 #, c-format
-msgid "Layers as pages (%s)"
-msgstr "Lager som sidor (%s)"
+msgid "_Layers as pages (%s)"
+msgstr "_Lager som sidor (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:845
 #: ../plug-ins/common/file-pdf-save.c:1044
@@ -3240,8 +3244,8 @@ msgid "bottom layers first"
 msgstr "nedersta lagren först"
 
 #: ../plug-ins/common/file-pdf-save.c:853
-msgid "Reverse the pages order"
-msgstr "Omvänd sidordning"
+msgid "_Reverse the pages order"
+msgstr "_Omvänd sidordning"
 
 #: ../plug-ins/common/file-pdf-save.c:927
 msgid "Save to:"
@@ -3262,6 +3266,11 @@ msgstr "Ta bort markerade sidor"
 #: ../plug-ins/common/file-pdf-save.c:978
 msgid "Add this image"
 msgstr "Lägg till denna bild"
+
+#: ../plug-ins/common/file-pdf-save.c:1042
+#, c-format
+msgid "Layers as pages (%s)"
+msgstr "Lager som sidor (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
@@ -3454,12 +3463,12 @@ msgid "Data formatting"
 msgstr "Dataformatering"
 
 #: ../plug-ins/common/file-pnm.c:1621
-msgid "Raw"
-msgstr "Rå"
+msgid "_Raw"
+msgstr "_Rå"
 
 #: ../plug-ins/common/file-pnm.c:1622
-msgid "ASCII"
-msgstr "ASCII"
+msgid "_ASCII"
+msgstr "_ASCII"
 
 #: ../plug-ins/common/file-ps.c:652 ../plug-ins/common/file-ps.c:719
 msgid "PostScript document"
@@ -3540,7 +3549,7 @@ msgstr "Grått"
 msgid "Color"
 msgstr "Färg"
 
-#: ../plug-ins/common/file-ps.c:3541 ../plug-ins/file-fits/fits.c:1186
+#: ../plug-ins/common/file-ps.c:3541
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -3933,12 +3942,10 @@ msgid "Palette"
 msgstr "Palett"
 
 #: ../plug-ins/common/file-raw-data.c:2029
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:4
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
 #: ../plug-ins/common/file-raw-data.c:2030
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP-stil)"
 
@@ -4062,8 +4069,12 @@ msgid "Data Formatting"
 msgstr "Dataformatering"
 
 #: ../plug-ins/common/file-sunras.c:1758
-msgid "RunLength Encoded"
-msgstr "RunLengthkodad"
+msgid "_RunLength Encoded"
+msgstr "Sku_rlängdskodad"
+
+#: ../plug-ins/common/file-sunras.c:1759
+msgid "_Standard"
+msgstr "_Standard"
 
 #: ../plug-ins/common/file-svg.c:139
 msgid "SVG image"
@@ -4159,7 +4170,7 @@ msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1426
+#: ../plug-ins/common/file-tga.c:1426 ../plug-ins/file-sgi/sgi.c:678
 msgid "_RLE compression"
 msgstr "_RLE-komprimeringsnivå"
 
@@ -4960,11 +4971,11 @@ msgstr "Typ av utsida"
 msgid "_Wrap"
 msgstr "_Wrap"
 
-#: ../plug-ins/common/fractal-trace.c:757
+#: ../plug-ins/common/fractal-trace.c:757 ../plug-ins/file-fits/fits.c:1174
 msgid "_Black"
 msgstr "_Svart"
 
-#: ../plug-ins/common/fractal-trace.c:759
+#: ../plug-ins/common/fractal-trace.c:759 ../plug-ins/file-fits/fits.c:1175
 msgid "_White"
 msgstr "_Vitt"
 
@@ -5057,6 +5068,11 @@ msgstr ""
 #: ../plug-ins/common/grid.c:759
 msgid "Intersection"
 msgstr "Skärningspunkt"
+
+#. attach labels
+#: ../plug-ins/common/grid.c:827
+msgid "Spacing:"
+msgstr "Mellanrum:"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:893
@@ -5436,6 +5452,7 @@ msgstr "G-Qbist"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:690
 #: ../plug-ins/gfig/gfig-dialog.c:886
 #: ../plug-ins/ifs-compose/ifs-compose.c:1035
+#: ../plug-ins/imagemap/imap_menu.c:162
 msgid "_Undo"
 msgstr "_Ångra"
 
@@ -5485,19 +5502,27 @@ msgstr "Från toning"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1406
-#: ../plug-ins/common/sample-colorize.c:1433
-msgid "Show selection"
-msgstr "Visa urval"
+msgid "Sho_w selection"
+msgstr "Visa _urval"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1417
+msgid "Show co_lor"
+msgstr "Visa _färg"
+
+#. check button
+#: ../plug-ins/common/sample-colorize.c:1433
+msgid "Show selec_tion"
+msgstr "Visa ur_val"
+
+#. check button
 #: ../plug-ins/common/sample-colorize.c:1444
-msgid "Show color"
-msgstr "Visa färg"
+msgid "Show c_olor"
+msgstr "Visa fä_rg"
 
 #: ../plug-ins/common/sample-colorize.c:1558
 msgid "Input levels:"
-msgstr "In-nivå:"
+msgstr "Innivåer:"
 
 #: ../plug-ins/common/sample-colorize.c:1609
 msgid "Output levels:"
@@ -5505,23 +5530,23 @@ msgstr "Utnivåer:"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1649
-msgid "Hold intensity"
-msgstr "Lås intensitet"
+msgid "Hold _intensity"
+msgstr "Lås _intensitet"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1660
-msgid "Original intensity"
-msgstr "Ursprunglig intensitet"
+msgid "Original i_ntensity"
+msgstr "Ursprunglig i_ntensitet"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1678
-msgid "Use subcolors"
-msgstr "Använd delfärger"
+msgid "Us_e subcolors"
+msgstr "Använd _delfärger"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1689
-msgid "Smooth samples"
-msgstr "Utjämna sampel"
+msgid "S_mooth samples"
+msgstr "Utjä_mna sampel"
 
 #: ../plug-ins/common/sample-colorize.c:2598
 msgid "Sample analyze"
@@ -5815,6 +5840,7 @@ msgstr "D_uplicera"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3007
 #: ../plug-ins/gradient-flare/gradient-flare.c:3288
 #: ../plug-ins/ifs-compose/ifs-compose.c:1031
+#: ../plug-ins/imagemap/imap_menu.c:172
 msgid "_Delete"
 msgstr "_Ta bort"
 
@@ -6263,8 +6289,8 @@ msgstr "Slå runt"
 msgid "Smear"
 msgstr "Smeta ut"
 
-#: ../plug-ins/common/warp.c:492 ../plug-ins/file-fits/fits.c:1174
-#: ../plug-ins/flame/flame.c:1182 ../plug-ins/gfig/gfig-dialog.c:1497
+#: ../plug-ins/common/warp.c:492 ../plug-ins/flame/flame.c:1182
+#: ../plug-ins/gfig/gfig-dialog.c:1497
 msgid "Black"
 msgstr "Svart"
 
@@ -6630,21 +6656,13 @@ msgstr "Avkoda alfaexponent"
 msgid "Load DDS"
 msgstr "Läs in DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1276
-msgid "Cancel"
-msgstr "Avbryt"
-
-#: ../plug-ins/file-dds/ddsread.c:1277
-msgid "OK"
-msgstr "OK"
-
 #: ../plug-ins/file-dds/ddsread.c:1293
-msgid "Load mipmaps"
-msgstr "Läs in mipmap-bilder"
+msgid "_Load mipmaps"
+msgstr "_Läs in mipmap-bilder"
 
 #: ../plug-ins/file-dds/ddsread.c:1300
-msgid "Automatically decode YCoCg/AExp images when detected"
-msgstr "Avkoda automatiskt YCoCg/AExp-bilder då de påträffas"
+msgid "_Automatically decode YCoCg/AExp images when detected"
+msgstr "_Avkoda automatiskt YCoCg/AExp-bilder då de påträffas"
 
 #: ../plug-ins/file-dds/ddswrite.c:1954
 msgid "Export as DDS"
@@ -6660,8 +6678,8 @@ msgid "_Compression:"
 msgstr "_Komprimering:"
 
 #: ../plug-ins/file-dds/ddswrite.c:1994
-msgid "Use perceptual error metric"
-msgstr "Använd perceptuell felmetrik"
+msgid "Use _perceptual error metric"
+msgstr "Använd _perceptuell felmetrik"
 
 # src/menus.c:280
 #: ../plug-ins/file-dds/ddswrite.c:2023
@@ -6689,20 +6707,20 @@ msgid "_Wrap mode:"
 msgstr "Ö_vergångsläge:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2140
-msgid "Apply gamma correction"
-msgstr "Tillämpa gammakorrigering"
+msgid "Appl_y gamma correction"
+msgstr "_Tillämpa gammakorrigering"
 
 #: ../plug-ins/file-dds/ddswrite.c:2154
-msgid "Use sRGB colorspace"
-msgstr "Använd sRGB-färgrymd"
+msgid "Use s_RGB colorspace"
+msgstr "Använd s_RGB-färgrymd"
 
 #: ../plug-ins/file-dds/ddswrite.c:2173 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2183
-msgid "Preserve alpha test coverage"
-msgstr "Behåll alfatesttäckning"
+msgid "Preserve alpha _test coverage"
+msgstr "Behåll alfa_testtäckning"
 
 #: ../plug-ins/file-dds/ddswrite.c:2202
 msgid "_Alpha test threshold:"
@@ -6761,18 +6779,17 @@ msgstr "Läs in FITS-fil"
 msgid "Replacement for undefined pixels"
 msgstr "Ersättning för odefinierade bildpunkter"
 
-#: ../plug-ins/file-fits/fits.c:1175 ../plug-ins/gfig/gfig-dialog.c:1323
-#: ../plug-ins/gfig/gfig-dialog.c:1498
-msgid "White"
-msgstr "Vitt"
-
 #: ../plug-ins/file-fits/fits.c:1182
 msgid "Pixel value scaling"
 msgstr "Skala bildpunktsvärden"
 
+#: ../plug-ins/file-fits/fits.c:1186
+msgid "_Automatic"
+msgstr "_Automatisk"
+
 #: ../plug-ins/file-fits/fits.c:1187
-msgid "By DATAMIN/DATAMAX"
-msgstr "Med DATAMIN/DATAMAX"
+msgid "By _DATAMIN/DATAMAX"
+msgstr "Med _DATAMIN/DATAMAX"
 
 #: ../plug-ins/file-fits/fits.c:1194
 msgid "Image Composing"
@@ -6780,8 +6797,8 @@ msgstr "Komponerar bild"
 
 #: ../plug-ins/file-fits/fits.c:1198
 msgctxt "composing"
-msgid "None"
-msgstr "Ingen"
+msgid "_None"
+msgstr "_Ingen"
 
 #: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
 msgid "AutoDesk FLIC animation"
@@ -6802,13 +6819,13 @@ msgstr "GFLI 1.3 - Läs in bildrutor"
 
 #: ../plug-ins/file-fli/fli-gimp.c:903 ../plug-ins/file-fli/fli-gimp.c:961
 msgctxt "frame-range"
-msgid "From:"
-msgstr "Från:"
+msgid "_From:"
+msgstr "_Från:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:913 ../plug-ins/file-fli/fli-gimp.c:971
 msgctxt "frame-range"
-msgid "To:"
-msgstr "Till:"
+msgid "_To:"
+msgstr "_Till:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:943
 msgid "GFLI 1.3"
@@ -6929,23 +6946,24 @@ msgstr "Aktivera förhandsvisning för att läsa av filstorleken."
 msgid "Sho_w preview in image window"
 msgstr "Visa _förhandsgranskning i bildfönstret"
 
-#. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:918
-#: ../plug-ins/file-webp/file-webp-dialog.c:366
 msgid "Save _Exif data"
 msgstr "Spara _Exif-data"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
 #: ../plug-ins/file-webp/file-webp-dialog.c:376
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Save _XMP data"
 msgstr "Spara _XMP-data"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:946
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "Save _IPTC data"
 msgstr "Spara _IPTC-data"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save _thumbnail"
 msgstr "Spara _miniatyrbild"
 
@@ -7067,72 +7085,72 @@ msgstr "För många kanaler i fil: %d"
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Bildens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:334
+#: ../plug-ins/file-psd/psd-load.c:335
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Färgläget stöds inte: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:360
+#: ../plug-ins/file-psd/psd-load.c:361
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Bitdjupet stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:394 ../plug-ins/file-psd/psd-load.c:404
-#: ../plug-ins/file-psd/psd-load.c:615 ../plug-ins/file-psd/psd-load.c:837
+#: ../plug-ins/file-psd/psd-load.c:395 ../plug-ins/file-psd/psd-load.c:405
+#: ../plug-ins/file-psd/psd-load.c:616 ../plug-ins/file-psd/psd-load.c:838
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Filen är skadad!"
 
-#: ../plug-ins/file-psd/psd-load.c:543
+#: ../plug-ins/file-psd/psd-load.c:544
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "För många kanaler i lager: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:551
+#: ../plug-ins/file-psd/psd-load.c:552
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Bildens höjd stöds inte eller är ogiltig: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:559
+#: ../plug-ins/file-psd/psd-load.c:560
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Bildens bredd stöds inte eller är ogiltig: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:568
+#: ../plug-ins/file-psd/psd-load.c:569
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Lagrets storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:754
+#: ../plug-ins/file-psd/psd-load.c:755
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Lagermaskens höjd är ogiltig eller stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:762
+#: ../plug-ins/file-psd/psd-load.c:763
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Lagermaskens bredd är ogiltig eller stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:771
+#: ../plug-ins/file-psd/psd-load.c:772
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagermaskens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1335 ../plug-ins/file-psd/psd-load.c:1832
+#: ../plug-ins/file-psd/psd-load.c:1337 ../plug-ins/file-psd/psd-load.c:1835
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Komprimeringsläget stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1960
+#: ../plug-ins/file-psd/psd-load.c:1963
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2139
+#: ../plug-ins/file-psd/psd-load.c:2142
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Kanalstorleken är ogiltig eller stöds inte"
 
-#: ../plug-ins/file-psd/psd-load.c:2208
+#: ../plug-ins/file-psd/psd-load.c:2211
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Misslyckades med att dekomprimera data"
@@ -7328,19 +7346,15 @@ msgid "Compression type"
 msgstr "Komprimeringstyp"
 
 #: ../plug-ins/file-sgi/sgi.c:676
-msgid "No compression"
-msgstr "Ingen komprimering"
-
-#: ../plug-ins/file-sgi/sgi.c:678
-msgid "RLE compression"
-msgstr "RLE-komprimering"
+msgid "_No compression"
+msgstr "_Ingen komprimering"
 
 #: ../plug-ins/file-sgi/sgi.c:680
 msgid ""
-"Aggressive RLE\n"
+"_Aggressive RLE\n"
 "(not supported by SGI)"
 msgstr ""
-"Aggressiv RLE\n"
+"_Aggressiv RLE\n"
 "(stöds inte av SGI)"
 
 #: ../plug-ins/file-tiff/file-tiff.c:139 ../plug-ins/file-tiff/file-tiff.c:161
@@ -7386,24 +7400,24 @@ msgstr "Importera från TIFF"
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
 #: ../plug-ins/file-tiff/file-tiff-load.c:1899
-msgid "Keep empty space around imported layers"
-msgstr "Behåll tomt utrymme runt importerade lager"
+msgid "_Keep empty space around imported layers"
+msgstr "_Behåll tomt utrymme runt importerade lager"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1916
 msgid "Process extra channel as:"
 msgstr "Bearbeta extra kanal som:"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1919
-msgid "Non-premultiplied alpha"
-msgstr "Ej förmultiplicerad alfa"
+msgid "_Non-premultiplied alpha"
+msgstr "_Ej förmultiplicerad alfa"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1920
-msgid "Premultiplied alpha"
-msgstr "Förmultiplicerad alfa"
+msgid "Pre_multiplied alpha"
+msgstr "För_multiplicerad alfa"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1921
-msgid "Channel"
-msgstr "Kanal"
+msgid "Channe_l"
+msgstr "Kana_l"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:594
 msgid ""
@@ -7457,7 +7471,7 @@ msgstr "_Packa bitar"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1163
 msgid "_Deflate"
-msgstr "_Packa ihop"
+msgstr "Pa_cka ihop"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1164
 msgid "_JPEG"
@@ -7488,30 +7502,25 @@ msgstr "(alla bildrutor är nyckelbilder)"
 msgid "WebP"
 msgstr "WebP"
 
-#. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
-msgid "Lossless"
-msgstr "Förlustfri"
-
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
-msgid "Image quality:"
-msgstr "Bildkvalitet:"
+msgid "Image _quality:"
+msgstr "Bild_kvalitet:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:148
 msgid "Image quality"
 msgstr "Bildkvalitet"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:159
-msgid "Alpha quality:"
-msgstr "Alfakvalitet:"
+msgid "Alpha q_uality:"
+msgstr "Alfak_valitet:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:167
 msgid "Alpha channel quality"
 msgstr "Kvalitet för alfakanaler"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:192
-msgid "Source type:"
-msgstr "Källtyp:"
+msgid "Source _type:"
+msgstr "Käll_typ:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:195
 msgid "WebP encoder \"preset\""
@@ -7524,8 +7533,8 @@ msgstr "Som a_nimation"
 
 #. loop animation checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:256
-msgid "Loop forever"
-msgstr "Loopa för evigt"
+msgid "Loop _forever"
+msgstr "Loopa _för evigt"
 
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:273
@@ -7534,8 +7543,8 @@ msgstr "Max avstånd mellan nyckelbildrutor:"
 
 #. minimize-size checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:308
-msgid "Minimize output size (slower)"
-msgstr "Minimera utdatastorlek (långsammare)"
+msgid "_Minimize output size (slower)"
+msgstr "_Minimera utdatastorlek (långsammare)"
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:331
@@ -7544,8 +7553,13 @@ msgstr "Tidsmellanrum mellan bildrutor när inte angivet:"
 
 #. Create the force-delay checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:354
-msgid "Use delay entered above for all frames"
-msgstr "Använd ovanstående fördröjning för alla bildrutor"
+msgid "Use _delay entered above for all frames"
+msgstr "Använd ovanstående för_dröjning för alla bildrutor"
+
+#. Save EXIF data
+#: ../plug-ins/file-webp/file-webp-dialog.c:366
+msgid "_Save Exif data"
+msgstr "_Spara Exif-data"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -7883,8 +7897,8 @@ msgid "Fractal Explorer"
 msgstr "Fractal Explorer"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
-msgid "Realtime preview"
-msgstr "Förhandsgranska i realtid"
+msgid "Re_altime preview"
+msgstr "Förh_andsgranska i realtid"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:645
 msgid "If enabled the preview will be redrawn automatically"
@@ -7895,10 +7909,12 @@ msgid "R_edraw preview"
 msgstr "Ri_ta om förhandsgranskning"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
+#: ../plug-ins/imagemap/imap_menu.c:197
 msgid "Zoom _In"
 msgstr "Zooma _in"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
+#: ../plug-ins/imagemap/imap_menu.c:198
 msgid "Zoom _Out"
 msgstr "Zooma _ut"
 
@@ -7909,6 +7925,7 @@ msgstr "Ångra senaste zoomändringen"
 # src/menus.c:306
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
 #: ../plug-ins/ifs-compose/ifs-compose.c:1039
+#: ../plug-ins/imagemap/imap_menu.c:164
 msgid "_Redo"
 msgstr "_Upprepa"
 
@@ -8468,6 +8485,10 @@ msgstr "Transparent"
 #: ../plug-ins/gfig/gfig-dialog.c:1322
 msgid "Foreground"
 msgstr "Förgrund"
+
+#: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/gfig/gfig-dialog.c:1498
+msgid "White"
+msgstr "Vitt"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
@@ -9088,6 +9109,10 @@ msgstr "Kunde inte spara PPM-filen ”%s”: %s"
 msgid "Save Current"
 msgstr "Spara aktuell"
 
+#: ../plug-ins/gimpressionist/presets.c:665
+msgid "Description:"
+msgstr "Beskrivning:"
+
 #: ../plug-ins/gimpressionist/presets.c:893
 msgid "Gimpressionist Defaults"
 msgstr "Gimpressionist standardvärden"
@@ -9304,9 +9329,9 @@ msgstr "Inställningar för animerad GIF"
 msgid "_Interlacing (Adam7)"
 msgstr "_Flätning (Adam7)"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:2
-msgid "Save _background color"
-msgstr "Spara _bakgrundsfärg"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:3
+msgid "Save gamma"
+msgstr "Spara gamma"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save layer o_ffset"
@@ -9316,15 +9341,12 @@ msgstr "Spara lager_position"
 msgid "Save _resolution"
 msgstr "Spara _upplösning"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:6
-msgid "Save creation _time"
-msgstr "Spara skapad _tid"
-
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
 msgstr "Spara _kommentar"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
 msgid "Save color _values from transparent pixels"
 msgstr "Spara färg_värden från transparenta bildpunkter"
 
@@ -9334,27 +9356,22 @@ msgid "S_ave Defaults"
 msgstr "S_para standardvärden"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save Exif data"
 msgstr "Spara Exif-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:13
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Save XMP data"
 msgstr "Spara XMP-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:14
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "Save IPTC data"
 msgstr "Spara IPTC-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:15
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:16
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save color profile"
 msgstr "Spara färgprofil"
 
@@ -9403,20 +9420,24 @@ msgid "RGB Save Type"
 msgstr "RGB skrivtyp"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:2
-msgid "Standard (R,G,B)"
-msgstr "Standard (R,G,B)"
+msgid "_Standard (R,G,B)"
+msgstr "_Standard (R,G,B)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:3
-msgid "Planar (RRR,GGG,BBB)"
-msgstr "Planär (RRR,GGG,BBB)"
+msgid "_Planar (RRR,GGG,BBB)"
+msgstr "_Planär (RRR,GGG,BBB)"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:4
+msgid "_R, G, B (normal)"
+msgstr "_R, G, B (normal)"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
+msgid "_B, G, R, X (BMP style)"
+msgstr "_B, G, R, X (BMP-stil)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
-msgid "Save layers"
-msgstr "Spara lager"
-
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
-msgid "Save color values from transparent pixels"
-msgstr "Spara färgvärden från transparenta bildpunkter"
+msgid "Save _layers"
+msgstr "Spara _lager"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "Colors are not stored premultiplied by the associated alpha"
@@ -9426,6 +9447,10 @@ msgstr "Färger lagras inte förmultiplicerade av associerat alfa"
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "<b>Comment</b>"
 msgstr "<b>Kommentar</b>"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
+msgid "S_ave Exif data"
+msgstr "Sp_ara Exif-data"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -10895,6 +10920,10 @@ msgstr "Spara"
 msgid "Save _As..."
 msgstr "Spara s_om…"
 
+#: ../plug-ins/imagemap/imap_menu.c:158
+msgid "_Quit"
+msgstr "A_vsluta"
+
 # src/menus.c:302
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Undo"
@@ -10904,6 +10933,14 @@ msgstr "Ångra"
 #: ../plug-ins/imagemap/imap_menu.c:164
 msgid "Redo"
 msgstr "Upprepa"
+
+#: ../plug-ins/imagemap/imap_menu.c:166
+msgid "Cu_t"
+msgstr "Klipp u_t"
+
+#: ../plug-ins/imagemap/imap_menu.c:170
+msgid "_Paste"
+msgstr "_Klistra in"
 
 #: ../plug-ins/imagemap/imap_menu.c:176
 msgid "D_eselect All"
@@ -10916,6 +10953,10 @@ msgstr "Redigera områdes_information…"
 #: ../plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Redigera info för valt område"
+
+#: ../plug-ins/imagemap/imap_menu.c:182
+msgid "_Preferences"
+msgstr "_Inställningar"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
 msgid "Preferences"
@@ -10988,6 +11029,10 @@ msgstr "_Hjälp"
 #: ../plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
 msgstr "_Innehåll"
+
+#: ../plug-ins/imagemap/imap_menu.c:215
+msgid "_About"
+msgstr "_Om"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
 msgid "_Zoom"
@@ -11177,10 +11222,6 @@ msgstr "För_fattare:"
 #: ../plug-ins/imagemap/imap_settings.c:104
 msgid "Default _URL:"
 msgstr "Standard-_URL:"
-
-#: ../plug-ins/imagemap/imap_settings.c:106
-msgid "_Description:"
-msgstr "_Beskrivning:"
 
 #: ../plug-ins/imagemap/imap_settings.c:128
 msgid "Map File Format"
@@ -11779,8 +11820,8 @@ msgid "Metadata Editor: %s"
 msgstr "Metadataredigerare: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:548
-msgid "Write Metadata"
-msgstr "Skriv metadata"
+msgid "_Write Metadata"
+msgstr "Skriv _metadata"
 
 #: ../plug-ins/metadata/metadata-editor.c:572
 msgid "Import metadata"
@@ -12565,6 +12606,45 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:506
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "Save background color"
+#~ msgstr "Spara bakgrundsfärg"
+
+#~ msgid "Save creation time"
+#~ msgstr "Spara skapad tid"
+
+#~ msgid "Raw"
+#~ msgstr "Rå"
+
+#~ msgid "RunLength Encoded"
+#~ msgstr "RunLengthkodad"
+
+#~ msgid "Cancel"
+#~ msgstr "Avbryt"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgctxt "composing"
+#~ msgid "None"
+#~ msgstr "Ingen"
+
+#~ msgctxt "frame-range"
+#~ msgid "From:"
+#~ msgstr "Från:"
+
+#~ msgctxt "frame-range"
+#~ msgid "To:"
+#~ msgstr "Till:"
+
+#~ msgid "RLE compression"
+#~ msgstr "RLE-komprimering"
+
+#~ msgid "Lossless"
+#~ msgstr "Förlustfri"
+
+#~ msgid "Save color values from transparent pixels"
+#~ msgstr "Spara färgvärden från transparenta bildpunkter"
 
 #~ msgid "Adding checkerboard"
 #~ msgstr "Lägger till schackrutor"
