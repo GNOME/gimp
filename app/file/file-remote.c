@@ -61,7 +61,7 @@ typedef struct
   GimpProgress   *progress;
   GCancellable   *cancellable;
   gboolean        cancel;
-  GTimeVal        last_time;
+  gint64          last_time;
 } RemoteProgress;
 
 
@@ -333,14 +333,12 @@ file_remote_progress_callback (goffset  current_num_bytes,
                                gpointer user_data)
 {
   RemoteProgress *progress = user_data;
-  GTimeVal        now;
+  gint64          now;
 
   /*  update the progress only up to 10 times a second  */
-  g_get_current_time (&now);
+  now = g_get_monotonic_time ();
 
-  if (progress->last_time.tv_sec &&
-      ((now.tv_sec - progress->last_time.tv_sec) * 1000 +
-       (now.tv_usec - progress->last_time.tv_usec) / 1000) < 100)
+  if ((now - progress->last_time) / 1000 < 100)
     return;
 
   progress->last_time = now;
