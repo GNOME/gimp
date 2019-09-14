@@ -82,26 +82,26 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
 
   if (G_IS_PARAM_SPEC_STRING (pspec))
     {
-      GParamSpecString *sspec = G_PARAM_SPEC_STRING (pspec);
+      GParamSpecString *spec = G_PARAM_SPEC_STRING (pspec);
 
       if (GEGL_IS_PARAM_SPEC_FILE_PATH (pspec))
         {
           copy = gimp_param_spec_config_path (name, nick, blurb,
                                               GIMP_CONFIG_PATH_FILE,
-                                              sspec->default_value,
+                                              spec->default_value,
                                               flags);
         }
       else if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
         {
           copy = gimp_param_spec_config_path (name, nick, blurb,
                                               gimp_param_spec_config_path_type (pspec),
-                                              sspec->default_value,
+                                              spec->default_value,
                                               flags);
         }
       else
         {
           copy = g_param_spec_string (name, nick, blurb,
-                                      sspec->default_value,
+                                      spec->default_value,
                                       flags);
         }
     }
@@ -122,34 +122,36 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                 spec->default_value,
                                 flags);
     }
-  else if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
-    {
-      GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
-      GParamSpecDouble    *spec  = G_PARAM_SPEC_DOUBLE (pspec);
-
-      copy = gegl_param_spec_double (name, nick, blurb,
-                                     spec->minimum,
-                                     spec->maximum,
-                                     spec->default_value,
-                                     gspec->ui_minimum,
-                                     gspec->ui_maximum,
-                                     gspec->ui_gamma,
-                                     flags);
-      gegl_param_spec_double_set_steps (GEGL_PARAM_SPEC_DOUBLE (copy),
-                                        gspec->ui_step_small,
-                                        gspec->ui_step_big);
-      gegl_param_spec_double_set_digits (GEGL_PARAM_SPEC_DOUBLE (copy),
-                                         gspec->ui_digits);
-    }
   else if (G_IS_PARAM_SPEC_DOUBLE (pspec))
     {
       GParamSpecDouble *spec = G_PARAM_SPEC_DOUBLE (pspec);
 
-      copy = g_param_spec_double (name, nick, blurb,
-                                  spec->minimum,
-                                  spec->maximum,
-                                  spec->default_value,
-                                  flags);
+      if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
+        {
+          GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
+
+          copy = gegl_param_spec_double (name, nick, blurb,
+                                         spec->minimum,
+                                         spec->maximum,
+                                         spec->default_value,
+                                         gspec->ui_minimum,
+                                         gspec->ui_maximum,
+                                         gspec->ui_gamma,
+                                         flags);
+          gegl_param_spec_double_set_steps (GEGL_PARAM_SPEC_DOUBLE (copy),
+                                            gspec->ui_step_small,
+                                            gspec->ui_step_big);
+          gegl_param_spec_double_set_digits (GEGL_PARAM_SPEC_DOUBLE (copy),
+                                             gspec->ui_digits);
+        }
+      else
+        {
+          copy = g_param_spec_double (name, nick, blurb,
+                                      spec->minimum,
+                                      spec->maximum,
+                                      spec->default_value,
+                                      flags);
+        }
     }
   else if (G_IS_PARAM_SPEC_FLOAT (pspec))
     {
@@ -161,66 +163,67 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                  spec->default_value,
                                  flags);
     }
-  else if (GEGL_IS_PARAM_SPEC_INT (pspec))
-    {
-      GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
-      GParamSpecInt    *spec  = G_PARAM_SPEC_INT (pspec);
-
-      copy = gegl_param_spec_int (name, nick, blurb,
-                                  spec->minimum,
-                                  spec->maximum,
-                                  spec->default_value,
-                                  gspec->ui_minimum,
-                                  gspec->ui_maximum,
-                                  gspec->ui_gamma,
-                                  flags);
-      gegl_param_spec_int_set_steps (GEGL_PARAM_SPEC_INT (copy),
-                                     gspec->ui_step_small,
-                                     gspec->ui_step_big);
-    }
-  else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
-    {
-      GParamSpecUInt    *spec  = G_PARAM_SPEC_UINT (pspec);
-      GeglParamSpecSeed *gspec = GEGL_PARAM_SPEC_SEED (pspec);
-
-      copy = gegl_param_spec_seed (name, nick, blurb,
-                                   flags);
-
-      G_PARAM_SPEC_UINT (copy)->minimum = spec->minimum;
-      G_PARAM_SPEC_UINT (copy)->maximum = spec->maximum;
-
-      GEGL_PARAM_SPEC_SEED (copy)->ui_minimum = gspec->ui_minimum;
-      GEGL_PARAM_SPEC_SEED (copy)->ui_maximum = gspec->ui_maximum;
-    }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {
       GParamSpecInt *spec = G_PARAM_SPEC_INT (pspec);
 
-      copy = g_param_spec_int (name, nick, blurb,
-                               spec->minimum,
-                               spec->maximum,
-                               spec->default_value,
-                               flags);
+      if (GEGL_IS_PARAM_SPEC_INT (pspec))
+        {
+          GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
+
+          copy = gegl_param_spec_int (name, nick, blurb,
+                                      spec->minimum,
+                                      spec->maximum,
+                                      spec->default_value,
+                                      gspec->ui_minimum,
+                                      gspec->ui_maximum,
+                                      gspec->ui_gamma,
+                                      flags);
+          gegl_param_spec_int_set_steps (GEGL_PARAM_SPEC_INT (copy),
+                                         gspec->ui_step_small,
+                                         gspec->ui_step_big);
+        }
+      else
+        {
+          copy = g_param_spec_int (name, nick, blurb,
+                                   spec->minimum,
+                                   spec->maximum,
+                                   spec->default_value,
+                                   flags);
+        }
     }
   else if (G_IS_PARAM_SPEC_UINT (pspec))
     {
       GParamSpecUInt *spec = G_PARAM_SPEC_UINT (pspec);
 
-      copy = g_param_spec_uint (name, nick, blurb,
-                                spec->minimum,
-                                spec->maximum,
-                                spec->default_value,
-                                flags);
+      if (GEGL_IS_PARAM_SPEC_SEED (pspec))
+        {
+          GeglParamSpecSeed *gspec = GEGL_PARAM_SPEC_SEED (pspec);
+
+          copy = gegl_param_spec_seed (name, nick, blurb,
+                                       flags);
+
+          G_PARAM_SPEC_UINT (copy)->minimum       = spec->minimum;
+          G_PARAM_SPEC_UINT (copy)->maximum       = spec->maximum;
+          G_PARAM_SPEC_UINT (copy)->default_value = spec->default_value;
+
+          GEGL_PARAM_SPEC_SEED (copy)->ui_minimum = gspec->ui_minimum;
+          GEGL_PARAM_SPEC_SEED (copy)->ui_maximum = gspec->ui_maximum;
+        }
+      else
+        {
+          copy = g_param_spec_uint (name, nick, blurb,
+                                    spec->minimum,
+                                    spec->maximum,
+                                    spec->default_value,
+                                    flags);
+        }
     }
   else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
     {
-      GValue  value = G_VALUE_INIT;
       GimpRGB color;
 
-      g_value_init (&value, GIMP_TYPE_RGB);
-      g_param_value_set_default (pspec, &value);
-      gimp_value_get_rgb (&value, &color);
-      g_value_unset (&value);
+      gimp_param_spec_rgb_get_default (pspec, &color);
 
       copy = gimp_param_spec_rgb (name, nick, blurb,
                                   gimp_param_spec_rgb_has_alpha (pspec),
