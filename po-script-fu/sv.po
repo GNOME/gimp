@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-08-12 20:37+0000\n"
-"PO-Revision-Date: 2019-08-16 22:57+0200\n"
+"POT-Creation-Date: 2019-09-13 17:12+0000\n"
+"PO-Revision-Date: 2019-09-14 19:29+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -618,28 +618,28 @@ msgid "Distress the selection"
 msgstr "Matta ut markeringen"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Tröskel (större 1<-->254 mindre)"
+msgid "_Threshold (bigger 1<-->254 smaller)"
+msgstr "_Tröskel (större 1<-->254 mindre)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-msgid "Spread"
-msgstr "Spridning"
+msgid "_Spread"
+msgstr "_Spridning"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-msgid "Granularity (1 is low)"
-msgstr "Granularitet (1 är låg)"
+msgid "_Granularity (1 is low)"
+msgstr "_Granularitet (1 är låg)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-msgid "Smooth"
-msgstr "Jämna ut"
+msgid "S_mooth"
+msgstr "Jä_mna ut"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-msgid "Smooth horizontally"
-msgstr "Utjämna horisontellt"
+msgid "Smooth hor_izontally"
+msgstr "Utjämna hor_isontellt"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-msgid "Smooth vertically"
-msgstr "Utjämna vertikalt"
+msgid "Smooth _vertically"
+msgstr "Utjämna _vertikalt"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
@@ -958,8 +958,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-msgid "Direction"
-msgstr "Beskrivning"
+msgid "_Direction"
+msgstr "_Riktning"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -972,8 +972,8 @@ msgid "Vertical"
 msgstr "Vertikal"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-msgid "Position (in %)"
-msgstr "Position (i %)"
+msgid "_Position (in %)"
+msgstr "_Position (i %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
@@ -985,8 +985,8 @@ msgstr ""
 "Lägg till en hjälplinje med angiven orientering och position (i bildpunkter)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-msgid "Position"
-msgstr "Position"
+msgid "_Position"
+msgstr "_Position"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
@@ -1071,8 +1071,6 @@ msgstr "Namn"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:143
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:198
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:268
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
 msgid "Spacing"
 msgstr "Mellanrum"
 
@@ -1195,15 +1193,20 @@ msgstr "Klistra in urklippets innehåll till en ny pensel"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-msgid "Brush name"
-msgstr "Penselnamn"
+msgid "_Brush name"
+msgstr "P_enselnamn"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-msgid "File name"
-msgstr "Filnamn"
+msgid "_File name"
+msgstr "_Filnamn"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "_Spacing"
+msgstr "Me_llanrum"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
@@ -1215,8 +1218,8 @@ msgstr "Klistra in urklippets innehåll till ett nytt mönster"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-msgid "Pattern name"
-msgstr "Mönsternamn"
+msgid "_Pattern name"
+msgstr "_Mönsternamn"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
@@ -1358,12 +1361,12 @@ msgid "Round the corners of the current selection"
 msgstr "Runda av hörnen på den aktuella markeringen"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-msgid "Radius (%)"
-msgstr "Radie (%)"
+msgid "R_adius (%)"
+msgstr "R_adie (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-msgid "Concave"
-msgstr "Konkav"
+msgid "Co_ncave"
+msgstr "Ko_nkav"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
