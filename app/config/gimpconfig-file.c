@@ -50,7 +50,7 @@ gimp_config_file_copy (const gchar         *source,
   gchar        buffer[8192];
   FILE        *sfile;
   FILE        *dfile;
-  struct stat  stat_buf;
+  GStatBuf  stat_buf;
   gint         nbytes;
   gint         unwritten_len = 0;
   GRegex      *old_options_regexp = NULL;
