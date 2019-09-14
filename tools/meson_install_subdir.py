@@ -67,6 +67,7 @@ def get_files_of_part(part_name):
     return files_of_part
 
 def install_files(files, verbose):
+    warnings = []
     for file in sorted(files.keys()):
         target = files[file]
         if verbose: print(file + '  →  ' + target, end='\n')
@@ -74,7 +75,14 @@ def install_files(files, verbose):
         if os.path.isdir(file):
             copytree(file, target)
         if os.path.isfile(file):
-            shutil.copy(file, target)
+            try:
+                shutil.copy2(file, target)
+            except Exception as e:
+                warnings += [(file, e)]
+    if len(warnings) > 0:
+        sys.stderr.write("\n*** WARNING: *** Some file installation failed:\n")
+        for (file, e) in warnings:
+            sys.stderr.write("- {}: {}\n".format(file, e))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
