@@ -208,6 +208,7 @@ libgimp_headers_introspectable = [
   'gimpthumbnailprocedure.h',
   'gimptypes.h',
   'gimpvectors.h',
+  pdb_wrappers_headers,
 ]
 
 libgimp_headers = [
