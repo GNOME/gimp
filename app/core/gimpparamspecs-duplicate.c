@@ -244,16 +244,6 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   &gimp_color,
                                   flags);
     }
-  else if (G_IS_PARAM_SPEC_OBJECT (pspec) ||
-           G_IS_PARAM_SPEC_POINTER (pspec))
-    {
-      /*  silently ignore object properties  */
-    }
-  else
-    {
-      g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
-                 g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
-    }
 
   if (copy)
     {

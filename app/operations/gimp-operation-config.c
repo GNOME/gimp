@@ -192,6 +192,14 @@ gimp_operation_config_class_init (GObjectClass *klass,
             {
               g_object_class_install_property (klass, i + 1, copy);
             }
+          else if (! G_IS_PARAM_SPEC_OBJECT (pspec) &&
+                   ! G_IS_PARAM_SPEC_POINTER (pspec))
+            {
+              /*  silently ignore object properties  */
+
+              g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
+                         g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
+            }
         }
     }
 
