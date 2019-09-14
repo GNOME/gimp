@@ -193,7 +193,6 @@ libappcore_sources = [
   'gimppalette.c',
   'gimppalettemru.c',
   'gimpparamspecs-desc.c',
-  'gimpparamspecs-duplicate.c',
   'gimpparamspecs.c',
   'gimpparasitelist.c',
   'gimppattern-load.c',

@@ -20,6 +20,7 @@ libgimpconfig_sources_introspectable = files(
   'gimpconfig-error.c',
   'gimpconfig-iface.c',
   'gimpconfig-path.c',
+  'gimpconfig-params.c',
   'gimpconfig-serialize.c',
   'gimpconfig-utils.c',
   'gimpconfigwriter.c',

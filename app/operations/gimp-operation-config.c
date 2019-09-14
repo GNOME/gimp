@@ -32,7 +32,6 @@
 #include "core/gimp.h"
 
 #include "core/gimplist.h"
-#include "core/gimpparamspecs-duplicate.h"
 #include "core/gimpviewable.h"
 
 #include "gegl/gimp-gegl-utils.h"
@@ -186,7 +185,7 @@ gimp_operation_config_class_init (GObjectClass *klass,
           strcmp (pspec->name, "input")     &&
           strcmp (pspec->name, "output"))
         {
-          GParamSpec *copy = gimp_param_spec_duplicate (pspec);
+          GParamSpec *copy = gimp_config_param_spec_duplicate (pspec);
 
           if (copy)
             {

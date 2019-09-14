@@ -38,7 +38,6 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
-#include "core/gimpparamspecs-duplicate.h"
 #include "core/gimppickable.h"
 #include "core/gimpsettings.h"
 

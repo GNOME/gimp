@@ -1,45 +1,65 @@
-/* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpparamspecs-duplicate.c
- * Copyright (C) 2008-2014 Michael Natterer <mitch@gimp.org>
+ * gimpconfig-params.c
+ * Copyright (C) 2008-2019 Michael Natterer <mitch@gimp.org>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
 
 #include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include <gegl.h>
 #include <gegl-paramspecs.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "core-types.h"
-
-#include "gegl/gimp-gegl-utils.h"
-
-#include "gimpparamspecs.h"
-#include "gimpparamspecs-duplicate.h"
+#include "gimpconfig.h"
 
 
-/* FIXME: this code is not yet general as it should be (gegl tool only atm) */
+static gboolean
+gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
+                              const gchar *key,
+                              const gchar *value)
+{
+  const gchar *v = gegl_param_spec_get_property_key (pspec, key);
 
+  if (v && ! strcmp (v, value))
+    return TRUE;
+
+  return FALSE;
+}
+
+
+/**
+ * gimp_config_param_spec_duplicate:
+ * @pspec: the #GParamSpec to duplicate
+ *
+ * Creates an exact copy of @pspec, with all its properties, returns
+ * %NULL if @pspec is of an unknown type that can't be duplicated.
+ *
+ * Return: (transfer full): The new #GParamSpec, or %NULL.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
-gimp_param_spec_duplicate (GParamSpec *pspec)
+gimp_config_param_spec_duplicate (GParamSpec *pspec)
 {
   GParamSpec  *copy = NULL;
   GParamFlags  flags;
@@ -48,6 +68,9 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
 
   flags = pspec->flags;
 
+  /*  this special case exists for the GEGL tool, we don't want this
+   *  property serialized
+   */
   if (! gimp_gegl_param_spec_has_key (pspec, "role", "output-extent"))
     flags |= GIMP_CONFIG_PARAM_SERIALIZE;
 
@@ -166,8 +189,7 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
       copy = gegl_param_spec_seed (pspec->name,
                                    g_param_spec_get_nick (pspec),
                                    g_param_spec_get_blurb (pspec),
-                                   pspec->flags |
-                                   GIMP_CONFIG_PARAM_SERIALIZE);
+                                   flags);
 
       G_PARAM_SPEC_UINT (copy)->minimum = spec->minimum;
       G_PARAM_SPEC_UINT (copy)->maximum = spec->maximum;

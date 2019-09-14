@@ -2,7 +2,8 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * ParamSpecs for config objects
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001       Sven Neumann <sven@gimp.org>
+ *               2001-2019  Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -182,6 +183,11 @@ G_BEGIN_DECLS
                                    flags |\
                                    G_PARAM_READWRITE |\
                                    GIMP_CONFIG_PARAM_SERIALIZE))
+
+
+/*  create a copy of a GParamSpec  */
+
+GParamSpec * gimp_config_param_spec_duplicate (GParamSpec *pspec);
 
 
 G_END_DECLS

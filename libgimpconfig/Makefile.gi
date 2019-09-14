@@ -8,10 +8,10 @@ libgimpconfig_introspectable_headers =	\
 	../libgimpconfig/gimpconfig-error.h		\
 	../libgimpconfig/gimpconfig-params.h		\
 	../libgimpconfig/gimpconfig-path.h		\
-	../libgimpconfig/gimpconfig-serialize.h	\
+	../libgimpconfig/gimpconfig-serialize.h		\
 	../libgimpconfig/gimpconfig-utils.h		\
 	../libgimpconfig/gimpconfigwriter.h		\
-	../libgimpconfig/gimpscanner.h		\
+	../libgimpconfig/gimpscanner.h			\
 	../libgimpconfig/gimpcolorconfig.h
 
 libgimpconfig_introspectable =	\
@@ -19,9 +19,10 @@ libgimpconfig_introspectable =	\
 	../libgimpconfig/gimpconfig-deserialize.c	\
 	../libgimpconfig/gimpconfig-error.c		\
 	../libgimpconfig/gimpconfig-path.c		\
-	../libgimpconfig/gimpconfig-serialize.c	\
+	../libgimpconfig/gimpconfig-params.c		\
+	../libgimpconfig/gimpconfig-serialize.c		\
 	../libgimpconfig/gimpconfig-utils.c		\
 	../libgimpconfig/gimpconfigwriter.c		\
-	../libgimpconfig/gimpscanner.c		\
+	../libgimpconfig/gimpscanner.c			\
 	../libgimpconfig/gimpcolorconfig.c		\
 	$(libgimpconfig_introspectable_headers)
