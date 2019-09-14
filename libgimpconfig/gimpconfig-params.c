@@ -27,6 +27,7 @@
 #include <gegl.h>
 #include <gegl-paramspecs.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -183,6 +184,17 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                          gspec->ui_step_small,
                                          gspec->ui_step_big);
         }
+      else if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
+        {
+          GimpParamSpecUnit *spec  = GIMP_PARAM_SPEC_UNIT (pspec);
+          GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
+
+          copy = gimp_param_spec_unit (name, nick, blurb,
+                                       ispec->minimum == GIMP_UNIT_PIXEL,
+                                       spec->allow_percent,
+                                       ispec->default_value,
+                                       flags);
+        }
       else
         {
           copy = g_param_spec_int (name, nick, blurb,
@@ -255,6 +267,58 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                   TRUE,
                                   &gimp_color,
                                   flags);
+    }
+  else if (G_IS_PARAM_SPEC_PARAM (pspec))
+    {
+      copy = g_param_spec_param (name, nick, blurb,
+                                 G_PARAM_SPEC_VALUE_TYPE (pspec),
+                                 flags);
+    }
+  else if (GIMP_IS_PARAM_SPEC_PARASITE (pspec))
+    {
+      copy = gimp_param_spec_parasite (name, nick, blurb,
+                                       flags);
+    }
+  else if (GIMP_IS_PARAM_SPEC_ARRAY (pspec))
+    {
+      if (GIMP_IS_PARAM_SPEC_UINT8_ARRAY (pspec))
+        {
+          copy = gimp_param_spec_uint8_array (name, nick, blurb,
+                                              flags);
+        }
+      else if (GIMP_IS_PARAM_SPEC_INT16_ARRAY (pspec))
+        {
+          copy = gimp_param_spec_int16_array (name, nick, blurb,
+                                              flags);
+        }
+      else if (GIMP_IS_PARAM_SPEC_INT32_ARRAY (pspec))
+        {
+          copy = gimp_param_spec_int32_array (name, nick, blurb,
+                                              flags);
+        }
+      else if (GIMP_IS_PARAM_SPEC_FLOAT_ARRAY (pspec))
+        {
+          copy = gimp_param_spec_float_array (name, nick, blurb,
+                                              flags);
+        }
+      else if (GIMP_IS_PARAM_SPEC_STRING_ARRAY (pspec))
+        {
+          copy = gimp_param_spec_string_array (name, nick, blurb,
+                                               flags);
+        }
+      else if (GIMP_IS_PARAM_SPEC_RGB_ARRAY (pspec))
+        {
+          copy = gimp_param_spec_rgb_array (name, nick, blurb,
+                                            flags);
+        }
+      else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
+        {
+          GimpParamSpecObjectArray *spec = GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec);
+
+          copy = gimp_param_spec_object_array (name, nick, blurb,
+                                               spec->object_type,
+                                               flags);
+        }
     }
 
   if (copy)
