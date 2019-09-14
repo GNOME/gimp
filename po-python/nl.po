@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-06-25 03:55+0000\n"
-"PO-Revision-Date: 2019-06-26 16:43+0200\n"
+"POT-Creation-Date: 2019-09-09 17:07+0000\n"
+"PO-Revision-Date: 2019-09-10 11:07+0200\n"
 "Last-Translator: Paul Matthijsse <paul.matthijsse@wanadoo.fr>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
@@ -56,7 +56,7 @@ msgstr "Ongeldige invoer voor '%s'"
 
 #: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
-msgstr "Python-Fu Kleurenselectie"
+msgstr "Python-Fu kleurselectie"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
@@ -714,8 +714,8 @@ msgstr ""
 "gecentreerd."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Opnieuw tekenen"
+msgid "Re_draw"
+msgstr "Opnieuw _tekenen"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -727,16 +727,16 @@ msgstr ""
 "zien."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Terug naar standaardwaarden"
+msgid "_Reset"
+msgstr "Te_rug naar standaardwaarden"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Annuleren"
+msgid "_Cancel"
+msgstr "_Annuleren"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "OK"
+msgid "_OK"
+msgstr "_OK"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
