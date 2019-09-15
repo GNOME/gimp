@@ -1011,6 +1011,10 @@ prefs_display_options_frame_add (Gimp         *gimp,
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (prefs_canvas_padding_color_changed),
                     combo);
+
+  prefs_check_button_add (object, "padding-in-show-all",
+                          _("_Keep canvas padding in \"Show All\" mode"),
+                          GTK_BOX (vbox));
 }
 
 static void

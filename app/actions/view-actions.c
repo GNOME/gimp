@@ -628,6 +628,17 @@ static const GimpEnumActionEntry view_padding_color_actions[] =
     GIMP_HELP_VIEW_PADDING_COLOR }
 };
 
+static const GimpToggleActionEntry view_padding_color_toggle_actions[] =
+{
+  { "view-padding-color-in-show-all", NULL,
+    NC_("view-padding-color", "Keep Padding in \"Show _All\" Mode"), NULL,
+    NC_("view-padding-color",
+        "Keep canvas padding when \"View -> Show All\" is enabled"),
+    view_padding_color_in_show_all_cmd_callback,
+    FALSE,
+    GIMP_HELP_VIEW_PADDING_COLOR }
+};
+
 static const GimpEnumActionEntry view_scroll_horizontal_actions[] =
 {
   { "view-scroll-horizontal", NULL,
@@ -762,6 +773,10 @@ view_actions_setup (GimpActionGroup *group)
                                       view_padding_color_actions,
                                       G_N_ELEMENTS (view_padding_color_actions),
                                       view_padding_color_cmd_callback);
+
+  gimp_action_group_add_toggle_actions (group, "view-padding-color",
+                                        view_padding_color_toggle_actions,
+                                        G_N_ELEMENTS (view_padding_color_toggle_actions));
 
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_scroll_horizontal_actions,
@@ -1056,6 +1071,9 @@ view_actions_update (GimpActionGroup *group,
           SET_COLOR ("view-padding-color-theme",  &color);
         }
     }
+
+  SET_SENSITIVE ("view-padding-color-in-show-all", image);
+  SET_ACTIVE    ("view-padding-color-in-show-all", display && options->padding_in_show_all);
 
   SET_SENSITIVE ("view-show-menubar",    image);
   SET_ACTIVE    ("view-show-menubar",    display && options->show_menubar);

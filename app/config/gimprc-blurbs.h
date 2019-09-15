@@ -33,6 +33,10 @@ _("Sets the dynamics search path.")
 _("Sets the canvas padding color used if the padding mode is set to " \
   "custom color.")
 
+#define CANVAS_PADDING_IN_SHOW_ALL_BLURB \
+_("Specifies whether to keep the canvas padding when \"View -> Show All\" " \
+  "is enabled.")
+
 #define CANVAS_PADDING_MODE_BLURB \
 _("Specifies how the area around the image should be drawn.")
 

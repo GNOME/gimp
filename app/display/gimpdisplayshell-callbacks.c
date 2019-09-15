@@ -466,6 +466,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
   cairo_rectangle_list_t *clip_rectangles;
   GeglRectangle           image_rect;
   GeglRectangle           rotated_image_rect;
+  GeglRectangle           canvas_rect;
   cairo_matrix_t          matrix;
   gdouble                 x1, y1;
   gdouble                 x2, y2;
@@ -477,6 +478,12 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
     &image_rect.width,
     &image_rect.height);
 
+  gimp_display_shell_scale_get_image_unrotated_bounds (
+    shell,
+    &canvas_rect.x,
+    &canvas_rect.y,
+    &canvas_rect.width,
+    &canvas_rect.height);
 
   /*  the background has already been cleared by GdkWindow
    */
@@ -496,7 +503,19 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
   if (shell->show_all)
     {
       cairo_save (cr);
+
+      if (gimp_display_shell_get_padding_in_show_all (shell))
+        {
+          cairo_rectangle (cr,
+                           canvas_rect.x,
+                           canvas_rect.y,
+                           canvas_rect.width,
+                           canvas_rect.height);
+          cairo_clip (cr);
+        }
+
       gimp_display_shell_draw_checkerboard (shell, cr);
+
       cairo_restore (cr);
     }
 

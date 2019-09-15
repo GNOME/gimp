@@ -1155,8 +1155,27 @@ view_padding_color_cmd_callback (GimpAction *action,
         gimp_display_shell_set_padding (shell,
                                         default_options->padding_mode,
                                         &default_options->padding_color);
+        gimp_display_shell_set_padding_in_show_all (shell,
+                                                    default_options->padding_in_show_all);
       }
       break;
+    }
+}
+
+void
+view_padding_color_in_show_all_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
+                                             gpointer    data)
+{
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_shell (shell, data);
+
+  active = g_variant_get_boolean (value);
+
+  if (active != gimp_display_shell_get_padding_in_show_all (shell))
+    {
+      gimp_display_shell_set_padding_in_show_all (shell, active);
     }
 }
 

@@ -56,7 +56,8 @@ enum
   PROP_SNAP_TO_CANVAS,
   PROP_SNAP_TO_PATH,
   PROP_PADDING_MODE,
-  PROP_PADDING_COLOR
+  PROP_PADDING_COLOR,
+  PROP_PADDING_IN_SHOW_ALL
 };
 
 
@@ -219,6 +220,13 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                         CANVAS_PADDING_COLOR_BLURB,
                         FALSE, &white,
                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
+                            "padding-in-show-all",
+                            "Keep padding in \"Show All\" mode",
+                            CANVAS_PADDING_IN_SHOW_ALL_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -344,6 +352,13 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                         CANVAS_PADDING_COLOR_BLURB,
                         FALSE, &black,
                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
+                            "padding-in-show-all",
+                            "Keep padding in \"Show All\" mode",
+                            CANVAS_PADDING_IN_SHOW_ALL_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -503,6 +518,9 @@ gimp_display_options_set_property (GObject      *object,
     case PROP_PADDING_COLOR:
       options->padding_color = *(GimpRGB *) g_value_get_boxed (value);
       break;
+    case PROP_PADDING_IN_SHOW_ALL:
+      options->padding_in_show_all = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -567,6 +585,9 @@ gimp_display_options_get_property (GObject    *object,
       break;
     case PROP_PADDING_COLOR:
       g_value_set_boxed (value, &options->padding_color);
+      break;
+    case PROP_PADDING_IN_SHOW_ALL:
+      g_value_set_boolean (value, options->padding_in_show_all);
       break;
 
     default:

@@ -36,6 +36,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-actions.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
@@ -82,30 +83,32 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
                                          has_grip);
     }
 
-  gimp_display_shell_set_show_menubar       (shell,
-                                             options->show_menubar);
-  gimp_display_shell_set_show_statusbar     (shell,
-                                             options->show_statusbar);
+  gimp_display_shell_set_show_menubar        (shell,
+                                              options->show_menubar);
+  gimp_display_shell_set_show_statusbar      (shell,
+                                              options->show_statusbar);
 
-  gimp_display_shell_set_show_rulers        (shell,
-                                             options->show_rulers);
-  gimp_display_shell_set_show_scrollbars    (shell,
-                                             options->show_scrollbars);
-  gimp_display_shell_set_show_selection     (shell,
-                                             options->show_selection);
-  gimp_display_shell_set_show_layer         (shell,
-                                             options->show_layer_boundary);
-  gimp_display_shell_set_show_canvas        (shell,
-                                             options->show_canvas_boundary);
-  gimp_display_shell_set_show_guides        (shell,
-                                             options->show_guides);
-  gimp_display_shell_set_show_grid          (shell,
-                                             options->show_grid);
-  gimp_display_shell_set_show_sample_points (shell,
-                                             options->show_sample_points);
-  gimp_display_shell_set_padding            (shell,
-                                             options->padding_mode,
-                                             &options->padding_color);
+  gimp_display_shell_set_show_rulers         (shell,
+                                              options->show_rulers);
+  gimp_display_shell_set_show_scrollbars     (shell,
+                                              options->show_scrollbars);
+  gimp_display_shell_set_show_selection      (shell,
+                                              options->show_selection);
+  gimp_display_shell_set_show_layer          (shell,
+                                              options->show_layer_boundary);
+  gimp_display_shell_set_show_canvas         (shell,
+                                              options->show_canvas_boundary);
+  gimp_display_shell_set_show_guides         (shell,
+                                              options->show_guides);
+  gimp_display_shell_set_show_grid           (shell,
+                                              options->show_grid);
+  gimp_display_shell_set_show_sample_points  (shell,
+                                              options->show_sample_points);
+  gimp_display_shell_set_padding             (shell,
+                                              options->padding_mode,
+                                              &options->padding_color);
+  gimp_display_shell_set_padding_in_show_all (shell,
+                                              options->padding_in_show_all);
 }
 
 void
@@ -541,6 +544,37 @@ gimp_display_shell_get_padding (GimpDisplayShell       *shell,
 
   if (padding_color)
     *padding_color = options->padding_color;
+}
+
+void
+gimp_display_shell_set_padding_in_show_all (GimpDisplayShell *shell,
+                                            gboolean          keep)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = appearance_get_options (shell);
+
+  if (options->padding_in_show_all != keep)
+    {
+      g_object_set (options, "padding-in-show-all", keep, NULL);
+
+      if (shell->display)
+        gimp_display_shell_expose_full (shell);
+
+      gimp_display_shell_set_action_active (shell,
+                                            "view-padding-color-in-show-all",
+                                            keep);
+    }
+}
+
+gboolean
+gimp_display_shell_get_padding_in_show_all (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return appearance_get_options (shell)->padding_in_show_all;
 }
 
 
