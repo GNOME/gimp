@@ -221,11 +221,11 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
   x2 = ceil  (dx2) + 1;
   y2 = ceil  (dy2) + 1;
 
-  if (! shell->show_all)
+  if (! gimp_display_shell_get_infinite_canvas (shell))
     {
       GeglRectangle bounds;
 
-      gimp_display_shell_scale_get_image_unrotated_bounding_box (
+      gimp_display_shell_scale_get_image_unrotated_bounds (
         shell,
         &bounds.x, &bounds.y, &bounds.width, &bounds.height);
 
@@ -349,7 +349,7 @@ gimp_canvas_grid_get_extents (GimpCanvasItem *item)
   if (! image)
     return NULL;
 
-  if (! shell->show_all)
+  if (! gimp_display_shell_get_infinite_canvas (shell))
     {
       
       gdouble x1, y1;
