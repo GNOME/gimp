@@ -103,7 +103,7 @@ enum
   PROP_TITLE,
   PROP_STATUS,
   PROP_ICON,
-  PROP_SHOW_ALL
+  PROP_INFINITE_CANVAS
 };
 
 enum
@@ -308,11 +308,11 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                         GDK_TYPE_PIXBUF,
                                                         GIMP_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class, PROP_SHOW_ALL,
-                                   g_param_spec_boolean ("show-all",
+  g_object_class_install_property (object_class, PROP_INFINITE_CANVAS,
+                                   g_param_spec_boolean ("infinite-canvas",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         GIMP_PARAM_READABLE));
 
   gtk_rc_parse_string (display_rc_style);
 }
@@ -926,9 +926,6 @@ gimp_display_shell_set_property (GObject      *object,
         g_object_unref (shell->icon);
       shell->icon = g_value_dup_object (value);
       break;
-    case PROP_SHOW_ALL:
-      gimp_display_shell_set_show_all (shell, g_value_get_boolean (value));
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -970,8 +967,9 @@ gimp_display_shell_get_property (GObject    *object,
     case PROP_ICON:
       g_value_set_object (value, shell->icon);
       break;
-    case PROP_SHOW_ALL:
-      g_value_set_boolean (value, shell->show_all);
+    case PROP_INFINITE_CANVAS:
+      g_value_set_boolean (value,
+                           gimp_display_shell_get_infinite_canvas (shell));
       break;
 
     default:
@@ -1850,7 +1848,7 @@ gimp_display_shell_set_show_all (GimpDisplayShell *shell,
             }
         }
 
-      g_object_notify (G_OBJECT (shell), "show-all");
+      g_object_notify (G_OBJECT (shell), "infinite-canvas");
     }
 }
 

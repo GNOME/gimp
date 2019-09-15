@@ -59,57 +59,57 @@
 #define UPDATE_DELAY 300 /* From GtkRange in GTK+ 2.22 */
 
 
-static void        gimp_navigation_editor_docked_iface_init          (GimpDockedInterface  *iface);
+static void        gimp_navigation_editor_docked_iface_init            (GimpDockedInterface  *iface);
 
-static void        gimp_navigation_editor_dispose                    (GObject              *object);
+static void        gimp_navigation_editor_dispose                      (GObject              *object);
 
-static void        gimp_navigation_editor_set_context                (GimpDocked           *docked,
-                                                                      GimpContext          *context);
+static void        gimp_navigation_editor_set_context                  (GimpDocked           *docked,
+                                                                        GimpContext          *context);
 
-static GtkWidget * gimp_navigation_editor_new_private                (GimpMenuFactory      *menu_factory,
-                                                                      GimpDisplayShell     *shell);
+static GtkWidget * gimp_navigation_editor_new_private                  (GimpMenuFactory      *menu_factory,
+                                                                        GimpDisplayShell     *shell);
 
-static void        gimp_navigation_editor_set_shell                  (GimpNavigationEditor *editor,
-                                                                      GimpDisplayShell     *shell);
-static gboolean    gimp_navigation_editor_button_release             (GtkWidget            *widget,
-                                                                      GdkEventButton       *bevent,
-                                                                      GimpDisplayShell     *shell);
-static void        gimp_navigation_editor_marker_changed             (GimpNavigationView   *view,
-                                                                      gdouble               center_x,
-                                                                      gdouble               center_y,
-                                                                      gdouble               width,
-                                                                      gdouble               height,
-                                                                      GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_zoom                       (GimpNavigationView   *view,
-                                                                      GimpZoomType          direction,
-                                                                      GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_scroll                     (GimpNavigationView   *view,
-                                                                      GdkScrollDirection    direction,
-                                                                      GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_set_shell                    (GimpNavigationEditor *editor,
+                                                                        GimpDisplayShell     *shell);
+static gboolean    gimp_navigation_editor_button_release               (GtkWidget            *widget,
+                                                                        GdkEventButton       *bevent,
+                                                                        GimpDisplayShell     *shell);
+static void        gimp_navigation_editor_marker_changed               (GimpNavigationView   *view,
+                                                                        gdouble               center_x,
+                                                                        gdouble               center_y,
+                                                                        gdouble               width,
+                                                                        gdouble               height,
+                                                                        GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_zoom                         (GimpNavigationView   *view,
+                                                                        GimpZoomType          direction,
+                                                                        GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_scroll                       (GimpNavigationView   *view,
+                                                                        GdkScrollDirection    direction,
+                                                                        GimpNavigationEditor *editor);
 
-static void        gimp_navigation_editor_zoom_adj_changed           (GtkAdjustment        *adj,
-                                                                      GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_zoom_adj_changed             (GtkAdjustment        *adj,
+                                                                        GimpNavigationEditor *editor);
 
-static void        gimp_navigation_editor_shell_show_all_notify      (GimpDisplayShell     *shell,
-                                                                      const GParamSpec     *pspec,
-                                                                      GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_scaled               (GimpDisplayShell     *shell,
-                                                                      GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_scrolled             (GimpDisplayShell     *shell,
-                                                                      GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_rotated              (GimpDisplayShell     *shell,
-                                                                      GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_reconnect            (GimpDisplayShell     *shell,
-                                                                      GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_infinite_canvas_notify (GimpDisplayShell     *shell,
+                                                                        const GParamSpec     *pspec,
+                                                                        GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_scaled                 (GimpDisplayShell     *shell,
+                                                                        GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_scrolled               (GimpDisplayShell     *shell,
+                                                                        GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_rotated                (GimpDisplayShell     *shell,
+                                                                        GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_shell_reconnect              (GimpDisplayShell     *shell,
+                                                                        GimpNavigationEditor *editor);
 
-static void        gimp_navigation_editor_viewable_size_changed      (GimpViewable         *viewable,
-                                                                      GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_viewable_size_changed        (GimpViewable         *viewable,
+                                                                        GimpNavigationEditor *editor);
 
-static void        gimp_navigation_editor_options_show_canvas_notify (GimpDisplayOptions   *options,
-                                                                      const GParamSpec     *pspec,
-                                                                      GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_options_show_canvas_notify   (GimpDisplayOptions   *options,
+                                                                        const GParamSpec     *pspec,
+                                                                        GimpNavigationEditor *editor);
 
-static void        gimp_navigation_editor_update_marker              (GimpNavigationEditor *editor);
+static void        gimp_navigation_editor_update_marker                (GimpNavigationEditor *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpNavigationEditor, gimp_navigation_editor,
@@ -497,7 +497,7 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
   if (editor->shell)
     {
       g_signal_handlers_disconnect_by_func (editor->shell,
-                                            gimp_navigation_editor_shell_show_all_notify,
+                                            gimp_navigation_editor_shell_infinite_canvas_notify,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->shell,
                                             gimp_navigation_editor_shell_scaled,
@@ -545,8 +545,8 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
       gimp_view_set_viewable (GIMP_VIEW (editor->view),
                               GIMP_VIEWABLE (editor->image_viewable));
 
-      g_signal_connect (editor->shell, "notify::show-all",
-                        G_CALLBACK (gimp_navigation_editor_shell_show_all_notify),
+      g_signal_connect (editor->shell, "notify::infinite-canvas",
+                        G_CALLBACK (gimp_navigation_editor_shell_infinite_canvas_notify),
                         editor);
       g_signal_connect (editor->shell, "scaled",
                         G_CALLBACK (gimp_navigation_editor_shell_scaled),
@@ -721,9 +721,9 @@ gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
 }
 
 static void
-gimp_navigation_editor_shell_show_all_notify (GimpDisplayShell     *shell,
-                                              const GParamSpec     *pspec,
-                                              GimpNavigationEditor *editor)
+gimp_navigation_editor_shell_infinite_canvas_notify (GimpDisplayShell     *shell,
+                                                     const GParamSpec     *pspec,
+                                                     GimpNavigationEditor *editor)
 {
   gimp_navigation_editor_update_marker (editor);
 
@@ -860,7 +860,7 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
 
       gimp_image_viewable_set_show_all (
         GIMP_IMAGE_VIEWABLE (renderer->viewable),
-        shell->show_all);
+        gimp_display_shell_get_infinite_canvas (shell));
 
       bounding_box = gimp_image_viewable_get_bounding_box (
         GIMP_IMAGE_VIEWABLE (renderer->viewable));
@@ -882,7 +882,8 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
 
       gimp_navigation_view_set_canvas (
         view,
-        shell->show_all && gimp_display_shell_get_show_canvas (shell),
+        gimp_display_shell_get_infinite_canvas (shell) &&
+        gimp_display_shell_get_show_canvas (shell),
         -bounding_box.x,              -bounding_box.y,
         gimp_image_get_width (image), gimp_image_get_height (image));
     }
