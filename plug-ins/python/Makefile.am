@@ -9,6 +9,9 @@ file_openraster_SCRIPTS = file-openraster.py
 foggifydir = $(gimpplugindir)/plug-ins/foggify
 foggify_SCRIPTS = foggify.py
 
+gradients_save_as_cssdir = $(gimpplugindir)/plug-ins/gradients-save-as-css
+gradients_save_as_css_SCRIPTS = gradients-save-as-css.py
+
 palette_offsetdir = $(gimpplugindir)/plug-ins/palette-offset
 palette_offset_SCRIPTS = palette-offset.py
 
@@ -23,7 +26,6 @@ spyro_plus_SCRIPTS = spyro-plus.py
 
 # TODO: to be ported:
 ##	colorxhtml.py
-##	gradients-save-as-css.py
 ##	histogram-export.py
 ##	palette-sort.py
 ##	python-eval.py
@@ -39,6 +41,7 @@ endif
 EXTRA_DIST = \
 	file-openraster.py		\
 	foggify.py			\
+	gradients-save-as-css.py	\
 	palette-offset.py		\
 	palette-to-gradient.py		\
 	py-slice.py			\
