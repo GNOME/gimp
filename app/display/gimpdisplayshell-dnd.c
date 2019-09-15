@@ -179,8 +179,10 @@ gimp_display_shell_dnd_position_item (GimpDisplayShell *shell,
       gint x, y;
       gint width, height;
 
-      gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
-                                               &x, &y, &width, &height);
+      gimp_display_shell_untransform_viewport (
+        shell,
+        ! gimp_display_shell_get_infinite_canvas (shell),
+        &x, &y, &width, &height);
 
       off_x = x + (width  - item_width)  / 2;
       off_y = y + (height - item_height) / 2;
@@ -494,8 +496,10 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   buffer = GIMP_BUFFER (viewable);
 
-  gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
-                                           &x, &y, &width, &height);
+  gimp_display_shell_untransform_viewport (
+    shell,
+    ! gimp_display_shell_get_infinite_canvas (shell),
+    &x, &y, &width, &height);
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 
@@ -567,10 +571,12 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
               gint height = gimp_image_get_height (image);
 
               if (gimp_display_get_image (shell->display))
-                gimp_display_shell_untransform_viewport (shell,
-                                                         ! shell->show_all,
-                                                         &x, &y,
-                                                         &width, &height);
+                {
+                  gimp_display_shell_untransform_viewport (
+                    shell,
+                    ! gimp_display_shell_get_infinite_canvas (shell),
+                    &x, &y, &width, &height);
+                }
 
               gimp_image_add_layers (image, new_layers,
                                      GIMP_IMAGE_ACTIVE_PARENT, -1,

@@ -610,8 +610,10 @@ edit_paste (GimpDisplay   *display,
           /* the actual paste-type conversion happens in gimp_edit_paste() */
         }
 
-      gimp_display_shell_untransform_viewport (shell, ! shell->show_all,
-                                               &x, &y, &width, &height);
+      gimp_display_shell_untransform_viewport (
+        shell,
+        ! gimp_display_shell_get_infinite_canvas (shell),
+        &x, &y, &width, &height);
 
       if (gimp_edit_paste (image, drawable, paste,
                            paste_type, x, y, width, height))
