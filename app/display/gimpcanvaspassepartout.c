@@ -148,7 +148,7 @@ gimp_canvas_passe_partout_draw (GimpCanvasItem *item,
   gint              x, y;
   gint              w, h;
 
-  if (! shell->show_all)
+  if (! gimp_display_shell_get_infinite_canvas (shell))
     {
       x = -shell->offset_x;
       y = -shell->offset_y;
@@ -171,7 +171,7 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem *item)
   GimpDisplayShell      *shell = gimp_canvas_item_get_shell (item);
   cairo_rectangle_int_t  rectangle;
 
-  if (! shell->show_all)
+  if (! gimp_display_shell_get_infinite_canvas (shell))
     {
       cairo_region_t *inner;
       cairo_region_t *outer;
