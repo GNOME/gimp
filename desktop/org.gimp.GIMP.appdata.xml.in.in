@@ -83,6 +83,9 @@
         </_p>
         <ul>
           <_li>
+          New "Show All" option in the "View" menu to reveal pixels outrside the canvas boundary
+          </_li>
+          <_li>
           Foreground Select tool: new "Grayscale" Preview Mode
           </_li>
           <_li>
