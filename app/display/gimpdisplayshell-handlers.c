@@ -884,7 +884,7 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
                                             shell->offset_x + scaled_previous_origin_x,
                                             shell->offset_y + scaled_previous_origin_y);
 
-      if (! shell->show_all)
+      if (! gimp_display_shell_get_infinite_canvas (shell))
         {
           gimp_display_shell_scroll_center_image (shell,
                                                   horizontally, vertically);

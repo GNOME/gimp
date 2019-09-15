@@ -1497,9 +1497,17 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                               gtk_widget_get_window (widget));
   gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
-  gimp_display_shell_scale_get_image_bounding_box (active_shell,
-                                                   NULL,   NULL,
-                                                   &width, &height);
+  if (! gimp_display_shell_get_infinite_canvas (active_shell))
+    {
+      gimp_display_shell_scale_get_image_size (active_shell,
+                                               &width, &height);
+    }
+  else
+    {
+      gimp_display_shell_scale_get_image_bounding_box (active_shell,
+                                                       NULL,   NULL,
+                                                       &width, &height);
+    }
 
   disp_width  = active_shell->disp_width;
   disp_height = active_shell->disp_height;

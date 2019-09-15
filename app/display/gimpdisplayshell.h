@@ -312,6 +312,8 @@ void              gimp_display_shell_set_show_all  (GimpDisplayShell   *shell,
 GimpPickable    * gimp_display_shell_get_pickable  (GimpDisplayShell   *shell);
 GeglRectangle     gimp_display_shell_get_bounding_box
                                                    (GimpDisplayShell   *shell);
+gboolean          gimp_display_shell_get_infinite_canvas
+                                                   (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_update_priority_rect
                                                    (GimpDisplayShell *shell);

@@ -1902,6 +1902,15 @@ gimp_display_shell_get_bounding_box (GimpDisplayShell *shell)
   return bounding_box;
 }
 
+gboolean
+gimp_display_shell_get_infinite_canvas (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->show_all &&
+         ! gimp_display_shell_get_padding_in_show_all (shell);
+}
+
 void
 gimp_display_shell_update_priority_rect (GimpDisplayShell *shell)
 {
