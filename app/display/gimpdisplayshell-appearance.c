@@ -553,6 +553,8 @@ gimp_display_shell_set_padding_in_show_all (GimpDisplayShell *shell,
       gimp_display_shell_set_action_active (shell,
                                             "view-padding-color-in-show-all",
                                             keep);
+
+      g_object_notify (G_OBJECT (shell), "infinite-canvas");
     }
 }
 
