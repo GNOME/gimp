@@ -166,6 +166,9 @@ void   view_snap_to_vectors_cmd_callback            (GimpAction *action,
 void   view_padding_color_cmd_callback              (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
+void   view_padding_color_in_show_all_cmd_callback  (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 
 void   view_shrink_wrap_cmd_callback                (GimpAction *action,
                                                      GVariant   *value,

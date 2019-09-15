@@ -61,6 +61,7 @@ struct _GimpDisplayOptions
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;
   gboolean               padding_mode_set;
+  gboolean               padding_in_show_all;
 };
 
 struct _GimpDisplayOptionsClass

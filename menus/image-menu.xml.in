@@ -351,6 +351,8 @@
         <menuitem action="view-padding-color-dark-check" />
         <menuitem action="view-padding-color-custom" />
         <separator />
+        <menuitem action="view-padding-color-in-show-all" />
+        <separator />
         <menuitem action="view-padding-color-prefs" />
       </menu>
       <menuitem action="view-show-menubar" />
