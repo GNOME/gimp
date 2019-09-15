@@ -480,11 +480,22 @@ gimp_display_shell_scroll_center_content (GimpDisplayShell *shell,
       (! vertically && ! horizontally))
     return;
 
-  gimp_display_shell_scale_get_image_bounding_box (shell,
-                                                   &content_x,
-                                                   &content_y,
-                                                   &content_width,
-                                                   &content_height);
+  if (! gimp_display_shell_get_infinite_canvas (shell))
+    {
+      gimp_display_shell_scale_get_image_bounds (shell,
+                                                 &content_x,
+                                                 &content_y,
+                                                 &content_width,
+                                                 &content_height);
+    }
+  else
+    {
+      gimp_display_shell_scale_get_image_bounding_box (shell,
+                                                       &content_x,
+                                                       &content_y,
+                                                       &content_width,
+                                                       &content_height);
+    }
 
   if (shell->disp_width > content_width)
     {

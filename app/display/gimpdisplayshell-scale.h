@@ -34,6 +34,12 @@ void     gimp_display_shell_scale_get_image_bounds   (GimpDisplayShell *shell,
                                                       gint             *y,
                                                       gint             *w,
                                                       gint             *h);
+void     gimp_display_shell_scale_get_image_unrotated_bounds
+                                                     (GimpDisplayShell *shell,
+                                                      gint             *x,
+                                                      gint             *y,
+                                                      gint             *w,
+                                                      gint             *h);
 void     gimp_display_shell_scale_get_image_bounding_box
                                                      (GimpDisplayShell *shell,
                                                       gint             *x,

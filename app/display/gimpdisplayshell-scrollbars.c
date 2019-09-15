@@ -110,9 +110,18 @@ gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
                                              &bounds_x,     NULL,
                                              &bounds_width, NULL);
 
-  gimp_display_shell_scale_get_image_bounding_box (shell,
-                                                   &bounding_box_x,     NULL,
-                                                   &bounding_box_width, NULL);
+  if (! gimp_display_shell_get_infinite_canvas (shell))
+    {
+      bounding_box_x     = bounds_x;
+      bounding_box_width = bounds_width;
+    }
+  else
+    {
+      gimp_display_shell_scale_get_image_bounding_box (
+        shell,
+        &bounding_box_x,     NULL,
+        &bounding_box_width, NULL);
+    }
 
   x1 = bounding_box_x;
   x2 = bounding_box_x + bounding_box_width;
@@ -162,9 +171,18 @@ gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
                                              NULL, &bounds_y,
                                              NULL, &bounds_height);
 
-  gimp_display_shell_scale_get_image_bounding_box (shell,
-                                                   NULL, &bounding_box_y,
-                                                   NULL, &bounding_box_height);
+  if (! gimp_display_shell_get_infinite_canvas (shell))
+    {
+      bounding_box_y      = bounds_y;
+      bounding_box_height = bounds_height;
+    }
+  else
+    {
+      gimp_display_shell_scale_get_image_bounding_box (
+        shell,
+        NULL, &bounding_box_y,
+        NULL, &bounding_box_height);
+    }
 
   y1 = bounding_box_y;
   y2 = bounding_box_y + bounding_box_height;

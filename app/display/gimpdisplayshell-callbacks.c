@@ -190,7 +190,7 @@ gimp_display_shell_canvas_tick (GtkWidget     *widget,
           center_horizontally = sw <= shell->disp_width;
           center_vertically   = sh <= shell->disp_height;
 
-          if (! shell->show_all)
+          if (! gimp_display_shell_get_infinite_canvas (shell))
             {
               gimp_display_shell_scroll_center_image (shell,
                                                       center_horizontally,

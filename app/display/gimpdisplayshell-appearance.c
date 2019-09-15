@@ -38,6 +38,8 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-scrollbars.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
 
@@ -541,7 +543,12 @@ gimp_display_shell_set_padding_in_show_all (GimpDisplayShell *shell,
       g_object_set (options, "padding-in-show-all", keep, NULL);
 
       if (shell->display)
-        gimp_display_shell_expose_full (shell);
+        {
+          gimp_display_shell_scroll_clamp_and_update (shell);
+          gimp_display_shell_scrollbars_update (shell);
+
+          gimp_display_shell_expose_full (shell);
+        }
 
       gimp_display_shell_set_action_active (shell,
                                             "view-padding-color-in-show-all",

@@ -276,6 +276,36 @@ gimp_display_shell_scale_get_image_bounds (GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_scale_get_image_unrotated_bounds:
+ * @shell:
+ * @x:
+ * @y:
+ * @w:
+ * @h:
+ *
+ * Gets the screen-space boudning box of the image, after it has
+ * been scaled and scrolled, but before it has been rotated.
+ **/
+void
+gimp_display_shell_scale_get_image_unrotated_bounds (GimpDisplayShell *shell,
+                                                     gint             *x,
+                                                     gint             *y,
+                                                     gint             *w,
+                                                     gint             *h)
+{
+  GimpImage *image;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  image = gimp_display_get_image (shell->display);
+
+  if (x) *x = -shell->offset_x;
+  if (y) *y = -shell->offset_y;
+  if (w) *w = floor (gimp_image_get_width  (image) * shell->scale_x);
+  if (h) *h = floor (gimp_image_get_height (image) * shell->scale_y);
+}
+
+/**
  * gimp_display_shell_scale_get_image_bounding_box:
  * @shell:
  * @x:
@@ -406,7 +436,7 @@ gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
   if (! horizontally) horizontally = &horizontally_dummy;
   if (! vertically)   vertically   = &vertically_dummy;
 
-  if (! shell->show_all)
+  if (! gimp_display_shell_get_infinite_canvas (shell))
     {
       gint sx, sy;
       gint sw, sh;
@@ -1130,7 +1160,19 @@ gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
   gdouble       current_scale;
   gdouble       zoom_factor;
 
-  bounding_box = gimp_display_shell_get_bounding_box (shell);
+  if (! gimp_display_shell_get_infinite_canvas (shell))
+    {
+      GimpImage *image = gimp_display_get_image (shell->display);
+
+      bounding_box.x      = 0;
+      bounding_box.y      = 0;
+      bounding_box.width  = gimp_image_get_width  (image);
+      bounding_box.height = gimp_image_get_height (image);
+    }
+  else
+    {
+      bounding_box = gimp_display_shell_get_bounding_box (shell);
+    }
 
   gimp_display_shell_transform_bounds (shell,
                                        bounding_box.x,
@@ -1180,7 +1222,8 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
   if (! horizontally) horizontally = &horizontally_dummy;
 
   /* The image can only start to fit if we zoom out */
-  if (new_scale > current_scale || shell->show_all)
+  if (new_scale > current_scale ||
+      gimp_display_shell_get_infinite_canvas (shell))
     {
       *vertically   = FALSE;
       *horizontally = FALSE;
@@ -1246,7 +1289,7 @@ gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell
   gint     center_x           = shell->disp_width  / 2;
   gint     center_y           = shell->disp_height / 2;
 
-  if (! shell->show_all)
+  if (! gimp_display_shell_get_infinite_canvas (shell))
     {
       local_horizontally = (x > center_x - ALMOST_CENTERED_THRESHOLD &&
                             x < center_x + ALMOST_CENTERED_THRESHOLD);
