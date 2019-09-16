@@ -270,7 +270,7 @@ gimp_module_new (GFile    *file,
  *
  * Returns #GFile of the @module,
  *
- * Returns: The @module's #GFile.
+ * Returns: (transfer none): The @module's #GFile.
  *
  * Since: 3.0
  **/
