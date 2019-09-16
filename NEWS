@@ -23,7 +23,12 @@ Core:
   - In gimp:gradient, fix dithering to correspond to how we actually round float
     values to 8-bit.  In particular, this avoids introducing noise when a
     component is fixed at 0 or 1 along a segment.
-  - New "Show All" view mode allowing to show out of canvas boundaries.
+  - New "Show All" view mode allowing to show pixels outside the canvas boundary.
+  - New "Show Canvas Boundary" option to render a dotted line around the canvas
+    boundary.
+  - New "Keep Padding in "Show All" Mode" option, also available as a default
+    option via Preferences, to preserve the padding color instead of displaying
+    the checkerboard.
   - Several features updated to react as expected when run out-of-canvas:
     color-picking, canvas grid, transform tools, bucket fill, and more.
 
@@ -128,13 +133,15 @@ Debugging:
 
 Translations:
 
-  - British English, Croatian, Dutch, French, Greek, Polish, Spanish, Turkish.
+  - British English, Catalan, Croatian, Dutch, French, Greek, Hungarian,
+    Italian, Polish, Russian, Slovenian, Spanish, Swedish, Turkish.
 
 Bugfixes:
 
    - #3630, #3226, #3610, #1725, #3093, #3599, #3597, #3082, #3553, #3435,
      #3503, #3532, #3164, #3560, #3500, #3493, #3514, #3512, #2685, #3641,
-     #1002, #360,  #2651, #3263, #2221.
+     #1002, #360,  #2651, #3263, #2221, #3893, #2708, #3100, #2873, #3655,
+     #2206, #3341, #3718, #3763, #3112, #3723, #
      
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
