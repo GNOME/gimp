@@ -566,16 +566,16 @@ do_build_2 (const gchar *cflags,
     q++;
 
   if (install_dir)
-  {
-    tmp = dest_dir;
-    dest_dir = g_strconcat (dest_dir, q, G_DIR_SEPARATOR_S, NULL);
-    g_free (tmp);
+    {
+      tmp      = dest_dir;
+      dest_dir = g_strconcat (dest_dir, q, G_DIR_SEPARATOR_S, NULL);
+      g_free (tmp);
 
-    g_mkdir_with_parents (dest_dir,
-                          S_IRUSR | S_IXUSR | S_IWUSR |
-                          S_IRGRP | S_IXGRP |
-                          S_IROTH | S_IXOTH);
-  }
+      g_mkdir_with_parents (dest_dir,
+                            S_IRUSR | S_IXUSR | S_IWUSR |
+                            S_IRGRP | S_IXGRP |
+                            S_IROTH | S_IXOTH);
+    }
 
   tmp = g_strconcat (dest_dir, q, NULL);
   g_free (dest_dir);
@@ -656,21 +656,23 @@ get_user_plugin_dir (void)
 }
 
 static gchar *
-get_plugin_dir (const gchar *base_dir, const gchar *what)
+get_plugin_dir (const gchar *base_dir,
+                const gchar *what)
 {
   gchar *separator, *dot, *plugin_name, *plugin_dir;
   gchar *tmp = g_strdup (what);
 
   separator = strrchr (tmp, G_DIR_SEPARATOR);
 #ifdef G_OS_WIN32
-  {
-    gchar *alt_separator = strrchr (tmp, '/');
-    if (alt_separator != NULL &&
-        (separator == NULL || alt_separator > separator))
     {
-      separator = alt_separator;
+      gchar *alt_separator = strrchr (tmp, '/');
+
+      if (alt_separator != NULL &&
+          (separator == NULL || alt_separator > separator))
+        {
+          separator = alt_separator;
+        }
     }
-  }
 #endif
 
   dot = strrchr (tmp, '.');
@@ -684,9 +686,9 @@ get_plugin_dir (const gchar *base_dir, const gchar *what)
     *dot = '\0';
 
   plugin_dir = g_strconcat (base_dir,
-                           G_DIR_SEPARATOR_S,
-                           plugin_name,
-                           NULL);
+                            G_DIR_SEPARATOR_S,
+                            plugin_name,
+                            NULL);
 
   g_free (tmp);
 
@@ -807,6 +809,7 @@ do_install_bin_2 (const gchar *dir,
   gchar *quoted_dir;
 
   gchar *dest_dir = g_strconcat (dir, G_DIR_SEPARATOR_S, NULL);
+
   g_mkdir_with_parents (dest_dir,
                         S_IRUSR | S_IXUSR | S_IWUSR |
                         S_IRGRP | S_IXGRP |
@@ -852,6 +855,7 @@ do_uninstall (const gchar *dir)
 {
   gchar *cmd;
   gchar *quoted_src;
+
   quoted_src = g_shell_quote (dir);
 
   cmd = g_strconcat (REMOVE_DIR, " ", quoted_src, NULL);
