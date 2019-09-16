@@ -33,42 +33,59 @@ G_BEGIN_DECLS
 
 
 /**
- * SECTION: gimpconfig-params
- * @title: GimpConfig-params
- * @short_description: Macros and defines to install config properties.
+ * GIMP_CONFIG_PARAM_SERIALIZE:
  *
- * Macros and defines to install config properties.
+ * A property that can and should be serialized and deserialized.
  **/
-
-
-/*
- * GIMP_CONFIG_PARAM_SERIALIZE - A property that can and should be
- *                               serialized and deserialized.
- * GIMP_CONFIG_PARAM_AGGREGATE - The object property is to be treated as
- *                               part of the parent object.
- * GIMP_CONFIG_PARAM_RESTART   - Changes to this property take effect only
- *                               after a restart.
- * GIMP_CONFIG_PARAM_CONFIRM   - Changes to this property should be
- *                               confirmed by the user before being applied.
- * GIMP_CONFIG_PARAM_DEFAULTS  - Don't serialize this property if it has the
- *                               default value.
- * GIMP_CONFIG_PARAM_IGNORE    - This property exists for obscure reasons
- *                               or is needed for backward compatibility.
- *                               Ignore the value read and don't serialize it.
- */
-
 #define GIMP_CONFIG_PARAM_SERIALIZE    (1 << (0 + G_PARAM_USER_SHIFT))
+
+/**
+ * GIMP_CONFIG_PARAM_AGGREGATE:
+ *
+ * The object property is to be treated as part of the parent object.
+ **/
 #define GIMP_CONFIG_PARAM_AGGREGATE    (1 << (1 + G_PARAM_USER_SHIFT))
+
+/**
+ * GIMP_CONFIG_PARAM_RESTART:
+ *
+ * Changes to this property take effect only after a restart.
+ **/
 #define GIMP_CONFIG_PARAM_RESTART      (1 << (2 + G_PARAM_USER_SHIFT))
+
+/**
+ * GIMP_CONFIG_PARAM_CONFIRM:
+ *
+ * Changes to this property should be confirmed by the user before
+ * being applied.
+ **/
 #define GIMP_CONFIG_PARAM_CONFIRM      (1 << (3 + G_PARAM_USER_SHIFT))
+
+/**
+ * GIMP_CONFIG_PARAM_DEFAULTS:
+ *
+ * Don't serialize this property if it has the default value.
+ **/
 #define GIMP_CONFIG_PARAM_DEFAULTS     (1 << (4 + G_PARAM_USER_SHIFT))
+
+/**
+ * GIMP_CONFIG_PARAM_IGNORE:
+ *
+ * This property exists for obscure reasons or is needed for backward
+ * compatibility. Ignore the value read and don't serialize it.
+ **/
 #define GIMP_CONFIG_PARAM_IGNORE       (1 << (5 + G_PARAM_USER_SHIFT))
 
-#define GIMP_CONFIG_PARAM_FLAGS (G_PARAM_READWRITE | \
-                                 G_PARAM_CONSTRUCT | \
-                                 G_PARAM_STATIC_STRINGS | \
-                                 GIMP_CONFIG_PARAM_SERIALIZE)
-
+/**
+ * GIMP_CONFIG_PARAM_FLAGS:
+ *
+ * The default flags that should be used for serializable #GimpConfig
+ * properties.
+ **/
+#define GIMP_CONFIG_PARAM_FLAGS        (G_PARAM_READWRITE |             \
+                                        G_PARAM_CONSTRUCT |             \
+                                        G_PARAM_STATIC_STRINGS |        \
+                                        GIMP_CONFIG_PARAM_SERIALIZE)
 
 
 /* some convenience macros to install object properties */

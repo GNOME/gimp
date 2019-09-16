@@ -34,6 +34,15 @@
 #include "gimpconfig.h"
 
 
+/**
+ * SECTION: gimpconfig-params
+ * @title: GimpConfig-params
+ * @short_description: Macros and defines to install config properties.
+ *
+ * Macros and defines to install config properties.
+ **/
+
+
 static gboolean
 gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
                               const gchar *key,
