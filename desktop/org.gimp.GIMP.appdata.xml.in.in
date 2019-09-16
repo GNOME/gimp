@@ -83,6 +83,12 @@
         </_p>
         <ul>
           <_li>
+          View: new "Show All" view mode to show out of canvas boundaries
+          </_li>
+          <_li>
+          Filters: unchecking "Clip to the input extent" allows layer resize
+          </_li>
+          <_li>
           Foreground Select tool: new "Grayscale" Preview Mode
           </_li>
           <_li>
@@ -90,6 +96,9 @@
           </_li>
           <_li>
           Free Select tool: improved copy-paste interaction
+          </_li>
+          <_li>
+          Transform tools: new Image transform type to transform the whole image
           </_li>
           <_li>
           Preferences: new "Allow editing on non-visible layers" setting
