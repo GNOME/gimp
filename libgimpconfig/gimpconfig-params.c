@@ -320,6 +320,17 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                                flags);
         }
     }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec))
+    {
+      GType value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
+
+      if (value_type == G_TYPE_FILE)
+        {
+          copy = g_param_spec_object (name, nick, blurb,
+                                      value_type,
+                                      flags);
+        }
+    }
 
   if (copy)
     {
