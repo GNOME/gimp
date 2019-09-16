@@ -114,12 +114,14 @@ static GimpParamDef save_args[] =
   { GIMP_PDB_FLOAT, "alpha_test_threshold", "Alpha test threshold value for which alpha test converage should be preserved"}
 };
 
+#if 0
 static GimpParamDef decode_args[] =
 {
   { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
   { GIMP_PDB_IMAGE, "image", "Input image"},
   { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"}
 };
+#endif
 
 
 MAIN ()
@@ -164,6 +166,7 @@ query (void)
                               "dds",
                               "");
 
+#if 0
   gimp_install_procedure (DECODE_YCOCG_PROC,
                           "Converts YCoCg encoded pixels to RGB",
                           "Converts YCoCg encoded pixels to RGB",
@@ -202,6 +205,7 @@ query (void)
                           G_N_ELEMENTS (decode_args), 0,
                           decode_args, 0);
   /*gimp_plugin_menu_register (DECODE_ALPHA_EXP_PROC, "<Image>/Filters/Colors");*/
+#endif
 }
 
 static void
@@ -383,6 +387,7 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (imageID);
     }
+#if 0
   else if (! strcmp (name, DECODE_YCOCG_PROC))
     {
       imageID = param[1].data.d_int32;
@@ -419,6 +424,7 @@ run (const gchar      *name,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
+#endif
   else
     {
       status = GIMP_PDB_CALLING_ERROR;
