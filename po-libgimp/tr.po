@@ -1663,7 +1663,7 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr "Siyah nokta dengeleme kullanna (bir nedeniniz yoksa)."
+msgstr "Siyah nokta dengelemesi kullan (kullanmamak için bildiğiniz bir neden yoksa)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
@@ -1741,7 +1741,7 @@ msgstr "Ekran görselleştirme amacı"
 
 #: ../libgimpconfig/gimpcolorconfig.c:257
 msgid "Use black point compensation for the display"
-msgstr "Ekran için siyah nokta telafisini kullan"
+msgstr "Ekran için siyah nokta dengelemesi kullan"
 
 #: ../libgimpconfig/gimpcolorconfig.c:264
 msgid "Optimize display color transformations"
@@ -1753,7 +1753,7 @@ msgstr "Ekran provası görselleştirme amacı"
 
 #: ../libgimpconfig/gimpcolorconfig.c:279
 msgid "Use black point compensation for soft-proofing"
-msgstr "Ekran provası için siyah nokta telafisini kullan"
+msgstr "Ekran provası için siyah nokta dengelemesi kullan"
 
 #: ../libgimpconfig/gimpcolorconfig.c:286
 msgid "Optimize soft-proofing color transformations"
@@ -2102,7 +2102,7 @@ msgstr "Görünür"
 
 #: ../libgimpwidgets/gimpicons.c:105 ../libgimpwidgets/gimpicons.c:109
 msgid "_Stroke"
-msgstr "_Vuruş"
+msgstr "_Darbe"
 
 #: ../libgimpwidgets/gimpicons.c:121
 msgid "L_etter Spacing"
