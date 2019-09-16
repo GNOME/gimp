@@ -73,12 +73,14 @@ static GimpValueArray * dds_save             (GimpProcedure        *procedure,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
+#if 0
 static GimpValueArray * dds_decode           (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
+#endif
 
 
 G_DEFINE_TYPE (Dds, dds, GIMP_TYPE_PLUG_IN)
@@ -133,9 +135,11 @@ dds_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (SAVE_PROC));
+#if 0
   list = g_list_append (list, g_strdup (DECODE_YCOCG_PROC));
   list = g_list_append (list, g_strdup (DECODE_YCOCG_SCALED_PROC));
   list = g_list_append (list, g_strdup (DECODE_ALPHA_EXP_PROC));
+#endif
 
   return list;
 }
@@ -299,6 +303,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                             0.0, 1.0, 0.5,
                             G_PARAM_READWRITE);
     }
+#if 0
   else if (! strcmp (name, DECODE_YCOCG_PROC))
     {
       procedure = gimp_image_procedure_new (plug_in, name,
@@ -363,6 +368,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                       "Shawn Kirst",
                                       "2008");
     }
+#endif
 
   return procedure;
 }
@@ -507,6 +513,7 @@ dds_save (GimpProcedure        *procedure,
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
+#if 0
 static GimpValueArray *
 dds_decode (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
@@ -535,3 +542,4 @@ dds_decode (GimpProcedure        *procedure,
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
+#endif
