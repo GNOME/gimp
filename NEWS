@@ -23,6 +23,9 @@ Core:
   - In gimp:gradient, fix dithering to correspond to how we actually round float
     values to 8-bit.  In particular, this avoids introducing noise when a
     component is fixed at 0 or 1 along a segment.
+  - New "Show All" view mode allowing to show out of canvas boundaries.
+  - Several features updated to react as expected when run out-of-canvas:
+    color-picking, canvas grid, transform tools, bucket fill, and more.
 
 Tools:
 
@@ -33,6 +36,19 @@ Tools:
   - Foreground Select tool: new "Grayscale" Preview Mode. Also, a color selector
     for "Color" preview (original preview mode) now available, to select any
     color and opacity for the preview.
+  - Add a new "Image" transform type to the transform tools, in addition
+    to the existing "Layer", "Selection", and "Path" transform types.
+    The "Image" mode transforms the entire image, rather than a single
+    item. In tools with a preview, the preview shows the transformed
+    image projection.  The clipping mode controls how the canvas is
+    clipped during the transform; in particular, the ADJUST clipping
+    mode resizes the canvas to fit its transformed size.
+  - In GimpFilterTool, add a new "clipping" option, which can be either
+    Adjust or Clip.  This option is controllable for layers, when
+    there's no selection mask.
+    When set to Adjust, which is used by default, the filter's output
+    may extent past the drawable's boundary, and the drawable will be
+    resized to match the output when committed.
 
 Plug-ins:
 
@@ -60,6 +76,11 @@ Plug-ins:
   - gimptool external tool now install plug-ins into subfolders (this is
     not mandatory in GIMP 2.10 yet, unlike future GIMP 3, but is already
     the recommended folder structure for plug-ins).
+  - 3 procedures ("color-decode-ycocg", "color-decode-ycocg-scaled" and
+    "color-decode-alpha-exp") removed from file-dds plug-in because they
+    are hacks which should stay internal to the plug-in and are
+    semantically wrong because colors in drawables are never in such
+    formats.
 
 Performance:
 
@@ -83,6 +104,11 @@ User interface:
     Pattern.
   - Add gegl:newsprint to Filters -> Distorts.
   - Add gegl:mean-curvature-blur to Filters -> Blur.
+  - Many mnemonics added in various dialogs.
+  - Add a gimp-rotate-image-arbitrary action, and a corresponding "Image
+    -> Transform -> Arbitrary Rotation..." menu entry, which activates
+    the rotate tool in image mode (similarly to the corresponding action
+    for layers).
 
 Devel docs:
 
@@ -95,6 +121,10 @@ Installers:
   - Install 64-bit Python on 64-bit Windows (until now, the installer
     used to install 32-bit Python for all architectures).
   - Windows installer now supports per-user install.
+
+Debugging:
+
+  - New mnemonic-clashes tool to help looking for mnemonic clashes.
 
 Translations:
 
