@@ -57,6 +57,9 @@ Plug-ins:
     higher).
   - PDF exporting: text layers in layer groups are now exported as proper text.
   - Cleaned up the file-dds GUI, removed the "Advanced" expander.
+  - gimptool external tool now install plug-ins into subfolders (this is
+    not mandatory in GIMP 2.10 yet, unlike future GIMP 3, but is already
+    the recommended folder structure for plug-ins).
 
 Performance:
 
@@ -101,7 +104,7 @@ Bugfixes:
 
    - #3630, #3226, #3610, #1725, #3093, #3599, #3597, #3082, #3553, #3435,
      #3503, #3532, #3164, #3560, #3500, #3493, #3514, #3512, #2685, #3641,
-     #1002, #360,  #2651, #3263.
+     #1002, #360,  #2651, #3263, #2221.
      
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
