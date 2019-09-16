@@ -86,166 +86,6 @@ gimp_operation_config_get_container_table (Gimp *gimp)
   return config_containers;
 }
 
-static GValue *
-gimp_operation_config_value_new (GParamSpec *pspec)
-{
-  GValue *value = g_slice_new0 (GValue);
-
-  g_value_init (value, pspec->value_type);
-  g_param_value_set_default (pspec, value);
-
-  return value;
-}
-
-static void
-gimp_operation_config_value_free (GValue *value)
-{
-  g_value_unset (value);
-  g_slice_free (GValue, value);
-}
-
-static GHashTable *
-gimp_operation_config_get_properties (GObject *object)
-{
-  GHashTable *properties = g_object_get_data (object, "properties");
-
-  if (! properties)
-    {
-      properties = g_hash_table_new_full (g_str_hash,
-                                          g_str_equal,
-                                          (GDestroyNotify) g_free,
-                                          (GDestroyNotify) gimp_operation_config_value_free);
-
-      g_object_set_data_full (object, "properties", properties,
-                              (GDestroyNotify) g_hash_table_unref);
-    }
-
-  return properties;
-}
-
-static GValue *
-gimp_operation_config_value_get (GObject    *object,
-                                 GParamSpec *pspec)
-{
-  GHashTable *properties = gimp_operation_config_get_properties (object);
-  GValue     *value;
-
-  value = g_hash_table_lookup (properties, pspec->name);
-
-  if (! value)
-    {
-      value = gimp_operation_config_value_new (pspec);
-      g_hash_table_insert (properties, g_strdup (pspec->name), value);
-    }
-
-  return value;
-}
-
-static void
-gimp_operation_config_set_property (GObject      *object,
-                                    guint         property_id,
-                                    const GValue *value,
-                                    GParamSpec   *pspec)
-{
-  GValue *val = gimp_operation_config_value_get (object, pspec);
-
-  g_value_copy (value, val);
-}
-
-static void
-gimp_operation_config_get_property (GObject    *object,
-                                    guint       property_id,
-                                    GValue     *value,
-                                    GParamSpec *pspec)
-{
-  GValue *val = gimp_operation_config_value_get (object, pspec);
-
-  g_value_copy (val, value);
-}
-
-static void
-gimp_operation_config_class_init (GObjectClass *klass,
-                                  const gchar  *operation)
-{
-  GParamSpec **pspecs;
-  guint        n_pspecs;
-  gint         i;
-
-  klass->set_property = gimp_operation_config_set_property;
-  klass->get_property = gimp_operation_config_get_property;
-
-  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
-
-  for (i = 0; i < n_pspecs; i++)
-    {
-      GParamSpec *pspec = pspecs[i];
-
-      if ((pspec->flags & G_PARAM_READABLE) &&
-          (pspec->flags & G_PARAM_WRITABLE) &&
-          strcmp (pspec->name, "input")     &&
-          strcmp (pspec->name, "output"))
-        {
-          GParamSpec *copy = gimp_config_param_spec_duplicate (pspec);
-
-          if (copy)
-            {
-              g_object_class_install_property (klass, i + 1, copy);
-            }
-          else if (! G_IS_PARAM_SPEC_OBJECT (pspec) &&
-                   ! G_IS_PARAM_SPEC_POINTER (pspec))
-            {
-              /*  silently ignore object properties  */
-
-              g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
-                         g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
-            }
-        }
-    }
-
-  g_free (pspecs);
-}
-
-static gboolean
-gimp_operation_config_equal (GimpConfig *a,
-                             GimpConfig *b)
-{
-  GList    *diff;
-  gboolean  equal = TRUE;
-
-  diff = gimp_config_diff (G_OBJECT (a), G_OBJECT (b),
-                           GIMP_CONFIG_PARAM_SERIALIZE);
-
-  if (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b))
-    {
-      GList *list;
-
-      for (list = diff; list; list = g_list_next (list))
-        {
-          GParamSpec *pspec = list->data;
-
-          if (pspec->owner_type == G_TYPE_FROM_INSTANCE (a))
-            {
-              equal = FALSE;
-              break;
-            }
-        }
-    }
-  else if (diff)
-    {
-      equal = FALSE;
-    }
-
-  g_list_free (diff);
-
-  return equal;
-}
-
-static void
-gimp_operation_config_config_iface_init (GimpConfigInterface *iface)
-{
-  iface->equal = gimp_operation_config_equal;
-}
-
 
 /*  public functions  */
 
@@ -265,7 +105,7 @@ gimp_operation_config_register (Gimp        *gimp,
   g_hash_table_insert (config_types,
                        g_strdup (operation),
                        (gpointer) config_type);
- }
+}
 
 GType
 gimp_operation_config_get_type (Gimp        *gimp,
@@ -278,6 +118,8 @@ gimp_operation_config_get_type (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), G_TYPE_NONE);
   g_return_val_if_fail (operation != NULL, G_TYPE_NONE);
+  g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT),
+                        G_TYPE_NONE);
 
   config_types = gimp_operation_config_get_type_table (gimp);
 
@@ -285,59 +127,51 @@ gimp_operation_config_get_type (Gimp        *gimp,
 
   if (! config_type)
     {
-      GTypeQuery query;
+      GParamSpec **pspecs;
+      guint        n_pspecs;
+      gchar       *type_name;
+      gint         i, j;
 
-      g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT),
-                            G_TYPE_NONE);
+      pspecs = gegl_operation_list_properties (operation, &n_pspecs);
 
-      g_type_query (parent_type, &query);
-
-      {
-        GTypeInfo info =
+      for (i = 0, j = 0; i < n_pspecs; i++)
         {
-          query.class_size,
-          (GBaseInitFunc) NULL,
-          (GBaseFinalizeFunc) NULL,
-          (GClassInitFunc) gimp_operation_config_class_init,
-          NULL,           /* class_finalize */
-          operation,
-          query.instance_size,
-          0,              /* n_preallocs */
-          (GInstanceInitFunc) NULL,
-        };
+          GParamSpec *pspec = pspecs[i];
 
-        const GInterfaceInfo config_info =
+          if ((pspec->flags & G_PARAM_READABLE) &&
+              (pspec->flags & G_PARAM_WRITABLE) &&
+              strcmp (pspec->name, "input")     &&
+              strcmp (pspec->name, "output"))
+            {
+              pspecs[j] = pspec;
+              j++;
+            }
+        }
+
+      n_pspecs = j;
+
+      type_name = g_strdup_printf ("GimpGegl-%s-config", operation);
+
+      g_strcanon (type_name,
+                  G_CSET_DIGITS "-" G_CSET_a_2_z G_CSET_A_2_Z, '-');
+
+      config_type = gimp_config_type_register (parent_type,
+                                               type_name,
+                                               pspecs, n_pspecs);
+
+      g_free (pspecs);
+      g_free (type_name);
+
+      if (icon_name && g_type_is_a (config_type, GIMP_TYPE_VIEWABLE))
         {
-          (GInterfaceInitFunc) gimp_operation_config_config_iface_init,
-          NULL, /* interface_finalize */
-          NULL  /* interface_data     */
-        };
+          GimpViewableClass *viewable_class = g_type_class_ref (config_type);
 
-        gchar *type_name = g_strdup_printf ("GimpGegl-%s-config",
-                                            operation);
+          viewable_class->default_icon_name = g_strdup (icon_name);
 
-        g_strcanon (type_name,
-                    G_CSET_DIGITS "-" G_CSET_a_2_z G_CSET_A_2_Z, '-');
+          g_type_class_unref (viewable_class);
+        }
 
-        config_type = g_type_register_static (parent_type, type_name,
-                                              &info, 0);
-
-        g_free (type_name);
-
-        g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
-                                     &config_info);
-
-        if (icon_name && g_type_is_a (config_type, GIMP_TYPE_VIEWABLE))
-          {
-            GimpViewableClass *viewable_class = g_type_class_ref (config_type);
-
-            viewable_class->default_icon_name = g_strdup (icon_name);
-
-            g_type_class_unref (viewable_class);
-          }
-
-        gimp_operation_config_register (gimp, operation, config_type);
-      }
+      gimp_operation_config_register (gimp, operation, config_type);
     }
 
   return config_type;

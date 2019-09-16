@@ -8,6 +8,7 @@ libgimpconfig_introspectable_headers =	\
 	../libgimpconfig/gimpconfig-error.h		\
 	../libgimpconfig/gimpconfig-params.h		\
 	../libgimpconfig/gimpconfig-path.h		\
+	../libgimpconfig/gimpconfig-register.h		\
 	../libgimpconfig/gimpconfig-serialize.h		\
 	../libgimpconfig/gimpconfig-utils.h		\
 	../libgimpconfig/gimpconfigwriter.h		\
@@ -20,6 +21,7 @@ libgimpconfig_introspectable =	\
 	../libgimpconfig/gimpconfig-error.c		\
 	../libgimpconfig/gimpconfig-path.c		\
 	../libgimpconfig/gimpconfig-params.c		\
+	../libgimpconfig/gimpconfig-register.c		\
 	../libgimpconfig/gimpconfig-serialize.c		\
 	../libgimpconfig/gimpconfig-utils.c		\
 	../libgimpconfig/gimpconfigwriter.c		\
