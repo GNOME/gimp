@@ -141,8 +141,23 @@ Bugfixes:
    - #3630, #3226, #3610, #1725, #3093, #3599, #3597, #3082, #3553, #3435,
      #3503, #3532, #3164, #3560, #3500, #3493, #3514, #3512, #2685, #3641,
      #1002, #360,  #2651, #3263, #2221, #3893, #2708, #3100, #2873, #3655,
-     #2206, #3341, #3718, #3763, #3112, #3723, #
-     
+     #2206, #3341, #3718, #3763, #3112, #3723
+
+Code contributors:
+
+   Alexandre Prokoudine, Ell, Federico Mena Quintero, Jehan, Jernej Simončič,
+   Lionel, Massimo Valentini, Michael Natterer, Michael Schumacher,
+   Oleksii Samorukov, Sabri Ünal, Sergio Jiménez Herena, Thomas Manni,
+   lillolollo, sarah, woob, Øyvind Kolås
+
+Translators:
+
+   Alexandre Prokoudine, Anders Jonsson, Balázs Meskó, Balázs Úr, Bruce Cowan,
+   Daniel Mustieles García , Dimitris Spingos, Emin Tufan Çetin,
+   Hannie Dumoleyn, Jordi Mas, Julia Dronova, Julien Hardelin, Marco Ciampa,
+   Martin Srebotnjak, Milo Ivir, Piotr Drąg, Rodrigo Lledó Milanca, Sabri Ünal,
+   Tim Sabsch, Zander Brown.
+
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
 
