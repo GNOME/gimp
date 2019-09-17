@@ -637,7 +637,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               g_value_set_int (&value,
                                sc->vptr->ivalue (sc->vptr->pair_car (a)));
 #if DEBUG_MARSHALL
-              g_printerr ("      int32 arg is '%d'\n", args[i].data.d_int32);
+              g_printerr ("      int arg is '%d'\n", args[i].data.d_int32);
 #endif
             }
         }
@@ -651,7 +651,21 @@ script_fu_marshal_procedure_call (scheme   *sc,
               g_value_set_uint (&value,
                                 sc->vptr->ivalue (sc->vptr->pair_car (a)));
 #if DEBUG_MARSHALL
-              g_printerr ("      int8 arg is '%u'\n", args[i].data.d_int8);
+              g_printerr ("      uint arg is '%u'\n", args[i].data.d_int8);
+#endif
+            }
+        }
+      else if (G_VALUE_HOLDS_UCHAR (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              g_value_set_uchar (&value,
+                                 sc->vptr->ivalue (sc->vptr->pair_car (a)));
+#if DEBUG_MARSHALL
+              g_printerr ("      uchar arg is '%u'\n", args[i].data.d_int8);
 #endif
             }
         }
@@ -762,6 +776,23 @@ script_fu_marshal_procedure_call (scheme   *sc,
 #endif
             }
         }
+      else if (GIMP_VALUE_HOLDS_LAYER_MASK (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpLayerMask *layer_mask =
+                gimp_layer_mask_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, layer_mask);
+#if DEBUG_MARSHALL
+              g_printerr ("      layer_mask arg is '%d'\n",
+                          gimp_item_get_id (GIMP_ITEM (layer_mask)));
+#endif
+            }
+        }
       else if (GIMP_VALUE_HOLDS_CHANNEL (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
@@ -810,6 +841,23 @@ script_fu_marshal_procedure_call (scheme   *sc,
 #if DEBUG_MARSHALL
               g_printerr ("      vectors arg is '%d'\n",
                           gimp_item_get_id (GIMP_ITEM (vectors)));
+#endif
+            }
+        }
+      else if (GIMP_VALUE_HOLDS_ITEM (&value))
+        {
+          if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+            success = FALSE;
+
+          if (success)
+            {
+              GimpItem *item =
+                gimp_item_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+
+              g_value_set_object (&value, item);
+#if DEBUG_MARSHALL
+              g_printerr ("      item arg is '%d'\n",
+                          gimp_item_get_id (item));
 #endif
             }
         }
