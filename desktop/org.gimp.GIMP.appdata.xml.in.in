@@ -86,7 +86,7 @@
           View: new "Show All" view mode to show out of canvas boundaries
           </_li>
           <_li>
-          Filters: unchecking "Clip to the input extent" allows layer resize
+          Filters: new "Clipping" option to allow layer resize when relevant
           </_li>
           <_li>
           Foreground Select tool: new "Grayscale" Preview Mode
