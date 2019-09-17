@@ -30,6 +30,8 @@
 
 #include "widgets-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpcontext.h"
 #include "core/gimppickable.h"
 
@@ -275,7 +277,13 @@ gimp_buffer_source_box_update_node (GimpBufferSourceBox *box)
 
       if (box->priv->enabled)
         {
-          buffer = gimp_pickable_get_buffer (box->priv->pickable);
+          gimp_pickable_flush (box->priv->pickable);
+
+          /* dup the buffer, since the original may be modified while applying
+           * the operation.  see issue #1283.
+           */
+          buffer = gimp_gegl_buffer_dup (
+            gimp_pickable_get_buffer (box->priv->pickable));
         }
 
       desc = gimp_viewable_get_description (GIMP_VIEWABLE (box->priv->pickable),
@@ -291,6 +299,8 @@ gimp_buffer_source_box_update_node (GimpBufferSourceBox *box)
   gegl_node_set (box->priv->source_node,
                  "buffer", buffer,
                  NULL);
+
+  g_clear_object (&buffer);
 }
 
 static void
