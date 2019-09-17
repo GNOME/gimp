@@ -1126,6 +1126,10 @@ load_changed (WebKitWebView   *view,
       update_actions ();
       select_index (webkit_web_view_get_uri (view));
       break;
+
+    case WEBKIT_LOAD_REDIRECTED:
+    case WEBKIT_LOAD_COMMITTED:
+      break;
     }
 }
 
