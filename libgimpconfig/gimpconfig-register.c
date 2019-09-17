@@ -84,7 +84,6 @@ gimp_config_type_register (GType         parent_type,
   g_return_val_if_fail (g_type_is_a (parent_type, G_TYPE_OBJECT), G_TYPE_NONE);
   g_return_val_if_fail (type_name != NULL, G_TYPE_NONE);
   g_return_val_if_fail (pspecs != NULL, G_TYPE_NONE);
-  g_return_val_if_fail (n_pspecs > 0, G_TYPE_NONE);
 
   terminated_pspecs = g_new0 (GParamSpec *, n_pspecs + 1);
 
@@ -115,7 +114,6 @@ gimp_config_type_register (GType         parent_type,
 
     config_type = g_type_register_static (parent_type, type_name,
                                           &info, 0);
-
     g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
                                  &config_info);
   }
