@@ -23,6 +23,7 @@
 #define __GIMP_MODULE_H__
 
 #include <gmodule.h>
+#include <gio/gio.h>
 
 #define __GIMP_MODULE_H_INSIDE__
 
