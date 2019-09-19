@@ -1,5 +1,8 @@
-#pragma once
+#ifndef __GIT_VERSION_H__
+#define __GIT_VERSION_H__
 
 #define GIMP_GIT_VERSION          "@GIMP_GIT_VERSION@"
 #define GIMP_GIT_VERSION_ABBREV   "@GIMP_GIT_VERSION_ABBREV@"
 #define GIMP_GIT_LAST_COMMIT_YEAR "@GIMP_GIT_LAST_COMMIT_YEAR@"
+
+#endif /* __GIT_VERSION_H__ */
