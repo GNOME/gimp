@@ -1498,14 +1498,13 @@ static gboolean
 design_area_draw (GtkWidget *widget,
                   cairo_t   *cr)
 {
-  GtkStyleContext *style = gtk_widget_get_style_context (widget);
-  cairo_t         *design_cr;
-  GtkAllocation    allocation;
-  PangoLayout     *layout;
-  GdkRGBA          black = { 0.0, 0.0, 0.0, 1.0 };
-  GdkRGBA          white = { 1.0, 1.0, 1.0, 1.0 };
-  gint             i;
-  gint             cx, cy;
+  cairo_t       *design_cr;
+  GtkAllocation  allocation;
+  PangoLayout   *layout;
+  GdkRGBA        black = { 0.0, 0.0, 0.0, 1.0 };
+  GdkRGBA        white = { 1.0, 1.0, 1.0, 1.0 };
+  gint           i;
+  gint           cx, cy;
 
   gtk_widget_get_allocation (widget, &allocation);
 
