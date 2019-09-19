@@ -1873,6 +1873,26 @@ gimp_display_shell_get_pickable (GimpDisplayShell *shell)
   return NULL;
 }
 
+GimpPickable *
+gimp_display_shell_get_canvas_pickable (GimpDisplayShell *shell)
+{
+  GimpImage *image;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      if (! gimp_display_shell_get_infinite_canvas (shell))
+        return GIMP_PICKABLE (image);
+      else
+        return GIMP_PICKABLE (gimp_image_get_projection (image));
+    }
+
+  return NULL;
+}
+
 GeglRectangle
 gimp_display_shell_get_bounding_box (GimpDisplayShell *shell)
 {
