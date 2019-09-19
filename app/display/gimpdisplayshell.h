@@ -317,6 +317,8 @@ void              gimp_display_shell_set_show_all  (GimpDisplayShell   *shell,
                                                     gboolean            show_all);
 
 GimpPickable    * gimp_display_shell_get_pickable  (GimpDisplayShell   *shell);
+GimpPickable    * gimp_display_shell_get_canvas_pickable
+                                                   (GimpDisplayShell   *shell);
 GeglRectangle     gimp_display_shell_get_bounding_box
                                                    (GimpDisplayShell   *shell);
 gboolean          gimp_display_shell_get_infinite_canvas
