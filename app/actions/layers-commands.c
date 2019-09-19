@@ -427,12 +427,14 @@ layers_new_from_visible_cmd_callback (GimpAction *action,
                                       gpointer    data)
 {
   GimpImage        *image;
+  GimpDisplayShell *shell;
   GimpLayer        *layer;
   GimpPickable     *pickable;
   GimpColorProfile *profile;
   return_if_no_image (image, data);
+  return_if_no_shell (shell, data);
 
-  pickable = GIMP_PICKABLE (image);
+  pickable = gimp_display_shell_get_canvas_pickable (shell);
 
   gimp_pickable_flush (pickable);
 
