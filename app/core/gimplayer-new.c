@@ -130,7 +130,8 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
                                  GimpLayerMode     mode,
                                  GimpColorProfile *buffer_profile)
 {
-  GimpLayer *layer;
+  GimpLayer           *layer;
+  const GeglRectangle *extent;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
@@ -138,14 +139,18 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
   g_return_val_if_fail (buffer_profile == NULL ||
                         GIMP_IS_COLOR_PROFILE (buffer_profile), NULL);
 
+  extent = gegl_buffer_get_extent (buffer);
+
   /*  do *not* use the buffer's format because this function gets
    *  buffers of any format passed, and converts them
    */
   layer = gimp_layer_new (dest_image,
-                          gegl_buffer_get_width  (buffer),
-                          gegl_buffer_get_height (buffer),
+                          extent->width, extent->height,
                           format,
                           name, opacity, mode);
+
+  if (extent->x != 0 || extent->y != 0)
+    gimp_item_translate (GIMP_ITEM (layer), extent->x, extent->y, FALSE);
 
   gimp_layer_new_convert_buffer (layer, buffer, buffer_profile, NULL);
 
