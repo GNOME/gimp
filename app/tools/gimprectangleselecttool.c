@@ -730,9 +730,7 @@ gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
                                 NULL);
                 }
 
-              gimp_rectangle_select_tool_update_option_defaults (rect_tool,
-                                                                 FALSE);
-              return;
+              gimp_rectangle_select_tool_update (rect_tool);
             }
           else
             {
