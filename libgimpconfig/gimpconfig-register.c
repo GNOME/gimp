@@ -83,7 +83,8 @@ gimp_config_type_register (GType         parent_type,
 
   g_return_val_if_fail (g_type_is_a (parent_type, G_TYPE_OBJECT), G_TYPE_NONE);
   g_return_val_if_fail (type_name != NULL, G_TYPE_NONE);
-  g_return_val_if_fail (pspecs != NULL, G_TYPE_NONE);
+  g_return_val_if_fail ((pspecs == NULL && n_pspecs == 0) ||
+                        (pspecs != NULL && n_pspecs > 0), G_TYPE_NONE);
 
   terminated_pspecs = g_new0 (GParamSpec *, n_pspecs + 1);
 
