@@ -45,13 +45,11 @@
 #define FILTER_ADAPTIVE  0x01
 #define FILTER_RECURSIVE 0x02
 
-#define despeckle_radius (despeckle_vals[0])    /* diameter of filter */
-#define filter_type      (despeckle_vals[1])    /* filter type */
-#define black_level      (despeckle_vals[2])    /* Black level */
-#define white_level      (despeckle_vals[3])    /* White level */
-
 /* List that stores pixels falling in to the same luma bucket */
-#define MAX_LIST_ELEMS SQR(2 * MAX_RADIUS + 1)
+#define MAX_LIST_ELEMS   SQR(2 * MAX_RADIUS + 1)
+
+#define RESPONSE_RESET   1
+
 
 typedef struct
 {
@@ -101,23 +99,32 @@ static GimpValueArray * despeckle_run              (GimpProcedure        *proced
                                                     const GimpValueArray *args,
                                                     gpointer              run_data);
 
-static void             despeckle                  (void);
-static void             despeckle_median           (guchar               *src,
+static void             despeckle                  (GimpDrawable         *drawable,
+                                                    GObject              *config);
+static void             despeckle_median           (GObject              *config,
+                                                    guchar               *src,
                                                     guchar               *dst,
                                                     gint                  width,
                                                     gint                  height,
                                                     gint                  bpp,
-                                                    gint                  radius,
                                                     gboolean              preview);
 
-static gboolean         despeckle_dialog           (void);
+static gboolean         despeckle_dialog           (GimpDrawable         *drawable,
+                                                    GObject              *config);
 
-static void             dialog_adaptive_callback   (GtkWidget            *widget,
-                                                    gpointer              data);
-static void             dialog_recursive_callback  (GtkWidget            *widget,
-                                                    gpointer              data);
+static void             dialog_adaptive_callback   (GtkWidget            *button,
+                                                    GObject              *config);
+static void             dialog_adaptive_notify     (GObject              *config,
+                                                    const GParamSpec     *pspec,
+                                                    GtkWidget            *button);
+static void             dialog_recursive_callback  (GtkWidget            *button,
+                                                    GObject              *config);
+static void             dialog_recursive_notify    (GObject              *config,
+                                                    const GParamSpec     *pspec,
+                                                    GtkWidget            *button);
 
-static void             preview_update             (GtkWidget            *preview);
+static void             preview_update             (GtkWidget            *preview,
+                                                    GObject              *config);
 
 
 G_DEFINE_TYPE (Despeckle, despeckle, GIMP_TYPE_PLUG_IN)
@@ -131,18 +138,6 @@ static gint                hist255;  /* More than max threshold */
 static gint                histrest; /* From min to max        */
 
 static DespeckleHistogram  histogram;
-
-static GtkWidget    *preview;         /* Preview widget   */
-static GimpDrawable *drawable = NULL; /* Current drawable */
-
-
-static gint despeckle_vals[4] =
-{
-  3,                  /* Default value for the diameter */
-  FILTER_ADAPTIVE,    /* Default value for the filter type */
-  7,                  /* Default value for the black level */
-  248                 /* Default value for the white level */
-};
 
 
 static void
@@ -227,61 +222,40 @@ static GimpValueArray *
 despeckle_run (GimpProcedure        *procedure,
                GimpRunMode           run_mode,
                GimpImage            *image,
-               GimpDrawable         *_drawable,
+               GimpDrawable         *drawable,
                const GimpValueArray *args,
                gpointer              run_data)
 {
+  GimpProcedureConfig *config;
+
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  drawable = _drawable;
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE :
-      gimp_get_data (PLUG_IN_PROC, &despeckle_radius);
-
-      if (gimp_drawable_is_rgb  (drawable) ||
-          gimp_drawable_is_gray (drawable))
-        {
-          if (! despeckle_dialog ())
-            {
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_CANCEL,
-                                                       NULL);
-            }
-        }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      despeckle_radius = GIMP_VALUES_GET_INT (args, 0);
-      filter_type      = GIMP_VALUES_GET_INT (args, 1);
-      black_level      = GIMP_VALUES_GET_INT (args, 2);
-      white_level      = GIMP_VALUES_GET_INT (args, 3);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, despeckle_vals);
-      break;
-    }
-
-  if (gimp_drawable_is_rgb  (drawable) ||
-      gimp_drawable_is_gray (drawable))
-    {
-      despeckle ();
-
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
-
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, despeckle_vals, sizeof (despeckle_vals));
-    }
-  else
+  if (! gimp_drawable_is_rgb  (drawable) &&
+      ! gimp_drawable_is_gray (drawable))
     {
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
+
+  config   = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, run_mode, args);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! despeckle_dialog (drawable, G_OBJECT (config)))
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
+    }
+
+  despeckle (drawable, G_OBJECT (config));
+
+  gimp_procedure_config_end_run (config, run_mode);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
@@ -335,8 +309,28 @@ pixel_copy (guchar       *dest,
  * accordingly.
  */
 
+static const Babl *
+get_u8_format (GimpDrawable *drawable)
+{
+  if (gimp_drawable_is_rgb (drawable))
+    {
+      if (gimp_drawable_has_alpha (drawable))
+        return babl_format ("R'G'B'A u8");
+      else
+        return babl_format ("R'G'B' u8");
+    }
+  else
+    {
+      if (gimp_drawable_has_alpha (drawable))
+        return babl_format ("Y'A u8");
+      else
+        return babl_format ("Y' u8");
+    }
+}
+
 static void
-despeckle (void)
+despeckle (GimpDrawable *drawable,
+           GObject      *config)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -351,21 +345,7 @@ despeckle (void)
                                       &x, &y, &width, &height))
     return;
 
-  if (gimp_drawable_is_rgb (drawable))
-    {
-      if (gimp_drawable_has_alpha (drawable))
-        format = babl_format ("R'G'B'A u8");
-      else
-        format = babl_format ("R'G'B' u8");
-    }
-  else
-    {
-      if (gimp_drawable_has_alpha (drawable))
-        format = babl_format ("Y'A u8");
-      else
-        format = babl_format ("Y' u8");
-    }
-
+  format  = get_u8_format (drawable);
   img_bpp = babl_format_get_bytes_per_pixel (format);
 
   src_buffer  = gimp_drawable_get_buffer (drawable);
@@ -378,7 +358,8 @@ despeckle (void)
                    format, src,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  despeckle_median (src, dst, width, height, img_bpp, despeckle_radius, FALSE);
+  despeckle_median (config,
+                    src, dst, width, height, img_bpp, FALSE);
 
   gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, width, height), 0,
                    format, dst,
@@ -395,16 +376,18 @@ despeckle (void)
 }
 
 static gboolean
-despeckle_dialog (void)
+despeckle_dialog (GimpDrawable *drawable,
+                  GObject      *config)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *vbox;
-  GtkWidget     *grid;
-  GtkWidget     *frame;
-  GtkWidget     *button;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
+  GtkWidget *vbox;
+  GtkWidget *grid;
+  GtkWidget *frame;
+  GtkWidget *button;
+  gint       filter_type;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -412,6 +395,7 @@ despeckle_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
+                            _("_Reset"),  RESPONSE_RESET,
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
@@ -434,9 +418,11 @@ despeckle_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
+  g_object_set_data (config, "drawable", drawable);
+
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update),
-                    NULL);
+                    config);
 
   frame = gimp_frame_new (_("Median"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -446,6 +432,8 @@ despeckle_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
+  g_object_get (config, "type", &filter_type, NULL);
+
   button = gtk_check_button_new_with_mnemonic (_("_Adaptive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
@@ -454,7 +442,10 @@ despeckle_dialog (void)
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_adaptive_callback),
-                    NULL);
+                    config);
+  g_signal_connect (config, "notify::type",
+                    G_CALLBACK (dialog_adaptive_notify),
+                    button);
 
   button = gtk_check_button_new_with_mnemonic (_("R_ecursive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -464,7 +455,10 @@ despeckle_dialog (void)
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_recursive_callback),
-                    NULL);
+                    config);
+  g_signal_connect (config, "notify::type",
+                    G_CALLBACK (dialog_recursive_notify),
+                    button);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -476,53 +470,52 @@ despeckle_dialog (void)
    * Box size (diameter) control...
    */
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                              _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &despeckle_radius);
-  g_signal_connect_swapped (adj, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  gimp_prop_scale_entry_new (config, "radius",
+                             GTK_GRID (grid), 0, 0,
+                             _("_Radius:"),
+                             1, 5, 0,
+                             FALSE, 0, 0);
 
   /*
    * Black level control...
    */
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
-                              _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              black_level, -1, 255, 1, 8, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &black_level);
-  g_signal_connect_swapped (adj, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  gimp_prop_scale_entry_new (config, "black",
+                             GTK_GRID (grid), 0, 1,
+                             _("_Black level:"),
+                             1, 8, 0,
+                             FALSE, 0, 0);
 
   /*
    * White level control...
    */
 
-  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
-                              _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              white_level, 0, 256, 1, 8, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &white_level);
-  g_signal_connect_swapped (adj, "value-changed",
+  gimp_prop_scale_entry_new (config, "white",
+                             GTK_GRID (grid), 0, 2,
+                             _("_White level:"),
+                             1, 8, 0,
+                             FALSE, 0, 0);
+
+  g_signal_connect_swapped (config, "notify",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  while (TRUE)
+    {
+      gint response = gimp_dialog_run (GIMP_DIALOG (dialog));
+
+      if (response == RESPONSE_RESET)
+        {
+          gimp_config_reset (GIMP_CONFIG (config));
+        }
+      else
+        {
+          run = (response == GTK_RESPONSE_OK);
+          break;
+        }
+    }
 
   gtk_widget_destroy (dialog);
 
@@ -530,34 +523,20 @@ despeckle_dialog (void)
 }
 
 static void
-preview_update (GtkWidget *widget)
+preview_update (GtkWidget *widget,
+                GObject   *config)
 {
-  GimpPreview *preview = GIMP_PREVIEW (widget);
-  GeglBuffer  *src_buffer;
-  const Babl  *format;
-  guchar      *dst;
-  guchar      *src;
-  gint         img_bpp;
-  gint         x1,y1;
-  gint         width, height;
+  GimpPreview  *preview = GIMP_PREVIEW (widget);
+  GimpDrawable *drawable = g_object_get_data (config, "drawable");
+  GeglBuffer   *src_buffer;
+  const Babl   *format;
+  guchar       *dst;
+  guchar       *src;
+  gint          img_bpp;
+  gint          x1,y1;
+  gint          width, height;
 
-  preview = GIMP_PREVIEW (widget);
-
-  if (gimp_drawable_is_rgb (drawable))
-    {
-      if (gimp_drawable_has_alpha (drawable))
-        format = babl_format ("R'G'B'A u8");
-      else
-        format = babl_format ("R'G'B' u8");
-    }
-  else
-    {
-      if (gimp_drawable_has_alpha (drawable))
-        format = babl_format ("Y'A u8");
-      else
-        format = babl_format ("Y' u8");
-    }
-
+  format  = get_u8_format (drawable);
   img_bpp = babl_format_get_bytes_per_pixel (format);
 
   gimp_preview_get_size (preview, &width, &height);
@@ -572,7 +551,8 @@ preview_update (GtkWidget *widget)
                    format, src,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  despeckle_median (src, dst, width, height, img_bpp, despeckle_radius, TRUE);
+  despeckle_median (config,
+                    src, dst, width, height, img_bpp, TRUE);
 
   gimp_preview_draw_buffer (preview, dst, width * img_bpp);
 
@@ -583,29 +563,94 @@ preview_update (GtkWidget *widget)
 }
 
 static void
-dialog_adaptive_callback (GtkWidget *widget,
-                          gpointer   data)
+dialog_adaptive_callback (GtkWidget *button,
+                          GObject   *config)
 {
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+  gint filter_type;
+
+  g_object_get (config, "type", &filter_type, NULL);
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     filter_type |= FILTER_ADAPTIVE;
   else
     filter_type &= ~FILTER_ADAPTIVE;
 
-  gimp_preview_invalidate (GIMP_PREVIEW (preview));
+  g_signal_handlers_block_by_func (config,
+                                   dialog_adaptive_notify,
+                                   button);
+
+  g_object_set (config, "type", filter_type, NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     dialog_adaptive_notify,
+                                     button);
 }
 
 static void
-dialog_recursive_callback (GtkWidget *widget,
-                           gpointer   data)
+dialog_adaptive_notify (GObject          *config,
+                        const GParamSpec *pspec,
+                        GtkWidget        *button)
 {
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+  gint filter_type;
+
+  g_object_get (config, "type", &filter_type, NULL);
+
+  g_signal_handlers_block_by_func (button,
+                                   dialog_adaptive_callback,
+                                   config);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                (filter_type & FILTER_ADAPTIVE) != 0);
+
+  g_signal_handlers_unblock_by_func (button,
+                                     dialog_adaptive_callback,
+                                     config);
+}
+
+static void
+dialog_recursive_callback (GtkWidget *button,
+                           GObject   *config)
+{
+  gint filter_type;
+
+  g_object_get (config, "type", &filter_type, NULL);
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     filter_type |= FILTER_RECURSIVE;
   else
     filter_type &= ~FILTER_RECURSIVE;
 
-  gimp_preview_invalidate (GIMP_PREVIEW (preview));
+  g_signal_handlers_block_by_func (config,
+                                   dialog_recursive_notify,
+                                   button);
+
+  g_object_set (config, "type", filter_type, NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     dialog_recursive_notify,
+                                     button);
 }
 
+static void
+dialog_recursive_notify (GObject          *config,
+                         const GParamSpec *pspec,
+                         GtkWidget        *button)
+{
+  gint filter_type;
+
+  g_object_get (config, "type", &filter_type, NULL);
+
+  g_signal_handlers_block_by_func (button,
+                                   dialog_recursive_callback,
+                                   config);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                (filter_type & FILTER_RECURSIVE) != 0);
+
+  g_signal_handlers_unblock_by_func (button,
+                                     dialog_recursive_callback,
+                                     config);
+}
 
 static inline void
 list_add_elem (PixelsList   *list,
@@ -688,6 +733,8 @@ histogram_get_median (DespeckleHistogram *hist,
 
 static inline void
 add_val (DespeckleHistogram *hist,
+         gint                black_level,
+         gint                white_level,
          const guchar       *src,
          gint                width,
          gint                bpp,
@@ -698,22 +745,24 @@ add_val (DespeckleHistogram *hist,
   const gint value = pixel_luminance (src + pos, bpp);
 
   if (value > black_level && value < white_level)
-  {
-    histogram_add (hist, value, src + pos);
-    histrest++;
-  }
+    {
+      histogram_add (hist, value, src + pos);
+      histrest++;
+    }
   else
-  {
-    if (value <= black_level)
-      hist0++;
+    {
+      if (value <= black_level)
+        hist0++;
 
-    if (value >= white_level)
-      hist255++;
-  }
+      if (value >= white_level)
+        hist255++;
+    }
 }
 
 static inline void
 del_val (DespeckleHistogram *hist,
+         gint                black_level,
+         gint                white_level,
          const guchar       *src,
          gint                width,
          gint                bpp,
@@ -724,22 +773,24 @@ del_val (DespeckleHistogram *hist,
   const gint value = pixel_luminance (src + pos, bpp);
 
   if (value > black_level && value < white_level)
-  {
-    histogram_remove (hist, value);
-    histrest--;
-  }
+    {
+      histogram_remove (hist, value);
+      histrest--;
+    }
   else
-  {
-    if (value <= black_level)
-      hist0--;
+    {
+      if (value <= black_level)
+        hist0--;
 
-    if (value >= white_level)
-      hist255--;
-  }
+      if (value >= white_level)
+        hist255--;
+    }
 }
 
 static inline void
 add_vals (DespeckleHistogram *hist,
+          gint                black_level,
+          gint                white_level,
           const guchar       *src,
           gint                width,
           gint                bpp,
@@ -758,13 +809,17 @@ add_vals (DespeckleHistogram *hist,
     {
       for (x = xmin; x <= xmax; x++)
         {
-          add_val (hist, src, width, bpp, x, y);
+          add_val (hist,
+                   black_level, white_level,
+                   src, width, bpp, x, y);
         }
     }
 }
 
 static inline void
 del_vals (DespeckleHistogram *hist,
+          gint                black_level,
+          gint                white_level,
           const guchar       *src,
           gint                width,
           gint                bpp,
@@ -783,13 +838,17 @@ del_vals (DespeckleHistogram *hist,
     {
       for (x = xmin; x <= xmax; x++)
         {
-          del_val (hist, src, width, bpp, x, y);
+          del_val (hist,
+                   black_level, white_level,
+                   src, width, bpp, x, y);
         }
     }
 }
 
 static inline void
 update_histogram (DespeckleHistogram *hist,
+                  gint                black_level,
+                  gint                white_level,
                   const guchar       *src,
                   gint                width,
                   gint                bpp,
@@ -803,13 +862,23 @@ update_histogram (DespeckleHistogram *hist,
   /* assuming that box is moving either right or down */
 
   del_vals (hist,
+            black_level, white_level,
             src, width, bpp, hist->xmin, hist->ymin, xmin - 1, hist->ymax);
-  del_vals (hist, src, width, bpp, xmin, hist->ymin, xmax, ymin - 1);
-  del_vals (hist, src, width, bpp, xmin, ymax + 1, xmax, hist->ymax);
+  del_vals (hist,
+            black_level, white_level,
+            src, width, bpp, xmin, hist->ymin, xmax, ymin - 1);
+  del_vals (hist,
+            black_level, white_level,
+            src, width, bpp, xmin, ymax + 1, xmax, hist->ymax);
 
-  add_vals (hist, src, width, bpp, hist->xmax + 1, ymin, xmax, ymax);
-  add_vals (hist, src, width, bpp, xmin, ymin, hist->xmax, hist->ymin - 1);
   add_vals (hist,
+            black_level, white_level,
+            src, width, bpp, hist->xmax + 1, ymin, xmax, ymax);
+  add_vals (hist,
+            black_level, white_level,
+            src, width, bpp, xmin, ymin, hist->xmax, hist->ymin - 1);
+  add_vals (hist,
+            black_level, white_level,
             src, width, bpp, hist->xmin, hist->ymax + 1, hist->xmax, ymax);
 
   hist->xmin = xmin;
@@ -819,14 +888,18 @@ update_histogram (DespeckleHistogram *hist,
 }
 
 static void
-despeckle_median (guchar   *src,
+despeckle_median (GObject  *config,
+                  guchar   *src,
                   guchar   *dst,
                   gint      width,
                   gint      height,
                   gint      bpp,
-                  gint      radius,
                   gboolean  preview)
 {
+  gint   radius;
+  gint   filter_type;
+  gint   black_level;
+  gint   white_level;
   guint  progress;
   guint  max_progress;
   gint   x, y;
@@ -836,6 +909,13 @@ despeckle_median (guchar   *src,
   gint   ymax;
   gint   xmin;
   gint   xmax;
+
+  g_object_get (config,
+                "radius", &radius,
+                "type",   &filter_type,
+                "black",  &black_level,
+                "white",  &white_level,
+                NULL);
 
   memset (&histogram, 0, sizeof(histogram));
   progress     = 0;
@@ -861,6 +941,7 @@ despeckle_median (guchar   *src,
       histogram.xmax = xmax;
       histogram.ymax = ymax;
       add_vals (&histogram,
+                black_level, white_level,
                 src, width, bpp,
                 histogram.xmin, histogram.ymin,
                 histogram.xmax, histogram.ymax);
@@ -875,6 +956,7 @@ despeckle_median (guchar   *src,
           xmax = MIN (width - 1, x + adapt_radius);
 
           update_histogram (&histogram,
+                            black_level, white_level,
                             src, width, bpp, xmin, ymin, xmax, ymax);
 
           pos = (x + (y * width)) * bpp;
@@ -882,9 +964,15 @@ despeckle_median (guchar   *src,
 
           if (filter_type & FILTER_RECURSIVE)
             {
-              del_val (&histogram, src, width, bpp, x, y);
+              del_val (&histogram,
+                       black_level, white_level,
+                       src, width, bpp, x, y);
+
               pixel_copy (src + pos, pixel, bpp);
-              add_val (&histogram, src, width, bpp, x, y);
+
+              add_val (&histogram,
+                       black_level, white_level,
+                       src, width, bpp, x, y);
             }
 
           pixel_copy (dst + pos, pixel, bpp);
