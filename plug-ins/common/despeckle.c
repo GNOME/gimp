@@ -36,7 +36,6 @@
 
 #define PLUG_IN_PROC     "plug-in-despeckle"
 #define PLUG_IN_BINARY   "despeckle"
-#define PLUG_IN_ROLE     "gimp-despeckle"
 #define PLUG_IN_VERSION  "May 2010"
 #define SCALE_WIDTH      100
 #define ENTRY_WIDTH        3
@@ -47,8 +46,6 @@
 
 /* List that stores pixels falling in to the same luma bucket */
 #define MAX_LIST_ELEMS   SQR(2 * MAX_RADIUS + 1)
-
-#define RESPONSE_RESET   1
 
 
 typedef struct
@@ -109,8 +106,9 @@ static void             despeckle_median           (GObject              *config
                                                     gint                  bpp,
                                                     gboolean              preview);
 
-static gboolean         despeckle_dialog           (GimpDrawable         *drawable,
-                                                    GObject              *config);
+static gboolean         despeckle_dialog           (GimpProcedure        *procedure,
+                                                    GObject              *config,
+                                                    GimpDrawable         *drawable);
 
 static void             dialog_adaptive_callback   (GtkWidget            *button,
                                                     GObject              *config);
@@ -244,7 +242,7 @@ despeckle_run (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! despeckle_dialog (drawable, G_OBJECT (config)))
+      if (! despeckle_dialog (procedure, G_OBJECT (config), drawable))
         {
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_CANCEL,
@@ -376,8 +374,9 @@ despeckle (GimpDrawable *drawable,
 }
 
 static gboolean
-despeckle_dialog (GimpDrawable *drawable,
-                  GObject      *config)
+despeckle_dialog (GimpProcedure *procedure,
+                  GObject       *config,
+                  GimpDrawable  *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -391,22 +390,9 @@ despeckle_dialog (GimpDrawable *drawable,
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Despeckle"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Reset"),  RESPONSE_RESET,
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Despeckle"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -502,20 +488,7 @@ despeckle_dialog (GimpDrawable *drawable,
 
   gtk_widget_show (dialog);
 
-  while (TRUE)
-    {
-      gint response = gimp_dialog_run (GIMP_DIALOG (dialog));
-
-      if (response == RESPONSE_RESET)
-        {
-          gimp_config_reset (GIMP_CONFIG (config));
-        }
-      else
-        {
-          run = (response == GTK_RESPONSE_OK);
-          break;
-        }
-    }
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
