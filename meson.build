@@ -773,10 +773,12 @@ endif
 ################################################################################
 # ISO codes
 
-isocodes = dependency('iso-codes')
-isocodes_prefix = isocodes.get_pkgconfig_variable('prefix')
-isocodes_location = isocodes_prefix / get_option('datadir') / 'xml' / 'iso-codes'
-isocodes_localedir= isocodes_prefix / get_option('datadir') / 'locale'
+isocodes = dependency('iso-codes', required: false)
+if isocodes.found()
+  isocodes_prefix = isocodes.get_pkgconfig_variable('prefix')
+  isocodes_location = isocodes_prefix / get_option('datadir') / 'xml' / 'iso-codes'
+  isocodes_localedir= isocodes_prefix / get_option('datadir') / 'locale'
+endif
 conf.set('HAVE_ISO_CODES', isocodes.found())
 
 
@@ -1284,8 +1286,10 @@ conf.set_quoted('SBINDIR',         prefix / get_option('sbindir'))
 conf.set_quoted('SYSDATADIR',      prefix / get_option('datadir'))
 
 # Third-party/Misc
-conf.set_quoted('ISO_CODES_LOCATION',    isocodes_location)
-conf.set_quoted('ISO_CODES_LOCALEDIR',   isocodes_localedir)
+if isocodes.found()
+  conf.set_quoted('ISO_CODES_LOCATION',    isocodes_location)
+  conf.set_quoted('ISO_CODES_LOCALEDIR',   isocodes_localedir)
+endif
 
 
 if platform_osx
