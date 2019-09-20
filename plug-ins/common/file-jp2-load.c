@@ -266,7 +266,7 @@ jp2_load (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
       interactive = TRUE;
       break;
 
@@ -967,7 +967,7 @@ open_dialog (GFile            *file,
     /* Unexpected, but let's be a bit flexible and ask. */
     title = "JPEG 2000 image with no color space";
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
                             NULL, 0,

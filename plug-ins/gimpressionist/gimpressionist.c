@@ -133,7 +133,7 @@ create_dialog (void)
   GtkWidget *hbox;
   GtkWidget *preview_box;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("GIMPressionist"), PLUG_IN_ROLE,
                             NULL, 0,

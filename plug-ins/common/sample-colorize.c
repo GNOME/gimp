@@ -1379,7 +1379,7 @@ smp_dialog (void)
   g_di.orig_inten_button     = NULL;
 
   /* Init GTK  */
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   /* Main Dialog */
   g_di.dialog = dialog =

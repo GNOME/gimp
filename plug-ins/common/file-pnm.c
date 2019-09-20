@@ -526,7 +526,7 @@ pnm_save (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
 
       if (! strcmp (name, PNM_SAVE_PROC))
         {

@@ -393,7 +393,7 @@ sparkle_dialog (GimpDrawable *drawable)
   GtkAdjustment *scale_data;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Sparkle"), PLUG_IN_ROLE,
                             NULL, 0,

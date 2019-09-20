@@ -1253,7 +1253,7 @@ dialog (GimpDrawable *drawable)
    GtkWidget    *main_vbox;
    GtkWidget    *tools;
 
-   gimp_ui_init (PLUG_IN_BINARY, TRUE);
+   gimp_ui_init (PLUG_IN_BINARY);
 
    set_arrow_func ();
 

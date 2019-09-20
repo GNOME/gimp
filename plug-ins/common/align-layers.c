@@ -654,7 +654,7 @@ align_layers_dialog (void)
   GtkAdjustment *adj;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_ROLE,
                             NULL, 0,

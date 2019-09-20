@@ -540,7 +540,7 @@ load_dialog (GFile *file)
   WmfLoadVals  vals = { WMF_DEFAULT_RESOLUTION,
                         - WMF_PREVIEW_SIZE, - WMF_PREVIEW_SIZE };
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Render Windows Metafile"), PLUG_IN_ROLE,
                             NULL, 0,

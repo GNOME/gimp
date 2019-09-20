@@ -2464,7 +2464,7 @@ dlg_run (void)
   GtkWidget  *notebook;
   gboolean    run = FALSE;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   /*
    *    Init Main Dialog

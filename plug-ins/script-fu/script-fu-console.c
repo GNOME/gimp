@@ -103,7 +103,7 @@ script_fu_console_run (GimpProcedure        *procedure,
 
   ts_set_print_flag (1);
 
-  gimp_ui_init ("script-fu", FALSE);
+  gimp_ui_init ("script-fu");
 
   console.history_max = 50;
 

@@ -194,7 +194,7 @@ metadata_run (GimpProcedure        *procedure,
 
   INIT_I18N ();
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   image = GIMP_VALUES_GET_IMAGE (args, 1);
 

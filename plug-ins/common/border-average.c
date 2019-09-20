@@ -400,7 +400,7 @@ borderaverage_dialog (GimpImage    *image,
   const gchar *labels[] =
     { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Border Average"), PLUG_IN_ROLE,
                             NULL, 0,

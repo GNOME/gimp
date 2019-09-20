@@ -388,7 +388,7 @@ despeckle_dialog (GimpProcedure *procedure,
   gint       filter_type;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),

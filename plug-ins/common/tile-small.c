@@ -414,7 +414,7 @@ tileit_dialog (GimpDrawable *drawable)
   GSList        *orientation_group = NULL;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   cache_preview (drawable); /* Get the preview image */
 

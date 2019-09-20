@@ -236,7 +236,7 @@ browser_open_url (GtkWindow    *window,
 
 #else
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   return gtk_show_uri_on_window (window,
                                  url,

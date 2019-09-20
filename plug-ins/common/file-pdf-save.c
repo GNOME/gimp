@@ -872,7 +872,7 @@ gui_single (void)
   gboolean   run;
   gint32     n_layers;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_PROC);
 
@@ -975,7 +975,7 @@ gui_multi (void)
   gboolean     run;
   const gchar *temp;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_MULTI_PROC);
 

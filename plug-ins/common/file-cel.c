@@ -285,7 +285,7 @@ cel_save (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
 
       export = gimp_export_image (&image, &drawable, "CEL",
                                   GIMP_EXPORT_CAN_HANDLE_RGB   |
@@ -987,7 +987,7 @@ palette_dialog (const gchar *title)
 {
   GtkWidget *dialog;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gtk_file_chooser_dialog_new (title, NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,

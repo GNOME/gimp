@@ -1004,7 +1004,7 @@ flame_dialog (void)
   GtkAdjustment *adj;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Flame"), PLUG_IN_ROLE,
                             NULL, 0,

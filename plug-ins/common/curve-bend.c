@@ -1093,7 +1093,7 @@ do_dialog (GimpDrawable *drawable)
   BenderDialog *cd;
 
   /* Init GTK  */
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   /*  The curve_bend dialog  */
   cd = bender_new_dialog (drawable);

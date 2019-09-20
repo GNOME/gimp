@@ -307,7 +307,7 @@ print_image (GimpImage *image,
 
   if (interactive)
     {
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
 
       g_signal_connect_swapped (operation, "end-print",
                                 G_CALLBACK (print_settings_save),
@@ -375,7 +375,7 @@ page_setup (GimpImage *image)
   GimpValueArray     *return_vals;
   gchar              *name;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   operation = gtk_print_operation_new ();
 

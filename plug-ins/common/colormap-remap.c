@@ -645,7 +645,7 @@ remap_dialog (GimpImage *image,
   gint             ncols, i;
   gboolean         valid;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Rearrange Colormap"), PLUG_IN_ROLE,
                             NULL, 0,

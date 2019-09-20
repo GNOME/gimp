@@ -421,7 +421,7 @@ unit_editor_dialog (void)
   GtkCellRenderer   *rend;
   gint               i;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   list_store = gtk_list_store_new (NUM_COLUMNS,
                                    G_TYPE_BOOLEAN,   /*  SAVE          */

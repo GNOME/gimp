@@ -168,7 +168,7 @@ browser_dialog_open (const gchar *plug_in_binary)
   GtkAction   *action;
   DialogData   data = { 720, 560, 240, TRUE, 1.0 };
 
-  gimp_ui_init (plug_in_binary, TRUE);
+  gimp_ui_init (plug_in_binary);
 
   gimp_get_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data);
 

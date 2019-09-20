@@ -837,7 +837,7 @@ dialog_run (void)
   gint       i;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("G-Qbist"), PLUG_IN_ROLE,
                             NULL, 0,

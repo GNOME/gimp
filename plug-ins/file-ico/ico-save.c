@@ -238,7 +238,7 @@ ico_save_dialog (GimpImage      *image,
   gint       i;
   gint       response;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = ico_dialog_new (info);
   for (iter = info->layers, i = 0;

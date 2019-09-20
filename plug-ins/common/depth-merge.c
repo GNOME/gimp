@@ -700,7 +700,7 @@ DepthMerge_dialog (DepthMerge *dm)
 
   dm->interface = g_new0 (DepthMergeInterface, 1);
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dm->interface->dialog =
     dialog = gimp_dialog_new (_("Depth Merge"), PLUG_IN_ROLE,

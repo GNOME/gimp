@@ -395,7 +395,7 @@ sel2path_dialog (SELVALS *sels)
 
   retVal = FALSE;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dlg = gimp_dialog_new (_("Selection to Path Advanced Settings"),
                          PLUG_IN_ROLE,

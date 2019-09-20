@@ -268,7 +268,7 @@ blinds_dialog (GimpDrawable *drawable)
   GtkWidget     *vertical;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Blinds"), PLUG_IN_ROLE,
                             NULL, 0,

@@ -215,7 +215,7 @@ script_fu_interface (SFScript  *script,
     {
       INIT_I18N();
 
-      gimp_ui_init ("script-fu", TRUE);
+      gimp_ui_init ("script-fu");
 
       gtk_initted = TRUE;
     }

@@ -543,7 +543,7 @@ send_dialog (void)
   gint           row = 0;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   /* check gimprc for a preferred "From:" address */
   gump_from = gimp_gimprc_query ("gump-from");

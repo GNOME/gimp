@@ -369,7 +369,7 @@ fli_save (GimpProcedure        *procedure,
 
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
 
       export = gimp_export_image (&image, &drawable, "FLI",
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -881,7 +881,7 @@ load_dialog (GFile *file)
   from_frame = 1;
   to_frame   = nframes;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), PLUG_IN_ROLE,
                             NULL, 0,

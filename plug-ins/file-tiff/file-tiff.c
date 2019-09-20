@@ -245,7 +245,7 @@ tiff_load (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_ui_init (PLUG_IN_BINARY, FALSE);
+    gimp_ui_init (PLUG_IN_BINARY);
 
   status = load_image (file, run_mode, &image,
                        &resolution_loaded,
@@ -309,7 +309,7 @@ tiff_save (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
       break;
     default:
       break;

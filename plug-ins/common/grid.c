@@ -725,7 +725,7 @@ dialog (GimpImage    *image,
 
   g_return_val_if_fail (main_dialog == NULL, FALSE);
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   d_width  = gimp_drawable_width  (drawable);
   d_height = gimp_drawable_height (drawable);

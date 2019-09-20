@@ -203,7 +203,7 @@ csource_save (GimpProcedure        *procedure,
     }
   x = config.comment;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   export = gimp_export_image (&image, &drawable, "C Source",
                               GIMP_EXPORT_CAN_HANDLE_RGB |

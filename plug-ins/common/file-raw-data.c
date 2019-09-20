@@ -1780,7 +1780,7 @@ load_dialog (GFile    *file,
 
   file_size = get_file_info (file);
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Load Image from Raw Data"), PLUG_IN_ROLE,
                             NULL, 0,
@@ -2063,7 +2063,7 @@ save_dialog (GimpImage *image)
   gchar      *ui_file;
   GError     *error = NULL;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   /* Dialog init */
   dialog = gimp_export_dialog_new (_("Raw Image"), PLUG_IN_BINARY, SAVE_PROC);

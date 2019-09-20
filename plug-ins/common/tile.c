@@ -452,7 +452,7 @@ tile_dialog (GimpImage    *image,
   GimpUnit   unit;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   width  = gimp_drawable_width (drawable);
   height = gimp_drawable_height (drawable);

@@ -159,7 +159,7 @@ browser_run (GimpProcedure        *procedure,
       {
         GtkWidget *dialog;
 
-        gimp_ui_init (PLUG_IN_BINARY, FALSE);
+        gimp_ui_init (PLUG_IN_BINARY);
 
         dialog =
           gimp_proc_browser_dialog_new (_("Procedure Browser"), PLUG_IN_BINARY,

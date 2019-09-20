@@ -770,7 +770,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   ifsD->preview_width   = design_width;
   ifsD->preview_height  = design_height;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("IFS Fractal"), PLUG_IN_ROLE,
                             NULL, 0,

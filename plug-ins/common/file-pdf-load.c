@@ -407,7 +407,7 @@ pdf_load (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (LOAD_PROC, &loadvals);
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
       doc = open_document (file,
                            loadvals.PDF_password,
                            run_mode, &error);

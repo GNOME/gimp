@@ -783,7 +783,7 @@ build_dialog (gchar *imagename)
   gint         index;
   gchar       *text;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_role (GTK_WINDOW (window), "animation-playback");

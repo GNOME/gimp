@@ -647,7 +647,7 @@ plugin_dialog (piArgs *argp)
   GtkWidget *frame;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dlg = gimp_dialog_new (_("Hot"), PLUG_IN_ROLE,
                          NULL, 0,

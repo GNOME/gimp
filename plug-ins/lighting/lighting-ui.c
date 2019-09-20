@@ -1026,7 +1026,7 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *image;
   */
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   path = gimp_gimprc_query ("lighting-effects-path");
   if (path)

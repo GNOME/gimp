@@ -497,7 +497,7 @@ save_dialog (GimpImage *image)
   GtkWidget     *toggle;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_export_dialog_new (_("HTML table"), PLUG_IN_BINARY, SAVE_PROC);
 

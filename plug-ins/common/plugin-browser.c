@@ -549,7 +549,7 @@ browser_dialog_new (void)
   GtkTreeSelection  *selection;
   GtkTreeIter        iter;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   browser = g_new0 (PluginBrowser, 1);
 

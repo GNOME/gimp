@@ -246,7 +246,7 @@ busy_dialog (gint         read_fd,
    */
   gtk_init (NULL, NULL);
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   /* the main window */
   if (! cancelable)

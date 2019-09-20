@@ -290,7 +290,7 @@ jpeg_load (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
       load_interactive = TRUE;
       break;
 
@@ -417,7 +417,7 @@ jpeg_save (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
 
       export = gimp_export_image (&image, &drawable, "JPEG",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |

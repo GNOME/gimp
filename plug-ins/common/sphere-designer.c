@@ -3113,7 +3113,7 @@ realrender (GimpDrawable *drawable)
 static gboolean
 sphere_main (GimpDrawable *drawable)
 {
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   img_stride = cairo_format_stride_for_width (CAIRO_FORMAT_RGB24, PREVIEWSIZE);
   img = g_malloc0 (img_stride * PREVIEWSIZE);

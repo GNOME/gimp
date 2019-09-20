@@ -410,7 +410,7 @@ mng_save (GimpProcedure        *procedure,
     {
       gimp_get_data (SAVE_PROC, &mng_data);
 
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
 
       export = gimp_export_image (&image, &drawable, "MNG",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |

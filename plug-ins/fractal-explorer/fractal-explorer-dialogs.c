@@ -526,7 +526,7 @@ explorer_dialog (void)
   GSList    *group = NULL;
   gint       i;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   path = gimp_gimprc_query ("fractalexplorer-path");
 

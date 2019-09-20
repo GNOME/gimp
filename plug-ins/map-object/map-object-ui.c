@@ -1300,7 +1300,7 @@ main_dialog (GimpDrawable *drawable)
   GimpZoomModel *model;
   gboolean       run = FALSE;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   appwin = gimp_dialog_new (_("Map to Object"), PLUG_IN_ROLE,
                             NULL, 0,

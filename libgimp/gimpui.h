@@ -52,8 +52,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void        gimp_ui_init                          (const gchar *prog_name,
-                                                   gboolean     preview);
+void        gimp_ui_init                          (const gchar *prog_name);
 
 GdkWindow * gimp_ui_get_progress_window           (void);
 

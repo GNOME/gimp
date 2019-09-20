@@ -214,7 +214,7 @@ gfig_dialog (void)
   GtkWidget    *empty_label;
   gchar        *path;
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   img_width  = gimp_drawable_width (gfig_context->drawable);
   img_height = gimp_drawable_height (gfig_context->drawable);

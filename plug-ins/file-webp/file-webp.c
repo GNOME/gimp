@@ -293,7 +293,7 @@ webp_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE ||
       run_mode == GIMP_RUN_WITH_LAST_VALS)
-    gimp_ui_init (PLUG_IN_BINARY, FALSE);
+    gimp_ui_init (PLUG_IN_BINARY);
 
   /* Default settings */
   params.preset        = WEBP_PRESET_DEFAULT;

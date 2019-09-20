@@ -320,7 +320,7 @@ fits_save (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY);
 
       export = gimp_export_image (&image, &drawable, "FITS",
                                   GIMP_EXPORT_CAN_HANDLE_RGB  |
@@ -1176,7 +1176,7 @@ load_dialog (void)
   GtkWidget *frame;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_dialog_new (_("Load FITS File"), PLUG_IN_ROLE,
                             NULL, 0,

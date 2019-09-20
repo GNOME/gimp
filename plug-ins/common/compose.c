@@ -1145,7 +1145,7 @@ compose_dialog (const gchar  *compose_type,
   composeint.width  = gimp_drawable_width  (drawable);
   composeint.height = gimp_drawable_height (drawable);
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY);
 
   layer_list = gimp_image_get_layers (gimp_item_get_image (GIMP_ITEM (drawable)),
                                       &nlayers);
