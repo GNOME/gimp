@@ -33,12 +33,16 @@ struct _GimpImageProcedurePrivate
 };
 
 
-static void   gimp_image_procedure_constructed (GObject              *object);
-static void   gimp_image_procedure_finalize    (GObject              *object);
+static void   gimp_image_procedure_constructed   (GObject              *object);
+static void   gimp_image_procedure_finalize      (GObject              *object);
 
 static GimpValueArray *
-              gimp_image_procedure_run         (GimpProcedure        *procedure,
-                                                const GimpValueArray *args);
+              gimp_image_procedure_run           (GimpProcedure        *procedure,
+                                                  const GimpValueArray *args);
+static GimpProcedureConfig *
+              gimp_image_procedure_create_config (GimpProcedure        *procedure,
+                                                  GParamSpec          **args,
+                                                  gint                  n_args);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpImageProcedure, gimp_image_procedure,
@@ -53,10 +57,11 @@ gimp_image_procedure_class_init (GimpImageProcedureClass *klass)
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
 
-  object_class->constructed  = gimp_image_procedure_constructed;
-  object_class->finalize     = gimp_image_procedure_finalize;
+  object_class->constructed      = gimp_image_procedure_constructed;
+  object_class->finalize         = gimp_image_procedure_finalize;
 
-  procedure_class->run       = gimp_image_procedure_run;
+  procedure_class->run           = gimp_image_procedure_run;
+  procedure_class->create_config = gimp_image_procedure_create_config;
 }
 
 static void
@@ -103,6 +108,8 @@ gimp_image_procedure_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+#define ARG_OFFSET 3
+
 static GimpValueArray *
 gimp_image_procedure_run (GimpProcedure        *procedure,
                           const GimpValueArray *args)
@@ -119,9 +126,9 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   image    = GIMP_VALUES_GET_IMAGE    (args, 1);
   drawable = GIMP_VALUES_GET_DRAWABLE (args, 2);
 
-  remaining = gimp_value_array_new (gimp_value_array_length (args) - 3);
+  remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
-  for (i = 3; i < gimp_value_array_length (args); i++)
+  for (i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
     {
       GValue *value = gimp_value_array_index (args, i);
 
@@ -137,6 +144,27 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   gimp_value_array_unref (remaining);
 
   return return_values;
+}
+
+static GimpProcedureConfig *
+gimp_image_procedure_create_config (GimpProcedure  *procedure,
+                                    GParamSpec    **args,
+                                    gint            n_args)
+{
+  if (n_args > ARG_OFFSET)
+    {
+      args   += ARG_OFFSET;
+      n_args -= ARG_OFFSET;
+    }
+  else
+    {
+      args   = NULL;
+      n_args = 0;
+    }
+
+  return GIMP_PROCEDURE_CLASS (parent_class)->create_config (procedure,
+                                                             args,
+                                                             n_args);
 }
 
 

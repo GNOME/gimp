@@ -105,6 +105,11 @@ static void       gimp_procedure_real_uninstall (GimpProcedure        *procedure
 static GimpValueArray *
                   gimp_procedure_real_run       (GimpProcedure        *procedure,
                                                  const GimpValueArray *args);
+static GimpProcedureConfig *
+                  gimp_procedure_real_create_config
+                                                (GimpProcedure        *procedure,
+                                                 GParamSpec          **args,
+                                                 gint                  n_args);
 
 static gboolean   gimp_procedure_validate_args  (GimpProcedure        *procedure,
                                                  GParamSpec          **param_specs,
@@ -138,6 +143,7 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
   klass->install             = gimp_procedure_real_install;
   klass->uninstall           = gimp_procedure_real_uninstall;
   klass->run                 = gimp_procedure_real_run;
+  klass->create_config       = gimp_procedure_real_create_config;
 
   props[PROP_PLUG_IN] =
     g_param_spec_object ("plug-in",
@@ -462,6 +468,31 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
 {
   return procedure->priv->run_func (procedure, args,
                                     procedure->priv->run_data);
+}
+
+static GimpProcedureConfig *
+gimp_procedure_real_create_config (GimpProcedure  *procedure,
+                                   GParamSpec    **args,
+                                   gint            n_args)
+{
+  gchar *type_name;
+  GType  type;
+
+  type_name = g_strdup_printf ("GimpProcedureConfig-%s",
+                               gimp_procedure_get_name (procedure));
+
+  type = g_type_from_name (type_name);
+
+  if (! type)
+    type = gimp_config_type_register (GIMP_TYPE_PROCEDURE_CONFIG,
+                                      type_name,
+                                      args, n_args);
+
+  g_free (type_name);
+
+  return g_object_new (type,
+                       "procedure", procedure,
+                       NULL);
 }
 
 
@@ -1488,6 +1519,26 @@ gimp_procedure_extension_ready (GimpProcedure *procedure)
   if (! gp_extension_ack_write (_gimp_plug_in_get_write_channel (plug_in),
                                 plug_in))
     gimp_quit ();
+}
+
+/**
+ * gimp_procedure_create_config:
+ * @procedure: A #GimpProcedure
+ *
+ * Create a #GimpConfig with properties that match @procedure's arguments.
+ *
+ * Returns: (transfer full): The new #GimpConfig.
+ *
+ * Since: 3.0
+ **/
+GimpProcedureConfig *
+gimp_procedure_create_config (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return GIMP_PROCEDURE_GET_CLASS (procedure)->create_config (procedure,
+                                                              procedure->priv->args,
+                                                              procedure->priv->n_args);
 }
 
 

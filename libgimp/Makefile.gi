@@ -130,6 +130,7 @@ libgimp_introspectable_headers = \
 	../libgimp/gimppdb.h			\
 	../libgimp/gimpplugin.h			\
 	../libgimp/gimpprocedure.h		\
+	../libgimp/gimpprocedureconfig.h	\
 	../libgimp/gimpprogress.h		\
 	../libgimp/gimpsaveprocedure.h		\
 	../libgimp/gimpselection.h		\
@@ -162,6 +163,7 @@ libgimp_introspectable = \
 	../libgimp/gimppdb.c			\
 	../libgimp/gimpplugin.c			\
 	../libgimp/gimpprocedure.c		\
+	../libgimp/gimpprocedureconfig.c	\
 	../libgimp/gimpprogress.c		\
 	../libgimp/gimpsaveprocedure.c		\
 	../libgimp/gimpselection.c		\

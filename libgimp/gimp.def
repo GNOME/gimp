@@ -680,6 +680,12 @@ EXPORTS
 	gimp_procedure_add_menu_path
 	gimp_procedure_add_return_value
 	gimp_procedure_add_return_value_from_property
+	gimp_procedure_config_begin_run
+	gimp_procedure_config_end_run
+	gimp_procedure_config_get_type
+	gimp_procedure_config_get_values
+	gimp_procedure_config_set_values
+	gimp_procedure_create_config
 	gimp_procedure_extension_ready
 	gimp_procedure_get_arguments
 	gimp_procedure_get_authors

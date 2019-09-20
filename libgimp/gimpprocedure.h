@@ -86,11 +86,15 @@ struct _GimpProcedureClass
 {
   GObjectClass parent_class;
 
-  void             (* install)   (GimpProcedure        *procedure);
-  void             (* uninstall) (GimpProcedure        *procedure);
+  void                  (* install)       (GimpProcedure         *procedure);
+  void                  (* uninstall)     (GimpProcedure         *procedure);
 
-  GimpValueArray * (* run)       (GimpProcedure        *procedure,
-                                  const GimpValueArray *args);
+  GimpValueArray      * (* run)           (GimpProcedure         *procedure,
+                                           const GimpValueArray  *args);
+
+  GimpProcedureConfig * (* create_config) (GimpProcedure         *procedure,
+                                           GParamSpec           **args,
+                                           gint                   n_args);
 
   /* Padding for future expansion */
   void (*_gimp_reserved1) (void);
@@ -184,6 +188,9 @@ GimpValueArray * gimp_procedure_run                (GimpProcedure        *proced
                                                     GimpValueArray       *args);
 
 void             gimp_procedure_extension_ready    (GimpProcedure        *procedure);
+
+GimpProcedureConfig *
+                 gimp_procedure_create_config      (GimpProcedure        *procedure);
 
 
 G_END_DECLS
