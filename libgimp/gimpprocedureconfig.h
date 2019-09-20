@@ -65,18 +65,21 @@ struct _GimpProcedureConfigClass
 };
 
 
-GType   gimp_procedure_config_get_type   (void) G_GNUC_CONST;
+GType   gimp_procedure_config_get_type      (void) G_GNUC_CONST;
 
-void    gimp_procedure_config_set_values (GimpProcedureConfig  *config,
-                                          const GimpValueArray *values);
-void    gimp_procedure_config_get_values (GimpProcedureConfig  *config,
-                                          GimpValueArray       *values);
+GimpProcedure *
+        gimp_procedure_config_get_procedure (GimpProcedureConfig *config);
 
-void    gimp_procedure_config_begin_run  (GimpProcedureConfig  *config,
-                                          GimpRunMode           run_mode,
-                                          const GimpValueArray *args);
-void    gimp_procedure_config_end_run    (GimpProcedureConfig  *config,
-                                          GimpRunMode           run_mode);
+void    gimp_procedure_config_set_values    (GimpProcedureConfig  *config,
+                                             const GimpValueArray *values);
+void    gimp_procedure_config_get_values    (GimpProcedureConfig  *config,
+                                             GimpValueArray       *values);
+
+void    gimp_procedure_config_begin_run     (GimpProcedureConfig  *config,
+                                             GimpRunMode           run_mode,
+                                             const GimpValueArray *args);
+void    gimp_procedure_config_end_run       (GimpProcedureConfig  *config,
+                                             GimpRunMode           run_mode);
 
 
 G_END_DECLS

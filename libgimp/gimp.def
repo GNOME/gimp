@@ -682,6 +682,7 @@ EXPORTS
 	gimp_procedure_add_return_value_from_property
 	gimp_procedure_config_begin_run
 	gimp_procedure_config_end_run
+	gimp_procedure_config_get_procedure
 	gimp_procedure_config_get_type
 	gimp_procedure_config_get_values
 	gimp_procedure_config_set_values

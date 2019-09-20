@@ -178,6 +178,25 @@ gimp_procedure_config_get_property (GObject    *object,
 /*  public functions  */
 
 /**
+ * gimp_procedure_config_get_procedure:
+ * @config: a #GimpProcedureConfig
+ *
+ * This function returns the #GimpProcedure which created @config, see
+ * gimp_procedure_create_config().
+ *
+ * Returns: The #GimpProcedure which created @config.
+ *
+ * Since: 3.0
+ **/
+GimpProcedure *
+gimp_procedure_config_get_procedure (GimpProcedureConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+
+  return config->priv->procedure;
+}
+
+/**
  * gimp_procedure_config_set_values:
  * @config: a #GimpProcedureConfig
  * @values: a #GimpValueArray

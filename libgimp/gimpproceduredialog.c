@@ -168,6 +168,8 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+  g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
+                        procedure, NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
   role = g_strdup_printf ("gimp-%s", gimp_procedure_get_name (procedure));
