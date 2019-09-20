@@ -44,6 +44,9 @@ EXPORTS
 	gimp_proc_browser_dialog_get_type
 	gimp_proc_browser_dialog_new
 	gimp_proc_view_new
+	gimp_procedure_dialog_get_type
+	gimp_procedure_dialog_new
+	gimp_procedure_dialog_run
 	gimp_progress_bar_get_type
 	gimp_progress_bar_new
 	gimp_select_button_close_popup

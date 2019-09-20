@@ -185,6 +185,7 @@ libgimpui_introspectable_headers = \
 	../libgimp/gimppaletteselectbutton.h	\
 	../libgimp/gimppatternselectbutton.h	\
 	../libgimp/gimpprocbrowserdialog.h	\
+	../libgimp/gimpproceduredialog.h	\
 	../libgimp/gimpprocview.h		\
 	../libgimp/gimpprogressbar.h		\
 	../libgimp/gimpselectbutton.h		\
@@ -205,6 +206,7 @@ libgimpui_introspectable = \
 	../libgimp/gimppaletteselectbutton.c	\
 	../libgimp/gimppatternselectbutton.c	\
 	../libgimp/gimpprocbrowserdialog.c	\
+	../libgimp/gimpproceduredialog.c	\
 	../libgimp/gimpprocview.c		\
 	../libgimp/gimpprogressbar.c		\
 	../libgimp/gimpselectbutton.c		\

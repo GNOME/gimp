@@ -39,6 +39,7 @@
 #include <libgimp/gimppaletteselectbutton.h>
 #include <libgimp/gimppatternselectbutton.h>
 #include <libgimp/gimpprocbrowserdialog.h>
+#include <libgimp/gimpproceduredialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
 #include <libgimp/gimpselectbutton.h>

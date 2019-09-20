@@ -28,6 +28,8 @@ G_BEGIN_DECLS
 /* For information look into the html documentation */
 
 
+typedef struct _GimpProcedureDialog      GimpProcedureDialog;
+
 typedef struct _GimpAspectPreview        GimpAspectPreview;
 typedef struct _GimpDrawablePreview      GimpDrawablePreview;
 typedef struct _GimpProcBrowserDialog    GimpProcBrowserDialog;
