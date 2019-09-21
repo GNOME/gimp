@@ -334,9 +334,10 @@ gio               = dependency('gio-2.0')
 gio_specific_name = platform_windows ? 'gio-windows-2.0' : 'gio-unix-2.0'
 gio_specific      = dependency(gio_specific_name)
 
-glib_version = platform_windows ? '>=2.56.2' : '>=2.54.2'
+glib_version      = platform_windows ? '>=2.56.2' : '>=2.54.2'
 glib              = dependency('glib-2.0',           version: glib_version)
-conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
+
+conf.set('G_DISABLE_DEPRECATED', glib.version().version_compare('>=2.57'))
 
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
