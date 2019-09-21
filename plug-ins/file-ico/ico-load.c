@@ -219,7 +219,7 @@ ico_read_info (FILE    *fp,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Could not read '%lu' bytes"),
-                   sizeof (IcoFileEntry));
+                   (long unsigned int) sizeof (IcoFileEntry));
       g_free (entries);
       return NULL;
     }
