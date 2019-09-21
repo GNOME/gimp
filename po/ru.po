@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-15 23:16+0300\n"
-"PO-Revision-Date: 2019-09-16 00:14+0300\n"
+"PO-Revision-Date: 2019-09-21 12:41+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -13729,9 +13729,9 @@ msgid "Arrange Objects"
 msgstr "Расстановка объектов"
 
 #: ../app/core/gimpimage-color-profile.c:122
-#, fuzzy
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
-msgstr "Сбой проверки правильности профиля ICC: "
+msgstr ""
+"Сбой проверки правильности ICC-профиля: имя паразита — не 'icc-profile'"
 
 #: ../app/core/gimpimage-color-profile.c:131
 msgid ""
@@ -14287,7 +14287,7 @@ msgstr "Выбирать прозрачные пиксели вместо сер
 
 #: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
-msgstr "Порог определения контурного  рисунка"
+msgstr "Порог определения контура"
 
 #: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
@@ -21571,15 +21571,15 @@ msgstr "Максимальное различие цветов"
 
 #: ../app/tools/gimpbucketfilloptions.c:181
 msgid "Source image for line art computation"
-msgstr ""
+msgstr "Исходное изображение с контурным рисунком"
 
 #: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
-msgstr ""
+msgstr "Максимальный пробел"
 
 #: ../app/tools/gimpbucketfilloptions.c:203
 msgid "Maximum gap (in pixels) in line art which can be closed"
-msgstr ""
+msgstr "Максимальный пробел в пикселях между контурами, который можно закрыть"
 
 #: ../app/tools/gimpbucketfilloptions.c:209
 #: ../app/tools/gimpbucketfilloptions.c:470
@@ -21640,9 +21640,8 @@ msgid "The active layer is not visible."
 msgstr "Точки растра активного слоя заблокированы от изменений"
 
 #: ../app/tools/gimpbucketfilltool.c:554
-#, fuzzy
 msgid "No valid line art source selected."
-msgstr "Фильтр не выбран"
+msgstr "Не выбран корректный источник контурного рисунка"
 
 #: ../app/tools/gimpbucketfilltool.c:737 ../app/tools/gimpbucketfilltool.c:870
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:451
@@ -21725,32 +21724,28 @@ msgid "Click to set a new clone source"
 msgstr "Нажмите для получения источника штампа"
 
 #: ../app/tools/gimpcoloroptions.c:70
-#, fuzzy
 msgid "Use merged color value from all composited visible layers"
-msgstr ""
-"Использовать объединённое значение цвета со всех видимых композитных слоёв"
+msgstr "Использовать объединённое значение цвета со всех видимых слоёв"
 
 #: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:71
 msgid "Sample average"
-msgstr "Сводить слои"
+msgstr "Усреднять значение"
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 msgid "Use averaged color value from nearby pixels"
-msgstr "Использовать все видимые слои при выделении области"
+msgstr "Использовать усредненное значение окружающих пикселей"
 
 #: ../app/tools/gimpcoloroptions.c:86
 msgid "Color Picker Average Radius"
 msgstr "Средний радиус пипетки"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-#, fuzzy
 msgid "Pick Target"
-msgstr "Выбрать контур"
+msgstr "Режим пипетки"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-#, fuzzy
 msgid "Choose what the color picker will do"
-msgstr "Выберите режим работы пипетки"
+msgstr "Выберите, что делает пипетка"
 
 #: ../app/tools/gimpcolorpickeroptions.c:87
 #: ../app/tools/gimpmeasureoptions.c:79
@@ -21766,7 +21761,7 @@ msgstr ""
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Target  (%s)"
 msgstr "Режим пипетки (%s)"
 
@@ -22286,7 +22281,7 @@ msgstr "Движок создания маски выделения"
 
 #: ../app/tools/gimpforegroundselectoptions.c:128
 msgid "Number of downsampled levels to use"
-msgstr ""
+msgstr "Сколько упрощённых уровней использовать"
 
 #: ../app/tools/gimpforegroundselectoptions.c:134
 msgid "Active levels"
@@ -22294,7 +22289,7 @@ msgstr "Активные уровни"
 
 #: ../app/tools/gimpforegroundselectoptions.c:135
 msgid "Number of levels to perform solving"
-msgstr ""
+msgstr "По скольким уровням находить решение"
 
 #: ../app/tools/gimpforegroundselectoptions.c:141
 msgid "Iterations"
@@ -24253,7 +24248,7 @@ msgstr "Залить похожие цвета"
 #: ../app/tools/tools-enums.c:27
 msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
-msgstr "Залить на основе определения контурного рисунка"
+msgstr "Залить как контурный рисунок"
 
 #: ../app/tools/tools-enums.c:57
 msgctxt "line-art-source"
@@ -25502,20 +25497,20 @@ msgstr "Число выполняющихся асинхронных опера�
 #: ../app/widgets/gimpdashboard.c:725
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr ""
+msgstr "Тайл"
 
 #: ../app/widgets/gimpdashboard.c:726
 msgid "Total size of tile memory"
-msgstr ""
+msgstr "Обзий размер памяти тайлов"
 
 #: ../app/widgets/gimpdashboard.c:735
 msgctxt "dashboard-variable"
 msgid "Scratch"
-msgstr ""
+msgstr "Врем. память"
 
 #: ../app/widgets/gimpdashboard.c:736
 msgid "Total size of scratch memory"
-msgstr ""
+msgstr "Общий размер временной памяти"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
@@ -25523,7 +25518,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:747
 msgctxt "dashboard-variable"
 msgid "TempBuf"
-msgstr "TempBuf"
+msgstr "Врем. буферы"
 
 #: ../app/widgets/gimpdashboard.c:748
 msgid "Total size of temporary buffers"
@@ -26312,11 +26307,8 @@ msgid "You can drop dockable dialogs here"
 msgstr "Панели диалогов можно прикрепить сюда."
 
 #: ../app/widgets/gimppdbdialog.c:282
-#, fuzzy
 msgid "The corresponding plug-in may have crashed."
-msgstr ""
-"Не удалось выполнить вызов %s. Возможно, случился сбой соответствующего "
-"расширения."
+msgstr "Возможно, соответствующий плагин аварийно прекратил работу."
 
 #: ../app/widgets/gimppdbdialog.c:286
 #, c-format
@@ -26374,8 +26366,8 @@ msgstr ""
 msgid ""
 "The image uses features from %s and won't be readable by older GIMP versions."
 msgstr ""
-"В данном изображении используются возможности %s, и оно не сможет быть "
-"прочитано более старыми версиями GIMP"
+"В этом изображении используются возможности %s, оно не сможет быть прочитано "
+"более старыми версиями GIMP."
 
 #: ../app/widgets/gimpsavedialog.c:407
 msgid "Metadata won't be visible in GIMP older than version 2.10."
