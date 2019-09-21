@@ -160,9 +160,16 @@ if platform_windows
     ],
   )
 
+  # for GimpDashboard and GimpBacktrace
+  psapi_cflags = [ '-DPSAPI_VERSION=1' ]
+  link_args = [ '-lpsapi' ]
+
 else
   console_rc_file = []
   gui_rc_file = []
+
+  psapi_cflags = [ ]
+  link_args = []
 endif
 
 
@@ -174,12 +181,14 @@ gimpconsole_exe = executable('gimp-console-'+gimp_app_version,
     '-DG_LOG_DOMAIN="Gimp"',
     '-DGIMP_APP_GLUE_COMPILATION',
     '-DGIMP_CONSOLE_COMPILATION',
+    psapi_cflags,
   ],
   include_directories: rootInclude,
   dependencies: app_deps,
   link_with: [
     app_links,
   ],
+  link_args: link_args,
   install: true,
 )
 
@@ -190,6 +199,7 @@ gimpmain_exe = executable('gimp-'+gimp_app_version,
   c_args: [
     '-DG_LOG_DOMAIN="Gimp"',
     '-DGIMP_APP_GLUE_COMPILATION',
+    psapi_cflags,
   ],
   include_directories: rootInclude,
   dependencies: app_deps,
@@ -197,5 +207,6 @@ gimpmain_exe = executable('gimp-'+gimp_app_version,
     app_links,
     app_gui_links,
   ],
+  link_args: link_args,
   install: true,
 )
