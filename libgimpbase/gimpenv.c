@@ -935,31 +935,6 @@ gimp_personal_rc_file (const gchar *basename)
 }
 
 /**
- * gimp_gtkrc:
- *
- * Returns the name of GIMP's application-specific gtkrc file.
- *
- * The returned string is owned by GIMP and must not be modified or
- * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.)
- *
- * Returns: The name of GIMP's application-specific gtkrc file.
- **/
-const gchar *
-gimp_gtkrc (void)
-{
-  static gchar *gimp_gtkrc_filename = NULL;
-
-  if (! gimp_gtkrc_filename)
-    gimp_gtkrc_filename = g_build_filename (gimp_data_directory (),
-                                            "themes", "System", "gtkrc",
-                                            NULL);
-
-  return gimp_gtkrc_filename;
-}
-
-/**
  * gimp_path_runtime_fix:
  * @path: A pointer to a string (allocated with g_malloc) that is
  *        (or could be) a pathname.

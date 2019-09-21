@@ -58,7 +58,6 @@ EXPORTS
 	gimp_gradient_segment_type_get_type
 	gimp_gradient_type_get_type
 	gimp_grid_style_get_type
-	gimp_gtkrc
 	gimp_hue_range_get_type
 	gimp_icon_type_get_type
 	gimp_image_base_type_get_type

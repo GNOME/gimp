@@ -69,7 +69,6 @@ GFile       * gimp_sysconf_directory_file      (const gchar *first_element,
 GFile       * gimp_plug_in_directory_file      (const gchar *first_element,
                                                 ...) G_GNUC_MALLOC;
 
-const gchar * gimp_gtkrc                       (void) G_GNUC_CONST;
 gchar       * gimp_personal_rc_file            (const gchar        *basename) G_GNUC_MALLOC;
 
 GList       * gimp_path_parse                  (const gchar        *path,
