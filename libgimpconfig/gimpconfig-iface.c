@@ -458,6 +458,46 @@ gimp_config_serialize_to_string (GimpConfig *config,
 }
 
 /**
+ * gimp_config_serialize_to_parasite:
+ * @config:          a #GObject that implements the #GimpConfigInterface.
+ * @parasite_name:   the new parasite's name
+ * @pparasite_flags: the new parasite's flags
+ * @data:            user data passed to the serialize implementation.
+ *
+ * Serializes the object properties of @config to a #GimpParasite.
+ *
+ * Returns: (transfer full): the newly allocated #GimpParasite.
+ *
+ * Since: 3.0
+ **/
+GimpParasite *
+gimp_config_serialize_to_parasite (GimpConfig  *config,
+                                   const gchar *parasite_name,
+                                   guint        parasite_flags,
+                                   gpointer     data)
+{
+  GimpParasite *parasite;
+  gchar        *str;
+
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
+  g_return_val_if_fail (parasite_name != NULL, NULL);
+
+  str = gimp_config_serialize_to_string (config, data);
+
+  if (! str)
+    return NULL;
+
+  parasite = gimp_parasite_new (parasite_name,
+                                parasite_flags,
+                                0, NULL);
+
+  parasite->size = strlen (str) + 1;
+  parasite->data = str;
+
+  return parasite;
+}
+
+/**
  * gimp_config_deserialize_file:
  * @config: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to read configuration from.
@@ -618,7 +658,7 @@ gimp_config_deserialize_stream (GimpConfig    *config,
  * Since: 2.4
  **/
 gboolean
-gimp_config_deserialize_string (GimpConfig      *config,
+gimp_config_deserialize_string (GimpConfig   *config,
                                 const gchar  *text,
                                 gint          text_len,
                                 gpointer      data,
@@ -646,6 +686,41 @@ gimp_config_deserialize_string (GimpConfig      *config,
     g_assert (error == NULL || *error != NULL);
 
   return success;
+}
+
+/**
+ * gimp_config_deserialize_parasite:
+ * @config:   a #GObject that implements the #GimpConfigInterface.
+ * @parasite: parasite containing a serialized config string
+ * @data:     client data
+ * @error:    return location for a possible error
+ *
+ * Configures @config from @parasite. Basically this function creates
+ * a properly configured #GScanner for you and calls the deserialize
+ * function of the @config's #GimpConfigInterface.
+ *
+ * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_config_deserialize_parasite (GimpConfig          *config,
+                                  const GimpParasite  *parasite,
+                                  gpointer             data,
+                                  GError             **error)
+{
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+  g_return_val_if_fail (parasite != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_parasite_data (parasite))
+    return TRUE;
+
+  return gimp_config_deserialize_string (config,
+                                         gimp_parasite_data (parasite),
+                                         gimp_parasite_data_size (parasite),
+                                         data,
+                                         error);
 }
 
 /**

@@ -25,6 +25,7 @@ EXPORTS
 	gimp_config_deserialize
 	gimp_config_deserialize_file
 	gimp_config_deserialize_gfile
+	gimp_config_deserialize_parasite
 	gimp_config_deserialize_properties
 	gimp_config_deserialize_property
 	gimp_config_deserialize_return
@@ -51,6 +52,7 @@ EXPORTS
 	gimp_config_serialize_to_fd
 	gimp_config_serialize_to_file
 	gimp_config_serialize_to_gfile
+	gimp_config_serialize_to_parasite
 	gimp_config_serialize_to_stream
 	gimp_config_serialize_to_string
 	gimp_config_serialize_value
