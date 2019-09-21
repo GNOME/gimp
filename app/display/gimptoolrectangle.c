@@ -172,7 +172,7 @@ struct _GimpToolRectanglePrivate
   gdouble                 x1, y1;
   gdouble                 x2, y2;
 
-  /* Integer coordinats of upper left corner and size. We must
+  /* Integer coordinates of upper left corner and size. We must
    * calculate this separately from the gdouble ones because sometimes
    * we don't want to affect the integer size (e.g. when moving the
    * rectangle), but that will be the case if we always calculate the

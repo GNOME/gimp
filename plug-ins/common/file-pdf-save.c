@@ -44,7 +44,7 @@
  * 1. Grayscale layers are inverted (although layer masks which are not grayscale,
  * are not inverted)
  * 2. Exporting some fonts doesn't work since gimp_text_layer_get_font Returns a
- * font which is sometimes incompatiable with pango_font_description_from_string
+ * font which is sometimes incompatible with pango_font_description_from_string
  * (gimp_text_layer_get_font sometimes returns suffixes such as "semi-expanded" to
  * the font's name although the GIMP's font selection dialog shows the don'ts name
  * normally - This should be checked again in GIMP 2.7)
@@ -88,7 +88,7 @@
  *   Fixed a typo that prevented the plugin from compiling...
  *   A migration to the new GIMP 2.8 api, which includes:
  *   - Now using gimp_export_dialog_new
- *   - Using gimp_text_layer_get_hint_style (2.8) instead of the depreceated
+ *   - Using gimp_text_layer_get_hint_style (2.8) instead of the deprecated
  *     gimp_text_layer_get_hinting (2.6).
  *
  * August 24, 2010 | Barak Itkin <lightningismyname@gmail.com>

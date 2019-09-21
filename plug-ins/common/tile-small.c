@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * A fair proprotion of this code was taken from the Whirl plug-in
+ * A fair proportion of this code was taken from the Whirl plug-in
  * which was copyrighted by Federico Mena Quintero (as below).
  *
  * Whirl plug-in --- distort an image into a whirlpool

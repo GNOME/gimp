@@ -139,7 +139,7 @@ goat_run (GimpProcedure        *procedure,
 
   INIT_I18N();
 
-  /* In interactive mode, display a dialog to advertize the exercise. */
+  /* In interactive mode, display a dialog to advertise the exercise. */
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       GtkTextBuffer    *buffer;

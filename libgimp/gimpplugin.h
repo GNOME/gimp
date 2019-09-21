@@ -82,7 +82,7 @@ struct _GimpPlugIn
  * @quit: This method can be overridden by a plug-in which needs to
  *   perform some actions upon quitting.
  *
- * A class which every plug-in should sublass, while overriding
+ * A class which every plug-in should subclass, while overriding
  * #GimpPlugInClass.query_procedures() and/or
  * #GimpPlugInClass.init_procedures(), as well as
  * #GimpPlugInClass.create_procedure().
