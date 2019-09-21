@@ -797,7 +797,7 @@ sendmail_create_headers (FILE *mailpipe)
   /* create all the mail header stuff. Feel free to add your own */
   /* It is advisable to leave the X-Mailer header though, as     */
   /* there is a possibility of a Gimp mail scanner/reader in the  */
-  /* future. It will probabaly need that header.                 */
+  /* future. It will probably need that header.                 */
 
   fprintf (mailpipe, "To: %s \n", mail_info.receipt);
   fprintf (mailpipe, "Subject: %s \n", mail_info.subject);

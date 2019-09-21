@@ -46,7 +46,7 @@
     </chapter>
 
     <chapter id="libgimp-image">
-      <title>Manupulating Images and their Properties</title>
+      <title>Manipulating Images and their Properties</title>
       <xi:include href="xml/gimpchannel.xml" />
       <xi:include href="xml/gimpdisplay.xml" />
       <xi:include href="xml/gimpdrawable.xml" />

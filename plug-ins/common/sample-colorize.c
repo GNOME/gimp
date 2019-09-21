@@ -309,7 +309,7 @@ colorize_create_procedure (GimpPlugIn  *plug_in,
         " in the sample colortable. If hold_inten is FALSE the picked color"
         " is used 1:1 as resulting remap_color."
         " If hold_inten is TRUE The brightness of the picked color is adjusted"
-        " back to the origial intensity value (only hue and saturation are"
+        " back to the original intensity value (only hue and saturation are"
         " taken from the picked sample color)"
         " (or to the input level, if orig_inten is set FALSE)"
         " Works on both Grayscale and RGB image with/without alpha channel."
@@ -1042,7 +1042,7 @@ levels_update (gint update)
   gint i;
 
   if (g_Sdebug)
-    g_printf ("levels_update: update reques %x\n", update);
+    g_printf ("levels_update: update request %x\n", update);
 
   /*  Recalculate the transfer array  */
   calculate_level_transfers ();

@@ -32,7 +32,7 @@
  * #GimpProcedureConfig base class for #GimpProcedure-specific config
  * objects and the main interface to manage aspects of
  * #GimpProcedure's arguments such as persistency of the last used
- * argments across GIMP sessions.
+ * arguments across GIMP sessions.
  *
  * A #GimpProcedureConfig is created by a #GimpProcedure using
  * gimp_procedure_create_config() and its properties match the

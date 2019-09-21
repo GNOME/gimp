@@ -21,7 +21,7 @@
 
 /* compressor plug-in for GIMP           */
 /* based on gz.c which in turn is        */
-/* loosley based on url.c by             */
+/* loosely based on url.c by             */
 /* Josh MacDonald, jmacd@cs.berkeley.edu */
 
 /* and, very loosely on hrz.c by */

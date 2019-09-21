@@ -149,7 +149,7 @@ gimp_enum_set_value_descriptions (GType               enum_type,
  * gimp_enum_get_value_descriptions:
  * @enum_type: a #GType
  *
- * Retreives the array of human readable and translatable descriptions
+ * Retrieves the array of human readable and translatable descriptions
  * and help texts for enum values.
  *
  * Returns: a %NULL terminated constant array of #GimpEnumDesc
@@ -191,7 +191,7 @@ gimp_flags_set_value_descriptions (GType                flags_type,
  * gimp_flags_get_value_descriptions:
  * @flags_type: a #GType
  *
- * Retreives the array of human readable and translatable descriptions
+ * Retrieves the array of human readable and translatable descriptions
  * and help texts for flags values.
  *
  * Returns: a %NULL terminated constant array of #GimpFlagsDesc

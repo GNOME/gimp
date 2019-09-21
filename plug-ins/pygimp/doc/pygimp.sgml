@@ -2134,7 +2134,7 @@ main()
 	  <ListItem>
 	    <Para>The registered procedure name (first parameter of the
 	    <Literal>register()</Literal> function) is mangled: all underscores
-	    are converted to hyphens, to better match the usual Scheme syntatic
+	    are converted to hyphens, to better match the usual Scheme syntactic
 	    style (here, <Literal>console_echo</Literal> becomes
 	    <Literal>console-echo</Literal>). Moreover, a
 	    <Literal>python-fu-</Literal> prefix is automatically added; it is

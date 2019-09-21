@@ -821,12 +821,12 @@ hex_area (gdouble sx, gdouble sy, gdouble hx, gdouble hy, gdouble d)
    gdouble hx0,hx1,hx2,hy0,hy1,hy2,hy3;
    gdouble sx0,sx1,sy0,sy1;
 
-       /* compute square co-ordinates */
+       /* compute square coordinates */
    sx0 = sx - 0.5;
    sy0 = sy - 0.5;
    sx1 = sx + 0.5;
    sy1 = sy + 0.5;
-       /* compute hexagon co-ordinates */
+       /* compute hexagon coordinates */
    hx0 = hx - d/2.0;
    hx1 = hx;
    hx2 = hx + d/2.0;

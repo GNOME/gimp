@@ -181,7 +181,7 @@ fli_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Load FLI-movies",
-                                        "This is an experimantal plug-in to "
+                                        "This is an experimental plug-in to "
                                         "handle FLI movies",
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -218,7 +218,7 @@ fli_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Export FLI-movies",
-                                        "This is an experimantal plug-in to "
+                                        "This is an experimental plug-in to "
                                         "handle FLI movies",
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -251,7 +251,7 @@ fli_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Get information about a Fli movie",
-                                        "This is an experimantal plug-in to "
+                                        "This is an experimental plug-in to "
                                         "handle FLI movies",
                                         name);
       gimp_procedure_set_attribution (procedure,
