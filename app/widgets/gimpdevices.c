@@ -113,10 +113,10 @@ gimp_devices_restore (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (manager),
-                                       file,
-                                       gimp,
-                                       &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager),
+                                      file,
+                                      gimp,
+                                      &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
@@ -183,12 +183,12 @@ gimp_devices_save (Gimp     *gimp,
       gimp_device_info_save_tool (current_device);
     }
 
-  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (manager),
-                                        file,
-                                        "GIMP devicerc",
-                                        "end of devicerc",
-                                        NULL,
-                                        &error))
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager),
+                                       file,
+                                       "GIMP devicerc",
+                                       "end of devicerc",
+                                       NULL,
+                                       &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);

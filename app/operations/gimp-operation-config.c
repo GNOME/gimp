@@ -264,11 +264,11 @@ gimp_operation_config_serialize (Gimp          *gimp,
 
   gimp_operation_config_remove_sep (container);
 
-  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (container),
-                                        file,
-                                        "settings",
-                                        "end of settings",
-                                        NULL, &error))
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (container),
+                                       file,
+                                       "settings",
+                                       "end of settings",
+                                       NULL, &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
                             error->message);
@@ -305,9 +305,9 @@ gimp_operation_config_deserialize (Gimp          *gimp,
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (container),
-                                       file,
-                                       NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (container),
+                                      file,
+                                      NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,

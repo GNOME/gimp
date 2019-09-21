@@ -78,32 +78,6 @@ static void          gimp_scanner_message (GimpScanner  *scanner,
 
 /**
  * gimp_scanner_new_file:
- * @filename:
- * @error:
- *
- * Returns: (transfer full): The new #GimpScanner.
- *
- * Since: 2.4
- **/
-GimpScanner *
-gimp_scanner_new_file (const gchar  *filename,
-                       GError      **error)
-{
-  GimpScanner *scanner;
-  GFile       *file;
-
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  file = g_file_new_for_path (filename);
-  scanner = gimp_scanner_new_gfile (file, error);
-  g_object_unref (file);
-
-  return scanner;
-}
-
-/**
- * gimp_scanner_new_gfile:
  * @file: a #GFile
  * @error: return location for #GError, or %NULL
  *
@@ -112,8 +86,8 @@ gimp_scanner_new_file (const gchar  *filename,
  * Since: 2.10
  **/
 GimpScanner *
-gimp_scanner_new_gfile (GFile   *file,
-                        GError **error)
+gimp_scanner_new_file (GFile   *file,
+                       GError **error)
 {
   GimpScanner *scanner;
   gchar       *path;

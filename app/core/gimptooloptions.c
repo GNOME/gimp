@@ -297,11 +297,11 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
   footer = g_strdup_printf ("end of %s options",
                             gimp_object_get_name (tool_options->tool_info));
 
-  retval = gimp_config_serialize_to_gfile (GIMP_CONFIG (tool_options),
-                                           file,
-                                           header, footer,
-                                           NULL,
-                                           error);
+  retval = gimp_config_serialize_to_file (GIMP_CONFIG (tool_options),
+                                          file,
+                                          header, footer,
+                                          NULL,
+                                          error);
 
   g_free (header);
   g_free (footer);
@@ -326,10 +326,10 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
   if (tool_options->tool_info->gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  retval = gimp_config_deserialize_gfile (GIMP_CONFIG (tool_options),
-                                          file,
-                                          NULL,
-                                          error);
+  retval = gimp_config_deserialize_file (GIMP_CONFIG (tool_options),
+                                         file,
+                                         NULL,
+                                         error);
 
   g_object_unref (file);
 

@@ -79,7 +79,7 @@ session_init (Gimp *gimp)
 
   file = session_file (gimp);
 
-  scanner = gimp_scanner_new_gfile (file, &error);
+  scanner = gimp_scanner_new_file (file, &error);
 
   if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
@@ -88,7 +88,7 @@ session_init (Gimp *gimp)
 
       file = gimp_sysconf_directory_file ("sessionrc", NULL);
 
-      scanner = gimp_scanner_new_gfile (file, NULL);
+      scanner = gimp_scanner_new_file (file, NULL);
     }
 
   if (! scanner)
@@ -368,18 +368,18 @@ session_save (Gimp     *gimp,
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   writer =
-    gimp_config_writer_new_from_gfile (file,
-                                       TRUE,
-                                       "GIMP sessionrc\n\n"
-                                       "This file takes session-specific info "
-                                       "(that is info, you want to keep between "
-                                       "two GIMP sessions).  You are not supposed "
-                                       "to edit it manually, but of course you "
-                                       "can do.  The sessionrc will be entirely "
-                                       "rewritten every time you quit GIMP.  "
-                                       "If this file isn't found, defaults are "
-                                       "used.",
-                                       NULL);
+    gimp_config_writer_new_from_file (file,
+                                      TRUE,
+                                      "GIMP sessionrc\n\n"
+                                      "This file takes session-specific info "
+                                      "(that is info, you want to keep between "
+                                      "two GIMP sessions).  You are not supposed "
+                                      "to edit it manually, but of course you "
+                                      "can do.  The sessionrc will be entirely "
+                                      "rewritten every time you quit GIMP.  "
+                                      "If this file isn't found, defaults are "
+                                      "used.",
+                                      NULL);
   g_object_unref (file);
 
   if (!writer)

@@ -270,8 +270,8 @@ gimp_tools_restore (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (gimp_config_deserialize_gfile (GIMP_CONFIG (gimp_list), file,
-                                     NULL, &error))
+  if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), file,
+                                    NULL, &error))
     {
       gint n = gimp_container_get_n_children (gimp->tool_info_list);
       gint i;
@@ -423,11 +423,11 @@ gimp_tools_save (Gimp     *gimp,
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  gimp_config_serialize_to_gfile (GIMP_CONFIG (gimp->tool_info_list),
-                                  file,
-                                  "GIMP toolrc",
-                                  "end of toolrc",
-                                  NULL, NULL);
+  gimp_config_serialize_to_file (GIMP_CONFIG (gimp->tool_info_list),
+                                 file,
+                                 "GIMP toolrc",
+                                 "end of toolrc",
+                                 NULL, NULL);
   g_object_unref (file);
 }
 

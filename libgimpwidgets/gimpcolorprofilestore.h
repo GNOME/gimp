@@ -64,7 +64,7 @@ struct _GimpColorProfileStoreClass
 
 GType          gimp_color_profile_store_get_type (void) G_GNUC_CONST;
 
-GtkListStore * gimp_color_profile_store_new      (const gchar           *history);
+GtkListStore * gimp_color_profile_store_new      (GFile                 *history);
 
 void           gimp_color_profile_store_add_file (GimpColorProfileStore *store,
                                                   GFile                 *file,

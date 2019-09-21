@@ -1309,12 +1309,12 @@ prefs_dialog_new (Gimp       *gimp,
   {
     GObject      *color_config = G_OBJECT (core_config->color_management);
     GtkListStore *store;
-    gchar        *filename;
+    GFile        *file;
     gint          row = 0;
 
-    filename = gimp_personal_rc_file ("profilerc");
-    store = gimp_color_profile_store_new (filename);
-    g_free (filename);
+    file = gimp_directory_file ("profilerc");
+    store = gimp_color_profile_store_new (file);
+    g_object_unref (file);
 
     gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
                                        NULL, NULL);

@@ -331,11 +331,11 @@ color_profile_combo_box_new (ProfileDialog *private)
   GtkListStore *store;
   GtkWidget    *combo;
   GtkWidget    *chooser;
-  gchar        *history;
+  GFile        *history;
 
-  history = gimp_personal_rc_file ("profilerc");
+  history = gimp_directory_file ("profilerc", NULL);
   store = gimp_color_profile_store_new (history);
-  g_free (history);
+  g_object_unref (history);
 
   if (private->default_profile)
     {

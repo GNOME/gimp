@@ -405,9 +405,9 @@ gimp_procedure_config_load_last (GimpProcedureConfig  *config,
   GFile    *file = gimp_procedure_config_get_file (config, ".last");
   gboolean  success;
 
-  success = gimp_config_deserialize_gfile (GIMP_CONFIG (config),
-                                           file,
-                                           NULL, error);
+  success = gimp_config_deserialize_file (GIMP_CONFIG (config),
+                                          file,
+                                          NULL, error);
 
   if (! success && (*error)->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
@@ -427,11 +427,11 @@ gimp_procedure_config_save_last (GimpProcedureConfig  *config,
   GFile    *file = gimp_procedure_config_get_file (config, ".last");
   gboolean  success;
 
-  success = gimp_config_serialize_to_gfile (GIMP_CONFIG (config),
-                                            file,
-                                            "settings",
-                                            "end of settings",
-                                            NULL, error);
+  success = gimp_config_serialize_to_file (GIMP_CONFIG (config),
+                                           file,
+                                           "settings",
+                                           "end of settings",
+                                           NULL, error);
 
   g_object_unref (file);
 

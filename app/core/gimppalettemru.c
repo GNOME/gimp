@@ -90,7 +90,7 @@ gimp_palette_mru_load (GimpPaletteMru *mru,
 
   palette = GIMP_PALETTE (mru);
 
-  scanner = gimp_scanner_new_gfile (file, NULL);
+  scanner = gimp_scanner_new_file (file, NULL);
   if (! scanner)
     return;
 
@@ -153,12 +153,12 @@ gimp_palette_mru_save (GimpPaletteMru *mru,
   g_return_if_fail (GIMP_IS_PALETTE_MRU (mru));
   g_return_if_fail (G_IS_FILE (file));
 
-  writer = gimp_config_writer_new_from_gfile (file,
-                                              TRUE,
-                                              "GIMP colorrc\n\n"
-                                              "This file holds a list of "
-                                              "recently used colors.",
-                                              NULL);
+  writer = gimp_config_writer_new_from_file (file,
+                                             TRUE,
+                                             "GIMP colorrc\n\n"
+                                             "This file holds a list of "
+                                             "recently used colors.",
+                                             NULL);
   if (! writer)
     return;
 

@@ -74,12 +74,6 @@ struct _GimpConfigInterface
 GType      gimp_config_get_type              (void) G_GNUC_CONST;
 
 gboolean   gimp_config_serialize_to_file     (GimpConfig          *config,
-                                              const gchar         *filename,
-                                              const gchar         *header,
-                                              const gchar         *footer,
-                                              gpointer             data,
-                                              GError             **error);
-gboolean   gimp_config_serialize_to_gfile    (GimpConfig          *config,
                                               GFile               *file,
                                               const gchar         *header,
                                               const gchar         *footer,
@@ -103,10 +97,6 @@ GimpParasite *
                                               gpointer             data);
 
 gboolean   gimp_config_deserialize_file      (GimpConfig          *config,
-                                              const gchar         *filename,
-                                              gpointer             data,
-                                              GError             **error);
-gboolean   gimp_config_deserialize_gfile     (GimpConfig          *config,
                                               GFile               *file,
                                               gpointer             data,
                                               GError             **error);

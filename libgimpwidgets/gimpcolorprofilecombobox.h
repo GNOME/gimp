@@ -65,7 +65,7 @@ struct _GimpColorProfileComboBoxClass
 GType       gimp_color_profile_combo_box_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_profile_combo_box_new              (GtkWidget    *dialog,
-                                                           const gchar  *history);
+                                                           GFile        *history);
 GtkWidget * gimp_color_profile_combo_box_new_with_model   (GtkWidget    *dialog,
                                                            GtkTreeModel *model);
 

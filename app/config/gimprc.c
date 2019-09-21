@@ -315,8 +315,8 @@ gimp_rc_load_system (GimpRc *rc)
     g_print ("Parsing '%s'\n",
              gimp_file_get_utf8_name (rc->system_gimprc));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
-                                       rc->system_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
+                                      rc->system_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message ("%s", error->message);
@@ -336,8 +336,8 @@ gimp_rc_load_user (GimpRc *rc)
     g_print ("Parsing '%s'\n",
              gimp_file_get_utf8_name (rc->user_gimprc));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
-                                       rc->user_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
+                                      rc->user_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
@@ -530,8 +530,8 @@ gimp_rc_save (GimpRc *rc)
   if (gimp)
     g_object_unref (gimp);
 
-  gimp_config_deserialize_gfile (GIMP_CONFIG (global),
-                                 rc->system_gimprc, NULL, NULL);
+  gimp_config_deserialize_file (GIMP_CONFIG (global),
+                                rc->system_gimprc, NULL, NULL);
 
   header = g_strconcat (top, gimp_file_get_utf8_name (rc->system_gimprc),
                         bottom, NULL);
@@ -540,10 +540,10 @@ gimp_rc_save (GimpRc *rc)
     g_print ("Writing '%s'\n",
              gimp_file_get_utf8_name (rc->user_gimprc));
 
-  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (rc),
-                                        rc->user_gimprc,
-                                        header, footer, global,
-                                        &error))
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (rc),
+                                       rc->user_gimprc,
+                                       header, footer, global,
+                                       &error))
     {
       g_message ("%s", error->message);
       g_error_free (error);

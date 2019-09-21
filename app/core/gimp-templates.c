@@ -49,8 +49,8 @@ gimp_templates_load (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (gimp->templates),
-                                       file, NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
+                                      file, NULL, &error))
     {
       if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
@@ -59,8 +59,8 @@ gimp_templates_load (Gimp *gimp)
 
           file = gimp_sysconf_directory_file ("templaterc", NULL);
 
-          if (! gimp_config_deserialize_gfile (GIMP_CONFIG (gimp->templates),
-                                               file, NULL, &error))
+          if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
+                                              file, NULL, &error))
             {
               gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
                                     error->message);
@@ -100,10 +100,10 @@ gimp_templates_save (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (gimp->templates),
-                                        file,
-                                        header, footer, NULL,
-                                        &error))
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->templates),
+                                       file,
+                                       header, footer, NULL,
+                                       &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);
@@ -171,8 +171,8 @@ gimp_templates_migrate (const gchar *olddir)
   GimpContainer *templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
   GFile         *file      = gimp_directory_file ("templaterc", NULL);
 
-  if (gimp_config_deserialize_gfile (GIMP_CONFIG (templates), file,
-                                     NULL, NULL))
+  if (gimp_config_deserialize_file (GIMP_CONFIG (templates), file,
+                                    NULL, NULL))
     {
       GFile *sysconf_file;
 
@@ -190,23 +190,23 @@ gimp_templates_migrate (const gchar *olddir)
 
           class->get_child_by_name = gimp_templates_migrate_get_child_by_name;
 
-          gimp_config_deserialize_gfile (GIMP_CONFIG (templates),
-                                         sysconf_file, NULL, NULL);
+          gimp_config_deserialize_file (GIMP_CONFIG (templates),
+                                        sysconf_file, NULL, NULL);
 
           class->get_child_by_name = func;
         }
       else
         {
-          gimp_config_deserialize_gfile (GIMP_CONFIG (templates),
-                                         sysconf_file, NULL, NULL);
+          gimp_config_deserialize_file (GIMP_CONFIG (templates),
+                                        sysconf_file, NULL, NULL);
         }
 
       g_object_unref (sysconf_file);
 
       gimp_list_reverse (GIMP_LIST (templates));
 
-      gimp_config_serialize_to_gfile (GIMP_CONFIG (templates), file,
-                                      NULL, NULL, NULL, NULL);
+      gimp_config_serialize_to_file (GIMP_CONFIG (templates), file,
+                                     NULL, NULL, NULL, NULL);
     }
 
   g_object_unref (file);

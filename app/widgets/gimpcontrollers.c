@@ -150,8 +150,8 @@ gimp_controllers_restore (Gimp          *gimp,
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (manager->controllers),
-                                       file, NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->controllers),
+                                      file, NULL, &error))
     {
       if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
@@ -160,8 +160,8 @@ gimp_controllers_restore (Gimp          *gimp,
 
           file = gimp_sysconf_directory_file ("controllerrc", NULL);
 
-          if (! gimp_config_deserialize_gfile (GIMP_CONFIG (manager->controllers),
-                                               file, NULL, &error))
+          if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->controllers),
+                                              file, NULL, &error))
             {
               gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
                                     error->message);
@@ -205,10 +205,10 @@ gimp_controllers_save (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (manager->controllers),
-                                        file,
-                                        header, footer, NULL,
-                                        &error))
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager->controllers),
+                                       file,
+                                       header, footer, NULL,
+                                       &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);

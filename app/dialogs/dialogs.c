@@ -616,9 +616,9 @@ dialogs_load_recent_docks (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (global_recent_docks),
-                                       file,
-                                       NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (global_recent_docks),
+                                      file,
+                                      NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
@@ -651,11 +651,11 @@ dialogs_save_recent_docks (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (global_recent_docks),
-                                        file,
-                                        "recently closed docks",
-                                        "end of recently closed docks",
-                                        NULL, &error))
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (global_recent_docks),
+                                       file,
+                                       "recently closed docks",
+                                       "end of recently closed docks",
+                                       NULL, &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);

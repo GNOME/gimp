@@ -41,9 +41,7 @@
 
 GType         gimp_scanner_get_type                 (void) G_GNUC_CONST;
 
-GimpScanner * gimp_scanner_new_file                 (const gchar   *filename,
-                                                     GError       **error);
-GimpScanner * gimp_scanner_new_gfile                (GFile         *file,
+GimpScanner * gimp_scanner_new_file                 (GFile         *file,
                                                      GError       **error);
 GimpScanner * gimp_scanner_new_stream               (GInputStream  *input,
                                                      GError       **error);

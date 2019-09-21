@@ -84,9 +84,9 @@ gimp_contexts_load (Gimp    *gimp,
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  success = gimp_config_deserialize_gfile (GIMP_CONFIG (gimp_get_user_context (gimp)),
-                                           file,
-                                           NULL, &my_error);
+  success = gimp_config_deserialize_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
+                                          file,
+                                          NULL, &my_error);
 
   g_object_unref (file);
 
@@ -121,11 +121,11 @@ gimp_contexts_save (Gimp    *gimp,
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  success = gimp_config_serialize_to_gfile (GIMP_CONFIG (gimp_get_user_context (gimp)),
-                                            file,
-                                            "GIMP user context",
-                                            "end of user context",
-                                            NULL, error);
+  success = gimp_config_serialize_to_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
+                                           file,
+                                           "GIMP user context",
+                                           "end of user context",
+                                           NULL, error);
 
   g_object_unref (file);
 

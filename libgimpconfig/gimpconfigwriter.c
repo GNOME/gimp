@@ -118,43 +118,6 @@ gimp_config_writer_newline (GimpConfigWriter *writer)
 
 /**
  * gimp_config_writer_new_from_file:
- * @filename: a filename
- * @atomic: if %TRUE the file is written atomically
- * @header: text to include as comment at the top of the file
- * @error: return location for errors
- *
- * Creates a new #GimpConfigWriter and sets it up to write to
- * @filename. If @atomic is %TRUE, a temporary file is used to avoid
- * possible race conditions. The temporary file is then moved to
- * @filename when the writer is closed.
- *
- * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
- *
- * Since: 2.4
- **/
-GimpConfigWriter *
-gimp_config_writer_new_from_file (const gchar  *filename,
-                                  gboolean      atomic,
-                                  const gchar  *header,
-                                  GError      **error)
-{
-  GimpConfigWriter *writer;
-  GFile            *file;
-
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  file = g_file_new_for_path (filename);
-
-  writer = gimp_config_writer_new_from_gfile (file, atomic, header, error);
-
-  g_object_unref (file);
-
-  return writer;
-}
-
-/**
- * gimp_config_writer_new_from_gfile:
  * @file: a #GFile
  * @atomic: if %TRUE the file is written atomically
  * @header: text to include as comment at the top of the file
@@ -170,10 +133,10 @@ gimp_config_writer_new_from_file (const gchar  *filename,
  * Since: 2.10
  **/
 GimpConfigWriter *
-gimp_config_writer_new_from_gfile (GFile        *file,
-                                   gboolean      atomic,
-                                   const gchar  *header,
-                                   GError      **error)
+gimp_config_writer_new_from_file (GFile        *file,
+                                  gboolean      atomic,
+                                  const gchar  *header,
+                                  GError      **error)
 {
   GimpConfigWriter *writer;
   GOutputStream    *output;

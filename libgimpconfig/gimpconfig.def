@@ -24,7 +24,6 @@ EXPORTS
 	gimp_config_copy
 	gimp_config_deserialize
 	gimp_config_deserialize_file
-	gimp_config_deserialize_gfile
 	gimp_config_deserialize_parasite
 	gimp_config_deserialize_properties
 	gimp_config_deserialize_property
@@ -51,7 +50,6 @@ EXPORTS
 	gimp_config_serialize_property_by_name
 	gimp_config_serialize_to_fd
 	gimp_config_serialize_to_file
-	gimp_config_serialize_to_gfile
 	gimp_config_serialize_to_parasite
 	gimp_config_serialize_to_stream
 	gimp_config_serialize_to_string
@@ -69,7 +67,6 @@ EXPORTS
 	gimp_config_writer_linefeed
 	gimp_config_writer_new_from_fd
 	gimp_config_writer_new_from_file
-	gimp_config_writer_new_from_gfile
 	gimp_config_writer_new_from_stream
 	gimp_config_writer_new_from_string
 	gimp_config_writer_open
@@ -86,7 +83,6 @@ EXPORTS
 	gimp_param_spec_config_path_type
 	gimp_scanner_get_type
 	gimp_scanner_new_file
-	gimp_scanner_new_gfile
 	gimp_scanner_new_stream
 	gimp_scanner_new_string
 	gimp_scanner_parse_boolean

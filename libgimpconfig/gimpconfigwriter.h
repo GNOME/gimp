@@ -40,11 +40,7 @@
 
 GType              gimp_config_writer_get_type     (void) G_GNUC_CONST;
 
-GimpConfigWriter * gimp_config_writer_new_from_file     (const gchar       *filename,
-                                                         gboolean           atomic,
-                                                         const gchar       *header,
-                                                         GError           **error);
-GimpConfigWriter * gimp_config_writer_new_from_gfile    (GFile             *file,
+GimpConfigWriter * gimp_config_writer_new_from_file     (GFile             *file,
                                                          gboolean           atomic,
                                                          const gchar       *header,
                                                          GError           **error);

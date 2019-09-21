@@ -288,7 +288,7 @@ gimp_color_profile_combo_box_changed (GtkComboBox *combo)
  * gimp_color_profile_combo_box_new:
  * @dialog:  a #GtkDialog to present when the user selects the
  *           "Select color profile from disk..." item
- * @history: filename of the profilerc (or %NULL for no history)
+ * @history: #GFile of the profilerc (or %NULL for no history)
  *
  * Create a combo-box widget for selecting color profiles. The combo-box
  * is populated from the file specified as @history. This filename is
@@ -313,13 +313,14 @@ gimp_color_profile_combo_box_changed (GtkComboBox *combo)
  * Since: 2.4
  **/
 GtkWidget *
-gimp_color_profile_combo_box_new (GtkWidget   *dialog,
-                                  const gchar *history)
+gimp_color_profile_combo_box_new (GtkWidget *dialog,
+                                  GFile     *history)
 {
   GtkWidget    *combo;
   GtkListStore *store;
 
   g_return_val_if_fail (GTK_IS_DIALOG (dialog), NULL);
+  g_return_val_if_fail (history == NULL || G_IS_FILE (history), NULL);
 
   store = gimp_color_profile_store_new (history);
   combo = gimp_color_profile_combo_box_new_with_model (dialog,

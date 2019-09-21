@@ -205,7 +205,7 @@ gimp_unitrc_load (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  scanner = gimp_scanner_new_gfile (file, &error);
+  scanner = gimp_scanner_new_file (file, &error);
 
   if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
@@ -214,7 +214,7 @@ gimp_unitrc_load (Gimp *gimp)
 
       file = gimp_sysconf_directory_file ("unitrc", NULL);
 
-      scanner = gimp_scanner_new_gfile (file, NULL);
+      scanner = gimp_scanner_new_file (file, NULL);
     }
 
   if (! scanner)
@@ -303,16 +303,16 @@ gimp_unitrc_save (Gimp *gimp)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   writer =
-    gimp_config_writer_new_from_gfile (file,
-                                       TRUE,
-                                       "GIMP units\n\n"
-                                       "This file contains the user unit database. "
-                                       "You can edit this list with the unit "
-                                       "editor. You are not supposed to edit it "
-                                       "manually, but of course you can do.\n"
-                                       "This file will be entirely rewritten each "
-                                       "time you exit.",
-                                       NULL);
+    gimp_config_writer_new_from_file (file,
+                                      TRUE,
+                                      "GIMP units\n\n"
+                                      "This file contains the user unit database. "
+                                      "You can edit this list with the unit "
+                                      "editor. You are not supposed to edit it "
+                                      "manually, but of course you can do.\n"
+                                      "This file will be entirely rewritten each "
+                                      "time you exit.",
+                                      NULL);
 
   g_object_unref (file);
 

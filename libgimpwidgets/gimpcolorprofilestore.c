@@ -56,7 +56,7 @@ enum
 
 struct _GimpColorProfileStorePrivate
 {
-  gchar *history;
+  GFile *history;
 };
 
 #define GET_PRIVATE(obj) (((GimpColorProfileStore *) (obj))->priv)
@@ -83,10 +83,10 @@ static void      gimp_color_profile_store_get_separator  (GimpColorProfileStore 
                                                           GtkTreeIter            *iter,
                                                           gboolean                top);
 static gboolean  gimp_color_profile_store_save           (GimpColorProfileStore  *store,
-                                                          const gchar            *filename,
+                                                          GFile                  *file,
                                                           GError                **error);
 static gboolean  gimp_color_profile_store_load           (GimpColorProfileStore  *store,
-                                                          const gchar            *filename,
+                                                          GFile                  *file,
                                                           GError                **error);
 
 
@@ -110,16 +110,16 @@ gimp_color_profile_store_class_init (GimpColorProfileStoreClass *klass)
   /**
    * GimpColorProfileStore:history:
    *
-   * Filename of the color history used to populate the profile store.
+   * #GFile of the color history used to populate the profile store.
    *
    * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_HISTORY,
-                                   g_param_spec_string ("history",
+                                   g_param_spec_object ("history",
                                                         "History",
-                                                        "Filename of the color history used to populate the profile store",
-                                                        NULL,
+                                                        "Filen of the color history used to populate the profile store",
+                                                        G_TYPE_FILE,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
 }
@@ -179,7 +179,7 @@ gimp_color_profile_store_finalize (GObject *object)
 {
   GimpColorProfileStorePrivate *private = GET_PRIVATE (object);
 
-  g_clear_pointer (&private->history, g_free);
+  g_clear_object (&private->history);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -196,7 +196,7 @@ gimp_color_profile_store_set_property (GObject      *object,
     {
     case PROP_HISTORY:
       g_return_if_fail (private->history == NULL);
-      private->history = g_value_dup_string (value);
+      private->history = g_value_dup_object (value);
       break;
 
     default:
@@ -216,7 +216,7 @@ gimp_color_profile_store_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_HISTORY:
-      g_value_set_string (value, private->history);
+      g_value_set_object (value, private->history);
       break;
 
     default:
@@ -228,13 +228,13 @@ gimp_color_profile_store_get_property (GObject    *object,
 
 /**
  * gimp_color_profile_store_new:
- * @history: filename of the profilerc (or %NULL for no history)
+ * @history: #GFile of the profilerc (or %NULL for no history)
  *
  * Creates a new #GimpColorProfileStore object and populates it with
  * last used profiles read from the file @history. The updated history
  * is written back to disk when the store is disposed.
  *
- * The filename passed as @history is typically created using the
+ * The #GFile passed as @history is typically created using the
  * following code snippet:
  * <informalexample><programlisting>
  *  gchar *history = gimp_personal_rc_file ("profilerc");
@@ -245,8 +245,10 @@ gimp_color_profile_store_get_property (GObject    *object,
  * Since: 2.4
  **/
 GtkListStore *
-gimp_color_profile_store_new (const gchar *history)
+gimp_color_profile_store_new (GFile *history)
 {
+  g_return_val_if_fail (history == NULL || G_IS_FILE (history), NULL);
+
   return g_object_new (GIMP_TYPE_COLOR_PROFILE_STORE,
                        "history", history,
                        NULL);
@@ -255,9 +257,9 @@ gimp_color_profile_store_new (const gchar *history)
 /**
  * gimp_color_profile_store_add_file:
  * @store: a #GimpColorProfileStore
- * @file:  file of the profile to add (or %NULL)
+ * @file:  #GFile of the profile to add (or %NULL)
  * @label: label to use for the profile
- *         (may only be %NULL if @filename is %NULL)
+ *         (may only be %NULL if @file is %NULL)
  *
  * Adds a color profile item to the #GimpColorProfileStore. Items
  * added with this function will be kept at the top, separated from
@@ -635,14 +637,14 @@ gimp_color_profile_store_load_profile (GimpColorProfileStore *store,
 
 static gboolean
 gimp_color_profile_store_load (GimpColorProfileStore  *store,
-                               const gchar            *filename,
+                               GFile                  *file,
                                GError                **error)
 {
   GScanner   *scanner;
   GTokenType  token;
   gint        i = 0;
 
-  scanner = gimp_scanner_new_file (filename, error);
+  scanner = gimp_scanner_new_file (file, error);
   if (! scanner)
     return FALSE;
 
@@ -687,7 +689,7 @@ gimp_color_profile_store_load (GimpColorProfileStore  *store,
 
 static gboolean
 gimp_color_profile_store_save (GimpColorProfileStore  *store,
-                               const gchar            *filename,
+                               GFile                  *file,
                                GError                **error)
 {
   GimpConfigWriter *writer;
@@ -698,7 +700,7 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
   gboolean          iter_valid;
   gint              i;
 
-  writer = gimp_config_writer_new_from_file (filename,
+  writer = gimp_config_writer_new_from_file (file,
                                              TRUE,
                                              "GIMP color profile history",
                                              error);

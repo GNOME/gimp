@@ -277,47 +277,6 @@ gimp_config_iface_copy (GimpConfig  *src,
 /**
  * gimp_config_serialize_to_file:
  * @config: a #GObject that implements the #GimpConfigInterface.
- * @filename: the name of the file to write the configuration to.
- * @header: optional file header (must be ASCII only)
- * @footer: optional file footer (must be ASCII only)
- * @data: user data passed to the serialize implementation.
- * @error: return location for a possible error
- *
- * Serializes the object properties of @config to the file specified
- * by @filename. If a file with that name already exists, it is
- * overwritten. Basically this function opens @filename for you and
- * calls the serialize function of the @config's #GimpConfigInterface.
- *
- * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
- *
- * Since: 2.4
- **/
-gboolean
-gimp_config_serialize_to_file (GimpConfig   *config,
-                               const gchar  *filename,
-                               const gchar  *header,
-                               const gchar  *footer,
-                               gpointer      data,
-                               GError      **error)
-{
-  GimpConfigWriter *writer;
-
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  writer = gimp_config_writer_new_from_file (filename, TRUE, header, error);
-  if (!writer)
-    return FALSE;
-
-  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
-
-  return gimp_config_writer_finish (writer, footer, error);
-}
-
-/**
- * gimp_config_serialize_to_gfile:
- * @config: a #GObject that implements the #GimpConfigInterface.
  * @file:   the #GFile to write the configuration to.
  * @header: optional file header (must be ASCII only)
  * @footer: optional file footer (must be ASCII only)
@@ -334,12 +293,12 @@ gimp_config_serialize_to_file (GimpConfig   *config,
  * Since: 2.10
  **/
 gboolean
-gimp_config_serialize_to_gfile (GimpConfig   *config,
-                                GFile        *file,
-                                const gchar  *header,
-                                const gchar  *footer,
-                                gpointer      data,
-                                GError      **error)
+gimp_config_serialize_to_file (GimpConfig   *config,
+                               GFile        *file,
+                               const gchar  *header,
+                               const gchar  *footer,
+                               gpointer      data,
+                               GError      **error)
 {
   GimpConfigWriter *writer;
 
@@ -347,7 +306,7 @@ gimp_config_serialize_to_gfile (GimpConfig   *config,
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  writer = gimp_config_writer_new_from_gfile (file, TRUE, header, error);
+  writer = gimp_config_writer_new_from_file (file, TRUE, header, error);
   if (!writer)
     return FALSE;
 
@@ -500,54 +459,6 @@ gimp_config_serialize_to_parasite (GimpConfig  *config,
 /**
  * gimp_config_deserialize_file:
  * @config: a #GObject that implements the #GimpConfigInterface.
- * @filename: the name of the file to read configuration from.
- * @data: user data passed to the deserialize implementation.
- * @error: return location for a possible error
- *
- * Opens the file specified by @filename, reads configuration data
- * from it and configures @config accordingly. Basically this function
- * creates a properly configured #GScanner for you and calls the
- * deserialize function of the @config's #GimpConfigInterface.
- *
- * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
- *
- * Since: 2.4
- **/
-gboolean
-gimp_config_deserialize_file (GimpConfig   *config,
-                              const gchar  *filename,
-                              gpointer      data,
-                              GError      **error)
-{
-  GScanner *scanner;
-  gboolean  success;
-
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  scanner = gimp_scanner_new_file (filename, error);
-  if (! scanner)
-    return FALSE;
-
-  g_object_freeze_notify (G_OBJECT (config));
-
-  success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
-                                                             scanner, 0, data);
-
-  g_object_thaw_notify (G_OBJECT (config));
-
-  gimp_scanner_unref (scanner);
-
-  if (! success)
-    g_assert (error == NULL || *error != NULL);
-
-  return success;
-}
-
-/**
- * gimp_config_deserialize_gfile:
- * @config: a #GObject that implements the #GimpConfigInterface.
  * @file: the #GFile to read configuration from.
  * @data: user data passed to the deserialize implementation.
  * @error: return location for a possible error
@@ -562,10 +473,10 @@ gimp_config_deserialize_file (GimpConfig   *config,
  * Since: 2.10
  **/
 gboolean
-gimp_config_deserialize_gfile (GimpConfig  *config,
-                               GFile       *file,
-                               gpointer     data,
-                               GError     **error)
+gimp_config_deserialize_file (GimpConfig  *config,
+                              GFile       *file,
+                              gpointer     data,
+                              GError     **error)
 {
   GScanner *scanner;
   gboolean  success;
@@ -574,7 +485,7 @@ gimp_config_deserialize_gfile (GimpConfig  *config,
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  scanner = gimp_scanner_new_gfile (file, error);
+  scanner = gimp_scanner_new_file (file, error);
   if (! scanner)
     return FALSE;
 

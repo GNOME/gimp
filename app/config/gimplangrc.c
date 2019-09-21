@@ -111,8 +111,8 @@ gimp_lang_rc_constructed (GObject *object)
     g_print ("Parsing '%s' for configured language.\n",
              gimp_file_get_utf8_name (rc->system_gimprc));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
-                                       rc->system_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
+                                      rc->system_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message ("%s", error->message);
@@ -124,8 +124,8 @@ gimp_lang_rc_constructed (GObject *object)
     g_print ("Parsing '%s' for configured language.\n",
              gimp_file_get_utf8_name (rc->user_gimprc));
 
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
-                                       rc->user_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
+                                      rc->user_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message ("%s", error->message);
