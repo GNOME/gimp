@@ -418,10 +418,10 @@ gimp_config_serialize_to_string (GimpConfig *config,
 
 /**
  * gimp_config_serialize_to_parasite:
- * @config:          a #GObject that implements the #GimpConfigInterface.
- * @parasite_name:   the new parasite's name
- * @pparasite_flags: the new parasite's flags
- * @data:            user data passed to the serialize implementation.
+ * @config:         a #GObject that implements the #GimpConfigInterface.
+ * @parasite_name:  the new parasite's name
+ * @parasite_flags: the new parasite's flags
+ * @data:           user data passed to the serialize implementation.
  *
  * Serializes the object properties of @config to a #GimpParasite.
  *
