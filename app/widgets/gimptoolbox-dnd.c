@@ -95,7 +95,7 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox,
 
   context = gimp_toolbox_get_context (toolbox);
 
-  /* Before caling any dnd helper functions, setup the drag
+  /* Before calling any dnd helper functions, setup the drag
    * destination manually since we want to handle all drag events
    * manually, otherwise we would not be able to give the drag handler
    * a chance to handle drag events

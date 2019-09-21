@@ -216,7 +216,7 @@ session_init (Gimp *gimp)
                 {
                   g_object_unref (info);
 
-                  /* set token to left paren to we won't set another
+                  /* set token to left paren so we won't set another
                    * error below, gimp_config_deserialize() already did
                    */
                   token = G_TOKEN_LEFT_PAREN;

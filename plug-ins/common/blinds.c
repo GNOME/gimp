@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * A fair proprotion of this code was taken from the Whirl plug-in
+ * A fair proportion of this code was taken from the Whirl plug-in
  * which was copyrighted by Federico Mena Quintero (as below).
  *
  * Whirl plug-in --- distort an image into a whirlpool
@@ -540,7 +540,7 @@ dialog_update_preview (GimpDrawable *drawable,
     {
       /* Horizontal blinds */
       /* Apply the blinds algo to a single column -
-       * this act as a transfomation matrix for the
+       * this act as a transformation matrix for the
        * rows. Make row 0 invalid so we can find it again!
        */
       gint i;
@@ -683,7 +683,7 @@ apply_blinds (GimpDrawable *drawable)
     {
       /* Horizontal blinds */
       /* Apply the blinds algo to a single column -
-       * this act as a transfomation matrix for the
+       * this act as a transformation matrix for the
        * rows. Make row 0 invalid so we can find it again!
        */
       gint    i;

@@ -211,7 +211,7 @@ gimp_file_procedure_get_prefixes (GimpFileProcedure *procedure)
  * gimp_file_procedure_set_magics:
  * @procedure: A #GimpFileProcedure.
  * @magics:    A comma separated list of magic file information this procedure
- *             can hande (i.e. "0,string,GIF").
+ *             can handle (i.e. "0,string,GIF").
  *
  * Since: 3.0
  **/

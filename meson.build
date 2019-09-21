@@ -70,7 +70,7 @@ versionconfig.set('GIMP_VERSION',       gimp_version)
 versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
 
 
-# Libtool versionning
+# Libtool versioning
 gimp_interface_age = 0
 lt_current = 0
 lt_revision = gimp_app_version_micro
@@ -1125,7 +1125,7 @@ conf.set('HAVE_GETTEXT', true)
 
 
 ################################################################################
-# Miscelaneous configuration
+# Miscellaneous configuration
 
 #     #
 ##   ## #  ####   ####
@@ -1420,7 +1420,7 @@ add_project_arguments(compiler_args, language: [ 'c', 'cpp' ])
 add_project_link_arguments(linker_args, language: [ 'c', 'cpp' ])
 
 ################################################################################
-# Miscelaneous targets
+# Miscellaneous targets
 
 
  #     #                    #######
@@ -1681,7 +1681,7 @@ final_message = [
 message('\n'.join(final_message))
 
 if warnings.length() > 0
-  warning('Warnings occured during configuration')
+  warning('Warnings occurred during configuration')
   foreach warning : warnings
     warning(warning)
   endforeach

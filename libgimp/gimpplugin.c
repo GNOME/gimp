@@ -88,7 +88,7 @@
  * #GimpProcedure using #GimpProcedureClass.register().
  *
  * The plug-in is called in "run" mode whenever one of the procedures
- * it implements is called by either the main GIMP appliction or any
+ * it implements is called by either the main GIMP application or any
  * other plug-in. In "run" mode, one of the procedure names returned
  * by #GimpPlugInClass.query_procedures() or
  * #GimpPlugInClass.init_procedures() is passed to
@@ -98,7 +98,7 @@
  *
  * In any of the three modes, #GimpPlugInClass.quit() is called before
  * the plug-in process exits, so the plug-in can perform whatever
- * cleanup neccessary.
+ * cleanup necessary.
  *
  * Since: 3.0
  **/

@@ -119,13 +119,13 @@
   /* CODE READABILITY BUGS:
    *
    * . Most uses of variants of the R,G,B variable naming convention
-   *   are referring to L*a*b* co-ordinates, not RGB co-ordinates!
+   *   are referring to L*a*b* coordinates, not RGB coordinates!
    *
    * . Each said variable is usually one of the following, but it is
    *   rarely clear which one:
-   *     - (assumed sRGB) raw non-linear 8-bit RGB co-ordinates
-   *     - 'full'-precision (unshifted) 8-bit L*a*b* co-ordinates
-   *     - box-space (reduced-precision shifted L*a*b*) co-ordinates
+   *     - (assumed sRGB) raw non-linear 8-bit RGB coordinates
+   *     - 'full'-precision (unshifted) 8-bit L*a*b* coordinates
+   *     - box-space (reduced-precision shifted L*a*b*) coordinates
    */
 
 #include "config.h"
@@ -214,9 +214,9 @@ typedef double etype;
 /*
   We provide two different histogram access interfaces.  HIST_LIN()
   accesses the histogram in histogram-native space, taking absolute
-  histogram co-ordinates.  HIST_RGB() accesses the histogram in RGB
-  space.  This latter takes unsigned 8-bit co-ordinates, internally
-  converts those co-ordinates to histogram-native space and returns
+  histogram coordinates.  HIST_RGB() accesses the histogram in RGB
+  space.  This latter takes unsigned 8-bit coordinates, internally
+  converts those coordinates to histogram-native space and returns
   the access pointer to the corresponding histogram cell.
 
   Using these two interfaces we can import RGB data into a more
@@ -3555,7 +3555,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
                             goto got_color;
                           }
                         }
-                      g_error ("Non-existant color was expected to "
+                      g_error ("Non-existent color was expected to "
                                "be in non-destructive colormap.");
                     got_color:
                       dest[INDEXED] = lastindex;

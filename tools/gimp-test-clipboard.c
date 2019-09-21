@@ -96,7 +96,7 @@ static const GOptionEntry main_entries[] =
   {
     "paste", 'p', 0,
     G_OPTION_ARG_STRING, &option_paste_filename,
-    "Paste clipoard into <file> ('-' pastes to STDOUT)", "<file>"
+    "Paste clipboard into <file> ('-' pastes to STDOUT)", "<file>"
   },
   {
     "version", 'v', G_OPTION_FLAG_NO_ARG,
