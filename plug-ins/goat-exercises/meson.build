@@ -1,4 +1,6 @@
-plugin_name = 'goat-exercise'
+# C version
+
+plugin_name = 'goat-exercise-c'
 
 plugin_sources = [
   'goat-exercise-c.c',
@@ -37,11 +39,12 @@ executable(plugin_name,
   install_dir: gimpplugindir /  'plug-ins' / plugin_name,
 )
 
-
 install_data(
   'goat-exercise-c.c',
   install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-c',
 )
+
+# Python 3 (pygobject) version.
 
 if have_python
   install_data(
@@ -50,6 +53,7 @@ if have_python
   )
 endif
 
+# Javascript (GJS) version.
 
 if have_javascript
   install_data(
@@ -57,6 +61,8 @@ if have_javascript
     install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-gjs',
   )
 endif
+
+# Lua (lua-jit + LGI) version.
 
 if have_lua
   install_data(
