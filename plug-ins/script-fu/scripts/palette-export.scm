@@ -95,7 +95,7 @@
 
 ; Convert a color to a simple pair of braces with comma separated values
 ; '(255 255 255) => "(255, 255, 255)"
-(define (color-rgb-to-comma-seperated-list color)
+(define (color-rgb-to-comma-separated-list color)
   (string-append "(" (number->string (color-get-red color))
                  ", " (number->string (color-get-green color))
                  ", " (number->string (color-get-blue color)) ")")
@@ -377,7 +377,7 @@
 				 "    public "
 				 (name-standard palette-name) "() {"))
                      (export-palette (car (gimp-context-get-palette))
-                                     color-rgb-to-comma-seperated-list
+                                     color-rgb-to-comma-separated-list
                                      name-no-conversion
                                      "        colors = new Hashtable<String,Color>();\n" ; start
                                      "        colors.put(\""                             ; name-pre
