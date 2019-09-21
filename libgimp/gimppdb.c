@@ -358,7 +358,7 @@ gimp_pdb_temp_procedure_name (GimpPDB *pdb)
 /**
  * gimp_pdb_dump_to_file:
  * @pdb:  A #GimpPDB.
- * @file: The dump filename.
+ * @file: The dump file.
  *
  * Dumps the current contents of the procedural database
  *
