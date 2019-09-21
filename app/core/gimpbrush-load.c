@@ -647,7 +647,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
     case 1: /* computed brush */
       /* FIXME: support it!
        *
-       * We can probabaly feed the info into the generated brush code
+       * We can probably feed the info into the generated brush code
        * and get a usable brush back. It seems to support the same
        * types -akl
        */

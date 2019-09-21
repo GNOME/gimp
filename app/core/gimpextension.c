@@ -440,7 +440,7 @@ gimp_extension_load (GimpExtension  *extension,
       if (error && *error == NULL)
         *error = g_error_new (GIMP_EXTENSION_ERROR,
                               GIMP_EXTENSION_NO_VERSION,
-                              _("Extension AppData must advertize a version in a <release> tag."));
+                              _("Extension AppData must advertise a version in a <release> tag."));
       success = FALSE;
     }
 

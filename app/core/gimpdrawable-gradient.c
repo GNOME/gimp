@@ -198,7 +198,7 @@ gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
 
           component_format = babl_format ("A float");
 
-          /*  extract the aplha into the temp mask  */
+          /*  extract the alpha into the temp mask  */
           gegl_buffer_set_format (temp_buffer, component_format);
           gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), region,
                                  GEGL_ABYSS_NONE,

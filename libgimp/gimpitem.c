@@ -330,7 +330,7 @@ gimp_item_is_vectors (GimpItem *item)
  *
  * Returns: (element-type GimpItem) (transfer container):
  *          The item's list of children.
- *          The returned ist must be freed with g_list_free(). Item
+ *          The returned list must be freed with g_list_free(). Item
  *          elements belong to libgimp and must not be unrefed.
  *
  * Since: 3.0

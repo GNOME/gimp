@@ -14,7 +14,7 @@ Pixels".
 lerp_rgb: The expression computed is exactly equivalent to mul8bit(a[i],255-f)
 + mul8bit(b[i],f) - I just verified that by brute force for -255 <= b[i]-a[i]
 <= 255 because I couldn't be bothered to find a derivation for this :) . You
-customarily use a factor between 0 and 256 incluse for LERPing if you can, but
+customarily use a factor between 0 and 256 include for LERPing if you can, but
 normal DXT blocks have colors placed at 1/3 and 2/3 between the two
 interpolated colors. 255 is divisible by 3, so lerp_rgb can later be used in
 eval_colors to determine the result of
