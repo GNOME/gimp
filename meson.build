@@ -406,15 +406,13 @@ endif
 ################################################################################
 # Check if Pango is built with a recent fontconfig
 
-pango_check_run = cc.run(
+pango_check = cc.links(
   '''#include <fontconfig/fontconfig.h>
   int main() {
     FcObjectSet *os; os = FcObjectSetBuild (FC_FAMILY, FC_WIDTH);
   }''',
   dependencies: fontconfig,
 )
-pango_check =(pango_check_run.compiled()
-          and pango_check_run.returncode() == 0)
 
 if not pango_check
   pango_warning = '\n  *** '.join([
@@ -470,7 +468,7 @@ if get_option('libbacktrace')
   libbacktrace = cc.find_library('backtrace', required: false)
 
   if libbacktrace.found()
-    libbacktrace_run = cc.run('''
+    libbacktrace_links = cc.links('''
         #include <stddef.h>
         #include <backtrace.h>
         #include <backtrace-supported.h>
@@ -487,7 +485,7 @@ if get_option('libbacktrace')
       dependencies: libbacktrace,
     )
 
-    if not(libbacktrace_run.compiled() and libbacktrace_run.returncode() == 0)
+    if not libbacktrace_links
       warning(
         'libbacktrace was found, but the test compilation failed.\n' +
         'You can find more info in meson-logs/meson-logs.txt.'
@@ -512,7 +510,7 @@ conf.set('HAVE_LIBUNWIND', libunwind.found())
 ## Check for Dr. Mingw
 drmingw = no_dep
 if platform_windows
-  exchndl = cc.find_library('exchndl')
+  exchndl = cc.find_library('exchndl', required: false)
   exchndl_fn = cc.has_function('ExcHndlSetLogFileNameA', dependencies: exchndl)
   if exchndl.found() and exchndl_fn
     drmingw = declare_dependency(dependencies: exchndl)
