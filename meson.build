@@ -287,7 +287,20 @@ no_dep = dependency('', required: false)
 ################################################################################
 # Mandatory Dependencies
 
-relocatable_bundle = get_option('relocatable-bundle')
+if get_option('relocatable-bundle').enabled()
+  relocatable_bundle = true
+elif get_option('relocatable-bundle').disabled()
+  relocatable_bundle = false
+else # .auto()
+  # By default, assume building for Windows or macOS everything to be on
+  # the same prefix and can be relocated.
+  # On other platforms, build-time paths are meaningful.
+  if platform_windows or platform_osx
+      relocatable_bundle = true
+  else
+      relocatable_bundle = false
+  endif
+endif
 conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
@@ -335,15 +348,15 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 
 libmypaint        = dependency('libmypaint',         version: '>=1.3.0')
 
-libmypaint_brushes= relocatable_bundle ? no_dep : \
-  dependency('mypaint-brushes-1.0', version: '>=1.3.0', required: false)
+mypaint_brushes   = dependency('mypaint-brushes-1.0', version: '>=1.3.0')
 
-libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable(
-  'brushesdir',
-  default: '${gimp_installation_dir}'/'share'/'mypaint-data'/'1.0'/'brushes',
-)
+if relocatable_bundle
+  mypaint_brushes_dir = '${gimp_installation_dir}'/'share'/'mypaint-data'/'1.0'/'brushes'
+else
+  mypaint_brushes_dir = mypaint_brushes.get_pkgconfig_variable('brushesdir')
+endif
 
-conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
+conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
 pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
