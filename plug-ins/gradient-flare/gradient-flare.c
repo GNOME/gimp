@@ -967,7 +967,7 @@ gflare_run (GimpProcedure        *procedure,
     }
   else
     {
-      gchar *gimprc    = gimp_personal_rc_file ("gimprc");
+      GFile *gimprc    = gimp_directory_file ("gimprc", NULL);
       gchar *full_path = gimp_config_build_data_path ("gflare");
       gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
@@ -977,9 +977,9 @@ gflare_run (GimpProcedure        *procedure,
                    "(%s \"%s\")\n"
                    "to your %s file."),
                  "gflare-path", "gflare-path",
-                 esc_path, gimp_filename_to_utf8 (gimprc));
+                 esc_path, gimp_file_get_utf8_name (gimprc));
 
-      g_free (gimprc);
+      g_object_unref (gimprc);
       g_free (esc_path);
     }
 
@@ -1529,8 +1529,8 @@ gflare_save (GFlare *gflare)
         {
           if (! message_ok)
             {
-              gchar *gimprc      = gimp_personal_rc_file ("gimprc");
-              gchar *dir         = gimp_personal_rc_file ("gflare");
+              GFile *gimprc = gimp_directory_file ("gimprc", NULL);
+              GFile *dir    = gimp_directory_file ("gflare", NULL);
               gchar *gflare_dir;
 
               gflare_dir =
@@ -1541,12 +1541,14 @@ gflare_save (GFlare *gflare)
                            "(gflare-path \"%s\")\n"
                            "and make a folder '%s', then you can save "
                            "your own GFlares into that folder."),
-                         gflare->name, gimprc, gflare_dir,
-                         gimp_filename_to_utf8 (dir));
+                         gflare->name,
+                         gimp_file_get_utf8_name (gimprc),
+                         gflare_dir,
+                         gimp_file_get_utf8_name (dir));
 
-              g_free (gimprc);
+              g_object_unref (gimprc);
+              g_object_unref (dir);
               g_free (gflare_dir);
-              g_free (dir);
 
               message_ok = TRUE;
             }

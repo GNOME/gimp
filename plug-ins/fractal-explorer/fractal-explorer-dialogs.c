@@ -537,7 +537,7 @@ explorer_dialog (void)
     }
   else
     {
-      gchar *gimprc    = gimp_personal_rc_file ("gimprc");
+      GFile *gimprc    = gimp_directory_file ("gimprc", NULL);
       gchar *full_path = gimp_config_build_data_path ("fractalexplorer");
       gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
@@ -548,9 +548,9 @@ explorer_dialog (void)
                    "to your %s file."),
                  "fractalexplorer-path",
                  "fractalexplorer-path",
-                 esc_path, gimp_filename_to_utf8 (gimprc));
+                 esc_path, gimp_file_get_utf8_name (gimprc));
 
-      g_free (gimprc);
+      g_object_unref (gimprc);
       g_free (esc_path);
     }
 

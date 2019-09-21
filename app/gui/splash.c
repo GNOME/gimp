@@ -90,15 +90,10 @@ static GdkPixbufAnimation *
                                                 gint            max_height,
                                                 gboolean        be_verbose);
 static GdkPixbufAnimation *
-                   splash_image_load_from_path (const gchar    *filename,
+                   splash_image_load_from_file (GFile          *file,
                                                 gint            max_width,
                                                 gint            max_height,
                                                 gboolean        be_verbose);
-static GdkPixbufAnimation *
-                   splash_image_load_from_file (GFile    *file,
-                                                gint      max_width,
-                                                gint      max_height,
-                                                gboolean  be_verbose);
 static GdkPixbufAnimation *
                    splash_image_pick_from_dirs (GList          *dirs,
                                                 gint            max_width,
@@ -485,7 +480,6 @@ splash_image_load (Gimp     *gimp,
                    gboolean  be_verbose)
 {
   GdkPixbufAnimation *animation = NULL;
-  gchar              *filename;
   GFile              *file;
   GList              *list;
 
@@ -500,18 +494,16 @@ splash_image_load (Gimp     *gimp,
     return animation;
 
   /* File "gimp-splash.png" in personal configuration directory. */
-  filename = gimp_personal_rc_file ("gimp-splash.png");
-  animation = splash_image_load_from_path (filename,
+  file = gimp_directory_file ("gimp-splash.png", NULL);
+  animation = splash_image_load_from_file (file,
                                            max_width, max_height,
                                            be_verbose);
-  g_free (filename);
+  g_object_unref (file);
   if (animation)
     return animation;
 
   /* Random image under splashes/ directory in personal config dir. */
-  filename = gimp_personal_rc_file ("splashes");
-  file = g_file_new_for_path (filename);
-  g_free (filename);
+  file = gimp_directory_file ("splashes", NULL);
   list = NULL;
   list = g_list_prepend (list, file);
   animation = splash_image_pick_from_dirs (list,
@@ -522,43 +514,22 @@ splash_image_load (Gimp     *gimp,
     return animation;
 
   /* Release splash image. */
-  filename = g_build_filename (gimp_data_directory (),
-                               "images", "gimp-splash.png", NULL);
-  animation = splash_image_load_from_path (filename,
+  file = gimp_data_directory_file ("images", "gimp-splash.png", NULL);
+  animation = splash_image_load_from_file (file,
                                            max_width, max_height,
                                            be_verbose);
-  g_free (filename);
+  g_object_unref (file);
   if (animation)
     return animation;
 
   /* Random release image in installed splashes/ directory. */
-  filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
-  file = g_file_new_for_path (filename);
-  g_free (filename);
+  file = gimp_data_directory_file ("splashes", NULL);
   list = NULL;
   list = g_list_prepend (list, file);
   animation = splash_image_pick_from_dirs (list,
                                            max_width, max_height,
                                            be_verbose);
   g_list_free_full (list, g_object_unref);
-
-  return animation;
-}
-
-static GdkPixbufAnimation *
-splash_image_load_from_path (const gchar *filename,
-                             gint         max_width,
-                             gint         max_height,
-                             gboolean     be_verbose)
-{
-  GdkPixbufAnimation *animation;
-  GFile              *file;
-
-  file = g_file_new_for_path (filename);
-  animation = splash_image_load_from_file (file,
-                                           max_width, max_height,
-                                           be_verbose);
-  g_object_unref (file);
 
   return animation;
 }

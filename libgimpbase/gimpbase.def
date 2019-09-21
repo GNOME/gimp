@@ -151,7 +151,6 @@ EXPORTS
 	gimp_pdb_error_handler_get_type
 	gimp_pdb_proc_type_get_type
 	gimp_pdb_status_type_get_type
-	gimp_personal_rc_file
 	gimp_pixels_to_units
 	gimp_pixpipe_params_build
 	gimp_pixpipe_params_free

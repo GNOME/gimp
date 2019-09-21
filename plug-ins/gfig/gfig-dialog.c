@@ -267,7 +267,7 @@ gfig_dialog (void)
     }
   else
     {
-      gchar *gimprc    = gimp_personal_rc_file ("gimprc");
+      GFile *gimprc    = gimp_directory_file ("gimprc", NULL);
       gchar *full_path = gimp_config_build_data_path ("gfig");
       gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
@@ -277,9 +277,9 @@ gfig_dialog (void)
                    "(%s \"%s\")\n"
                    "to your %s file."),
                    "gfig-path", "gfig-path", esc_path,
-                   gimp_filename_to_utf8 (gimprc));
+                   gimp_file_get_utf8_name (gimprc));
 
-      g_free (gimprc);
+      g_object_unref (gimprc);
       g_free (esc_path);
     }
 

@@ -26,7 +26,6 @@
 #ifndef __GIMP_ENV_H__
 #define __GIMP_ENV_H__
 
-
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
@@ -69,20 +68,18 @@ GFile       * gimp_sysconf_directory_file      (const gchar *first_element,
 GFile       * gimp_plug_in_directory_file      (const gchar *first_element,
                                                 ...) G_GNUC_MALLOC;
 
-gchar       * gimp_personal_rc_file            (const gchar        *basename) G_GNUC_MALLOC;
+GList       * gimp_path_parse                  (const gchar  *path,
+                                                gint          max_paths,
+                                                gboolean      check,
+                                                GList       **check_failed);
+gchar       * gimp_path_to_str                 (GList        *path) G_GNUC_MALLOC;
+void          gimp_path_free                   (GList        *path);
 
-GList       * gimp_path_parse                  (const gchar        *path,
-                                                gint                max_paths,
-                                                gboolean            check,
-                                                GList             **check_failed);
-gchar       * gimp_path_to_str                 (GList              *path) G_GNUC_MALLOC;
-void          gimp_path_free                   (GList              *path);
-
-gchar       * gimp_path_get_user_writable_dir  (GList              *path) G_GNUC_MALLOC;
+gchar       * gimp_path_get_user_writable_dir  (GList        *path) G_GNUC_MALLOC;
 
 
 /*  should be considered private, don't use!  */
-void          gimp_env_init                    (gboolean            plug_in);
+void          gimp_env_init                    (gboolean      plug_in);
 
 
 G_END_DECLS

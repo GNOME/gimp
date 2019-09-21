@@ -42,30 +42,34 @@
 
 typedef struct
 {
-  gchar    *filename;
+  GFile    *file;
   gchar    *md5;
   GTimeVal  modtime;
 } GimpTestFileState;
 
 
 static gboolean
-gimp_test_get_file_state_verbose (const gchar       *filename,
+gimp_test_get_file_state_verbose (GFile             *file,
                                   GimpTestFileState *filestate)
 {
   gboolean success = TRUE;
 
-  filestate->filename = g_strdup (filename);
+  filestate->file = g_object_ref (file);
 
   /* Get checksum */
   if (success)
     {
+      gchar *filename;
       gchar *contents = NULL;
       gsize  length   = 0;
 
+      filename = g_file_get_path (file);
       success = g_file_get_contents (filename,
                                      &contents,
                                      &length,
                                      NULL);
+      g_free (filename);
+
       if (success)
         {
           filestate->md5 = g_compute_checksum_for_string (G_CHECKSUM_MD5,
@@ -79,7 +83,6 @@ gimp_test_get_file_state_verbose (const gchar       *filename,
   /* Get modification time */
   if (success)
     {
-      GFile     *file = g_file_new_for_path (filename);
       GFileInfo *info = g_file_query_info (file,
                                            G_FILE_ATTRIBUTE_TIME_MODIFIED, 0,
                                            NULL, NULL);
@@ -93,25 +96,25 @@ gimp_test_get_file_state_verbose (const gchar       *filename,
         {
           success = FALSE;
         }
-
-      g_object_unref (file);
     }
 
   if (! success)
-    g_printerr ("Failed to get initial file info for '%s'\n", filename);
+    g_printerr ("Failed to get initial file info for '%s'\n",
+                gimp_file_get_utf8_name (file));
 
   return success;
 }
 
 static gboolean
-gimp_test_file_state_changes (const gchar       *filename,
+gimp_test_file_state_changes (GFile             *file,
                               GimpTestFileState *state1,
                               GimpTestFileState *state2)
 {
   if (state1->modtime.tv_sec  == state2->modtime.tv_sec &&
       state1->modtime.tv_usec == state2->modtime.tv_usec)
     {
-      g_printerr ("A new '%s' was not created\n", filename);
+      g_printerr ("A new '%s' was not created\n",
+                  gimp_file_get_utf8_name (file));
       return FALSE;
     }
 
@@ -120,13 +123,14 @@ gimp_test_file_state_changes (const gchar       *filename,
       char *diff_argv[5] = {
         "diff",
         "-u",
-        state1->filename,
-        state2->filename,
+        g_file_get_path (state1->file),
+        g_file_get_path (state2->file),
         NULL
       };
 
       g_printerr ("'%s' was changed but should not have been. Reason, using "
-                  "`diff -u $expected $actual`\n", filename);
+                  "`diff -u $expected $actual`\n",
+                  gimp_file_get_utf8_name (file));
 
       g_spawn_sync (NULL /*working_directory*/,
                     diff_argv,
@@ -138,6 +142,9 @@ gimp_test_file_state_changes (const gchar       *filename,
                     NULL /*standard_error*/,
                     NULL /*exist_status*/,
                     NULL /*error*/);
+
+      g_free (diff_argv[2]);
+      g_free (diff_argv[3]);
 
       return FALSE;
     }
@@ -171,8 +178,8 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   GimpTestFileState  initial_dockrc_state    = { NULL, NULL, { 0, 0 } };
   GimpTestFileState  final_sessionrc_state   = { NULL, NULL, { 0, 0 } };
   GimpTestFileState  final_dockrc_state      = { NULL, NULL, { 0, 0 } };
-  gchar             *sessionrc_filename      = NULL;
-  gchar             *dockrc_filename         = NULL;
+  GFile             *sessionrc_file          = NULL;
+  GFile             *dockrc_file             = NULL;
 
   /* Make sure to run this before we use any GIMP functions */
   gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
@@ -183,13 +190,13 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
    * the read file, which is why we check the MD5 of the -expected
    * variant
    */
-  sessionrc_filename = gimp_personal_rc_file (expected_sessionrc);
-  dockrc_filename    = gimp_personal_rc_file (expected_dockrc);
+  sessionrc_file = gimp_directory_file (expected_sessionrc, NULL);
+  dockrc_file    = gimp_directory_file (expected_dockrc, NULL);
 
   /* Remember the modtimes and MD5s */
-  g_assert (gimp_test_get_file_state_verbose (sessionrc_filename,
+  g_assert (gimp_test_get_file_state_verbose (sessionrc_file,
                                               &initial_sessionrc_state));
-  g_assert (gimp_test_get_file_state_verbose (dockrc_filename,
+  g_assert (gimp_test_get_file_state_verbose (dockrc_file,
                                               &initial_dockrc_state));
 
   /* Use specific input files when restoring the session */
@@ -215,18 +222,19 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   g_unsetenv ("GIMP_TESTING_SESSIONRC_NAME");
   g_unsetenv ("GIMP_TESTING_DOCKRC_NAME");
 
-  g_free (sessionrc_filename);
-  g_free (dockrc_filename);
-  sessionrc_filename = gimp_personal_rc_file ("sessionrc");
-  dockrc_filename    = gimp_personal_rc_file ("dockrc");
+  g_object_unref (sessionrc_file);
+  g_object_unref (dockrc_file);
+
+  sessionrc_file = gimp_directory_file ("sessionrc", NULL);
+  dockrc_file    = gimp_directory_file ("dockrc", NULL);
 
   /* Exit. This includes writing sessionrc and dockrc*/
   gimp_exit (gimp, TRUE);
 
   /* Now get the new modtimes and MD5s */
-  g_assert (gimp_test_get_file_state_verbose (sessionrc_filename,
+  g_assert (gimp_test_get_file_state_verbose (sessionrc_file,
                                               &final_sessionrc_state));
-  g_assert (gimp_test_get_file_state_verbose (dockrc_filename,
+  g_assert (gimp_test_get_file_state_verbose (dockrc_file,
                                               &final_dockrc_state));
 
   /* If things have gone our way, GIMP will have deserialized
@@ -235,10 +243,10 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
    * to make sure that their content remains the same we compare their
    * MD5
    */
-  g_assert (gimp_test_file_state_changes ("sessionrc",
+  g_assert (gimp_test_file_state_changes (g_file_new_for_path ("sessionrc"),
                                           &initial_sessionrc_state,
                                           &final_sessionrc_state));
-  g_assert (gimp_test_file_state_changes ("dockrc",
+  g_assert (gimp_test_file_state_changes (g_file_new_for_path ("dockrc"),
                                           &initial_dockrc_state,
                                           &final_dockrc_state));
 }

@@ -799,12 +799,11 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
       ! strcmp (param_spec->name, "precision"))
     {
       GtkListStore *profile_store;
-      GFile        *profile;
-      gchar        *filename;
+      GFile        *file;
 
-      filename = gimp_personal_rc_file ("profilerc");
-      profile_store = gimp_color_profile_store_new (filename);
-      g_free (filename);
+      file = gimp_directory_file ("profilerc", NULL);
+      profile_store = gimp_color_profile_store_new (file);
+      g_object_unref (file);
 
       gimp_color_profile_store_add_defaults (GIMP_COLOR_PROFILE_STORE (profile_store),
                                              private->gimp->config->color_management,
@@ -817,13 +816,13 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
       g_object_unref (profile_store);
 
       g_object_get (template,
-                    "color-profile", &profile,
+                    "color-profile", &file,
                     NULL);
 
       gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->profile_combo),
-                                                    profile, NULL);
+                                                    file, NULL);
 
-      if (profile)
-        g_object_unref (profile);
+      if (file)
+        g_object_unref (file);
     }
 }

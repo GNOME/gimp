@@ -1628,11 +1628,11 @@ gimp_prop_profile_combo_box_new (GObject      *config,
     }
   else
     {
-      gchar *filename;
+      GFile *file;
 
-      filename = gimp_personal_rc_file ("profilerc");
-      combo = gimp_color_profile_combo_box_new (dialog, filename);
-      g_free (filename);
+      file = gimp_directory_file ("profilerc", NULL);
+      combo = gimp_color_profile_combo_box_new (dialog, file);
+      g_object_unref (file);
     }
 
   gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),

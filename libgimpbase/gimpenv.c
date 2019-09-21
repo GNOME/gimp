@@ -736,7 +736,7 @@ gimp_child_file (const gchar *parent,
  * @...: a %NULL terminated list of the remaining elements of the path
  *       to the file.
  *
- * Returns a #GFile in the user's GIMP directory, or the data
+ * Returns a #GFile in the user's GIMP directory, or the GIMP
  * directory itself if @first_element is %NULL.
  *
  * See also: gimp_directory().
@@ -913,25 +913,6 @@ gimp_plug_in_directory_file (const gchar *first_element,
   va_end (args);
 
   return file;
-}
-
-/**
- * gimp_personal_rc_file:
- * @basename: The basename of a rc_file.
- *
- * Returns the name of a file in the user-specific GIMP settings directory.
- *
- * The returned string is newly allocated and should be freed with
- * g_free() after use. The returned string is in the encoding used for
- * filenames by GLib, which isn't necessarily UTF-8. (On Windows it
- * always is UTF-8.)
- *
- * Returns: The name of a file in the user-specific GIMP settings directory.
- **/
-gchar *
-gimp_personal_rc_file (const gchar *basename)
-{
-  return g_build_filename (gimp_directory (), basename, NULL);
 }
 
 /**

@@ -414,23 +414,28 @@ menus_exit (Gimp *gimp)
 void
 menus_restore (Gimp *gimp)
 {
+  GFile *file;
   gchar *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("menurc");
+  file = gimp_directory_file ("menurc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   gtk_accel_map_load (filename);
   g_free (filename);
+
+  g_object_unref (file);
 }
 
 void
 menus_save (Gimp     *gimp,
             gboolean  always_save)
 {
+  GFile *file;
   gchar *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -438,13 +443,16 @@ menus_save (Gimp     *gimp,
   if (menurc_deleted && ! always_save)
     return;
 
-  filename = gimp_personal_rc_file ("menurc");
+  file = gimp_directory_file ("menurc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
+  filename = g_file_get_path (file);
   gtk_accel_map_save (filename);
   g_free (filename);
+
+  g_object_unref (file);
 
   menurc_deleted = FALSE;
 }

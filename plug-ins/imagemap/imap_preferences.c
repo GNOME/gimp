@@ -167,93 +167,113 @@ parse_line(PreferencesData_t *data, char *line)
 gboolean
 preferences_load(PreferencesData_t *data)
 {
-   FILE *in;
-   char buf[256];
-   gchar *filename;
+  FILE *in;
+  char buf[256];
+  GFile *file;
+  gchar *filename;
 
-   filename = gimp_personal_rc_file ("imagemaprc");
+  file = gimp_directory_file ("imagemaprc", NULL);
 
-   in = g_fopen(filename, "rb");
-   g_free(filename);
-   if (in) {
-      while (fgets(buf, sizeof(buf), in)) {
-         if (*buf != '\n' && *buf != '#') {
-            parse_line(data, buf);
-         }
-      }
-      fclose(in);
+  filename = g_file_get_path (file);
+  in = g_fopen (filename, "rb");
+  g_free (filename);
+
+  g_object_unref (file);
+
+  if (in)
+    {
+      while (fgets (buf, sizeof (buf), in))
+        {
+          if (*buf != '\n' && *buf != '#')
+            {
+              parse_line (data, buf);
+            }
+        }
+
+      fclose (in);
+
       return TRUE;
-   }
-   return FALSE;
+    }
+
+  return FALSE;
 }
 
 void
 preferences_save(PreferencesData_t *data)
 {
    FILE *out;
+   GFile *file;
    gchar *filename;
    ColorSelData_t *colors = &data->colors;
 
-   filename = gimp_personal_rc_file ("imagemaprc");
+   file = gimp_directory_file ("imagemaprc", NULL);
 
+   filename = g_file_get_path (file);
    out = g_fopen(filename, "wb");
-   if (out) {
-      fprintf(out, "# Image map plug-in resource file\n\n");
-      if (data->default_map_type == NCSA)
+   g_free (filename);
+
+   if (out)
+     {
+       fprintf(out, "# Image map plug-in resource file\n\n");
+       if (data->default_map_type == NCSA)
          fprintf(out, "(default-map-type ncsa)\n");
-      else if (data->default_map_type == CERN)
+       else if (data->default_map_type == CERN)
          fprintf(out, "(default-map-type cern)\n");
-      else
+       else
          fprintf(out, "(default-map-type csim)\n");
 
-      fprintf(out, "(prompt-for-area-info %s)\n",
-              (data->prompt_for_area_info) ? "yes" : "no");
-      fprintf(out, "(require-default-url %s)\n",
-              (data->require_default_url) ? "yes" : "no");
-      fprintf(out, "(show-area-handle %s)\n",
-              (data->show_area_handle) ? "yes" : "no");
-      fprintf(out, "(keep-circles-round %s)\n",
-              (data->keep_circles_round) ? "yes" : "no");
-      fprintf(out, "(show-url-tip %s)\n",
-              (data->show_url_tip) ? "yes" : "no");
-      fprintf(out, "(use-doublesized %s)\n",
-              (data->use_doublesized) ? "yes" : "no");
+       fprintf(out, "(prompt-for-area-info %s)\n",
+               (data->prompt_for_area_info) ? "yes" : "no");
+       fprintf(out, "(require-default-url %s)\n",
+               (data->require_default_url) ? "yes" : "no");
+       fprintf(out, "(show-area-handle %s)\n",
+               (data->show_area_handle) ? "yes" : "no");
+       fprintf(out, "(keep-circles-round %s)\n",
+               (data->keep_circles_round) ? "yes" : "no");
+       fprintf(out, "(show-url-tip %s)\n",
+               (data->show_url_tip) ? "yes" : "no");
+       fprintf(out, "(use-doublesized %s)\n",
+               (data->use_doublesized) ? "yes" : "no");
 
-      fprintf(out, "(undo-levels %d)\n", data->undo_levels);
-      fprintf(out, "(mru-size %d)\n", data->mru_size);
+       fprintf(out, "(undo-levels %d)\n", data->undo_levels);
+       fprintf(out, "(mru-size %d)\n", data->mru_size);
 
-      fprintf(out, "(normal-fg-color %d %d %d)\n",
-              ROUND (colors->normal_fg.red * 255.0),
-              ROUND (colors->normal_fg.green * 255.0),
-              ROUND (colors->normal_fg.blue * 255.0));
-      fprintf(out, "(normal-bg-color %d %d %d)\n",
-              ROUND (colors->normal_bg.red * 255.0),
-              ROUND (colors->normal_bg.green * 255.0),
-              ROUND (colors->normal_bg.blue * 255.0));
-      fprintf(out, "(selected-fg-color %d %d %d)\n",
-              ROUND (colors->selected_fg.red * 255.0),
-              ROUND (colors->selected_fg.green * 255.0),
-              ROUND (colors->selected_fg.blue * 255.0));
-      fprintf(out, "(selected-bg-color %d %d %d)\n",
-              ROUND (colors->selected_bg.red * 255.0),
-              ROUND (colors->selected_bg.green * 255.0),
-              ROUND (colors->selected_bg.blue * 255.0));
-      fprintf(out, "(interactive-fg-color %d %d %d)\n",
-              ROUND (colors->interactive_fg.red * 255.0),
-              ROUND (colors->interactive_fg.green * 255.0),
-              ROUND (colors->interactive_fg.blue * 255.0));
-      fprintf(out, "(interactive-bg-color %d %d %d)\n",
-              ROUND (colors->interactive_bg.red * 255.0),
-              ROUND (colors->interactive_bg.green * 255.0),
-              ROUND (colors->interactive_bg.blue * 255.0));
+       fprintf(out, "(normal-fg-color %d %d %d)\n",
+               ROUND (colors->normal_fg.red * 255.0),
+               ROUND (colors->normal_fg.green * 255.0),
+               ROUND (colors->normal_fg.blue * 255.0));
+       fprintf(out, "(normal-bg-color %d %d %d)\n",
+               ROUND (colors->normal_bg.red * 255.0),
+               ROUND (colors->normal_bg.green * 255.0),
+               ROUND (colors->normal_bg.blue * 255.0));
+       fprintf(out, "(selected-fg-color %d %d %d)\n",
+               ROUND (colors->selected_fg.red * 255.0),
+               ROUND (colors->selected_fg.green * 255.0),
+               ROUND (colors->selected_fg.blue * 255.0));
+       fprintf(out, "(selected-bg-color %d %d %d)\n",
+               ROUND (colors->selected_bg.red * 255.0),
+               ROUND (colors->selected_bg.green * 255.0),
+               ROUND (colors->selected_bg.blue * 255.0));
+       fprintf(out, "(interactive-fg-color %d %d %d)\n",
+               ROUND (colors->interactive_fg.red * 255.0),
+               ROUND (colors->interactive_fg.green * 255.0),
+               ROUND (colors->interactive_fg.blue * 255.0));
+       fprintf(out, "(interactive-bg-color %d %d %d)\n",
+               ROUND (colors->interactive_bg.red * 255.0),
+               ROUND (colors->interactive_bg.green * 255.0),
+               ROUND (colors->interactive_bg.blue * 255.0));
 
-      mru_write(get_mru(), out);
+       mru_write(get_mru(), out);
 
-      fclose(out);
-   } else {
-      do_file_error_dialog( _("Couldn't save resource file:"), filename);
-   }
-   g_free(filename);
+       fclose(out);
+     }
+   else
+     {
+       do_file_error_dialog (_("Couldn't save resource file:"),
+                             gimp_file_get_utf8_name (file));
+     }
+
+   g_object_unref (file);
 }
 
 static void
