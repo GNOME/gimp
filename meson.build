@@ -355,20 +355,14 @@ conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'
 ################################################################################
 # Check for GLib Networking
 
-glib_networking_works_run = cc.run(
-  '''#include <gio/gio.h>
-  int main() {
-    return !g_tls_backend_supports_tls (g_tls_backend_get_default ());
-  }''',
-  dependencies: gio,
-)
-glib_networking_works =(glib_networking_works_run.compiled()
-                    and glib_networking_works_run.returncode() == 0)
-
-if not glib_networking_works
-  if meson.is_cross_build()
+glib_networking_works_run=false
+if meson.is_cross_build() and not meson.has_exe_wrapper()
+    # Cross-compilation without run capability: we won't be able to
+    # check networking support.
+    glib_networking_works = true
     glib_warning = '''
-      Test for glib-networking cannot be performed while cross-compiling.
+      Test for glib-networking cannot be performed while cross-compiling,
+      unless you set an `exe_wrapper` binary in your toolchain file.
       Make sure glib-networking is installed, otherwise GIMP will not be able
       to display the remote help pages through the help browser, nor will it
       be able to open remote HTTPS (or other protocol using SSL/TLS) files.
@@ -377,9 +371,36 @@ if not glib_networking_works
     '''
     warning(glib_warning)
     warnings += glib_warning
-  else
-    error('Test for glib-networking failed. This is required.')
-  endif
+else # not meson.is_cross_build() or meson.has_exe_wrapper()
+    glib_networking_works_run = cc.run(
+      '''#include <gio/gio.h>
+      int main() {
+        return !g_tls_backend_supports_tls (g_tls_backend_get_default ());
+      }''',
+      dependencies: gio,
+    )
+    glib_networking_works = (glib_networking_works_run.compiled() and
+                             glib_networking_works_run.returncode() == 0)
+    if not glib_networking_works and meson.is_cross_build()
+        # Since cross-platform test runs may be unreliable, let's be
+        # flexible and pass the test with a warning.
+        glib_networking_works = true
+        glib_warning = '''
+      The cross-platform test for glib-networking failed, using the
+      `exe_wrapper` set in your toolchain file.
+      Make sure glib-networking is installed, otherwise GIMP will not be able
+      to display the remote help pages through the help browser, nor will it
+      be able to open remote HTTPS (or other protocol using SSL/TLS) files.
+      HTTPS is becoming the expected standard and should not be considered
+      optional anymore.
+        '''
+        warning(glib_warning)
+        warnings += glib_warning
+    endif
+endif
+
+if not glib_networking_works
+  error('Test for glib-networking failed. This is required.')
 endif
 
 ################################################################################
