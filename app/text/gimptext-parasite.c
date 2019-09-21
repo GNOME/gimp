@@ -55,45 +55,33 @@ gimp_text_parasite_name (void)
 GimpParasite *
 gimp_text_to_parasite (const GimpText *text)
 {
-  GimpParasite *parasite;
-  gchar        *str;
-
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (text), NULL);
-  g_return_val_if_fail (str != NULL, NULL);
-
-  parasite = gimp_parasite_new (gimp_text_parasite_name (),
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
+  return gimp_config_serialize_to_parasite (GIMP_CONFIG (text),
+                                            gimp_text_parasite_name (),
+                                            GIMP_PARASITE_PERSISTENT,
+                                            NULL);
 }
 
 GimpText *
 gimp_text_from_parasite (const GimpParasite  *parasite,
                          GError             **error)
 {
-  GimpText    *text;
-  const gchar *str;
+  GimpText *text;
 
   g_return_val_if_fail (parasite != NULL, NULL);
   g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
                                 gimp_text_parasite_name ()) == 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  str = gimp_parasite_data (parasite);
-
   text = g_object_new (GIMP_TYPE_TEXT, NULL);
 
-  if (str != NULL)
+  if (gimp_parasite_data (parasite))
     {
-      gimp_config_deserialize_string (GIMP_CONFIG (text),
-                                      str,
-                                      gimp_parasite_data_size (parasite),
-                                      NULL,
-                                      error);
+      gimp_config_deserialize_parasite (GIMP_CONFIG (text),
+                                        parasite,
+                                        NULL,
+                                        error);
     }
   else
     {

@@ -354,10 +354,9 @@ gimp_color_display_load_state (GimpColorDisplay *display,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
   g_return_if_fail (state != NULL);
 
-  gimp_config_deserialize_string (GIMP_CONFIG (display),
-                                  gimp_parasite_data (state),
-                                  gimp_parasite_data_size (state),
-                                  NULL, NULL);
+  gimp_config_deserialize_parasite (GIMP_CONFIG (display),
+                                    state,
+                                    NULL, NULL);
 }
 
 /**
@@ -373,19 +372,12 @@ gimp_color_display_load_state (GimpColorDisplay *display,
 GimpParasite *
 gimp_color_display_save_state (GimpColorDisplay *display)
 {
-  GimpParasite *parasite;
-  gchar        *str;
-
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
 
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
-
-  parasite = gimp_parasite_new ("Display/Proof",
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
+  return gimp_config_serialize_to_parasite (GIMP_CONFIG (display),
+                                            "Display/Proof",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            NULL);
 }
 
 /**

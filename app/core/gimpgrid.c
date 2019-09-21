@@ -307,36 +307,25 @@ gimp_grid_parasite_name (void)
 GimpParasite *
 gimp_grid_to_parasite (GimpGrid *grid)
 {
-  GimpParasite *parasite;
-  gchar        *str;
-
   g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
-  str = gimp_config_serialize_to_string (GIMP_CONFIG (grid), NULL);
-  g_return_val_if_fail (str != NULL, NULL);
-
-  parasite = gimp_parasite_new (gimp_grid_parasite_name (),
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (str) + 1, str);
-  g_free (str);
-
-  return parasite;
+  return gimp_config_serialize_to_parasite (GIMP_CONFIG (grid),
+                                            gimp_grid_parasite_name (),
+                                            GIMP_PARASITE_PERSISTENT,
+                                            NULL);
 }
 
 GimpGrid *
 gimp_grid_from_parasite (const GimpParasite *parasite)
 {
-  GimpGrid    *grid;
-  const gchar *str;
-  GError      *error = NULL;
+  GimpGrid *grid;
+  GError   *error = NULL;
 
   g_return_val_if_fail (parasite != NULL, NULL);
   g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
                                 gimp_grid_parasite_name ()) == 0, NULL);
 
-  str = gimp_parasite_data (parasite);
-
-  if (! str)
+  if (! gimp_parasite_data (parasite))
     {
       g_warning ("Empty grid parasite");
 
@@ -345,11 +334,10 @@ gimp_grid_from_parasite (const GimpParasite *parasite)
 
   grid = g_object_new (GIMP_TYPE_GRID, NULL);
 
-  if (! gimp_config_deserialize_string (GIMP_CONFIG (grid),
-                                        str,
-                                        gimp_parasite_data_size (parasite),
-                                        NULL,
-                                        &error))
+  if (! gimp_config_deserialize_parasite (GIMP_CONFIG (grid),
+                                          parasite,
+                                          NULL,
+                                          &error))
     {
       g_warning ("Failed to deserialize grid parasite: %s", error->message);
       g_error_free (error);
