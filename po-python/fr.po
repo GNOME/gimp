@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-08 16:27+0000\n"
-"PO-Revision-Date: 2019-04-06 20:24+0200\n"
+"POT-Creation-Date: 2019-09-20 16:59+0000\n"
+"PO-Revision-Date: 2019-09-21 10:52+0200\n"
 "Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -573,8 +573,8 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
-"Le motif n’est défini que par l’onglet actif. « Boîte de jeu » est semblable à "
-"Roues, mais il utilise les roues dentées et les numéros de trous trouvés "
+"Le motif n’est défini que par l’onglet actif. « Boîte de jeu » est semblable "
+"à Roues, mais il utilise les roues dentées et les numéros de trous trouvés "
 "dans les boîtes de jeu. Si vous suivez les instructions des manuels des "
 "boîtes de jeu, les résultats seront semblables."
 
@@ -683,7 +683,8 @@ msgstr "Morphing"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
 msgid "Morph fixed gear shape. Only affects some of the shapes."
-msgstr "Forme de roue dentée fixe par morphing. N’affecte que certaines formes."
+msgstr ""
+"Forme de roue dentée fixe par morphing. N’affecte que certaines formes."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
 msgid "Rotation of the fixed gear, in degrees"
@@ -711,8 +712,8 @@ msgstr ""
 "est centré."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Redessiner"
+msgid "Re_draw"
+msgstr "Re_dessiner"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -723,16 +724,16 @@ msgstr ""
 "sélection, cliquez sur cette option pour obtenir un aperçu du motif."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Réinitialiser"
+msgid "_Reset"
+msgstr "_Réinitialiser"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Annuler"
+msgid "_Cancel"
+msgstr "Ann_uler"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "Valider"
+msgid "_OK"
+msgstr "_Valider"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
