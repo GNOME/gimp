@@ -227,6 +227,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                   NULL;
       config.tile_cache_size  = gegl_config->tile_cache_size;
       config.swap_path        = gegl_config->swap_path;
+      config.swap_compression = gegl_config->swap_compression;
       config.num_processors   = gegl_config->num_processors;
 
       proc_run.name     = (gchar *) gimp_object_get_name (procedure);
