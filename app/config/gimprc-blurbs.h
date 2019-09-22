@@ -456,6 +456,9 @@ _("Enable the Seamless Clone tool.")
 #define SPACE_BAR_ACTION_BLURB \
 _("What to do when the space bar is pressed in the image window.")
 
+#define SWAP_COMPRESSION_BLURB \
+_("The compression method used for tile data stored in the swap file.")
+
 #define SWAP_PATH_BLURB \
 _("Sets the swap file location. GIMP uses a tile based memory allocation " \
   "scheme. The swap file is used to quickly and easily swap tiles out to " \

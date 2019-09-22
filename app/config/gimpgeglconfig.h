@@ -37,6 +37,7 @@ struct _GimpGeglConfig
 
   gchar    *temp_path;
   gchar    *swap_path;
+  gchar    *swap_compression;
   gint      num_processors;
   guint64   tile_cache_size;
   gboolean  use_opencl;

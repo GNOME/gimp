@@ -1172,9 +1172,9 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
 #ifdef ENABLE_MP
-  table = prefs_table_new (5, GTK_CONTAINER (vbox2));
+  table = prefs_table_new (6, GTK_CONTAINER (vbox2));
 #else
-  table = prefs_table_new (4, GTK_CONTAINER (vbox2));
+  table = prefs_table_new (5, GTK_CONTAINER (vbox2));
 #endif /* ENABLE_MP */
 
   prefs_spin_button_add (object, "undo-levels", 1.0, 5.0, 0,
@@ -1190,10 +1190,14 @@ prefs_dialog_new (Gimp       *gimp,
                            _("Maximum _new image size:"),
                            GTK_TABLE (table), 3, size_group);
 
+  prefs_compression_combo_box_add (object, "swap-compression",
+                                   _("S_wap compression:"),
+                                   GTK_TABLE (table), 4, size_group);
+
 #ifdef ENABLE_MP
   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
                          _("Number of _threads to use:"),
-                         GTK_TABLE (table), 4, size_group);
+                         GTK_TABLE (table), 5, size_group);
 #endif /* ENABLE_MP */
 
   /*  Hardware Acceleration  */
