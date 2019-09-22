@@ -165,11 +165,11 @@ browser_open_url (GtkWindow    *window,
   HINSTANCE hinst = ShellExecute (GetDesktopWindow(),
                                   "open", url, NULL, NULL, SW_SHOW);
 
-  if ((gint) hinst <= 32)
+  if ((intptr_t) hinst <= 32)
     {
       const gchar *err;
 
-      switch ((gint) hinst)
+      switch ((intptr_t) hinst)
         {
           case 0 :
             err = _("The operating system is out of memory or resources.");
