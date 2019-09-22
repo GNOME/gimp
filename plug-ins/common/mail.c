@@ -674,9 +674,9 @@ send_dialog (void)
 static gboolean
 valid_file (GFile *file)
 {
-  gchar       *filename;
-  struct stat  buf;
-  gboolean     valid;
+  gchar    *filename;
+  GStatBuf  buf;
+  gboolean  valid;
 
   filename = g_file_get_path (file);
   valid = g_stat (filename, &buf) == 0 && buf.st_size > 0;

@@ -1134,11 +1134,11 @@ gimp_path_free (GList *path)
 gchar *
 gimp_path_get_user_writable_dir (GList *path)
 {
-  GList       *list;
-  uid_t        euid;
-  gid_t        egid;
-  struct stat  filestat;
-  gint         err;
+  GList    *list;
+  uid_t     euid;
+  gid_t     egid;
+  GStatBuf  filestat;
+  gint      err;
 
   g_return_val_if_fail (path != NULL, NULL);
 

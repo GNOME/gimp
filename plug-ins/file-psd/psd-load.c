@@ -119,13 +119,13 @@ load_image (GFile        *file,
             gboolean     *profile_loaded,
             GError      **load_error)
 {
-  gchar        *filename;
-  FILE         *f;
-  struct stat   st;
-  PSDimage      img_a;
-  PSDlayer    **lyr_a;
-  GimpImage    *image = NULL;
-  GError       *error = NULL;
+  gchar      *filename;
+  FILE       *f;
+  GStatBuf    st;
+  PSDimage    img_a;
+  PSDlayer  **lyr_a;
+  GimpImage  *image = NULL;
+  GError     *error = NULL;
 
   filename = g_file_get_path (file);
 

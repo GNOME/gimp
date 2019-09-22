@@ -61,12 +61,12 @@ load_thumbnail_image (GFile   *file,
                       gint    *height,
                       GError **load_error)
 {
-  gchar       *filename;
-  FILE        *f;
-  struct stat  st;
-  PSDimage     img_a;
-  GimpImage   *image = NULL;
-  GError      *error = NULL;
+  gchar     *filename;
+  FILE      *f;
+  GStatBuf   st;
+  PSDimage   img_a;
+  GimpImage *image = NULL;
+  GError    *error = NULL;
 
   filename = g_file_get_path (file);
 
