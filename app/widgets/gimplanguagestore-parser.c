@@ -336,7 +336,7 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-#if ENABLE_RELOCATABLE_RESOURCES
+#ifdef ENABLE_RELOCATABLE_RESOURCES
   file = gimp_installation_directory_file ("share", "xml", "iso-codes",
                                            "iso_639.xml", NULL);
 #else
