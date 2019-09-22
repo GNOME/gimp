@@ -139,12 +139,15 @@ static gdouble         gradient_calc_spiral_factor               (gdouble       
                                                                   gboolean               clockwise);
 
 static gdouble         gradient_calc_shapeburst_angular_factor   (GeglSampler           *dist_sampler,
+                                                                  gdouble                offset,
                                                                   gdouble                x,
                                                                   gdouble                y);
 static gdouble         gradient_calc_shapeburst_spherical_factor (GeglSampler           *dist_sampler,
+                                                                  gdouble                offset,
                                                                   gdouble                x,
                                                                   gdouble                y);
 static gdouble         gradient_calc_shapeburst_dimpled_factor   (GeglSampler           *dist_sampler,
+                                                                  gdouble                offset,
                                                                   gdouble                x,
                                                                   gdouble                y);
 
@@ -797,14 +800,24 @@ gradient_calc_spiral_factor (gdouble   dist,
 
 static gdouble
 gradient_calc_shapeburst_angular_factor (GeglSampler *dist_sampler,
+                                         gdouble      offset,
                                          gdouble      x,
                                          gdouble      y)
 {
   gfloat value;
 
+  offset = offset / 100.0;
+
   gegl_sampler_get (dist_sampler, x, y, NULL, &value, GEGL_ABYSS_NONE);
 
   value = 1.0 - value;
+
+  if (value < offset)
+    value = 0.0;
+  else if (offset == 1.0)
+    value = (value >= 1.0) ? 1.0 : 0.0;
+  else
+    value = (value - offset) / (1.0 - offset);
 
   return value;
 }
@@ -812,12 +825,22 @@ gradient_calc_shapeburst_angular_factor (GeglSampler *dist_sampler,
 
 static gdouble
 gradient_calc_shapeburst_spherical_factor (GeglSampler *dist_sampler,
+                                           gdouble      offset,
                                            gdouble      x,
                                            gdouble      y)
 {
   gfloat value;
 
+  offset = 1.0 - offset / 100.0;
+
   gegl_sampler_get (dist_sampler, x, y, NULL, &value, GEGL_ABYSS_NONE);
+
+  if (value > offset)
+    value = 1.0;
+  else if (offset == 0.0)
+    value = (value <= 0.0) ? 0.0 : 1.0;
+  else
+    value = value / offset;
 
   value = 1.0 - sin (0.5 * G_PI * value);
 
@@ -827,12 +850,22 @@ gradient_calc_shapeburst_spherical_factor (GeglSampler *dist_sampler,
 
 static gdouble
 gradient_calc_shapeburst_dimpled_factor (GeglSampler *dist_sampler,
+                                         gdouble      offset,
                                          gdouble      x,
                                          gdouble      y)
 {
   gfloat value;
 
+  offset = 1.0 - offset / 100.0;
+
   gegl_sampler_get (dist_sampler, x, y, NULL, &value, GEGL_ABYSS_NONE);
+
+  if (value > offset)
+    value = 1.0;
+  else if (offset == 0.0)
+    value = (value <= 0.0) ? 0.0 : 1.0;
+  else
+    value = value / offset;
 
   value = cos (0.5 * G_PI * value);
 
@@ -893,16 +926,19 @@ gradient_render_pixel (gdouble   x,
 
     case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
       factor = gradient_calc_shapeburst_angular_factor (rbd->dist_sampler,
+                                                        rbd->offset,
                                                         x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
       factor = gradient_calc_shapeburst_spherical_factor (rbd->dist_sampler,
+                                                          rbd->offset,
                                                           x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       factor = gradient_calc_shapeburst_dimpled_factor (rbd->dist_sampler,
+                                                        rbd->offset,
                                                         x, y);
       break;
 
