@@ -229,6 +229,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.tile_cache_size  = gegl_config->tile_cache_size;
       config.swap_path        = gegl_config->swap_path;
       config.num_processors   = gegl_config->num_processors;
+      config.swap_compression = gegl_config->swap_compression;
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = gimp_value_array_length (args);
