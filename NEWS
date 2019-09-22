@@ -54,6 +54,7 @@ Tools:
     When set to Adjust, which is used by default, the filter's output
     may extent past the drawable's boundary, and the drawable will be
     resized to match the output when committed.
+  - Gradient tool: offest support in shaped gradients
 
 Plug-ins:
 
@@ -115,6 +116,13 @@ User interface:
     the rotate tool in image mode (similarly to the corresponding action
     for layers).
 
+Preferences:
+
+  - New "Swap compression" option: explicit control over the tile-swap
+    compression algorithm in GEGL. "Best performance" is used by default,
+    "Balanced", "Best compression", and "None" (disables compression) are
+    available. 
+
 Devel docs:
 
   - Update the libgimpconfig and libgimpbase docs.
@@ -133,8 +141,9 @@ Debugging:
 
 Translations:
 
-  - British English, Catalan, Croatian, Dutch, French, Greek, Hungarian,
-    Italian, Polish, Russian, Slovenian, Spanish, Swedish, Turkish.
+  - Brazilian Portuguese, British English, Catalan, Croatian, Dutch, French,
+    Greek, Hungarian, Italian, Polish, Russian, Slovenian, Spanish, Swedish,
+    Turkish.
 
 Bugfixes:
 
