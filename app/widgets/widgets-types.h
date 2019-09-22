@@ -178,6 +178,7 @@ typedef struct _GimpColorHistory             GimpColorHistory;
 typedef struct _GimpColormapSelection        GimpColormapSelection;
 typedef struct _GimpColorPanel               GimpColorPanel;
 typedef struct _GimpComboTagEntry            GimpComboTagEntry;
+typedef struct _GimpCompressionComboBox      GimpCompressionComboBox;
 typedef struct _GimpControllerEditor         GimpControllerEditor;
 typedef struct _GimpControllerList           GimpControllerList;
 typedef struct _GimpCurveView                GimpCurveView;

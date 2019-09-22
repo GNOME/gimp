@@ -390,3 +390,20 @@ prefs_profile_combo_box_add (GObject      *config,
 
   return combo;
 }
+
+GtkWidget *
+prefs_compression_combo_box_add (GObject      *config,
+                                 const gchar  *property_name,
+                                 const gchar  *label,
+                                 GtkGrid      *grid,
+                                 gint          grid_top,
+                                 GtkSizeGroup *group)
+{
+  GtkWidget *combo = gimp_prop_compression_combo_box_new (config,
+                                                          property_name);
+
+  if (combo)
+    prefs_widget_add_aligned (combo, label, grid, grid_top, FALSE, group);
+
+  return combo;
+}

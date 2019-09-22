@@ -40,6 +40,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcolorpanel.h"
+#include "gimpcompressioncombobox.h"
 #include "gimpdial.h"
 #include "gimpdnd.h"
 #include "gimpiconpicker.h"
@@ -1742,6 +1743,107 @@ gimp_prop_profile_combo_notify (GObject                  *config,
 
   if (file)
     g_object_unref (file);
+}
+
+
+/***************************/
+/*  compression combo box  */
+/***************************/
+
+static void   gimp_prop_compression_combo_box_callback (GtkWidget  *combo,
+                                                        GObject    *config);
+static void   gimp_prop_compression_combo_box_notify   (GObject    *config,
+                                                        GParamSpec *param_spec,
+                                                        GtkWidget  *combo);
+
+GtkWidget *
+gimp_prop_compression_combo_box_new (GObject     *config,
+                                     const gchar *property_name)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo;
+  gchar      *value;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_STRING, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  combo = gimp_compression_combo_box_new ();
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  gimp_compression_combo_box_set_compression (
+    GIMP_COMPRESSION_COMBO_BOX (combo), value);
+  g_free (value);
+
+  set_param_spec (G_OBJECT (combo), combo, param_spec);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_prop_compression_combo_box_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_compression_combo_box_notify),
+                  combo);
+
+  return combo;
+}
+
+static void
+gimp_prop_compression_combo_box_callback (GtkWidget *combo,
+                                          GObject   *config)
+{
+  GParamSpec *param_spec;
+  gchar      *compression;
+
+  param_spec = get_param_spec (G_OBJECT (combo));
+  if (! param_spec)
+    return;
+
+  compression = gimp_compression_combo_box_get_compression (
+    GIMP_COMPRESSION_COMBO_BOX (combo));
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_compression_combo_box_notify,
+                                   combo);
+
+  g_object_set (config,
+                param_spec->name, compression,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_compression_combo_box_notify,
+                                     combo);
+
+  g_free (compression);
+}
+
+static void
+gimp_prop_compression_combo_box_notify (GObject    *config,
+                                        GParamSpec *param_spec,
+                                        GtkWidget  *combo)
+{
+  gchar *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (combo,
+                                   gimp_prop_compression_combo_box_callback,
+                                   config);
+
+  gimp_compression_combo_box_set_compression (
+    GIMP_COMPRESSION_COMBO_BOX (combo), value);
+
+  g_signal_handlers_unblock_by_func (combo,
+                                     gimp_prop_compression_combo_box_callback,
+                                     config);
+
+  g_free (value);
 }
 
 

@@ -1185,10 +1185,14 @@ prefs_dialog_new (Gimp       *gimp,
                            _("Maximum _new image size:"),
                            GTK_GRID (grid), 3, size_group);
 
+  prefs_compression_combo_box_add (object, "swap-compression",
+                                   _("S_wap compression:"),
+                                   GTK_GRID (grid), 4, size_group);
+
 #ifdef ENABLE_MP
   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
                          _("Number of _threads to use:"),
-                         GTK_GRID (grid), 4, size_group);
+                         GTK_GRID (grid), 5, size_group);
 #endif /* ENABLE_MP */
 
   /*  Hardware Acceleration  */

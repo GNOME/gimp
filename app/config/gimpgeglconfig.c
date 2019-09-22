@@ -38,7 +38,9 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_MAX_MEM_PROCESS (MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE))
+#define GIMP_DEFAULT_SWAP_COMPRESSION "fast"
+
+#define GIMP_MAX_MEM_PROCESS          (MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE))
 
 
 enum
@@ -46,6 +48,7 @@ enum
   PROP_0,
   PROP_TEMP_PATH,
   PROP_SWAP_PATH,
+  PROP_SWAP_COMPRESSION,
   PROP_NUM_PROCESSORS,
   PROP_TILE_CACHE_SIZE,
   PROP_USE_OPENCL,
@@ -104,6 +107,13 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                          "${gimp_cache_dir}",
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_SWAP_COMPRESSION,
+                           "swap-compression",
+                           "Swap compression",
+                            SWAP_COMPRESSION_BLURB,
+                           GIMP_DEFAULT_SWAP_COMPRESSION,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   n_threads = g_get_num_processors ();
 
@@ -174,6 +184,7 @@ gimp_gegl_config_finalize (GObject *object)
 
   g_free (gegl_config->temp_path);
   g_free (gegl_config->swap_path);
+  g_free (gegl_config->swap_compression);
 
   gimp_debug_remove_instance (object);
 
@@ -197,6 +208,10 @@ gimp_gegl_config_set_property (GObject      *object,
     case PROP_SWAP_PATH:
       g_free (gegl_config->swap_path);
       gegl_config->swap_path = g_value_dup_string (value);
+      break;
+    case PROP_SWAP_COMPRESSION:
+      g_free (gegl_config->swap_compression);
+      gegl_config->swap_compression = g_value_dup_string (value);
       break;
     case PROP_NUM_PROCESSORS:
       gegl_config->num_processors = g_value_get_int (value);
@@ -233,6 +248,9 @@ gimp_gegl_config_get_property (GObject    *object,
       break;
     case PROP_SWAP_PATH:
       g_value_set_string (value, gegl_config->swap_path);
+      break;
+    case PROP_SWAP_COMPRESSION:
+      g_value_set_string (value, gegl_config->swap_compression);
       break;
     case PROP_NUM_PROCESSORS:
       g_value_set_int (value, gegl_config->num_processors);

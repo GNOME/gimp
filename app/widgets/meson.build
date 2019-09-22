@@ -40,6 +40,7 @@ libappwidgets_sources = [
   'gimpcolorselectorpalette.c',
   'gimpcombotagentry.c',
   'gimpcomponenteditor.c',
+  'gimpcompressioncombobox.c',
   'gimpcontainerbox.c',
   'gimpcontainercombobox.c',
   'gimpcontainereditor.c',

@@ -96,6 +96,8 @@ libappwidgets_a_sources = \
 	gimpcombotagentry.h		\
 	gimpcomponenteditor.c		\
 	gimpcomponenteditor.h		\
+	gimpcompressioncombobox.c	\
+	gimpcompressioncombobox.h	\
 	gimpcontainerbox.c		\
 	gimpcontainerbox.h		\
 	gimpcontainercombobox.c		\

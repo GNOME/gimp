@@ -122,6 +122,12 @@ GtkWidget * prefs_profile_combo_box_add      (GObject      *config,
                                               GtkSizeGroup *group,
                                               GObject      *profile_path_config,
                                               const gchar  *profile_path_property_name);
+GtkWidget * prefs_compression_combo_box_add  (GObject      *config,
+                                              const gchar  *property_name,
+                                              const gchar  *label,
+                                              GtkGrid      *grid,
+                                              gint          grid_top,
+                                              GtkSizeGroup *group);
 
 
 #endif /* __PREFERENCES_DIALOG_H__ */
