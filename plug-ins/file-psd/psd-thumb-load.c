@@ -62,7 +62,7 @@ load_thumbnail_image (const gchar  *filename,
                       GError      **load_error)
 {
   FILE        *f;
-  struct stat  st;
+  GStatBuf     st;
   PSDimage     img_a;
   gint32       image_id = -1;
   GError      *error    = NULL;

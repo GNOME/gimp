@@ -613,7 +613,7 @@ send_dialog (void)
 static gboolean
 valid_file (const gchar *filename)
 {
-  struct stat buf;
+  GStatBuf buf;
 
   return g_stat (filename, &buf) == 0 && buf.st_size > 0;
 }

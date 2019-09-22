@@ -120,7 +120,7 @@ load_image (const gchar  *filename,
             GError      **load_error)
 {
   FILE         *f;
-  struct stat   st;
+  GStatBuf      st;
   PSDimage      img_a;
   PSDlayer    **lyr_a;
   gint32        image_id = -1;
