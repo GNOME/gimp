@@ -1312,7 +1312,7 @@ prefs_dialog_new (Gimp       *gimp,
     GFile        *file;
     gint          row = 0;
 
-    file = gimp_directory_file ("profilerc");
+    file = gimp_directory_file ("profilerc", NULL);
     store = gimp_color_profile_store_new (file);
     g_object_unref (file);
 
