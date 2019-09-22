@@ -11198,7 +11198,7 @@ msgstr "Habilita la simetria al dibuixar."
 
 #: ../app/config/gimprc-blurbs.h:437
 msgid "Enable the MyPaint Brush tool."
-msgstr "Habilita l'eina del MyPaint."
+msgstr "Habilita l'eina Pinzell del MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:440
 msgid "Enable the Seamless Clone tool."
@@ -20066,22 +20066,22 @@ msgstr "La dinàmica «%s» no es pot reanomenar"
 
 #: ../app/pdb/gimppdb-utils.c:198
 msgid "Invalid empty MyPaint brush name"
-msgstr "Un nom de pinzell buit no és vàlid"
+msgstr "Un nom buit de pinzell del MyPaint no és vàlid"
 
 #: ../app/pdb/gimppdb-utils.c:207
 #, c-format
 msgid "MyPaint brush '%s' not found"
-msgstr "No s'ha trobat el pinzell «%s»"
+msgstr "No s'ha trobat el pinzell del MyPaint «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:213
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
-msgstr "El pinzell «%s» no és editable"
+msgstr "El pinzell del MyPaint «%s» no és editable"
 
 #: ../app/pdb/gimppdb-utils.c:220
 #, c-format
 msgid "MyPaint brush '%s' is not renamable"
-msgstr "El pinzell «%s» no es pot reanomenar"
+msgstr "El pinzell del MyPaint «%s» no es pot reanomenar"
 
 #: ../app/pdb/gimppdb-utils.c:240
 msgid "Invalid empty pattern name"
@@ -23015,11 +23015,11 @@ msgstr "_Mou"
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
-msgstr "Eina El meu Pinzell: utilitza pinzells del Meu Pinzell al GIMP"
+msgstr "Eina Pinzell del MyPaint: utilitza pinzells del MyPaint al GIMP"
 
 #: ../app/tools/gimpmybrushtool.c:75
 msgid "M_yPaint Brush"
-msgstr "El meu _Pinzell"
+msgstr "_Pinzell del MyPaint"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:77
 #: ../app/tools/gimpnpointdeformationoptions.c:78
