@@ -112,7 +112,8 @@ static gboolean gimp_tag_popup_scroll_timeout_initial  (gpointer        data);
 static void     gimp_tag_popup_start_scrolling         (GimpTagPopup   *popup);
 static void     gimp_tag_popup_stop_scrolling          (GimpTagPopup   *popup);
 static void     gimp_tag_popup_scroll_by               (GimpTagPopup   *popup,
-                                                        gint            step);
+                                                        gint            step,
+                                                        const GdkEvent *event);
 static void     gimp_tag_popup_handle_scrolling        (GimpTagPopup   *popup,
                                                         gint            x,
                                                         gint            y,
@@ -751,20 +752,8 @@ gimp_tag_popup_border_event (GtkWidget *widget,
     }
   else if (event->type == GDK_SCROLL)
     {
-      GdkEventScroll *scroll_event = (GdkEventScroll *) event;
-
-      switch (scroll_event->direction)
-        {
-        case GDK_SCROLL_RIGHT:
-        case GDK_SCROLL_DOWN:
-          gimp_tag_popup_scroll_by (popup, MENU_SCROLL_STEP2);
-          return TRUE;
-
-        case GDK_SCROLL_LEFT:
-        case GDK_SCROLL_UP:
-          gimp_tag_popup_scroll_by (popup, - MENU_SCROLL_STEP2);
-          return TRUE;
-        }
+      gimp_tag_popup_scroll_by (popup, 0, event);
+      return TRUE;
     }
 
   return FALSE;
@@ -1119,7 +1108,7 @@ gimp_tag_popup_scroll_timeout (gpointer data)
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
 
-  gimp_tag_popup_scroll_by (popup, popup->scroll_step);
+  gimp_tag_popup_scroll_by (popup, popup->scroll_step, NULL);
 
   return TRUE;
 }
@@ -1146,7 +1135,7 @@ gimp_tag_popup_scroll_timeout_initial (gpointer data)
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
 
-  gimp_tag_popup_scroll_by (popup, popup->scroll_step);
+  gimp_tag_popup_scroll_by (popup, popup->scroll_step, NULL);
 
   gimp_tag_popup_remove_scroll_timeout (popup);
 
@@ -1169,7 +1158,7 @@ gimp_tag_popup_start_scrolling (GimpTagPopup *popup)
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
 
-  gimp_tag_popup_scroll_by (popup, popup->scroll_step);
+  gimp_tag_popup_scroll_by (popup, popup->scroll_step, NULL);
 
   popup->scroll_timeout_id =
     gdk_threads_add_timeout (timeout,
@@ -1196,12 +1185,66 @@ gimp_tag_popup_stop_scrolling (GimpTagPopup *popup)
 }
 
 static void
-gimp_tag_popup_scroll_by (GimpTagPopup *popup,
-                          gint          step)
+gimp_tag_popup_scroll_by (GimpTagPopup   *popup,
+                          gint            step,
+                          const GdkEvent *event)
 {
   GtkStateType arrow_state;
-  gint         new_scroll_y = popup->scroll_y + step;
+  gint         new_scroll_y = popup->scroll_y;
 
+  /* If event is set, we override the step value. */
+  if (event)
+    {
+      GdkEventScroll *scroll_event = (GdkEventScroll *) event;
+      gdouble         delta_x;
+      gdouble         delta_y;
+
+      switch (scroll_event->direction)
+        {
+        case GDK_SCROLL_RIGHT:
+        case GDK_SCROLL_DOWN:
+          if (popup->smooth_scrolling)
+            /* In some case, we get both a SMOOTH event and step events
+             * (right, left, up, down). If we process them all, we get
+             * some fluid scrolling with regular bumps, which feels
+             * buggy. So when smooth scrolling is in progress, we just
+             * skip step events until we receive the stop scroll event.
+             */
+            return;
+
+          step = MENU_SCROLL_STEP2;
+          break;
+
+        case GDK_SCROLL_LEFT:
+        case GDK_SCROLL_UP:
+          if (popup->smooth_scrolling)
+            return;
+
+          step = - MENU_SCROLL_STEP2;
+          break;
+
+        case GDK_SCROLL_SMOOTH:
+          if (gdk_event_get_scroll_deltas (event, &delta_x, &delta_y))
+            {
+              popup->smooth_scrolling = TRUE;
+              step = 0;
+
+              if (delta_x < 0.0 || delta_y < 0.0)
+                step = (gint) (MIN (delta_x, delta_y) * MENU_SCROLL_STEP2);
+              else if (delta_x > 0.0 || delta_y > 0.0)
+                step = (gint) (MAX (delta_x, delta_y) * MENU_SCROLL_STEP2);
+            }
+          break;
+        }
+
+      if (gdk_event_is_scroll_stop_event (event))
+        popup->smooth_scrolling = FALSE;
+    }
+
+  if (step == 0)
+    return;
+
+  new_scroll_y += step;
   arrow_state = popup->upper_arrow_state;
 
   if (new_scroll_y < 0)
