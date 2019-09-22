@@ -339,49 +339,61 @@ introspectable_files = [
   'gimpparamspecs-body.c',
 ]
 
-libgimp_gir = gnome.generate_gir(
-  libgimp,
-  libgimpui,
-  libgimpbase,
-  libgimpcolor,
-  libgimpconfig,
-  libgimpmath,
-  libgimpmodule,
-  libgimpthumb,
-  libgimpwidgets,
-
-  sources: introspectable_files,
-  nsversion: gimp_api_version,
-  namespace: 'Gimp',
-  identifier_prefix: 'Gimp',
-  # symbol_prefix: 'gimp',
-
-  extra_args: [
-    '-DGIMP_COMPILATION',
-    '-DGIMP_BASE_COMPILATION',
-    '-DGIMP_COLOR_COMPILATION',
-    '-DGIMP_CONFIG_COMPILATION',
-    '-DGIMP_MATH_COMPILATION',
-    '-DGIMP_MODULE_COMPILATION',
-    '-DGIMP_THUMB_COMPILATION',
-    '-DGIMP_WIDGETS_COMPILATION',
-  ],
-
-  includes: [
-    'Babl-0.1',
-    'cairo-1.0',
-    'GdkPixbuf-2.0',
-    'Gegl-0.4',
-    'Gio-2.0',
-    'GLib-2.0',
-    'GObject-2.0',
-    'Gtk-3.0',
-  ],
-
-  link_with: [
+if meson.is_cross_build()
+  gobject_introspection_warning = '\n      '.join(['',
+    'GObject Introspection is disabled while cross-compiling because',
+    'GI tools do not manage to properly generate introspection data',
+    'while cross-compiling. Nevertheless we consider our introspected',
+    'API as a core component of GIMP, thus you are expected to build',
+    'this data natively.'
+  ])
+  warning(gobject_introspection_warning)
+  warnings += gobject_introspection_warning
+else
+  libgimp_gir = gnome.generate_gir(
+    libgimp,
+    libgimpui,
+    libgimpbase,
+    libgimpcolor,
+    libgimpconfig,
+    libgimpmath,
+    libgimpmodule,
     libgimpthumb,
-  ],
+    libgimpwidgets,
 
-  include_directories: rootInclude,
-  install: true,
-)
+    sources: introspectable_files,
+    nsversion: gimp_api_version,
+    namespace: 'Gimp',
+    identifier_prefix: 'Gimp',
+    # symbol_prefix: 'gimp',
+
+    extra_args: [
+      '-DGIMP_COMPILATION',
+      '-DGIMP_BASE_COMPILATION',
+      '-DGIMP_COLOR_COMPILATION',
+      '-DGIMP_CONFIG_COMPILATION',
+      '-DGIMP_MATH_COMPILATION',
+      '-DGIMP_MODULE_COMPILATION',
+      '-DGIMP_THUMB_COMPILATION',
+      '-DGIMP_WIDGETS_COMPILATION',
+    ],
+
+    includes: [
+      'Babl-0.1',
+      'cairo-1.0',
+      'GdkPixbuf-2.0',
+      'Gegl-0.4',
+      'Gio-2.0',
+      'GLib-2.0',
+      'GObject-2.0',
+      'Gtk-3.0',
+    ],
+
+    link_with: [
+      libgimpthumb,
+    ],
+
+    include_directories: rootInclude,
+    install: true,
+  )
+endif
