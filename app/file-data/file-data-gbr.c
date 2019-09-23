@@ -23,6 +23,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
 
@@ -362,12 +363,13 @@ file_gbr_brush_to_image (Gimp      *gimp,
 {
   GimpImage         *image;
   GimpLayer         *layer;
-  const gchar       *name;
   GimpImageBaseType  base_type;
   gint               width;
   gint               height;
   GimpTempBuf       *mask   = gimp_brush_get_mask   (brush);
   GimpTempBuf       *pixmap = gimp_brush_get_pixmap (brush);
+  GString           *string;
+  GimpConfigWriter  *writer;
   GimpParasite      *parasite;
 
   if (pixmap)
@@ -375,18 +377,35 @@ file_gbr_brush_to_image (Gimp      *gimp,
   else
     base_type = GIMP_GRAY;
 
-  name   = gimp_object_get_name (brush);
   width  = gimp_temp_buf_get_width  (mask);
   height = gimp_temp_buf_get_height (mask);
 
   image = gimp_image_new (gimp, width, height, base_type,
                           GIMP_PRECISION_U8_NON_LINEAR);
 
-  parasite = gimp_parasite_new ("gimp-brush-name",
+  string = g_string_new (NULL);
+  writer = gimp_config_writer_new_from_string (string);
+
+  gimp_config_writer_open (writer, "spacing");
+  gimp_config_writer_printf (writer, "%d", gimp_brush_get_spacing (brush));
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_linefeed (writer);
+
+  gimp_config_writer_open (writer, "description");
+  gimp_config_writer_string (writer, gimp_object_get_name (brush));
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_finish (writer, NULL, NULL);
+  g_object_unref (writer);
+
+  parasite = gimp_parasite_new ("GimpProcedureConfig-file-gbr-save-last",
                                 GIMP_PARASITE_PERSISTENT,
-                                strlen (name) + 1, name);
+                                string->len + 1, string->str);
   gimp_image_parasite_attach (image, parasite, FALSE);
   gimp_parasite_free (parasite);
+
+  g_string_free (string, TRUE);
 
   layer = file_gbr_brush_to_layer (image, brush);
   gimp_image_add_layer (image, layer, NULL, 0, FALSE);

@@ -45,13 +45,6 @@
 #define PLUG_IN_ROLE   "gimp-file-gbr"
 
 
-typedef struct
-{
-  gchar description[256];
-  gint  spacing;
-} BrushInfo;
-
-
 typedef struct _Gbr      Gbr;
 typedef struct _GbrClass GbrClass;
 
@@ -83,20 +76,13 @@ static GimpValueArray * gbr_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gboolean         save_dialog          (void);
-static void             entry_callback       (GtkWidget            *widget,
-                                              gpointer              data);
+static gboolean         save_dialog          (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 
 G_DEFINE_TYPE (Gbr, gbr, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GBR_TYPE)
-
-static BrushInfo info =
-{
-  "GIMP Brush",
-  10
-};
 
 
 static void
@@ -181,11 +167,12 @@ gbr_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GimpParasite      *parasite;
-  GimpImage         *orig_image;
-  GError            *error  = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpImage           *orig_image;
+  gchar               *description;
+  GError              *error  = NULL;
 
   INIT_I18N ();
 
@@ -208,63 +195,52 @@ gbr_save (GimpProcedure        *procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
 
-      /*  Possibly retrieve data  */
-      gimp_get_data (SAVE_PROC, &info);
-
-      parasite = gimp_image_get_parasite (orig_image,
-                                          "gimp-brush-name");
-      if (parasite)
-        {
-          g_strlcpy (info.description,
-                     gimp_parasite_data (parasite),
-                     MIN (sizeof (info.description),
-                          gimp_parasite_data_size (parasite)));
-
-          gimp_parasite_free (parasite);
-        }
-      else
-        {
-          gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
-
-          if (g_str_has_suffix (name, ".gbr"))
-            name[strlen (name) - 4] = '\0';
-
-          if (strlen (name))
-            g_strlcpy (info.description, name, sizeof (info.description));
-
-          g_free (name);
-        }
-      break;
-
     default:
       break;
     }
 
-  switch (run_mode)
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
+
+  g_object_get (config,
+                "description", &description,
+                NULL);
+
+  if (! description || ! strlen (description))
     {
-    case GIMP_RUN_INTERACTIVE:
-      if (! save_dialog ())
+      gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+
+      if (g_str_has_suffix (name, ".gbr"))
+        name[strlen (name) - 4] = '\0';
+
+      if (strlen (name))
+        g_object_set (config,
+                      "description", name,
+                      NULL);
+
+      g_free (name);
+    }
+
+  g_free (description);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! save_dialog (procedure, G_OBJECT (config)))
         {
           status = GIMP_PDB_CANCEL;
           goto out;
         }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      info.spacing = GIMP_VALUES_GET_INT (args, 0);
-      g_strlcpy (info.description,
-                 GIMP_VALUES_GET_STRING (args, 1),
-                 sizeof (info.description));
-      break;
-
-    default:
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpValueArray *save_retvals;
-      gchar          *uri = g_file_get_uri (file);
+      gint            spacing;
+
+      g_object_get (config,
+                    "description", &description,
+                    "spacing",     &spacing,
+                    NULL);
 
       save_retvals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
@@ -272,16 +248,16 @@ gbr_save (GimpProcedure        *procedure,
                                 GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
                                 GIMP_TYPE_IMAGE,    image,
                                 GIMP_TYPE_DRAWABLE, drawable,
-                                G_TYPE_STRING,      uri,
-                                G_TYPE_INT,         info.spacing,
-                                G_TYPE_STRING,      info.description,
+                                G_TYPE_FILE,        file,
+                                G_TYPE_INT,         spacing,
+                                G_TYPE_STRING,      description,
                                 G_TYPE_NONE);
 
-      g_free (uri);
+      g_free (description);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
-          gimp_set_data (SAVE_PROC, &info, sizeof (info));
+          gimp_procedure_config_end_run (config, orig_image, run_mode);
         }
       else
         {
@@ -296,23 +272,9 @@ gbr_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
-  if (strlen (info.description))
-    {
-      GimpParasite *parasite;
-
-      parasite = gimp_parasite_new ("gimp-brush-name",
-                                    GIMP_PARASITE_PERSISTENT,
-                                    strlen (info.description) + 1,
-                                    info.description);
-      gimp_image_attach_parasite (orig_image, parasite);
-      gimp_parasite_free (parasite);
-    }
-  else
-    {
-      gimp_image_detach_parasite (orig_image, "gimp-brush-name");
-    }
-
  out:
+  g_object_unref (config);
+
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
 
@@ -320,63 +282,46 @@ gbr_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *grid;
-  GtkWidget     *entry;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *adj;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *grid;
+  GtkWidget *entry;
+  gboolean   run;
 
-  dialog = gimp_export_dialog_new (_("Brush"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as Brush"));
 
   /* The main grid */
   grid = gtk_grid_new ();
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
-  entry = gtk_entry_new ();
+  entry = gimp_prop_entry_new (config, "description", 256);
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
-  gtk_entry_set_text (GTK_ENTRY (entry), info.description);
+
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Description:"), 1.0, 0.5,
-                            entry, 1);
+                            entry, 2);
 
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (entry_callback),
-                    info.description);
-
-  adj = gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("_Spacing:"), 1.0, 0.5,
-                            spinbutton, 1);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &info.spacing);
+  gimp_prop_scale_entry_new (config, "spacing",
+                             GTK_GRID (grid), 0, 1,
+                             _("_Spacing:"),
+                             1, 10, 0,
+                             FALSE, 0, 0);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-entry_callback (GtkWidget *widget,
-                gpointer   data)
-{
-  g_strlcpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)),
-             sizeof (info.description));
 }
