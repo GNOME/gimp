@@ -34,13 +34,17 @@ struct _GimpSaveProcedurePrivate
 };
 
 
-static void   gimp_save_procedure_constructed (GObject              *object);
-static void   gimp_save_procedure_finalize    (GObject              *object);
+static void   gimp_save_procedure_constructed   (GObject              *object);
+static void   gimp_save_procedure_finalize      (GObject              *object);
 
-static void   gimp_save_procedure_install     (GimpProcedure        *procedure);
+static void   gimp_save_procedure_install       (GimpProcedure        *procedure);
 static GimpValueArray *
-              gimp_save_procedure_run         (GimpProcedure        *procedure,
-                                               const GimpValueArray *args);
+              gimp_save_procedure_run           (GimpProcedure        *procedure,
+                                                 const GimpValueArray *args);
+static GimpProcedureConfig *
+              gimp_save_procedure_create_config (GimpProcedure        *procedure,
+                                                 GParamSpec          **args,
+                                                 gint                  n_args);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSaveProcedure, gimp_save_procedure,
@@ -55,11 +59,12 @@ gimp_save_procedure_class_init (GimpSaveProcedureClass *klass)
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
 
-  object_class->constructed  = gimp_save_procedure_constructed;
-  object_class->finalize     = gimp_save_procedure_finalize;
+  object_class->constructed      = gimp_save_procedure_constructed;
+  object_class->finalize         = gimp_save_procedure_finalize;
 
-  procedure_class->install   = gimp_save_procedure_install;
-  procedure_class->run       = gimp_save_procedure_run;
+  procedure_class->install       = gimp_save_procedure_install;
+  procedure_class->run           = gimp_save_procedure_run;
+  procedure_class->create_config = gimp_save_procedure_create_config;
 }
 
 static void
@@ -131,6 +136,8 @@ gimp_save_procedure_install (GimpProcedure *procedure)
                                       priority);
 }
 
+#define ARG_OFFSET 4
+
 static GimpValueArray *
 gimp_save_procedure_run (GimpProcedure        *procedure,
                          const GimpValueArray *args)
@@ -149,9 +156,9 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   drawable = GIMP_VALUES_GET_DRAWABLE (args, 2);
   file     = GIMP_VALUES_GET_FILE     (args, 3);
 
-  remaining = gimp_value_array_new (gimp_value_array_length (args) - 4);
+  remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
-  for (i = 4; i < gimp_value_array_length (args); i++)
+  for (i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
     {
       GValue *value = gimp_value_array_index (args, i);
 
@@ -168,6 +175,27 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   gimp_value_array_unref (remaining);
 
   return return_values;
+}
+
+static GimpProcedureConfig *
+gimp_save_procedure_create_config (GimpProcedure  *procedure,
+                                   GParamSpec    **args,
+                                   gint            n_args)
+{
+  if (n_args > ARG_OFFSET)
+    {
+      args   += ARG_OFFSET;
+      n_args -= ARG_OFFSET;
+    }
+  else
+    {
+      args   = NULL;
+      n_args = 0;
+    }
+
+  return GIMP_PROCEDURE_CLASS (parent_class)->create_config (procedure,
+                                                             args,
+                                                             n_args);
 }
 
 

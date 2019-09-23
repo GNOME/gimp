@@ -39,6 +39,11 @@ static void   gimp_thumbnail_procedure_finalize    (GObject              *object
 static GimpValueArray *
               gimp_thumbnail_procedure_run         (GimpProcedure        *procedure,
                                                     const GimpValueArray *args);
+static GimpProcedureConfig *
+              gimp_thumbnail_procedure_create_config
+                                                   (GimpProcedure        *procedure,
+                                                    GParamSpec          **args,
+                                                    gint                  n_args);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpThumbnailProcedure, gimp_thumbnail_procedure,
@@ -53,10 +58,11 @@ gimp_thumbnail_procedure_class_init (GimpThumbnailProcedureClass *klass)
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
 
-  object_class->constructed  = gimp_thumbnail_procedure_constructed;
-  object_class->finalize     = gimp_thumbnail_procedure_finalize;
+  object_class->constructed      = gimp_thumbnail_procedure_constructed;
+  object_class->finalize         = gimp_thumbnail_procedure_finalize;
 
-  procedure_class->run       = gimp_thumbnail_procedure_run;
+  procedure_class->run           = gimp_thumbnail_procedure_run;
+  procedure_class->create_config = gimp_thumbnail_procedure_create_config;
 }
 
 static void
@@ -126,6 +132,8 @@ gimp_thumbnail_procedure_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+#define ARG_OFFSET 2
+
 static GimpValueArray *
 gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
                               const GimpValueArray *args)
@@ -140,9 +148,9 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
   file = GIMP_VALUES_GET_FILE (args, 0);
   size = GIMP_VALUES_GET_INT  (args, 1);
 
-  remaining = gimp_value_array_new (gimp_value_array_length (args) - 2);
+  remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
-  for (i = 2; i < gimp_value_array_length (args); i++)
+  for (i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
     {
       GValue *value = gimp_value_array_index (args, i);
 
@@ -158,6 +166,27 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
   gimp_value_array_unref (remaining);
 
   return return_values;
+}
+
+static GimpProcedureConfig *
+gimp_thumbnail_procedure_create_config (GimpProcedure  *procedure,
+                                        GParamSpec    **args,
+                                        gint            n_args)
+{
+  if (n_args > ARG_OFFSET)
+    {
+      args   += ARG_OFFSET;
+      n_args -= ARG_OFFSET;
+    }
+  else
+    {
+      args   = NULL;
+      n_args = 0;
+    }
+
+  return GIMP_PROCEDURE_CLASS (parent_class)->create_config (procedure,
+                                                             args,
+                                                             n_args);
 }
 
 
