@@ -164,6 +164,7 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
   GtkWidget   *dialog;
   gchar       *role;
   const gchar *help_id;
+  const gchar *ok_label;
   gboolean     use_header_bar;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
@@ -192,10 +193,17 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
 
   g_free (role);
 
+  if (GIMP_IS_LOAD_PROCEDURE (procedure))
+    ok_label = _("_Open");
+  else if (GIMP_IS_SAVE_PROCEDURE (procedure))
+    ok_label = _("_Export");
+  else
+    ok_label = _("_OK");
+
   gimp_dialog_add_buttons (GIMP_DIALOG (dialog),
                            _("_Reset"),  RESPONSE_RESET,
                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                           _("_OK"),     GTK_RESPONSE_OK,
+                           ok_label,     GTK_RESPONSE_OK,
                             NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
