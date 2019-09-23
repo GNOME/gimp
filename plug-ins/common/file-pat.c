@@ -29,7 +29,6 @@
 
 #define SAVE_PROC      "file-pat-save"
 #define PLUG_IN_BINARY "file-pat"
-#define PLUG_IN_ROLE   "gimp-file-pat"
 
 
 typedef struct _Pat      Pat;
@@ -63,14 +62,13 @@ static GimpValueArray * pat_save             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gboolean         save_dialog          (void);
+static gboolean         save_dialog          (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 
 G_DEFINE_TYPE (Pat, pat, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PAT_TYPE)
-
-static gchar description[256] = "GIMP Pattern";
 
 
 static void
@@ -147,11 +145,12 @@ pat_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GimpParasite      *parasite;
-  GimpImage         *orig_image;
-  GError            *error  = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpImage           *orig_image;
+  gchar               *description;
+  GError              *error  = NULL;
 
   INIT_I18N ();
 
@@ -172,62 +171,52 @@ pat_save (GimpProcedure        *procedure,
       if (export == GIMP_EXPORT_CANCEL)
         return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
                                                  NULL);
-
-      /*  Possibly retrieve data  */
-      gimp_get_data (SAVE_PROC, description);
-
-      parasite = gimp_image_get_parasite (orig_image, "gimp-pattern-name");
-      if (parasite)
-        {
-          g_strlcpy (description,
-                     gimp_parasite_data (parasite),
-                     MIN (sizeof (description),
-                          gimp_parasite_data_size (parasite)));
-
-          gimp_parasite_free (parasite);
-        }
-      else
-        {
-          gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
-
-          if (g_str_has_suffix (name, ".pat"))
-            name[strlen (name) - 4] = '\0';
-
-          if (strlen (name))
-            g_strlcpy (description, name, sizeof (description));
-
-          g_free (name);
-        }
       break;
 
     default:
       break;
     }
 
-  switch (run_mode)
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
+
+  g_object_get (config,
+                "description", &description,
+                NULL);
+
+  if (! description || ! strlen (description))
     {
-    case GIMP_RUN_INTERACTIVE:
-      if (! save_dialog ())
+      gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+
+      if (g_str_has_suffix (name, ".pat"))
+        name[strlen (name) - 4] = '\0';
+
+      if (strlen (name))
+        g_object_set (config,
+                      "description", name,
+                      NULL);
+
+      g_free (name);
+    }
+
+  g_free (description);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! save_dialog (procedure, G_OBJECT (config)))
         {
           status = GIMP_PDB_CANCEL;
           goto out;
         }
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      g_strlcpy (description,
-                 GIMP_VALUES_GET_STRING (args, 0),
-                 sizeof (description));
-      break;
-
-    default:
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpValueArray *save_retvals;
-      gchar          *uri = g_file_get_uri (file);
+
+      g_object_get (config,
+                    "description", &description,
+                    NULL);
 
       save_retvals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
@@ -235,15 +224,13 @@ pat_save (GimpProcedure        *procedure,
                                 GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
                                 GIMP_TYPE_IMAGE,    image,
                                 GIMP_TYPE_DRAWABLE, drawable,
-                                G_TYPE_STRING,      uri,
+                                G_TYPE_FILE,        file,
                                 G_TYPE_STRING,      description,
                                 G_TYPE_NONE);
 
-      g_free (uri);
-
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
-          gimp_set_data (SAVE_PROC, description, sizeof (description));
+          gimp_procedure_config_end_run (config, orig_image, run_mode);
         }
       else
         {
@@ -258,23 +245,9 @@ pat_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
-  if (strlen (description))
-    {
-      GimpParasite *parasite;
-
-      parasite = gimp_parasite_new ("gimp-pattern-name",
-                                    GIMP_PARASITE_PERSISTENT,
-                                    strlen (description) + 1,
-                                    description);
-      gimp_image_attach_parasite (orig_image, parasite);
-      gimp_parasite_free (parasite);
-    }
-  else
-    {
-      gimp_image_detach_parasite (orig_image, "gimp-pattern-name");
-    }
-
  out:
+  g_object_unref (config);
+
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
 
@@ -282,39 +255,37 @@ pat_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *grid;
   GtkWidget *entry;
   gboolean   run;
 
-  dialog = gimp_export_dialog_new (_("Pattern"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as Pattern"));
 
   /* The main grid */
   grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
-  entry = gtk_entry_new ();
+  entry = gimp_prop_entry_new (config, "description", 256);
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
-  gtk_entry_set_text (GTK_ENTRY (entry), description);
+
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Description:"), 1.0, 0.5,
                             entry, 1);
-  gtk_widget_show (entry);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  if (run)
-    g_strlcpy (description, gtk_entry_get_text (GTK_ENTRY (entry)),
-               sizeof (description));
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

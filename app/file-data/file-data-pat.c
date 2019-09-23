@@ -21,6 +21,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
 
@@ -156,13 +157,14 @@ file_pat_pattern_to_image (Gimp        *gimp,
   GimpImage         *image;
   GimpLayer         *layer;
   const Babl        *format;
-  const gchar       *name;
   GimpImageBaseType  base_type;
   gboolean           alpha;
   gint               width;
   gint               height;
   GimpTempBuf       *mask   = gimp_pattern_get_mask (pattern);
   GeglBuffer        *buffer;
+  GString           *string;
+  GimpConfigWriter  *writer;
   GimpParasite      *parasite;
 
   format = gimp_temp_buf_get_format (mask);
@@ -193,22 +195,34 @@ file_pat_pattern_to_image (Gimp        *gimp,
       g_return_val_if_reached (NULL);
     }
 
-  name   = gimp_object_get_name (pattern);
   width  = gimp_temp_buf_get_width  (mask);
   height = gimp_temp_buf_get_height (mask);
 
   image = gimp_image_new (gimp, width, height, base_type,
                           GIMP_PRECISION_U8_NON_LINEAR);
 
-  parasite = gimp_parasite_new ("gimp-pattern-name",
+  string = g_string_new (NULL);
+  writer = gimp_config_writer_new_from_string (string);
+
+  gimp_config_writer_open (writer, "description");
+  gimp_config_writer_string (writer, gimp_object_get_name (pattern));
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_finish (writer, NULL, NULL);
+  g_object_unref (writer);
+
+  parasite = gimp_parasite_new ("GimpProcedureConfig-file-pat-save-last",
                                 GIMP_PARASITE_PERSISTENT,
-                                strlen (name) + 1, name);
+                                string->len + 1, string->str);
   gimp_image_parasite_attach (image, parasite, FALSE);
   gimp_parasite_free (parasite);
 
+  g_string_free (string, TRUE);
+
   format = gimp_image_get_layer_format (image, alpha);
 
-  layer = gimp_layer_new (image, width, height, format, name,
+  layer = gimp_layer_new (image, width, height, format,
+                          gimp_object_get_name (pattern),
                           1.0, GIMP_LAYER_MODE_NORMAL);
   gimp_image_add_layer (image, layer, NULL, 0, FALSE);
 
