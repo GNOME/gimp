@@ -43,7 +43,6 @@
 #define LOAD_PROC        "file-sgi-load"
 #define SAVE_PROC        "file-sgi-save"
 #define PLUG_IN_BINARY   "file-sgi"
-#define PLUG_IN_ROLE     "gimp-file-sgi"
 #define PLUG_IN_VERSION  "1.1.1 - 17 May 1998"
 
 
@@ -88,17 +87,16 @@ static GimpImage      * load_image           (GFile                *file,
 static gint             save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
+                                              GObject              *config,
                                               GError              **error);
 
-static gboolean         save_dialog          (void);
+static gboolean         save_dialog          (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 
 G_DEFINE_TYPE (Sgi, sgi, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (SGI_TYPE)
-
-
-static gint  compression = SGI_COMP_RLE;
 
 
 static void
@@ -186,8 +184,8 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_INT (procedure, "compression",
                          "Compression",
                          "Compression level (0 = none, 1 = RLE, 2 = ARLE)",
-                         0, 2, 1,
-                         G_PARAM_STATIC_STRINGS);
+                         0, 2, SGI_COMP_RLE,
+                         GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -232,12 +230,16 @@ sgi_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpImage           *orig_image;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  orig_image = image;
 
   switch (run_mode)
     {
@@ -261,39 +263,29 @@ sgi_save (GimpProcedure        *procedure,
       break;
     }
 
-  switch (run_mode)
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (SAVE_PROC, &compression);
-
-      if (! save_dialog ())
+      if (! save_dialog (procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      compression = GIMP_VALUES_GET_INT (args, 0);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (SAVE_PROC, &compression);
-      break;
-
-    default:
-      break;
-    };
+    }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable,
+      if (save_image (file, image, drawable, G_OBJECT (config),
                       &error))
         {
-          gimp_set_data (SAVE_PROC, &compression, sizeof (compression));
+          gimp_procedure_config_end_run (config, orig_image, run_mode);
         }
       else
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -520,23 +512,29 @@ static gint
 save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
+            GObject      *config,
             GError      **error)
 {
-  gint         i, j,        /* Looping var */
-               x,           /* Current X coordinate */
-               y,           /* Current Y coordinate */
-               width,       /* Drawable width */
-               height,      /* Drawable height */
-               tile_height, /* Height of tile in GIMP */
-               count,       /* Count of rows to put in image */
-               zsize;       /* Number of channels in file */
+  gint         compression;
+  gint         i, j;        /* Looping var */
+  gint         x;           /* Current X coordinate */
+  gint         y;           /* Current Y coordinate */
+  gint         width;       /* Drawable width */
+  gint         height;      /* Drawable height */
+  gint         tile_height; /* Height of tile in GIMP */
+  gint         count;       /* Count of rows to put in image */
+  gint         zsize;       /* Number of channels in file */
   gchar       *filename;
   sgi_t       *sgip;        /* File pointer */
   GeglBuffer  *buffer;      /* Buffer for layer */
   const Babl  *format;
-  guchar     **pixels,      /* Pixel rows */
-              *pptr;        /* Current pixel */
+  guchar     **pixels;      /* Pixel rows */
+  guchar      *pptr;        /* Current pixel */
   gushort    **rows;        /* SGI image data */
+
+  g_object_get (config,
+                "compression", &compression,
+                NULL);
 
   /*
    * Get the drawable for the current image...
@@ -667,31 +665,40 @@ save_image (GFile        *file,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkWidget    *grid;
+  GtkListStore *store;
+  GtkWidget    *combo;
+  gboolean      run;
 
-  dialog = gimp_export_dialog_new (_("SGI"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as SGI"));
 
-  frame = gimp_int_radio_group_new (TRUE, _("Compression type"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &compression, compression,
+  grid = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
-                                    _("_No compression"),
-                                    SGI_COMP_NONE, NULL,
-                                    _("_RLE compression"),
-                                    SGI_COMP_RLE, NULL,
-                                    _("_Aggressive RLE\n(not supported by SGI)"),
-                                    SGI_COMP_ARLE, NULL,
+  store = gimp_int_store_new (_("No compression"),
+                              SGI_COMP_NONE,
+                              _("RLE compression"),
+                              SGI_COMP_RLE,
+                              _("Aggressive RLE (not supported by SGI)"),
+                              SGI_COMP_ARLE,
+                              NULL);
+  combo = gimp_prop_int_combo_box_new (config, "compression",
+                                       GIMP_INT_STORE (store));
+  g_object_unref (store);
 
-                                    NULL);
-
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Compression _type:"), 1.0, 0.5,
+                            combo, 1);
 
   gtk_widget_show (dialog);
 
