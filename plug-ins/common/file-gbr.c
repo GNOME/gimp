@@ -42,7 +42,6 @@
 
 #define SAVE_PROC      "file-gbr-save"
 #define PLUG_IN_BINARY "file-gbr"
-#define PLUG_IN_ROLE   "gimp-file-gbr"
 
 
 typedef struct _Gbr      Gbr;
@@ -194,6 +193,7 @@ gbr_save (GimpProcedure        *procedure,
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
+      break;
 
     default:
       break;
