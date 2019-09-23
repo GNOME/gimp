@@ -223,6 +223,7 @@ EXPORTS
 	gimp_int_store_lookup_by_user_data
 	gimp_int_store_lookup_by_value
 	gimp_int_store_new
+	gimp_int_store_new_valist
 	gimp_label_set_attributes
 	gimp_memsize_entry_get_spinbutton
 	gimp_memsize_entry_get_type

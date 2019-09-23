@@ -138,7 +138,7 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
       GList        *sym_iter;
       GimpSymmetry *symmetry;
 
-      store = gimp_int_store_new ();
+      store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
 
       /* The menu of available symmetries. */
       syms = gimp_image_symmetry_list ();

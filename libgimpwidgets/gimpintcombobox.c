@@ -158,7 +158,7 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
 
   combo_box->priv = priv = gimp_int_combo_box_get_instance_private (combo_box);
 
-  store = gimp_int_store_new ();
+  store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
   g_object_unref (store);
 
@@ -292,7 +292,7 @@ gimp_int_combo_box_new (const gchar *first_label,
  * @values: a va_list with more values
  *
  * A variant of gimp_int_combo_box_new() that takes a va_list of
- * label/value pairs. Probably only useful for language bindings.
+ * label/value pairs.
  *
  * Returns: a new #GimpIntComboBox.
  *
@@ -305,25 +305,14 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
 {
   GtkWidget    *combo_box;
   GtkListStore *store;
-  const gchar  *label;
-  gint          value;
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  store = gimp_int_store_new_valist (first_label, first_value, values);
 
-  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "model", store,
+                            NULL);
 
-  for (label = first_label, value = first_value;
-       label;
-       label = va_arg (values, const gchar *), value = va_arg (values, gint))
-    {
-      GtkTreeIter  iter = { 0, };
-
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,
-                          GIMP_INT_STORE_VALUE, value,
-                          GIMP_INT_STORE_LABEL, label,
-                          -1);
-    }
+  g_object_unref (store);
 
   return combo_box;
 }

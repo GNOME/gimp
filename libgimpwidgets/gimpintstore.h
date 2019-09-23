@@ -89,7 +89,12 @@ struct _GimpIntStoreClass
 
 GType          gimp_int_store_get_type        (void) G_GNUC_CONST;
 
-GtkListStore * gimp_int_store_new             (void);
+GtkListStore * gimp_int_store_new             (const gchar   *first_label,
+                                               gint           first_value,
+                                               ...) G_GNUC_NULL_TERMINATED;
+GtkListStore * gimp_int_store_new_valist      (const gchar   *first_label,
+                                               gint           first_value,
+                                               va_list        values);
 
 gboolean       gimp_int_store_lookup_by_value (GtkTreeModel  *model,
                                                gint           value,

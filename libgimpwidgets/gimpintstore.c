@@ -260,19 +260,76 @@ gimp_int_store_add_empty (GimpIntStore *store)
 
 /**
  * gimp_int_store_new:
+ * @first_label: the label of the first item
+ * @first_value: the value of the first item
+ * @...:         a %NULL terminated list of more label, value pairs
  *
  * Creates a #GtkListStore with a number of useful columns.
  * #GimpIntStore is especially useful if the items you want to store
  * are identified using an integer value.
+ *
+ * If you need to construct an empty #GimpIntStore, it's best to use
+ * g_object_new (GIMP_TYPE_INT_STORE, NULL).
  *
  * Returns: a new #GimpIntStore.
  *
  * Since: 2.2
  **/
 GtkListStore *
-gimp_int_store_new (void)
+gimp_int_store_new (const gchar *first_label,
+                    gint         first_value,
+                    ...)
 {
-  return g_object_new (GIMP_TYPE_INT_STORE, NULL);
+  GtkListStore *store;
+  va_list       args;
+
+  va_start (args, first_value);
+
+  store = gimp_int_store_new_valist (first_label, first_value, args);
+
+  va_end (args);
+
+  return store;
+}
+
+/**
+ * gimp_int_store_new_valist:
+ * @first_label: the label of the first item
+ * @first_value: the value of the first item
+ * @values:      a va_list with more values
+ *
+ * A variant of gimp_int_store_new() that takes a va_list of
+ * label/value pairs.
+ *
+ * Returns: a new #GimpIntStore.
+ *
+ * Since: 3.0
+ **/
+GtkListStore *
+gimp_int_store_new_valist (const gchar *first_label,
+                           gint         first_value,
+                           va_list      values)
+{
+  GtkListStore *store;
+  const gchar  *label;
+  gint          value;
+
+  store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
+
+  for (label = first_label, value = first_value;
+       label;
+       label = va_arg (values, const gchar *), value = va_arg (values, gint))
+    {
+      GtkTreeIter iter = { 0, };
+
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter,
+                          GIMP_INT_STORE_VALUE, value,
+                          GIMP_INT_STORE_LABEL, label,
+                          -1);
+    }
+
+  return store;
 }
 
 /**
