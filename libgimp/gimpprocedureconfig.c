@@ -77,6 +77,16 @@ static gboolean   gimp_procedure_config_load_last (GimpProcedureConfig  *config,
 static gboolean   gimp_procedure_config_save_last (GimpProcedureConfig  *config,
                                                    GError              **error);
 
+static gchar    * gimp_procedure_config_parasite_name
+                                                  (GimpProcedureConfig *config,
+                                                   const gchar         *suffix);
+static gboolean   gimp_procedure_config_load_parasite
+                                                  (GimpProcedureConfig  *config,
+                                                   GimpImage            *image,
+                                                   GError              **error);
+static gboolean   gimp_procedure_config_save_parasite
+                                                  (GimpProcedureConfig  *config,
+                                                   GimpImage            *image);
 
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpProcedureConfig, gimp_procedure_config,
@@ -281,6 +291,7 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_begin_run:
  * @config:   a #GimpProcedureConfig
+ * @image:    a #GimpImage or %NULL
  * @run_mode: the #GimpRunMode passed to a #GimpProcedure's run()
  * @args:     the #GimpValueArray passed to a #GimpProcedure's run()
  *
@@ -289,8 +300,10 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
  *
  * If @run_mode is %GIMP_RUN_INTERACTIVE or %GIMP_RUN_WITH_LAST_VALS,
  * the saved values from the procedure's last run() are loaded and set
- * on @config. If no saved last values are found, the procedure's
- * default argument values are used.
+ * on @config. If @image is not %NULL, the last used values for this
+ * image are tried first, and if no image-spesicic values are found
+ * the globally saved last used values are used. If no saved last used
+ * values are found, the procedure's default argument values are used.
  *
  * If @run_mode is %GIMP_RUN_NONINTERACTIVE, the contents of @args are
  * set on @config using gimp_procedure_config_set_values().
@@ -312,21 +325,37 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
  **/
 void
 gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
+                                 GimpImage            *image,
                                  GimpRunMode           run_mode,
                                  const GimpValueArray *args)
 {
-  GError *error = NULL;
+  gboolean  loaded = FALSE;
+  GError   *error  = NULL;
 
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
   g_return_if_fail (args != NULL);
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE :
     case GIMP_RUN_WITH_LAST_VALS:
-      if (! gimp_procedure_config_load_last (config, &error))
+      if (image)
         {
-          g_printerr ("Saving last values failed: %s\n",
+          loaded = gimp_procedure_config_load_parasite (config, image,
+                                                        &error);
+          if (! loaded && error)
+            {
+              g_printerr ("Loading last used values from parasite failed: %s\n",
+                          error->message);
+              g_clear_error (&error);
+            }
+        }
+
+      if (! loaded &&
+          ! gimp_procedure_config_load_last (config, &error))
+        {
+          g_printerr ("Loading last used values from disk failed: %s\n",
                       error->message);
           g_clear_error (&error);
         }
@@ -341,6 +370,7 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_end_run:
  * @config:   a #GimpProcedureConfig
+ * @image:    a #GimpImage or %NULL
  * @run_mode: the #GimpRunMode passed to a #GimpProcedure's run()
  *
  * This function is the counterpart of
@@ -349,7 +379,10 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  * %GIMP_PDB_SUCCESS return values.
  *
  * If @run_mode is %GIMP_RUN_INTERACTIVE, @config is saved as last
- * values to be used when the procedure runs again.
+ * used values to be used when the procedure runs again. Additionally,
+ * if @image is not %NULL, @config is attached to @image as last used
+ * values for this image using a #GimpParasite and
+ * gimp_image_attach_parasite().
  *
  * If @run_mode is not %GIMP_RUN_NONINTERACTIVE, this function also
  * conveniently calls gimp_display_flush(), which is what most
@@ -361,9 +394,11 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  **/
 void
 gimp_procedure_config_end_run (GimpProcedureConfig  *config,
+                               GimpImage            *image,
                                GimpRunMode           run_mode)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
@@ -372,9 +407,12 @@ gimp_procedure_config_end_run (GimpProcedureConfig  *config,
     {
       GError *error = NULL;
 
+      if (image)
+        gimp_procedure_config_save_parasite (config, image);
+
       if (! gimp_procedure_config_save_last (config, &error))
         {
-          g_printerr ("Saving last values failed: %s\n",
+          g_printerr ("Saving last used values to disk failed: %s\n",
                       error->message);
           g_clear_error (&error);
         }
@@ -436,4 +474,58 @@ gimp_procedure_config_save_last (GimpProcedureConfig  *config,
   g_object_unref (file);
 
   return success;
+}
+
+static gchar *
+gimp_procedure_config_parasite_name (GimpProcedureConfig *config,
+                                     const gchar         *suffix)
+{
+  return g_strconcat (G_OBJECT_TYPE_NAME (config), suffix, NULL);
+}
+
+static gboolean
+gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
+                                     GimpImage            *image,
+                                     GError              **error)
+{
+  gchar        *name;
+  GimpParasite *parasite;
+  gboolean      success;
+
+  name = gimp_procedure_config_parasite_name (config, "-last");
+  parasite = gimp_image_get_parasite (image, name);
+  g_free (name);
+
+  if (! parasite)
+    return FALSE;
+
+  success = gimp_config_deserialize_parasite (GIMP_CONFIG (config),
+                                              parasite,
+                                              NULL, error);
+  gimp_parasite_free (parasite);
+
+  return success;
+}
+
+static gboolean
+gimp_procedure_config_save_parasite (GimpProcedureConfig *config,
+                                     GimpImage           *image)
+{
+  gchar        *name;
+  GimpParasite *parasite;
+
+  name = gimp_procedure_config_parasite_name (config, "-last");
+  parasite = gimp_config_serialize_to_parasite (GIMP_CONFIG (config),
+                                                name,
+                                                GIMP_PARASITE_PERSISTENT,
+                                                NULL);
+  g_free (name);
+
+  if (! parasite)
+    return FALSE;
+
+  gimp_image_attach_parasite (image, parasite);
+  gimp_parasite_free (parasite);
+
+  return TRUE;
 }

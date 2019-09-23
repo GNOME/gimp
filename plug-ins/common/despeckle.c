@@ -237,8 +237,8 @@ despeckle_run (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  config   = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, run_mode, args);
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -252,7 +252,7 @@ despeckle_run (GimpProcedure        *procedure,
 
   despeckle (drawable, G_OBJECT (config));
 
-  gimp_procedure_config_end_run (config, run_mode);
+  gimp_procedure_config_end_run (config, NULL, run_mode);
   g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
