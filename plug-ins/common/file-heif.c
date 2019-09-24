@@ -31,16 +31,6 @@
 #define PLUG_IN_BINARY "file-heif"
 
 
-typedef struct _SaveParams SaveParams;
-
-struct _SaveParams
-{
-  gint     quality;
-  gboolean lossless;
-  gboolean save_profile;
-};
-
-
 typedef struct _Heif      Heif;
 typedef struct _HeifClass HeifClass;
 
@@ -84,12 +74,13 @@ static GimpImage      * load_image            (GFile               *file,
 static gboolean         save_image            (GFile                *file,
                                                GimpImage            *image,
                                                GimpDrawable         *drawable,
-                                               const SaveParams     *params,
+                                               GObject              *config,
                                                GError              **error);
 
 static gboolean         load_dialog           (struct heif_context  *heif,
                                                uint32_t             *selected_image);
-static gboolean         save_dialog           (SaveParams           *params);
+static gboolean         save_dialog           (GimpProcedure        *procedure,
+                                               GObject              *config);
 
 
 G_DEFINE_TYPE (Heif, heif, GIMP_TYPE_PLUG_IN)
@@ -204,6 +195,12 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                              "Use lossless compression",
                              FALSE,
                              G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-profile",
+                                 "Save profile",
+                                 "Save the image's color profile",
+                                 gimp_export_color_profile (),
+                                 G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -253,29 +250,23 @@ heif_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpExportReturn       export = GIMP_EXPORT_CANCEL;
-  SaveParams             params;
-  GimpMetadata          *metadata = NULL;
-  GimpMetadataSaveFlags  metadata_flags;
-  GError                *error    = NULL;
+  GimpProcedureConfig  *config;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  GimpExportReturn      export = GIMP_EXPORT_CANCEL;
+  GimpImage            *orig_image;
+  GError               *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  metadata = gimp_image_metadata_save_prepare (image,
-                                               "image/heif",
-                                               &metadata_flags);
-
-  params.lossless     = FALSE;
-  params.quality      = 50;
-  params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+  orig_image = image;
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
+
       export = gimp_export_image (&image, &drawable, "HEIF",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
@@ -290,43 +281,48 @@ heif_save (GimpProcedure        *procedure,
       break;
     }
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (SAVE_PROC, &params);
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
 
-      if (! save_dialog (&params))
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! save_dialog (procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (SAVE_PROC, &params);
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      params.quality  = GIMP_VALUES_GET_INT     (args, 0);
-      params.lossless = GIMP_VALUES_GET_BOOLEAN (args, 1);
-      break;
     }
 
-  if (save_image (file, image, drawable,
-                  &params,
-                  &error))
+  if (status == GIMP_PDB_SUCCESS)
     {
-      if (metadata)
-        gimp_image_metadata_save_finish (image,
-                                         "image/heif",
-                                         metadata, metadata_flags,
-                                         file, NULL);
+      if (save_image (file, image, drawable, G_OBJECT (config),
+                      &error))
+        {
+          GimpMetadata          *metadata;
+          GimpMetadataSaveFlags  metadata_flags;
 
-      gimp_set_data (SAVE_PROC, &params, sizeof (params));
-    }
-  else
-    {
-      status = GIMP_PDB_EXECUTION_ERROR;
+          metadata = gimp_image_metadata_save_prepare (orig_image,
+                                                       "image/heif",
+                                                       &metadata_flags);
+
+          if (metadata)
+            {
+              gimp_image_metadata_save_finish (image,
+                                               "image/heif",
+                                               metadata, metadata_flags,
+                                               file, NULL);
+              g_object_unref (metadata);
+            }
+
+          gimp_procedure_config_end_run (config, orig_image, run_mode);
+        }
+      else
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
-  g_object_unref (metadata);
+  g_object_unref (config);
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -693,11 +689,11 @@ write_callback (struct heif_context *ctx,
 }
 
 static gboolean
-save_image (GFile             *file,
-            GimpImage         *image,
-            GimpDrawable      *drawable,
-            const SaveParams  *params,
-            GError           **error)
+save_image (GFile         *file,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GObject       *config,
+            GError       **error)
 {
   struct heif_image        *h_image = NULL;
   struct heif_context      *context = heif_context_alloc ();
@@ -716,6 +712,15 @@ save_image (GFile             *file,
   gint                      height;
   gboolean                  has_alpha;
   gboolean                  out_linear = FALSE;
+  gboolean                  lossless;
+  gint                      quality;
+  gboolean                  save_profile;
+
+  g_object_get (config,
+                "lossless",     &lossless,
+                "quality",      &quality,
+                "save-profile", &save_profile,
+                NULL);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
@@ -733,7 +738,7 @@ save_image (GFile             *file,
                            &h_image);
 
 #ifdef HAVE_LIBHEIF_1_4_0
-  if (params->save_profile)
+  if (save_profile)
     {
       GimpColorProfile *profile = NULL;
       const guint8     *icc_data;
@@ -823,8 +828,8 @@ save_image (GFile             *file,
                                              heif_compression_HEVC,
                                              &encoder);
 
-  heif_encoder_set_lossy_quality (encoder, params->quality);
-  heif_encoder_set_lossless (encoder, params->lossless);
+  heif_encoder_set_lossy_quality (encoder, quality);
+  heif_encoder_set_lossless (encoder, lossless);
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
   err = heif_context_encode_image (context,
@@ -1232,81 +1237,62 @@ load_dialog (struct heif_context *heif,
 
 /*  the save dialog  */
 
-static void
-save_dialog_lossless_button_toggled (GtkToggleButton *source,
-                                     GtkWidget       *hbox)
-{
-  gboolean lossless = gtk_toggle_button_get_active (source);
-
-  gtk_widget_set_sensitive (hbox, ! lossless);
-}
-
 gboolean
-save_dialog (SaveParams *params)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *lossless_button;
+  GtkWidget *grid;
+  GtkWidget *button;
   GtkWidget *frame;
-#ifdef HAVE_LIBHEIF_1_4_0
-  GtkWidget *profile_button;
-#endif
-  GtkWidget *quality_slider;
-  gboolean   run = FALSE;
+  gboolean   run;
 
-  dialog = gimp_export_dialog_new (_("HEIF"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as HEIF"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      main_vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      main_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
 
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  lossless_button = gtk_check_button_new_with_mnemonic (_("_Lossless"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), lossless_button);
+  button = gimp_prop_check_button_new (config, "lossless",
+                                       _("_Lossless"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+  gtk_widget_show (button);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  label = gtk_label_new_with_mnemonic (_("_Quality:"));
-  quality_slider = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
-                                             0, 100, 5);
-  gtk_scale_set_value_pos (GTK_SCALE (quality_slider), GTK_POS_RIGHT);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), quality_slider, TRUE, TRUE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
-  gtk_range_set_value (GTK_RANGE (quality_slider), params->quality);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lossless_button),
-                                params->lossless);
-  gtk_widget_set_sensitive (quality_slider, !params->lossless);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), quality_slider);
+  g_object_bind_property (config, "lossless",
+                          grid,   "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
 
-  g_signal_connect (lossless_button, "toggled",
-                    G_CALLBACK (save_dialog_lossless_button_toggled),
-                    hbox);
+  gimp_prop_scale_entry_new (config, "quality",
+                             GTK_GRID (grid), 0, 1,
+                             _("_Quality"),
+                             1, 10, 0,
+                             FALSE, 0, 0);
 
 #ifdef HAVE_LIBHEIF_1_4_0
-  profile_button = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (profile_button),
-                                params->save_profile);
-  g_signal_connect (profile_button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &params->save_profile);
-  gtk_box_pack_start (GTK_BOX (main_vbox), profile_button, FALSE, FALSE, 0);
+  button = gimp_prop_check_button_new (config, "save-profile",
+                                       _("Save color _profile"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 #endif
 
-  gtk_widget_show_all (dialog);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  if (run)
-    {
-      params->quality  = gtk_range_get_value (GTK_RANGE (quality_slider));
-      params->lossless = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (lossless_button));
-    }
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
