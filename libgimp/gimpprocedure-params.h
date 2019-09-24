@@ -49,6 +49,12 @@ G_BEGIN_DECLS
                                default,\
                                flags))
 
+#define GIMP_PROC_AUX_ARG_BOOLEAN(class, name, nick, blurb, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_boolean (name, nick, blurb,\
+                                   default,\
+                                   flags))
+
 #define GIMP_PROC_VAL_BOOLEAN(class, name, nick, blurb, default, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    g_param_spec_boolean (name, nick, blurb,\
@@ -69,6 +75,12 @@ G_BEGIN_DECLS
                                g_param_spec_int (name, nick, blurb,\
                                min, max, default,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_INT(class, name, nick, blurb, min, max, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_int (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags))
 
 #define GIMP_PROC_VAL_INT(class, name, nick, blurb, min, max, default, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -91,6 +103,12 @@ G_BEGIN_DECLS
                                min, max, default,\
                                flags))
 
+#define GIMP_PROC_AUX_ARG_UINT(class, name, nick, blurb, min, max, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_uint (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags))
+
 #define GIMP_PROC_VAL_UINT(class, name, nick, blurb, min, max, default, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    g_param_spec_uint (name, nick, blurb,\
@@ -111,6 +129,12 @@ G_BEGIN_DECLS
                                g_param_spec_uchar (name, nick, blurb,\
                                min, max, default,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_UCHAR(class, name, nick, blurb, min, max, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_uchar (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags))
 
 #define GIMP_PROC_VAL_UCHAR(class, name, nick, blurb, min, max, default, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -133,6 +157,12 @@ G_BEGIN_DECLS
                                pixels, percent, default,\
                                flags))
 
+#define GIMP_PROC_AUX_ARG_UNIT(class, name, nick, blurb, pixels, percent, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_unit (name, nick, blurb,\
+                                   pixels, percent, default,\
+                                   flags))
+
 #define GIMP_PROC_VAL_UNIT(class, name, nick, blurb, pixels, percent, default, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_unit (name, nick, blurb,\
@@ -147,6 +177,12 @@ G_BEGIN_DECLS
                                g_param_spec_double (name, nick, blurb,\
                                min, max, default,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_DOUBLE(class, name, nick, blurb, min, max, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_double (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags))
 
 #define GIMP_PROC_VAL_DOUBLE(class, name, nick, blurb, min, max, default, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -169,6 +205,12 @@ G_BEGIN_DECLS
                                enum_type, default,\
                                flags))
 
+#define GIMP_PROC_AUX_ARG_ENUM(class, name, nick, blurb, enum_type, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_enum (name, nick, blurb,\
+                                   enum_type, default,\
+                                   flags))
+
 #define GIMP_PROC_VAL_ENUM(class, name, nick, blurb, enum_type, default, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    g_param_spec_enum (name, nick, blurb,\
@@ -189,6 +231,12 @@ G_BEGIN_DECLS
                                g_param_spec_string (name, nick, blurb,\
                                default,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_STRING(class, name, nick, blurb, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_string (name, nick, blurb,\
+                                   default,\
+                                   flags))
 
 #define GIMP_PROC_VAL_STRING(class, name, nick, blurb, default, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -217,6 +265,12 @@ G_BEGIN_DECLS
                                has_alpha, default, \
                                flags))
 
+#define GIMP_PROC_AUX_ARG_RGB(class, name, nick, blurb, has_alpha, default, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_rgb (name, nick, blurb,\
+                                   has_alpha, default, \
+                                   flags))
+
 #define GIMP_PROC_VAL_RGB(class, name, nick, blurb, has_alpha, default, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_rgb (name, nick, blurb,\
@@ -236,6 +290,11 @@ G_BEGIN_DECLS
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_parasite (name, nick, blurb,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_PARASITE(class, name, nick, blurb, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_parasite (name, nick, blurb,\
+                                   flags))
 
 #define GIMP_PROC_VAL_PARASITE(class, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -262,6 +321,11 @@ G_BEGIN_DECLS
                                g_param_spec_param (name, nick, blurb, param_type, \
                                flags))
 
+#define GIMP_PROC_AUX_ARG_PARAM(class, name, nick, blurb, param_type, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_param (name, nick, blurb, param_type, \
+                                   flags))
+
 #define GIMP_PROC_VAL_PARAM(class, name, nick, blurb, param_type, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    g_param_spec_param (name, nick, blurb, param_type, \
@@ -282,10 +346,15 @@ G_BEGIN_DECLS
 
 /*  uint8 array  */
 
-#define GIMP_PROC_ARG_UINT8_ARRAY(class, name, nick, blurb, flags)      \
+#define GIMP_PROC_ARG_UINT8_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_uint8_array (name, nick, blurb,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_UINT8_ARRAY(class, name, nick, blurb, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_uint8_array (name, nick, blurb,\
+                                   flags))
 
 #define GIMP_PROC_VAL_UINT8_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -312,15 +381,20 @@ G_BEGIN_DECLS
                                gimp_param_spec_int16_array (name, nick, blurb,\
                                flags))
 
-#define GIMP_PROC_VAL_INT16_ARRAY(class, name, nick, blurb, flags)      \
+#define GIMP_PROC_AUX_ARG_INT16_ARRAY(class, name, nick, blurb, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_int16_array (name, nick, blurb,\
+                                   flags))
+
+#define GIMP_PROC_VAL_INT16_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_int16_array (name, nick, blurb,\
                                    flags))
 
-#define GIMP_VALUES_GET_INT16_ARRAY(args, n)                    \
+#define GIMP_VALUES_GET_INT16_ARRAY(args, n) \
   gimp_value_get_int16_array (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_DUP_INT16_ARRAY(args, n)                    \
+#define GIMP_VALUES_DUP_INT16_ARRAY(args, n) \
   gimp_value_dup_int16_array (gimp_value_array_index (args, n))
 
 #define GIMP_VALUES_SET_INT16_ARRAY(args, n, value, length) \
@@ -337,7 +411,12 @@ G_BEGIN_DECLS
                                gimp_param_spec_int32_array (name, nick, blurb,\
                                flags))
 
-#define GIMP_PROC_VAL_INT32_ARRAY(class, name, nick, blurb, flags)      \
+#define GIMP_PROC_AUX_ARG_INT32_ARRAY(class, name, nick, blurb, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_int32_array (name, nick, blurb,\
+                                   flags))
+
+#define GIMP_PROC_VAL_INT32_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_int32_array (name, nick, blurb,\
                                    flags))
@@ -357,10 +436,15 @@ G_BEGIN_DECLS
 
 /*  float array  */
 
-#define GIMP_PROC_ARG_FLOAT_ARRAY(class, name, nick, blurb, flags)      \
+#define GIMP_PROC_ARG_FLOAT_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_float_array (name, nick, blurb,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_FLOAT_ARRAY(class, name, nick, blurb, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_float_array (name, nick, blurb,\
+                                   flags))
 
 #define GIMP_PROC_VAL_FLOAT_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -382,10 +466,15 @@ G_BEGIN_DECLS
 
 /*  string array  */
 
-#define GIMP_PROC_ARG_STRING_ARRAY(class, name, nick, blurb, flags)     \
+#define GIMP_PROC_ARG_STRING_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_string_array (name, nick, blurb,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_STRING_ARRAY(class, name, nick, blurb, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_string_array (name, nick, blurb,\
+                                   flags))
 
 #define GIMP_PROC_VAL_STRING_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -407,10 +496,15 @@ G_BEGIN_DECLS
 
 /*  rgb array  */
 
-#define GIMP_PROC_ARG_RGB_ARRAY(class, name, nick, blurb, flags)        \
+#define GIMP_PROC_ARG_RGB_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_rgb_array (name, nick, blurb,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_RGB_ARRAY(class, name, nick, blurb, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_rgb_array (name, nick, blurb,\
+                                   flags))
 
 #define GIMP_PROC_VAL_RGB_ARRAY(class, name, nick, blurb, flags) \
   gimp_procedure_add_return_value (procedure,\
@@ -437,6 +531,11 @@ G_BEGIN_DECLS
                                gimp_param_spec_object_array (name, nick, blurb,\
                                                              object_type, flags))
 
+#define GIMP_PROC_AUX_ARG_OBJECT_ARRAY(class, name, nick, blurb, object_type, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_object_array (name, nick, blurb,\
+                                                                 object_type, flags))
+
 #define GIMP_PROC_VAL_OBJECT_ARRAY(class, name, nick, blurb, object_type, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_object_array (name, nick, blurb,\
@@ -459,16 +558,22 @@ G_BEGIN_DECLS
 
 /*  display  */
 
-#define GIMP_PROC_ARG_DISPLAY(class, name, nick, blurb, none_ok, flags)  \
+#define GIMP_PROC_ARG_DISPLAY(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_display (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
 
-#define GIMP_PROC_VAL_DISPLAY(class, name, nick, blurb, none_ok, flags)  \
+#define GIMP_PROC_AUX_ARG_DISPLAY(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_display (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
+
+#define GIMP_PROC_VAL_DISPLAY(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_display (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_DISPLAY(args, n) \
@@ -483,16 +588,22 @@ G_BEGIN_DECLS
 
 /*  image  */
 
-#define GIMP_PROC_ARG_IMAGE(class, name, nick, blurb, none_ok, flags)    \
+#define GIMP_PROC_ARG_IMAGE(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_image (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
 
-#define GIMP_PROC_VAL_IMAGE(class, name, nick, blurb, none_ok, flags)    \
+#define GIMP_PROC_AUX_ARG_IMAGE(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                               gimp_param_spec_image (name, nick, blurb,\
+                               none_ok,\
+                               flags))
+
+#define GIMP_PROC_VAL_IMAGE(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_image (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_IMAGE(args, n) \
@@ -507,16 +618,22 @@ G_BEGIN_DECLS
 
 /*  item  */
 
-#define GIMP_PROC_ARG_ITEM(class, name, nick, blurb, none_ok, flags)     \
+#define GIMP_PROC_ARG_ITEM(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_item (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
 
-#define GIMP_PROC_VAL_ITEM(class, name, nick, blurb, none_ok, flags)     \
+#define GIMP_PROC_AUX_ARG_ITEM(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_item (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
+
+#define GIMP_PROC_VAL_ITEM(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_item (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_ITEM(args, n) \
@@ -534,13 +651,19 @@ G_BEGIN_DECLS
 #define GIMP_PROC_ARG_DRAWABLE(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_drawable (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_DRAWABLE(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_drawable (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
 
 #define GIMP_PROC_VAL_DRAWABLE(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_drawable (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_DRAWABLE(args, n) \
@@ -555,16 +678,22 @@ G_BEGIN_DECLS
 
 /*  layer */
 
-#define GIMP_PROC_ARG_LAYER(class, name, nick, blurb, none_ok, flags)    \
+#define GIMP_PROC_ARG_LAYER(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_layer (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
 
-#define GIMP_PROC_VAL_LAYER(class, name, nick, blurb, none_ok, flags)    \
+#define GIMP_PROC_AUX_ARG_LAYER(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_layer (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
+
+#define GIMP_PROC_VAL_LAYER(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_layer (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_LAYER(args, n) \
@@ -579,16 +708,22 @@ G_BEGIN_DECLS
 
 /*  channel  */
 
-#define GIMP_PROC_ARG_CHANNEL(class, name, nick, blurb, none_ok, flags)  \
+#define GIMP_PROC_ARG_CHANNEL(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_channel (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_CHANNEL(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_channel (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
 
 #define GIMP_PROC_VAL_CHANNEL(class, name, nick, blurb, none_ok, flags)  \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_channe (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_CHANNEL(args, n) \
@@ -606,13 +741,19 @@ G_BEGIN_DECLS
 #define GIMP_PROC_ARG_LAYER_MASK(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_layer_mask (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_LAYER_MASK(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_layer_mask (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
 
 #define GIMP_PROC_VAL_LAYER_MASK(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_layer_mask (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_LAYER_MASK(args, n) \
@@ -630,13 +771,19 @@ G_BEGIN_DECLS
 #define GIMP_PROC_ARG_SELECTION(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_selection (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_SELECTION(class, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_selection (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
 
 #define GIMP_PROC_VAL_SELECTION(class, name, nick, blurb, none_ok, flags) \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_selection (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_SELECTION(args, n) \
@@ -654,13 +801,19 @@ G_BEGIN_DECLS
 #define GIMP_PROC_ARG_VECTORS(class, name, nick, blurb, none_ok, flags)  \
   gimp_procedure_add_argument (procedure,\
                                gimp_param_spec_vectors (name, nick, blurb,\
-                               none_ok, \
+                               none_ok,\
                                flags))
+
+#define GIMP_PROC_AUX_ARG_VECTORS(class, name, nick, blurb, none_ok, flags)  \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_vectors (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
 
 #define GIMP_PROC_VAL_VECTORS(class, name, nick, blurb, none_ok, flags)  \
   gimp_procedure_add_return_value (procedure,\
                                    gimp_param_spec_vectors (name, nick, blurb,\
-                                   none_ok, \
+                                   none_ok,\
                                    flags))
 
 #define GIMP_VALUES_GET_VECTORS(args, n) \
@@ -680,6 +833,12 @@ G_BEGIN_DECLS
                                g_param_spec_object (name, nick, blurb,\
                                                     G_TYPE_FILE,\
                                                     flags))
+
+#define GIMP_PROC_AUX_ARG_FILE(class, name, nick, blurb, flags)  \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   g_param_spec_object (name, nick, blurb,\
+                                                        G_TYPE_FILE,\
+                                                        flags))
 
 #define GIMP_PROC_VAL_FILE(class, name, nick, blurb, none_ok, flags)  \
   gimp_procedure_add_return_value (procedure,\
