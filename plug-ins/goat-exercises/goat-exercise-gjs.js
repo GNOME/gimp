@@ -71,7 +71,7 @@ var Goat = GObject.registerClass({
         /* TODO: localization. */
 
         if (run_mode == Gimp.RunMode.INTERACTIVE) {
-            Gimp.ui_init("goat-exercise-gjs", false);
+            Gimp.ui_init("goat-exercise-gjs");
             /* TODO: help function and ID. */
             let dialog = new Gimp.Dialog({
               title: "Exercise a goat (JavaScript)",

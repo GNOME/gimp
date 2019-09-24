@@ -38,7 +38,7 @@ PROC_NAME = 'python-fu-console'
 RESPONSE_BROWSE, RESPONSE_CLEAR, RESPONSE_SAVE = range(3)
 
 def run(procedure, args, data):
-    Gimp.ui_init ("python-console.py", False)
+    Gimp.ui_init ("python-console.py")
 
     namespace = {'__builtins__': __builtins__,
                  '__name__': '__main__', '__doc__': None,

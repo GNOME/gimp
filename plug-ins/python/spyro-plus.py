@@ -1410,7 +1410,7 @@ class SpyroWindow(Gtk.Window):
 
         self.drawing_layer = self.spyro_layer
 
-        Gimp.ui_init(sys.argv[0], False)
+        Gimp.ui_init(sys.argv[0])
         create_ui()
         self.update_view()
 

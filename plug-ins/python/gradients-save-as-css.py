@@ -74,7 +74,7 @@ def gradient_css_save(procedure, args, data):
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
-        Gimp.ui_init ("gradients-save-as-css.py", False)
+        Gimp.ui_init ("gradients-save-as-css.py")
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,

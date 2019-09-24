@@ -39,7 +39,7 @@ function run(procedure, run_mode, image, drawable, args, run_data)
   -- Not sure why run_mode has become a string instead of testing
   -- against Gimp.RunMode.INTERACTIVE.
   if run_mode == "INTERACTIVE" then
-    Gimp.ui_init("goat-exercise-lua", false);
+    Gimp.ui_init("goat-exercise-lua");
     local dialog = Gimp.Dialog {
       title          = "Exercise a goat (Lua)",
       role           = "goat-exercise-Lua",
