@@ -338,7 +338,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       /* IPTC */
 
-      if (! gimp_export_xmp () ||
+      if (! gimp_export_iptc () ||
           ! gexiv2_metadata_has_iptc (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
 
