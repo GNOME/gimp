@@ -74,6 +74,9 @@ struct _GimpProcedurePrivate
   gint32            n_args;
   GParamSpec      **args;
 
+  gint32            n_aux_args;
+  GParamSpec      **aux_args;
+
   gint32            n_values;
   GParamSpec      **values;
 
@@ -222,6 +225,14 @@ gimp_procedure_finalize (GObject *object)
         g_param_spec_unref (procedure->priv->args[i]);
 
       g_clear_pointer (&procedure->priv->args, g_free);
+    }
+
+  if (procedure->priv->aux_args)
+    {
+      for (i = 0; i < procedure->priv->n_aux_args; i++)
+        g_param_spec_unref (procedure->priv->aux_args[i]);
+
+      g_clear_pointer (&procedure->priv->aux_args, g_free);
     }
 
   if (procedure->priv->values)
@@ -484,9 +495,27 @@ gimp_procedure_real_create_config (GimpProcedure  *procedure,
   type = g_type_from_name (type_name);
 
   if (! type)
-    type = gimp_config_type_register (GIMP_TYPE_PROCEDURE_CONFIG,
-                                      type_name,
-                                      args, n_args);
+    {
+      GParamSpec **config_args;
+      gint         n_config_args;
+
+      n_config_args = n_args + procedure->priv->n_aux_args;
+
+      config_args = g_new0 (GParamSpec *, n_config_args);
+
+      memcpy (config_args,
+              args,
+              n_args * sizeof (GParamSpec *));
+      memcpy (config_args + n_args,
+              procedure->priv->aux_args,
+              procedure->priv->n_aux_args * sizeof (GParamSpec *));
+
+      type = gimp_config_type_register (GIMP_TYPE_PROCEDURE_CONFIG,
+                                        type_name,
+                                        config_args, n_config_args);
+
+      g_free (config_args);
+    }
 
   g_free (type_name);
 
@@ -1132,6 +1161,15 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
         return;
       }
 
+  for (i = 0; i < procedure->priv->n_aux_args; i++)
+    if (! strcmp (pspec->name, procedure->priv->aux_args[i]->name))
+      {
+        g_warning ("Argument with name '%s' already exists on procedure '%s'",
+                   pspec->name,
+                   gimp_procedure_get_name (procedure));
+        return;
+      }
+
   procedure->priv->args = g_renew (GParamSpec *, procedure->priv->args,
                                    procedure->priv->n_args + 1);
 
@@ -1151,9 +1189,9 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
  * Add a new argument to @procedure according to the specifications of
  * the property @prop_name registered on @config.
  *
- * The arguments will be ordered according to the call order to
- * gimp_procedure_add_argument() and
- * gimp_procedure_add_argument_from_property().
+ * See gimp_procedure_add_argument() for details.
+ *
+ * Since: 3.0
  */
 void
 gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
@@ -1171,6 +1209,91 @@ gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
   g_return_if_fail (pspec != NULL);
 
   gimp_procedure_add_argument (procedure, pspec);
+}
+
+/**
+ * gimp_procedure_add_aux_argument:
+ * @procedure: the #GimpProcedure.
+ * @pspec:     (transfer full): the argument specification.
+ *
+ * Add a new auxiliary argument to @procedure according to @pspec
+ * specifications.
+ *
+ * Auxiliary arguments are not passed to the @procedure in run() and
+ * are not known to the PDB. They are however members of the
+ * #GimpProcedureConfig created by gimp_procedure_create_config() and
+ * can be used to persistently store whatever last used values the
+ * @procedure wants to remember across invocations
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_add_aux_argument (GimpProcedure *procedure,
+                                 GParamSpec    *pspec)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+  g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
+
+  for (i = 0; i < procedure->priv->n_args; i++)
+    if (! strcmp (pspec->name, procedure->priv->args[i]->name))
+      {
+        g_warning ("Argument with name '%s' already exists on procedure '%s'",
+                   pspec->name,
+                   gimp_procedure_get_name (procedure));
+        return;
+      }
+
+  for (i = 0; i < procedure->priv->n_aux_args; i++)
+    if (! strcmp (pspec->name, procedure->priv->aux_args[i]->name))
+      {
+        g_warning ("Argument with name '%s' already exists on procedure '%s'",
+                   pspec->name,
+                   gimp_procedure_get_name (procedure));
+        return;
+      }
+
+  procedure->priv->aux_args = g_renew (GParamSpec *, procedure->priv->aux_args,
+                                       procedure->priv->n_aux_args + 1);
+
+  procedure->priv->aux_args[procedure->priv->n_aux_args] = pspec;
+
+  g_param_spec_ref_sink (pspec);
+
+  procedure->priv->n_aux_args++;
+}
+
+/**
+ * gimp_procedure_add_aux_argument_from_property:
+ * @procedure: the #GimpProcedure.
+ * @config:    a #GObject.
+ * @prop_name: property name in @config.
+ *
+ * Add a new auxiliaty argument to @procedure according to the
+ * specifications of the property @prop_name registered on @config.
+ *
+ * See gimp_procedure_add_aux_argument() for details.
+ *
+ * Since: 3.0
+ */
+void
+gimp_procedure_add_aux_argument_from_property (GimpProcedure *procedure,
+                                               GObject       *config,
+                                               const gchar   *prop_name)
+{
+  GParamSpec *pspec;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (G_IS_OBJECT (config));
+  g_return_if_fail (prop_name != NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
+
+  g_return_if_fail (pspec != NULL);
+
+  gimp_procedure_add_aux_argument (procedure, pspec);
 }
 
 /**
@@ -1268,6 +1391,29 @@ gimp_procedure_get_arguments (GimpProcedure *procedure,
   *n_arguments = procedure->priv->n_args;
 
   return procedure->priv->args;
+}
+
+/**
+ * gimp_procedure_get_aux_arguments:
+ * @procedure:   A #GimpProcedure.
+ * @n_arguments: (out): Returns the number of auxiliary arguments.
+ *
+ * Returns: (transfer none) (array length=n_arguments): An array
+ *          of @GParamSpec in the order added with
+ *          gimp_procedure_add_aux_argument().
+ *
+ * Since: 3.0
+ **/
+GParamSpec **
+gimp_procedure_get_aux_arguments (GimpProcedure *procedure,
+                                  gint          *n_arguments)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (n_arguments != NULL, NULL);
+
+  *n_arguments = procedure->priv->n_aux_args;
+
+  return procedure->priv->aux_args;
 }
 
 /**

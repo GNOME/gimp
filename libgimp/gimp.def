@@ -677,6 +677,8 @@ EXPORTS
 	gimp_plug_in_set_translation_domain
 	gimp_procedure_add_argument
 	gimp_procedure_add_argument_from_property
+	gimp_procedure_add_aux_argument
+	gimp_procedure_add_aux_argument_from_property
 	gimp_procedure_add_menu_path
 	gimp_procedure_add_return_value
 	gimp_procedure_add_return_value_from_property
@@ -690,6 +692,7 @@ EXPORTS
 	gimp_procedure_extension_ready
 	gimp_procedure_get_arguments
 	gimp_procedure_get_authors
+	gimp_procedure_get_aux_arguments
 	gimp_procedure_get_blurb
 	gimp_procedure_get_copyright
 	gimp_procedure_get_date

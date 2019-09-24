@@ -228,6 +228,8 @@ gimp_procedure_config_set_values (GimpProcedureConfig  *config,
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
+  gint         n_aux_args;
+  gint         n_values;
   gint         i;
 
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
@@ -235,10 +237,12 @@ gimp_procedure_config_set_values (GimpProcedureConfig  *config,
 
   pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
                                            &n_pspecs);
+  gimp_procedure_get_aux_arguments (config->priv->procedure, &n_aux_args);
+  n_values = gimp_value_array_length (values);
 
-  g_return_if_fail (n_pspecs == gimp_value_array_length (values));
+  g_return_if_fail (n_pspecs == n_values + n_aux_args);
 
-  for (i = 0; i < n_pspecs; i++)
+  for (i = 0; i < n_values; i++)
     {
       GParamSpec *pspec = pspecs[i];
       GValue     *value = gimp_value_array_index (values, i);
@@ -267,6 +271,8 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
+  gint         n_aux_args;
+  gint         n_values;
   gint         i;
 
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
@@ -274,10 +280,12 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
 
   pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
                                            &n_pspecs);
+  gimp_procedure_get_aux_arguments (config->priv->procedure, &n_aux_args);
+  n_values = gimp_value_array_length (values);
 
-  g_return_if_fail (n_pspecs == gimp_value_array_length (values));
+  g_return_if_fail (n_pspecs == n_values + n_aux_args);
 
-  for (i = 0; i < n_pspecs; i++)
+  for (i = 0; i < n_values; i++)
     {
       GParamSpec *pspec = pspecs[i];
       GValue     *value = gimp_value_array_index (values, i);
