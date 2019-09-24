@@ -204,10 +204,7 @@ pat_save (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        {
-          status = GIMP_PDB_CANCEL;
-          goto out;
-        }
+        status = GIMP_PDB_CANCEL;
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -245,7 +242,6 @@ pat_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
- out:
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
@@ -267,7 +263,6 @@ save_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as Pattern"));
 
-  /* The main grid */
   grid = gtk_grid_new ();
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
