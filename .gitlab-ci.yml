@@ -36,6 +36,10 @@ cache:
         base-devel
         python-docutils
         python-pip
+    - curl https://aur.archlinux.org/cgit/aur.git/snapshot/mingw-w64-gcc.tar.gz --output mingw-w64-gcc.tar.gz
+    - tar xzf mingw-w64-gcc.tar.gz
+    - cd mingw-w64-gcc
+    - makepkg -si
     - pip3 install crossroad
 
 build-git-x86_64-w64-mingw32-meson:
