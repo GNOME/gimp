@@ -86,12 +86,6 @@ typedef struct
   gint n;     /* How many times it is repeated */
 } RLEBUF;
 
-/* Export info  */
-typedef struct
-{
-  gboolean  rle;  /*  rle or standard */
-} SUNRASSaveVals;
-
 
 typedef struct _Sunras      Sunras;
 typedef struct _SunrasClass SunrasClass;
@@ -134,6 +128,7 @@ static GimpImage      * load_image              (GFile                *file,
 static gboolean         save_image              (GFile                *file,
                                                  GimpImage            *image,
                                                  GimpDrawable         *drawable,
+                                                 GObject              *config,
                                                  GError              **error);
 
 static void             set_color_table         (GimpImage            *image,
@@ -216,7 +211,8 @@ static gint             save_rgb                (FILE                *ofp,
                                                  GimpDrawable        *drawable,
                                                  gboolean             rle);
 
-static gboolean         save_dialog             (void);
+static gboolean         save_dialog             (GimpProcedure       *procedure,
+                                                 GObject             *config);
 
 /* Portability kludge */
 static int              my_fwrite               (void                *ptr,
@@ -232,11 +228,6 @@ GIMP_MAIN (SUNRAS_TYPE)
 
 static int    read_msb_first = 1;
 static RLEBUF rlebuf;
-
-static SUNRASSaveVals psvals =
-{
-  TRUE     /* rle */
-};
 
 
 static void
@@ -266,7 +257,7 @@ sunras_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 sunras_create_procedure (GimpPlugIn  *plug_in,
-                      const gchar *name)
+                         const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
@@ -370,12 +361,16 @@ sunras_save (GimpProcedure        *procedure,
              const GimpValueArray *args,
              gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpImage           *orig_image;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  orig_image = image;
 
   switch (run_mode)
     {
@@ -398,39 +393,26 @@ sunras_save (GimpProcedure        *procedure,
       break;
     }
 
-  switch (run_mode)
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (SAVE_PROC, &psvals);
-
-      if (! save_dialog ())
+      if (! save_dialog (procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      psvals.rle = GIMP_VALUES_GET_BOOLEAN (args, 0);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (SAVE_PROC, &psvals);
-      break;
-
-    default:
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable,
-                      &error))
-        {
-          gimp_set_data (SAVE_PROC, &psvals, sizeof (SUNRASSaveVals));
-        }
-      else
+      if (! save_image (file, image, drawable, G_OBJECT (config),
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -595,14 +577,20 @@ static gboolean
 save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
+            GObject       *config,
             GError       **error)
 {
   gchar         *filename;
   FILE          *ofp;
   GimpImageType  drawable_type;
+  gboolean       rle;
   gboolean       retval;
 
   drawable_type = gimp_drawable_type (drawable);
+
+  g_object_get (config,
+                "rle", &rle,
+                NULL);
 
   /*  Make sure we're not exporting an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable))
@@ -642,15 +630,15 @@ save_image (GFile         *file,
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     {
-      retval = save_index (ofp, image, drawable, FALSE, psvals.rle);
+      retval = save_index (ofp, image, drawable, FALSE, rle);
     }
   else if (drawable_type == GIMP_GRAY_IMAGE)
     {
-      retval = save_index (ofp, image, drawable, TRUE, psvals.rle);
+      retval = save_index (ofp, image, drawable, TRUE, rle);
     }
   else if (drawable_type == GIMP_RGB_IMAGE)
     {
-      retval = save_rgb (ofp, image, drawable, psvals.rle);
+      retval = save_rgb (ofp, image, drawable, rle);
     }
   else
     {
@@ -1781,32 +1769,29 @@ save_rgb (FILE         *ofp,
 /*  Save interface functions  */
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *frame;
   gboolean   run;
 
-  dialog = gimp_export_dialog_new (_("SUNRAS"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as SUNRAS"));
 
-  /*  file save type  */
-  frame = gimp_int_radio_group_new (TRUE, _("Data Formatting"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &psvals.rle, psvals.rle,
-
-                                    _("_RunLength Encoded"), TRUE,  NULL,
-                                    _("_Standard"),          FALSE, NULL,
-
-                                    NULL);
+  frame = gimp_prop_boolean_radio_frame_new (config, "rle",
+                                             _("Data Formatting"),
+                                             _("_RunLength Encoded"),
+                                             _("_Standard"));
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
