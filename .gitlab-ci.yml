@@ -29,21 +29,30 @@ cache:
     paths:
     - "${INSTALL_DIR}"
   before_script:
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
+    - apt-get update
+    - apt-get install --yes --no-install-recommends
+        bash
+        build-essential
+        cmake
+        ninja-build
+        ca-certificates
         git
-        base-devel
+        mingw-w64
         python-docutils
-        python-pip
-    - curl https://aur.archlinux.org/cgit/aur.git/snapshot/mingw-w64-gcc.tar.gz --output mingw-w64-gcc.tar.gz
-    - tar xzf mingw-w64-gcc.tar.gz
-    - cd mingw-w64-gcc
-    - makepkg -si
-    - pip3 install crossroad
+        python3-pip
+        python3-setuptools
+    - pip3 install wheel
+    - echo $SHELL
+    #- pip3 install crossroad
+    - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - cd crossroad
+    - ./setup.py install
+    - cd ..
 
 build-git-x86_64-w64-mingw32-meson:
   extends: .gimp-x86_64-w64-mingw32-base
   script:
-    - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
+    - crossroad --verbose w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
   artifacts:
     name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: on_failure
