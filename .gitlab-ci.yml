@@ -1,4 +1,4 @@
-image: salamandar/archlinux-gimp:latest
+image: debian:testing
 
 stages:
   - gimp
@@ -6,12 +6,10 @@ stages:
 variables:
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
-  PACMAN_CACHE:   "${CI_PROJECT_DIR}/_pacman_cache"
 
 cache:
   paths:
-  - _pacman_cache
-
+  - /var/cache/apt
 
 # build-min-autotools:
 #   extends: .gimp-autotools
