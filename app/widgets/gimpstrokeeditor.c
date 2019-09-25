@@ -137,7 +137,6 @@ gimp_stroke_editor_constructed (GObject *object)
                                    editor->resolution);
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
   gtk_box_pack_start (GTK_BOX (box), size, FALSE, FALSE, 0);
-  gtk_widget_show (size);
 
   expander = gtk_expander_new_with_mnemonic (_("_Line Style"));
   gtk_box_pack_start (GTK_BOX (editor), expander, FALSE, FALSE, 0);

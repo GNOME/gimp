@@ -506,7 +506,6 @@ gimp_device_info_editor_constructed (GObject *object)
           gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                                "gimp-curve");
           gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-          gtk_widget_show (combo);
 
           gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 

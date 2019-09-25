@@ -137,6 +137,8 @@ gimp_prop_check_button_new (GObject     *config,
                   G_CALLBACK (gimp_prop_check_button_notify),
                   button);
 
+  gtk_widget_show (button);
+
   return button;
 }
 
@@ -258,6 +260,8 @@ gimp_prop_enum_check_button_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_enum_check_button_notify),
                   button);
+
+  gtk_widget_show (button);
 
   return button;
 }
@@ -404,6 +408,8 @@ gimp_prop_int_combo_box_new (GObject      *config,
                   G_CALLBACK (gimp_prop_int_combo_box_notify),
                   combo_box);
 
+  gtk_widget_show (combo_box);
+
   return combo_box;
 }
 
@@ -469,6 +475,8 @@ gimp_prop_pointer_combo_box_new (GObject      *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_pointer_combo_box_notify),
                   combo_box);
+
+  gtk_widget_show (combo_box);
 
   return combo_box;
 }
@@ -572,6 +580,8 @@ gimp_prop_enum_combo_box_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_int_combo_box_notify),
                   combo_box);
+
+  gtk_widget_show (combo_box);
 
   return combo_box;
 }
@@ -731,6 +741,8 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_boolean_combo_box_notify),
                   combo);
 
+  gtk_widget_show (combo);
+
   return combo;
 }
 
@@ -864,6 +876,8 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
 
   g_object_set_data (G_OBJECT (frame), "radio-button", button);
 
+  gtk_widget_show (frame);
+
   return frame;
 }
 
@@ -934,6 +948,8 @@ gimp_prop_enum_radio_box_new (GObject     *config,
 
   g_object_set_data (G_OBJECT (vbox), "radio-button", button);
 
+  gtk_widget_show (vbox);
+
   return vbox;
 }
 
@@ -983,6 +999,8 @@ gimp_prop_enum_label_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_enum_label_notify),
                   label);
+
+  gtk_widget_show (label);
 
   return label;
 }
@@ -1064,6 +1082,8 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
 
   g_object_set_data (G_OBJECT (frame), "radio-button", button);
 
+  gtk_widget_show (frame);
+
   return frame;
 }
 
@@ -1136,6 +1156,8 @@ gimp_prop_enum_icon_box_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_radio_button_notify),
                   button);
+
+  gtk_widget_show (box);
 
   return box;
 }
@@ -1245,6 +1267,8 @@ gimp_prop_spin_button_new (GObject     *config,
                   G_CALLBACK (gimp_prop_adjustment_notify),
                   adjustment);
 
+  gtk_widget_show (spinbutton);
+
   return spinbutton;
 }
 
@@ -1306,6 +1330,8 @@ gimp_prop_hscale_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_adjustment_notify),
                   adjustment);
+
+  gtk_widget_show (scale);
 
   return scale;
 }
@@ -1755,6 +1781,8 @@ gimp_prop_memsize_entry_new (GObject     *config,
                   G_CALLBACK (gimp_prop_memsize_notify),
                   entry);
 
+  gtk_widget_show (entry);
+
   return entry;
 }
 
@@ -1866,6 +1894,8 @@ gimp_prop_label_new (GObject     *config,
 
   gimp_prop_label_notify (config, param_spec, label);
 
+  gtk_widget_show (label);
+
   return label;
 }
 
@@ -1969,6 +1999,8 @@ gimp_prop_entry_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_entry_notify),
                   entry);
+
+  gtk_widget_show (entry);
 
   return entry;
 }
@@ -2250,6 +2282,8 @@ gimp_prop_string_combo_box_new (GObject      *config,
                   G_CALLBACK (gimp_prop_string_combo_box_notify),
                   combo_box);
 
+  gtk_widget_show (combo_box);
+
   return combo_box;
 }
 
@@ -2304,7 +2338,6 @@ gimp_prop_string_combo_box_notify (GObject    *config,
 /*************************/
 /*  file chooser button  */
 /*************************/
-
 
 static GtkWidget * gimp_prop_file_chooser_button_setup    (GtkWidget      *button,
                                                            GObject        *config,
@@ -2435,6 +2468,8 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
   connect_notify (config, param_spec->name,
                   G_CALLBACK (gimp_prop_file_chooser_button_notify),
                   button);
+
+  gtk_widget_show (button);
 
   return button;
 }
@@ -2620,6 +2655,8 @@ gimp_prop_path_editor_new (GObject     *config,
                       G_CALLBACK (gimp_prop_path_editor_writable_notify),
                       editor);
     }
+
+  gtk_widget_show (editor);
 
   return editor;
 }
@@ -2928,6 +2965,8 @@ gimp_prop_size_entry_new (GObject                   *config,
                       entry);
     }
 
+  gtk_widget_show (entry);
+
   return entry;
 }
 
@@ -3161,6 +3200,8 @@ gimp_prop_coordinates_new (GObject                   *config,
       gtk_widget_destroy (entry);
       return NULL;
     }
+
+  gtk_widget_show (entry);
 
   return entry;
 }
@@ -3615,6 +3656,8 @@ gimp_prop_color_area_new (GObject           *config,
                   G_CALLBACK (gimp_prop_color_area_notify),
                   area);
 
+  gtk_widget_show (area);
+
   return area;
 }
 
@@ -3739,6 +3782,8 @@ gimp_prop_unit_combo_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_unit_combo_box_notify),
                   combo);
 
+  gtk_widget_show (combo);
+
   return combo;
 }
 
@@ -3850,6 +3895,8 @@ gimp_prop_icon_image_new (GObject     *config,
                   G_CALLBACK (gimp_prop_icon_image_notify),
                   image);
 
+  gtk_widget_show (image);
+
   return image;
 }
 
@@ -3936,6 +3983,8 @@ gimp_prop_expander_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_expander_notify),
                   expander);
+
+  gtk_widget_show (expander);
 
   return expander;
 }

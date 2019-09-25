@@ -1351,7 +1351,6 @@ prefs_dialog_new (Gimp       *gimp,
                                          _("_Try to use the system monitor "
                                            "profile"));
     gtk_grid_attach (GTK_GRID (grid), button, 1, row, 1, 1);
-    gtk_widget_show (button);
     row++;
 
     prefs_enum_combo_box_add (color_config,
@@ -1363,7 +1362,6 @@ prefs_dialog_new (Gimp       *gimp,
                                          "display-use-black-point-compensation",
                                          _("Use _black point compensation"));
     gtk_grid_attach (GTK_GRID (grid), button, 1, row, 1, 1);
-    gtk_widget_show (button);
     row++;
 
     prefs_boolean_combo_box_add (color_config,
@@ -1398,7 +1396,6 @@ prefs_dialog_new (Gimp       *gimp,
                                          "simulation-use-black-point-compensation",
                                          _("Use black _point compensation"));
     gtk_grid_attach (GTK_GRID (grid), button, 1, row, 1, 1);
-    gtk_widget_show (button);
     row++;
 
     prefs_boolean_combo_box_add (color_config,
@@ -1416,7 +1413,6 @@ prefs_dialog_new (Gimp       *gimp,
     button = gimp_prop_check_button_new (color_config, "simulation-gamut-check",
                                          _("Mar_k out of gamut colors"));
     gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-    gtk_widget_show (button);
 
     button = gimp_prop_color_button_new (color_config, "out-of-gamut-color",
                                          _("Select Warning Color"),
@@ -1424,7 +1420,6 @@ prefs_dialog_new (Gimp       *gimp,
                                          PREFS_COLOR_BUTTON_HEIGHT,
                                          GIMP_COLOR_AREA_FLAT);
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
 
     gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                   gimp_get_user_context (gimp));
@@ -2686,7 +2681,6 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_set_halign (hbox, GTK_ALIGN_START);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 24);
-  gtk_widget_show (entry);
   gtk_widget_set_sensitive (entry, ! display_config->monitor_res_from_gdk);
 
   group = NULL;
@@ -2986,7 +2980,6 @@ prefs_dialog_new (Gimp       *gimp,
 
         entry = gimp_prop_entry_new (object, formats[format].property_name, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), entry, FALSE, FALSE, 0);
-        gtk_widget_show (entry);
 
         scrolled_win = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -3325,7 +3318,6 @@ prefs_dialog_new (Gimp       *gimp,
                                             paths[i].writable_property_name,
                                             gettext (paths[i].fs_label));
         gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
-        gtk_widget_show (editor);
       }
   }
 

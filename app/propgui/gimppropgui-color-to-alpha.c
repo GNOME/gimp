@@ -90,7 +90,6 @@ _gimp_prop_gui_new_color_to_alpha (GObject                  *config,
                                        area, context, create_picker_func, NULL,
                                        creator);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -99,7 +98,6 @@ _gimp_prop_gui_new_color_to_alpha (GObject                  *config,
   scale = gimp_prop_widget_new (config, "transparency-threshold",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
 
   if (create_picker_func)
     {
@@ -121,7 +119,6 @@ _gimp_prop_gui_new_color_to_alpha (GObject                  *config,
   scale = gimp_prop_widget_new (config, "opacity-threshold",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
 
   if (create_picker_func)
     {

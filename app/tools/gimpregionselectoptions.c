@@ -255,37 +255,31 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   /*  the select transparent areas toggle  */
   button = gimp_prop_check_button_new (config, "select-transparent", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  the sample merged toggle  */
   button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  the diagonal neighbors toggle  */
   if (tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL)
     {
       button = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
     }
 
   /*  the threshold scale  */
   scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /*  the select criterion combo  */
   combo = gimp_prop_enum_combo_box_new (config, "select-criterion", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Select by"));
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
 
   /*  the show mask toggle  */
   button = gimp_prop_check_button_new (config, "draw-mask", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   return vbox;
 }

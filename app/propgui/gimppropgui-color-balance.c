@@ -61,7 +61,6 @@ create_levels_scale (GObject     *config,
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_widget_set_hexpand (scale, TRUE);
   gtk_grid_attach (GTK_GRID (grid), scale, 1, col, 1, 1);
-  gtk_widget_show (scale);
 
   label = gtk_label_new (right);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -97,7 +96,6 @@ _gimp_prop_gui_new_color_balance (GObject                  *config,
                                           _("Select Range to Adjust"),
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   frame = gimp_frame_new (_("Adjust Color Levels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -142,7 +140,6 @@ _gimp_prop_gui_new_color_balance (GObject                  *config,
                                        "preserve-luminosity",
                                        _("Preserve _luminosity"));
   gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   return main_vbox;
 }

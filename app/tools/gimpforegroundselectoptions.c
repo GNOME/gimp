@@ -293,7 +293,6 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_enum_radio_frame_new (config, "draw-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -305,7 +304,6 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
 
   button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -326,16 +324,15 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_enum_radio_frame_new (config, "preview-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
 
   /*  mask color */
   button = gimp_prop_color_button_new (config, "mask-color",
                                        NULL,
                                        128, 24,
                                        GIMP_COLOR_AREA_SMALL_CHECKS);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), GIMP_CONTEXT (config));
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                GIMP_CONTEXT (config));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* engine */
   frame = gimp_frame_new (NULL);
@@ -347,9 +344,8 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
 
-  if (!gegl_has_operation ("gegl:matting-levin"))
+  if (! gegl_has_operation ("gegl:matting-levin"))
     gtk_widget_set_sensitive (combo, FALSE);
-  gtk_widget_show (combo);
 
   inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), inner_vbox);

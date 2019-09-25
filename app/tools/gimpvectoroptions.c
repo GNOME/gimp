@@ -159,7 +159,6 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_enum_radio_frame_new (config, "vectors-edit-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   button = g_object_get_data (G_OBJECT (frame), "radio-button");
 
@@ -177,7 +176,6 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "vectors-polygonal", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   str = g_strdup_printf (_("Path to Selection\n"
                            "%s  Add\n"

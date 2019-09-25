@@ -291,7 +291,6 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Relative to"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (align_vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
@@ -384,7 +383,6 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   spinbutton = gimp_prop_spin_button_new (config, "offset-x",
                                           1, 20, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
@@ -397,7 +395,6 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   spinbutton = gimp_prop_spin_button_new (config, "offset-y",
                                           1, 20, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
 
   return vbox;
 }

@@ -408,10 +408,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   str = g_strdup_printf (_("Fill Type  (%s)"),
                          gimp_get_mod_string (toggle_mask)),
   frame = gimp_prop_enum_radio_frame_new (config, "fill-mode", str, 0, 0);
-  g_free (str);
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  g_free (str);
 
   hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options),
                                     NULL, 2,
@@ -423,10 +421,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   str = g_strdup_printf (_("Affected Area  (%s)"),
                          gimp_get_mod_string (extend_mask));
   frame = gimp_prop_enum_radio_frame_new (config, "fill-area", str, 0, 0);
-  g_free (str);
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  g_free (str);
 
   /* Similar color frame */
   frame = gimp_frame_new (_("Finding Similar Colors"));
@@ -441,36 +437,30 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /*  the fill transparent areas toggle  */
   widget = gimp_prop_check_button_new (config, "fill-transparent", NULL);
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
 
   /*  the sample merged toggle  */
   widget = gimp_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
 
   /*  the diagonal neighbors toggle  */
   widget = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
   options->priv->diagonal_neighbors_checkbox = widget;
-  gtk_widget_show (widget);
 
   /*  the antialias toggle  */
   widget = gimp_prop_check_button_new (config, "antialias", NULL);
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
 
   /*  the threshold scale  */
   scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
   options->priv->threshold_scale = scale;
-  gtk_widget_show (scale);
 
   /*  the fill criterion combo  */
   combo = gimp_prop_enum_combo_box_new (config, "fill-criterion", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill by"));
   gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   /* Line art frame */
   frame = gimp_frame_new (NULL);
@@ -505,12 +495,10 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   combo = gimp_prop_enum_combo_box_new (config, "line-art-source", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Source"));
   gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   /*  the fill transparent areas toggle  */
   widget = gimp_prop_check_button_new (config, "fill-transparent", NULL);
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
 
   /*  Line Art: feather radius scale  */
   scale = gimp_prop_spin_scale_new (config, "feather-radius", NULL,
@@ -519,25 +507,21 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "feather", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /*  Line Art: max growing size */
   scale = gimp_prop_spin_scale_new (config, "line-art-max-grow", NULL,
                                     1, 5, 0);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /*  Line Art: stroke threshold */
   scale = gimp_prop_spin_scale_new (config, "line-art-threshold", NULL,
                                     0.05, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /*  Line Art: max gap length */
   scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length", NULL,
                                     1, 5, 0);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   gimp_bucket_fill_options_update_area (options);
 

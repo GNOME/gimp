@@ -307,7 +307,6 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   combo = gimp_prop_enum_combo_box_new (config, "behavior", 0, 0);
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   options->behavior_combo = combo;
 
@@ -315,46 +314,38 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, "effect-hardness", NULL,
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, "effect-strength", NULL,
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, "stroke-spacing", NULL,
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Interpolation"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   combo = gimp_prop_enum_combo_box_new (config, "abyss-policy",
                                         GEGL_ABYSS_NONE, GEGL_ABYSS_LOOP);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Abyss policy"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   button = gimp_prop_check_button_new (config, "high-quality-preview", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "real-time-preview", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  the stroke frame  */
   frame = gimp_frame_new (_("Stroke"));
@@ -369,7 +360,6 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "stroke-during-motion", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   scale = gimp_prop_spin_scale_new (config, "stroke-periodically-rate", NULL,
                                     1, 10, 1);
@@ -378,7 +368,6 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "stroke-periodically", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /*  the animation frame  */
   frame = gimp_frame_new (_("Animate"));
@@ -393,7 +382,6 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 3.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   options->animate_button = gtk_button_new_with_label (_("Create Animation"));
   gtk_widget_set_sensitive (options->animate_button, FALSE);

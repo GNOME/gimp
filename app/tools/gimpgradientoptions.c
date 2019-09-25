@@ -274,7 +274,6 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
                                        "gimp-gradient-editor",
                                        _("Edit this gradient"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  the blend color space  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-blend-color-space",
@@ -283,7 +282,6 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
                                 _("Blend Color Space"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
 
   /*  the gradient type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
@@ -292,14 +290,12 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                        "gimp-gradient");
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   /*  the distance metric menu  */
   combo = gimp_prop_enum_combo_box_new (config, "distance-metric", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Metric"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   g_signal_connect (config, "notify::gradient-type",
                     G_CALLBACK (gradient_options_metric_gradient_type_notify),
@@ -311,7 +307,6 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Repeat"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   g_signal_connect (config, "notify::gradient-type",
                     G_CALLBACK (gradient_options_repeat_gradient_type_notify),
@@ -322,31 +317,26 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "offset", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /*  the dither toggle  */
   button = gimp_prop_check_button_new (config, "dither", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  supersampling options  */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   frame = gimp_prop_expanding_frame_new (config, "supersample", NULL,
                                          vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /*  max depth scale  */
   scale = gimp_prop_spin_scale_new (config, "supersample-depth", NULL,
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /*  threshold scale  */
   scale = gimp_prop_spin_scale_new (config, "supersample-threshold", NULL,
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* the instant toggle */
   str = g_strdup_printf (_("Instant mode  (%s)"),
@@ -354,7 +344,6 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "instant", str);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   g_free (str);
 
@@ -365,7 +354,6 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "modify-active", NULL,
                                          vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   options->modify_active_frame = frame;
 

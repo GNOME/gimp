@@ -236,14 +236,12 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
 
   box = gimp_prop_enum_icon_box_new (config, "type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
 
   if (direction)
     {
       frame = gimp_prop_enum_radio_frame_new (config, "direction", NULL,
                                               0, 0);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
 
       options->direction_frame = frame;
     }
@@ -255,7 +253,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Interpolation"));
       g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-      gtk_widget_show (combo);
     }
 
   /*  the clipping menu  */
@@ -265,7 +262,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Clipping"));
       g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-      gtk_widget_show (combo);
     }
 
   return vbox;

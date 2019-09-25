@@ -70,7 +70,6 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Source"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
-  gtk_widget_show (combo);
 
   source_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), source_vbox);
@@ -102,7 +101,6 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Alignment"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
 
   return vbox;
 }

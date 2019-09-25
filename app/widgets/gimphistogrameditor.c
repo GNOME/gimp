@@ -159,7 +159,6 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->menu),
                                  view->channel);
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
 
   gimp_help_set_help_data (editor->menu,
                            _("Histogram channel"), NULL);
@@ -168,13 +167,11 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                       "histogram-scale", "gimp-histogram",
                                       0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
 
   menu = gimp_prop_enum_icon_box_new (G_OBJECT (editor), "trc",
                                       "gimp-color-space",
                                       -1, -1);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
 
   gtk_box_pack_start (GTK_BOX (editor), editor->box, TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->box));

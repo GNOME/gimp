@@ -143,7 +143,6 @@ gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_enum_radio_frame_new (config, "handle-mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /* add modifier to name, add tooltip */
   button = g_object_get_data (G_OBJECT (frame), "radio-button");

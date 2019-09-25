@@ -336,7 +336,6 @@ gimp_cursor_view_init (GimpCursorView *view)
   toggle = gimp_prop_check_button_new (G_OBJECT (view), "sample-merged",
                                        _("_Sample Merged"));
   gtk_box_pack_start (GTK_BOX (view), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
 }
 
 static void

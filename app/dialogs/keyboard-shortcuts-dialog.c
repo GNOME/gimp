@@ -96,7 +96,6 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
   button = gimp_prop_check_button_new (G_OBJECT (gimp->config), "save-accels",
                                        _("S_ave keyboard shortcuts on exit"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   return dialog;
 }

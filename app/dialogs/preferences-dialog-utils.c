@@ -130,10 +130,7 @@ prefs_check_button_add (GObject     *config,
   button = gimp_prop_check_button_new (config, property_name, label);
 
   if (button)
-    {
-      gtk_box_pack_start (vbox, button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-    }
+    gtk_box_pack_start (vbox, button, FALSE, FALSE, 0);
 
   return button;
 }
@@ -151,7 +148,7 @@ prefs_check_button_add_with_icon (GObject      *config,
   GtkWidget *image;
 
   button = gimp_prop_check_button_new (config, property_name, label);
-  if (!button)
+  if (! button)
     return NULL;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -169,7 +166,6 @@ prefs_check_button_add_with_icon (GObject      *config,
   gtk_widget_show (image);
 
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
 
   if (group)
     gtk_size_group_add_widget (group, image);
@@ -357,10 +353,7 @@ prefs_language_combo_box_add (GObject      *config,
   GtkWidget *combo = gimp_prop_language_combo_box_new (config, property_name);
 
   if (combo)
-    {
-      gtk_box_pack_start (vbox, combo, FALSE, FALSE, 0);
-      gtk_widget_show (combo);
-    }
+    gtk_box_pack_start (vbox, combo, FALSE, FALSE, 0);
 
   return combo;
 }

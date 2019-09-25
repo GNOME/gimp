@@ -109,13 +109,11 @@ gimp_prop_angle_range_box_new (GObject     *config,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, beta_property_name, NULL,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
@@ -125,7 +123,6 @@ gimp_prop_angle_range_box_new (GObject     *config,
   button = gimp_prop_check_button_new (config, clockwise_property_name,
                                        _("Clockwise"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
 
   invert_button = gtk_button_new_with_label (_("Invert Range"));
   gtk_box_pack_start (GTK_BOX (hbox), invert_button, TRUE, TRUE, 0);
@@ -140,7 +137,6 @@ gimp_prop_angle_range_box_new (GObject     *config,
                                          beta_property_name,
                                          clockwise_property_name);
   gtk_box_pack_start (GTK_BOX (main_hbox), dial, FALSE, FALSE, 0);
-  gtk_widget_show (dial);
 
   g_signal_connect (invert_button, "clicked",
                     G_CALLBACK (invert_segment_clicked),
@@ -173,18 +169,17 @@ gimp_prop_polar_box_new (GObject     *config,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, radius_property_name, NULL,
                                     1.0, 15.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   polar = gimp_prop_polar_new (config,
                                angle_property_name,
                                radius_property_name);
   gtk_box_pack_start (GTK_BOX (main_hbox), polar, FALSE, FALSE, 0);
-  gtk_widget_show (polar);
+
+  gtk_widget_show (main_hbox);
 
   return main_hbox;
 }
@@ -220,7 +215,6 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
                                        param_specs[2]->name,
                                        param_specs[0]->name);
   gtk_container_add (GTK_CONTAINER (frame), box);
-  gtk_widget_show (box);
 
   frame = gimp_frame_new (_("Destination Range"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -231,7 +225,6 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
                                        param_specs[5]->name,
                                        param_specs[3]->name);
   gtk_container_add (GTK_CONTAINER (frame), box);
-  gtk_widget_show (box);
 
   frame = gimp_frame_new (_("Gray Handling"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -248,13 +241,11 @@ _gimp_prop_gui_new_color_rotate (GObject                  *config,
                                     create_controller_func,
                                     creator);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
 
   box = gimp_prop_polar_box_new (config,
                                  param_specs[8]->name,
                                  param_specs[9]->name);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
 
   return main_vbox;
 }

@@ -516,14 +516,12 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                                        "histogram-scale", "gimp-histogram",
                                        0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
 
   /*  The linear/perceptual radio buttons  */
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (config), "trc",
                                        "gimp-color-space",
                                        -1, -1);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);

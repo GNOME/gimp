@@ -433,6 +433,8 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
       gimp_prop_config_notify (config, NULL, widget);
     }
 
+  gtk_widget_show (widget);
+
   return widget;
 }
 
@@ -549,6 +551,8 @@ gimp_prop_gui_new (GObject                  *config,
                     "margin-bottom", 4,
                     NULL);
     }
+
+  gtk_widget_show (gui);
 
   return gui;
 }

@@ -219,25 +219,20 @@ gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
   /* the type (dodge or burn) */
   str = g_strdup_printf (_("Type  (%s)"),
                          gimp_get_mod_string (toggle_mask));
-
   frame = gimp_prop_enum_radio_frame_new (config, "type",
                                           str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   g_free (str);
 
   /*  mode (highlights, midtones, or shadows)  */
   frame = gimp_prop_enum_radio_frame_new (config, "mode", NULL,
                                           0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /*  the exposure scale  */
   scale = gimp_prop_spin_scale_new (config, "exposure", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   return vbox;
 }

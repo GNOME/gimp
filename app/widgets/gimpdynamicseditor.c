@@ -316,7 +316,6 @@ gimp_dynamics_editor_add_icon_editor (GimpDynamics *dynamics,
 
   button = gimp_prop_icon_picker_new (GIMP_VIEWABLE (dynamics), gimp);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 }
 
 static void
@@ -374,7 +373,6 @@ dynamics_check_button_new (GObject     *config,
   button = gimp_prop_check_button_new (config, property_name, NULL);
   gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
   gtk_grid_attach (grid, button, column, row, 1, 1);
-  gtk_widget_show (button);
 
   return button;
 }

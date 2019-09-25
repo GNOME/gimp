@@ -226,7 +226,6 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
                                     _("_Overlap"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   frame = gimp_frame_new (_("Adjust Selected Color"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -241,21 +240,18 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
                                     _("_Hue"), 1.0 / 180.0, 15.0 / 180.0, 0);
   gimp_prop_widget_set_factor (scale, 180.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /*  Create the lightness scale widget  */
   scale = gimp_prop_spin_scale_new (config, "lightness",
                                     _("_Lightness"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /*  Create the saturation scale widget  */
   scale = gimp_prop_spin_scale_new (config, "saturation",
                                     _("_Saturation"), 0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

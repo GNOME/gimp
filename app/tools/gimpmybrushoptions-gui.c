@@ -54,35 +54,29 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
                                       _("Brush"), 2,
                                       NULL, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* erase mode */
   scale = gimp_prop_check_button_new (config, "eraser", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* no erasing */
   scale = gimp_prop_check_button_new (config, "no-erasing", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* radius */
   scale = gimp_prop_spin_scale_new (config, "radius", NULL,
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* opaque */
   scale = gimp_prop_spin_scale_new (config, "opaque", NULL,
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* hardness */
   scale = gimp_prop_spin_scale_new (config, "hardness", NULL,
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   return vbox;
 }

@@ -194,7 +194,6 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   /*  layer toggle  */
   button = gimp_prop_check_button_new (config, "layer-only", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  fill type combo  */
   combo = gimp_prop_enum_combo_box_new (config, "fill-type", 0, 0);
@@ -204,7 +203,6 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "allow-growing", NULL,
                                          combo, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /*  rectangle options  */
   vbox_rectangle = gimp_rectangle_options_gui (tool_options);

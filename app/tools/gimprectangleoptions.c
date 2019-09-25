@@ -785,7 +785,6 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
 
   menu = gimp_prop_unit_combo_box_new (config, unit_property_name);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
 
   /*  content  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
@@ -832,7 +831,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   /* Fixed Center */
   button = gimp_prop_check_button_new (config, "fixed-center", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* Rectangle fixed-rules (e.g. aspect or width). */
   {
@@ -855,7 +853,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     button = gimp_prop_check_button_new (config, "fixed-rule-active", NULL);
     gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
-    gtk_widget_show (button);
 
     g_signal_connect (button, "toggled",
                       G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
@@ -865,7 +862,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fixed"));
     g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-    gtk_widget_show (combo);
 
     g_signal_connect (combo, "changed",
                       G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
@@ -902,7 +898,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                              0.001, GIMP_MAX_IMAGE_SIZE);
     gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox), entry,
                         TRUE, TRUE, 0);
-    gtk_widget_show (entry);
 
     g_signal_connect (entry, "notify::user-override",
                       G_CALLBACK (gimp_rectangle_options_string_current_updates),
@@ -920,7 +915,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                    "aspect", "gimp", -1, -1);
     gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox),
                         private->aspect_button_box, FALSE, FALSE, 0);
-    gtk_widget_show (private->aspect_button_box);
 
     g_object_add_weak_pointer (G_OBJECT (private->aspect_button_box),
                                (gpointer) &private->aspect_button_box);
@@ -939,7 +933,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_width_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_width_entry);
-    /* don't show */
+    gtk_widget_hide (private->fixed_width_entry);
 
     g_object_add_weak_pointer (G_OBJECT (private->fixed_width_entry),
                                (gpointer) &private->fixed_width_entry);
@@ -952,7 +946,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_height_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_height_entry);
-    /* don't show */
+    gtk_widget_hide (private->fixed_height_entry);
 
     g_object_add_weak_pointer (G_OBJECT (private->fixed_height_entry),
                                (gpointer) &private->fixed_height_entry);
@@ -962,7 +956,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_size_hbox,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_size_hbox);
-    /* don't show */
+    gtk_widget_hide (private->fixed_size_hbox);
 
     g_object_add_weak_pointer (G_OBJECT (private->fixed_size_hbox),
                                (gpointer) &private->fixed_size_hbox);
@@ -979,7 +973,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                              1, GIMP_MAX_IMAGE_SIZE);
     gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox), entry,
                         TRUE, TRUE, 0);
-    gtk_widget_show (entry);
 
     gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
                                                    entry,
@@ -990,7 +983,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                    "aspect", "gimp", -1, -1);
     gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox),
                         private->size_button_box, FALSE, FALSE, 0);
-    gtk_widget_show (private->size_button_box);
 
     /* hide "square" */
     children =
@@ -1034,7 +1026,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     frame = gimp_prop_expanding_frame_new (config, "highlight", NULL,
                                            scale, NULL);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-    gtk_widget_show (frame);
   }
 
   /*  Guide  */
@@ -1042,7 +1033,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                         GIMP_GUIDES_NONE,
                                         GIMP_GUIDES_DIAGONALS);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   /*  Auto Shrink  */
   private->auto_shrink_button = gtk_button_new_with_label (_("Auto Shrink"));
@@ -1056,7 +1046,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "shrink-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* Setup initial fixed rule widgets */
   gimp_rectangle_options_fixed_rule_changed (NULL, private);

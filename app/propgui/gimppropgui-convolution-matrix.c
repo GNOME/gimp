@@ -179,7 +179,6 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
                                             1.0, 10.0, 2);
           gtk_entry_set_width_chars (GTK_ENTRY (spin), 8);
           gtk_grid_attach (GTK_GRID (grid), spin, y, x, 1, 1);
-          gtk_widget_show (spin);
         }
     }
 
@@ -269,12 +268,10 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
   scale = gimp_prop_widget_new (config, "divisor",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "offset",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_widget_show (scale);
 
   /* rest of the properties */
 
@@ -290,7 +287,6 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
                                       create_controller_func,
                                       creator);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-  gtk_widget_show (vbox2);
 
   vbox2 = _gimp_prop_gui_new_generic (config,
                                       param_specs + 31,
@@ -300,7 +296,6 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
                                       create_controller_func,
                                       creator);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-  gtk_widget_show (vbox2);
 
   return main_vbox;
 }

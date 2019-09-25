@@ -394,14 +394,12 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
                                        "histogram-scale", "gimp-histogram",
                                        0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
 
   /*  The linear/perceptual radio buttons  */
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (config), "trc",
                                        "gimp-color-space",
                                        -1, -1);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
@@ -483,7 +481,6 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
     gimp_prop_spin_button_new (filter_tool->config, "low-input",
                                0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
 
   tool->low_input = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0,
@@ -497,14 +494,12 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   button = gimp_prop_check_button_new (filter_tool->config, "clamp-input",
                                        _("Clamp _input"));
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  input gamma spin  */
   spinbutton = gimp_prop_spin_button_new (filter_tool->config, "gamma",
                                           0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
-  gtk_widget_show (spinbutton);
 
   tool->gamma = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
@@ -529,7 +524,6 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   spinbutton = gimp_prop_spin_button_new (filter_tool->config, "high-input",
                                           0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
   tool->high_input_spinbutton = spinbutton;
 
   tool->high_input = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
@@ -578,7 +572,6 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
     gimp_prop_spin_button_new (filter_tool->config, "low-output",
                                0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
 
   adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0, adjustment);
@@ -587,14 +580,12 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   button = gimp_prop_check_button_new (filter_tool->config, "clamp-output",
                                        _("Clamp outpu_t"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  high output spin  */
   tool->high_output_spinbutton = spinbutton =
     gimp_prop_spin_button_new (filter_tool->config, "high-output",
                                0.01, 0.1, 1);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
 
   adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 2, adjustment);

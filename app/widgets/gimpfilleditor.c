@@ -112,7 +112,6 @@ gimp_fill_editor_constructed (GObject *object)
   box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
                                       0, 0);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
-  gtk_widget_show (box);
 
   if (editor->edit_context)
     {
@@ -142,7 +141,6 @@ gimp_fill_editor_constructed (GObject *object)
                                        "antialias",
                                        _("_Antialiasing"));
   gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 }
 
 static void

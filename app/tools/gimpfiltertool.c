@@ -372,12 +372,10 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview", NULL);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-      gtk_widget_show (toggle);
 
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview-split", NULL);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
 
       g_object_bind_property (G_OBJECT (tool_info->tool_options), "preview",
                               toggle,                             "sensitive",
@@ -389,8 +387,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                                     "controller", NULL);
       gtk_box_pack_end (GTK_BOX (vbox), filter_tool->controller_toggle,
                         FALSE, FALSE, 0);
-      if (filter_tool->widget)
-        gtk_widget_show (filter_tool->controller_toggle);
+      if (! filter_tool->widget)
+        gtk_widget_hide (filter_tool->controller_toggle);
 
       /*  The Color Options expander  */
       expander = gtk_expander_new (_("Advanced Color Options"));
@@ -414,7 +412,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "gamma-hack", NULL);
       gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
 
       /*  The area combo  */
       filter_tool->region_combo =
@@ -423,6 +420,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                                       0, 0);
       gtk_box_pack_end (GTK_BOX (vbox), filter_tool->region_combo,
                         FALSE, FALSE, 0);
+      gtk_widget_hide (filter_tool->region_combo);
 
       /*  The clipping combo  */
       filter_tool->clip_combo =
@@ -434,6 +432,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
         GIMP_INT_COMBO_BOX (filter_tool->clip_combo), _("Clipping"));
       gtk_box_pack_end (GTK_BOX (vbox), filter_tool->clip_combo,
                         FALSE, FALSE, 0);
+      gtk_widget_hide (filter_tool->clip_combo);
 
       /*  Fill in subclass widgets  */
       gimp_filter_tool_dialog (filter_tool);

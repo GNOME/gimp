@@ -140,7 +140,6 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
                                           GIMP_ORIENTATION_HORIZONTAL,
                                           GIMP_ORIENTATION_VERTICAL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   g_free (str);
 
@@ -157,7 +156,6 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Clipping"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
 
   g_object_unref (clip_model);
 

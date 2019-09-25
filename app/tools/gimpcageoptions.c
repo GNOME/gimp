@@ -143,11 +143,9 @@ gimp_cage_options_gui (GimpToolOptions *tool_options)
 
   mode = gimp_prop_enum_radio_box_new (config, "cage-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
-  gtk_widget_show (mode);
 
   button = gimp_prop_check_button_new (config, "fill-plain-color", NULL);
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   return vbox;
 }

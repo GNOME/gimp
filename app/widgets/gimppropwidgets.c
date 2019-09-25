@@ -138,6 +138,8 @@ gimp_prop_expanding_frame_new (GObject      *config,
   if (button)
     *button = toggle;
 
+  gtk_widget_show (frame);
+
   return frame;
 }
 
@@ -238,6 +240,8 @@ gimp_prop_boolean_icon_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_radio_button_notify),
                   button);
 
+  gtk_widget_show (box);
+
   return box;
 }
 
@@ -318,6 +322,8 @@ gimp_prop_layer_mode_box_new (GObject              *config,
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
+  gtk_widget_show (box);
+
   return box;
 }
 
@@ -386,6 +392,8 @@ gimp_prop_color_button_new (GObject           *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_color_button_notify),
                   button);
+
+  gtk_widget_show (button);
 
   return button;
 }
@@ -535,6 +543,8 @@ gimp_prop_spin_scale_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_adjustment_notify),
                   adjustment);
+
+  gtk_widget_show (scale);
 
   return scale;
 }
@@ -880,6 +890,8 @@ gimp_prop_angle_dial_new (GObject     *config,
                                    l, (GDestroyNotify) g_free);
     }
 
+  gtk_widget_show (dial);
+
   return dial;
 }
 
@@ -976,6 +988,8 @@ gimp_prop_polar_new (GObject     *config,
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
+  gtk_widget_show (polar);
+
   return polar;
 }
 
@@ -1060,6 +1074,8 @@ gimp_prop_view_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_view_notify),
                   view);
+
+  gtk_widget_show (view);
 
   return view;
 }
@@ -1259,8 +1275,7 @@ gimp_prop_number_pair_entry_new (GObject     *config,
                   G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
                   number_pair_entry);
 
-
-  /* Done */
+  gtk_widget_show (number_pair_entry);
 
   return number_pair_entry;
 }
@@ -1402,6 +1417,8 @@ gimp_prop_language_combo_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_language_combo_box_notify),
                   combo);
 
+  gtk_widget_show (combo);
+
   return combo;
 }
 
@@ -1499,6 +1516,8 @@ gimp_prop_language_entry_new (GObject     *config,
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_language_entry_notify),
                   entry);
+
+  gtk_widget_show (entry);
 
   return entry;
 }
@@ -1652,6 +1671,8 @@ gimp_prop_profile_combo_box_new (GObject      *config,
                   G_CALLBACK (gimp_prop_profile_combo_notify),
                   combo);
 
+  gtk_widget_show (combo);
+
   return combo;
 }
 
@@ -1789,6 +1810,8 @@ gimp_prop_compression_combo_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_compression_combo_box_notify),
                   combo);
 
+  gtk_widget_show (combo);
+
   return combo;
 }
 
@@ -1897,6 +1920,8 @@ gimp_prop_icon_picker_new (GimpViewable *viewable,
     g_free (icon_name_value);
   if (pixbuf_value)
     g_object_unref (pixbuf_value);
+
+  gtk_widget_show (picker);
 
   return picker;
 }

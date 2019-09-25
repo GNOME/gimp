@@ -2291,38 +2291,31 @@ save_dialog (GimpImage     *image,
   button = gimp_prop_check_button_new (config, "interlaced",
                                        _("_Interlacing (Adam7)"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "bkgd",
                                        _("Save _background color"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "gama",
                                        _("Save _gamma"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "offs",
                                        _("Save layer o_ffset"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "phys",
                                        _("Save _resolution"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "time",
                                        _("Save creation _time"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "save-transparent",
                                        _("Save color _values from "
                                          "transparent pixels"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 2, 1);
-  gtk_widget_show (button);
 
   gtk_widget_set_sensitive (button, alpha);
 
@@ -2332,7 +2325,6 @@ save_dialog (GimpImage     *image,
   button = gimp_prop_check_button_new (config, "comment",
                                        _("Save comme_nt"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   parasite = gimp_image_get_parasite (image, "gimp-comment");
   gtk_widget_set_sensitive (button, parasite != NULL);
@@ -2341,27 +2333,22 @@ save_dialog (GimpImage     *image,
   button = gimp_prop_check_button_new (config, "save-exif",
                                        _("Save E_xif data"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "save-xmp",
                                        _("Save XMP data"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "save-iptc",
                                        _("Save IPTC data"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "save-thumbnail",
                                        _("Save thumbnail"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "save-color-profile",
                                        _("Save color profile"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
-  gtk_widget_show (button);
 
 #if !defined(PNG_iCCP_SUPPORTED)
   gtk_widget_hide (button);

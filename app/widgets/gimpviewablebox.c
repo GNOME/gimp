@@ -717,6 +717,8 @@ view_props_connect (GtkWidget   *box,
     gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
                               view_size_prop, "popup-view-size");
 
+  gtk_widget_show (box);
+
   return box;
 }
 

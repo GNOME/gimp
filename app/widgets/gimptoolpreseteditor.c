@@ -150,47 +150,38 @@ gimp_tool_preset_editor_constructed (GObject *object)
   button = gimp_prop_icon_picker_new (GIMP_VIEWABLE (preset),
                                       data_editor->context->gimp);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->fg_bg_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->brush_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-brush", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->dynamics_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->mybrush_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-mypaint-brush", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->gradient_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-gradient", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->pattern_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-pattern", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->palette_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-palette", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = editor->priv->font_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-font", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (editor),
                                           "tool-preset-editor",

@@ -342,7 +342,6 @@ gimp_device_status_device_add (GimpContainer    *devices,
   entry->tool = gimp_prop_view_new (G_OBJECT (entry->context), "tool",
                                     entry->context, CELL_SIZE);
   gtk_box_pack_start (GTK_BOX (hbox), entry->tool, FALSE, FALSE, 0);
-  gtk_widget_show (entry->tool);
 
   /*  the foreground color  */
 

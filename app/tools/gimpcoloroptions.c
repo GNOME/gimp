@@ -159,7 +159,6 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   frame = gimp_prop_expanding_frame_new (config, "sample-average", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
 
   return vbox;
 }

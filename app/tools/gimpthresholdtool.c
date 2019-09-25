@@ -238,13 +238,10 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
                                                        "channel", -1, -1);
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (t_tool->channel_menu),
                                        "gimp-channel");
-
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (t_tool->channel_menu),
                                       gimp_threshold_tool_channel_sensitive,
                                       filter_tool, NULL);
-
   gtk_box_pack_start (GTK_BOX (hbox), t_tool->channel_menu, FALSE, FALSE, 0);
-  gtk_widget_show (t_tool->channel_menu);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), t_tool->channel_menu);
 
@@ -252,7 +249,6 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
                                        "histogram-scale", "gimp-histogram",
                                        0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
-  gtk_widget_show (hbox2);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);

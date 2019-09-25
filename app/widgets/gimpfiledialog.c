@@ -758,7 +758,6 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
                                          "show-all-files",
                                          _("Show _All Files"));
   gtk_box_pack_end (GTK_BOX (box), checkbox, FALSE, FALSE, 1);
-  gtk_widget_show (checkbox);
 }
 
 static void

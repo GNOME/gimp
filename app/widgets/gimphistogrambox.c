@@ -170,12 +170,10 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   spinbutton = gimp_prop_spin_button_new (G_OBJECT (box->view), "border-width",
                                           1, 5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
 
   spinbutton = gimp_prop_spin_button_new (G_OBJECT (box->view), "subdivisions",
                                           1, 5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
 #endif
 }
 

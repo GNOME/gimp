@@ -133,7 +133,6 @@ gimp_seamless_clone_options_gui (GimpToolOptions *tool_options)
                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 50.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   return vbox;
 }

@@ -1264,7 +1264,6 @@ save_dialog (GimpProcedure *procedure,
   button = gimp_prop_check_button_new (config, "lossless",
                                        _("_Lossless"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-  gtk_widget_show (button);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
@@ -1286,7 +1285,6 @@ save_dialog (GimpProcedure *procedure,
   button = gimp_prop_check_button_new (config, "save-color-profile",
                                        _("Save color _profile"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 #endif
 
   gtk_widget_show (dialog);

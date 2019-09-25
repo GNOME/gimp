@@ -205,7 +205,6 @@ gimp_grid_editor_constructed (GObject *object)
   gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 1, 2);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
-  gtk_widget_show (sizeentry);
 
   gtk_widget_show (hbox);
 
@@ -241,7 +240,6 @@ gimp_grid_editor_constructed (GObject *object)
   gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 1, 2);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
-  gtk_widget_show (sizeentry);
 
   gtk_widget_show (hbox);
 }

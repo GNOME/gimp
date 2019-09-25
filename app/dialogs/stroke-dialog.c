@@ -243,7 +243,6 @@ stroke_dialog_new (GimpItem           *item,
                                          "emulate-brush-dynamics",
                                          _("_Emulate brush dynamics"));
     gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
   }
 
   return dialog;

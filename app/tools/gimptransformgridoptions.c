@@ -400,10 +400,10 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "preview-opacity", NULL,
                                     0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+
   frame = gimp_prop_expanding_frame_new (config, "show-preview", NULL,
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   /*  the guides frame  */
   frame = gimp_frame_new (NULL);
@@ -415,7 +415,6 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Guides"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
-  gtk_widget_show (combo);
 
   /*  the grid density scale  */
   scale = gimp_prop_spin_scale_new (config, "grid-size", NULL,
@@ -440,7 +439,6 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_prop_check_button_new (config, "constrain-rotate", label);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
 
       gimp_help_set_help_data (button, _("Limit rotation steps to 15 degrees"),
                                NULL);
@@ -457,7 +455,6 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_prop_check_button_new (config, "constrain-scale", label);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
 
       gimp_help_set_help_data (button, _("Keep the original aspect ratio"),
                                NULL);
@@ -469,7 +466,6 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_prop_check_button_new (config, "frompivot-scale", label);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
 
       gimp_help_set_help_data (button, _("Scale around the center point"),
                                NULL);
@@ -486,7 +482,6 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_prop_check_button_new (config, "constrain-perspective", label);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
 
       gimp_help_set_help_data (
         button, _("Constrain handles to move along edges and diagonal (%s)"),
@@ -499,7 +494,6 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_prop_check_button_new (config, "frompivot-perspective", label);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
 
       gimp_help_set_help_data (
         button, _("Transform around the center point"),
@@ -568,11 +562,8 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
             {
               button = gimp_prop_check_button_new (config, opt_list[i].name,
                                                    label);
-
               gtk_box_pack_start (GTK_BOX (frame ? grid_box : vbox),
                                   button, FALSE, FALSE, 0);
-
-              gtk_widget_show (button);
 
               g_free (label);
               label = g_strdup_printf (gettext (opt_list[i].tip),

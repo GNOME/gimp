@@ -64,13 +64,11 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "size", NULL,
                                     1.0, 2.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* angle adjust slider */
   scale = gimp_prop_spin_scale_new (config, "tilt-angle", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* sens sliders */
   frame = gimp_frame_new (_("Sensitivity"));
@@ -85,19 +83,16 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "size-sensitivity", NULL,
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* tilt sens slider */
   scale = gimp_prop_spin_scale_new (config, "tilt-sensitivity", NULL,
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* velocity sens slider */
   scale = gimp_prop_spin_scale_new (config, "vel-sensitivity", NULL,
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   /* Blob shape widgets */
   frame = gimp_frame_new (_("Shape"));
@@ -116,7 +111,6 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (blob_box),
                                   GTK_ORIENTATION_VERTICAL);
   gtk_box_pack_start (GTK_BOX (hbox), blob_box, FALSE, FALSE, 0);
-  gtk_widget_show (blob_box);
 
   gtk_size_group_add_widget (size_group, blob_box);
   g_object_unref (size_group);

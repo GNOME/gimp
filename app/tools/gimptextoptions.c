@@ -551,7 +551,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                                  _("Font"), 2,
                                  "font-view-type", "font-view-size");
   gtk_box_pack_start (GTK_BOX (options_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
@@ -574,11 +573,9 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_check_button_new (config, "use-editor", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (config, "antialias", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
@@ -664,7 +661,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
     entry = gimp_prop_language_entry_new (config, "language");
     gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
-    gtk_widget_show (entry);
   }
 #endif
 

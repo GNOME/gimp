@@ -276,7 +276,6 @@ gimp_brightness_contrast_tool_dialog (GimpFilterTool *filter_tool)
   scale = gimp_prop_spin_scale_new (filter_tool->config, "brightness",
                                     _("_Brightness"), 0.01, 0.1, 3);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   bc_tool->brightness_scale = scale;
 
@@ -284,7 +283,6 @@ gimp_brightness_contrast_tool_dialog (GimpFilterTool *filter_tool)
   scale = gimp_prop_spin_scale_new (filter_tool->config, "contrast",
                                     _("_Contrast"), 0.01, 0.1, 3);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
 
   bc_tool->contrast_scale = scale;
 

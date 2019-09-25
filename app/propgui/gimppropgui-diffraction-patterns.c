@@ -66,7 +66,6 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Frequencies")));
-  gtk_widget_show (vbox);
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 3, 3,
@@ -77,7 +76,6 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Contours")));
-  gtk_widget_show (vbox);
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 6, 3,
@@ -88,7 +86,6 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Sharp Edges")));
-  gtk_widget_show (vbox);
 
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 9, 3,
@@ -99,7 +96,6 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Other Options")));
-  gtk_widget_show (vbox);
 
   return notebook;
 }

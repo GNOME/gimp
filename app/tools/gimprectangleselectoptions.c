@@ -182,7 +182,6 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
       frame = gimp_prop_expanding_frame_new (config, "round-corners", NULL,
                                              scale, NULL);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
 
       toggle = GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle;
 

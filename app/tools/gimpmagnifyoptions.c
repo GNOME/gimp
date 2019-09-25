@@ -186,17 +186,13 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
   /*  the auto_resize toggle button  */
   button = gimp_prop_check_button_new (config, "auto-resize", NULL);
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Direction  (%s)"),
                          gimp_get_mod_string (toggle_mask));
-
   frame = gimp_prop_enum_radio_frame_new (config, "zoom-type",
                                           str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   g_free (str);
 
   return vbox;

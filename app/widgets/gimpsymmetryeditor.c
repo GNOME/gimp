@@ -179,7 +179,6 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
       gtk_box_pack_start (GTK_BOX (editor), editor->p->menu,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (editor), editor->p->menu, 0);
-      gtk_widget_show (editor->p->menu);
 
       /* Connect to symmetry change. */
       g_signal_connect (image_editor->image, "notify::symmetry",
@@ -252,7 +251,6 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
                                NULL, NULL, NULL);
       gtk_box_pack_start (GTK_BOX (editor->p->options_vbox), gui,
                           FALSE, FALSE, 0);
-      gtk_widget_show (gui);
     }
 }
 
