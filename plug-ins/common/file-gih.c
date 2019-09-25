@@ -418,7 +418,6 @@ gih_save (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpValueArray *save_retvals;
-      gchar          *uri = g_file_get_uri (file);
       gchar           spacing[8];
       gchar          *paramstring;
 
@@ -430,13 +429,11 @@ gih_save (GimpProcedure        *procedure,
                                 GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
                                 GIMP_TYPE_IMAGE,    image,
                                 GIMP_TYPE_DRAWABLE, drawable,
-                                G_TYPE_STRING,      uri,
+                                G_TYPE_FILE,        file,
                                 G_TYPE_INT,         info.spacing,
                                 G_TYPE_STRING,      info.description,
                                 G_TYPE_STRING,      paramstring,
                                 G_TYPE_NONE);
-
-      g_free (uri);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
