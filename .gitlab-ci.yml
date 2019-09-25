@@ -36,7 +36,7 @@ cache:
         base-devel
         python-docutils
         python-pip
-    - pip3 install --user crossroad
+    - pip3 install crossroad
 
 build-git-x86_64-w64-mingw32-meson:
   extends: .gimp-x86_64-w64-mingw32-base
