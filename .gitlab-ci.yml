@@ -217,3 +217,27 @@ build-git-meson:
 #   dependencies:
 #     - babl-min
 #     - gegl-min
+
+.gimp-x86_64-w64-mingw32-base:
+  stage: gimp
+  artifacts:
+    paths:
+    - "${INSTALL_DIR}"
+  before_script:
+    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
+        git
+        base-devel
+        mingw-w64-x86_64-toolchain
+        python-pip
+    - pip3 install --user crossroad
+
+build-git-x86_64-w64-mingw32-meson:
+  extends: .gimp-x86_64-w64-mingw32-base
+  script:
+    - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
+  artifacts:
+    name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: on_failure
+    expire_in: 1 week
+    paths:
+      - _build/
