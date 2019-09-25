@@ -226,10 +226,7 @@ gbr_save (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        {
-          status = GIMP_PDB_CANCEL;
-          goto out;
-        }
+        status = GIMP_PDB_CANCEL;
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -255,11 +252,7 @@ gbr_save (GimpProcedure        *procedure,
 
       g_free (description);
 
-      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
-        {
-          gimp_procedure_config_end_run (config, orig_image, run_mode);
-        }
-      else
+      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
         {
           g_set_error (&error, 0, 0,
                        "Running procedure 'file-gbr-save-internal' "
@@ -272,7 +265,7 @@ gbr_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
- out:
+  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

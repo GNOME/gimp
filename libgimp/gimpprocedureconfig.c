@@ -380,11 +380,11 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  * @config:   a #GimpProcedureConfig
  * @image:    a #GimpImage or %NULL
  * @run_mode: the #GimpRunMode passed to a #GimpProcedure's run()
+ * @status:   the return status of the #GimpProcedure's run()
  *
  * This function is the counterpart of
- * gimp_procedure_conig_begin_run() and should be used upon successful
- * completion of a procedure's run(), before returning
- * %GIMP_PDB_SUCCESS return values.
+ * gimp_procedure_conig_begin_run() and must always be called in pairs
+ * in a procedure's run(), before returning return values.
  *
  * If @run_mode is %GIMP_RUN_INTERACTIVE, @config is saved as last
  * used values to be used when the procedure runs again. Additionally,
@@ -403,7 +403,8 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
 void
 gimp_procedure_config_end_run (GimpProcedureConfig  *config,
                                GimpImage            *image,
-                               GimpRunMode           run_mode)
+                               GimpRunMode           run_mode,
+                               GimpPDBStatusType     status)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
@@ -411,7 +412,8 @@ gimp_procedure_config_end_run (GimpProcedureConfig  *config,
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (status   == GIMP_PDB_SUCCESS &&
+      run_mode == GIMP_RUN_INTERACTIVE)
     {
       GError *error = NULL;
 

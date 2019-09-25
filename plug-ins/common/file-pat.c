@@ -225,11 +225,7 @@ pat_save (GimpProcedure        *procedure,
                                 G_TYPE_STRING,      description,
                                 G_TYPE_NONE);
 
-      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
-        {
-          gimp_procedure_config_end_run (config, orig_image, run_mode);
-        }
-      else
+      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
         {
           g_set_error (&error, 0, 0,
                        "Running procedure 'file-pat-save-internal' "
@@ -242,6 +238,7 @@ pat_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
+  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

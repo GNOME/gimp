@@ -543,8 +543,6 @@ png_save (GimpProcedure        *procedure,
 
               g_object_unref (metadata);
             }
-
-          gimp_procedure_config_end_run (config, orig_image, run_mode);
         }
       else
         {
@@ -552,6 +550,7 @@ png_save (GimpProcedure        *procedure,
         }
     }
 
+  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

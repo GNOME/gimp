@@ -274,17 +274,14 @@ sgi_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable, G_OBJECT (config),
-                      &error))
-        {
-          gimp_procedure_config_end_run (config, orig_image, run_mode);
-        }
-      else
+      if (! save_image (file, image, drawable, G_OBJECT (config),
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
+  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
