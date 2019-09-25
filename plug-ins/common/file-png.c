@@ -324,7 +324,7 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                  TRUE,
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-profile",
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
                                  "Save profile",
                                  "Save color profile",
                                  gimp_export_color_profile (),
@@ -1336,21 +1336,21 @@ save_image (GFile        *file,
   gboolean        save_profile;
 
   g_object_get (config,
-                "interlaced",       &save_interlaced,
-                "bkgd",             &save_bkgd,
-                "gama",             &save_gama,
-                "offs",             &save_offs,
-                "phys",             &save_phys,
-                "time",             &save_time,
-                "comment",          &save_comment,
-                "save-transparent", &save_transp_pixels,
-                "compression",      &compression_level,
-                "format",           &export_format,
-                "save-exif",        &save_exif,
-                "save-xmp",         &save_xmp,
-                "save-iptc",        &save_iptc,
-                "save-thumbnail",   &save_thumbnail,
-                "save-profile",     &save_profile,
+                "interlaced",         &save_interlaced,
+                "bkgd",               &save_bkgd,
+                "gama",               &save_gama,
+                "offs",               &save_offs,
+                "phys",               &save_phys,
+                "time",               &save_time,
+                "comment",            &save_comment,
+                "save-transparent",   &save_transp_pixels,
+                "compression",        &compression_level,
+                "format",             &export_format,
+                "save-exif",          &save_exif,
+                "save-xmp",           &save_xmp,
+                "save-iptc",          &save_iptc,
+                "save-thumbnail",     &save_thumbnail,
+                "save-color-profile", &save_profile,
                 NULL);
 
   out_linear = FALSE;
@@ -2358,7 +2358,7 @@ save_dialog (GimpImage     *image,
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (config, "save-profile",
+  button = gimp_prop_check_button_new (config, "save-color-profile",
                                        _("Save color profile"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
   gtk_widget_show (button);

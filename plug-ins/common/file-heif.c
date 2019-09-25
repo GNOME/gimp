@@ -196,8 +196,8 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-profile",
-                                 "Save profile",
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
+                                 "Save color profile",
                                  "Save the image's color profile",
                                  gimp_export_color_profile (),
                                  G_PARAM_READWRITE);
@@ -716,9 +716,9 @@ save_image (GFile         *file,
   gboolean                  save_profile;
 
   g_object_get (config,
-                "lossless",     &lossless,
-                "quality",      &quality,
-                "save-profile", &save_profile,
+                "lossless",           &lossless,
+                "quality",            &quality,
+                "save-color-profile", &save_profile,
                 NULL);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
@@ -1283,7 +1283,7 @@ save_dialog (GimpProcedure *procedure,
                              FALSE, 0, 0);
 
 #ifdef HAVE_LIBHEIF_1_4_0
-  button = gimp_prop_check_button_new (config, "save-profile",
+  button = gimp_prop_check_button_new (config, "save-color-profile",
                                        _("Save color _profile"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
