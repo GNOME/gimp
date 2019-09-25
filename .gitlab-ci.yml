@@ -1,4 +1,4 @@
-image: archlinux/base:latest
+image: salamandar/archlinux-gimp:latest
 
 stages:
   - gimp
