@@ -348,9 +348,6 @@ EXPORTS
 	gimp_query_size_box
 	gimp_query_string_box
 	gimp_radio_button_update
-	gimp_radio_group_new
-	gimp_radio_group_new2
-	gimp_radio_group_set_active
 	gimp_random_seed_new
 	gimp_ruler_add_track_widget
 	gimp_ruler_get_position

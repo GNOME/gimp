@@ -45,211 +45,6 @@
 
 
 /**
- * gimp_radio_group_new:
- * @in_frame:    %TRUE if you want a #GtkFrame around the radio button group.
- * @frame_title: The title of the Frame or %NULL if you don't want a title.
- * @...:         A %NULL-terminated @va_list describing the radio buttons.
- *
- * Convenience function to create a group of radio buttons embedded into
- * a #GtkFrame or #GtkVBox.
- *
- * Returns: (transfer full): A #GtkFrame or #GtkVBox (depending on @in_frame).
- **/
-GtkWidget *
-gimp_radio_group_new (gboolean            in_frame,
-                      const gchar        *frame_title,
-
-                      /* specify radio buttons as va_list:
-                       *  const gchar    *label,
-                       *  GCallback       callback,
-                       *  gpointer        callback_data,
-                       *  gpointer        item_data,
-                       *  GtkWidget     **widget_ptr,
-                       *  gboolean        active,
-                       */
-
-                      ...)
-{
-  GtkWidget *vbox;
-  GtkWidget *button;
-  GSList    *group;
-
-  /*  radio button variables  */
-  const gchar  *label;
-  GCallback     callback;
-  gpointer      callback_data;
-  gpointer      item_data;
-  GtkWidget   **widget_ptr;
-  gboolean      active;
-
-  va_list args;
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-
-  group = NULL;
-
-  /*  create the radio buttons  */
-  va_start (args, frame_title);
-  label = va_arg (args, const gchar *);
-  while (label)
-    {
-      callback      = va_arg (args, GCallback);
-      callback_data = va_arg (args, gpointer);
-      item_data     = va_arg (args, gpointer);
-      widget_ptr    = va_arg (args, GtkWidget **);
-      active        = va_arg (args, gboolean);
-
-      if (label != (gpointer) 1)
-        button = gtk_radio_button_new_with_mnemonic (group, label);
-      else
-        button = gtk_radio_button_new (group);
-
-      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
-      if (item_data)
-        {
-          g_object_set_data (G_OBJECT (button), "gimp-item-data", item_data);
-
-          /*  backward compatibility  */
-          g_object_set_data (G_OBJECT (button), "user_data", item_data);
-        }
-
-      if (widget_ptr)
-        *widget_ptr = button;
-
-      if (active)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-      g_signal_connect (button, "toggled",
-                        callback,
-                        callback_data);
-
-      gtk_widget_show (button);
-
-      label = va_arg (args, const gchar *);
-    }
-  va_end (args);
-
-  if (in_frame)
-    {
-      GtkWidget *frame;
-
-      frame = gimp_frame_new (frame_title);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-
-      return frame;
-    }
-
-  return vbox;
-}
-
-/**
- * gimp_radio_group_new2:
- * @in_frame:              %TRUE if you want a #GtkFrame around the
- *                         radio button group.
- * @frame_title:           The title of the Frame or %NULL if you don't want
- *                         a title.
- * @radio_button_callback: The callback each button's "toggled" signal will
- *                         be connected with.
- * @radio_button_callback_data:
- *                         The data which will be passed to g_signal_connect().
- * @initial:               The @item_data of the initially pressed radio button.
- * @...:                   A %NULL-terminated @va_list describing
- *                         the radio buttons.
- *
- * Convenience function to create a group of radio buttons embedded into
- * a #GtkFrame or #GtkVBox.
- *
- * Returns: (transfer full): A #GtkFrame or #GtkVBox (depending on @in_frame).
- **/
-GtkWidget *
-gimp_radio_group_new2 (gboolean         in_frame,
-                       const gchar     *frame_title,
-                       GCallback        radio_button_callback,
-                       gpointer         callback_data,
-                       gpointer         initial, /* item_data */
-
-                       /* specify radio buttons as va_list:
-                        *  const gchar *label,
-                        *  gpointer     item_data,
-                        *  GtkWidget  **widget_ptr,
-                        */
-
-                       ...)
-{
-  GtkWidget *vbox;
-  GtkWidget *button;
-  GSList    *group;
-
-  /*  radio button variables  */
-  const gchar *label;
-  gpointer     item_data;
-  GtkWidget  **widget_ptr;
-
-  va_list args;
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-
-  group = NULL;
-
-  /*  create the radio buttons  */
-  va_start (args, initial);
-  label = va_arg (args, const gchar *);
-
-  while (label)
-    {
-      item_data  = va_arg (args, gpointer);
-      widget_ptr = va_arg (args, GtkWidget **);
-
-      if (label != (gpointer) 1)
-        button = gtk_radio_button_new_with_mnemonic (group, label);
-      else
-        button = gtk_radio_button_new (group);
-
-      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
-      if (item_data)
-        {
-          g_object_set_data (G_OBJECT (button), "gimp-item-data", item_data);
-
-          /*  backward compatibility  */
-          g_object_set_data (G_OBJECT (button), "user_data", item_data);
-        }
-
-      if (widget_ptr)
-        *widget_ptr = button;
-
-      if (initial == item_data)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-      g_signal_connect (button, "toggled",
-                        radio_button_callback,
-                        callback_data);
-
-      gtk_widget_show (button);
-
-      label = va_arg (args, const gchar *);
-    }
-  va_end (args);
-
-  if (in_frame)
-    {
-      GtkWidget *frame;
-
-      frame = gimp_frame_new (frame_title);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-
-      return frame;
-    }
-
-  return vbox;
-}
-
-/**
  * gimp_int_radio_group_new:
  * @in_frame:              %TRUE if you want a #GtkFrame around the
  *                         radio button group.
@@ -360,37 +155,6 @@ gimp_int_radio_group_new (gboolean         in_frame,
 }
 
 /**
- * gimp_radio_group_set_active:
- * @radio_button: Pointer to a #GtkRadioButton.
- * @item_data: The @item_data of the radio button you want to select.
- *
- * Calls gtk_toggle_button_set_active() with the radio button that was
- * created with a matching @item_data.
- **/
-void
-gimp_radio_group_set_active (GtkRadioButton *radio_button,
-                             gpointer        item_data)
-{
-  GtkWidget *button;
-  GSList    *group;
-
-  g_return_if_fail (GTK_IS_RADIO_BUTTON (radio_button));
-
-  for (group = gtk_radio_button_get_group (radio_button);
-       group;
-       group = g_slist_next (group))
-    {
-      button = GTK_WIDGET (group->data);
-
-      if (g_object_get_data (G_OBJECT (button), "gimp-item-data") == item_data)
-        {
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-          return;
-        }
-    }
-}
-
-/**
  * gimp_int_radio_group_set_active:
  * @radio_button: Pointer to a #GtkRadioButton.
  * @item_data: The @item_data of the radio button you want to select.
@@ -404,10 +168,26 @@ void
 gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
                                  gint            item_data)
 {
+  GtkWidget *button;
+  GSList    *group;
+
   g_return_if_fail (GTK_IS_RADIO_BUTTON (radio_button));
 
-  gimp_radio_group_set_active (radio_button, GINT_TO_POINTER (item_data));
+  for (group = gtk_radio_button_get_group (radio_button);
+       group;
+       group = g_slist_next (group))
+    {
+      button = GTK_WIDGET (group->data);
+
+      if (g_object_get_data (G_OBJECT (button), "gimp-item-data") ==
+          GINT_TO_POINTER (item_data))
+        {
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+          return;
+        }
+    }
 }
+
 
 static void
 gimp_random_seed_update (GtkWidget *widget,
