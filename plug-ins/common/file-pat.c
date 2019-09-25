@@ -148,37 +148,13 @@ pat_save (GimpProcedure        *procedure,
   GimpProcedureConfig *config;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpImage           *orig_image;
   gchar               *description;
   GError              *error  = NULL;
 
   INIT_I18N ();
 
-  orig_image = image;
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, &drawable, "PAT",
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                 NULL);
-      break;
-
-    default:
-      break;
-    }
-
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
                 "description", &description,
@@ -200,6 +176,27 @@ pat_save (GimpProcedure        *procedure,
     }
 
   g_free (description);
+
+  switch (run_mode)
+    {
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY);
+
+      export = gimp_export_image (&image, &drawable, "PAT",
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
+
+    default:
+      break;
+    }
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -238,7 +235,7 @@ pat_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
-  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
+  gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

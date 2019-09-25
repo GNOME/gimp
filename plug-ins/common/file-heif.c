@@ -259,6 +259,9 @@ heif_save (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
+
   orig_image = image;
 
   switch (run_mode)
@@ -280,9 +283,6 @@ heif_save (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -317,7 +317,7 @@ heif_save (GimpProcedure        *procedure,
         }
     }
 
-  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
+  gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

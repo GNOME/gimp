@@ -364,13 +364,13 @@ sunras_save (GimpProcedure        *procedure,
   GimpProcedureConfig *config;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpImage           *orig_image;
   GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  orig_image = image;
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -393,9 +393,6 @@ sunras_save (GimpProcedure        *procedure,
       break;
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
-
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
@@ -411,7 +408,7 @@ sunras_save (GimpProcedure        *procedure,
         }
     }
 
-  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
+  gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

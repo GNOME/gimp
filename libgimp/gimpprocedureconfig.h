@@ -80,8 +80,6 @@ void    gimp_procedure_config_begin_run     (GimpProcedureConfig  *config,
                                              GimpRunMode           run_mode,
                                              const GimpValueArray *args);
 void    gimp_procedure_config_end_run       (GimpProcedureConfig  *config,
-                                             GimpImage            *image,
-                                             GimpRunMode           run_mode,
                                              GimpPDBStatusType     status);
 
 

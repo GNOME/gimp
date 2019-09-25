@@ -56,6 +56,9 @@ enum
 struct _GimpProcedureConfigPrivate
 {
   GimpProcedure *procedure;
+
+  GimpImage     *image;
+  GimpRunMode    run_mode;
 };
 
 
@@ -122,6 +125,8 @@ static void
 gimp_procedure_config_init (GimpProcedureConfig *config)
 {
   config->priv = gimp_procedure_config_get_instance_private (config);
+
+  config->priv->run_mode = -1;
 }
 
 static void
@@ -344,6 +349,9 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
   g_return_if_fail (args != NULL);
 
+  config->priv->image    = image;
+  config->priv->run_mode = run_mode;
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE :
@@ -377,22 +385,21 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
 
 /**
  * gimp_procedure_config_end_run:
- * @config:   a #GimpProcedureConfig
- * @image:    a #GimpImage or %NULL
- * @run_mode: the #GimpRunMode passed to a #GimpProcedure's run()
- * @status:   the return status of the #GimpProcedure's run()
+ * @config: a #GimpProcedureConfig
+ * @status: the return status of the #GimpProcedure's run()
  *
  * This function is the counterpart of
  * gimp_procedure_conig_begin_run() and must always be called in pairs
  * in a procedure's run(), before returning return values.
  *
- * If @run_mode is %GIMP_RUN_INTERACTIVE, @config is saved as last
- * used values to be used when the procedure runs again. Additionally,
- * if @image is not %NULL, @config is attached to @image as last used
- * values for this image using a #GimpParasite and
- * gimp_image_attach_parasite().
+ * If the @run_mode passed to gimp_procedure_config_end_run() was
+ * %GIMP_RUN_INTERACTIVE, @config is saved as last used values to be
+ * used when the procedure runs again. Additionally, the @image passed
+ * gimp_procedure_config_begin_run() was not %NULL, @config is
+ * attached to @image as last used values for this image using a
+ * #GimpParasite and gimp_image_attach_parasite().
  *
- * If @run_mode is not %GIMP_RUN_NONINTERACTIVE, this function also
+ * If @run_mode was not %GIMP_RUN_NONINTERACTIVE, this function also
  * conveniently calls gimp_display_flush(), which is what most
  * procedures want and doesn't do any harm if called redundantly.
  *
@@ -401,24 +408,21 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  * Since: 3.0
  **/
 void
-gimp_procedure_config_end_run (GimpProcedureConfig  *config,
-                               GimpImage            *image,
-                               GimpRunMode           run_mode,
-                               GimpPDBStatusType     status)
+gimp_procedure_config_end_run (GimpProcedureConfig *config,
+                               GimpPDBStatusType    status)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+  if (config->priv->run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
-  if (status   == GIMP_PDB_SUCCESS &&
-      run_mode == GIMP_RUN_INTERACTIVE)
+  if (status                 == GIMP_PDB_SUCCESS &&
+      config->priv->run_mode == GIMP_RUN_INTERACTIVE)
     {
       GError *error = NULL;
 
-      if (image)
-        gimp_procedure_config_save_parasite (config, image);
+      if (config->priv->image)
+        gimp_procedure_config_save_parasite (config, config->priv->image);
 
       if (! gimp_procedure_config_save_last (config, &error))
         {
@@ -427,6 +431,9 @@ gimp_procedure_config_end_run (GimpProcedureConfig  *config,
           g_clear_error (&error);
         }
     }
+
+  config->priv->image    = NULL;
+  config->priv->run_mode = -1;
 }
 
 

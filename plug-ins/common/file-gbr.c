@@ -169,13 +169,34 @@ gbr_save (GimpProcedure        *procedure,
   GimpProcedureConfig *config;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpImage           *orig_image;
   gchar               *description;
   GError              *error  = NULL;
 
   INIT_I18N ();
 
-  orig_image = image;
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
+
+  g_object_get (config,
+                "description", &description,
+                NULL);
+
+  if (! description || ! strlen (description))
+    {
+      gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+
+      if (g_str_has_suffix (name, ".gbr"))
+        name[strlen (name) - 4] = '\0';
+
+      if (strlen (name))
+        g_object_set (config,
+                      "description", name,
+                      NULL);
+
+      g_free (name);
+    }
+
+  g_free (description);
 
   switch (run_mode)
     {
@@ -198,30 +219,6 @@ gbr_save (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
-
-  g_object_get (config,
-                "description", &description,
-                NULL);
-
-  if (! description || ! strlen (description))
-    {
-      gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
-
-      if (g_str_has_suffix (name, ".gbr"))
-        name[strlen (name) - 4] = '\0';
-
-      if (strlen (name))
-        g_object_set (config,
-                      "description", name,
-                      NULL);
-
-      g_free (name);
-    }
-
-  g_free (description);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -265,7 +262,7 @@ gbr_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
-  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
+  gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

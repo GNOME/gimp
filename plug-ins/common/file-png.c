@@ -423,6 +423,21 @@ png_save (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
+
+#if 0
+  /* Override the defaults with preferences. */
+  metadata = gimp_image_metadata_save_prepare (image,
+                                               "image/png",
+                                               &metadata_flags);
+  pngvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+  pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+  pngvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+  pngvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
+  pngvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+#endif
+
   orig_image = image;
 
   switch (run_mode)
@@ -445,21 +460,6 @@ png_save (GimpProcedure        *procedure,
     default:
       break;
     }
-
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, orig_image, run_mode, args);
-
-#if 0
-  /* Override the defaults with preferences. */
-  metadata = gimp_image_metadata_save_prepare (orig_image,
-                                               "image/png",
-                                               &metadata_flags);
-  pngvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-  pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-  pngvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
-  pngvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
-  pngvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
-#endif
 
   alpha = gimp_drawable_has_alpha (drawable);
 
@@ -536,7 +536,7 @@ png_save (GimpProcedure        *procedure,
               else
                 metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
-              gimp_image_metadata_save_finish (orig_image,
+              gimp_image_metadata_save_finish (image,
                                                "image/png",
                                                metadata, metadata_flags,
                                                file, NULL);
@@ -550,7 +550,7 @@ png_save (GimpProcedure        *procedure,
         }
     }
 
-  gimp_procedure_config_end_run (config, orig_image, run_mode, status);
+  gimp_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

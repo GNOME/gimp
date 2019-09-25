@@ -252,7 +252,7 @@ despeckle_run (GimpProcedure        *procedure,
 
   despeckle (drawable, G_OBJECT (config));
 
-  gimp_procedure_config_end_run (config, NULL, run_mode, GIMP_PDB_SUCCESS);
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
   g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
