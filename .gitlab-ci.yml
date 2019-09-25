@@ -34,7 +34,7 @@ cache:
     - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
         git
         base-devel
-        mingw-w64-x86_64-toolchain
+        mingw-w64-gcc
         python-pip
     - pip3 install --user crossroad
 
