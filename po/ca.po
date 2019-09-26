@@ -93,13 +93,13 @@ msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
-"Eina cubell de pintura: nou \"Emplenament per detecció de línia artística\" "
+"Eina pot de pintura: nou \"Emplenament per detecció de línia artística\" "
 "per a zones artístiques no perfectament tancades"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
-"L'eina cubell de pintura pot ara ràpidament seleccionar amb el color Ctrl"
+"L'eina pot de pintura pot ara ràpidament seleccionar amb el color Ctrl"
 "+click"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
@@ -107,7 +107,7 @@ msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
-"L'eina cubell de pintura permet mantenir el ratolí quan s'omplin «colors "
+"L'eina pot de pintura permet mantenir el ratolí quan s'omplin «colors "
 "similars» i «detecció de línies artístiques»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
@@ -13055,7 +13055,7 @@ msgstr "Canal %s a la selecció"
 #: ../app/core/gimpchannel-select.c:505
 msgctxt "undo-type"
 msgid "Fuzzy Select"
-msgstr "Selecció de regió contigua"
+msgstr "Selecció difusa"
 
 #: ../app/core/gimpchannel-select.c:553
 msgctxt "undo-type"
@@ -13368,7 +13368,7 @@ msgstr "Ajusta la mida"
 #: ../app/core/gimpdrawable-bucket-fill.c:85
 msgctxt "undo-type"
 msgid "Bucket Fill"
-msgstr "Cubell de pintura"
+msgstr "Pot de pintura"
 
 #: ../app/core/gimpdrawable-edit.c:151
 msgctxt "undo-type"
@@ -21680,19 +21680,19 @@ msgstr "(S'està computant...)"
 
 #: ../app/tools/gimpbucketfilltool.c:157
 msgid "Bucket Fill"
-msgstr "Cubell de pintura"
+msgstr "Pot de pintura"
 
 #: ../app/tools/gimpbucketfilltool.c:158
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Eina Cubell de pintura: omple amb un color o un patró"
+msgstr "Eina Pot de pintura: omple amb un color o un patró"
 
 #: ../app/tools/gimpbucketfilltool.c:159
 msgid "_Bucket Fill"
-msgstr "Cu_bell de pintura"
+msgstr "_Pot de pintura"
 
 #: ../app/tools/gimpbucketfilltool.c:296
 msgid "Bucket fill"
-msgstr "Cubell de pintura"
+msgstr "Pot de pintura"
 
 #: ../app/tools/gimpbucketfilltool.c:495 ../app/tools/gimpcagetool.c:239
 #: ../app/tools/gimpfiltertool.c:290
@@ -22423,12 +22423,12 @@ msgstr "Selecció lliure"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select"
-msgstr "Selecció de regió contigua"
+msgstr "Selecció difusa"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
 msgstr ""
-"Eina Selecció de regió contigua: selecciona una regió contigua basant-se en "
+"Eina Selecció difusa: selecciona una regió contigua basant-se en "
 "el color"
 
 #: ../app/tools/gimpfuzzyselecttool.c:68
@@ -22438,7 +22438,7 @@ msgstr "Selecció _de regió contigua"
 #: ../app/tools/gimpfuzzyselecttool.c:81
 msgctxt "command"
 msgid "Fuzzy Select"
-msgstr "Selecció de regió contigua"
+msgstr "Selecció difusa"
 
 #: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:546
 #: ../app/tools/gimpgegltool.c:547 ../app/tools/gimpoperationtool.c:134

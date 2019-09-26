@@ -27,7 +27,7 @@ msgid ""
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
 "with the eyedropper tool sets the background color instead of the foreground "
 "color."
-msgstr "<tt>Ctrl</tt>-feu clic amb l'eina Cubell de pintura per tal d'utilitzar el color de fons en comptes del color de primer pla. El mateix, fent clic <tt>Ctrl</tt> amb l'eina Capturador de color s'obté el color de fons en comptes del color del primer pla."
+msgstr "<tt>Ctrl</tt>-feu clic amb l'eina Pot de pintura per tal d'utilitzar el color de fons en comptes del color de primer pla. El mateix, fent clic <tt>Ctrl</tt> amb l'eina Capturador de color s'obté el color de fons en comptes del color del primer pla."
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
