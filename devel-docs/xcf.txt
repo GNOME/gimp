@@ -20,7 +20,7 @@ License
 -------
 
 Copyright Henning Makholm <henning@makholm.net>, 2006-07-11
-Copyright various GIMP developers (see git log), 2009-2018
+Copyright various GIMP developers (see git log), 2009-2019
 
 This is free documentation; you can modify and/or redistribute
 it according to the terms of the GNU General Public License
@@ -124,15 +124,20 @@ https://web.archive.org/web/20161024115140/http://www.cinepaint.org/more/docs/xc
 Status
 ------
 
-This specification is an unofficial condensation and extrapolation of
-the XCF-writing and -reading code in version 2.10.0 of GIMP. Yet we
-remind that the ultimate reference is the loading and saving code of the
-XCF format.
+This specification is an official condensation and extrapolation of
+the XCF-writing and -reading code in version 2.10.14 of GIMP, and
+earlier versions. Yet we remind that the ultimate reference is the
+loading and saving code of the XCF format.
 
 Some of the normative statements made below are enforced by the XCF
 code in GIMP; others are just the authors' informed guess about
 "best practices" that would be likely to maximize interoperability
 with future versions of GIMP.
+
+This document is complete, relatively to GIMP 2.10 features stored in
+the XCF format, though if you discover any errors or missing features,
+we would be thankful if you could report it as a bug:
+https://gitlab.gnome.org/GNOME/gimp/issues
 
 
 Version history
@@ -169,6 +174,7 @@ Since GIMP 2.10.0, released on 2018-04-27.
 Adds many layer modes, layer group masks, high-bit depth (precisions
 other than 8-bit gamma), zlib compression and 64-bit offsets for XCF
 files bigger than 4GB.
+
 
 1. BASIC CONCEPTS
 =================
