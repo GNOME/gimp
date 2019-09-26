@@ -71,12 +71,6 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 #define SCALE_WIDTH    125
 
 
-/* Structs for the save dialog */
-typedef struct
-{
-  gint threshold;
-} XpmSaveVals;
-
 typedef struct
 {
   guchar r;
@@ -130,8 +124,10 @@ static void             parse_image          (GimpImage            *image,
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
+                                              GObject              *config,
                                               GError              **error);
-static gboolean         save_dialog          (void);
+static gboolean         save_dialog          (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 
 G_DEFINE_TYPE (Xpm, xpm, GIMP_TYPE_PLUG_IN)
@@ -152,11 +148,6 @@ static gboolean   color;
  *  to the GHFunc
  */
 static gint       cpp;
-
-static XpmSaveVals xpmvals =
-{
-  127  /* alpha threshold */
-};
 
 
 static void
@@ -305,12 +296,16 @@ xpm_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GError              *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -334,40 +329,24 @@ xpm_save (GimpProcedure        *procedure,
       break;
     }
 
-  switch (run_mode)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (SAVE_PROC, &xpmvals);
-
       if (gimp_drawable_has_alpha (drawable))
-        if (! save_dialog ())
+        if (! save_dialog (procedure, G_OBJECT (config)))
           status = GIMP_PDB_CANCEL;
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      xpmvals.threshold = GIMP_VALUES_GET_INT (args, 0);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (SAVE_PROC, &xpmvals);
-      break;
-
-    default:
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable,
-                      &error))
-        {
-          gimp_set_data (SAVE_PROC, &xpmvals, sizeof (XpmSaveVals));
-        }
-      else
+      if (! save_image (file, image, drawable, G_OBJECT (config),
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -632,6 +611,7 @@ static gboolean
 save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
+            GObject       *config,
             GError       **error)
 {
   GeglBuffer *buffer;
@@ -650,8 +630,12 @@ save_image (GFile         *file,
   guchar     *data;
   GHashTable *hash = NULL;
   gint        i, j, k;
-  gint        threshold = xpmvals.threshold;
+  gint        threshold;
   gboolean    success = FALSE;
+
+  g_object_get (config,
+                "threshold", &threshold,
+                NULL);
 
   buffer = gimp_drawable_get_buffer (drawable);
 
@@ -863,35 +847,33 @@ save_image (GFile         *file,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *grid;
-  GtkAdjustment *scale_data;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *grid;
+  gboolean   run;
 
-  dialog = gimp_export_dialog_new (_("XPM"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as XPM"));
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
-  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
-                                     _("_Alpha threshold:"), SCALE_WIDTH, 0,
-                                     xpmvals.threshold, 0, 255, 1, 8, 0,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
-
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &xpmvals.threshold);
+  gimp_prop_scale_entry_new (config, "threshold",
+                             GTK_GRID (grid), 0, 0,
+                             _("_Alpha threshold:"),
+                             1, 8, 0,
+                             FALSE, 0, 0);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
