@@ -23,6 +23,8 @@
 
 #include "gimp.h"
 
+#include "gimpprocedureconfig-private.h"
+
 
 /**
  * SECTION: gimpprocedureconfig
@@ -62,34 +64,16 @@ struct _GimpProcedureConfigPrivate
 };
 
 
-static void   gimp_procedure_config_constructed   (GObject              *object);
-static void   gimp_procedure_config_dispose       (GObject              *object);
-static void   gimp_procedure_config_set_property  (GObject              *object,
-                                                   guint                 property_id,
-                                                   const GValue         *value,
-                                                   GParamSpec           *pspec);
-static void   gimp_procedure_config_get_property  (GObject              *object,
-                                                   guint                 property_id,
-                                                   GValue               *value,
-                                                   GParamSpec           *pspec);
-
-static GFile    * gimp_procedure_config_get_file  (GimpProcedureConfig *config,
-                                                   const gchar         *extension);
-static gboolean   gimp_procedure_config_load_last (GimpProcedureConfig  *config,
-                                                   GError              **error);
-static gboolean   gimp_procedure_config_save_last (GimpProcedureConfig  *config,
-                                                   GError              **error);
-
-static gchar    * gimp_procedure_config_parasite_name
-                                                  (GimpProcedureConfig *config,
-                                                   const gchar         *suffix);
-static gboolean   gimp_procedure_config_load_parasite
-                                                  (GimpProcedureConfig  *config,
-                                                   GimpImage            *image,
-                                                   GError              **error);
-static gboolean   gimp_procedure_config_save_parasite
-                                                  (GimpProcedureConfig  *config,
-                                                   GimpImage            *image);
+static void   gimp_procedure_config_constructed   (GObject      *object);
+static void   gimp_procedure_config_dispose       (GObject      *object);
+static void   gimp_procedure_config_set_property  (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void   gimp_procedure_config_get_property  (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
 
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpProcedureConfig, gimp_procedure_config,
@@ -358,8 +342,8 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
     case GIMP_RUN_WITH_LAST_VALS:
       if (image)
         {
-          loaded = gimp_procedure_config_load_parasite (config, image,
-                                                        &error);
+          loaded = _gimp_procedure_config_load_parasite (config, image,
+                                                         &error);
           if (! loaded && error)
             {
               g_printerr ("Loading last used values from parasite failed: %s\n",
@@ -369,7 +353,7 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
         }
 
       if (! loaded &&
-          ! gimp_procedure_config_load_last (config, &error))
+          ! _gimp_procedure_config_load_last (config, &error) && error)
         {
           g_printerr ("Loading last used values from disk failed: %s\n",
                       error->message);
@@ -422,9 +406,9 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
       GError *error = NULL;
 
       if (config->priv->image)
-        gimp_procedure_config_save_parasite (config, config->priv->image);
+        _gimp_procedure_config_save_parasite (config, config->priv->image);
 
-      if (! gimp_procedure_config_save_last (config, &error))
+      if (! _gimp_procedure_config_save_last (config, &error))
         {
           g_printerr ("Saving last used values to disk failed: %s\n",
                       error->message);
@@ -453,9 +437,48 @@ gimp_procedure_config_get_file (GimpProcedureConfig *config,
   return file;
 }
 
-static gboolean
-gimp_procedure_config_load_last (GimpProcedureConfig  *config,
-                                 GError              **error)
+gboolean
+_gimp_procedure_config_load_default (GimpProcedureConfig  *config,
+                                     GError              **error)
+{
+  GFile    *file = gimp_procedure_config_get_file (config, ".default");
+  gboolean  success;
+
+  success = gimp_config_deserialize_file (GIMP_CONFIG (config),
+                                          file,
+                                          NULL, error);
+
+  if (! success && (*error)->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+    {
+      g_clear_error (error);
+    }
+
+  g_object_unref (file);
+
+  return success;
+}
+
+gboolean
+_gimp_procedure_config_save_default (GimpProcedureConfig  *config,
+                                     GError              **error)
+{
+  GFile    *file = gimp_procedure_config_get_file (config, ".default");
+  gboolean  success;
+
+  success = gimp_config_serialize_to_file (GIMP_CONFIG (config),
+                                           file,
+                                           "settings",
+                                           "end of settings",
+                                           NULL, error);
+
+  g_object_unref (file);
+
+  return success;
+}
+
+gboolean
+_gimp_procedure_config_load_last (GimpProcedureConfig  *config,
+                                  GError              **error)
 {
   GFile    *file = gimp_procedure_config_get_file (config, ".last");
   gboolean  success;
@@ -467,17 +490,16 @@ gimp_procedure_config_load_last (GimpProcedureConfig  *config,
   if (! success && (*error)->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
       g_clear_error (error);
-      success = TRUE;
     }
 
   g_object_unref (file);
 
-  return TRUE;
+  return success;
 }
 
-static gboolean
-gimp_procedure_config_save_last (GimpProcedureConfig  *config,
-                                 GError              **error)
+gboolean
+_gimp_procedure_config_save_last (GimpProcedureConfig  *config,
+                                  GError              **error)
 {
   GFile    *file = gimp_procedure_config_get_file (config, ".last");
   gboolean  success;
@@ -500,10 +522,10 @@ gimp_procedure_config_parasite_name (GimpProcedureConfig *config,
   return g_strconcat (G_OBJECT_TYPE_NAME (config), suffix, NULL);
 }
 
-static gboolean
-gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
-                                     GimpImage            *image,
-                                     GError              **error)
+gboolean
+_gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
+                                      GimpImage            *image,
+                                      GError              **error)
 {
   gchar        *name;
   GimpParasite *parasite;
@@ -524,9 +546,9 @@ gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
   return success;
 }
 
-static gboolean
-gimp_procedure_config_save_parasite (GimpProcedureConfig *config,
-                                     GimpImage           *image)
+gboolean
+_gimp_procedure_config_save_parasite (GimpProcedureConfig *config,
+                                      GimpImage           *image)
 {
   gchar        *name;
   GimpParasite *parasite;

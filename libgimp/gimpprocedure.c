@@ -34,6 +34,7 @@
 #include "gimppdb_pdb.h"
 #include "gimpplugin_pdb.h"
 #include "gimpprocedure-private.h"
+#include "gimpprocedureconfig-private.h"
 
 #include "libgimp-intl.h"
 
@@ -1580,7 +1581,18 @@ gimp_procedure_run (GimpProcedure  *procedure,
   /*  add missing args with default values  */
   if (gimp_value_array_length (args) < procedure->priv->n_args)
     {
-      GimpValueArray *complete = gimp_value_array_new (0);
+      GimpProcedureConfig *config;
+      GObjectClass        *config_class = NULL;
+      GimpValueArray      *complete;
+
+      /*  if saved defaults exist, they override GParamSpec  */
+      config = gimp_procedure_create_config (procedure);
+      if (_gimp_procedure_config_load_default (config, NULL))
+        config_class = G_OBJECT_GET_CLASS (config);
+      else
+        g_clear_object (&config);
+
+      complete = gimp_value_array_new (procedure->priv->n_args);
 
       for (i = 0; i < procedure->priv->n_args; i++)
         {
@@ -1595,6 +1607,12 @@ gimp_procedure_run (GimpProcedure  *procedure,
 
               g_value_copy (orig, &value);
             }
+          else if (config &&
+                   g_object_class_find_property (config_class, pspec->name))
+            {
+              g_object_get_property (G_OBJECT (config), pspec->name,
+                                     &value);
+            }
           else
             {
               g_param_value_set_default (pspec, &value);
@@ -1603,6 +1621,8 @@ gimp_procedure_run (GimpProcedure  *procedure,
           gimp_value_array_append (complete, &value);
           g_value_unset (&value);
         }
+
+      g_clear_object (&config);
 
       /*  call the procedure  */
       return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->run (procedure,

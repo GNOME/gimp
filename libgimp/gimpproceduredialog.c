@@ -28,6 +28,8 @@
 #include "gimp.h"
 #include "gimpui.h"
 
+#include "gimpprocedureconfig-private.h"
+
 #include "libgimp-intl.h"
 
 
@@ -46,18 +48,30 @@ struct _GimpProcedureDialogPrivate
 {
   GimpProcedure       *procedure;
   GimpProcedureConfig *config;
+  GimpProcedureConfig *initial_config;
+
+  GtkWidget           *reset_popover;
 };
 
 
-static void   gimp_procedure_dialog_dispose      (GObject      *object);
-static void   gimp_procedure_dialog_set_property (GObject      *object,
-                                                  guint         property_id,
-                                                  const GValue *value,
-                                                  GParamSpec   *pspec);
-static void   gimp_procedure_dialog_get_property (GObject      *object,
-                                                  guint         property_id,
-                                                  GValue       *value,
-                                                  GParamSpec   *pspec);
+static void   gimp_procedure_dialog_dispose       (GObject      *object);
+static void   gimp_procedure_dialog_set_property  (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void   gimp_procedure_dialog_get_property  (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
+
+static void   gimp_procedure_dialog_reset_initial (GtkWidget           *button,
+                                                   GimpProcedureDialog *dialog);
+static void   gimp_procedure_dialog_reset_factory (GtkWidget           *button,
+                                                   GimpProcedureDialog *dialog);
+static void   gimp_procedure_dialog_load_defaults (GtkWidget           *button,
+                                                   GimpProcedureDialog *dialog);
+static void   gimp_procedure_dialog_save_defaults (GtkWidget           *button,
+                                                   GimpProcedureDialog *dialog);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
@@ -104,6 +118,9 @@ gimp_procedure_dialog_dispose (GObject *object)
 
   g_clear_object (&dialog->priv->procedure);
   g_clear_object (&dialog->priv->config);
+  g_clear_object (&dialog->priv->initial_config);
+
+  g_clear_pointer (&dialog->priv->reset_popover, gtk_widget_destroy);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -124,6 +141,10 @@ gimp_procedure_dialog_set_property (GObject      *object,
 
     case PROP_CONFIG:
       dialog->priv->config = g_value_dup_object (value);
+
+      if (dialog->priv->config)
+        dialog->priv->initial_config =
+          gimp_config_duplicate (GIMP_CONFIG (dialog->priv->config));
       break;
 
     default:
@@ -166,6 +187,8 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
   const gchar *help_id;
   const gchar *ok_label;
   gboolean     use_header_bar;
+  GtkWidget   *hbox;
+  GtkWidget   *button;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
@@ -214,6 +237,30 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
+  hbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_box_set_spacing (GTK_BOX (hbox), 6);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_START);
+  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                    hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_procedure_dialog_load_defaults),
+                    dialog);
+
+  button = gtk_button_new_with_mnemonic (_("_Save Defaults"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_procedure_dialog_save_defaults),
+                    dialog);
+
   return GTK_WIDGET (dialog);
 }
 
@@ -228,11 +275,104 @@ gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
 
       if (response == RESPONSE_RESET)
         {
-          gimp_config_reset (GIMP_CONFIG (dialog->priv->config));
+          if (! dialog->priv->reset_popover)
+            {
+              GtkWidget *button;
+              GtkWidget *vbox;
+
+              button = gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog),
+                                                           response);
+
+              dialog->priv->reset_popover = gtk_popover_new (button);
+
+              vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+              gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+              gtk_container_add (GTK_CONTAINER (dialog->priv->reset_popover),
+                                 vbox);
+              gtk_widget_show (vbox);
+
+              button = gtk_button_new_with_mnemonic (_("Reset to _Initial "
+                                                       "Values"));
+              gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+              gtk_widget_show (button);
+
+              g_signal_connect (button, "clicked",
+                                G_CALLBACK (gimp_procedure_dialog_reset_initial),
+                                dialog);
+
+              button = gtk_button_new_with_mnemonic (_("Reset to _Factory "
+                                                       "Defaults"));
+              gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+              gtk_widget_show (button);
+
+              g_signal_connect (button, "clicked",
+                                G_CALLBACK (gimp_procedure_dialog_reset_factory),
+                                dialog);
+            }
+
+          gtk_popover_popup (GTK_POPOVER (dialog->priv->reset_popover));
         }
       else
         {
           return response == GTK_RESPONSE_OK;
         }
+    }
+}
+
+
+/*  private functions  */
+
+static void
+gimp_procedure_dialog_reset_initial (GtkWidget           *button,
+                                     GimpProcedureDialog *dialog)
+{
+  gimp_config_copy (GIMP_CONFIG (dialog->priv->initial_config),
+                    GIMP_CONFIG (dialog->priv->config),
+                    0);
+
+  gtk_popover_popdown (GTK_POPOVER (dialog->priv->reset_popover));
+}
+
+static void
+gimp_procedure_dialog_reset_factory (GtkWidget           *button,
+                                     GimpProcedureDialog *dialog)
+{
+  gimp_config_reset (GIMP_CONFIG (dialog->priv->config));
+
+  gtk_popover_popdown (GTK_POPOVER (dialog->priv->reset_popover));
+}
+
+static void
+gimp_procedure_dialog_load_defaults (GtkWidget           *button,
+                                     GimpProcedureDialog *dialog)
+{
+  GError *error = NULL;
+
+  if (! _gimp_procedure_config_load_default (dialog->priv->config, &error))
+    {
+      if (error)
+        {
+          g_printerr ("Loading default values from disk failed: %s\n",
+                      error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          g_printerr ("No default values found on disk\n");
+        }
+    }
+}
+
+static void
+gimp_procedure_dialog_save_defaults (GtkWidget           *button,
+                                     GimpProcedureDialog *dialog)
+{
+  GError *error = NULL;
+
+  if (! _gimp_procedure_config_save_default (dialog->priv->config, &error))
+    {
+      g_printerr ("Saving default values to disk failed: %s\n",
+                  error->message);
+      g_clear_error (&error);
     }
 }

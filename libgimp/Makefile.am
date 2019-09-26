@@ -105,25 +105,26 @@ libgimp_sources = \
 	libgimp-intl.h
 
 libgimp_private_sources = \
-	gimp-debug.c		\
-	gimp-debug.h		\
-	gimp-private.h		\
-	gimp-shm.c		\
-	gimp-shm.h		\
-	gimpgpparams.c		\
-	gimpgpparams.h		\
-	gimppdb-private.h	\
-	gimppdbprocedure.c	\
-	gimppdbprocedure.h	\
-	gimppixbuf.c		\
-	gimppixbuf.h		\
-	gimpplugin-private.h	\
+	gimp-debug.c			\
+	gimp-debug.h			\
+	gimp-private.h			\
+	gimp-shm.c			\
+	gimp-shm.h			\
+	gimpgpparams.c			\
+	gimpgpparams.h			\
+	gimppdb-private.h		\
+	gimppdbprocedure.c		\
+	gimppdbprocedure.h		\
+	gimppixbuf.c			\
+	gimppixbuf.h			\
+	gimpplugin-private.h		\
+	gimpprocedureconfig-private.h	\
 	\
-	gimpunit_pdb.c		\
-	gimpunit_pdb.h		\
-	gimppdb_pdb.c		\
-	gimppdb_pdb.h		\
-	gimpplugin_pdb.c	\
+	gimpunit_pdb.c			\
+	gimpunit_pdb.h			\
+	gimppdb_pdb.c			\
+	gimppdb_pdb.h			\
+	gimpplugin_pdb.c		\
 	gimpplugin_pdb.h
 
 libgimp_extra_sources = \
