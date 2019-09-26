@@ -1,4 +1,4 @@
-image: debian:testing
+image: fedora:30
 
 stages:
   - gimp
@@ -29,20 +29,20 @@ cache:
     paths:
     - "${INSTALL_DIR}"
   before_script:
-    - apt-get update
-    - apt-get install --yes --no-install-recommends
-        bash
-        build-essential
+    - dnf install --assumeyes
+        automake
+        autoconf
+        meson
         cmake
-        ninja-build
-        ca-certificates
+        gcc
         git
-        mingw-w64
-        python-docutils
+        mingw64-gcc
+        mingw64-gcc-c++
+        mingw64-binutils
+        python3-docutils
         python3-pip
         python3-setuptools
-    - pip3 install wheel
-    - echo $SHELL
+        zsh
     #- pip3 install crossroad
     - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
@@ -52,7 +52,13 @@ cache:
 build-git-x86_64-w64-mingw32-meson:
   extends: .gimp-x86_64-w64-mingw32-base
   script:
-    - crossroad --verbose w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
+    - echo $SHELL
+    - export SHELL=zsh
+    - pwd
+    - export
+    - cat build/windows/crossbuild-gitlab-ci.sh
+    - cat /usr/local/share/crossroad/scripts/shells/bash/bashrc.w64
+    - zsh -c 'crossroad --verbose w64 gimp --run=build/windows/crossbuild-gitlab-ci.sh'
   artifacts:
     name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: on_failure
