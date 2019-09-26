@@ -1,4 +1,4 @@
-image: debian:testing
+image: fedora:30
 
 stages:
   - gimp
@@ -29,19 +29,18 @@ cache:
     paths:
     - "${INSTALL_DIR}"
   before_script:
-    - apt-get update
-    - apt-get install --yes --no-install-recommends
-        bash
-        build-essential
+    - dnf install
+        automake
+        autoconf
+        meson
         cmake
-        ninja-build
-        ca-certificates
-        git
-        mingw-w64
-        python-docutils
+        gcc
+        mingw64-gcc
+        mingw64-gcc-c++
+        mingw64-binutils
+        python3-docutils
         python3-pip
         python3-setuptools
-    - pip3 install wheel
     - echo $SHELL
     #- pip3 install crossroad
     - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
