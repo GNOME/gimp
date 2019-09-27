@@ -777,6 +777,8 @@ gradient_calc_spiral_factor (gdouble   dist,
       gdouble ang;
       double  r;
 
+      offset = offset / 100.0;
+
       ang0 = atan2 (axis[0], axis[1]) + G_PI;
       ang1 = atan2 (x, y) + G_PI;
 
