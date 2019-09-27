@@ -163,8 +163,8 @@ blinds_create_procedure (GimpPlugIn  *plug_in,
                                       "Andy Thomas",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "angle-dsp",
-                         "Angle dps",
+      GIMP_PROC_ARG_INT (procedure, "angle-displacement",
+                         "Angle displacement",
                          "Angle of Displacement",
                          0, 360, 30,
                          G_PARAM_READWRITE);
