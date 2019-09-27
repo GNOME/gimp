@@ -208,22 +208,22 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                          0, G_MAXINT, 50,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "exif",
-                             "EXIF",
-                             "Toggle saving exif data",
-                             FALSE,
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
+                             "Save Exif",
+                             "Toggle saving Exif data",
+                             gimp_export_exif (),
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "iptc",
-                             "IPTC",
-                             "Toggle saving iptc data",
-                             FALSE,
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-iptc",
+                             "Save IPTC",
+                             "Toggle saving IPTC data",
+                             gimp_export_iptc (),
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "xmp",
-                             "XMP",
-                             "Toggle saving xmp data",
-                             FALSE,
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
+                             "Save XMP",
+                             "Toggle saving XMP data",
+                             gimp_export_xmp (),
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "delay",
@@ -304,9 +304,9 @@ webp_save (GimpProcedure        *procedure,
   params.kf_distance   = 50;
   params.quality       = 90.0f;
   params.alpha_quality = 100.0f;
-  params.exif          = FALSE;
-  params.iptc          = FALSE;
-  params.xmp           = FALSE;
+  params.save_exif     = FALSE;
+  params.save_iptc     = FALSE;
+  params.save_xmp      = FALSE;
   params.delay         = 200;
   params.force_delay   = FALSE;
 
@@ -314,10 +314,10 @@ webp_save (GimpProcedure        *procedure,
   metadata = gimp_image_metadata_save_prepare (image,
                                                "image/webp",
                                                &metadata_flags);
-  params.exif    = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-  params.xmp     = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-  params.iptc    = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
-  params.profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+  params.save_exif    = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+  params.save_xmp     = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+  params.save_iptc    = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+  params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
 
   switch (run_mode)
     {
@@ -345,9 +345,9 @@ webp_save (GimpProcedure        *procedure,
       params.loop          = GIMP_VALUES_GET_BOOLEAN (args, 5);
       params.minimize_size = GIMP_VALUES_GET_BOOLEAN (args, 6);
       params.kf_distance   = GIMP_VALUES_GET_INT     (args, 7);
-      params.exif          = GIMP_VALUES_GET_BOOLEAN (args, 8);
-      params.iptc          = GIMP_VALUES_GET_BOOLEAN (args, 9);
-      params.xmp           = GIMP_VALUES_GET_BOOLEAN (args, 10);
+      params.save_exif     = GIMP_VALUES_GET_BOOLEAN (args, 8);
+      params.save_iptc     = GIMP_VALUES_GET_BOOLEAN (args, 9);
+      params.save_xmp      = GIMP_VALUES_GET_BOOLEAN (args, 10);
       params.delay         = GIMP_VALUES_GET_INT     (args, 11);
       params.force_delay   = GIMP_VALUES_GET_BOOLEAN (args, 12);
       break;
@@ -376,12 +376,54 @@ webp_save (GimpProcedure        *procedure,
                                                  NULL);
     }
 
-  if (! save_image (file, image, drawable,
-                    metadata, metadata_flags,
-                    &params,
-                    &error))
+  if (params.animation)
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      if (! save_animation (file, image, drawable, &params,
+                            &error))
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+    }
+  else
+    {
+      if (! save_layer (file, image, drawable, &params,
+                        &error))
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+    }
+
+  if (status == GIMP_PDB_SUCCESS && metadata)
+    {
+      gimp_metadata_set_bits_per_sample (metadata, 8);
+
+      if (params.save_exif)
+        metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+      else
+        metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
+
+      /* WebP doesn't support iptc natively and sets it via xmp
+       */
+      if (params.save_xmp)
+        {
+          metadata_flags |= GIMP_METADATA_SAVE_XMP;
+          metadata_flags |= GIMP_METADATA_SAVE_IPTC;
+        }
+      else
+        {
+          metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
+          metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
+        }
+
+      if (params.save_profile)
+        metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
+      else
+        metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
+
+      gimp_image_metadata_save_finish (image,
+                                       "image/webp",
+                                       metadata, metadata_flags,
+                                       file, NULL);
     }
 
   if (export == GIMP_EXPORT_EXPORT)

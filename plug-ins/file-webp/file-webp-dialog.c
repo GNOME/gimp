@@ -363,33 +363,33 @@ save_dialog (WebPSaveParams *params,
 
   /* Save EXIF data */
   toggle = gtk_check_button_new_with_mnemonic (_("_Save Exif data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->exif);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->save_exif);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &params->exif);
+                    &params->save_exif);
 
   /* XMP metadata */
   toggle = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->xmp);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->save_xmp);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &params->xmp);
+                    &params->save_xmp);
 
   /* Color profile */
   toggle = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->profile);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->save_profile);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &params->profile);
+                    &params->save_profile);
 
   gtk_widget_show (dialog);
 
