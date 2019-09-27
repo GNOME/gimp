@@ -23,36 +23,17 @@
 #define __WEBP_SAVE_H__
 
 
-typedef struct
-{
-  WebPPreset preset;
-  gboolean   lossless;
-  gboolean   animation;
-  gboolean   loop;
-  gboolean   minimize_size;
-  gint       kf_distance;
-  gfloat     quality;
-  gfloat     alpha_quality;
-  gboolean   save_exif;
-  gboolean   save_iptc;
-  gboolean   save_xmp;
-  gboolean   save_profile;
-  gint       delay;
-  gboolean   force_delay;
-} WebPSaveParams;
+gboolean   save_layer     (GFile         *file,
+                           GimpImage     *image,
+                           GimpDrawable  *drawable,
+                           GObject       *config,
+                           GError       **error);
 
-
-gboolean   save_layer     (GFile           *file,
-                           GimpImage       *image,
-                           GimpDrawable    *drawable,
-                           WebPSaveParams  *params,
-                           GError         **error);
-
-gboolean   save_animation (GFile           *file,
-                           GimpImage       *image,
-                           GimpDrawable    *drawable,
-                           WebPSaveParams  *params,
-                           GError         **error);
+gboolean   save_animation (GFile         *file,
+                           GimpImage     *image,
+                           GimpDrawable  *drawable,
+                           GObject       *config,
+                           GError       **error);
 
 
 #endif /* __WEBP_SAVE_H__ */

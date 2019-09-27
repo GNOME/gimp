@@ -23,11 +23,9 @@
 #define __WEBP_DIALOG_H__
 
 
-#include "file-webp-save.h"
-
-
-gboolean   save_dialog (WebPSaveParams *params,
-                        GimpImage      *image);
+gboolean   save_dialog (GimpImage     *image,
+                        GimpProcedure *procedure,
+                        GObject       *config);
 
 
 #endif /* __WEBP_DIALOG_H__ */

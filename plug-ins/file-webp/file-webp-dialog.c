@@ -32,39 +32,31 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static void           save_dialog_toggle_scale   (GtkWidget     *widget,
-                                                  gpointer       data);
-
-static void           save_dialog_toggle_minsize (GtkWidget     *widget,
-                                                  gpointer       data);
-
-static void           show_maxkeyframe_hints     (GtkAdjustment *adj,
-                                                  GtkLabel      *label);
-
-
 static void
-save_dialog_toggle_scale (GtkWidget *widget,
-                          gpointer   data)
+save_dialog_toggle_scale (GObject          *config,
+                          const GParamSpec *pspec,
+                          GtkAdjustment    *adjustment)
 {
-  gimp_scale_entry_set_sensitive (data,
-                                  ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
+  gboolean lossless;
+
+  g_object_get (config,
+                "lossless", &lossless,
+                NULL);
+
+  gimp_scale_entry_set_sensitive (adjustment, ! lossless);
 }
 
 static void
-save_dialog_toggle_minsize (GtkWidget *widget,
-                            gpointer   data)
-{
-  gtk_widget_set_sensitive (GTK_WIDGET (data),
-                            ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
-}
-
-static void
-show_maxkeyframe_hints (GtkAdjustment *adj,
-                        GtkLabel      *label)
+show_maxkeyframe_hints (GObject          *config,
+                        const GParamSpec *pspec,
+                        GtkLabel         *label)
 {
   gint kmax;
 
-  kmax = (gint) gtk_adjustment_get_value (adj);
+  g_object_get (config,
+                "keyframe-distance", &kmax,
+                NULL);
+
   if (kmax == 0)
     {
       gtk_label_set_text (label, _("(no keyframes)"));
@@ -80,8 +72,9 @@ show_maxkeyframe_hints (GtkAdjustment *adj,
 }
 
 gboolean
-save_dialog (WebPSaveParams *params,
-             GimpImage      *image)
+save_dialog (GimpImage     *image,
+             GimpProcedure *procedure,
+             GObject       *config)
 {
   GtkWidget     *dialog;
   GtkWidget     *vbox;
@@ -91,7 +84,7 @@ save_dialog (WebPSaveParams *params,
   GtkWidget     *vbox2;
   GtkWidget     *label;
   GtkWidget     *toggle;
-  GtkWidget     *toggle_minsize;
+  GtkListStore  *store;
   GtkWidget     *combo;
   GtkAdjustment *quality_scale;
   GtkAdjustment *alpha_quality_scale;
@@ -105,17 +98,16 @@ save_dialog (WebPSaveParams *params,
 
   animation_supported = nlayers > 1;
 
-  /* Create the dialog */
-  dialog = gimp_export_dialog_new (_("WebP"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as WebP"));
 
-  /* Create the vbox */
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  /* Create the grid */
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
@@ -123,71 +115,48 @@ save_dialog (WebPSaveParams *params,
   gtk_widget_show (grid);
 
   /* Create the lossless checkbox */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Lossless"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                params->lossless);
+  toggle = gimp_prop_check_button_new (config, "lossless",
+                                       _("_Lossless"));
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 3, 1);
-  gtk_widget_show (toggle);
   row++;
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &params->lossless);
-
   /* Create the slider for image quality */
-  quality_scale = gimp_scale_entry_new (GTK_GRID (grid),
-                                        0, row++,
-                                        _("Image _quality:"),
-                                        125,
-                                        0,
-                                        params->quality,
-                                        0.0, 100.0,
-                                        1.0, 10.0,
-                                        0, TRUE,
-                                        0.0, 0.0,
-                                        _("Image quality"),
-                                        NULL);
-  gimp_scale_entry_set_sensitive (quality_scale, ! params->lossless);
-
-  g_signal_connect (quality_scale, "value-changed",
-                    G_CALLBACK (gimp_float_adjustment_update),
-                    &params->quality);
+  quality_scale = gimp_prop_scale_entry_new (config, "quality",
+                                             GTK_GRID (grid), 0, row++,
+                                             _("Image _quality:"),
+                                             1.0, 10.0, 0,
+                                             FALSE, 0, 0);
 
   /* Create the slider for alpha channel quality */
-  alpha_quality_scale = gimp_scale_entry_new (GTK_GRID (grid),
-                                              0, row++,
-                                              _("Alpha q_uality:"),
-                                              125,
-                                              0,
-                                              params->alpha_quality,
-                                              0.0, 100.0,
-                                              1.0, 10.0,
-                                              0, TRUE,
-                                              0.0, 0.0,
-                                              _("Alpha channel quality"),
-                                              NULL);
-  gimp_scale_entry_set_sensitive (alpha_quality_scale, ! params->lossless);
-
-  g_signal_connect (alpha_quality_scale, "value-changed",
-                    G_CALLBACK (gimp_float_adjustment_update),
-                    &params->alpha_quality);
+  alpha_quality_scale = gimp_prop_scale_entry_new (config, "alpha-quality",
+                                                   GTK_GRID (grid), 0, row++,
+                                                   _("Alpha q_uality:"),
+                                                   1.0, 10.0, 0,
+                                                   FALSE, 0, 0);
 
   /* Enable and disable the sliders when the lossless option is selected */
-  g_signal_connect (toggle, "toggled",
+  g_signal_connect (config, "notify::lossless",
                     G_CALLBACK (save_dialog_toggle_scale),
                     quality_scale);
-  g_signal_connect (toggle, "toggled",
+  g_signal_connect (config, "notify::lossless",
                     G_CALLBACK (save_dialog_toggle_scale),
                     alpha_quality_scale);
 
+  save_dialog_toggle_scale (config, NULL, quality_scale);
+  save_dialog_toggle_scale (config, NULL, alpha_quality_scale);
+
   /* Create the combobox containing the presets */
-  combo = gimp_int_combo_box_new ("Default", WEBP_PRESET_DEFAULT,
-                                  "Picture", WEBP_PRESET_PICTURE,
-                                  "Photo",   WEBP_PRESET_PHOTO,
-                                  "Drawing", WEBP_PRESET_DRAWING,
-                                  "Icon",    WEBP_PRESET_ICON,
-                                  "Text",    WEBP_PRESET_TEXT,
-                                  NULL);
+  store = gimp_int_store_new ("Default", WEBP_PRESET_DEFAULT,
+                              "Picture", WEBP_PRESET_PICTURE,
+                              "Photo",   WEBP_PRESET_PHOTO,
+                              "Drawing", WEBP_PRESET_DRAWING,
+                              "Icon",    WEBP_PRESET_ICON,
+                              "Text",    WEBP_PRESET_TEXT,
+                              NULL);
+  combo = gimp_prop_int_combo_box_new (config, "preset",
+                                       GIMP_INT_STORE (store));
+  g_object_unref (store);
+
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                                     _("Source _type:"), 0.0, 0.5,
                                     combo, 2);
@@ -195,19 +164,12 @@ save_dialog (WebPSaveParams *params,
                            _("WebP encoder \"preset\""),
                            NULL);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              params->preset,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &params->preset, NULL);
-
   if (animation_supported)
     {
       GtkWidget      *animation_box;
-      GtkAdjustment  *adj;
       GtkWidget      *delay;
       GtkWidget      *hbox;
       GtkWidget      *label_kf;
-      GtkAdjustment  *adj_kf;
       GtkWidget      *kf_distance;
       GtkWidget      *hbox_kf;
       PangoAttrList  *attrs;
@@ -225,19 +187,13 @@ save_dialog (WebPSaveParams *params,
 
       /* Create the top-level animation checkbox expander */
       text = g_strdup_printf ("<b>%s</b>", _("As A_nimation"));
-      toggle = gtk_check_button_new_with_mnemonic (text);
+      toggle = gimp_prop_check_button_new (config, "animation",
+                                           text);
       g_free (text);
 
       gtk_label_set_use_markup (GTK_LABEL (gtk_bin_get_child (GTK_BIN (toggle))),
                                 TRUE);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    params->animation);
       gtk_box_pack_start (GTK_BOX (vbox2), toggle, TRUE, TRUE, 0);
-      gtk_widget_show (toggle);
-
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &params->animation);
 
       frame = gimp_frame_new ("<expander>");
       gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
@@ -253,15 +209,10 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (animation_box);
 
       /* loop animation checkbox */
-      toggle = gtk_check_button_new_with_mnemonic (_("Loop _forever"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->loop);
+      toggle = gimp_prop_check_button_new (config, "animation-loop",
+                                           _("Loop _forever"));
       gtk_box_pack_start (GTK_BOX (animation_box), toggle,
                           FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
-
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &params->loop);
 
       /* create a hbox for 'max key-frame distance */
       hbox_kf = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -276,17 +227,9 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (label_kf);
 
       /* key-frame distance entry */
-      adj_kf = gtk_adjustment_new (params->kf_distance,
-                                   0.0, 10000.0,
-                                   1.0, 10.0, 0.0);
-      kf_distance = gimp_spin_button_new (adj_kf, 1, 0);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (kf_distance), TRUE);
+      kf_distance = gimp_prop_spin_button_new (config, "keyframe-distance",
+                                               1.0, 1.0, 0);
       gtk_box_pack_start (GTK_BOX (hbox_kf), kf_distance, FALSE, FALSE, 0);
-      gtk_widget_show (kf_distance);
-
-      g_signal_connect (adj_kf, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
-                        &params->kf_distance);
 
       /* Add some hinting text for special values of key-frame distance. */
       label_kf = gtk_label_new (NULL);
@@ -299,28 +242,25 @@ save_dialog (WebPSaveParams *params,
       gtk_label_set_attributes (GTK_LABEL (label_kf), attrs);
       pango_attr_list_unref (attrs);
 
-      g_signal_connect (adj_kf, "value-changed",
+      g_signal_connect (config, "notify::keyframe-distance",
                         G_CALLBACK (show_maxkeyframe_hints),
                         label_kf);
-      show_maxkeyframe_hints (adj_kf, GTK_LABEL (label_kf));
+      show_maxkeyframe_hints (config, NULL, GTK_LABEL (label_kf));
 
       /* minimize-size checkbox */
-      toggle_minsize = gtk_check_button_new_with_mnemonic (_("_Minimize output size (slower)"));
-
-      gtk_box_pack_start (GTK_BOX (animation_box), toggle_minsize,
+      toggle = gimp_prop_check_button_new (config, "minimize-size",
+                                           _("_Minimize output size "
+                                             "(slower)"));
+      gtk_box_pack_start (GTK_BOX (animation_box), toggle,
                           FALSE, FALSE, 0);
-      gtk_widget_show (toggle_minsize);
 
-      g_signal_connect (toggle_minsize, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &params->minimize_size);
-
-
-      /* Enable and disable the kf-distance box when the 'minimize size' option is selected */
-      g_signal_connect (toggle_minsize, "toggled",
-                        G_CALLBACK (save_dialog_toggle_minsize),
-                        hbox_kf);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle_minsize), params->minimize_size);
+      /* Enable and disable the kf-distance box when the 'minimize size'
+       * option is selected
+       */
+      g_object_bind_property (config,  "minimize-size",
+                              hbox_kf, "sensitive",
+                              G_BINDING_SYNC_CREATE |
+                              G_BINDING_INVERT_BOOLEAN);
 
       /* create a hbox for delay */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -334,15 +274,9 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (label);
 
       /* default delay */
-      adj = gtk_adjustment_new (params->delay, 1, 10000, 1, 10, 0);
-      delay = gimp_spin_button_new (adj, 1, 0);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (delay), TRUE);
+      delay = gimp_prop_spin_button_new (config, "default-delay",
+                                         1, 10, 0);
       gtk_box_pack_start (GTK_BOX (hbox), delay, FALSE, FALSE, 0);
-      gtk_widget_show (delay);
-
-      g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
-                        &params->delay);
 
       /* label for 'ms' adjustment */
       label = gtk_label_new (_("milliseconds"));
@@ -350,50 +284,30 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (label);
 
       /* Create the force-delay checkbox */
-      toggle = gtk_check_button_new_with_mnemonic (_("Use _delay entered above for all frames"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    params->force_delay);
+      toggle = gimp_prop_check_button_new (config, "force-delay",
+                                           _("Use _delay entered above for "
+                                             "all frames"));
       gtk_box_pack_start (GTK_BOX (animation_box), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
-
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &params->force_delay);
   }
 
   /* Save EXIF data */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Save Exif data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->save_exif);
+  toggle = gimp_prop_check_button_new (config, "save-exif",
+                                       _("_Save Exif data"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &params->save_exif);
 
   /* XMP metadata */
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->save_xmp);
+  toggle = gimp_prop_check_button_new (config, "save-xmp",
+                                       _("Save _XMP data"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &params->save_xmp);
 
   /* Color profile */
-  toggle = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->save_profile);
+  toggle = gimp_prop_check_button_new (config, "save-color-profile",
+                                       _("Save color _profile"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &params->save_profile);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
