@@ -51,6 +51,8 @@ struct _GimpImagePrivate
 
   gint               show_all;              /*  render full image content    */
   GeglRectangle      bounding_box;          /*  image content bounding box   */
+  gint               bounding_box_freeze_count;
+  gboolean           bounding_box_update_pending;
   GeglBuffer        *pickable_buffer;
 
   guchar            *colormap;              /*  colormap (for indexed)       */
