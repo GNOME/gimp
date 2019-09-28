@@ -264,6 +264,8 @@ static void     gimp_image_active_vectors_notify (GimpItemTree      *tree,
                                                   const GParamSpec  *pspec,
                                                   GimpImage         *image);
 
+static void     gimp_image_freeze_bounding_box   (GimpImage         *image);
+static void     gimp_image_thaw_bounding_box     (GimpImage         *image);
 static void     gimp_image_update_bounding_box   (GimpImage         *image);
 
 
@@ -1768,10 +1770,41 @@ gimp_image_active_vectors_notify (GimpItemTree     *tree,
 }
 
 static void
+gimp_image_freeze_bounding_box (GimpImage *image)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->bounding_box_freeze_count++;
+}
+
+static void
+gimp_image_thaw_bounding_box (GimpImage *image)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->bounding_box_freeze_count--;
+
+  if (private->bounding_box_freeze_count == 0 &&
+      private->bounding_box_update_pending)
+    {
+      private->bounding_box_update_pending = FALSE;
+
+      gimp_image_update_bounding_box (image);
+    }
+}
+
+static void
 gimp_image_update_bounding_box (GimpImage *image)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GeglRectangle     bounding_box;
+
+  if (private->bounding_box_freeze_count > 0)
+    {
+      private->bounding_box_update_pending = TRUE;
+
+      return;
+    }
 
   bounding_box.x      = 0;
   bounding_box.y      = 0;
@@ -4433,6 +4466,8 @@ gimp_image_reorder_item (GimpImage   *image,
                                    undo_desc);
     }
 
+  gimp_image_freeze_bounding_box (image);
+
   gimp_item_start_move (item, push_undo);
 
   /*  item and new_parent are type-checked in GimpItemTree
@@ -4442,6 +4477,8 @@ gimp_image_reorder_item (GimpImage   *image,
                                         push_undo, undo_desc);
 
   gimp_item_end_move (item, push_undo);
+
+  gimp_image_thaw_bounding_box (image);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
