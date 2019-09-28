@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-16 18:36+0000\n"
-"PO-Revision-Date: 2019-09-17 12:28+0200\n"
+"POT-Creation-Date: 2019-09-26 18:52+0000\n"
+"PO-Revision-Date: 2019-09-26 23:44+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -157,7 +157,8 @@ msgid "Confirm Save"
 msgstr "Potrditev shranjevanja"
 
 #: ../libgimp/gimpexport.c:498 ../libgimp/gimpexport.c:580
-#: ../libgimp/gimpexport.c:1080 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimp/gimpexport.c:1080 ../libgimp/gimpproceduredialog.c:228
+#: ../libgimpwidgets/gimpcolorbutton.c:554
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:274
@@ -179,6 +180,7 @@ msgid "_Ignore"
 msgstr "_Prezri"
 
 #: ../libgimp/gimpexport.c:581 ../libgimp/gimpexport.c:1081
+#: ../libgimp/gimpproceduredialog.c:222
 msgid "_Export"
 msgstr "_Izvozi"
 
@@ -390,12 +392,12 @@ msgstr[1] "%d procedura se ujema z vašim povpraševanjem"
 msgstr[2] "%d proceduri se ujemata z vašim povpraševanjem"
 msgstr[3] "%d procedure se ujemajo z vašim povpraševanjem"
 
-#: ../libgimp/gimpprocedure.c:1447
+#: ../libgimp/gimpprocedure.c:1644
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura »%s« ni vrnila nobenih vrednosti"
 
-#: ../libgimp/gimpprocedure.c:1519
+#: ../libgimp/gimpprocedure.c:1736
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -404,7 +406,7 @@ msgstr ""
 "Procedura »%s« je vrnila napačno vrsto vrnjene vrednosti »%s« (#%d). "
 "Pričakovana vrednost %s, prejeta %s."
 
-#: ../libgimp/gimpprocedure.c:1531
+#: ../libgimp/gimpprocedure.c:1748
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -413,7 +415,7 @@ msgstr ""
 "Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
 "%d). Pričakovano %s, prejeto %s."
 
-#: ../libgimp/gimpprocedure.c:1566
+#: ../libgimp/gimpprocedure.c:1783
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -422,7 +424,7 @@ msgstr ""
 "Procedura »%s« je vrnila »%s« kot vrnjeno vrednost »%s« (#%d, vrsta %s). Ta "
 "vrednost je izven dovoljenega obsega."
 
-#: ../libgimp/gimpprocedure.c:1580
+#: ../libgimp/gimpprocedure.c:1797
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -431,18 +433,50 @@ msgstr ""
 "Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
 "vrednost je zunaj dovoljenega obsega."
 
-#: ../libgimp/gimpprocedure.c:1630
+#: ../libgimp/gimpprocedure.c:1847
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
 
-#: ../libgimp/gimpprocedure.c:1640
+#: ../libgimp/gimpprocedure.c:1857
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
+
+#: ../libgimp/gimpproceduredialog.c:220
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+msgid "_Open"
+msgstr "_Odpri"
+
+#: ../libgimp/gimpproceduredialog.c:224 ../libgimpwidgets/gimpcolorbutton.c:555
+#: ../libgimpwidgets/gimpfileentry.c:438 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
+#: ../libgimpwidgets/gimpquerybox.c:479
+msgid "_OK"
+msgstr "V _redu"
+
+#: ../libgimp/gimpproceduredialog.c:227 ../libgimpwidgets/gimpcolorbutton.c:553
+msgid "_Reset"
+msgstr "_Ponastavi"
+
+#: ../libgimp/gimpproceduredialog.c:248
+msgid "_Load Defaults"
+msgstr "_Naloži privzete vrednosti"
+
+#: ../libgimp/gimpproceduredialog.c:256
+msgid "_Save Defaults"
+msgstr "_Shrani privzete vrednosti"
+
+#: ../libgimp/gimpproceduredialog.c:294
+msgid "Reset to _Initial Values"
+msgstr "Ponastavi na _začetne vrednosti"
+
+#: ../libgimp/gimpproceduredialog.c:303
+msgid "Reset to _Factory Defaults"
+msgstr "Ponastavi na _tovarniške vrednosti"
 
 #: ../libgimp/gimpprocview.c:175
 msgid "Image types:"
@@ -1883,10 +1917,10 @@ msgstr "neveljavna vrednost »%ld« za žeton %s"
 msgid "while parsing token '%s': %s"
 msgstr "pri razčlenjevanju žetona »%s«: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:676
-#: ../libgimpconfig/gimpconfig-iface.c:689 ../libgimpconfig/gimpscanner.c:805
-#: ../libgimpconfig/gimpscanner.c:887
-#: ../libgimpwidgets/gimpcolorprofilestore.c:680
+#: ../libgimpconfig/gimpconfig-iface.c:662
+#: ../libgimpconfig/gimpconfig-iface.c:675 ../libgimpconfig/gimpscanner.c:779
+#: ../libgimpconfig/gimpscanner.c:861
+#: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
 msgstr "usodna napaka pri razčlenjevanju"
 
@@ -1900,40 +1934,40 @@ msgid "Cannot expand ${%s}"
 msgstr "Ni mogoče razširiti ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:95
-#: ../libgimpconfig/gimpconfigwriter.c:762
+#: ../libgimpconfig/gimpconfigwriter.c:725
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Napaka pri pisanju v »%s«: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:190
+#: ../libgimpconfig/gimpconfigwriter.c:153
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
 msgstr "Mape »%s« za »%s« ni mogoče ustvariti: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:206
+#: ../libgimpconfig/gimpconfigwriter.c:169
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Začasne datoteke za »%s« ni mogoče ustvariti: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:872
+#: ../libgimpconfig/gimpconfigwriter.c:835
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Napaka pri pisanju »%s«: %s"
 
-#: ../libgimpconfig/gimpscanner.c:448
+#: ../libgimpconfig/gimpscanner.c:422
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "neveljaven niz UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:680
+#: ../libgimpconfig/gimpscanner.c:654
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr ""
 "za logični žeton je pričakovana vrednost »yes« ali »no«, vrnjena vrednost pa "
 "je »%s«"
 
-#: ../libgimpconfig/gimpscanner.c:914
+#: ../libgimpconfig/gimpscanner.c:888
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Napaka pri razčlenjevanju »%s« v vrstici %d: %s"
@@ -2005,17 +2039,6 @@ msgstr "_Črna"
 msgid "_White"
 msgstr "_Bela"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:553
-msgid "_Reset"
-msgstr "_Ponastavi"
-
-#: ../libgimpwidgets/gimpcolorbutton.c:555
-#: ../libgimpwidgets/gimpfileentry.c:438 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
-#: ../libgimpwidgets/gimpquerybox.c:479
-msgid "_OK"
-msgstr "V _redu"
-
 #: ../libgimpwidgets/gimpcolorhexentry.c:135
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
@@ -2036,10 +2059,6 @@ msgstr "Barvni profil ICC (*.icc, *.icm)"
 msgid "_Save"
 msgstr "_Shrani"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
-msgid "_Open"
-msgstr "_Odpri"
-
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:346
 #: ../libgimpwidgets/gimppatheditor.c:269
 msgid "Folder"
@@ -2053,7 +2072,7 @@ msgstr "Ni navadna datoteka."
 msgid "Select color profile from disk..."
 msgstr "Izberite barvni profil z diska ..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:285
+#: ../libgimpwidgets/gimpcolorprofilestore.c:287
 msgctxt "profile"
 msgid "None"
 msgstr "Brez"
@@ -2233,7 +2252,7 @@ msgstr "Preveri velikost"
 msgid "Check Style"
 msgstr "Preveri slog"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2128
+#: ../libgimpwidgets/gimppropwidgets.c:2160
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2242,7 +2261,7 @@ msgstr[1] "Vnosno polje za besedilo je omejeno na %d znak."
 msgstr[2] "Vnosno polje za besedilo je omejeno na %d znaka."
 msgstr[3] "Vnosno polje za besedilo je omejeno na %d znake."
 
-#: ../libgimpwidgets/gimpwidgets.c:471
+#: ../libgimpwidgets/gimpwidgets.c:251
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2250,15 +2269,15 @@ msgstr ""
 "Uporabi navedeno vrednost pri izračunavanju naključnih števil. Tako lahko "
 "ponovite dano »naključno« operacijo."
 
-#: ../libgimpwidgets/gimpwidgets.c:475
+#: ../libgimpwidgets/gimpwidgets.c:255
 msgid "_New Seed"
 msgstr "_Novo seme"
 
-#: ../libgimpwidgets/gimpwidgets.c:491
+#: ../libgimpwidgets/gimpwidgets.c:271
 msgid "Seed random number generator with a generated random number"
 msgstr "Ponastavi generator naključnih števil z novim naključnim številom"
 
-#: ../libgimpwidgets/gimpwidgets.c:495
+#: ../libgimpwidgets/gimpwidgets.c:275
 msgid "_Randomize"
 msgstr "Na_redi naključno"
 
