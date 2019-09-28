@@ -53,30 +53,22 @@ typedef enum
 } RGBMode;
 
 
-static  void      write_image     (FILE     *f,
-                                   guchar   *src,
-                                   gint      width,
-                                   gint      height,
-                                   gboolean  use_run_length_encoding,
-                                   gint      channels,
-                                   gint      bpp,
-                                   gint      spzeile,
-                                   gint      MapSize,
-                                   RGBMode   rgb_format,
-                                   gint      mask_info_size,
-                                   gint      color_space_size);
+static  void      write_image     (FILE          *f,
+                                   guchar        *src,
+                                   gint           width,
+                                   gint           height,
+                                   gboolean       use_run_length_encoding,
+                                   gint           channels,
+                                   gint           bpp,
+                                   gint           spzeile,
+                                   gint           MapSize,
+                                   RGBMode        rgb_format,
+                                   gint           mask_info_size,
+                                   gint           color_space_size);
 
-static  gboolean  save_dialog     (gint      channels);
-
-
-static struct
-{
-  RGBMode  rgb_format;
-  gboolean use_run_length_encoding;
-
-  /* Whether or not to write BITMAPV5HEADER color space data */
-  gboolean dont_write_color_space_data;
-} BMPSaveData;
+static  gboolean  save_dialog     (GimpProcedure *procedure,
+                                   GObject       *config,
+                                   gint           channels);
 
 
 static void
@@ -128,6 +120,8 @@ save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
             GimpRunMode    run_mode,
+            GimpProcedure *procedure,
+            GObject       *config,
             GError       **error)
 {
   gchar          *filename;
@@ -144,13 +138,16 @@ save_image (GFile         *file,
   guchar         *pixels;
   GeglBuffer     *buffer;
   const Babl     *format;
-  GimpImageType    drawable_type;
+  GimpImageType   drawable_type;
   gint            drawable_width;
   gint            drawable_height;
   gint            i;
   gint            mask_info_size;
   gint            color_space_size;
   guint32         Mask[4];
+  gboolean        use_rle;
+  gboolean        write_color_space;
+  RGBMode         rgb_format;
 
   buffer = gimp_drawable_get_buffer (drawable);
 
@@ -166,7 +163,10 @@ save_image (GFile         *file,
       BitsPerPixel = 32;
       MapSize      = 0;
       channels     = 4;
-      BMPSaveData.rgb_format = RGBA_8888;
+
+      g_object_set (config,
+                    "rgb-format", RGBA_8888,
+                    NULL);
       break;
 
     case GIMP_RGB_IMAGE:
@@ -175,7 +175,10 @@ save_image (GFile         *file,
       BitsPerPixel = 24;
       MapSize      = 0;
       channels     = 3;
-      BMPSaveData.rgb_format = RGB_888;
+
+      g_object_set (config,
+                    "rgb-format", RGBA_8888,
+                    NULL);
       break;
 
     case GIMP_GRAYA_IMAGE:
@@ -249,21 +252,13 @@ save_image (GFile         *file,
       g_assert_not_reached ();
     }
 
-  BMPSaveData.use_run_length_encoding     = FALSE;
-  BMPSaveData.dont_write_color_space_data = FALSE;
-
   mask_info_size = 0;
-
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      gimp_get_data (SAVE_PROC, &BMPSaveData);
-    }
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
       (BitsPerPixel == 8 ||
        BitsPerPixel == 4))
     {
-      if (! save_dialog (1))
+      if (! save_dialog (procedure, config, 1))
         return GIMP_PDB_CANCEL;
     }
   else if (BitsPerPixel == 24 ||
@@ -271,12 +266,16 @@ save_image (GFile         *file,
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          if (! save_dialog (channels))
+          if (! save_dialog (procedure, config, channels))
             return GIMP_PDB_CANCEL;
         }
 
+      g_object_get (config,
+                    "rgb-format", &rgb_format,
+                    NULL);
+
       /* mask_info_size is only set to non-zero for 16- and 32-bpp */
-      switch (BMPSaveData.rgb_format)
+      switch (rgb_format)
         {
         case RGB_888:
           BitsPerPixel = 24;
@@ -306,13 +305,15 @@ save_image (GFile         *file,
         }
     }
 
-  gimp_set_data (SAVE_PROC, &BMPSaveData, sizeof (BMPSaveData));
+  g_object_get (config,
+                "use-rle",                &use_rle,
+                "write-color-space-info", &write_color_space,
+                "rgb-format",             &rgb_format,
+                NULL);
 
-  /* Let's begin the progress */
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  /* Let's take some file */
   filename = g_file_get_path (file);
   outfile = g_fopen (filename, "wb");
   g_free (filename);
@@ -328,8 +329,8 @@ save_image (GFile         *file,
   /* fetch the image */
   pixels = g_new (guchar, drawable_width * drawable_height * channels);
 
-  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0,
-                                           drawable_width, drawable_height), 1.0,
+  gegl_buffer_get (buffer,
+                   GEGL_RECTANGLE (0, 0, drawable_width, drawable_height), 1.0,
                    format, pixels,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -350,7 +351,7 @@ save_image (GFile         *file,
   else
     SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
 
-  if (! BMPSaveData.dont_write_color_space_data)
+  if (write_color_space)
     color_space_size = 68;
   else
     color_space_size = 0;
@@ -368,7 +369,7 @@ save_image (GFile         *file,
   bitmap_head.biPlanes = 1;
   bitmap_head.biBitCnt = BitsPerPixel;
 
-  if (! BMPSaveData.use_run_length_encoding)
+  if (! use_rle)
     {
       if (mask_info_size > 0)
         bitmap_head.biCompr = 3; /* BI_BITFIELDS */
@@ -393,6 +394,7 @@ save_image (GFile         *file,
   {
     gdouble xresolution;
     gdouble yresolution;
+
     gimp_image_get_resolution (image, &xresolution, &yresolution);
 
     if (xresolution > GIMP_MIN_RESOLUTION &&
@@ -458,7 +460,7 @@ save_image (GFile         *file,
 
   if (mask_info_size > 0)
     {
-      switch (BMPSaveData.rgb_format)
+      switch (rgb_format)
         {
         default:
         case RGB_888:
@@ -506,7 +508,7 @@ save_image (GFile         *file,
       Write (outfile, &Mask, mask_info_size);
     }
 
-  if (! BMPSaveData.dont_write_color_space_data)
+  if (write_color_space)
     {
       guint32 buf[0x11];
 
@@ -549,9 +551,9 @@ save_image (GFile         *file,
 
   write_image (outfile,
                pixels, cols, rows,
-               BMPSaveData.use_run_length_encoding,
+               use_rle,
                channels, BitsPerPixel, SpZeile,
-               MapSize, BMPSaveData.rgb_format,
+               MapSize, rgb_format,
                mask_info_size, color_space_size);
 
   /* ... and exit normally */
@@ -912,18 +914,53 @@ format_sensitive_callback (gint     value,
     };
 }
 
-static gboolean
-save_dialog (gint channels)
+static void
+config_notify (GObject          *config,
+               const GParamSpec *pspec,
+               gpointer          data)
 {
-  GtkWidget *dialog;
-  GtkWidget *toggle;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *combo;
-  gboolean   run;
+  gint    channels = GPOINTER_TO_INT (data);
+  RGBMode format;
 
-  /* Dialog init */
-  dialog = gimp_export_dialog_new ("BMP", PLUG_IN_BINARY, SAVE_PROC);
+  g_object_get (config,
+                "rgb-format", &format,
+                NULL);
+
+  switch (format)
+    {
+    case RGBA_5551:
+    case RGBA_8888:
+      if (channels != 4)
+        {
+          g_signal_handlers_block_by_func (config, config_notify, data);
+
+          g_object_set (config, "rgb-format", format - 1, NULL);
+
+          g_signal_handlers_unblock_by_func (config, config_notify, data);
+        }
+      break;
+
+    default:
+      break;
+    };
+}
+
+static gboolean
+save_dialog (GimpProcedure *procedure,
+             GObject       *config,
+             gint           channels)
+{
+  GtkWidget    *dialog;
+  GtkWidget    *toggle;
+  GtkWidget    *vbox;
+  GtkWidget    *frame;
+  GtkListStore *store;
+  GtkWidget    *combo;
+  gboolean      run;
+
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as BMP"));
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -934,41 +971,30 @@ save_dialog (gint channels)
   gtk_widget_show (vbox);
 
   /* Run-Length Encoded */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Run-Length Encoded"));
+  toggle = gimp_prop_check_button_new (config, "use-rle",
+                                       _("_Run-Length Encoded"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                BMPSaveData.use_run_length_encoding);
-  gtk_widget_show (toggle);
+
   if (channels > 1)
     gtk_widget_set_sensitive (toggle, FALSE);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &BMPSaveData.use_run_length_encoding);
 
   /* Compatibility Options */
   frame = gimp_frame_new (_("Compatibility"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Do not write color space information"));
+  toggle = gimp_prop_check_button_new (config, "write-color-space-info",
+                                       _("_Write color space information"));
   gimp_help_set_help_data (toggle,
                            _("Some applications can not read BMP images that "
                              "include color space information. GIMP writes "
-                             "color space information by default. Enabling "
+                             "color space information by default. Disabling "
                              "this option will cause GIMP to not write color "
                              "space information to the file."),
                            NULL);
   gtk_container_add (GTK_CONTAINER (frame), toggle);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                BMPSaveData.dont_write_color_space_data);
-  gtk_widget_show (toggle);
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &BMPSaveData.dont_write_color_space_data);
-
-  /* Advanced Options */
+  /* RGB Encoding Pptions */
   frame = gimp_frame_new (_("RGB Encoding"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -976,20 +1002,16 @@ save_dialog (gint channels)
   if (channels < 3)
     gtk_widget_set_sensitive (frame, FALSE);
 
-  combo = gimp_int_combo_box_new (_("16 bit (R5 G6 B5"),     RGB_565,
-                                  _("16 bit (A1 R5 G5 B5"),  RGBA_5551,
-                                  _("16 bit (X1 R5 G5 B5"),  RGB_555,
-                                  _("24 bit (R8 G8 B8)"),    RGB_888,
-                                  _("32 bit (A8 R8 G8 B8)"), RGBA_8888,
-                                  _("32 bit (X8 R8 G8 B8)"), RGBX_8888,
-                                  NULL);
+  store = gimp_int_store_new (_("16 bit (R5 G6 B5"),     RGB_565,
+                              _("16 bit (A1 R5 G5 B5"),  RGBA_5551,
+                              _("16 bit (X1 R5 G5 B5"),  RGB_555,
+                              _("24 bit (R8 G8 B8)"),    RGB_888,
+                              _("32 bit (A8 R8 G8 B8)"), RGBA_8888,
+                              _("32 bit (X8 R8 G8 B8)"), RGBX_8888,
+                              NULL);
+  combo = gimp_prop_int_combo_box_new (config, "rgb-format",
+                                       GIMP_INT_STORE (store));
   gtk_container_add (GTK_CONTAINER (frame), combo);
-  gtk_widget_show (combo);
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              BMPSaveData.rgb_format,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &BMPSaveData.rgb_format, NULL);
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
                                       format_sensitive_callback,
@@ -997,7 +1019,15 @@ save_dialog (gint channels)
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  g_signal_connect (config, "notify::rgb-format",
+                    G_CALLBACK (config_notify),
+                    GINT_TO_POINTER (channels));
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  g_signal_handlers_disconnect_by_func (config,
+                                        config_notify,
+                                        GINT_TO_POINTER (channels));
 
   gtk_widget_destroy (dialog);
 

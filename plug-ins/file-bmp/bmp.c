@@ -187,6 +187,25 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
                                           "image/bmp");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "bmp");
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-rle",
+                                 "Use RLE",
+                                 "Use run-lengh-encoding",
+                                 FALSE,
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "write-color-space-info",
+                                 "Write color space information",
+                                 "Whether or not to write BITMAPV5HEADER "
+                                 "color space data",
+                                 TRUE,
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_INT (procedure, "rgb-format",
+                             "RGB format",
+                             "Export format for RGB images",
+                             0, 5, 3,
+                             G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -231,12 +250,16 @@ bmp_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpExportReturn       export = GIMP_EXPORT_CANCEL;
-  GError                *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GError              *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -261,7 +284,11 @@ bmp_save (GimpProcedure        *procedure,
     }
 
   status = save_image (file, image, drawable, run_mode,
+                       procedure, G_OBJECT (config),
                        &error);
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
