@@ -342,8 +342,8 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
     case GIMP_RUN_WITH_LAST_VALS:
       if (image)
         {
-          loaded = _gimp_procedure_config_load_parasite (config, image,
-                                                         &error);
+          loaded = gimp_procedure_config_load_parasite (config, image,
+                                                        &error);
           if (! loaded && error)
             {
               g_printerr ("Loading last used values from parasite failed: %s\n",
@@ -353,7 +353,7 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
         }
 
       if (! loaded &&
-          ! _gimp_procedure_config_load_last (config, &error) && error)
+          ! gimp_procedure_config_load_last (config, &error) && error)
         {
           g_printerr ("Loading last used values from disk failed: %s\n",
                       error->message);
@@ -406,9 +406,10 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
       GError *error = NULL;
 
       if (config->priv->image)
-        _gimp_procedure_config_save_parasite (config, config->priv->image);
+        gimp_procedure_config_save_parasite (config, config->priv->image,
+                                             NULL);
 
-      if (! _gimp_procedure_config_save_last (config, &error))
+      if (! gimp_procedure_config_save_last (config, &error))
         {
           g_printerr ("Saving last used values to disk failed: %s\n",
                       error->message);
@@ -438,11 +439,16 @@ gimp_procedure_config_get_file (GimpProcedureConfig *config,
 }
 
 gboolean
-_gimp_procedure_config_load_default (GimpProcedureConfig  *config,
-                                     GError              **error)
+gimp_procedure_config_load_default (GimpProcedureConfig  *config,
+                                    GError              **error)
 {
-  GFile    *file = gimp_procedure_config_get_file (config, ".default");
+  GFile    *file;
   gboolean  success;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  file = gimp_procedure_config_get_file (config, ".default");
 
   success = gimp_config_deserialize_file (GIMP_CONFIG (config),
                                           file,
@@ -459,11 +465,16 @@ _gimp_procedure_config_load_default (GimpProcedureConfig  *config,
 }
 
 gboolean
-_gimp_procedure_config_save_default (GimpProcedureConfig  *config,
-                                     GError              **error)
+gimp_procedure_config_save_default (GimpProcedureConfig  *config,
+                                    GError              **error)
 {
-  GFile    *file = gimp_procedure_config_get_file (config, ".default");
+  GFile    *file;
   gboolean  success;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  file = gimp_procedure_config_get_file (config, ".default");
 
   success = gimp_config_serialize_to_file (GIMP_CONFIG (config),
                                            file,
@@ -477,11 +488,16 @@ _gimp_procedure_config_save_default (GimpProcedureConfig  *config,
 }
 
 gboolean
-_gimp_procedure_config_load_last (GimpProcedureConfig  *config,
-                                  GError              **error)
+gimp_procedure_config_load_last (GimpProcedureConfig  *config,
+                                 GError              **error)
 {
-  GFile    *file = gimp_procedure_config_get_file (config, ".last");
+  GFile    *file;
   gboolean  success;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  file = gimp_procedure_config_get_file (config, ".last");
 
   success = gimp_config_deserialize_file (GIMP_CONFIG (config),
                                           file,
@@ -498,11 +514,16 @@ _gimp_procedure_config_load_last (GimpProcedureConfig  *config,
 }
 
 gboolean
-_gimp_procedure_config_save_last (GimpProcedureConfig  *config,
-                                  GError              **error)
+gimp_procedure_config_save_last (GimpProcedureConfig  *config,
+                                 GError              **error)
 {
-  GFile    *file = gimp_procedure_config_get_file (config, ".last");
+  GFile    *file;
   gboolean  success;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  file = gimp_procedure_config_get_file (config, ".last");
 
   success = gimp_config_serialize_to_file (GIMP_CONFIG (config),
                                            file,
@@ -523,13 +544,17 @@ gimp_procedure_config_parasite_name (GimpProcedureConfig *config,
 }
 
 gboolean
-_gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
-                                      GimpImage            *image,
-                                      GError              **error)
+gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
+                                     GimpImage            *image,
+                                     GError              **error)
 {
   gchar        *name;
   GimpParasite *parasite;
   gboolean      success;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   name = gimp_procedure_config_parasite_name (config, "-last");
   parasite = gimp_image_get_parasite (image, name);
@@ -547,11 +572,16 @@ _gimp_procedure_config_load_parasite (GimpProcedureConfig  *config,
 }
 
 gboolean
-_gimp_procedure_config_save_parasite (GimpProcedureConfig *config,
-                                      GimpImage           *image)
+gimp_procedure_config_save_parasite (GimpProcedureConfig  *config,
+                                     GimpImage            *image,
+                                     GError              **error)
 {
   gchar        *name;
   GimpParasite *parasite;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   name = gimp_procedure_config_parasite_name (config, "-last");
   parasite = gimp_config_serialize_to_parasite (GIMP_CONFIG (config),

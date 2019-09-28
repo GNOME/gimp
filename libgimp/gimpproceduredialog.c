@@ -348,7 +348,7 @@ gimp_procedure_dialog_load_defaults (GtkWidget           *button,
 {
   GError *error = NULL;
 
-  if (! _gimp_procedure_config_load_default (dialog->priv->config, &error))
+  if (! gimp_procedure_config_load_default (dialog->priv->config, &error))
     {
       if (error)
         {
@@ -369,7 +369,7 @@ gimp_procedure_dialog_save_defaults (GtkWidget           *button,
 {
   GError *error = NULL;
 
-  if (! _gimp_procedure_config_save_default (dialog->priv->config, &error))
+  if (! gimp_procedure_config_save_default (dialog->priv->config, &error))
     {
       g_printerr ("Saving default values to disk failed: %s\n",
                   error->message);

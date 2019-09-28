@@ -1587,7 +1587,7 @@ gimp_procedure_run (GimpProcedure  *procedure,
 
       /*  if saved defaults exist, they override GParamSpec  */
       config = gimp_procedure_create_config (procedure);
-      if (_gimp_procedure_config_load_default (config, NULL))
+      if (gimp_procedure_config_load_default (config, NULL))
         config_class = G_OBJECT_GET_CLASS (config);
       else
         g_clear_object (&config);

@@ -687,6 +687,12 @@ EXPORTS
 	gimp_procedure_config_get_procedure
 	gimp_procedure_config_get_type
 	gimp_procedure_config_get_values
+	gimp_procedure_config_load_default
+	gimp_procedure_config_load_last
+	gimp_procedure_config_load_parasite
+	gimp_procedure_config_save_default
+	gimp_procedure_config_save_last
+	gimp_procedure_config_save_parasite
 	gimp_procedure_config_set_values
 	gimp_procedure_create_config
 	gimp_procedure_extension_ready
