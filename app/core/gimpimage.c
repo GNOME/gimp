@@ -233,6 +233,9 @@ static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               width,
                                                   gint               height,
                                                   GimpImage         *image);
+static void     gimp_image_layers_changed        (GimpContainer     *container,
+                                                  GimpChannel       *channel,
+                                                  GimpImage         *image);
 static void     gimp_image_layer_offset_changed  (GimpDrawable      *drawable,
                                                   const GParamSpec  *pspec,
                                                   GimpImage         *image);
@@ -815,6 +818,13 @@ gimp_image_init (GimpImage *image)
                                 G_CALLBACK (gimp_image_layer_alpha_changed),
                                 image);
 
+  g_signal_connect (private->layers->container, "add",
+                    G_CALLBACK (gimp_image_layers_changed),
+                    image);
+  g_signal_connect (private->layers->container, "remove",
+                    G_CALLBACK (gimp_image_layers_changed),
+                    image);
+
   g_signal_connect_swapped (private->channels->container, "update",
                             G_CALLBACK (gimp_image_invalidate),
                             image);
@@ -1062,6 +1072,10 @@ gimp_image_dispose (GObject *object)
                                  private->layer_bounding_box_handler);
   gimp_container_remove_handler (private->layers->container,
                                  private->layer_alpha_handler);
+
+  g_signal_handlers_disconnect_by_func (private->layers->container,
+                                        gimp_image_layers_changed,
+                                        image);
 
   g_signal_handlers_disconnect_by_func (private->channels->container,
                                         gimp_image_invalidate,
@@ -1650,6 +1664,14 @@ gimp_image_mask_update (GimpDrawable *drawable,
                         GimpImage    *image)
 {
   GIMP_IMAGE_GET_PRIVATE (image)->flush_accum.mask_changed = TRUE;
+}
+
+static void
+gimp_image_layers_changed (GimpContainer *container,
+                           GimpChannel   *channel,
+                           GimpImage     *image)
+{
+  gimp_image_update_bounding_box (image);
 }
 
 static void
@@ -4582,8 +4604,6 @@ gimp_image_add_layer (GimpImage *image,
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
 
-  gimp_image_update_bounding_box (image);
-
   return TRUE;
 }
 
@@ -4700,8 +4720,6 @@ gimp_image_remove_layer (GimpImage *image,
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
-
-  gimp_image_update_bounding_box (image);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
