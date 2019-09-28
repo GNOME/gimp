@@ -53,29 +53,29 @@ typedef enum
 } RGBMode;
 
 
-static  void      write_image     (FILE   *f,
-                                   guchar *src,
-                                   gint    width,
-                                   gint    height,
-                                   gint    use_run_length_encoding,
-                                   gint    channels,
-                                   gint    bpp,
-                                   gint    spzeile,
-                                   gint    MapSize,
-                                   RGBMode rgb_format,
-                                   gint    mask_info_size,
-                                   gint    color_space_size);
+static  void      write_image     (FILE     *f,
+                                   guchar   *src,
+                                   gint      width,
+                                   gint      height,
+                                   gboolean  use_run_length_encoding,
+                                   gint      channels,
+                                   gint      bpp,
+                                   gint      spzeile,
+                                   gint      MapSize,
+                                   RGBMode   rgb_format,
+                                   gint      mask_info_size,
+                                   gint      color_space_size);
 
-static  gboolean  save_dialog     (gint    channels);
+static  gboolean  save_dialog     (gint      channels);
 
 
 static struct
 {
-  RGBMode rgb_format;
-  gint    use_run_length_encoding;
+  RGBMode  rgb_format;
+  gboolean use_run_length_encoding;
 
   /* Whether or not to write BITMAPV5HEADER color space data */
-  gint    dont_write_color_space_data;
+  gboolean dont_write_color_space_data;
 } BMPSaveData;
 
 
@@ -249,8 +249,9 @@ save_image (GFile         *file,
       g_assert_not_reached ();
     }
 
-  BMPSaveData.use_run_length_encoding = 0;
-  BMPSaveData.dont_write_color_space_data = 0;
+  BMPSaveData.use_run_length_encoding     = FALSE;
+  BMPSaveData.dont_write_color_space_data = FALSE;
+
   mask_info_size = 0;
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -367,7 +368,7 @@ save_image (GFile         *file,
   bitmap_head.biPlanes = 1;
   bitmap_head.biBitCnt = BitsPerPixel;
 
-  if (BMPSaveData.use_run_length_encoding == 0)
+  if (! BMPSaveData.use_run_length_encoding)
     {
       if (mask_info_size > 0)
         bitmap_head.biCompr = 3; /* BI_BITFIELDS */
@@ -596,18 +597,18 @@ Make5551 (guchar  r,
 }
 
 static void
-write_image (FILE   *f,
-             guchar *src,
-             gint    width,
-             gint    height,
-             gint    use_run_length_encoding,
-             gint    channels,
-             gint    bpp,
-             gint    spzeile,
-             gint    MapSize,
-             RGBMode rgb_format,
-             gint    mask_info_size,
-             gint    color_space_size)
+write_image (FILE     *f,
+             guchar   *src,
+             gint      width,
+             gint      height,
+             gboolean  use_run_length_encoding,
+             gint      channels,
+             gint      bpp,
+             gint      spzeile,
+             gint      MapSize,
+             RGBMode   rgb_format,
+             gint      mask_info_size,
+             gint      color_space_size)
 {
   guchar  buf[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0 };
   guint32 uint32buf;
@@ -708,182 +709,207 @@ write_image (FILE   *f,
     }
   else
     {
-      switch (use_run_length_encoding)  /* now it gets more difficult */
-        {               /* uncompressed 1,4 and 8 bit */
-        case 0:
-          {
-            thiswidth = (width / (8 / bpp));
-            if (width % (8 / bpp))
-              thiswidth++;
+      /* now it gets more difficult */
+      if (! use_run_length_encoding)
+        {
+          /* uncompressed 1,4 and 8 bit */
 
-            for (ypos = height - 1; ypos >= 0; ypos--) /* for each row */
-              {
-                for (xpos = 0; xpos < width;)  /* for each _byte_ */
-                  {
-                    v = 0;
-                    for (i = 1;
-                         (i <= (8 / bpp)) && (xpos < width);
-                         i++, xpos++)  /* for each pixel */
-                      {
-                        temp = src + (ypos * rowstride) + (xpos * channels);
-                        if (channels > 1 && *(temp+1) == 0) *temp = 0x0;
-                        v=v | ((guchar) *temp << (8 - (i * bpp)));
-                      }
-                    Write (f, &v, 1);
-                  }
-                Write (f, &buf[3], spzeile - thiswidth);
-                xpos = 0;
+          thiswidth = (width / (8 / bpp));
+          if (width % (8 / bpp))
+            thiswidth++;
 
-                cur_progress++;
-                if ((cur_progress % 5) == 0)
-                  gimp_progress_update ((gdouble) cur_progress /
+          for (ypos = height - 1; ypos >= 0; ypos--) /* for each row */
+            {
+              for (xpos = 0; xpos < width;)  /* for each _byte_ */
+                {
+                  v = 0;
+                  for (i = 1;
+                       (i <= (8 / bpp)) && (xpos < width);
+                       i++, xpos++)  /* for each pixel */
+                    {
+                      temp = src + (ypos * rowstride) + (xpos * channels);
+                      if (channels > 1 && *(temp+1) == 0) *temp = 0x0;
+                      v=v | ((guchar) *temp << (8 - (i * bpp)));
+                    }
+                  Write (f, &v, 1);
+                }
+
+              Write (f, &buf[3], spzeile - thiswidth);
+              xpos = 0;
+
+              cur_progress++;
+              if ((cur_progress % 5) == 0)
+                gimp_progress_update ((gdouble) cur_progress /
                                         (gdouble) max_progress);
-              }
-            break;
-          }
-        default:
-          {              /* Save RLE encoded file, quite difficult */
-            length = 0;
-            buf[12] = 0;
-            buf[13] = 1;
-            buf[14] = 0;
-            buf[15] = 0;
-            row = g_new (guchar, width / (8 / bpp) + 10);
-            ketten = g_new (guchar, width / (8 / bpp) + 10);
-            for (ypos = height - 1; ypos >= 0; ypos--)
-              { /* each row separately */
-                j = 0;
-                /* first copy the pixels to a buffer,
-                 * making one byte from two 4bit pixels
-                 */
-                for (xpos = 0; xpos < width;)
-                  {
-                    v = 0;
-                    for (i = 1;
-                         (i <= (8 / bpp)) && (xpos < width);
-                         i++, xpos++)
-                      { /* for each pixel */
-                        temp = src + (ypos * rowstride) + (xpos * channels);
-                        if (channels > 1 && *(temp+1) == 0) *temp = 0x0;
-                        v = v | ((guchar) * temp << (8 - (i * bpp)));
-                      }
-                    row[j++] = v;
-                  }
-                breite = width / (8 / bpp);
-                if (width % (8 / bpp))
-                  breite++;
+            }
+        }
+      else
+        {
+          /* Save RLE encoded file, quite difficult */
 
-                /* then check for strings of equal bytes */
-                for (i = 0; i < breite; i += j)
-                  {
-                    j = 0;
-                    while ((i + j < breite) &&
-                           (j < (255 / (8 / bpp))) &&
-                           (row[i + j] == row[i]))
-                      j++;
+          length = 0;
+          buf[12] = 0;
+          buf[13] = 1;
+          buf[14] = 0;
+          buf[15] = 0;
 
-                    ketten[i] = j;
-                  }
+          row    = g_new (guchar, width / (8 / bpp) + 10);
+          ketten = g_new (guchar, width / (8 / bpp) + 10);
 
-                /* then write the strings and the other pixels to the file */
-                for (i = 0; i < breite;)
-                  {
-                    if (ketten[i] < 3)
+          for (ypos = height - 1; ypos >= 0; ypos--)
+            {
+              /* each row separately */
+              j = 0;
+
+              /* first copy the pixels to a buffer, making one byte
+               * from two 4bit pixels
+               */
+              for (xpos = 0; xpos < width;)
+                {
+                  v = 0;
+
+                  for (i = 1;
+                       (i <= (8 / bpp)) && (xpos < width);
+                       i++, xpos++)
+                    {
+                      /* for each pixel */
+
+                      temp = src + (ypos * rowstride) + (xpos * channels);
+                      if (channels > 1 && *(temp+1) == 0) *temp = 0x0;
+                      v = v | ((guchar) * temp << (8 - (i * bpp)));
+                    }
+
+                  row[j++] = v;
+                }
+
+              breite = width / (8 / bpp);
+              if (width % (8 / bpp))
+                breite++;
+
+              /* then check for strings of equal bytes */
+              for (i = 0; i < breite; i += j)
+                {
+                  j = 0;
+
+                  while ((i + j < breite) &&
+                         (j < (255 / (8 / bpp))) &&
+                         (row[i + j] == row[i]))
+                    j++;
+
+                  ketten[i] = j;
+                }
+
+              /* then write the strings and the other pixels to the file */
+              for (i = 0; i < breite;)
+                {
+                  if (ketten[i] < 3)
+                    {
                       /* strings of different pixels ... */
-                      {
-                        j = 0;
-                        while ((i + j < breite) &&
-                               (j < (255 / (8 / bpp))) &&
-                               (ketten[i + j] < 3))
-                          j += ketten[i + j];
 
-                        /* this can only happen if j jumps over
-                         * the end with a 2 in ketten[i+j]
-                         */
-                        if (j > (255 / (8 / bpp)))
-                          j -= 2;
-                        /* 00 01 and 00 02 are reserved */
-                        if (j > 2)
-                          {
-                            Write (f, &buf[12], 1);
-                            n = j * (8 / bpp);
-                            if (n + i * (8 / bpp) > width)
-                              n--;
-                            Write (f, &n, 1);
-                            length += 2;
-                            Write (f, &row[i], j);
-                            length += j;
-                            if ((j) % 2)
-                              {
-                                Write (f, &buf[12], 1);
-                                length++;
-                              }
-                          }
-                        else
-                          {
-                            for (k = i; k < i + j; k++)
-                              {
-                                n = (8 / bpp);
-                                if (n + i * (8 / bpp) > width)
-                                  n--;
-                                Write (f, &n, 1);
-                                Write (f, &row[k], 1);
-                                /*printf("%i.#|",n); */
-                                length += 2;
-                              }
-                          }
-                        i += j;
-                      }
-                    else
+                      j = 0;
+
+                      while ((i + j < breite) &&
+                             (j < (255 / (8 / bpp))) &&
+                             (ketten[i + j] < 3))
+                        j += ketten[i + j];
+
+                      /* this can only happen if j jumps over the end
+                       * with a 2 in ketten[i+j]
+                       */
+                      if (j > (255 / (8 / bpp)))
+                        j -= 2;
+
+                      /* 00 01 and 00 02 are reserved */
+                      if (j > 2)
+                        {
+                          Write (f, &buf[12], 1);
+                          n = j * (8 / bpp);
+                          if (n + i * (8 / bpp) > width)
+                            n--;
+                          Write (f, &n, 1);
+                          length += 2;
+                          Write (f, &row[i], j);
+                          length += j;
+                          if ((j) % 2)
+                            {
+                              Write (f, &buf[12], 1);
+                              length++;
+                            }
+                        }
+                      else
+                        {
+                          for (k = i; k < i + j; k++)
+                            {
+                              n = (8 / bpp);
+                              if (n + i * (8 / bpp) > width)
+                                n--;
+                              Write (f, &n, 1);
+                              Write (f, &row[k], 1);
+                              /*printf("%i.#|",n); */
+                              length += 2;
+                            }
+                        }
+
+                      i += j;
+                    }
+                  else
+                    {
                       /* strings of equal pixels */
-                      {
-                        n = ketten[i] * (8 / bpp);
-                        if (n + i * (8 / bpp) > width)
-                          n--;
-                        Write (f, &n, 1);
-                        Write (f, &row[i], 1);
-                        i += ketten[i];
-                        length += 2;
-                      }
-                  }
 
-                Write (f, &buf[14], 2);          /* End of row */
-                length += 2;
+                      n = ketten[i] * (8 / bpp);
+                      if (n + i * (8 / bpp) > width)
+                        n--;
+                      Write (f, &n, 1);
+                      Write (f, &row[i], 1);
+                      i += ketten[i];
+                      length += 2;
+                    }
+                }
 
-                cur_progress++;
-                if ((cur_progress % 5) == 0)
-                  gimp_progress_update ((gdouble) cur_progress /
-                                        (gdouble) max_progress);
-              }
+              Write (f, &buf[14], 2);          /* End of row */
+              length += 2;
 
-            fseek (f, -2, SEEK_CUR);     /* Overwrite last End of row ... */
-            Write (f, &buf[12], 2);      /* ... with End of file */
+              cur_progress++;
+              if ((cur_progress % 5) == 0)
+                gimp_progress_update ((gdouble) cur_progress /
+                                      (gdouble) max_progress);
+            }
 
-            fseek (f, 0x22, SEEK_SET);            /* Write length of image */
-            uint32buf = GUINT32_TO_LE (length);
-            Write (f, &uint32buf, 4);
+          fseek (f, -2, SEEK_CUR);     /* Overwrite last End of row ... */
+          Write (f, &buf[12], 2);      /* ... with End of file */
 
-            fseek (f, 0x02, SEEK_SET);            /* Write length of file */
-            length += (0x36 + MapSize + mask_info_size + color_space_size);
-            uint32buf = GUINT32_TO_LE (length);
-            Write (f, &uint32buf, 4);
+          fseek (f, 0x22, SEEK_SET);            /* Write length of image */
+          uint32buf = GUINT32_TO_LE (length);
+          Write (f, &uint32buf, 4);
 
-            g_free (ketten);
-            g_free (row);
-            break;
-          }
+          fseek (f, 0x02, SEEK_SET);            /* Write length of file */
+          length += (0x36 + MapSize + mask_info_size + color_space_size);
+          uint32buf = GUINT32_TO_LE (length);
+          Write (f, &uint32buf, 4);
+
+          g_free (ketten);
+          g_free (row);
         }
     }
 
   gimp_progress_update (1.0);
 }
 
-static void
-format_callback (GtkToggleButton *toggle,
-                 gpointer         data)
+static gboolean
+format_sensitive_callback (gint     value,
+                           gpointer data)
 {
-  if (gtk_toggle_button_get_active (toggle))
-    BMPSaveData.rgb_format = GPOINTER_TO_INT (data);
+  gint channels = GPOINTER_TO_INT (data);
+
+  switch (value)
+    {
+    case RGBA_5551:
+    case RGBA_8888:
+      return channels == 4;
+
+    default:
+      return TRUE;
+    };
 }
 
 static gboolean
@@ -891,12 +917,9 @@ save_dialog (gint channels)
 {
   GtkWidget *dialog;
   GtkWidget *toggle;
-  GtkWidget *vbox_main;
   GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *expander;
   GtkWidget *frame;
-  GSList    *group;
+  GtkWidget *combo;
   gboolean   run;
 
   /* Dialog init */
@@ -904,15 +927,15 @@ save_dialog (gint channels)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  vbox_main = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox_main), 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      vbox_main, TRUE, TRUE, 0);
-  gtk_widget_show (vbox_main);
+                      vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   /* Run-Length Encoded */
   toggle = gtk_check_button_new_with_mnemonic (_("_Run-Length Encoded"));
-  gtk_box_pack_start (GTK_BOX (vbox_main), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 BMPSaveData.use_run_length_encoding);
   gtk_widget_show (toggle);
@@ -924,15 +947,9 @@ save_dialog (gint channels)
                     &BMPSaveData.use_run_length_encoding);
 
   /* Compatibility Options */
-  expander = gtk_expander_new_with_mnemonic (_("Co_mpatibility Options"));
-
-  gtk_box_pack_start (GTK_BOX (vbox_main), expander, TRUE, TRUE, 0);
-  gtk_widget_show (expander);
-
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
-  gtk_container_add (GTK_CONTAINER (expander), vbox2);
-  gtk_widget_show (vbox2);
+  frame = gimp_frame_new (_("Compatibility"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Do not write color space information"));
   gimp_help_set_help_data (toggle,
@@ -942,7 +959,7 @@ save_dialog (gint channels)
                              "this option will cause GIMP to not write color "
                              "space information to the file."),
                            NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), toggle);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 BMPSaveData.dont_write_color_space_data);
   gtk_widget_show (toggle);
@@ -952,110 +969,32 @@ save_dialog (gint channels)
                     &BMPSaveData.dont_write_color_space_data);
 
   /* Advanced Options */
-  expander = gtk_expander_new_with_mnemonic (_("_Advanced Options"));
-
-  gtk_box_pack_start (GTK_BOX (vbox_main), expander, TRUE, TRUE, 0);
-  gtk_widget_show (expander);
+  frame = gimp_frame_new (_("RGB Encoding"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   if (channels < 3)
-    gtk_widget_set_sensitive (expander, FALSE);
+    gtk_widget_set_sensitive (frame, FALSE);
 
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
-  gtk_container_add (GTK_CONTAINER (expander), vbox2);
-  gtk_widget_show (vbox2);
+  combo = gimp_int_combo_box_new (_("16 bit (R5 G6 B5"),     RGB_565,
+                                  _("16 bit (A1 R5 G5 B5"),  RGBA_5551,
+                                  _("16 bit (X1 R5 G5 B5"),  RGB_555,
+                                  _("24 bit (R8 G8 B8)"),    RGB_888,
+                                  _("32 bit (A8 R8 G8 B8)"), RGBA_8888,
+                                  _("32 bit (X8 R8 G8 B8)"), RGBX_8888,
+                                  NULL);
+  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gtk_widget_show (combo);
 
-  group = NULL;
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              BMPSaveData.rgb_format,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &BMPSaveData.rgb_format, NULL);
 
-  frame = gimp_frame_new (_("16 bits"));
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
+                                      format_sensitive_callback,
+                                      GINT_TO_POINTER (channels), NULL);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, "_R5 G6 B5");
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (format_callback),
-                    GINT_TO_POINTER (RGB_565));
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, "_A1 R5 G5 B5");
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-
-  if (channels < 4)
-    gtk_widget_set_sensitive (toggle, FALSE);
-
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (format_callback),
-                    GINT_TO_POINTER (RGBA_5551));
-  toggle = gtk_radio_button_new_with_mnemonic (group, "_X1 R5 G5 B5");
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (format_callback),
-                    GINT_TO_POINTER (RGB_555));
-
-  frame = gimp_frame_new (_("24 bits"));
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, "R_8 G8 B8");
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON(toggle));
-  gtk_container_add (GTK_CONTAINER (frame), toggle);
-  gtk_widget_show (toggle);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (format_callback),
-                    GINT_TO_POINTER (RGB_888));
-  if (channels < 4)
-    {
-      BMPSaveData.rgb_format = RGB_888;
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
-    }
-
-  frame = gimp_frame_new (_("32 bits"));
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, "A8 R8 G8 _B8");
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (format_callback),
-                    GINT_TO_POINTER (RGBA_8888));
-
-
-  if (channels < 4)
-    {
-      gtk_widget_set_sensitive (toggle, FALSE);
-    }
-  else
-    {
-      BMPSaveData.rgb_format = RGBA_8888;
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
-    }
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, "X8 R8 G8 _B8");
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (format_callback),
-                    GINT_TO_POINTER (RGBX_8888));
-
-  /* Dialog show */
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
