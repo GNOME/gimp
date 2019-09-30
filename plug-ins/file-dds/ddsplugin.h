@@ -49,8 +49,8 @@ typedef struct
 
 typedef struct
 {
-  int mipmaps;
-  int decode_images;
+  gboolean mipmaps;
+  gboolean decode_images;
 } DDSReadVals;
 
 extern DDSWriteVals dds_write_vals;
@@ -58,11 +58,11 @@ extern DDSReadVals dds_read_vals;
 
 extern GimpPDBStatusType read_dds  (GFile         *file,
                                     GimpImage    **image,
-                                    gboolean       interactive_dds);
+                                    gboolean       interactive);
 extern GimpPDBStatusType write_dds (GFile         *file,
                                     GimpImage     *image,
                                     GimpDrawable  *drawable,
-                                    gboolean       interactive_dds);
+                                    gboolean       interactive);
 
 
 #define LOAD_PROC                "file-dds-load"

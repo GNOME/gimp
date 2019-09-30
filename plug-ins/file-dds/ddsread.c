@@ -49,15 +49,17 @@
 #include "misc.h"
 #include "imath.h"
 
+
 typedef struct
 {
-  unsigned char  rshift, gshift, bshift, ashift;
-  unsigned char  rbits, gbits, bbits, abits;
-  unsigned int   rmask, gmask, bmask, amask;
-  unsigned int   bpp, gimp_bpp;
-  int            tile_height;
-  unsigned char *palette;
+  guchar  rshift, gshift, bshift, ashift;
+  guchar  rbits, gbits, bbits, abits;
+  guint   rmask, gmask, bmask, amask;
+  guint   bpp, gimp_bpp;
+  gint    tile_height;
+  guchar *palette;
 } dds_load_info_t;
+
 
 static int           read_header       (dds_header_t      *hdr,
                                         FILE              *fp);
@@ -70,52 +72,51 @@ static int           load_layer        (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
                                         GimpImage         *image,
-                                        unsigned int       level,
-                                        char              *prefix,
-                                        unsigned int      *l,
+                                        guint              level,
+                                        gchar             *prefix,
+                                        guint             *l,
                                         guchar            *pixels,
-                                        unsigned char     *buf);
+                                        guchar            *buf);
 static int           load_mipmaps      (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
                                         GimpImage         *image,
-                                        char              *prefix,
-                                        unsigned int      *l,
+                                        gchar             *prefix,
+                                        guint             *l,
                                         guchar            *pixels,
-                                        unsigned char     *buf);
+                                        guchar            *buf);
 static int           load_face         (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
                                         GimpImage         *image,
                                         char              *prefix,
-                                        unsigned int      *l,
+                                        guint             *l,
                                         guchar            *pixels,
-                                        unsigned char     *buf);
-static unsigned char color_bits        (unsigned int       mask);
-static unsigned char color_shift       (unsigned int       mask);
-static int           load_dialog       (void);
+                                        guchar            *buf);
+static guchar        color_bits        (guint              mask);
+static guchar        color_shift       (guint              mask);
+static gboolean      load_dialog       (void);
 
-static gboolean runme = FALSE;
 
 GimpPDBStatusType
 read_dds (GFile      *file,
           GimpImage **ret_image,
-          gboolean    interactive_dds)
+          gboolean    interactive)
 {
-  GimpImage *image = NULL;
-  unsigned char *buf;
-  unsigned int l = 0;
-  guchar *pixels;
-  gchar *filename;
-  FILE *fp;
-  dds_header_t hdr;
-  dds_header_dx10_t dx10hdr;
-  dds_load_info_t d;
-  GList *layers;
-  GimpImageBaseType type;
-  int i, j;
+  GimpImage          *image = NULL;
+  guchar             *buf;
+  guint               l = 0;
+  guchar             *pixels;
+  gchar              *filename;
+  FILE               *fp;
+  dds_header_t        hdr;
+  dds_header_dx10_t   dx10hdr;
+  dds_load_info_t     d;
+  GList             *layers;
+  GimpImageBaseType  type;
+  gint               i, j;
 
-  if (interactive_dds)
+  if (interactive)
     {
       if (! load_dialog ())
         return GIMP_PDB_CANCEL;
@@ -384,8 +385,9 @@ read_dds (GFile      *file,
   else if ((hdr.caps.caps2 & DDSCAPS2_VOLUME) &&
            (hdr.flags & DDSD_DEPTH))
     {
-      unsigned int i, level;
-      char *plane;
+      guint  i, level;
+      gchar *plane;
+
       for (i = 0; i < hdr.depth; ++i)
         {
           plane = g_strdup_printf ("(z = %d)", i);
@@ -424,8 +426,8 @@ read_dds (GFile      *file,
     }
   else if (dx10hdr.arraySize > 0)
     {
-      unsigned int i;
-      char *elem;
+      guint  i;
+      gchar *elem;
 
       for (i = 0; i < dx10hdr.arraySize; ++i)
         {
@@ -475,7 +477,7 @@ static int
 read_header (dds_header_t *hdr,
              FILE         *fp)
 {
-  unsigned char buf[DDS_HEADERSIZE];
+  guchar buf[DDS_HEADERSIZE];
 
   memset (hdr, 0, sizeof (dds_header_t));
 
@@ -524,7 +526,7 @@ static int
 read_header_dx10 (dds_header_dx10_t *hdr,
                   FILE              *fp)
 {
-  char buf[DDS_HEADERSIZE_DX10];
+  gchar buf[DDS_HEADERSIZE_DX10];
 
   memset (hdr, 0, sizeof (dds_header_dx10_t));
 
@@ -543,7 +545,7 @@ read_header_dx10 (dds_header_dx10_t *hdr,
 static int
 validate_header (dds_header_t *hdr)
 {
-  unsigned int fourcc;
+  guint fourcc;
 
   if (hdr->magic != FOURCC ('D','D','S',' '))
     {
@@ -833,13 +835,14 @@ setup_dxgi_format (dds_header_t      *hdr,
 }
 
 
-static const Babl*
+static const Babl *
 premultiplied_variant (const Babl* format)
 {
   if (format == babl_format ("R'G'B'A u8"))
     return babl_format ("R'aG'aB'aA u8");
   else
-    g_printerr ("Add format %s to premultiplied_variant () %s: %d\n", babl_get_name (format), __FILE__, __LINE__);
+    g_printerr ("Add format %s to premultiplied_variant () %s: %d\n",
+                babl_get_name (format), __FILE__, __LINE__);
   return format;
 }
 
@@ -848,11 +851,11 @@ load_layer (FILE            *fp,
             dds_header_t    *hdr,
             dds_load_info_t *d,
             GimpImage       *image,
-            unsigned int     level,
+            guint            level,
             char            *prefix,
-            unsigned int    *l,
+            guint           *l,
             guchar          *pixels,
-            unsigned char   *buf)
+            guchar          *buf)
 {
   GeglBuffer    *buffer;
   const Babl    *bablfmt = NULL;
@@ -860,11 +863,11 @@ load_layer (FILE            *fp,
   gchar         *layer_name;
   gint           x, y, z, n;
   GimpLayer     *layer;
-  unsigned int   width = hdr->width >> level;
-  unsigned int   height = hdr->height >> level;
-  unsigned int   size = hdr->pitch_or_linsize >> (2 * level);
-  unsigned int   layerw;
-  int            format = DDS_COMPRESS_NONE;
+  guint          width = hdr->width >> level;
+  guint          height = hdr->height >> level;
+  guint          size = hdr->pitch_or_linsize >> (2 * level);
+  guint          layerw;
+  gint           format = DDS_COMPRESS_NONE;
 
   if (width < 1) width = 1;
   if (height < 1) height = 1;
@@ -936,8 +939,8 @@ load_layer (FILE            *fp,
 
   if (hdr->pixelfmt.flags & DDPF_FOURCC)
     {
-      unsigned int w = (width  + 3) >> 2;
-      unsigned int h = (height + 3) >> 2;
+      guint w = (width  + 3) >> 2;
+      guint h = (height + 3) >> 2;
 
       switch (GETL32(hdr->pixelfmt.fourcc))
         {
@@ -980,7 +983,7 @@ load_layer (FILE            *fp,
               gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y - n, layerw, n), 0,
                                bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
               n = 0;
-              gimp_progress_update ((double)y / (double)hdr->height);
+              gimp_progress_update ((double) y / (double) hdr->height);
             }
 
           if ((hdr->flags & DDSD_PITCH) &&
@@ -994,12 +997,12 @@ load_layer (FILE            *fp,
 
           for (x = 0; x < layerw; ++x)
             {
-              unsigned int pixel = buf[z];
-              unsigned int pos = (n * layerw + x) * d->gimp_bpp;
+              guint pixel = buf[z];
+              guint pos   = (n * layerw + x) * d->gimp_bpp;
 
-              if (d->bpp > 1) pixel += ((unsigned int)buf[z + 1] <<  8);
-              if (d->bpp > 2) pixel += ((unsigned int)buf[z + 2] << 16);
-              if (d->bpp > 3) pixel += ((unsigned int)buf[z + 3] << 24);
+              if (d->bpp > 1) pixel += ((guint) buf[z + 1] <<  8);
+              if (d->bpp > 2) pixel += ((guint) buf[z + 2] << 16);
+              if (d->bpp > 3) pixel += ((guint) buf[z + 3] << 24);
 
               if (d->bpp >= 3)
                 {
@@ -1061,7 +1064,7 @@ load_layer (FILE            *fp,
                         }
                     }
                   else //L16
-                    pixels[pos] = (unsigned char)(255 * ((float)(pixel & 0xffff) / 65535.0f));
+                    pixels[pos] = (guchar) (255 * ((float)(pixel & 0xffff) / 65535.0f));
                 }
               else
                 {
@@ -1098,7 +1101,7 @@ load_layer (FILE            *fp,
     }
   else if (hdr->pixelfmt.flags & DDPF_FOURCC)
     {
-      unsigned char *dst;
+      guchar *dst;
 
       if (!(hdr->flags & DDSD_LINEARSIZE))
         {
@@ -1179,7 +1182,7 @@ load_mipmaps (FILE            *fp,
               guchar          *pixels,
               unsigned char   *buf)
 {
-  unsigned int level;
+  guint level;
 
   if ((hdr->flags & DDSD_MIPMAPCOUNT) &&
       (hdr->caps.caps1 & DDSCAPS_MIPMAP) &&
@@ -1200,10 +1203,10 @@ load_face (FILE            *fp,
            dds_header_t    *hdr,
            dds_load_info_t *d,
            GimpImage       *image,
-           char            *prefix,
-           unsigned int    *l,
+           gchar           *prefix,
+           guint           *l,
            guchar          *pixels,
-           unsigned char   *buf)
+           guchar          *buf)
 {
   if (!load_layer (fp, hdr, d, image, 0, prefix, l, pixels, buf))
     return 0;
@@ -1211,10 +1214,10 @@ load_face (FILE            *fp,
   return load_mipmaps (fp, hdr, d, image, prefix, l, pixels, buf);
 }
 
-static unsigned char
-color_bits (unsigned int mask)
+static guchar
+color_bits (guint mask)
 {
-  unsigned char i = 0;
+  guchar i = 0;
 
   while (mask)
     {
@@ -1225,8 +1228,8 @@ color_bits (unsigned int mask)
   return i;
 }
 
-static unsigned char
-color_shift (unsigned int mask)
+static guchar
+color_shift (guint mask)
 {
   guchar i = 0;
 
@@ -1239,74 +1242,51 @@ color_shift (unsigned int mask)
   return i;
 }
 
-static void
-load_dialog_response (GtkWidget *widget,
-                      gint       response_id,
-                      gpointer   data)
-{
-  switch (response_id)
-    {
-    case GTK_RESPONSE_OK:
-      runme = TRUE;
-    default:
-      gtk_widget_destroy (widget);
-      break;
-    }
-}
-
-static void
-toggle_clicked (GtkWidget *widget,
-                gpointer   data)
-{
-  int *flag = (int*) data;
-  (*flag) = !(*flag);
-}
-
-static int
+static gboolean
 load_dialog (void)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *check;
+  gboolean   run;
 
-  dlg = gimp_dialog_new (_("Load DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
-                         gimp_standard_help_func, LOAD_PROC,
-                         _("_Cancel"), GTK_RESPONSE_CANCEL,
-                         _("_OK"),     GTK_RESPONSE_OK,
-                         NULL);
-
-  g_signal_connect (dlg, "response",
-                    G_CALLBACK (load_dialog_response),
-                    0);
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    0);
+  dialog = gimp_dialog_new (_("Load DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
+                            gimp_standard_help_func, LOAD_PROC,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
+                            NULL);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, 1, 1, 0);
   gtk_widget_show (vbox);
 
   check = gtk_check_button_new_with_mnemonic (_("_Load mipmaps"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), dds_read_vals.mipmaps);
-  g_signal_connect (check, "clicked",
-                    G_CALLBACK (toggle_clicked), &dds_read_vals.mipmaps);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
+                                dds_read_vals.mipmaps);
   gtk_box_pack_start (GTK_BOX (vbox), check, 1, 1, 0);
   gtk_widget_show (check);
+
+  g_signal_connect (check, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dds_read_vals.mipmaps);
 
   check = gtk_check_button_new_with_mnemonic (_("_Automatically decode YCoCg/AExp images when detected"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), dds_read_vals.decode_images);
-  g_signal_connect (check, "clicked",
-                    G_CALLBACK (toggle_clicked), &dds_read_vals.decode_images);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
+                                dds_read_vals.decode_images);
   gtk_box_pack_start (GTK_BOX (vbox), check, 1, 1, 0);
   gtk_widget_show (check);
 
-  gtk_widget_show (dlg);
+  g_signal_connect (check, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dds_read_vals.decode_images);
 
-  runme = FALSE;
+  gtk_widget_show (dialog);
 
-  gtk_main ();
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return runme;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }

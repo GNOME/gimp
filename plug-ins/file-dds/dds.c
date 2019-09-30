@@ -108,8 +108,8 @@ DDSWriteVals dds_write_vals =
 
 DDSReadVals dds_read_vals =
 {
-  1,
-  1
+  TRUE,
+  TRUE
 };
 
 

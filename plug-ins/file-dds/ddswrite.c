@@ -95,14 +95,14 @@ static GtkWidget *alpha_test_threshold_spin;
 
 static struct
 {
-  int          format;
+  gint         format;
   DXGI_FORMAT  dxgi_format;
-  int          bpp;
-  int          alpha;
-  unsigned int rmask;
-  unsigned int gmask;
-  unsigned int bmask;
-  unsigned int amask;
+  gint         bpp;
+  gint         alpha;
+  guint        rmask;
+  guint        gmask;
+  guint        bmask;
+  guint        amask;
 } format_info[] =
 {
   { DDS_FORMAT_RGB8,    DXGI_FORMAT_UNKNOWN,           3, 0, 0x00ff0000, 0x0000ff00, 0x000000ff, 0x00000000},
@@ -504,7 +504,7 @@ GimpPDBStatusType
 write_dds (GFile        *file,
            GimpImage    *image,
            GimpDrawable *drawable,
-           gboolean      interactive_dds)
+           gboolean      interactive)
 {
   gchar *filename;
   FILE  *fp;
@@ -516,7 +516,7 @@ write_dds (GFile        *file,
   is_volume  = check_volume (image);
   is_array   = check_array (image);
 
-  if (interactive_dds)
+  if (interactive)
     {
       if (! is_mipmap_chain_valid &&
           dds_write_vals.mipmaps == DDS_MIPMAP_EXISTING)
