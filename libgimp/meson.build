@@ -242,6 +242,7 @@ libgimpui_sources_introspectable = [
 libgimpui_sources = [
   libgimpui_sources_introspectable,
   gimpuimarshal,
+  'gimpprocedureconfig.c',
 ]
 
 libgimpui_headers_introspectable = [
