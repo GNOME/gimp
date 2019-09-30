@@ -261,6 +261,7 @@ build-git-meson:
     - cd crossroad
     - ./setup.py install
     - cd ..
+    - gdk-pixbuf-query-loaders-64 > /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders.cache
 
 build-git-x86_64-w64-mingw32-meson:
   extends: .gimp-x86_64-w64-mingw32-base
