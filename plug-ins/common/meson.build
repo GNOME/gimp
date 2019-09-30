@@ -172,6 +172,7 @@ foreach plugin : common_plugins_list
       include_directories: [
         rootInclude, appInclude,
       ],
+      depend_files: [ config_h ],
     )
   endif
 

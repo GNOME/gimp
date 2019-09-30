@@ -1409,7 +1409,7 @@ configure_file(
 )
 
 
-configure_file(
+config_h = configure_file(
   output: 'config.h',
   configuration: conf
 )
