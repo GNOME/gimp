@@ -98,12 +98,11 @@ DDSWriteVals dds_write_vals =
   -1,
   DDS_MIPMAP_FILTER_DEFAULT,
   DDS_MIPMAP_WRAP_DEFAULT,
-  0,
-  0,
+  FALSE,
+  FALSE,
   0.0,
-  0,
-  0,
-  0,
+  FALSE,
+  FALSE,
   0.5
 };
 

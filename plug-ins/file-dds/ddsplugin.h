@@ -32,20 +32,19 @@
 
 typedef struct
 {
-  int compression;
-  int mipmaps;
-  int savetype;
-  int format;
-  int transindex;
-  int mipmap_filter;
-  int mipmap_wrap;
-  int gamma_correct;
-  int srgb;
-  float gamma;
-  int perceptual_metric;
-  int show_adv_opt;
-  int preserve_alpha_coverage;
-  float alpha_test_threshold;
+  gint     compression;
+  gint     mipmaps;
+  gint     savetype;
+  gint     format;
+  gint     transindex;
+  gint     mipmap_filter;
+  gint     mipmap_wrap;
+  gboolean gamma_correct;
+  gboolean srgb;
+  gdouble  gamma;
+  gboolean perceptual_metric;
+  gboolean preserve_alpha_coverage;
+  gdouble  alpha_test_threshold;
 } DDSWriteVals;
 
 typedef struct
