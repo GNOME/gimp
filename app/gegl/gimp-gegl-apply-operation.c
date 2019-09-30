@@ -94,6 +94,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   GeglNode          *dest_node;
   GeglNode          *underlying_operation;
   GeglNode          *operation_src_node = NULL;
+  GeglBuffer        *result_buffer;
   GimpChunkIterator *iter;
   cairo_region_t    *region;
   gboolean           progress_started   = FALSE;
@@ -141,12 +142,48 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   gegl_buffer_freeze_changed (dest_buffer);
 
+  underlying_operation = gimp_gegl_node_get_underlying_operation (operation);
+
+  result_buffer = dest_buffer;
+
+  if (result_buffer == src_buffer &&
+      ! (gimp_gegl_node_is_point_operation  (underlying_operation) ||
+         gimp_gegl_node_is_source_operation (underlying_operation)))
+    {
+      /* Write the result to a temporary buffer, instead of directly to
+       * dest_buffer, since reading and writing the same buffer doesn't
+       * generally work with non-point ops when working in chunks.
+       *
+       * See bug #701875.
+       */
+
+      if (cache)
+        {
+          /* If we have a cache, use it directly as the temporary result
+           * buffer, and skip copying the cached results to result_buffer
+           * below.  Instead, the cached results are copied together with the
+           * newly rendered results in a single step at the end of processing.
+           */
+
+          g_warn_if_fail (cache != dest_buffer);
+
+          result_buffer = g_object_ref (cache);
+
+          cache = NULL;
+        }
+      else
+        {
+          result_buffer = gegl_buffer_new (
+            dest_rect, gegl_buffer_get_format (dest_buffer));
+        }
+    }
+
   all_pixels  = dest_rect->width * dest_rect->height;
   done_pixels = 0;
 
   region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) dest_rect);
 
-  if (cache)
+  if (n_valid_rects > 0)
     {
       gint i;
 
@@ -160,8 +197,12 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
               continue;
             }
 
-          gimp_gegl_buffer_copy (cache,       &valid_rect, GEGL_ABYSS_NONE,
-                                 dest_buffer, &valid_rect);
+          if (cache)
+            {
+              gimp_gegl_buffer_copy (
+                cache,         &valid_rect, GEGL_ABYSS_NONE,
+                result_buffer, &valid_rect);
+            }
 
           cairo_region_subtract_rectangle (region,
                                            (cairo_rectangle_int_t *)
@@ -185,33 +226,14 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   effect = operation;
 
-  underlying_operation = gimp_gegl_node_get_underlying_operation (operation);
-
   if (src_buffer)
     {
       GeglNode *src_node;
-
-      /* dup() because reading and writing the same buffer doesn't
-       * generally work with non-point ops when working in chunks.
-       * See bug #701875.
-       */
-      if (src_buffer == dest_buffer &&
-          ! (gimp_gegl_node_is_point_operation  (underlying_operation) ||
-             gimp_gegl_node_is_source_operation (underlying_operation)))
-        {
-          src_buffer = gimp_gegl_buffer_dup (src_buffer);
-        }
-      else
-        {
-          g_object_ref (src_buffer);
-        }
 
       src_node = gegl_node_new_child (gegl,
                                       "operation", "gegl:buffer-source",
                                       "buffer",    src_buffer,
                                       NULL);
-
-      g_object_unref (src_buffer);
 
       if (crop_input)
         {
@@ -249,7 +271,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   dest_node = gegl_node_new_child (gegl,
                                    "operation", "gegl:write-buffer",
-                                   "buffer",    dest_buffer,
+                                   "buffer",    result_buffer,
                                    NULL);
 
   gegl_node_connect_to (effect,    "output",
@@ -313,6 +335,14 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                    (gdouble) done_pixels /
                                    (gdouble) all_pixels);
         }
+    }
+
+  if (result_buffer != dest_buffer)
+    {
+      gimp_gegl_buffer_copy (result_buffer, dest_rect, GEGL_ABYSS_NONE,
+                             dest_buffer,   dest_rect);
+
+      g_object_unref (result_buffer);
     }
 
   gegl_buffer_thaw_changed (dest_buffer);
