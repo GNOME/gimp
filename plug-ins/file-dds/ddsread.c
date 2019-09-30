@@ -61,14 +61,14 @@ typedef struct
 } dds_load_info_t;
 
 
-static int           read_header       (dds_header_t      *hdr,
+static gboolean      read_header       (dds_header_t      *hdr,
                                         FILE              *fp);
-static int           read_header_dx10  (dds_header_dx10_t *hdr,
+static gboolean      read_header_dx10  (dds_header_dx10_t *hdr,
                                         FILE              *fp);
-static int           validate_header   (dds_header_t      *hdr);
-static int           setup_dxgi_format (dds_header_t      *hdr,
+static gboolean      validate_header   (dds_header_t      *hdr);
+static gboolean      setup_dxgi_format (dds_header_t      *hdr,
                                         dds_header_dx10_t *dx10hdr);
-static int           load_layer        (FILE              *fp,
+static gboolean      load_layer        (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
                                         GimpImage         *image,
@@ -77,7 +77,7 @@ static int           load_layer        (FILE              *fp,
                                         guint             *l,
                                         guchar            *pixels,
                                         guchar            *buf);
-static int           load_mipmaps      (FILE              *fp,
+static gboolean      load_mipmaps      (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
                                         GimpImage         *image,
@@ -85,7 +85,7 @@ static int           load_mipmaps      (FILE              *fp,
                                         guint             *l,
                                         guchar            *pixels,
                                         guchar            *buf);
-static int           load_face         (FILE              *fp,
+static gboolean      load_face         (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
                                         GimpImage         *image,
@@ -140,18 +140,18 @@ read_dds (GFile      *file,
   memset (&dx10hdr, 0, sizeof (dds_header_dx10_t));
 
   /* read DX10 header if necessary */
-  if (GETL32(hdr.pixelfmt.fourcc) == FOURCC ('D','X','1','0'))
+  if (GETL32 (hdr.pixelfmt.fourcc) == FOURCC ('D','X','1','0'))
     {
-      read_header_dx10(&dx10hdr, fp);
+      read_header_dx10 (&dx10hdr, fp);
 
-      if (!setup_dxgi_format (&hdr, &dx10hdr))
+      if (! setup_dxgi_format (&hdr, &dx10hdr))
         {
           fclose (fp);
           return GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
-  if (!validate_header (&hdr))
+  if (! validate_header (&hdr))
     {
       fclose (fp);
       g_message ("Invalid DDS header!\n");
@@ -164,7 +164,7 @@ read_dds (GFile      *file,
       if (hdr.pixelfmt.flags & DDPF_FOURCC) /* assume linear size */
         {
           hdr.pitch_or_linsize = ((hdr.width + 3) >> 2) * ((hdr.height + 3) >> 2);
-          switch (GETL32(hdr.pixelfmt.fourcc))
+          switch (GETL32 (hdr.pixelfmt.fourcc))
             {
             case FOURCC ('D','X','T','1'):
             case FOURCC ('A','T','I','1'):
@@ -192,7 +192,7 @@ read_dds (GFile      *file,
 
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
     {
-      switch (GETL32(hdr.pixelfmt.fourcc))
+      switch (GETL32 (hdr.pixelfmt.fourcc))
         {
         case FOURCC ('A','T','I','1'):
         case FOURCC ('B','C','4','U'):
@@ -311,26 +311,27 @@ read_dds (GFile      *file,
   d.gshift = color_shift (hdr.pixelfmt.gmask);
   d.bshift = color_shift (hdr.pixelfmt.bmask);
   d.ashift = color_shift (hdr.pixelfmt.amask);
-  d.rbits = color_bits (hdr.pixelfmt.rmask);
-  d.gbits = color_bits (hdr.pixelfmt.gmask);
-  d.bbits = color_bits (hdr.pixelfmt.bmask);
-  d.abits = color_bits (hdr.pixelfmt.amask);
-  d.rmask = (hdr.pixelfmt.rmask >> d.rshift) << (8 - d.rbits);
-  d.gmask = (hdr.pixelfmt.gmask >> d.gshift) << (8 - d.gbits);
-  d.bmask = (hdr.pixelfmt.bmask >> d.bshift) << (8 - d.bbits);
-  d.amask = (hdr.pixelfmt.amask >> d.ashift) << (8 - d.abits);
+  d.rbits  = color_bits (hdr.pixelfmt.rmask);
+  d.gbits  = color_bits (hdr.pixelfmt.gmask);
+  d.bbits  = color_bits (hdr.pixelfmt.bmask);
+  d.abits  = color_bits (hdr.pixelfmt.amask);
+  d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (8 - d.rbits);
+  d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (8 - d.gbits);
+  d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (8 - d.bbits);
+  d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (8 - d.abits);
 
-  if (!(hdr.caps.caps2 & DDSCAPS2_CUBEMAP) &&
-      !(hdr.caps.caps2 & DDSCAPS2_VOLUME) &&
+  if (! (hdr.caps.caps2 & DDSCAPS2_CUBEMAP) &&
+      ! (hdr.caps.caps2 & DDSCAPS2_VOLUME) &&
       dx10hdr.arraySize == 0)
     {
-      if (!load_layer (fp, &hdr, &d, image, 0, "", &l, pixels, buf))
+      if (! load_layer (fp, &hdr, &d, image, 0, "", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
-      if (!load_mipmaps (fp, &hdr, &d, image, "", &l, pixels, buf))
+
+      if (! load_mipmaps (fp, &hdr, &d, image, "", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -340,42 +341,47 @@ read_dds (GFile      *file,
   else if (hdr.caps.caps2 & DDSCAPS2_CUBEMAP)
     {
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) &&
-          !load_face (fp, &hdr, &d, image, "(positive x)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(positive x)", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
+
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) &&
-          !load_face (fp, &hdr, &d, image, "(negative x)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(negative x)", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
+
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) &&
-          !load_face (fp, &hdr, &d, image, "(positive y)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(positive y)", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
+
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) &&
-          !load_face (fp, &hdr, &d, image, "(negative y)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(negative y)", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
+
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) &&
-          !load_face (fp, &hdr, &d, image, "(positive z)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(positive z)", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
+
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) &&
-          !load_face (fp, &hdr, &d, image, "(negative z)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(negative z)", &l, pixels, buf))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -391,7 +397,7 @@ read_dds (GFile      *file,
       for (i = 0; i < hdr.depth; ++i)
         {
           plane = g_strdup_printf ("(z = %d)", i);
-          if (!load_layer (fp, &hdr, &d, image, 0, plane, &l, pixels, buf))
+          if (! load_layer (fp, &hdr, &d, image, 0, plane, &l, pixels, buf))
             {
               g_free (plane);
               fclose (fp);
@@ -408,17 +414,23 @@ read_dds (GFile      *file,
           for (level = 1; level < hdr.num_mipmaps; ++level)
             {
               int n = hdr.depth >> level;
-              if (n < 1) n = 1;
+
+              if (n < 1)
+                n = 1;
+
               for (i = 0; i < n; ++i)
                 {
                   plane = g_strdup_printf ("(z = %d)", i);
-                  if (!load_layer (fp, &hdr, &d, image, level, plane, &l, pixels, buf))
+
+                  if (! load_layer (fp, &hdr, &d, image, level, plane, &l,
+                                    pixels, buf))
                     {
                       g_free (plane);
                       fclose (fp);
                       gimp_image_delete (image);
                       return GIMP_PDB_EXECUTION_ERROR;
                     }
+
                   g_free (plane);
                 }
             }
@@ -432,18 +444,21 @@ read_dds (GFile      *file,
       for (i = 0; i < dx10hdr.arraySize; ++i)
         {
           elem = g_strdup_printf ("(array element %d)", i);
-          if (!load_layer (fp, &hdr, &d, image, 0, elem, &l, pixels, buf))
+
+          if (! load_layer (fp, &hdr, &d, image, 0, elem, &l, pixels, buf))
             {
               fclose (fp);
               gimp_image_delete (image);
               return GIMP_PDB_EXECUTION_ERROR;
             }
-          if (!load_mipmaps (fp, &hdr, &d, image, elem, &l, pixels, buf))
+
+          if (! load_mipmaps (fp, &hdr, &d, image, elem, &l, pixels, buf))
             {
               fclose (fp);
               gimp_image_delete (image);
               return GIMP_PDB_EXECUTION_ERROR;
             }
+
           g_free (elem);
         }
     }
@@ -473,7 +488,7 @@ read_dds (GFile      *file,
   return GIMP_PDB_SUCCESS;
 }
 
-static int
+static gboolean
 read_header (dds_header_t *hdr,
              FILE         *fp)
 {
@@ -482,47 +497,47 @@ read_header (dds_header_t *hdr,
   memset (hdr, 0, sizeof (dds_header_t));
 
   if (fread (buf, 1, DDS_HEADERSIZE, fp) != DDS_HEADERSIZE)
-    return 0;
+    return FALSE;
 
   hdr->magic = GETL32(buf);
 
-  hdr->size = GETL32(buf + 4);
-  hdr->flags = GETL32(buf + 8);
-  hdr->height = GETL32(buf + 12);
-  hdr->width = GETL32(buf + 16);
-  hdr->pitch_or_linsize = GETL32(buf + 20);
-  hdr->depth = GETL32(buf + 24);
-  hdr->num_mipmaps = GETL32(buf + 28);
+  hdr->size             = GETL32 (buf + 4);
+  hdr->flags            = GETL32 (buf + 8);
+  hdr->height           = GETL32 (buf + 12);
+  hdr->width            = GETL32 (buf + 16);
+  hdr->pitch_or_linsize = GETL32 (buf + 20);
+  hdr->depth            = GETL32 (buf + 24);
+  hdr->num_mipmaps      = GETL32 (buf + 28);
 
-  hdr->pixelfmt.size = GETL32(buf + 76);
-  hdr->pixelfmt.flags = GETL32(buf + 80);
+  hdr->pixelfmt.size      = GETL32 (buf + 76);
+  hdr->pixelfmt.flags     = GETL32 (buf + 80);
   hdr->pixelfmt.fourcc[0] = buf[84];
   hdr->pixelfmt.fourcc[1] = buf[85];
   hdr->pixelfmt.fourcc[2] = buf[86];
   hdr->pixelfmt.fourcc[3] = buf[87];
-  hdr->pixelfmt.bpp = GETL32(buf + 88);
-  hdr->pixelfmt.rmask = GETL32(buf + 92);
-  hdr->pixelfmt.gmask = GETL32(buf + 96);
-  hdr->pixelfmt.bmask = GETL32(buf + 100);
-  hdr->pixelfmt.amask = GETL32(buf + 104);
+  hdr->pixelfmt.bpp       = GETL32 (buf + 88);
+  hdr->pixelfmt.rmask     = GETL32 (buf + 92);
+  hdr->pixelfmt.gmask     = GETL32 (buf + 96);
+  hdr->pixelfmt.bmask     = GETL32 (buf + 100);
+  hdr->pixelfmt.amask     = GETL32 (buf + 104);
 
-  hdr->caps.caps1 = GETL32(buf + 108);
-  hdr->caps.caps2 = GETL32(buf + 112);
+  hdr->caps.caps1 = GETL32 (buf + 108);
+  hdr->caps.caps2 = GETL32 (buf + 112);
 
   /* GIMP-DDS special info */
-  if (GETL32(buf + 32) == FOURCC ('G','I','M','P') &&
-      GETL32(buf + 36) == FOURCC ('-','D','D','S'))
+  if (GETL32 (buf + 32) == FOURCC ('G','I','M','P') &&
+      GETL32 (buf + 36) == FOURCC ('-','D','D','S'))
     {
-      hdr->reserved.gimp_dds_special.magic1 = GETL32(buf + 32);
-      hdr->reserved.gimp_dds_special.magic2 = GETL32(buf + 36);
-      hdr->reserved.gimp_dds_special.version = GETL32(buf + 40);
-      hdr->reserved.gimp_dds_special.extra_fourcc = GETL32(buf + 44);
+      hdr->reserved.gimp_dds_special.magic1       = GETL32 (buf + 32);
+      hdr->reserved.gimp_dds_special.magic2       = GETL32 (buf + 36);
+      hdr->reserved.gimp_dds_special.version      = GETL32 (buf + 40);
+      hdr->reserved.gimp_dds_special.extra_fourcc = GETL32 (buf + 44);
     }
 
-  return 1;
+  return TRUE;
 }
 
-static int
+static gboolean
 read_header_dx10 (dds_header_dx10_t *hdr,
                   FILE              *fp)
 {
@@ -531,18 +546,18 @@ read_header_dx10 (dds_header_dx10_t *hdr,
   memset (hdr, 0, sizeof (dds_header_dx10_t));
 
   if (fread (buf, 1, DDS_HEADERSIZE_DX10, fp) != DDS_HEADERSIZE_DX10)
-    return 0;
+    return FALSE;
 
-  hdr->dxgiFormat = GETL32(buf);
-  hdr->resourceDimension = GETL32(buf + 4);
-  hdr->miscFlag = GETL32(buf + 8);
-  hdr->arraySize = GETL32(buf + 12);
-  hdr->reserved = GETL32(buf + 16);
+  hdr->dxgiFormat        = GETL32 (buf);
+  hdr->resourceDimension = GETL32 (buf + 4);
+  hdr->miscFlag          = GETL32 (buf + 8);
+  hdr->arraySize         = GETL32 (buf + 12);
+  hdr->reserved          = GETL32 (buf + 16);
 
-  return 1;
+  return TRUE;
 }
 
-static int
+static gboolean
 validate_header (dds_header_t *hdr)
 {
   guint fourcc;
@@ -550,7 +565,7 @@ validate_header (dds_header_t *hdr)
   if (hdr->magic != FOURCC ('D','D','S',' '))
     {
       g_message ("Invalid DDS file.\n");
-      return 0;
+      return FALSE;
     }
 
   if ((hdr->flags & DDSD_PITCH) == (hdr->flags & DDSD_LINEARSIZE))
@@ -592,7 +607,7 @@ validate_header (dds_header_t *hdr)
                  hdr->pixelfmt.fourcc[2],
                  hdr->pixelfmt.fourcc[3],
                  GETL32(hdr->pixelfmt.fourcc));
-      return 0;
+      return FALSE;
     }
 
   if (hdr->pixelfmt.flags & DDPF_RGB)
@@ -603,7 +618,7 @@ validate_header (dds_header_t *hdr)
           (hdr->pixelfmt.bpp != 32))
         {
           g_message ("Invalid BPP.\n");
-          return 0;
+          return FALSE;
         }
     }
   else if (hdr->pixelfmt.flags & DDPF_LUMINANCE)
@@ -612,7 +627,7 @@ validate_header (dds_header_t *hdr)
           (hdr->pixelfmt.bpp != 16))
         {
           g_message ("Invalid BPP.\n");
-          return 0;
+          return FALSE;
         }
 
       hdr->pixelfmt.flags |= DDPF_RGB;
@@ -622,10 +637,10 @@ validate_header (dds_header_t *hdr)
       hdr->pixelfmt.flags |= DDPF_RGB;
     }
 
-  if (!(hdr->pixelfmt.flags & DDPF_RGB) &&
-      !(hdr->pixelfmt.flags & DDPF_ALPHA) &&
-      !(hdr->pixelfmt.flags & DDPF_FOURCC) &&
-      !(hdr->pixelfmt.flags & DDPF_LUMINANCE))
+  if (! (hdr->pixelfmt.flags & DDPF_RGB) &&
+      ! (hdr->pixelfmt.flags & DDPF_ALPHA) &&
+      ! (hdr->pixelfmt.flags & DDPF_FOURCC) &&
+      ! (hdr->pixelfmt.flags & DDPF_LUMINANCE))
     {
       g_message ("Unknown pixel format!  Taking a guess, expect trouble!");
       switch (fourcc)
@@ -660,20 +675,20 @@ validate_header (dds_header_t *hdr)
               break;
             default:
               g_message ("Invalid pixel format.");
-              return 0;
+              return FALSE;
             }
           break;
         }
     }
 
-  return 1;
+  return TRUE;
 }
 
 /*
  * This function will set the necessary flags and attributes in the standard
  * dds header using the information found in the DX10 header.
  */
-static int
+static gboolean
 setup_dxgi_format (dds_header_t      *hdr,
                    dds_header_dx10_t *dx10hdr)
 {
@@ -691,7 +706,7 @@ setup_dxgi_format (dds_header_t      *hdr,
   if ((dx10hdr->resourceDimension != D3D10_RESOURCE_DIMENSION_TEXTURE1D) &&
       (dx10hdr->resourceDimension != D3D10_RESOURCE_DIMENSION_TEXTURE2D) &&
       (dx10hdr->resourceDimension != D3D10_RESOURCE_DIMENSION_TEXTURE3D))
-    return 0;
+    return FALSE;
 
   // check for a compressed DXGI format
   if ((dx10hdr->dxgiFormat >= DXGI_FORMAT_BC1_TYPELESS) &&
@@ -827,11 +842,11 @@ setup_dxgi_format (dds_header_t      *hdr,
           break;
         default:  /* unsupported DXGI format */
           g_message ("Unsupported DXGI format (%d)", dx10hdr->dxgiFormat);
-          return 0;
+          return FALSE;
         }
     }
 
-  return 1;
+  return TRUE;
 }
 
 
@@ -846,7 +861,7 @@ premultiplied_variant (const Babl* format)
   return format;
 }
 
-static int
+static gboolean
 load_layer (FILE            *fp,
             dds_header_t    *hdr,
             dds_load_info_t *d,
@@ -969,7 +984,7 @@ load_layer (FILE            *fp,
       !fread (buf, size, 1, fp))
     {
       g_message ("Unexpected EOF.\n");
-      return 0;
+      return FALSE;
     }
 
   if ((hdr->pixelfmt.flags & DDPF_RGB) ||
@@ -987,10 +1002,10 @@ load_layer (FILE            *fp,
             }
 
           if ((hdr->flags & DDSD_PITCH) &&
-              !fread (buf, width * d->bpp, 1, fp))
+              ! fread (buf, width * d->bpp, 1, fp))
             {
               g_message ("Unexpected EOF.\n");
-              return 0;
+              return FALSE;
             }
 
           if (!(hdr->flags & DDSD_LINEARSIZE)) z = 0;
@@ -1106,7 +1121,7 @@ load_layer (FILE            *fp,
       if (!(hdr->flags & DDSD_LINEARSIZE))
         {
           g_message ("Image marked as compressed, but DDSD_LINEARSIZE is not set.\n");
-          return 0;
+          return FALSE;
         }
 
       dst = g_malloc (width * height * d->gimp_bpp);
@@ -1169,10 +1184,10 @@ load_layer (FILE            *fp,
         }
     }
 
-  return 1;
+  return TRUE;
 }
 
-static int
+static gboolean
 load_mipmaps (FILE            *fp,
               dds_header_t    *hdr,
               dds_load_info_t *d,
@@ -1190,15 +1205,15 @@ load_mipmaps (FILE            *fp,
     {
       for (level = 1; level < hdr->num_mipmaps; ++level)
         {
-          if (!load_layer (fp, hdr, d, image, level, prefix, l, pixels, buf))
-            return 0;
+          if (! load_layer (fp, hdr, d, image, level, prefix, l, pixels, buf))
+            return FALSE;
         }
     }
 
-  return 1;
+  return TRUE;
 }
 
-static int
+static gboolean
 load_face (FILE            *fp,
            dds_header_t    *hdr,
            dds_load_info_t *d,
@@ -1208,8 +1223,8 @@ load_face (FILE            *fp,
            guchar          *pixels,
            guchar          *buf)
 {
-  if (!load_layer (fp, hdr, d, image, 0, prefix, l, pixels, buf))
-    return 0;
+  if (! load_layer (fp, hdr, d, image, 0, prefix, l, pixels, buf))
+    return FALSE;
 
   return load_mipmaps (fp, hdr, d, image, prefix, l, pixels, buf);
 }
