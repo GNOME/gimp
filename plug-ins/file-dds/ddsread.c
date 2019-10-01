@@ -76,7 +76,8 @@ static gboolean      load_layer        (FILE              *fp,
                                         gchar             *prefix,
                                         guint             *l,
                                         guchar            *pixels,
-                                        guchar            *buf);
+                                        guchar            *buf,
+                                        gboolean           decode_images);
 static gboolean      load_mipmaps      (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
@@ -84,7 +85,9 @@ static gboolean      load_mipmaps      (FILE              *fp,
                                         gchar             *prefix,
                                         guint             *l,
                                         guchar            *pixels,
-                                        guchar            *buf);
+                                        guchar            *buf,
+                                        gboolean           read_mipmaps,
+                                        gboolean           decode_images);
 static gboolean      load_face         (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
@@ -92,35 +95,49 @@ static gboolean      load_face         (FILE              *fp,
                                         char              *prefix,
                                         guint             *l,
                                         guchar            *pixels,
-                                        guchar            *buf);
+                                        guchar            *buf,
+                                        gboolean           read_mipmaps,
+                                        gboolean           decode_images);
 static guchar        color_bits        (guint              mask);
 static guchar        color_shift       (guint              mask);
-static gboolean      load_dialog       (void);
+static gboolean      load_dialog       (GimpProcedure     *procedure,
+                                        GObject           *config);
 
 
 GimpPDBStatusType
-read_dds (GFile      *file,
-          GimpImage **ret_image,
-          gboolean    interactive)
+read_dds (GFile          *file,
+          GimpImage     **ret_image,
+          gboolean        interactive,
+          GimpProcedure  *procedure,
+          GObject        *config)
 {
-  GimpImage          *image = NULL;
-  guchar             *buf;
-  guint               l = 0;
-  guchar             *pixels;
-  gchar              *filename;
-  FILE               *fp;
-  dds_header_t        hdr;
-  dds_header_dx10_t   dx10hdr;
-  dds_load_info_t     d;
+  GimpImage         *image = NULL;
+  guchar            *buf;
+  guint              l = 0;
+  guchar            *pixels;
+  gchar             *filename;
+  FILE              *fp;
+  dds_header_t       hdr;
+  dds_header_dx10_t  dx10hdr;
+  dds_load_info_t    d;
   GList             *layers;
   GimpImageBaseType  type;
+  gboolean           read_mipmaps;
+  gboolean           decode_images;
   gint               i, j;
 
   if (interactive)
     {
-      if (! load_dialog ())
+      gimp_ui_init ("dds");
+
+      if (! load_dialog (procedure, config))
         return GIMP_PDB_CANCEL;
     }
+
+  g_object_get (config,
+                "load-mipmaps",  &read_mipmaps,
+                "decode-images", &decode_images,
+                NULL);
 
   filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
@@ -324,14 +341,16 @@ read_dds (GFile      *file,
       ! (hdr.caps.caps2 & DDSCAPS2_VOLUME) &&
       dx10hdr.arraySize == 0)
     {
-      if (! load_layer (fp, &hdr, &d, image, 0, "", &l, pixels, buf))
+      if (! load_layer (fp, &hdr, &d, image, 0, "", &l, pixels, buf,
+                        decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (! load_mipmaps (fp, &hdr, &d, image, "", &l, pixels, buf))
+      if (! load_mipmaps (fp, &hdr, &d, image, "", &l, pixels, buf,
+                          read_mipmaps, decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -341,7 +360,8 @@ read_dds (GFile      *file,
   else if (hdr.caps.caps2 & DDSCAPS2_CUBEMAP)
     {
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEX) &&
-          ! load_face (fp, &hdr, &d, image, "(positive x)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(positive x)", &l, pixels, buf,
+                       read_mipmaps, decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -349,7 +369,8 @@ read_dds (GFile      *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEX) &&
-          ! load_face (fp, &hdr, &d, image, "(negative x)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(negative x)", &l, pixels, buf,
+                       read_mipmaps, decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -357,7 +378,8 @@ read_dds (GFile      *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEY) &&
-          ! load_face (fp, &hdr, &d, image, "(positive y)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(positive y)", &l, pixels, buf,
+                       read_mipmaps, decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -365,7 +387,8 @@ read_dds (GFile      *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEY) &&
-          ! load_face (fp, &hdr, &d, image, "(negative y)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(negative y)", &l, pixels, buf,
+                       read_mipmaps, decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -373,7 +396,8 @@ read_dds (GFile      *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_POSITIVEZ) &&
-          ! load_face (fp, &hdr, &d, image, "(positive z)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(positive z)", &l, pixels, buf,
+                       read_mipmaps, decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -381,7 +405,8 @@ read_dds (GFile      *file,
         }
 
       if ((hdr.caps.caps2 & DDSCAPS2_CUBEMAP_NEGATIVEZ) &&
-          ! load_face (fp, &hdr, &d, image, "(negative z)", &l, pixels, buf))
+          ! load_face (fp, &hdr, &d, image, "(negative z)", &l, pixels, buf,
+                       read_mipmaps, decode_images))
         {
           fclose (fp);
           gimp_image_delete (image);
@@ -397,7 +422,8 @@ read_dds (GFile      *file,
       for (i = 0; i < hdr.depth; ++i)
         {
           plane = g_strdup_printf ("(z = %d)", i);
-          if (! load_layer (fp, &hdr, &d, image, 0, plane, &l, pixels, buf))
+          if (! load_layer (fp, &hdr, &d, image, 0, plane, &l, pixels, buf,
+                            decode_images))
             {
               g_free (plane);
               fclose (fp);
@@ -409,7 +435,7 @@ read_dds (GFile      *file,
 
       if ((hdr.flags & DDSD_MIPMAPCOUNT) &&
           (hdr.caps.caps1 & DDSCAPS_MIPMAP) &&
-          (dds_read_vals.mipmaps != 0))
+          read_mipmaps)
         {
           for (level = 1; level < hdr.num_mipmaps; ++level)
             {
@@ -423,7 +449,8 @@ read_dds (GFile      *file,
                   plane = g_strdup_printf ("(z = %d)", i);
 
                   if (! load_layer (fp, &hdr, &d, image, level, plane, &l,
-                                    pixels, buf))
+                                    pixels, buf,
+                                    decode_images))
                     {
                       g_free (plane);
                       fclose (fp);
@@ -445,14 +472,16 @@ read_dds (GFile      *file,
         {
           elem = g_strdup_printf ("(array element %d)", i);
 
-          if (! load_layer (fp, &hdr, &d, image, 0, elem, &l, pixels, buf))
+          if (! load_layer (fp, &hdr, &d, image, 0, elem, &l, pixels, buf,
+                            decode_images))
             {
               fclose (fp);
               gimp_image_delete (image);
               return GIMP_PDB_EXECUTION_ERROR;
             }
 
-          if (! load_mipmaps (fp, &hdr, &d, image, elem, &l, pixels, buf))
+          if (! load_mipmaps (fp, &hdr, &d, image, elem, &l, pixels, buf,
+                              read_mipmaps, decode_images))
             {
               fclose (fp);
               gimp_image_delete (image);
@@ -870,7 +899,8 @@ load_layer (FILE            *fp,
             char            *prefix,
             guint           *l,
             guchar          *pixels,
-            guchar          *buf)
+            guchar          *buf,
+            gboolean         decode_images)
 {
   GeglBuffer    *buffer;
   const Babl    *bablfmt = NULL;
@@ -1164,7 +1194,7 @@ load_layer (FILE            *fp,
   g_object_unref (buffer);
 
   /* gimp dds specific.  decode encoded images */
-  if (dds_read_vals.decode_images &&
+  if (decode_images &&
       hdr->reserved.gimp_dds_special.magic1 == FOURCC ('G','I','M','P') &&
       hdr->reserved.gimp_dds_special.magic2 == FOURCC ('-','D','D','S'))
     {
@@ -1195,17 +1225,20 @@ load_mipmaps (FILE            *fp,
               char            *prefix,
               unsigned int    *l,
               guchar          *pixels,
-              unsigned char   *buf)
+              guchar          *buf,
+              gboolean         read_mipmaps,
+              gboolean         decode_images)
 {
   guint level;
 
   if ((hdr->flags & DDSD_MIPMAPCOUNT) &&
       (hdr->caps.caps1 & DDSCAPS_MIPMAP) &&
-      (dds_read_vals.mipmaps != 0))
+      read_mipmaps)
     {
       for (level = 1; level < hdr->num_mipmaps; ++level)
         {
-          if (! load_layer (fp, hdr, d, image, level, prefix, l, pixels, buf))
+          if (! load_layer (fp, hdr, d, image, level, prefix, l, pixels, buf,
+                            decode_images))
             return FALSE;
         }
     }
@@ -1221,12 +1254,16 @@ load_face (FILE            *fp,
            gchar           *prefix,
            guint           *l,
            guchar          *pixels,
-           guchar          *buf)
+           guchar          *buf,
+           gboolean         read_mipmaps,
+           gboolean         decode_images)
 {
-  if (! load_layer (fp, hdr, d, image, 0, prefix, l, pixels, buf))
+  if (! load_layer (fp, hdr, d, image, 0, prefix, l, pixels, buf,
+                    decode_images))
     return FALSE;
 
-  return load_mipmaps (fp, hdr, d, image, prefix, l, pixels, buf);
+  return load_mipmaps (fp, hdr, d, image, prefix, l, pixels, buf,
+                       read_mipmaps, decode_images);
 }
 
 static guchar
@@ -1258,18 +1295,17 @@ color_shift (guint mask)
 }
 
 static gboolean
-load_dialog (void)
+load_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *check;
   gboolean   run;
 
-  dialog = gimp_dialog_new (_("Load DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
-                            gimp_standard_help_func, LOAD_PROC,
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Open DDS"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
@@ -1277,29 +1313,18 @@ load_dialog (void)
                       vbox, 1, 1, 0);
   gtk_widget_show (vbox);
 
-  check = gtk_check_button_new_with_mnemonic (_("_Load mipmaps"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
-                                dds_read_vals.mipmaps);
-  gtk_box_pack_start (GTK_BOX (vbox), check, 1, 1, 0);
-  gtk_widget_show (check);
+  check = gimp_prop_check_button_new (config, "load-mipmaps",
+                                      _("_Load mipmaps"));
+  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
 
-  g_signal_connect (check, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &dds_read_vals.mipmaps);
-
-  check = gtk_check_button_new_with_mnemonic (_("_Automatically decode YCoCg/AExp images when detected"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
-                                dds_read_vals.decode_images);
-  gtk_box_pack_start (GTK_BOX (vbox), check, 1, 1, 0);
-  gtk_widget_show (check);
-
-  g_signal_connect (check, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &dds_read_vals.decode_images);
+  check = gimp_prop_check_button_new (config, "decode-images",
+                                      _("_Automatically decode YCoCg/AExp "
+                                        "images when detected"));
+  gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

@@ -47,18 +47,13 @@ typedef struct
   gdouble  alpha_test_threshold;
 } DDSWriteVals;
 
-typedef struct
-{
-  gboolean mipmaps;
-  gboolean decode_images;
-} DDSReadVals;
-
 extern DDSWriteVals dds_write_vals;
-extern DDSReadVals dds_read_vals;
 
 extern GimpPDBStatusType read_dds  (GFile         *file,
                                     GimpImage    **image,
-                                    gboolean       interactive);
+                                    gboolean       interactive,
+                                    GimpProcedure *procedure,
+                                    GObject       *config);
 extern GimpPDBStatusType write_dds (GFile         *file,
                                     GimpImage     *image,
                                     GimpDrawable  *drawable,

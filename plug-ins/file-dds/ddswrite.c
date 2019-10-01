@@ -44,11 +44,11 @@
 #include "color.h"
 
 
-static gboolean   write_image (FILE         *fp,
-                               GimpImage    *image,
-                               GimpDrawable *drawable);
-static gint       save_dialog (GimpImage    *image,
-                               GimpDrawable *drawable);
+static gboolean   write_image (FILE          *fp,
+                               GimpImage     *image,
+                               GimpDrawable  *drawable);
+static gint       save_dialog (GimpImage     *image,
+                               GimpDrawable  *drawable);
 
 
 static const char *cubemap_face_names[4][6] =

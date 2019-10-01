@@ -106,12 +106,6 @@ DDSWriteVals dds_write_vals =
   0.5
 };
 
-DDSReadVals dds_read_vals =
-{
-  TRUE,
-  TRUE
-};
-
 
 static void
 dds_class_init (DdsClass *klass)
@@ -379,40 +373,25 @@ dds_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray    *return_vals;
-  GimpPDBStatusType  status;
-  GimpImage         *image;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpValueArray      *return_vals;
+  GimpPDBStatusType    status;
+  GimpImage           *image;
+  GError              *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_ui_init ("dds");
-      gimp_get_data (LOAD_PROC, &dds_read_vals);
-      break;
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
-    case GIMP_RUN_NONINTERACTIVE:
-      dds_read_vals.mipmaps       = GIMP_VALUES_GET_BOOLEAN (args, 0);
-      dds_read_vals.decode_images = GIMP_VALUES_GET_BOOLEAN (args, 1);
-      break;
+  status = read_dds (file, &image, run_mode == GIMP_RUN_INTERACTIVE,
+                     procedure, G_OBJECT (config));
 
-    default:
-      break;
-    }
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
-  status = read_dds (file, &image,
-                     run_mode == GIMP_RUN_INTERACTIVE);
-
-  if (status == GIMP_PDB_SUCCESS &&
-      run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      gimp_set_data (LOAD_PROC, &dds_read_vals, sizeof (dds_read_vals));
-    }
-
-  if (! image)
+  if (status != GIMP_PDB_SUCCESS)
     return gimp_procedure_new_return_values (procedure, status, error);
 
   return_vals = gimp_procedure_new_return_values (procedure,
