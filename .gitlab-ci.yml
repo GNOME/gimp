@@ -17,8 +17,10 @@ cache:
 .babl-base:
   stage: babl
   artifacts:
+    expire_in: 1 week
+    when: always
     paths:
-    - "${INSTALL_DIR}"
+    - _babl/_build
   variables:
     GIT_DEPTH: "5"
   before_script:
@@ -56,8 +58,10 @@ babl-git:
 .gegl-base:
   stage: gegl
   artifacts:
+    expire_in: 1 week
+    when: always
     paths:
-    - "${INSTALL_DIR}"
+    - _gegl/_build
   variables:
     GIT_DEPTH: "5"
   before_script:
@@ -111,8 +115,12 @@ gegl-git:
 .gimp-base:
   stage: gimp
   artifacts:
+    expire_in: 1 week
+    when: always
+    name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     paths:
-    - "${INSTALL_DIR}"
+    - _build
+    #- "${INSTALL_DIR}"
   variables:
     GIT_DEPTH: "5"
   before_script:
@@ -169,12 +177,6 @@ gegl-git:
         --with-lua=force
     - make -j "$(nproc)"
     # - make check
-  artifacts:
-    name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    when: on_failure
-    expire_in: 1 week
-    paths:
-      - _build/app/tests/
 
 .gimp-meson:
   extends: .gimp-base
@@ -186,13 +188,6 @@ gegl-git:
       -Dlua=always
     - ninja -C _build
     # - ninja test
-  artifacts:
-    name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    when: on_failure
-    expire_in: 1 week
-    paths:
-      - _build/app/tests/
-
 
 build-git-autotools:
   extends: .gimp-autotools
@@ -221,9 +216,6 @@ build-git-meson:
 .gimp-x86_64-w64-mingw32-base:
   image: fedora:30
   stage: gimp
-  artifacts:
-    paths:
-    - "${INSTALL_DIR}"
   before_script:
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
@@ -273,8 +265,9 @@ build-git-x86_64-w64-mingw32-meson:
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
   artifacts:
     name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    when: on_failure
+    when: always
     expire_in: 1 week
     paths:
       - _deps/
       - _build/
+      #- "${INSTALL_DIR}"
