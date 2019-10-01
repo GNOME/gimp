@@ -77,8 +77,6 @@ crossroad meson _build -Dintrospection=false && \
 ninja -C _build install || exit 1
 cd ..
 
-# GIMP
+# preparing GIMP
 
-crossroad install atk gtk3 libtiff xz-libs librsvg2 poppler-glib dbus-glib && \
-cd .. && mkdir _build && cd _build && \
-crossroad meson .. -Dwmf=disabled  -Dgtk-doc=false -Dpython=always -Dlua=always -Djavascript=always && ninja install
+crossroad install atk gtk3 libtiff xz-libs librsvg2 poppler-glib dbus-glib
