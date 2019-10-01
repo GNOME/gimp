@@ -197,11 +197,14 @@ the very beginning of the file, and that the tile data blocks for each drawable
 must follow each other directly.
 
 References _between_ structures in the XCF file take the form of
-32-bit "pointers" that count the number of bytes between the beginning of
-the XCF file and the beginning of the target structure. Note that therefore
-the maximum address of a layer, channel, hierarchy or tile set is 2^32 - 1,
-i.e. at 4 GB. Everything after will be lost. Currently this doesn't play a
-role yet.
+"pointers" that count the number of bytes between the beginning
+of the XCF file and the beginning of the target structure.
+Pointers used to be 32-bit data. Since the maximum address of a layer,
+channel, hierarchy or tile set was 2^32 - 1, i.e. at 4 GB, the maximum
+size for XCF images before GIMP 2.10.0 was quite limited.
+Now pointers can be 64-bit, allowing files big enough for any image
+produced by current technology. See the chapter "Basic data types" for
+description of the POINTER type.
 
 Each structure is designed to be written and read sequentially; many
 contain items of variable length and the concept of an offset _within_
