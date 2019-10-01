@@ -13,8 +13,6 @@ variables:
 cache:
   paths:
   - _pacman_cache
-  - dnf_cache
-  - .cache/crossroad/
 
 .babl-base:
   stage: babl
@@ -226,6 +224,9 @@ build-git-meson:
   artifacts:
     paths:
     - "${INSTALL_DIR}"
+  cache:
+    paths:
+    - dnf_cache
   before_script:
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
@@ -265,6 +266,11 @@ build-git-meson:
 
 build-git-x86_64-w64-mingw32-meson:
   extends: .gimp-x86_64-w64-mingw32-base
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+  cache:
+    paths:
+    - .cache/crossroad/
   script:
     - export SHELL
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
