@@ -6,6 +6,7 @@ stages:
   - gimp
 
 variables:
+  GIT_DEPTH: "1"
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
   PACMAN_CACHE:   "${CI_PROJECT_DIR}/_pacman_cache"
@@ -22,8 +23,6 @@ cache:
     paths:
     - "${INSTALL_DIR}"
     - _babl/_build
-  variables:
-    GIT_DEPTH: "5"
   before_script:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
@@ -64,8 +63,6 @@ babl-git:
     paths:
     - "${INSTALL_DIR}"
     - _gegl/_build
-  variables:
-    GIT_DEPTH: "5"
   before_script:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
@@ -123,8 +120,6 @@ gegl-git:
     paths:
     - _build
     #- "${INSTALL_DIR}"
-  variables:
-    GIT_DEPTH: "5"
   before_script:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
