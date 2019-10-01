@@ -874,6 +874,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-antialias",               writable);
   SET_SENSITIVE ("filters-apply-canvas",            writable);
   SET_SENSITIVE ("filters-apply-lens",              writable);
+  SET_SENSITIVE ("filters-bayer-matrix",            writable);
   SET_SENSITIVE ("filters-brightness-contrast",     writable);
   SET_SENSITIVE ("filters-bump-map",                writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
@@ -926,16 +927,19 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-lens-flare",              writable);
   SET_SENSITIVE ("filters-levels",                  writable);
+  SET_SENSITIVE ("filters-linear-sinusoid",         writable);
   SET_SENSITIVE ("filters-little-planet",           writable);
   SET_SENSITIVE ("filters-long-shadow",             writable && alpha);
   SET_SENSITIVE ("filters-mantiuk-2006",            writable);
   SET_SENSITIVE ("filters-maze",                    writable);
+  SET_SENSITIVE ("filters-mean-curvature-blur",     writable);
   SET_SENSITIVE ("filters-median-blur",             writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);
   SET_SENSITIVE ("filters-motion-blur-linear",      writable);
   SET_SENSITIVE ("filters-motion-blur-zoom",        writable);
+  SET_SENSITIVE ("filters-newsprint",               writable);
   SET_SENSITIVE ("filters-noise-cell",              writable);
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
