@@ -1,8 +1,7 @@
 image: salamandar/archlinux-gimp:latest
 
 stages:
-  - babl
-  - gegl
+  - dependencies
   - gimp
 
 variables:
@@ -11,57 +10,17 @@ variables:
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
   PACMAN_CACHE:   "${CI_PROJECT_DIR}/_pacman_cache"
 
-cache:
-  paths:
-  - _pacman_cache
-
-.babl-base:
-  stage: babl
+deps-git:
+  stage: dependencies
+  cache:
+    paths:
+    - _pacman_cache
   artifacts:
     expire_in: 1 week
     when: always
     paths:
     - "${INSTALL_DIR}"
     - _babl/_build
-  before_script:
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        gobject-introspection
-        meson
-        lcms2
-    - git clone --depth="${GIT_DEPTH}" https://gitlab.gnome.org/GNOME/babl.git _babl
-
-babl-git:
-  extends: .babl-base
-  script:
-    - cd _babl
-    - meson -Dprefix="${INSTALL_PREFIX}" _build
-    - ninja -C _build
-    - ninja -C _build install
-
-# babl-min:
-#   extends: .babl-base
-#   script:
-#     - BABL_MIN_VERSION="$(grep babl meson.build | grep version
-#         | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g')"
-#     - cd _babl
-#     - git fetch --no-tags origin "refs/tags/BABL_${BABL_MIN_VERSION}:refs/tags/MIN_VERSION"
-#     - git checkout MIN_VERSION
-#     - meson -Dprefix="${INSTALL_PREFIX}" _build
-#     - ninja -C _build
-#     - ninja -C _build install
-
-.gegl-base:
-  stage: gegl
-  artifacts:
-    expire_in: 1 week
-    when: always
-    paths:
-    - "${INSTALL_DIR}"
     - _gegl/_build
   before_script:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
@@ -90,29 +49,21 @@ babl-git:
         sdl2
         suitesparse
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
-
-gegl-git:
-  extends: .gegl-base
+    - git clone --depth="${GIT_DEPTH}" https://gitlab.gnome.org/GNOME/babl.git _babl
   script:
-    - cd _gegl
+    - cd _babl
+    - meson -Dprefix="${INSTALL_PREFIX}" _build
+    - ninja -C _build
+    - ninja -C _build install
+    - cd ../_gegl
     - meson --prefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
 
-# gegl-min:
-#   extends: .gegl-base
-#   script:
-#     - GEGL_MIN_VERSION="$(grep gegl meson.build | grep version
-#         | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g')"
-#     - cd _gegl
-#     - git fetch --no-tags origin "refs/tags/GEGL_${GEGL_MIN_VERSION}:refs/tags/MIN_VERSION"
-#     - git checkout MIN_VERSION
-#     - meson -Dprefix="${INSTALL_PREFIX}" _build
-#     - ninja -C _build
-#     - ninja -C _build install
-
 .gimp-base:
   stage: gimp
+  dependencies:
+    - deps-git
   artifacts:
     expire_in: 1 week
     when: always
@@ -161,7 +112,7 @@ gegl-git:
         iso-codes
         xorg-server-xvfb
 
-.gimp-autotools:
+gimp-autotools:
   extends: .gimp-base
   script:
     - mkdir _build
@@ -175,7 +126,7 @@ gegl-git:
     - make -j "$(nproc)"
     # - make check
 
-.gimp-meson:
+gimp-meson:
   extends: .gimp-base
   script:
     - meson _build
@@ -186,33 +137,16 @@ gegl-git:
     - ninja -C _build
     # - ninja test
 
-build-git-autotools:
-  extends: .gimp-autotools
-  dependencies:
-    - babl-git
-    - gegl-git
-
-build-git-meson:
-  extends: .gimp-meson
-  dependencies:
-    - babl-git
-    - gegl-git
-
-# build-min-autotools:
-#   extends: .gimp-autotools
-#   dependencies:
-#     - babl-git
-#     - gegl-git
-
-# build-min-meson:
-#   extends: .gimp-meson
-#   dependencies:
-#     - babl-min
-#     - gegl-min
-
-.gimp-x86_64-w64-mingw32-base:
+deps-x86_64-w64-mingw32:
   image: fedora:30
-  stage: gimp
+  stage: dependencies
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME: "$CI_PROJECT_DIR/.local/share/"
+  cache:
+    paths:
+    - .cache/crossroad/
+    - dnf_cache
   before_script:
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
@@ -249,22 +183,39 @@ build-git-meson:
     - ./setup.py install
     - cd ..
     - gdk-pixbuf-query-loaders-64 > /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders.cache
+  script:
+    - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: always
+    expire_in: 1 week
+    paths:
+      - "${XDG_DATA_HOME}"/crossroad/roads/w64/gimp/
+      - _deps/
 
-build-git-x86_64-w64-mingw32-meson:
-  extends: .gimp-x86_64-w64-mingw32-base
+gimp-x86_64-w64-mingw32-meson:
+  image: fedora:30
+  stage: gimp
+  dependencies:
+    - deps-x86_64-w64-mingw32
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME: "$CI_PROJECT_DIR/.local/share/"
   cache:
     paths:
     - .cache/crossroad/
     - dnf_cache
   script:
-    - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci.sh"
+    - mkdir _build && cd _build
+    - echo 'crossroad meson ..
+              -Dwmf=disabled  -Dgtk-doc=false
+              -Dpython=always -Dlua=always
+              -Djavascript=always && ninja install' |
+      crossroad w64 gimp --run="-"
   artifacts:
-    name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
     expire_in: 1 week
     paths:
-      - _deps/
       - _build/
-      #- "${INSTALL_DIR}"
+      #- "${CROSSROAD_PREFIX}"
