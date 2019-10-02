@@ -44,8 +44,10 @@
 static void    gimp_drawable_remove_fs_filter             (GimpDrawable      *drawable);
 static void    gimp_drawable_sync_fs_filter               (GimpDrawable      *drawable);
 
-static void    gimp_drawable_fs_notify                    (GimpLayer         *fs,
+static void    gimp_drawable_fs_notify                    (GObject           *object,
                                                            const GParamSpec  *pspec,
+                                                           GimpDrawable      *drawable);
+static void    gimp_drawable_fs_lock_position_changed     (GimpDrawable      *signal_drawable,
                                                            GimpDrawable      *drawable);
 static void    gimp_drawable_fs_format_changed            (GimpDrawable      *signal_drawable,
                                                            GimpDrawable      *drawable);
@@ -214,10 +216,9 @@ _gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
 
   gimp_applicator_set_cache (private->fs_applicator, TRUE);
 
-  private->fs_crop_node =
-    gegl_node_new_child (node,
-                         "operation", "gegl:crop",
-                         NULL);
+  private->fs_crop_node = gegl_node_new_child (node,
+                                               "operation", "gegl:nop",
+                                               NULL);
 
   gegl_node_connect_to (fs_source,             "output",
                         private->fs_crop_node, "input");
@@ -228,6 +229,15 @@ _gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
 
   g_signal_connect (fs, "notify",
                     G_CALLBACK (gimp_drawable_fs_notify),
+                    drawable);
+  g_signal_connect (drawable, "notify::offset-x",
+                    G_CALLBACK (gimp_drawable_fs_notify),
+                    drawable);
+  g_signal_connect (drawable, "notify::offset-y",
+                    G_CALLBACK (gimp_drawable_fs_notify),
+                    drawable);
+  g_signal_connect (drawable, "lock-position-changed",
+                    G_CALLBACK (gimp_drawable_fs_lock_position_changed),
                     drawable);
   g_signal_connect (drawable, "format-changed",
                     G_CALLBACK (gimp_drawable_fs_format_changed),
@@ -259,6 +269,12 @@ gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
 
       g_signal_handlers_disconnect_by_func (fs,
                                             gimp_drawable_fs_notify,
+                                            drawable);
+      g_signal_handlers_disconnect_by_func (drawable,
+                                            gimp_drawable_fs_notify,
+                                            drawable);
+      g_signal_handlers_disconnect_by_func (drawable,
+                                            gimp_drawable_fs_lock_position_changed,
                                             drawable);
       g_signal_handlers_disconnect_by_func (drawable,
                                             gimp_drawable_fs_format_changed,
@@ -310,12 +326,25 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
   gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
 
-  gegl_node_set (private->fs_crop_node,
-                 "x",      (gdouble) (off_x - fs_off_x),
-                 "y",      (gdouble) (off_y - fs_off_y),
-                 "width",  (gdouble) gimp_item_get_width  (GIMP_ITEM (drawable)),
-                 "height", (gdouble) gimp_item_get_height (GIMP_ITEM (drawable)),
-                 NULL);
+  if (gimp_item_get_clip (GIMP_ITEM (drawable), GIMP_TRANSFORM_RESIZE_ADJUST) ==
+      GIMP_TRANSFORM_RESIZE_CLIP)
+    {
+      gegl_node_set (
+        private->fs_crop_node,
+        "operation", "gegl:crop",
+        "x",         (gdouble) (off_x - fs_off_x),
+        "y",         (gdouble) (off_y - fs_off_y),
+        "width",     (gdouble) gimp_item_get_width  (GIMP_ITEM (drawable)),
+        "height",    (gdouble) gimp_item_get_height (GIMP_ITEM (drawable)),
+        NULL);
+    }
+  else
+    {
+      gegl_node_set (
+        private->fs_crop_node,
+        "operation", "gegl:nop",
+        NULL);
+    }
 
   gimp_applicator_set_apply_offset (private->fs_applicator,
                                     fs_off_x - off_x,
@@ -345,10 +374,12 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
                               gimp_drawable_get_active_mask (drawable));
   gimp_applicator_set_output_format (private->fs_applicator,
                                      gimp_drawable_get_format (drawable));
+
+  gimp_drawable_update_bounding_box (drawable);
 }
 
 static void
-gimp_drawable_fs_notify (GimpLayer        *fs,
+gimp_drawable_fs_notify (GObject          *object,
                          const GParamSpec *pspec,
                          GimpDrawable     *drawable)
 {
@@ -363,6 +394,17 @@ gimp_drawable_fs_notify (GimpLayer        *fs,
     {
       gimp_drawable_sync_fs_filter (drawable);
     }
+}
+
+static void
+gimp_drawable_fs_lock_position_changed (GimpDrawable *signal_drawable,
+                                        GimpDrawable *drawable)
+{
+  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+
+  gimp_drawable_sync_fs_filter (drawable);
+
+  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
@@ -425,28 +467,28 @@ gimp_drawable_fs_update (GimpLayer    *fs,
                          gint          height,
                          GimpDrawable *drawable)
 {
-  gint fs_off_x, fs_off_y;
-  gint off_x, off_y;
-  gint dr_x, dr_y, dr_width, dr_height;
+  GeglRectangle bounding_box;
+  GeglRectangle rect;
+  gint          fs_off_x, fs_off_y;
+  gint          off_x, off_y;
 
   gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-  if (gimp_rectangle_intersect (x + fs_off_x,
-                                y + fs_off_y,
-                                width,
-                                height,
-                                off_x,
-                                off_y,
-                                gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                gimp_item_get_height (GIMP_ITEM (drawable)),
-                                &dr_x,
-                                &dr_y,
-                                &dr_width,
-                                &dr_height))
+  bounding_box = gimp_drawable_get_bounding_box (drawable);
+
+  bounding_box.x += off_x;
+  bounding_box.y += off_y;
+
+  rect.x      = x + fs_off_x;
+  rect.y      = y + fs_off_y;
+  rect.width  = width;
+  rect.height = height;
+
+  if (gegl_rectangle_intersect (&rect, &rect, &bounding_box))
     {
       gimp_drawable_update (drawable,
-                            dr_x - off_x, dr_y - off_y,
-                            dr_width, dr_height);
+                            rect.x - off_x, rect.y - off_y,
+                            rect.width, rect.height);
     }
 }
