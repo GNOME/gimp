@@ -60,6 +60,8 @@ static void    gimp_drawable_fs_visibility_changed        (GimpLayer         *fs
                                                            GimpDrawable      *drawable);
 static void    gimp_drawable_fs_excludes_backdrop_changed (GimpLayer         *fs,
                                                            GimpDrawable      *drawable);
+static void    gimp_drawable_fs_bounding_box_changed      (GimpLayer         *fs,
+                                                           GimpDrawable      *drawable);
 static void    gimp_drawable_fs_update                    (GimpLayer         *fs,
                                                            gint               x,
                                                            gint               y,
@@ -110,6 +112,9 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
   g_signal_connect (fs, "excludes-backdrop-changed",
                     G_CALLBACK (gimp_drawable_fs_excludes_backdrop_changed),
                     drawable);
+  g_signal_connect (fs, "bounding-box-changed",
+                    G_CALLBACK (gimp_drawable_fs_bounding_box_changed),
+                    drawable);
   g_signal_connect (fs, "update",
                     G_CALLBACK (gimp_drawable_fs_update),
                     drawable);
@@ -142,6 +147,9 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable)
                                         drawable);
   g_signal_handlers_disconnect_by_func (fs,
                                         gimp_drawable_fs_excludes_backdrop_changed,
+                                        drawable);
+  g_signal_handlers_disconnect_by_func (fs,
+                                        gimp_drawable_fs_bounding_box_changed,
                                         drawable);
   g_signal_handlers_disconnect_by_func (fs,
                                         gimp_drawable_fs_update,
@@ -457,6 +465,13 @@ gimp_drawable_fs_excludes_backdrop_changed (GimpLayer    *fs,
 {
   if (gimp_item_get_visible (GIMP_ITEM (fs)))
     gimp_drawable_update (drawable, 0, 0, -1, -1);
+}
+
+static void
+gimp_drawable_fs_bounding_box_changed (GimpLayer    *fs,
+                                       GimpDrawable *drawable)
+{
+  gimp_drawable_update_bounding_box (drawable);
 }
 
 static void
