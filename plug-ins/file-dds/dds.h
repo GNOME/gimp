@@ -21,11 +21,22 @@
 #ifndef __DDS_H__
 #define __DDS_H__
 
+#define DDS_PLUGIN_VERSION_MAJOR     3
+#define DDS_PLUGIN_VERSION_MINOR     9
+#define DDS_PLUGIN_VERSION_REVISION  90
+
+#define DDS_PLUGIN_VERSION \
+   ((guint) (DDS_PLUGIN_VERSION_MAJOR << 16) | \
+    (guint) (DDS_PLUGIN_VERSION_MINOR <<  8) | \
+    (guint) (DDS_PLUGIN_VERSION_REVISION))
+
+
 #define FOURCC(a, b, c, d) \
-         ((unsigned int)((unsigned int)(a)      ) | \
-                        ((unsigned int)(b) <<  8) | \
-                        ((unsigned int)(c) << 16) | \
-                        ((unsigned int)(d) << 24))
+         ((guint) ((guint)(a)      ) | \
+                  ((guint)(b) <<  8) | \
+                  ((guint)(c) << 16) | \
+                  ((guint)(d) << 24))
+
 
 typedef enum
 {

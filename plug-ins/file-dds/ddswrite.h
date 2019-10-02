@@ -18,23 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __DDSPLUGIN_H__
-#define __DDSPLUGIN_H__
+#ifndef __DDSWRITE_H__
+#define __DDSWRITE_H__
 
-#define DDS_PLUGIN_VERSION_MAJOR     3
-#define DDS_PLUGIN_VERSION_MINOR     9
-#define DDS_PLUGIN_VERSION_REVISION  90
 
-#define DDS_PLUGIN_VERSION  \
-   ((unsigned int)(DDS_PLUGIN_VERSION_MAJOR << 16) | \
-    (unsigned int)(DDS_PLUGIN_VERSION_MINOR <<  8) | \
-    (unsigned int)(DDS_PLUGIN_VERSION_REVISION))
-
-extern GimpPDBStatusType read_dds  (GFile         *file,
-                                    GimpImage    **image,
-                                    gboolean       interactive,
-                                    GimpProcedure *procedure,
-                                    GObject       *config);
 extern GimpPDBStatusType write_dds (GFile         *file,
                                     GimpImage     *image,
                                     GimpDrawable  *drawable,
@@ -43,11 +30,4 @@ extern GimpPDBStatusType write_dds (GFile         *file,
                                     GObject       *config);
 
 
-#define LOAD_PROC                "file-dds-load"
-#define SAVE_PROC                "file-dds-save"
-
-#define DECODE_YCOCG_PROC        "color-decode-ycocg"
-#define DECODE_YCOCG_SCALED_PROC "color-decode-ycocg-scaled"
-#define DECODE_ALPHA_EXP_PROC    "color-decode-alpha-exp"
-
-#endif /* __DDSPLUGIN_H__ */
+#endif /* __DDSWRITE_H__ */

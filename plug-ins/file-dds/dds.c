@@ -33,9 +33,18 @@
 
 #include <libgimp/stdplugins-intl.h>
 
-#include "ddsplugin.h"
 #include "dds.h"
+#include "ddsread.h"
+#include "ddswrite.h"
 #include "misc.h"
+
+
+#define LOAD_PROC                "file-dds-load"
+#define SAVE_PROC                "file-dds-save"
+
+#define DECODE_YCOCG_PROC        "color-decode-ycocg"
+#define DECODE_YCOCG_SCALED_PROC "color-decode-ycocg-scaled"
+#define DECODE_ALPHA_EXP_PROC    "color-decode-alpha-exp"
 
 
 typedef struct _Dds      Dds;

@@ -42,7 +42,7 @@
 
 #include <libgimp/stdplugins-intl.h>
 
-#include "ddsplugin.h"
+#include "ddsread.h"
 #include "dds.h"
 #include "dxt.h"
 #include "endian_rw.h"

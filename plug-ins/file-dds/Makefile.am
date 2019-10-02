@@ -31,9 +31,10 @@ file_dds_SOURCES = \
 	dds.h		\
 	color.c		\
 	color.h		\
-	ddsplugin.h	\
 	ddsread.c	\
+	ddsread.h	\
 	ddswrite.c	\
+	ddswrite.h	\
 	dxt.c		\
 	dxt.h		\
 	dxt_tables.h	\

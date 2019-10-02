@@ -35,7 +35,7 @@
 
 #include <libgimp/stdplugins-intl.h>
 
-#include "ddsplugin.h"
+#include "ddswrite.h"
 #include "dds.h"
 #include "dxt.h"
 #include "mipmap.h"
@@ -1936,23 +1936,20 @@ save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget         *dialog;
-  GtkWidget         *vbox;
-  GtkWidget         *hbox;
-  GtkWidget         *grid;
-  GtkListStore      *store;
-  GtkWidget         *opt;
-  GtkWidget         *check;
-  GtkWidget         *frame;
-  GimpImageBaseType  basetype;
-  gboolean           run;
+  GtkWidget    *dialog;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *grid;
+  GtkListStore *store;
+  GtkWidget    *opt;
+  GtkWidget    *check;
+  GtkWidget    *frame;
+  gboolean      run;
 
   if (is_cubemap || is_volume || is_array)
     g_object_set (config,
                   "save-type", DDS_SAVE_SELECTED_LAYER,
                   NULL);
-
-  basetype = gimp_image_base_type (image);
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
