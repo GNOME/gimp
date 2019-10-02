@@ -94,47 +94,49 @@ struct _GimpDrawableFilter
 };
 
 
-static void       gimp_drawable_filter_dispose            (GObject             *object);
-static void       gimp_drawable_filter_finalize           (GObject             *object);
+static void       gimp_drawable_filter_dispose               (GObject             *object);
+static void       gimp_drawable_filter_finalize              (GObject             *object);
 
-static void       gimp_drawable_filter_sync_clip          (GimpDrawableFilter  *filter,
-                                                           gboolean             sync_region);
-static void       gimp_drawable_filter_sync_region        (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_crop          (GimpDrawableFilter  *filter,
-                                                           gboolean             old_crop_enabled,
-                                                           const GeglRectangle *old_crop_rect,
-                                                           gboolean             old_preview_enabled,
-                                                           GimpAlignmentType    old_preview_alignment,
-                                                           gdouble              old_preview_position,
-                                                           gboolean             update);
-static void       gimp_drawable_filter_sync_opacity       (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_mode          (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_affect        (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_format        (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_mask          (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_transform     (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_gamma_hack    (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_clip             (GimpDrawableFilter  *filter,
+                                                              gboolean             sync_region);
+static void       gimp_drawable_filter_sync_region           (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_crop             (GimpDrawableFilter  *filter,
+                                                              gboolean             old_crop_enabled,
+                                                              const GeglRectangle *old_crop_rect,
+                                                              gboolean             old_preview_enabled,
+                                                              GimpAlignmentType    old_preview_alignment,
+                                                              gdouble              old_preview_position,
+                                                              gboolean             update);
+static void       gimp_drawable_filter_sync_opacity          (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_mode             (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_affect           (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_format           (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_mask             (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_transform        (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_gamma_hack       (GimpDrawableFilter  *filter);
 
-static gboolean   gimp_drawable_filter_is_filtering       (GimpDrawableFilter  *filter);
-static gboolean   gimp_drawable_filter_add_filter         (GimpDrawableFilter  *filter);
-static gboolean   gimp_drawable_filter_remove_filter      (GimpDrawableFilter  *filter);
+static gboolean   gimp_drawable_filter_is_filtering          (GimpDrawableFilter  *filter);
+static gboolean   gimp_drawable_filter_add_filter            (GimpDrawableFilter  *filter);
+static gboolean   gimp_drawable_filter_remove_filter         (GimpDrawableFilter  *filter);
 
-static void       gimp_drawable_filter_update_drawable    (GimpDrawableFilter  *filter,
-                                                           const GeglRectangle *area);
+static void       gimp_drawable_filter_update_drawable       (GimpDrawableFilter  *filter,
+                                                              const GeglRectangle *area);
 
-static void       gimp_drawable_filter_affect_changed     (GimpImage           *image,
-                                                           GimpChannelType      channel,
-                                                           GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_mask_changed       (GimpImage           *image,
-                                                           GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_profile_changed    (GimpColorManaged    *managed,
-                                                           GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_format_changed     (GimpDrawable        *drawable,
-                                                           GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_drawable_removed   (GimpDrawable        *drawable,
-                                                           GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_lock_alpha_changed (GimpLayer           *layer,
-                                                           GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_affect_changed        (GimpImage           *image,
+                                                              GimpChannelType      channel,
+                                                              GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_mask_changed          (GimpImage           *image,
+                                                              GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_profile_changed       (GimpColorManaged    *managed,
+                                                              GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_lock_position_changed (GimpDrawable        *drawable,
+                                                              GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_format_changed        (GimpDrawable        *drawable,
+                                                              GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_drawable_removed      (GimpDrawable        *drawable,
+                                                              GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_lock_alpha_changed    (GimpLayer           *layer,
+                                                              GimpDrawableFilter  *filter);
 
 
 G_DEFINE_TYPE (GimpDrawableFilter, gimp_drawable_filter, GIMP_TYPE_FILTER)
@@ -1031,6 +1033,9 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
       g_signal_connect (image, "profile-changed",
                         G_CALLBACK (gimp_drawable_filter_profile_changed),
                         filter);
+      g_signal_connect (filter->drawable, "lock-position-changed",
+                        G_CALLBACK (gimp_drawable_filter_lock_position_changed),
+                        filter);
       g_signal_connect (filter->drawable, "format-changed",
                         G_CALLBACK (gimp_drawable_filter_format_changed),
                         filter);
@@ -1070,6 +1075,9 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
                                             filter);
       g_signal_handlers_disconnect_by_func (filter->drawable,
                                             gimp_drawable_filter_format_changed,
+                                            filter);
+      g_signal_handlers_disconnect_by_func (filter->drawable,
+                                            gimp_drawable_filter_lock_position_changed,
                                             filter);
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_drawable_filter_profile_changed,
@@ -1168,6 +1176,14 @@ gimp_drawable_filter_profile_changed (GimpColorManaged   *managed,
                                       GimpDrawableFilter *filter)
 {
   gimp_drawable_filter_sync_transform (filter);
+  gimp_drawable_filter_update_drawable (filter, NULL);
+}
+
+static void
+gimp_drawable_filter_lock_position_changed (GimpDrawable       *drawable,
+                                            GimpDrawableFilter *filter)
+{
+  gimp_drawable_filter_sync_clip (filter, TRUE);
   gimp_drawable_filter_update_drawable (filter, NULL);
 }
 
