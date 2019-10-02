@@ -262,7 +262,9 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
   if (gimp_paint_tool_paint_use_thread (paint_tool))
     gimp_drawable_start_paint (drawable);
 
-  gimp_paint_core_set_show_all (core, shell->show_all);
+  /*  Prepare to start the paint core  */
+  if (GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_prepare)
+    GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_prepare (paint_tool, display);
 
   /*  Start the paint core  */
   if (! gimp_paint_core_start (core,
