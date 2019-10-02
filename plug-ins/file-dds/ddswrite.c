@@ -46,9 +46,12 @@
 
 static gboolean   write_image (FILE          *fp,
                                GimpImage     *image,
-                               GimpDrawable  *drawable);
-static gint       save_dialog (GimpImage     *image,
-                               GimpDrawable  *drawable);
+                               GimpDrawable  *drawable,
+                               GObject       *config);
+static gboolean   save_dialog (GimpImage     *image,
+                               GimpDrawable  *drawable,
+                               GimpProcedure *procedure,
+                               GObject       *config);
 
 
 static const char *cubemap_face_names[4][6] =
@@ -86,11 +89,12 @@ static GtkWidget *format_opt;
 static GtkWidget *mipmap_opt;
 static GtkWidget *mipmap_filter_opt;
 static GtkWidget *mipmap_wrap_opt;
-static GtkWidget *srgb_chk;
-static GtkWidget *gamma_chk;
+static GtkWidget *transparent_spin;
+static GtkWidget *srgb_check;
+static GtkWidget *gamma_check;
 static GtkWidget *gamma_spin;
-static GtkWidget *pm_chk;
-static GtkWidget *alpha_coverage_chk;
+static GtkWidget *pm_check;
+static GtkWidget *alpha_coverage_check;
 static GtkWidget *alpha_test_threshold_spin;
 
 static struct
@@ -501,16 +505,27 @@ get_array_size (GimpImage *image)
 }
 
 GimpPDBStatusType
-write_dds (GFile        *file,
-           GimpImage    *image,
-           GimpDrawable *drawable,
-           gboolean      interactive)
+write_dds (GFile         *file,
+           GimpImage     *image,
+           GimpDrawable  *drawable,
+           gboolean       interactive,
+           GimpProcedure *procedure,
+           GObject       *config)
 {
   gchar *filename;
   FILE  *fp;
-  int    rc = 0;
+  gint   rc = 0;
+  gint   compression;
+  gint   mipmaps;
+  gint   savetype;
 
-  is_mipmap_chain_valid = check_mipmaps (image, dds_write_vals.savetype);
+  g_object_get (config,
+                "compression-format", &compression,
+                "mipmaps",            &mipmaps,
+                "save-type",          &savetype,
+                NULL);
+
+  is_mipmap_chain_valid = check_mipmaps (image, savetype);
 
   is_cubemap = check_cubemap (image);
   is_volume  = check_volume (image);
@@ -519,34 +534,34 @@ write_dds (GFile        *file,
   if (interactive)
     {
       if (! is_mipmap_chain_valid &&
-          dds_write_vals.mipmaps == DDS_MIPMAP_EXISTING)
-        dds_write_vals.mipmaps = DDS_MIPMAP_NONE;
+          mipmaps == DDS_MIPMAP_EXISTING)
+        mipmaps = DDS_MIPMAP_NONE;
 
-      if (! save_dialog (image, drawable))
+      if (! save_dialog (image, drawable, procedure, config))
         return GIMP_PDB_CANCEL;
     }
   else
     {
-      if (dds_write_vals.savetype == DDS_SAVE_CUBEMAP && ! is_cubemap)
+      if (savetype == DDS_SAVE_CUBEMAP && ! is_cubemap)
         {
           g_message ("DDS: Cannot save image as cube map");
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (dds_write_vals.savetype == DDS_SAVE_VOLUMEMAP && ! is_volume)
+      if (savetype == DDS_SAVE_VOLUMEMAP && ! is_volume)
         {
           g_message ("DDS: Cannot save image as volume map");
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (dds_write_vals.savetype == DDS_SAVE_VOLUMEMAP &&
-          dds_write_vals.compression != DDS_COMPRESS_NONE)
+      if (savetype == DDS_SAVE_VOLUMEMAP &&
+          compression != DDS_COMPRESS_NONE)
         {
           g_message ("DDS: Cannot save volume map with compression");
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      if (dds_write_vals.mipmaps == DDS_MIPMAP_EXISTING &&
+      if (mipmaps == DDS_MIPMAP_EXISTING &&
           ! is_mipmap_chain_valid)
         {
           g_message ("DDS: Cannot save with existing mipmaps as the mipmap chain is incomplete");
@@ -566,7 +581,7 @@ write_dds (GFile        *file,
 
   gimp_progress_init_printf ("Saving %s:", gimp_file_get_utf8_name (file));
 
-  rc = write_image (fp, image, drawable);
+  rc = write_image (fp, image, drawable, config);
 
   fclose (fp);
 
@@ -822,11 +837,12 @@ static void
 write_layer (FILE         *fp,
              GimpImage    *image,
              GimpDrawable *drawable,
+             GObject      *config,
              int           w,
              int           h,
              int           bpp,
              int           fmtbpp,
-             int           mipmaps)
+             int           num_mipmaps)
 {
   GeglBuffer        *buffer;
   const Babl        *format;
@@ -843,8 +859,18 @@ write_layer (FILE         *fp,
   gint               fmtsize;
   gint               offset;
   gint               colors;
-  gint               compression = dds_write_vals.compression;
+  gint               compression;
+  gint               mipmaps;
+  gint               pixel_format;
+  gboolean           perceptual_metric;
   gint               flags = 0;
+
+  g_object_get (config,
+                "compression-format", &compression,
+                "mipmaps",            &mipmaps,
+                "format",             &pixel_format,
+                "perceptual-metric",  &perceptual_metric,
+                NULL);
 
   basetype = gimp_image_base_type (image);
   type = gimp_drawable_type (drawable);
@@ -963,13 +989,13 @@ write_layer (FILE         *fp,
 
   if (compression == DDS_COMPRESS_NONE)
     {
-      if (mipmaps > 1)
+      if (num_mipmaps > 1)
         {
           /* pre-convert indexed images to RGB for better quality mipmaps
              if a pixel format conversion is requested */
-          if (dds_write_vals.format > DDS_FORMAT_DEFAULT && basetype == GIMP_INDEXED)
+          if (pixel_format > DDS_FORMAT_DEFAULT && basetype == GIMP_INDEXED)
             {
-              fmtsize = get_mipmapped_size (w, h, 3, 0, mipmaps, DDS_COMPRESS_NONE);
+              fmtsize = get_mipmapped_size (w, h, 3, 0, num_mipmaps, DDS_COMPRESS_NONE);
               fmtdst = g_malloc (fmtsize);
               convert_pixels (fmtdst, src, DDS_FORMAT_RGB8, w, h, 0, bpp,
                               palette, 1);
@@ -979,18 +1005,37 @@ write_layer (FILE         *fp,
               palette = NULL;
             }
 
-          size = get_mipmapped_size (w, h, bpp, 0, mipmaps, DDS_COMPRESS_NONE);
+          size = get_mipmapped_size (w, h, bpp, 0, num_mipmaps,
+                                     DDS_COMPRESS_NONE);
           dst = g_malloc (size);
-          if (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE)
+          if (mipmaps == DDS_MIPMAP_GENERATE)
             {
+              gint     mipmap_filter;
+              gint     mipmap_wrap;
+              gboolean gamma_correct;
+              gboolean srgb;
+              gdouble  gamma;
+              gboolean preserve_alpha_coverage;
+              gdouble  alpha_test_threshold;
+
+              g_object_get (config,
+                            "mipmap-filter",           &mipmap_filter,
+                            "mipmap-wrap",             &mipmap_wrap,
+                            "gamma-correct",           &gamma_correct,
+                            "srgb",                    &srgb,
+                            "gamma",                   &gamma,
+                            "preserve-alpha-coverage", &preserve_alpha_coverage,
+                            "alpha-test-threshold",    &alpha_test_threshold,
+                            NULL);
+
               generate_mipmaps (dst, src, w, h, bpp, palette != NULL,
-                                mipmaps,
-                                dds_write_vals.mipmap_filter,
-                                dds_write_vals.mipmap_wrap,
-                                dds_write_vals.gamma_correct + dds_write_vals.srgb,
-                                dds_write_vals.gamma,
-                                dds_write_vals.preserve_alpha_coverage,
-                                dds_write_vals.alpha_test_threshold);
+                                num_mipmaps,
+                                mipmap_filter,
+                                mipmap_wrap,
+                                gamma_correct + srgb,
+                                gamma,
+                                preserve_alpha_coverage,
+                                alpha_test_threshold);
             }
           else
             {
@@ -998,14 +1043,14 @@ write_layer (FILE         *fp,
               get_mipmap_chain (dst + (w * h * bpp), w, h, bpp, image, drawable);
             }
 
-          if (dds_write_vals.format > DDS_FORMAT_DEFAULT)
+          if (pixel_format > DDS_FORMAT_DEFAULT)
             {
-              fmtsize = get_mipmapped_size (w, h, fmtbpp, 0, mipmaps,
+              fmtsize = get_mipmapped_size (w, h, fmtbpp, 0, num_mipmaps,
                                             DDS_COMPRESS_NONE);
               fmtdst = g_malloc (fmtsize);
 
-              convert_pixels (fmtdst, dst, dds_write_vals.format, w, h, 0, bpp,
-                              palette, mipmaps);
+              convert_pixels (fmtdst, dst, pixel_format, w, h, 0, bpp,
+                              palette, num_mipmaps);
 
               g_free (dst);
               dst = fmtdst;
@@ -1014,7 +1059,7 @@ write_layer (FILE         *fp,
 
           offset = 0;
 
-          for (i = 0; i < mipmaps; ++i)
+          for (i = 0; i < num_mipmaps; ++i)
             {
               size = get_mipmapped_size (w, h, bpp, i, 1, DDS_COMPRESS_NONE);
               fwrite (dst + offset, 1, size, fp);
@@ -1025,10 +1070,10 @@ write_layer (FILE         *fp,
         }
       else
         {
-          if (dds_write_vals.format > DDS_FORMAT_DEFAULT)
+          if (pixel_format > DDS_FORMAT_DEFAULT)
             {
               fmtdst = g_malloc (h * w * fmtbpp);
-              convert_pixels (fmtdst, src, dds_write_vals.format, w, h, 0, bpp,
+              convert_pixels (fmtdst, src, pixel_format, w, h, 0, bpp,
                               palette, 1);
               g_free (src);
               src = fmtdst;
@@ -1040,36 +1085,54 @@ write_layer (FILE         *fp,
     }
   else
     {
-      size = get_mipmapped_size (w, h, bpp, 0, mipmaps, compression);
+      size = get_mipmapped_size (w, h, bpp, 0, num_mipmaps, compression);
 
       dst = g_malloc (size);
 
       if (basetype == GIMP_INDEXED)
         {
-          fmtsize = get_mipmapped_size (w, h, 3, 0, mipmaps,
+          fmtsize = get_mipmapped_size (w, h, 3, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
           fmtdst = g_malloc (fmtsize);
           convert_pixels (fmtdst, src, DDS_FORMAT_RGB8, w, h, 0, bpp,
-                          palette, mipmaps);
+                          palette, num_mipmaps);
           g_free (src);
           src = fmtdst;
           bpp = 3;
         }
 
-      if (mipmaps > 1)
+      if (num_mipmaps > 1)
         {
-          fmtsize = get_mipmapped_size (w, h, bpp, 0, mipmaps,
+          fmtsize = get_mipmapped_size (w, h, bpp, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
           fmtdst = g_malloc (fmtsize);
-          if (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE)
+          if (mipmaps == DDS_MIPMAP_GENERATE)
             {
-              generate_mipmaps (fmtdst, src, w, h, bpp, 0, mipmaps,
-                                dds_write_vals.mipmap_filter,
-                                dds_write_vals.mipmap_wrap,
-                                dds_write_vals.gamma_correct + dds_write_vals.srgb,
-                                dds_write_vals.gamma,
-                                dds_write_vals.preserve_alpha_coverage,
-                                dds_write_vals.alpha_test_threshold);
+              gint     mipmap_filter;
+              gint     mipmap_wrap;
+              gboolean gamma_correct;
+              gboolean srgb;
+              gdouble  gamma;
+              gboolean preserve_alpha_coverage;
+              gdouble  alpha_test_threshold;
+
+              g_object_get (config,
+                            "mipmap-filter",           &mipmap_filter,
+                            "mipmap-wrap",             &mipmap_wrap,
+                            "gamma-correct",           &gamma_correct,
+                            "srgb",                    &srgb,
+                            "gamma",                   &gamma,
+                            "preserve-alpha-coverage", &preserve_alpha_coverage,
+                            "alpha-test-threshold",    &alpha_test_threshold,
+                            NULL);
+
+              generate_mipmaps (fmtdst, src, w, h, bpp, 0, num_mipmaps,
+                                mipmap_filter,
+                                mipmap_wrap,
+                                gamma_correct + srgb,
+                                gamma,
+                                preserve_alpha_coverage,
+                                alpha_test_threshold);
             }
           else
             {
@@ -1082,9 +1145,10 @@ write_layer (FILE         *fp,
         }
 
       flags = 0;
-      if (dds_write_vals.perceptual_metric) flags |= DXT_PERCEPTUAL;
+      if (perceptual_metric)
+        flags |= DXT_PERCEPTUAL;
 
-      dxt_compress (dst, src, compression, w, h, bpp, mipmaps, flags);
+      dxt_compress (dst, src, compression, w, h, bpp, num_mipmaps, flags);
 
       fwrite (dst, 1, size, fp);
 
@@ -1099,13 +1163,14 @@ write_layer (FILE         *fp,
 static void
 write_volume_mipmaps (FILE      *fp,
                       GimpImage *image,
+                      GObject   *config,
                       GList     *layers,
                       int        w,
                       int        h,
                       int        d,
                       int        bpp,
                       int        fmtbpp,
-                      int        mipmaps)
+                      int        num_mipmaps)
 {
   GList             *list;
   gint               i;
@@ -1120,10 +1185,27 @@ write_volume_mipmaps (FILE      *fp,
   GeglBuffer        *buffer;
   const Babl        *format;
   GimpImageBaseType  type;
+  gint               compression;
+  gint               pixel_format;
+  gint               mipmap_filter;
+  gint               mipmap_wrap;
+  gboolean           gamma_correct;
+  gboolean           srgb;
+  gdouble            gamma;
+
+  g_object_get (config,
+                "compression-format", &compression,
+                "format",             &pixel_format,
+                "mipmap-filter",      &mipmap_filter,
+                "mipmap-wrap",        &mipmap_wrap,
+                "gamma-correct",      &gamma_correct,
+                "srgb",               &srgb,
+                "gamma",              &gamma,
+                NULL);
 
   type = gimp_image_base_type (image);
 
-  if (dds_write_vals.compression != DDS_COMPRESS_NONE)
+  if (compression != DDS_COMPRESS_NONE)
     return;
 
   src = g_malloc (w * h * bpp * d);
@@ -1169,9 +1251,9 @@ write_volume_mipmaps (FILE      *fp,
 
   /* pre-convert indexed images to RGB for better mipmaps if a
      pixel format conversion is requested */
-  if (dds_write_vals.format > DDS_FORMAT_DEFAULT && type == GIMP_INDEXED)
+  if (pixel_format > DDS_FORMAT_DEFAULT && type == GIMP_INDEXED)
     {
-      size = get_volume_mipmapped_size (w, h, d, 3, 0, mipmaps,
+      size = get_volume_mipmapped_size (w, h, d, 3, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
       dst = g_malloc (size);
       convert_pixels (dst, src, DDS_FORMAT_RGB8, w, h, d, bpp, palette, 1);
@@ -1181,31 +1263,31 @@ write_volume_mipmaps (FILE      *fp,
       palette = NULL;
     }
 
-  size = get_volume_mipmapped_size (w, h, d, bpp, 0, mipmaps,
-                                    dds_write_vals.compression);
+  size = get_volume_mipmapped_size (w, h, d, bpp, 0, num_mipmaps,
+                                    compression);
 
   dst = g_malloc (size);
 
   offset = get_volume_mipmapped_size (w, h, d, bpp, 0, 1,
-                                      dds_write_vals.compression);
+                                      compression);
 
   generate_volume_mipmaps (dst, src, w, h, d, bpp,
-                           palette != NULL, mipmaps,
-                           dds_write_vals.mipmap_filter,
-                           dds_write_vals.mipmap_wrap,
-                           dds_write_vals.gamma_correct + dds_write_vals.srgb,
-                           dds_write_vals.gamma);
+                           palette != NULL, num_mipmaps,
+                           mipmap_filter,
+                           mipmap_wrap,
+                           gamma_correct + srgb,
+                           gamma);
 
-  if (dds_write_vals.format > DDS_FORMAT_DEFAULT)
+  if (pixel_format > DDS_FORMAT_DEFAULT)
     {
-      size = get_volume_mipmapped_size (w, h, d, fmtbpp, 0, mipmaps,
-                                        dds_write_vals.compression);
+      size = get_volume_mipmapped_size (w, h, d, fmtbpp, 0, num_mipmaps,
+                                        compression);
       offset = get_volume_mipmapped_size (w, h, d, fmtbpp, 0, 1,
-                                          dds_write_vals.compression);
+                                          compression);
       fmtdst = g_malloc (size);
 
-      convert_pixels (fmtdst, dst, dds_write_vals.format, w, h, d, bpp,
-                      palette, mipmaps);
+      convert_pixels (fmtdst, dst, pixel_format, w, h, d, bpp,
+                      palette, num_mipmaps);
       g_free (dst);
       dst = fmtdst;
     }
@@ -1219,7 +1301,8 @@ write_volume_mipmaps (FILE      *fp,
 static gboolean
 write_image (FILE         *fp,
              GimpImage    *image,
-             GimpDrawable *drawable)
+             GimpDrawable *drawable,
+             GObject      *config)
 {
   GimpImageType      drawable_type;
   GimpImageBaseType  basetype;
@@ -1242,14 +1325,27 @@ write_image (FILE         *fp,
   guchar             zero[4] = {0, 0, 0, 0};
   gint               is_dx10 = 0;
   gint               array_size = 1;
+  gint               compression;
+  gint               mipmaps;
+  gint               savetype;
+  gint               pixel_format;
+  gint               transindex;
+
+  g_object_get (config,
+                "compression-format", &compression,
+                "mipmaps",            &mipmaps,
+                "save-type",          &savetype,
+                "format",             &pixel_format,
+                "transparent-index",  &transindex,
+                NULL);
 
   layers = gimp_image_list_layers (image);
   num_layers = g_list_length (layers);
 
-  if (dds_write_vals.mipmaps == DDS_MIPMAP_EXISTING)
+  if (mipmaps == DDS_MIPMAP_EXISTING)
     drawable = layers->data;
 
-  if (dds_write_vals.savetype == DDS_SAVE_SELECTED_LAYER)
+  if (savetype == DDS_SAVE_SELECTED_LAYER)
     {
       w = gimp_drawable_width (drawable);
       h = gimp_drawable_height (drawable);
@@ -1275,11 +1371,11 @@ write_image (FILE         *fp,
                               break;
     }
 
-  if (dds_write_vals.format > DDS_FORMAT_DEFAULT)
+  if (pixel_format > DDS_FORMAT_DEFAULT)
     {
       for (i = 0; ; ++i)
         {
-          if (format_info[i].format == dds_write_vals.format)
+          if (format_info[i].format == pixel_format)
             {
               fmtbpp = format_info[i].bpp;
               has_alpha = format_info[i].alpha;
@@ -1354,7 +1450,7 @@ write_image (FILE         *fp,
   PUTL32(hdr + 16,  w);
   PUTL32(hdr + 76,  32);
 
-  if (dds_write_vals.compression == DDS_COMPRESS_NONE)
+  if (compression == DDS_COMPRESS_NONE)
     {
       PUTL32(hdr + 88,  fmtbpp << 3);
       PUTL32(hdr + 92,  rmask);
@@ -1374,7 +1470,7 @@ write_image (FILE         *fp,
   flags = DDSD_CAPS | DDSD_PIXELFORMAT | DDSD_WIDTH | DDSD_HEIGHT;
 
   caps = DDSCAPS_TEXTURE;
-  if (dds_write_vals.mipmaps)
+  if (mipmaps)
     {
       flags |= DDSD_MIPMAPCOUNT;
       caps |= (DDSCAPS_COMPLEX | DDSCAPS_MIPMAP);
@@ -1385,12 +1481,12 @@ write_image (FILE         *fp,
       num_mipmaps = 1;
     }
 
-  if ((dds_write_vals.savetype == DDS_SAVE_CUBEMAP) && is_cubemap)
+  if ((savetype == DDS_SAVE_CUBEMAP) && is_cubemap)
     {
       caps |= DDSCAPS_COMPLEX;
       caps2 |= (DDSCAPS2_CUBEMAP | DDSCAPS2_CUBEMAP_ALL_FACES);
     }
-  else if ((dds_write_vals.savetype == DDS_SAVE_VOLUMEMAP) && is_volume)
+  else if ((savetype == DDS_SAVE_VOLUMEMAP) && is_volume)
     {
       PUTL32(hdr + 24, num_layers); /* depth */
       flags |= DDSD_DEPTH;
@@ -1402,18 +1498,18 @@ write_image (FILE         *fp,
   PUTL32(hdr + 108, caps);
   PUTL32(hdr + 112, caps2);
 
-  if (dds_write_vals.compression == DDS_COMPRESS_NONE)
+  if (compression == DDS_COMPRESS_NONE)
     {
       flags |= DDSD_PITCH;
 
-      if (dds_write_vals.format > DDS_FORMAT_DEFAULT)
+      if (pixel_format > DDS_FORMAT_DEFAULT)
         {
-          if (dds_write_vals.format == DDS_FORMAT_A8)
+          if (pixel_format == DDS_FORMAT_A8)
             pflags |= DDPF_ALPHA;
           else
             {
-              if (((fmtbpp == 1) || (dds_write_vals.format == DDS_FORMAT_L8A8)) &&
-                  (dds_write_vals.format != DDS_FORMAT_R3G3B2))
+              if (((fmtbpp == 1) || (pixel_format == DDS_FORMAT_L8A8)) &&
+                  (pixel_format != DDS_FORMAT_R3G3B2))
                 pflags |= DDPF_LUMINANCE;
               else
                 pflags |= DDPF_RGB;
@@ -1450,11 +1546,11 @@ write_image (FILE         *fp,
        * is read by the plugin, we can detect the added information to decode
        * the pixels
        */
-      if (dds_write_vals.format == DDS_FORMAT_AEXP)
+      if (pixel_format == DDS_FORMAT_AEXP)
         {
           PUTL32 (hdr + 44, FOURCC ('A','E','X','P'));
         }
-      else if (dds_write_vals.format == DDS_FORMAT_YCOCG)
+      else if (pixel_format == DDS_FORMAT_YCOCG)
         {
           PUTL32 (hdr + 44, FOURCC ('Y','C','G','1'));
         }
@@ -1464,7 +1560,7 @@ write_image (FILE         *fp,
       flags |= DDSD_LINEARSIZE;
       pflags = DDPF_FOURCC;
 
-      switch (dds_write_vals.compression)
+      switch (compression)
         {
         case DDS_COMPRESS_BC1:
           fourcc = FOURCC ('D','X','T','1');
@@ -1503,8 +1599,8 @@ write_image (FILE         *fp,
           break;
         }
 
-      if ((dds_write_vals.compression == DDS_COMPRESS_BC3N) ||
-          (dds_write_vals.compression == DDS_COMPRESS_RXGB))
+      if ((compression == DDS_COMPRESS_BC3N) ||
+          (compression == DDS_COMPRESS_RXGB))
         {
           pflags |= DDPF_NORMAL;
         }
@@ -1514,8 +1610,8 @@ write_image (FILE         *fp,
       PUTL32 (hdr + 84, fourcc);
 
       size = ((w + 3) >> 2) * ((h + 3) >> 2);
-      if ((dds_write_vals.compression == DDS_COMPRESS_BC1) ||
-          (dds_write_vals.compression == DDS_COMPRESS_BC4))
+      if ((compression == DDS_COMPRESS_BC1) ||
+          (compression == DDS_COMPRESS_BC4))
         size *= 8;
       else
         size *= 16;
@@ -1527,27 +1623,27 @@ write_image (FILE         *fp,
        * is read by the plugin, we can detect the added information to decode
        * the pixels
        */
-      if (dds_write_vals.compression == DDS_COMPRESS_AEXP)
+      if (compression == DDS_COMPRESS_AEXP)
         {
           PUTL32 (hdr + 44, FOURCC ('A','E','X','P'));
         }
-      else if (dds_write_vals.compression == DDS_COMPRESS_YCOCG)
+      else if (compression == DDS_COMPRESS_YCOCG)
         {
           PUTL32 (hdr + 44, FOURCC ('Y','C','G','1'));
         }
-      else if (dds_write_vals.compression == DDS_COMPRESS_YCOCGS)
+      else if (compression == DDS_COMPRESS_YCOCGS)
         {
           PUTL32 (hdr + 44, FOURCC ('Y','C','G','2'));
         }
     }
 
   /* texture arrays require a DX10 header */
-  if (dds_write_vals.savetype == DDS_SAVE_ARRAY)
+  if (savetype == DDS_SAVE_ARRAY)
     is_dx10 = 1;
 
   if (is_dx10)
     {
-      array_size = ((dds_write_vals.savetype == DDS_SAVE_SELECTED_LAYER) ?
+      array_size = ((savetype == DDS_SAVE_SELECTED_LAYER) ?
                     1 : get_array_size (image));
 
       PUTL32 (hdr10 +  0, dxgi_format);
@@ -1568,15 +1664,15 @@ write_image (FILE         *fp,
 
   /* write palette for indexed images */
   if ((basetype == GIMP_INDEXED) &&
-      (dds_write_vals.format == DDS_FORMAT_DEFAULT) &&
-      (dds_write_vals.compression == DDS_COMPRESS_NONE))
+      (pixel_format == DDS_FORMAT_DEFAULT) &&
+      (compression == DDS_COMPRESS_NONE))
     {
       cmap = gimp_image_get_colormap (image, &colors);
 
       for (i = 0; i < colors; ++i)
         {
           fwrite (&cmap[3 * i], 1, 3, fp);
-          if (i == dds_write_vals.transindex)
+          if (i == transindex)
             fputc (0, fp);
           else
             fputc (255, fp);
@@ -1586,31 +1682,32 @@ write_image (FILE         *fp,
         fwrite (zero, 1, 4, fp);
     }
 
-  if (dds_write_vals.savetype == DDS_SAVE_CUBEMAP)
+  if (savetype == DDS_SAVE_CUBEMAP)
     {
       for (i = 0; i < 6; ++i)
         {
-          write_layer (fp, image, GIMP_DRAWABLE (cubemap_faces[i]),
+          write_layer (fp, image, GIMP_DRAWABLE (cubemap_faces[i]), config,
                        w, h, bpp, fmtbpp,
                        num_mipmaps);
           gimp_progress_update ((float)(i + 1) / 6.0);
         }
     }
-  else if (dds_write_vals.savetype == DDS_SAVE_VOLUMEMAP)
+  else if (savetype == DDS_SAVE_VOLUMEMAP)
     {
       for (i = 0, list = layers;
            i < num_layers;
            ++i, list = g_list_next (layers))
         {
-          write_layer (fp, image, list->data, w, h, bpp, fmtbpp, 1);
+          write_layer (fp, image, list->data, config,
+                       w, h, bpp, fmtbpp, 1);
           gimp_progress_update ((float)i / (float)num_layers);
         }
 
       if (num_mipmaps > 1)
-        write_volume_mipmaps (fp, image, layers, w, h, num_layers,
+        write_volume_mipmaps (fp, image, config, layers, w, h, num_layers,
                               bpp, fmtbpp, num_mipmaps);
     }
-  else if (dds_write_vals.savetype == DDS_SAVE_ARRAY)
+  else if (savetype == DDS_SAVE_ARRAY)
     {
       for (i = 0, list = layers;
            i < num_layers;
@@ -1619,7 +1716,7 @@ write_image (FILE         *fp,
           if ((gimp_drawable_width  (list->data) == w) &&
               (gimp_drawable_height (list->data) == h))
             {
-              write_layer (fp, image, list->data,
+              write_layer (fp, image, list->data, config,
                            w, h, bpp, fmtbpp, num_mipmaps);
             }
 
@@ -1628,7 +1725,8 @@ write_image (FILE         *fp,
     }
   else
     {
-      write_layer (fp, image, drawable, w, h, bpp, fmtbpp, num_mipmaps);
+      write_layer (fp, image, drawable, config,
+                   w, h, bpp, fmtbpp, num_mipmaps);
     }
 
   gimp_progress_update (1.0);
@@ -1679,195 +1777,186 @@ combo_set_item_sensitive (GtkWidget *widget,
 }
 
 static void
-compression_selected (GtkWidget *widget,
-                      gpointer   data)
+config_notify (GObject          *config,
+               const GParamSpec *pspec,
+               GimpImage        *image)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 &dds_write_vals.compression);
-
-  if (format_opt)
-    gtk_widget_set_sensitive (format_opt,
-                              dds_write_vals.compression == DDS_COMPRESS_NONE);
-
-  if (pm_chk)
-    gtk_widget_set_sensitive (pm_chk,
-                              dds_write_vals.compression != DDS_COMPRESS_NONE);
-}
-
-static void
-savetype_selected (GtkWidget *widget,
-                   gpointer   data)
-{
-  GimpImage *image = data;
-
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 &dds_write_vals.savetype);
-
-  switch (dds_write_vals.savetype)
+  if (! strcmp (pspec->name, "compression-format"))
     {
-    case DDS_SAVE_SELECTED_LAYER:
-    case DDS_SAVE_CUBEMAP:
-    case DDS_SAVE_ARRAY:
-      gtk_widget_set_sensitive (compress_opt, TRUE);
-      break;
+      gint compression;
 
-    case DDS_SAVE_VOLUMEMAP:
-      dds_write_vals.compression = DDS_COMPRESS_NONE;
-      gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (compress_opt),
-                                     DDS_COMPRESS_NONE);
-      gtk_widget_set_sensitive (compress_opt, FALSE);
-      break;
+      g_object_get (config,
+                    "compression-format", &compression,
+                    NULL);
+
+      if (format_opt)
+        gtk_widget_set_sensitive (format_opt,
+                                  compression == DDS_COMPRESS_NONE);
+
+      if (pm_check)
+        gtk_widget_set_sensitive (pm_check,
+                                  compression != DDS_COMPRESS_NONE);
     }
-
-  if (mipmap_opt)
-    combo_set_item_sensitive (mipmap_opt, DDS_MIPMAP_EXISTING,
-                              check_mipmaps (image, dds_write_vals.savetype));
-}
-
-static void
-mipmaps_selected (GtkWidget *widget,
-                  gpointer   data)
-{
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 &dds_write_vals.mipmaps);
-
-  if (mipmap_filter_opt)
-    gtk_widget_set_sensitive (mipmap_filter_opt,
-                              dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-
-  if (mipmap_wrap_opt)
-    gtk_widget_set_sensitive (mipmap_wrap_opt,
-                              dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-
-  if (gamma_chk)
-    gtk_widget_set_sensitive (gamma_chk,
-                              dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-
-  if (srgb_chk)
-    gtk_widget_set_sensitive (srgb_chk,
-                              (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE) &&
-                              dds_write_vals.gamma_correct);
-
-  if (gamma_spin)
-    gtk_widget_set_sensitive (gamma_spin,
-                              (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE) &&
-                              dds_write_vals.gamma_correct &&
-                              !dds_write_vals.srgb);
-
-  if (alpha_coverage_chk)
-    gtk_widget_set_sensitive (alpha_coverage_chk,
-                              dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-
-  if (alpha_test_threshold_spin)
-    gtk_widget_set_sensitive (alpha_test_threshold_spin,
-                              (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE) &&
-                              dds_write_vals.preserve_alpha_coverage);
-}
-
-static void
-transindex_clicked (GtkWidget *widget,
-                    gpointer   data)
-{
-  GtkWidget *spin = GTK_WIDGET (g_object_get_data (G_OBJECT (widget), "spin"));
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+  else if (! strcmp (pspec->name, "save-type"))
     {
-      dds_write_vals.transindex = 0;
-      gtk_widget_set_sensitive (spin, TRUE);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON (spin), 0);
+      gint savetype;
+
+      g_object_get (config,
+                    "save-type", &savetype,
+                    NULL);
+
+      switch (savetype)
+        {
+        case DDS_SAVE_SELECTED_LAYER:
+        case DDS_SAVE_CUBEMAP:
+        case DDS_SAVE_ARRAY:
+          gtk_widget_set_sensitive (compress_opt, TRUE);
+          break;
+
+        case DDS_SAVE_VOLUMEMAP:
+          g_object_set (config,
+                        "compression-format", DDS_COMPRESS_NONE,
+                        NULL);
+          gtk_widget_set_sensitive (compress_opt, FALSE);
+          break;
+        }
+
+      if (mipmap_opt)
+        combo_set_item_sensitive (mipmap_opt, DDS_MIPMAP_EXISTING,
+                                  check_mipmaps (image, savetype));
     }
-  else
+  else if (! strcmp (pspec->name, "mipmaps"))
     {
-      gtk_widget_set_sensitive (spin, FALSE);
-      dds_write_vals.transindex = -1;
+      gint     mipmaps;
+      gboolean gamma_correct;
+      gboolean srgb;
+      gboolean preserve_alpha_coverage;
+
+      g_object_get (config,
+                    "mipmaps",                 &mipmaps,
+                    "gamma-correct",           &gamma_correct,
+                    "srgb",                    &srgb,
+                    "preserve-alpha-coverage", &preserve_alpha_coverage,
+                    NULL);
+
+      if (mipmap_filter_opt)
+        gtk_widget_set_sensitive (mipmap_filter_opt,
+                                  mipmaps == DDS_MIPMAP_GENERATE);
+
+      if (mipmap_wrap_opt)
+        gtk_widget_set_sensitive (mipmap_wrap_opt,
+                                  mipmaps == DDS_MIPMAP_GENERATE);
+
+      if (gamma_check)
+        gtk_widget_set_sensitive (gamma_check,
+                                  mipmaps == DDS_MIPMAP_GENERATE);
+
+      if (srgb_check)
+        gtk_widget_set_sensitive (srgb_check,
+                                  (mipmaps == DDS_MIPMAP_GENERATE) &&
+                                  gamma_correct);
+
+      if (gamma_spin)
+        gtk_widget_set_sensitive (gamma_spin,
+                                  (mipmaps == DDS_MIPMAP_GENERATE) &&
+                                  gamma_correct &&
+                                  ! srgb);
+
+      if (alpha_coverage_check)
+        gtk_widget_set_sensitive (alpha_coverage_check,
+                                  mipmaps == DDS_MIPMAP_GENERATE);
+
+      if (alpha_test_threshold_spin)
+        gtk_widget_set_sensitive (alpha_test_threshold_spin,
+                                  (mipmaps == DDS_MIPMAP_GENERATE) &&
+                                  preserve_alpha_coverage);
+    }
+  else if (! strcmp (pspec->name, "transparent-color"))
+    {
+      GimpImageBaseType base_type;
+      gboolean          transparent_color;
+
+      base_type = gimp_image_base_type (image);
+
+      g_object_get (config,
+                    "transparent-color", &transparent_color,
+                    NULL);
+
+      if (transparent_spin)
+        gtk_widget_set_sensitive (transparent_spin,
+                                  transparent_color &&
+                                  base_type == GIMP_INDEXED);
+    }
+  else if (! strcmp (pspec->name, "gamma-correct"))
+    {
+      gboolean gamma_correct;
+      gboolean srgb;
+
+      g_object_get (config,
+                    "gamma-correct", &gamma_correct,
+                    "srgb",          &srgb,
+                    NULL);
+
+      if (srgb_check)
+        gtk_widget_set_sensitive (srgb_check, gamma_correct);
+
+      if (gamma_spin)
+        gtk_widget_set_sensitive (gamma_spin, gamma_correct && ! srgb);
+    }
+  else if (! strcmp (pspec->name, "srgb"))
+    {
+      gboolean gamma_correct;
+      gboolean srgb;
+
+      g_object_get (config,
+                    "gamma-correct", &gamma_correct,
+                    "srgb",          &srgb,
+                    NULL);
+
+      if (gamma_spin)
+        gtk_widget_set_sensitive (gamma_spin, gamma_correct && ! srgb);
+    }
+  else if (! strcmp (pspec->name, "preserve-alpha-coverage"))
+    {
+      gboolean preserve_alpha_coverage;
+
+      g_object_get (config,
+                    "preserve-alpha-coverage", &preserve_alpha_coverage,
+                    NULL);
+
+      if (alpha_test_threshold_spin)
+        gtk_widget_set_sensitive (alpha_test_threshold_spin,
+                                  preserve_alpha_coverage);
     }
 }
 
-static void
-transindex_changed (GtkWidget *widget,
-                    gpointer   data)
+static gboolean
+save_dialog (GimpImage     *image,
+             GimpDrawable  *drawable,
+             GimpProcedure *procedure,
+             GObject       *config)
 {
-  dds_write_vals.transindex =
-    gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
-}
-
-static void
-gamma_correct_clicked (GtkWidget *widget,
-                       gpointer   data)
-{
-  dds_write_vals.gamma_correct =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-  gtk_widget_set_sensitive (srgb_chk,
-                            dds_write_vals.gamma_correct);
-  gtk_widget_set_sensitive (gamma_spin,
-                            dds_write_vals.gamma_correct &&
-                            ! dds_write_vals.srgb);
-}
-
-static void
-srgb_clicked (GtkWidget *widget,
-              gpointer   data)
-{
-  dds_write_vals.srgb =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-  gtk_widget_set_sensitive (gamma_spin, !dds_write_vals.srgb);
-}
-
-static void
-gamma_changed (GtkWidget *widget,
-               gpointer   data)
-{
-  dds_write_vals.gamma =
-    gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
-}
-
-static void
-alpha_coverage_clicked (GtkWidget *widget,
-                        gpointer   data)
-{
-  dds_write_vals.preserve_alpha_coverage =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-  gtk_widget_set_sensitive (alpha_test_threshold_spin,
-                            dds_write_vals.preserve_alpha_coverage);
-}
-
-static void
-alpha_test_threshold_changed (GtkWidget *widget,
-                              gpointer   data)
-{
-  dds_write_vals.alpha_test_threshold =
-    gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
-}
-
-static gint
-save_dialog (GimpImage    *image,
-             GimpDrawable *drawable)
-{
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *grid;
-  GtkWidget *opt;
-  GtkWidget *check;
-  GtkWidget *spin;
-  GtkWidget *frame;
-  GimpImageBaseType basetype;
-  gboolean   run;
-
+  GtkWidget         *dialog;
+  GtkWidget         *vbox;
+  GtkWidget         *hbox;
+  GtkWidget         *grid;
+  GtkListStore      *store;
+  GtkWidget         *opt;
+  GtkWidget         *check;
+  GtkWidget         *frame;
+  GimpImageBaseType  basetype;
+  gboolean           run;
 
   if (is_cubemap || is_volume || is_array)
-    dds_write_vals.savetype = DDS_SAVE_SELECTED_LAYER;
+    g_object_set (config,
+                  "save-type", DDS_SAVE_SELECTED_LAYER,
+                  NULL);
 
   basetype = gimp_image_base_type (image);
 
-  dialog = gimp_dialog_new (_("Export as DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
-                            gimp_standard_help_func, SAVE_PROC,
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Export"), GTK_RESPONSE_OK,
-                            NULL);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as DDS"));
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -1879,90 +1968,67 @@ save_dialog (GimpImage    *image,
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 8);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  opt = gimp_int_combo_box_new ("None",                  DDS_COMPRESS_NONE,
-                                "BC1 / DXT1",            DDS_COMPRESS_BC1,
-                                "BC2 / DXT3",            DDS_COMPRESS_BC2,
-                                "BC3 / DXT5",            DDS_COMPRESS_BC3,
-                                "BC3nm / DXT5nm",        DDS_COMPRESS_BC3N,
-                                "BC4 / ATI1 (3Dc+)",     DDS_COMPRESS_BC4,
-                                "BC5 / ATI2 (3Dc)",      DDS_COMPRESS_BC5,
-                                "RXGB (DXT5)",           DDS_COMPRESS_RXGB,
-                                "Alpha Exponent (DXT5)", DDS_COMPRESS_AEXP,
-                                "YCoCg (DXT5)",          DDS_COMPRESS_YCOCG,
-                                "YCoCg scaled (DXT5)",   DDS_COMPRESS_YCOCGS,
-                                NULL);
+  store = gimp_int_store_new ("None",                  DDS_COMPRESS_NONE,
+                              "BC1 / DXT1",            DDS_COMPRESS_BC1,
+                              "BC2 / DXT3",            DDS_COMPRESS_BC2,
+                              "BC3 / DXT5",            DDS_COMPRESS_BC3,
+                              "BC3nm / DXT5nm",        DDS_COMPRESS_BC3N,
+                              "BC4 / ATI1 (3Dc+)",     DDS_COMPRESS_BC4,
+                              "BC5 / ATI2 (3Dc)",      DDS_COMPRESS_BC5,
+                              "RXGB (DXT5)",           DDS_COMPRESS_RXGB,
+                              "Alpha Exponent (DXT5)", DDS_COMPRESS_AEXP,
+                              "YCoCg (DXT5)",          DDS_COMPRESS_YCOCG,
+                              "YCoCg scaled (DXT5)",   DDS_COMPRESS_YCOCGS,
+                              NULL);
+  compress_opt = gimp_prop_int_combo_box_new (config, "compression-format",
+                                              GIMP_INT_STORE (store));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Compression:"),
                             0.0, 0.5,
-                            opt, 1);
+                            compress_opt, 1);
 
-  compress_opt = opt;
+  pm_check = gimp_prop_check_button_new (config, "perceptual-metric",
+                                         _("Use _perceptual error metric"));
+  gtk_grid_attach (GTK_GRID (grid), pm_check, 1, 1, 1, 1);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (opt),
-                              dds_write_vals.compression,
-                              G_CALLBACK (compression_selected),
-                              NULL, NULL);
-
-  check = gtk_check_button_new_with_mnemonic (_("Use _perceptual error metric"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
-                                dds_write_vals.perceptual_metric);
-  gtk_grid_attach (GTK_GRID (grid), check, 1, 1, 1, 1);
-  gtk_widget_show (check);
-
-  pm_chk = check;
-
-  g_signal_connect (check, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &dds_write_vals.perceptual_metric);
-
-  opt = gimp_int_combo_box_new ("Default", DDS_FORMAT_DEFAULT,
-                                "RGB8",    DDS_FORMAT_RGB8,
-                                "RGBA8",   DDS_FORMAT_RGBA8,
-                                "BGR8",    DDS_FORMAT_BGR8,
-                                "ABGR8",   DDS_FORMAT_ABGR8,
-                                "R5G6B5",  DDS_FORMAT_R5G6B5,
-                                "RGBA4",   DDS_FORMAT_RGBA4,
-                                "RGB5A1",  DDS_FORMAT_RGB5A1,
-                                "RGB10A2", DDS_FORMAT_RGB10A2,
-                                "R3G3B2",  DDS_FORMAT_R3G3B2,
-                                "A8",      DDS_FORMAT_A8,
-                                "L8",      DDS_FORMAT_L8,
-                                "L8A8",    DDS_FORMAT_L8A8,
-                                "AExp",    DDS_FORMAT_AEXP,
-                                "YCoCg",   DDS_FORMAT_YCOCG,
-                                NULL);
+  store = gimp_int_store_new ("Default", DDS_FORMAT_DEFAULT,
+                              "RGB8",    DDS_FORMAT_RGB8,
+                              "RGBA8",   DDS_FORMAT_RGBA8,
+                              "BGR8",    DDS_FORMAT_BGR8,
+                              "ABGR8",   DDS_FORMAT_ABGR8,
+                              "R5G6B5",  DDS_FORMAT_R5G6B5,
+                              "RGBA4",   DDS_FORMAT_RGBA4,
+                              "RGB5A1",  DDS_FORMAT_RGB5A1,
+                              "RGB10A2", DDS_FORMAT_RGB10A2,
+                              "R3G3B2",  DDS_FORMAT_R3G3B2,
+                              "A8",      DDS_FORMAT_A8,
+                              "L8",      DDS_FORMAT_L8,
+                              "L8A8",    DDS_FORMAT_L8A8,
+                              "AExp",    DDS_FORMAT_AEXP,
+                              "YCoCg",   DDS_FORMAT_YCOCG,
+                              NULL);
+  format_opt = gimp_prop_int_combo_box_new (config, "format",
+                                            GIMP_INT_STORE (store));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_Format:"),
                             0.0, 0.5,
-                            opt, 1);
+                            format_opt, 1);
 
-  format_opt = opt;
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (opt),
-                              dds_write_vals.format,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dds_write_vals.format, NULL);
-
-  gtk_widget_set_sensitive (opt, dds_write_vals.compression == DDS_COMPRESS_NONE);
-
-  opt = gimp_int_combo_box_new ("Image / Selected layer", DDS_SAVE_SELECTED_LAYER,
-                                "As cube map",            DDS_SAVE_CUBEMAP,
-                                "As volume map",          DDS_SAVE_VOLUMEMAP,
-                                "As texture array",       DDS_SAVE_ARRAY,
-                                NULL);
+  store = gimp_int_store_new ("Image / Selected layer", DDS_SAVE_SELECTED_LAYER,
+                              "As cube map",            DDS_SAVE_CUBEMAP,
+                              "As volume map",          DDS_SAVE_VOLUMEMAP,
+                              "As texture array",       DDS_SAVE_ARRAY,
+                              NULL);
+  opt = gimp_prop_int_combo_box_new (config, "save-type",
+                                     GIMP_INT_STORE (store));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("_Save:"),
                             0.0, 0.5,
                             opt, 1);
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (opt),
-                              dds_write_vals.savetype,
-                              G_CALLBACK (savetype_selected),
-                              image, NULL);
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (opt),
                                       combo_sensitivity_func,
@@ -1972,31 +2038,22 @@ save_dialog (GimpImage    *image,
   combo_set_item_sensitive (opt, DDS_SAVE_VOLUMEMAP, is_volume);
   combo_set_item_sensitive (opt, DDS_SAVE_ARRAY,     is_array);
 
-  opt = gimp_int_combo_box_new ("No mipmaps",           DDS_MIPMAP_NONE,
-                                "Generate mipmaps",     DDS_MIPMAP_GENERATE,
-                                "Use existing mipmaps", DDS_MIPMAP_EXISTING,
-                                NULL);
+  store = gimp_int_store_new ("No mipmaps",           DDS_MIPMAP_NONE,
+                              "Generate mipmaps",     DDS_MIPMAP_GENERATE,
+                              "Use existing mipmaps", DDS_MIPMAP_EXISTING,
+                              NULL);
+  mipmap_opt = gimp_prop_int_combo_box_new (config, "mipmaps",
+                                            GIMP_INT_STORE (store));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                             _("_Mipmaps:"),
                             0.0, 0.5,
-                            opt, 1);
+                            mipmap_opt, 1);
 
-  mipmap_opt = opt;
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (opt),
-                              dds_write_vals.mipmaps,
-                              G_CALLBACK (mipmaps_selected),
-                              image, NULL);
-
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (opt),
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (mipmap_opt),
                                       combo_sensitivity_func,
-                                      opt, NULL);
+                                      mipmap_opt, NULL);
 
-  combo_set_item_sensitive (opt, DDS_MIPMAP_EXISTING,
-                            check_mipmaps (image,
-                                           dds_write_vals.savetype));
-
-  combo_set_item_sensitive (opt, DDS_MIPMAP_EXISTING,
+  combo_set_item_sensitive (mipmap_opt, DDS_MIPMAP_EXISTING,
                             ! (is_volume || is_cubemap) &&
                             is_mipmap_chain_valid);
 
@@ -2005,50 +2062,14 @@ save_dialog (GimpImage    *image,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  check = gtk_check_button_new_with_label (_("Transparent index:"));
+  check = gimp_prop_check_button_new (config, "transparent-color",
+                                      _("Transparent index:"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
-  g_signal_connect (check, "clicked",
-                    G_CALLBACK (transindex_clicked),
-                    NULL);
-
-  spin = gimp_spin_button_new
-    (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 255, 1, 1, 0)), 1, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spin),
-                                     GTK_UPDATE_IF_VALID);
-  gtk_widget_show (spin);
-
-  g_signal_connect (spin, "value-changed",
-                    G_CALLBACK (transindex_changed),
-                    NULL);
-
-  g_object_set_data (G_OBJECT (check), "spin", spin);
-
-  if (basetype != GIMP_INDEXED)
-    {
-      gtk_widget_set_sensitive (check, FALSE);
-      gtk_widget_set_sensitive (spin, FALSE);
-    }
-  else if (dds_write_vals.transindex < 0)
-    {
-      gtk_widget_set_sensitive (spin, FALSE);
-    }
-  else if (dds_write_vals.transindex >= 0)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), TRUE);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON (spin),
-                                 dds_write_vals.transindex);
-    }
-
-  if (is_volume && dds_write_vals.savetype == DDS_SAVE_VOLUMEMAP)
-    {
-      dds_write_vals.compression = DDS_COMPRESS_NONE;
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (compress_opt),
-                                     DDS_COMPRESS_NONE);
-      gtk_widget_set_sensitive (compress_opt, FALSE);
-    }
+  transparent_spin = gimp_prop_spin_button_new (config, "transparent-index",
+                                                1, 8, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), transparent_spin, TRUE, TRUE, 0);
 
   frame = gimp_frame_new (_("Mipmap Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -2060,140 +2081,92 @@ save_dialog (GimpImage    *image,
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  opt = gimp_int_combo_box_new ("Default",   DDS_MIPMAP_FILTER_DEFAULT,
-                                "Nearest",   DDS_MIPMAP_FILTER_NEAREST,
-                                "Box",       DDS_MIPMAP_FILTER_BOX,
-                                "Triangle",  DDS_MIPMAP_FILTER_TRIANGLE,
-                                "Quadratic", DDS_MIPMAP_FILTER_QUADRATIC,
-                                "B-Spline",  DDS_MIPMAP_FILTER_BSPLINE,
-                                "Mitchell",  DDS_MIPMAP_FILTER_MITCHELL,
-                                "Lanczos",   DDS_MIPMAP_FILTER_LANCZOS,
-                                "Kaiser",    DDS_MIPMAP_FILTER_KAISER,
-                                NULL);
+  store = gimp_int_store_new ("Default",   DDS_MIPMAP_FILTER_DEFAULT,
+                              "Nearest",   DDS_MIPMAP_FILTER_NEAREST,
+                              "Box",       DDS_MIPMAP_FILTER_BOX,
+                              "Triangle",  DDS_MIPMAP_FILTER_TRIANGLE,
+                              "Quadratic", DDS_MIPMAP_FILTER_QUADRATIC,
+                              "B-Spline",  DDS_MIPMAP_FILTER_BSPLINE,
+                              "Mitchell",  DDS_MIPMAP_FILTER_MITCHELL,
+                              "Lanczos",   DDS_MIPMAP_FILTER_LANCZOS,
+                              "Kaiser",    DDS_MIPMAP_FILTER_KAISER,
+                              NULL);
+  mipmap_filter_opt = gimp_prop_int_combo_box_new (config, "mipmap-filter",
+                                                   GIMP_INT_STORE (store));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("F_ilter:"),
                             0.0, 0.5,
-                            opt, 1);
+                            mipmap_filter_opt, 1);
 
-  mipmap_filter_opt = opt;
-
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (opt),
-                              dds_write_vals.mipmap_filter,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dds_write_vals.mipmap_filter, NULL);
-
-  opt = gimp_int_combo_box_new ("Default", DDS_MIPMAP_WRAP_DEFAULT,
-                                "Mirror",  DDS_MIPMAP_WRAP_MIRROR,
-                                "Repeat",  DDS_MIPMAP_WRAP_REPEAT,
-                                "Clamp",   DDS_MIPMAP_WRAP_CLAMP,
-                                NULL);
+  store = gimp_int_store_new ("Default", DDS_MIPMAP_WRAP_DEFAULT,
+                              "Mirror",  DDS_MIPMAP_WRAP_MIRROR,
+                              "Repeat",  DDS_MIPMAP_WRAP_REPEAT,
+                              "Clamp",   DDS_MIPMAP_WRAP_CLAMP,
+                              NULL);
+  mipmap_wrap_opt = gimp_prop_int_combo_box_new (config, "mipmap-wrap",
+                                                 GIMP_INT_STORE (store));
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Wrap mode:"),
                             0.0, 0.5,
-                            opt, 1);
+                            mipmap_wrap_opt, 1);
 
-  mipmap_wrap_opt = opt;
+  gamma_check = gimp_prop_check_button_new (config, "gamma-correct",
+                                            _("Appl_y gamma correction"));
+  gtk_grid_attach (GTK_GRID (grid), gamma_check, 1, 2, 1, 1);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (opt),
-                              dds_write_vals.mipmap_wrap,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dds_write_vals.mipmap_wrap, NULL);
+  srgb_check = gimp_prop_check_button_new (config, "srgb",
+                                           _("Use s_RGB colorspace"));
+  gtk_grid_attach (GTK_GRID (grid), srgb_check, 1, 3, 1, 1);
 
-  check = gtk_check_button_new_with_mnemonic (_("Appl_y gamma correction"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
-                                dds_write_vals.gamma_correct &&
-                                dds_write_vals.mipmaps);
-  gtk_grid_attach (GTK_GRID (grid), check, 1, 2, 1, 1);
-  gtk_widget_show (check);
-
-  gamma_chk = check;
-
-  g_signal_connect (check, "clicked",
-                    G_CALLBACK (gamma_correct_clicked),
-                    NULL);
-
-  check = gtk_check_button_new_with_mnemonic (_("Use s_RGB colorspace"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
-                                dds_write_vals.gamma_correct &&
-                                dds_write_vals.srgb);
-  gtk_grid_attach (GTK_GRID (grid), check, 1, 3, 1, 1);
-  gtk_widget_show (check);
-
-  srgb_chk = check;
-
-  g_signal_connect (check, "clicked",
-                    G_CALLBACK (srgb_clicked),
-                    NULL);
-
-  spin = gimp_spin_button_new
-    (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.gamma,
-                                         1e-05, 100, 0.1, 0.5, 0)), 1, 1);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spin),
-                                     GTK_UPDATE_IF_VALID);
+  gamma_spin = gimp_prop_spin_button_new (config, "gamma",
+                                          0.1, 0.5, 1);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
-                            _("_Gamma:"),
-                            0.0, 0.5,
-                            spin, 1);
+                            _("_Gamma:"), 0.0, 0.5,
+                            gamma_spin, 1);
 
-  gamma_spin = spin;
+  alpha_coverage_check =
+    gimp_prop_check_button_new (config, "preserve-alpha-coverage",
+                                _("Preserve alpha _test coverage"));
+  gtk_grid_attach (GTK_GRID (grid), alpha_coverage_check, 1, 5, 1, 1);
 
-  g_signal_connect (spin, "value_changed",
-                    G_CALLBACK (gamma_changed),
-                    NULL);
-
-  check = gtk_check_button_new_with_mnemonic (_("Preserve alpha _test coverage"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
-                                dds_write_vals.preserve_alpha_coverage &&
-                                dds_write_vals.mipmaps);
-  gtk_grid_attach (GTK_GRID (grid), check, 1, 5, 1, 1);
-  gtk_widget_show (check);
-
-  alpha_coverage_chk = check;
-
-  g_signal_connect (check, "clicked",
-                    G_CALLBACK (alpha_coverage_clicked),
-                    NULL);
-
-  spin = gimp_spin_button_new
-    (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.alpha_test_threshold,
-                                         0, 1, 0.01, 0.1, 0)), 1, 2);
-  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spin),
-                                     GTK_UPDATE_IF_VALID);
+  alpha_test_threshold_spin =
+    gimp_prop_spin_button_new (config, "alpha-test-threshold",
+                               0.01, 0.1, 2);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6,
-                            _("_Alpha test threshold:"),
-                            0.0, 0.5,
-                            spin, 1);
+                            _("_Alpha test threshold:"), 0.0, 0.5,
+                            alpha_test_threshold_spin, 1);
 
-  alpha_test_threshold_spin = spin;
+  config_notify (config,
+                 g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                               "compression-format"),
+                 image);
 
-  g_signal_connect (spin, "value_changed",
-                    G_CALLBACK (alpha_test_threshold_changed),
-                    NULL);
+  config_notify (config,
+                 g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                               "mipmaps"),
+                 image);
 
-  gtk_widget_set_sensitive (mipmap_filter_opt,
-                            dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-  gtk_widget_set_sensitive (mipmap_wrap_opt,
-                            dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-  gtk_widget_set_sensitive (gamma_chk
-                            , dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-  gtk_widget_set_sensitive (srgb_chk,
-                            (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE) &&
-                            dds_write_vals.gamma_correct);
-  gtk_widget_set_sensitive (gamma_spin,
-                            (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE) &&
-                            dds_write_vals.gamma_correct &&
-                            !dds_write_vals.srgb);
-  gtk_widget_set_sensitive (pm_chk,
-                            dds_write_vals.compression != DDS_COMPRESS_NONE);
-  gtk_widget_set_sensitive (alpha_coverage_chk,
-                            dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE);
-  gtk_widget_set_sensitive (alpha_test_threshold_spin,
-                            (dds_write_vals.mipmaps == DDS_MIPMAP_GENERATE) &&
-                            dds_write_vals.preserve_alpha_coverage);
+  config_notify (config,
+                 g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                               "save-type"),
+                 image);
+
+  config_notify (config,
+                 g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                               "transparent-color"),
+                 image);
+
+  g_signal_connect (config, "notify",
+                    G_CALLBACK (config_notify),
+                    image);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  g_signal_handlers_disconnect_by_func (config,
+                                        config_notify,
+                                        image);
 
   gtk_widget_destroy (dialog);
 

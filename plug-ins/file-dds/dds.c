@@ -88,25 +88,6 @@ G_DEFINE_TYPE (Dds, dds, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (DDS_TYPE)
 
 
-
-DDSWriteVals dds_write_vals =
-{
-  DDS_COMPRESS_NONE,
-  DDS_MIPMAP_NONE,
-  DDS_SAVE_SELECTED_LAYER,
-  DDS_FORMAT_DEFAULT,
-  -1,
-  DDS_MIPMAP_FILTER_DEFAULT,
-  DDS_MIPMAP_WRAP_DEFAULT,
-  FALSE,
-  FALSE,
-  0.0,
-  FALSE,
-  FALSE,
-  0.5
-};
-
-
 static void
 dds_class_init (DdsClass *klass)
 {
@@ -230,16 +211,28 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_INT (procedure, "format",
                          "Format",
-                         "Pixel format (0 = default, 1 = R5G6B5, 2 = RGBA4, "
-                         "3 = RGB5A1, 4 = RGB10A2)",
-                         0, 4, DDS_FORMAT_DEFAULT,
+                         "Pixel format (0 = default, 1 = DDS_FORMAT_RGB8, "
+                         "2 = DDS_FORMAT_RGBA8, 3 = DDS_FORMAT_BGR8, "
+                         "4 = DDS_FORMAT_ABGR8, 5 = DDS_FORMAT_R5G6B5, "
+                         "6 = DDS_FORMAT_RGBA4, 7 = DDS_FORMAT_RGB5A1, "
+                         "8 = DDS_FORMAT_RGB10A2, 9 = DDS_FORMAT_R3G3B2, "
+                         "10 = DDS_FORMAT_A8, 11 = DDS_FORMAT_L8, "
+                         "12 = DDS_FORMAT_L8A8, 13 = DDS_FORMAT_AEXP, "
+                         "14 = DDS_FORMAT_YCOCG)",
+                         0, 14, DDS_FORMAT_DEFAULT,
                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-color",
+                             "Transparent color",
+                             "Make an indexed color transparent",
+                             FALSE,
+                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "transparent-index",
                          "Transparent index",
                          "Index of transparent color or -1 to disable "
                          "(for indexed images only).",
-                         -1, 255, -1,
+                         0, 255, 0,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "mipmap-filter",
@@ -412,12 +405,17 @@ dds_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GError              *error = NULL;
+  gdouble              gamma;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
   switch (run_mode)
     {
@@ -442,51 +440,28 @@ dds_save (GimpProcedure        *procedure,
       break;
     }
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (SAVE_PROC, &dds_write_vals);
-      break;
+  g_object_get (config,
+                "gamma", &gamma,
+                NULL);
 
-    case GIMP_RUN_NONINTERACTIVE:
-      dds_write_vals.compression             = GIMP_VALUES_GET_INT (args, 0);
-      dds_write_vals.mipmaps                 = GIMP_VALUES_GET_INT (args, 1);
-      dds_write_vals.savetype                = GIMP_VALUES_GET_INT (args, 2);
-      dds_write_vals.format                  = GIMP_VALUES_GET_INT (args, 3);
-      dds_write_vals.transindex              = GIMP_VALUES_GET_INT (args, 4);
-      dds_write_vals.mipmap_filter           = GIMP_VALUES_GET_INT (args, 5);
-      dds_write_vals.mipmap_wrap             = GIMP_VALUES_GET_INT (args, 6);
-      dds_write_vals.gamma_correct           = GIMP_VALUES_GET_BOOLEAN (args, 7);
-      dds_write_vals.srgb                    = GIMP_VALUES_GET_BOOLEAN (args, 8);
-      dds_write_vals.gamma                   = GIMP_VALUES_GET_DOUBLE  (args, 9);
-      dds_write_vals.perceptual_metric       = GIMP_VALUES_GET_BOOLEAN (args, 10);
-      dds_write_vals.preserve_alpha_coverage = GIMP_VALUES_GET_BOOLEAN (args, 11);
-      dds_write_vals.alpha_test_threshold    = GIMP_VALUES_GET_DOUBLE  (args, 12);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (SAVE_PROC, &dds_write_vals);
-      break;
-
-    default:
-      break;
-    }
-
-  if (dds_write_vals.gamma < 1e-04f)
-    /* gimp_gamma () got removed and was always returning 2.2 anyway.
-     * XXX Review this piece of code if we expect gamma value could be
-     * parameterized.
-     */
-    dds_write_vals.gamma = 2.2;
+  /* gimp_gamma () got removed and was always returning 2.2 anyway.
+   * XXX Review this piece of code if we expect gamma value could be
+   * parameterized.
+   */
+  if (gamma < 1e-04f)
+    g_object_set (config,
+                  "gamma", 2.2,
+                  NULL);
 
   status = write_dds (file, image, drawable,
-                      run_mode == GIMP_RUN_INTERACTIVE);
-
-  if (status == GIMP_PDB_SUCCESS)
-    gimp_set_data (SAVE_PROC, &dds_write_vals, sizeof (dds_write_vals));
+                      run_mode == GIMP_RUN_INTERACTIVE,
+                      procedure, G_OBJECT (config));
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

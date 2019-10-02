@@ -30,25 +30,6 @@
     (unsigned int)(DDS_PLUGIN_VERSION_MINOR <<  8) | \
     (unsigned int)(DDS_PLUGIN_VERSION_REVISION))
 
-typedef struct
-{
-  gint     compression;
-  gint     mipmaps;
-  gint     savetype;
-  gint     format;
-  gint     transindex;
-  gint     mipmap_filter;
-  gint     mipmap_wrap;
-  gboolean gamma_correct;
-  gboolean srgb;
-  gdouble  gamma;
-  gboolean perceptual_metric;
-  gboolean preserve_alpha_coverage;
-  gdouble  alpha_test_threshold;
-} DDSWriteVals;
-
-extern DDSWriteVals dds_write_vals;
-
 extern GimpPDBStatusType read_dds  (GFile         *file,
                                     GimpImage    **image,
                                     gboolean       interactive,
@@ -57,7 +38,9 @@ extern GimpPDBStatusType read_dds  (GFile         *file,
 extern GimpPDBStatusType write_dds (GFile         *file,
                                     GimpImage     *image,
                                     GimpDrawable  *drawable,
-                                    gboolean       interactive);
+                                    gboolean       interactive,
+                                    GimpProcedure *procedure,
+                                    GObject       *config);
 
 
 #define LOAD_PROC                "file-dds-load"
