@@ -689,7 +689,10 @@ static GimpTransformResize
 gimp_item_real_get_clip (GimpItem            *item,
                          GimpTransformResize  clip_result)
 {
-  return clip_result;
+  if (gimp_item_get_lock_position (item))
+    return GIMP_TRANSFORM_RESIZE_CLIP;
+  else
+    return clip_result;
 }
 
 

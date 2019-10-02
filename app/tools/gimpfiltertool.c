@@ -169,6 +169,9 @@ static void      gimp_filter_tool_config_notify  (GObject             *object,
 static void      gimp_filter_tool_unset_setting  (GObject             *object,
                                                   const GParamSpec    *pspec,
                                                   GimpFilterTool      *filter_tool);
+static void      gimp_filter_tool_lock_position_changed
+                                                 (GimpDrawable        *drawable,
+                                                  GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_mask_changed   (GimpImage           *image,
                                                   GimpFilterTool      *filter_tool);
 
@@ -452,6 +455,10 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   gimp_tool_gui_set_viewable (filter_tool->gui, GIMP_VIEWABLE (drawable));
 
   gimp_tool_gui_show (filter_tool->gui);
+
+  g_signal_connect_object (drawable, "lock-position-changed",
+                           G_CALLBACK (gimp_filter_tool_lock_position_changed),
+                           filter_tool, 0);
 
   g_signal_connect_object (image, "mask-changed",
                            G_CALLBACK (gimp_filter_tool_mask_changed),
@@ -972,6 +979,10 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
     {
       GimpImage *image = gimp_display_get_image (tool->display);
 
+      g_signal_handlers_disconnect_by_func (tool->drawable,
+                                            gimp_filter_tool_lock_position_changed,
+                                            filter_tool);
+
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_filter_tool_mask_changed,
                                             filter_tool);
@@ -1206,6 +1217,13 @@ gimp_filter_tool_unset_setting (GObject          *object,
                                         filter_tool);
 
   gimp_settings_box_unset (GIMP_SETTINGS_BOX (filter_tool->settings_box));
+}
+
+static void
+gimp_filter_tool_lock_position_changed (GimpDrawable   *drawable,
+                                        GimpFilterTool *filter_tool)
+{
+  gimp_filter_tool_update_dialog (filter_tool);
 }
 
 static void
