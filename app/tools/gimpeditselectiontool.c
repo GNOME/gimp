@@ -596,6 +596,8 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
 
           edit_select->live_items = g_list_prepend (NULL, active_item);
 
+          gimp_viewable_preview_freeze (GIMP_VIEWABLE (active_item));
+
           gimp_item_start_transform (active_item, TRUE);
 
           /*  fallthru  */
