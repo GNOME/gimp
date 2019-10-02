@@ -454,7 +454,7 @@ gimp_procedure_config_load_default (GimpProcedureConfig  *config,
                                           file,
                                           NULL, error);
 
-  if (! success && (*error)->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+  if (! success && error && (*error)->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
       g_clear_error (error);
     }
