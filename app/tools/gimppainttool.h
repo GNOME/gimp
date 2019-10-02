@@ -69,6 +69,8 @@ struct _GimpPaintToolClass
 {
   GimpColorToolClass  parent_class;
 
+  void             (* paint_prepare) (GimpPaintTool *paint_tool,
+                                      GimpDisplay   *display);
   void             (* paint_start)   (GimpPaintTool *paint_tool);
   void             (* paint_end)     (GimpPaintTool *paint_tool);
   void             (* paint_flush)   (GimpPaintTool *paint_tool);

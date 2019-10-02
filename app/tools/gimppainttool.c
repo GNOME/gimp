@@ -99,6 +99,10 @@ static void   gimp_paint_tool_oper_update    (GimpTool              *tool,
 
 static void   gimp_paint_tool_draw           (GimpDrawTool          *draw_tool);
 
+static void
+          gimp_paint_tool_real_paint_prepare (GimpPaintTool         *paint_tool,
+                                              GimpDisplay           *display);
+
 static GimpCanvasItem *
               gimp_paint_tool_get_outline    (GimpPaintTool         *paint_tool,
                                               GimpDisplay           *display,
@@ -142,6 +146,8 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->oper_update    = gimp_paint_tool_oper_update;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
+
+  klass->paint_prepare       = gimp_paint_tool_real_paint_prepare;
 }
 
 static void
@@ -815,6 +821,15 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
     }
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+}
+
+static void
+gimp_paint_tool_real_paint_prepare (GimpPaintTool *paint_tool,
+                                    GimpDisplay   *display)
+{
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
+
+  gimp_paint_core_set_show_all (paint_tool->core, shell->show_all);
 }
 
 static GimpCanvasItem *
