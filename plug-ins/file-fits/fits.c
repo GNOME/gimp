@@ -55,15 +55,6 @@
 #define PLUG_IN_ROLE   "gimp-file-fits"
 
 
-/* Load info */
-typedef struct
-{
-  gint replace;     /* replacement for blank/NaN-values    */
-  gint use_datamin; /* Use DATAMIN/MAX-scaling if possible */
-  gint compose;     /* compose images with naxis==3        */
-} FITSLoadVals;
-
-
 typedef struct _Fits      Fits;
 typedef struct _FitsClass FitsClass;
 
@@ -101,6 +92,8 @@ static GimpValueArray * fits_save             (GimpProcedure        *procedure,
                                                gpointer              run_data);
 
 static GimpImage      * load_image            (GFile              *file,
+                                               GObject            *config,
+                                               GimpRunMode         run_mode,
                                                GError            **error);
 static gint             save_image            (GFile              *file,
                                                GimpImage          *image,
@@ -127,30 +120,20 @@ static GimpImage      * create_new_image      (GFile              *file,
                                                GimpLayer         **layer,
                                                GeglBuffer        **buffer);
 
-static void             check_load_vals       (void);
-
 static GimpImage      * load_fits             (GFile              *file,
                                                FitsFile           *ifp,
+                                               GObject            *config,
                                                guint               picnum,
                                                guint               ncompose);
 
-static gboolean         load_dialog           (void);
+static gboolean         load_dialog           (GimpProcedure      *procedure,
+                                               GObject            *config);
 static void             show_fits_errors      (void);
 
 
 G_DEFINE_TYPE (Fits, fits, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (FITS_TYPE)
-
-
-static FITSLoadVals plvals =
-{
-  0,        /* Replace with black */
-  0,        /* Do autoscale on pixel-values */
-  0         /* Don't compose images */
-};
-
-static GimpRunMode l_run_mode;
 
 
 static void
@@ -209,6 +192,24 @@ fits_create_procedure (GimpPlugIn  *plug_in,
                                           "fit,fits");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,SIMPLE");
+
+      GIMP_PROC_AUX_ARG_INT (procedure, "replace",
+                             "Replace",
+                             "Replacement for undefined pixels",
+                             0, 255, 0,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-data-min-max",
+                                 "Use data min max",
+                                 "Use DATAMIN/DATAMAX-scaling if possible",
+                                 FALSE,
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "compose",
+                                 "Compose",
+                                 "Image composing",
+                                 FALSE,
+                                 G_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_PROC))
     {
@@ -242,42 +243,31 @@ fits_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 fits_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+           GimpRunMode           run_mode,
+           GFile                *file,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
-  GError         *error = NULL;
+  GimpProcedureConfig *config;
+  GimpValueArray      *return_vals;
+  GimpImage           *image;
+  GError              *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  l_run_mode = run_mode;
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
-  switch (run_mode)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (LOAD_PROC, &plvals);
-
-      if (! load_dialog ())
+      if (! load_dialog (procedure, G_OBJECT (config)))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (LOAD_PROC, &plvals);
-      break;
-
-    default:
-      break;
     }
 
-  check_load_vals ();
-
-  image = load_image (file, &error);
+  image = load_image (file, G_OBJECT (config), run_mode, &error);
 
   /* Write out error messages of FITS-Library */
   show_fits_errors ();
@@ -287,7 +277,8 @@ fits_load (GimpProcedure        *procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
 
-  gimp_set_data (LOAD_PROC, &plvals, sizeof (FITSLoadVals));
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -300,12 +291,12 @@ fits_load (GimpProcedure        *procedure,
 
 static GimpValueArray *
 fits_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          GimpDrawable         *drawable,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
+           GFile                *file,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -313,8 +304,6 @@ fits_save (GimpProcedure        *procedure,
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  l_run_mode = run_mode;
 
   switch (run_mode)
     {
@@ -350,8 +339,10 @@ fits_save (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (GFile   *file,
-            GError **error)
+load_image (GFile        *file,
+            GObject      *config,
+            GimpRunMode   run_mode,
+            GError      **error)
 {
   GimpImage   *image;
   GimpImage  **image_list;
@@ -363,6 +354,11 @@ load_image (GFile   *file,
   FILE        *fp;
   FitsFile    *ifp;
   FitsHduList *hdu;
+  gboolean     compose_arg;
+
+  g_object_get (config,
+                "compose", &compose_arg,
+                NULL);
 
   filename = g_file_get_path (file);
   fp = g_fopen (filename, "rb");
@@ -409,7 +405,7 @@ load_image (GFile   *file,
         break;
 
       /* Get number of FITS-images to compose */
-      compose = (plvals.compose && (hdu_picnum == 1) && (hdu->naxis == 3) &&
+      compose = (compose_arg && (hdu_picnum == 1) && (hdu->naxis == 3) &&
                  (hdu->naxisn[2] > 1) && (hdu->naxisn[2] <= 4));
 
       if (compose)
@@ -417,7 +413,7 @@ load_image (GFile   *file,
       else
         compose = 1;  /* Load as GRAY */
 
-      image = load_fits (file, ifp, picnum, compose);
+      image = load_fits (file, ifp, config, picnum, compose);
 
       /* Write out error messages of FITS-Library */
       show_fits_errors ();
@@ -447,7 +443,7 @@ load_image (GFile   *file,
   fits_close (ifp);
 
   /* Display images in reverse order. The last will be displayed by GIMP itself*/
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
       for (k = n_images-1; k >= 1; k--)
         {
@@ -520,15 +516,6 @@ save_image (GFile         *file,
   return retval;
 }
 
-
-/* Check (and correct) the load values plvals */
-static void
-check_load_vals (void)
-{
-  if (plvals.replace > 255) plvals.replace = 255;
-}
-
-
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static GimpImage *
 create_new_image (GFile              *file,
@@ -578,6 +565,7 @@ create_new_image (GFile              *file,
 static GimpImage *
 load_fits (GFile    *file,
            FitsFile *ifp,
+           GObject  *config,
            guint     picnum,
            guint     ncompose)
 {
@@ -597,6 +585,13 @@ load_fits (GFile    *file,
   FitsPixTransform   trans;
   double             datamax, replacetransform;
   const Babl        *type, *format;
+  gint               replace;
+  gboolean           use_datamin;
+
+  g_object_get (config,
+                "replace",          &replace,
+                "use-data-min-max", &use_datamin,
+                NULL);
 
   hdulist = fits_seek_image (ifp, (int)picnum);
   if (hdulist == NULL)
@@ -700,7 +695,7 @@ load_fits (GFile    *file,
   /* If the transformation from pixel value to data value has been
    * specified, use it
    */
-  if (plvals.use_datamin    &&
+  if (use_datamin &&
       hdulist->used.datamin && hdulist->used.datamax &&
       hdulist->used.bzero   && hdulist->used.bscale)
     {
@@ -720,7 +715,7 @@ load_fits (GFile    *file,
 
   trans.datamin     = 0.0;
   trans.datamax     = datamax;
-  trans.replacement = plvals.replace * replacetransform;
+  trans.replacement = replace * replacetransform;
   trans.dsttyp      = 'k';
 
   /* FITS stores images with bottom row first. Therefore we have to
@@ -1169,32 +1164,20 @@ save_fits (FitsFile     *ofp,
 /*  Load interface functions  */
 
 static gboolean
-load_dialog (void)
+load_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkWidget    *vbox;
+  GtkListStore *store;
+  GtkWidget    *frame;
+  gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Load FITS File"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Open"),   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Open FITS File"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -1202,44 +1185,29 @@ load_dialog (void)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Replacement for undefined pixels"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &plvals.replace, plvals.replace,
-
-                                    _("_Black"), 0,   NULL,
-                                    _("_White"), 255, NULL,
-
-                                    NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  frame =
-    gimp_int_radio_group_new (TRUE, _("Pixel value scaling"),
-                              G_CALLBACK (gimp_radio_button_update),
-                              &plvals.use_datamin, plvals.use_datamin,
-
-                              _("_Automatic"),          FALSE, NULL,
-                              _("By _DATAMIN/DATAMAX"), TRUE,  NULL,
-
+  store = gimp_int_store_new (_("_Black"), 0,
+                              _("_White"), 255,
                               NULL);
+  frame = gimp_prop_int_radio_frame_new (config, "replace",
+                                         _("Replacement for undefined pixels"),
+                                         GIMP_INT_STORE (store));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
-  frame =
-    gimp_int_radio_group_new (TRUE, _("Image Composing"),
-                              G_CALLBACK (gimp_radio_button_update),
-                              &plvals.compose, plvals.compose,
-
-                              C_("composing", "_None"),   FALSE, NULL,
-                              "NA_XIS=3, NAXIS3=2,...,4", TRUE,  NULL,
-
-                              NULL);
+  frame = gimp_prop_boolean_radio_frame_new (config, "use-data-min-max",
+                                             _("Pixel value scaling"),
+                                             _("By _DATAMIN/DATAMAX"),
+                                             _("_Automatic"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+
+  frame = gimp_prop_boolean_radio_frame_new (config, "compose",
+                                             _("Image Composing"),
+                                             "NA_XIS=3, NAXIS3=2,...,4",
+                                             C_("composing", "_None"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
