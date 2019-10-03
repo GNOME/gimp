@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-26 19:33+0000\n"
-"PO-Revision-Date: 2019-09-26 23:33+0200\n"
+"POT-Creation-Date: 2019-09-28 19:27+0000\n"
+"PO-Revision-Date: 2019-09-28 23:36+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -870,7 +870,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: ../plug-ins/common/file-raw-data.c:1161 ../plug-ins/common/file-sunras.c:623
 #: ../plug-ins/common/file-tga.c:1220 ../plug-ins/common/file-xmc.c:1561
 #: ../plug-ins/common/sphere-designer.c:2196
-#: ../plug-ins/file-bmp/bmp-save.c:322 ../plug-ins/file-fits/fits.c:511
+#: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:511
 #: ../plug-ins/file-fli/fli-gimp.c:767 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:340 ../plug-ins/file-psd/psd-save.c:1624
 #: ../plug-ins/file-tiff/file-tiff-save.c:983
@@ -1928,7 +1928,6 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #.
 #. * Open the file and initialize the PNG write "engine"...
 #.
-#. Let's begin the progress
 #.
 #. * Open the file for writing...
 #.
@@ -1939,7 +1938,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: ../plug-ins/common/file-ps.c:1309 ../plug-ins/common/file-sunras.c:612
 #: ../plug-ins/common/file-tga.c:1210 ../plug-ins/common/file-xbm.c:1076
 #: ../plug-ins/common/file-xpm.c:684 ../plug-ins/common/file-xwd.c:663
-#: ../plug-ins/file-bmp/bmp-save.c:311 ../plug-ins/file-fits/fits.c:500
+#: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:500
 #: ../plug-ins/file-fli/fli-gimp.c:732 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:293 ../plug-ins/file-psd/psd-save.c:1587
 #: ../plug-ins/file-sgi/sgi.c:574 ../plug-ins/file-tiff/file-tiff-save.c:973
@@ -2340,9 +2339,8 @@ msgstr "Izberi sliko"
 msgid "Export Image as HEIF"
 msgstr "Izvozi sliko kot HEIF"
 
-#. Create the lossless checkbox
 #: ../plug-ins/common/file-heif.c:1265
-#: ../plug-ins/file-webp/file-webp-dialog.c:126
+#: ../plug-ins/file-webp/file-webp-dialog.c:119
 msgid "_Lossless"
 msgstr "_Brez izgub"
 
@@ -2350,9 +2348,8 @@ msgstr "_Brez izgub"
 msgid "_Quality"
 msgstr "_Kakovost"
 
-#. Color profile
 #: ../plug-ins/common/file-heif.c:1286 ../plug-ins/file-jpeg/jpeg-save.c:1001
-#: ../plug-ins/file-webp/file-webp-dialog.c:385
+#: ../plug-ins/file-webp/file-webp-dialog.c:305
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save color _profile"
 msgstr "Shrani _barvni profil"
@@ -2689,7 +2686,7 @@ msgstr "Privzeta zakasnitev slik:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1791
-#: ../plug-ins/file-webp/file-webp-dialog.c:348
+#: ../plug-ins/file-webp/file-webp-dialog.c:282
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "milliseconds"
 msgstr "milisekund"
@@ -4227,8 +4224,8 @@ msgstr "Komentar je omejen na %d znakov."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1546
-#: ../plug-ins/file-webp/file-webp-save.c:201
-#: ../plug-ins/file-webp/file-webp-save.c:569
+#: ../plug-ins/file-webp/file-webp-save.c:196
+#: ../plug-ins/file-webp/file-webp-save.c:591
 #, c-format
 msgid "Saving '%s'"
 msgstr "Shranjevanje »%s«"
@@ -6013,56 +6010,69 @@ msgstr "Nepodprta vrsta datoteke ali neveljavna bitna globina."
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitna slika se nepričakovano zaključi."
 
-#: ../plug-ins/file-bmp/bmp-save.c:183 ../plug-ins/file-bmp/bmp-save.c:216
+#: ../plug-ins/file-bmp/bmp-save.c:186 ../plug-ins/file-bmp/bmp-save.c:219
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Indeksirane slike s prosojnostjo ni mogoče shraniti v zapisu BMP."
 
-#: ../plug-ins/file-bmp/bmp-save.c:185 ../plug-ins/file-bmp/bmp-save.c:218
+#: ../plug-ins/file-bmp/bmp-save.c:188 ../plug-ins/file-bmp/bmp-save.c:221
 msgid "Alpha channel will be ignored."
 msgstr "Kanal alfa ne bo upoštevan."
 
-#. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:914
+#: ../plug-ins/file-bmp/bmp-save.c:963
+msgid "Export Image as BMP"
+msgstr "Izvozi sliko kot BMP"
+
+#: ../plug-ins/file-bmp/bmp-save.c:975
 msgid "_Run-Length Encoded"
 msgstr "_Kodirano s tekočo dolžino (RLE)"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:927
-msgid "Co_mpatibility Options"
-msgstr "Možnosti z_družljivosti"
+#: ../plug-ins/file-bmp/bmp-save.c:982
+msgid "Compatibility"
+msgstr "Združljivost"
 
-#: ../plug-ins/file-bmp/bmp-save.c:937
-msgid "_Do not write color space information"
-msgstr "_Ne zapisuj podatkov o barvnem prostoru"
+#: ../plug-ins/file-bmp/bmp-save.c:987
+msgid "_Write color space information"
+msgstr "_ Zapiši informacije o barvnem prostoru"
 
-#: ../plug-ins/file-bmp/bmp-save.c:939
+#: ../plug-ins/file-bmp/bmp-save.c:989
 msgid ""
 "Some applications can not read BMP images that include color space "
-"information. GIMP writes color space information by default. Enabling this "
+"information. GIMP writes color space information by default. Disabling this "
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
 "Nekateri programi ne morejo brati slik BMP, ki vsebujejo podatke o barvnem "
 "prostoru. GIMP privzeto zapiše podatke o barvnem prostoru. S to možnostjo "
 "GIMP v datoteko ne bo zapisal podatkov o barvnem prostoru."
 
-#. Advanced Options
-#. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:955 ../plug-ins/file-jpeg/jpeg-save.c:1041
-#: ../plug-ins/file-webp/file-webp-dialog.c:220
-msgid "_Advanced Options"
-msgstr "_Napredne možnosti"
+#. RGB Encoding Pptions
+#: ../plug-ins/file-bmp/bmp-save.c:998
+msgid "RGB Encoding"
+msgstr "Kodiranje RGB"
 
-#: ../plug-ins/file-bmp/bmp-save.c:970
-msgid "16 bits"
-msgstr "16-bitno"
+#: ../plug-ins/file-bmp/bmp-save.c:1005
+msgid "16 bit (R5 G6 B5"
+msgstr "16-bitno (R5 G6 B5"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1006
-msgid "24 bits"
-msgstr "24-bitno"
+msgid "16 bit (A1 R5 G5 B5"
+msgstr "16-bitno (a1 R5 G5 B5"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1023
-msgid "32 bits"
-msgstr "32-bitno"
+#: ../plug-ins/file-bmp/bmp-save.c:1007
+msgid "16 bit (X1 R5 G5 B5"
+msgstr "16-bitno (X1 R5 G5 B5"
+
+#: ../plug-ins/file-bmp/bmp-save.c:1008
+msgid "24 bit (R8 G8 B8)"
+msgstr "24-bitno (R8 G8 B8)"
+
+#: ../plug-ins/file-bmp/bmp-save.c:1009
+msgid "32 bit (A8 R8 G8 B8)"
+msgstr "32-bitno (A8 R8 G8 B8)"
+
+#: ../plug-ins/file-bmp/bmp-save.c:1010
+msgid "32 bit (X8 R8 G8 B8)"
+msgstr "32-bitno (X8 R8 G8 B8)"
 
 #: ../plug-ins/file-bmp/bmp.c:149 ../plug-ins/file-bmp/bmp.c:175
 msgid "Windows BMP image"
@@ -6393,9 +6403,8 @@ msgstr "Poka_ži predogled v oknu slike"
 msgid "Save _Exif data"
 msgstr "Shrani podatke _Exif"
 
-#. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:959
-#: ../plug-ins/file-webp/file-webp-dialog.c:375
+#: ../plug-ins/file-webp/file-webp-dialog.c:300
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save _XMP data"
 msgstr "Shrani podatke _XMP"
@@ -6414,6 +6423,12 @@ msgstr "Shrani sli_čico za predogled"
 #: ../plug-ins/file-jpeg/jpeg-save.c:1014
 msgid "Comment"
 msgstr "Komentar"
+
+#. Advanced expander
+#: ../plug-ins/file-jpeg/jpeg-save.c:1041
+#: ../plug-ins/file-webp/file-webp-dialog.c:182
+msgid "_Advanced Options"
+msgstr "_Napredne možnosti"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1069
 msgid "S_moothing:"
@@ -6930,75 +6945,62 @@ msgstr "Faks CCITT Group _4"
 msgid "WebP image"
 msgstr "Slika WebP"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:70
+#: ../plug-ins/file-webp/file-webp-dialog.c:62
 msgid "(no keyframes)"
 msgstr "(brez ključnih sličic)"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:74
+#: ../plug-ins/file-webp/file-webp-dialog.c:66
 msgid "(all frames are keyframes)"
 msgstr "(vse sličice so ključne sličice)"
 
-#. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:109
-msgid "WebP"
-msgstr "WebP"
+#: ../plug-ins/file-webp/file-webp-dialog.c:103
+msgid "Export Image as WebP"
+msgstr "Izvozi sliko kot WebP"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:140
+#: ../plug-ins/file-webp/file-webp-dialog.c:126
 msgid "Image _quality:"
 msgstr "_Kakovost slike:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:148
-msgid "Image quality"
-msgstr "Kakovost slike"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:159
+#: ../plug-ins/file-webp/file-webp-dialog.c:133
 msgid "Alpha q_uality:"
 msgstr "_Kakovost alfe:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:167
-msgid "Alpha channel quality"
-msgstr "Kakovost kanala alfa"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:192
+#: ../plug-ins/file-webp/file-webp-dialog.c:161
 msgid "Source _type:"
 msgstr "Vrsta _vira:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:195
+#: ../plug-ins/file-webp/file-webp-dialog.c:164
 msgid "WebP encoder \"preset\""
 msgstr "»Prednastavitev« kodirnika WebP"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:227
+#: ../plug-ins/file-webp/file-webp-dialog.c:189
 msgid "As A_nimation"
 msgstr "Kot a_nimacija"
 
-#. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:256
+#: ../plug-ins/file-webp/file-webp-dialog.c:213
 msgid "Loop _forever"
 msgstr "Zankaj ne_skončno"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:273
+#: ../plug-ins/file-webp/file-webp-dialog.c:224
 msgid "Max distance between key-frames:"
 msgstr "Največja razdalja med ključnima sličicama:"
 
-#. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:308
+#: ../plug-ins/file-webp/file-webp-dialog.c:252
 msgid "_Minimize output size (slower)"
 msgstr "_Minimiziraj izhodno velikost (počasneje)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:331
+#: ../plug-ins/file-webp/file-webp-dialog.c:271
 msgid "Delay between frames where unspecified:"
 msgstr "Zakasnitev med sličicami, kjer ni določena:"
 
-#. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:353
+#: ../plug-ins/file-webp/file-webp-dialog.c:288
 msgid "Use _delay entered above for all frames"
 msgstr "Uporabi zgoraj vneseno _zakasnitev za vse sličice"
 
-#. Save EXIF data
-#: ../plug-ins/file-webp/file-webp-dialog.c:365
+#: ../plug-ins/file-webp/file-webp-dialog.c:295
 msgid "_Save Exif data"
 msgstr "_Shrani podatke Exif"
 
@@ -7027,61 +7029,61 @@ msgstr "Spodletelo dekodiranje sličice animiranega WebP iz »%s«"
 msgid "Frame %d (%dms)"
 msgstr "Sličica %d (%d ms)"
 
-#: ../plug-ins/file-webp/file-webp-save.c:116
+#: ../plug-ins/file-webp/file-webp-save.c:101
 msgid "out of memory"
 msgstr "pomanjkanje pomnilnika"
 
-#: ../plug-ins/file-webp/file-webp-save.c:118
+#: ../plug-ins/file-webp/file-webp-save.c:103
 msgid "not enough memory to flush bits"
 msgstr "premalo pomnilnika za izmet bitov"
 
-#: ../plug-ins/file-webp/file-webp-save.c:120
+#: ../plug-ins/file-webp/file-webp-save.c:105
 msgid "NULL parameter"
 msgstr "parameter NULL"
 
-#: ../plug-ins/file-webp/file-webp-save.c:122
+#: ../plug-ins/file-webp/file-webp-save.c:107
 msgid "invalid configuration"
 msgstr "neveljavna prilagoditev"
 
-#: ../plug-ins/file-webp/file-webp-save.c:124
+#: ../plug-ins/file-webp/file-webp-save.c:109
 msgid "bad image dimensions"
 msgstr "neprimerne dimenzije slike"
 
-#: ../plug-ins/file-webp/file-webp-save.c:126
+#: ../plug-ins/file-webp/file-webp-save.c:111
 msgid "partition is bigger than 512K"
 msgstr "particija je večja od 512K"
 
-#: ../plug-ins/file-webp/file-webp-save.c:128
+#: ../plug-ins/file-webp/file-webp-save.c:113
 msgid "partition is bigger than 16M"
 msgstr "particija je večja od 16Mb"
 
-#: ../plug-ins/file-webp/file-webp-save.c:130
+#: ../plug-ins/file-webp/file-webp-save.c:115
 msgid "unable to flush bytes"
 msgstr "bajtov ni mogoče izmetati"
 
-#: ../plug-ins/file-webp/file-webp-save.c:132
+#: ../plug-ins/file-webp/file-webp-save.c:117
 msgid "file is larger than 4GiB"
 msgstr "datoteka je večja kot 4 GiB"
 
-#: ../plug-ins/file-webp/file-webp-save.c:134
+#: ../plug-ins/file-webp/file-webp-save.c:119
 msgid "user aborted encoding"
 msgstr "uporabnik prekinil kodiranje"
 
-#: ../plug-ins/file-webp/file-webp-save.c:136
+#: ../plug-ins/file-webp/file-webp-save.c:121
 msgid "list terminator"
 msgstr "terminator seznama"
 
-#: ../plug-ins/file-webp/file-webp-save.c:138
+#: ../plug-ins/file-webp/file-webp-save.c:123
 msgid "unknown error"
 msgstr "neznana napaka"
 
-#: ../plug-ins/file-webp/file-webp-save.c:213
-#: ../plug-ins/file-webp/file-webp-save.c:581
+#: ../plug-ins/file-webp/file-webp-save.c:208
+#: ../plug-ins/file-webp/file-webp-save.c:603
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Datoteke »%s« ni mogoče odpreti za pisanje: %s"
 
-#: ../plug-ins/file-webp/file-webp-save.c:297
+#: ../plug-ins/file-webp/file-webp-save.c:292
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Napaka WebP: »%s«"
