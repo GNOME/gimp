@@ -62,6 +62,7 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
   gimp_gegl_apply_cached_operation (src_buffer,
                                     progress, undo_desc,
                                     operation,
+                                    TRUE,
                                     dest_buffer,
                                     dest_rect,
                                     crop_input,
@@ -81,6 +82,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                   GimpProgress        *progress,
                                   const gchar         *undo_desc,
                                   GeglNode            *operation,
+                                  gboolean             connect_src_buffer,
                                   GeglBuffer          *dest_buffer,
                                   const GeglRectangle *dest_rect,
                                   gboolean             crop_input,
@@ -226,14 +228,21 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   effect = operation;
 
-  if (src_buffer)
+  if (connect_src_buffer || crop_input)
     {
       GeglNode *src_node;
 
-      src_node = gegl_node_new_child (gegl,
-                                      "operation", "gegl:buffer-source",
-                                      "buffer",    src_buffer,
-                                      NULL);
+      operation_src_node = gegl_node_get_producer (operation, "input", NULL);
+
+      src_node = operation_src_node;
+
+      if (connect_src_buffer)
+        {
+          src_node = gegl_node_new_child (gegl,
+                                          "operation", "gegl:buffer-source",
+                                          "buffer",    src_buffer,
+                                          NULL);
+        }
 
       if (crop_input)
         {
@@ -252,8 +261,6 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
           src_node = crop_node;
         }
-
-      operation_src_node = gegl_node_get_producer (operation, "input", NULL);
 
       if (! gegl_node_has_pad (operation, "input"))
         {
