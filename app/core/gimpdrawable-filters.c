@@ -217,7 +217,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
   if (gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
                                         progress, undo_desc,
-                                        gimp_filter_get_node (filter),
+                                        gimp_filter_get_node (filter), FALSE,
                                         dest_buffer, &rect, FALSE,
                                         cache, rects, n_rects,
                                         cancellable))
