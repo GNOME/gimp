@@ -315,6 +315,8 @@ gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
       g_clear_object (&private->fs_applicator);
 
       private->fs_crop_node = NULL;
+
+      gimp_drawable_update_bounding_box (drawable);
     }
 }
 
