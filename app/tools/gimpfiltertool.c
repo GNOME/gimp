@@ -810,7 +810,9 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
     {
       gimp_drawable_filter_set_clip (filter_tool->filter,
                                      filter_options->clip ==
-                                     GIMP_TRANSFORM_RESIZE_CLIP);
+                                     GIMP_TRANSFORM_RESIZE_CLIP ||
+                                     ! gimp_drawable_has_alpha (
+                                         tool->drawable));
     }
   else if (! strcmp (pspec->name, "region") &&
            filter_tool->filter)
@@ -1120,7 +1122,9 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 
   gimp_drawable_filter_set_clip       (filter_tool->filter,
                                        options->clip ==
-                                       GIMP_TRANSFORM_RESIZE_CLIP);
+                                       GIMP_TRANSFORM_RESIZE_CLIP ||
+                                       ! gimp_drawable_has_alpha (
+                                           tool->drawable));
   gimp_drawable_filter_set_region     (filter_tool->filter,
                                        options->region);
   gimp_drawable_filter_set_gamma_hack (filter_tool->filter,
@@ -1158,7 +1162,8 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
           gtk_widget_set_visible (
             filter_tool->clip_combo,
             gimp_item_get_clip (GIMP_ITEM (tool->drawable), FALSE) == FALSE &&
-            ! gimp_gegl_node_is_point_operation (filter_tool->operation));
+            ! gimp_gegl_node_is_point_operation (filter_tool->operation)    &&
+            gimp_drawable_has_alpha (tool->drawable));
 
           gtk_widget_hide (filter_tool->region_combo);
         }
