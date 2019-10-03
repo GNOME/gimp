@@ -331,6 +331,8 @@ EXPORTS
 	gimp_prop_hscale_new
 	gimp_prop_icon_image_new
 	gimp_prop_int_combo_box_new
+	gimp_prop_int_radio_box_new
+	gimp_prop_int_radio_frame_new
 	gimp_prop_label_new
 	gimp_prop_memsize_entry_new
 	gimp_prop_opacity_entry_new
