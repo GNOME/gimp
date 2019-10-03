@@ -337,7 +337,8 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
   gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
 
   if (gimp_item_get_clip (GIMP_ITEM (drawable), GIMP_TRANSFORM_RESIZE_ADJUST) ==
-      GIMP_TRANSFORM_RESIZE_CLIP)
+      GIMP_TRANSFORM_RESIZE_CLIP ||
+      ! gimp_drawable_has_alpha (drawable))
     {
       gegl_node_set (
         private->fs_crop_node,
