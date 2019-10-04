@@ -111,17 +111,19 @@ static GimpValueArray * fli_info             (GimpProcedure        *procedure,
                                               gpointer              run_data);
 
 static GimpImage      * load_image           (GFile                *file,
-                                              gint32                from_frame,
-                                              gint32                to_frame,
+                                              GObject              *config,
                                               GError              **error);
-static gboolean         load_dialog          (GFile                *file);
+static gboolean         load_dialog          (GFile                *file,
+                                              GimpProcedure        *procedure,
+                                              GObject              *config);
 
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
-                                              gint32                from_frame,
-                                              gint32                to_frame,
+                                              GObject              *config,
                                               GError              **error);
-static gboolean         save_dialog          (GimpImage            *image);
+static gboolean         save_dialog          (GimpImage            *image,
+                                              GimpProcedure        *procedure,
+                                              GObject              *config);
 
 static gboolean         get_info             (GFile                *file,
                                               gint32               *width,
@@ -133,10 +135,6 @@ static gboolean         get_info             (GFile                *file,
 G_DEFINE_TYPE (Fli, fli, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (FLI_TYPE)
-
-
-static gint32 from_frame;
-static gint32 to_frame;
 
 
 static void
@@ -259,11 +257,10 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                       "Jens Ch. Restemeier",
                                       "1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "uri",
-                            "URI",
-                            "The local file:// URI of the file to get info",
-                            NULL,
-                            G_PARAM_READWRITE);
+      GIMP_PROC_ARG_FILE (procedure, "file",
+                          "File",
+                          "The local file to get info about",
+                          G_PARAM_READWRITE);
 
       GIMP_PROC_VAL_INT (procedure, "width",
                          "Width",
@@ -294,41 +291,35 @@ fli_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
-  GError         *error = NULL;
+  GimpProcedureConfig *config;
+  GimpValueArray      *return_vals;
+  GimpImage           *image;
+  GError              *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_NONINTERACTIVE:
-      from_frame = GIMP_VALUES_GET_INT (args, 0);
-      to_frame   = GIMP_VALUES_GET_INT (args, 1);
-      break;
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
 
-    case GIMP_RUN_INTERACTIVE:
-      if (! load_dialog (file))
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! load_dialog (file, procedure, G_OBJECT (config)))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
-                                               error);
-      break;
     }
 
-  image = load_image (file, from_frame, to_frame,
+  image = load_image (file, G_OBJECT (config),
                       &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
+
+  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  g_object_unref (config);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -348,25 +339,19 @@ fli_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
+
   switch (run_mode)
     {
-    case GIMP_RUN_NONINTERACTIVE:
-      from_frame = GIMP_VALUES_GET_INT (args, 0);
-      to_frame   = GIMP_VALUES_GET_INT (args, 1);
-
-      if (from_frame > to_frame)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CALLING_ERROR,
-                                                 NULL);
-      break;
-
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
@@ -381,19 +366,29 @@ fli_save (GimpProcedure        *procedure,
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
+      break;
 
-      if (! save_dialog (image))
+    default:
+      break;
+    }
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! save_dialog (image, procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, from_frame, to_frame,
+      if (! save_image (file, image, G_OBJECT (config),
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -413,7 +408,7 @@ fli_info (GimpProcedure        *procedure,
   gint32          frames;
   GError         *error = NULL;
 
-  file = g_file_new_for_uri (GIMP_VALUES_GET_STRING (args, 0));
+  file = GIMP_VALUES_GET_FILE (args, 0);
 
   if (! get_info (file, &width, &height, &frames,
                   &error))
@@ -476,10 +471,9 @@ get_info (GFile   *file,
  * load fli animation and store as framestack
  */
 static GimpImage *
-load_image (GFile   *file,
-            gint32   from_frame,
-            gint32   to_frame,
-            GError **error)
+load_image (GFile    *file,
+            GObject  *config,
+            GError  **error)
 {
   gchar        *filename;
   FILE         *fp;
@@ -490,13 +484,20 @@ load_image (GFile   *file,
   guchar        cm[768], ocm[768];
   s_fli_header  fli_header;
   gint          cnt;
+  gint          from_frame;
+  gint          to_frame;
+
+  g_object_get (config,
+                "from-frame", &from_frame,
+                "to-frame",   &to_frame,
+                NULL);
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
   filename = g_file_get_path (file);
   fp = g_fopen (filename ,"rb");
-  g_free (file);
+  g_free (filename);
 
   if (! fp)
     {
@@ -520,31 +521,37 @@ load_image (GFile   *file,
   /*
    * Fix parameters
    */
-  if ((from_frame==-1) && (to_frame==-1))
+  if ((from_frame == -1) && (to_frame == -1))
     {
       /* to make scripting easier: */
-      from_frame=1; to_frame=fli_header.frames;
+      from_frame = 1;
+      to_frame   = fli_header.frames;
     }
+
   if (to_frame < from_frame)
     {
       to_frame = fli_header.frames;
     }
+
   if (from_frame < 1)
     {
       from_frame = 1;
     }
+
   if (to_frame < 1)
     {
       /* nothing to do ... */
       fclose (fp);
       return NULL;
     }
+
   if (from_frame >= fli_header.frames)
     {
       /* nothing to do ... */
       fclose (fp);
       return NULL;
     }
+
   if (to_frame > fli_header.frames)
     {
       to_frame = fli_header.frames;
@@ -626,15 +633,14 @@ load_image (GFile   *file,
 static gboolean
 save_image (GFile      *file,
             GimpImage  *image,
-            gint32      from_frame,
-            gint32      to_frame,
+            GObject    *config,
             GError    **error)
 {
   gchar        *filename;
   FILE         *fp;
   GList        *framelist;
   GList        *iter;
-  gint          nframes;
+  gint          n_frames;
   gint          colors, i;
   guchar       *cmap;
   guchar        bg;
@@ -648,19 +654,27 @@ save_image (GFile      *file,
   GimpRGB       background;
   s_fli_header  fli_header;
   gint          cnt;
+  gint          from_frame;
+  gint          to_frame;
+
+  g_object_get (config,
+                "from-frame", &from_frame,
+                "to-frame",   &to_frame,
+                NULL);
 
   framelist = gimp_image_list_layers (image);
   framelist = g_list_reverse (framelist);
-  nframes = g_list_length (framelist);
+  n_frames  = g_list_length (framelist);
 
   if ((from_frame == -1) && (to_frame == -1))
     {
       /* to make scripting easier: */
-      from_frame = 0; to_frame = nframes;
+      from_frame = 1;
+      to_frame   = n_frames;
     }
   if (to_frame < from_frame)
     {
-      to_frame = nframes;
+      to_frame = n_frames;
     }
   if (from_frame < 1)
     {
@@ -671,14 +685,14 @@ save_image (GFile      *file,
       /* nothing to do ... */
       return FALSE;
     }
-  if (from_frame > nframes)
+  if (from_frame > n_frames)
     {
       /* nothing to do ... */
       return FALSE;
     }
-  if (to_frame > nframes)
+  if (to_frame > n_frames)
     {
-      to_frame = nframes;
+      to_frame = n_frames;
     }
 
   gimp_context_get_background (&background);
@@ -856,7 +870,7 @@ save_image (GFile      *file,
 
   g_free (fb);
   g_free (ofb);
-  g_free (framelist);
+  g_list_free (framelist);
 
   gimp_progress_update (1.0);
 
@@ -867,35 +881,28 @@ save_image (GFile      *file,
  * Dialogs for interactive usage
  */
 static gboolean
-load_dialog (GFile *file)
+load_dialog (GFile         *file,
+             GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *grid;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *adj;
-  gint32         width, height, nframes;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *grid;
+  GtkWidget *spinbutton;
+  gint       width, height, n_frames;
+  gboolean   run;
 
-  get_info (file, &width, &height, &nframes, NULL);
+  get_info (file, &width, &height, &n_frames, NULL);
 
-  from_frame = 1;
-  to_frame   = nframes;
+  g_object_set (config,
+                "from-frame", 1,
+                "to-frame",   n_frames,
+                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
-
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Open"),   GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Open FLIC Animation"));
 
   grid = gtk_grid_new ();
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
@@ -909,29 +916,22 @@ load_dialog (GFile *file)
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
-  adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
+  spinbutton = gimp_prop_spin_button_new (config, "from-frame",
+                                          1, 10, 0);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             C_("frame-range", "_From:"), 0.0, 0.5,
                             spinbutton, 1);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &from_frame);
 
-  adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  spinbutton = gimp_prop_spin_button_new (config, "to-frame",
+                                          1, 10, 0);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             C_("frame-range", "_To:"), 0.0, 0.5,
                             spinbutton, 1);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &to_frame);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -939,27 +939,32 @@ load_dialog (GFile *file)
 }
 
 static gboolean
-save_dialog (GimpImage *image)
+save_dialog (GimpImage     *image,
+             GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *grid;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *adj;
-  gint           nframes;
-  gboolean       run;
+  GtkWidget *dialog;
+  GtkWidget *grid;
+  GtkWidget *spinbutton;
+  gint       n_frames;
+  gboolean   run;
 
-  g_free (gimp_image_get_layers (image, &nframes));
+  g_free (gimp_image_get_layers (image, &n_frames));
 
-  from_frame = 1;
-  to_frame   = nframes;
+  g_object_set (config,
+                "from-frame", 1,
+                "to-frame",   n_frames,
+                NULL);
 
-  dialog = gimp_export_dialog_new (_("GFLI 1.3"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as FLI Animation"));
 
   grid = gtk_grid_new ();
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
@@ -967,29 +972,22 @@ save_dialog (GimpImage *image)
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
-  adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
+  spinbutton = gimp_prop_spin_button_new (config, "from-frame",
+                                          1, 10, 0);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             C_("frame-range", "_From:"), 0.0, 0.5,
                             spinbutton, 1);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &from_frame);
 
-  adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  spinbutton = gimp_prop_spin_button_new (config, "to-frame",
+                                          1, 10, 0);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             C_("frame-range", "_To:"), 0.0, 0.5,
                             spinbutton, 1);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &to_frame);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
