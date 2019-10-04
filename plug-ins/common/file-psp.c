@@ -521,12 +521,6 @@ typedef struct
 } PSPimage;
 
 
-typedef struct
-{
-  PSPCompression compression;
-} PSPSaveVals;
-
-
 typedef struct _Psp      Psp;
 typedef struct _PspClass PspClass;
 
@@ -568,18 +562,16 @@ static GimpImage      * load_image           (GFile                *file,
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
+                                              GObject              *config,
                                               GError              **error);
-static gboolean         save_dialog          (void);
+static gboolean         save_dialog          (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 
 G_DEFINE_TYPE (Psp, psp, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PSP_TYPE)
 
-static PSPSaveVals psvals =
-{
-  PSP_COMP_LZ77
-};
 
 static guint16 psp_ver_major;
 static guint16 psp_ver_minor;
@@ -678,7 +670,7 @@ psp_create_procedure (GimpPlugIn  *plug_in,
                          "Compression",
                          "Specify 0 for no compression, "
                          "1 for RLE, and 2 for LZ77",
-                         0, 2, 0,
+                         0, 2, PSP_COMP_LZ77,
                          G_PARAM_READWRITE);
     }
 
@@ -724,12 +716,16 @@ psp_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -754,39 +750,23 @@ psp_save (GimpProcedure        *procedure,
       break;
     }
 
-  switch (run_mode)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (SAVE_PROC, &psvals);
-
-      if (! save_dialog ())
+      if (! save_dialog (procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      psvals.compression = GIMP_VALUES_GET_INT (args, 0);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (SAVE_PROC, &psvals);
-      break;
-
-    default:
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable,
-                      &error))
-        {
-          gimp_set_data (SAVE_PROC, &psvals, sizeof (PSPSaveVals));
-        }
-      else
+      if (! save_image (file, image, drawable, G_OBJECT (config),
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -795,33 +775,33 @@ psp_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  gint       run;
+  GtkWidget    *dialog;
+  GtkListStore *store;
+  GtkWidget    *frame;
+  gint          run;
 
-  dialog = gimp_export_dialog_new (_("PSP"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as PSP"));
 
   /*  file save type  */
-  frame = gimp_int_radio_group_new (TRUE, _("Data Compression"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &psvals.compression, psvals.compression,
-
-                                    C_("compression", "None"), PSP_COMP_NONE, NULL,
-                                    _("RLE"),                  PSP_COMP_RLE,  NULL,
-                                    _("LZ77"),                 PSP_COMP_LZ77, NULL,
-
-                                    NULL);
-
+  store = gimp_int_store_new (C_("compression", "None"), PSP_COMP_NONE,
+                              _("RLE"),                  PSP_COMP_RLE,
+                              _("LZ77"),                 PSP_COMP_LZ77,
+                              NULL);
+  frame = gimp_prop_int_radio_frame_new (config, "compression",
+                                         _("Data Compression"),
+                                         GIMP_INT_STORE (store));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      frame, FALSE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      frame, FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -2121,6 +2101,7 @@ static gint
 save_image (GFile        *file,
             GimpImage    *image,
             GimpDrawable *drawable,
+            GObject      *config,
             GError      **error)
 {
   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
