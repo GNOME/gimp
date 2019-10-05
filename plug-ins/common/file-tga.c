@@ -90,17 +90,13 @@
 #define PLUG_IN_BINARY "file-tga"
 #define PLUG_IN_ROLE   "gimp-file-tga"
 
+
 typedef enum
 {
   ORIGIN_TOP_LEFT    = 0,
   ORIGIN_BOTTOM_LEFT = 1
 } TgaOrigin;
 
-typedef struct _TgaSaveVals
-{
-  gboolean   rle;
-  TgaOrigin  origin;
-} TgaSaveVals;
 
 typedef struct tga_info_struct
 {
@@ -196,9 +192,11 @@ static GimpImage      * load_image           (GFile                *file,
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
+                                              GObject              *config,
                                               GError              **error);
 
-static gboolean         save_dialog          (void);
+static gboolean         save_dialog          (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 static GimpImage      * ReadImage            (FILE                 *fp,
                                               tga_info             *info,
@@ -209,12 +207,6 @@ G_DEFINE_TYPE (Tga, tga, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (TGA_TYPE)
 
-
-static TgaSaveVals tsvals =
-{
-  TRUE,                 /* rle    */
-  ORIGIN_BOTTOM_LEFT    /* origin */
-};
 
 /* TRUEVISION-XFILE magic signature string */
 static guchar magic[18] =
@@ -358,12 +350,16 @@ tga_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
@@ -387,39 +383,23 @@ tga_save (GimpProcedure        *procedure,
       break;
     }
 
-  switch (run_mode)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (SAVE_PROC, &tsvals);
-
-      if (! save_dialog ())
+      if (! save_dialog (procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
-      break;
-
-    case GIMP_RUN_NONINTERACTIVE:
-      tsvals.rle = GIMP_VALUES_GET_BOOLEAN (args, 0);
-      break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (SAVE_PROC, &tsvals);
-      break;
-
-    default:
-      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable,
-                      &error))
-        {
-          gimp_set_data (SAVE_PROC, &tsvals, sizeof (tsvals));
-        }
-      else
+      if (! save_image (file, image, drawable, G_OBJECT (config),
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -1181,6 +1161,7 @@ static gboolean
 save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
+            GObject       *config,
             GError       **error)
 {
   GeglBuffer    *buffer;
@@ -1199,6 +1180,13 @@ save_image (GFile         *file,
   guchar        *data;
   gint           num_colors;
   guchar        *gimp_cmap = NULL;
+  gboolean       rle;
+  TgaOrigin      origin;
+
+  g_object_get (config,
+                "rle",    &rle,
+                "origin", &origin,
+                NULL);
 
   buffer = gimp_drawable_get_buffer (drawable);
 
@@ -1229,7 +1217,7 @@ save_image (GFile         *file,
       gimp_cmap = gimp_image_get_colormap (image, &num_colors);
 
       header[1] = 1; /* cmap type */
-      header[2] = (tsvals.rle) ? 9 : 1;
+      header[2] = rle ? 9 : 1;
       header[3] = header[4] = 0; /* no offset */
       header[5] = num_colors % 256;
       header[6] = num_colors / 256;
@@ -1240,7 +1228,7 @@ save_image (GFile         *file,
       gimp_cmap = gimp_image_get_colormap (image, &num_colors);
 
       header[1] = 1; /* cmap type */
-      header[2] = (tsvals.rle) ? 9 : 1;
+      header[2] = rle ? 9 : 1;
       header[3] = header[4] = 0; /* no offset */
       header[5] = (num_colors + 1) % 256;
       header[6] = (num_colors + 1) / 256;
@@ -1252,19 +1240,19 @@ save_image (GFile         *file,
 
       if (dtype == GIMP_RGB_IMAGE || dtype == GIMP_RGBA_IMAGE)
         {
-          header[2]= (tsvals.rle) ? 10 : 2;
+          header[2]= rle ? 10 : 2;
         }
       else
         {
-          header[2]= (tsvals.rle) ? 11 : 3;
+          header[2]= rle ? 11 : 3;
         }
 
       header[3] = header[4] = header[5] = header[6] = header[7] = 0;
     }
 
   header[8]  = header[9] = 0;                           /* xorigin */
-  header[10] = tsvals.origin ? 0 : (height % 256);      /* yorigin */
-  header[11] = tsvals.origin ? 0 : (height / 256);      /* yorigin */
+  header[10] = origin ? 0 : (height % 256);      /* yorigin */
+  header[11] = origin ? 0 : (height / 256);      /* yorigin */
 
 
   header[12] = width % 256;
@@ -1280,35 +1268,35 @@ save_image (GFile         *file,
       format  = NULL;
       out_bpp = 1;
       header[16] = 8; /* bpp */
-      header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
+      header[17] = origin ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_GRAY_IMAGE:
       format  = babl_format ("Y' u8");
       out_bpp = 1;
       header[16] = 8; /* bpp */
-      header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
+      header[17] = origin ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_GRAYA_IMAGE:
       format  = babl_format ("Y'A u8");
       out_bpp = 2;
       header[16] = 16; /* bpp */
-      header[17] = tsvals.origin ? 8 : 0x28; /* alpha + orientation */
+      header[17] = origin ? 8 : 0x28; /* alpha + orientation */
       break;
 
     case GIMP_RGB_IMAGE:
       format  = babl_format ("R'G'B' u8");
       out_bpp = 3;
       header[16] = 24; /* bpp */
-      header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
+      header[17] = origin ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_RGBA_IMAGE:
       format  = babl_format ("R'G'B'A u8");
       out_bpp = 4;
       header[16] = 32; /* bpp */
-      header[17] = tsvals.origin ? 8 : 0x28; /* alpha + orientation */
+      header[17] = origin ? 8 : 0x28; /* alpha + orientation */
       break;
     }
 
@@ -1347,7 +1335,7 @@ save_image (GFile         *file,
 
   for (row = 0; row < height; ++row)
     {
-      if (tsvals.origin)
+      if (origin)
         {
           gegl_buffer_get (buffer,
                            GEGL_RECTANGLE (0, height - (row + 1), width, 1), 1.0,
@@ -1385,7 +1373,7 @@ save_image (GFile         *file,
           memcpy (data, pixels, width * out_bpp);
         }
 
-      if (tsvals.rle)
+      if (rle)
         {
           rle_write (fp, data, width, out_bpp);
         }
@@ -1416,33 +1404,32 @@ save_image (GFile         *file,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *label;
-  GtkWidget *toggle;
-  GtkWidget *combo;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  gboolean   run;
+  GtkWidget    *dialog;
+  GtkWidget    *label;
+  GtkWidget    *toggle;
+  GtkListStore *store;
+  GtkWidget    *combo;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  gboolean      run;
 
-  dialog = gimp_export_dialog_new (_("TGA"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as TGA"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /*  rle  */
-  toggle = gtk_check_button_new_with_mnemonic (_("_RLE compression"));
+  toggle = gimp_prop_check_button_new (config, "rle",
+                                       _("_RLE compression"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tsvals.rle);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals.rle);
 
   /*  origin  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -1453,22 +1440,18 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = gimp_int_combo_box_new (_("Bottom left"), ORIGIN_BOTTOM_LEFT,
-                                  _("Top left"),    ORIGIN_TOP_LEFT,
-                                  NULL);
+  store = gimp_int_store_new (_("Bottom left"), ORIGIN_BOTTOM_LEFT,
+                              _("Top left"),    ORIGIN_TOP_LEFT,
+                              NULL);
+  combo = gimp_prop_int_combo_box_new (config, "origin",
+                                       GIMP_INT_STORE (store));
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              tsvals.origin,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &tsvals.origin, NULL);
-
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
