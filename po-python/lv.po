@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-30 13:41+0000\n"
-"PO-Revision-Date: 2019-03-31 16:27+0200\n"
+"POT-Creation-Date: 2019-09-20 16:59+0000\n"
+"PO-Revision-Date: 2019-10-05 22:28+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -478,7 +478,6 @@ msgid "Frame"
 msgstr "Ietvars"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
-#| msgid "Se_lections"
 msgid "Selection"
 msgstr "Iezīmējums"
 
@@ -531,8 +530,8 @@ msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
-"Epitrochoid raksts veidojas, kad kustīgais zobrats ir ārpusē no fiksētā"
-" zobrata."
+"Epitrochoid raksts veidojas, kad kustīgais zobrats ir ārpusē no fiksētā "
+"zobrata."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
 msgid "Tool"
@@ -544,7 +543,6 @@ msgid ""
 msgstr "Rīks, ar kuru zīmēt rakstu. Iepriekšējais rīks vienkārši zīmē ātri."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
-#| msgid "Palette to _Gradient"
 msgid "Long Gradient"
 msgstr "Garā krāsu pāreja"
 
@@ -554,9 +552,10 @@ msgid ""
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr ""
-"Kad nav atzīmēts, pašreizējais rīka iestatījums tiks izmantots. Kad atzīmēts,"
-" izmantos garo krāsu pāreju, lai atbilstu rakstam, balstoties uz pašreizējo"
-" krāsu pāreju un atkārtošanas režīmu no krāsu pārejas rīka iestatījumiem."
+"Kad nav atzīmēts, pašreizējais rīka iestatījums tiks izmantots. Kad "
+"atzīmēts, izmantos garo krāsu pāreju, lai atbilstu rakstam, balstoties uz "
+"pašreizējo krāsu pāreju un atkārtošanas režīmu no krāsu pārejas rīka "
+"iestatījumiem."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
 msgid "Specify pattern using one of the following tabs:"
@@ -569,18 +568,18 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
-"Raksts ir norādīts tikai aktīvajā cilnē. Spēļu Rīki ir līdzīgi Zobratiem, bet"
-" tie izmanto zobratus un caurumu skaitļus, kas ir atrodami Spēļu Rīkos. Ja"
-" sekojat instrukcijām no Spēļu Rīku instrukcijām, rezultātiem vajadzētu būt"
-" līdzīgiem."
+"Raksts ir norādīts tikai aktīvajā cilnē. Spēļu Rīki ir līdzīgi Zobratiem, "
+"bet tie izmanto zobratus un caurumu skaitļus, kas ir atrodami Spēļu Rīkos. "
+"Ja sekojat instrukcijām no Spēļu Rīku instrukcijām, rezultātiem vajadzētu "
+"būt līdzīgiem."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
-"Fiksētā zobrata zobu skaits. Fiksētā zobrata izmērs ir proporcionāls zobu"
-" skaitam."
+"Fiksētā zobrata zobu skaits. Fiksētā zobrata izmērs ir proporcionāls zobu "
+"skaitam."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
@@ -592,8 +591,8 @@ msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 msgstr ""
-"Kustīgā zobrata zobu skaits. Kustīgā zobrata izmērs ir proporcionāls zobu"
-" skaitam."
+"Kustīgā zobrata zobu skaits. Kustīgā zobrata izmērs ir proporcionāls zobu "
+"skaitam."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
@@ -601,7 +600,6 @@ msgid "Moving Gear Teeth"
 msgstr "Kustīgā zobrata zobi"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
-#| msgid "Percent"
 msgid "Hole percent"
 msgstr "Cauruma procenti"
 
@@ -610,11 +608,10 @@ msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 msgstr ""
-"Cik tālu caurums ir no kustīgā zobrata viduspunkta. 100% nozīmē ka caurums ir"
-" pie zobrata malas."
+"Cik tālu caurums ir no kustīgā zobrata viduspunkta. 100% nozīmē ka caurums "
+"ir pie zobrata malas."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
-#| msgid "File Name"
 msgid "Hole Number"
 msgstr "Cauruma numurs"
 
@@ -623,8 +620,8 @@ msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr ""
-"Caurums #1 ir zobrata malā. Maksimālais cauruma numur ir pie centra."
-" Maksimālais cauruma numur dažādiem zobratiem ir atšķirīgs."
+"Caurums #1 ir zobrata malā. Maksimālais cauruma numur ir pie centra. "
+"Maksimālais cauruma numur dažādiem zobratiem ir atšķirīgs."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
 msgid "Toy Kit"
@@ -636,7 +633,6 @@ msgstr "Zobrati"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
-#| msgid "Saturation"
 msgid "Rotation"
 msgstr "Rotācija"
 
@@ -645,8 +641,8 @@ msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr ""
-"Raksta rotācija, grādos. Sākuma pozīcija kustīgajam zobratam fiksētajā"
-" zobratā."
+"Raksta rotācija, grādos. Sākuma pozīcija kustīgajam zobratam fiksētajā "
+"zobratā."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
 msgid "Shape"
@@ -660,11 +656,11 @@ msgid ""
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
 msgstr ""
-"Fiksētā zobrata forma, kuru izmantot iekš pašreizējās izvēles. Statīvs ir"
-" gara, noapaļota figūra, kas ir atrodama Spēļu Rīkos. Ietvars ietver robežas"
-" taisnstūra izvēlē, izmantojiet hole=100 Zobratu notācijā, lai pieskartos"
-" malām. Izvēle ietvers pašreizējās izvēles robežas — mēģiniet kaut ko"
-" ne-taisnstūrveida."
+"Fiksētā zobrata forma, kuru izmantot iekš pašreizējās izvēles. Statīvs ir "
+"gara, noapaļota figūra, kas ir atrodama Spēļu Rīkos. Ietvars ietver robežas "
+"taisnstūra izvēlē, izmantojiet hole=100 Zobratu notācijā, lai pieskartos "
+"malām. Izvēle ietvers pašreizējās izvēles robežas — mēģiniet kaut ko ne-"
+"taisnstūrveida."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
 msgid "Sides"
@@ -703,32 +699,36 @@ msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr ""
-"Kad nav atzīmēts, raksts aizpildīs pašreizējo attēlu vai iezīmējumu. Kad"
-" atzīmēts, rakstam būs vienāds platums un augstums, un tas būs centrēts."
+"Kad nav atzīmēts, raksts aizpildīs pašreizējo attēlu vai iezīmējumu. Kad "
+"atzīmēts, rakstam būs vienāds platums un augstums, un tas būs centrēts."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Pārzīmēt"
+#| msgid "Redraw"
+msgid "Re_draw"
+msgstr "Pār_zīmēt"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
-"Ja maināt kāda rīka iestatījumus, maināt krāsu vai iezīmējumu, spiediet šo,"
-" lai priekšskatītu, kā izskatīsies raksts."
+"Ja maināt kāda rīka iestatījumus, maināt krāsu vai iezīmējumu, spiediet šo, "
+"lai priekšskatītu, kā izskatīsies raksts."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Atiestatīt"
+#| msgid "Reset"
+msgid "_Reset"
+msgstr "_Atiestatīt"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Atcelt"
+#| msgid "Cancel"
+msgid "_Cancel"
+msgstr "At_celt"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "Labi"
+#| msgid "OK"
+msgid "_OK"
+msgstr "_Labi"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
@@ -744,9 +744,9 @@ msgid ""
 "exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
 "redrawn on the layer that was active when the plugin was launched."
 msgstr ""
-"Ja atzīmēts, kad ir piespiesta poga “Labi”, spyro slānis tiks paturēts un"
-" spraudnis ātri izies. Ja nav atzīmēts, spyro slānis tiks izdzēsts un raksts"
-" tiks pārzīmēts uz slāņa, kas bija aktīvs pirms tika palaists spraudnis."
+"Ja atzīmēts, kad ir piespiesta poga “Labi”, spyro slānis tiks paturēts un "
+"spraudnis ātri izies. Ja nav atzīmēts, spyro slānis tiks izdzēsts un raksts "
+"tiks pārzīmēts uz slāņa, kas bija aktīvs pirms tika palaists spraudnis."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
 msgid "Spyrogimp"
