@@ -109,7 +109,7 @@ void              gimp_button_set_suggested        (GtkWidget            *button
                                                     gboolean              suggested,
                                                     GtkReliefStyle        default_relief);
 void              gimp_button_set_destructive      (GtkWidget            *button,
-                                                    gboolean              suggestes,
+                                                    gboolean              suggests,
                                                     GtkReliefStyle        default_relief);
 
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
