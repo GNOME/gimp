@@ -1262,8 +1262,8 @@ gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
                                              gboolean         *horizontally)
 {
   return gimp_display_shell_scale_image_starts_to_fit (shell,
-                                                       current_scale,
                                                        new_scale,
+                                                       current_scale,
                                                        vertically,
                                                        horizontally);
 }
