@@ -181,7 +181,7 @@ print_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("Page Set_up"));
+      gimp_procedure_set_menu_label (procedure, N_("Page Set_up..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PAGE_SETUP);
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
