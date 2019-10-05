@@ -57,7 +57,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SAVE_PROC      "file-gtm-save"
+#define SAVE_PROC      "file-html-table-save"
 #define PLUG_IN_BINARY "file-html-table"
 #define PLUG_IN_ROLE   "gimp-file-html-table"
 
@@ -131,7 +131,7 @@ G_DEFINE_TYPE (Html, html, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (HTML_TYPE)
 
 
-  static GTMValues gtmvals =
+static GTMValues gtmvals =
 {
   "Made with GIMP Table Magic",  /* caption text */
   "&nbsp;",  /* cellcontent text */
