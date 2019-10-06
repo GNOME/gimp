@@ -12552,7 +12552,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:ro"
+msgstr "tags-locale:ro"
 
 #: ../app/core/gimp-user-install.c:216
 #, c-format

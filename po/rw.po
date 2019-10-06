@@ -10591,9 +10591,8 @@ msgstr ""
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
-#, fuzzy
 msgid "tags-locale:C"
-msgstr "Inyobora Umwanya C"
+msgstr "tags-locale:rw"
 
 #: ../app/core/gimptemplate.c:132
 #, fuzzy
@@ -12731,9 +12730,8 @@ msgstr ""
 #. E.g. for the german translation, that would be "tips-locale:de".
 #.
 #: ../app/dialogs/tips-parser.c:187
-#, fuzzy
 msgid "tips-locale:C"
-msgstr "Inyobora Umwanya C"
+msgstr "tips-locale:rw"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

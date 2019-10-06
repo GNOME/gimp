@@ -12357,7 +12357,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tags-locale:C"
+msgstr "tags-locale:ko"
 
 #: ../app/core/gimp-user-install.c:216
 #, c-format

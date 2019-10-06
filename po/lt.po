@@ -9572,7 +9572,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:89
 msgid "tags-locale:C"
-msgstr "tips-locale:lt"
+msgstr "tags-locale:lt"
 
 #: ../app/core/gimptemplate.c:135
 msgid "The unit used for coordinate display when not in dot-for-dot mode."

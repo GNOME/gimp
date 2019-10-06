@@ -17588,7 +17588,7 @@ msgstr "Vita meira"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locale:C"
+msgstr "tips-locale:is"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
