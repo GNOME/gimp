@@ -8880,7 +8880,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr "குறியொட்டுகள் உள்ளமைவு:C"
+msgstr "tags-locale:ta"
 
 #: ../app/core/gimptemplate.c:132
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -10604,7 +10604,7 @@ msgstr "மேலும் அறிய"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "உதவிக்குறிப்பு உள்ளமைவு:C"
+msgstr "tips-locale:ta"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

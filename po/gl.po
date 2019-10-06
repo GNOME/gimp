@@ -12265,7 +12265,7 @@ msgstr "Primeiro plano a Transparente"
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:gl"
+msgstr "tags-locale:gl"
 
 #: ../app/core/gimp-user-install.c:213
 #, c-format

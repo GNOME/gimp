@@ -8220,7 +8220,7 @@ msgstr "Istorijat boja"
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "lokalne-oznake:C"
+msgstr "tags-locale:bs"
 
 #: ../app/core/gimp-user-install.c:208
 #, c-format
@@ -11523,7 +11523,7 @@ msgstr "Saznajte više"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locale:sr"
+msgstr "tips-locale:bs"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"

@@ -11872,7 +11872,7 @@ msgstr "Fes transparent el color de primer pla"
 #. * that would be "tags-locale:lt".
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:ca"
+msgstr "tags-locale:ca@valencia"
 
 #: ../app/core/gimp-user-install.c:216
 #, c-format
@@ -16447,17 +16447,13 @@ msgstr "_Següent"
 msgid "Learn more"
 msgstr "Més informació"
 
-#  This is a special string to specify the language identifier to
-#  look for in the gimp-tips.xml file. Please translate the C in it
-#  according to the name of the po file used for gimp-tips.xml.
-#  E.g. for the german translation, that would be "tips-locale:de".
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
 #. according to the name of the po file used for gimp-tips.xml.
 #. E.g. for the german translation, that would be "tips-locale:de".
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locale:ca"
+msgstr "tips-locale:ca@valencia"
 
 #: ../app/dialogs/user-install-dialog.c:85
 msgid "GIMP User Installation"
