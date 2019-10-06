@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-08 11:49+0200\n"
-"PO-Revision-Date: 2019-09-08 11:50+0200\n"
+"POT-Creation-Date: 2019-10-06 12:52+0200\n"
+"PO-Revision-Date: 2019-10-06 12:53+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -6651,19 +6651,19 @@ msgstr "32 bity"
 msgid "Windows BMP image"
 msgstr "Obraz BMP systemu Windows"
 
-#: ../plug-ins/file-dds/dds.c:137 ../plug-ins/file-dds/dds.c:156
+#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
 msgid "DDS image"
 msgstr "Obraz DDS"
 
-#: ../plug-ins/file-dds/dds.c:173
+#: ../plug-ins/file-dds/dds.c:176
 msgid "Decode YCoCg"
 msgstr "Dekodowanie YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:186
+#: ../plug-ins/file-dds/dds.c:189
 msgid "Decode YCoCg (scaled)"
 msgstr "Dekodowanie YCoCg (przeskalowane)"
 
-#: ../plug-ins/file-dds/dds.c:199
+#: ../plug-ins/file-dds/dds.c:202
 msgid "Decode Alpha exponent"
 msgstr "Dekodowanie wykładnika alfy"
 
@@ -12226,8 +12226,8 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Dostosowuje wymiary strony i ułożenie dla drukowania"
 
 #: ../plug-ins/print/print.c:131
-msgid "Page Set_up"
-msgstr "_Ustawienia strony"
+msgid "Page Set_up..."
+msgstr "_Ustawienia strony…"
 
 #: ../plug-ins/print/print.c:275
 msgid "Image Settings"
