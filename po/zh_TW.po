@@ -13269,7 +13269,7 @@ msgstr ""
 #: ../app/core/gimp-tags.c:87
 #, fuzzy
 msgid "tags-locale:C"
-msgstr "目前的地區設定"
+msgstr "tags-locale:zh_TW"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:386
 #, fuzzy, c-format

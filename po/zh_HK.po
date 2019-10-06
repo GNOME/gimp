@@ -8853,9 +8853,8 @@ msgstr ""
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
-#, fuzzy
 msgid "tags-locale:C"
-msgstr "目前的地區設定"
+msgstr "tags-locale:zh_HK"
 
 #: ../app/core/gimptemplate.c:132
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -10566,7 +10565,7 @@ msgstr "了解更多"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locale:zh_TW"
+msgstr "tips-locale:zh_HK"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

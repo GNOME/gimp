@@ -9695,7 +9695,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr ""
+msgstr "tags-locale:th"
 
 #: ../app/core/gimptemplate.c:132
 #, fuzzy
@@ -11486,7 +11486,7 @@ msgstr ""
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:th"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

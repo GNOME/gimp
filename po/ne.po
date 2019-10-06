@@ -12439,9 +12439,8 @@ msgstr "पारदर्शीमा FG"
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:87
-#, fuzzy
 msgid "tags-locale:C"
-msgstr "tips-locale:ne"
+msgstr "tags-locale:ne"
 
 #: ../app/core/gimp-user-install.c:213
 #, c-format

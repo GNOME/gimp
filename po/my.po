@@ -10776,7 +10776,7 @@ msgstr "ပိုမို လေ့လာပါ"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locale:C"
+msgstr "tips-locale:my"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"
