@@ -12846,7 +12846,7 @@ msgstr "Kindprozess »%s« konnte nicht ausgeführt werden (%s)"
 #.
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "tips-locale:de"
+msgstr "tags-locale:de"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:386
 #, c-format

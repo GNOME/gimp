@@ -9659,7 +9659,7 @@ msgstr ""
 #.
 #: ../app/core/gimp-tags.c:88
 msgid "tags-locale:C"
-msgstr ""
+msgstr "tags-locale:az"
 
 #: ../app/core/gimptemplate.c:132
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -11547,7 +11547,7 @@ msgstr ""
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:az"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"

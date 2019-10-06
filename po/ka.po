@@ -9635,9 +9635,8 @@ msgstr ""
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
-#, fuzzy
 msgid "tags-locale:C"
-msgstr "tips-locale:ka"
+msgstr "tags-locale:ka"
 
 #: ../app/core/gimptemplate.c:132
 msgid "The unit used for coordinate display when not in dot-for-dot mode."

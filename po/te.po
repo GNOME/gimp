@@ -10422,7 +10422,7 @@ msgstr "మరింత నేర్చుకోండి"
 #.
 #: ../app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "స్థానిక-సూచన:te-IN"
+msgstr "tips-locale:te"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"
