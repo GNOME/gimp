@@ -15,23 +15,23 @@
 #
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
 # Rodrigo <rodhos92@gmail.com>, 2000-2019.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
 # Rodrigo Lledó <rodhos92@gmail.com>, 2019.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-05 20:10+0000\n"
-"PO-Revision-Date: 2019-10-06 12:58+0200\n"
-"Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
-"Language: es\n"
+"POT-Creation-Date: 2019-10-07 07:06+0000\n"
+"PO-Revision-Date: 2019-10-07 09:18+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 3.32.0\n"
+"X-Generator: Gtranslator 3.34.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/common/align-layers.c:190
@@ -1792,7 +1792,7 @@ msgstr "Anti-bandas"
 msgid "Destripe"
 msgstr "Anti-bandas"
 
-#: ../plug-ins/common/destripe.c:492 ../plug-ins/common/file-html-table.c:675
+#: ../plug-ins/common/destripe.c:492 ../plug-ins/common/file-html-table.c:699
 #: ../plug-ins/common/file-ps.c:3610 ../plug-ins/common/file-ps.c:3810
 #: ../plug-ins/common/file-raw-data.c:1942
 #: ../plug-ins/common/smooth-palette.c:508 ../plug-ins/common/tile.c:496
@@ -1952,7 +1952,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:834 ../plug-ins/common/file-gif-save.c:887
-#: ../plug-ins/common/file-heif.c:724 ../plug-ins/common/file-html-table.c:268
+#: ../plug-ins/common/file-heif.c:724 ../plug-ins/common/file-html-table.c:349
 #: ../plug-ins/common/file-pcx.c:782 ../plug-ins/common/file-pix.c:547
 #: ../plug-ins/common/file-png.c:1485 ../plug-ins/common/file-pnm.c:1317
 #: ../plug-ins/common/file-ps.c:1309 ../plug-ins/common/file-sunras.c:612
@@ -1971,7 +1971,6 @@ msgid "C source code"
 msgstr "Código fuente en C"
 
 #: ../plug-ins/common/file-csource.c:983
-#| msgid "Export Image as DDS"
 msgid "Export Image as C-Source"
 msgstr "Exportar imagen como código C"
 
@@ -2376,16 +2375,91 @@ msgstr "Ca_lidad"
 msgid "Save color _profile"
 msgstr "Guardar _perfil de color"
 
-#: ../plug-ins/common/file-html-table.c:184
-#: ../plug-ins/common/file-html-table.c:502
+#: ../plug-ins/common/file-html-table.c:150
 msgid "HTML table"
 msgstr "Tabla HTML"
 
-#: ../plug-ins/common/file-html-table.c:515
+#: ../plug-ins/common/file-html-table.c:171
+#| msgid "Check if you would like to have the table captioned."
+msgid "Enable if you would like to have the table captioned."
+msgstr "Actívelo si quiere que la tabla tenga un título."
+
+#: ../plug-ins/common/file-html-table.c:178
+msgid "The text for the table caption."
+msgstr "El texto para el título de la tabla."
+
+#: ../plug-ins/common/file-html-table.c:184
+msgid "The text to go into each cell."
+msgstr "El texto que va en cada celda."
+
+#: ../plug-ins/common/file-html-table.c:190
+#| msgid "The width for each table cell.  Can be a number or a percent."
+msgid "The width for each table cell. Can be a number or a percent."
+msgstr ""
+"La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
+
+#: ../plug-ins/common/file-html-table.c:197
+#| msgid "The height for each table cell.  Can be a number or a percent."
+msgid "The height for each table cell. Can be a number or a percent."
+msgstr "La altura de cada celda de tabla. Puede ser un número o un porcentaje."
+
+#: ../plug-ins/common/file-html-table.c:204
+#| msgid ""
+#| "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
+#| "tags instead of just the table html."
+msgid ""
+"If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
+"tags instead of just the table html."
+msgstr ""
+"Si lo activa GTM producirá un archivo HTML completo con etiquetas <HTML>, "
+"<BODY>, etc. en vez de simplemente la tabla HTML."
+
+#: ../plug-ins/common/file-html-table.c:212
+msgid "The number of pixels in the table border."
+msgstr "El número de píxeles en el borde de la tabla."
+
+#: ../plug-ins/common/file-html-table.c:218
+#| msgid ""
+#| "If checked GTM will replace any rectangular sections of identically "
+#| "colored blocks with one large cell with ROWSPAN and COLSPAN values."
+msgid ""
+"If enabled GTM will replace any rectangular sections of identically colored "
+"blocks with one large cell with ROWSPAN and COLSPAN values."
+msgstr ""
+"Si lo activa GTM reemplazará cualquier región rectangular de bloques "
+"idénticamente coloreados con una gran celda con valores ROWSPAN y COLSPAN."
+
+#: ../plug-ins/common/file-html-table.c:227
+#| msgid ""
+#| "Checking this tag will cause GTM to leave no whitespace between the TD "
+#| "tags and the cellcontent.  This is only necessary for pixel level "
+#| "positioning control."
+msgid ""
+"Enabling this will cause GTM to leave no whitespace between the TD tags and "
+"the cell content. This is only necessary for pixel level positioning control."
+msgstr ""
+"Activar esto hará que GTM no deje espacios en blanco entre las etiquetas TD "
+"y el contenido de las celdas. Esto sólo es necesario para el control de "
+"posición a nivel de píxel."
+
+#: ../plug-ins/common/file-html-table.c:237
+msgid "The amount of cell padding."
+msgstr "La cantidad de relleno de celdas."
+
+#: ../plug-ins/common/file-html-table.c:243
+msgid "The amount of cell spacing."
+msgstr "La cantidad de espaciado de celdas."
+
+#: ../plug-ins/common/file-html-table.c:596
+#| msgid "Export Image as TGA"
+msgid "Export Image as HTML Table"
+msgstr "Exportar imagen como tabla HTML"
+
+#: ../plug-ins/common/file-html-table.c:610
 msgid "Warning"
 msgstr "Aviso"
 
-#: ../plug-ins/common/file-html-table.c:526
+#: ../plug-ins/common/file-html-table.c:621
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
@@ -2396,93 +2470,46 @@ msgstr ""
 "colgará su navegador."
 
 #. HTML Page Options
-#: ../plug-ins/common/file-html-table.c:535
+#: ../plug-ins/common/file-html-table.c:630
 msgid "HTML Page Options"
 msgstr "Opciones de página HTML"
 
-#: ../plug-ins/common/file-html-table.c:542
+#: ../plug-ins/common/file-html-table.c:639
 msgid "_Generate full HTML document"
 msgstr "_Generar un documento HTML completo"
 
-#: ../plug-ins/common/file-html-table.c:548
-msgid ""
-"If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
-"tags instead of just the table html."
-msgstr ""
-"Si lo activa GTM producirá un archivo HTML completo con etiquetas <HTML>, "
-"<BODY>, etc. en vez de simplemente la tabla HTML."
-
 #. HTML Table Creation Options
-#: ../plug-ins/common/file-html-table.c:561
+#: ../plug-ins/common/file-html-table.c:643
 msgid "Table Creation Options"
 msgstr "Opciones de creación de tabla"
 
 # //R ¿Cómo traduzco esto?
-#: ../plug-ins/common/file-html-table.c:569
+#: ../plug-ins/common/file-html-table.c:654
 msgid "_Use cellspan"
 msgstr "_Usar cellspan"
 
-#: ../plug-ins/common/file-html-table.c:575
-msgid ""
-"If checked GTM will replace any rectangular sections of identically colored "
-"blocks with one large cell with ROWSPAN and COLSPAN values."
-msgstr ""
-"Si lo activa GTM reemplazará cualquier región rectangular de bloques "
-"idénticamente coloreados con una gran celda con valores ROWSPAN y COLSPAN."
-
-#: ../plug-ins/common/file-html-table.c:584
+#: ../plug-ins/common/file-html-table.c:658
 msgid "Co_mpress TD tags"
 msgstr "Co_mprimir etiquetas TD"
 
-#: ../plug-ins/common/file-html-table.c:590
-msgid ""
-"Checking this tag will cause GTM to leave no whitespace between the TD tags "
-"and the cellcontent.  This is only necessary for pixel level positioning "
-"control."
-msgstr ""
-"Si lo activa GTK no dejará espacios en blanco entre las etiquetas TD y el "
-"contenido de las celdas. Esto sólo es necesario para el control de posición "
-"a nivel de píxel."
-
-#: ../plug-ins/common/file-html-table.c:600
+#: ../plug-ins/common/file-html-table.c:662
 msgid "C_aption"
 msgstr "Tít_ulo"
 
-#: ../plug-ins/common/file-html-table.c:606
-msgid "Check if you would like to have the table captioned."
-msgstr "Actívelo si desea que la tabla tenga un título."
-
-#: ../plug-ins/common/file-html-table.c:620
-msgid "The text for the table caption."
-msgstr "El texto para el título de la tabla."
-
-#: ../plug-ins/common/file-html-table.c:634
+#: ../plug-ins/common/file-html-table.c:676
 msgid "C_ell content:"
 msgstr "Contenido de c_elda:"
 
-#: ../plug-ins/common/file-html-table.c:638
-msgid "The text to go into each cell."
-msgstr "El texto que va en cada celda."
-
 #. HTML Table Options
-#: ../plug-ins/common/file-html-table.c:648
+#: ../plug-ins/common/file-html-table.c:680
 msgid "Table Options"
 msgstr "Opciones de tabla"
 
-#: ../plug-ins/common/file-html-table.c:660
+#: ../plug-ins/common/file-html-table.c:693
 msgid "_Border:"
 msgstr "_Borde:"
 
-#: ../plug-ins/common/file-html-table.c:664
-msgid "The number of pixels in the table border."
-msgstr "El número de píxeles en el borde de la tabla."
-
-#: ../plug-ins/common/file-html-table.c:679
-msgid "The width for each table cell.  Can be a number or a percent."
-msgstr ""
-"La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
-
-#: ../plug-ins/common/file-html-table.c:691 ../plug-ins/common/file-ps.c:3623
+#: ../plug-ins/common/file-html-table.c:705 ../plug-ins/common/file-ps.c:3623
 #: ../plug-ins/common/file-ps.c:3821 ../plug-ins/common/file-raw-data.c:1958
 #: ../plug-ins/common/film.c:1050 ../plug-ins/common/smooth-palette.c:513
 #: ../plug-ins/common/tile.c:500 ../plug-ins/imagemap/imap_cmd_guides.c:173
@@ -2491,25 +2518,13 @@ msgstr ""
 msgid "_Height:"
 msgstr "A_ltura:"
 
-#: ../plug-ins/common/file-html-table.c:695
-msgid "The height for each table cell.  Can be a number or a percent."
-msgstr "La altura de cada celda de tabla. Puede ser un número o un porcentaje."
-
-#: ../plug-ins/common/file-html-table.c:707
+#: ../plug-ins/common/file-html-table.c:711
 msgid "Cell-_padding:"
 msgstr "Rel_leno de celdas:"
 
-#: ../plug-ins/common/file-html-table.c:711
-msgid "The amount of cell padding."
-msgstr "La cantidad de relleno de celdas."
-
-#: ../plug-ins/common/file-html-table.c:721
+#: ../plug-ins/common/file-html-table.c:717
 msgid "Cell-_spacing:"
 msgstr "Es_paciado de celdas:"
-
-#: ../plug-ins/common/file-html-table.c:725
-msgid "The amount of cell spacing."
-msgstr "La cantidad de espaciado de celdas."
 
 #: ../plug-ins/common/file-jp2-load.c:181
 msgid "JPEG 2000 image"
@@ -3430,7 +3445,6 @@ msgid "Paint Shop Pro image"
 msgstr "Imagen de Paint Shop Pro"
 
 #: ../plug-ins/common/file-psp.c:788
-#| msgid "Export Image as PNG"
 msgid "Export Image as PSP"
 msgstr "Exportar imagen como PSP"
 
@@ -3961,7 +3975,6 @@ msgid "Cannot read header from '%s'"
 msgstr "No se pudo leer la cabecera de «%s»"
 
 #: ../plug-ins/common/file-tga.c:1421
-#| msgid "Export Image as PNG"
 msgid "Export Image as TGA"
 msgstr "Exportar imagen como TGA"
 
@@ -6324,7 +6337,6 @@ msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Disculpe, sólo se puede exportar ÍNDICES e imágenes en GRIS. "
 
 #: ../plug-ins/file-fli/fli-gimp.c:905
-#| msgid "AutoDesk FLIC animation"
 msgid "Open FLIC Animation"
 msgstr "Abrir animación FLIC"
 
@@ -6339,7 +6351,6 @@ msgid "_To:"
 msgstr "_Para:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:961
-#| msgid "Export Image as Pattern"
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagen como animación FLI"
 
@@ -11713,7 +11724,6 @@ msgid "Print the image"
 msgstr "Imprimir la imagen"
 
 #: ../plug-ins/print/print.c:184
-#| msgid "Page Set_up"
 msgid "Page Set_up..."
 msgstr "_Configuración de la página…"
 
