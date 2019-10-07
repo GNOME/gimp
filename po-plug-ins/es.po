@@ -15,23 +15,23 @@
 #
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
 # Rodrigo <rodhos92@gmail.com>, 2000-2019.
-# Rodrigo Lledó <rodhos92@gmail.com>, 2019.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
+# Rodrigo Lledó <rodhos92@gmail.com>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-20 16:58+0000\n"
-"PO-Revision-Date: 2019-09-23 16:01+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
-"Language: es_ES\n"
+"POT-Creation-Date: 2019-10-05 20:12+0000\n"
+"PO-Revision-Date: 2019-10-06 13:00+0200\n"
+"Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 3.32.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -2420,7 +2420,6 @@ msgid "_Description:"
 msgstr "_Descripción:"
 
 #: ../plug-ins/common/file-gbr.c:344
-#| msgid "Spacing:"
 msgid "_Spacing:"
 msgstr "_Espaciado:"
 
@@ -2574,7 +2573,6 @@ msgid "Brush Pipe"
 msgstr "Tubería de pinceles"
 
 #: ../plug-ins/common/file-gih.c:582
-#| msgid "Spacing (percent):"
 msgid "_Spacing (percent):"
 msgstr "_Espaciado (porcentaje):"
 
@@ -2583,12 +2581,10 @@ msgid "Pixels"
 msgstr "Píxeles"
 
 #: ../plug-ins/common/file-gih.c:642
-#| msgid "Cell size:"
 msgid "Ce_ll size:"
 msgstr "Tamaño de ce_lda:"
 
 #: ../plug-ins/common/file-gih.c:655
-#| msgid "Number of cells:"
 msgid "_Number of cells:"
 msgstr "_Número de celdas:"
 
@@ -2613,7 +2609,6 @@ msgid "Display as:"
 msgstr "Mostrar como:"
 
 #: ../plug-ins/common/file-gih.c:716
-#| msgid "Dimension:"
 msgid "Di_mension:"
 msgstr "Di_mensión:"
 
@@ -2698,7 +2693,6 @@ msgstr "HEIF"
 #. Create the lossless checkbox
 #: ../plug-ins/common/file-heif.c:1252
 #: ../plug-ins/file-webp/file-webp-dialog.c:124
-#| msgid "Lossless"
 msgid "_Lossless"
 msgstr "_Sin pérdida"
 
@@ -2954,7 +2948,6 @@ msgid "MNG Options"
 msgstr "Opciones de MNG"
 
 #: ../plug-ins/common/file-mng.c:1350
-#| msgid "Interlace"
 msgid "_Interlace"
 msgstr "_Entrelazar"
 
@@ -2963,7 +2956,6 @@ msgid "Save _background color"
 msgstr "Guardar el color de _fondo"
 
 #: ../plug-ins/common/file-mng.c:1373
-#| msgid "Save gamma"
 msgid "Save _gamma"
 msgstr "Guardar _gamma"
 
@@ -3013,12 +3005,10 @@ msgid "Replace"
 msgstr "Reemplazar"
 
 #: ../plug-ins/common/file-mng.c:1447
-#| msgid "Default frame disposal:"
 msgid "Default _frame disposal:"
 msgstr "Disposición predeterminada del _cuadro:"
 
 #: ../plug-ins/common/file-mng.c:1459
-#| msgid "PNG compression level:"
 msgid "_PNG compression level:"
 msgstr "Nivel de compresión de _PNG:"
 
@@ -3041,7 +3031,6 @@ msgid "Animated MNG Options"
 msgstr "Opciones del MNG animado"
 
 #: ../plug-ins/common/file-mng.c:1514
-#| msgid "Loop"
 msgid "_Loop"
 msgstr "_Bucle"
 
@@ -3258,19 +3247,16 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:823
 #: ../plug-ins/common/file-pdf-save.c:983
-#| msgid "Omit hidden layers and layers with zero opacity"
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Omitir las capas ocultas y las que tienen opacidad cero"
 
 #: ../plug-ins/common/file-pdf-save.c:828
 #: ../plug-ins/common/file-pdf-save.c:988
-#| msgid "Convert bitmaps to vector graphics where possible"
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Convertir los mapas de _bit a gráficos vectoriales cuando sea posible"
 
 #: ../plug-ins/common/file-pdf-save.c:833
 #: ../plug-ins/common/file-pdf-save.c:993
-#| msgid "Apply layer masks before saving"
 msgid "_Apply layer masks before saving"
 msgstr "_Aplicar máscaras de capa antes de guardar"
 
@@ -3281,7 +3267,6 @@ msgstr "Mantener las máscaras no cambiará la salida"
 
 #: ../plug-ins/common/file-pdf-save.c:843
 #, c-format
-#| msgid "Layers as pages (%s)"
 msgid "_Layers as pages (%s)"
 msgstr "_Capas como páginas (%s)"
 
@@ -3296,7 +3281,6 @@ msgid "bottom layers first"
 msgstr "capas inferiores primero"
 
 #: ../plug-ins/common/file-pdf-save.c:853
-#| msgid "Reverse the pages order"
 msgid "_Reverse the pages order"
 msgstr "Inve_rtir el orden de las páginas"
 
@@ -3527,7 +3511,6 @@ msgid "_Raw"
 msgstr "_Bruto"
 
 #: ../plug-ins/common/file-pnm.c:1622
-#| msgid "ASCII"
 msgid "_ASCII"
 msgstr "_ASCII"
 
@@ -4131,12 +4114,10 @@ msgid "Data Formatting"
 msgstr "Formateado de datos"
 
 #: ../plug-ins/common/file-sunras.c:1758
-#| msgid "_Run-Length Encoded"
 msgid "_RunLength Encoded"
 msgstr "Codificación _RunLenght"
 
 #: ../plug-ins/common/file-sunras.c:1759
-#| msgid "Standard"
 msgid "_Standard"
 msgstr "E_stándar"
 
@@ -5080,7 +5061,6 @@ msgid "Exercise a goat"
 msgstr "Ejercitar una cabra"
 
 #: ../plug-ins/common/goat-exercise.c:67
-#| msgid "Goat-exercise"
 msgid "Goat-e_xercise"
 msgstr "E_jercitar cabra"
 
@@ -5583,25 +5563,21 @@ msgstr "Desde degradado"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1406
-#| msgid "Show selection"
 msgid "Sho_w selection"
 msgstr "Mo_strar selección"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1417
-#| msgid "Show color"
 msgid "Show co_lor"
 msgstr "Mostrar co_lor"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1433
-#| msgid "Show selection"
 msgid "Show selec_tion"
 msgstr "Mos_trar selección"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1444
-#| msgid "Show color"
 msgid "Show c_olor"
 msgstr "Mostrar c_olor"
 
@@ -5615,25 +5591,21 @@ msgstr "Niveles de salida:"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1649
-#| msgid "Hold intensity"
 msgid "Hold _intensity"
 msgstr "Mantener _intensidad"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1660
-#| msgid "Original intensity"
 msgid "Original i_ntensity"
 msgstr "I_ntensidad original"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1678
-#| msgid "Use subcolors"
 msgid "Us_e subcolors"
 msgstr "Usar sub-color_es"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1689
-#| msgid "Smooth samples"
 msgid "S_mooth samples"
 msgstr "Suavizar las _muestras"
 
@@ -6755,12 +6727,10 @@ msgid "Load DDS"
 msgstr "Cargar DDS"
 
 #: ../plug-ins/file-dds/ddsread.c:1293
-#| msgid "Load mipmaps"
 msgid "_Load mipmaps"
 msgstr "_Cargar mipmaps"
 
 #: ../plug-ins/file-dds/ddsread.c:1300
-#| msgid "Automatically decode YCoCg/AExp images when detected"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Decodificar _automáticamente imágenes YCoCg/AExp al detectarlas"
 
@@ -6774,22 +6744,18 @@ msgid "_Export"
 msgstr "_Exportar"
 
 #: ../plug-ins/file-dds/ddswrite.c:1984
-#| msgid "Compression:"
 msgid "_Compression:"
 msgstr "_Compresión:"
 
 #: ../plug-ins/file-dds/ddswrite.c:1994
-#| msgid "Use perceptual error metric"
 msgid "Use _perceptual error metric"
 msgstr "Usar métrica de error _preceptiva"
 
 #: ../plug-ins/file-dds/ddswrite.c:2023
-#| msgid "_Save"
 msgid "_Save:"
 msgstr "_Guardar:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2037
-#| msgid "Mipmaps:"
 msgid "_Mipmaps:"
 msgstr "_Mipmaps:"
 
@@ -6798,27 +6764,22 @@ msgid "Transparent index:"
 msgstr "Índice transparente:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2104
-#| msgid "Main Options"
 msgid "Mipmap Options"
 msgstr "Opciones del mipmap"
 
 #: ../plug-ins/file-dds/ddswrite.c:2117
-#| msgid "Filter:"
 msgid "_F_ilter:"
 msgstr "_Filtro:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2130
-#| msgid "Wrap mode:"
 msgid "_Wrap mode:"
 msgstr "Modo en_volver:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2140
-#| msgid "Apply gamma correction"
 msgid "Appl_y gamma correction"
 msgstr "Apl_icar corrección de gamma"
 
 #: ../plug-ins/file-dds/ddswrite.c:2154
-#| msgid "Use sRGB colorspace"
 msgid "Use s_RGB colorspace"
 msgstr "Usar espacio de colores s_RGB"
 
@@ -6827,12 +6788,10 @@ msgid "_Gamma:"
 msgstr "_Gamma:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2183
-#| msgid "Preserve alpha test coverage"
 msgid "Preserve alpha _test coverage"
 msgstr "Preservar la cober_tura de la prueba alfa"
 
 #: ../plug-ins/file-dds/ddswrite.c:2202
-#| msgid "Alpha test threshold:"
 msgid "_Alpha test threshold:"
 msgstr "Umbral de prueba _alfa:"
 
@@ -6894,12 +6853,10 @@ msgid "Pixel value scaling"
 msgstr "Escalado de los valores de los píxeles"
 
 #: ../plug-ins/file-fits/fits.c:1186
-#| msgid "Automatic"
 msgid "_Automatic"
 msgstr "_Automático"
 
 #: ../plug-ins/file-fits/fits.c:1187
-#| msgid "By DATAMIN/DATAMAX"
 msgid "By _DATAMIN/DATAMAX"
 msgstr "Según el _dato máximo/mínimo"
 
@@ -6908,7 +6865,6 @@ msgid "Image Composing"
 msgstr "Composición de imagen"
 
 #: ../plug-ins/file-fits/fits.c:1198
-#| msgid "_None"
 msgctxt "composing"
 msgid "_None"
 msgstr "_Ninguno"
@@ -6931,15 +6887,11 @@ msgid "GFLI 1.3 - Load framestack"
 msgstr "GLI 1.3 - Cargar pila de cuadros"
 
 #: ../plug-ins/file-fli/fli-gimp.c:903 ../plug-ins/file-fli/fli-gimp.c:961
-#| msgctxt "email-address"
-#| msgid "_From:"
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_De:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:913 ../plug-ins/file-fli/fli-gimp.c:971
-#| msgctxt "email-address"
-#| msgid "_To:"
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Para:"
@@ -7466,14 +7418,10 @@ msgid "Compression type"
 msgstr "Tipo de compresión"
 
 #: ../plug-ins/file-sgi/sgi.c:676
-#| msgid "No compression"
 msgid "_No compression"
 msgstr "Si_n compresión"
 
 #: ../plug-ins/file-sgi/sgi.c:680
-#| msgid ""
-#| "Aggressive RLE\n"
-#| "(not supported by SGI)"
 msgid ""
 "_Aggressive RLE\n"
 "(not supported by SGI)"
@@ -7524,7 +7472,6 @@ msgstr "Importar desde TIFF"
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
 #: ../plug-ins/file-tiff/file-tiff-load.c:1899
-#| msgid "Keep empty space around imported layers"
 msgid "_Keep empty space around imported layers"
 msgstr "_Mantener espacio vacío alrededor de capas importadas"
 
@@ -7533,17 +7480,14 @@ msgid "Process extra channel as:"
 msgstr "Procesar canal adicional como:"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1919
-#| msgid "Non-premultiplied alpha"
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _no premultiplicado"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1920
-#| msgid "Premultiplied alpha"
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicado"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1921
-#| msgid "Channel"
 msgid "Channe_l"
 msgstr "Cana_l"
 
@@ -7631,7 +7575,6 @@ msgid "WebP"
 msgstr "WebP"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
-#| msgid "Image quality:"
 msgid "Image _quality:"
 msgstr "_Calidad de la imagen:"
 
@@ -7640,7 +7583,6 @@ msgid "Image quality"
 msgstr "Calidad de la imagen"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:159
-#| msgid "Alpha quality:"
 msgid "Alpha q_uality:"
 msgstr "C_alidad alfa:"
 
@@ -7649,7 +7591,6 @@ msgid "Alpha channel quality"
 msgstr "Calidad del canal alfa"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:192
-#| msgid "Source type:"
 msgid "Source _type:"
 msgstr "_Tipo de la fuente:"
 
@@ -7664,7 +7605,6 @@ msgstr "Como _animación"
 
 #. loop animation checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:256
-#| msgid "Loop forever"
 msgid "Loop _forever"
 msgstr "Bucle in_finito"
 
@@ -7675,7 +7615,6 @@ msgstr "Distancia máxima entre fotogramas clave:"
 
 #. minimize-size checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:308
-#| msgid "Minimize output size (slower)"
 msgid "_Minimize output size (slower)"
 msgstr "_Minimizar tamaño de salida (más lento)"
 
@@ -7686,13 +7625,11 @@ msgstr "Retraso entre fotogramas cuando no esté especificado:"
 
 #. Create the force-delay checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:354
-#| msgid "Use delay entered above for all frames"
 msgid "Use _delay entered above for all frames"
 msgstr "Usar el retraso intro_ducido anteriormente para todos los cuadros"
 
 #. Save EXIF data
 #: ../plug-ins/file-webp/file-webp-dialog.c:366
-#| msgid "Save Exif data"
 msgid "_Save Exif data"
 msgstr "_Guardar los datos Exif"
 
@@ -8031,7 +7968,6 @@ msgid "Fractal Explorer"
 msgstr "Examinador de fractales"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
-#| msgid "Realtime preview"
 msgid "Re_altime preview"
 msgstr "Vista previa en tiempo re_al"
 
@@ -9579,27 +9515,22 @@ msgid "RGB Save Type"
 msgstr "Guardar tipo RGB"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:2
-#| msgid "Standard (R,G,B)"
 msgid "_Standard (R,G,B)"
 msgstr "_Estándard (R,G,B)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:3
-#| msgid "Planar (RRR,GGG,BBB)"
 msgid "_Planar (RRR,GGG,BBB)"
 msgstr "_Planar (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
-#| msgid "R, G, B (normal)"
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (normal)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:5
-#| msgid "B, G, R, X (BMP style)"
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (estilo BMP)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
-#| msgid "Save layers"
 msgid "Save _layers"
 msgstr "Guardar ca_pas"
 
@@ -9612,7 +9543,6 @@ msgid "<b>Comment</b>"
 msgstr "<b>Comentario</b>"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
-#| msgid "Save Exif data"
 msgid "S_ave Exif data"
 msgstr "Gu_ardar los datos Exif"
 
@@ -11100,7 +11030,6 @@ msgid "Cu_t"
 msgstr "Co_rtar"
 
 #: ../plug-ins/imagemap/imap_menu.c:170
-#| msgid "Paste"
 msgid "_Paste"
 msgstr "_Pegar"
 
@@ -11117,7 +11046,6 @@ msgid "Edit selected area info"
 msgstr "Información de Editar el área seleccionada"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
-#| msgid "Preferences"
 msgid "_Preferences"
 msgstr "_Preferencias"
 
@@ -11980,7 +11908,6 @@ msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Editar los metadatos (Exif, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-editor.c:416
-#| msgid "Edit Metadata"
 msgid "_Edit Metadata"
 msgstr "_Editar metadatos"
 
@@ -11990,7 +11917,6 @@ msgid "Metadata Editor: %s"
 msgstr "Editor de metadatos: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:548
-#| msgid "Write Metadata"
 msgid "_Write Metadata"
 msgstr "Esc_ribir metadatos"
 
@@ -12224,7 +12150,6 @@ msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Ver los metadatos (Exif, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:127
-#| msgid "View Metadata"
 msgid "_View Metadata"
 msgstr "_Ver los metadatos"
 
@@ -12367,8 +12292,9 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Ajustar el tamaño y la orientación de impresión de la página"
 
 #: ../plug-ins/print/print.c:131
-msgid "Page Set_up"
-msgstr "_Preparación de la página"
+#| msgid "Page Set_up"
+msgid "Page Set_up..."
+msgstr "_Configuración de la página…"
 
 #: ../plug-ins/print/print.c:275
 msgid "Image Settings"
