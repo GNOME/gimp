@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-03 14:02+0000\n"
-"PO-Revision-Date: 2019-10-03 21:02+0200\n"
+"POT-Creation-Date: 2019-10-05 20:10+0000\n"
+"PO-Revision-Date: 2019-10-06 12:58+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -77,7 +77,6 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/tile-small.c:425 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:704 ../plug-ins/common/warp.c:467
 #: ../plug-ins/common/wavelet-decompose.c:388 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-fli/fli-gimp.c:890
 #: ../plug-ins/file-tiff/file-tiff-load.c:1870 ../plug-ins/flame/flame.c:513
 #: ../plug-ins/flame/flame.c:689 ../plug-ins/flame/flame.c:1013
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:565
@@ -316,7 +315,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-pcx.c:476 ../plug-ins/common/file-pix.c:409
 #: ../plug-ins/common/file-png.c:929 ../plug-ins/common/file-pnm.c:753
 #: ../plug-ins/common/file-raw-data.c:1340
-#: ../plug-ins/common/file-sunras.c:1069 ../plug-ins/common/file-tga.c:1104
+#: ../plug-ins/common/file-sunras.c:1069 ../plug-ins/common/file-tga.c:1084
 #: ../plug-ins/common/file-xbm.c:946 ../plug-ins/common/film.c:795
 #: ../plug-ins/common/smooth-palette.c:309 ../plug-ins/common/tile.c:382
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:275
@@ -666,8 +665,7 @@ msgstr "Semilla aleatoria"
 #: ../plug-ins/common/file-jp2-load.c:977
 #: ../plug-ins/common/file-raw-data.c:1790 ../plug-ins/common/qbist.c:751
 #: ../plug-ins/common/qbist.c:914 ../plug-ins/common/sphere-designer.c:2285
-#: ../plug-ins/common/sphere-designer.c:2676
-#: ../plug-ins/file-fli/fli-gimp.c:891 ../plug-ins/flame/flame.c:515
+#: ../plug-ins/common/sphere-designer.c:2676 ../plug-ins/flame/flame.c:515
 #: ../plug-ins/flame/flame.c:1084
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -884,10 +882,10 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: ../plug-ins/common/file-pdf-save.c:650 ../plug-ins/common/file-png.c:1495
 #: ../plug-ins/common/file-raw-data.c:1132
 #: ../plug-ins/common/file-raw-data.c:1161 ../plug-ins/common/file-sunras.c:623
-#: ../plug-ins/common/file-tga.c:1220 ../plug-ins/common/file-xmc.c:1561
+#: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1561
 #: ../plug-ins/common/sphere-designer.c:2196
 #: ../plug-ins/file-bmp/bmp-save.c:324 ../plug-ins/file-fits/fits.c:507
-#: ../plug-ins/file-fli/fli-gimp.c:767 ../plug-ins/file-ico/ico-save.c:1103
+#: ../plug-ins/file-fli/fli-gimp.c:781 ../plug-ins/file-ico/ico-save.c:1103
 #: ../plug-ins/file-jpeg/jpeg-save.c:340 ../plug-ins/file-psd/psd-save.c:1624
 #: ../plug-ins/file-tiff/file-tiff-save.c:983
 #: ../plug-ins/file-tiff/file-tiff-save.c:1097 ../plug-ins/flame/flame.c:482
@@ -913,16 +911,16 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1407
 #: ../plug-ins/common/file-pcx.c:398 ../plug-ins/common/file-png.c:747
 #: ../plug-ins/common/file-ps.c:1133 ../plug-ins/common/file-ps.c:3485
-#: ../plug-ins/common/file-psp.c:1943 ../plug-ins/common/file-psp.c:1997
+#: ../plug-ins/common/file-psp.c:1923 ../plug-ins/common/file-psp.c:1977
 #: ../plug-ins/common/file-raw-data.c:466
 #: ../plug-ins/common/file-raw-data.c:1249 ../plug-ins/common/file-sunras.c:440
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
-#: ../plug-ins/common/file-tga.c:453 ../plug-ins/common/file-xbm.c:783
+#: ../plug-ins/common/file-tga.c:433 ../plug-ins/common/file-xbm.c:783
 #: ../plug-ins/common/file-xmc.c:718 ../plug-ins/common/file-xmc.c:914
 #: ../plug-ins/common/file-xwd.c:469 ../plug-ins/common/sphere-designer.c:2085
 #: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-faxg3/faxg3.c:256
-#: ../plug-ins/file-fits/fits.c:370 ../plug-ins/file-fli/fli-gimp.c:460
-#: ../plug-ins/file-fli/fli-gimp.c:504 ../plug-ins/file-ico/ico-load.c:676
+#: ../plug-ins/file-fits/fits.c:370 ../plug-ins/file-fli/fli-gimp.c:455
+#: ../plug-ins/file-fli/fli-gimp.c:505 ../plug-ins/file-ico/ico-load.c:676
 #: ../plug-ins/file-ico/ico-load.c:758 ../plug-ins/file-jpeg/jpeg-load.c:102
 #: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:150
 #: ../plug-ins/file-psd/psd-thumb-load.c:90 ../plug-ins/flame/flame.c:451
@@ -1213,13 +1211,11 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:597
 #, c-format
-#| msgid "Unable to recompose, source layer not found"
 msgid "Cannot recompose: Specified source layer ID %d not found"
 msgstr "No se puede recomponer: no se encontró la capa fuente con ID %d"
 
 #: ../plug-ins/common/compose.c:617
 #, c-format
-#| msgid "Specified layer %d not found"
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
 msgstr ""
 "No se puede recomponer: no se ha encontrado la capa especificada #%d con ID "
@@ -1873,11 +1869,11 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/common/file-pix.c:366 ../plug-ins/common/file-png.c:737
 #: ../plug-ins/common/file-pnm.c:635 ../plug-ins/common/file-ps.c:1122
 #: ../plug-ins/common/file-raw-data.c:1239 ../plug-ins/common/file-sunras.c:430
-#: ../plug-ins/common/file-tga.c:443 ../plug-ins/common/file-wmf.c:1035
+#: ../plug-ins/common/file-tga.c:423 ../plug-ins/common/file-wmf.c:1035
 #: ../plug-ins/common/file-xbm.c:773 ../plug-ins/common/file-xmc.c:706
 #: ../plug-ins/common/file-xpm.c:366 ../plug-ins/common/file-xwd.c:459
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
-#: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:495
 #: ../plug-ins/file-ico/ico-load.c:666 ../plug-ins/file-jpeg/jpeg-load.c:91
 #: ../plug-ins/file-psd/psd-load.c:139
 #: ../plug-ins/file-raw/file-darktable.c:419
@@ -1960,63 +1956,58 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/common/file-pcx.c:782 ../plug-ins/common/file-pix.c:547
 #: ../plug-ins/common/file-png.c:1485 ../plug-ins/common/file-pnm.c:1317
 #: ../plug-ins/common/file-ps.c:1309 ../plug-ins/common/file-sunras.c:612
-#: ../plug-ins/common/file-tga.c:1210 ../plug-ins/common/file-xbm.c:1076
+#: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1076
 #: ../plug-ins/common/file-xpm.c:684 ../plug-ins/common/file-xwd.c:663
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:496
-#: ../plug-ins/file-fli/fli-gimp.c:732 ../plug-ins/file-ico/ico-save.c:1093
+#: ../plug-ins/file-fli/fli-gimp.c:746 ../plug-ins/file-ico/ico-save.c:1093
 #: ../plug-ins/file-jpeg/jpeg-save.c:293 ../plug-ins/file-psd/psd-save.c:1587
 #: ../plug-ins/file-sgi/sgi.c:574 ../plug-ins/file-tiff/file-tiff-save.c:973
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportando «%s»"
 
-#: ../plug-ins/common/file-csource.c:145
+#: ../plug-ins/common/file-csource.c:118
 msgid "C source code"
 msgstr "Código fuente en C"
 
-#: ../plug-ins/common/file-csource.c:922
-msgid "C-Source"
-msgstr "Fuente en C"
+#: ../plug-ins/common/file-csource.c:983
+#| msgid "Export Image as DDS"
+msgid "Export Image as C-Source"
+msgstr "Exportar imagen como código C"
 
-#: ../plug-ins/common/file-csource.c:940
+#: ../plug-ins/common/file-csource.c:1001
 msgid "_Prefixed name:"
 msgstr "Nombre con _prefijo:"
 
-#: ../plug-ins/common/file-csource.c:949
+#: ../plug-ins/common/file-csource.c:1008
 msgid "Co_mment:"
 msgstr "Co_mentario:"
 
-#. Use Comment
-#.
-#: ../plug-ins/common/file-csource.c:956
+#: ../plug-ins/common/file-csource.c:1014
 msgid "_Save comment to file"
 msgstr "G_uardar el comentario en un archivo"
 
-#. GLib types
-#.
-#: ../plug-ins/common/file-csource.c:968
+#: ../plug-ins/common/file-csource.c:1020
 msgid "_Use GLib types (guint8*)"
 msgstr "_Usar tipos GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:981
+#: ../plug-ins/common/file-csource.c:1026
 msgid "Us_e macros instead of struct"
 msgstr "Usar macros _en vez de struct"
 
-#: ../plug-ins/common/file-csource.c:994
+#: ../plug-ins/common/file-csource.c:1032
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Usar Run-Length-Encoding de _1 byte"
 
-#: ../plug-ins/common/file-csource.c:1007
+#: ../plug-ins/common/file-csource.c:1038
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "G_uardar el canal alfa (RGBA/RGB)"
 
-#. RGB-565
-#.
-#: ../plug-ins/common/file-csource.c:1019
+#: ../plug-ins/common/file-csource.c:1049
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Guardar como _RGB565 (16 bit)"
 
-#: ../plug-ins/common/file-csource.c:1041
+#: ../plug-ins/common/file-csource.c:1061
 msgid "Op_acity:"
 msgstr "Op_acidad:"
 
@@ -2084,7 +2075,6 @@ msgid "GIMP brush"
 msgstr "Pincel GIMP"
 
 #: ../plug-ins/common/file-gbr.c:285
-#| msgid "Exports HEIF images"
 msgid "Export Image as Brush"
 msgstr "Exportar imagen como un pincel"
 
@@ -2368,7 +2358,6 @@ msgid "Select Image"
 msgstr "Seleccione imagen"
 
 #: ../plug-ins/common/file-heif.c:1252
-#| msgid "Exports HEIF images"
 msgid "Export Image as HEIF"
 msgstr "Exportar imagen como HEIF"
 
@@ -2378,7 +2367,6 @@ msgid "_Lossless"
 msgstr "_Sin pérdida"
 
 #: ../plug-ins/common/file-heif.c:1280
-#| msgid "_Quality:"
 msgid "_Quality"
 msgstr "Ca_lidad"
 
@@ -2743,7 +2731,6 @@ msgid "GIMP pattern"
 msgstr "Patrón GIMP"
 
 #: ../plug-ins/common/file-pat.c:258
-#| msgid "Export metadata"
 msgid "Export Image as Pattern"
 msgstr "Exportar imagen como un patrón"
 
@@ -3095,7 +3082,6 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Error al exportar «%s». No se pudo exportar la imagen."
 
 #: ../plug-ins/common/file-png.c:2273
-#| msgid "Exports HEIF images"
 msgid "Export Image as PNG"
 msgstr "Exportar imagen como PNG"
 
@@ -3120,7 +3106,6 @@ msgid "Save comme_nt"
 msgstr "G_uardar el comentario"
 
 #: ../plug-ins/common/file-png.c:2334
-#| msgid "Save Exif data"
 msgid "Save E_xif data"
 msgstr "Guardar los datos E_xif"
 
@@ -3147,47 +3132,38 @@ msgstr "Automático"
 
 # bits por canal
 #: ../plug-ins/common/file-png.c:2365
-#| msgid "8bpc RGB"
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
 #: ../plug-ins/common/file-png.c:2366
-#| msgid "8bpc GRAY"
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRAY"
 
 #: ../plug-ins/common/file-png.c:2367
-#| msgid "8bpc RGBA"
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
 #: ../plug-ins/common/file-png.c:2368
-#| msgid "8bpc GRAYA"
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRAYA"
 
 #: ../plug-ins/common/file-png.c:2369
-#| msgid "16bpc RGB"
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
 #: ../plug-ins/common/file-png.c:2370
-#| msgid "16bpc GRAY"
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRAY"
 
 #: ../plug-ins/common/file-png.c:2371
-#| msgid "16bpc RGBA"
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
 #: ../plug-ins/common/file-png.c:2372
-#| msgid "16bpc GRAYA"
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRAYA"
 
 #: ../plug-ins/common/file-png.c:2379
-#| msgid "_Format:"
 msgid "_Pixel format:"
 msgstr "Formato de _píxel:"
 
@@ -3449,153 +3425,154 @@ msgstr "Vista p_revia"
 msgid "Preview _size:"
 msgstr "Tamaño de la vi_sta previa:"
 
-#: ../plug-ins/common/file-psp.c:627 ../plug-ins/common/file-psp.c:657
+#: ../plug-ins/common/file-psp.c:619 ../plug-ins/common/file-psp.c:649
 msgid "Paint Shop Pro image"
 msgstr "Imagen de Paint Shop Pro"
 
-#: ../plug-ins/common/file-psp.c:804
-msgid "PSP"
-msgstr "PSP"
+#: ../plug-ins/common/file-psp.c:788
+#| msgid "Export Image as PNG"
+msgid "Export Image as PSP"
+msgstr "Exportar imagen como PSP"
 
 #. file save type
-#: ../plug-ins/common/file-psp.c:807
-msgid "Data Compression"
-msgstr "Compresión de datos"
-
-#: ../plug-ins/common/file-psp.c:811
+#: ../plug-ins/common/file-psp.c:791
 msgctxt "compression"
 msgid "None"
 msgstr "Ninguna"
 
-#: ../plug-ins/common/file-psp.c:812
+#: ../plug-ins/common/file-psp.c:792
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/common/file-psp.c:813
+#: ../plug-ins/common/file-psp.c:793
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-psp.c:892
+#: ../plug-ins/common/file-psp.c:796
+msgid "Data Compression"
+msgstr "Compresión de datos"
+
+#: ../plug-ins/common/file-psp.c:872
 #, c-format
 msgid "Error reading block header"
 msgstr "Error al leer la cabecera del bloque"
 
-#: ../plug-ins/common/file-psp.c:899
+#: ../plug-ins/common/file-psp.c:879
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Bloque de cabecera no válido en %ld"
 
-#: ../plug-ins/common/file-psp.c:902
+#: ../plug-ins/common/file-psp.c:882
 #, c-format
 msgid "Invalid block header"
 msgstr "Bloque de cabecera no válido"
 
-#: ../plug-ins/common/file-psp.c:1005
+#: ../plug-ins/common/file-psp.c:985
 #, c-format
 msgid "Seek error: %s"
 msgstr "Error de búsqueda: %s"
 
-#: ../plug-ins/common/file-psp.c:1043
+#: ../plug-ins/common/file-psp.c:1023
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Error al leer la parte de creación de palabra clave"
 
-#: ../plug-ins/common/file-psp.c:1049
+#: ../plug-ins/common/file-psp.c:1029
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "La parte del encabezado sobre la palabra clave no es válida"
 
-#: ../plug-ins/common/file-psp.c:1064 ../plug-ins/common/file-psp.c:1096
+#: ../plug-ins/common/file-psp.c:1044 ../plug-ins/common/file-psp.c:1076
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Error al leer el origen de las palabras clave"
 
-#: ../plug-ins/common/file-psp.c:1071
+#: ../plug-ins/common/file-psp.c:1051
 #, c-format
 msgid "Creator keyword data not nul-terminated"
 msgstr "Los datos de creación de la palabra clave no terminan en nulo"
 
-#: ../plug-ins/common/file-psp.c:1447 ../plug-ins/common/file-psp.c:1461
+#: ../plug-ins/common/file-psp.c:1427 ../plug-ins/common/file-psp.c:1441
 #, c-format
 msgid "zlib error"
 msgstr "error de zlib"
 
-#: ../plug-ins/common/file-psp.c:1527
+#: ../plug-ins/common/file-psp.c:1507
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "El sub-bloque de la capa %s no es válido, debería ser CAPA"
 
-#: ../plug-ins/common/file-psp.c:1559 ../plug-ins/common/file-psp.c:1590
+#: ../plug-ins/common/file-psp.c:1539 ../plug-ins/common/file-psp.c:1570
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Error al leer la parte sobre la información de la capa"
 
-#: ../plug-ins/common/file-psp.c:1624
+#: ../plug-ins/common/file-psp.c:1604
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Dimensiones de la capa no válidas: %dx%d"
 
-#: ../plug-ins/common/file-psp.c:1677
+#: ../plug-ins/common/file-psp.c:1657
 #, c-format
 msgid "Error creating layer"
 msgstr "Error al crear la capa"
 
-#: ../plug-ins/common/file-psp.c:1728
+#: ../plug-ins/common/file-psp.c:1708
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "El sub-bloque de la capa %s no es válido, debería ser CANAL"
 
-#: ../plug-ins/common/file-psp.c:1744
+#: ../plug-ins/common/file-psp.c:1724
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Error al leer la parte sobre la información del canal"
 
-#: ../plug-ins/common/file-psp.c:1756
+#: ../plug-ins/common/file-psp.c:1736
 #, c-format
 msgid "Invalid bitmap type %d in channel information chunk"
 msgstr ""
 "Tipo de mapa de bits %d no válido en la parte sobre información del canal"
 
-#: ../plug-ins/common/file-psp.c:1764
+#: ../plug-ins/common/file-psp.c:1744
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Tipo de canal %d no válido en la parte sobre información del canal"
 
-#: ../plug-ins/common/file-psp.c:1844
+#: ../plug-ins/common/file-psp.c:1824
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Error al leer la parte sobre datos del tubo"
 
-#: ../plug-ins/common/file-psp.c:1954
+#: ../plug-ins/common/file-psp.c:1934
 #, c-format
 msgid "Error reading file header."
 msgstr "Error al leer la cabecera del archivo."
 
-#: ../plug-ins/common/file-psp.c:1961
+#: ../plug-ins/common/file-psp.c:1941
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Firma del archivo incorrecta."
 
-#: ../plug-ins/common/file-psp.c:1979
+#: ../plug-ins/common/file-psp.c:1959
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "La versión %d.%d del formato de archivo PSP no está soportada."
 
-#: ../plug-ins/common/file-psp.c:1999
+#: ../plug-ins/common/file-psp.c:1979
 msgid "invalid block size"
 msgstr "tamaño de bloque no válido"
 
-#: ../plug-ins/common/file-psp.c:2008
+#: ../plug-ins/common/file-psp.c:1988
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "El bloque general de atributos de imagen está duplicado."
 
-#: ../plug-ins/common/file-psp.c:2038
+#: ../plug-ins/common/file-psp.c:2018
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Falta el bloque general de atributos de imagen."
 
-#: ../plug-ins/common/file-psp.c:2127
+#: ../plug-ins/common/file-psp.c:2108
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Exportar no está todavía implementado."
@@ -3877,7 +3854,6 @@ msgid "Write error occurred"
 msgstr "Ocurrió un error de escritura"
 
 #: ../plug-ins/common/file-sunras.c:1778
-#| msgid "Exports HEIF images"
 msgid "Export Image as SUNRAS"
 msgstr "Exportar imagen como SUNRAS"
 
@@ -3965,43 +3941,43 @@ msgstr ""
 msgid "Merge imported paths"
 msgstr "Combinar las rutas importadas"
 
-#: ../plug-ins/common/file-tga.c:264 ../plug-ins/common/file-tga.c:290
+#: ../plug-ins/common/file-tga.c:256 ../plug-ins/common/file-tga.c:282
 msgid "TarGA image"
 msgstr "Imagen TarGA"
 
-#: ../plug-ins/common/file-tga.c:463
+#: ../plug-ins/common/file-tga.c:443
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "No se puede leer el pie de «%s»"
 
-#: ../plug-ins/common/file-tga.c:481
+#: ../plug-ins/common/file-tga.c:461
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "No se puede leer la extensión de «%s»"
 
-#: ../plug-ins/common/file-tga.c:493
+#: ../plug-ins/common/file-tga.c:473
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "No se pudo leer la cabecera de «%s»"
 
-#: ../plug-ins/common/file-tga.c:1429
-msgid "TGA"
-msgstr "TGA"
+#: ../plug-ins/common/file-tga.c:1421
+#| msgid "Export Image as PNG"
+msgid "Export Image as TGA"
+msgstr "Exportar imagen como TGA"
 
-#. rle
-#: ../plug-ins/common/file-tga.c:1438
+#: ../plug-ins/common/file-tga.c:1431
 msgid "_RLE compression"
 msgstr "Compresión _RLE"
 
-#: ../plug-ins/common/file-tga.c:1452
+#: ../plug-ins/common/file-tga.c:1439
 msgid "Or_igin:"
 msgstr "Or_iginal:"
 
-#: ../plug-ins/common/file-tga.c:1456
+#: ../plug-ins/common/file-tga.c:1443
 msgid "Bottom left"
 msgstr "Inferior izquierdo"
 
-#: ../plug-ins/common/file-tga.c:1457
+#: ../plug-ins/common/file-tga.c:1444
 msgid "Top left"
 msgstr "Arriba a la izquierda"
 
@@ -4408,7 +4384,6 @@ msgid "Unsupported drawable type"
 msgstr "Tipo de dibujable no soportado"
 
 #: ../plug-ins/common/file-xpm.c:859
-#| msgid "Exports HEIF images"
 msgid "Export Image as XPM"
 msgstr "Exportar imagen como XPM"
 
@@ -4893,7 +4868,6 @@ msgid "A_lpha:"
 msgstr "A_lfa:"
 
 #: ../plug-ins/common/plugin-browser.c:167
-#| msgid "_Plug-in Browser"
 msgid "_Plug-In Browser"
 msgstr "_Visor de complementos"
 
@@ -6110,7 +6084,6 @@ msgid "Alpha channel will be ignored."
 msgstr "El canal alfa se ignorará."
 
 #: ../plug-ins/file-bmp/bmp-save.c:963
-#| msgid "Exports HEIF images"
 msgid "Export Image as BMP"
 msgstr "Exportar imagen como BMP"
 
@@ -6120,21 +6093,14 @@ msgstr "Codificación _Run-Lenght"
 
 #. Compatibility Options
 #: ../plug-ins/file-bmp/bmp-save.c:982
-#| msgid "Co_mpatibility Options"
 msgid "Compatibility"
 msgstr "Compatibilidad"
 
 #: ../plug-ins/file-bmp/bmp-save.c:987
-#| msgid "_Do not write color space information"
 msgid "_Write color space information"
 msgstr "_Escribir la información del espacio de colores"
 
 #: ../plug-ins/file-bmp/bmp-save.c:989
-#| msgid ""
-#| "Some applications can not read BMP images that include color space "
-#| "information. GIMP writes color space information by default. Enabling "
-#| "this option will cause GIMP to not write color space information to the "
-#| "file."
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
@@ -6195,7 +6161,6 @@ msgid "Decode Alpha exponent"
 msgstr "Decodificar exponente Alfa"
 
 #: ../plug-ins/file-dds/ddsread.c:1308
-#| msgid "Open as"
 msgid "Open DDS"
 msgstr "Abrir DDS"
 
@@ -6208,7 +6173,6 @@ msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Decodificar _automáticamente imágenes YCoCg/AExp al detectarlas"
 
 #: ../plug-ins/file-dds/ddswrite.c:1956
-#| msgid "Export as DDS"
 msgid "Export Image as DDS"
 msgstr "Exportar imagen como DDS"
 
@@ -6237,7 +6201,6 @@ msgid "Mipmap Options"
 msgstr "Opciones del mipmap"
 
 #: ../plug-ins/file-dds/ddswrite.c:2094
-#| msgid "_F_ilter:"
 msgid "F_ilter:"
 msgstr "F_iltro:"
 
@@ -6311,7 +6274,6 @@ msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS no puede manejar la exportación de imágenes con canales alfa"
 
 #: ../plug-ins/file-fits/fits.c:1180
-#| msgid "Open File"
 msgid "Open FITS File"
 msgstr "Abrir archivo FITS"
 
@@ -6348,36 +6310,38 @@ msgctxt "composing"
 msgid "_None"
 msgstr "_Ninguno"
 
-#: ../plug-ins/file-fli/fli-gimp.c:180 ../plug-ins/file-fli/fli-gimp.c:217
+#: ../plug-ins/file-fli/fli-gimp.c:178 ../plug-ins/file-fli/fli-gimp.c:215
 msgid "AutoDesk FLIC animation"
 msgstr "Animación FLIC de Autodesk"
 
-#: ../plug-ins/file-fli/fli-gimp.c:573
+#: ../plug-ins/file-fli/fli-gimp.c:580
 #, c-format
 msgid "Frame (%i)"
 msgstr "Cuadro (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:728
+#: ../plug-ins/file-fli/fli-gimp.c:742
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Disculpe, sólo se puede exportar ÍNDICES e imágenes en GRIS. "
 
-#: ../plug-ins/file-fli/fli-gimp.c:886
-msgid "GFLI 1.3 - Load framestack"
-msgstr "GLI 1.3 - Cargar pila de cuadros"
+#: ../plug-ins/file-fli/fli-gimp.c:905
+#| msgid "AutoDesk FLIC animation"
+msgid "Open FLIC Animation"
+msgstr "Abrir animación FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:916 ../plug-ins/file-fli/fli-gimp.c:974
+#: ../plug-ins/file-fli/fli-gimp.c:923 ../plug-ins/file-fli/fli-gimp.c:979
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_De:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:926 ../plug-ins/file-fli/fli-gimp.c:984
+#: ../plug-ins/file-fli/fli-gimp.c:929 ../plug-ins/file-fli/fli-gimp.c:985
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Para:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:956
-msgid "GFLI 1.3"
-msgstr "GFLI 1.3"
+#: ../plug-ins/file-fli/fli-gimp.c:961
+#| msgid "Export Image as Pattern"
+msgid "Export Image as FLI Animation"
+msgstr "Exportar imagen como animación FLI"
 
 #: ../plug-ins/file-ico/ico-dialog.c:54
 msgid "Windows Icon"
@@ -6897,12 +6861,10 @@ msgid "Could not open '%s' for writing."
 msgstr "No se pudo abrir «%s» para escritura."
 
 #: ../plug-ins/file-sgi/sgi.c:673
-#| msgid "Export as DDS"
 msgid "Export Image as SGI"
 msgstr "Exportar imagen como  SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:682
-#| msgid "_No compression"
 msgid "No compression"
 msgstr "Sin compresión"
 
@@ -6911,14 +6873,10 @@ msgid "RLE compression"
 msgstr "Compresión RLE"
 
 #: ../plug-ins/file-sgi/sgi.c:686
-#| msgid ""
-#| "_Aggressive RLE\n"
-#| "(not supported by SGI)"
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "RLE agresivo (no soportado por SGI)"
 
 #: ../plug-ins/file-sgi/sgi.c:694
-#| msgid "Compression type"
 msgid "Compression _type:"
 msgstr "_Tipo de compresión:"
 
@@ -7062,7 +7020,6 @@ msgid "(all frames are keyframes)"
 msgstr "(todos los fotogramas son fotogramas clave)"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:103
-#| msgid "Exports HEIF images"
 msgid "Export Image as WebP"
 msgstr "Exportar imagen como WebP"
 
@@ -8874,22 +8831,18 @@ msgstr ""
 "tenga alguna influencia"
 
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:111
-#| msgid "Exercise a goat"
 msgid "Exercise in _C minor"
 msgstr "Ejercitar en _C menor"
 
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:117
-#| msgid "Exercise a goat"
 msgid "Exercise a goat in the C language"
 msgstr "Ejercitar una cabra en el lenguaje C"
 
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:160
-#| msgid "Exercise a goat"
 msgid "Exercise a goat (C)"
 msgstr "Ejercitar una cabra (C)"
 
 #: ../plug-ins/goat-exercises/goat-exercise-c.c:165
-#| msgid "Source"
 msgid "_Source"
 msgstr "_Fuente"
 
@@ -8910,7 +8863,6 @@ msgstr ""
 "«Fuente»."
 
 #: ../plug-ins/goat-exercises/goat-exercise-py3.py:67
-#| msgid "Exercise a goat"
 msgid "Exercise a goat (Python 3)"
 msgstr "Ejercitar una cabra (Python 3)"
 
@@ -11761,8 +11713,9 @@ msgid "Print the image"
 msgstr "Imprimir la imagen"
 
 #: ../plug-ins/print/print.c:184
-msgid "Page Set_up"
-msgstr "_Preparación de la página"
+#| msgid "Page Set_up"
+msgid "Page Set_up..."
+msgstr "_Configuración de la página…"
 
 #: ../plug-ins/print/print.c:189
 msgid "Adjust page size and orientation for printing"
@@ -12175,6 +12128,21 @@ msgstr "_Escáner/Cámara…"
 #: ../plug-ins/twain/twain.c:506
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "C-Source"
+#~ msgstr "Fuente en C"
+
+#~ msgid "PSP"
+#~ msgstr "PSP"
+
+#~ msgid "TGA"
+#~ msgstr "TGA"
+
+#~ msgid "GFLI 1.3 - Load framestack"
+#~ msgstr "GLI 1.3 - Cargar pila de cuadros"
+
+#~ msgid "GFLI 1.3"
+#~ msgstr "GFLI 1.3"
 
 #~ msgid "Preview a GIMP layer-based animation"
 #~ msgstr "Vista previa de una animación GIMP basada en capas"
