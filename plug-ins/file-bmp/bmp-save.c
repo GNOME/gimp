@@ -1002,9 +1002,9 @@ save_dialog (GimpProcedure *procedure,
   if (channels < 3)
     gtk_widget_set_sensitive (frame, FALSE);
 
-  store = gimp_int_store_new (_("16 bit (R5 G6 B5"),     RGB_565,
-                              _("16 bit (A1 R5 G5 B5"),  RGBA_5551,
-                              _("16 bit (X1 R5 G5 B5"),  RGB_555,
+  store = gimp_int_store_new (_("16 bit (R5 G6 B5)"),    RGB_565,
+                              _("16 bit (A1 R5 G5 B5)"), RGBA_5551,
+                              _("16 bit (X1 R5 G5 B5)"), RGB_555,
                               _("24 bit (R8 G8 B8)"),    RGB_888,
                               _("32 bit (A8 R8 G8 B8)"), RGBA_8888,
                               _("32 bit (X8 R8 G8 B8)"), RGBX_8888,
