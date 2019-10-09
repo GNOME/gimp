@@ -124,7 +124,7 @@ static gboolean    save_image                (GFile            *file,
                                               GimpDrawable     *drawable,
                                               GimpImage        *orig_image,
                                               GObject          *config,
-                                              gboolean         *profile_saved,
+                                              gint             *bits_per_sample,
                                               GError          **error);
 
 static int         respin_cmap               (png_structp       pp,
@@ -416,6 +416,7 @@ png_save (GimpProcedure        *procedure,
   GimpProcedureConfig *config;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpMetadata        *metadata;
   GimpImage           *orig_image;
   gboolean             alpha;
   GError              *error = NULL;
@@ -424,19 +425,8 @@ png_save (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
-
-#if 0
-  /* Override the defaults with preferences. */
-  metadata = gimp_image_metadata_save_prepare (image,
-                                               "image/png",
-                                               &metadata_flags);
-  pngvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-  pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-  pngvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
-  pngvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
-  pngvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
-#endif
+  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+                                                 args, "image/png");
 
   orig_image = image;
 
@@ -480,69 +470,13 @@ png_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gboolean profile_saved = FALSE;
+      gint bits_per_sample;
 
       if (save_image (file, image, drawable, orig_image, G_OBJECT (config),
-                      &profile_saved, &error))
+                      &bits_per_sample, &error))
         {
-          GimpMetadata          *metadata;
-          GimpMetadataSaveFlags  metadata_flags;
-
-          metadata = gimp_image_metadata_save_prepare (orig_image,
-                                                       "image/png",
-                                                       &metadata_flags);
-
           if (metadata)
-            {
-              gboolean save_exif;
-              gboolean save_xmp;
-              gboolean save_iptc;
-              gboolean save_thumbnail;
-
-              g_object_get (config,
-                            "save-exif",      &save_exif,
-                            "save-xmp",       &save_xmp,
-                            "save-iptc",      &save_iptc,
-                            "save-thumbnail", &save_thumbnail,
-                            NULL);
-
-              gimp_metadata_set_bits_per_sample (metadata, 8);
-
-              if (save_exif)
-                metadata_flags |= GIMP_METADATA_SAVE_EXIF;
-              else
-                metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
-
-              if (save_xmp)
-                metadata_flags |= GIMP_METADATA_SAVE_XMP;
-              else
-                metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
-
-              if (save_iptc)
-                metadata_flags |= GIMP_METADATA_SAVE_IPTC;
-              else
-                metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
-
-              if (save_thumbnail)
-                metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
-              else
-                metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
-
-              /* check if the profile was actually saved, not only if
-               * we wanted to save it
-               */
-              if (profile_saved)
-                metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
-              else
-                metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
-
-              gimp_image_metadata_save_finish (image,
-                                               "image/png",
-                                               metadata, metadata_flags,
-                                               file, NULL);
-
-              g_object_unref (metadata);
-            }
+            gimp_metadata_set_bits_per_sample (metadata, bits_per_sample);
         }
       else
         {
@@ -550,7 +484,7 @@ png_save (GimpProcedure        *procedure,
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  gimp_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
@@ -1279,7 +1213,7 @@ save_image (GFile        *file,
             GimpDrawable *drawable,
             GimpImage    *orig_image,
             GObject      *config,
-            gboolean     *profile_saved,
+            gint         *bits_per_sample,
             GError      **error)
 {
   gint              i, k;             /* Looping vars */
@@ -1335,6 +1269,12 @@ save_image (GFile        *file,
   gboolean        save_thumbnail;
   gboolean        save_profile;
 
+#if !defined(PNG_iCCP_SUPPORTED)
+  g_object_set (config,
+                "save-color-profile", FALSE,
+                NULL);
+#endif
+
   g_object_get (config,
                 "interlaced",         &save_interlaced,
                 "bkgd",               &save_bkgd,
@@ -1355,6 +1295,7 @@ save_image (GFile        *file,
 
   out_linear = FALSE;
   space      = gimp_drawable_get_format (drawable);
+
 #if defined(PNG_iCCP_SUPPORTED)
   /* If no profile is written: export as sRGB.
    * If manually assigned profile written: follow its TRC.
@@ -1367,7 +1308,7 @@ save_image (GFile        *file,
     {
       profile = gimp_image_get_color_profile (orig_image);
 
-      if (profile                                     ||
+      if (profile                             ||
           export_format == PNG_FORMAT_AUTO    ||
           export_format == PNG_FORMAT_RGB16   ||
           export_format == PNG_FORMAT_RGBA16  ||
@@ -1798,7 +1739,6 @@ save_image (GFile        *file,
 
       g_free (profile_name);
 
-      *profile_saved = TRUE;
       g_object_unref (profile);
     }
 #endif
@@ -2050,6 +1990,8 @@ save_image (GFile        *file,
   free (info);
 
   fclose (fp);
+
+  *bits_per_sample = bit_depth;
 
   return TRUE;
 }
