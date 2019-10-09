@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include "gimp.h"
+#include "gimpimagemetadata.h"
 
 #include "gimpprocedureconfig-private.h"
 
@@ -57,10 +58,14 @@ enum
 
 struct _GimpProcedureConfigPrivate
 {
-  GimpProcedure *procedure;
+  GimpProcedure         *procedure;
 
-  GimpImage     *image;
-  GimpRunMode    run_mode;
+  GimpImage             *image;
+  GimpRunMode            run_mode;
+
+  GimpMetadata          *metadata;
+  gchar                 *mime_type;
+  GimpMetadataSaveFlags  metadata_flags;
 };
 
 
@@ -82,6 +87,20 @@ G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpProcedureConfig, gimp_procedure_config,
 #define parent_class gimp_procedure_config_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
+
+static const struct
+{
+  const gchar           *name;
+  GimpMetadataSaveFlags  flag;
+}
+metadata_properties[] =
+{
+  { "save-exif",          GIMP_METADATA_SAVE_EXIF          },
+  { "save-xmp",           GIMP_METADATA_SAVE_XMP           },
+  { "save-iptc",          GIMP_METADATA_SAVE_IPTC          },
+  { "save-thumbnail",     GIMP_METADATA_SAVE_THUMBNAIL     },
+  { "save-color-profile", GIMP_METADATA_SAVE_COLOR_PROFILE }
+};
 
 
 static void
@@ -129,6 +148,8 @@ gimp_procedure_config_dispose (GObject *object)
   GimpProcedureConfig *config = GIMP_PROCEDURE_CONFIG (object);
 
   g_clear_object (&config->priv->procedure);
+  g_clear_object (&config->priv->metadata);
+  g_clear_pointer (&config->priv->mime_type, g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -183,7 +204,7 @@ gimp_procedure_config_get_property (GObject    *object,
  * This function returns the #GimpProcedure which created @config, see
  * gimp_procedure_create_config().
  *
- * Returns: The #GimpProcedure which created @config.
+ * Returns: (transfer none): The #GimpProcedure which created @config.
  *
  * Since: 3.0
  **/
@@ -419,6 +440,179 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
 
   config->priv->image    = NULL;
   config->priv->run_mode = -1;
+}
+
+/**
+ * gimp_procedure_config_begin_export:
+ * @config:         a #GimpProcedureConfig
+ * @original_image: the #GimpImage passed to run()
+ * @run_mode:       the #GimpRunMode passed to a #GimpProcedure's run()
+ * @args:           the #GimpValueArray passed to a #GimpProcedure's run()
+ * @mime_type:      the exported file format's mime type
+ *
+ * This is a variant of gimp_procedure_config_begin_run() to be used
+ * by file export procedures using #GimpSaveProcedure. It must be
+ * paired with a call to gimp_procedure_config_end_export() at the end
+ * of run().
+ *
+ * It does everything gimp_procedure_config_begin_run() does but
+ * provides additional features to automate file export:
+ *
+ * Exporting metadata is handled automatically, by calling
+ * gimp_image_metadata_save_prepare() and syncing its returned
+ * #GimpMetadataSaveFlags with @config's properties. (The
+ * corresponding gimp_image_metadata_save_finish() will be called by
+ * gimp_procedure_config_end_export()).
+ *
+ * The following boolean arguments of the used #GimpSaveProcedure are
+ * synced. The procedure can but must not provide these arguments.
+ *
+ * "save-exif" for %GIMP_METADATA_SAVE_EXIF.
+ *
+ * "save-xmp" for %GIMP_METADATA_SAVE_XMP.
+ *
+ * "save-iptc" for %GIMP_METADATA_SAVE_IPTC.
+ *
+ * "save-thumbnail" for %GIMP_METADATA_SAVE_THUMBNAIL.
+ *
+ * "save-color-profile" for %GIMP_METADATA_SAVE_COLOR_PROFILE.
+ *
+ * The values from the #GimpMetadataSaveFlags will only ever be used
+ * to set these properties to %FALSE, overriding the user's saved
+ * default values for the procedure, but NOT overriding the last used
+ * values from exporting @original_image or the last used values from
+ * exporting any other image using this procedure.
+ *
+ * Returns: (transfer none): The #GimpMetadata to be used for this
+ *          export, or %NULL if @original_image doesn't have metadata.
+ *
+ * Since: 3.0
+ **/
+GimpMetadata *
+gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
+                                    GimpImage            *original_image,
+                                    GimpRunMode           run_mode,
+                                    const GimpValueArray *args,
+                                    const gchar          *mime_type)
+{
+  GObjectClass          *object_class;
+  GimpMetadataSaveFlags  metadata_flags;
+  gint                   i;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (original_image), NULL);
+  g_return_val_if_fail (args != NULL, NULL);
+  g_return_val_if_fail (mime_type != NULL, NULL);
+
+  object_class = G_OBJECT_GET_CLASS (config);
+
+  config->priv->metadata =
+    gimp_image_metadata_save_prepare (original_image,
+                                      mime_type,
+                                      &metadata_flags);
+
+  if (config->priv->metadata)
+    {
+      config->priv->mime_type      = g_strdup (mime_type);
+      config->priv->metadata_flags = metadata_flags;
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
+    {
+      /*  we only disable properties based on metadata flags here and
+       *  never enable them, so we don't override the user's saved
+       *  default values that are passed to us via "args"
+       */
+      if (! (metadata_flags &  metadata_properties[i].flag))
+        {
+          const gchar *prop_name = metadata_properties[i].name;
+          GParamSpec  *pspec;
+
+          pspec = g_object_class_find_property (object_class, prop_name);
+          if (pspec)
+            g_object_set (config,
+                          prop_name, FALSE,
+                          NULL);
+        }
+    }
+
+  gimp_procedure_config_begin_run (config, original_image, run_mode, args);
+
+  return config->priv->metadata;
+}
+
+/**
+ * gimp_procedure_config_end_export:
+ * @config:         a #GimpProcedureConfig
+ * @exported_image: the #GimpImage that was actually exported
+ * @file:           the #GFile @exported_image was written to
+ * @status:         the return status of the #GimpProcedure's run()
+ *
+ * This is a variant of gimp_procedure_config_end_run() to be used by
+ * file export procedures using #GimpSaveProcedure. It must be paired
+ * with a call to gimp_procedure_config_begin_export() at the
+ * beginning of run().
+ *
+ * It does everything gimp_procedure_config_begin_run() does but
+ * provides additional features to automate file export:
+ *
+ * If @status is %GIMP_PDB_SUCCESS, and
+ * gimp_procedure_config_begin_export() returned a #GimpMetadata,
+ * @config's export properties are synced back to the metadata's
+ * #GimpMetadataSaveFlags and the metadata is written to @file using
+ * gimp_image_metadata_save_finish().
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_config_end_export (GimpProcedureConfig  *config,
+                                  GimpImage            *exported_image,
+                                  GFile                *file,
+                                  GimpPDBStatusType     status)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
+  g_return_if_fail (GIMP_IS_IMAGE (exported_image));
+  g_return_if_fail (G_IS_FILE (file));
+
+  if (status == GIMP_PDB_SUCCESS &&
+      config->priv->metadata)
+    {
+      GObjectClass *object_class = G_OBJECT_GET_CLASS (config);
+      gint          i;
+
+      for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
+        {
+          const gchar           *prop_name = metadata_properties[i].name;
+          GimpMetadataSaveFlags  prop_flag = metadata_properties[i].flag;
+          GParamSpec            *pspec;
+          gboolean               value;
+
+          pspec = g_object_class_find_property (object_class, prop_name);
+          if (pspec)
+            {
+              g_object_get (config,
+                            prop_name, &value,
+                            NULL);
+
+              if (value)
+                config->priv->metadata_flags |= prop_flag;
+              else
+                config->priv->metadata_flags &= ~prop_flag;
+            }
+
+          gimp_image_metadata_save_finish (exported_image,
+                                           config->priv->mime_type,
+                                           config->priv->metadata,
+                                           config->priv->metadata_flags,
+                                           file, NULL);
+        }
+    }
+
+  g_clear_object (&config->priv->metadata);
+  g_clear_pointer (&config->priv->mime_type, g_free);
+  config->priv->metadata_flags = 0;
+
+  gimp_procedure_config_end_run (config, status);
 }
 
 

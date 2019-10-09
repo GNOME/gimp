@@ -152,6 +152,7 @@ libgimp_introspectable = \
 	../libgimp/gimpgradientselect.c		\
 	../libgimp/gimpimage.c			\
 	../libgimp/gimpimagecolorprofile.c	\
+	../libgimp/gimpimagemetadata-save.c	\
 	../libgimp/gimpimageprocedure.c		\
 	../libgimp/gimpitem.c			\
 	../libgimp/gimplayer.c			\

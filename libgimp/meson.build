@@ -145,6 +145,7 @@ libgimp_sources_introspectable = [
   'gimpgradientselect.c',
   'gimpimage.c',
   'gimpimagecolorprofile.c',
+  'gimpimagemetadata-save.c',
   'gimpimageprocedure.c',
   'gimpitem.c',
   'gimplayer.c',

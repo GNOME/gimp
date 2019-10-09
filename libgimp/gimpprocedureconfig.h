@@ -82,6 +82,16 @@ void    gimp_procedure_config_begin_run     (GimpProcedureConfig  *config,
 void    gimp_procedure_config_end_run       (GimpProcedureConfig  *config,
                                              GimpPDBStatusType     status);
 
+GimpMetadata *
+        gimp_procedure_config_begin_export  (GimpProcedureConfig  *config,
+                                             GimpImage            *original_image,
+                                             GimpRunMode           run_mode,
+                                             const GimpValueArray *args,
+                                             const gchar          *mime_type);
+void    gimp_procedure_config_end_export    (GimpProcedureConfig  *config,
+                                             GimpImage            *exported_image,
+                                             GFile                *file,
+                                             GimpPDBStatusType     status);
 
 G_END_DECLS
 

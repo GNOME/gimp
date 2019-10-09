@@ -438,6 +438,8 @@ EXPORTS
 	gimp_image_merge_down
 	gimp_image_merge_layer_group
 	gimp_image_merge_visible_layers
+	gimp_image_metadata_save_finish
+	gimp_image_metadata_save_prepare
 	gimp_image_new
 	gimp_image_new_with_precision
 	gimp_image_pick_color
@@ -682,7 +684,9 @@ EXPORTS
 	gimp_procedure_add_menu_path
 	gimp_procedure_add_return_value
 	gimp_procedure_add_return_value_from_property
+	gimp_procedure_config_begin_export
 	gimp_procedure_config_begin_run
+	gimp_procedure_config_end_export
 	gimp_procedure_config_end_run
 	gimp_procedure_config_get_procedure
 	gimp_procedure_config_get_type
