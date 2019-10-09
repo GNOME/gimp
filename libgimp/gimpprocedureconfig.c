@@ -99,7 +99,8 @@ metadata_properties[] =
   { "save-xmp",           GIMP_METADATA_SAVE_XMP           },
   { "save-iptc",          GIMP_METADATA_SAVE_IPTC          },
   { "save-thumbnail",     GIMP_METADATA_SAVE_THUMBNAIL     },
-  { "save-color-profile", GIMP_METADATA_SAVE_COLOR_PROFILE }
+  { "save-color-profile", GIMP_METADATA_SAVE_COLOR_PROFILE },
+  { "save-comment",       GIMP_METADATA_SAVE_COMMENT       }
 };
 
 

@@ -231,6 +231,11 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
   if (! gimp_export_color_profile ())
     *suggested_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
+  /* Comment */
+
+  if (! gimp_export_comment ())
+    *suggested_flags &= ~GIMP_METADATA_SAVE_COMMENT;
+
   return metadata;
 }
 
@@ -509,6 +514,11 @@ gimp_image_metadata_save_finish (GimpImage              *image,
        * on the exported color profile, this is probably the place to
        * add it
        */
+    }
+
+  if (flags & GIMP_METADATA_SAVE_COMMENT)
+    {
+      /* nothing to do, blah blah */
     }
 
   success = gimp_metadata_save_to_file (new_metadata, file, error);

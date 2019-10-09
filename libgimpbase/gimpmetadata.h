@@ -61,6 +61,8 @@ typedef enum
  * @GIMP_METADATA_SAVE_THUMBNAIL:     Save a thumbnail of the image
  * @GIMP_METADATA_SAVE_COLOR_PROFILE: Save the image's color profile
  *                                    Since: 2.10.10
+ * @GIMP_METADATA_SAVE_COMMENT:       Save the image's comment
+ *                                    Since: 3.0
  * @GIMP_METADATA_SAVE_ALL:           Save all of the above
  *
  * What kinds of metadata to save when exporting images.
@@ -72,6 +74,7 @@ typedef enum
   GIMP_METADATA_SAVE_IPTC          = 1 << 2,
   GIMP_METADATA_SAVE_THUMBNAIL     = 1 << 3,
   GIMP_METADATA_SAVE_COLOR_PROFILE = 1 << 4,
+  GIMP_METADATA_SAVE_COMMENT       = 1 << 5,
 
   GIMP_METADATA_SAVE_ALL       = 0xffffffff
 } GimpMetadataSaveFlags;
