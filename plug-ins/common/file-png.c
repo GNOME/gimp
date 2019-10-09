@@ -19,23 +19,6 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
- * Contents:
- *
- *   main()                      - Main entry - just call gimp_main()...
- *   query()                     - Respond to a plug-in query...
- *   run()                       - Run the plug-in...
- *   load_image()                - Load a PNG image into a new image window.
- *   offsets_dialog()            - Asks the user about offsets when loading.
- *   respin_cmap()               - Re-order a Gimp colormap for PNG tRNS
- *   save_image()                - Export the specified image to a PNG file.
- *   save_compression_callback() - Update the image compression level.
- *   save_interlace_update()     - Update the interlacing option.
- *   save_dialog()               - Pop up the export dialog.
- *
- * Revision History:
- *
- *   see ChangeLog
  */
 
 #include "config.h"
@@ -281,10 +264,10 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "comment",
-                             "Comment",
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-comment",
+                             "Save comment",
                              "Write comment?",
-                             TRUE,
+                             gimp_export_comment (),
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
@@ -1282,7 +1265,7 @@ save_image (GFile        *file,
                 "offs",               &save_offs,
                 "phys",               &save_phys,
                 "time",               &save_time,
-                "comment",            &save_comment,
+                "save-comment",       &save_comment,
                 "save-transparent",   &save_transp_pixels,
                 "compression",        &compression_level,
                 "format",             &export_format,
@@ -2264,7 +2247,7 @@ save_dialog (GimpImage     *image,
   col = 1;
   row = 0;
 
-  button = gimp_prop_check_button_new (config, "comment",
+  button = gimp_prop_check_button_new (config, "save-comment",
                                        _("Save comme_nt"));
   gtk_grid_attach (GTK_GRID (grid), button, col, row++, 1, 1);
 

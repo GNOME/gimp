@@ -202,16 +202,16 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "xbm,icon,bitmap");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-comment",
-                             "Use comment",
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-comment",
+                             "Save comment",
                              _("Write a comment at the beginning of the file."),
-                             FALSE,
+                             FALSE, /* *NOT* gimp_export_comment() */
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_STRING (procedure, "comment",
                             "Comment",
                             "Image description (maximum 72 bytes)",
-                            "Created with GIMP",
+                            gimp_get_default_comment (),
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "x10-format",
@@ -980,7 +980,7 @@ save_image (GFile         *file,
   guchar        *data = NULL;
   guchar        *cmap;
   const gchar   *intfmt;
-  gboolean       config_use_comment;
+  gboolean       config_save_comment;
   gchar         *config_comment;
   gint           config_x10_format;
   gint           config_use_hot;
@@ -988,7 +988,7 @@ save_image (GFile         *file,
   gint           config_y_hot;
 
   g_object_get (config,
-                "use-comment",  &config_use_comment,
+                "save-comment", &config_save_comment,
                 "comment",      &config_comment,
                 "x10-format",   &config_x10_format,
                 "use-hot-spot", &config_use_hot,
@@ -1065,7 +1065,7 @@ save_image (GFile         *file,
     }
 
   /* Maybe write the image comment. */
-  if (config_use_comment && config_comment && *config_comment)
+  if (config_save_comment && config_comment && *config_comment)
     {
       if (! print (output, error, "/* %s */\n", config_comment))
         goto fail;
@@ -1278,7 +1278,7 @@ save_dialog (GimpDrawable  *drawable,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gimp_prop_check_button_new (config, "use-comment",
+  toggle = gimp_prop_check_button_new (config, "save-comment",
                                        _("_Write comment"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
 
@@ -1298,7 +1298,7 @@ save_dialog (GimpDrawable  *drawable,
   gtk_grid_attach (GTK_GRID (grid), hint, 0, 0, 2, 1);
   gtk_widget_show (hint);
 
-  g_object_bind_property (config, "use-comment",
+  g_object_bind_property (config, "save-comment",
                           grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 

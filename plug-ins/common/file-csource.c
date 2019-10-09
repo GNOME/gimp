@@ -143,13 +143,13 @@ csource_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_AUX_ARG_STRING (procedure, "comment",
                                 "Comment",
                                 "Comment",
-                                NULL,
+                                gimp_get_default_comment (),
                                 GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-comment",
-                                 "Use comment",
-                                 "Use comment",
-                                 FALSE,
+      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
+                                 "Save comment",
+                                 "Save comment",
+                                 gimp_export_comment (),
                                  GIMP_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "glib-types",
@@ -547,7 +547,7 @@ save_image (GFile         *file,
   gint           drawable_bpp;
   gchar         *config_prefixed_name;
   gchar         *config_comment;
-  gboolean       config_use_comment;
+  gboolean       config_save_comment;
   gboolean       config_glib_types;
   gboolean       config_save_alpha;
   gboolean       config_rgb565;
@@ -558,7 +558,7 @@ save_image (GFile         *file,
   g_object_get (config,
                 "prefixed-name", &config_prefixed_name,
                 "comment",       &config_comment,
-                "use-comment",   &config_use_comment,
+                "save-comment",  &config_save_comment,
                 "glib-types",    &config_glib_types,
                 "save-alpha",    &config_save_alpha,
                 "rgb565",        &config_rgb565,
@@ -736,7 +736,7 @@ save_image (GFile         *file,
                    s_uint, s_uint, s_uint))
         goto fail;
 
-      if (config_use_comment)
+      if (config_save_comment)
         {
           if (! print (output, error, "  %s\t*comment;\n", s_char))
             goto fail;
@@ -789,7 +789,7 @@ save_image (GFile         *file,
         }
     }
 
-  if (config_use_comment && ! config_comment)
+  if (config_save_comment && ! config_comment)
     {
       if (! config_use_macros)
         {
@@ -804,7 +804,7 @@ save_image (GFile         *file,
             goto fail;
         }
     }
-  else if (config_use_comment)
+  else if (config_save_comment)
     {
       gchar *p = config_comment - 1;
 
@@ -1010,7 +1010,7 @@ save_dialog (GimpProcedure *procedure,
 
   /* Use Comment
    */
-  toggle = gimp_prop_check_button_new (config, "use-comment",
+  toggle = gimp_prop_check_button_new (config, "save-comment",
                                        _("_Save comment to file"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 

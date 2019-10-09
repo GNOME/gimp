@@ -223,7 +223,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_STRING (procedure, "comment",
                             "Comment",
                             "Image comment",
-                            NULL,
+                            gimp_get_default_comment (),
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "sub-sampling",
