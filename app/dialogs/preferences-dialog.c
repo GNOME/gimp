@@ -1527,6 +1527,9 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_check_button_add (object, "export-color-profile",
                                    _("Export the i_mage's color profile by default"),
                                    GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "export-comment",
+                                   _("Export the image's comment by default"),
+                                   GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-exif",
                                    /* Translators: label for
                                     * configuration option (checkbox).

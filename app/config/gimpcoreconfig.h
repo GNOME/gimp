@@ -98,6 +98,7 @@ struct _GimpCoreConfig
   gchar                  *import_raw_plug_in;
   GimpExportFileType      export_file_type;
   gboolean                export_color_profile;
+  gboolean                export_comment;
   gboolean                export_metadata_exif;
   gboolean                export_metadata_xmp;
   gboolean                export_metadata_iptc;

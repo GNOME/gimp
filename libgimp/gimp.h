@@ -172,6 +172,7 @@ guint               gimp_tile_width           (void) G_GNUC_CONST;
 guint               gimp_tile_height          (void) G_GNUC_CONST;
 gboolean            gimp_show_help_button     (void) G_GNUC_CONST;
 gboolean            gimp_export_color_profile (void) G_GNUC_CONST;
+gboolean            gimp_export_comment       (void) G_GNUC_CONST;
 gboolean            gimp_export_exif          (void) G_GNUC_CONST;
 gboolean            gimp_export_xmp           (void) G_GNUC_CONST;
 gboolean            gimp_export_iptc          (void) G_GNUC_CONST;

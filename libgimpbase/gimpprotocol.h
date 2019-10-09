@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x010D
+#define GIMP_PROTOCOL_VERSION  0x010E
 
 
 enum
@@ -109,11 +109,12 @@ struct _GPConfig
   gint8    show_help_button;
   gint8    use_cpu_accel;
   gint8    use_opencl;
-  gint8    export_profile;
+  gint8    export_color_profile;
+  gint8    export_comment;
   gint8    export_exif;
   gint8    export_xmp;
   gint8    export_iptc;
-  gint32   gdisp_id;
+  gint32   default_display_id;
   gchar   *app_name;
   gchar   *wm_class;
   gchar   *display_name;

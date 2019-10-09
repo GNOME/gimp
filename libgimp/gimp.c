@@ -134,27 +134,28 @@ static void        gimp_plugin_sigfatal_handler (gint sig_num);
 #endif /* G_OS_WIN32 */
 
 
-static GimpPlugIn         *PLUG_IN           = NULL;
-static GimpPDB            *PDB               = NULL;
+static GimpPlugIn         *PLUG_IN               = NULL;
+static GimpPDB            *PDB                   = NULL;
 
-static gint                _tile_width       = -1;
-static gint                _tile_height      = -1;
-static gboolean            _show_help_button = TRUE;
-static gboolean            _export_profile   = FALSE;
-static gboolean            _export_exif      = FALSE;
-static gboolean            _export_xmp       = FALSE;
-static gboolean            _export_iptc      = FALSE;
-static GimpCheckSize       _check_size       = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
-static GimpCheckType       _check_type       = GIMP_CHECK_TYPE_GRAY_CHECKS;
-static gint                _gdisp_id         = -1;
-static gchar              *_wm_class         = NULL;
-static gchar              *_display_name     = NULL;
-static gint                _monitor_number   = 0;
-static guint32             _timestamp        = 0;
-static gchar              *_icon_theme_dir   = NULL;
-static const gchar        *progname          = NULL;
+static gint                _tile_width           = -1;
+static gint                _tile_height          = -1;
+static gboolean            _show_help_button     = TRUE;
+static gboolean            _export_color_profile = FALSE;
+static gboolean            _export_comment       = FALSE;
+static gboolean            _export_exif          = FALSE;
+static gboolean            _export_xmp           = FALSE;
+static gboolean            _export_iptc          = FALSE;
+static GimpCheckSize       _check_size           = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
+static GimpCheckType       _check_type           = GIMP_CHECK_TYPE_GRAY_CHECKS;
+static gint                _default_display_id   = -1;
+static gchar              *_wm_class             = NULL;
+static gchar              *_display_name         = NULL;
+static gint                _monitor_number       = 0;
+static guint32             _timestamp            = 0;
+static gchar              *_icon_theme_dir       = NULL;
+static const gchar        *progname              = NULL;
 
-static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
+static GimpStackTraceMode  stack_trace_mode      = GIMP_STACK_TRACE_NEVER;
 
 
 /**
@@ -711,7 +712,23 @@ gimp_show_help_button (void)
 gboolean
 gimp_export_color_profile (void)
 {
-  return _export_profile;
+  return _export_color_profile;
+}
+
+/**
+ * gimp_export_comment:
+ *
+ * Returns whether file plug-ins should default to exporting the
+ * image's comment.
+ *
+ * Returns: TRUE if preferences are set to export the comment.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_export_comment (void)
+{
+  return _export_comment;
 }
 
 /**
@@ -813,7 +830,7 @@ gimp_check_type (void)
 GimpDisplay *
 gimp_default_display (void)
 {
-  return gimp_display_get_by_id (_gdisp_id);
+  return gimp_display_get_by_id (_default_display_id);
 }
 
 /**
@@ -1105,21 +1122,21 @@ _gimp_config (GPConfig *config)
   GFile *file;
   gchar *path;
 
-  _tile_width       = config->tile_width;
-  _tile_height      = config->tile_height;
-  _check_size       = config->check_size;
-  _check_type       = config->check_type;
-  _show_help_button = config->show_help_button ? TRUE : FALSE;
-  _export_profile   = config->export_profile   ? TRUE : FALSE;
-  _export_exif      = config->export_exif      ? TRUE : FALSE;
-  _export_xmp       = config->export_xmp       ? TRUE : FALSE;
-  _export_iptc      = config->export_iptc      ? TRUE : FALSE;
-  _gdisp_id         = config->gdisp_id;
-  _wm_class         = g_strdup (config->wm_class);
-  _display_name     = g_strdup (config->display_name);
-  _monitor_number   = config->monitor_number;
-  _timestamp        = config->timestamp;
-  _icon_theme_dir   = g_strdup (config->icon_theme_dir);
+  _tile_width           = config->tile_width;
+  _tile_height          = config->tile_height;
+  _check_size           = config->check_size;
+  _check_type           = config->check_type;
+  _show_help_button     = config->show_help_button ? TRUE : FALSE;
+  _export_color_profile = config->export_color_profile   ? TRUE : FALSE;
+  _export_exif          = config->export_exif      ? TRUE : FALSE;
+  _export_xmp           = config->export_xmp       ? TRUE : FALSE;
+  _export_iptc          = config->export_iptc      ? TRUE : FALSE;
+  _default_display_id   = config->default_display_id;
+  _wm_class             = g_strdup (config->wm_class);
+  _display_name         = g_strdup (config->display_name);
+  _monitor_number       = config->monitor_number;
+  _timestamp            = config->timestamp;
+  _icon_theme_dir       = g_strdup (config->icon_theme_dir);
 
   if (config->app_name)
     g_set_application_name (config->app_name);

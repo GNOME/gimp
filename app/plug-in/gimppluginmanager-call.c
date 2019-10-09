@@ -200,35 +200,37 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       icon_theme_dir = gimp_get_icon_theme_dir (manager->gimp);
 
-      config.tile_width       = GIMP_PLUG_IN_TILE_WIDTH;
-      config.tile_height      = GIMP_PLUG_IN_TILE_HEIGHT;
-      config.shm_id           = (manager->shm ?
-                                 gimp_plug_in_shm_get_id (manager->shm) : -1);
-      config.check_size       = display_config->transparency_size;
-      config.check_type       = display_config->transparency_type;
-      config.show_help_button = (gui_config->use_help &&
-                                 gui_config->show_help_button);
-      config.use_cpu_accel    = manager->gimp->use_cpu_accel;
-      config.use_opencl       = gegl_config->use_opencl;
-      config.export_profile   = core_config->export_color_profile;
-      config.export_exif      = core_config->export_metadata_exif;
-      config.export_xmp       = core_config->export_metadata_xmp;
-      config.export_iptc      = core_config->export_metadata_iptc;
-      config.gdisp_id         = display_id;
-      config.app_name         = (gchar *) g_get_application_name ();
-      config.wm_class         = (gchar *) gimp_get_program_class (manager->gimp);
-      config.display_name     = gimp_get_display_name (manager->gimp,
-                                                       display_id,
-                                                       &monitor,
-                                                       &config.monitor_number);
-      config.timestamp        = gimp_get_user_time (manager->gimp);
-      config.icon_theme_dir   = icon_theme_dir ?
-                                  g_file_get_path (icon_theme_dir) :
-                                  NULL;
-      config.tile_cache_size  = gegl_config->tile_cache_size;
-      config.swap_path        = gegl_config->swap_path;
-      config.swap_compression = gegl_config->swap_compression;
-      config.num_processors   = gegl_config->num_processors;
+      config.tile_width           = GIMP_PLUG_IN_TILE_WIDTH;
+      config.tile_height          = GIMP_PLUG_IN_TILE_HEIGHT;
+      config.shm_id               = (manager->shm ?
+                                     gimp_plug_in_shm_get_id (manager->shm) :
+                                     -1);
+      config.check_size           = display_config->transparency_size;
+      config.check_type           = display_config->transparency_type;
+      config.show_help_button     = (gui_config->use_help &&
+                                     gui_config->show_help_button);
+      config.use_cpu_accel        = manager->gimp->use_cpu_accel;
+      config.use_opencl           = gegl_config->use_opencl;
+      config.export_color_profile = core_config->export_color_profile;
+      config.export_comment       = core_config->export_comment;
+      config.export_exif          = core_config->export_metadata_exif;
+      config.export_xmp           = core_config->export_metadata_xmp;
+      config.export_iptc          = core_config->export_metadata_iptc;
+      config.default_display_id   = display_id;
+      config.app_name             = (gchar *) g_get_application_name ();
+      config.wm_class             = (gchar *) gimp_get_program_class (manager->gimp);
+      config.display_name         = gimp_get_display_name (manager->gimp,
+                                                           display_id,
+                                                           &monitor,
+                                                           &config.monitor_number);
+      config.timestamp            = gimp_get_user_time (manager->gimp);
+      config.icon_theme_dir       = (icon_theme_dir ?
+                                     g_file_get_path (icon_theme_dir) :
+                                     NULL);
+      config.tile_cache_size      = gegl_config->tile_cache_size;
+      config.swap_path            = gegl_config->swap_path;
+      config.swap_compression     = gegl_config->swap_compression;
+      config.num_processors       = gegl_config->num_processors;
 
       proc_run.name     = (gchar *) gimp_object_get_name (procedure);
       proc_run.n_params = gimp_value_array_length (args);

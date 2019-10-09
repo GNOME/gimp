@@ -217,6 +217,9 @@ _("Export file type used by default.")
 #define EXPORT_COLOR_PROFILE_BLURB \
 _("Export the image's color profile by default.")
 
+#define EXPORT_COMMENT_BLURB \
+_("Export the image's comment by default.")
+
 /* Translators: tooltip for configuration option (checkbox).
  * It determines how file export plug-ins handle Exif by default.
  */
