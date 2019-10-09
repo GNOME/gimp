@@ -390,10 +390,10 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           break;
 
         case GIMP_HANDLE_CROSS:
-          cairo_move_to (cr, x - private->width / 2, y);
-          cairo_line_to (cr, x + private->width / 2 - 0.5, y);
-          cairo_move_to (cr, x, y - private->height / 2);
-          cairo_line_to (cr, x, y + private->height / 2 - 0.5);
+          cairo_move_to (cr, x - private->width / 2.0, y);
+          cairo_line_to (cr, x + private->width / 2.0 - 0.5, y);
+          cairo_move_to (cr, x, y - private->height / 2.0);
+          cairo_line_to (cr, x, y + private->height / 2.0 - 0.5);
           _gimp_canvas_item_stroke (item, cr);
           break;
 
@@ -413,7 +413,7 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
 
           cairo_save (cr);
 
-          circ = 2.0 * G_PI * (private->width / 2);
+          circ = 2.0 * G_PI * (private->width / 2.0);
 
           dashes[0] = (circ / N_DASHES) * DASH_ON_RATIO;
           dashes[1] = (circ / N_DASHES) * DASH_OFF_RATIO;
@@ -421,7 +421,7 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           cairo_set_dash (cr, dashes, 2, dashes[0] / 2.0);
         }
 
-      gimp_cairo_arc (cr, x, y, private->width / 2,
+      gimp_cairo_arc (cr, x, y, private->width / 2.0,
                       private->start_angle,
                       private->slice_angle);
 
@@ -442,16 +442,16 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
       break;
 
     case GIMP_HANDLE_CROSSHAIR:
-      cairo_move_to (cr, x - private->width / 2, y);
+      cairo_move_to (cr, x - private->width / 2.0, y);
       cairo_line_to (cr, x - private->width * 0.4, y);
 
-      cairo_move_to (cr, x + private->width / 2 - 0.5, y);
+      cairo_move_to (cr, x + private->width / 2.0 - 0.5, y);
       cairo_line_to (cr, x + private->width * 0.4, y);
 
-      cairo_move_to (cr, x, y - private->height / 2);
+      cairo_move_to (cr, x, y - private->height / 2.0);
       cairo_line_to (cr, x, y - private->height * 0.4 - 0.5);
 
-      cairo_move_to (cr, x, y + private->height / 2 - 0.5);
+      cairo_move_to (cr, x, y + private->height / 2.0 - 0.5);
       cairo_line_to (cr, x, y + private->height * 0.4 - 0.5);
 
        _gimp_canvas_item_stroke (item, cr);
@@ -493,8 +493,8 @@ gimp_canvas_handle_get_extents (GimpCanvasItem *item)
     case GIMP_HANDLE_DIAMOND:
     case GIMP_HANDLE_DASHED_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
-      rectangle.x      = x - private->width  / 2 - 2.0;
-      rectangle.y      = y - private->height / 2 - 2.0;
+      rectangle.x      = x - private->width  / 2.0 - 2.0;
+      rectangle.y      = y - private->height / 2.0 - 2.0;
       rectangle.width  = private->width  + 4.0;
       rectangle.height = private->height + 4.0;
       break;
