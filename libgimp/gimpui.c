@@ -63,8 +63,10 @@ static void      gimp_ui_theme_changed          (GFileMonitor      *monitor,
                                                  GFileMonitorEvent  event_type,
                                                  GtkCssProvider    *css_provider);
 static void      gimp_ensure_modules            (void);
+#ifndef GDK_WINDOWING_WIN32
 static void      gimp_window_transient_realized (GtkWidget         *window,
                                                  GdkWindow         *parent);
+#endif
 static gboolean  gimp_window_set_transient_for  (GtkWindow         *window,
                                                  GdkWindow         *parent);
 
@@ -398,6 +400,7 @@ gimp_ensure_modules (void)
     }
 }
 
+#ifndef GDK_WINDOWING_WIN32
 static void
 gimp_window_transient_realized (GtkWidget *window,
                                 GdkWindow *parent)
@@ -405,6 +408,7 @@ gimp_window_transient_realized (GtkWidget *window,
   if (gtk_widget_get_realized (window))
     gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
 }
+#endif
 
 static gboolean
 gimp_window_set_transient_for (GtkWindow *window,
