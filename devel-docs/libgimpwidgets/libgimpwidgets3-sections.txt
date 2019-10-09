@@ -497,6 +497,7 @@ GIMP_PATH_EDITOR_GET_CLASS
 GimpIntStore
 GimpIntStoreColumns
 gimp_int_store_new
+gimp_int_store_new_valist
 gimp_int_store_lookup_by_value
 gimp_int_store_lookup_by_user_data
 <SUBSECTION Standard>
@@ -1143,9 +1144,6 @@ gimp_enum_icon_box_set_child_padding
 <FILE>gimpwidgets</FILE>
 <TITLE>GimpWidgets</TITLE>
 GimpWidgetsError
-gimp_radio_group_new
-gimp_radio_group_new2
-gimp_radio_group_set_active
 gimp_int_radio_group_new
 gimp_int_radio_group_set_active
 gimp_spin_button_new
@@ -1198,6 +1196,8 @@ gimp_prop_file_chooser_button_new_with_dialog
 gimp_prop_hscale_new
 gimp_prop_icon_image_new
 gimp_prop_int_combo_box_new
+gimp_prop_int_radio_frame_new
+gimp_prop_int_radio_box_new
 gimp_prop_label_new
 gimp_prop_memsize_entry_new
 gimp_prop_opacity_entry_new

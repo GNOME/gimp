@@ -16,6 +16,7 @@ gimp_font_select_button_get_type
 gimp_gradient_select_button_get_type
 gimp_image_combo_box_get_type
 gimp_image_get_type
+gimp_image_procedure_get_type
 gimp_layer_combo_box_get_type
 gimp_layer_get_type
 gimp_layer_mask_get_type
@@ -26,6 +27,8 @@ gimp_pdb_get_type
 gimp_plug_in_get_type
 gimp_proc_browser_dialog_get_type
 gimp_procedure_get_type
+gimp_procedure_config_get_type
+gimp_procedure_dialog_get_type
 gimp_progress_bar_get_type
 gimp_save_procedure_get_type
 gimp_select_button_get_type

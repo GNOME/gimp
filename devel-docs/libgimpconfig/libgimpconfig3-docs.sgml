@@ -25,6 +25,7 @@
     <xi:include href="xml/gimpconfig-error.xml" />
     <xi:include href="xml/gimpconfig-params.xml" />
     <xi:include href="xml/gimpconfig-path.xml" />
+    <xi:include href="xml/gimpconfig-register.xml" />
     <xi:include href="xml/gimpconfig-utils.xml" />
     <xi:include href="xml/gimpconfigwriter.xml" />
     <xi:include href="xml/gimpscanner.xml" />

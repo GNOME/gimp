@@ -215,8 +215,6 @@ gimp_data_directory_file
 gimp_locale_directory_file
 gimp_sysconf_directory_file
 gimp_plug_in_directory_file
-gimp_personal_rc_file
-gimp_gtkrc
 gimp_path_parse
 gimp_path_to_str
 gimp_path_free

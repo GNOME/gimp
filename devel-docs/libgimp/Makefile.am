@@ -32,19 +32,20 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
 IGNORE_HFILES = \
-	gimp-debug.h		\
-	gimp-private.h		\
-	gimp-shm.h		\
-	gimppdb-private.h	\
-	gimppdbprocedure.h	\
-	gimpgpparams.h		\
-	gimppixbuf.h		\
-	gimpplugin-private.h	\
-	gimpprocedure-private.h	\
-	gimptilebackendplugin.h	\
-	gimpunit_pdb.h		\
-	gimpunitcache.h		\
-	libgimp-intl.h		\
+	gimp-debug.h			\
+	gimp-private.h			\
+	gimp-shm.h			\
+	gimppdb-private.h		\
+	gimppdbprocedure.h		\
+	gimpgpparams.h			\
+	gimppixbuf.h			\
+	gimpplugin-private.h		\
+	gimpprocedure-private.h		\
+	gimpprocedureconfig-private.h	\
+	gimptilebackendplugin.h		\
+	gimpunit_pdb.h			\
+	gimpunitcache.h			\
+	libgimp-intl.h			\
 	stdplugins-intl.h
 
 # Images to copy into HTML directory
