@@ -288,34 +288,23 @@ webp_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig   *config;
-  GimpPDBStatusType      status   = GIMP_PDB_SUCCESS;
-  GimpExportReturn       export   = GIMP_EXPORT_CANCEL;
-  GimpMetadata          *metadata = NULL;
-  GimpMetadataSaveFlags  metadata_flags;
-  gboolean               animation;
-  GError                *error    = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GimpMetadata        *metadata;
+  gboolean             animation;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+                                                 args, "image/webp");
 
   if (run_mode == GIMP_RUN_INTERACTIVE ||
       run_mode == GIMP_RUN_WITH_LAST_VALS)
     gimp_ui_init (PLUG_IN_BINARY);
-
-  /* Override the defaults with preferences. */
-  metadata = gimp_image_metadata_save_prepare (image,
-                                               "image/webp",
-                                               &metadata_flags);
-#if 0
-  params.save_exif    = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-  params.save_xmp     = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-  params.save_iptc    = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
-  params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
-#endif
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -368,50 +357,20 @@ webp_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS && metadata)
     {
-      gboolean save_exif;
       gboolean save_xmp;
-      gboolean save_iptc;
-      gboolean save_profile;
-
-      g_object_get (config,
-                    "save-exif",    &save_exif,
-                    "save-xmp",     &save_xmp,
-                    "save-iptc",    &save_iptc,
-                    "save-profile", &save_profile,
-                    NULL);
 
       /* WebP doesn't support iptc natively and sets it via xmp */
-      save_iptc = save_xmp;
+      g_object_get (config,
+                    "save-xmp", &save_xmp,
+                    NULL);
+      g_object_set (config,
+                    "save-iptc", save_xmp,
+                    NULL);
 
       gimp_metadata_set_bits_per_sample (metadata, 8);
-
-      if (save_exif)
-        metadata_flags |= GIMP_METADATA_SAVE_EXIF;
-      else
-        metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
-
-      if (save_xmp)
-        metadata_flags |= GIMP_METADATA_SAVE_XMP;
-      else
-        metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
-
-      if (save_iptc)
-        metadata_flags |= GIMP_METADATA_SAVE_IPTC;
-      else
-        metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
-
-      if (save_profile)
-        metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
-      else
-        metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
-
-      gimp_image_metadata_save_finish (image,
-                                       "image/webp",
-                                       metadata, metadata_flags,
-                                       file, NULL);
     }
 
-  gimp_procedure_config_end_run (config, status);
+  gimp_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)

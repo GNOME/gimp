@@ -250,19 +250,17 @@ heif_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig  *config;
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  GimpExportReturn      export = GIMP_EXPORT_CANCEL;
-  GimpImage            *orig_image;
-  GError               *error  = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
-
-  orig_image = image;
+  gimp_procedure_config_begin_export (config, image, run_mode,
+                                      args, "image/heif");
 
   switch (run_mode)
     {
@@ -292,32 +290,14 @@ heif_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable, G_OBJECT (config),
-                      &error))
-        {
-          GimpMetadata          *metadata;
-          GimpMetadataSaveFlags  metadata_flags;
-
-          metadata = gimp_image_metadata_save_prepare (orig_image,
-                                                       "image/heif",
-                                                       &metadata_flags);
-
-          if (metadata)
-            {
-              gimp_image_metadata_save_finish (image,
-                                               "image/heif",
-                                               metadata, metadata_flags,
-                                               file, NULL);
-              g_object_unref (metadata);
-            }
-        }
-      else
+      if (! save_image (file, image, drawable, G_OBJECT (config),
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  gimp_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
