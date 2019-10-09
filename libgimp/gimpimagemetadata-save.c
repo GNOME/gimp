@@ -42,7 +42,7 @@ typedef struct
 
 /**
  * gimp_image_metadata_save_prepare:
- * @image:           The image
+ * @image:           The original image
  * @mime_type:       The saved file's mime-type
  * @suggested_flags: Suggested default values for the @flags passed to
  *                   gimp_image_metadata_save_finish()
@@ -59,7 +59,7 @@ typedef struct
  * override the preferences without a good reason since it is a data
  * leak.
  *
- * The suggested value for GIMP_METADATA_SAVE_THUMBNAIL is determined by
+ * The suggested value for %GIMP_METADATA_SAVE_THUMBNAIL is determined by
  * whether there was a thumbnail in the previously imported image.
  *
  * Returns: (transfer full): The image's metadata, prepared for saving.
@@ -261,16 +261,20 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
 
 /**
  * gimp_image_metadata_save_finish:
- * @image:     The image
+ * @image:     The actually saved image
  * @mime_type: The saved file's mime-type
- * @metadata:  The metadata to set on the image
+ * @metadata:  The metadata to write to @file
  * @flags:     Flags to specify what of the metadata to save
- * @file:      The file to load the metadata from
+ * @file:      The file @image was saved to
  * @error:     Return location for error message
  *
  * Saves the @metadata retrieved from the image with
  * gimp_image_metadata_save_prepare() to @file, taking into account
  * the passed @flags.
+ *
+ * Note that the @image passed to this function might be different
+ * from the image passed to gimp_image_metadata_save_prepare(), due
+ * to whatever file export conversion happened in the meantime
  *
  * Returns: Whether the save was successful.
  *
