@@ -899,6 +899,7 @@ gimp_window_get_native_id (GtkWindow *window)
   return 0;
 }
 
+#ifndef GDK_WINDOWING_WIN32
 static void
 gimp_window_transient_realized (GtkWidget *window,
                                 GdkWindow *parent)
@@ -923,6 +924,7 @@ gimp_get_foreign_window (guint32 window)
 
   return NULL;
 }
+#endif
 
 void
 gimp_window_set_transient_for (GtkWindow *window,
@@ -934,6 +936,10 @@ gimp_window_set_transient_for (GtkWindow *window,
    * no-op. If it eventually is fixed to actually work, change this to
    * a run-time check of GTK+ version. Remember to change also the
    * function with the same name in libgimp/gimpui.c
+   *
+   * Note: this hanging bug is still happening with GTK+3 as of 2019-10,
+   * with steps described in comment 4 in:
+   * https://bugzilla.gnome.org/show_bug.cgi?id=359538
    */
 #ifndef GDK_WINDOWING_WIN32
   GdkWindow *parent;

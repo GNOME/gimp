@@ -416,6 +416,9 @@ gimp_window_set_transient_for (GtkWindow *window,
 {
   gtk_window_set_transient_for (window, NULL);
 
+  /* To know why it is disabled on Win32, see
+   * gimp_window_set_transient_for() in app/widgets/gimpwidgets-utils.c.
+   */
 #ifndef GDK_WINDOWING_WIN32
   g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
                                         0, 0, NULL,
