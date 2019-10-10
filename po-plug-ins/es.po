@@ -15,23 +15,23 @@
 #
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
 # Rodrigo <rodhos92@gmail.com>, 2000-2019.
-# Rodrigo Lledó <rodhos92@gmail.com>, 2019.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
+# Rodrigo Lledó <rodhos92@gmail.com>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-07 07:06+0000\n"
-"PO-Revision-Date: 2019-10-07 09:18+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
-"Language: es_ES\n"
+"POT-Creation-Date: 2019-10-08 20:13+0000\n"
+"PO-Revision-Date: 2019-10-10 12:10+0200\n"
+"Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 3.32.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/common/align-layers.c:190
@@ -316,7 +316,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-png.c:929 ../plug-ins/common/file-pnm.c:753
 #: ../plug-ins/common/file-raw-data.c:1340
 #: ../plug-ins/common/file-sunras.c:1069 ../plug-ins/common/file-tga.c:1084
-#: ../plug-ins/common/file-xbm.c:946 ../plug-ins/common/film.c:795
+#: ../plug-ins/common/file-xbm.c:908 ../plug-ins/common/film.c:795
 #: ../plug-ins/common/smooth-palette.c:309 ../plug-ins/common/tile.c:382
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:547 ../plug-ins/file-fits/fits.c:550
@@ -915,7 +915,7 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: ../plug-ins/common/file-raw-data.c:466
 #: ../plug-ins/common/file-raw-data.c:1249 ../plug-ins/common/file-sunras.c:440
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
-#: ../plug-ins/common/file-tga.c:433 ../plug-ins/common/file-xbm.c:783
+#: ../plug-ins/common/file-tga.c:433 ../plug-ins/common/file-xbm.c:745
 #: ../plug-ins/common/file-xmc.c:718 ../plug-ins/common/file-xmc.c:914
 #: ../plug-ins/common/file-xwd.c:469 ../plug-ins/common/sphere-designer.c:2085
 #: ../plug-ins/file-bmp/bmp-load.c:229 ../plug-ins/file-faxg3/faxg3.c:256
@@ -1806,16 +1806,16 @@ msgstr "A_nchura:"
 msgid "Create _histogram"
 msgstr "Crear _histograma"
 
-#: ../plug-ins/common/file-aa.c:124
+#: ../plug-ins/common/file-aa.c:127
 msgid "ASCII art"
 msgstr "Arte ASCII"
 
-#. Create the actual window.
-#: ../plug-ins/common/file-aa.c:393
-msgid "Text"
-msgstr "Texto"
+#: ../plug-ins/common/file-aa.c:369
+#| msgid "Export Image as TGA"
+msgid "Export Image as Text"
+msgstr "Exportar imagen como texto"
 
-#: ../plug-ins/common/file-aa.c:401 ../plug-ins/file-dds/ddswrite.c:2014
+#: ../plug-ins/common/file-aa.c:377 ../plug-ins/file-dds/ddswrite.c:2014
 msgid "_Format:"
 msgstr "_Formato:"
 
@@ -1870,7 +1870,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/common/file-pnm.c:635 ../plug-ins/common/file-ps.c:1122
 #: ../plug-ins/common/file-raw-data.c:1239 ../plug-ins/common/file-sunras.c:430
 #: ../plug-ins/common/file-tga.c:423 ../plug-ins/common/file-wmf.c:1035
-#: ../plug-ins/common/file-xbm.c:773 ../plug-ins/common/file-xmc.c:706
+#: ../plug-ins/common/file-xbm.c:735 ../plug-ins/common/file-xmc.c:706
 #: ../plug-ins/common/file-xpm.c:366 ../plug-ins/common/file-xwd.c:459
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
 #: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:495
@@ -1956,7 +1956,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/common/file-pcx.c:782 ../plug-ins/common/file-pix.c:547
 #: ../plug-ins/common/file-png.c:1485 ../plug-ins/common/file-pnm.c:1317
 #: ../plug-ins/common/file-ps.c:1309 ../plug-ins/common/file-sunras.c:612
-#: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1076
+#: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1047
 #: ../plug-ins/common/file-xpm.c:684 ../plug-ins/common/file-xwd.c:663
 #: ../plug-ins/file-bmp/bmp-save.c:314 ../plug-ins/file-fits/fits.c:496
 #: ../plug-ins/file-fli/fli-gimp.c:746 ../plug-ins/file-ico/ico-save.c:1093
@@ -2380,7 +2380,6 @@ msgid "HTML table"
 msgstr "Tabla HTML"
 
 #: ../plug-ins/common/file-html-table.c:171
-#| msgid "Check if you would like to have the table captioned."
 msgid "Enable if you would like to have the table captioned."
 msgstr "Actívelo si quiere que la tabla tenga un título."
 
@@ -2393,20 +2392,15 @@ msgid "The text to go into each cell."
 msgstr "El texto que va en cada celda."
 
 #: ../plug-ins/common/file-html-table.c:190
-#| msgid "The width for each table cell.  Can be a number or a percent."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr ""
 "La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
 
 #: ../plug-ins/common/file-html-table.c:197
-#| msgid "The height for each table cell.  Can be a number or a percent."
 msgid "The height for each table cell. Can be a number or a percent."
 msgstr "La altura de cada celda de tabla. Puede ser un número o un porcentaje."
 
 #: ../plug-ins/common/file-html-table.c:204
-#| msgid ""
-#| "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
-#| "tags instead of just the table html."
 msgid ""
 "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
@@ -2419,9 +2413,6 @@ msgid "The number of pixels in the table border."
 msgstr "El número de píxeles en el borde de la tabla."
 
 #: ../plug-ins/common/file-html-table.c:218
-#| msgid ""
-#| "If checked GTM will replace any rectangular sections of identically "
-#| "colored blocks with one large cell with ROWSPAN and COLSPAN values."
 msgid ""
 "If enabled GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
@@ -2430,10 +2421,6 @@ msgstr ""
 "idénticamente coloreados con una gran celda con valores ROWSPAN y COLSPAN."
 
 #: ../plug-ins/common/file-html-table.c:227
-#| msgid ""
-#| "Checking this tag will cause GTM to leave no whitespace between the TD "
-#| "tags and the cellcontent.  This is only necessary for pixel level "
-#| "positioning control."
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
 "the cell content. This is only necessary for pixel level positioning control."
@@ -2451,7 +2438,6 @@ msgid "The amount of cell spacing."
 msgstr "La cantidad de espaciado de celdas."
 
 #: ../plug-ins/common/file-html-table.c:596
-#| msgid "Export Image as TGA"
 msgid "Export Image as HTML Table"
 msgstr "Exportar imagen como tabla HTML"
 
@@ -3800,7 +3786,7 @@ msgstr "No se han podido leer las entradas de color de «%s»"
 msgid "Type of colormap not supported"
 msgstr "El tipo del mapa de color no está soportado"
 
-#: ../plug-ins/common/file-sunras.c:506 ../plug-ins/common/file-xbm.c:871
+#: ../plug-ins/common/file-sunras.c:506 ../plug-ins/common/file-xbm.c:833
 #: ../plug-ins/common/file-xwd.c:539
 #, c-format
 msgid ""
@@ -3810,7 +3796,7 @@ msgstr ""
 "«%s»:\n"
 "No se ha especificado la anchura de la imagen"
 
-#: ../plug-ins/common/file-sunras.c:514 ../plug-ins/common/file-xbm.c:879
+#: ../plug-ins/common/file-sunras.c:514 ../plug-ins/common/file-xbm.c:841
 #: ../plug-ins/common/file-xwd.c:547
 #, c-format
 msgid ""
@@ -3820,7 +3806,7 @@ msgstr ""
 "«%s»:\n"
 "La anchura de la imagen es mayor de lo que GIMP puede manejar"
 
-#: ../plug-ins/common/file-sunras.c:522 ../plug-ins/common/file-xbm.c:887
+#: ../plug-ins/common/file-sunras.c:522 ../plug-ins/common/file-xbm.c:849
 #: ../plug-ins/common/file-xwd.c:554
 #, c-format
 msgid ""
@@ -3830,7 +3816,7 @@ msgstr ""
 "«%s»:\n"
 "No se ha especificado la altura de la imagen"
 
-#: ../plug-ins/common/file-sunras.c:530 ../plug-ins/common/file-xbm.c:895
+#: ../plug-ins/common/file-sunras.c:530 ../plug-ins/common/file-xbm.c:857
 #: ../plug-ins/common/file-xwd.c:561
 #, c-format
 msgid ""
@@ -4014,11 +4000,15 @@ msgstr "Renderizar un metaarchivo de Windows"
 msgid "Rendered WMF"
 msgstr "WMF renderizado"
 
-#: ../plug-ins/common/file-xbm.c:205 ../plug-ins/common/file-xbm.c:233
+#: ../plug-ins/common/file-xbm.c:155 ../plug-ins/common/file-xbm.c:183
 msgid "X BitMap image"
 msgstr "Imagen X BitMap"
 
-#: ../plug-ins/common/file-xbm.c:863
+#: ../plug-ins/common/file-xbm.c:207
+msgid "Write a comment at the beginning of the file."
+msgstr "Escribir un comentario al principio del archivo."
+
+#: ../plug-ins/common/file-xbm.c:825
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4028,7 +4018,7 @@ msgstr ""
 "No se pudo leer la cabecera (ftell == %ld)"
 
 # //R :-?
-#: ../plug-ins/common/file-xbm.c:903
+#: ../plug-ins/common/file-xbm.c:865
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4038,7 +4028,7 @@ msgstr ""
 "No se ha especificado el tipo de datos de la imagen"
 
 #. The image is not black-and-white.
-#: ../plug-ins/common/file-xbm.c:1040
+#: ../plug-ins/common/file-xbm.c:1011
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -4052,7 +4042,7 @@ msgstr ""
 "intentarlo."
 
 # //R Hum
-#: ../plug-ins/common/file-xbm.c:1052
+#: ../plug-ins/common/file-xbm.c:1023
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -4060,51 +4050,54 @@ msgstr ""
 "No puede guardar una máscara de cursor para una imagen\n"
 "que no tiene canal Alfa."
 
-#: ../plug-ins/common/file-xbm.c:1286
-msgid "XBM"
-msgstr "XBM"
+#: ../plug-ins/common/file-xbm.c:1251
+#| msgid "Export Image as XPM"
+msgid "Export Image as XBM"
+msgstr "Exportar imagen como XBM"
 
-#. parameter settings
-#: ../plug-ins/common/file-xbm.c:1289
-msgid "XBM Options"
-msgstr "Opciones XBM"
-
-#. X10 format
-#: ../plug-ins/common/file-xbm.c:1299
+#: ../plug-ins/common/file-xbm.c:1261
 msgid "_X10 format bitmap"
 msgstr "Formato de mapa de bits _X10"
 
-#: ../plug-ins/common/file-xbm.c:1319
+#: ../plug-ins/common/file-xbm.c:1273
 msgid "_Identifier prefix:"
 msgstr "Prefijo del _identificador:"
 
-#: ../plug-ins/common/file-xbm.c:1333
+#: ../plug-ins/common/file-xbm.c:1282
+#| msgid "_GIF comment:"
+msgid "_Write comment"
+msgstr "_Escribir comentario"
+
+#: ../plug-ins/common/file-xbm.c:1293
+msgid ""
+"Writing a comment will make the XBM file unreadable by some applications.\n"
+"The comment will not affect embedding the XBM in C source code."
+msgstr ""
+"Al escribir un comentario, algunas aplicaciones no podrán leer el archivo "
+"XBM.\n"
+"El comentario no afectará la incrustación de XBM en código fuente C."
+
+#: ../plug-ins/common/file-xbm.c:1308
 msgid "Comment:"
 msgstr "Comentario:"
 
-#. hotspot toggle
-#: ../plug-ins/common/file-xbm.c:1341
+#: ../plug-ins/common/file-xbm.c:1317
 msgid "_Write hot spot values"
 msgstr "E_scribir valores del punto activo"
 
-#: ../plug-ins/common/file-xbm.c:1366 ../plug-ins/common/file-xmc.c:1156
+#: ../plug-ins/common/file-xbm.c:1335 ../plug-ins/common/file-xmc.c:1156
 msgid "Hot spot _X:"
 msgstr "_X del punto activo:"
 
-#: ../plug-ins/common/file-xbm.c:1379
+#: ../plug-ins/common/file-xbm.c:1343
 msgid "Hot spot _Y:"
 msgstr "_Y del punto activo:"
 
-#. mask file
-#: ../plug-ins/common/file-xbm.c:1387
-msgid "Mask File"
-msgstr "Archivo de máscara"
-
-#: ../plug-ins/common/file-xbm.c:1397
+#: ../plug-ins/common/file-xbm.c:1354
 msgid "W_rite extra mask file"
 msgstr "Esc_ribir archivo de máscara extra"
 
-#: ../plug-ins/common/file-xbm.c:1410
+#: ../plug-ins/common/file-xbm.c:1369
 msgid "_Mask file extension:"
 msgstr "Extensión del archivo de _máscara:"
 
@@ -6130,16 +6123,19 @@ msgid "RGB Encoding"
 msgstr "Codificación RGB"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1005
-msgid "16 bit (R5 G6 B5"
-msgstr "16 bit (R5 G6 B5"
+#| msgid "16 bit (R5 G6 B5"
+msgid "16 bit (R5 G6 B5)"
+msgstr "16 bit (R5 G6 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1006
-msgid "16 bit (A1 R5 G5 B5"
-msgstr "16 bit (A1 R5 G5 B5"
+#| msgid "16 bit (A1 R5 G5 B5"
+msgid "16 bit (A1 R5 G5 B5)"
+msgstr "16 bit (A1 R5 G5 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1007
-msgid "16 bit (X1 R5 G5 B5"
-msgstr "16 bit (X1 R5 G5 B5"
+#| msgid "16 bit (X1 R5 G5 B5"
+msgid "16 bit (X1 R5 G5 B5)"
+msgstr "16 bit (X1 R5 G5 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1008
 msgid "24 bit (R8 G8 B8)"
@@ -12138,6 +12134,18 @@ msgstr "_Escáner/Cámara…"
 #: ../plug-ins/twain/twain.c:506
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "Text"
+#~ msgstr "Texto"
+
+#~ msgid "XBM"
+#~ msgstr "XBM"
+
+#~ msgid "XBM Options"
+#~ msgstr "Opciones XBM"
+
+#~ msgid "Mask File"
+#~ msgstr "Archivo de máscara"
 
 #~ msgid "C-Source"
 #~ msgstr "Fuente en C"
