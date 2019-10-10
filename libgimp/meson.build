@@ -182,12 +182,16 @@ libgimp_sources = [
 ]
 
 libgimp_headers_introspectable = [
+  # Order matters. Leave these headers at the top.
   'gimp.h',
+  'gimptypes.h',
+  'gimpenums.h',
+
+  # Other headers
   'gimpbrushselect.h',
   'gimpchannel.h',
   'gimpdisplay.h',
   'gimpdrawable.h',
-  'gimpenums.h',
   'gimpfileprocedure.h',
   'gimpfontselect.h',
   'gimpgimprc.h',
@@ -209,7 +213,6 @@ libgimp_headers_introspectable = [
   'gimpsaveprocedure.h',
   'gimpselection.h',
   'gimpthumbnailprocedure.h',
-  'gimptypes.h',
   'gimpvectors.h',
   pdb_wrappers_headers,
 ]
@@ -247,6 +250,11 @@ libgimpui_sources = [
 ]
 
 libgimpui_headers_introspectable = [
+  # Order matters. Leave these headers at the top.
+  'gimpui.h',
+  'gimpuitypes.h',
+
+  # Other headers
   'gimpaspectpreview.h',
   'gimpbrushselectbutton.h',
   'gimpdrawablepreview.h',
@@ -263,8 +271,6 @@ libgimpui_headers_introspectable = [
   'gimpprocview.h',
   'gimpprogressbar.h',
   'gimpselectbutton.h',
-  'gimpui.h',
-  'gimpuitypes.h',
   'gimpzoompreview.h',
 ]
 
