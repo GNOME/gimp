@@ -2601,7 +2601,7 @@ gimp_edgel_track_mark (GeglBuffer *mask,
  * Follows a line border, starting from @start_edgel to compute the area
  * enclosed by this border.
  * Unfortunately this may return a negative area when the line does not
- * close a zone. In this case, there is an uncertaincy on the size of
+ * close a zone. In this case, there is an uncertainty on the size of
  * the created zone, and we should consider it a big size.
  *
  * Returns: the area enclosed by the followed line, or a negative value

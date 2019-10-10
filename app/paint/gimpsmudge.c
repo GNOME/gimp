@@ -466,7 +466,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
       paint_buffer_width  = gegl_buffer_get_width  (paint_buffer);
       paint_buffer_height = gegl_buffer_get_height (paint_buffer);
 
-      /*  Get the unclipped acumulator coordinates  */
+      /*  Get the unclipped accumulator coordinates  */
       gimp_smudge_accumulator_coords (paint_core, coords, i, &x, &y);
 
       accum_buffer = g_list_nth_data (smudge->accum_buffers, i);
