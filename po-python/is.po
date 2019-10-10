@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-08 18:35+0000\n"
-"PO-Revision-Date: 2019-03-12 14:34+0000\n"
+"POT-Creation-Date: 2019-09-20 16:59+0000\n"
+"PO-Revision-Date: 2019-10-10 13:03+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -478,7 +478,6 @@ msgid "Frame"
 msgstr "Rammi"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
-#| msgid "Se_lections"
 msgid "Selection"
 msgstr "Myndval"
 
@@ -516,7 +515,7 @@ msgstr "Spírógraf"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Utan (epitrochoid)"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
 msgid "Lissajous"
@@ -542,7 +541,6 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
-#| msgid "Palette to _Gradient"
 msgid "Long Gradient"
 msgstr "Langur litstigull"
 
@@ -588,7 +586,6 @@ msgid "Moving Gear Teeth"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
-#| msgid "Percent"
 msgid "Hole percent"
 msgstr "Holuprósenta"
 
@@ -599,7 +596,6 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
-#| msgid "File Name"
 msgid "Hole Number"
 msgstr "Holufjöldi"
 
@@ -619,7 +615,6 @@ msgstr "Tannhjól"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
-#| msgid "Saturation"
 msgid "Rotation"
 msgstr "Snúningur"
 
@@ -660,7 +655,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
 msgid "Rotation of the fixed gear, in degrees"
-msgstr ""
+msgstr "Snúningur fasta gírhjólsins, í gráðum"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin (px)"
@@ -681,8 +676,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Endurteikna"
+#| msgid "Redraw"
+msgid "Re_draw"
+msgstr "En_durteikna"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -691,16 +687,19 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Frumstilla"
+#| msgid "Reset"
+msgid "_Reset"
+msgstr "F_rumstilla"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Hætta við"
+#| msgid "Cancel"
+msgid "_Cancel"
+msgstr "_Hætta við"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "Í lagi"
+#| msgid "OK"
+msgid "_OK"
+msgstr "Í _lagi"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
@@ -728,7 +727,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
 msgid "Curve Pattern"
-msgstr ""
+msgstr "Sveiglínumynstur"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
 msgid "Fixed Gear"
