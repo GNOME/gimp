@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-07 18:08+0000\n"
-"PO-Revision-Date: 2019-09-08 01:04+0300\n"
+"POT-Creation-Date: 2019-10-08 15:00+0000\n"
+"PO-Revision-Date: 2019-10-08 18:58+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -1432,7 +1432,7 @@ msgstr "Önceden ayrıştırılan bir görüntüyü yeniden düzenle"
 
 #: ../plug-ins/common/compose.c:438
 msgid "R_ecompose"
-msgstr "Y_eniden düzenle"
+msgstr "Y_eniden Düzenle"
 
 #: ../plug-ins/common/compose.c:486
 msgid ""
@@ -2803,11 +2803,11 @@ msgstr "Her tablo hücresi için yükseklik. Sayı veya yüzde olabilir."
 
 #: ../plug-ins/common/file-html-table.c:680
 msgid "Cell-_padding:"
-msgstr "Hücre-_dolgusu:"
+msgstr "Hücre-_doldurması:"
 
 #: ../plug-ins/common/file-html-table.c:684
 msgid "The amount of cell padding."
-msgstr "Hücre dolgusu miktarı"
+msgstr "Hücre doldurması miktarı"
 
 #: ../plug-ins/common/file-html-table.c:695
 msgid "Cell-_spacing:"
@@ -6641,19 +6641,19 @@ msgstr "32 bit"
 msgid "Windows BMP image"
 msgstr "Windows BMP görüntüsü"
 
-#: ../plug-ins/file-dds/dds.c:137 ../plug-ins/file-dds/dds.c:156
+#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
 msgid "DDS image"
 msgstr "DDS görüntüsü"
 
-#: ../plug-ins/file-dds/dds.c:173
+#: ../plug-ins/file-dds/dds.c:176
 msgid "Decode YCoCg"
 msgstr "YCoCg Çözümle"
 
-#: ../plug-ins/file-dds/dds.c:186
+#: ../plug-ins/file-dds/dds.c:189
 msgid "Decode YCoCg (scaled)"
 msgstr "YCoCg Çözümle (ölçeklenmiş)"
 
-#: ../plug-ins/file-dds/dds.c:199
+#: ../plug-ins/file-dds/dds.c:202
 msgid "Decode Alpha exponent"
 msgstr "Alfa katsayılarını çözümle"
 
@@ -8756,10 +8756,9 @@ msgstr "Katı renkli artalan"
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Saydam artalan kullan; yalnızca boyanan darbeler görünür olacak"
 
-# fuzzy: kenarları boya olmasın?
 #: ../plug-ins/gimpressionist/general.c:202
 msgid "Paint edges"
-msgstr "Boya kenarları"
+msgstr "Kenarları boya"
 
 #: ../plug-ins/gimpressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
@@ -12208,8 +12207,8 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Yazdırma işlemi için sayfa boyutu ve yönelimini ayarla"
 
 #: ../plug-ins/print/print.c:131
-msgid "Page Set_up"
-msgstr "Sayfa _Ayarı"
+msgid "Page Set_up..."
+msgstr "Sayfa _Ayarı..."
 
 #: ../plug-ins/print/print.c:275
 msgid "Image Settings"
