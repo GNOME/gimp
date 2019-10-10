@@ -199,6 +199,7 @@ libgimp_headers_introspectable = [
   'gimpimage.h',
   'gimpimagecolorprofile.h',
   'gimpimageprocedure.h',
+  'gimpitem.h',
   'gimplayer.h',
   'gimplayermask.h',
   'gimploadprocedure.h',
