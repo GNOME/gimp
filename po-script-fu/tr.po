@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-18 18:17+0000\n"
-"PO-Revision-Date: 2019-03-18 23:39+0200\n"
+"POT-Creation-Date: 2019-10-08 15:02+0000\n"
+"PO-Revision-Date: 2019-10-08 18:46+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -27,79 +27,79 @@ msgstr ""
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: ../plug-ins/script-fu/script-fu.c:111
-msgid "Interactive console for Script-Fu development"
-msgstr "Script-Fu geliştirmesi için etkileşimli uçbirim"
-
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:138
 msgid "_Console"
 msgstr "_Uçbirim"
 
-#: ../plug-ins/script-fu/script-fu.c:141
-msgid "Server for remote Script-Fu operation"
-msgstr "Uzak Script-Fu işlemi için sunucu"
+#: ../plug-ins/script-fu/script-fu.c:143
+msgid "Interactive console for Script-Fu development"
+msgstr "Script-Fu geliştirmesi için etkileşimli uçbirim"
 
-#: ../plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:190
 msgid "_Start Server..."
 msgstr "Sunucuyu _Başlat..."
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:195
+msgid "Server for remote Script-Fu operation"
+msgstr "Uzak Script-Fu işlemi için sunucu"
+
+#: ../plug-ins/script-fu/script-fu.c:394
 msgid "_GIMP Online"
 msgstr "Çevrimiçi _GIMP"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
 msgstr "_Kullanıcı Kılavuzu"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:398
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:400
 msgid "_Test"
 msgstr "_Dene"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:403
 msgid "_Buttons"
 msgstr "_Düğmeler"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:405
 msgid "_Logos"
 msgstr "_Logolar"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:407
 msgid "_Patterns"
 msgstr "_Desenler"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:410
 msgid "_Web Page Themes"
 msgstr "_Ağ Sayfası Temaları"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:412
 msgid "_Alien Glow"
 msgstr "Y_abancı Parıltı"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: ../plug-ins/script-fu/script-fu.c:414
 msgid "_Beveled Pattern"
 msgstr "_Eğimli Desen"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:416
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:419
 msgid "Alpha to _Logo"
 msgstr "Alfadan _Logoya"
 
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Kullanılabilir tüm Script-Fu betiklerini yeniden oku"
-
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:425
 msgid "_Refresh Scripts"
 msgstr "Betikleri _Yenile"
 
-#: ../plug-ins/script-fu/script-fu.c:362
+#: ../plug-ins/script-fu/script-fu.c:430
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Kullanılabilir tüm Script-Fu betiklerini yeniden oku"
+
+#: ../plug-ins/script-fu/script-fu.c:456
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -108,63 +108,63 @@ msgstr ""
 "kullanamazsınız. Lütfen bütün Script-Fu pencerelerini kapatın ve yeniden "
 "deneyin."
 
-#: ../plug-ins/script-fu/script-fu-console.c:127
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:110
+#: ../plug-ins/script-fu/script-fu-console.c:177
 msgid "Script-Fu Console"
 msgstr "Script-Fu Uçbirimi"
 
-#: ../plug-ins/script-fu/script-fu-console.c:132
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:115
+#: ../plug-ins/script-fu/script-fu-console.c:281
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: ../plug-ins/script-fu/script-fu-console.c:133
+#: ../plug-ins/script-fu/script-fu-console.c:116
 msgid "C_lear"
 msgstr "_Temizle"
 
-#: ../plug-ins/script-fu/script-fu-console.c:134
-#: ../plug-ins/script-fu/script-fu-console.c:374
+#: ../plug-ins/script-fu/script-fu-console.c:117
+#: ../plug-ins/script-fu/script-fu-console.c:359
 msgid "_Close"
 msgstr "_Kapat"
 
 # TinyScheme burada marka ismi gibi özel isim
-#: ../plug-ins/script-fu/script-fu-console.c:190
+#: ../plug-ins/script-fu/script-fu-console.c:173
 msgid "Welcome to TinyScheme"
 msgstr "TinyScheme'ya hoşgeldiniz"
 
 # Scheme burada Scheme programa diline atıf, yani özel isim
-#: ../plug-ins/script-fu/script-fu-console.c:196
+#: ../plug-ins/script-fu/script-fu-console.c:179
 msgid "Interactive Scheme Development"
 msgstr "Etkileşimli Scheme Geliştirici"
 
-#: ../plug-ins/script-fu/script-fu-console.c:232
+#: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:291
+#: ../plug-ins/script-fu/script-fu-console.c:276
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu Uçbirimi Çıktısını Kaydet"
 
-#: ../plug-ins/script-fu/script-fu-console.c:295
+#: ../plug-ins/script-fu/script-fu-console.c:280
 #: ../plug-ins/script-fu/script-fu-interface.c:238
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: ../plug-ins/script-fu/script-fu-server.c:829
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: ../plug-ins/script-fu/script-fu-console.c:340
+#: ../plug-ins/script-fu/script-fu-console.c:325
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Yazma için '%s' açılamadı: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:369
+#: ../plug-ins/script-fu/script-fu-console.c:354
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu Yordam Tarayıcı"
 
-#: ../plug-ins/script-fu/script-fu-console.c:373
+#: ../plug-ins/script-fu/script-fu-console.c:358
 msgid "_Apply"
 msgstr "_Uygula"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:60
+#: ../plug-ins/script-fu/script-fu-eval.c:53
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu değerlendirme kipi sadece etkileşimsiz çağrıma izin verir"
 
@@ -231,41 +231,41 @@ msgstr "Script-Fu Renk Geçişi Seçimi"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Fırça Seçimi"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:887
+#: ../plug-ins/script-fu/script-fu-interface.c:888
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s yürütülürken hata:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:149
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "'script-fu-register' çağrısında çok fazla bağımsız değişken"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:648
+#: ../plug-ins/script-fu/script-fu-scripts.c:647
 #, c-format
 msgid "Error while loading %s:"
 msgstr "%s yüklenirken hata:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:825
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Sunucu Seçenekleri"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "_Start Server"
 msgstr "_Sunucuyu Başlat"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: ../plug-ins/script-fu/script-fu-server.c:863
 msgid "Listen on IP:"
 msgstr "IP'yi dinle:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: ../plug-ins/script-fu/script-fu-server.c:870
 msgid "Server port:"
 msgstr "Sunucu bağlantı noktası:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: ../plug-ins/script-fu/script-fu-server.c:876
 msgid "Server logfile:"
 msgstr "Sunucu günlük dosyası:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: ../plug-ins/script-fu/script-fu-server.c:889
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -278,19 +278,19 @@ msgstr ""
 msgid "Bumpmap"
 msgstr "Derinlik etkisi"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:183
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add B_evel..."
 msgstr "E_ğim Ekle..."
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:184
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:190
 msgid "Add a beveled border to an image"
-msgstr "Bir görüntüye eğimli bir sınır ekle"
+msgstr "Görüntüye eğimli bir kenarlık ekle"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:191
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:197
 msgid "Thickness"
 msgstr "Kalınlık"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:192
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
 #: ../plug-ins/script-fu/scripts/round-corners.scm:143
@@ -299,33 +299,33 @@ msgstr "Kalınlık"
 msgid "Work on copy"
 msgstr "Kopya üzerinde çalış"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Keep bump layer"
 msgstr "Tümsek katmanı koru"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
 msgid "Border Layer"
-msgstr "Sınır Katmanı"
+msgstr "Kenarlık Katmanı"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
-msgstr "_Sınır Ekle..."
+msgstr "_Kenarlık Ekle..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
-msgstr "Bir görüntü etrafına bir sınır ekle"
+msgstr "Görüntü etrafına kenarlık ekle"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:170
 msgid "Border X size"
-msgstr "Sınırın X büyüklüğü"
+msgstr "Kenarlığın X büyüklüğü"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:171
 msgid "Border Y size"
-msgstr "Sınırın Y büyüklüğü"
+msgstr "Kenarlığın Y büyüklüğü"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:172
 msgid "Border color"
-msgstr "Sınır rengi"
+msgstr "Kenarlık rengi"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:173
 msgid "Delta value on color"
@@ -385,7 +385,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
-msgstr "Işık rengi"
+msgstr "Parıltı rengi"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
@@ -393,7 +393,7 @@ msgstr "Solma"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
-msgstr "Kararma genişliği"
+msgstr "Solma genişliği"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
@@ -405,7 +405,7 @@ msgstr "Parıltıdan sonra"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
-msgstr "Parlama ekle"
+msgstr "Parıltı ekle"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
@@ -415,61 +415,61 @@ msgstr "GIF İçin Hazırla"
 msgid "Speed (pixels/frame)"
 msgstr "Hız (piksel/kare)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+#: ../plug-ins/script-fu/scripts/carve-it.scm:176
 msgid "Carved Surface"
 msgstr "Oyulmuş Yüzey"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#: ../plug-ins/script-fu/scripts/carve-it.scm:177
 msgid "Bevel Shadow"
 msgstr "Eğim Gölge"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#: ../plug-ins/script-fu/scripts/carve-it.scm:178
 msgid "Bevel Highlight"
 msgstr "Eğim Vurgula"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#: ../plug-ins/script-fu/scripts/carve-it.scm:179
 msgid "Cast Shadow"
 msgstr "Gölge Oluştur"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+#: ../plug-ins/script-fu/scripts/carve-it.scm:180
 msgid "Inset"
 msgstr "İçe doğru"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+#: ../plug-ins/script-fu/scripts/carve-it.scm:192
 msgid "Stencil C_arve..."
 msgstr "Kalıp O_yma..."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+#: ../plug-ins/script-fu/scripts/carve-it.scm:193
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
-"Belirtilen görüntüden kesmek için şablon olarak belirtilen çizgileri kullan"
+"Belirtilen görüntüden kesmek için şablon olarak belirtilen çizgileri kullan."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+#: ../plug-ins/script-fu/scripts/carve-it.scm:200
 msgid "Image to carve"
 msgstr "Oyulacak görüntü"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+#: ../plug-ins/script-fu/scripts/carve-it.scm:201
 msgid "Carve white areas"
 msgstr "Ak alanları oy"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
 msgid "Background"
 msgstr "Artalan"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
 msgid "Layer 1"
 msgstr "Katman 1"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
 msgid "Layer 2"
 msgstr "Katman 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
 msgid "Layer 3"
 msgstr "Katman 3"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
 msgid "Drop Shadow"
 msgstr "Gölge"
 
@@ -482,43 +482,43 @@ msgstr "Krom"
 msgid "Highlight"
 msgstr "Vurgu"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
 msgid "Stencil C_hrome..."
 msgstr "Kalıp K_rom..."
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:231
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Belirtilen kalıbı (gri tonlama) kullanarak seçili bölgeye (veya alfaya) "
-"gümüş etkisi uygula"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:238
-msgid "Chrome saturation"
-msgstr "Krom Doygunluğu"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:239
-msgid "Chrome lightness"
-msgstr "Krom aydınlığı"
+"Belirtilen kalıbı (gri tonlama) kullanarak seçili bölgeye (veya alfaya) krom "
+"etkisi uygula"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+msgid "Chrome saturation"
+msgstr "Krom doygunluğu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+msgid "Chrome lightness"
+msgstr "Krom açıklığı"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Chrome factor"
 msgstr "Krom katsayısı"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid "Environment map"
 msgstr "Ortam eşlemi"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:244
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
 msgid "Highlight balance"
 msgstr "Vurgu dengesi"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:245
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
 msgid "Chrome balance"
 msgstr "Krom dengesi"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
 msgid "Chrome white areas"
 msgstr "Krom beyaz alanlar"
 
@@ -606,15 +606,15 @@ msgstr "Lekeler"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:91
 msgid "Darken only"
-msgstr "Sadece koyulaşan"
+msgstr "Yalnızca koyulaştır"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "Difference Clouds..."
-msgstr "Farklı Bulutlar..."
+msgid "_Difference Clouds..."
+msgstr "_Farklı Bulutlar..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
-msgstr "Değişik katman modu ile uygulanmış yoğun gürültü"
+msgstr "Değişik katman kipiyle uygulanmış yoğun gürültü"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
@@ -625,28 +625,29 @@ msgid "Distress the selection"
 msgstr "Seçimi yıprat"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Eşik (en büyük 1<-->254 en küçük)"
+msgid "_Threshold (bigger 1<-->254 smaller)"
+msgstr "_Eşik (en büyük 1<-->254 en küçük)"
 
+# Arc kelimesiyle karışmaması için bu şekilde çevirildi
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-msgid "Spread"
-msgstr "Etrafa Saç"
+msgid "_Spread"
+msgstr "Etrafa _Saç"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-msgid "Granularity (1 is low)"
-msgstr "Tanelilik (1 düşük)"
+msgid "_Granularity (1 is low)"
+msgstr "_Tanelilik (1 düşük)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-msgid "Smooth"
-msgstr "Yumuşat"
+msgid "S_mooth"
+msgstr "_Pürüzsüz"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-msgid "Smooth horizontally"
-msgstr "Enine Yumuşat"
+msgid "Smooth hor_izontally"
+msgstr "_Yatay pürüzsüzleştir"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-msgid "Smooth vertically"
-msgstr "Boyuna Yumuşat"
+msgid "Smooth _vertically"
+msgstr "_Dikey pürüzsüzleştir"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
@@ -679,7 +680,7 @@ msgstr "Renk"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Opacity"
-msgstr "Işık Geçirmezlik"
+msgstr "Matlık"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
@@ -763,7 +764,7 @@ msgstr "Yazı tipi _boyutu (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "_Sınır (piksel)"
+msgstr "_Kenarlık (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
@@ -779,20 +780,20 @@ msgstr "Etkin renkler"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
-msgstr "_Bulanık Sınır..."
+msgstr "_Bulanık Kenarlık..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
-msgstr "Görüntüye çıkıntılı, donuk çerçeve uygula"
+msgstr "Görüntüye pürüzlü, bulanık bir kenarlık ekle"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
 #: ../plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Border size"
-msgstr "Sınır boyutu"
+msgstr "Kenarlık boyutu"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
-msgstr "Bulanık sınır çizgisi"
+msgstr "Kenarlığı bulanıklaştır"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
@@ -804,7 +805,7 @@ msgstr "Gölge ekle"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
-msgstr "Gölge kalınlığı"
+msgstr "Gölge ağırlığı (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
@@ -937,7 +938,7 @@ msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
-"Şu anki fırçayı kullanarak, X ve Y konumlarınca belirlenmiş bir ızgara çiz"
+"Geçerli fırçayı kullanarak, X ve Y konumlarınca belirlenmiş bir ızgara çiz"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -965,8 +966,8 @@ msgstr "Görüntü boyutunun yüzdesi olarak belirlenen konuma bir kılavuz ekle
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-msgid "Direction"
-msgstr "Yön"
+msgid "_Direction"
+msgstr "_Yön"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -979,8 +980,8 @@ msgid "Vertical"
 msgstr "Dikey"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-msgid "Position (in %)"
-msgstr "Konum (% içinde)"
+msgid "_Position (in %)"
+msgstr "_Konum (% içinde)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
@@ -991,8 +992,8 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Belirlenen yönelim ve konuma (piksel olarak) bir kılavuz ekle"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-msgid "Position"
-msgstr "Konum"
+msgid "_Position"
+msgstr "_Konum"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
@@ -1077,8 +1078,6 @@ msgstr "Ad"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:143
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:198
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:268
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
 msgid "Spacing"
 msgstr "Boşluk"
 
@@ -1088,28 +1087,28 @@ msgstr "Dik_dörtgen, Tüylü..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
-msgstr "Tüylü köşeli, dikdörtgen bir fırça oluştur"
+msgstr "Tüylü kenarlı, dikdörtgen fırça oluştur"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:142
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:267
 msgid "Feathering"
-msgstr "Yumuşak Geçiş"
+msgstr "Tüyleme"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
-msgstr "_Oval..."
+msgstr "_Eliptik..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:190
 msgid "Create an elliptical brush"
-msgstr "Oval bir fırça oluştur"
+msgstr "Eliptik bir fırça oluştur"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
-msgstr "O_val, Tüylü..."
+msgstr "_Eliptik, Tüylü..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
-msgstr "Tüylü köşeli, oval bir fırça oluştur"
+msgstr "Tüylü kenarlı, eliptik bir fırça oluştur"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
@@ -1144,7 +1143,7 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"Oluşturulacak dosyanın adı (eğer bu adda bir dosya varsa, değiştirilecektir)"
+"Oluşturulacak dosyanın adı (bu adda bir dosya zaten varsa, değiştirilir)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1203,15 +1202,20 @@ msgstr "Panodaki içeriği yeni fırçaya yapıştır"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-msgid "Brush name"
-msgstr "Fırça adı"
+msgid "_Brush name"
+msgstr "_Fırça adı"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-msgid "File name"
-msgstr "Dosya adı"
+msgid "_File name"
+msgstr "_Dosya adı"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "_Spacing"
+msgstr "_Boşluk"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
@@ -1223,8 +1227,8 @@ msgstr "Pano içeriğini yeni bir desene yapıştır"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-msgid "Pattern name"
-msgstr "Desen adı"
+msgid "_Pattern name"
+msgstr "_Desen adı"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
@@ -1271,8 +1275,8 @@ msgid "Pixel amount"
 msgstr "Piksel miktarı"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-msgid "Reverse Layer Order"
-msgstr "Katmanların Sırasını Tersine Çevir"
+msgid "Reverse Layer _Order"
+msgstr "Katmanların Sırasını _Tersine Çevir"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
@@ -1286,8 +1290,7 @@ msgstr "_Dalgalanma..."
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
-"Geçerli katmana dalgacık etkisi uygulayarak çok katmanlı yeni bir görüntü "
-"oluştur"
+"Geçerli katmana dalgacık etkisi uygulayarak çok katmanlı yeni görüntü oluştur"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
@@ -1300,7 +1303,7 @@ msgstr "Çerçeve sayısı"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Edge behavior"
-msgstr "Kıyı davranışı"
+msgstr "Kenar davranışı"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1363,15 +1366,15 @@ msgstr "Yuvarlanmış D_ikdörtgen..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
-msgstr "Şu anki seçimin köşelerini yuvarla"
+msgstr "Geçerli seçimin köşelerini yuvarla"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-msgid "Radius (%)"
-msgstr "Yarıçap (%)"
+msgid "R_adius (%)"
+msgstr "Y_arıçap (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-msgid "Concave"
-msgstr "İç bükey"
+msgid "Co_ncave"
+msgstr "İç _bükey"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
@@ -1490,7 +1493,7 @@ msgstr "Maske boyutu"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
 msgid "Mask opacity"
-msgstr "Maske ışık geçirmezliği"
+msgstr "Maske matlığı"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
@@ -1526,7 +1529,7 @@ msgid ""
 "bump map"
 msgstr ""
 "Kaplama veya derinlik etkisi olarak kullanılmak üzere dokuma efektiyle "
-"doldurulmuş yeni bir katman oluştur"
+"doldurulmuş yeni katman oluştur"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
@@ -1582,7 +1585,7 @@ msgstr "Vurgu rengi"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr "Vurgu ışık geçirmezliği"
+msgstr "Vurgu matlığı"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
@@ -1590,7 +1593,7 @@ msgstr "Gölge rengi"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow opacity"
-msgstr "Gölge ışık geçirmezliği"
+msgstr "Gölge matlığı"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
