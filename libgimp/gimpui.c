@@ -201,7 +201,7 @@ gimp_ui_get_foreign_window (guint32 window)
 
 #ifdef GDK_WINDOWING_WIN32
   return gdk_win32_window_foreign_new_for_display (gdk_display_get_default (),
-                                                   window);
+                                                   (HWND) (uintptr_t) window);
 #endif
 
   return NULL;
