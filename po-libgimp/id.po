@@ -1,815 +1,2458 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2005-02-02 19:53+0100\n"
-"PO-Revision-Date: 2003-06-28 22:03+0700\n"
-"Last-Translator: Mohammad DAMT <mdamt@bisnisweb.com>\n"
+"POT-Creation-Date: 2019-09-20 16:58+0000\n"
+"PO-Revision-Date: 2019-10-11 14:48+0700\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <sukarelawan@gnome.linux.or.id>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.2.3\n"
 
-#: ../libgimp/gimpbrushmenu.c:129
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1265
+#, fuzzy
+msgid "success"
+msgstr "sukses"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1269
+#, fuzzy
+msgid "execution error"
+msgstr "galat eksekusi"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1273
+#, fuzzy
+msgid "calling error"
+msgstr "galat pemanggilan"
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1277
+#, fuzzy
+msgid "cancelled"
+msgstr "dibatalkan"
+
+#: ../libgimp/gimpbrushselectbutton.c:179
+#, fuzzy
 msgid "Brush Selection"
-msgstr ""
+msgstr "Pemilihan Kuas"
 
-#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
+#: ../libgimp/gimpbrushselectbutton.c:920
+#: ../libgimp/gimppatternselectbutton.c:718
+#, fuzzy
 msgid "_Browse..."
-msgstr ""
+msgstr "_Telusur..."
 
-#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
-#, c-format
-msgid "%s can't handle layers"
-msgstr ""
+#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layers"
+msgstr "Pengaya %s tak dapat menangani lapisan"
 
-#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
+#, fuzzy
 msgid "Merge Visible Layers"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:224
-#, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
-#, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
-msgid "Save as Animation"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
-msgid "Flatten Image"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:260
-#, c-format
-msgid "%s can't handle transparency"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:269
-#, c-format
-msgid "%s can't handle layer masks"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:270
-msgid "Apply Layer Masks"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:278
-#, c-format
-msgid "%s can only handle RGB images"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
-msgid "Convert to RGB"
-msgstr ""
+msgstr "Gabungkan Layer Yang Tampak"
 
 #: ../libgimp/gimpexport.c:287
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "Pengaya %s tak bisa menangani ofset, ukuran, atau opasitas lapisan"
+
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#, fuzzy, c-format
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "Pengaya %s hanya dapat menangani lapisan sebagai bingkai animasi"
+
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
+#, fuzzy
+msgid "Save as Animation"
+msgstr "Simpan sebagai Animasi"
+
+#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
+#, fuzzy
+msgid "Flatten Image"
+msgstr "Ratakan Citra"
+
+#: ../libgimp/gimpexport.c:323
+#, fuzzy, c-format
+msgid "%s plug-in can't handle transparency"
+msgstr "Pengaya %s tak bisa menangani transparansi"
+
+#: ../libgimp/gimpexport.c:332
 #, c-format
-msgid "%s can only handle grayscale images"
+msgid "%s plug-in can't handle transparent layers"
 msgstr ""
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:341
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layer masks"
+msgstr "Pengaya %s tak bisa menangani topeng lapisan"
+
+#: ../libgimp/gimpexport.c:342
+#, fuzzy
+msgid "Apply Layer Masks"
+msgstr "Terapkan Topeng Lapisan"
+
+#: ../libgimp/gimpexport.c:350
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB images"
+msgstr "Pengaya %s hanya dapat menangani citra RGB"
+
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:398
+#, fuzzy
+msgid "Convert to RGB"
+msgstr "Konversikan ke RGB"
+
+#: ../libgimp/gimpexport.c:359
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale images"
+msgstr "Pengaya %s hanya dapat menangani citra skala kelabu"
+
+#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:410
+#, fuzzy
 msgid "Convert to Grayscale"
-msgstr ""
+msgstr "Konversikan ke Skala Kelabu"
 
-#: ../libgimp/gimpexport.c:296
-#, c-format
-msgid "%s can only handle indexed images"
-msgstr ""
+#: ../libgimp/gimpexport.c:368
+#, fuzzy, c-format
+msgid "%s plug-in can only handle indexed images"
+msgstr "Pengaya %s hanya dapat menangani citra terindeks"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:408
+#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Konversikan ke Terindeks memakai pengaturan baku\n"
+"(Lakukan secara manual untuk menala hasil)"
 
-#: ../libgimp/gimpexport.c:306
-#, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
+#: ../libgimp/gimpexport.c:378
+#, fuzzy, c-format
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "Pengaya %s hanya dapat menangani bitmap (dua warna) citra terindeks"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:379
+#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Konversikan ke Terindeks memakai pengaturan baku bitmap\n"
+"(Lakukan secara manual untuk menala hasil)"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:388
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "Pengaya %s hanya dapat menangani citra RGB atau skala kelabu"
+
+#: ../libgimp/gimpexport.c:397
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
+msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 
-#: ../libgimp/gimpexport.c:325
-#, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr ""
+#: ../libgimp/gimpexport.c:407
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "Pengaya %s hanya dapat menangani citra skala kelabu atau terindeks"
 
-#: ../libgimp/gimpexport.c:335
-#, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr ""
+#: ../libgimp/gimpexport.c:418
+#, fuzzy, c-format
+msgid "%s plug-in needs an alpha channel"
+msgstr "Pengaya %s memerlukan sebuah kanal alfa"
 
-#: ../libgimp/gimpexport.c:346
-#, c-format
-msgid "%s needs an alpha channel"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:419
+#, fuzzy
 msgid "Add Alpha Channel"
-msgstr ""
+msgstr "Tambahkan Kanal Alfa"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:478
+#, fuzzy
 msgid "Confirm Save"
+msgstr "Konfirmasi Simpan"
+
+#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
+#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
+#, fuzzy
+msgid "_Cancel"
+msgstr "Ba_tal"
+
+#: ../libgimp/gimpexport.c:484
+msgid "C_onfirm"
 msgstr ""
 
-#: ../libgimp/gimpexport.c:387
-msgid "Confirm"
-msgstr ""
-
-#: ../libgimp/gimpexport.c:454
+#: ../libgimp/gimpexport.c:560
+#, fuzzy
 msgid "Export File"
-msgstr ""
+msgstr "Ekspor Berkas"
 
-#: ../libgimp/gimpexport.c:458
+#: ../libgimp/gimpexport.c:564
+#, fuzzy
 msgid "_Ignore"
-msgstr ""
+msgstr "Aba_ikan"
 
-#: ../libgimp/gimpexport.c:460
+#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
+#, fuzzy
 msgid "_Export"
-msgstr ""
+msgstr "_Ekspor"
 
 #. the headline
-#: ../libgimp/gimpexport.c:482
-#, c-format
+#: ../libgimp/gimpexport.c:596
+#, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
+"Citra Anda mesti diekspor sebelum dapat disimpan sebagai %s karena alasan "
+"berikut:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:553
+#: ../libgimp/gimpexport.c:670
+#, fuzzy
 msgid "The export conversion won't modify your original image."
-msgstr ""
+msgstr "Konversi ekspor tak akan mengubah citra asli Anda."
 
-#: ../libgimp/gimpexport.c:653
-#, c-format
+#: ../libgimp/gimpexport.c:774
+#, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Anda akan menyimpan suatu topeng lapisan sebagai %s.\n"
+"Ini tidak akan menyimpan lapisan tampak."
 
-#: ../libgimp/gimpexport.c:659
-#, c-format
+#: ../libgimp/gimpexport.c:780
+#, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Anda akan menyimpan suatu kanal (pilihan yang disimpan) sebagai %s.\n"
+"Ini tidak akan menyimpan lapisan tampak."
 
-#: ../libgimp/gimpfontmenu.c:89
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: ../libgimp/gimpexport.c:1057
+#, c-format
+msgid "Export Image as %s"
+msgstr ""
+
+#: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
 msgstr "Pilih Font"
 
-#: ../libgimp/gimpgradientmenu.c:104
+#: ../libgimp/gimpgradientselectbutton.c:158
+#, fuzzy
 msgid "Gradient Selection"
+msgstr "Pemilihan Gradien"
+
+#: ../libgimp/gimpimagemetadata.c:514
+msgid "GIMP 2.10"
 msgstr ""
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpimagemetadata.c:703
+#, fuzzy
+msgid "Background"
+msgstr "Latar belakang"
+
+#: ../libgimp/gimpimagemetadata.c:892
+#, c-format
+msgid "Rotate %s?"
+msgstr ""
+
+#: ../libgimp/gimpimagemetadata.c:898
+msgid "_Keep Original"
+msgstr ""
+
+#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#, fuzzy
+msgid "_Rotate"
+msgstr "Puta_r"
+
+#: ../libgimp/gimpimagemetadata.c:940
+#, fuzzy
+msgid "Original"
+msgstr "Asli"
+
+#: ../libgimp/gimpimagemetadata.c:956
+#, fuzzy
+msgid "Rotated"
+msgstr "Diputar"
+
+#: ../libgimp/gimpimagemetadata.c:974
+msgid "This image contains Exif orientation metadata."
+msgstr ""
+
+#: ../libgimp/gimpimagemetadata.c:992
+msgid "Would you like to rotate the image?"
+msgstr ""
+
+#: ../libgimp/gimpimagemetadata.c:1004
+msgid "_Don't ask me again"
+msgstr ""
+
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:252
+#, fuzzy
 msgid "(Empty)"
-msgstr ""
+msgstr "(Kosong)"
 
-#: ../libgimp/gimppalettemenu.c:91
+#: ../libgimp/gimppaletteselectbutton.c:139
 #, fuzzy
 msgid "Palette Selection"
-msgstr "Pilih Font"
+msgstr "Pemilihan Palet"
 
-#: ../libgimp/gimppatternmenu.c:113
-msgid "Pattern Selection"
-msgstr ""
-
-#: ../libgimp/gimpunitcache.c:57
-msgid "percent"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:26
-msgid "_White (full opacity)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimp/gimppatternselectbutton.c:165
 #, fuzzy
-msgid "_Black (full transparency)"
-msgstr "Tetapkan sifat transparansi"
+msgid "Pattern Selection"
+msgstr "Pemilihan Pola"
+
+#: ../libgimp/gimpprocbrowserdialog.c:150
+#, fuzzy
+msgid "by name"
+msgstr "menurut nama"
+
+#: ../libgimp/gimpprocbrowserdialog.c:151
+#, fuzzy
+msgid "by description"
+msgstr "menurut deskripsi"
+
+#: ../libgimp/gimpprocbrowserdialog.c:152
+#, fuzzy
+msgid "by help"
+msgstr "menurut bantuan"
+
+#: ../libgimp/gimpprocbrowserdialog.c:153
+#, fuzzy
+msgid "by author"
+msgstr "menurut pengarang"
+
+#: ../libgimp/gimpprocbrowserdialog.c:154
+#, fuzzy
+msgid "by copyright"
+msgstr "menurut hak cipta"
+
+#: ../libgimp/gimpprocbrowserdialog.c:155
+#, fuzzy
+msgid "by date"
+msgstr "menurut tanggal"
+
+#: ../libgimp/gimpprocbrowserdialog.c:156
+#, fuzzy
+msgid "by type"
+msgstr "menurut tipe"
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:395
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
+#, fuzzy
+msgid "No matches"
+msgstr "Tidak ada yang cocok"
+
+#: ../libgimp/gimpprocbrowserdialog.c:398
+#, fuzzy
+msgid "Search term invalid or incomplete"
+msgstr "Istilah yang dicari tidak valid atau tidak lengkap"
+
+#: ../libgimp/gimpprocbrowserdialog.c:407
+#, fuzzy
+msgid "Searching"
+msgstr "Mencari"
+
+#: ../libgimp/gimpprocbrowserdialog.c:418
+#, fuzzy
+msgid "Searching by name"
+msgstr "Mencari berdasarkan nama"
+
+#: ../libgimp/gimpprocbrowserdialog.c:439
+#, fuzzy
+msgid "Searching by description"
+msgstr "Mencari berdasarkan deskripsi"
+
+#: ../libgimp/gimpprocbrowserdialog.c:446
+#, fuzzy
+msgid "Searching by help"
+msgstr "Mencari berdasarkan bantuan"
+
+#: ../libgimp/gimpprocbrowserdialog.c:453
+#, fuzzy
+msgid "Searching by author"
+msgstr "Mencari berdasarkan pengarang"
+
+#: ../libgimp/gimpprocbrowserdialog.c:460
+#, fuzzy
+msgid "Searching by copyright"
+msgstr "Mencari berdasarkan hak cipta"
+
+#: ../libgimp/gimpprocbrowserdialog.c:467
+#, fuzzy
+msgid "Searching by date"
+msgstr "Mencari berdasarkan tanggal"
+
+#: ../libgimp/gimpprocbrowserdialog.c:474
+#, fuzzy
+msgid "Searching by type"
+msgstr "Mencari berdasarkan tipe"
+
+#: ../libgimp/gimpprocbrowserdialog.c:484
+#, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:493
+#, fuzzy
+msgid "No matches for your query"
+msgstr "Tidak ada yang cocok untuk kuiri Anda"
+
+#: ../libgimp/gimpprocbrowserdialog.c:497
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] ""
+
+#: ../libgimp/gimpprocview.c:173
+#, fuzzy
+msgid "Parameters"
+msgstr "Parameter"
+
+#: ../libgimp/gimpprocview.c:186
+#, fuzzy
+msgid "Return Values"
+msgstr "Nilai Balikan"
+
+#: ../libgimp/gimpprocview.c:199
+#, fuzzy
+msgid "Additional Information"
+msgstr "Informasi Tambahan"
+
+#: ../libgimp/gimpprocview.c:240
+#, fuzzy
+msgid "Author:"
+msgstr "Pengarang:"
+
+#: ../libgimp/gimpprocview.c:253
+#, fuzzy
+msgid "Date:"
+msgstr "Tanggal:"
+
+#: ../libgimp/gimpprocview.c:266
+#, fuzzy
+msgid "Copyright:"
+msgstr "Hak Cipta:"
+
+#: ../libgimp/gimpunitcache.c:54
+#, fuzzy
+msgid "percent"
+msgstr "persen"
 
 #: ../libgimpbase/gimpbaseenums.c:28
-msgid "Layer's _alpha channel"
-msgstr ""
+#, fuzzy
+msgctxt "add-mask-type"
+msgid "_White (full opacity)"
+msgstr "_Putih (opasitas penuh)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
-msgid "_Transfer layer's alpha channel"
-msgstr ""
+#, fuzzy
+msgctxt "add-mask-type"
+msgid "_Black (full transparency)"
+msgstr "_Hitam (transparansi penuh)"
 
 #: ../libgimpbase/gimpbaseenums.c:30
-msgid "_Selection"
-msgstr ""
+#, fuzzy
+msgctxt "add-mask-type"
+msgid "Layer's _alpha channel"
+msgstr "Kanal _alfa lapisan"
 
 #: ../libgimpbase/gimpbaseenums.c:31
+#, fuzzy
+msgctxt "add-mask-type"
+msgid "_Transfer layer's alpha channel"
+msgstr "_Transfer kanal alfa lapisan"
+
+#: ../libgimpbase/gimpbaseenums.c:32
+#, fuzzy
+#| msgid "Font Selection"
+msgctxt "add-mask-type"
+msgid "_Selection"
+msgstr "_Seleksi"
+
+#: ../libgimpbase/gimpbaseenums.c:33
+#, fuzzy
+msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
-msgstr ""
+msgstr "Salinan skala kela_bu dari lapisan"
 
-#: ../libgimpbase/gimpbaseenums.c:61
+#: ../libgimpbase/gimpbaseenums.c:34
+#, fuzzy
+msgctxt "add-mask-type"
+msgid "C_hannel"
+msgstr "_Kanal"
+
+#: ../libgimpbase/gimpbaseenums.c:65
+#, fuzzy
+msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
-msgstr ""
+msgstr "FG ke BG (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:66
+#, fuzzy
+msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
-msgstr ""
+msgstr "FG ke BG (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:67
 #, fuzzy
+msgctxt "blend-mode"
 msgid "FG to transparent"
-msgstr "Tetapkan sifat transparansi"
+msgstr "FG ke transparan"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:68
 #, fuzzy
+msgctxt "blend-mode"
 msgid "Custom gradient"
-msgstr "Ganti Warna"
+msgstr "Gradien ubahan"
 
-#: ../libgimpbase/gimpbaseenums.c:93
+#: ../libgimpbase/gimpbaseenums.c:98
 #, fuzzy
+msgctxt "brush-generated-shape"
+msgid "Circle"
+msgstr "Lingkaran"
+
+#: ../libgimpbase/gimpbaseenums.c:99
+#, fuzzy
+msgctxt "brush-generated-shape"
+msgid "Square"
+msgstr "Bujur Sangkar"
+
+#: ../libgimpbase/gimpbaseenums.c:100
+#, fuzzy
+msgctxt "brush-generated-shape"
+msgid "Diamond"
+msgstr "Berlian"
+
+#: ../libgimpbase/gimpbaseenums.c:130
+#, fuzzy
+msgctxt "bucket-fill-mode"
 msgid "FG color fill"
-msgstr "Warna Baru"
+msgstr "Isian warna FG"
 
-#: ../libgimpbase/gimpbaseenums.c:94
+#: ../libgimpbase/gimpbaseenums.c:131
 #, fuzzy
+msgctxt "bucket-fill-mode"
 msgid "BG color fill"
-msgstr "Warna Baru"
+msgstr "Isian warna BG"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:132
 #, fuzzy
+msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Pola:"
+msgstr "Isian pola"
 
-#: ../libgimpbase/gimpbaseenums.c:125
+#: ../libgimpbase/gimpbaseenums.c:162
+#, fuzzy
+msgctxt "cap-style"
+msgid "Butt"
+msgstr "Butt"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+#, fuzzy
+msgctxt "cap-style"
+msgid "Round"
+msgstr "Pembulatan"
+
+#: ../libgimpbase/gimpbaseenums.c:164
+#, fuzzy
+msgctxt "cap-style"
+msgid "Square"
+msgstr "Bujur Sangkar"
+
+#: ../libgimpbase/gimpbaseenums.c:195
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Add to the current selection"
-msgstr ""
+msgstr "Tambahkan ke pilihan saat ini"
 
-#: ../libgimpbase/gimpbaseenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:196
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Subtract from the current selection"
-msgstr ""
+msgstr "Kurangkan dari pilihan saat ini"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:197
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Replace the current selection"
-msgstr ""
+msgstr "Gantikan pilihan saat ini"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:198
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr ""
+msgstr "Iriskan dengan pilihan saat ini"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
-#: ../libgimpwidgets/gimpcolorselect.c:352
+#: ../libgimpbase/gimpbaseenums.c:231
+#, fuzzy
+#| msgid "Red"
+msgctxt "channel-type"
 msgid "Red"
 msgstr "Merah"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
-#: ../libgimpwidgets/gimpcolorselect.c:353
+#: ../libgimpbase/gimpbaseenums.c:232
+#, fuzzy
+#| msgid "Green"
+msgctxt "channel-type"
 msgid "Green"
 msgstr "Hijau"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
-#: ../libgimpwidgets/gimpcolorselect.c:354
+#: ../libgimpbase/gimpbaseenums.c:233
+#, fuzzy
+#| msgid "Blue"
+msgctxt "channel-type"
 msgid "Blue"
 msgstr "Biru"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpbase/gimpbaseenums.c:234
+#, fuzzy
+msgctxt "channel-type"
 msgid "Gray"
-msgstr ""
+msgstr "Kelabu"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:436
+#: ../libgimpbase/gimpbaseenums.c:235
+#, fuzzy
+msgctxt "channel-type"
 msgid "Indexed"
-msgstr ""
+msgstr "Terindeks"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
-#: ../libgimpwidgets/gimpcolorselect.c:355
+#: ../libgimpbase/gimpbaseenums.c:236
+#, fuzzy
+#| msgid "Alpha"
+msgctxt "channel-type"
 msgid "Alpha"
-msgstr "Alpha"
+msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:194
+#: ../libgimpbase/gimpbaseenums.c:266
+#, fuzzy
+#| msgid "Small"
+msgctxt "check-size"
 msgid "Small"
 msgstr "Kecil"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libgimpbase/gimpbaseenums.c:267
+#, fuzzy
+#| msgid "Medium"
+msgctxt "check-size"
 msgid "Medium"
 msgstr "Sedang"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:268
+#, fuzzy
+#| msgid "Large"
+msgctxt "check-size"
 msgid "Large"
 msgstr "Besar"
 
-#: ../libgimpbase/gimpbaseenums.c:228
-msgid "Light Checks"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:229
-msgid "Mid-Tone Checks"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:230
-msgid "Dark Checks"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:231
-msgid "White Only"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:232
-msgid "Gray Only"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:233
-msgid "Black Only"
-msgstr "Hitam saja"
-
-#: ../libgimpbase/gimpbaseenums.c:261
+#: ../libgimpbase/gimpbaseenums.c:301
 #, fuzzy
-msgid "Image source"
-msgstr "/Lihat/Tampilkan Grid"
+msgctxt "check-type"
+msgid "Light checks"
+msgstr "check-type"
 
-#: ../libgimpbase/gimpbaseenums.c:262
+#: ../libgimpbase/gimpbaseenums.c:302
 #, fuzzy
-msgid "Pattern source"
-msgstr "Pola:"
+msgctxt "check-type"
+msgid "Mid-tone checks"
+msgstr "check-type"
 
-#: ../libgimpbase/gimpbaseenums.c:290
+#: ../libgimpbase/gimpbaseenums.c:303
+#, fuzzy
+msgctxt "check-type"
+msgid "Dark checks"
+msgstr "check-type"
+
+#: ../libgimpbase/gimpbaseenums.c:304
+#, fuzzy
+msgctxt "check-type"
+msgid "White only"
+msgstr "check-type"
+
+#: ../libgimpbase/gimpbaseenums.c:305
+#, fuzzy
+msgctxt "check-type"
+msgid "Gray only"
+msgstr "check-type"
+
+#: ../libgimpbase/gimpbaseenums.c:306
+#, fuzzy
+#| msgid "Black Only"
+msgctxt "check-type"
+msgid "Black only"
+msgstr "clone-type"
+
+#: ../libgimpbase/gimpbaseenums.c:335
+#, fuzzy
+msgctxt "clone-type"
+msgid "Image"
+msgstr "Foto"
+
+#: ../libgimpbase/gimpbaseenums.c:336
+#, fuzzy
+msgctxt "clone-type"
+msgid "Pattern"
+msgstr "Pola"
+
+#: ../libgimpbase/gimpbaseenums.c:372
+#, fuzzy
+#| msgid "None"
+msgctxt "color-tag"
+msgid "None"
+msgstr "None"
+
+#: ../libgimpbase/gimpbaseenums.c:373
+#, fuzzy
+#| msgid "Blue"
+msgctxt "color-tag"
+msgid "Blue"
+msgstr "Biru"
+
+#: ../libgimpbase/gimpbaseenums.c:374
+#, fuzzy
+#| msgid "Green"
+msgctxt "color-tag"
+msgid "Green"
+msgstr "Hijau"
+
+#: ../libgimpbase/gimpbaseenums.c:375
+#, fuzzy
+msgctxt "color-tag"
+msgid "Yellow"
+msgstr "Kuning"
+
+#: ../libgimpbase/gimpbaseenums.c:376
+#, fuzzy
+msgctxt "color-tag"
+msgid "Orange"
+msgstr "Oranye"
+
+#: ../libgimpbase/gimpbaseenums.c:377
+#, fuzzy
+msgctxt "color-tag"
+msgid "Brown"
+msgstr "Coklat"
+
+#: ../libgimpbase/gimpbaseenums.c:378
+#, fuzzy
+#| msgid "Red"
+msgctxt "color-tag"
+msgid "Red"
+msgstr "Merah"
+
+#: ../libgimpbase/gimpbaseenums.c:379
+#, fuzzy
+msgctxt "color-tag"
+msgid "Violet"
+msgstr "Violet"
+
+#: ../libgimpbase/gimpbaseenums.c:380
+#, fuzzy
+msgctxt "color-tag"
+msgid "Gray"
+msgstr "Kelabu"
+
+#: ../libgimpbase/gimpbaseenums.c:413
+msgctxt "component-type"
+msgid "8-bit integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:414
+msgctxt "component-type"
+msgid "16-bit integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:415
+msgctxt "component-type"
+msgid "32-bit integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:416
+msgctxt "component-type"
+msgid "16-bit floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:417
+msgctxt "component-type"
+msgid "32-bit floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:418
+msgctxt "component-type"
+msgid "64-bit floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:449
+#, fuzzy
+msgctxt "convert-palette-type"
+msgid "Generate optimum palette"
+msgstr "Buat palet optimal"
+
+#: ../libgimpbase/gimpbaseenums.c:450
+#, fuzzy
+msgctxt "convert-palette-type"
+msgid "Use web-optimized palette"
+msgstr "convert-palette-type"
+
+#: ../libgimpbase/gimpbaseenums.c:451
+#, fuzzy
+msgctxt "convert-palette-type"
+msgid "Use black and white (1-bit) palette"
+msgstr "convert-palette-type"
+
+#: ../libgimpbase/gimpbaseenums.c:452
+#, fuzzy
+msgctxt "convert-palette-type"
+msgid "Use custom palette"
+msgstr "align-reference-type"
+
+#: ../libgimpbase/gimpbaseenums.c:481
+#, fuzzy
+msgctxt "convolve-type"
+msgid "Blur"
+msgstr "Kabur"
+
+#: ../libgimpbase/gimpbaseenums.c:482
+#, fuzzy
+msgctxt "convolve-type"
+msgid "Sharpen"
+msgstr "Pertajam"
+
+#: ../libgimpbase/gimpbaseenums.c:514
+msgctxt "desaturate-mode"
+msgid "Lightness (HSL)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:515
+msgctxt "desaturate-mode"
+msgid "Luma"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:516
+msgctxt "desaturate-mode"
+msgid "Average (HSI Intensity)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:517
+msgctxt "desaturate-mode"
+msgid "Luminance"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:518
+#, fuzzy
+#| msgid "Value"
+msgctxt "desaturate-mode"
+msgid "Value (HSV)"
+msgstr "Nilai"
+
+#: ../libgimpbase/gimpbaseenums.c:547
+#, fuzzy
+msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr ""
+msgstr "dodge-burn-type"
 
-#: ../libgimpbase/gimpbaseenums.c:291
+#: ../libgimpbase/gimpbaseenums.c:548
+#, fuzzy
+msgctxt "dodge-burn-type"
 msgid "Burn"
+msgstr "Bakar"
+
+#: ../libgimpbase/gimpbaseenums.c:580
+#, fuzzy
+msgctxt "fill-type"
+msgid "Foreground color"
+msgstr "Warna latar depan"
+
+#: ../libgimpbase/gimpbaseenums.c:581
+#, fuzzy
+msgctxt "fill-type"
+msgid "Background color"
+msgstr "Warna latar belakang"
+
+#: ../libgimpbase/gimpbaseenums.c:582
+#, fuzzy
+msgctxt "fill-type"
+msgid "White"
+msgstr "Putih"
+
+#: ../libgimpbase/gimpbaseenums.c:583
+#, fuzzy
+msgctxt "fill-type"
+msgid "Transparency"
+msgstr "Transparansi"
+
+#: ../libgimpbase/gimpbaseenums.c:584
+#, fuzzy
+msgctxt "fill-type"
+msgid "Pattern"
+msgstr "Pola"
+
+#: ../libgimpbase/gimpbaseenums.c:644
+msgctxt "gradient-blend-color-space"
+msgid "Perceptual RGB"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:328 ../libgimpbase/gimpbaseenums.c:468
+#: ../libgimpbase/gimpbaseenums.c:645
+#, fuzzy
+#| msgid "Linear"
+msgctxt "gradient-blend-color-space"
+msgid "Linear RGB"
+msgstr "Linier"
+
+#: ../libgimpbase/gimpbaseenums.c:646
+msgctxt "gradient-blend-color-space"
+msgid "CIE Lab"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:676
+#, fuzzy
+msgctxt "gradient-segment-color"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:677
+msgctxt "gradient-segment-color"
+msgid "HSV (counter-clockwise hue)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:680
+msgctxt "gradient-segment-color"
+msgid "HSV (ccw)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:681
+msgctxt "gradient-segment-color"
+msgid "HSV (clockwise hue)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "HSV (clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:684
+msgctxt "gradient-segment-color"
+msgid "HSV (cw)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:717
+#, fuzzy
+#| msgid "Linear"
+msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Linier"
 
-#: ../libgimpbase/gimpbaseenums.c:329
+#: ../libgimpbase/gimpbaseenums.c:718
 #, fuzzy
-msgid "Bi-linear"
+msgctxt "gradient-segment-type"
+msgid "Curved"
+msgstr "Kurva"
+
+#: ../libgimpbase/gimpbaseenums.c:719
+#, fuzzy
+msgctxt "gradient-segment-type"
+msgid "Sinusoidal"
+msgstr "Gelombang sinus"
+
+#: ../libgimpbase/gimpbaseenums.c:720
+msgctxt "gradient-segment-type"
+msgid "Spherical (increasing)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "Spherical (increasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:723
+msgctxt "gradient-segment-type"
+msgid "Spherical (inc)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:724
+msgctxt "gradient-segment-type"
+msgid "Spherical (decreasing)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "Spherical (decreasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:727
+msgctxt "gradient-segment-type"
+msgid "Spherical (dec)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:728
+#, fuzzy
+msgctxt "gradient-segment-type"
+msgid "Step"
+msgstr "Langkah"
+
+#: ../libgimpbase/gimpbaseenums.c:766
+#, fuzzy
+#| msgid "Linear"
+msgctxt "gradient-type"
+msgid "Linear"
 msgstr "Linier"
 
-#: ../libgimpbase/gimpbaseenums.c:330
-msgid "Radial"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:331
-msgid "Square"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:332
-msgid "Conical (sym)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:333
-msgid "Conical (asym)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:334
-msgid "Shaped (angular)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:335
-msgid "Shaped (spherical)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:336
-msgid "Shaped (dimpled)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:337
-msgid "Spiral (cw)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:338
-msgid "Spiral (ccw)"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:367
-msgid "Stock ID"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:368
-msgid "Inline pixbuf"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:369
+#: ../libgimpbase/gimpbaseenums.c:767
 #, fuzzy
+msgctxt "gradient-type"
+msgid "Bi-linear"
+msgstr "gradient-type"
+
+#: ../libgimpbase/gimpbaseenums.c:768
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Radial"
+msgstr "Radial"
+
+#: ../libgimpbase/gimpbaseenums.c:769
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Square"
+msgstr "Bujur Sangkar"
+
+#: ../libgimpbase/gimpbaseenums.c:770
+msgctxt "gradient-type"
+msgid "Conical (symmetric)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "Conical (symmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:773
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Conical (sym)"
+msgstr "gradient-type"
+
+#: ../libgimpbase/gimpbaseenums.c:774
+msgctxt "gradient-type"
+msgid "Conical (asymmetric)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "Conical (asymmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:777
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Conical (asym)"
+msgstr "gradient-type"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Shaped (angular)"
+msgstr "gradient-type"
+
+#: ../libgimpbase/gimpbaseenums.c:779
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Shaped (spherical)"
+msgstr "gradient-type"
+
+#: ../libgimpbase/gimpbaseenums.c:780
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Shaped (dimpled)"
+msgstr "gradient-type"
+
+#: ../libgimpbase/gimpbaseenums.c:781
+msgctxt "gradient-type"
+msgid "Spiral (clockwise)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "Spiral (clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:784
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Spiral (cw)"
+msgstr "gradient-type"
+
+#: ../libgimpbase/gimpbaseenums.c:785
+msgctxt "gradient-type"
+msgid "Spiral (counter-clockwise)"
+msgstr ""
+
+#. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:788
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Spiral (ccw)"
+msgstr "grid-style"
+
+#: ../libgimpbase/gimpbaseenums.c:820
+#, fuzzy
+msgctxt "grid-style"
+msgid "Intersections (dots)"
+msgstr "grid-style"
+
+#: ../libgimpbase/gimpbaseenums.c:821
+#, fuzzy
+msgctxt "grid-style"
+msgid "Intersections (crosshairs)"
+msgstr "grid-style"
+
+#: ../libgimpbase/gimpbaseenums.c:822
+#, fuzzy
+msgctxt "grid-style"
+msgid "Dashed"
+msgstr "Dashed"
+
+#: ../libgimpbase/gimpbaseenums.c:823
+#, fuzzy
+msgctxt "grid-style"
+msgid "Double dashed"
+msgstr "grid-style"
+
+#: ../libgimpbase/gimpbaseenums.c:824
+#, fuzzy
+msgctxt "grid-style"
+msgid "Solid"
+msgstr "Padat"
+
+#: ../libgimpbase/gimpbaseenums.c:894
+#, fuzzy
+msgctxt "icon-type"
+msgid "Icon name"
+msgstr "Nama ikon"
+
+#: ../libgimpbase/gimpbaseenums.c:895
+#, fuzzy
+msgctxt "icon-type"
+msgid "Inline pixbuf"
+msgstr "icon-type"
+
+#: ../libgimpbase/gimpbaseenums.c:896
+#, fuzzy
+msgctxt "icon-type"
 msgid "Image file"
-msgstr "/Lihat/Tampilkan Grid"
+msgstr "Berkas gambar"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:926
+#, fuzzy
+msgctxt "image-base-type"
 msgid "RGB color"
-msgstr ""
+msgstr "image-base-type"
 
-#: ../libgimpbase/gimpbaseenums.c:399 ../libgimpbase/gimpbaseenums.c:434
+#: ../libgimpbase/gimpbaseenums.c:927
+#, fuzzy
+msgctxt "image-base-type"
 msgid "Grayscale"
-msgstr ""
+msgstr "Skala kelabu"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:928
+#, fuzzy
+msgctxt "image-base-type"
 msgid "Indexed color"
-msgstr ""
+msgstr "image-type"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libgimpbase/gimpbaseenums.c:961
+#, fuzzy
+msgctxt "image-type"
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libgimpbase/gimpbaseenums.c:962
+#, fuzzy
+msgctxt "image-type"
 msgid "RGB-alpha"
-msgstr ""
+msgstr "image-type"
 
-#: ../libgimpbase/gimpbaseenums.c:435
+#: ../libgimpbase/gimpbaseenums.c:963
+#, fuzzy
+msgctxt "image-type"
+msgid "Grayscale"
+msgstr "Skala kelabu"
+
+#: ../libgimpbase/gimpbaseenums.c:964
+#, fuzzy
+msgctxt "image-type"
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "image-type"
 
-#: ../libgimpbase/gimpbaseenums.c:437
+#: ../libgimpbase/gimpbaseenums.c:965
+#, fuzzy
+msgctxt "image-type"
+msgid "Indexed"
+msgstr "Terindeks"
+
+#: ../libgimpbase/gimpbaseenums.c:966
+#, fuzzy
+msgctxt "image-type"
 msgid "Indexed-alpha"
+msgstr "interpolation-type"
+
+#: ../libgimpbase/gimpbaseenums.c:996
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Lingkaran"
+
+#: ../libgimpbase/gimpbaseenums.c:997
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Bujur Sangkar"
+
+#: ../libgimpbase/gimpbaseenums.c:998
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Berlian"
+
+#: ../libgimpbase/gimpbaseenums.c:1030
+#, fuzzy
+#| msgid "None"
+msgctxt "interpolation-type"
+msgid "None"
+msgstr "None"
+
+#: ../libgimpbase/gimpbaseenums.c:1031
+#, fuzzy
+#| msgid "Linear"
+msgctxt "interpolation-type"
+msgid "Linear"
+msgstr "Linier"
+
+#: ../libgimpbase/gimpbaseenums.c:1032
+#, fuzzy
+msgctxt "interpolation-type"
+msgid "Cubic"
+msgstr "interpolation-type"
+
+#: ../libgimpbase/gimpbaseenums.c:1033
+msgctxt "interpolation-type"
+msgid "NoHalo"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:467
-msgid "None (Fastest)"
+#: ../libgimpbase/gimpbaseenums.c:1034
+msgctxt "interpolation-type"
+msgid "LoHalo"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1064
+#, fuzzy
+msgctxt "join-style"
+msgid "Miter"
+msgstr "Miter"
+
+#: ../libgimpbase/gimpbaseenums.c:1065
+#, fuzzy
+msgctxt "join-style"
+msgid "Round"
+msgstr "Pembulatan"
+
+#: ../libgimpbase/gimpbaseenums.c:1066
+#, fuzzy
+msgctxt "join-style"
+msgid "Bevel"
+msgstr "Bevel"
+
+#: ../libgimpbase/gimpbaseenums.c:1127
+msgctxt "merge-type"
+msgid "Expanded as necessary"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1128
+msgctxt "merge-type"
+msgid "Clipped to image"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1129
+msgctxt "merge-type"
+msgid "Clipped to bottom layer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1130
+msgctxt "merge-type"
+msgid "Flatten"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1224
+#, fuzzy
+msgctxt "orientation-type"
+msgid "Horizontal"
+msgstr "Horisontal"
+
+#: ../libgimpbase/gimpbaseenums.c:1225
+#, fuzzy
+msgctxt "orientation-type"
+msgid "Vertical"
+msgstr "Vertikal"
+
+#: ../libgimpbase/gimpbaseenums.c:1226
+#, fuzzy
+msgctxt "orientation-type"
+msgid "Unknown"
+msgstr "Tidak Diketahui"
+
+#: ../libgimpbase/gimpbaseenums.c:1255
+#, fuzzy
+msgctxt "paint-application-mode"
+msgid "Constant"
+msgstr "Konstanta"
+
+#: ../libgimpbase/gimpbaseenums.c:1256
+#, fuzzy
+msgctxt "paint-application-mode"
+msgid "Incremental"
+msgstr "Inkremental"
+
+#: ../libgimpbase/gimpbaseenums.c:1389
+#, fuzzy
+msgctxt "pdb-proc-type"
+msgid "Internal GIMP procedure"
+msgstr "pdb-proc-type"
+
+#: ../libgimpbase/gimpbaseenums.c:1390
+#, fuzzy
+msgctxt "pdb-proc-type"
+msgid "GIMP Plug-In"
+msgstr "pdb-proc-type"
+
+#: ../libgimpbase/gimpbaseenums.c:1391
+#, fuzzy
+msgctxt "pdb-proc-type"
+msgid "GIMP Extension"
+msgstr "pdb-proc-type"
+
+#: ../libgimpbase/gimpbaseenums.c:1392
+#, fuzzy
+msgctxt "pdb-proc-type"
+msgid "Temporary Procedure"
+msgstr "text-direction"
+
+#: ../libgimpbase/gimpbaseenums.c:1467
+msgctxt "precision"
+msgid "8-bit linear integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1468
+msgctxt "precision"
+msgid "8-bit gamma integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1469
+msgctxt "precision"
+msgid "16-bit linear integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1470
+msgctxt "precision"
+msgid "16-bit gamma integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1471
+msgctxt "precision"
+msgid "32-bit linear integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1472
+msgctxt "precision"
+msgid "32-bit gamma integer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1473
+msgctxt "precision"
+msgid "16-bit linear floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1474
+msgctxt "precision"
+msgid "16-bit gamma floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1475
+msgctxt "precision"
+msgid "32-bit linear floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1476
+msgctxt "precision"
+msgid "32-bit gamma floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1477
+msgctxt "precision"
+msgid "64-bit linear floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1478
+msgctxt "precision"
+msgid "64-bit gamma floating point"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1547
+#, fuzzy
+#| msgid "None (Fastest)"
+msgctxt "repeat-mode"
+msgid "None (extend)"
 msgstr "Tidak ada (Paling cepat)"
 
-#: ../libgimpbase/gimpbaseenums.c:469
-msgid "Cubic"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:470
+#: ../libgimpbase/gimpbaseenums.c:1548
 #, fuzzy
-msgid "Lanczos (Best)"
-msgstr "Kubik (Paling baik)"
-
-#: ../libgimpbase/gimpbaseenums.c:498
-msgid "Constant"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:499
-msgid "Incremental"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:528
-msgid "None"
-msgstr "Tidak ada"
-
-#: ../libgimpbase/gimpbaseenums.c:529
+msgctxt "repeat-mode"
 msgid "Sawtooth wave"
-msgstr ""
+msgstr "repeat-mode"
 
-#: ../libgimpbase/gimpbaseenums.c:530
-msgid "Triangular wave"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:558
-msgid "Pixels"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:559
+#: ../libgimpbase/gimpbaseenums.c:1549
 #, fuzzy
-msgid "Points"
-msgstr "poin"
+msgctxt "repeat-mode"
+msgid "Triangular wave"
+msgstr "run-mode"
 
-#: ../libgimpbase/gimpbaseenums.c:588
+#: ../libgimpbase/gimpbaseenums.c:1550
+#, fuzzy
+msgctxt "repeat-mode"
+msgid "Truncate"
+msgstr "Penggal"
+
+#: ../libgimpbase/gimpbaseenums.c:1612
+#, fuzzy
+msgctxt "run-mode"
+msgid "Run interactively"
+msgstr "run-mode"
+
+#: ../libgimpbase/gimpbaseenums.c:1613
+#, fuzzy
+msgctxt "run-mode"
+msgid "Run non-interactively"
+msgstr "run-mode"
+
+#: ../libgimpbase/gimpbaseenums.c:1614
+#, fuzzy
+msgctxt "run-mode"
+msgid "Run with last used values"
+msgstr "size-type"
+
+#: ../libgimpbase/gimpbaseenums.c:1652
+#, fuzzy
+msgctxt "select-criterion"
+msgid "Composite"
+msgstr "Komposit"
+
+#: ../libgimpbase/gimpbaseenums.c:1653
+#, fuzzy
+#| msgid "Red"
+msgctxt "select-criterion"
+msgid "Red"
+msgstr "Merah"
+
+#: ../libgimpbase/gimpbaseenums.c:1654
+#, fuzzy
+#| msgid "Green"
+msgctxt "select-criterion"
+msgid "Green"
+msgstr "Hijau"
+
+#: ../libgimpbase/gimpbaseenums.c:1655
+#, fuzzy
+#| msgid "Blue"
+msgctxt "select-criterion"
+msgid "Blue"
+msgstr "Biru"
+
+#: ../libgimpbase/gimpbaseenums.c:1656
+msgctxt "select-criterion"
+msgid "HSV Hue"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1657
+#, fuzzy
+#| msgid "Saturation"
+msgctxt "select-criterion"
+msgid "HSV Saturation"
+msgstr "Saturasi"
+
+#: ../libgimpbase/gimpbaseenums.c:1658
+#, fuzzy
+#| msgid "Value"
+msgctxt "select-criterion"
+msgid "HSV Value"
+msgstr "Nilai"
+
+#: ../libgimpbase/gimpbaseenums.c:1659
+#, fuzzy
+#| msgid "Alpha"
+msgctxt "select-criterion"
+msgid "Alpha"
+msgstr "Alfa"
+
+#: ../libgimpbase/gimpbaseenums.c:1660
+msgctxt "select-criterion"
+msgid "LCh Lightness"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1661
+msgctxt "select-criterion"
+msgid "LCh Chroma"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1662
+msgctxt "select-criterion"
+msgid "LCh Hue"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1691
+#, fuzzy
+msgctxt "size-type"
+msgid "Pixels"
+msgstr "Piksel"
+
+#: ../libgimpbase/gimpbaseenums.c:1692
+#, fuzzy
+msgctxt "size-type"
+msgid "Points"
+msgstr "Titik"
+
+#: ../libgimpbase/gimpbaseenums.c:1753
+#, fuzzy
+msgctxt "stroke-method"
+msgid "Stroke line"
+msgstr "stroke-method"
+
+#: ../libgimpbase/gimpbaseenums.c:1754
+#, fuzzy
+msgctxt "stroke-method"
+msgid "Stroke with a paint tool"
+msgstr "join-style"
+
+#: ../libgimpbase/gimpbaseenums.c:1787
+#, fuzzy
+msgctxt "text-direction"
+msgid "From left to right"
+msgstr "Dari kiri ke kanan"
+
+#: ../libgimpbase/gimpbaseenums.c:1788
+#, fuzzy
+msgctxt "text-direction"
+msgid "From right to left"
+msgstr "Dari kanan ke kiri"
+
+#: ../libgimpbase/gimpbaseenums.c:1789
+msgctxt "text-direction"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1790
+msgctxt "text-direction"
+msgid "Vertical, right to left (upright orientation)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1791
+msgctxt "text-direction"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1792
+msgctxt "text-direction"
+msgid "Vertical, left to right (upright orientation)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1823
+#, fuzzy
+#| msgid "None"
+msgctxt "text-hint-style"
+msgid "None"
+msgstr "None"
+
+#: ../libgimpbase/gimpbaseenums.c:1824
+#, fuzzy
+msgctxt "text-hint-style"
+msgid "Slight"
+msgstr "Sedikit"
+
+#: ../libgimpbase/gimpbaseenums.c:1825
+#, fuzzy
+#| msgid "Medium"
+msgctxt "text-hint-style"
+msgid "Medium"
+msgstr "Sedang"
+
+#: ../libgimpbase/gimpbaseenums.c:1826
+#, fuzzy
+msgctxt "text-hint-style"
+msgid "Full"
+msgstr "Penuh"
+
+#: ../libgimpbase/gimpbaseenums.c:1857
+#, fuzzy
+msgctxt "text-justification"
+msgid "Left justified"
+msgstr "text-justification"
+
+#: ../libgimpbase/gimpbaseenums.c:1858
+#, fuzzy
+msgctxt "text-justification"
+msgid "Right justified"
+msgstr "text-justification"
+
+#: ../libgimpbase/gimpbaseenums.c:1859
+#, fuzzy
+msgctxt "text-justification"
+msgid "Centered"
+msgstr "Terpusat"
+
+#: ../libgimpbase/gimpbaseenums.c:1860
+#, fuzzy
+msgctxt "text-justification"
+msgid "Filled"
+msgstr "Terisi"
+
+#: ../libgimpbase/gimpbaseenums.c:1890
+#, fuzzy
+#| msgid "Shadows"
+msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Bayangan"
 
-#: ../libgimpbase/gimpbaseenums.c:589
+#: ../libgimpbase/gimpbaseenums.c:1891
+#, fuzzy
+msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr ""
+msgstr "Midtone"
 
-#: ../libgimpbase/gimpbaseenums.c:590
+#: ../libgimpbase/gimpbaseenums.c:1892
+#, fuzzy
+msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr ""
+msgstr "Sorotan"
 
-#: ../libgimpbase/gimpbaseenums.c:618
-msgid "Forward (traditional)"
-msgstr ""
+#: ../libgimpbase/gimpbaseenums.c:1921
+#, fuzzy
+msgctxt "transform-direction"
+msgid "Normal (Forward)"
+msgstr "transform-direction"
 
-#: ../libgimpbase/gimpbaseenums.c:619
-msgid "Backward (corrective)"
-msgstr ""
+#: ../libgimpbase/gimpbaseenums.c:1922
+#, fuzzy
+msgctxt "transform-direction"
+msgid "Corrective (Backward)"
+msgstr "transform-resize"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpbaseenums.c:1953
+#, fuzzy
+msgctxt "transform-resize"
+msgid "Adjust"
+msgstr "Atur"
+
+#: ../libgimpbase/gimpbaseenums.c:1954
+#, fuzzy
+msgctxt "transform-resize"
+msgid "Clip"
+msgstr "Klip"
+
+#: ../libgimpbase/gimpbaseenums.c:1955
+#, fuzzy
+msgctxt "transform-resize"
+msgid "Crop to result"
+msgstr "transform-resize"
+
+#: ../libgimpbase/gimpbaseenums.c:1956
+#, fuzzy
+msgctxt "transform-resize"
+msgid "Crop with aspect"
+msgstr "pdb-proc-type"
+
+#: ../libgimpbase/gimpmetadata.c:878
 #, c-format
-msgid "%d Bytes"
+msgid "Can load metadata only from local files"
 msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
 #, c-format
-msgid "%.2f KB"
+msgid "Conversion of the filename to system codepage failed."
 msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmetadata.c:949
 #, c-format
-msgid "%.1f KB"
+msgid "Can save metadata only to local files"
 msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmetadata.c:1011
 #, c-format
-msgid "%d KB"
+msgid "Invalid Exif data size."
 msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmetadata.c:1040
 #, c-format
-msgid "%.2f MB"
+msgid "Parsing Exif data failed."
 msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmetadata.c:1090
 #, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
-
-#: ../libgimpbase/gimpmemsize.c:205
-#, fuzzy, c-format
-msgid "%d MB"
-msgstr "%.1f MB"
-
-#: ../libgimpbase/gimpmemsize.c:212
-#, fuzzy, c-format
-msgid "%.2f GB"
-msgstr "%.1f MB"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, fuzzy, c-format
-msgid "%.1f GB"
-msgstr "%.1f MB"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%d GB"
+msgid "Parsing IPTC data failed."
 msgstr ""
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../libgimpbase/gimpmetadata.c:1138
+#, c-format
+msgid "Parsing XMP data failed."
+msgstr ""
+
+#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
 msgid "(invalid UTF-8 string)"
 msgstr "(string UTF-8 salah)"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpbase/gimputils.c:394
+#, fuzzy
+msgid "File path is NULL"
+msgstr "Path berkas NULL"
+
+#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
+#, fuzzy
+msgid "Error converting UTF-8 filename to wide char"
+msgstr "Galat saat mengonversi nama berkas UTF-8 ke wide char"
+
+#: ../libgimpbase/gimputils.c:422
+#, fuzzy
+msgid "ILCreateFromPath() failed"
+msgstr "ILCreateFromPath() gagal"
+
+#: ../libgimpbase/gimputils.c:459
 #, c-format
-msgid "value for token %s is not a valid UTF-8 string"
+msgid "Cannot convert '%s' into a valid NSURL."
 msgstr ""
 
+#: ../libgimpbase/gimputils.c:487
+#, fuzzy
+msgid "Connecting to org.freedesktop.FileManager1 failed: "
+msgstr "Menghubungi org.freedesktop.FileManager1 gagal:"
+
+#: ../libgimpbase/gimputils.c:511
+#, fuzzy
+msgid "Calling ShowItems failed: "
+msgstr "Pemanggilan ShowItems gagal:"
+
+#: ../libgimpcolor/gimpcolorprofile.c:258
+#, c-format
+msgid "'%s' does not appear to be an ICC color profile"
+msgstr ""
+
+#: ../libgimpcolor/gimpcolorprofile.c:304
+msgid "Data does not appear to be an ICC color profile"
+msgstr ""
+
+#: ../libgimpcolor/gimpcolorprofile.c:361
+msgid "Could not save color profile to memory"
+msgstr ""
+
+#: ../libgimpcolor/gimpcolorprofile.c:578
+msgid "(unnamed profile)"
+msgstr ""
+
+#: ../libgimpcolor/gimpcolorprofile.c:620
+#, c-format
+msgid "Model: %s"
+msgstr ""
+
+#: ../libgimpcolor/gimpcolorprofile.c:629
+#, c-format
+msgid "Manufacturer: %s"
+msgstr ""
+
+#: ../libgimpcolor/gimpcolorprofile.c:638
+#, c-format
+msgid "Copyright: %s"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfigenums.c:24
+#, fuzzy
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "color-management-mode"
+
+#: ../libgimpconfig/gimpconfigenums.c:25
+msgctxt "color-management-mode"
+msgid "Color-managed display"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfigenums.c:26
+msgctxt "color-management-mode"
+msgid "Soft-proofing"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfigenums.c:57
+#, fuzzy
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "Perseptual"
+
+#: ../libgimpconfig/gimpconfigenums.c:58
+#, fuzzy
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "color-rendering-intent"
+
+#: ../libgimpconfig/gimpconfigenums.c:59
+#, fuzzy
+#| msgid "Saturation"
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "Saturasi"
+
+#: ../libgimpconfig/gimpconfigenums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr ""
+
+#. *
+#. * SECTION: gimpcolorconfig
+#. * @title: GimpColorConfig
+#. * @short_description: Color management settings.
+#. *
+#. * Color management settings.
+#. *
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "How images are displayed on screen."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:55
+msgid "The color profile of your (primary) monitor."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:58
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:63
+msgid ""
+"The preferred RGB working space color profile. It will be offered next to "
+"the built-in RGB profile when a color profile can be chosen."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:67
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:71
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:74
+msgid ""
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
+"device profile. "
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:79
+msgid ""
+"How colors are converted from your image's color space to your display "
+"device. Relative colorimetric is usually the best choice. Unless you use a "
+"LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
+"intent really gives you relative colorimetric."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:86
+msgid ""
+"Do use black point compensation (unless you know you have a reason not to)."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:90
+msgid ""
+"When disabled, image display might be of better quality at the cost of speed."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:94
+msgid ""
+"How colors are converted from your image's color space to the output "
+"simulation device (usually your monitor). Try them all and choose what looks "
+"the best. "
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:99
+msgid ""
+"Try with and without black point compensation and choose what looks best. "
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:103
+msgid ""
+"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:107
+msgid ""
+"When enabled, the soft-proofing will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:111
+#, fuzzy
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "color-management-mode"
+
+#: ../libgimpconfig/gimpcolorconfig.c:198
+msgid "Mode of operation"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:206
+msgid "Preferred RGB profile"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:213
+msgid "Preferred grayscale profile"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:220
+msgid "CMYK profile"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:227
+msgid "Monitor profile"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:234
+msgid "Use the system monitor profile"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:242
+msgid "Simulation profile for soft-proofing"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:249
+msgid "Display rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:257
+msgid "Use black point compensation for the display"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:264
+msgid "Optimize display color transformations"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:271
+msgid "Soft-proofing rendering intent"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:279
+msgid "Use black point compensation for soft-proofing"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:286
+msgid "Optimize soft-proofing color transformations"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:293
+msgid "Mark out of gamut colors"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:300
+msgid "Out of gamut warning color"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:657
+#: ../libgimpconfig/gimpcolorconfig.c:841
+#, c-format
+msgid "Color profile '%s' is not for RGB color space."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:699
+#: ../libgimpconfig/gimpcolorconfig.c:891
+#, c-format
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:741
+#: ../libgimpconfig/gimpcolorconfig.c:941
+#, c-format
+msgid "Color profile '%s' is not for CMYK color space."
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
+#, fuzzy, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "nilai bagi token %s bukan string UTF-8 yang valid"
+
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "diminta 'ya' atau 'tidak' untuk token boolean %s, tapi didapat '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:599
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:668
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:513
-#: ../libgimpconfig/gimpscanner.c:594
+#: ../libgimpconfig/gimpconfig-iface.c:682
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:756
+#: ../libgimpconfig/gimpscanner.c:838
+#: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "error parse fatal"
 
-#: ../libgimpconfig/gimpconfig-path.c:349
+#: ../libgimpconfig/gimpconfig-path.c:483
+msgid "File has no path representation"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-path.c:570
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfigwriter.c:134
-#, fuzzy, c-format
-msgid "Could not create temporary file for '%s': %s"
-msgstr "Gagal saat membuat file '%s': %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:147
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr ""
-
-#: ../libgimpconfig/gimpconfigwriter.c:666
-#, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"The original file has not been touched."
-msgstr ""
-
-#: ../libgimpconfig/gimpconfigwriter.c:674
-#, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"No file has been created."
-msgstr ""
-
-#: ../libgimpconfig/gimpconfigwriter.c:685
+#: ../libgimpconfig/gimpconfigwriter.c:88
+#: ../libgimpconfig/gimpconfigwriter.c:673
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfigwriter.c:703
+#: ../libgimpconfig/gimpconfigwriter.c:183
 #, fuzzy, c-format
-msgid "Could not create '%s': %s"
+msgid "Could not create directory '%s' for '%s': "
 msgstr "Gagal saat membuat file '%s': %s"
 
-#: ../libgimpconfig/gimpscanner.c:100
-#, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr ""
+#: ../libgimpconfig/gimpconfigwriter.c:199
+#, fuzzy, c-format
+msgid "Could not create temporary file for '%s': "
+msgstr "Gagal saat membuat file '%s': %s"
 
-#: ../libgimpconfig/gimpscanner.c:270
+#: ../libgimpconfig/gimpconfigwriter.c:783
+#, fuzzy, c-format
+msgid "Error writing '%s': %s"
+msgstr "Galat saat menulis '%s': %s"
+
+#: ../libgimpconfig/gimpscanner.c:409
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr ""
 
-#: ../libgimpconfig/gimpscanner.c:621
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpscanner.c:631
+#, fuzzy, c-format
+#| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "diminta 'ya' atau 'tidak' untuk token boolean %s, tapi didapat '%s'"
+
+#: ../libgimpconfig/gimpscanner.c:865
 #, fuzzy, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr ""
 "Error saat menulis file '%s':\n"
 "%s"
 
-#: ../libgimpmodule/gimpmodule.c:177
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr ""
-
-#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
-#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
-#: ../libgimpmodule/gimpmodule.c:478
-#, c-format
+#: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
+#: ../libgimpmodule/gimpmodule.c:275 ../libgimpmodule/gimpmodule.c:302
+#: ../libgimpmodule/gimpmodule.c:428
+#, fuzzy, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
+msgstr "Galat pemuatan modul '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:282
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr ""
-
-#: ../libgimpmodule/gimpmodule.c:422
+#: ../libgimpmodule/gimpmodule.c:370
+#, fuzzy
 msgid "Module error"
-msgstr ""
+msgstr "Galat modul"
 
-#: ../libgimpmodule/gimpmodule.c:423
+#: ../libgimpmodule/gimpmodule.c:371
+#, fuzzy
 msgid "Loaded"
-msgstr ""
+msgstr "Dimuat"
 
-#: ../libgimpmodule/gimpmodule.c:424
+#: ../libgimpmodule/gimpmodule.c:372
+#, fuzzy
 msgid "Load failed"
-msgstr ""
+msgstr "Gagal memuat"
 
-#: ../libgimpmodule/gimpmodule.c:425
+#: ../libgimpmodule/gimpmodule.c:373
+#, fuzzy
 msgid "Not loaded"
+msgstr "Tak dimuat"
+
+#: ../libgimpthumb/gimpthumb-utils.c:153
+#, c-format
+msgid ""
+"Cannot determine a valid thumbnails directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 
-#: ../libgimpthumb/gimpthumb-utils.c:227 ../libgimpthumb/gimpthumb-utils.c:295
+#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
-#: ../libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:479
+#, c-format
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr ""
+
+#: ../libgimpthumb/gimpthumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorbutton.c:99
+#: ../libgimpwidgets/gimpbrowser.c:114
+#, fuzzy
+msgid "_Search:"
+msgstr "_Cari:"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:147
+#, fuzzy
 msgid "_Foreground Color"
-msgstr ""
+msgstr "Warna Latar _Depan"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:103
+#: ../libgimpwidgets/gimpcolorbutton.c:151
+#, fuzzy
 msgid "_Background Color"
-msgstr ""
+msgstr "Warna Latar _Belakang"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:107
+#: ../libgimpwidgets/gimpcolorbutton.c:155
 msgid "Blac_k"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorbutton.c:111
+#: ../libgimpwidgets/gimpcolorbutton.c:159
 msgid "_White"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorbutton.c:548 ../libgimpwidgets/gimpicons.c:68
+#, fuzzy
+msgid "_Reset"
+msgstr "_Reset"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:550
+#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
+#, fuzzy
+msgid "_OK"
+msgstr "_OK"
+
+#: ../libgimpwidgets/gimpcolorhexentry.c:118
+#, fuzzy
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Notasi warna heksadesimal sebagaimana dipakai dalam HTML dan CSS. Entri ini "
+"juga menerima nama-nama warna CSS."
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:107
+#, fuzzy
+msgid "All files (*.*)"
+msgstr "Semua berkas (*.*)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:112
+#, fuzzy
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "Profil warna ICC (*.icc, *.icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
+#, fuzzy
+msgid "_Save"
+msgstr "_Simpan"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
+#, fuzzy
+msgid "_Open"
+msgstr "Buk_a"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:345
+#: ../libgimpwidgets/gimppatheditor.c:270
+#, fuzzy
+msgid "Folder"
+msgstr "Folder"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:350
+msgid "Not a regular file."
+msgstr ""
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:147
+#, fuzzy
+msgid "Select color profile from disk..."
+msgstr "profile"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:315
+#, fuzzy
+#| msgid "None"
+msgctxt "profile"
+msgid "None"
+msgstr "None"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:168
+#, fuzzy
+msgid "Manufacturer: "
+msgstr "Pembuat:"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:180
+#, fuzzy
+msgid "Copyright: "
+msgstr "Hak cipta:"
+
+#: ../libgimpwidgets/gimpcolorscales.c:205
+#, fuzzy
 msgid "Scales"
+msgstr "Sisik"
+
+#: ../libgimpwidgets/gimpcolorscales.c:437
+msgid "0..100"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorscales.c:155
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_H"
-msgstr "_H"
-
-#: ../libgimpwidgets/gimpcolorscales.c:156
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_S"
-msgstr "_S"
-
-#: ../libgimpwidgets/gimpcolorscales.c:157
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_V"
-msgstr "_V"
-
-#: ../libgimpwidgets/gimpcolorscales.c:158
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_R"
-msgstr "_R"
-
-#: ../libgimpwidgets/gimpcolorscales.c:159
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_G"
-msgstr "_G"
-
-#: ../libgimpwidgets/gimpcolorscales.c:160
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_B"
-msgstr "_B"
-
-#: ../libgimpwidgets/gimpcolorscales.c:161
-msgid "_A"
-msgstr "_A"
-
-#: ../libgimpwidgets/gimpcolorscales.c:165
-#: ../libgimpwidgets/gimpcolorselect.c:349
-msgid "Hue"
-msgstr "Hue"
-
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
-msgid "Saturation"
-msgstr "Saturasi"
-
-#: ../libgimpwidgets/gimpcolorscales.c:167
-#: ../libgimpwidgets/gimpcolorselect.c:351
-msgid "Value"
-msgstr "Nilai"
-
-#: ../libgimpwidgets/gimpcolorscales.c:243
-msgid "Hexadecimal color notation as used in HTML and CSS"
+#: ../libgimpwidgets/gimpcolorscales.c:439
+msgid "0..255"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
+#: ../libgimpwidgets/gimpcolorscales.c:460
+msgid "LCh"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorscales.c:462
+#, fuzzy
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpcolorselection.c:222
+#, fuzzy
 msgid "Current:"
-msgstr ""
+msgstr "Saat Ini:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr ""
 
-#: ../libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpcolorselection.c:318
+msgid "HTML _notation:"
+msgstr ""
+
+#: ../libgimpwidgets/gimpdialog.c:178
+#, fuzzy
+msgid "_Help"
+msgstr "Ba_ntuan"
+
+#: ../libgimpwidgets/gimpfileentry.c:152
+msgid "Show file location in the file manager"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:223
+msgid "Open a file selector to browse your folders"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:224
+msgid "Open a file selector to browse your files"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:236
+msgid "Indicates whether or not the folder exists"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:237
+msgid "Indicates whether or not the file exists"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:397
+#, c-format
+msgid "Can't show file in file manager: %s"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:424
+#, fuzzy
 msgid "Select Folder"
-msgstr ""
+msgstr "Pilih Folder"
 
-#: ../libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:426
+#, fuzzy
 msgid "Select File"
+msgstr "Pilih Berkas"
+
+#: ../libgimpwidgets/gimphelpui.c:433
+msgid "Press F1 for more help"
 msgstr ""
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimpicons.c:62
+#, fuzzy
+msgid "Anchor"
+msgstr "Jangkar"
+
+#: ../libgimpwidgets/gimpicons.c:63
+msgid "C_enter"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:64
+#, fuzzy
+msgid "_Duplicate"
+msgstr "_Duplikat"
+
+#: ../libgimpwidgets/gimpicons.c:65
+#, fuzzy
+msgid "Linked"
+msgstr "Terkait"
+
+#: ../libgimpwidgets/gimpicons.c:66
+msgid "Paste as New"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:67
+msgid "Paste Into"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:69
+#, fuzzy
+msgid "Visible"
+msgstr "Terlihat"
+
+#: ../libgimpwidgets/gimpicons.c:105 ../libgimpwidgets/gimpicons.c:109
+msgid "_Stroke"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:121
+msgid "L_etter Spacing"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:122
+msgid "L_ine Spacing"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:139
+msgid "Re_size"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
+#, fuzzy
+msgid "_Scale"
+msgstr "_Skala"
+
+#: ../libgimpwidgets/gimpicons.c:247
+msgid "Cr_op"
+msgstr ""
+
+#: ../libgimpwidgets/gimpicons.c:255
+#, fuzzy
+msgid "_Select"
+msgstr "_Pilih"
+
+#: ../libgimpwidgets/gimpicons.c:267
+#, fuzzy
+msgid "_Transform"
+msgstr "_Ubah"
+
+#: ../libgimpwidgets/gimpicons.c:273
+msgid "_Shear"
+msgstr ""
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#, fuzzy
 msgid "Kilobytes"
-msgstr ""
+msgstr "Kilobita"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#, fuzzy
 msgid "Megabytes"
-msgstr ""
+msgstr "Megabita"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
+#, fuzzy
 msgid "Gigabytes"
+msgstr "Gigabita"
+
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:270
+#: ../libgimpwidgets/gimppageselector.c:1066
+#, fuzzy
+msgid "Nothing selected"
+msgstr "Tidak ada dipilih"
+
+#: ../libgimpwidgets/gimppageselector.c:288
+#, fuzzy
+msgid "Select _All"
+msgstr "Pilih Semu_a"
+
+#: ../libgimpwidgets/gimppageselector.c:308
+msgid "Select _range:"
 msgstr ""
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#: ../libgimpwidgets/gimppageselector.c:320
+msgid "Open _pages as"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:448
+#: ../libgimpwidgets/gimppageselector.c:646
+#, fuzzy, c-format
+msgid "Page %d"
+msgstr "Halaman %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1071
+msgid "One page selected"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:1078
+#: ../libgimpwidgets/gimppageselector.c:1082
+#, c-format
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] ""
+
+#: ../libgimpwidgets/gimppatheditor.c:181
+msgid "Add a new folder"
+msgstr ""
+
+#: ../libgimpwidgets/gimppatheditor.c:199
+msgid "Move the selected folder up"
+msgstr ""
+
+#: ../libgimpwidgets/gimppatheditor.c:217
+msgid "Move the selected folder down"
+msgstr ""
+
+#: ../libgimpwidgets/gimppatheditor.c:235
+msgid "Remove the selected folder from the list"
+msgstr ""
+
+#: ../libgimpwidgets/gimppatheditor.c:261
+#, fuzzy
 msgid "Writable"
-msgstr ""
+msgstr "Ditulisi"
 
-#: ../libgimpwidgets/gimppatheditor.c:252
-msgid "Folder"
-msgstr ""
-
-#: ../libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:112
+#, fuzzy
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"Klik pada pengambil warna, lalu klik pada warna apa saja di layar untuk "
+"memilih warna tersebut."
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
+#. toggle button to (de)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:293
+#, fuzzy
+msgid "_Preview"
+msgstr "_Pratinjau"
+
+#: ../libgimpwidgets/gimppreviewarea.c:125
 msgid "Check Size"
 msgstr ""
 
@@ -817,266 +2460,821 @@ msgstr ""
 msgid "Check Style"
 msgstr ""
 
-#. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:240
+#: ../libgimpwidgets/gimppropwidgets.c:2178
+#, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] ""
+
+#: ../libgimpwidgets/gimpunitmenu.c:261
 #, fuzzy
-msgid "_Preview"
-msgstr "Lihat Contoh Jadi"
-
-#: ../libgimpwidgets/gimpstock.c:113
-msgid "Anchor"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:114
-msgid "C_enter"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:115
-msgid "_Duplicate"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:116
-msgid "_Edit"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:117
-msgid "Linked"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:118
-msgid "Paste as New"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:119
-msgid "Paste Into"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:120
-msgid "_Reset"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:121
-msgid "Visible"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
-msgid "_Stroke"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:170
-msgid "L_etter Spacing"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:171
-msgid "L_ine Spacing"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:187
-msgid "_Resize"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
-msgid "_Scale"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:271
-msgid "Crop"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:288
-msgid "_Transform"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:291
-msgid "_Rotate"
-msgstr ""
-
-#: ../libgimpwidgets/gimpstock.c:293
-msgid "_Shear"
-msgstr ""
-
-#: ../libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
-msgstr ""
+msgstr "Lainnya..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:487
 msgid "Unit Selection"
 msgstr ""
 
-#: ../libgimpwidgets/gimpunitmenu.c:655
+#: ../libgimpwidgets/gimpunitmenu.c:536
+#, fuzzy
 msgid "Unit"
-msgstr ""
+msgstr "Unit"
 
-#: ../libgimpwidgets/gimpunitmenu.c:659
+#: ../libgimpwidgets/gimpunitmenu.c:540
+#, fuzzy
 msgid "Factor"
-msgstr ""
+msgstr "Faktor"
 
-#: ../libgimpwidgets/gimpwidgets.c:1001
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgets.c:1018
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:542
+#, fuzzy
 msgid "_Randomize"
+msgstr "input-mode"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:50
+#, fuzzy
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "Dinonaktifkan"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:51
+#, fuzzy
+#| msgid "Green"
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "Layar"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:52
+#, fuzzy
+msgctxt "input-mode"
+msgid "Window"
+msgstr "Jendela"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Square"
+msgstr "Bujur Sangkar"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Portrait"
+msgstr "Potret"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Landscape"
+msgstr "Lanskap"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#, fuzzy
+#| msgid "_H"
+msgctxt "color-selector-channel"
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgid "HSV Hue"
 msgstr ""
 
-#: ../modules/cdisplay_colorblind.c:68
-msgid "Protanopia (insensitivity to red"
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#, fuzzy
+#| msgid "_S"
+msgctxt "color-selector-channel"
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#, fuzzy
+#| msgid "Saturation"
+msgid "HSV Saturation"
+msgstr "Saturasi"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#, fuzzy
+#| msgid "_V"
+msgctxt "color-selector-channel"
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#, fuzzy
+#| msgid "Value"
+msgid "HSV Value"
+msgstr "Nilai"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#, fuzzy
+#| msgid "_R"
+msgctxt "color-selector-channel"
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+msgid "Red"
+msgstr "Merah"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#, fuzzy
+#| msgid "_G"
+msgctxt "color-selector-channel"
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
+msgid "Green"
+msgstr "Hijau"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#, fuzzy
+#| msgid "_B"
+msgctxt "color-selector-channel"
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
+msgid "Blue"
+msgstr "Biru"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#, fuzzy
+#| msgid "_A"
+msgctxt "color-selector-channel"
+msgid "_A"
+msgstr "_A"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
+msgid "Alpha"
+msgstr "Alpha"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_L"
+msgstr "_L"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+msgid "LCh Lightness"
 msgstr ""
 
-#: ../modules/cdisplay_colorblind.c:70
-msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
-
-#: ../modules/cdisplay_colorblind.c:72
-msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
-
-#: ../modules/cdisplay_colorblind.c:163
-msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-
-#: ../modules/cdisplay_colorblind.c:256
-msgid "Color Deficient Vision"
-msgstr ""
-
-#: ../modules/cdisplay_colorblind.c:554
-msgid "Color _Deficiency Type:"
-msgstr ""
-
-#: ../modules/cdisplay_gamma.c:105
-msgid "Gamma color display filter"
-msgstr ""
-
-#: ../modules/cdisplay_gamma.c:178
-msgid "Gamma"
-msgstr ""
-
-#: ../modules/cdisplay_gamma.c:352
-msgid "_Gamma:"
-msgstr ""
-
-#: ../modules/cdisplay_highcontrast.c:105
-msgid "High Contrast color display filter"
-msgstr ""
-
-#: ../modules/cdisplay_highcontrast.c:178
-msgid "Contrast"
-msgstr ""
-
-#: ../modules/cdisplay_highcontrast.c:352
-msgid "Contrast C_ycles:"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:57
-msgid "Perceptual"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:58
-msgid "Relative Colorimetric"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:60
-msgid "Absolute Colorimetric"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:147
-msgid "Color proof filter using ICC color profile"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:251
-msgid "Color Proof"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:462
-msgid "_Intent:"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:465
-msgid "Choose an ICC Color Profile"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:468
-msgid "_Profile:"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:476
-msgid "_Black Point Compensation"
-msgstr ""
-
-#: ../modules/colorsel_cmyk.c:73
-msgid "CMYK color selector"
-msgstr ""
-
-#: ../modules/colorsel_cmyk.c:130
-msgid "CMYK"
-msgstr ""
-
-#: ../modules/colorsel_cmyk.c:147
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_C"
+msgstr "_C"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+msgid "LCh Chroma"
 msgstr ""
 
-#: ../modules/colorsel_cmyk.c:148
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgctxt "color-selector-channel"
+msgid "_h"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgid "LCh Hue"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#, fuzzy
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#, fuzzy
+msgid "RGB color model"
+msgstr "Warna Baru"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIE LCh color model"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#, fuzzy
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgid "HSV color model"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:231
+#, fuzzy
+msgctxt "page-selector-target"
+msgid "Layers"
+msgstr "Lapisan"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:232
+#, fuzzy
+msgctxt "page-selector-target"
+msgid "Images"
+msgstr "Citra"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:293
+#, fuzzy
+msgctxt "zoom-type"
+msgid "Zoom in"
+msgstr "Zum masuk"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:294
+#, fuzzy
+msgctxt "zoom-type"
+msgid "Zoom out"
+msgstr "Zum keluar"
+
+#: ../modules/color-selector-cmyk.c:82
+msgid "CMYK color selector (using color profile)"
+msgstr ""
+
+#: ../modules/color-selector-cmyk.c:116
+#, fuzzy
+msgid "CMYK"
+msgstr "CMYK"
+
+#. Cyan
+#: ../modules/color-selector-cmyk.c:138
+#, fuzzy
+msgid "_C"
+msgstr "_C"
+
+#. Magenta
+#: ../modules/color-selector-cmyk.c:140
+#, fuzzy
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
-#: ../modules/colorsel_cmyk.c:149
+#. Yellow
+#: ../modules/color-selector-cmyk.c:142
+#, fuzzy
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
-#: ../modules/colorsel_cmyk.c:150
+#. Key (Black)
+#: ../modules/color-selector-cmyk.c:144
+#, fuzzy
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/color-selector-cmyk.c:148
+#, fuzzy
 msgid "Cyan"
-msgstr ""
+msgstr "Cyan"
 
-#: ../modules/colorsel_cmyk.c:155
+#: ../modules/color-selector-cmyk.c:149
+#, fuzzy
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:156
+#: ../modules/color-selector-cmyk.c:150
+#, fuzzy
 msgid "Yellow"
-msgstr ""
+msgstr "Kuning"
 
-#: ../modules/colorsel_cmyk.c:157
+#: ../modules/color-selector-cmyk.c:151
+#, fuzzy
 msgid "Black"
+msgstr "Hitam"
+
+#: ../modules/color-selector-cmyk.c:374
+msgid "Profile: (none)"
 msgstr ""
 
-#: ../modules/colorsel_cmyk.c:191
-msgid "Black _Pullout:"
-msgstr ""
+#: ../modules/color-selector-cmyk.c:386
+#, fuzzy, c-format
+msgid "Profile: %s"
+msgstr "Profil: %s"
 
-#: ../modules/colorsel_cmyk.c:208
-msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
-
-#: ../modules/colorsel_triangle.c:104
-msgid "Painter-style triangle color selector"
-msgstr ""
-
-#: ../modules/colorsel_triangle.c:170
-msgid "Triangle"
-msgstr ""
-
-#: ../modules/colorsel_water.c:88
+#: ../modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr ""
 
-#: ../modules/colorsel_water.c:154
+#: ../modules/color-selector-water.c:130
+#, fuzzy
 msgid "Watercolor"
+msgstr "Cat Air"
+
+#: ../modules/color-selector-water.c:200
+#, fuzzy
+msgid "Pressure"
+msgstr "Tekanan"
+
+#: ../modules/color-selector-wheel.c:72
+msgid "HSV color wheel"
 msgstr ""
 
-#: ../modules/colorsel_water.c:220
-msgid "Pressure"
+#: ../modules/color-selector-wheel.c:104
+#, fuzzy
+msgid "Wheel"
+msgstr "Roda"
+
+#: ../modules/controller-dx-dinput.c:156
+msgid "DirectX DirectInput event controller"
 msgstr ""
+
+#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
+#, fuzzy
+msgid "Device:"
+msgstr "Perangkat:"
+
+#: ../modules/controller-dx-dinput.c:197
+msgid "The device to read DirectInput events from."
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:206
+msgid "DirectX DirectInput"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:419
+#, c-format
+msgid "Button %d"
+msgstr "Tombol %d"
+
+#: ../modules/controller-dx-dinput.c:422
+#, c-format
+msgid "Button %d Press"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:425
+#, c-format
+msgid "Button %d Release"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
+msgid "X Move Left"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
+msgid "X Move Right"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:451
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:454
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
+msgid "Z Move Up"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
+msgid "Z Move Down"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:469
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:472
+msgid "X Axis Tilt Near"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
+msgid "Y Axis Tilt Right"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:100
+msgid "Y Axis Tilt Left"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:101
+msgid "Z Axis Turn Left"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:102
+msgid "Z Axis Turn Right"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:501
+#, c-format
+msgid "Slider %d Increase"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:504
+#, c-format
+msgid "Slider %d Decrease"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:514
+#, c-format
+msgid "POV %d X View"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:517
+#, c-format
+msgid "POV %d Y View"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:520
+#, c-format
+msgid "POV %d Return"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:1081
+msgid "DirectInput Events"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:1092
+#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
+msgid "No device configured"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:1117
+#: ../modules/controller-linux-input.c:588
+msgid "Device not available"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:58
+msgid "Button 0"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:59
+msgid "Button 1"
+msgstr "Tombol 1"
+
+#: ../modules/controller-linux-input.c:60
+msgid "Button 2"
+msgstr "Tombol 2"
+
+#: ../modules/controller-linux-input.c:61
+msgid "Button 3"
+msgstr "Tombol 3"
+
+#: ../modules/controller-linux-input.c:62
+msgid "Button 4"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:63
+msgid "Button 5"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:64
+msgid "Button 6"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:65
+msgid "Button 7"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:66
+msgid "Button 8"
+msgstr "Tombol 8"
+
+#: ../modules/controller-linux-input.c:67
+msgid "Button 9"
+msgstr "Tombol 9"
+
+#: ../modules/controller-linux-input.c:68
+msgid "Button Mouse"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:69
+msgid "Button Left"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:70
+msgid "Button Right"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:71
+msgid "Button Middle"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:72
+msgid "Button Side"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:73
+msgid "Button Extra"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:74
+msgid "Button Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:75
+msgid "Button Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:76
+msgid "Button Task"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:78
+msgid "Button Wheel"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:81
+msgid "Button Gear Down"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:84
+msgid "Button Gear Up"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:92
+msgid "Y Move Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:93
+msgid "Y Move Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:97
+msgid "X Axis Tilt Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:98
+msgid "X Axis Tilt Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:106
+msgid "Dial Turn Left"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:107
+msgid "Dial Turn Right"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:108
+msgid "Wheel Turn Left"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:109
+msgid "Wheel Turn Right"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:178
+msgid "Linux input event controller"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:219
+msgid "The name of the device to read Linux Input events from."
+msgstr ""
+
+#: ../modules/controller-linux-input.c:230
+msgid "Linux Input"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:513
+msgid "Linux Input Events"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
+#, c-format
+msgid "Reading from %s"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
+#, c-format
+msgid "Device not available: %s"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
+msgid "End of file"
+msgstr "Akhir berkas"
+
+#: ../modules/controller-midi.c:164
+msgid "MIDI event controller"
+msgstr ""
+
+#: ../modules/controller-midi.c:203
+msgid "The name of the device to read MIDI events from."
+msgstr ""
+
+#: ../modules/controller-midi.c:206
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr ""
+
+#: ../modules/controller-midi.c:221
+#, fuzzy
+msgid "Channel:"
+msgstr "Kanal:"
+
+#: ../modules/controller-midi.c:222
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+
+#: ../modules/controller-midi.c:226
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller-midi.c:355
+#, c-format
+msgid "Note %02x on"
+msgstr ""
+
+#: ../modules/controller-midi.c:358
+#, c-format
+msgid "Note %02x off"
+msgstr ""
+
+#: ../modules/controller-midi.c:361
+#, c-format
+msgid "Controller %03d"
+msgstr ""
+
+#: ../modules/controller-midi.c:408
+msgid "MIDI Events"
+msgstr ""
+
+#: ../modules/controller-midi.c:426
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../modules/controller-midi.c:428
+msgid "GIMP MIDI Input Controller"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:120
+msgid "Clip warning color display filter"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:157
+msgid "Show shadows"
+msgstr "Tampilkan bayangan"
+
+#: ../modules/display-filter-clip-warning.c:158
+msgid "Show warning for pixels with a negative component"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:164
+msgid "Shadows color"
+msgstr "Warna bayangan"
+
+#: ../modules/display-filter-clip-warning.c:165
+msgid "Shadows warning color"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:177
+msgid "Show highlights"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:178
+msgid "Show warning for pixels with a component greater than one"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:184
+msgid "Highlights color"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:185
+msgid "Highlights warning color"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:197
+msgid "Show bogus"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:198
+msgid "Show warning for pixels with an infinite or NaN component"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:204
+msgid "Bogus color"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:205
+msgid "Bogus warning color"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:217
+msgid "Include alpha component"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:218
+msgid "Include alpha component in the warning"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:224
+msgid "Include transparent pixels"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:225
+msgid "Include fully transparent pixels in the warning"
+msgstr ""
+
+#: ../modules/display-filter-clip-warning.c:229
+msgid "Clip Warning"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:68
+msgid "Protanopia (insensitivity to red)"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:70
+msgid "Deuteranopia (insensitivity to green)"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:72
+msgid "Tritanopia (insensitivity to blue)"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:194
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:253
+msgid "Type"
+msgstr "Tipe"
+
+#: ../modules/display-filter-color-blind.c:254
+msgid "Color vision deficiency type"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:259
+msgid "Color Deficient Vision"
+msgstr ""
+
+#: ../modules/display-filter-gamma.c:86
+msgid "Gamma color display filter"
+msgstr ""
+
+#: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
+#, fuzzy
+msgid "Gamma"
+msgstr "Gamma"
+
+#: ../modules/display-filter-high-contrast.c:86
+msgid "High Contrast color display filter"
+msgstr ""
+
+#: ../modules/display-filter-high-contrast.c:123
+msgid "Contrast cycles"
+msgstr ""
+
+#: ../modules/display-filter-high-contrast.c:128
+msgid "Contrast"
+msgstr "Kontras"
+
+#, fuzzy
+#~ msgid "Pattern source"
+#~ msgstr "Pola:"
+
+#, fuzzy
+#~ msgid "Lanczos (Best)"
+#~ msgstr "Kubik (Paling baik)"
+
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f MB"
+
+#, fuzzy
+#~ msgid "%d MB"
+#~ msgstr "%.1f MB"
+
+#, fuzzy
+#~ msgid "%.2f GB"
+#~ msgstr "%.1f MB"
+
+#, fuzzy
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f MB"
+
+#, fuzzy
+#~ msgid "Could not create '%s': %s"
+#~ msgstr "Gagal saat membuat file '%s': %s"
+
+#~ msgid "Hue"
+#~ msgstr "Hue"
