@@ -9,18 +9,16 @@
 # Asier Sarasua Garmendia <asier.sarasua@gmail.com>, 2018.
 #
 msgid ""
-msgstr ""
-"Project-Id-Version: gimp-python master\n"
+msgstr "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-01-13 20:30+0000\n"
-"PO-Revision-Date: 2018-01-06 15:25+0100\n"
+"POT-Creation-Date: 2019-09-17 11:04+0000\n"
+"PO-Revision-Date: 2019-10-11 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: OmegaT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
@@ -62,53 +60,45 @@ msgstr "'%s'(r)en baliogabeko sarrera"
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu kolore-hautapena"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
 msgid "Saving as colored XHTML"
 msgstr "Koloreztatutako XHTML gisa gordetzen"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
 msgid "Save as colored XHTML"
 msgstr "Gorde koloreztatutako XHTML gisa"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
 msgid "Colored XHTML"
 msgstr "Koloreztatutako XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
 msgid "Character _source"
 msgstr "Karaktere-_iturburua"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Source code"
 msgstr "Iturburu-kodea"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Text file"
 msgstr "Testu fitxategia"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Entry box"
 msgstr "Sarrerako koadroa"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "_File to read or characters to use"
 msgstr "_Fitxategia irakurtzeko edo karaktereak erabiltzeko"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Fo_nt size in pixels"
 msgstr "_Letra-tamaina pixeletan"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_Write a separate CSS file"
 msgstr "_Idatzi CSS fitxategi bereizia"
-
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "Gradientea erabiltzeko"
-
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "Fitxategi-izena"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
 msgid "Exports the image histogram to a text file (CSV)"
@@ -153,53 +143,6 @@ msgstr "Normalizatua"
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Percent"
 msgstr "Ehunekoa"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "Add a layer of fog"
-msgstr "Gehitu lainoaren geruza"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "_Fog..."
-msgstr "_Lainoa..."
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "_Geruzaren izena"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "Clouds"
-msgstr "Hodeiak"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
-msgid "_Fog color"
-msgstr "_Lainoaren kolorea"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
-msgid "_Turbulence"
-msgstr "_Turbulentzia"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "Op_akutasuna"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "Desplazatu koloreak paletan"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
-msgid "_Offset Palette..."
-msgstr "_Desplazatu paleta..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
-msgid "Palette"
-msgstr "Paleta"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-msgid "Off_set"
-msgstr "Desplaza_mendua"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
 msgid "Red"
@@ -273,6 +216,13 @@ msgstr "Ordenatu koloreak paletan"
 msgid "_Sort Palette..."
 msgstr "_Ordenatu paleta..."
 
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/python/palette-offset.py:44
+#: ../plug-ins/python/palette-offset.py:45
+#: ../plug-ins/python/palette-to-gradient.py:103
+msgid "Palette"
+msgstr "Paleta"
+
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 msgid "Se_lections"
 msgstr "Ha_utapenak"
@@ -322,108 +272,6 @@ msgstr "_Partizio-kanala"
 msgid "Partition q_uantization"
 msgstr "Partizioaren k_uantizazioa"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Sortu gradiente errepikakorra paletako koloreak erabiliz"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "Paleta gradientea _errepikatzeko"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "Sortu gradientea paletako koloreak erabiliz"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
-msgid "Palette to _Gradient"
-msgstr "Paleta _gradientera"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
-msgid "Slice"
-msgstr "Zatitu"
-
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Irudia bere gidetan zehar zatitzen du, irudiak eta HTML taularen mozketa "
-"sortzen du"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
-msgid "_Slice..."
-msgstr "_Zatitu..."
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Path for HTML export"
-msgstr "Bidea HTML esportatzeko"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Filename for export"
-msgstr "Fitxategi-izena esportatzeko"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image name prefix"
-msgstr "Irudiaren izenaren aurrizkia"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Image format"
-msgstr "Irudi-formatua"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
-msgid "Separate image folder"
-msgstr "Bereizi irudi-karpeta"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Folder for image export"
-msgstr "Karpeta irudia esportatzeko"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
-msgid "Space between table elements"
-msgstr "Taulako elementuen arteko tartea"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
-msgid "Javascript for onmouseover and clicked"
-msgstr "'onmouseover' eta 'clicked'-en Javascript kodea"
-
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
-msgid "Skip animation for table caps"
-msgstr "Saltatu animazioa taulen ertzetan"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
-msgid "Python Console"
-msgstr "Python kontsola"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
-msgid "_Browse..."
-msgstr "_Arakatu..."
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:154
-msgid "Python Procedure Browser"
-msgstr "Python-eko prozeduren arakatzailea"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Ezin izan da '%s' ireki idazteko: %s"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:198
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Ezin izan da '%s'(e)n idatzi: %s"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:206
-msgid "Save Python-Fu Console Output"
-msgstr "Gorde Python-Fu kontsolaren irteera"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:232
-msgid "Interactive GIMP Python interpreter"
-msgstr "GIMP Python interpretatzaile interaktiboa"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:237
-msgid "_Console"
-msgstr "_Kontsola"
-
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "Gehitu itzal jaurtia geruzari, eta aukeran alakatu"
@@ -451,6 +299,458 @@ msgstr "Itzal jaurtiaren _X desplazamendua"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Itzal jaurtiaren _Y desplazamendua"
+
+#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+msgid "Layer name"
+msgstr "Geruzaren izena"
+
+#: ../plug-ins/python/foggify.py:84
+msgid "Clouds"
+msgstr "Hodeiak"
+
+#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
+msgid "Fog color"
+msgstr "Lainoaren kolorea"
+
+#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+msgid "Turbulence"
+msgstr "Turbulentzia"
+
+#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+msgid "Opacity"
+msgstr "Opakutasuna"
+
+#: ../plug-ins/python/foggify.py:114
+msgid "Add a layer of fog"
+msgstr "Gehitu lainoaren geruza"
+
+#: ../plug-ins/python/foggify.py:117
+msgid "_Fog..."
+msgstr "_Lainoa..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:81
+msgid "CSS file..."
+msgstr "CSS fitxategia..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:144
+msgid "Gradient to use"
+msgstr "Erabiliko den gradientea"
+
+#: ../plug-ins/python/gradients-save-as-css.py:147
+msgid "File"
+msgstr "Fitxategia"
+
+#: ../plug-ins/python/palette-offset.py:56
+msgid "Off_set"
+msgstr "Desplaza_mendua"
+
+#: ../plug-ins/python/palette-offset.py:57
+msgid "Offset"
+msgstr "Desplazatu"
+
+#: ../plug-ins/python/palette-offset.py:90
+msgid "_Offset Palette..."
+msgstr "_Desplazatu paleta..."
+
+#: ../plug-ins/python/palette-offset.py:91
+msgid "Offset the colors in a palette"
+msgstr "Desplazatu koloreak paletan"
+
+#: ../plug-ins/python/palette-offset.py:139
+msgid "Offset Palette..."
+msgstr "Desplazatu paleta..."
+
+#: ../plug-ins/python/palette-to-gradient.py:139
+msgid "Palette to _Gradient"
+msgstr "Paleta _gradientera"
+
+#: ../plug-ins/python/palette-to-gradient.py:140
+msgid "Create a gradient using colors from the palette"
+msgstr "Sortu gradientea paletako koloreak erabiliz"
+
+#: ../plug-ins/python/palette-to-gradient.py:144
+msgid "Palette to _Repeating Gradient"
+msgstr "Paleta gradientea _errepikatzeko"
+
+#: ../plug-ins/python/palette-to-gradient.py:145
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Sortu gradiente errepikakorra paletako koloreak erabiliz"
+
+#: ../plug-ins/python/py-slice.py:74
+msgid "Slice"
+msgstr "Zatitu"
+
+#: ../plug-ins/python/py-slice.py:438 ../plug-ins/python/py-slice.py:439
+msgid "Path for HTML export"
+msgstr "Bidea HTML esportatzeko"
+
+#: ../plug-ins/python/py-slice.py:443 ../plug-ins/python/py-slice.py:444
+msgid "Filename for export"
+msgstr "Fitxategi-izena esportatzeko"
+
+#: ../plug-ins/python/py-slice.py:448 ../plug-ins/python/py-slice.py:449
+msgid "Image name prefix"
+msgstr "Irudiaren izenaren aurrizkia"
+
+#: ../plug-ins/python/py-slice.py:453 ../plug-ins/python/py-slice.py:454
+msgid "Image format (gif, jpg, png)"
+msgstr "Irudi-formatua (gif, jpg, png)"
+
+#: ../plug-ins/python/py-slice.py:458 ../plug-ins/python/py-slice.py:459
+msgid "Separate image folder"
+msgstr "Bereizi irudi-karpeta"
+
+#: ../plug-ins/python/py-slice.py:463 ../plug-ins/python/py-slice.py:464
+msgid "Folder for image export"
+msgstr "Karpeta irudia esportatzeko"
+
+#: ../plug-ins/python/py-slice.py:468 ../plug-ins/python/py-slice.py:469
+msgid "Space between table elements"
+msgstr "Taulako elementuen arteko tartea"
+
+#: ../plug-ins/python/py-slice.py:473 ../plug-ins/python/py-slice.py:474
+msgid "Javascript for onmouseover and clicked"
+msgstr "'onmouseover' eta 'clicked'-en Javascript kodea"
+
+#: ../plug-ins/python/py-slice.py:479 ../plug-ins/python/py-slice.py:480
+msgid "Skip animation for table caps"
+msgstr "Saltatu animazioa taulen ertzetan"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/python/py-slice.py:500
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "Irudia bere gidetan zehar zatitzen du, irudiak eta HTML taularen mozketa sortzen du"
+
+#: ../plug-ins/python/py-slice.py:509
+msgid "_Slice..."
+msgstr "_Zatitu..."
+
+#: ../plug-ins/python/python-console/python-console.py:73
+msgid "Python Console"
+msgstr "Python kontsola"
+
+#: ../plug-ins/python/python-console/python-console.py:77
+msgid "_Browse..."
+msgstr "_Arakatu..."
+
+#: ../plug-ins/python/python-console/python-console.py:177
+msgid "Python Procedure Browser"
+msgstr "Python-eko prozeduren arakatzailea"
+
+#: ../plug-ins/python/python-console/python-console.py:205
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Ezin izan da '%s' ireki idazteko: %s"
+
+#: ../plug-ins/python/python-console/python-console.py:220
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Ezin izan da '%s'(e)n idatzi: %s"
+
+#: ../plug-ins/python/python-console/python-console.py:229
+msgid "Save Python-Fu Console Output"
+msgstr "Gorde Python-Fu kontsolaren irteera"
+
+#: ../plug-ins/python/python-console/python-console.py:278
+msgid "_Console"
+msgstr "_Kontsola"
+
+#: ../plug-ins/python/python-console/python-console.py:279
+msgid "Interactive GIMP Python interpreter"
+msgstr "GIMP Python interpretatzaile interaktiboa"
+
+#: ../plug-ins/python/spyro-plus.py:42
+msgid "Spyro Layer"
+msgstr "Espirografia-geruza"
+
+#: ../plug-ins/python/spyro-plus.py:88
+msgid "Circle"
+msgstr "Zirkulua"
+
+#: ../plug-ins/python/spyro-plus.py:124
+msgid "Polygon-Star"
+msgstr "Poligonoa-Izarra"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/python/spyro-plus.py:140 ../plug-ins/python/spyro-plus.py:840
+msgid "Sine"
+msgstr "Sinua"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/python/spyro-plus.py:150
+msgid "Bumps"
+msgstr "Erliebeak"
+
+#: ../plug-ins/python/spyro-plus.py:255
+msgid "Rack"
+msgstr "Apala"
+
+#: ../plug-ins/python/spyro-plus.py:299
+msgid "Frame"
+msgstr "Markoa"
+
+#: ../plug-ins/python/spyro-plus.py:388
+msgid "Selection"
+msgstr "Hautapena"
+
+#: ../plug-ins/python/spyro-plus.py:475
+msgid "Pencil"
+msgstr "Arkatza"
+
+#: ../plug-ins/python/spyro-plus.py:491
+msgid "AirBrush"
+msgstr "Aerografoa"
+
+#: ../plug-ins/python/spyro-plus.py:551
+msgid "Preview"
+msgstr "Aurrebista"
+
+#: ../plug-ins/python/spyro-plus.py:556
+msgid "Stroke"
+msgstr "Trazua"
+
+#: ../plug-ins/python/spyro-plus.py:584
+msgid "PaintBrush"
+msgstr "Pintzela"
+
+#: ../plug-ins/python/spyro-plus.py:586
+msgid "Ink"
+msgstr "Tinta"
+
+#: ../plug-ins/python/spyro-plus.py:587
+msgid "MyPaintBrush"
+msgstr "MyPaintBrush"
+
+#: ../plug-ins/python/spyro-plus.py:826
+msgid "Spyrograph"
+msgstr "Espirografoa"
+
+#: ../plug-ins/python/spyro-plus.py:833
+msgid "Epitrochoid"
+msgstr "Epitrokoidea"
+
+#: ../plug-ins/python/spyro-plus.py:860
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/python/spyro-plus.py:1108
+msgid "Curve Type"
+msgstr "Kurba mota"
+
+#: ../plug-ins/python/spyro-plus.py:1109
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr "Eredu epitrokoidea da mugitzen den gurpila gurpil finkoaren kanpoaldean dagoenean."
+
+#: ../plug-ins/python/spyro-plus.py:1114
+msgid "Tool"
+msgstr "Tresna"
+
+#: ../plug-ins/python/spyro-plus.py:1115
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr "Eredua marrazteko erabiliko den tresna. Tresnaren aurrebistak azkar marrazten du."
+
+#: ../plug-ins/python/spyro-plus.py:1120
+msgid "Long Gradient"
+msgstr "Gradiente luzea"
+
+#: ../plug-ins/python/spyro-plus.py:1122
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr "Markatu gabe dagoenean, uneko tresna-ezarpenak erabiliko dira. Markatuta dagoenean, gradiente luzea erabiliko du ereduaren luzerarekin bat egiteko, gradiente-tresnaren ezarpenetan ezarritako uneko gradientean eta errepikatze moduan oinarrituta."
+
+#: ../plug-ins/python/spyro-plus.py:1142
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Zehaztu eredua honako fitxetako bat erabilita:"
+
+#: ../plug-ins/python/spyro-plus.py:1144
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1168
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr "Horzdun gurpil finkoaren hortz kopurua. Gurpil finkoaren tamaina hortz kopuruaren araberakoa da."
+
+#: ../plug-ins/python/spyro-plus.py:1171 ../plug-ins/python/spyro-plus.py:1199
+msgid "Fixed Gear Teeth"
+msgstr "Horzdun gurpil finkoaren hortzak"
+
+#: ../plug-ins/python/spyro-plus.py:1179
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr "Horzdun gurpil mugikorraren hortz kopurua. Gurpil mugikorraren tamaina hortz kopuruaren araberakoa da."
+
+#: ../plug-ins/python/spyro-plus.py:1182 ../plug-ins/python/spyro-plus.py:1204
+msgid "Moving Gear Teeth"
+msgstr "Horzdun gurpil mugikorraren hortzak"
+
+#: ../plug-ins/python/spyro-plus.py:1187
+msgid "Hole percent"
+msgstr "Zuloaren ehunekoa"
+
+#: ../plug-ins/python/spyro-plus.py:1188
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr "ZUloa horzdun gurpil mugikorraren erdigunetik zein distantziara dagoen. %100ek esan nahi du zuloa gurpilaren ertzean dagoela."
+
+#: ../plug-ins/python/spyro-plus.py:1209
+msgid "Hole Number"
+msgstr "Zulo-zenbakia"
+
+#: ../plug-ins/python/spyro-plus.py:1210
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr "#1 zuloa horzdun gurpilaren ertzean dago. Zulo-zenbaki handiena erdigunetik hurbil dago. Zulo-zenbaki handiena desberdina da gurpil bakoitzerako."
+
+#: ../plug-ins/python/spyro-plus.py:1219
+msgid "Toy Kit"
+msgstr "Jostailuen multzoa"
+
+#: ../plug-ins/python/spyro-plus.py:1225
+msgid "Gears"
+msgstr "Horzdun gurpilak"
+
+#: ../plug-ins/python/spyro-plus.py:1238 ../plug-ins/python/spyro-plus.py:1282
+msgid "Rotation"
+msgstr "Biraketa"
+
+#: ../plug-ins/python/spyro-plus.py:1239
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr "Ereduaren biraketa, graduetan. Horzdun gurpil mugikorraren hasierako posizioa horzdun gurpil finkoan."
+
+#: ../plug-ins/python/spyro-plus.py:1262
+msgid "Shape"
+msgstr "Forma"
+
+#: ../plug-ins/python/spyro-plus.py:1263
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1272
+msgid "Sides"
+msgstr "Alboak"
+
+#: ../plug-ins/python/spyro-plus.py:1272
+msgid "Number of sides of the shape."
+msgstr "Formaren albo kopurua."
+
+#: ../plug-ins/python/spyro-plus.py:1277
+msgid "Morph"
+msgstr "Itxuraldatu"
+
+#: ../plug-ins/python/spyro-plus.py:1277
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "Itxuraldatu horzdun gurpil finkoaren forma. Formetako batzuetan soilik du eragina."
+
+#: ../plug-ins/python/spyro-plus.py:1282
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Horzdun gurpilaren biraketa, graduetan"
+
+#: ../plug-ins/python/spyro-plus.py:1297
+msgid "Margin (px)"
+msgstr "Marjina (px)"
+
+#: ../plug-ins/python/spyro-plus.py:1297
+msgid "Margin from edge of selection."
+msgstr "Marjina hautapenaren ertzetik."
+
+#: ../plug-ins/python/spyro-plus.py:1302
+msgid "Make width and height equal"
+msgstr "Berdindu zabalera eta altuera"
+
+#: ../plug-ins/python/spyro-plus.py:1304
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr "Markatu gabe badago, ereduak uneko irudia edo hautapena beteko du. Markatuta badago, ereduak zabalera eta altuera bera izango du, eta zentratuta egongo da."
+
+#: ../plug-ins/python/spyro-plus.py:1328
+msgid "Re_draw"
+msgstr "_Birmarraztu"
+
+#: ../plug-ins/python/spyro-plus.py:1329
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr "Tresna baten ezarpenak, kolorea edo hautapen aldatzen baduzu, sakatu hau ereduak zein itxura izango duen aurreikusteko."
+
+#: ../plug-ins/python/spyro-plus.py:1331
+msgid "_Reset"
+msgstr "_Berrezarri"
+
+#: ../plug-ins/python/spyro-plus.py:1332
+msgid "_Cancel"
+msgstr "_Utzi"
+
+#: ../plug-ins/python/spyro-plus.py:1333
+msgid "_OK"
+msgstr "_Ados"
+
+#: ../plug-ins/python/spyro-plus.py:1335
+msgid ""
+"Keep\n"
+"Layer"
+msgstr "Mantendu\n"
+"geruza"
+
+#: ../plug-ins/python/spyro-plus.py:1337
+msgid ""
+"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
+"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
+"redrawn on the layer that was active when the plugin was launched."
+msgstr ""
+
+#: ../plug-ins/python/spyro-plus.py:1351
+msgid "Spyrogimp"
+msgstr "Spyrogimp"
+
+#: ../plug-ins/python/spyro-plus.py:1360 ../plug-ins/python/spyro-plus.py:1829
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "Marraztu espirografoak uneko tresnaren ezarpenak eta hautapena erabilita."
+
+#: ../plug-ins/python/spyro-plus.py:1373
+msgid "Curve Pattern"
+msgstr "Kurba-eredua"
+
+#: ../plug-ins/python/spyro-plus.py:1376
+msgid "Fixed Gear"
+msgstr "Horzdun gurpil finkoa"
+
+#: ../plug-ins/python/spyro-plus.py:1379
+msgid "Size"
+msgstr "Tamaina"
+
+#: ../plug-ins/python/spyro-plus.py:1662
+msgid "Rendering Pattern"
+msgstr "Errendatze-eredua"
+
+#: ../plug-ins/python/spyro-plus.py:1674
+msgid "Please wait : Rendering Pattern"
+msgstr "Itxaron: Eredua errendatzen"
+
+#: ../plug-ins/python/spyro-plus.py:1833
+msgid "Spyrogimp..."
+msgstr "Spyrogimp..."
 
 #~ msgid "Color _model"
 #~ msgstr "Kolore-_eredua"
