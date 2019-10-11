@@ -1,6 +1,6 @@
 # C version
 
-plugin_name = 'goat-exercise-c'
+plugin_name = 'goat-exercise'
 
 plugin_sources = [
   'goat-exercise-c.c',
@@ -10,7 +10,7 @@ if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,
     args: [
-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name + '-c.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
       '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
     ],
@@ -20,7 +20,7 @@ if platform_windows
   )
 endif
 
-executable(plugin_name,
+executable(plugin_name + '-c',
   plugin_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
@@ -36,7 +36,7 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: gimpplugindir /  'plug-ins' / plugin_name,
+  install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-c',
 )
 
 install_data(
