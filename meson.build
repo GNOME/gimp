@@ -1618,14 +1618,15 @@ pkgconfig.generate(libgimpui,
 # Subdir installations
 
 foreach dir : [
-    { 'dir': 'libgimp',   'deps': libgimp},
-    { 'dir': 'libgimpbase',   'deps': libgimpbase},
+    { 'dir': 'libgimp',        'deps': libgimp},
+    { 'dir': 'libgimpbase',    'deps': libgimpbase},
     { 'dir': 'libgimpcolor',   'deps': libgimpcolor},
-    { 'dir': 'libgimpconfig',   'deps': libgimpconfig},
-    { 'dir': 'libgimpmath',   'deps': libgimpmath},
-    { 'dir': 'libgimpmodule',   'deps': libgimpmodule},
+    { 'dir': 'libgimpconfig',  'deps': libgimpconfig},
+    { 'dir': 'libgimpmath',    'deps': libgimpmath},
+    { 'dir': 'libgimpmodule',  'deps': libgimpmodule},
     { 'dir': 'libgimpthumb',   'deps': libgimpthumb},
-    { 'dir': 'libgimpwidgets',   'deps': libgimpwidgets},
+    { 'dir': 'libgimpwidgets', 'deps': libgimpwidgets},
+    { 'dir': 'icons' },
     { 'dir': 'plug-ins', },
   ]
   run_target('install-' + dir.get('dir'),
