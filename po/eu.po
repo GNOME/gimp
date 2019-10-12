@@ -422,7 +422,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "And much, much more…"
-msgstr "Et askoz gehiago..."
+msgstr "Eta askoz gehiago..."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid ""
@@ -510,7 +510,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "On-canvas gradient editing"
-msgstr ""
+msgstr "Oihal gaineko gradiente-edizioa"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Notification when an image is over/underexposed"
@@ -518,7 +518,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid "Better and faster color management"
-msgstr ""
+msgstr "Kolore-kudeaketa hobea eta azkarragoa"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
@@ -534,7 +534,7 @@ msgstr "Erabilgarritasunaren hobekuntza anitz"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "Manual can be displayed in the user's preferred language"
-msgstr ""
+msgstr "Eskuliburua erabiltzaileak hobetsitako hizkuntza ikus daiteke"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "Improvements for the Wavelet Decompose filter"
@@ -542,15 +542,15 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid "Improved compatibility with Photoshop .psd files"
-msgstr ""
+msgstr "Bateragarritasun hobea Phtoshop-en .psd fitxategiekin"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "New support for password-protected PDF"
-msgstr ""
+msgstr "Euskarri berria pasahitzez babestutako PDFetarako"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid "New support for HGT format (Digital Elevation Model data)"
-msgstr ""
+msgstr "Euskarri berria HGT formaturako (garaieren eredu digitalak)"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:1
 msgid "Extra files for GIMP"
@@ -697,7 +697,7 @@ msgstr "Araztu kraskatzean (never|query|always)"
 
 #: ../app/main.c:255
 msgid "Enable non-fatal debugging signal handlers"
-msgstr "Gaitu larriak ez diren arazketako seinale-kudeatzaileak"
+msgstr "Gaitu larriak ez diren arazketako seinale-heldulekuak"
 
 #: ../app/main.c:260
 msgid "Make all warnings fatal"
@@ -3780,22 +3780,22 @@ msgstr "Mantendu marrazgaiaren kokalekua eta ez utzi kokaleku hori alda dadin"
 #: ../app/actions/drawable-actions.c:91
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
-msgstr "Irauli _horizontalki"
+msgstr "Irauli _horizontalean"
 
 #: ../app/actions/drawable-actions.c:92
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
-msgstr "Irauli marrazgaia horizontalki"
+msgstr "Irauli marrazgaia horizontalean"
 
 #: ../app/actions/drawable-actions.c:97
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
-msgstr "Irauli _bertikalki"
+msgstr "Irauli _bertikalean"
 
 #: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
-msgstr "Irauli marrazgaia bertikalki"
+msgstr "Irauli marrazgaia bertikalean"
 
 #: ../app/actions/drawable-actions.c:106
 msgctxt "drawable-action"
@@ -6261,22 +6261,22 @@ msgstr "Bihurtu irudia pertzepziozko (sRGB) gammara"
 #: ../app/actions/image-actions.c:271
 msgctxt "image-action"
 msgid "Flip _Horizontally"
-msgstr "Irauli _horizontalki"
+msgstr "Irauli _horizontalean"
 
 #: ../app/actions/image-actions.c:272
 msgctxt "image-action"
 msgid "Flip image horizontally"
-msgstr "Irauli irudia horizontalki"
+msgstr "Irauli irudia horizontalean"
 
 #: ../app/actions/image-actions.c:277
 msgctxt "image-action"
 msgid "Flip _Vertically"
-msgstr "Irauli _bertikalki"
+msgstr "Irauli _bertikalean"
 
 #: ../app/actions/image-actions.c:278
 msgctxt "image-action"
 msgid "Flip image vertically"
-msgstr "Irauli irudia bertikalki"
+msgstr "Irauli irudia bertikalean"
 
 #: ../app/actions/image-actions.c:286
 msgctxt "image-action"
@@ -9866,7 +9866,7 @@ msgstr "Ezarri zoomaren faktore pertsonalizatua"
 #: ../app/actions/view-actions.c:480
 msgctxt "view-action"
 msgid "Flip _Horizontally"
-msgstr "Irauli _horizontalki"
+msgstr "Irauli _horizontalean"
 
 #: ../app/actions/view-actions.c:481
 msgctxt "view-action"
@@ -9876,7 +9876,7 @@ msgstr "Irauli ikuspegia horizontalean"
 #: ../app/actions/view-actions.c:487
 msgctxt "view-action"
 msgid "Flip _Vertically"
-msgstr "Irauli _bertikalki"
+msgstr "Irauli _bertikalean"
 
 #: ../app/actions/view-actions.c:488
 msgctxt "view-action"
@@ -10573,7 +10573,7 @@ msgstr "Irudiaren inguruko area nola marraztu behar den zehazten du."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "How to handle embedded color profiles when opening a file."
-msgstr "Nola kudeatu kolore kapsulatuen profilak fitxategi bat irekitzean."
+msgstr "Nola maneiatu kolore kapsulatuen profilak fitxategi bat irekitzean."
 
 #: ../app/config/gimprc-blurbs.h:50
 msgid "Sets the default folder path for all color profile file dialogs."
@@ -10637,7 +10637,7 @@ msgid ""
 "The window type hint that is set on dock windows and the toolbox window. "
 "This may affect the way your window manager decorates and handles these "
 "windows."
-msgstr "Leiho motaren aholkuak atrakatutako leihoetara eta tresna-kutxaren leihora ezarrita dagoela dio. Honek leiho-kudeatzailearen gain eragin dezake, leihoak marraztean eta kudeatzean."
+msgstr "Leiho motaren aholkuak atrakatutako leihoetara eta tresna-kutxaren leihora ezarrita dagoela dio. Honek leiho-kudeatzailearen gain eragin dezake, leihoak marraztean eta maneiatzean."
 
 #: ../app/config/gimprc-blurbs.h:152
 msgid "When enabled, the selected brush will be used for all tools."
@@ -11003,7 +11003,7 @@ msgid ""
 "is used with large images. Also, things can get horribly slow if the swap "
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
-msgstr "swap fitxategiaren kokalekua ezartzen du. Gimp-ek fitxetan oinarritutako memoria-esleipeneko eskema erabiltzen du. Trukatze-fitxategia fitxategiak diskotik eta diskora azkar eta erraztasunez trukatzeko erabiltzen da. Kontuan izan trukatze-fitxategia azkar handitu daitekeela GIMP irudi handiekin erabiltzen bada. Horrez gain, lana asko moteldu daiteke trukatze-fitxategia NFSren gainean muntatutako direktorioan sortzen bada. Hori dela eta, komeni da zure trukatze-fitxategia \"/tmp\" karpetan gordetzea."
+msgstr "Trukatze-fitxategiaren kokalekua ezartzen du. GIMPek fitxetan oinarritutako memoria-esleipeneko eskema erabiltzen du. Trukatze-fitxategia fitxategiak diskotik eta diskora azkar eta erraztasunez trukatzeko erabiltzen da. Kontuan izan trukatze-fitxategia azkar handitu daitekeela GIMP irudi handiekin erabiltzen bada. Horrez gain, lana asko moteldu daiteke trukatze-fitxategia NFSren gainean muntatutako direktorioan sortzen bada. Hori dela eta, komeni da zure trukatze-fitxategia \"/tmp\" karpetan gordetzea."
 
 #: ../app/config/gimprc-blurbs.h:475
 msgid ""
@@ -15529,7 +15529,7 @@ msgstr "Ezarri oihalaren kolore pertsonalizatu betegarria"
 
 #: ../app/dialogs/preferences-dialog.c:1015
 msgid "_Keep canvas padding in \"Show All\" mode"
-msgstr ""
+msgstr "Mantendu oihalaren betegarria \"Era_kutsi dena\" moduan"
 
 #: ../app/dialogs/preferences-dialog.c:1040
 msgid "Snap to _Guides"
@@ -15578,7 +15578,7 @@ msgstr "Gehieneko irudi _berriaren tamaina:"
 
 #: ../app/dialogs/preferences-dialog.c:1189
 msgid "S_wap compression:"
-msgstr ""
+msgstr "T_rukatze-konpresioa:"
 
 #: ../app/dialogs/preferences-dialog.c:1194
 msgid "Number of _threads to use:"
@@ -18065,12 +18065,12 @@ msgstr "Karaktere-sekuentzia baliogabea URIan"
 #: ../app/file-data/file-data-gex.c:146
 #, c-format
 msgid "Absolute path are forbidden in GIMP extension '%s': %s"
-msgstr ""
+msgstr "Bide-izen absolutuak debekatuta daude '%s' GIMP hedapenean: %s"
 
 #: ../app/file-data/file-data-gex.c:156
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
-msgstr ""
+msgstr "Fitxategia ez da onartzen '%s' GIMP hedapenaren erroan: %s"
 
 #: ../app/file-data/file-data-gex.c:167
 #, c-format
@@ -18082,7 +18082,7 @@ msgstr ""
 #: ../app/file-data/file-data-gex.c:446
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
-msgstr ""
+msgstr "Errore larria '%s' GIMP hedapena deskonprimatzean: %s"
 
 #: ../app/file-data/file-data-gex.c:297
 #, c-format
@@ -18092,7 +18092,7 @@ msgstr ""
 #: ../app/file-data/file-data-gex.c:306
 #, c-format
 msgid "GIMP extension '%s' requires an AppStream file: %s"
-msgstr ""
+msgstr "'%s' GIMP hedapenak AppStream fitxategi bat behar du: %s"
 
 #: ../app/file-data/file-data-gex.c:321 ../app/file-data/file-data-gex.c:456
 #, c-format
@@ -18163,7 +18163,7 @@ msgstr "Gris-eskala"
 #: ../app/gegl/gimp-babl.c:255 ../app/gegl/gimp-babl.c:256
 #: ../app/gegl/gimp-babl.c:257 ../app/gegl/gimp-babl.c:258
 msgid "Grayscale-alpha"
-msgstr "Gris-eskala/alpha"
+msgstr "Gris-eskala/alfa"
 
 #: ../app/gegl/gimp-babl.c:260 ../app/gegl/gimp-babl.c:261
 #: ../app/gegl/gimp-babl.c:262 ../app/gegl/gimp-babl.c:263
@@ -19800,7 +19800,7 @@ msgstr "%d objektu bektorialak ez du %d IDa duen trazurik"
 #: ../app/pdb/gimppdb-utils.c:859
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
-msgstr ""
+msgstr "'%s' prozedura-izena ez da identifikatzaile kanonikoa"
 
 #: ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:377 ../app/pdb/pdb-cmds.c:69
 #, c-format
@@ -19929,14 +19929,14 @@ msgstr "'%1$s' prozedurak '%3$s' (#%4$d, %5$s mota) argumentua '%2$s' balioareki
 #: ../app/pdb/gimpprocedure.c:1016
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
-msgstr ""
+msgstr "'%s' prozedurak baliogabeko UTF-8 kate bat itzuli du '%s' argumenturako."
 
 #: ../app/pdb/gimpprocedure.c:1026
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
-msgstr ""
+msgstr "'%s' prozedura baliogabeko UTF-8 kate batekin deitu da '%s' argumenturako."
 
 #: ../app/pdb/image-cmds.c:2320
 msgid ""
@@ -21819,7 +21819,7 @@ msgstr "Irauli"
 #: ../app/tools/gimpfliptool.c:110
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr "Iraultze-tresna: alderantzikatu geruza, hautapena edo bidea horizontalki edo bertikalki"
+msgstr "Iraultze-tresna: alderantzikatu geruza, hautapena edo bidea horizontalean edo bertikalean"
 
 #: ../app/tools/gimpfliptool.c:112
 msgid "_Flip"
@@ -23195,7 +23195,7 @@ msgstr "Atxikitzea"
 #: ../app/tools/gimptextoptions.c:144
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr "Atxikitze-indizeak letra-tipoen eskema aldatzen du tamaina txikiko bitmapa doitzeko"
+msgstr "Atxikitze-indizeak letra-tipoen eskema aldatzen du tamaina txikiko bit-mapa doitzeko"
 
 #: ../app/tools/gimptextoptions.c:154
 msgid "The text language may have an effect on the way the text is rendered."
