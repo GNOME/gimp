@@ -723,6 +723,7 @@ gimp_image_init (GimpImage *image)
   private->height              = 0;
   private->xresolution         = 1.0;
   private->yresolution         = 1.0;
+  private->resolution_set      = FALSE;
   private->resolution_unit     = GIMP_UNIT_INCH;
   private->base_type           = GIMP_RGB;
   private->precision           = GIMP_PRECISION_U8_NON_LINEAR;
@@ -2287,6 +2288,24 @@ gimp_image_set_imported_file (GimpImage *image,
     {
       gimp_object_name_changed (GIMP_OBJECT (image));
     }
+
+  if (! private->resolution_set)
+    {
+      /* Unlike new files (which follow technological progress and will
+       * use higher default resolution, or explicitly chosen templates),
+       * imported files have a more backward-compatible value.
+       *
+       * 72 PPI is traditionnally the default value when none other had
+       * been explicitly set (for instance it is the default when no
+       * resolution metadata was set in Exif version 2.32, and below,
+       * standard). This historical value will only ever apply to loaded
+       * images. New images will continue having more modern or
+       * templated defaults.
+       */
+      private->xresolution     = 72.0;
+      private->yresolution     = 72.0;
+      private->resolution_unit = GIMP_UNIT_INCH;
+    }
 }
 
 /**
@@ -2788,8 +2807,9 @@ gimp_image_set_resolution (GimpImage *image,
       gimp_image_undo_push_image_resolution (image,
                                              C_("undo-type", "Change Image Resolution"));
 
-      private->xresolution = xresolution;
-      private->yresolution = yresolution;
+      private->xresolution    = xresolution;
+      private->yresolution    = yresolution;
+      private->resolution_set = TRUE;
 
       gimp_image_resolution_changed (image);
       gimp_image_size_changed_detailed (image,
