@@ -589,7 +589,7 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
   gtk_list_store_set (priv->store, &iter,
                       COLUMN_THUMBNAIL, thumbnail,
                       -1);
-  g_object_unref (thumbnail);
+  g_clear_object (&thumbnail);
 }
 
 /**
@@ -1313,8 +1313,16 @@ gimp_page_selector_add_frame (GtkWidget *widget,
 
   if (! frame)
     {
+      GError *error = NULL;
+
       frame = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                        GIMP_ICON_FRAME, 64, 0, NULL);
+                                        GIMP_ICON_FRAME, 64, 0, &error);
+      if (error)
+        {
+          g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+          g_error_free (error);
+        }
+      g_return_val_if_fail (frame, NULL);
       g_object_set_data_full (G_OBJECT (widget), "frame", frame,
                               (GDestroyNotify) g_object_unref);
     }
