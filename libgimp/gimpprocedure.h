@@ -180,6 +180,13 @@ void             gimp_procedure_add_return_value_from_property
                                                     GObject              *config,
                                                     const gchar          *prop_name);
 
+GParamSpec     * gimp_procedure_find_argument      (GimpProcedure        *procedure,
+                                                    const gchar          *name);
+GParamSpec     * gimp_procedure_find_aux_argument  (GimpProcedure        *procedure,
+                                                    const gchar          *name);
+GParamSpec     * gimp_procedure_find_return_value  (GimpProcedure        *procedure,
+                                                    const gchar          *name);
+
 GParamSpec    ** gimp_procedure_get_arguments      (GimpProcedure        *procedure,
                                                     gint                 *n_arguments);
 GParamSpec    ** gimp_procedure_get_aux_arguments  (GimpProcedure        *procedure,

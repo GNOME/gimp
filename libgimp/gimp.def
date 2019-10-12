@@ -701,6 +701,9 @@ EXPORTS
 	gimp_procedure_config_set_values
 	gimp_procedure_create_config
 	gimp_procedure_extension_ready
+	gimp_procedure_find_argument
+	gimp_procedure_find_aux_argument
+	gimp_procedure_find_return_value
 	gimp_procedure_get_arguments
 	gimp_procedure_get_authors
 	gimp_procedure_get_aux_arguments

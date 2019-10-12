@@ -1147,29 +1147,26 @@ void
 gimp_procedure_add_argument (GimpProcedure *procedure,
                              GParamSpec    *pspec)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
   g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
 
-  for (i = 0; i < procedure->priv->n_args; i++)
-    if (! strcmp (pspec->name, procedure->priv->args[i]->name))
-      {
-        g_warning ("Argument with name '%s' already exists on procedure '%s'",
-                   pspec->name,
-                   gimp_procedure_get_name (procedure));
-        return;
-      }
+  if (gimp_procedure_find_argument (procedure, pspec->name))
+    {
+      g_warning ("Argument with name '%s' already exists on procedure '%s'",
+                 pspec->name,
+                 gimp_procedure_get_name (procedure));
+      return;
+    }
 
-  for (i = 0; i < procedure->priv->n_aux_args; i++)
-    if (! strcmp (pspec->name, procedure->priv->aux_args[i]->name))
-      {
-        g_warning ("Argument with name '%s' already exists on procedure '%s'",
-                   pspec->name,
-                   gimp_procedure_get_name (procedure));
-        return;
-      }
+  if (gimp_procedure_find_aux_argument (procedure, pspec->name))
+    {
+      g_warning ("Auxiliary argument with name '%s' already exists "
+                 "on procedure '%s'",
+                 pspec->name,
+                 gimp_procedure_get_name (procedure));
+      return;
+    }
 
   procedure->priv->args = g_renew (GParamSpec *, procedure->priv->args,
                                    procedure->priv->n_args + 1);
@@ -1232,29 +1229,26 @@ void
 gimp_procedure_add_aux_argument (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
   g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
 
-  for (i = 0; i < procedure->priv->n_args; i++)
-    if (! strcmp (pspec->name, procedure->priv->args[i]->name))
-      {
-        g_warning ("Argument with name '%s' already exists on procedure '%s'",
-                   pspec->name,
-                   gimp_procedure_get_name (procedure));
-        return;
-      }
+  if (gimp_procedure_find_argument (procedure, pspec->name))
+    {
+      g_warning ("Argument with name '%s' already exists on procedure '%s'",
+                 pspec->name,
+                 gimp_procedure_get_name (procedure));
+      return;
+    }
 
-  for (i = 0; i < procedure->priv->n_aux_args; i++)
-    if (! strcmp (pspec->name, procedure->priv->aux_args[i]->name))
-      {
-        g_warning ("Argument with name '%s' already exists on procedure '%s'",
-                   pspec->name,
-                   gimp_procedure_get_name (procedure));
-        return;
-      }
+  if (gimp_procedure_find_aux_argument (procedure, pspec->name))
+    {
+      g_warning ("Auxiliary argument with name '%s' already exists "
+                 "on procedure '%s'",
+                 pspec->name,
+                 gimp_procedure_get_name (procedure));
+      return;
+    }
 
   procedure->priv->aux_args = g_renew (GParamSpec *, procedure->priv->aux_args,
                                        procedure->priv->n_aux_args + 1);
@@ -1272,7 +1266,7 @@ gimp_procedure_add_aux_argument (GimpProcedure *procedure,
  * @config:    a #GObject.
  * @prop_name: property name in @config.
  *
- * Add a new auxiliaty argument to @procedure according to the
+ * Add a new auxiliary argument to @procedure according to the
  * specifications of the property @prop_name registered on @config.
  *
  * See gimp_procedure_add_aux_argument() for details.
@@ -1315,20 +1309,17 @@ void
 gimp_procedure_add_return_value (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
   g_return_if_fail (gimp_is_canonical_identifier (pspec->name));
 
-  for (i = 0; i < procedure->priv->n_values; i++)
-    if (! strcmp (pspec->name, procedure->priv->values[i]->name))
-      {
-        g_warning ("Return value with name '%s' already exists on procedure '%s'",
-                   pspec->name,
-                   gimp_procedure_get_name (procedure));
-        return;
-      }
+  if (gimp_procedure_find_return_value (procedure, pspec->name))
+    {
+      g_warning ("Return value with name '%s' already exists on procedure '%s'",
+                 pspec->name,
+                 gimp_procedure_get_name (procedure));
+      return;
+    }
 
   procedure->priv->values = g_renew (GParamSpec *, procedure->priv->values,
                                      procedure->priv->n_values + 1);
@@ -1369,6 +1360,92 @@ gimp_procedure_add_return_value_from_property (GimpProcedure *procedure,
   g_return_if_fail (pspec != NULL);
 
   gimp_procedure_add_return_value (procedure, pspec);
+}
+
+/**
+ * gimp_procedure_find_argument:
+ * @procedure: A #GimpProcedure
+ * @name:      An argument name
+ *
+ * Searches the @procedure's arguments for a #GParamSpec called @name.
+ *
+ * Returns: (transfer none): The @procedure's argument with @name if it
+ *          exists, or %NULL otherwise.
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_procedure_find_argument (GimpProcedure *procedure,
+                              const gchar   *name)
+{
+  gint i;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  for (i = 0; i < procedure->priv->n_args; i++)
+    if (! strcmp (name, procedure->priv->args[i]->name))
+      return procedure->priv->args[i];
+
+  return NULL;
+}
+
+/**
+ * gimp_procedure_find_aux_argument:
+ * @procedure: A #GimpProcedure
+ * @name:      An auxiliary argument name
+ *
+ * Searches the @procedure's auxiliary arguments for a #GParamSpec
+ * called @name.
+ *
+ * Returns: (transfer none): The @procedure's auxiliary argument with
+ *          @name if it exists, or %NULL otherwise.
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_procedure_find_aux_argument (GimpProcedure *procedure,
+                                  const gchar   *name)
+{
+  gint i;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  for (i = 0; i < procedure->priv->n_aux_args; i++)
+    if (! strcmp (name, procedure->priv->aux_args[i]->name))
+      return procedure->priv->aux_args[i];
+
+  return NULL;
+}
+
+/**
+ * gimp_procedure_find_return_value:
+ * @procedure: A #GimpProcedure
+ * @name:      A return value name
+ *
+ * Searches the @procedure's return values for a #GParamSpec called
+ * @name.
+ *
+ * Returns: (transfer none): The @procedure's return values with @name
+ *          if it exists, or %NULL otherwise.
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_procedure_find_return_value (GimpProcedure *procedure,
+                                  const gchar   *name)
+{
+  gint i;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  for (i = 0; i < procedure->priv->n_values; i++)
+    if (! strcmp (name, procedure->priv->values[i]->name))
+      return procedure->priv->values[i];
+
+  return NULL;
 }
 
 /**
