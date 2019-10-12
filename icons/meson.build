@@ -1564,8 +1564,11 @@ bitmap_48 = [
   '48/gimp-text-layer.png',
   '48/gimp-wilber.png',
 ]
+bitmap_64_always = [
+  '64/gimp-frame.png',
+  '64/gimp-texture.png',
+]
 bitmap_64 = [
-  '64/dialog-information.png',
   '64/gimp-user-manual.png',
   '64/gimp-wilber-eek.png',
   '64/gimp-wilber-outline.png',
