@@ -45,6 +45,7 @@ struct _GimpImagePrivate
   gdouble            xresolution;           /*  image x-res, in dpi          */
   gdouble            yresolution;           /*  image y-res, in dpi          */
   GimpUnit           resolution_unit;       /*  resolution unit              */
+  gboolean           resolution_set;        /*  resolution explicitly set    */
   GimpImageBaseType  base_type;             /*  base gimp_image type         */
   GimpPrecision      precision;             /*  image's precision            */
   GimpLayerMode      new_layer_mode;        /*  default mode of new layers   */
