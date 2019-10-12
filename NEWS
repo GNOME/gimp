@@ -148,9 +148,9 @@ Debugging:
 
 Translations:
 
-  - Brazilian Portuguese, British English, Catalan, Croatian, Dutch, French,
-    Greek, Hungarian, Italian, Polish, Russian, Slovenian, Spanish, Swedish,
-    Turkish.
+  - Basque, Brazilian Portuguese, British English, Catalan, Chinese (Taiwan),
+    Croatian, Dutch, French, German, Greek, Hungarian, Icelandic, Indonesian,
+    Italian, Latvian, Polish, Russian, Slovenian, Spanish, Swedish, Turkish.
 
 Bugfixes:
 
@@ -168,11 +168,12 @@ Code contributors:
 
 Translators:
 
-   Alexandre Prokoudine, Anders Jonsson, Balázs Meskó, Balázs Úr, Bruce Cowan,
-   Daniel Mustieles García , Dimitris Spingos, Emin Tufan Çetin,
-   Hannie Dumoleyn, Jordi Mas, Julia Dronova, Julien Hardelin, Marco Ciampa,
-   Martin Srebotnjak, Milo Ivir, Piotr Drąg, Rodrigo Lledó Milanca, Sabri Ünal,
-   Tim Sabsch, Zander Brown.
+   Alexandre Prokoudine, Anders Jonsson, Andika Triwidada, Asier Sarasua
+   Garmendia, Balázs Meskó, Balázs Úr, Bruce Cowan, Claude Paroz, Daniel
+   Mustieles García, Dimitris Spingos, Emin Tufan Çetin, Hannie Dumoleyn,
+   Jordi Mas, Julia Dronova, Julien Hardelin, Marco Ciampa, Martin Srebotnjak,
+   Milo Ivir, pesder, Piotr Drąg, Rafael Fontenelle, Rodrigo Lledó Milanca,
+   Rūdolfs Mazurs, Sabri Ünal, Sveinn í Felli, Tim Sabsch, Zander Brown.
 
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
