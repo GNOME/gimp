@@ -397,14 +397,20 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
         }
       else
         {
+          gint source_off_x = 0;
+          gint source_off_y = 0;
+
           if (options->line_art_source != GIMP_LINE_ART_SOURCE_SAMPLE_MERGED)
             {
-              gint off_x, off_y;
+              GimpPickable *input;
 
-              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+              input = gimp_line_art_get_input (tool->priv->line_art);
+              g_return_if_fail (GIMP_IS_ITEM (input));
 
-              x -= (gdouble) off_x;
-              y -= (gdouble) off_y;
+              gimp_item_get_offset (GIMP_ITEM (input), &source_off_x, &source_off_y);
+
+              x -= (gdouble) source_off_x;
+              y -= (gdouble) source_off_y;
             }
           fill = gimp_drawable_get_line_art_fill_buffer (drawable,
                                                          tool->priv->line_art,
@@ -414,6 +420,15 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                          x, y,
                                                          &tool->priv->fill_mask,
                                                          &x, &y, NULL, NULL);
+          if (options->line_art_source != GIMP_LINE_ART_SOURCE_SAMPLE_MERGED)
+            {
+              gint off_x, off_y;
+
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+              x -= (gdouble) off_x - (gdouble) source_off_x;
+              y -= (gdouble) off_y - (gdouble) source_off_y;
+            }
         }
       if (fill)
         {
