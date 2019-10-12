@@ -31,6 +31,13 @@ Core:
     the checkerboard.
   - Several features updated to react as expected when run out-of-canvas:
     color-picking, canvas grid, transform tools, bucket fill, and more.
+  - Loaded images' pixel density will now default to 72 PPI when no
+    explicit resolution information was stored in the imported file.
+    Newly created images' default pixel density will continue to be
+    based on the default image template (with value 300 PPI if it has
+    not be changed), yet not loaded images anymore.
+    72 PPI is the common default in most software (and in standards such
+    as Exif) so it makes sense we stick to it, only for loaded images.
 
 Tools:
 
