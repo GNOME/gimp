@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-20 16:59+0000\n"
-"PO-Revision-Date: 2019-10-05 22:28+0200\n"
+"POT-Creation-Date: 2019-10-05 19:37+0000\n"
+"PO-Revision-Date: 2019-10-13 14:05+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -57,53 +57,45 @@ msgstr "Nederīga “%s” ievade"
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu krāsu izvēle"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
 msgid "Saving as colored XHTML"
 msgstr "Saglabā kā krāsainu XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
 msgid "Save as colored XHTML"
 msgstr "Saglabāt kā krāsainu XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
 msgid "Colored XHTML"
 msgstr "Krāsains XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
 msgid "Character _source"
 msgstr "Rakstzīme_s avots"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Source code"
 msgstr "Pirmkods"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Text file"
 msgstr "Teksta datne"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Entry box"
 msgstr "Ievades kaste"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "_File to read or characters to use"
 msgstr "_Datne, ko lasīt vai rakstzīmes, ko lietot"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Fo_nt size in pixels"
 msgstr "Fo_nta izmērs pikseļos"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_Write a separate CSS file"
 msgstr "_Rakstīt atsevišķu CSS datni"
-
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "Krāsu pāreja, ko izmantot"
-
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "Datnes nosaukums"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
 msgid "Exports the image histogram to a text file (CSV)"
@@ -148,53 +140,6 @@ msgstr "Normalizēts"
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Percent"
 msgstr "Procenti"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "Add a layer of fog"
-msgstr "Pievienot miglas slāni"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "_Fog..."
-msgstr "_Migla..."
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "S_lāņa nosaukums"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "Clouds"
-msgstr "Mākoņi"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
-msgid "_Fog color"
-msgstr "_Miglas krāsa"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
-msgid "_Turbulence"
-msgstr "_Turbulence"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "Nec_aurspīdīgums"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "Nobīdīt krāsas paletē"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
-msgid "_Offset Palette..."
-msgstr "N_obīdīt paleti..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
-msgid "Palette"
-msgstr "Palete"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-msgid "Off_set"
-msgstr "No_bīdīt"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
 msgid "Red"
@@ -268,6 +213,13 @@ msgstr "Sakārot krāsas paletē"
 msgid "_Sort Palette..."
 msgstr "_Kārtot paleti..."
 
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/python/palette-offset.py:44
+#: ../plug-ins/python/palette-offset.py:45
+#: ../plug-ins/python/palette-to-gradient.py:103
+msgid "Palette"
+msgstr "Palete"
+
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 msgid "Se_lections"
 msgstr "Ie_zīmējumi"
@@ -317,107 +269,6 @@ msgstr "_Nodalīšanas kanāls"
 msgid "Partition q_uantization"
 msgstr "Nodalīj_umu kvantēšana"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Izveidot atkārtojošos krāsu pāreju, lietojot krāsas no paletes"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "Paleti uz atkā_rtojošos krāsu pāreju"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "Izveidot krāsu pāreju, lietojot krāsas no paletes"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
-msgid "Palette to _Gradient"
-msgstr "Paleti uz _krāsu pāreju"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
-msgid "Slice"
-msgstr "Sagriezt šķēlēs"
-
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Sagriež attēlu pa palīglīnijām, izveido attēlus un HTML tabulas atgriezumu"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
-msgid "_Slice..."
-msgstr "_Sagriezt šķēlēs..."
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Path for HTML export"
-msgstr "Ceļš HTML eksportam"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Filename for export"
-msgstr "Eksporta datnes nosaukums"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image name prefix"
-msgstr "Attēla nosaukuma prefikss"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Image format"
-msgstr "Attēla formāts"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
-msgid "Separate image folder"
-msgstr "Atdalīt attēla mapi"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Folder for image export"
-msgstr "Mape attēla eksportam"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
-msgid "Space between table elements"
-msgstr "Atstarpes starp tabulas elementiem"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript notikumam “onmouseover” un klikšķim"
-
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
-msgid "Skip animation for table caps"
-msgstr "Izlaist animācijas tabulas malu šūnām"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
-msgid "Python Console"
-msgstr "Python konsole"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
-msgid "_Browse..."
-msgstr "_Pārlūkot..."
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:154
-msgid "Python Procedure Browser"
-msgstr "Python procedūru pārlūks"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Nevar atvērt “%s” rakstīšanai — %s"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:198
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Nevarēja ierakstīt “%s” — %s"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:206
-msgid "Save Python-Fu Console Output"
-msgstr "Saglabāt Python konsoles izvadi"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:232
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktīvs GIMP Python interpretators"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:237
-msgid "_Console"
-msgstr "_Konsole"
-
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "Slānim pievienot krītošu ēnu un apmali"
@@ -446,86 +297,253 @@ msgstr "Krītošas ēnas _X pārvietojums"
 msgid "Drop shadow _Y displacement"
 msgstr "Krītošas ēnas _Y pārvietojums"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+#| msgid "_Layer name"
+msgid "Layer name"
+msgstr "Slāņa nosaukums"
+
+#: ../plug-ins/python/foggify.py:84
+msgid "Clouds"
+msgstr "Mākoņi"
+
+#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
+#| msgid "_Fog color"
+msgid "Fog color"
+msgstr "Miglas krāsa"
+
+#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+#| msgid "_Turbulence"
+msgid "Turbulence"
+msgstr "Turbulence"
+
+#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+#| msgid "Op_acity"
+msgid "Opacity"
+msgstr "Necaurspīdīgums"
+
+#: ../plug-ins/python/foggify.py:114
+msgid "Add a layer of fog"
+msgstr "Pievienot miglas slāni"
+
+#: ../plug-ins/python/foggify.py:117
+msgid "_Fog..."
+msgstr "_Migla..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:81
+#| msgid "_Slice..."
+msgid "CSS file..."
+msgstr "CSS datne..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:144
+msgid "Gradient to use"
+msgstr "Krāsu pāreja, ko izmantot"
+
+#: ../plug-ins/python/gradients-save-as-css.py:147
+#| msgid "File Name"
+msgid "File"
+msgstr "Datne"
+
+#: ../plug-ins/python/palette-offset.py:56
+msgid "Off_set"
+msgstr "No_bīdīt"
+
+#: ../plug-ins/python/palette-offset.py:57
+msgid "Offset"
+msgstr "Nobīde"
+
+#: ../plug-ins/python/palette-offset.py:90
+msgid "_Offset Palette..."
+msgstr "N_obīdīt paleti..."
+
+#: ../plug-ins/python/palette-offset.py:91
+msgid "Offset the colors in a palette"
+msgstr "Nobīdīt krāsas paletē"
+
+#: ../plug-ins/python/palette-offset.py:139
+#| msgid "_Offset Palette..."
+msgid "Offset Palette..."
+msgstr "Nobīdīt paleti..."
+
+#: ../plug-ins/python/palette-to-gradient.py:139
+msgid "Palette to _Gradient"
+msgstr "Paleti uz _krāsu pāreju"
+
+#: ../plug-ins/python/palette-to-gradient.py:140
+msgid "Create a gradient using colors from the palette"
+msgstr "Izveidot krāsu pāreju, lietojot krāsas no paletes"
+
+#: ../plug-ins/python/palette-to-gradient.py:144
+msgid "Palette to _Repeating Gradient"
+msgstr "Paleti uz atkā_rtojošos krāsu pāreju"
+
+#: ../plug-ins/python/palette-to-gradient.py:145
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Izveidot atkārtojošos krāsu pāreju, lietojot krāsas no paletes"
+
+#: ../plug-ins/python/py-slice.py:74
+msgid "Slice"
+msgstr "Sagriezt šķēlēs"
+
+#: ../plug-ins/python/py-slice.py:438 ../plug-ins/python/py-slice.py:439
+msgid "Path for HTML export"
+msgstr "Ceļš HTML eksportam"
+
+#: ../plug-ins/python/py-slice.py:443 ../plug-ins/python/py-slice.py:444
+msgid "Filename for export"
+msgstr "Eksporta datnes nosaukums"
+
+#: ../plug-ins/python/py-slice.py:448 ../plug-ins/python/py-slice.py:449
+msgid "Image name prefix"
+msgstr "Attēla nosaukuma prefikss"
+
+#: ../plug-ins/python/py-slice.py:453 ../plug-ins/python/py-slice.py:454
+#| msgid "Image format"
+msgid "Image format (gif, jpg, png)"
+msgstr "Attēla formāts (gif, jpg, png)"
+
+#: ../plug-ins/python/py-slice.py:458 ../plug-ins/python/py-slice.py:459
+msgid "Separate image folder"
+msgstr "Atdalīt attēla mapi"
+
+#: ../plug-ins/python/py-slice.py:463 ../plug-ins/python/py-slice.py:464
+msgid "Folder for image export"
+msgstr "Mape attēla eksportam"
+
+#: ../plug-ins/python/py-slice.py:468 ../plug-ins/python/py-slice.py:469
+msgid "Space between table elements"
+msgstr "Atstarpes starp tabulas elementiem"
+
+#: ../plug-ins/python/py-slice.py:473 ../plug-ins/python/py-slice.py:474
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript notikumam “onmouseover” un klikšķim"
+
+#: ../plug-ins/python/py-slice.py:479 ../plug-ins/python/py-slice.py:480
+msgid "Skip animation for table caps"
+msgstr "Izlaist animācijas tabulas malu šūnām"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/python/py-slice.py:500
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"Sagriež attēlu pa palīglīnijām, izveido attēlus un HTML tabulas atgriezumu"
+
+#: ../plug-ins/python/py-slice.py:509
+msgid "_Slice..."
+msgstr "_Sagriezt šķēlēs..."
+
+#: ../plug-ins/python/python-console/python-console.py:73
+msgid "Python Console"
+msgstr "Python konsole"
+
+#: ../plug-ins/python/python-console/python-console.py:77
+msgid "_Browse..."
+msgstr "_Pārlūkot..."
+
+#: ../plug-ins/python/python-console/python-console.py:177
+msgid "Python Procedure Browser"
+msgstr "Python procedūru pārlūks"
+
+#: ../plug-ins/python/python-console/python-console.py:205
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nevar atvērt “%s” rakstīšanai — %s"
+
+#: ../plug-ins/python/python-console/python-console.py:220
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Nevarēja ierakstīt “%s” — %s"
+
+#: ../plug-ins/python/python-console/python-console.py:229
+msgid "Save Python-Fu Console Output"
+msgstr "Saglabāt Python konsoles izvadi"
+
+#: ../plug-ins/python/python-console/python-console.py:278
+msgid "_Console"
+msgstr "_Konsole"
+
+#: ../plug-ins/python/python-console/python-console.py:279
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interaktīvs GIMP Python interpretators"
+
+#: ../plug-ins/python/spyro-plus.py:42
 msgid "Spyro Layer"
 msgstr "Spyro slānis"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+#: ../plug-ins/python/spyro-plus.py:88
 msgid "Circle"
 msgstr "Aplis"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+#: ../plug-ins/python/spyro-plus.py:124
 msgid "Polygon-Star"
 msgstr "Daudzstūru zvaigzne"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+#: ../plug-ins/python/spyro-plus.py:140 ../plug-ins/python/spyro-plus.py:840
 msgid "Sine"
 msgstr "Sinuss"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+#: ../plug-ins/python/spyro-plus.py:150
 msgid "Bumps"
 msgstr "Izciļņi"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+#: ../plug-ins/python/spyro-plus.py:255
 msgid "Rack"
 msgstr "Statīvs"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+#: ../plug-ins/python/spyro-plus.py:299
 msgid "Frame"
 msgstr "Ietvars"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+#: ../plug-ins/python/spyro-plus.py:388
 msgid "Selection"
 msgstr "Iezīmējums"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+#: ../plug-ins/python/spyro-plus.py:475
 msgid "Pencil"
 msgstr "Zīmulis"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+#: ../plug-ins/python/spyro-plus.py:491
 msgid "AirBrush"
 msgstr "Aerogrāfas"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+#: ../plug-ins/python/spyro-plus.py:551
 msgid "Preview"
 msgstr "Priekšskatījums"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+#: ../plug-ins/python/spyro-plus.py:556
 msgid "Stroke"
 msgstr "Vilkums"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+#: ../plug-ins/python/spyro-plus.py:584
 msgid "PaintBrush"
 msgstr "PaintBrush"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+#: ../plug-ins/python/spyro-plus.py:586
 msgid "Ink"
 msgstr "Tinte"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+#: ../plug-ins/python/spyro-plus.py:587
 msgid "MyPaintBrush"
 msgstr "MyPaintBrush"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+#: ../plug-ins/python/spyro-plus.py:826
 msgid "Spyrograph"
 msgstr "Spirografs"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+#: ../plug-ins/python/spyro-plus.py:833
 msgid "Epitrochoid"
 msgstr "Epitrochoid"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+#: ../plug-ins/python/spyro-plus.py:860
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+#: ../plug-ins/python/spyro-plus.py:1108
 msgid "Curve Type"
 msgstr "Līknes tips"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+#: ../plug-ins/python/spyro-plus.py:1109
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -533,20 +551,23 @@ msgstr ""
 "Epitrochoid raksts veidojas, kad kustīgais zobrats ir ārpusē no fiksētā "
 "zobrata."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+#: ../plug-ins/python/spyro-plus.py:1114
 msgid "Tool"
 msgstr "Rīks"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+#: ../plug-ins/python/spyro-plus.py:1115
+#| msgid ""
+#| "The tool with which to draw the pattern.The Preview tool just draws "
+#| "quickly."
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr "Rīks, ar kuru zīmēt rakstu. Iepriekšējais rīks vienkārši zīmē ātri."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+#: ../plug-ins/python/spyro-plus.py:1120
 msgid "Long Gradient"
 msgstr "Garā krāsu pāreja"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+#: ../plug-ins/python/spyro-plus.py:1122
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -557,11 +578,11 @@ msgstr ""
 "pašreizējo krāsu pāreju un atkārtošanas režīmu no krāsu pārejas rīka "
 "iestatījumiem."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+#: ../plug-ins/python/spyro-plus.py:1142
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Norādiet rakstu, izmantojot vienu no šīm cilnēm:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+#: ../plug-ins/python/spyro-plus.py:1144
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -573,7 +594,7 @@ msgstr ""
 "Ja sekojat instrukcijām no Spēļu Rīku instrukcijām, rezultātiem vajadzētu "
 "būt līdzīgiem."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+#: ../plug-ins/python/spyro-plus.py:1168
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -581,12 +602,11 @@ msgstr ""
 "Fiksētā zobrata zobu skaits. Fiksētā zobrata izmērs ir proporcionāls zobu "
 "skaitam."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+#: ../plug-ins/python/spyro-plus.py:1171 ../plug-ins/python/spyro-plus.py:1199
 msgid "Fixed Gear Teeth"
 msgstr "Fiksētā zobrata zobi"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+#: ../plug-ins/python/spyro-plus.py:1179
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -594,16 +614,15 @@ msgstr ""
 "Kustīgā zobrata zobu skaits. Kustīgā zobrata izmērs ir proporcionāls zobu "
 "skaitam."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+#: ../plug-ins/python/spyro-plus.py:1182 ../plug-ins/python/spyro-plus.py:1204
 msgid "Moving Gear Teeth"
 msgstr "Kustīgā zobrata zobi"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+#: ../plug-ins/python/spyro-plus.py:1187
 msgid "Hole percent"
 msgstr "Cauruma procenti"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+#: ../plug-ins/python/spyro-plus.py:1188
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -611,11 +630,11 @@ msgstr ""
 "Cik tālu caurums ir no kustīgā zobrata viduspunkta. 100% nozīmē ka caurums "
 "ir pie zobrata malas."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+#: ../plug-ins/python/spyro-plus.py:1209
 msgid "Hole Number"
 msgstr "Cauruma numurs"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+#: ../plug-ins/python/spyro-plus.py:1210
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -623,20 +642,19 @@ msgstr ""
 "Caurums #1 ir zobrata malā. Maksimālais cauruma numur ir pie centra. "
 "Maksimālais cauruma numur dažādiem zobratiem ir atšķirīgs."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+#: ../plug-ins/python/spyro-plus.py:1219
 msgid "Toy Kit"
 msgstr "Spēļu Rīki"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+#: ../plug-ins/python/spyro-plus.py:1225
 msgid "Gears"
 msgstr "Zobrati"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/python/spyro-plus.py:1238 ../plug-ins/python/spyro-plus.py:1282
 msgid "Rotation"
 msgstr "Rotācija"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+#: ../plug-ins/python/spyro-plus.py:1239
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -644,11 +662,11 @@ msgstr ""
 "Raksta rotācija, grādos. Sākuma pozīcija kustīgajam zobratam fiksētajā "
 "zobratā."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+#: ../plug-ins/python/spyro-plus.py:1262
 msgid "Shape"
 msgstr "Figūra"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+#: ../plug-ins/python/spyro-plus.py:1263
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -662,39 +680,39 @@ msgstr ""
 "malām. Izvēle ietvers pašreizējās izvēles robežas — mēģiniet kaut ko ne-"
 "taisnstūrveida."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/python/spyro-plus.py:1272
 msgid "Sides"
 msgstr "Puses"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/python/spyro-plus.py:1272
 msgid "Number of sides of the shape."
 msgstr "Figūras malu skaits."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/python/spyro-plus.py:1277
 msgid "Morph"
 msgstr "Morfēt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/python/spyro-plus.py:1277
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Morfēt fiksētā zobrata formu. Ietekmē tikai dažās formas."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/python/spyro-plus.py:1282
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Fiksēt zobratu pagriešana, grādos"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/python/spyro-plus.py:1297
 msgid "Margin (px)"
 msgstr "Apmale (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/python/spyro-plus.py:1297
 msgid "Margin from edge of selection."
 msgstr "Apmale no izvēlējuma malas"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+#: ../plug-ins/python/spyro-plus.py:1302
 msgid "Make width and height equal"
 msgstr "Padarīt platumu un augstumu vienādu"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+#: ../plug-ins/python/spyro-plus.py:1304
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -702,12 +720,11 @@ msgstr ""
 "Kad nav atzīmēts, raksts aizpildīs pašreizējo attēlu vai iezīmējumu. Kad "
 "atzīmēts, rakstam būs vienāds platums un augstums, un tas būs centrēts."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-#| msgid "Redraw"
+#: ../plug-ins/python/spyro-plus.py:1328
 msgid "Re_draw"
 msgstr "Pār_zīmēt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+#: ../plug-ins/python/spyro-plus.py:1329
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -715,22 +732,19 @@ msgstr ""
 "Ja maināt kāda rīka iestatījumus, maināt krāsu vai iezīmējumu, spiediet šo, "
 "lai priekšskatītu, kā izskatīsies raksts."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-#| msgid "Reset"
+#: ../plug-ins/python/spyro-plus.py:1331
 msgid "_Reset"
 msgstr "_Atiestatīt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-#| msgid "Cancel"
+#: ../plug-ins/python/spyro-plus.py:1332
 msgid "_Cancel"
 msgstr "At_celt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-#| msgid "OK"
+#: ../plug-ins/python/spyro-plus.py:1333
 msgid "_OK"
 msgstr "_Labi"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+#: ../plug-ins/python/spyro-plus.py:1335
 msgid ""
 "Keep\n"
 "Layer"
@@ -738,7 +752,7 @@ msgstr ""
 "Paturēt\n"
 "Slāni"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
+#: ../plug-ins/python/spyro-plus.py:1337
 msgid ""
 "If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
 "exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
@@ -748,36 +762,35 @@ msgstr ""
 "spraudnis ātri izies. Ja nav atzīmēts, spyro slānis tiks izdzēsts un raksts "
 "tiks pārzīmēts uz slāņa, kas bija aktīvs pirms tika palaists spraudnis."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+#: ../plug-ins/python/spyro-plus.py:1351
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+#: ../plug-ins/python/spyro-plus.py:1360 ../plug-ins/python/spyro-plus.py:1829
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Zīmēt spirografus, izmantojot pašreizējo rīku iestatījumus un izvēli."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+#: ../plug-ins/python/spyro-plus.py:1373
 msgid "Curve Pattern"
 msgstr "Līknes raksts"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+#: ../plug-ins/python/spyro-plus.py:1376
 msgid "Fixed Gear"
 msgstr "Fiksēts zobrats"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+#: ../plug-ins/python/spyro-plus.py:1379
 msgid "Size"
 msgstr "Izmērs"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+#: ../plug-ins/python/spyro-plus.py:1662
 msgid "Rendering Pattern"
 msgstr "Renderēšanas raksts"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+#: ../plug-ins/python/spyro-plus.py:1674
 msgid "Please wait : Rendering Pattern"
 msgstr "Lūdzu, uzgaidiet — renderē rakstu"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+#: ../plug-ins/python/spyro-plus.py:1833
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
 
