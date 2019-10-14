@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-05 20:12+0000\n"
-"PO-Revision-Date: 2019-10-06 13:00+0200\n"
+"POT-Creation-Date: 2019-10-12 15:18+0000\n"
+"PO-Revision-Date: 2019-10-13 15:01+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -2408,7 +2408,7 @@ msgstr "No puede operar sobre tipos de imagen desconocidos."
 
 #: ../plug-ins/common/file-gbr.c:109
 msgid "GIMP brush"
-msgstr "PincGIMP"
+msgstr "Pincel GIMP"
 
 #: ../plug-ins/common/file-gbr.c:316
 msgid "Brush"
@@ -12292,7 +12292,6 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Ajustar el tamaño y la orientación de impresión de la página"
 
 #: ../plug-ins/print/print.c:131
-#| msgid "Page Set_up"
 msgid "Page Set_up..."
 msgstr "_Configuración de la página…"
 
