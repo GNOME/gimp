@@ -115,7 +115,7 @@ gimp_heal_register (Gimp                      *gimp,
                 GIMP_TYPE_HEAL,
                 GIMP_TYPE_SOURCE_OPTIONS,
                 "gimp-heal",
-                _("Heal"),
+                _("Healing"),
                 "gimp-tool-heal");
 }
 
