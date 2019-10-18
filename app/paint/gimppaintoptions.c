@@ -1053,7 +1053,7 @@ gimp_paint_options_set_default_brush_size (GimpPaintOptions *paint_options,
       gint height;
       gint width;
 
-      gimp_brush_transform_size (brush, 1.0, 0.0, 0.0, FALSE, &height, &width);
+      gimp_brush_transform_size (brush, 1.0, 0.0, 0.0, FALSE, &width, &height);
 
       g_object_set (paint_options,
                     "brush-size", (gdouble) MAX (height, width),
