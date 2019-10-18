@@ -177,7 +177,7 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
     col = x / gimp_tile_width ();
     row = y / gimp_tile_height ();
 
-    t = gimp_drawable_get_tile(self->drawable, shadow, col, row);
+    t = gimp_drawable_get_tile(self->drawable, shadow, row, col);
     return pygimp_tile_new(t, self);
 }
 
