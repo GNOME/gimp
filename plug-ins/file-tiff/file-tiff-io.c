@@ -149,6 +149,8 @@ tiff_io_warning (const gchar *module,
       va_arg (ap_test, const char *); /* ignore first arg */
 
       tag = va_arg (ap_test, int);
+
+      va_end (ap_test);
     }
   /* for older versions of libtiff? */
   else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored") ||
@@ -160,6 +162,8 @@ tiff_io_warning (const gchar *module,
       G_VA_COPY (ap_test, ap);
 
       tag = va_arg (ap_test, int);
+
+      va_end (ap_test);
     }
 
   /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975
