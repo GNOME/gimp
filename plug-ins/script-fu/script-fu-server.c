@@ -494,6 +494,8 @@ server_start (const gchar *listen_ip,
       if (listen (server_socks[sockno], 5) < 0)
         {
           print_socket_api_error ("listen");
+          g_free(ai_curr);
+          g_free(ai);
           return;
         }
     }
@@ -541,6 +543,7 @@ server_start (const gchar *listen_ip,
 
   server_progress_uninstall (progress);
 
+  g_free(ai);
   server_quit ();
 }
 
