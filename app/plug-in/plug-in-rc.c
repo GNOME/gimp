@@ -659,7 +659,7 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
               return G_TOKEN_STRING;
 
             g_free (proc->prefixes);
-            proc->extensions = prefixes;
+            proc->prefixes = prefixes;
           }
           break;
 
