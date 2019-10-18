@@ -1201,6 +1201,7 @@ save_image (const gchar  *filename,
     case RAW_RGB:
       if (! fwrite (buf, width * height * bpp, 1, fp))
         {
+          fclose (fp);
           return FALSE;
         }
 
@@ -1271,6 +1272,7 @@ save_image (const gchar  *filename,
       break;
 
     default:
+      fclose (fp);
       break;
     }
 
