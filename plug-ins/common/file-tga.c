@@ -442,6 +442,7 @@ load_image (GFile   *file,
         {
           g_message (_("Cannot read footer from '%s'"),
                      gimp_file_get_utf8_name (file));
+          fclose (fp);
           return NULL;
         }
       else if (memcmp (footer + 8, magic, sizeof (magic)) == 0)
@@ -460,6 +461,7 @@ load_image (GFile   *file,
                 {
                   g_message (_("Cannot read extension from '%s'"),
                              gimp_file_get_utf8_name (file));
+                  fclose (fp);
                   return NULL;
                 }
               /* Eventually actually handle version 2 TGA here */
@@ -472,6 +474,7 @@ load_image (GFile   *file,
     {
       g_message (_("Cannot read header from '%s'"),
                  gimp_file_get_utf8_name (file));
+      fclose (fp);
       return NULL;
     }
 
@@ -547,6 +550,7 @@ load_image (GFile   *file,
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
                        gimp_file_get_utf8_name (file),
                        info.imageType, info.bpp);
+            fclose (fp);
             return NULL;
           }
         break;
@@ -562,6 +566,7 @@ load_image (GFile   *file,
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u, alpha = %u)",
                        gimp_file_get_utf8_name (file),
                        info.imageType, info.bpp, info.alphaBits);
+            fclose (fp);
             return NULL;
           }
         break;
@@ -572,6 +577,7 @@ load_image (GFile   *file,
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
                        gimp_file_get_utf8_name (file),
                        info.imageType, info.bpp);
+            fclose (fp);
             return NULL;
           }
         break;
@@ -579,6 +585,7 @@ load_image (GFile   *file,
       default:
         g_message ("Unknown image type %u for '%s'",
                    info.imageType, gimp_file_get_utf8_name (file));
+        fclose (fp);
         return NULL;
     }
 
@@ -588,6 +595,7 @@ load_image (GFile   *file,
       g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
                  gimp_file_get_utf8_name (file),
                  info.imageType, info.bpp);
+      fclose (fp);
       return NULL;
     }
 
@@ -596,12 +604,14 @@ load_image (GFile   *file,
     {
       g_message ("Indexed image has invalid color map type %u",
                  info.colorMapType);
+      fclose (fp);
       return NULL;
     }
   else if (info.imageType != TGA_TYPE_MAPPED && info.colorMapType != 0)
     {
       g_message ("Non-indexed image has invalid color map type %u",
                  info.colorMapType);
+      fclose (fp);
       return NULL;
     }
 
@@ -610,6 +620,7 @@ load_image (GFile   *file,
     {
       g_message ("File '%s' is truncated or corrupted",
                  gimp_file_get_utf8_name (file));
+      fclose (fp);
       return NULL;
     }
 
