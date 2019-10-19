@@ -94,6 +94,23 @@ libgimpwidgets_sources = [
 ]
 
 libgimpwidgets_headers_introspectable = files(
+  'gimpbrowser.h',
+  'gimpbusybox.h',
+  'gimpbutton.h',
+  'gimpcairo-utils.h',
+  'gimpcellrenderercolor.h',
+  'gimpcellrenderertoggle.h',
+  'gimpchainbutton.h',
+  'gimpcolorarea.h',
+  'gimpcolorbutton.h',
+  'gimpcolordisplay.h',
+  'gimpcolordisplaystack.h',
+  'gimpcolorhexentry.h',
+  'gimpcolornotebook.h',
+  'gimpcolorprofilechooserdialog.h',
+  'gimpcolorprofilecombobox.h',
+  'gimpcolorprofilestore.h',
+  'gimpcolorprofileview.h',
   'gimpcolorselection.h',
   'gimpcolorselector.h',
   'gimpdialog.h',
