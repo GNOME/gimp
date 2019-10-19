@@ -1142,6 +1142,7 @@ save_image (GFile         *file,
     case RAW_RGB:
       if (! fwrite (buf, width * height * bpp, 1, fp))
         {
+          fclose (fp);
           return FALSE;
         }
 
@@ -1213,6 +1214,7 @@ save_image (GFile         *file,
       break;
 
     default:
+      fclose (fp);
       break;
     }
 
