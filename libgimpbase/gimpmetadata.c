@@ -456,7 +456,7 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
 #endif
 
   memset (tagstr, 0, sizeof (tagstr));
-  memset (strdata, 0, sizeof (tagstr));
+  memset (strdata, 0, sizeof (strdata));
 
   g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
               tags[3], id_count, history_tags[4]);
