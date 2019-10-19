@@ -1476,6 +1476,7 @@ mng_save_image (const gchar  *filename,
                 {
                   g_warning ("Unable to mng_putchunk_ihdr() "
                              "in mng_save_image()");
+                  fclose (infile);
                   goto err3;
                 }
             }
@@ -1486,6 +1487,7 @@ mng_save_image (const gchar  *filename,
                 {
                   g_warning ("Unable to mng_putchunk_idat() "
                              "in mng_save_image()");
+                  fclose (infile);
                   goto err3;
                 }
             }
@@ -1495,6 +1497,7 @@ mng_save_image (const gchar  *filename,
                 {
                   g_warning ("Unable to mng_putchunk_iend() "
                              "in mng_save_image()");
+                  fclose (infile);
                   goto err3;
                 }
             }
@@ -1510,6 +1513,7 @@ mng_save_image (const gchar  *filename,
                 {
                   g_warning ("Unable to mng_putchunk_plte() "
                              "in mng_save_image()");
+                  fclose (infile);
                   goto err3;
                 }
             }
@@ -1521,6 +1525,7 @@ mng_save_image (const gchar  *filename,
                 {
                   g_warning ("Unable to mng_putchunk_trns() "
                              "in mng_save_image()");
+                  fclose (infile);
                   goto err3;
                 }
             }
