@@ -1080,7 +1080,7 @@ meson_install_subdir= find_program('tools'/'meson_install_subdir.py')
 
 gimp_mkenums        = find_program('tools'/'gimp-mkenums')
 gimp_mkenums_custom_target_commonargs = [
-  '--fprod','/* enumerations from "@basename@" */\n',
+  '--fprod','/* enumerations from "@basename@" */',
   '--vhead','GType\n'+
             '@enum_name@_get_type (void)\n'+
             '{\n'+
@@ -1091,10 +1091,8 @@ gimp_mkenums_custom_target_commonargs = [
             '  };\n',
   '--dhead','  static const Gimp@Type@Desc descs[] =\n'+
             '  {',
-  '--dprod','    {\n'+
-            '      @VALUENAME@, @valuedesc@, @valuehelp@\n'+
-            '    },\n'+
-            '    @if (\'@valueabbrev@\' ne \'NULL\')@\n'+
+  '--dprod','    { @VALUENAME@, @valuedesc@, @valuehelp@ },'+
+            '@if (\'@valueabbrev@\' ne \'NULL\')@    \n'+
             '    /* Translators:\n'+
             '       this is an abbreviated version of @valueudesc@.\n'+
             '       Keep it short. */\n'+
@@ -1108,6 +1106,7 @@ gimp_mkenums_custom_target_commonargs = [
             '  if (G_UNLIKELY (! type))\n'+
             '    {\n'+
             '      type = g_@type@_register_static ("@EnumName@", values);\n'+
+            '      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");\n'+
             '      gimp_type_set_translation_context (type, "@enumnick@");\n'+
             '      gimp_@type@_set_value_descriptions (type, descs);\n'+
             '    }\n'+

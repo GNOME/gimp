@@ -7,7 +7,7 @@ gimpwidgetsenums = custom_target('gimpwidgetsenums.c',
     '--fhead','#include "config.h"\n'
             + '#include <gio/gio.h>\n'
             + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@INPUT@"\n'
+            + '#include "gimpwidgetsenums.h"\n'
             + '#include "libgimp/libgimp-intl.h"\n',
     gimp_mkenums_custom_target_commonargs,
   ],
