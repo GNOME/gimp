@@ -16,7 +16,8 @@ gimpbaseenums = custom_target('gimpbaseenums.c',
             + '#undef GIMP_DISABLE_DEPRECATED\n'
             + '#include "gimpbasetypes.h"\n'
             + '#include "libgimp/libgimp-intl.h"\n',
-    gimp_mkenums_custom_target_commonargs,
+    libgimp_mkenums_custom_target_commonargs,
+    '@INPUT@',
   ],
   capture: true,
 )
@@ -29,9 +30,10 @@ gimpcompatenums = custom_target('gimpcompatenums.c',
     '--fhead','#include "config.h"\n'
             + '#include <glib-object.h>\n'
             + '#include "gimpbasetypes.h"\n'
-            + '#include "@INPUT@"\n'
+            + '#include "@basename@"\n'
             + '#include "libgimp/libgimp-intl.h"\n',
-    gimp_mkenums_custom_target_commonargs,
+    libgimp_mkenums_custom_target_commonargs,
+    '@INPUT@',
   ],
   capture: true,
 )

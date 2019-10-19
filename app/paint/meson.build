@@ -2,7 +2,16 @@
 apppaintenums = custom_target('paint-enums.c',
   input : [ 'paint-enums.h', ],
   output: [ 'paint-enums.c', ],
-  command: app_mkenums_custom_target_command,
+  command: [
+    gimp_mkenums,
+    '--fhead','#include "config.h"\n'
+            + '#include <gio/gio.h>\n'
+            + '#include "libgimpbase/gimpbase.h"\n'
+            + '#include "@basename@"\n'
+            + '#include "gimp-intl.h"\n',
+    app_mkenums_custom_target_commonargs,
+    '@INPUT@',
+  ],
   capture: true,
 )
 

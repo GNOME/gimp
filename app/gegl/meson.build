@@ -2,7 +2,17 @@
 appgeglenums = custom_target('gimp-gegl-enums.c',
   input : [ 'gimp-gegl-enums.h', ],
   output: [ 'gimp-gegl-enums.c', ],
-  command: app_mkenums_custom_target_command,
+  command: [
+    gimp_mkenums,
+    '--fhead','#include "config.h"\n'
+            + '#include <gio/gio.h>\n'
+            + '#include "libgimpbase/gimpbase.h"\n'
+            + '#include "core/core-enums.h"\n'
+            + '#include "@basename@"\n'
+            + '#include "gimp-intl.h"\n',
+    app_mkenums_custom_target_commonargs,
+    '@INPUT@',
+  ],
   capture: true,
 )
 

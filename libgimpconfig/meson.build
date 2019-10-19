@@ -7,9 +7,10 @@ gimpconfigenums = custom_target('gimpconfigenums.c',
     '--fhead','#include "config.h"\n'
             + '#include <gio/gio.h>\n'
             + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@INPUT@"\n'
+            + '#include "@basename@"\n'
             + '#include "libgimp/libgimp-intl.h"\n',
-    gimp_mkenums_custom_target_commonargs,
+    libgimp_mkenums_custom_target_commonargs,
+    '@INPUT@',
   ],
   capture: true,
 )

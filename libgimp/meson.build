@@ -12,7 +12,8 @@ gimpenums_notail = custom_target('gimpenums.c.notail',
             + '#include "libgimpbase/gimpbase-private.h"\n'
             + '#include "libgimpconfig/gimpconfigenums.h"\n'
             + '#include "gimpenums.h"\n',
-    gimp_mkenums_custom_target_commonargs,
+    libgimp_mkenums_custom_target_commonargs,
+    '@INPUT@',
   ],
   capture: true,
 )

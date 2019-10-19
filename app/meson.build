@@ -1,14 +1,21 @@
 rootAppInclude = include_directories('.')
 
-app_mkenums_custom_target_command = [
-  gimp_mkenums,
-  '--fhead','#include "config.h"\n'
-          + '#include <gio/gio.h>\n'
-          + '#include "libgimpbase/gimpbase.h"\n'
-          + '#include "core/core-enums.h"\n'
-          + '#include "@INPUT@"\n'
-          + '#include "gimp-intl.h"\n',
+app_mkenums_custom_target_commonargs = [
   gimp_mkenums_custom_target_commonargs,
+  '--dtail','    { 0, NULL, NULL }\n'+
+            '  };\n'+
+            '\n'+
+            '  static GType type = 0;\n'+
+            '\n'+
+            '  if (G_UNLIKELY (! type))\n'+
+            '    {\n'+
+            '      type = g_@type@_register_static ("@EnumName@", values);\n'+
+            '      gimp_type_set_translation_context (type, "@enumnick@");\n'+
+            '      gimp_@type@_set_value_descriptions (type, descs);\n'+
+            '    }\n'+
+            '\n'+
+            '  return type;\n'+
+            '}\n',
 ]
 
 subdir('actions')

@@ -2,7 +2,16 @@
 appwidgetsenums = custom_target('widgets-enums.c',
   input : [ 'widgets-enums.h', ],
   output: [ 'widgets-enums.c', ],
-  command: app_mkenums_custom_target_command,
+  command: [
+    gimp_mkenums,
+    '--fhead','#include "config.h"\n'
+            + '#include <gtk/gtk.h>\n'
+            + '#include "libgimpbase/gimpbase.h"\n'
+            + '#include "@basename@"\n'
+            + '#include "gimp-intl.h"\n',
+    app_mkenums_custom_target_commonargs,
+    '@INPUT@',
+  ],
   capture: true,
 )
 

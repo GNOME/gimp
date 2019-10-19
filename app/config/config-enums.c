@@ -5,7 +5,7 @@
 #include <gio/gio.h>
 #include "libgimpbase/gimpbase.h"
 #include "config-enums.h"
-#include"gimp-intl.h"
+#include "gimp-intl.h"
 
 /* enumerations from "config-enums.h" */
 GType
