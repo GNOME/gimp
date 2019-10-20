@@ -44,7 +44,6 @@ file_dds_SOURCES = \
 	mipmap.h	\
 	misc.c		\
 	misc.h		\
-	mktables.c	\
 	vec.h
 
 AM_CPPFLAGS = \
