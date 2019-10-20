@@ -809,7 +809,7 @@ toggle_arithmetic_coding (GtkToggleButton *togglebutton,
 }
 
 gboolean
-save_dialog (void)
+save_dialog (GimpDrawable *drawable)
 {
   JpegSaveGui    pg;
   GtkWidget     *dialog;
@@ -1196,7 +1196,7 @@ save_dialog (void)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  if (gimp_drawable_is_rgb (drawable_global))
+  if (gimp_drawable_is_rgb (drawable))
     {
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   jsvals.subsmp,

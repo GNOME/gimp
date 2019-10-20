@@ -44,13 +44,13 @@ extern GimpImage       *orig_image_global;
 extern GimpDrawable    *drawable_global;
 
 
-gboolean    save_image         (GFile        *file,
-                                GimpImage    *image,
-                                GimpDrawable *drawable,
-                                GimpImage    *orig_image,
-                                gboolean      preview,
-                                GError      **error);
-gboolean    save_dialog        (void);
+gboolean    save_image         (GFile         *file,
+                                GimpImage     *image,
+                                GimpDrawable  *drawable,
+                                GimpImage     *orig_image,
+                                gboolean       preview,
+                                GError       **error);
+gboolean    save_dialog        (GimpDrawable  *drawable);
 void        load_defaults      (void);
 void        load_parasite      (void);
 

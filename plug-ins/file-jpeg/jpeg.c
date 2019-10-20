@@ -56,25 +56,25 @@ GType                   jpeg_get_type         (void) G_GNUC_CONST;
 
 static GList          * jpeg_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * jpeg_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+                                               const gchar          *name);
 
 static GimpValueArray * jpeg_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+                                               GimpRunMode           run_mode,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 static GimpValueArray * jpeg_load_thumb       (GimpProcedure        *procedure,
-                                              GFile                *file,
-                                              gint                  size,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+                                               GFile                *file,
+                                               gint                  size,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 static GimpValueArray * jpeg_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 
 
 G_DEFINE_TYPE (Jpeg, jpeg, GIMP_TYPE_PLUG_IN)
@@ -82,16 +82,15 @@ G_DEFINE_TYPE (Jpeg, jpeg, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (JPEG_TYPE)
 
 
-gboolean         undo_touched;
-gboolean         load_interactive;
-gchar           *image_comment;
-GimpDisplay     *display;
-JpegSaveVals     jsvals;
-GimpImage       *orig_image_global;
-GimpDrawable    *drawable_global;
-gint             orig_quality;
-JpegSubsampling  orig_subsmp;
-gint             num_quant_tables;
+gboolean         undo_touched      = FALSE;
+gchar           *image_comment     = NULL;
+GimpDisplay     *display           = NULL;
+JpegSaveVals     jsvals            = { 0, };
+GimpImage       *orig_image_global = NULL;
+GimpDrawable    *drawable_global   = NULL;
+gint             orig_quality      = 0;
+JpegSubsampling  orig_subsmp       = JPEG_SUBSAMPLING_2x2_1x1_1x1;;
+gint             num_quant_tables  = 0;
 
 
 static void
@@ -122,7 +121,7 @@ jpeg_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 jpeg_create_procedure (GimpPlugIn  *plug_in,
-                      const gchar *name)
+                       const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
@@ -196,6 +195,9 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "jpg,jpeg,jpe");
 
+      /* See bugs #63610 and #61088 for a discussion about the quality
+       * settings
+       */
       GIMP_PROC_ARG_DOUBLE (procedure, "quality",
                             "Quality",
                             "Quality of saved image",
@@ -253,9 +255,7 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_INT (procedure, "dct",
                          "DCT",
-                         "DCT method to use { "
-                         "INTEGER (0), "
-                         "FIXED (1), "
+                         "DCT method to use { INTEGER (0), FIXED (1), "
                          "FLOAT (2) }",
                          0, 2, 0,
                          G_PARAM_READWRITE);
@@ -266,13 +266,14 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 jpeg_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+           GimpRunMode           run_mode,
+           GFile                *file,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
+  gboolean        interactive;
   gboolean        resolution_loaded = FALSE;
   GError         *error             = NULL;
 
@@ -282,20 +283,16 @@ jpeg_load (GimpProcedure        *procedure,
   preview_image = NULL;
   preview_layer = NULL;
 
-  orig_quality = 0;
-  orig_subsmp = JPEG_SUBSAMPLING_2x2_1x1_1x1;
-  num_quant_tables = 0;
-
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
-      load_interactive = TRUE;
+      interactive = TRUE;
       break;
 
     default:
-      load_interactive = FALSE;
+      interactive = FALSE;
       break;
     }
 
@@ -318,7 +315,7 @@ jpeg_load (GimpProcedure        *procedure,
 
           gimp_image_metadata_load_finish (image, "image/jpeg",
                                            metadata, flags,
-                                           load_interactive);
+                                           interactive);
 
           g_object_unref (metadata);
         }
@@ -340,10 +337,10 @@ jpeg_load (GimpProcedure        *procedure,
 
 static GimpValueArray *
 jpeg_load_thumb (GimpProcedure        *procedure,
-                GFile                *file,
-                gint                  size,
-                const GimpValueArray *args,
-                gpointer              run_data)
+                 GFile                *file,
+                 gint                  size,
+                 const GimpValueArray *args,
+                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -357,10 +354,6 @@ jpeg_load_thumb (GimpProcedure        *procedure,
 
   preview_image = NULL;
   preview_layer = NULL;
-
-  orig_quality = 0;
-  orig_subsmp = JPEG_SUBSAMPLING_2x2_1x1_1x1;
-  num_quant_tables = 0;
 
   image = load_thumbnail_image (file, &width, &height, &type,
                                 &error);
@@ -386,12 +379,12 @@ jpeg_load_thumb (GimpProcedure        *procedure,
 
 static GimpValueArray *
 jpeg_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          GimpDrawable         *drawable,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
+           GFile                *file,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
   GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
   GimpParasite          *parasite;
@@ -406,10 +399,6 @@ jpeg_save (GimpProcedure        *procedure,
 
   preview_image = NULL;
   preview_layer = NULL;
-
-  orig_quality = 0;
-  orig_subsmp = JPEG_SUBSAMPLING_2x2_1x1_1x1;
-  num_quant_tables = 0;
 
   orig_image = image;
 
@@ -582,7 +571,7 @@ jpeg_save (GimpProcedure        *procedure,
       drawable_global   = drawable;
 
       /*  First acquire information with a dialog  */
-      if (! save_dialog ())
+      if (! save_dialog (drawable))
         {
           status = GIMP_PDB_CANCEL;
         }
