@@ -36,6 +36,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
 
 #include "file/file-open.h"
 
@@ -166,6 +167,7 @@ gui_unique_win32_message_handler (HWND   hWnd,
       if (unique_gimp)
         {
           COPYDATASTRUCT *copydata = (COPYDATASTRUCT *) lParam;
+          GimpObject     *display;
 
           if (copydata->cbData > 0)
             {
@@ -193,6 +195,11 @@ gui_unique_win32_message_handler (HWND   hWnd,
               g_source_attach (source, NULL);
               g_source_unref (source);
             }
+
+          /* Deiconify the window if minimized. */
+          display = gimp_container_get_first_child (unique_gimp->displays);
+          if (display)
+            gimp_display_shell_present (gimp_display_get_shell (GIMP_DISPLAY (display)));
         }
       return TRUE;
 
