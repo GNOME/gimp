@@ -122,6 +122,8 @@ User interface:
     -> Transform -> Arbitrary Rotation..." menu entry, which activates
     the rotate tool in image mode (similarly to the corresponding action
     for layers).
+  - On Windows, minimized GIMP window is now deiconified when GIMP is
+    run again (clicking its shortcut or otherwise).
 
 Preferences:
 
