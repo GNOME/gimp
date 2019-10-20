@@ -385,6 +385,7 @@ else
       '-DGIMP_MODULE_COMPILATION',
       '-DGIMP_THUMB_COMPILATION',
       '-DGIMP_WIDGETS_COMPILATION',
+      '-DGIMP_DISABLE_DEPRECATED',
     ],
 
     includes: [
