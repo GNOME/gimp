@@ -619,8 +619,8 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
 #if 0
   g_return_if_fail (histogram == NULL ||
                     view->bg_histogram == NULL ||
-                    gimp_histogram_n_channels (view->bg_histogram) ==
-                    gimp_histogram_n_channels (histogram));
+                    gimp_histogram_n_components (view->bg_histogram) ==
+                    gimp_histogram_n_components (histogram));
 #endif
 
   if (view->histogram != histogram)
@@ -643,7 +643,7 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
                             G_CALLBACK (gimp_histogram_view_notify),
                             view);
 
-          if (view->channel >= gimp_histogram_n_channels (histogram))
+          if (! gimp_histogram_has_channel (histogram, view->channel))
             gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
         }
 
@@ -669,8 +669,8 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
 #if 0
   g_return_if_fail (histogram == NULL ||
                     view->histogram == NULL ||
-                    gimp_histogram_n_channels (view->histogram) ==
-                    gimp_histogram_n_channels (histogram));
+                    gimp_histogram_n_components (view->histogram) ==
+                    gimp_histogram_n_components (histogram));
 #endif
 
   if (view->bg_histogram != histogram)
@@ -693,7 +693,7 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
                             G_CALLBACK (gimp_histogram_view_notify),
                             view);
 
-          if (view->channel >= gimp_histogram_n_channels (histogram))
+          if (! gimp_histogram_has_channel (histogram, view->channel))
             gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
         }
 

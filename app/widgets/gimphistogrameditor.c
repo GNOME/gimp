@@ -651,40 +651,14 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_editor_channel_valid (GimpHistogramEditor  *editor,
-                                     GimpHistogramChannel  channel)
-{
-  if (editor->drawable)
-    {
-      switch (channel)
-        {
-        case GIMP_HISTOGRAM_VALUE:
-          return TRUE;
-
-        case GIMP_HISTOGRAM_RED:
-        case GIMP_HISTOGRAM_GREEN:
-        case GIMP_HISTOGRAM_BLUE:
-        case GIMP_HISTOGRAM_LUMINANCE:
-        case GIMP_HISTOGRAM_RGB:
-          return gimp_drawable_is_rgb (editor->drawable);
-
-        case GIMP_HISTOGRAM_ALPHA:
-          return gimp_drawable_has_alpha (editor->drawable);
-        }
-    }
-
-  return TRUE;
-}
-
-static gboolean
 gimp_histogram_menu_sensitivity (gint      value,
                                  gpointer  data)
 {
   GimpHistogramEditor  *editor  = GIMP_HISTOGRAM_EDITOR (data);
   GimpHistogramChannel  channel = value;
 
-  if (editor->drawable)
-    return gimp_histogram_editor_channel_valid (editor, channel);
+  if (editor->histogram)
+    return gimp_histogram_has_channel (editor->histogram, channel);
 
   return FALSE;
 }
@@ -696,7 +670,8 @@ gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
 
   gtk_widget_queue_draw (editor->menu);
 
-  if (! gimp_histogram_editor_channel_valid (editor, view->channel))
+  if (editor->histogram &&
+      ! gimp_histogram_has_channel (editor->histogram, view->channel))
     {
       gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
     }

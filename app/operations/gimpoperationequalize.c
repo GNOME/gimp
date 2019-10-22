@@ -172,8 +172,8 @@ gimp_operation_equalize_set_property (GObject      *object,
           pixels = gimp_histogram_get_count (self->histogram,
                                              GIMP_HISTOGRAM_VALUE, 0, n_bins - 1);
 
-          if (gimp_histogram_n_channels (self->histogram) == 1 ||
-              gimp_histogram_n_channels (self->histogram) == 2)
+          if (gimp_histogram_n_components (self->histogram) == 1 ||
+              gimp_histogram_n_components (self->histogram) == 2)
             max = 1;
           else
             max = 3;

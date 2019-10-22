@@ -95,8 +95,10 @@ gdouble         gimp_histogram_get_value       (GimpHistogram        *histogram,
 gdouble         gimp_histogram_get_component   (GimpHistogram        *histogram,
                                                 gint                  component,
                                                 gint                  bin);
-gint            gimp_histogram_n_channels      (GimpHistogram        *histogram);
+gint            gimp_histogram_n_components    (GimpHistogram        *histogram);
 gint            gimp_histogram_n_bins          (GimpHistogram        *histogram);
+gboolean        gimp_histogram_has_channel     (GimpHistogram        *histogram,
+                                                GimpHistogramChannel  channel);
 
 
 #endif /* __GIMP_HISTOGRAM_H__ */
