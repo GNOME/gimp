@@ -270,6 +270,12 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              gimp_export_comment (),
                              G_PARAM_READWRITE);
 
+      GIMP_PROC_AUX_ARG_STRING (procedure, "comment",
+                                "Comment",
+                                "Image comment",
+                                gimp_get_default_comment (),
+                                G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
                              "Save transparent",
                              "Preserve color of transparent pixels?",
@@ -1243,6 +1249,7 @@ save_image (GFile        *file,
   gboolean        save_phys;
   gboolean        save_time;
   gboolean        save_comment;
+  gchar          *comment;
   gboolean        save_transp_pixels;
   gint            compression_level;
   PngExportFormat export_format;
@@ -1266,6 +1273,7 @@ save_image (GFile        *file,
                 "phys",               &save_phys,
                 "time",               &save_time,
                 "save-comment",       &save_comment,
+                "comment",            &comment,
                 "save-transparent",   &save_transp_pixels,
                 "compression",        &compression_level,
                 "format",             &export_format,
@@ -1732,91 +1740,81 @@ save_image (GFile        *file,
 #define COMPRESSION_WORTHY_LENGTH 200
 #endif
 
-  if (save_comment)
+  if (save_comment && comment && strlen (comment))
     {
-      GimpParasite *parasite;
-      gsize         text_length = 0;
+      gsize text_length = 0;
 
-      parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
-      if (parasite)
-        {
-          gchar *comment = g_strndup (gimp_parasite_data (parasite),
-                                      gimp_parasite_data_size (parasite));
+      text = g_new0 (png_text, 1);
 
-          gimp_parasite_free (parasite);
-
-          if (comment && strlen (comment) > 0)
-            {
-              text = g_new0 (png_text, 1);
-
-              text[0].key = "Comment";
+      text[0].key = "Comment";
 
 #ifdef PNG_iTXt_SUPPORTED
 
-              text[0].text = g_convert (comment, -1,
-                                        "ISO-8859-1",
-                                        "UTF-8",
-                                        NULL,
-                                        &text_length,
-                                        NULL);
+      text[0].text = g_convert (comment, -1,
+                                "ISO-8859-1",
+                                "UTF-8",
+                                NULL,
+                                &text_length,
+                                NULL);
 
-              if (text[0].text == NULL || strlen (text[0].text) == 0)
-                {
-                  /* We can't convert to ISO-8859-1 without loss.
-                     Save the comment as iTXt (UTF-8). */
-                  g_free (text[0].text);
+      if (text[0].text == NULL || strlen (text[0].text) == 0)
+        {
+          /* We can't convert to ISO-8859-1 without loss.
+           * Save the comment as iTXt (UTF-8).
+           */
+          g_free (text[0].text);
 
-                  text[0].text        = g_strdup (comment);
-                  text[0].itxt_length = strlen (text[0].text);
+          text[0].text        = g_strdup (comment);
+          text[0].itxt_length = strlen (text[0].text);
 
 #ifdef PNG_zTXt_SUPPORTED
-                  text[0].compression = strlen (text[0].text) > COMPRESSION_WORTHY_LENGTH ?
-                                        PNG_ITXT_COMPRESSION_zTXt : PNG_ITXT_COMPRESSION_NONE;
+          text[0].compression = strlen (text[0].text) > COMPRESSION_WORTHY_LENGTH ?
+                                PNG_ITXT_COMPRESSION_zTXt : PNG_ITXT_COMPRESSION_NONE;
 #else
-                  text[0].compression = PNG_ITXT_COMPRESSION_NONE;
+          text[0].compression = PNG_ITXT_COMPRESSION_NONE;
 #endif /* PNG_zTXt_SUPPORTED */
-                }
-              else
-                  /* The comment is ISO-8859-1 compatible, so we use tEXt
-                     even if there is iTXt support for compatibility to more
-                     png reading programs. */
+        }
+      else
+        /* The comment is ISO-8859-1 compatible, so we use tEXt even
+         * if there is iTXt support for compatibility to more png
+         * reading programs.
+         */
 #endif /* PNG_iTXt_SUPPORTED */
-                {
+        {
 #ifndef PNG_iTXt_SUPPORTED
-                  /* No iTXt support, so we are forced to use tEXt (ISO-8859-1).
-                     A broken comment is better than no comment at all, so the
-                     conversion does not fail on unknown character.
-                     They are simply ignored. */
-                  text[0].text = g_convert_with_fallback (comment, -1,
-                                                          "ISO-8859-1",
-                                                          "UTF-8",
-                                                          "",
-                                                          NULL,
-                                                          &text_length,
-                                                          NULL);
+          /* No iTXt support, so we are forced to use tEXt
+           * (ISO-8859-1).  A broken comment is better than no comment
+           * at all, so the conversion does not fail on unknown
+           * character.  They are simply ignored.
+           */
+          text[0].text = g_convert_with_fallback (comment, -1,
+                                                  "ISO-8859-1",
+                                                  "UTF-8",
+                                                  "",
+                                                  NULL,
+                                                  &text_length,
+                                                  NULL);
 #endif
 
 #ifdef PNG_zTXt_SUPPORTED
-                  text[0].compression = strlen (text[0].text) > COMPRESSION_WORTHY_LENGTH ?
-                                        PNG_TEXT_COMPRESSION_zTXt : PNG_TEXT_COMPRESSION_NONE;
+          text[0].compression = strlen (text[0].text) > COMPRESSION_WORTHY_LENGTH ?
+                                PNG_TEXT_COMPRESSION_zTXt : PNG_TEXT_COMPRESSION_NONE;
 #else
-                  text[0].compression = PNG_TEXT_COMPRESSION_NONE;
+          text[0].compression = PNG_TEXT_COMPRESSION_NONE;
 #endif /* PNG_zTXt_SUPPORTED */
 
-                  text[0].text_length = text_length;
-                 }
+          text[0].text_length = text_length;
+        }
 
-              if (! text[0].text || strlen (text[0].text) == 0)
-                {
-                  g_free (text[0].text);
-                  g_free (text);
-                  text = NULL;
-                }
-
-              g_free (comment);
-            }
+      if (! text[0].text || strlen (text[0].text) == 0)
+        {
+          g_free (text[0].text);
+          g_free (text);
+          text = NULL;
         }
     }
+
+  g_free (comment);
 
 #ifdef PNG_zTXt_SUPPORTED
 #undef COMPRESSION_WORTHY_LENGTH
