@@ -1438,8 +1438,8 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
         gimp_display_shell_scale_image_stops_to_fit (shell,
                                                      new_scale,
                                                      current_scale,
-                                                     &stops_horizontally,
-                                                     &stops_vertically);
+                                                     &stops_vertically,
+                                                     &stops_horizontally);
 
         *x = within_horizontally && ! stops_horizontally ? image_center_x : other_x;
         *y = within_vertically   && ! stops_vertically   ? image_center_y : other_y;
