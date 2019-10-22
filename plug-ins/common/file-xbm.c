@@ -343,7 +343,7 @@ xbm_save (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   switch (run_mode)
     {
@@ -375,22 +375,6 @@ xbm_save (GimpProcedure        *procedure,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       GimpParasite *parasite;
-
-      /* Get the parasites */
-      parasite = gimp_image_get_parasite (image, "gimp-comment");
-
-      if (parasite)
-        {
-          gchar *comment = g_strndup (gimp_parasite_data (parasite),
-                                      gimp_parasite_data_size (parasite));
-
-          g_object_set (config,
-                        "comment", comment,
-                        NULL);
-
-          g_free (comment);
-          gimp_parasite_free (parasite);
-        }
 
       parasite = gimp_image_get_parasite (image, "hot-spot");
 
@@ -481,7 +465,7 @@ xbm_save (GimpProcedure        *procedure,
       g_object_unref (mask_file);
     }
 
-  gimp_procedure_config_end_run (config, status);
+  gimp_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
