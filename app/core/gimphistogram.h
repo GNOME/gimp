@@ -65,7 +65,8 @@ GimpAsync     * gimp_histogram_calculate_async (GimpHistogram        *histogram,
                                                 GeglBuffer           *mask,
                                                 const GeglRectangle  *mask_rect);
 
-void            gimp_histogram_clear_values    (GimpHistogram        *histogram);
+void            gimp_histogram_clear_values    (GimpHistogram        *histogram,
+                                                gint                  n_components);
 
 gdouble         gimp_histogram_get_maximum     (GimpHistogram        *histogram,
                                                 GimpHistogramChannel  channel);

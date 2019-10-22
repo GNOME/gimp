@@ -507,6 +507,11 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
 
               editor->histogram = gimp_histogram_new (editor->trc);
 
+              gimp_histogram_clear_values (
+                editor->histogram,
+                babl_format_get_n_components (
+                  gimp_drawable_get_format (editor->drawable)));
+
               gimp_histogram_view_set_histogram (view, editor->histogram);
             }
 
@@ -525,7 +530,7 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
         }
       else if (editor->histogram)
         {
-          gimp_histogram_clear_values (editor->histogram);
+          gimp_histogram_clear_values (editor->histogram, 0);
 
           gimp_histogram_editor_info_update (editor);
         }

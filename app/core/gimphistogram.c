@@ -167,7 +167,7 @@ gimp_histogram_finalize (GObject *object)
 {
   GimpHistogram *histogram = GIMP_HISTOGRAM (object);
 
-  gimp_histogram_clear_values (histogram);
+  gimp_histogram_clear_values (histogram, 0);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -369,26 +369,15 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
 }
 
 void
-gimp_histogram_clear_values (GimpHistogram *histogram)
+gimp_histogram_clear_values (GimpHistogram *histogram,
+                             gint           n_components)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
 
   if (histogram->priv->calculate_async)
     gimp_async_cancel_and_wait (histogram->priv->calculate_async);
 
-  if (histogram->priv->values)
-    {
-      g_clear_pointer (&histogram->priv->values, g_free);
-
-      g_object_notify (G_OBJECT (histogram), "values");
-    }
-
-  if (histogram->priv->n_channels)
-    {
-      histogram->priv->n_channels = 0;
-
-      g_object_notify (G_OBJECT (histogram), "n-components");
-    }
+  gimp_histogram_set_values (histogram, n_components, 0, NULL);
 }
 
 
@@ -852,12 +841,16 @@ gimp_histogram_set_values (GimpHistogram *histogram,
                            gdouble       *values)
 {
   GimpHistogramPrivate *priv                = histogram->priv;
+  gint                  n_channels          = n_components;
   gboolean              notify_n_components = FALSE;
   gboolean              notify_n_bins       = FALSE;
 
-  if (n_components + N_DERIVED_CHANNELS != priv->n_channels)
+  if (n_channels > 0)
+    n_channels += N_DERIVED_CHANNELS;
+
+  if (n_channels != priv->n_channels)
     {
-      priv->n_channels = n_components + N_DERIVED_CHANNELS;
+      priv->n_channels = n_channels;
 
       notify_n_components = TRUE;
     }
