@@ -482,7 +482,10 @@ gimp_histogram_n_components (GimpHistogram *histogram)
 {
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0);
 
-  return histogram->priv->n_channels - N_DERIVED_CHANNELS;
+  if (histogram->priv->n_channels > 0)
+    return histogram->priv->n_channels - N_DERIVED_CHANNELS;
+  else
+    return 0;
 }
 
 gint
