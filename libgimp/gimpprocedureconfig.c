@@ -449,7 +449,7 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * @original_image: the #GimpImage passed to run()
  * @run_mode:       the #GimpRunMode passed to a #GimpProcedure's run()
  * @args:           the #GimpValueArray passed to a #GimpProcedure's run()
- * @mime_type:      the exported file format's mime type
+ * @mime_type:      the exported file format's mime type, or %NULL.
  *
  * This is a variant of gimp_procedure_config_begin_run() to be used
  * by file export procedures using #GimpSaveProcedure. It must be
@@ -459,11 +459,11 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * It does everything gimp_procedure_config_begin_run() does but
  * provides additional features to automate file export:
  *
- * Exporting metadata is handled automatically, by calling
- * gimp_image_metadata_save_prepare() and syncing its returned
- * #GimpMetadataSaveFlags with @config's properties. (The
- * corresponding gimp_image_metadata_save_finish() will be called by
- * gimp_procedure_config_end_export()).
+ * If @mime_type is non-%NULL, exporting metadata is handled
+ * automatically, by calling gimp_image_metadata_save_prepare() and
+ * syncing its returned #GimpMetadataSaveFlags with @config's
+ * properties. (The corresponding gimp_image_metadata_save_finish()
+ * will be called by gimp_procedure_config_end_export()).
  *
  * The following boolean arguments of the used #GimpSaveProcedure are
  * synced. The procedure can but must not provide these arguments.
@@ -478,11 +478,29 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
  *
  * "save-color-profile" for %GIMP_METADATA_SAVE_COLOR_PROFILE.
  *
+ * "save-comment" for %GIMP_METADATA_SAVE_COMMENT.
+ *
  * The values from the #GimpMetadataSaveFlags will only ever be used
  * to set these properties to %FALSE, overriding the user's saved
  * default values for the procedure, but NOT overriding the last used
  * values from exporting @original_image or the last used values from
  * exporting any other image using this procedure.
+ *
+ * If @mime_type is %NULL, #GimpMetadata handling is skipped. The
+ * procedure can still have all of the above listed boolean arguments,
+ * but must take care of their default values itself. The easiest way
+ * to do this is by simply using gimp_export_comment(),
+ * gimp_export_exif() etc. as default values for these arguments when
+ * adding them using GIMP_PROC_ARG_BOOLEAN() or
+ * GIMP_PROC_AUX_ARG_BOOLEAN().
+ *
+ * Additionally, some procedure arguments are handled automatically
+ * regardless of whether @mime_type is %NULL or not:
+ *
+ * If the procedure has a "comment" argument, it is synced with the
+ * image's "gimp-comment" parasite, unless @run_mode is
+ * %GIMP_RUN_NONINTERACTIVE and the argument is not an auxiliary
+ * argument.
  *
  * Returns: (transfer none): The #GimpMetadata to be used for this
  *          export, or %NULL if @original_image doesn't have metadata.
@@ -496,48 +514,80 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
                                     const GimpValueArray *args,
                                     const gchar          *mime_type)
 {
-  GObjectClass          *object_class;
-  GimpMetadataSaveFlags  metadata_flags;
-  gint                   i;
+  GObjectClass *object_class;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (original_image), NULL);
   g_return_val_if_fail (args != NULL, NULL);
-  g_return_val_if_fail (mime_type != NULL, NULL);
 
   object_class = G_OBJECT_GET_CLASS (config);
 
-  config->priv->metadata =
-    gimp_image_metadata_save_prepare (original_image,
-                                      mime_type,
-                                      &metadata_flags);
-
-  if (config->priv->metadata)
+  if (mime_type)
     {
-      config->priv->mime_type      = g_strdup (mime_type);
-      config->priv->metadata_flags = metadata_flags;
-    }
+      GimpMetadataSaveFlags metadata_flags;
+      gint                  i;
 
-  for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
-    {
-      /*  we only disable properties based on metadata flags here and
-       *  never enable them, so we don't override the user's saved
-       *  default values that are passed to us via "args"
-       */
-      if (! (metadata_flags &  metadata_properties[i].flag))
+      config->priv->metadata =
+        gimp_image_metadata_save_prepare (original_image,
+                                          mime_type,
+                                          &metadata_flags);
+
+      if (config->priv->metadata)
         {
-          const gchar *prop_name = metadata_properties[i].name;
-          GParamSpec  *pspec;
+          config->priv->mime_type      = g_strdup (mime_type);
+          config->priv->metadata_flags = metadata_flags;
+        }
 
-          pspec = g_object_class_find_property (object_class, prop_name);
-          if (pspec)
-            g_object_set (config,
-                          prop_name, FALSE,
-                          NULL);
+      for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
+        {
+          /*  we only disable properties based on metadata flags here
+           *  and never enable them, so we don't override the user's
+           *  saved default values that are passed to us via "args"
+           */
+          if (! (metadata_flags &  metadata_properties[i].flag))
+            {
+              const gchar *prop_name = metadata_properties[i].name;
+              GParamSpec  *pspec;
+
+              pspec = g_object_class_find_property (object_class, prop_name);
+              if (pspec)
+                g_object_set (config,
+                              prop_name, FALSE,
+                              NULL);
+            }
         }
     }
 
   gimp_procedure_config_begin_run (config, original_image, run_mode, args);
+
+  if (g_object_class_find_property (object_class, "comment"))
+    {
+      /*  we set the comment property from the image comment if it is
+       *  an aux argument, or if we run interactively, because the
+       *  image comment should be global and not depend on whatever
+       *  comment another image had when last using this export
+       *  procedure
+       */
+      if (gimp_procedure_find_aux_argument (config->priv->procedure,
+                                            "comment") ||
+          (run_mode != GIMP_RUN_NONINTERACTIVE))
+        {
+          GimpParasite *parasite = gimp_image_get_parasite (original_image,
+                                                            "gimp-comment");
+          if (parasite)
+            {
+              gchar *comment = g_strndup (gimp_parasite_data (parasite),
+                                          gimp_parasite_data_size (parasite));
+
+              g_object_set (config,
+                            "comment", comment,
+                            NULL);
+
+              g_free (comment);
+              gimp_parasite_free (parasite);
+            }
+        }
+    }
 
   return config->priv->metadata;
 }
@@ -563,6 +613,10 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
  * #GimpMetadataSaveFlags and the metadata is written to @file using
  * gimp_image_metadata_save_finish().
  *
+ * If the procedure has a "comment" argument, and it was modified
+ * during an interactive run, it is synced back to the original
+ * image's "gimp-comment" parasite.
+ *
  * Since: 3.0
  **/
 void
@@ -575,37 +629,85 @@ gimp_procedure_config_end_export (GimpProcedureConfig  *config,
   g_return_if_fail (GIMP_IS_IMAGE (exported_image));
   g_return_if_fail (G_IS_FILE (file));
 
-  if (status == GIMP_PDB_SUCCESS &&
-      config->priv->metadata)
+  if (status == GIMP_PDB_SUCCESS)
     {
       GObjectClass *object_class = G_OBJECT_GET_CLASS (config);
-      gint          i;
 
-      for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
+      /*  we write the comment back to the image if it was modified
+       *  during an interactive export
+       */
+      if (g_object_class_find_property (object_class, "comment") &&
+          config->priv->run_mode == GIMP_RUN_INTERACTIVE)
         {
-          const gchar           *prop_name = metadata_properties[i].name;
-          GimpMetadataSaveFlags  prop_flag = metadata_properties[i].flag;
-          GParamSpec            *pspec;
-          gboolean               value;
+          GimpParasite *parasite;
+          gchar        *image_comment = NULL;
+          gchar        *comment;
 
-          pspec = g_object_class_find_property (object_class, prop_name);
-          if (pspec)
+          parasite = gimp_image_get_parasite (config->priv->image,
+                                              "gimp-comment");
+          if (parasite)
             {
-              g_object_get (config,
-                            prop_name, &value,
-                            NULL);
-
-              if (value)
-                config->priv->metadata_flags |= prop_flag;
-              else
-                config->priv->metadata_flags &= ~prop_flag;
+              image_comment = g_strndup (gimp_parasite_data (parasite),
+                                         gimp_parasite_data_size (parasite));
+              gimp_parasite_free (parasite);
             }
 
-          gimp_image_metadata_save_finish (exported_image,
-                                           config->priv->mime_type,
-                                           config->priv->metadata,
-                                           config->priv->metadata_flags,
-                                           file, NULL);
+          g_object_get (config,
+                        "comment", &comment,
+                        NULL);
+
+          if (g_strcmp0 (comment, image_comment))
+            {
+              if (comment && strlen (comment))
+                {
+                  parasite = gimp_parasite_new ("gimp-comment",
+                                                GIMP_PARASITE_PERSISTENT,
+                                                strlen (comment) + 1,
+                                                comment);
+                  gimp_image_attach_parasite (config->priv->image, parasite);
+                  gimp_parasite_free (parasite);
+                }
+              else
+                {
+                  gimp_image_detach_parasite (config->priv->image,
+                                              "gimp-comment");
+                }
+            }
+
+          g_free (image_comment);
+          g_free (comment);
+        }
+
+      if (config->priv->metadata)
+        {
+          gint i;
+
+          for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
+            {
+              const gchar           *prop_name = metadata_properties[i].name;
+              GimpMetadataSaveFlags  prop_flag = metadata_properties[i].flag;
+              GParamSpec            *pspec;
+              gboolean               value;
+
+              pspec = g_object_class_find_property (object_class, prop_name);
+              if (pspec)
+                {
+                  g_object_get (config,
+                                prop_name, &value,
+                                NULL);
+
+                  if (value)
+                    config->priv->metadata_flags |= prop_flag;
+                  else
+                    config->priv->metadata_flags &= ~prop_flag;
+                }
+
+              gimp_image_metadata_save_finish (exported_image,
+                                               config->priv->mime_type,
+                                               config->priv->metadata,
+                                               config->priv->metadata_flags,
+                                               file, NULL);
+            }
         }
     }
 
