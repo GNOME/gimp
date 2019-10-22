@@ -262,7 +262,7 @@ EXPORTS
 	gimp_histogram_get_median
 	gimp_histogram_get_std_dev
 	gimp_histogram_get_value
-	gimp_histogram_n_channels
+	gimp_histogram_n_components
 	gimp_histogram_new
 	gimp_image_add_channel
 	gimp_image_add_colormap_entry
