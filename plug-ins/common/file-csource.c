@@ -204,7 +204,6 @@ csource_save (GimpProcedure        *procedure,
   GimpProcedureConfig *config;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpParasite        *parasite;
   gchar               *prefixed_name;
   gchar               *comment;
   GError              *error  = NULL;
@@ -218,24 +217,11 @@ csource_save (GimpProcedure        *procedure,
                                              NULL);
 
   config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   g_object_set (config,
                 "save-alpha", gimp_drawable_has_alpha (drawable),
                 NULL);
-
-  parasite = gimp_image_get_parasite (image, "gimp-comment");
-  if (parasite)
-    {
-      gchar *comment = g_strndup (gimp_parasite_data (parasite),
-                                  gimp_parasite_data_size (parasite));
-      g_object_set (config,
-                    "comment", comment,
-                    NULL);
-      g_free (comment);
-
-      gimp_parasite_free (parasite);
-    }
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -278,28 +264,7 @@ csource_save (GimpProcedure        *procedure,
         }
     }
 
-#if 0
-  /* FIXME generic comment handling */
-  if (x != config.comment &&
-      ! (x && config.comment && strcmp (x, config.comment) == 0))
-    {
-      if (! config.comment || ! config.comment[0])
-        {
-          gimp_image_detach_parasite (image, "gimp-comment");
-        }
-      else
-        {
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
-                                        strlen (config.comment) + 1,
-                                        config.comment);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
-        }
-    }
-#endif
-
-  gimp_procedure_config_end_run (config, status);
+  gimp_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
