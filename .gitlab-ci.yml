@@ -245,4 +245,4 @@ gimp-x86_64-w64-mingw32-meson:
     expire_in: 1 week
     paths:
       - _build/
-      #- "${CROSSROAD_PREFIX}"
+      - "${CROSSROAD_PREFIX}"
