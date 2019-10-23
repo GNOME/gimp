@@ -677,6 +677,7 @@ sanity_check_gegl_ops (void)
     "gegl:noise-slur",
     "gegl:noise-solid",
     "gegl:noise-spread",
+    "gegl:normal-map",
     "gegl:npd",
     "gegl:oilify",
     "gegl:opacity",

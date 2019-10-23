@@ -544,6 +544,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:noise-spread",
     GIMP_HELP_FILTER_NOISE_SPREAD },
 
+  { "filters-normal-map", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Normal Map..."), NULL, NULL,
+    "gegl:normal-map",
+    GIMP_HELP_FILTER_NORMAL_MAP },
+
   { "filters-offset", GIMP_ICON_TOOL_OFFSET,
     NC_("filters-action", "_Offset..."), "<primary><shift>O", NULL,
     "gimp:offset",
@@ -952,6 +957,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-noise-slur",              writable);
   SET_SENSITIVE ("filters-noise-solid",             writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
+  SET_SENSITIVE ("filters-normal-map",              writable);
   SET_SENSITIVE ("filters-offset",                  writable);
   SET_SENSITIVE ("filters-oilify",                  writable);
   SET_SENSITIVE ("filters-panorama-projection",     writable);
