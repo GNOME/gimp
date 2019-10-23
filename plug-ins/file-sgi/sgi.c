@@ -324,6 +324,7 @@ load_image (GFile   *file,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for reading."),
                    gimp_file_get_utf8_name (file));
+      free (sgip);
       return NULL;
     };
 
@@ -338,6 +339,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid width: %hu"), sgip->xsize);
+      free (sgip);
       return NULL;
     }
 
@@ -345,6 +347,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid height: %hu"), sgip->ysize);
+      free (sgip);
       return NULL;
     }
 
@@ -352,6 +355,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid number of channels: %hu"), sgip->zsize);
+      free (sgip);
       return NULL;
     }
 
@@ -392,6 +396,7 @@ load_image (GFile   *file,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "Could not allocate new image: %s",
                    gimp_pdb_get_last_error (gimp_get_pdb ()));
+      free (sgip);
       return NULL;
     }
 
