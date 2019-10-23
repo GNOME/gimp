@@ -772,6 +772,7 @@
         <menuitem action="filters-convolution-matrix" />
         <menuitem action="filters-distance-map" />
         <menuitem action="filters-gegl-graph" />
+        <menuitem action="filters-normal-map" />
         <menuitem action="filters-dilate" />
         <menuitem action="filters-erode" />
       </menu>

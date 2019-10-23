@@ -418,6 +418,7 @@
 #define GIMP_HELP_FILTER_NOISE_SLUR               "gimp-filter-noise-slur"
 #define GIMP_HELP_FILTER_NOISE_SOLID              "gimp-filter-noise-solid"
 #define GIMP_HELP_FILTER_NOISE_SPREAD             "gimp-filter-noise-spread"
+#define GIMP_HELP_FILTER_NORMAL_MAP               "gimp-filter-normal-map"
 #define GIMP_HELP_FILTER_OILIFY                   "gimp-filter-oilify"
 #define GIMP_HELP_FILTER_PANORAMA_PROJECTION      "gimp-filter-panorama-projection"
 #define GIMP_HELP_FILTER_PHOTOCOPY                "gimp-filter-photocopy"
