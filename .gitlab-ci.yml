@@ -239,7 +239,8 @@ gimp-x86_64-w64-mingw32-meson:
               -Dpython=always -Dlua=always
               -Djavascript=always -Dbuildtype=debugoptimized &&
             ninja install &&
-            cp ../build/windows/crossbuild-gitlab-ci/gimp-wrapper.cmd $CROSSROAD_PREFIX/bin/
+            cp ../build/windows/crossbuild-gitlab-ci/gimp-wrapper.cmd $CROSSROAD_PREFIX/bin/ &&
+            cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w64 gimp --run="-"
   artifacts:
@@ -248,4 +249,4 @@ gimp-x86_64-w64-mingw32-meson:
     expire_in: 1 week
     paths:
       - _build/
-      - "${XDG_DATA_HOME}/crossroad/roads/w64/gimp"
+      - gimp-prefix/
