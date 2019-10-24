@@ -359,7 +359,7 @@ endif
 
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
-pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
+pangocairo        = dependency('pangocairo',         version: '>=1.42.0')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
