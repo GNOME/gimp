@@ -10,7 +10,7 @@ cd ..
 
 # GEGL
 
-crossroad install json-glib && \
+crossroad install cairo json-glib && \
 git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git && cd gegl && \
 crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled && \
 ninja -C _build install || exit 1
@@ -65,8 +65,7 @@ cd ../..
 
 git clone --depth 1 https://gitlab.gnome.org/GNOME/glib.git && cd glib && \
 crossroad meson _build && ninja -C _build install || exit 1
-which glib-compile-resources
-rm -fr $CROSSROAD_PREFIX/bin/glib-compile-resources*
+crossroad mask glib
 cd ..
 
 # Pango (available in crossroad but too old)
@@ -75,6 +74,7 @@ crossroad install harfbuzz && \
 git clone --depth 1 https://gitlab.gnome.org/GNOME/pango.git && cd pango && \
 crossroad meson _build -Dintrospection=false && \
 ninja -C _build install || exit 1
+crossroad mask pango
 cd ..
 
 # preparing GIMP
