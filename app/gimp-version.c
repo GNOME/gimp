@@ -78,15 +78,31 @@ gimp_library_versions (gboolean localized)
   gchar *lib_versions;
   gchar *lib_version;
   gchar *temp;
+  gint   babl_major_version;
+  gint   babl_minor_version;
+  gint   babl_micro_version;
   gint   gegl_major_version;
   gint   gegl_minor_version;
   gint   gegl_micro_version;
+
+  babl_get_version (&babl_major_version,
+                    &babl_minor_version,
+                    &babl_micro_version);
+
+  lib_versions = gimp_library_version ("babl",
+                                       BABL_MAJOR_VERSION,
+                                       BABL_MINOR_VERSION,
+                                       BABL_MICRO_VERSION,
+                                       babl_major_version,
+                                       babl_minor_version,
+                                       babl_micro_version,
+                                       localized);
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
                     &gegl_micro_version);
 
-  lib_versions = gimp_library_version ("GEGL",
+  lib_version = gimp_library_version ("GEGL",
                                        GEGL_MAJOR_VERSION,
                                        GEGL_MINOR_VERSION,
                                        GEGL_MICRO_VERSION,
@@ -94,6 +110,11 @@ gimp_library_versions (gboolean localized)
                                        gegl_minor_version,
                                        gegl_micro_version,
                                        localized);
+
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
 
   lib_version = gimp_library_version ("GLib",
                                       GLIB_MAJOR_VERSION,
