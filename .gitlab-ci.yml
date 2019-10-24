@@ -237,7 +237,8 @@ gimp-x86_64-w64-mingw32-meson:
     - echo 'crossroad meson ..
               -Dwmf=disabled  -Dgtk-doc=false
               -Dpython=always -Dlua=always
-              -Djavascript=always && ninja install' |
+              -Djavascript=always -Dbuildtype=debugoptimized &&
+            ninja install' |
       crossroad w64 gimp --run="-"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
