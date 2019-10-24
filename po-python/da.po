@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-24 16:52+0000\n"
-"PO-Revision-Date: 2019-03-02 14:39+0100\n"
+"POT-Creation-Date: 2019-10-10 13:11+0000\n"
+"PO-Revision-Date: 2019-10-10 19:19+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -730,8 +730,8 @@ msgstr ""
 "centreret."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Gentegn"
+msgid "Re_draw"
+msgstr "_Gentegn"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -742,16 +742,16 @@ msgstr ""
 "så tryk her for at se, hvordan mønsteret ser ud."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Nulstil"
+msgid "_Reset"
+msgstr "_Nulstil"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Annullér"
+msgid "_Cancel"
+msgstr "_Annullér"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "OK"
+msgid "_OK"
+msgstr "_OK"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
