@@ -77,6 +77,13 @@ ninja -C _build install || exit 1
 crossroad mask pango
 cd ..
 
+# DrMingw
+
+git clone --depth 1 https://github.com/jrfonseca/drmingw.git \
+mkdir drmingw/_build && cd drmingw/_build && \
+crossroad cmake .. -DPYTHON_EXECUTABLE=`which python3` && make install || exit 1
+cd ../..
+
 # preparing GIMP
 
 crossroad install atk gtk3 libtiff xz-libs librsvg2 poppler-glib dbus-glib
