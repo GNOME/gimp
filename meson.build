@@ -4,6 +4,7 @@ project('gimp',
   meson_version: '>=0.50.0',
   default_options: [
     'cpp_std=gnu++14',
+    'buildtype=debugoptimized',
   ],
 )
 
