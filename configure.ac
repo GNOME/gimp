@@ -2636,6 +2636,7 @@ if test "x$platform_osx" = "xno" &&
   AC_DEFINE_UNQUOTED(COLOR_PROFILE_DIRECTORY,
                      "$with_icc_directory",
                      [The path to default color profiles for this system])
+  AC_MSG_RESULT([$with_icc_directory])
 fi
 
 ######################################
