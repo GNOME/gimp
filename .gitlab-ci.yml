@@ -237,8 +237,7 @@ gimp-x86_64-w64-mingw32-meson:
     - echo 'crossroad meson ..
               -Dwmf=disabled  -Dgtk-doc=false
               -Dpython=always -Dlua=always
-              -Djavascript=always -Dbuildtype=debugoptimized &&
-            ninja install &&
+              -Djavascript=always && ninja install &&
             cp ../build/windows/crossbuild-gitlab-ci/gimp-wrapper.cmd $CROSSROAD_PREFIX/bin/ &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
