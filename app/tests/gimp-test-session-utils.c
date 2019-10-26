@@ -42,9 +42,9 @@
 
 typedef struct
 {
-  gchar    *filename;
-  gchar    *md5;
-  GTimeVal  modtime;
+  gchar   *filename;
+  gchar   *md5;
+  guint64  modtime;
 } GimpTestFileState;
 
 
@@ -85,7 +85,8 @@ gimp_test_get_file_state_verbose (const gchar       *filename,
                                            NULL, NULL);
       if (info)
         {
-          g_file_info_get_modification_time (info, &filestate->modtime);
+          filestate->modtime = g_file_info_get_attribute_uint64 (
+            info, G_FILE_ATTRIBUTE_TIME_MODIFIED);
           success = TRUE;
           g_object_unref (info);
         }
@@ -108,8 +109,7 @@ gimp_test_file_state_changes (const gchar       *filename,
                               GimpTestFileState *state1,
                               GimpTestFileState *state2)
 {
-  if (state1->modtime.tv_sec  == state2->modtime.tv_sec &&
-      state1->modtime.tv_usec == state2->modtime.tv_usec)
+  if (state1->modtime == state2->modtime)
     {
       g_printerr ("A new '%s' was not created\n", filename);
       return FALSE;
@@ -167,10 +167,10 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
                                                 gboolean     single_window_mode)
 {
   Gimp              *gimp;
-  GimpTestFileState  initial_sessionrc_state = { NULL, NULL, { 0, 0 } };
-  GimpTestFileState  initial_dockrc_state    = { NULL, NULL, { 0, 0 } };
-  GimpTestFileState  final_sessionrc_state   = { NULL, NULL, { 0, 0 } };
-  GimpTestFileState  final_dockrc_state      = { NULL, NULL, { 0, 0 } };
+  GimpTestFileState  initial_sessionrc_state = { NULL, NULL, 0 };
+  GimpTestFileState  initial_dockrc_state    = { NULL, NULL, 0 };
+  GimpTestFileState  final_sessionrc_state   = { NULL, NULL, 0 };
+  GimpTestFileState  final_dockrc_state      = { NULL, NULL, 0 };
   gchar             *sessionrc_filename      = NULL;
   gchar             *dockrc_filename         = NULL;
 
