@@ -54,6 +54,12 @@ on a folder that is mounted over NFS.  For these reasons, it may be desirable
 to put your swap file in "/tmp".  This is a single folder.
 
 .TP
+(swap-compression "fast")
+
+The compression method used for tile data stored in the swap file.  This is a
+string value.
+
+.TP
 (num-processors 1)
 
 Sets how many threads GIMP should use for operations that support it.  This is
@@ -286,8 +292,8 @@ are yes and no.
     (width 1920)
     (height 1080)
     (unit pixels)
-    (xresolution 300.000000)
-    (yresolution 300.000000)
+    (xresolution 300)
+    (yresolution 300)
     (resolution-unit inches)
     (image-type rgb)
     (precision u8-gamma)
@@ -301,13 +307,13 @@ Sets the default image in the "File/New" dialog.  This is a parameter list.
 .TP
 (default-grid
     (style solid)
-    (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
-    (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
-    (xspacing 10.000000)
-    (yspacing 10.000000)
+    (fgcolor (color-rgba 0 0 0 1))
+    (bgcolor (color-rgba 1 1 1 1))
+    (xspacing 10)
+    (yspacing 10)
     (spacing-unit inches)
-    (xoffset 0.000000)
-    (yoffset 0.000000)
+    (xoffset 0)
+    (yoffset 0)
     (offset-unit inches))
 
 Specify a default image grid.  This is a parameter list.
@@ -393,7 +399,7 @@ is specified the size defaults to being specified in kilobytes.
     (simulation-use-black-point-compensation no)
     (simulation-optimize yes)
     (simulation-gamut-check no)
-    (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000))
+    (out-of-gamut-color (color-rgb 1 0 1))
     (display-module "CdisplayLcms"))
 
 Defines the color management behavior.  This is a parameter list.
@@ -405,7 +411,7 @@ Keep a permanent record of all opened and saved files in the Recent Documents
 list.  Possible values are yes and no.
 
 .TP
-(quick-mask-color (color-rgba 1.000000 0.000000 0.000000 0.500000))
+(quick-mask-color (color-rgba 1 0 0 0.5))
 
 Sets the default quick mask color.  The color is specified in the form
 (color-rgba red green blue alpha) with channel values as floats in the range
@@ -506,6 +512,11 @@ Possible values are yes and no.
 When enabled, the image window will automatically resize itself whenever the
 physical image size changes. This setting only takes effect in multi-window
 mode.  Possible values are yes and no.
+
+.TP
+(default-show-all no)
+
+Show full image content by default.  Possible values are yes and no.
 
 .TP
 (default-dot-for-dot yes)
@@ -696,14 +707,14 @@ certain % character sequences are recognised and expanded as follows:
 .br
 
 .TP
-(monitor-xresolution 96.000000)
+(monitor-xresolution 96)
 
 Sets the monitor's horizontal resolution, in dots per inch.  If set to 0,
 forces the X server to be queried for both horizontal and vertical resolution
 information.  This is a float value.
 
 .TP
-(monitor-yresolution 96.000000)
+(monitor-yresolution 96)
 
 Sets the monitor's vertical resolution, in dots per inch.  If set to 0, forces
 the X server to be queried for both horizontal and vertical resolution
@@ -730,6 +741,7 @@ large, extra-large, huge, enormous and gigantic.
     (show-scrollbars yes)
     (show-selection yes)
     (show-layer-boundary yes)
+    (show-canvas-boundary yes)
     (show-guides yes)
     (show-grid no)
     (show-sample-points yes)
@@ -738,7 +750,8 @@ large, extra-large, huge, enormous and gigantic.
     (snap-to-canvas no)
     (snap-to-path no)
     (padding-mode default)
-    (padding-color (color-rgb 1.000000 1.000000 1.000000)))
+    (padding-color (color-rgb 1 1 1))
+    (padding-in-show-all no))
 
 Sets the default settings for the image view.  This is a parameter list.
 
@@ -750,6 +763,7 @@ Sets the default settings for the image view.  This is a parameter list.
     (show-scrollbars yes)
     (show-selection yes)
     (show-layer-boundary yes)
+    (show-canvas-boundary yes)
     (show-guides yes)
     (show-grid no)
     (show-sample-points yes)
@@ -758,7 +772,8 @@ Sets the default settings for the image view.  This is a parameter list.
     (snap-to-canvas no)
     (snap-to-path no)
     (padding-mode default)
-    (padding-color (color-rgb 1.000000 1.000000 1.000000)))
+    (padding-color (color-rgb 1 1 1))
+    (padding-in-show-all no))
 
 Sets the default settings used when an image is viewed in fullscreen mode. 
 This is a parameter list.
@@ -787,6 +802,12 @@ Possible values are low and high.
 
 Bugs in event history buffer are frequent so in case of cursor offset problems
 turning it off helps.  Possible values are yes and no.
+
+.TP
+(edit-non-visible no)
+
+When enabled, non-visible layers can be edited as normal.  Possible values are
+yes and no.
 
 .TP
 (move-tool-changes-active no)
@@ -1167,7 +1188,7 @@ Sets the default composite mode for the 'New Layer' dialog.  Possible values
 are auto, union, clip-to-backdrop, clip-to-layer and intersection.
 
 .TP
-(layer-new-opacity 1.000000)
+(layer-new-opacity 1)
 
 Sets the default opacity for the 'New Layer' dialog.  This is a float value.
 
@@ -1221,7 +1242,7 @@ Sets the default channel name for the 'New Channel' dialog.  This is a string
 value.
 
 .TP
-(channel-new-color (color-rgba 0.000000 0.000000 0.000000 0.500000))
+(channel-new-color (color-rgba 0 0 0 0.5))
 
 Sets the default color and opacity for the 'New Channel' dialog.  The color is
 specified in the form (color-rgba red green blue alpha) with channel values as
@@ -1261,19 +1282,25 @@ Sets the default 'Scale imported paths to fit size' state for the 'Import
 Path' dialog.  Possible values are yes and no.
 
 .TP
-(selection-feather-radius 5.000000)
+(selection-feather-radius 5)
 
 Sets the default feather radius for the 'Feather Selection' dialog.  This is a
 float value.
 
 .TP
-(selection-grow-radius 1.000000)
+(selection-feather-edge-lock yes)
+
+Sets the default 'Selected areas continue outside the image' setting for the
+\&'Feather Selection' dialog.  Possible values are yes and no.
+
+.TP
+(selection-grow-radius 1)
 
 Sets the default grow radius for the 'Grow Selection' dialog.  This is a float
 value.
 
 .TP
-(selection-shrink-radius 1.000000)
+(selection-shrink-radius 1)
 
 Sets the default shrink radius for the 'Shrink Selection' dialog.  This is a
 float value.
@@ -1285,7 +1312,7 @@ Sets the default 'Selected areas continue outside the image' setting for the
 \&'Shrink Selection' dialog.  Possible values are yes and no.
 
 .TP
-(selection-border-radius 5.000000)
+(selection-border-radius 5)
 
 Sets the default border radius for the 'Border Selection' dialog.  This is a
 float value.
@@ -1307,7 +1334,7 @@ Sets the default 'Selected areas continue outside the image' setting for the
     (style solid)
     (antialias yes)
     (feather no)
-    (feather-radius 10.000000))
+    (feather-radius 10))
 
 The default fill options for the fill dialogs.  This is a parameter list.
 
@@ -1316,14 +1343,14 @@ The default fill options for the fill dialogs.  This is a parameter list.
     (style solid)
     (antialias yes)
     (feather no)
-    (feather-radius 10.000000)
+    (feather-radius 10)
     (method line)
-    (width 6.000000)
+    (width 6)
     (unit pixels)
     (cap-style butt)
     (join-style miter)
-    (miter-limit 10.000000)
-    (dash-offset 0.000000)
+    (miter-limit 10)
+    (dash-offset 0)
     (dash-info 0)
     (emulate-brush-dynamics no))
 
