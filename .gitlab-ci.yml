@@ -164,6 +164,7 @@ gegl-git:
     - ../autogen.sh
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
+        --enable-gtk-doc
     - make -j "$(nproc)"
     - make distcheck
   artifacts:
