@@ -327,7 +327,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl              = dependency('gegl-0.4',           version: '>=0.4.17')
+gegl              = dependency('gegl-0.4',           version: '>=0.4.18')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
