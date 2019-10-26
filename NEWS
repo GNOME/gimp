@@ -7,57 +7,63 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
 
 Core:
 
-  - New "Selected areas continue outside the image" toggle option to the
-    "Feather Selection" dialog.
-  - New "Allow editing on non-visible layers" setting in Preferences to allow
-    painting, transforming, and selecting on layers with toggled off visibility.
+  - New "Selected areas continue outside the image" toggle option to
+    the "Feather Selection" dialog.
+  - New "Allow editing on non-visible layers" setting in Preferences
+    to allow painting, transforming, and selecting on layers with
+    toggled off visibility.
   - XCF loading a bit more resilient to corruption: it doesn't stop
-    anymore at the first layer or channel error; instead it tries to
-    load more layers/channels to salvage as much data as possible from a
-    corrupted XCF file.
-  - In gimp:gradient, fix dithering to correspond to how we actually round float
-    values to 8-bit.  In particular, this avoids introducing noise when a
-    component is fixed at 0 or 1 along a segment.
-  - New "Show All" view mode allowing to show pixels outside the canvas boundary.
-  - New "Show Canvas Boundary" option to render a dotted line around the canvas
-    boundary.
-  - New "Keep Padding in "Show All" Mode" option, also available as a default
-    option via Preferences, to preserve the padding color instead of displaying
-    the checkerboard.
-  - Several features updated to react as expected when run out-of-canvas:
-    color-picking, canvas grid, transform tools, bucket fill, and more.
+    any more at the first layer or channel error; instead it tries to
+    load more layers/channels to salvage as much data as possible from
+    a corrupted XCF file.
+  - In gimp:gradient, fix dithering to correspond to how we actually
+    round float values to 8-bit. In particular, this avoids
+    introducing noise when a component is fixed at 0 or 1 along a
+    segment.
+  - New "Show All" view mode allowing to show pixels outside the
+    canvas boundary.
+  - New "Show Canvas Boundary" option to render a dotted line around
+    the canvas boundary.
+  - New "Keep Padding in "Show All" Mode" option, also available as a
+    default option via Preferences, to preserve the padding color
+    instead of displaying the checkerboard.
+  - Several features updated to react as expected when run
+    out-of-canvas: color-picking, canvas grid, transform tools, bucket
+    fill, and more.
   - Loaded images' pixel density will now default to 72 PPI when no
     explicit resolution information was stored in the imported file.
     Newly created images' default pixel density will continue to be
     based on the default image template (with value 300 PPI if it has
-    not be changed), yet not loaded images anymore.
-    72 PPI is the common default in most software (and in standards such
-    as Exif) so it makes sense we stick to it, only for loaded images.
+    not be changed), yet not loaded images anymore. 72 PPI is the
+    common default in most software (and in standards such as Exif) so
+    it makes sense we stick to it, only for loaded images.
 
 Tools:
 
   - Free Select tool: fast copy|cut-paste modifiers (Alt + Ctrl|Shift)
-    are now working even when the selection is not committed. Starting a
-    fast copy|cut-paste will automatically close the polygon and commit
-    the selection, accelerating fast usage of free selections.
-  - Foreground Select tool: new "Grayscale" Preview Mode. Also, a color selector
-    for "Color" preview (original preview mode) now available, to select any
-    color and opacity for the preview.
-  - Add a new "Image" transform type to the transform tools, in addition
-    to the existing "Layer", "Selection", and "Path" transform types.
-    The "Image" mode transforms the entire image, rather than a single
-    item. In tools with a preview, the preview shows the transformed
-    image projection.  The clipping mode controls how the canvas is
-    clipped during the transform; in particular, the ADJUST clipping
-    mode resizes the canvas to fit its transformed size.
-  - In GimpFilterTool, add a new "clipping" option, which can be either
-    Adjust or Clip.  This option is controllable for layers, when
-    there's no selection mask.
+    are now working even when the selection is not committed. Starting
+    a fast copy|cut-paste will automatically close the polygon and
+    commit the selection, accelerating fast usage of free selections.
+  - Foreground Select tool: new "Grayscale" Preview Mode. Also, a
+    color selector for "Color" preview (original preview mode) now
+    available, to select any color and opacity for the preview.
+  - Add a new "Image" transform type to the transform tools, in
+    addition to the existing "Layer", "Selection", and "Path"
+    transform types.  The "Image" mode transforms the entire image,
+    rather than a single item. In tools with a preview, the preview
+    shows the transformed image projection.  The clipping mode
+    controls how the canvas is clipped during the transform; in
+    particular, the ADJUST clipping mode resizes the canvas to fit its
+    transformed size.
+  - In GimpFilterTool, add a new "clipping" option, which can be
+    either Adjust or Clip.  This option is controllable for layers,
+    when there's no selection mask.
     When set to Adjust, which is used by default, the filter's output
     may extent past the drawable's boundary, and the drawable will be
     resized to match the output when committed.
@@ -65,12 +71,13 @@ Tools:
 
 Plug-ins:
 
-  - Simple 8-bit port of filters to GEGL: nl-filter, film, fractal-explorer,
-    flame, blinds, jigsaw, gradient-flare, checkerboard, tile-small,
-    curve-bend, sample-colorize, map-object, lighting, grid, despeckle,
-    sphere-designer, contrast-retinex, hot, sparkle, cml-explorer, destripe,
-    twain, animation-optimize, depth-merge, warp, imagemap, gimpressionist
-  - Port of filters to GEGL with floats support: van-gogh-lic.
+  - Simple 8-bit port of filters to GEGL: nl-filter, film,
+    fractal-explorer, flame, blinds, jigsaw, gradient-flare,
+    checkerboard, tile-small, curve-bend, sample-colorize, map-object,
+    lighting, grid, despeckle, sphere-designer, contrast-retinex, hot,
+    sparkle, cml-explorer, destripe, twain, animation-optimize,
+    depth-merge, warp, imagemap, gimpressionist
+  - Port of filters to GEGL with float support: van-gogh-lic.
   - Add color profile support for HEIF (only when libheif 1.4.0 is
     available).
   - TIFF import will now ask (in interactive mode) how to process
@@ -79,63 +86,65 @@ Plug-ins:
     channel.
   - HEIF export now improved with same profile logics as JPEG or WebP
     (it can actually export higher bit-depth data, so profile logics
-    should be the one as in PNG, but we only support 8 bpc HEIF for the
-    time being).
-  - HEIF export dialog now has a "Save color profile" checkbox allowing
-    to not export with a profile when needed (needs libheif 1.4.0 or
-    higher).
-  - PDF exporting: text layers in layer groups are now exported as proper text.
+    should be the one as in PNG, but we only support 8 bpc HEIF for
+    the time being).
+  - HEIF export dialog now has a "Save color profile" checkbox
+    allowing to not export with a profile when needed (needs libheif
+    1.4.0 or higher).
+  - PDF exporting: text layers in layer groups are now exported as
+    proper text.
   - Cleaned up the file-dds GUI, removed the "Advanced" expander.
-  - gimptool external tool now install plug-ins into subfolders (this is
-    not mandatory in GIMP 2.10 yet, unlike future GIMP 3, but is already
-    the recommended folder structure for plug-ins).
-  - 3 procedures ("color-decode-ycocg", "color-decode-ycocg-scaled" and
-    "color-decode-alpha-exp") removed from file-dds plug-in because they
-    are hacks which should stay internal to the plug-in and are
-    semantically wrong because colors in drawables are never in such
-    formats.
+  - gimptool external tool now install plug-ins into subfolders (this
+    is not mandatory in GIMP 2.10 yet, unlike future GIMP 3, but is
+    already the recommended folder structure for plug-ins).
+  - 3 procedures ("color-decode-ycocg", "color-decode-ycocg-scaled"
+    and "color-decode-alpha-exp") removed from file-dds plug-in
+    because they are hacks which should stay internal to the plug-in
+    and are semantically wrong because colors in drawables are never
+    in such formats.
 
 Filters:
 
-  - New "Normal Map" filter to generate normal maps from height maps in the
-    Generic section.
+  - New "Normal Map" filter to generate normal maps from height maps
+    in the Generic section.
   - Replace old filters with GEGL operation counterparts: edge-neon
-    (gegl:edge-neon), contrast-normalize (gegl:stretch-contrast), oilify
-    (gegl:oilify)
-  - Add gegl:bayer-matrix and gegl:linear-sinusoid to Filters -> Render ->
-    Pattern.
+    (gegl:edge-neon), contrast-normalize (gegl:stretch-contrast),
+    oilify (gegl:oilify)
+  - Add gegl:bayer-matrix and gegl:linear-sinusoid to Filters ->
+    Render -> Pattern.
   - Add gegl:newsprint to Filters -> Distorts.
   - Add gegl:mean-curvature-blur to Filters -> Blur.
 
 Performance:
 
-  - Adde an active-thread variable to the dashboard's misc group, showing the
-    number of active worker threads.
-  - Reduce time complexity of layer-group translation. When translating a layer
-    group, avoid separately updating the original area of the child layers
-    before translating them (as per the fix to issue #3484), as this results in
-    quadratic time complexity w.r.t. to the maximal subgroup nesting level.
-    Instead, simply defer the updating of the group's offset until *after*
-    translating the child layers, so that their original area isn't clipped by
-    the parent, while their new area is still properly updated even if the
+  - Add an active-thread variable to the dashboard's misc group,
+    showing the number of active worker threads.
+  - Reduce time complexity of layer-group translation. When
+    translating a layer group, avoid separately updating the original
+    area of the child layers before translating them (as per the fix
+    to issue #3484), as this results in quadratic time complexity
+    w.r.t. to the maximal subgroup nesting level. Instead, simply
+    defer the updating of the group's offset until *after* translating
+    the child layers, so that their original area isn't clipped by the
+    parent, while their new area is still properly updated even if the
     parent's size changes.
 
 User interface:
 
   - Many mnemonics added in various dialogs.
-  - Add a gimp-rotate-image-arbitrary action, and a corresponding "Image
-    -> Transform -> Arbitrary Rotation..." menu entry, which activates
-    the rotate tool in image mode (similarly to the corresponding action
-    for layers).
+  - Add a gimp-rotate-image-arbitrary action, and a corresponding
+    "Image -> Transform -> Arbitrary Rotation..." menu entry, which
+    activates the rotate tool in image mode (similarly to the
+    corresponding action for layers).
   - On Windows, minimized GIMP window is now deiconified when GIMP is
     run again (clicking its shortcut or otherwise).
 
 Preferences:
 
   - New "Swap compression" option: explicit control over the tile-swap
-    compression algorithm in GEGL. "Best performance" is used by default,
-    "Balanced", "Best compression", and "None" (disables compression) are
-    available. 
+    compression algorithm in GEGL. "Best performance" is used by
+    default, "Balanced", "Best compression", and "None" (disables
+    compression) are available.
 
 Devel docs:
 
@@ -155,10 +164,10 @@ Debugging:
 
 Translations:
 
-  - Basque, Brazilian Portuguese, British English, Catalan, Chinese (Taiwan),
-    Croatian, Danish, Dutch, French, German, Greek, Hungarian, Icelandic,
-    Indonesian, Italian, Latvian, Polish, Russian, Slovenian, Spanish, Swedish,
-    Turkish.
+  - Basque, Brazilian Portuguese, British English, Catalan, Chinese
+    (Taiwan), Croatian, Danish, Dutch, French, German, Greek,
+    Hungarian, Icelandic, Indonesian, Italian, Latvian, Polish,
+    Russian, Slovenian, Spanish, Swedish, Turkish.
 
 Bugfixes:
 
@@ -169,19 +178,21 @@ Bugfixes:
 
 Code contributors:
 
-   Alexandre Prokoudine, Ell, Federico Mena Quintero, Jehan, Jernej Simončič,
-   Lionel, Massimo Valentini, Michael Natterer, Michael Schumacher,
-   Oleksii Samorukov, Sabri Ünal, Sergio Jiménez Herena, Thomas Manni,
-   lillolollo, sarah, woob, Øyvind Kolås
+   Alexandre Prokoudine, Ell, Federico Mena Quintero, Jehan, Jernej
+   Simončič, Lionel, Massimo Valentini, Michael Natterer, Michael
+   Schumacher, Oleksii Samorukov, Sabri Ünal, Sergio Jiménez Herena,
+   Thomas Manni, lillolollo, sarah, woob, Øyvind Kolås.
 
 Translators:
 
-   Alan Mortensen, Alexandre Prokoudine, Anders Jonsson, Andika Triwidada,
-   Asier Sarasua Garmendia, Balázs Meskó, Balázs Úr, Bruce Cowan, Claude Paroz,
-   Daniel Mustieles García, Dimitris Spingos, Emin Tufan Çetin, Hannie Dumoleyn,
-   Jordi Mas, Julia Dronova, Julien Hardelin, Marco Ciampa, Martin Srebotnjak,
-   Milo Ivir, pesder, Piotr Drąg, Rafael Fontenelle, Rodrigo Lledó Milanca,
-   Rūdolfs Mazurs, Sabri Ünal, Sveinn í Felli, Tim Sabsch, Zander Brown.
+   Alan Mortensen, Alexandre Prokoudine, Anders Jonsson, Andika
+   Triwidada, Asier Sarasua Garmendia, Balázs Meskó, Balázs Úr, Bruce
+   Cowan, Claude Paroz, Daniel Mustieles García, Dimitris Spingos,
+   Emin Tufan Çetin, Hannie Dumoleyn, Jordi Mas, Julia Dronova, Julien
+   Hardelin, Marco Ciampa, Martin Srebotnjak, Milo Ivir, pesder, Piotr
+   Drąg, Rafael Fontenelle, Rodrigo Lledó Milanca, Rūdolfs Mazurs,
+   Sabri Ünal, Sveinn í Felli, Tim Sabsch, Zander Brown.
+
 
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
@@ -302,6 +313,7 @@ Translations:
    - 12 translations were updated: Catalan, Chinese, French, German,
      Hungarian, Indonesian, Italian, Polish, Russian, Spanish, Swedish
      and Turkish.
+
 
 Overview of Changes from GIMP 2.10.8 to GIMP 2.10.10
 ====================================================
@@ -639,6 +651,7 @@ Build:
     this is not mandatory to do so, but it would protect our core
     plug-ins against any DLL installed directly under plug-ins/ by
     third-party plug-ins (cf. Windows DLL hell).
+
 
 Overview of Changes from GIMP 2.10.2 to GIMP 2.10.4
 ===================================================
