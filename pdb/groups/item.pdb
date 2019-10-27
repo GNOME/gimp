@@ -216,7 +216,7 @@ This procedure returns TRUE if the specified item ID is a selection.
 HELP
 
     &std_pdb_misc;
-    $since = '3,0';
+    $since = '3.0';
 
     @inargs = (
 	{ name => 'item_id', type => 'int32',

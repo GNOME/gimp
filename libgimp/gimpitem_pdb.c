@@ -263,7 +263,7 @@ gimp_item_id_is_layer_mask (gint item_id)
  *
  * Returns: TRUE if the item ID is a selection, FALSE otherwise.
  *
- * Since: 3,0
+ * Since: 3.0
  **/
 gboolean
 gimp_item_id_is_selection (gint item_id)
