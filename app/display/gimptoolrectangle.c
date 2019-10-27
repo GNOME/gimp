@@ -2723,7 +2723,7 @@ gimp_tool_rectangle_set_other_side_coord (GimpToolRectangle *rectangle,
  *
  * Adjust the rectangle to the new position specified by passed
  * coordinate, taking fixed_center into account, which means it
- * expands the rectagle around the center point.
+ * expands the rectangle around the center point.
  */
 static void
 gimp_tool_rectangle_apply_coord (GimpToolRectangle *rectangle,
