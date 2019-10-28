@@ -187,7 +187,7 @@ if (get_option('buildtype') == 'release' or
 
   have_altivec        = false
   have_altivec_sysctl = false
-  if arch_ppc
+  if host_cpu_family == 'ppc'
     altivec_args = cc.get_supported_arguments([
       '-faltivec',
       '-maltivec',
@@ -474,7 +474,7 @@ endif
 ################################################################################
 # Check for 32-bit DLLs (Win32 64-bit)
 
-if platform_windows and arch_x86_64
+if platform_windows and host_cpu_family == 'x86_64'
   conf.set_quoted('WIN32_32BIT_DLL_FOLDER', get_option('win32-32bits-dll-folder'))
 endif
 
