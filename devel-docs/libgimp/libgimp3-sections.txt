@@ -10,6 +10,7 @@ gimp_tile_width
 gimp_tile_height
 gimp_show_help_button
 gimp_export_color_profile
+gimp_export_comment
 gimp_export_exif
 gimp_export_xmp
 gimp_export_iptc
@@ -997,6 +998,9 @@ gimp_procedure_get_date
 gimp_procedure_add_argument
 gimp_procedure_add_aux_argument
 gimp_procedure_add_return_value
+gimp_procedure_find_argument
+gimp_procedure_find_aux_argument
+gimp_procedure_find_return_value
 gimp_procedure_get_arguments
 gimp_procedure_get_aux_arguments
 gimp_procedure_get_return_values

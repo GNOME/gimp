@@ -169,7 +169,7 @@
     <title>Index of new symbols in GIMP 2.10.14</title>
     <xi:include href="xml/api-index-2.10.14.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="2.3.0" id="api-index-3-0">
+  <index role="3.0" id="api-index-3-0">
     <title>Index of new symbols in GIMP 3.0</title>
     <xi:include href="xml/api-index-3.0.xml"><xi:fallback /></xi:include>
   </index>
