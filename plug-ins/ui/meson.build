@@ -1,5 +1,4 @@
 plugin_ui = [
-  'plug-in-file-gif.ui',
   'plug-in-file-tiff.ui',
   'plug-in-metadata-editor-calendar.ui',
   'plug-in-metadata-editor.ui',
