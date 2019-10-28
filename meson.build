@@ -98,21 +98,25 @@ linker_args = []
 ################################################################################
 # Host system detection
 
-cpu = host_machine.cpu().to_lower()
+host_cpu_family = host_machine.cpu_family()
+message('Host machine cpu family: ' + host_cpu_family)
 
-arch_x86_64 = (cpu == 'x86_64')
-arch_x86    = (cpu.startswith('i') and cpu.endswith('86')) or arch_x86_64
-arch_ppc64  = (cpu == 'ppc64' or cpu == 'powerpc64')
-arch_ppc    = (cpu == 'ppc'   or cpu == 'powerpc') or arch_ppc64
-
-if not (arch_x86 or arch_ppc)
-  error('Unknown host architecture')
+host_cpu_family = host_machine.cpu_family()
+if   host_cpu_family == 'x86'
+  have_x86 = true
+  conf.set10('ARCH_X86',    true)
+elif host_cpu_family == 'x86_64'
+  have_x86 = true
+  conf.set10('ARCH_X86',    true)
+  conf.set10('ARCH_X86_64', true)
+elif host_cpu_family == 'ppc'
+  have_ppc = true
+  conf.set10('ARCH_PPC',    true)
+elif host_cpu_family == 'ppc64'
+  have_ppc = true
+  conf.set10('ARCH_PPC',    true)
+  conf.set10('ARCH_PPC64',  true)
 endif
-
-conf.set10('ARCH_X86',    arch_x86)
-conf.set10('ARCH_X86_64', arch_x86_64)
-conf.set10('ARCH_PPC',    arch_ppc)
-conf.set10('ARCH_PPC64',  arch_ppc64)
 
 
 host_os = host_machine.system().to_lower()
