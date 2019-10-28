@@ -32,14 +32,15 @@
  * @title: GimpProcedureConfig
  * @short_description: Config object for procedure arguments
  *
- * #GimpProcedureConfig base class for #GimpProcedure-specific config
- * objects and the main interface to manage aspects of
+ * #GimpProcedureConfig is the base class for #GimpProcedure specific
+ * config objects and the main interface to manage aspects of
  * #GimpProcedure's arguments such as persistency of the last used
  * arguments across GIMP sessions.
  *
  * A #GimpProcedureConfig is created by a #GimpProcedure using
  * gimp_procedure_create_config() and its properties match the
- * procedure's arguments in number, order and type.
+ * procedure's arguments and auxiliary arguments in number, order and
+ * type.
  *
  * It implements the #GimpConfig interface and therefore has all its
  * serialization and deserialization features.
@@ -395,8 +396,8 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  * @status: the return status of the #GimpProcedure's run()
  *
  * This function is the counterpart of
- * gimp_procedure_conig_begin_run() and must always be called in pairs
- * in a procedure's run(), before returning return values.
+ * gimp_procedure_config_begin_run() and must always be called in
+ * pairs in a procedure's run(), before returning return values.
  *
  * If the @run_mode passed to gimp_procedure_config_end_run() was
  * %GIMP_RUN_INTERACTIVE, @config is saved as last used values to be
@@ -406,7 +407,7 @@ gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
  * #GimpParasite and gimp_image_attach_parasite().
  *
  * If @run_mode was not %GIMP_RUN_NONINTERACTIVE, this function also
- * conveniently calls gimp_display_flush(), which is what most
+ * conveniently calls gimp_displays_flush(), which is what most
  * procedures want and doesn't do any harm if called redundantly.
  *
  * See gimp_procedure_config_begin_run().
@@ -500,7 +501,9 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * If the procedure has a "comment" argument, it is synced with the
  * image's "gimp-comment" parasite, unless @run_mode is
  * %GIMP_RUN_NONINTERACTIVE and the argument is not an auxiliary
- * argument.
+ * argument. If there is no "gimp-comment" parasite, the "comment"
+ * argument is initialized with the default comment returned by
+ * gimp_get_default_comment().
  *
  * Returns: (transfer none): The #GimpMetadata to be used for this
  *          export, or %NULL if @original_image doesn't have metadata.
@@ -572,20 +575,30 @@ gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
                                             "comment") ||
           (run_mode != GIMP_RUN_NONINTERACTIVE))
         {
-          GimpParasite *parasite = gimp_image_get_parasite (original_image,
-                                                            "gimp-comment");
+          GimpParasite *parasite;
+          gchar        *comment = NULL;
+
+          parasite = gimp_image_get_parasite (original_image, "gimp-comment");
           if (parasite)
             {
-              gchar *comment = g_strndup (gimp_parasite_data (parasite),
-                                          gimp_parasite_data_size (parasite));
+              comment = g_strndup (gimp_parasite_data (parasite),
+                                   gimp_parasite_data_size (parasite));
 
-              g_object_set (config,
-                            "comment", comment,
-                            NULL);
+              if (comment && ! strlen (comment))
+                g_clear_pointer (&comment, g_free);
 
-              g_free (comment);
               gimp_parasite_free (parasite);
             }
+
+          if (! comment)
+            comment = gimp_get_default_comment ();
+
+          if (comment && strlen (comment))
+            g_object_set (config,
+                          "comment", comment,
+                          NULL);
+
+          g_free (comment);
         }
     }
 
@@ -640,41 +653,70 @@ gimp_procedure_config_end_export (GimpProcedureConfig  *config,
           config->priv->run_mode == GIMP_RUN_INTERACTIVE)
         {
           GimpParasite *parasite;
-          gchar        *image_comment = NULL;
           gchar        *comment;
-
-          parasite = gimp_image_get_parasite (config->priv->image,
-                                              "gimp-comment");
-          if (parasite)
-            {
-              image_comment = g_strndup (gimp_parasite_data (parasite),
-                                         gimp_parasite_data_size (parasite));
-              gimp_parasite_free (parasite);
-            }
 
           g_object_get (config,
                         "comment", &comment,
                         NULL);
 
-          if (g_strcmp0 (comment, image_comment))
+          parasite = gimp_image_get_parasite (config->priv->image,
+                                              "gimp-comment");
+          if (parasite)
             {
-              if (comment && strlen (comment))
+              /*  it there is an image comment, always override it if
+               *  the comment was changed
+               */
+              gchar *image_comment;
+
+              image_comment = g_strndup (gimp_parasite_data (parasite),
+                                         gimp_parasite_data_size (parasite));
+              gimp_parasite_free (parasite);
+
+              if (g_strcmp0 (comment, image_comment))
+                {
+                  if (comment && strlen (comment))
+                    {
+                      parasite = gimp_parasite_new ("gimp-comment",
+                                                    GIMP_PARASITE_PERSISTENT,
+                                                    strlen (comment) + 1,
+                                                    comment);
+                      gimp_image_attach_parasite (config->priv->image,
+                                                  parasite);
+                      gimp_parasite_free (parasite);
+                    }
+                  else
+                    {
+                      gimp_image_detach_parasite (config->priv->image,
+                                                  "gimp-comment");
+                    }
+                }
+
+              g_free (image_comment);
+            }
+          else
+            {
+              /*  otherwise, set an image comment if the comment was
+               *  changed from the default comment
+               */
+              gchar *default_comment;
+
+              default_comment = gimp_get_default_comment ();
+
+              if (g_strcmp0 (comment, default_comment) &&
+                  comment && strlen (comment))
                 {
                   parasite = gimp_parasite_new ("gimp-comment",
                                                 GIMP_PARASITE_PERSISTENT,
                                                 strlen (comment) + 1,
                                                 comment);
-                  gimp_image_attach_parasite (config->priv->image, parasite);
+                  gimp_image_attach_parasite (config->priv->image,
+                                              parasite);
                   gimp_parasite_free (parasite);
                 }
-              else
-                {
-                  gimp_image_detach_parasite (config->priv->image,
-                                              "gimp-comment");
-                }
+
+              g_free (default_comment);
             }
 
-          g_free (image_comment);
           g_free (comment);
         }
 
