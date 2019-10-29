@@ -220,7 +220,7 @@ gimp_save_procedure_create_config (GimpProcedure  *procedure,
  *
  * It automatically adds the standard
  *
- * (GimpRunMode, GimpImage, GimpImage, GFile)
+ * (#GimpRunMode, #GimpImage, #GimpDrawable, #GFile)
  *
  * arguments of a save procedure. It is possible to add additional
  * arguments.

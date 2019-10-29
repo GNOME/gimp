@@ -223,11 +223,11 @@ gimp_load_procedure_create_config (GimpProcedure  *procedure,
  *
  * It automatically adds the standard
  *
- * (GimpRunMode, GFile)
+ * (#GimpRunMode, #GFile)
  *
  * arguments and the standard
  *
- * (GimpImage)
+ * (#GimpImage)
  *
  * return value of a load procedure. It is possible to add additional
  * arguments.

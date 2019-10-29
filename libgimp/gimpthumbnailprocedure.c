@@ -211,11 +211,11 @@ gimp_thumbnail_procedure_create_config (GimpProcedure  *procedure,
  *
  * It automatically adds the standard
  *
- * (uri, size)
+ * (#GFile, size)
  *
  * arguments and the standard
  *
- * (image-id, image-width, image-height, image-type, num-layers)
+ * (#GimpImage, image-width, image-height, #GimpImageType, num-layers)
  *
  * return value of a thumbnail procedure. It is possible to add
  * additional arguments.
@@ -225,7 +225,7 @@ gimp_thumbnail_procedure_create_config (GimpProcedure  *procedure,
  * "args" #GimpValueArray of #GimpRunThumbnailFunc only contains
  * additionally added arguments.
  *
- * #GimpThumbnailRunFunc must gimp_value_array_truncate() the returned
+ * #GimpRunThumbnailFunc must gimp_value_array_truncate() the returned
  * #GimpValueArray to the number of return values it actually uses.
  *
  * Returns: a new #GimpProcedure.

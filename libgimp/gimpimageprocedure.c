@@ -189,7 +189,7 @@ gimp_image_procedure_create_config (GimpProcedure  *procedure,
  *
  * It automatically adds the standard
  *
- * (run-mode, image-id, drawable-id)
+ * (#GimpRunMode, #GimpImage, #GimpDrawable)
  *
  * arguments of an image procedure. It is possible to add additional
  * arguments.
