@@ -544,17 +544,17 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 ;gegl 0.2
 Type: filesandordirs; Name: "{app}\lib\gegl-0.2"
 ;old icons
-Type: files; Name: "{commonprograms}\GIMP 2.lnk"
-Type: files; Name: "{commondesktop}\GIMP 2.lnk"
+Type: files; Name: "{autoprograms}\GIMP 2.lnk"
+Type: files; Name: "{autodesktop}\GIMP 2.lnk"
 ;get previous GIMP icon name from uninstall name in Registry
-Type: files; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
-Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
+Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayVersion|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayVersion|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayVersion')
 ;32-bit Python
 Type: filesandordirs; Name: "{app}\32\lib\gimp\2.0\python"
 Type: files; Name: "{app}\32\bin\python2w.exe"
 Type: files; Name: "{app}\32\bin\python2.exe"
 Type: files; Name: "{app}\32\bin\libpython2.7.dll"
-Type: filesandordirs; Name: "{app}\32\\lib\python2.7"
+Type: filesandordirs; Name: "{app}\32\lib\python2.7"
 ;remove old babl and gegl plugins
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
@@ -702,7 +702,8 @@ end;
 
 function CheckRegValueExists(const SubKeyName, ValueName: String): Boolean;
 begin
-	Result := RegValueExists(HKEY_LOCAL_MACHINE, SubKeyName, ValueName);
+	Result := RegValueExists(HKEY_AUTO, SubKeyName, ValueName);
+	DebugMsg('CheckRegValueExists',SubKeyName + ', ' + ValueName + ': ' + BoolToStr(Result));
 end;
 
 
