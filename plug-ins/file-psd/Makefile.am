@@ -10,6 +10,8 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
+else
+libm = -lm
 endif
 
 if HAVE_WINDRES
@@ -53,6 +55,7 @@ AM_CPPFLAGS = \
 	-I$(includedir)
 
 file_psd_LDADD = \
+	$(libm)			\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\
