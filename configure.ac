@@ -594,7 +594,7 @@ fi
 for CC_VERSION_OPT in $CC_VERSION_OPTS; do
   # We run $CC, and escape and format its output, in a single step,
   # since some shells expand escape sequences in "echo" arguments.
-  CC_VERSION="`$CC $CC_VERSION_OPT 2>&1 | sed -e 's/\\\\/\\\\\\\\/g;s/^/\\\\t/;s/$/\\\\n/' | tr -d '\n'`"
+  CC_VERSION="`$CC $CC_VERSION_OPT 2>&1 | sed -e 's/\\\\/\\\\\\\\\\\\\\\\/g;s/^/\\\\t/;s/$/\\\\n/' | tr -d '\n'`"
   if test $? -eq 0; then
     break
   fi
