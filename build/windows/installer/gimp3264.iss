@@ -177,13 +177,13 @@ Name: "ca"; MessagesFile: "compiler:Languages\Catalan.isl,lang\ca.setup.isl"
 Name: "cs"; MessagesFile: "compiler:Languages\Czech.isl,lang\cs.setup.isl"
 Name: "da"; MessagesFile: "compiler:Languages\Danish.isl,lang\da.setup.isl"
 Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
-Name: "el"; MessagesFile: "compiler:Languages\Greek.isl,lang\el.setup.isl"
+Name: "el"; MessagesFile: "compiler:Languages\Unofficial\Greek.isl,lang\el.setup.isl"
 Name: "eo"; MessagesFile: "compiler:Languages\Unofficial\Esperanto.isl,lang\eo.setup.isl"
 Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl,lang\es.setup.isl"
 Name: "eu"; MessagesFile: "compiler:Languages\Unofficial\Basque.isl,lang\eu.setup.isl"
 Name: "fi"; MessagesFile: "compiler:Languages\Finnish.isl,lang\fi.setup.isl"
 Name: "fr"; MessagesFile: "compiler:Languages\French.isl,lang\fr.setup.isl"
-Name: "hu"; MessagesFile: "compiler:Languages\Hungarian.isl,lang\hu.setup.isl"
+Name: "hu"; MessagesFile: "compiler:Languages\Unofficial\Hungarian.isl,lang\hu.setup.isl"
 Name: "id"; MessagesFile: "compiler:Languages\Unofficial\Indonesian.isl,lang\id.setup.isl"
 Name: "is"; MessagesFile: "compiler:Languages\Unofficial\Icelandic.isl,lang\is.setup.isl"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\it.setup.isl"
@@ -277,7 +277,7 @@ Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: g
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\9.27\lib\*.*"; DestDir: "{app}\share\ghostscript\9.27\lib"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\ghostscript\9.50\lib\*.*"; DestDir: "{app}\share\ghostscript\9.50\lib"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;32-on-64bit
 #include "32on64.isi"
