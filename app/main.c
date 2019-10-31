@@ -308,7 +308,7 @@ static const GOptionEntry main_entries[] =
 static void
 gimp_macos_setenv (const char * progname)
 {
-  /* helper to set environment variables for GIMP to be rellocatable.
+  /* helper to set environment variables for GIMP to be relocatable.
    * Due to the latest changes it is not recommended to set it in the shell
    * wrapper anymore.
    */
@@ -332,14 +332,14 @@ gimp_macos_setenv (const char * progname)
 
       app_dir = g_path_get_dirname (resolved_path);
       g_snprintf (tmp, sizeof(tmp), "%s/../Resources", app_dir);
-      if ( realpath (tmp, res_dir) && !stat (res_dir,&sb) && S_ISDIR (sb.st_mode))
+      if (realpath (tmp, res_dir) && !stat (res_dir,&sb) && S_ISDIR (sb.st_mode))
         {
           g_print ("GIMP is started as MacOS application\n");
         }
       else
         return;
 
-      path_len = strlen (g_getenv ("PATH") ?: "") + strlen (app_dir) + 2;
+      path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (app_dir) + 2;
       path = g_try_malloc (path_len);
       if (path == NULL)
         {
@@ -350,32 +350,35 @@ gimp_macos_setenv (const char * progname)
         g_snprintf (path, path_len, "%s:%s", app_dir, g_getenv ("PATH"));
       else
         g_snprintf (path, path_len, "%s", app_dir);
-      g_setenv ("PATH", path, 1);
+      g_free (app_dir);
+      g_setenv ("PATH", path, TRUE);
       g_free (path);
       g_snprintf (tmp, sizeof(tmp), "%s/lib/gtk-2.0/2.10.0", res_dir);
-      g_setenv ("GTK_PATH", tmp, 1);
+      g_setenv ("GTK_PATH", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/etc/gtk-2.0/gtk.immodules", res_dir);
-      g_setenv ("GTK_IM_MODULE_FILE", tmp, 1);
+      g_setenv ("GTK_IM_MODULE_FILE", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/lib/gegl-0.4", res_dir);
-      g_setenv ("GEGL_PATH", tmp, 1);
+      g_setenv ("GEGL_PATH", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/lib/babl-0.1", res_dir);
-      g_setenv ("BABL_PATH", tmp, 1);
+      g_setenv ("BABL_PATH", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache", res_dir);
-      g_setenv ("GDK_PIXBUF_MODULE_FILE", tmp, 1);
+      g_setenv ("GDK_PIXBUF_MODULE_FILE", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/etc/fonts", res_dir);
-      g_setenv ("FONTCONFIG_PATH", tmp, 1);
+      g_setenv ("FONTCONFIG_PATH", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s", res_dir);
-      g_setenv ("PYTHONHOME", tmp, 1);
+      g_setenv ("PYTHONHOME", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/lib/python2.7:%s/lib/gimp/2.0/python", res_dir, res_dir);
-      g_setenv ("PYTHONPATH", tmp, 1);
+      g_setenv ("PYTHONPATH", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/lib/gio/modules", res_dir);
-      g_setenv ("GIO_MODULE_DIR", tmp, 1);
+      g_setenv ("GIO_MODULE_DIR", tmp, TRUE);
       g_snprintf (tmp, sizeof(tmp), "%s/share/libwmf/fonts", res_dir);
-      g_setenv ("WMF_FONTDIR", tmp, 1);
+      g_setenv ("WMF_FONTDIR", tmp, TRUE);
       if (g_getenv ("HOME")!=NULL)
         {
-          g_snprintf (tmp, sizeof(tmp), "%s/Library/Application Support/GIMP/2.10/cache", g_getenv("HOME"));
-          g_setenv ("XDG_CACHE_HOME", tmp, 1);
+          g_snprintf (tmp, sizeof(tmp),
+                      "%s/Library/Application Support/GIMP/2.10/cache",
+                      g_getenv("HOME"));
+          g_setenv ("XDG_CACHE_HOME", tmp, TRUE);
         }
     }
 }
@@ -402,7 +405,7 @@ main (int    argc,
   gint newargc = 0;
   for (gint i = 0; i < argc; i++)
     {
-      if (strncmp (argv[i], "-psn_",5))
+      if (!g_str_has_prefix (argv[i], "-psn_"))
         {
           argv[newargc] = argv[i];
           newargc++;
