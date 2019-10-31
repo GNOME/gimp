@@ -32,8 +32,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://exiv2.org/builds/exiv2-0.27.1-Source.tar.gz",
-                            "sha256": "f125286980fd1bcb28e188c02a93946951c61e10784720be2301b661a65b3081"
+                            "url": "https://exiv2.org/builds/exiv2-0.27.2-Source.tar.gz",
+                            "sha256": "2652f56b912711327baff6dc0c90960818211cf7ab79bb5e1eb59320b78d153f"
                         }
                     ]
                 }
@@ -196,8 +196,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.3.0/libmypaint-1.3.0.tar.xz",
-                    "sha256": "6a07d9d57fea60f68d218a953ce91b168975a003db24de6ac01ad69dcc94a671"
+                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.4.0/libmypaint-1.4.0.tar.xz",
+                    "sha256": "59d13b14c6aca0497095f29ee7228ca2499a923ba8e1dd718a2f2ecb45a9cbff"
                 }
             ]
         },
@@ -207,8 +207,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/mypaint/mypaint-brushes.git",
-                    "branch": "v1.3.x",
-                    "commit": "2c567a19d47c2c23a5a512c9193f4dd61168c69e"
+                    "branch": "v1.3.x"
                 }
             ]
         },
@@ -247,6 +246,7 @@
         },
         {
             "name" : "libheif",
+            "config-opts": [ "--disable-gdk-pixbuf" ],
             "cleanup": [ "/bin" ],
             "modules": [
                 {
@@ -264,15 +264,16 @@
             ],
             "sources" : [
                 {
-                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.1.0/libheif-1.1.0.tar.gz",
-                    "sha256" : "3f8e62e5481b38965b05d44cddc522b15c4820ee635205f826a6b15c0d4040cb",
+                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.4.0/libheif-1.4.0.tar.gz",
+                    "sha256" : "977a9831f1d61b5005566945c7e16e31de35a57a8dd6eb715ae0f40a3595cb60",
                     "type" : "archive"
                 }
             ]
         },
         {
             "name": "babl",
-            "config-opts": [ "--disable-docs" ],
+            "buildsystem": "meson",
+            "config-opts": [ "-Dwith-docs=false" ],
             "sources": [
                 {
                     "type": "git",
@@ -283,7 +284,8 @@
         },
         {
             "name": "gegl",
-            "config-opts": [ "--disable-docs", "--disable-introspection" ],
+            "buildsystem": "meson",
+            "config-opts": [ "-Ddocs=false", "-Dintrospection=false" ],
             "cleanup": [ "/bin" ],
             "sources": [
                 {
