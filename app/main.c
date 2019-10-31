@@ -335,9 +335,7 @@ gimp_macos_setenv (const char * progname)
       app_dir = g_path_get_dirname (resolved_path);
       g_snprintf (tmp, sizeof(tmp), "%s/../Resources", app_dir);
       if (realpath (tmp, res_dir) && !stat (res_dir,&sb) && S_ISDIR (sb.st_mode))
-        {
-          g_print ("GIMP is started as MacOS application\n");
-        }
+        g_print ("GIMP is started as MacOS application\n");
       else
         return;
 
