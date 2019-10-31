@@ -39,10 +39,9 @@
 #endif /* G_OS_WIN32 */
 
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
-#include <sys/param.h>
+#include <sys/param.h> /* PATH_MAX */
 #include <libgen.h> /* dirname */
 #include <sys/stat.h>
-#include <sys/param.h> /* PATH_MAX */
 #endif /* __APPLE__ */
 
 #ifndef GIMP_CONSOLE_COMPILATION
