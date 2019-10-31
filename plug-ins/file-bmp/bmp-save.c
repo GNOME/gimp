@@ -346,9 +346,15 @@ save_image (const gchar  *filename,
     SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
 
   if (! BMPSaveData.dont_write_color_space_data)
-    color_space_size = 68;
+    {
+      /* Always include color mask for BITMAPV5HEADER, see #4155. */
+      mask_info_size = 16;
+      color_space_size = 68;
+    }
   else
-    color_space_size = 0;
+    {
+      color_space_size = 0;
+    }
 
   bitmap_file_head.bfSize    = (0x36 + MapSize + (rows * SpZeile) +
                                 mask_info_size + color_space_size);
