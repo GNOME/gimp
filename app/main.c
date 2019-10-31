@@ -323,10 +323,12 @@ gimp_macos_setenv (const char * progname)
       /* set path to the app folder to make sure that our python is called
        * instead of system one
        */
+      static gboolean            show_playground   = TRUE;
+
       gchar *path;
-      gchar tmp[PATH_MAX];
-      gchar * app_dir;
-      gchar res_dir[PATH_MAX];
+      gchar  tmp[PATH_MAX];
+      gchar *app_dir;
+      gchar  res_dir[PATH_MAX];
       size_t path_len;
       struct stat sb;
 
