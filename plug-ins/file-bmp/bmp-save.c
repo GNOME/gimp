@@ -352,7 +352,10 @@ save_image (GFile         *file,
     SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
 
   if (write_color_space)
+  {
+    mask_info_size = 16;
     color_space_size = 68;
+  }
   else
     color_space_size = 0;
 
