@@ -478,8 +478,8 @@ gimp_config_deserialize_fundamental (GValue     *value,
 
     case G_TYPE_INT:
       g_value_set_int (value, (negate ?
-                               - scanner->value.v_int64 :
-                               scanner->value.v_int64));
+                               - (gint) scanner->value.v_int64 :
+                                 (gint) scanner->value.v_int64));
       break;
     case G_TYPE_UINT:
       g_value_set_uint (value, scanner->value.v_int64);
@@ -487,8 +487,8 @@ gimp_config_deserialize_fundamental (GValue     *value,
 
     case G_TYPE_LONG:
       g_value_set_long (value, (negate ?
-                                - scanner->value.v_int64 :
-                                scanner->value.v_int64));
+                                - (glong) scanner->value.v_int64 :
+                                  (glong) scanner->value.v_int64));
       break;
     case G_TYPE_ULONG:
       g_value_set_ulong (value, scanner->value.v_int64);
@@ -496,8 +496,8 @@ gimp_config_deserialize_fundamental (GValue     *value,
 
     case G_TYPE_INT64:
       g_value_set_int64 (value, (negate ?
-                                 - scanner->value.v_int64 :
-                                 scanner->value.v_int64));
+                                 - (gint64) scanner->value.v_int64 :
+                                   (gint64) scanner->value.v_int64));
       break;
     case G_TYPE_UINT64:
       g_value_set_uint64 (value, scanner->value.v_int64);
@@ -506,19 +506,23 @@ gimp_config_deserialize_fundamental (GValue     *value,
     case G_TYPE_FLOAT:
       if (next_token == G_TOKEN_FLOAT)
         g_value_set_float (value, negate ?
-                           - scanner->value.v_float : scanner->value.v_float);
+                           - scanner->value.v_float :
+                             scanner->value.v_float);
       else
         g_value_set_float (value, negate ?
-                           - scanner->value.v_int : scanner->value.v_int);
+                           - (gfloat) scanner->value.v_int :
+                             (gfloat) scanner->value.v_int);
       break;
 
     case G_TYPE_DOUBLE:
       if (next_token == G_TOKEN_FLOAT)
         g_value_set_double (value, negate ?
-                            - scanner->value.v_float: scanner->value.v_float);
+                            - scanner->value.v_float:
+                              scanner->value.v_float);
       else
         g_value_set_double (value, negate ?
-                            - scanner->value.v_int: scanner->value.v_int);
+                            - (gdouble) scanner->value.v_int:
+                              (gdouble) scanner->value.v_int);
       break;
 
     default:
