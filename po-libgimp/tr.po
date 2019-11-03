@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-08-05 20:15+0000\n"
-"PO-Revision-Date: 2019-08-06 14:35+0300\n"
+"POT-Creation-Date: 2019-10-31 15:39+0000\n"
+"PO-Revision-Date: 2019-11-03 03:26+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -58,82 +58,82 @@ msgstr "Fırça Seçimi"
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s eklentisi katmanları kullanamaz"
 
-#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
-#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
 msgid "Merge Visible Layers"
 msgstr "Görünür Katmanları Birleştir"
 
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:287
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s eklentisi katmanın konumlarını, boyutunu ya da matlığını kullanamaz"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "%s eklentisi katmanları yalnızca canlandırma karesi olarak kullanabilir"
 
-#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:298
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
 msgid "Save as Animation"
 msgstr "Canlandırma olarak kaydet"
 
-#: ../libgimp/gimpexport.c:298 ../libgimp/gimpexport.c:307
-#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
 msgid "Flatten Image"
 msgstr "Görüntüyü Düzleştir"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:323
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s eklentisi saydamlığı kullanamaz"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:332
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s eklentisi saydam katmanları kullanamaz"
 
-#: ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s eklentisi katman maskelerini kullanamaz"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:342
 msgid "Apply Layer Masks"
 msgstr "Katman Maskelerini Uygula"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:350
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s eklentisi yalnızca RGB görüntülerini kullanabilir"
 
-#: ../libgimp/gimpexport.c:343 ../libgimp/gimpexport.c:381
-#: ../libgimp/gimpexport.c:390
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:398
 msgid "Convert to RGB"
 msgstr "RGB'ye çevir"
 
-#: ../libgimp/gimpexport.c:351
+#: ../libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s eklentisi yalnızca gri tonlamalı görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:352 ../libgimp/gimpexport.c:381
-#: ../libgimp/gimpexport.c:402
+#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:410
 msgid "Convert to Grayscale"
 msgstr "Gri Tonlamaya çevir"
 
-#: ../libgimp/gimpexport.c:360
+#: ../libgimp/gimpexport.c:368
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s eklentisi yalnızca indekslenmiş görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:361 ../libgimp/gimpexport.c:390
-#: ../libgimp/gimpexport.c:400
+#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:408
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -141,13 +141,13 @@ msgstr ""
 "Varsayılan ayarları kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: ../libgimp/gimpexport.c:370
+#: ../libgimp/gimpexport.c:378
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s eklentisi yalnızca bit eşlem (iki renk) indeksli görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:379
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -155,37 +155,37 @@ msgstr ""
 "Bit eşlem varsayılan ayarlarını kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: ../libgimp/gimpexport.c:380
+#: ../libgimp/gimpexport.c:388
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s eklentisi yalnızca RGB ya da gri tonlamalı görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:397
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s eklentisi yalnızca RGB ya da indeksli görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:399
+#: ../libgimp/gimpexport.c:407
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "%s eklentisi yalnızca gri tonlamalı ya da indeksli görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:418
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s eklentisi bir alfa kanalına gereksiniyor"
 
-#: ../libgimp/gimpexport.c:411
+#: ../libgimp/gimpexport.c:419
 msgid "Add Alpha Channel"
 msgstr "Alfa Kanalı Ekle"
 
-#: ../libgimp/gimpexport.c:470
+#: ../libgimp/gimpexport.c:478
 msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
-#: ../libgimp/gimpexport.c:475 ../libgimp/gimpexport.c:557
-#: ../libgimp/gimpexport.c:1055 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
+#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -194,24 +194,24 @@ msgstr "Kaydetmeyi Onayla"
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: ../libgimp/gimpexport.c:476
+#: ../libgimp/gimpexport.c:484
 msgid "C_onfirm"
 msgstr "_Onayla"
 
-#: ../libgimp/gimpexport.c:552
+#: ../libgimp/gimpexport.c:560
 msgid "Export File"
 msgstr "Dosyayı Dışarı Aktar"
 
-#: ../libgimp/gimpexport.c:556
+#: ../libgimp/gimpexport.c:564
 msgid "_Ignore"
 msgstr "_Yoksay"
 
-#: ../libgimp/gimpexport.c:558 ../libgimp/gimpexport.c:1056
+#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
 #. the headline
-#: ../libgimp/gimpexport.c:588
+#: ../libgimp/gimpexport.c:596
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -221,11 +221,11 @@ msgstr ""
 "aktarılmalıdır:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:662
+#: ../libgimp/gimpexport.c:670
 msgid "The export conversion won't modify your original image."
 msgstr "Dışarı aktarma işlemi orjinal özgün görüntüde değişiklik yapmaz."
 
-#: ../libgimp/gimpexport.c:766
+#: ../libgimp/gimpexport.c:774
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -234,7 +234,7 @@ msgstr ""
 "Bir katman maskesini %s olarak imlemek üzeresiniz.\n"
 "Bu işlem görünür katmanları kaydetmeyecektir."
 
-#: ../libgimp/gimpexport.c:772
+#: ../libgimp/gimpexport.c:780
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -244,7 +244,7 @@ msgstr ""
 "Bu işlem görünür katmanları kaydetmeyecektir."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1049
+#: ../libgimp/gimpexport.c:1057
 #, c-format
 msgid "Export Image as %s"
 msgstr "Görüntüyü %s Olarak Dışa Aktar"
@@ -405,7 +405,7 @@ msgstr "Parametreler"
 
 #: ../libgimp/gimpprocview.c:186
 msgid "Return Values"
-msgstr "Değerleri Geri Getir"
+msgstr "Dönüş Değerleri"
 
 #: ../libgimp/gimpprocview.c:199
 msgid "Additional Information"
@@ -743,19 +743,21 @@ msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Açıklık (HSL)"
 
-# Luma kelimesi Luminance kelimesinin kısaltması, biz de çeviriyi kısaltalım
 # Luma metodunun Luminance metodundan farkı var,
-# o sebeple "Renk Parl." çevirisini koruyalım
+# https://docs.gimp.org/2.10/en/gimp-filter-desaturate.html
 #: ../libgimpbase/gimpbaseenums.c:515
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr "Renk Parl."
+msgstr "Luma"
 
 #: ../libgimpbase/gimpbaseenums.c:516
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Ortalama (HSI Yoğunluğu)"
 
+# Luma metodunun Luminance metodundan farkı var,
+# o sebeple "Renk Parlaklığı" olarak çevirdim
+# https://docs.gimp.org/2.10/en/gimp-filter-desaturate.html
 #: ../libgimpbase/gimpbaseenums.c:517
 msgctxt "desaturate-mode"
 msgid "Luminance"
@@ -1571,7 +1573,7 @@ msgstr "Renk yönetimli ekran"
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr "Ekran Provası"
+msgstr "Ekran provası"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
 msgctxt "color-rendering-intent"
@@ -1663,7 +1665,8 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr "Siyah nokta dengelemesi kullan (kullanmamak için bildiğiniz bir neden yoksa)."
+msgstr ""
+"Siyah nokta dengelemesi kullan (kullanmamak için bildiğiniz bir neden yoksa)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
