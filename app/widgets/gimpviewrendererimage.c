@@ -28,7 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpimage.h"
-#include "core/gimpimageviewable.h"
+#include "core/gimpimageproxy.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpviewrendererimage.h"
@@ -72,10 +72,10 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
     {
       image = GIMP_IMAGE (renderer->viewable);
     }
-  else if (GIMP_IS_IMAGE_VIEWABLE (renderer->viewable))
+  else if (GIMP_IS_IMAGE_PROXY (renderer->viewable))
     {
-      image = gimp_image_viewable_get_image (
-        GIMP_IMAGE_VIEWABLE (renderer->viewable));
+      image = gimp_image_proxy_get_image (
+        GIMP_IMAGE_PROXY (renderer->viewable));
     }
   else
     {
