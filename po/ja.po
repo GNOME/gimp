@@ -1,11 +1,11 @@
 # Japanese message table for GIMP 2.0
-# Copyright (C) 1998-2005,2008-2012 Free Software Foundation, Inc.
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2001, 2004.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003, 2004.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# Ken Okubo <se5k-ookb@asahi-net.or.jp>, 2009
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2012.
+# Ken Okubo <se5k-ookb@asahi-net.or.jp>, 2009
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2012.
 # Hajime Taira <htaira@redhat.com>, 2018.
 # ONO Yoshio <ohtsuka.yoshio@gmail.com>, 2018.
@@ -17,15 +17,15 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-11-03 02:04+0000\n"
-"PO-Revision-Date: 2019-02-18 23:39+0900\n"
-"Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
+"PO-Revision-Date: 2019-11-03 23:31+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -596,15 +596,12 @@ msgstr "GIMP"
 # Copyright 表記なので原文のままにした
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
-#| msgid ""
-#| "Copyright c 1995-%s\n"
-#| "Spencer Kimball, Peter Mattis and the GIMP Development Team"
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright c 1995-%s\n"
+"Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 
 #. TRANSLATORS: do not end the license URL with a dot, because it would
@@ -613,20 +610,6 @@ msgstr ""
 #. * Cf. bug 762282.
 #.
 #: ../app/about.h:39
-#, fuzzy
-#| msgid ""
-#| "GIMP is free software: you can redistribute it and/or modify it under the "
-#| "terms of the GNU General Public License as published by the Free Software "
-#| "Foundation; either version 3 of the License, or (at your option) any "
-#| "later version.\n"
-#| "\n"
-#| "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY "
-#| "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-#| "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-#| "details.\n"
-#| "\n"
-#| "You should have received a copy of the GNU General Public License along "
-#| "with GIMP.  If not, see https://www.gnu.org/licenses/."
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -4906,12 +4889,9 @@ msgid "Open an image file from a specified location"
 msgstr "画像ファイルの場所を指定(キーボードで入力)して開きます"
 
 #: ../app/actions/file-actions.c:95
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "Create Template..."
 msgctxt "file-action"
 msgid "Create _Template..."
-msgstr "テンプレートの作成..."
+msgstr "テンプレートの作成(_T)..."
 
 #: ../app/actions/file-actions.c:96
 msgctxt "file-action"
@@ -5025,12 +5005,9 @@ msgid "Save this image and close its window"
 msgstr "この画像を保存して画像ウィンドウを閉じます"
 
 #: ../app/actions/file-actions.c:160 ../app/actions/file-actions.c:334
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "Export..."
 msgctxt "file-action"
 msgid "E_xport..."
-msgstr "エクスポート..."
+msgstr "エクスポート(_X)..."
 
 #: ../app/actions/file-actions.c:161
 msgctxt "file-action"
@@ -5051,12 +5028,9 @@ msgstr ""
 "画像編集は xcf 形式ファイルとして継続されます"
 
 #: ../app/actions/file-actions.c:172
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "Export As..."
 msgctxt "file-action"
 msgid "E_xport As..."
-msgstr "名前を付けてエクスポート..."
+msgstr "名前を付けてエクスポート(_X)..."
 
 #: ../app/actions/file-actions.c:173
 msgctxt "file-action"
@@ -5124,10 +5098,8 @@ msgid "Revert Image"
 msgstr "復帰 (画像を元に戻す)"
 
 #: ../app/actions/file-commands.c:425
-#, fuzzy
-#| msgid "Revert"
 msgid "_Revert"
-msgstr "復帰"
+msgstr "復帰(_R)"
 
 #: ../app/actions/file-commands.c:443
 #, c-format
@@ -5451,36 +5423,24 @@ msgid "_Desaturate..."
 msgstr "脱色(_D)..."
 
 #: ../app/actions/filters-actions.c:288
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Difference of Gaussians..."
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
-msgstr "ガウス差分..."
+msgstr "ガウス差分(_G)..."
 
 #: ../app/actions/filters-actions.c:293
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Diffraction Patterns..."
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
-msgstr "回折模様..."
+msgstr "回折模様(_I)..."
 
 #: ../app/actions/filters-actions.c:298
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Displace..."
 msgctxt "filters-action"
 msgid "_Displace..."
-msgstr "ずらしマップ..."
+msgstr "ずらしマップ(_D)..."
 
 #: ../app/actions/filters-actions.c:303
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Distance Map..."
 msgctxt "filters-action"
 msgid "Distance _Map..."
-msgstr "距離マップ..."
+msgstr "距離マップ(_M)..."
 
 #: ../app/actions/filters-actions.c:308
 msgctxt "filters-action"
@@ -5584,20 +5544,14 @@ msgid "_Kaleidoscope..."
 msgstr "万華鏡(_K)..."
 
 #: ../app/actions/filters-actions.c:408
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Lens Distortion..."
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
-msgstr "レンズ補正..."
+msgstr "レンズ補正(_N)..."
 
 #: ../app/actions/filters-actions.c:413
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Lens Flare..."
 msgctxt "filters-action"
 msgid "Lens _Flare..."
-msgstr "レンズフレア..."
+msgstr "レンズフレア(_F)..."
 
 #: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
@@ -5605,12 +5559,9 @@ msgid "_Levels..."
 msgstr "レベル(_L)..."
 
 #: ../app/actions/filters-actions.c:423
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Linear Motion Blur..."
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
-msgstr "線形モーションぼかし(_L)..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
@@ -5633,12 +5584,9 @@ msgid "_Maze..."
 msgstr "迷路(_M)..."
 
 #: ../app/actions/filters-actions.c:448
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Median Blur..."
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr "メディアンぼかし(_M)..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:453
 msgctxt "filters-action"
@@ -5646,12 +5594,9 @@ msgid "_Median Blur..."
 msgstr "メディアンぼかし(_M)..."
 
 #: ../app/actions/filters-actions.c:458
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "_New Channel..."
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
-msgstr "チャンネルの追加(_N)..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
@@ -5679,28 +5624,19 @@ msgid "_Cell Noise..."
 msgstr "セルノイズ(_C)..."
 
 #: ../app/actions/filters-actions.c:488
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_New..."
 msgctxt "filters-action"
 msgid "_Newsprint..."
-msgstr "新しい画像(_N)..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:493
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "CIE lch Noise..."
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
-msgstr "CIE LCh ノイズ..."
+msgstr "CIE LCh ノイズ(_C)..."
 
 #: ../app/actions/filters-actions.c:498
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "HSV Noise..."
 msgctxt "filters-action"
 msgid "HS_V Noise..."
-msgstr "HSV ノイズ..."
+msgstr "HSV ノイズ(_V)..."
 
 #: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
@@ -5708,12 +5644,9 @@ msgid "_Hurl..."
 msgstr "浴びせ(_H)..."
 
 #: ../app/actions/filters-actions.c:508
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Perlin Noise..."
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
-msgstr "パーリンノイズ(_P)..."
+msgstr "パーリンノイズ(_N)..."
 
 #: ../app/actions/filters-actions.c:513
 msgctxt "filters-action"
@@ -5751,17 +5684,11 @@ msgid "Sp_read..."
 msgstr "拡散(_R)..."
 
 #: ../app/actions/filters-actions.c:548
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Bump Map..."
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr "バンプマップ(_B)..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:553
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "_Offset..."
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "オフセット(_O)..."
@@ -5817,12 +5744,9 @@ msgid "_Reinhard 2005..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:608
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "RGB _Clip..."
-msgstr "ノイズ(_N)"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
@@ -5890,11 +5814,9 @@ msgid "_Stretch Contrast..."
 msgstr "コントラスト伸長(_S)..."
 
 #: ../app/actions/filters-actions.c:678
-#, fuzzy
-#| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Stress..."
-msgstr "トーンカーブ(_C)..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
@@ -6599,18 +6521,14 @@ msgid "Create a duplicate of this image"
 msgstr "この画像の複製を作成します"
 
 #: ../app/actions/image-actions.c:88
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
-msgstr "カラープロファイル"
+msgstr ""
 
 #: ../app/actions/image-actions.c:89
-#, fuzzy
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgctxt "image-action"
 msgid "Set a color profile on the image"
-msgstr "カラープロファイルはグレースケール画像に適用できません (%s)"
+msgstr ""
 
 #: ../app/actions/image-actions.c:94
 msgctxt "image-action"
@@ -6618,42 +6536,29 @@ msgid "_Convert to Color Profile..."
 msgstr "カラープロファイルに変換(_C)..."
 
 #: ../app/actions/image-actions.c:95
-#, fuzzy
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
-msgstr "カラープロファイルはグレースケール画像に適用できません (%s)"
+msgstr ""
 
 #: ../app/actions/image-actions.c:100
-#, fuzzy
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr "カラープロファイル"
+msgstr ""
 
 #: ../app/actions/image-actions.c:101
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgctxt "image-action"
 msgid "Remove the image's color profile"
-msgstr "サンプルポイントを表示します"
+msgstr ""
 
 #: ../app/actions/image-actions.c:106
-#, fuzzy
-#| msgctxt "error-console-action"
-#| msgid "_Save Error Log to File..."
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
-msgstr "エラーログの保存(_S)..."
+msgstr ""
 
 #: ../app/actions/image-actions.c:107
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
-msgstr "サンプルポイントを表示します"
+msgstr ""
 
 #: ../app/actions/image-actions.c:112
 msgctxt "image-action"
@@ -6949,38 +6854,23 @@ msgid "Rotate the image 90 degrees to the left"
 msgstr "画像を反時計回りに 90 度回転します (すべてのレイヤーが回転します)"
 
 #: ../app/actions/image-actions.c:437
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "_RGB"
 msgctxt "image-convert-action"
 msgid "_RGB..."
-msgstr "RGB(_R)"
+msgstr "RGB(_R)..."
 
 #: ../app/actions/image-actions.c:439
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
-msgstr "グレースケール(_G)"
+msgstr "グレースケール(_G)..."
 
 #: ../app/actions/image-commands.c:566
-#, fuzzy, c-format
-#| msgid ""
-#| "Saving '%s' failed:\n"
-#| "\n"
-#| "%s"
+#, c-format
 msgid "Saving color profile failed: %s"
-msgstr ""
-"'%s' の保存に失敗しました。\n"
-"\n"
-"%s"
+msgstr "カラープロファイルの保存に失敗しました: %s"
 
 #: ../app/actions/image-commands.c:606
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Save Color Profile"
-msgstr "カラープロファイル"
+msgstr ""
 
 #: ../app/actions/image-commands.c:655
 msgid "Set Image Canvas Size"
@@ -9834,12 +9724,9 @@ msgid "Lower this path to the bottom"
 msgstr "このパスを最背面に移動します"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Fill Path..."
 msgctxt "vectors-action"
 msgid "Fill Pat_h..."
-msgstr "パスで塗りつぶす..."
+msgstr "パスで塗りつぶす(_H)..."
 
 #: ../app/actions/vectors-actions.c:120
 #, fuzzy
@@ -10793,12 +10680,9 @@ msgid "Zoom 1:16"
 msgstr "1/16倍で表示します"
 
 #: ../app/actions/view-actions.c:472
-#, fuzzy
-#| msgctxt "view-zoom-action"
-#| msgid "Othe_r..."
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "任意の倍率(_R)..."
+msgstr "任意の表示倍率(_R)..."
 
 #: ../app/actions/view-actions.c:473
 msgctxt "view-zoom-action"
@@ -10806,9 +10690,6 @@ msgid "Set a custom zoom factor"
 msgstr "表示倍率を指定します"
 
 #: ../app/actions/view-actions.c:481
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Flip _Horizontally"
 msgctxt "view-action"
 msgid "Flip _Horizontally"
 msgstr "水平反転(_H)"
@@ -10819,9 +10700,6 @@ msgid "Flip the view horizontally"
 msgstr "表示を左右反転します (すべてのレイヤーが反転します)"
 
 #: ../app/actions/view-actions.c:488
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Flip _Vertically"
 msgctxt "view-action"
 msgid "Flip _Vertically"
 msgstr "垂直反転(_V)"
@@ -10919,11 +10797,9 @@ msgid "Display rendering intent is relative colorimetric"
 msgstr "モニター表示のレンダリングインテント(_D):"
 
 #: ../app/actions/view-actions.c:558 ../app/actions/view-actions.c:585
-#, fuzzy
-#| msgid "_Saturation:"
 msgctxt "view-action"
 msgid "_Saturation"
-msgstr "彩度(_S):"
+msgstr "彩度(_S)"
 
 #: ../app/actions/view-actions.c:559
 #, fuzzy
@@ -14271,10 +14147,8 @@ msgstr "%s コピー"
 
 #: ../app/core/gimpdatafactory.c:586 ../app/tools/gimptextoptions.c:532
 #: ../app/widgets/gimpfontfactoryview.c:97
-#, fuzzy
-#| msgid "Fonts (this may take a while)"
 msgid "Loading fonts (this may take a while...)"
-msgstr "フォント (しばらくお待ちください)"
+msgstr "フォントを読み込み中 (しばらくお待ちください...)"
 
 # '%s' はフォルダー名を指す
 #: ../app/core/gimpdatafactory.c:908
@@ -20825,12 +20699,8 @@ msgid "Choose shade of gray based on"
 msgstr "脱色の基準にする要素"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
-#, fuzzy
-#| msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
 msgid "Adjust hue, saturation, and lightness"
 msgstr ""
-"[色相-彩度...]\n"
-"色相・彩度・輝度を調整します"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
@@ -20838,13 +20708,10 @@ msgstr "色レベルの調整"
 
 #: ../app/operations/gimpoperationoffset.c:118
 #: ../app/tools/gimpoffsettool.c:130
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Shift the pixels, optionally wrapping them at the borders"
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr ""
-"描かれているものを指定ピクセル数だけ移動します。(はみ出した部分を回り込ませる"
-"こともできます。)"
+"描かれているものを指定ピクセル数だけ移動します (はみ出した部分を回り込ませる"
+"こともできます)"
 
 #: ../app/operations/gimpoperationposterize.c:82
 msgid "Reduce to a limited set of colors"
@@ -21770,23 +21637,16 @@ msgid "Smooth edges"
 msgstr "境界をなめらかにします"
 
 #: ../app/pdb/gimppdbcontext.c:107
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "Fea_ther..."
 msgid "Feather"
-msgstr "境界をぼかす(_T)..."
+msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:114
-#, fuzzy
-#| msgid "Feather edges"
 msgid "Feather radius X"
-msgstr "境界をぼかす"
+msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:121
-#, fuzzy
-#| msgid "Feather edges"
 msgid "Feather radius Y"
-msgstr "境界をぼかす"
+msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:135
 #, fuzzy
@@ -22110,12 +21970,9 @@ msgstr "モザイク"
 
 # xcf 形式以外の画像ファイルはインポートするように仕様変更されたことに伴い、「（インポート）」を追加した。
 #: ../app/pdb/plug-in-compat-cmds.c:2813
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Neon..."
 msgctxt "undo-type"
 msgid "Neon"
-msgstr "ネオン(_N)..."
+msgstr "ネオン"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2901
 msgctxt "undo-type"
@@ -22123,12 +21980,9 @@ msgid "Newsprint"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:2941
-#, fuzzy
-#| msgctxt "layer-mode"
-#| msgid "Normal"
 msgctxt "undo-type"
 msgid "Normalize"
-msgstr "標準"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:3003
 msgctxt "undo-type"
@@ -22136,12 +21990,9 @@ msgid "Supernova"
 msgstr "超新星"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3047 ../app/pdb/plug-in-compat-cmds.c:3112
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Oili_fy..."
 msgctxt "undo-type"
 msgid "Oilify"
-msgstr "油絵化(_F)..."
+msgstr "油絵化"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3202
 msgctxt "undo-type"
@@ -22736,32 +22587,24 @@ msgid "Select Primary Color to Adjust"
 msgstr "調整する基準色を選択"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:236
-#, fuzzy
-#| msgid "_Overlap:"
 msgid "_Overlap"
-msgstr "オーバーラップ(_O):"
+msgstr "オーバーラップ(_O)"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:241
 msgid "Adjust Selected Color"
 msgstr "選択した色を調整"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:251
-#, fuzzy
-#| msgid "_Hue:"
 msgid "_Hue"
-msgstr "色相(_H):"
+msgstr "色相(_H)"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:258
-#, fuzzy
-#| msgid "_Lightness:"
 msgid "_Lightness"
-msgstr "輝度(_L):"
+msgstr "輝度(_L)"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:265
-#, fuzzy
-#| msgid "_Saturation:"
 msgid "_Saturation"
-msgstr "彩度(_S):"
+msgstr "彩度(_S)"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:274
 msgid "R_eset Color"
@@ -23726,12 +23569,8 @@ msgid "R_eset Channel"
 msgstr "チャンネルのリセット(_E)"
 
 #: ../app/tools/gimpcurvestool.c:526
-#, fuzzy
-#| msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
 msgid "Adjust curves in linear light"
 msgstr ""
-"[色相-彩度...]\n"
-"色相・彩度・輝度を調整します"
 
 #: ../app/tools/gimpcurvestool.c:527
 msgid "Adjust curves perceptually"
@@ -24387,17 +24226,13 @@ msgstr "パスを削除"
 
 #. the type label
 #: ../app/tools/gimpgradienttool-editor.c:1536
-#, fuzzy
-#| msgid "Blending"
 msgid "Blending:"
-msgstr "ブレンドしています..."
+msgstr ""
 
 #. the color label
 #: ../app/tools/gimpgradienttool-editor.c:1558
-#, fuzzy
-#| msgid "Color:"
 msgid "Coloring:"
-msgstr "色:"
+msgstr ""
 
 #: ../app/tools/gimpgradienttool-editor.c:1592
 msgid "New stop at midpoint"
@@ -24999,9 +24834,6 @@ msgid "_N-Point Deformation"
 msgstr "ピクセル情報"
 
 #: ../app/tools/gimpoffsettool.c:131
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "_Offset..."
 msgid "_Offset..."
 msgstr "オフセット(_O)..."
 
@@ -28325,11 +28157,8 @@ msgid "From File..."
 msgstr "ファイルから..."
 
 #: ../app/widgets/gimpiconpicker.c:250
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "_Copy Named..."
 msgid "From Named Icons..."
-msgstr "名前付きでコピー(_C)..."
+msgstr ""
 
 #: ../app/widgets/gimpiconpicker.c:259
 #, fuzzy
