@@ -333,10 +333,10 @@ libappcore_a_sources = \
 	gimpimage-undo.h			\
 	gimpimage-undo-push.c			\
 	gimpimage-undo-push.h			\
+	gimpimageproxy.c			\
+	gimpimageproxy.h			\
 	gimpimageundo.c				\
 	gimpimageundo.h				\
-	gimpimageviewable.c			\
-	gimpimageviewable.h			\
 	gimpimagefile.c				\
 	gimpimagefile.h				\
 	gimpitem.c				\
