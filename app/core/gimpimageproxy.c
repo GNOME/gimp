@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimageviewable.c
+ * gimpimageproxy.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-preview.h"
-#include "gimpimageviewable.h"
+#include "gimpimageproxy.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
 #include "gimptempbuf.h"
@@ -49,7 +49,7 @@ enum
 };
 
 
-struct _GimpImageViewablePrivate
+struct _GimpImageProxyPrivate
 {
   GimpImage     *image;
   gboolean       show_all;
@@ -61,86 +61,86 @@ struct _GimpImageViewablePrivate
 
 /*  local function prototypes  */
 
-static void          gimp_image_viewable_finalize                 (GObject            *object);
-static void          gimp_image_viewable_set_property             (GObject            *object,
-                                                                   guint               property_id,
-                                                                   const GValue       *value,
-                                                                   GParamSpec         *pspec);
-static void          gimp_image_viewable_get_property             (GObject            *object,
-                                                                   guint               property_id,
-                                                                   GValue             *value,
-                                                                   GParamSpec         *pspec);
+static void          gimp_image_proxy_finalize                 (GObject           *object);
+static void          gimp_image_proxy_set_property             (GObject           *object,
+                                                                guint              property_id,
+                                                                const GValue      *value,
+                                                                GParamSpec        *pspec);
+static void          gimp_image_proxy_get_property             (GObject           *object,
+                                                                guint              property_id,
+                                                                GValue            *value,
+                                                                GParamSpec        *pspec);
 
-static gboolean      gimp_image_viewable_get_size                 (GimpViewable       *viewable,
-                                                                   gint               *width,
-                                                                   gint               *height);
-static void          gimp_image_viewable_get_preview_size         (GimpViewable       *viewable,
-                                                                   gint                size,
-                                                                   gboolean            is_popup,
-                                                                   gboolean            dot_for_dot,
-                                                                   gint               *width,
-                                                                   gint               *height);
-static gboolean      gimp_image_viewable_get_popup_size           (GimpViewable       *viewable,
-                                                                   gint                width,
-                                                                   gint                height,
-                                                                   gboolean            dot_for_dot,
-                                                                   gint               *popup_width,
-                                                                   gint               *popup_height);
-static GimpTempBuf * gimp_image_viewable_get_new_preview          (GimpViewable       *viewable,
-                                                                   GimpContext        *context,
-                                                                   gint                width,
-                                                                   gint                height);
-static GdkPixbuf   * gimp_image_viewable_get_new_pixbuf           (GimpViewable       *viewable,
-                                                                   GimpContext        *context,
-                                                                   gint                width,
-                                                                   gint                height);
-static gchar       * gimp_image_viewable_get_description          (GimpViewable       *viewable,
-                                                                   gchar             **tooltip);
+static gboolean      gimp_image_proxy_get_size                 (GimpViewable      *viewable,
+                                                                gint              *width,
+                                                                gint              *height);
+static void          gimp_image_proxy_get_preview_size         (GimpViewable      *viewable,
+                                                                gint               size,
+                                                                gboolean           is_popup,
+                                                                gboolean           dot_for_dot,
+                                                                gint              *width,
+                                                                gint              *height);
+static gboolean      gimp_image_proxy_get_popup_size           (GimpViewable      *viewable,
+                                                                gint               width,
+                                                                gint               height,
+                                                                gboolean           dot_for_dot,
+                                                                gint              *popup_width,
+                                                                gint              *popup_height);
+static GimpTempBuf * gimp_image_proxy_get_new_preview          (GimpViewable      *viewable,
+                                                                GimpContext       *context,
+                                                                gint               width,
+                                                                gint               height);
+static GdkPixbuf   * gimp_image_proxy_get_new_pixbuf           (GimpViewable      *viewable,
+                                                                GimpContext       *context,
+                                                                gint               width,
+                                                                gint               height);
+static gchar       * gimp_image_proxy_get_description          (GimpViewable      *viewable,
+                                                                gchar            **tooltip);
 
-static void          gimp_image_viewable_image_frozen_notify      (GimpImage          *image,
-                                                                   const GParamSpec   *pspec,
-                                                                   GimpImageViewable  *image_viewable);
-static void          gimp_image_viewable_image_invalidate_preview (GimpImage          *image,
-                                                                   GimpImageViewable  *image_viewable);
-static void          gimp_image_viewable_image_size_changed       (GimpImage          *image,
-                                                                   GimpImageViewable  *image_viewable);
-static void          gimp_image_viewable_image_bounds_changed     (GimpImage          *image,
-                                                                   gint                old_x,
-                                                                   gint                old_y,
-                                                                   GimpImageViewable  *image_viewable);
+static void          gimp_image_proxy_image_frozen_notify      (GimpImage         *image,
+                                                                const GParamSpec  *pspec,
+                                                                GimpImageProxy    *image_proxy);
+static void          gimp_image_proxy_image_invalidate_preview (GimpImage         *image,
+                                                                GimpImageProxy    *image_proxy);
+static void          gimp_image_proxy_image_size_changed       (GimpImage         *image,
+                                                                GimpImageProxy    *image_proxy);
+static void          gimp_image_proxy_image_bounds_changed     (GimpImage         *image,
+                                                                gint               old_x,
+                                                                gint               old_y,
+                                                                GimpImageProxy    *image_proxy);
 
-static void          gimp_image_viewable_set_image                (GimpImageViewable  *image_viewable,
-                                                                   GimpImage          *image);
-static void          gimp_image_viewable_update_bounding_box      (GimpImageViewable  *image_viewable);
-static void          gimp_image_viewable_update_frozen            (GimpImageViewable  *image_viewable);
+static void          gimp_image_proxy_set_image                (GimpImageProxy    *image_proxy,
+                                                                GimpImage         *image);
+static void          gimp_image_proxy_update_bounding_box      (GimpImageProxy    *image_proxy);
+static void          gimp_image_proxy_update_frozen            (GimpImageProxy    *image_proxy);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpImageViewable, gimp_image_viewable,
+G_DEFINE_TYPE_WITH_PRIVATE (GimpImageProxy, gimp_image_proxy,
                             GIMP_TYPE_VIEWABLE)
 
-#define parent_class gimp_image_viewable_parent_class
+#define parent_class gimp_image_proxy_parent_class
 
 
 /*  private functions  */
 
 
-static void
-gimp_image_viewable_class_init (GimpImageViewableClass *klass)
+static void-
+gimp_image_proxy_class_init (GimpImageProxyClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize            = gimp_image_viewable_finalize;
-  object_class->set_property        = gimp_image_viewable_set_property;
-  object_class->get_property        = gimp_image_viewable_get_property;
+  object_class->finalize            = gimp_image_proxy_finalize;
+  object_class->set_property        = gimp_image_proxy_set_property;
+  object_class->get_property        = gimp_image_proxy_get_property;
 
   viewable_class->default_icon_name = "gimp-image";
-  viewable_class->get_size          = gimp_image_viewable_get_size;
-  viewable_class->get_preview_size  = gimp_image_viewable_get_preview_size;
-  viewable_class->get_popup_size    = gimp_image_viewable_get_popup_size;
-  viewable_class->get_new_preview   = gimp_image_viewable_get_new_preview;
-  viewable_class->get_new_pixbuf    = gimp_image_viewable_get_new_pixbuf;
-  viewable_class->get_description   = gimp_image_viewable_get_description;
+  viewable_class->get_size          = gimp_image_proxy_get_size;
+  viewable_class->get_preview_size  = gimp_image_proxy_get_preview_size;
+  viewable_class->get_popup_size    = gimp_image_proxy_get_popup_size;
+  viewable_class->get_new_preview   = gimp_image_proxy_get_new_preview;
+  viewable_class->get_new_pixbuf    = gimp_image_proxy_get_new_pixbuf;
+  viewable_class->get_description   = gimp_image_proxy_get_description;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
@@ -158,39 +158,39 @@ gimp_image_viewable_class_init (GimpImageViewableClass *klass)
 }
 
 static void
-gimp_image_viewable_init (GimpImageViewable *image_viewable)
+gimp_image_proxy_init (GimpImageProxy *image_proxy)
 {
-  image_viewable->priv = gimp_image_viewable_get_instance_private (image_viewable);
+  image_proxy->priv = gimp_image_proxy_get_instance_private (image_proxy);
 }
 
 static void
-gimp_image_viewable_finalize (GObject *object)
+gimp_image_proxy_finalize (GObject *object)
 {
-  GimpImageViewable *image_viewable = GIMP_IMAGE_VIEWABLE (object);
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (object);
 
-  gimp_image_viewable_set_image (image_viewable, NULL);
+  gimp_image_proxy_set_image (image_proxy, NULL);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_image_viewable_set_property (GObject      *object,
-                                  guint         property_id,
-                                  const GValue *value,
-                                  GParamSpec   *pspec)
+gimp_image_proxy_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
 {
-  GimpImageViewable *image_viewable = GIMP_IMAGE_VIEWABLE (object);
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (object);
 
   switch (property_id)
     {
     case PROP_IMAGE:
-      gimp_image_viewable_set_image (image_viewable,
-                                     g_value_get_object (value));
+      gimp_image_proxy_set_image (image_proxy,
+                                  g_value_get_object (value));
       break;
 
     case PROP_SHOW_ALL:
-      gimp_image_viewable_set_show_all (image_viewable,
-                                        g_value_get_boolean (value));
+      gimp_image_proxy_set_show_all (image_proxy,
+                                     g_value_get_boolean (value));
       break;
 
     default:
@@ -200,23 +200,23 @@ gimp_image_viewable_set_property (GObject      *object,
 }
 
 static void
-gimp_image_viewable_get_property (GObject    *object,
-                                  guint       property_id,
-                                  GValue     *value,
-                                  GParamSpec *pspec)
+gimp_image_proxy_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
 {
-  GimpImageViewable *image_viewable = GIMP_IMAGE_VIEWABLE (object);
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (object);
 
   switch (property_id)
     {
     case PROP_IMAGE:
       g_value_set_object (value,
-                          gimp_image_viewable_get_image (image_viewable));
+                          gimp_image_proxy_get_image (image_proxy));
       break;
 
     case PROP_SHOW_ALL:
       g_value_set_boolean (value,
-                           gimp_image_viewable_get_show_all (image_viewable));
+                           gimp_image_proxy_get_show_all (image_proxy));
       break;
 
     default:
@@ -226,32 +226,32 @@ gimp_image_viewable_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_image_viewable_get_size (GimpViewable *viewable,
-                              gint         *width,
-                              gint         *height)
+gimp_image_proxy_get_size (GimpViewable *viewable,
+                           gint         *width,
+                           gint         *height)
 {
-  GimpImageViewable *image_viewable = GIMP_IMAGE_VIEWABLE (viewable);
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (viewable);
 
-  *width  = image_viewable->priv->bounding_box.width;
-  *height = image_viewable->priv->bounding_box.height;
+  *width  = image_proxy->priv->bounding_box.width;
+  *height = image_proxy->priv->bounding_box.height;
 
   return TRUE;
 }
 
 static void
-gimp_image_viewable_get_preview_size (GimpViewable *viewable,
-                                      gint          size,
-                                      gboolean      is_popup,
-                                      gboolean      dot_for_dot,
-                                      gint         *width,
-                                      gint         *height)
+gimp_image_proxy_get_preview_size (GimpViewable *viewable,
+                                   gint          size,
+                                   gboolean      is_popup,
+                                   gboolean      dot_for_dot,
+                                   gint         *width,
+                                   gint         *height)
 {
-  GimpImageViewable *image_viewable = GIMP_IMAGE_VIEWABLE (viewable);
-  GimpImage         *image          = image_viewable->priv->image;
-  gdouble            xres;
-  gdouble            yres;
-  gint               viewable_width;
-  gint               viewable_height;
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (viewable);
+  GimpImage      *image       = image_proxy->priv->image;
+  gdouble         xres;
+  gdouble         yres;
+  gint            viewable_width;
+  gint            viewable_height;
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -270,12 +270,12 @@ gimp_image_viewable_get_preview_size (GimpViewable *viewable,
 }
 
 static gboolean
-gimp_image_viewable_get_popup_size (GimpViewable *viewable,
-                                    gint          width,
-                                    gint          height,
-                                    gboolean      dot_for_dot,
-                                    gint         *popup_width,
-                                    gint         *popup_height)
+gimp_image_proxy_get_popup_size (GimpViewable *viewable,
+                                 gint          width,
+                                 gint          height,
+                                 gboolean      dot_for_dot,
+                                 gint         *popup_width,
+                                 gint         *popup_height)
 {
   gint viewable_width;
   gint viewable_height;
@@ -308,27 +308,27 @@ gimp_image_viewable_get_popup_size (GimpViewable *viewable,
 }
 
 static GimpTempBuf *
-gimp_image_viewable_get_new_preview (GimpViewable *viewable,
-                                     GimpContext  *context,
-                                     gint          width,
-                                     gint          height)
+gimp_image_proxy_get_new_preview (GimpViewable *viewable,
+                                  GimpContext  *context,
+                                  gint          width,
+                                  gint          height)
 {
-  GimpImageViewable *image_viewable = GIMP_IMAGE_VIEWABLE (viewable);
-  GimpImage         *image          = image_viewable->priv->image;
-  GimpPickable      *pickable;
-  const Babl        *format;
-  GeglRectangle      bounding_box;
-  GimpTempBuf       *buf;
-  gdouble            scale_x;
-  gdouble            scale_y;
-  gdouble            scale;
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (viewable);
+  GimpImage      *image       = image_proxy->priv->image;
+  GimpPickable   *pickable;
+  const Babl     *format;
+  GeglRectangle   bounding_box;
+  GimpTempBuf    *buf;
+  gdouble         scale_x;
+  gdouble         scale_y;
+  gdouble         scale;
 
-  if (! image_viewable->priv->show_all)
+  if (! image_proxy->priv->show_all)
     pickable = GIMP_PICKABLE (image);
   else
     pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
 
-  bounding_box = gimp_image_viewable_get_bounding_box (image_viewable);
+  bounding_box = gimp_image_proxy_get_bounding_box (image_proxy);
 
   scale_x = (gdouble) width  / (gdouble) bounding_box.width;
   scale_y = (gdouble) height / (gdouble) bounding_box.height;
@@ -353,13 +353,13 @@ gimp_image_viewable_get_new_preview (GimpViewable *viewable,
 }
 
 static GdkPixbuf *
-gimp_image_viewable_get_new_pixbuf (GimpViewable *viewable,
-                                    GimpContext  *context,
-                                    gint          width,
-                                    gint          height)
+gimp_image_proxy_get_new_pixbuf (GimpViewable *viewable,
+                                 GimpContext  *context,
+                                 gint          width,
+                                 gint          height)
 {
-  GimpImageViewable  *image_viewable = GIMP_IMAGE_VIEWABLE (viewable);
-  GimpImage          *image          = image_viewable->priv->image;
+  GimpImageProxy     *image_proxy = GIMP_IMAGE_PROXY (viewable);
+  GimpImage          *image       = image_proxy->priv->image;
   GimpPickable       *pickable;
   GeglRectangle       bounding_box;
   GdkPixbuf          *pixbuf;
@@ -368,12 +368,12 @@ gimp_image_viewable_get_new_pixbuf (GimpViewable *viewable,
   gdouble             scale;
   GimpColorTransform *transform;
 
-  if (! image_viewable->priv->show_all)
+  if (! image_proxy->priv->show_all)
     pickable = GIMP_PICKABLE (image);
   else
     pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
 
-  bounding_box = gimp_image_viewable_get_bounding_box (image_viewable);
+  bounding_box = gimp_image_proxy_get_bounding_box (image_proxy);
 
   scale_x = (gdouble) width  / (gdouble) bounding_box.width;
   scale_y = (gdouble) height / (gdouble) bounding_box.height;
@@ -437,11 +437,11 @@ gimp_image_viewable_get_new_pixbuf (GimpViewable *viewable,
 }
 
 static gchar *
-gimp_image_viewable_get_description (GimpViewable  *viewable,
-                                     gchar        **tooltip)
+gimp_image_proxy_get_description (GimpViewable  *viewable,
+                                  gchar        **tooltip)
 {
-  GimpImageViewable  *image_viewable = GIMP_IMAGE_VIEWABLE (viewable);
-  GimpImage          *image          = image_viewable->priv->image;
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (viewable);
+  GimpImage      *image       = image_proxy->priv->image;
 
   if (tooltip)
     *tooltip = g_strdup (gimp_image_get_display_path (image));
@@ -452,102 +452,102 @@ gimp_image_viewable_get_description (GimpViewable  *viewable,
 }
 
 static void
-gimp_image_viewable_image_frozen_notify (GimpImage          *image,
-                                         const GParamSpec   *pspec,
-                                         GimpImageViewable  *image_viewable)
+gimp_image_proxy_image_frozen_notify (GimpImage        *image,
+                                      const GParamSpec *pspec,
+                                      GimpImageProxy   *image_proxy)
 {
-  gimp_image_viewable_update_frozen (image_viewable);
+  gimp_image_proxy_update_frozen (image_proxy);
 }
 
 static void
-gimp_image_viewable_image_invalidate_preview (GimpImage         *image,
-                                              GimpImageViewable *image_viewable)
+gimp_image_proxy_image_invalidate_preview (GimpImage      *image,
+                                           GimpImageProxy *image_proxy)
 {
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image_viewable));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image_proxy));
 }
 
 static void
-gimp_image_viewable_image_size_changed (GimpImage         *image,
-                                        GimpImageViewable *image_viewable)
+gimp_image_proxy_image_size_changed (GimpImage      *image,
+                                     GimpImageProxy *image_proxy)
 {
-  gimp_image_viewable_update_bounding_box (image_viewable);
+  gimp_image_proxy_update_bounding_box (image_proxy);
 }
 
 static void
-gimp_image_viewable_image_bounds_changed (GimpImage         *image,
-                                          gint               old_x,
-                                          gint               old_y,
-                                          GimpImageViewable *image_viewable)
+gimp_image_proxy_image_bounds_changed (GimpImage      *image,
+                                       gint            old_x,
+                                       gint            old_y,
+                                       GimpImageProxy *image_proxy)
 {
-  gimp_image_viewable_update_bounding_box (image_viewable);
+  gimp_image_proxy_update_bounding_box (image_proxy);
 }
 
 static void
-gimp_image_viewable_set_image (GimpImageViewable *image_viewable,
-                               GimpImage         *image)
+gimp_image_proxy_set_image (GimpImageProxy *image_proxy,
+                            GimpImage      *image)
 {
-  if (image_viewable->priv->image)
+  if (image_proxy->priv->image)
     {
       g_signal_handlers_disconnect_by_func (
-        image_viewable->priv->image,
-        gimp_image_viewable_image_frozen_notify,
-        image_viewable);
+        image_proxy->priv->image,
+        gimp_image_proxy_image_frozen_notify,
+        image_proxy);
       g_signal_handlers_disconnect_by_func (
-        image_viewable->priv->image,
-        gimp_image_viewable_image_invalidate_preview,
-        image_viewable);
+        image_proxy->priv->image,
+        gimp_image_proxy_image_invalidate_preview,
+        image_proxy);
       g_signal_handlers_disconnect_by_func (
-        image_viewable->priv->image,
-        gimp_image_viewable_image_size_changed,
-        image_viewable);
+        image_proxy->priv->image,
+        gimp_image_proxy_image_size_changed,
+        image_proxy);
       g_signal_handlers_disconnect_by_func (
-        image_viewable->priv->image,
-        gimp_image_viewable_image_bounds_changed,
-        image_viewable);
+        image_proxy->priv->image,
+        gimp_image_proxy_image_bounds_changed,
+        image_proxy);
 
-      g_object_unref (image_viewable->priv->image);
+      g_object_unref (image_proxy->priv->image);
     }
 
-  image_viewable->priv->image = image;
+  image_proxy->priv->image = image;
 
-  if (image_viewable->priv->image)
+  if (image_proxy->priv->image)
     {
-      g_object_ref (image_viewable->priv->image);
+      g_object_ref (image_proxy->priv->image);
 
       g_signal_connect (
-        image_viewable->priv->image, "notify::frozen",
-        G_CALLBACK (gimp_image_viewable_image_frozen_notify),
-        image_viewable);
+        image_proxy->priv->image, "notify::frozen",
+        G_CALLBACK (gimp_image_proxy_image_frozen_notify),
+        image_proxy);
       g_signal_connect (
-        image_viewable->priv->image, "invalidate-preview",
-        G_CALLBACK (gimp_image_viewable_image_invalidate_preview),
-        image_viewable);
+        image_proxy->priv->image, "invalidate-preview",
+        G_CALLBACK (gimp_image_proxy_image_invalidate_preview),
+        image_proxy);
       g_signal_connect (
-        image_viewable->priv->image, "size-changed",
-        G_CALLBACK (gimp_image_viewable_image_size_changed),
-        image_viewable);
+        image_proxy->priv->image, "size-changed",
+        G_CALLBACK (gimp_image_proxy_image_size_changed),
+        image_proxy);
       g_signal_connect (
-        image_viewable->priv->image, "bounds-changed",
-        G_CALLBACK (gimp_image_viewable_image_bounds_changed),
-        image_viewable);
+        image_proxy->priv->image, "bounds-changed",
+        G_CALLBACK (gimp_image_proxy_image_bounds_changed),
+        image_proxy);
 
-      gimp_image_viewable_update_bounding_box (image_viewable);
-      gimp_image_viewable_update_frozen (image_viewable);
+      gimp_image_proxy_update_bounding_box (image_proxy);
+      gimp_image_proxy_update_frozen (image_proxy);
 
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image_viewable));
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image_proxy));
     }
 }
 
 static void
-gimp_image_viewable_update_bounding_box (GimpImageViewable *image_viewable)
+gimp_image_proxy_update_bounding_box (GimpImageProxy *image_proxy)
 {
-  GimpImage     *image = image_viewable->priv->image;
+  GimpImage     *image = image_proxy->priv->image;
   GeglRectangle  bounding_box;
 
-  if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (image_viewable)))
+  if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (image_proxy)))
     return;
 
-  if (! image_viewable->priv->show_all)
+  if (! image_proxy->priv->show_all)
     {
       bounding_box.x      = 0;
       bounding_box.y      = 0;
@@ -561,35 +561,35 @@ gimp_image_viewable_update_bounding_box (GimpImageViewable *image_viewable)
     }
 
   if (! gegl_rectangle_equal (&bounding_box,
-                              &image_viewable->priv->bounding_box))
+                              &image_proxy->priv->bounding_box))
     {
-      image_viewable->priv->bounding_box = bounding_box;
+      image_proxy->priv->bounding_box = bounding_box;
 
-      gimp_viewable_size_changed (GIMP_VIEWABLE (image_viewable));
+      gimp_viewable_size_changed (GIMP_VIEWABLE (image_proxy));
     }
 }
 
 static void
-gimp_image_viewable_update_frozen (GimpImageViewable *image_viewable)
+gimp_image_proxy_update_frozen (GimpImageProxy *image_proxy)
 {
   gboolean frozen;
 
   frozen = gimp_viewable_preview_is_frozen (
-    GIMP_VIEWABLE (image_viewable->priv->image));
+    GIMP_VIEWABLE (image_proxy->priv->image));
 
-  if (frozen != image_viewable->priv->frozen)
+  if (frozen != image_proxy->priv->frozen)
     {
-      image_viewable->priv->frozen = frozen;
+      image_proxy->priv->frozen = frozen;
 
       if (frozen)
         {
-          gimp_viewable_preview_freeze (GIMP_VIEWABLE (image_viewable));
+          gimp_viewable_preview_freeze (GIMP_VIEWABLE (image_proxy));
         }
       else
         {
-          gimp_viewable_preview_thaw (GIMP_VIEWABLE (image_viewable));
+          gimp_viewable_preview_thaw (GIMP_VIEWABLE (image_proxy));
 
-          gimp_image_viewable_update_bounding_box (image_viewable);
+          gimp_image_proxy_update_bounding_box (image_proxy);
         }
     }
 }
@@ -598,51 +598,51 @@ gimp_image_viewable_update_frozen (GimpImageViewable *image_viewable)
 /*  public functions  */
 
 
-GimpImageViewable *
-gimp_image_viewable_new (GimpImage *image)
+GimpImageProxy *
+gimp_image_proxy_new (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_object_new (GIMP_TYPE_IMAGE_VIEWABLE,
+  return g_object_new (GIMP_TYPE_IMAGE_PROXY,
                        "image", image,
                        NULL);
 }
 
 GimpImage *
-gimp_image_viewable_get_image (GimpImageViewable *image_viewable)
+gimp_image_proxy_get_image (GimpImageProxy *image_proxy)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE_VIEWABLE (image_viewable), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE_PROXY (image_proxy), NULL);
 
-  return image_viewable->priv->image;
+  return image_proxy->priv->image;
 }
 
 void
-gimp_image_viewable_set_show_all (GimpImageViewable *image_viewable,
-                                  gboolean           show_all)
+gimp_image_proxy_set_show_all (GimpImageProxy *image_proxy,
+                               gboolean        show_all)
 {
-  g_return_if_fail (GIMP_IS_IMAGE_VIEWABLE (image_viewable));
+  g_return_if_fail (GIMP_IS_IMAGE_PROXY (image_proxy));
 
-  if (show_all != image_viewable->priv->show_all)
+  if (show_all != image_proxy->priv->show_all)
     {
-      image_viewable->priv->show_all = show_all;
+      image_proxy->priv->show_all = show_all;
 
-      gimp_image_viewable_update_bounding_box (image_viewable);
+      gimp_image_proxy_update_bounding_box (image_proxy);
     }
 }
 
 gboolean
-gimp_image_viewable_get_show_all (GimpImageViewable *image_viewable)
+gimp_image_proxy_get_show_all (GimpImageProxy *image_proxy)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE_VIEWABLE (image_viewable), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE_PROXY (image_proxy), FALSE);
 
-  return image_viewable->priv->show_all;
+  return image_proxy->priv->show_all;
 }
 
 GeglRectangle
-gimp_image_viewable_get_bounding_box (GimpImageViewable *image_viewable)
+gimp_image_proxy_get_bounding_box (GimpImageProxy *image_proxy)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE_VIEWABLE (image_viewable),
+  g_return_val_if_fail (GIMP_IS_IMAGE_PROXY (image_proxy),
                         *GEGL_RECTANGLE (0, 0, 0, 0));
 
-  return image_viewable->priv->bounding_box;
+  return image_proxy->priv->bounding_box;
 }

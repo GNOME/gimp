@@ -40,25 +40,25 @@ typedef struct _GimpNavigationEditorClass  GimpNavigationEditorClass;
 
 struct _GimpNavigationEditor
 {
-  GimpEditor         parent_instance;
+  GimpEditor        parent_instance;
 
-  GimpContext       *context;
-  GimpDisplayShell  *shell;
+  GimpContext      *context;
+  GimpDisplayShell *shell;
 
-  GimpImageViewable *image_viewable;
+  GimpImageProxy   *image_proxy;
 
-  GtkWidget         *view;
-  GtkWidget         *zoom_label;
-  GtkAdjustment     *zoom_adjustment;
+  GtkWidget        *view;
+  GtkWidget        *zoom_label;
+  GtkAdjustment    *zoom_adjustment;
 
-  GtkWidget         *zoom_out_button;
-  GtkWidget         *zoom_in_button;
-  GtkWidget         *zoom_100_button;
-  GtkWidget         *zoom_fit_in_button;
-  GtkWidget         *zoom_fill_button;
-  GtkWidget         *shrink_wrap_button;
+  GtkWidget        *zoom_out_button;
+  GtkWidget        *zoom_in_button;
+  GtkWidget        *zoom_100_button;
+  GtkWidget        *zoom_fit_in_button;
+  GtkWidget        *zoom_fill_button;
+  GtkWidget        *shrink_wrap_button;
 
-  guint              scale_timeout;
+  guint             scale_timeout;
 };
 
 struct _GimpNavigationEditorClass

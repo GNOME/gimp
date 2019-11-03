@@ -36,7 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimageviewable.h"
+#include "core/gimpimageproxy.h"
 
 #include "widgets/gimpdocked.h"
 #include "widgets/gimphelp-ids.h"
@@ -151,7 +151,7 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
 
   editor->view = gimp_view_new_by_types (NULL,
                                          GIMP_TYPE_NAVIGATION_VIEW,
-                                         GIMP_TYPE_IMAGE_VIEWABLE,
+                                         GIMP_TYPE_IMAGE_PROXY,
                                          GIMP_VIEW_SIZE_MEDIUM, 0, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
   gtk_widget_show (editor->view);
@@ -540,20 +540,20 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
     {
       GimpImage *image = gimp_display_get_image (shell->display);
 
-      g_clear_object (&editor->image_viewable);
+      g_clear_object (&editor->image_proxy);
 
       if (image)
         {
-          editor->image_viewable = gimp_image_viewable_new (image);
+          editor->image_proxy = gimp_image_proxy_new (image);
 
           g_signal_connect (
-            editor->image_viewable, "size-changed",
+            editor->image_proxy, "size-changed",
             G_CALLBACK (gimp_navigation_editor_viewable_size_changed),
             editor);
         }
 
       gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (editor->image_viewable));
+                              GIMP_VIEWABLE (editor->image_proxy));
 
       g_signal_connect (editor->shell, "notify::infinite-canvas",
                         G_CALLBACK (gimp_navigation_editor_shell_infinite_canvas_notify),
@@ -585,7 +585,7 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
       gimp_view_set_viewable (GIMP_VIEW (editor->view), NULL);
       gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 
-      g_clear_object (&editor->image_viewable);
+      g_clear_object (&editor->image_proxy);
     }
 
   if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
@@ -622,8 +622,8 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
         {
           GeglRectangle bounding_box;
 
-          bounding_box = gimp_image_viewable_get_bounding_box (
-            GIMP_IMAGE_VIEWABLE (renderer->viewable));
+          bounding_box = gimp_image_proxy_get_bounding_box (
+            GIMP_IMAGE_PROXY (renderer->viewable));
 
           center_x += bounding_box.x;
           center_y += bounding_box.y;
@@ -800,20 +800,20 @@ gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
 {
   GimpImage *image = gimp_display_get_image (shell->display);
 
-  g_clear_object (&editor->image_viewable);
+  g_clear_object (&editor->image_proxy);
 
   if (image)
     {
-      editor->image_viewable = gimp_image_viewable_new (image);
+      editor->image_proxy = gimp_image_proxy_new (image);
 
       g_signal_connect (
-        editor->image_viewable, "size-changed",
+        editor->image_proxy, "size-changed",
         G_CALLBACK (gimp_navigation_editor_viewable_size_changed),
         editor);
     }
 
   gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                          GIMP_VIEWABLE (editor->image_viewable));
+                          GIMP_VIEWABLE (editor->image_proxy));
 
   if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
     gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
@@ -837,15 +837,15 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
       gdouble             x, y;
       gdouble             w, h;
 
-      image = gimp_image_viewable_get_image (
-        GIMP_IMAGE_VIEWABLE (renderer->viewable));
+      image = gimp_image_proxy_get_image (
+        GIMP_IMAGE_PROXY (renderer->viewable));
 
-      gimp_image_viewable_set_show_all (
-        GIMP_IMAGE_VIEWABLE (renderer->viewable),
+      gimp_image_proxy_set_show_all (
+        GIMP_IMAGE_PROXY (renderer->viewable),
         gimp_display_shell_get_infinite_canvas (shell));
 
-      bounding_box = gimp_image_viewable_get_bounding_box (
-        GIMP_IMAGE_VIEWABLE (renderer->viewable));
+      bounding_box = gimp_image_proxy_get_bounding_box (
+        GIMP_IMAGE_PROXY (renderer->viewable));
 
       gimp_display_shell_scroll_get_viewport (shell, &x, &y, &w, &h);
       gimp_display_shell_untransform_xy_f (shell,
