@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-07 18:08+0000\n"
-"PO-Revision-Date: 2019-09-08 00:32+0300\n"
+"POT-Creation-Date: 2019-10-31 15:39+0000\n"
+"PO-Revision-Date: 2019-11-03 03:26+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -223,7 +223,7 @@ msgstr "Mavi"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
 msgid "Luma (Y)"
-msgstr "Renk Parl. (Y)"
+msgstr "Luma (Y)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Hue"
