@@ -674,8 +674,11 @@ static void
 gimp_line_art_prepare_async_func (GimpAsync   *async,
                                   LineArtData *data)
 {
+  GeglBuffer *buffer;
   GeglBuffer *closed  = NULL;
   gfloat     *distmap = NULL;
+  gint        buffer_x;
+  gint        buffer_y;
   gboolean    has_alpha;
   gboolean    select_transparent = FALSE;
 
@@ -726,13 +729,26 @@ gimp_line_art_prepare_async_func (GimpAsync   *async,
         }
     }
 
+  buffer   = data->buffer;
+  buffer_x = gegl_buffer_get_x (data->buffer);
+  buffer_y = gegl_buffer_get_y (data->buffer);
+
+  if (buffer_x != 0 || buffer_y != 0)
+    {
+      buffer = g_object_new (GEGL_TYPE_BUFFER,
+                             "source",  buffer,
+                             "shift-x", buffer_x,
+                             "shift-y", buffer_y,
+                             NULL);
+    }
+
   /* For smart selection, we generate a binarized image with close
    * regions, then run a composite selection with no threshold on
    * this intermediate buffer.
    */
   GIMP_TIMER_START();
 
-  closed = gimp_line_art_close (data->buffer,
+  closed = gimp_line_art_close (buffer,
                                 select_transparent,
                                 data->threshold,
                                 data->spline_max_len,
@@ -762,8 +778,24 @@ gimp_line_art_prepare_async_func (GimpAsync   *async,
 
   GIMP_TIMER_END("close line-art");
 
+  if (buffer != data->buffer)
+    g_object_unref (buffer);
+
   if (! gimp_async_is_stopped (async))
     {
+      if (buffer_x != 0 || buffer_y != 0)
+        {
+          buffer = g_object_new (GEGL_TYPE_BUFFER,
+                                 "source",  closed,
+                                 "shift-x", -buffer_x,
+                                 "shift-y", -buffer_y,
+                                 NULL);
+
+          g_object_unref (closed);
+
+          closed = buffer;
+        }
+
       gimp_async_finish_full (async,
                               line_art_result_new (closed, distmap),
                               (GDestroyNotify) line_art_result_free);
