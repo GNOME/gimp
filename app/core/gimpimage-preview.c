@@ -37,6 +37,26 @@
 #include "gimptempbuf.h"
 
 
+const Babl *
+gimp_image_get_preview_format (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  switch (gimp_image_get_base_type (image))
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      return gimp_babl_format_change_component_type (
+        gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
+        GIMP_COMPONENT_TYPE_U8);
+
+    case GIMP_INDEXED:
+      return babl_format ("R'G'B'A u8");
+    }
+
+  g_return_val_if_reached (NULL);
+}
+
 void
 gimp_image_get_preview_size (GimpViewable *viewable,
                              gint          size,
@@ -107,7 +127,6 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 {
   GimpImage   *image = GIMP_IMAGE (viewable);
   const Babl  *format;
-  gboolean     linear;
   GimpTempBuf *buf;
   gdouble      scale_x;
   gdouble      scale_y;
@@ -115,13 +134,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
 
-  format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
-  linear = gimp_babl_format_get_linear (format);
-
-  format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                             gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
-                                                  linear),
-                             babl_format_has_alpha (format));
+  format = gimp_image_get_preview_format (image);
 
   buf = gimp_temp_buf_new (width, height, format);
 
