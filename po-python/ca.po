@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-05-08 20:38+0000\n"
-"PO-Revision-Date: 2019-05-09 17:02+0200\n"
+"POT-Creation-Date: 2019-10-26 19:52+0000\n"
+"PO-Revision-Date: 2019-10-27 00:18+0200\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
@@ -608,7 +608,6 @@ msgid "Moving Gear Teeth"
 msgstr "Dents de l'engranatge mòbil"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
-#| msgid "Percent"
 msgid "Hole percent"
 msgstr "Percentatge del forat"
 
@@ -717,8 +716,8 @@ msgstr ""
 "centrat."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Redibuixa"
+msgid "Re_draw"
+msgstr "Re_dibuixa"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
@@ -729,16 +728,16 @@ msgstr ""
 "per previsualitzar l’aspecte del patró."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Reinicia"
+msgid "_Reset"
+msgstr "_Reinicia"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Cancel·la"
+msgid "_Cancel"
+msgstr "_Cancel·la"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "D'acord"
+msgid "_OK"
+msgstr "D'ac_ord"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
