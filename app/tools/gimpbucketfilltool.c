@@ -36,6 +36,7 @@
 #include "core/gimperror.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
+#include "core/gimpimageproxy.h"
 #include "core/gimpitem.h"
 #include "core/gimplineart.h"
 #include "core/gimppickable.h"
@@ -68,6 +69,7 @@ struct _GimpBucketFillToolPrivate
 {
   GimpLineArt        *line_art;
   GimpImage          *line_art_image;
+  GimpDisplayShell   *line_art_shell;
 
   /* For preview */
   GeglNode           *graph;
@@ -251,7 +253,7 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   g_signal_connect_swapped (options, "notify::line-art-source",
                             G_CALLBACK (gimp_bucket_fill_tool_reset_line_art),
                             tool);
-  g_signal_connect_swapped (context, "image-changed",
+  g_signal_connect_swapped (context, "display-changed",
                             G_CALLBACK (gimp_bucket_fill_tool_reset_line_art),
                             tool);
 
@@ -274,6 +276,14 @@ gimp_bucket_fill_tool_finalize (GObject *object)
       g_signal_handlers_disconnect_by_data (tool->priv->line_art_image, tool);
       tool->priv->line_art_image = NULL;
     }
+  if (tool->priv->line_art_shell)
+    {
+      g_signal_handlers_disconnect_by_func (
+        tool->priv->line_art_shell,
+        gimp_bucket_fill_tool_reset_line_art,
+        tool);
+      tool->priv->line_art_shell = NULL;
+    }
   g_clear_object (&tool->priv->line_art);
 
   g_signal_handlers_disconnect_by_data (options, tool);
@@ -290,7 +300,6 @@ gimp_bucket_fill_tool_coords_in_active_pickable (GimpBucketFillTool *tool,
   GimpBucketFillOptions *options       = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell      *shell         = gimp_display_get_shell (display);
   GimpImage             *image         = gimp_display_get_image (display);
-  gboolean               show_all      = FALSE;
   gboolean               sample_merged = FALSE;
 
   switch (options->fill_area)
@@ -299,7 +308,6 @@ gimp_bucket_fill_tool_coords_in_active_pickable (GimpBucketFillTool *tool,
       break;
 
     case GIMP_BUCKET_FILL_SIMILAR_COLORS:
-      show_all      = shell->show_all;
       sample_merged = options->sample_merged;
       break;
 
@@ -310,7 +318,8 @@ gimp_bucket_fill_tool_coords_in_active_pickable (GimpBucketFillTool *tool,
     }
 
   return gimp_image_coords_in_active_pickable (image, coords,
-                                               show_all, sample_merged, TRUE);
+                                               shell->show_all, sample_merged,
+                                               TRUE);
 }
 
 static void
@@ -919,14 +928,22 @@ gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool *tool)
 {
   GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpLineArt           *line_art = tool->priv->line_art;
+  GimpDisplayShell      *shell    = NULL;
   GimpImage             *image    = NULL;
 
-  if (options && options->fill_area == GIMP_BUCKET_FILL_LINE_ART)
+  if (options->fill_area == GIMP_BUCKET_FILL_LINE_ART)
     {
       GimpContext *context;
+      GimpDisplay *display;
 
       context = gimp_get_user_context (GIMP_CONTEXT (options)->gimp);
-      image   = gimp_context_get_image (context);
+      display = gimp_context_get_display (context);
+
+      if (display)
+        {
+          shell = gimp_display_get_shell (display);
+          image = gimp_display_get_image (display);
+        }
     }
 
   if (image != tool->priv->line_art_image)
@@ -960,6 +977,26 @@ gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool *tool)
         }
     }
 
+  if (shell != tool->priv->line_art_shell)
+    {
+      if (tool->priv->line_art_shell)
+        {
+          g_signal_handlers_disconnect_by_func (
+            tool->priv->line_art_shell,
+            gimp_bucket_fill_tool_reset_line_art,
+            tool);
+        }
+
+      tool->priv->line_art_shell = shell;
+
+      if (shell)
+        {
+          g_signal_connect_swapped (shell, "notify::show-all",
+                                    G_CALLBACK (gimp_bucket_fill_tool_reset_line_art),
+                                    tool);
+        }
+    }
+
   if (image)
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
@@ -969,7 +1006,13 @@ gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool *tool)
 
       if (options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED)
         {
-          gimp_line_art_set_input (line_art, GIMP_PICKABLE (image));
+          GimpImageProxy *image_proxy = gimp_image_proxy_new (image);
+
+          gimp_image_proxy_set_show_all (image_proxy, shell->show_all);
+
+          gimp_line_art_set_input (line_art, GIMP_PICKABLE (image_proxy));
+
+          g_object_unref (image_proxy);
         }
       else if (drawable)
         {
