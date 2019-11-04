@@ -1,4 +1,3 @@
-
 appcoreenums = custom_target('core-enums',
   input : [ 'core-enums.h', ],
   output: [ 'core-enums.c', ],
@@ -170,7 +169,7 @@ libappcore_sources = [
   'gimpimage.c',
   'gimpimagefile.c',
   'gimpimageundo.c',
-  'gimpimageviewable.c',
+  'gimpimageproxy.c',
   'gimpitem-exclusive.c',
   'gimpitem-linked.c',
   'gimpitem-preview.c',
