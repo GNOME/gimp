@@ -495,7 +495,7 @@ gimp_line_art_set_input (GimpLineArt  *line_art,
       if (line_art->priv->input)
         g_signal_handlers_disconnect_by_data (line_art->priv->input, line_art);
 
-      line_art->priv->input = pickable;
+      g_set_object (&line_art->priv->input, pickable);
 
       gimp_line_art_compute (line_art);
 
