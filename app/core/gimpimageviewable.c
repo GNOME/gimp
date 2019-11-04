@@ -34,6 +34,7 @@
 
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
+#include "gimpimage-preview.h"
 #include "gimpimageviewable.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
@@ -317,7 +318,6 @@ gimp_image_viewable_get_new_preview (GimpViewable *viewable,
   GimpPickable      *pickable;
   const Babl        *format;
   GeglRectangle      bounding_box;
-  GimpTRCType        trc;
   GimpTempBuf       *buf;
   gdouble            scale_x;
   gdouble            scale_y;
@@ -335,13 +335,7 @@ gimp_image_viewable_get_new_preview (GimpViewable *viewable,
 
   scale   = MIN (scale_x, scale_y);
 
-  format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
-  trc    = gimp_babl_format_get_trc (format);
-
-  format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                             gimp_babl_precision (GIMP_COMPONENT_TYPE_U8, trc),
-                             babl_format_has_alpha (format),
-                             babl_format_get_space (format));
+  format = gimp_image_get_preview_format (image);
 
   buf = gimp_temp_buf_new (width, height, format);
 
