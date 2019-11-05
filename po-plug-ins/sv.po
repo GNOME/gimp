@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-13 17:11+0000\n"
-"PO-Revision-Date: 2019-09-14 22:49+0200\n"
+"POT-Creation-Date: 2019-10-05 10:29+0000\n"
+"PO-Revision-Date: 2019-11-05 21:07+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -6636,19 +6636,19 @@ msgstr "32 bitar"
 msgid "Windows BMP image"
 msgstr "Windows BMP-bild"
 
-#: ../plug-ins/file-dds/dds.c:137 ../plug-ins/file-dds/dds.c:156
+#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
 msgid "DDS image"
 msgstr "DDS-bild"
 
-#: ../plug-ins/file-dds/dds.c:173
+#: ../plug-ins/file-dds/dds.c:176
 msgid "Decode YCoCg"
 msgstr "Avkoda YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:186
+#: ../plug-ins/file-dds/dds.c:189
 msgid "Decode YCoCg (scaled)"
 msgstr "Avkoda YCoCg (skalad)"
 
-#: ../plug-ins/file-dds/dds.c:199
+#: ../plug-ins/file-dds/dds.c:202
 msgid "Decode Alpha exponent"
 msgstr "Avkoda alfaexponent"
 
@@ -12196,8 +12196,8 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Justera sidstorlek och orientering för utskrift"
 
 #: ../plug-ins/print/print.c:131
-msgid "Page Set_up"
-msgstr "Sidinställnin_gar"
+msgid "Page Set_up..."
+msgstr "Sidinställnin_gar…"
 
 #: ../plug-ins/print/print.c:275
 msgid "Image Settings"
