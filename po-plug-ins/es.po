@@ -219,7 +219,7 @@ msgstr "Tamaño de re_jilla:"
 
 #: ../plug-ins/common/align-layers.c:754
 msgid "_Ignore the bottom layer even if visible"
-msgstr "No cons_iderar la capa inferior aunque esté visible"
+msgstr "No cons_iderar la capa inferior aunque sea visible"
 
 #: ../plug-ins/common/align-layers.c:764
 msgid "_Use the (invisible) bottom layer as the base"
