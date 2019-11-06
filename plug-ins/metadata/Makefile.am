@@ -34,6 +34,7 @@ metadata_editor_SOURCES = \
 	metadata-impexp.c	\
 	metadata-impexp.h	\
 	metadata-misc.h		\
+	metadata-tags.c		\
 	metadata-tags.h		\
 	metadata-xml.c		\
 	metadata-xml.h

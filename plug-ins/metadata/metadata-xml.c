@@ -236,7 +236,7 @@ set_tag_ui (metadata_editor *args,
                                   COL_LICENSOR_EMAIL, list_tag_data[row][7],
                                   COL_LICENSOR_WEB, list_tag_data[row][8],
                                   -1);
-              for (item = 1; item < G_N_ELEMENTS (licensor) + 1; item++)
+              for (item = 1; item < n_licensor + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -273,7 +273,7 @@ set_tag_ui (metadata_editor *args,
                                   COL_IMG_CR8_NAME, list_tag_data[row][1],
                                   COL_IMG_CR8_ID, list_tag_data[row][2],
                                   -1);
-              for (item = 1; item < G_N_ELEMENTS (imagecreator) + 1; item++)
+              for (item = 1; item < n_imagecreator + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -308,7 +308,7 @@ set_tag_ui (metadata_editor *args,
                                   COL_AOO_SRC_INV_ID, list_tag_data[row][5],
                                   COL_AOO_CR_NOT, list_tag_data[row][6],
                                   -1);
-              for (item = 1; item < G_N_ELEMENTS (artworkorobject) + 1; item++)
+              for (item = 1; item < n_artworkorobject + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -343,7 +343,7 @@ set_tag_ui (metadata_editor *args,
                                   COL_REGSITRY_ORG_ID, list_tag_data[row][1],
                                   COL_REGSITRY_ITEM_ID, list_tag_data[row][2],
                                   -1);
-              for (item = 1; item < G_N_ELEMENTS (registryid) + 1; item++)
+              for (item = 1; item < n_registryid + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -376,7 +376,7 @@ set_tag_ui (metadata_editor *args,
                                       COL_CR_OWNER_NAME, list_tag_data[row][1],
                                       COL_CR_OWNER_ID, list_tag_data[row][2],
                                       -1);
-                  for (item = 1; item < G_N_ELEMENTS (copyrightowner) + 1; item++)
+                  for (item = 1; item < n_copyrightowner + 1; item++)
                     {
                       if (list_tag_data[row][item])
                         {
@@ -412,7 +412,7 @@ set_tag_ui (metadata_editor *args,
                                   COL_LOC_SHO_CNTRY_ISO, list_tag_data[row][5],
                                   COL_LOC_SHO_CNTRY_WRLD_REG, list_tag_data[row][6],
                                   -1);
-              for (item = 1; item < G_N_ELEMENTS (locationshown) + 1; item++)
+              for (item = 1; item < n_locationshown + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -892,7 +892,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
       if (str_tag_name && str_tag_value)
         {
           /* make sure to only allow supported tags */
-          for (i = 0; i < G_N_ELEMENTS (equivalent_metadata_tags); i++)
+          for (i = 0; i < n_equivalent_metadata_tags; i++)
             {
               if (strcmp(equivalent_metadata_tags[i].tag, str_tag_name) == 0)
                 {
@@ -918,7 +918,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
           if (str_tag_name && str_tag_value)
             {
               /* make sure to only allow supported tags */
-              for (i = 0; i < G_N_ELEMENTS (default_metadata_tags); i++)
+              for (i = 0; i < n_default_metadata_tags; i++)
                 {
                   if (strcmp(default_metadata_tags[i].tag, str_tag_name) == 0)
                     {
@@ -941,7 +941,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
           if (row_count > 0)
             {
               /* make sure to only allow supported tags */
-              for (i = 0; i < G_N_ELEMENTS (default_metadata_tags); i++)
+              for (i = 0; i < n_default_metadata_tags; i++)
                 {
                   if (strcmp(default_metadata_tags[i].tag, str_tag_name) == 0)
                     {

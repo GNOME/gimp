@@ -1510,7 +1510,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gchar     *value;
   gint       i;
 
-  gint32 numele = G_N_ELEMENTS (default_metadata_tags);
+  gint32 numele = n_default_metadata_tags;
 
   /* Setup Buttons */
   button_widget = builder_get_widget (builder, "add_licensor_button");
@@ -3075,11 +3075,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   counter = count_tags (metadata, LICENSOR_HEADER,
                                         licensor,
-                                        G_N_ELEMENTS (licensor));
+                                        n_licensor);
 
                   get_tags (metadata, LICENSOR_HEADER,
                             licensor,
-                            G_N_ELEMENTS (licensor), counter);
+                            n_licensor, counter);
 
                   phonestore = gtk_list_store_new (1, G_TYPE_STRING);
                   gtk_list_store_append (phonestore, &phoneiter);
@@ -3347,11 +3347,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   counter = count_tags (metadata, COPYRIGHTOWNER_HEADER,
                                         copyrightowner,
-                                        G_N_ELEMENTS (copyrightowner));
+                                        n_copyrightowner);
 
                   get_tags (metadata, COPYRIGHTOWNER_HEADER,
                             copyrightowner,
-                            G_N_ELEMENTS (copyrightowner), counter);
+                            n_copyrightowner, counter);
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -3439,11 +3439,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   counter = count_tags (metadata, IMAGECREATOR_HEADER,
                                         imagecreator,
-                                        G_N_ELEMENTS (imagecreator));
+                                        n_imagecreator);
 
                   get_tags (metadata, IMAGECREATOR_HEADER,
                             imagecreator,
-                            G_N_ELEMENTS (imagecreator), counter);
+                            n_imagecreator, counter);
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -3531,11 +3531,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   counter = count_tags (metadata, ARTWORKOROBJECT_HEADER,
                                         artworkorobject,
-                                        G_N_ELEMENTS (artworkorobject));
+                                        n_artworkorobject);
 
                   get_tags (metadata, ARTWORKOROBJECT_HEADER,
                             artworkorobject,
-                            G_N_ELEMENTS (artworkorobject), counter);
+                            n_artworkorobject, counter);
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -3734,11 +3734,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   counter = count_tags (metadata, REGISTRYID_HEADER,
                                         registryid,
-                                        G_N_ELEMENTS (registryid));
+                                        n_registryid);
 
                   get_tags (metadata, REGISTRYID_HEADER,
                             registryid,
-                            G_N_ELEMENTS (registryid), counter);
+                            n_registryid, counter);
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -3826,11 +3826,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   counter = count_tags (metadata, LOCATIONSHOWN_HEADER,
                                         locationshown,
-                                        G_N_ELEMENTS (locationshown));
+                                        n_locationshown);
 
                   get_tags (metadata, LOCATIONSHOWN_HEADER,
                             locationshown,
-                            G_N_ELEMENTS (locationshown), counter);
+                            n_locationshown, counter);
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
                   liststore = GTK_LIST_STORE (treemodel);
@@ -4502,7 +4502,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
     {
       gint item;
 
-      for (item = 0; item < G_N_ELEMENTS (locationshown); item++)
+      for (item = 0; item < n_locationshown; item++)
         {
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                      LOCATIONSHOWN_HEADER, row, locationshown[item]);
@@ -4604,7 +4604,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
     {
       gint item;
 
-      for (item = 0; item < G_N_ELEMENTS (artworkorobject); item++)
+      for (item = 0; item < n_artworkorobject; item++)
         {
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       ARTWORKOROBJECT_HEADER, row, artworkorobject[item]);
@@ -4708,7 +4708,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
     {
       gint item;
 
-      for (item = 0; item < G_N_ELEMENTS (registryid); item++)
+      for (item = 0; item < n_registryid; item++)
         {
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       REGISTRYID_HEADER, row, registryid[item]);
@@ -4772,7 +4772,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
     {
       gint item;
 
-      for (item = 0; item < G_N_ELEMENTS (imagecreator); item++)
+      for (item = 0; item < n_imagecreator; item++)
         {
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       IMAGECREATOR_HEADER, row, imagecreator[item]);
@@ -4836,7 +4836,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
     {
       gint item;
 
-      for (item = 0; item < G_N_ELEMENTS (copyrightowner); item++)
+      for (item = 0; item < n_copyrightowner; item++)
         {
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       COPYRIGHTOWNER_HEADER, row, copyrightowner[item]);
@@ -4900,7 +4900,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
     {
       gint item;
 
-      for (item = 0; item < G_N_ELEMENTS (licensor); item++)
+      for (item = 0; item < n_licensor; item++)
         {
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       LICENSOR_HEADER, row, licensor[item]);
@@ -5107,7 +5107,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         }
     }
 
-  max_elements = G_N_ELEMENTS (default_metadata_tags);
+  max_elements = n_default_metadata_tags;
 
   for (i = 0; i < max_elements; i++)
     {
