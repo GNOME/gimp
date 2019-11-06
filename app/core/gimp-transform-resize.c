@@ -30,9 +30,8 @@
 #include "gimp-transform-utils.h"
 #include "gimp-utils.h"
 
-#ifdef PLATFORM_OSX
-#define FINITE(x) isfinite(x)
-#elif defined (HAVE_FINITE)
+
+#if defined (HAVE_FINITE)
 #define FINITE(x) finite(x)
 #elif defined (HAVE_ISFINITE)
 #define FINITE(x) isfinite(x)
