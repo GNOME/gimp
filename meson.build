@@ -240,9 +240,6 @@ warning_cflags_common = [
   '-Wpointer-arith',
   '-Wreturn-type',
   '-Wtype-limits',
-
-  # You can uncomment this to debug with less warning outputs
-  '-Wno-deprecated-declarations',
 ]
 warning_cflags_c = [
   '-Wdeclaration-after-statement',
