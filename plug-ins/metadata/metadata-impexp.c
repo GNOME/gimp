@@ -119,7 +119,7 @@ export_file_metadata (metadata_editor *args)
                          "<gimp-metadata>\n", NULL);
 
   /* HANDLE IPTC */
-  for (i = 0; i < G_N_ELEMENTS (equivalent_metadata_tags); i++)
+  for (i = 0; i < n_equivalent_metadata_tags; i++)
     {
       int index = equivalent_metadata_tags[i].other_tag_index;
       xmldata = g_strconcat (xmldata, "\t<iptc-tag>\n", NULL);
@@ -165,7 +165,7 @@ export_file_metadata (metadata_editor *args)
     }
 
   /* HANDLE XMP */
-  for (i = 0; i < G_N_ELEMENTS (default_metadata_tags); i++)
+  for (i = 0; i < n_default_metadata_tags; i++)
     {
       xmldata = g_strconcat (xmldata, "\t<xmp-tag>\n", NULL);
       xmldata = g_strconcat (xmldata, "\t\t<tag-name>", NULL);
