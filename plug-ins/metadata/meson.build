@@ -4,6 +4,7 @@ plugin_name = 'metadata-editor'
 plugin_sources = [
   'metadata-editor.c',
   'metadata-impexp.c',
+  'metadata-tags.c',
   'metadata-xml.c',
 ]
 
