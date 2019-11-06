@@ -221,7 +221,7 @@ set_tag_ui (metadata_editor *args,
             }
         }
       /* Add new values values */
-      if (!strcmp ("Xmp.plus.Licensor", name))
+      if (!strcmp (LICENSOR_HEADER, name))
         {
           for (row = 1; row < row_count+1; row++)
             {
@@ -264,7 +264,7 @@ set_tag_ui (metadata_editor *args,
                 }
             }
         }
-      else if (!strcmp ("Xmp.plus.ImageCreator", name))
+      else if (!strcmp (IMAGECREATOR_HEADER, name))
         {
           for (row = 1; row < row_count+1; row++)
             {
@@ -295,7 +295,7 @@ set_tag_ui (metadata_editor *args,
                 }
             }
         }
-      else if (!strcmp ("Xmp.iptcExt.ArtworkOrObject", name))
+      else if (!strcmp (ARTWORKOROBJECT_HEADER, name))
         {
           for (row = 1; row < row_count+1; row++)
             {
@@ -334,7 +334,7 @@ set_tag_ui (metadata_editor *args,
                 }
             }
         }
-      else if (!strcmp ("Xmp.iptcExt.RegistryId", name))
+      else if (!strcmp (REGISTRYID_HEADER, name))
         {
           for (row = 1; row < row_count+1; row++)
             {
@@ -365,7 +365,7 @@ set_tag_ui (metadata_editor *args,
                 }
             }
         }
-      else if (!strcmp ("Xmp.plus.CopyrightOwner", name))
+      else if (!strcmp (COPYRIGHTOWNER_HEADER, name))
         {
           if (row_count > 0)
             {
@@ -399,7 +399,7 @@ set_tag_ui (metadata_editor *args,
                 }
             }
         }
-      else if (!strcmp ("Xmp.iptcExt.LocationShown", name))
+      else if (!strcmp (LOCATIONSHOWN_HEADER, name))
         {
           for (row = 1; row < row_count+1; row++)
             {
@@ -604,7 +604,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
     {
       if (gtk_tree_model_iter_nth_child(treemodel, &iter, NULL, row))
         {
-          if (!strcmp ("Xmp.plus.Licensor", name))
+          if (!strcmp (LICENSOR_HEADER, name))
             {
               gtk_tree_model_get (treemodel, &iter,
                                   COL_LICENSOR_NAME, &tagdata[row][0],
@@ -640,7 +640,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
                 }
             }
-          else if (!strcmp ("Xmp.plus.CopyrightOwner", name))
+          else if (!strcmp (COPYRIGHTOWNER_HEADER, name))
             {
               gtk_tree_model_get (treemodel, &iter,
                                   COL_CR_OWNER_NAME, &tagdata[row][0],
@@ -662,7 +662,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
                 }
             }
-          else if (!strcmp ("Xmp.plus.ImageCreator", name))
+          else if (!strcmp (IMAGECREATOR_HEADER, name))
             {
               gtk_tree_model_get (treemodel, &iter,
                                   COL_IMG_CR8_NAME, &tagdata[row][0],
@@ -686,7 +686,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
                 }
             }
-          else if (!strcmp ("Xmp.iptcExt.ArtworkOrObject", name))
+          else if (!strcmp (ARTWORKOROBJECT_HEADER, name))
             {
               gtk_tree_model_get (treemodel, &iter,
                                   COL_AOO_TITLE, &tagdata[row][0],
@@ -718,7 +718,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
                 }
             }
-          else if (!strcmp ("Xmp.iptcExt.RegistryId", name))
+          else if (!strcmp (REGISTRYID_HEADER, name))
             {
               gtk_tree_model_get (treemodel, &iter,
                                   COL_REGSITRY_ORG_ID, &tagdata[row][0],
@@ -742,7 +742,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
                   xmldata = g_strconcat (xmldata, "\t\t\t</list-element>\n", NULL);
                 }
             }
-          else if (!strcmp ("Xmp.iptcExt.LocationShown", name))
+          else if (!strcmp (LOCATIONSHOWN_HEADER, name))
             {
               gtk_tree_model_get (treemodel, &iter,
                                   COL_LOC_SHO_SUB_LOC, &tagdata[row][0],

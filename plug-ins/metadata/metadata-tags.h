@@ -404,7 +404,7 @@ static const TranslateTag imageSupplierInfoTags[] =
 
 /* Plus and IPTC extension tags */
 
-static const gchar *licensor_header = "Xmp.plus.Licensor";
+#define LICENSOR_HEADER "Xmp.plus.Licensor"
 static const gchar *licensor[] =
 {
   "/plus:LicensorName",
@@ -418,7 +418,7 @@ static const gchar *licensor[] =
 };
 
 #ifdef USE_TAGS
-static const gchar *imagesupplier_header = "Xmp.plus.ImageSupplier";
+#define IMAGESUPPLIER_HEADER "Xmp.plus.ImageSupplier"
 static const gchar *imagesupplier[] =
 {
   "/plus:ImageSupplierName",
@@ -426,28 +426,28 @@ static const gchar *imagesupplier[] =
 };
 #endif
 
-static const gchar *imagecreator_header = "Xmp.plus.ImageCreator";
+#define IMAGECREATOR_HEADER "Xmp.plus.ImageCreator"
 static const gchar *imagecreator[] =
 {
   "/plus:ImageCreatorName",
   "/plus:ImageCreatorID"
 };
 
-static const gchar *copyrightowner_header = "Xmp.plus.CopyrightOwner";
+#define COPYRIGHTOWNER_HEADER "Xmp.plus.CopyrightOwner"
 static const gchar *copyrightowner[] =
 {
   "/plus:CopyrightOwnerName",
   "/plus:CopyrightOwnerID"
 };
 
-static const gchar *registryid_header = "Xmp.iptcExt.RegistryId";
+#define REGISTRYID_HEADER "Xmp.iptcExt.RegistryId"
 static const gchar *registryid[] =
 {
   "/Iptc4xmpExt:RegOrgId",
   "/Iptc4xmpExt:RegItemId"
 };
 
-static const gchar *artworkorobject_header = "Xmp.iptcExt.ArtworkOrObject";
+#define ARTWORKOROBJECT_HEADER "Xmp.iptcExt.ArtworkOrObject"
 static const gchar *artworkorobject[] =
 {
   "/Iptc4xmpExt:AODateCreated",
@@ -458,7 +458,7 @@ static const gchar *artworkorobject[] =
   "/Iptc4xmpExt:AOCreator"
 };
 
-static const gchar *locationshown_header = "Xmp.iptcExt.LocationShown";
+#define LOCATIONSHOWN_HEADER "Xmp.iptcExt.LocationShown"
 static const gchar *locationshown[] =
 {
   "/Iptc4xmpExt:Sublocation",
@@ -470,7 +470,7 @@ static const gchar *locationshown[] =
 };
 
 #ifdef USE_TAGS
-static const gchar *locationcreated_header = "Xmp.iptcExt.LocationCreated";
+#define LOCATIONCREATED_HEADER "Xmp.iptcExt.LocationCreated"
 static const gchar *locationcreated[] =
 {
   "/Iptc4xmpExt:Sublocation",
@@ -483,4 +483,3 @@ static const gchar *locationcreated[] =
 #endif
 
 #endif /* __METADATA_TAGS_H__ */
-
