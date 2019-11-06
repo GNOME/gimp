@@ -8,6 +8,41 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.14 to GIMP 2.10.16
+=====================================================
+
+Tools:
+
+  - add "show all" support to the Bucket Fill tool in line-art mode
+
+Windows:
+
+  - Installer: unofficial languages, ghostscript 9.50.
+  - Installer: skip .debug files when they don't exist.
+  - Installer: properly remove old icons on 32-bit installs and per-user
+    installs.
+
+macOS:
+
+  - Set required variables if is running from Apple application bundle.
+
+Updated translations:
+
+  - Catalan, Japanese, Spanish, Swedish, Turkish, Ukrainian.
+
+Bugfixes:
+
+   - #4172.
+
+Developers:
+
+  - Alex Samorukov, Ell, Jehan, Jernej Simončič, Pascal Terjan.
+
+Translators:
+
+  - Anders Jonsson, Daniel Korostil, Jordi Mas, Rodrigo Lledó Milanca,
+    Ryuta Fujii, Sabri Ünal.
+
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
 
