@@ -231,6 +231,7 @@ warning_cflags_common = [
   '-fdiagnostics-show-option',
   '-fno-common',
 
+  '-Wformat',
   '-Wformat-security',
   '-Winit-self',
   '-Wlogical-op',
