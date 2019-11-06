@@ -1021,7 +1021,7 @@ AC_RUN_IFELSE(
      [AC_MSG_RESULT])],
   [AC_MSG_RESULT()])
 
-# Check for finite or isfinite
+# Check for finite
 AC_CHECK_FUNCS(finite, , [
   AC_MSG_CHECKING(for finite in <math.h>)
   AC_LINK_IFELSE(
@@ -1030,15 +1030,23 @@ AC_CHECK_FUNCS(finite, , [
       [[double f = 0.0; finite (f)]])],
     [AC_DEFINE(HAVE_FINITE, 1)
      AC_MSG_RESULT(yes)],
-    [AC_MSG_RESULT(no)
-     AC_MSG_CHECKING(for isfinite in <math.h>)
-     AC_LINK_IFELSE(
-       [AC_LANG_PROGRAM(
-         [[#include <math.h>]],
-         [[float f = 0.0; isfinite(f)]])],
-       [AC_DEFINE([HAVE_ISFINITE],[1],[Define to 1 if you have the isfinite function.])
-        AC_MSG_RESULT(yes)],
-       [AC_MSG_RESULT(no)])])])
+    [AC_MSG_RESULT(no)])
+  ]
+)
+
+# Check for isfinite
+AC_CHECK_FUNCS(isfinite, , [
+  AC_MSG_CHECKING(for isfinite in <math.h>)
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[#include <math.h>]],
+      [[double f = 0.0; isfinite (f)]])],
+    [AC_DEFINE(HAVE_ISFINITE, 1)
+     AC_MSG_RESULT(yes)],
+    [AC_MSG_RESULT(no)])
+  ]
+)
+
 AC_SUBST(HAVE_FINITE)
 AC_SUBST(HAVE_ISFINITE)
 
@@ -1340,7 +1348,7 @@ AC_MSG_CHECKING([whether symbols are prefixed])
 
 case "$host_os" in
   mingw*)
-    case "$host_cpu" in 
+    case "$host_cpu" in
 	  x86_64) SYMPREFIX='' ;;
 	  *) SYMPREFIX='_' ;;
 	esac
