@@ -1149,7 +1149,6 @@ foreach fn : [
     { 'm': 'HAVE_DCGETTEXT',                'v': 'dcgettext', },
     { 'm': 'HAVE_DIFFTIME',                 'v': 'difftime', },
     { 'm': 'HAVE_FINITE',                   'v': 'finite', },
-    { 'm': 'HAVE_FINITE',                   'v': 'finite', },
     { 'm': 'HAVE_FSYNC',                    'v': 'fsync', },
     { 'm': 'HAVE_GETADDRINFO',              'v': 'getaddrinfo', },
     { 'm': 'HAVE_GETNAMEINFO',              'v': 'getnameinfo', },
