@@ -15,6 +15,11 @@ conf = configuration_data()
 
 warnings = []
 
+# git-version.h is already present and not generated if dist tarball
+is_dist_tarball = run_command('python', '-c',
+  'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)'
+).returncode() == 0
+
 ################################################################################
 # Project info
 
@@ -919,20 +924,20 @@ else
 
   if (not python_found) and (not always_install)
     error('''
-    Python @0@ or PyGObject was not found.
+    Python >=@0@ or PyGObject was not found.
     Note that you may install the Python plug-ins even if you have no Python
     interpreter at build-time by passing the configure option -Dpython=always.
-    Just make sure that a Python @0@ interpreter is available at run-time.
-    '''.format(python3_required_version))
+    Just make sure that a Python >=@0@ interpreter is available at run-time.
+    '''.format(python3_minver))
   endif
 
   if (not python_found) and (always_install)
     python_warning = '''
-    Python @0@ or PyGObject was not found.
+    Python >=@0@ or PyGObject was not found.
     Python plug-ins will be installed anyway but you should make sure that
     a compatible Python interpreter is available at installation, otherwise
     installed plug-ins won't be usable.
-    '''.format(python3_required_version)
+    '''.format(python3_minver)
     warning(python_warning)
     warnings += python_warning
   endif
@@ -1401,29 +1406,29 @@ endif
   #####   ####  #    # #      #  ####     #       # ###### ######  ####
 
 
-
-gitversion_h1 = vcs_tag(
-  input : 'app/git-version.h.in',
-  output: 'git-version.h.in.1',
-  command: [ 'git', 'describe', '--always', ],
-  replace_string: '@GIMP_GIT_VERSION@',
-  fallback: '',
-)
-gitversion_h2 = vcs_tag(
-  input : gitversion_h1,
-  output: 'git-version.h.in.2',
-  command: [ 'git', 'rev-parse', '--short', 'HEAD', ],
-  replace_string: '@GIMP_GIT_VERSION_ABBREV@',
-  fallback: '',
-)
-gitversion_h = vcs_tag(
-  input : gitversion_h2,
-  output: 'git-version.h',
-  command: [ 'git', 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
-  replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
-  fallback: '',
-)
-
+if not is_dist_tarball
+  gitversion_h1 = vcs_tag(
+    input : 'app/git-version.h.in',
+    output: 'git-version.h.in.1',
+    command: [ 'git', 'describe', '--always', ],
+    replace_string: '@GIMP_GIT_VERSION@',
+    fallback: '',
+  )
+  gitversion_h2 = vcs_tag(
+    input : gitversion_h1,
+    output: 'git-version.h.in.2',
+    command: [ 'git', 'rev-parse', '--short', 'HEAD', ],
+    replace_string: '@GIMP_GIT_VERSION_ABBREV@',
+    fallback: '',
+  )
+  gitversion_h = vcs_tag(
+    input : gitversion_h2,
+    output: 'git-version.h',
+    command: [ 'git', 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
+    replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
+    fallback: '',
+  )
+endif
 
 install_conf = configuration_data()
 install_conf.set('GIMP_APP_VERSION', gimp_app_version)
@@ -1460,11 +1465,13 @@ install_conf.set('WEBP_REQUIRED_VERSION',         webp_minver)
 install_conf.set('WMF_REQUIRED_VERSION',          wmf_minver)
 install_conf.set('XGETTEXT_REQUIRED_VERSION',     '0.19')
 
-configure_file(
-  input : 'INSTALL.in',
-  output: 'INSTALL',
-  configuration: install_conf
-)
+if not is_dist_tarball
+  INSTALL = configure_file(
+    input : 'INSTALL.in',
+    output: 'INSTALL',
+    configuration: install_conf
+  )
+endif
 
 
 configure_file(
@@ -1546,6 +1553,8 @@ custom_target('Changelog',
   ],
   build_by_default: false,
 )
+
+meson.add_dist_script('meson_dist_script.sh')
 
 
 ################################################################################
