@@ -404,35 +404,15 @@ gimp_palette_import_from_indexed_image (GimpImage   *image,
                                         const gchar *palette_name)
 {
   GimpPalette  *palette;
-  const guchar *colormap;
-  guint         n_colors;
-  gint          count;
-  GimpRGB       color;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (gimp_image_get_base_type (image) == GIMP_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
 
-  palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
+  palette = GIMP_PALETTE (gimp_data_duplicate (GIMP_DATA (gimp_image_get_colormap_palette (image))));
 
-  colormap = gimp_image_get_colormap (image);
-  n_colors = gimp_image_get_colormap_size (image);
-
-  for (count = 0; count < n_colors; ++count)
-    {
-      gchar name[256];
-
-      g_snprintf (name, sizeof (name), _("Index %d"), count);
-
-      gimp_rgba_set_uchar (&color,
-                           colormap[count * 3 + 0],
-                           colormap[count * 3 + 1],
-                           colormap[count * 3 + 2],
-                           255);
-
-      gimp_palette_add_entry (palette, -1, name, &color);
-    }
+  gimp_object_set_name (GIMP_OBJECT (palette), palette_name);
 
   return palette;
 }

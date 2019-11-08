@@ -56,8 +56,6 @@ struct _GimpImagePrivate
   gboolean           bounding_box_update_pending;
   GeglBuffer        *pickable_buffer;
 
-  guchar            *colormap;              /*  colormap (for indexed)       */
-  gint               n_colors;              /*  # of colors (for indexed)    */
   GimpPalette       *palette;               /*  palette of colormap          */
   const Babl        *babl_palette_rgb;      /*  palette's RGB Babl format    */
   const Babl        *babl_palette_rgba;     /*  palette's RGBA Babl format   */

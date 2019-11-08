@@ -32,8 +32,11 @@ const Babl   * gimp_image_colormap_get_rgb_format  (GimpImage     *image);
 const Babl   * gimp_image_colormap_get_rgba_format (GimpImage     *image);
 
 GimpPalette  * gimp_image_get_colormap_palette     (GimpImage     *image);
+void           gimp_image_set_colormap_palette     (GimpImage     *image,
+                                                    GimpPalette   *palette,
+                                                    gboolean       push_undo);
 
-const guchar * gimp_image_get_colormap             (GimpImage     *image);
+guchar *       gimp_image_get_colormap             (GimpImage     *image);
 gint           gimp_image_get_colormap_size        (GimpImage     *image);
 void           gimp_image_set_colormap             (GimpImage     *image,
                                                     const guchar  *colormap,

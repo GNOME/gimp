@@ -871,7 +871,7 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
   gint                     n_colors;
 
   n_colors = gimp_image_get_colormap_size (image);
-  cmap     = g_memdup (gimp_image_get_colormap (image), n_colors * 3);
+  cmap     = gimp_image_get_colormap (image);
 
   if (bpc)
     flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
