@@ -2289,7 +2289,7 @@ gimp_image_set_imported_file (GimpImage *image,
       gimp_object_name_changed (GIMP_OBJECT (image));
     }
 
-  if (! private->resolution_set)
+  if (! private->resolution_set && file != NULL)
     {
       /* Unlike new files (which follow technological progress and will
        * use higher default resolution, or explicitly chosen templates),
@@ -2801,15 +2801,16 @@ gimp_image_set_resolution (GimpImage *image,
       yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
     return;
 
+  private->resolution_set = TRUE;
+
   if ((ABS (private->xresolution - xresolution) >= 1e-5) ||
       (ABS (private->yresolution - yresolution) >= 1e-5))
     {
       gimp_image_undo_push_image_resolution (image,
                                              C_("undo-type", "Change Image Resolution"));
 
-      private->xresolution    = xresolution;
-      private->yresolution    = yresolution;
-      private->resolution_set = TRUE;
+      private->xresolution = xresolution;
+      private->yresolution = yresolution;
 
       gimp_image_resolution_changed (image);
       gimp_image_size_changed_detailed (image,
