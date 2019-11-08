@@ -1,7 +1,8 @@
 
+appoperationsenums_header = files('operations-enums.h')
 appoperationsenums = custom_target('operations-enums.c',
-  input : [ 'operations-enums.h', ],
-  output: [ 'operations-enums.c', ],
+  input : appoperationsenums_header,
+  output: 'operations-enums.c',
   command: [
     gimp_mkenums,
     '--fhead','#include "config.h"\n'

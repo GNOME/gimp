@@ -8,10 +8,10 @@ gimpversion = configure_file(
   configuration: versionconfig,
 )
 
-
+gimpbaseenums_header = files('gimpbaseenums.h')
 gimpbaseenums = custom_target('gimpbaseenums.c',
-  input : [ 'gimpbaseenums.h', ],
-  output: [ 'gimpbaseenums.c', ],
+  input : gimpbaseenums_header,
+  output: 'gimpbaseenums.c',
   command: [
     gimp_mkenums,
     '--fhead','#include "config.h"\n'

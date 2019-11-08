@@ -63,11 +63,11 @@ endforeach
 
 
 enum_headers = [
-  gimpbaseenums,
-  appconfigenums,
-  appoperationsenums,
-  appcoreenums,
-  apppaintenums,
+  gimpbaseenums_header,
+  gimpconfigenums_header,
+  appoperationsenums_header,
+  appcoreenums_header,
+  apppaintenums_header,
 ]
 
 # Perl environment
@@ -79,7 +79,7 @@ perl_env = [
   'PDBGEN_GROUPS=' + (pdbgen_groups ? '1' : '0'),
   'rootme='   + perlbindir,
   'srcdir='   + perlsrcdir,
-  'destdir='  + meson.build_root(),
+  'destdir='  + meson.source_root(),
   'builddir=' + meson.build_root(),
   perl,
   '-I', perlbindir,
