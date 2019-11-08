@@ -52,6 +52,15 @@
 /* Declare local data types
  */
 
+typedef enum
+{
+  FILE_TYPE_PNM,
+  FILE_TYPE_PBM,
+  FILE_TYPE_PGM,
+  FILE_TYPE_PPM,
+  FILE_TYPE_PFM
+} FileType;
+
 typedef struct _PNMScanner PNMScanner;
 typedef struct _PNMInfo    PNMInfo;
 typedef struct _PNMRowInfo PNMRowInfo;
@@ -102,12 +111,6 @@ struct _PNMRowInfo
   gboolean       zero_is_black; /* index zero is black (PBM only) */
 };
 
-/* Export info  */
-typedef struct
-{
-  gint  raw;            /*  raw or ascii  */
-} PNMSaveVals;
-
 #define BUFLEN 512              /* The input buffer size for data returned
                                  * from the scanner.  Note that lines
                                  * aren't allowed to be over 256 characters
@@ -156,11 +159,12 @@ static GimpImage      * load_image           (GFile                *file,
 static gint             save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
-                                              gboolean              pbm,
-                                              gboolean              float_format,
+                                              FileType              file_type,
+                                              GObject              *config,
                                               GError              **error);
 
-static gboolean         save_dialog          (void);
+static gboolean         save_dialog          (GimpProcedure        *procedure,
+                                              GObject              *config);
 
 static void             pnm_load_ascii       (PNMScanner           *scan,
                                               PNMInfo              *info,
@@ -240,11 +244,6 @@ static const struct
   {  0 , 0, 0,   0, NULL}
 };
 
-static PNMSaveVals psvals =
-{
-  TRUE     /* raw? or ascii */
-};
-
 
 static void
 pnm_class_init (PnmClass *klass)
@@ -314,7 +313,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save, NULL, NULL);
+                                           pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PNM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -347,7 +348,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save, NULL, NULL);
+                                           pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PBM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -380,7 +383,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save, NULL, NULL);
+                                           pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PGM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -413,7 +418,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save, NULL, NULL);
+                                           pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PPM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -446,7 +453,9 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_save_procedure_new (plug_in, name,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
-                                           pnm_save, NULL, NULL);
+                                           pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PFM),
+                                           NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
@@ -512,15 +521,17 @@ pnm_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export       = GIMP_EXPORT_CANCEL;
-  const gchar       *name         = gimp_procedure_get_name (procedure);
-  gboolean           pbm          = FALSE;
-  gboolean           float_format = FALSE;
-  GError            *error        = NULL;
+  GimpProcedureConfig *config;
+  FileType             file_type = GPOINTER_TO_INT (run_data);
+  GimpPDBStatusType    status    = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export    = GIMP_EXPORT_CANCEL;
+  GError              *error     = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   switch (run_mode)
     {
@@ -528,36 +539,36 @@ pnm_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      if (! strcmp (name, PNM_SAVE_PROC))
+      switch (file_type)
         {
+        case FILE_TYPE_PNM:
           export = gimp_export_image (&image, &drawable, "PNM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB  |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED);
-        }
-      else if (! strcmp (name, PBM_SAVE_PROC))
-        {
+          break;
+
+        case FILE_TYPE_PBM:
           export = gimp_export_image (&image, &drawable, "PBM",
                                       GIMP_EXPORT_CAN_HANDLE_BITMAP);
-          pbm = TRUE;  /* gimp has no mono image type so hack it */
-        }
-      else if (! strcmp (name, PGM_SAVE_PROC))
-        {
+          break;
+
+        case FILE_TYPE_PGM:
           export = gimp_export_image (&image, &drawable, "PGM",
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
-        }
-      else if (! strcmp (name, PPM_SAVE_PROC))
-        {
+          break;
+
+        case FILE_TYPE_PPM:
           export = gimp_export_image (&image, &drawable, "PPM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED);
-        }
-      else
-        {
+          break;
+
+        case FILE_TYPE_PFM:
           export = gimp_export_image (&image, &drawable, "PFM",
                                       GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY);
-          float_format = TRUE;
+          break;
         }
 
       if (export == GIMP_EXPORT_CANCEL)
@@ -570,47 +581,24 @@ pnm_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (strcmp (name, PFM_SAVE_PROC) != 0)
+  if (file_type != FILE_TYPE_PFM &&
+      run_mode  == GIMP_RUN_INTERACTIVE)
     {
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          gimp_get_data (name, &psvals);
-
-          if (! save_dialog ())
-            status = GIMP_PDB_CANCEL;
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          psvals.raw = GIMP_VALUES_GET_BOOLEAN (args, 0);
-          pbm = (strcmp (name, PBM_SAVE_PROC) == 0);
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data (name, &psvals);
-          break;
-
-        default:
-          break;
-        }
+      if (! save_dialog (procedure, G_OBJECT (config)))
+        status = GIMP_PDB_CANCEL;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_image (file, image, drawable, pbm, float_format,
-                      &error))
-        {
-          if (strcmp (name, PFM_SAVE_PROC))
-            {
-              /*  Store psvals data  */
-              gimp_set_data (name, &psvals, sizeof (PNMSaveVals));
-            }
-        }
-      else
+      if (! save_image (file, image, drawable, file_type, G_OBJECT (config),
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+  gimp_procedure_config_end_export (config, image, file, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -680,7 +668,7 @@ load_image (GFile   *file,
         pnminfo->loader       = pnm_types[ctr].loader;
       }
 
-  if (!pnminfo->loader)
+  if (! pnminfo->loader)
     {
       g_message (_("File not in a supported format."));
       longjmp (pnminfo->jmpbuf, 1);
@@ -715,7 +703,7 @@ load_image (GFile   *file,
       pnminfo->scale_factor = g_ascii_strtod (buf, &endptr);
       CHECK_FOR_ERROR (endptr == NULL || *endptr != 0 || errno == ERANGE,
                        pnminfo->jmpbuf, _("Bogus scale factor."));
-      CHECK_FOR_ERROR (!isnormal (pnminfo->scale_factor),
+      CHECK_FOR_ERROR (! isnormal (pnminfo->scale_factor),
                        pnminfo->jmpbuf, _("Unsupported scale factor."));
       precision = GIMP_PRECISION_FLOAT_LINEAR;
     }
@@ -743,7 +731,8 @@ load_image (GFile   *file,
     }
 
   /* Create a new image of the proper size and associate the filename
-     with it. */
+   * with it.
+   */
   image = gimp_image_new_with_precision (pnminfo->xres, pnminfo->yres,
                                          (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
                                          precision);
@@ -1084,13 +1073,15 @@ pnm_load_rawpfm (PNMScanner *scan,
               data[x] = v.f;
             }
 
-          /* let's see if this is what people want, the PFM specs are a
-           * little vague about what the scale factor should be used
-           * for */
+          /* let's see if this is what people want, the PFM specs are
+           * a little vague about what the scale factor should be used
+           * for
+           */
           data[x] *= fabsf (info->scale_factor);
-          /* Keep values smaller than zero. That is in line with what the
-           * TIFF loader does. If the user doesn't want the negative numbers
-           * he has to get rid of them afterwards */
+          /* Keep values smaller than zero. That is in line with what
+           * the TIFF loader does. If the user doesn't want the
+           * negative numbers he has to get rid of them afterwards
+           */
           /* data[x] = fmaxf (0.0f, fminf (FLT_MAX, data[x])); */
         }
 
@@ -1285,8 +1276,8 @@ static gboolean
 save_image (GFile         *file,
             GimpImage     *image,
             GimpDrawable  *drawable,
-            gboolean       pbm,
-            gboolean       float_format,
+            FileType       file_type,
+            GObject       *config,
             GError       **error)
 {
   gboolean       status = FALSE;
@@ -1305,7 +1296,13 @@ save_image (GFile         *file,
   gint           xres, yres;
   gint           ypos, yend;
   gint           rowbufsize = 0;
-  gchar         *comment = NULL;
+  gchar         *comment    = NULL;
+  gboolean       config_raw = TRUE;
+
+  if (file_type != FILE_TYPE_PFM)
+    g_object_get (config,
+                  "raw", &config_raw,
+                  NULL);
 
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable))
@@ -1344,9 +1341,9 @@ save_image (GFile         *file,
     }
 
   /* write out magic number */
-  if (! float_format && ! psvals.raw)
+  if (file_type != FILE_TYPE_PFM && ! config_raw)
     {
-      if (pbm)
+      if (file_type == FILE_TYPE_PBM)
         {
           header_string = "P1\n";
           format = gegl_buffer_get_format (buffer);
@@ -1404,9 +1401,9 @@ save_image (GFile         *file,
             }
         }
     }
-  else if (!float_format)
+  else if (file_type != FILE_TYPE_PFM)
     {
-      if (pbm)
+      if (file_type == FILE_TYPE_PBM)
         {
           header_string = "P4\n";
           format = gegl_buffer_get_format (buffer);
@@ -1498,7 +1495,7 @@ save_image (GFile         *file,
 
       cmap = gimp_image_get_colormap (image, &num_colors);
 
-      if (pbm)
+      if (file_type == FILE_TYPE_PBM)
         {
           /*  Test which of the two colors is white and which is black  */
           switch (num_colors)
@@ -1543,7 +1540,7 @@ save_image (GFile         *file,
       g_free (cmap);
     }
 
-  if (!float_format)
+  if (file_type != FILE_TYPE_PFM)
     {
       /* write out comment string */
       comment = g_strdup_printf("# Created by GIMP version %s PNM plug-in\n",
@@ -1554,19 +1551,25 @@ save_image (GFile         *file,
     }
 
   /* write out resolution and maxval */
-  if (pbm)
-    g_snprintf (buf, sizeof (buf), "%d %d\n", xres, yres);
-  else if (!float_format)
-    g_snprintf (buf, sizeof (buf), "%d %d\n%d\n", xres, yres,
-                rowinfo.bpc == 1 ? 255 : 65535);
+  if (file_type == FILE_TYPE_PBM)
+    {
+      g_snprintf (buf, sizeof (buf), "%d %d\n", xres, yres);
+    }
+  else if (file_type != FILE_TYPE_PFM)
+    {
+      g_snprintf (buf, sizeof (buf), "%d %d\n%d\n", xres, yres,
+                  rowinfo.bpc == 1 ? 255 : 65535);
+    }
   else
-    g_snprintf (buf, sizeof (buf), "%d %d\n%s\n", xres, yres,
-                G_BYTE_ORDER == G_BIG_ENDIAN ? "1.0" : "-1.0");
+    {
+      g_snprintf (buf, sizeof (buf), "%d %d\n%s\n", xres, yres,
+                  G_BYTE_ORDER == G_BIG_ENDIAN ? "1.0" : "-1.0");
+    }
 
   if (! output_write (output, buf, strlen (buf), error))
     goto out;
 
-  if (!float_format)
+  if (file_type != FILE_TYPE_PFM)
     {
       guchar *data;
       guchar *d;
@@ -1621,7 +1624,8 @@ save_image (GFile         *file,
   else
     {
       /* allocate a buffer for retrieving information from the pixel
-         region */
+       * region
+       */
       gfloat *data = g_new (gfloat, xres * np);
 
       rowinfo.output = output;
@@ -1674,31 +1678,30 @@ save_image (GFile         *file,
 }
 
 static gboolean
-save_dialog (void)
+save_dialog (GimpProcedure *procedure,
+             GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *frame;
   gboolean   run;
 
-  dialog = gimp_export_dialog_new (_("PNM"), PLUG_IN_BINARY, PNM_SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as PNM"));
 
   /*  file save type  */
-  frame = gimp_int_radio_group_new (TRUE, _("Data formatting"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &psvals.raw, psvals.raw,
-
-                                    _("_Raw"),   TRUE,  NULL,
-                                    _("_ASCII"), FALSE, NULL,
-
-                                    NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      frame, FALSE, TRUE, 0);
+  frame = gimp_prop_boolean_radio_frame_new (config, "raw",
+                                             _("Data formatting"),
+                                             _("_Raw"),
+                                             _("_ASCII"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -1859,7 +1862,7 @@ pnmscanner_eatwhitespace (PNMScanner *s)
 {
   gint state = 0;
 
-  while (!(s->eof) && (state != -1))
+  while (! (s->eof) && (state != -1))
     {
       switch (state)
         {
