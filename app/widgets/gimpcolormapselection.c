@@ -69,7 +69,7 @@ enum
 #define HAVE_COLORMAP(image) \
         (image != NULL && \
          gimp_image_get_base_type (image) == GIMP_INDEXED && \
-         gimp_image_get_colormap (image) != NULL)
+         gimp_image_get_colormap_palette (image) != NULL)
 
 
 static void   gimp_colormap_selection_set_property    (GObject               *object,
@@ -566,15 +566,16 @@ gimp_colormap_selection_update_entries (GimpColormapSelection *selection)
     }
   else
     {
-      const guchar *colormap = gimp_image_get_colormap (image);
-      const guchar *col;
-      gchar        *string;
+      GimpRGB  color;
+      guchar   r, g, b;
+      gchar   *string;
 
-      gtk_adjustment_set_value (selection->index_adjustment, selection->col_index);
+      gtk_adjustment_set_value (selection->index_adjustment,
+                                selection->col_index);
+      gimp_image_get_colormap_entry (image, selection->col_index, &color);
+      gimp_rgb_get_uchar (&color, &r, &g, &b);
 
-      col = colormap + selection->col_index * 3;
-
-      string = g_strdup_printf ("%02x%02x%02x", col[0], col[1], col[2]);
+      string = g_strdup_printf ("%02x%02x%02x", r, g, b);
       gtk_entry_set_text (GTK_ENTRY (selection->color_entry), string);
       g_free (string);
 

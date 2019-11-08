@@ -1867,7 +1867,7 @@ gimp_drawable_get_component_index (GimpDrawable    *drawable,
   return -1;
 }
 
-const guchar *
+guchar *
 gimp_drawable_get_colormap (GimpDrawable *drawable)
 {
   GimpImage *image;

@@ -1557,7 +1557,7 @@ image_get_colormap_invoker (GimpProcedure         *procedure,
   if (success)
     {
       num_bytes = 3 * gimp_image_get_colormap_size (image);
-      colormap = g_memdup2 (gimp_image_get_colormap (image), num_bytes);
+      colormap = gimp_image_get_colormap (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

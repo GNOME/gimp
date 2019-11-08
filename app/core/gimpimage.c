@@ -70,6 +70,7 @@
 #include "gimplayermask.h"
 #include "gimplayerstack.h"
 #include "gimpmarshal.h"
+#include "gimppalette.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
@@ -757,8 +758,6 @@ gimp_image_init (GimpImage *image)
   private->bounding_box.height = 0;
   private->pickable_buffer     = NULL;
 
-  private->colormap            = NULL;
-  private->n_colors            = 0;
   private->palette             = NULL;
 
   private->metadata            = NULL;
@@ -1070,7 +1069,7 @@ gimp_image_dispose (GObject *object)
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->colormap)
+  if (private->palette)
     gimp_image_colormap_dispose (image);
 
   gimp_image_undo_free (image);
@@ -1129,7 +1128,7 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->graph);
   private->visible_mask = NULL;
 
-  if (private->colormap)
+  if (private->palette)
     gimp_image_colormap_free (image);
 
   _gimp_image_free_color_profile (image);
@@ -1239,9 +1238,6 @@ gimp_image_get_memsize (GimpObject *object,
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   gint64            memsize = 0;
-
-  if (gimp_image_get_colormap (image))
-    memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (private->palette),
                                       gui_size);
@@ -2723,7 +2719,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
       reasons = g_list_prepend (reasons, tmp); }
 
   /* need version 1 for colormaps */
-  if (gimp_image_get_colormap (image))
+  if (gimp_image_get_colormap_palette (image))
     version = 1;
 
   items = gimp_image_get_layer_list (image);
@@ -3775,9 +3771,13 @@ void
 gimp_image_colormap_changed (GimpImage *image,
                              gint       color_index)
 {
+  GimpPalette *palette;
+  gint         n_colors;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (color_index >= -1 &&
-                    color_index < GIMP_IMAGE_GET_PRIVATE (image)->n_colors);
+  palette = GIMP_IMAGE_GET_PRIVATE (image)->palette;
+  n_colors = palette ? gimp_palette_get_n_colors (palette) : 0;
+  g_return_if_fail (color_index >= -1 && color_index < n_colors);
 
   g_signal_emit (image, gimp_image_signals[COLORMAP_CHANGED], 0,
                  color_index);

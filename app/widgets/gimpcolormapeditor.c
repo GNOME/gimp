@@ -214,11 +214,10 @@ gimp_colormap_editor_new (GimpMenuFactory *menu_factory)
 void
 gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
 {
-  GimpImage    *image;
-  const guchar *colormap;
-  GimpRGB       color;
-  gchar        *desc;
-  gint          index;
+  GimpImage *image;
+  GimpRGB    color;
+  gchar     *desc;
+  gint       index;
 
   g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
 
@@ -230,13 +229,7 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
     /* No colormap. */
     return;
 
-  colormap = gimp_image_get_colormap (image);
-
-  gimp_rgba_set_uchar (&color,
-                       colormap[index * 3],
-                       colormap[index * 3 + 1],
-                       colormap[index * 3 + 2],
-                       255);
+  gimp_image_get_colormap_entry (image, index, &color);
 
   desc = g_strdup_printf (_("Edit colormap entry #%d"), index);
 

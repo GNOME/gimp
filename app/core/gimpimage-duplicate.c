@@ -199,10 +199,9 @@ gimp_image_duplicate_colormap (GimpImage *image,
                                GimpImage *new_image)
 {
   if (gimp_image_get_base_type (new_image) == GIMP_INDEXED)
-    gimp_image_set_colormap (new_image,
-                             gimp_image_get_colormap (image),
-                             gimp_image_get_colormap_size (image),
-                             FALSE);
+    gimp_image_set_colormap_palette (new_image,
+                                     gimp_image_get_colormap_palette (image),
+                                     FALSE);
 }
 
 static GimpItem *

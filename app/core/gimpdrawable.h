@@ -224,7 +224,7 @@ const Babl      * gimp_drawable_get_component_format (GimpDrawable    *drawable,
 gint              gimp_drawable_get_component_index  (GimpDrawable    *drawable,
                                                       GimpChannelType  channel);
 
-const guchar    * gimp_drawable_get_colormap         (GimpDrawable    *drawable);
+guchar          * gimp_drawable_get_colormap         (GimpDrawable    *drawable);
 
 void              gimp_drawable_start_paint          (GimpDrawable    *drawable);
 gboolean          gimp_drawable_end_paint            (GimpDrawable    *drawable);
