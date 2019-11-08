@@ -69,10 +69,10 @@
 #include "gimp-intl.h"
 
 
-#if defined (HAVE_FINITE)
-#define FINITE(x) finite(x)
-#elif defined (HAVE_ISFINITE)
+#if defined (HAVE_ISFINITE)
 #define FINITE(x) isfinite(x)
+#elif defined (HAVE_FINITE)
+#define FINITE(x) finite(x)
 #elif defined (G_OS_WIN32)
 #define FINITE(x) _finite(x)
 #else
