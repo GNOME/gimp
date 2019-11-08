@@ -1,7 +1,8 @@
 
+apppaintenums_header = files('paint-enums.h')
 apppaintenums = custom_target('paint-enums.c',
-  input : [ 'paint-enums.h', ],
-  output: [ 'paint-enums.c', ],
+  input : apppaintenums_header,
+  output: 'paint-enums.c',
   command: [
     gimp_mkenums,
     '--fhead','#include "config.h"\n'

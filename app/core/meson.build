@@ -1,6 +1,8 @@
+
+appcoreenums_header = files('core-enums.h')
 appcoreenums = custom_target('core-enums',
-  input : [ 'core-enums.h', ],
-  output: [ 'core-enums.c', ],
+  input : appcoreenums_header,
+  output: 'core-enums.c',
   command: [
     gimp_mkenums,
     '--fhead','#include "config.h"\n'
