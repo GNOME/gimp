@@ -58,7 +58,7 @@ my $header = <<'HEADER';
 HEADER
 
 my $external;
-open my $EXTERNAL, "enums-external.pl";
+open my $EXTERNAL, "$srcdir/enums-external.pl";
 {
     local $/;
     $external = <$EXTERNAL>;
