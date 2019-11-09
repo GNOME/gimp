@@ -723,7 +723,7 @@ msgstr "No utilitzis la memòria compartida entre el GIMP i els seus connectors"
 
 #: ../app/main.c:207
 msgid "Do not use special CPU acceleration functions"
-msgstr "No utilitzis cap funció especial d'acceleració de CPU "
+msgstr "No utilitzis cap funció especial d'acceleració de CPU"
 
 #: ../app/main.c:212
 msgid "Use an alternate sessionrc file"
@@ -13659,15 +13659,15 @@ msgstr "Simetria"
 
 #: ../app/core/gimpimage.c:2222
 msgid " (exported)"
-msgstr "(exportat)"
+msgstr " (exportat)"
 
 #: ../app/core/gimpimage.c:2226
 msgid " (overwritten)"
-msgstr "(sobreescrit)"
+msgstr " (sobreescrit)"
 
 #: ../app/core/gimpimage.c:2235
 msgid " (imported)"
-msgstr "(importat)"
+msgstr " (importat)"
 
 #: ../app/core/gimpimage.c:2409 ../app/core/gimpimage.c:2423
 #: ../app/core/gimpimage.c:2466
@@ -19357,7 +19357,7 @@ msgstr "Limita els valors de sortida finals."
 
 #: ../app/operations/gimplevelsconfig.c:855
 msgid "not a GIMP Levels file"
-msgstr "no és un fitxer de nivells del GIMP "
+msgstr "no és un fitxer de nivells del GIMP"
 
 #: ../app/operations/gimplevelsconfig.c:930
 msgid "parse error"

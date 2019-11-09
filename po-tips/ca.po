@@ -103,7 +103,7 @@ msgstr ""
 "això fa que es mogui la finestra serà perquè el vostre gestor de finestres "
 "ja fa servir la tecla <tt>Alt</tt>. La majoria de gestors de finestres es "
 "poden configurar perquè ignorin la tecla <tt>Alt</tt> o perquè utilitzin la "
-"tecla <tt>Super</tt> (o el «logotip de Windows»)."
+"tecla <tt>Súper</tt> (o el «logotip de Windows»)."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -121,7 +121,7 @@ msgid ""
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
 "Podeu utilitzar el botó del mig del ratolí per desplaçar la imatge (o també "
-"podeu prémer la <tt>Barra Espai</tt> mentre moveu el ratolí)."
+"podeu prémer la <tt>barra espaiadora</tt> mentre moveu el ratolí)."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -250,7 +250,7 @@ msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
-"Si teniu masses coses a la pantalla, podeu prémer <tt>Tab</tt> en una "
+"Si teniu massa coses a la pantalla, podeu prémer <tt>Tab</tt> en una "
 "finestra d'imatge per a commutar la caixa d'eines i els altres diàlegs."
 
 #: ../data/tips/gimp-tips.xml.in.h:23
