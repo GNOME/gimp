@@ -285,7 +285,7 @@
         {
             "name": "gegl",
             "buildsystem": "meson",
-            "config-opts": [ "-Ddocs=false", "-Dintrospection=false" ],
+            "config-opts": [ "-Ddocs=false" ],
             "cleanup": [ "/bin" ],
             "sources": [
                 {
@@ -298,7 +298,8 @@
         {
             "name": "gimp",
             "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html",
-                             "--with-icc-directory=/run/host/usr/share/color/icc/", "--disable-python" ],
+                             "--with-icc-directory=/run/host/usr/share/color/icc/",
+			     "--with-lua=force", "--with-python=force", "--with-javascript=force" ],
             "cleanup": [ "/bin/gimptool-3.0", "/bin/gimp-console-2.99" ],
             "sources": [
                 {
