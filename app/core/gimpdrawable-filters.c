@@ -215,6 +215,11 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
   gimp_projection_stop_rendering (gimp_image_get_projection (image));
 
+  /* make sure we have a source node - this connects the filter stack to the
+   * underlying source node
+   */
+  (void) gimp_drawable_get_source_node (drawable);
+
   if (gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
                                         progress, undo_desc,
                                         gimp_filter_get_node (filter), FALSE,
