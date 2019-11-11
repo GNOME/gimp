@@ -157,8 +157,6 @@ static void
 gimp_histogram_init (GimpHistogram *histogram)
 {
   histogram->priv = gimp_histogram_get_instance_private (histogram);
-
-  histogram->priv->n_bins = 256;
 }
 
 static void
