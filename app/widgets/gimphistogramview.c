@@ -799,21 +799,21 @@ gimp_histogram_view_notify (GimpHistogram     *histogram,
 static void
 gimp_histogram_view_update_bins (GimpHistogramView *view)
 {
-  gint new_bins = 256;
+  gint new_bins = 0;
 
   if (view->histogram)
     new_bins = gimp_histogram_n_bins (view->histogram);
   else if (view->bg_histogram)
     new_bins = gimp_histogram_n_bins (view->bg_histogram);
 
-  if (new_bins != view->n_bins)
+  if (new_bins > 0 && new_bins != view->n_bins)
     {
-      view->start = ROUND (((gdouble) view->start *
-                            (new_bins - 1) /
-                            (view->n_bins - 1)));
-      view->end   = ROUND (((gdouble) view->end   *
-                            (new_bins - 1) /
-                            (view->n_bins - 1)));
+      view->start = MIN (ROUND ((gdouble) view->start *
+                                new_bins / view->n_bins),
+                         new_bins - 1);
+      view->end   = MAX (ROUND ((gdouble) (view->end + 1) *
+                                new_bins / view->n_bins) - 1,
+                         0);
 
       view->n_bins = new_bins;
 
