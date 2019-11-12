@@ -192,7 +192,6 @@ gimp_palette_load (GimpContext   *context,
                                255);
 
           entry->name     = g_strdup (tok ? tok : _("Untitled"));
-          entry->position = gimp_palette_get_n_colors (palette);
 
           palette->colors = g_list_prepend (palette->colors, entry);
           palette->n_colors++;

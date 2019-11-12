@@ -532,12 +532,14 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
       gint              index = -1;
 
       data = gimp_data_editor_get_data (GIMP_DATA_EDITOR (editor));
+      index = gimp_palette_get_entry_position (GIMP_PALETTE (data),
+                                               editor->color);
 
       switch (pick_state)
         {
         case GIMP_COLOR_PICK_STATE_START:
           if (editor->color)
-            index = editor->color->position + 1;
+            index += 1;
 
           entry = gimp_palette_add_entry (GIMP_PALETTE (data), index,
                                           NULL, color);
@@ -548,8 +550,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
         case GIMP_COLOR_PICK_STATE_UPDATE:
         case GIMP_COLOR_PICK_STATE_END:
           gimp_palette_set_entry_color (GIMP_PALETTE (data),
-                                        editor->color->position,
-                                        color);
+                                        index, color);
           break;
         }
     }
@@ -643,7 +644,7 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
       entry = gimp_palette_find_entry (palette, search, editor->color);
 
       if (entry)
-        return entry->position;
+        return gimp_palette_get_entry_position (palette, entry);
     }
 
   return -1;
@@ -786,9 +787,17 @@ palette_editor_entry_selected (GimpPaletteView   *view,
       editor->color = entry;
 
       if (entry)
-        g_snprintf (index, sizeof (index), "%04i", entry->position);
+        {
+          GimpPalette *palette = GIMP_PALETTE (data_editor->data);
+          gint pos;
+
+          pos = gimp_palette_get_entry_position (palette, entry);
+          g_snprintf (index, sizeof (index), "%04i", pos);
+        }
       else
-        g_snprintf (index, sizeof (index), "####");
+        {
+          g_snprintf (index, sizeof (index), "####");
+        }
 
       gtk_label_set_text (GTK_LABEL (editor->index_label), index);
 
@@ -844,7 +853,7 @@ palette_editor_color_dropped (GimpPaletteView   *view,
       gint         pos     = -1;
 
       if (entry)
-        pos = entry->position;
+        pos = gimp_palette_get_entry_position (palette, entry);
 
       entry = gimp_palette_add_entry (palette, pos, NULL, color);
       gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
@@ -862,10 +871,12 @@ palette_editor_color_name_changed (GtkWidget         *widget,
     {
       GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
       const gchar *name;
+      gint pos;
 
       name = gtk_entry_get_text (GTK_ENTRY (editor->color_name));
 
-      gimp_palette_set_entry_name (palette, editor->color->position, name);
+      pos = gimp_palette_get_entry_position (palette, editor->color);
+      gimp_palette_set_entry_name (palette, pos, name);
     }
 }
 

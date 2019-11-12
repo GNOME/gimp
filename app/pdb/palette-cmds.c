@@ -397,10 +397,9 @@ palette_add_entry_invoker (GimpProcedure         *procedure,
 
       if (palette)
         {
-          GimpPaletteEntry *entry =
-            gimp_palette_add_entry (palette, -1, entry_name, &color);
+          gimp_palette_add_entry (palette, -1, entry_name, &color);
 
-          entry_num = entry->position;
+          entry_num = gimp_palette_get_n_colors (palette) - 1;
         }
       else
         success = FALSE;

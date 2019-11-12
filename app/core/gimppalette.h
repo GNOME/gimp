@@ -34,9 +34,6 @@ struct _GimpPaletteEntry
 {
   GimpRGB  color;
   gchar   *name;
-
-  /* EEK */
-  gint     position;
 };
 
 
@@ -90,6 +87,8 @@ gboolean           gimp_palette_set_entry_name  (GimpPalette      *palette,
                                                  const gchar      *name);
 GimpPaletteEntry * gimp_palette_get_entry       (GimpPalette      *palette,
                                                  gint              position);
+gint               gimp_palette_get_entry_position (GimpPalette   *palette,
+                                                 GimpPaletteEntry *entry);
 
 void               gimp_palette_set_columns     (GimpPalette      *palette,
                                                  gint              columns);

@@ -579,7 +579,12 @@ gimp_colormap_selection_entry_clicked (GimpPaletteView       *view,
                                        GdkModifierType        state,
                                        GimpColormapSelection *selection)
 {
-  gimp_colormap_selection_set_index (selection, entry->position, NULL);
+  GimpPalette *palette;
+  gint index;
+
+  palette = gimp_image_get_colormap_palette (selection->active_image);
+  index = gimp_palette_get_entry_position (palette, entry);
+  gimp_colormap_selection_set_index (selection, index, NULL);
 
   g_signal_emit (selection, signals[COLOR_CLICKED], 0, entry, state);
 }
@@ -589,7 +594,15 @@ gimp_colormap_selection_entry_selected (GimpPaletteView       *view,
                                         GimpPaletteEntry      *entry,
                                         GimpColormapSelection *selection)
 {
-  gint index = entry ? entry->position : 0;
+  GimpPalette *palette;
+  gint index = -1;
+
+  palette = gimp_image_get_colormap_palette (selection->active_image);
+  if (entry)
+    index = gimp_palette_get_entry_position (palette, entry);
+
+  if (index < 0)
+    index = 0;
 
   gimp_colormap_selection_set_index (selection, index, NULL);
 }
@@ -599,7 +612,12 @@ gimp_colormap_selection_entry_activated (GimpPaletteView       *view,
                                          GimpPaletteEntry      *entry,
                                          GimpColormapSelection *selection)
 {
-  gimp_colormap_selection_set_index (selection, entry->position, NULL);
+  GimpPalette *palette;
+  gint index;
+
+  palette = gimp_image_get_colormap_palette (selection->active_image);
+  index = gimp_palette_get_entry_position (palette, entry);
+  gimp_colormap_selection_set_index (selection, index, NULL);
 
   g_signal_emit (selection, signals[COLOR_ACTIVATED], 0, entry);
 }
@@ -609,7 +627,12 @@ gimp_colormap_selection_entry_context (GimpPaletteView       *view,
                                        GimpPaletteEntry      *entry,
                                        GimpColormapSelection *selection)
 {
-  gimp_colormap_selection_set_index (selection, entry->position, NULL);
+  GimpPalette *palette;
+  gint index;
+
+  palette = gimp_image_get_colormap_palette (selection->active_image);
+  index = gimp_palette_get_entry_position (palette, entry);
+  gimp_colormap_selection_set_index (selection, index, NULL);
 
   g_signal_emit (selection, signals[COLOR_CONTEXT], 0, entry);
 }
