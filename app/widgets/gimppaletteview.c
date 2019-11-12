@@ -152,6 +152,9 @@ gimp_palette_view_draw (GtkWidget *widget,
 {
   GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (widget);
   GimpView        *view     = GIMP_VIEW (widget);
+  GimpPalette     *palette;
+
+  palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
 
   cairo_save (cr);
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
@@ -161,14 +164,16 @@ gimp_palette_view_draw (GtkWidget *widget,
     {
       GimpViewRendererPalette *renderer;
       GtkAllocation            allocation;
-      gint                     row, col;
+      gint                     pos, row, col;
 
       renderer = GIMP_VIEW_RENDERER_PALETTE (view->renderer);
 
       gtk_widget_get_allocation (widget, &allocation);
 
-      row = pal_view->selected->position / renderer->columns;
-      col = pal_view->selected->position % renderer->columns;
+      pos = gimp_palette_get_entry_position (palette, pal_view->selected);
+
+      row = pos / renderer->columns;
+      col = pos % renderer->columns;
 
       cairo_rectangle (cr,
                        col * renderer->cell_width  + 0.5,
@@ -310,9 +315,12 @@ gimp_palette_view_focus (GtkWidget        *widget,
       if (skip != 0)
         {
           GimpPaletteEntry *entry;
+          GimpPalette      *palette;
           gint              position;
 
-          position = view->selected->position + skip;
+          palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
+          position = gimp_palette_get_entry_position (palette, view->selected);
+          position += skip;
 
           entry = gimp_palette_get_entry (palette, position);
 
@@ -410,8 +418,9 @@ gimp_palette_view_get_entry_rect (GimpPaletteView  *view,
                                   GdkRectangle     *rect)
 {
   GimpViewRendererPalette *renderer;
+  GimpPalette             *palette;
   GtkAllocation            allocation;
-  gint                     row, col;
+  gint                     pos, row, col;
 
   g_return_if_fail (GIMP_IS_PALETTE_VIEW (view));
   g_return_if_fail (entry);
@@ -420,8 +429,10 @@ gimp_palette_view_get_entry_rect (GimpPaletteView  *view,
   gtk_widget_get_allocation (GTK_WIDGET (view), &allocation);
 
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
-  row = entry->position / renderer->columns;
-  col = entry->position % renderer->columns;
+  palette = GIMP_PALETTE (GIMP_VIEW_RENDERER (renderer)->viewable);
+  pos = gimp_palette_get_entry_position (palette, entry);
+  row = pos / renderer->columns;
+  col = pos % renderer->columns;
 
   rect->x = allocation.x + col * renderer->cell_width;
   rect->y = allocation.y + row * renderer->cell_height;
@@ -442,8 +453,8 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
   GimpPaletteEntry        *entry = NULL;
   gint                     col, row;
 
-  palette  = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+  palette  = GIMP_PALETTE (GIMP_VIEW_RENDERER (renderer)->viewable);
 
   if (! palette || ! gimp_palette_get_n_colors (palette))
     return NULL;
@@ -466,16 +477,19 @@ gimp_palette_view_expose_entry (GimpPaletteView  *view,
                                 GimpPaletteEntry *entry)
 {
   GimpViewRendererPalette *renderer;
-  gint                     row, col;
+  gint                     pos, row, col;
   GtkWidget               *widget = GTK_WIDGET (view);
   GtkAllocation            allocation;
+  GimpPalette             *palette;
 
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+  palette = GIMP_PALETTE (GIMP_VIEW_RENDERER (renderer)->viewable);
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  row = entry->position / renderer->columns;
-  col = entry->position % renderer->columns;
+  pos = gimp_palette_get_entry_position (palette, entry);
+  row = pos / renderer->columns;
+  col = pos % renderer->columns;
 
   gtk_widget_queue_draw_area (GTK_WIDGET (view),
                               allocation.x + col * renderer->cell_width,

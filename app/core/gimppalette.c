@@ -399,48 +399,15 @@ gimp_palette_move_entry (GimpPalette      *palette,
                          GimpPaletteEntry *entry,
                          gint              position)
 {
-  GList *list;
-  gint   pos = 0;
-
   g_return_if_fail (GIMP_IS_PALETTE (palette));
   g_return_if_fail (entry != NULL);
 
   if (g_list_find (palette->colors, entry))
     {
-      pos = entry->position;
-
-      if (entry->position == position)
-        return;
-
-      entry->position = position;
       palette->colors = g_list_remove (palette->colors,
                                        entry);
       palette->colors = g_list_insert (palette->colors,
                                        entry, position);
-
-      if (pos < position)
-        {
-          for (list = g_list_nth (palette->colors, pos);
-               list && pos < position;
-               list = g_list_next (list))
-            {
-              entry = (GimpPaletteEntry *) list->data;
-
-              entry->position = pos++;
-            }
-        }
-      else
-        {
-          for (list = g_list_nth (palette->colors, position + 1);
-               list && position < pos;
-               list = g_list_next (list))
-            {
-              entry = (GimpPaletteEntry *) list->data;
-
-              entry->position += 1;
-              pos--;
-            }
-        }
 
       gimp_data_dirty (GIMP_DATA (palette));
     }
@@ -464,25 +431,11 @@ gimp_palette_add_entry (GimpPalette   *palette,
 
   if (position < 0 || position >= palette->n_colors)
     {
-      entry->position = palette->n_colors;
       palette->colors = g_list_append (palette->colors, entry);
     }
   else
     {
-      GList *list;
-
-      entry->position = position;
       palette->colors = g_list_insert (palette->colors, entry, position);
-
-      /* renumber the displaced entries */
-      for (list = g_list_nth (palette->colors, position + 1);
-           list;
-           list = g_list_next (list))
-        {
-          GimpPaletteEntry *entry2 = list->data;
-
-          entry2->position += 1;
-        }
     }
 
   palette->n_colors += 1;
@@ -496,29 +449,16 @@ void
 gimp_palette_delete_entry (GimpPalette      *palette,
                            GimpPaletteEntry *entry)
 {
-  GList *list;
-  gint   pos = 0;
-
   g_return_if_fail (GIMP_IS_PALETTE (palette));
   g_return_if_fail (entry != NULL);
 
   if (g_list_find (palette->colors, entry))
     {
-      pos = entry->position;
       gimp_palette_entry_free (entry);
 
       palette->colors = g_list_remove (palette->colors, entry);
 
       palette->n_colors--;
-
-      for (list = g_list_nth (palette->colors, pos);
-           list;
-           list = g_list_next (list))
-        {
-          entry = (GimpPaletteEntry *) list->data;
-
-          entry->position = pos++;
-        }
 
       gimp_data_dirty (GIMP_DATA (palette));
     }
@@ -605,6 +545,16 @@ gimp_palette_get_entry (GimpPalette *palette,
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
 
   return g_list_nth_data (palette->colors, position);
+}
+
+gint
+gimp_palette_get_entry_position (GimpPalette      *palette,
+                                 GimpPaletteEntry *entry)
+{
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), -1);
+  g_return_val_if_fail (entry != NULL, -1);
+
+  return g_list_index (palette->colors, entry);
 }
 
 void
