@@ -1909,8 +1909,14 @@ fi
 # Check for libmypaint
 ######################
 
-PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
-                  [add_deps_error([libmypaint >= libmypaint_required_version])])
+PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= 1.4.0,,
+  [
+    PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
+                      [add_deps_error([libmypaint >= libmypaint_required_version])])
+    warning_libmypaint="
+WARNING: libmypaint lower than version 1.4.0 is known to crash when
+         parsing MyPaint 2 brushes. Please update."
+  ])
 
 PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
                   [add_deps_error([mypaint-brushes-1.0])])
@@ -3175,7 +3181,7 @@ Tests:
   Test desktop file          $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript$warning_lua$warning_libheif"
+$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript$warning_lua$warning_libheif$warning_libmypaint"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
