@@ -352,6 +352,16 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 
 libmypaint        = dependency('libmypaint',         version: '>=1.3.0')
 
+if not libmypaint.version().version_compare('>=1.4.0')
+  libmypaint_warning='''
+
+        libmypaint lower than version 1.4.0 is known to crash when
+        parsing MyPaint 2 brushes. Please update.
+    '''
+    warning(libmypaint_warning)
+    warnings += libmypaint_warning
+endif
+
 mypaint_brushes   = dependency('mypaint-brushes-1.0', version: '>=1.3.0')
 
 if relocatable_bundle
