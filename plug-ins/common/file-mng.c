@@ -59,10 +59,11 @@
 #include <jpeglib.h>
 
 
-/* Grrr. The grrr is because the following have to be defined
- * by the application as well for some reason, although they
- * were enabled when libmng was compiled. The authors of libmng
- * must look into this. */
+/* Grrr. The grrr is because the following have to be defined by the
+ * application as well for some reason, although they were enabled
+ * when libmng was compiled. The authors of libmng must look into
+ * this.
+ */
 
 #if !defined(MNG_SUPPORT_FULL)
 #define MNG_SUPPORT_FULL 1
@@ -112,30 +113,6 @@ enum
 };
 
 
-/* The contents of this struct remain static among multiple
- * invocations of the plug-in. */
-
-/* TODO: describe the members of the struct */
-
-struct mng_data_t
-{
-  gint32 interlaced;
-  gint32 bkgd;
-  gint32 gama;
-  gint32 phys;
-  gint32 time;
-  gint32 default_chunks;
-
-  gfloat quality;
-  gfloat smoothing;
-
-  gint32 compression_level;
-
-  gint32 loop;
-  gint32 default_delay;
-  gint32 default_dispose;
-};
-
 /* These are not saved or restored. */
 
 struct mng_globals_t
@@ -148,8 +125,9 @@ struct mng_globals_t
   int        num_palette;
 };
 
-/* The output FILE pointer which is used by libmng;
- * passed around as user data. */
+/* The output FILE pointer which is used by libmng; passed around as
+ * user data.
+ */
 struct mnglib_userdata_t
 {
   FILE *fp;
@@ -198,10 +176,13 @@ static mng_bool MNG_DECL  mywritedata   (mng_handle  handle,
                                          mng_uint32 *written_size);
 
 
-static gint32    parse_chunks_type_from_layer_name   (const gchar *str);
-static gint32    parse_disposal_type_from_layer_name (const gchar *str);
-static gint32    parse_ms_tag_from_layer_name        (const gchar *str);
-static gint      find_unused_ia_color               (guchar      *pixels,
+static gint32    parse_chunks_type_from_layer_name   (const gchar *str,
+                                                      gint         default_chunks);
+static gint32    parse_disposal_type_from_layer_name (const gchar *str,
+                                                      gint         default_dispose);
+static gint32    parse_ms_tag_from_layer_name        (const gchar *str,
+                                                      gint         default_delay);
+static gint      find_unused_ia_color                (guchar      *pixels,
                                                       gint         numpixels,
                                                       gint        *colors);
 static gboolean  ia_has_transparent_pixels           (guchar      *pixels,
@@ -214,40 +195,20 @@ static gboolean  respin_cmap     (png_structp       png_ptr,
                                   GeglBuffer       *buffer,
                                   int              *bit_depth);
 
-static gboolean  mng_save_image  (const gchar      *filename,
+static gboolean  mng_save_image  (GFile            *file,
                                   GimpImage        *image,
-                                  GimpDrawable     *drawabl,
-                                  GimpImage        *original_image,
+                                  GimpDrawable     *drawable,
+                                  GObject          *config,
                                   GError          **error);
-static gboolean  mng_save_dialog (GimpImage        *image);
+static gboolean  mng_save_dialog (GimpImage        *image,
+                                  GimpProcedure    *procedure,
+                                  GObject          *config);
 
 
 G_DEFINE_TYPE (Mng, mng, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (MNG_TYPE)
 
-
-/* Values of the instance of the above struct when the plug-in is
- * first invoked. */
-
-static struct mng_data_t mng_data =
-{
-  FALSE,                        /* interlaced */
-  FALSE,                        /* bkgd */
-  FALSE,                        /* gama */
-  TRUE,                         /* phys */
-  TRUE,                         /* time */
-  CHUNKS_PNG_D,                 /* default_chunks */
-
-  0.75,                         /* quality */
-  0.0,                          /* smoothing */
-
-  9,                            /* compression_level */
-
-  TRUE,                         /* loop */
-  100,                          /* default_delay */
-  DISPOSE_COMBINE               /* default_dispose */
-};
 
 static struct mng_globals_t mngg;
 
@@ -306,26 +267,27 @@ mng_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "mng");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "interlace",
-                             "Interlace",
+      GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
+                             "Interlaced",
                              "Use interlacing",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "compression",
-                         "Compression",
-                         "PNG deflate compression level",
+      GIMP_PROC_ARG_INT (procedure, "png-compression",
+                         "PNG Compression",
+                         _("PNG compression level, choose a high compression "
+                           "level for small file size"),
                          0, 9, 9,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "quality",
-                            "Quality",
+      GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-quality",
+                            "JPEG Quality",
                             "JPEG quality factor",
                             0, 1, 0.75,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "smoothing",
-                            "Smoothing",
+      GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-smoothing",
+                            "JPEG Smoothing",
                             "JPEG smoothing factor",
                             0, 1, 0,
                             G_PARAM_READWRITE);
@@ -360,7 +322,7 @@ mng_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
                              "bKGD",
-                             "Write bKGD (background color) chunk",
+                             "Write bKGd (background color) chunk",
                              FALSE,
                              G_PARAM_READWRITE);
 
@@ -370,8 +332,8 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "pHYs",
-                             "gHYs",
+      GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
+                             "pHYs",
                              "Write pHYs (image resolution) chunk",
                              TRUE,
                              G_PARAM_READWRITE);
@@ -395,21 +357,20 @@ mng_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
-  GimpImage         *original_image;
-  GError            *error  = NULL;
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpExportReturn     export = GIMP_EXPORT_IGNORE;
+  GError              *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  original_image = image;
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   if (run_mode == GIMP_RUN_INTERACTIVE ||
       run_mode == GIMP_RUN_WITH_LAST_VALS)
     {
-      gimp_get_data (SAVE_PROC, &mng_data);
-
       gimp_ui_init (PLUG_IN_BINARY);
 
       export = gimp_export_image (&image, &drawable, "MNG",
@@ -420,48 +381,28 @@ mng_save (GimpProcedure        *procedure,
                                   GIMP_EXPORT_CAN_HANDLE_LAYERS);
 
       if (export == GIMP_EXPORT_CANCEL)
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
     }
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! mng_save_dialog (image))
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
-    }
-  else if (run_mode == GIMP_RUN_NONINTERACTIVE)
-    {
-      mng_data.interlaced        = GIMP_VALUES_GET_BOOLEAN (args, 0);
-      mng_data.compression_level = GIMP_VALUES_GET_INT     (args, 1);
-      mng_data.quality           = GIMP_VALUES_GET_DOUBLE  (args, 2);
-      mng_data.smoothing         = GIMP_VALUES_GET_DOUBLE  (args, 3);
-      mng_data.loop              = GIMP_VALUES_GET_BOOLEAN (args, 4);
-      mng_data.default_delay     = GIMP_VALUES_GET_INT     (args, 5);
-      mng_data.default_chunks    = GIMP_VALUES_GET_INT     (args, 6);
-      mng_data.default_dispose   = GIMP_VALUES_GET_INT     (args, 7);
-      mng_data.bkgd              = GIMP_VALUES_GET_BOOLEAN (args, 8);
-      mng_data.gama              = GIMP_VALUES_GET_BOOLEAN (args, 9);
-      mng_data.phys              = GIMP_VALUES_GET_BOOLEAN (args, 10);
-      mng_data.time              = GIMP_VALUES_GET_BOOLEAN (args, 11);
+      if (! mng_save_dialog (image, procedure, G_OBJECT (config)))
+        status = GIMP_PDB_CANCEL;
     }
 
-  if (mng_save_image (g_file_get_path (file),
-                      image, drawable,
-                      original_image, &error))
+  if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_set_data (SAVE_PROC, &mng_data, sizeof (mng_data));
+      if (! mng_save_image (file, image, drawable, G_OBJECT (config),
+                            &error))
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
-  else
-    {
-      status = GIMP_PDB_EXECUTION_ERROR;
-    }
+
+  gimp_procedure_config_end_export (config, image, file, status);
+  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
@@ -523,11 +464,12 @@ mywritedata (mng_handle  handle,
 }
 
 
-/* Parses which output chunk type to use for this layer
- * from the layer name. */
-
+/* Parses which output chunk type to use for this layer from the layer
+ * name.
+ */
 static gint32
-parse_chunks_type_from_layer_name (const gchar *str)
+parse_chunks_type_from_layer_name (const gchar *str,
+                                   gint         default_chunks)
 {
   guint i;
 
@@ -539,15 +481,17 @@ parse_chunks_type_from_layer_name (const gchar *str)
         return CHUNKS_JNG;
     }
 
-  return mng_data.default_chunks;
+  return default_chunks;
 }
 
 
-/* Parses which disposal type to use for this layer
- * from the layer name. */
+/* Parses which disposal type to use for this layer from the layer
+ * name.
+ */
 
 static gint32
-parse_disposal_type_from_layer_name (const gchar *str)
+parse_disposal_type_from_layer_name (const gchar *str,
+                                     gint         default_dispose)
 {
   guint i;
 
@@ -559,7 +503,7 @@ parse_disposal_type_from_layer_name (const gchar *str)
         return DISPOSE_REPLACE;
     }
 
-  return mng_data.default_dispose;
+  return default_dispose;
 }
 
 
@@ -567,7 +511,8 @@ parse_disposal_type_from_layer_name (const gchar *str)
  * from the layer name. */
 
 static gint32
-parse_ms_tag_from_layer_name (const gchar *str)
+parse_ms_tag_from_layer_name (const gchar *str,
+                              gint         default_delay)
 {
   guint offset = 0;
   gint32 sum = 0;
@@ -579,7 +524,7 @@ parse_ms_tag_from_layer_name (const gchar *str)
         offset++;
 
       if (offset >= length)
-        return mng_data.default_delay;
+        return default_delay;
 
       offset++;
 
@@ -596,11 +541,11 @@ parse_ms_tag_from_layer_name (const gchar *str)
   while ((offset < length) && (g_ascii_isdigit (str[offset])));
 
   if ((length - offset) <= 2)
-    return mng_data.default_delay;
+    return default_delay;
 
   if ((g_ascii_toupper (str[offset]) != 'M') ||
       (g_ascii_toupper (str[offset + 1]) != 'S'))
-    return mng_data.default_delay;
+    return default_delay;
 
   return sum;
 }
@@ -737,8 +682,8 @@ respin_cmap (png_structp  pp,
           gint i;
 
           /* Set tRNS chunk values for writing later. */
-          mngg.has_trns = TRUE;
-          mngg.trans = trans;
+          mngg.has_trns  = TRUE;
+          mngg.trans     = trans;
           mngg.num_trans = 1;
 
           /* Transform all pixels with a value = transparent to
@@ -762,8 +707,8 @@ respin_cmap (png_structp  pp,
             }
 
           /* Set PLTE chunk values for writing later. */
-          mngg.has_plte = TRUE;
-          mngg.palette = palette;
+          mngg.has_plte    = TRUE;
+          mngg.palette     = palette;
           mngg.num_palette = colors;
 
           *bit_depth = get_bit_depth_for_palette (colors);
@@ -777,9 +722,10 @@ respin_cmap (png_structp  pp,
         }
     }
 
-  mngg.has_plte = TRUE;
-  mngg.palette = (png_colorp) before;
+  mngg.has_plte    = TRUE;
+  mngg.palette     = (png_colorp) before;
   mngg.num_palette = colors;
+
   *bit_depth = get_bit_depth_for_palette (colors);
 
   return FALSE;
@@ -822,12 +768,13 @@ mng_putchunk_trns_wrapper (mng_handle    handle,
 }
 
 static gboolean
-mng_save_image (const gchar  *filename,
-                GimpImage    *image,
-                GimpDrawable *drawable,
-                GimpImage    *original_image,
-                GError      **error)
+mng_save_image (GFile         *file,
+                GimpImage     *image,
+                GimpDrawable  *drawable,
+                GObject       *config,
+                GError       **error)
 {
+  gchar          *filename;
   gboolean        ret = FALSE;
   gint            rows, cols;
   volatile gint   i;
@@ -841,6 +788,34 @@ mng_save_image (const gchar  *filename,
   mng_handle      handle;
   guint32         mng_ticks_per_second;
   guint32         mng_simplicity_profile;
+
+  gboolean config_interlaced;
+  gint     config_png_compression;
+  gdouble  config_jpeg_quality;
+  gdouble  config_jpeg_smoothing;
+  gboolean config_loop;
+  gint     config_default_delay;
+  gint     config_default_chunks;
+  gint     config_default_dispose;
+  gboolean config_bkgd;
+  gboolean config_gama;
+  gboolean config_phys;
+  gboolean config_time;
+
+  g_object_get (config,
+                "interlaced",      &config_interlaced,
+                "png-compression", &config_png_compression,
+                "jpeg-quality",    &config_jpeg_quality,
+                "jpeg-smoothing",  &config_jpeg_smoothing,
+                "loop",            &config_loop,
+                "defaut-delay",    &config_default_delay,
+                "default-chunks",  &config_default_chunks,
+                "default-dispose", &config_default_dispose,
+                "bkgd",            &config_bkgd,
+                "gama",            &config_gama,
+                "phys",            &config_phys,
+                "time",            &config_time,
+                NULL);
 
   layers = gimp_image_get_layers (image, &num_layers);
 
@@ -883,19 +858,23 @@ mng_save_image (const gchar  *filename,
         }
     }
 
+  filename = g_file_get_path (file);
+
   userdata = g_new0 (struct mnglib_userdata_t, 1);
   userdata->fp = g_fopen (filename, "wb");
 
-  if (NULL == userdata->fp)
+  g_free (filename);
+
+  if (! userdata->fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       goto err;
     }
 
   handle = mng_initialize ((mng_ptr) userdata, myalloc, myfree, NULL);
-  if (NULL == handle)
+  if (! handle)
     {
       g_warning ("Unable to mng_initialize() in mng_save_image()");
       goto err2;
@@ -916,17 +895,18 @@ mng_save_image (const gchar  *filename,
     }
 
   if (mng_putchunk_mhdr (handle, cols, rows, mng_ticks_per_second, 1,
-                         num_layers, mng_data.default_delay,
+                         num_layers, config_default_delay,
                          mng_simplicity_profile) != MNG_NOERROR)
     {
       g_warning ("Unable to mng_putchunk_mhdr() in mng_save_image()");
       goto err3;
     }
 
-  if ((num_layers > 1) && (mng_data.loop))
+  if ((num_layers > 1) && (config_loop))
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])));
+        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])),
+                                      config_default_delay);
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_REPEAT,
                              MNG_ITERACTION_LASTFRAME,
@@ -939,7 +919,8 @@ mng_save_image (const gchar  *filename,
   else
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])));
+        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])),
+                                      config_default_delay);
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_LASTFRAME,
                              MNG_ITERACTION_LASTFRAME,
@@ -964,7 +945,7 @@ mng_save_image (const gchar  *filename,
 #if 0
 
   /* how do we get this to work? */
-  if (mng_data.bkgd)
+  if (config_bkgd)
     {
       GimpRGB bgcolor;
       guchar red, green, blue;
@@ -991,7 +972,7 @@ mng_save_image (const gchar  *filename,
 
 #endif
 
-  if (mng_data.gama)
+  if (config_gama)
     {
       if (mng_putchunk_gama (handle, MNG_FALSE,
                              (1.0 / 2.2 * 100000)) != MNG_NOERROR)
@@ -1004,9 +985,9 @@ mng_save_image (const gchar  *filename,
 #if 0
 
   /* how do we get this to work? */
-  if (mng_data.phys)
+  if (config_phys)
     {
-      gimp_image_get_resolution (original_image, &xres, &yres);
+      gimp_image_get_resolution (image, &xres, &yres);
 
       if (mng_putchunk_phyg (handle, MNG_FALSE,
                              (mng_uint32) (xres * 39.37),
@@ -1027,7 +1008,7 @@ mng_save_image (const gchar  *filename,
 
 #endif
 
-  if (mng_data.time)
+  if (config_time)
     {
       t = time (NULL);
       gmt = gmtime (&t);
@@ -1090,7 +1071,8 @@ mng_save_image (const gchar  *filename,
       int             bit_depth;
 
       layer_name          = gimp_item_get_name (GIMP_ITEM (layers[i]));
-      layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
+      layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name,
+                                                               config_default_chunks);
       layer_drawable_type = gimp_drawable_type (GIMP_DRAWABLE (layers[i]));
 
       layer_buffer        = gimp_drawable_get_buffer (GIMP_DRAWABLE (layers[i]));
@@ -1151,32 +1133,36 @@ mng_save_image (const gchar  *filename,
         {
         case CHUNKS_PNG_D:
           layer_mng_compression_type = MNG_COMPRESSION_DEFLATE;
-          if (mng_data.interlaced != 0)
+          if (config_interlaced)
             layer_mng_interlace_type = MNG_INTERLACE_ADAM7;
           else
             layer_mng_interlace_type = MNG_INTERLACE_NONE;
           break;
+
         case CHUNKS_JNG_D:
           layer_mng_compression_type = MNG_COMPRESSION_DEFLATE;
-          if (mng_data.interlaced != 0)
+          if (config_interlaced)
             layer_mng_interlace_type = MNG_INTERLACE_ADAM7;
           else
             layer_mng_interlace_type = MNG_INTERLACE_NONE;
           break;
+
         case CHUNKS_PNG:
           layer_mng_compression_type = MNG_COMPRESSION_DEFLATE;
-          if (mng_data.interlaced != 0)
+          if (config_interlaced)
             layer_mng_interlace_type = MNG_INTERLACE_ADAM7;
           else
             layer_mng_interlace_type = MNG_INTERLACE_NONE;
           break;
+
         case CHUNKS_JNG:
           layer_mng_compression_type = MNG_COMPRESSION_BASELINEJPEG;
-          if (mng_data.interlaced != 0)
+          if (config_interlaced)
             layer_mng_interlace_type = MNG_INTERLACE_PROGRESSIVE;
           else
             layer_mng_interlace_type = MNG_INTERLACE_SEQUENTIAL;
           break;
+
         default:
           g_warning ("Huh? Programmer stupidity error "
                      "with 'layer_chunks_type'");
@@ -1184,12 +1170,14 @@ mng_save_image (const gchar  *filename,
         }
 
       if ((i == (num_layers - 1)) ||
-          (parse_disposal_type_from_layer_name (layer_name) != DISPOSE_COMBINE))
+          (parse_disposal_type_from_layer_name (layer_name,
+                                                config_default_dispose) != DISPOSE_COMBINE))
         frame_mode = MNG_FRAMINGMODE_3;
       else
         frame_mode = MNG_FRAMINGMODE_1;
 
-      frame_delay = parse_ms_tag_from_layer_name (layer_name);
+      frame_delay = parse_ms_tag_from_layer_name (layer_name,
+                                                  config_default_delay);
 
       if (mng_putchunk_fram (handle, MNG_FALSE, frame_mode, 0, NULL,
                              MNG_CHANGEDELAY_DEFAULT,
@@ -1239,7 +1227,7 @@ mng_save_image (const gchar  *filename,
 
       pp = png_create_write_struct (PNG_LIBPNG_VER_STRING,
                                     NULL, NULL, NULL);
-      if (NULL == pp)
+      if (! pp)
         {
           g_warning ("Unable to png_create_write_struct() in mng_save_image()");
           fclose (outfile);
@@ -1248,7 +1236,7 @@ mng_save_image (const gchar  *filename,
         }
 
       info = png_create_info_struct (pp);
-      if (NULL == info)
+      if (! info)
         {
           g_warning
             ("Unable to png_create_info_struct() in mng_save_image()");
@@ -1276,29 +1264,38 @@ mng_save_image (const gchar  *filename,
         case GIMP_RGB_IMAGE:
           color_type = PNG_COLOR_TYPE_RGB;
           break;
+
         case GIMP_RGBA_IMAGE:
           color_type = PNG_COLOR_TYPE_RGB_ALPHA;
           break;
+
         case GIMP_GRAY_IMAGE:
           color_type = PNG_COLOR_TYPE_GRAY;
           break;
+
         case GIMP_GRAYA_IMAGE:
           color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
           break;
+
         case GIMP_INDEXED_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
+
           mngg.has_plte = TRUE;
-          mngg.palette = (png_colorp)
+          mngg.palette  = (png_colorp)
             gimp_image_get_colormap (image, &mngg.num_palette);
+
           bit_depth = get_bit_depth_for_palette (mngg.num_palette);
           break;
+
         case GIMP_INDEXEDA_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
+
           layer_has_unique_palette =
             respin_cmap (pp, info, layer_remap,
                          image, layer_buffer,
                          &bit_depth);
           break;
+
         default:
           g_warning ("This can't be!\n");
           png_destroy_write_struct (&pp, &info);
@@ -1308,11 +1305,12 @@ mng_save_image (const gchar  *filename,
         }
 
       /* Note: png_set_IHDR() must be called before any other
-         png_set_*() functions. */
+       * png_set_*() functions.
+       */
       png_set_IHDR (pp, info, layer_cols, layer_rows,
                     bit_depth,
                     color_type,
-                    mng_data.interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
+                    config_interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
                     PNG_COMPRESSION_TYPE_BASE,
                     PNG_FILTER_TYPE_BASE);
 
@@ -1326,11 +1324,11 @@ mng_save_image (const gchar  *filename,
           png_set_PLTE (pp, info, mngg.palette, mngg.num_palette);
         }
 
-      png_set_compression_level (pp, mng_data.compression_level);
+      png_set_compression_level (pp, config_png_compression);
 
       png_write_info (pp, info);
 
-      if (mng_data.interlaced != 0)
+      if (config_interlaced)
         num_passes = png_set_interlace_handling (pp);
       else
         num_passes = 1;
@@ -1570,90 +1568,66 @@ mng_save_image (const gchar  *filename,
 /* The interactive dialog. */
 
 static gboolean
-mng_save_dialog (GimpImage *image)
+mng_save_dialog (GimpImage     *image,
+                 GimpProcedure *procedure,
+                 GObject       *config)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *main_vbox;
-  GtkWidget     *frame;
-  GtkWidget     *vbox;
-  GtkWidget     *grid;
-  GtkWidget     *toggle;
-  GtkWidget     *hbox;
-  GtkWidget     *combo;
-  GtkWidget     *label;
-  GtkWidget     *scale;
-  GtkAdjustment *scale_adj;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *spinbutton_adj;
-  gint           num_layers;
-  gboolean       run;
+  GtkWidget    *dialog;
+  GtkWidget    *main_vbox;
+  GtkWidget    *frame;
+  GtkWidget    *vbox;
+  GtkWidget    *grid;
+  GtkWidget    *toggle;
+  GtkWidget    *hbox;
+  GtkListStore *store;
+  GtkWidget    *combo;
+  GtkWidget    *label;
+  GtkWidget    *scale;
+  GtkWidget    *spinbutton;
+  gint          num_layers;
+  gboolean      run;
 
-  dialog = gimp_export_dialog_new (_("MNG"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as MNG"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
 
   frame = gimp_frame_new (_("MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Interlace"));
+  toggle = gimp_prop_check_button_new (config, "interlaced",
+                                       _("_Interlace"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mng_data.interlaced);
+  toggle = gimp_prop_check_button_new (config, "bkgd",
+                                       _("Save _background color"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mng_data.interlaced);
-
-  gtk_widget_show (toggle);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _background color"));
   gtk_widget_set_sensitive (toggle, FALSE);
+
+  toggle = gimp_prop_check_button_new (config, "gama",
+                                       _("Save _gamma"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mng_data.bkgd);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mng_data.bkgd);
-
-  gtk_widget_show (toggle);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _gamma"));
+  toggle = gimp_prop_check_button_new (config, "phys",
+                                       _("Save resolution"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mng_data.gama);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mng_data.gama);
-
-  gtk_widget_show (toggle);
-
-  toggle = gtk_check_button_new_with_label (_("Save resolution"));
   gtk_widget_set_sensitive (toggle, FALSE);
+
+  toggle = gimp_prop_check_button_new (config, "time",
+                                       _("Save creation _time"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mng_data.phys);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mng_data.phys);
-
-  gtk_widget_show (toggle);
-
-  toggle = gtk_check_button_new_with_mnemonic (_("Save creation _time"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mng_data.time);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mng_data.time);
-
-  gtk_widget_show (toggle);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -1664,143 +1638,92 @@ mng_save_dialog (GimpImage *image)
   g_free (gimp_image_get_layers (image, &num_layers));
 
   if (num_layers == 1)
-    combo = gimp_int_combo_box_new (_("PNG"), CHUNKS_PNG_D,
-                                    _("JNG"), CHUNKS_JNG_D,
-                                    NULL);
+    store = gimp_int_store_new (_("PNG"), CHUNKS_PNG_D,
+                                _("JNG"), CHUNKS_JNG_D,
+                                NULL);
   else
-    combo = gimp_int_combo_box_new (_("PNG + delta PNG"), CHUNKS_PNG_D,
-                                    _("JNG + delta PNG"), CHUNKS_JNG_D,
-                                    _("All PNG"),         CHUNKS_PNG,
-                                    _("All JNG"),         CHUNKS_JNG,
-                                    NULL);
+    store = gimp_int_store_new (_("PNG + delta PNG"), CHUNKS_PNG_D,
+                                _("JNG + delta PNG"), CHUNKS_JNG_D,
+                                _("All PNG"),         CHUNKS_PNG,
+                                _("All JNG"),         CHUNKS_JNG,
+                                NULL);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 mng_data.default_chunks);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &mng_data.default_chunks);
+  combo = gimp_prop_int_combo_box_new (config, "default-chunks",
+                                       GIMP_INT_STORE (store));
+  g_object_unref (store);
 
   gtk_widget_set_sensitive (combo, FALSE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Default chunks type:"), 0.0, 0.5,
                             combo, 1);
 
-  combo = gimp_int_combo_box_new (_("Combine"), DISPOSE_COMBINE,
-                                  _("Replace"), DISPOSE_REPLACE,
-                                  NULL);
-
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 mng_data.default_dispose);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &mng_data.default_dispose);
+  store = gimp_int_store_new (_("Combine"), DISPOSE_COMBINE,
+                              _("Replace"), DISPOSE_REPLACE,
+                              NULL);
+  combo = gimp_prop_int_combo_box_new (config, "default-dispose",
+                                       GIMP_INT_STORE (store));
+  g_object_unref (store);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Default _frame disposal:"), 0.0, 0.5,
                             combo, 1);
 
-  scale_adj = gtk_adjustment_new (mng_data.compression_level,
-                                  0.0, 9.0, 1.0, 1.0, 0.0);
-
-  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
+  scale = gimp_prop_hscale_new (config, "png-compression",
+                                1.0, 1.0, 0);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_PNG compression level:"), 0.0, 0.9,
                             scale, 1);
 
-  g_signal_connect (scale_adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &mng_data.compression_level);
-
-  gimp_help_set_help_data (scale,
-                           _("Choose a high compression level "
-                             "for small file size"),
-                           NULL);
-
-  scale_adj = gtk_adjustment_new (mng_data.quality,
-                                  0.0, 1.0, 0.01, 0.01, 0.0);
-
-  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
+  scale = gimp_prop_hscale_new (config, "jpeg-quality",
+                                0.01, 0.01, 2);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_widget_set_sensitive (scale, FALSE);
+
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("JPEG compression quality:"), 0.0, 0.9,
                             scale, 1);
 
-  g_signal_connect (scale_adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &mng_data.quality);
-
-  scale_adj = gtk_adjustment_new (mng_data.smoothing,
-                                  0.0, 1.0, 0.01, 0.01, 0.0);
-
-  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
+  scale = gimp_prop_hscale_new (config, "jpeg-smoothing",
+                                0.01, 0.01, 2);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_widget_set_sensitive (scale, FALSE);
+
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                             _("JPEG smoothing factor:"), 0.0, 0.9,
                             scale, 1);
 
-  g_signal_connect (scale_adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &mng_data.smoothing);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
-
   frame = gimp_frame_new (_("Animated MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Loop"));
+  toggle = gimp_prop_check_button_new (config, "loop",
+                                       _("_Loop"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mng_data.loop);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                mng_data.loop);
-
-  gtk_widget_show (toggle);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Default frame delay:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton_adj = gtk_adjustment_new (mng_data.default_delay,
-                                       0, 65000, 10, 100, 0);
-  spinbutton = gimp_spin_button_new (spinbutton_adj, 1.0, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-
-  g_signal_connect (spinbutton_adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &mng_data.default_delay);
-
+  spinbutton = gimp_prop_spin_button_new (config, "default-delay",
+                                          10, 100, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-
-  gtk_widget_show (spinbutton);
 
   label = gtk_label_new (_("milliseconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gtk_widget_show (hbox);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
 
   if (num_layers <= 1)
     {
@@ -1813,10 +1736,9 @@ mng_save_dialog (GimpImage *image)
                                NULL);
     }
 
-  gtk_widget_show (main_vbox);
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
