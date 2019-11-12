@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: GIMP plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-24 18:28+0000\n"
-"PO-Revision-Date: 2019-02-26 19:39+0100\n"
+"PO-Revision-Date: 2019-10-26 14:32+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -5312,7 +5312,7 @@ msgstr "_Lås kanaler"
 
 #: ../plug-ins/common/newsprint.c:1395
 msgid "_Factory Defaults"
-msgstr "_Fabriksindstillinger"
+msgstr "Fa_briksindstillinger"
 
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1421 ../plug-ins/gfig/gfig-dialog.c:1295
@@ -5322,7 +5322,7 @@ msgstr "Udjævning"
 # https://en.wikipedia.org/wiki/Oversampling
 #: ../plug-ins/common/newsprint.c:1429
 msgid "O_versample:"
-msgstr "O_versampling:"
+msgstr "Oversam_pling:"
 
 #: ../plug-ins/common/nl-filter.c:119
 msgid "Nonlinear swiss army knife filter"
@@ -11510,7 +11510,7 @@ msgstr "_Metallisk"
 
 #: ../plug-ins/lighting/lighting-ui.c:815
 msgid "E_nable bump mapping"
-msgstr "Aktivér _unjævnhedsafbildning"
+msgstr "Aktivér _ujævnhedsafbildning"
 
 # mere sigende
 #: ../plug-ins/lighting/lighting-ui.c:829
