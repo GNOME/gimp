@@ -686,13 +686,24 @@ endif
 
 
 libheif = dependency('libheif', version: '>=1.3.2', required: get_option('heif'))
-conf.set('HAVE_LIBHEIF_4_1_0', libheif.version().version_compare('>=1.4.0'))
+conf.set('HAVE_LIBHEIF_1_4_0', libheif.version().version_compare('>=1.4.0'))
+conf.set('HAVE_LIBHEIF_1_6_0', libheif.version().version_compare('>=1.6.0'))
 
 if libheif.found()
   MIMEtypes += [
     'image/heif',
     'image/heic',
   ]
+endif
+
+if not libheif.version().version_compare('>=1.6.0') and (platform_windows or platform_osx)
+  libheif_warning='''
+
+        libheif lower than version 1.6.0 is known to crash when
+        exporting on Windows and macOS (bug #4185). Please update.
+    '''
+    warning(libheif_warning)
+    warnings += libheif_warning
 endif
 
 webkit = dependency('webkit2gtk-4.0', version: '>=2.20.3', required: get_option('webkit'))
@@ -1662,7 +1673,8 @@ final_message = [
 '''  MNG:                 @0@'''.format(libmng.found()),
 '''  OpenEXR:             @0@'''.format(openexr.found()),
 '''  WebP:                @0@'''.format(webp_found),
-'''  Heif:                @0@'''.format(libheif.found()),
+'''  Heif:                @0@ (profile support: @1@)'''
+                                .format(libheif.found(), libheif.version().version_compare('>=1.4.0')),
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
 '''  Print:               @0@'''.format(have_print),
 '''  Python 3 plug-ins:   @0@'''.format(have_python),
