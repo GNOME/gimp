@@ -1830,7 +1830,7 @@ WARNING: libheif version 1.5.0 and 1.5.1 are known to crash when
 fi
 
 if test "x$have_libheif" = xyes; then
-  FILE_HEIF='file-heif$(EXEEXT)',
+  FILE_HEIF='file-heif$(EXEEXT)'
 fi
 
 AC_SUBST(FILE_HEIF)
