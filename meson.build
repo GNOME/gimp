@@ -706,11 +706,12 @@ if libheif.found()
   ]
 endif
 
-if not libheif.version().version_compare('>=1.6.0') and (platform_windows or platform_osx)
+libheif_warning=''
+if libheif.version().version_compare('==1.5.0') or libheif.version().version_compare('==1.5.1')
   libheif_warning='''
 
-        libheif lower than version 1.6.0 is known to crash when
-        exporting on Windows and macOS (bug #4185). Please update.
+        libheif version 1.5.0 and 1.5.1 are known to crash when
+        exporting (bug #4185). Please update.
     '''
     warning(libheif_warning)
     warnings += libheif_warning
@@ -1683,8 +1684,10 @@ final_message = [
 '''  MNG:                 @0@'''.format(libmng.found()),
 '''  OpenEXR:             @0@'''.format(openexr.found()),
 '''  WebP:                @0@'''.format(webp_found),
-'''  Heif:                @0@ (profile support: @1@)'''
-                                .format(libheif.found(), libheif.version().version_compare('>=1.4.0')),
+'''  Heif:                @0@ [profile support: @1@@2@]'''
+                                .format(libheif.found(),
+                                        libheif.version().version_compare('>=1.4.0'),
+                                       libheif_warning != '' ? ' (see warning below)' : ''),
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
 '''  Print:               @0@'''.format(have_print),
 '''  Python 3 plug-ins:   @0@'''.format(have_python),
