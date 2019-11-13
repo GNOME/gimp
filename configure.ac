@@ -1798,45 +1798,56 @@ AM_CONDITIONAL(HAVE_WEBP, test "x$have_webp" = xyes)
 
 AC_ARG_WITH(libheif, [  --without-libheif       build without libheif support])
 
+# Overcomplex tests, but basically:
+# - Profiles supported only for libheif >= 1.4.0.
+# - libheif 1.5.0 and 1.5.1 are very broken and easily crash.
+# As a consequence we prioritize any libheif other than these 2 versions
+# (even when under 1.4.0 thus we lose profile support), and only use
+# these as last resort, outputting a warning.
 have_libheif=no
 have_libheif_1_4_0=no
-have_libheif_1_6_0=no
 if test "x$with_libheif" != xno; then
   have_libheif_1_4_0=yes
-  have_libheif_1_6_0=yes
   have_libheif=yes
-  PKG_CHECK_MODULES(LIBHEIF, libheif >= 1.6.0,,
+  PKG_CHECK_MODULES(LIBHEIF, libheif > 1.5.1,,
     [
-      have_libheif_1_6_0="no (libheif >= 1.6.0 not found)"
-      PKG_CHECK_MODULES(LIBHEIF, libheif >= 1.4.0,,
+      PKG_CHECK_MODULES(LIBHEIF, libheif = 1.4.0,,
         [
           have_libheif_1_4_0="no (libheif >= 1.4.0 not found)"
-          PKG_CHECK_MODULES(LIBHEIF, libheif >= libheif_required_version,
-                            FILE_HEIF='file-heif$(EXEEXT)',
-                            [have_libheif="no (libheif not found)"])
+          PKG_CHECK_MODULES(LIBHEIF, libheif = libheif_required_version,,
+                            [
+                              PKG_CHECK_MODULES(LIBHEIF, libheif >= 1.5.0,
+                                                [
+                                                  have_libheif_1_4_0=yes
+                                                  warning_libheif="
+WARNING: libheif version 1.5.0 and 1.5.1 are known to crash when
+         exporting (bug #4185). Please update."
+                                                ],
+                                                [ have_libheif="no (libheif not found)" ])
+                            ])
         ])
     ])
+fi
+
+if test "x$have_libheif" = xyes; then
+  FILE_HEIF='file-heif$(EXEEXT)',
 fi
 
 AC_SUBST(FILE_HEIF)
 AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
 
-if test "x$have_libheif" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/heif;image/heic"
-  have_libheif="yes [[profile support: $have_libheif_1_4_0]]"
-fi
-
 if test "x$have_libheif_1_4_0" = xyes; then
   AC_DEFINE(HAVE_LIBHEIF_1_4_0, 1,
             [Define to 1 if libheif >= 1.4.0 is available])
+
+  if test "x$warning_libheif" != "x"; then
+    have_libheif_1_4_0="yes (see warning below)"
+  fi
 fi
-if test "x$have_libheif_1_6_0" = xyes; then
-  AC_DEFINE(HAVE_LIBHEIF_1_6_0, 1,
-            [Define to 1 if libheif >= 1.6.0 is available])
-elif test "x$platform_win32" = xyes || test "x$platform_osx" = xyes; then
-          warning_libheif="
-WARNING: libheif lower than version 1.6.0 are known to crash when
-         exporting on Windows and macOS (bug #4185). Please update."
+
+if test "x$have_libheif" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/heif;image/heic"
+  have_libheif="yes [[profile support: $have_libheif_1_4_0]]"
 fi
 
 
