@@ -17,8 +17,8 @@ warnings = []
 
 # git-version.h is already present and not generated if dist tarball
 is_dist_tarball = run_command('python', '-c',
-  'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)'
-).returncode() == 0
+  'import sys,os; sys.exit(0 if os.path.exists(".git") else 1)'
+).returncode() == 1
 
 ################################################################################
 # Project info
