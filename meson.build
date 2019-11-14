@@ -15,6 +15,11 @@ conf = configuration_data()
 
 warnings = []
 
+# git-version.h is already present and not generated if dist tarball
+is_dist_tarball = run_command('python', '-c',
+  'import sys,os; sys.exit(0 if os.path.exists(".git") else 1)'
+).returncode() == 1
+
 ################################################################################
 # Project info
 
@@ -312,46 +317,49 @@ dl                = platform_windows ? no_dep : cc.find_library('dl')
 rpc               = platform_windows ? cc.find_library('rpcrt4') : no_dep
 dbghelp           = platform_windows ? cc.find_library('dbghelp') : no_dep
 winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
-
-atk               = dependency('atk',                version: '>=2.4.0')
-
-babl              = dependency('babl',               version: '>=0.1.72')
-
-cairo             = dependency('cairo',              version: '>=1.12.2')
+atk_minver        = '2.4.0'
+atk               = dependency('atk',                version: '>='+atk_minver)
+babl_minver       = '0.1.72'
+babl              = dependency('babl',               version: '>='+babl_minver)
+cairo_minver      = '1.12.2'
+cairo             = dependency('cairo',              version: '>='+cairo_minver)
 
 dbus_glib         = dependency('dbus-glib-1')
 
 # fontconfig_name   = platform_windows ? 'fontconfig_win32' : 'fontconfig'
 fontconfig_name   = 'fontconfig'
-fontconfig        = dependency(fontconfig_name,      version: '>=2.12.4')
-
-freetype2         = dependency('freetype2',          version: '>=2.1.7')
-
-gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
-
-gegl              = dependency('gegl-0.4',           version: '>=0.4.18')
-
-gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
+fontconfig_minver = '2.12.4'
+fontconfig        = dependency(fontconfig_name,      version: '>='+fontconfig_minver)
+freetype2_minver  = '2.1.7'
+freetype2         = dependency('freetype2',          version: '>='+freetype2_minver)
+gdk_pixbuf_minver = '2.30.8'
+gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
+gegl_minver       = '0.4.18'
+gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
+gexiv2_minver     = '0.10.6'
+gexiv2            = dependency('gexiv2',             version: '>='+gexiv2_minver)
 
 gio               = dependency('gio-2.0')
 gio_specific_name = platform_windows ? 'gio-windows-2.0' : 'gio-unix-2.0'
 gio_specific      = dependency(gio_specific_name)
 
-glib_version      = platform_windows ? '>=2.56.2' : '>=2.54.2'
-glib              = dependency('glib-2.0',           version: glib_version)
+glib_minver       = platform_windows ? '2.56.2' : '2.54.2'
+glib              = dependency('glib-2.0',           version: '>='+glib_minver)
 
 conf.set('G_DISABLE_DEPRECATED', glib.version().version_compare('>=2.57'))
 
-gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
+gobject           = dependency('gobject-2.0',        version: '>='+glib_minver)
 gmodule           = dependency('gmodule-no-export-2.0')
 
-gtk3              = dependency('gtk+-3.0',           version: '>=3.16.10')
-
-harfbuzz          = dependency('harfbuzz',           version: '>=0.9.19')
-lcms              = dependency('lcms2',              version: '>=2.8')
-
-libmypaint        = dependency('libmypaint',         version: '>=1.3.0')
-
+gtk3_minver       = '3.16.10'
+gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
+harfbuzz_minver   = '0.9.19'
+harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
+lcms_minver       = '2.8'
+lcms              = dependency('lcms2',              version: '>='+lcms_minver)
+libmypaint_minver = '1.3.0'
+libmypaint        = dependency('libmypaint',         version: '>='+libmypaint_minver)
+mypaint_brushes   = dependency('mypaint-brushes-1.0',version: '>='+libmypaint_minver)
 if not libmypaint.version().version_compare('>=1.4.0')
   libmypaint_warning='''
 
@@ -362,19 +370,21 @@ if not libmypaint.version().version_compare('>=1.4.0')
     warnings += libmypaint_warning
 endif
 
-mypaint_brushes   = dependency('mypaint-brushes-1.0', version: '>=1.3.0')
 
 if relocatable_bundle
-  mypaint_brushes_dir = '${gimp_installation_dir}'/'share'/'mypaint-data'/'1.0'/'brushes'
+  mypaint_brushes_dir = '${gimp_installation_dir}'\
+                        /'share'/'mypaint-data'/'1.0'/'brushes'
 else
   mypaint_brushes_dir = mypaint_brushes.get_pkgconfig_variable('brushesdir')
 endif
 
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
-pangocairo        = dependency('pangocairo',         version: '>=1.42.0')
+pangocairo_minver = '1.42.0'
+pangocairo        = dependency('pangocairo',         version: '>='+pangocairo_minver)
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
-rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
+rsvg_minver       = '2.40.6'
+rsvg              = dependency('librsvg-2.0',        version: '>='+rsvg_minver)
 
 conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'))
 
@@ -467,7 +477,8 @@ conf.set('HAVE_LIBSOCKET', libsocket.found())
 ################################################################################
 # Check for extension support
 
-appstream_glib = dependency('appstream-glib',     version: '>=0.7.7')
+appstream_glib_minver = '0.7.7'
+appstream_glib = dependency('appstream-glib', version: '>='+appstream_glib_minver)
 
 libarchive = dependency('libarchive')
 
@@ -577,8 +588,10 @@ if x11_target
     endif
   endforeach
 endif
-conf.set('HAVE_X11_EXTENSIONS_SHAPE_H', x11_target and cc.has_header('X11/extensions/shape.h'))
-conf.set('HAVE_X11_XMU_WINUTIL_H',      x11_target and cc.has_header('X11/Xmu/WinUtil.h'))
+conf.set('HAVE_X11_EXTENSIONS_SHAPE_H',
+  x11_target and cc.has_header('X11/extensions/shape.h'))
+conf.set('HAVE_X11_XMU_WINUTIL_H',
+  x11_target and cc.has_header('X11/Xmu/WinUtil.h'))
 
 
 # Features requiring x11
@@ -648,7 +661,8 @@ MIMEtypes += 'image/x-psp'
 
 bz2 = cc.find_library('bz2')
 
-liblzma = dependency('liblzma', version: '>=5.0.0')
+liblzma_minver = '5.0.0'
+liblzma = dependency('liblzma', version: '>='+liblzma_minver)
 
 
 ghostscript = cc.find_library('gs', required: get_option('ghostscript'))
@@ -658,8 +672,10 @@ else
   ghostscript = disabler()
 endif
 
-
-libpng = dependency('libpng', version: '>=1.6.25', required: get_option('png'))
+libpng_minver = '1.6.25'
+libpng = dependency('libpng', version: '>='+libpng_minver,
+  required: get_option('png')
+)
 if libpng.found()
   MIMEtypes += [ 'image/png', 'image/x-icon']
 endif
@@ -674,16 +690,19 @@ if libxpm.found()
   MIMEtypes += 'image/x-xpixmap'
 endif
 
-
-openexr = dependency('OpenEXR', version: '>=1.6.1', required: get_option('openexr'))
+openexr_minver = '1.6.1'
+openexr = dependency('OpenEXR', version: '>='+openexr_minver,
+  required: get_option('openexr')
+)
 if openexr.found()
   MIMEtypes += 'image/x-exr'
 endif
 
+webp_minver = '0.6.0'
 webp_libs = [
-  dependency('libwebp',     version: '>=0.6.0', required: get_option('webp')),
-  dependency('libwebpmux',  version: '>=0.6.0', required: get_option('webp')),
-  dependency('libwebpdemux',version: '>=0.6.0', required: get_option('webp')),
+  dependency('libwebp',     version: '>='+webp_minver, required: get_option('webp')),
+  dependency('libwebpmux',  version: '>='+webp_minver, required: get_option('webp')),
+  dependency('libwebpdemux',version: '>='+webp_minver, required: get_option('webp')),
 ]
 webp_found = true
 foreach lib : webp_libs
@@ -694,8 +713,10 @@ if webp_found
   MIMEtypes += 'image/x-webp'
 endif
 
-
-libheif = dependency('libheif', version: '>=1.3.2', required: get_option('heif'))
+libheif_minver = '1.3.2'
+libheif = dependency('libheif', version: '>='+libheif_minver,
+  required: get_option('heif')
+)
 conf.set('HAVE_LIBHEIF_1_4_0', libheif.version().version_compare('>=1.4.0'))
 conf.set('HAVE_LIBHEIF_1_6_0', libheif.version().version_compare('>=1.6.0'))
 
@@ -717,32 +738,43 @@ if libheif.version().version_compare('==1.5.0') or libheif.version().version_com
     warnings += libheif_warning
 endif
 
-webkit = dependency('webkit2gtk-4.0', version: '>=2.20.3', required: get_option('webkit'))
+webkit_minver = '2.20.3'
+webkit = dependency('webkit2gtk-4.0', version: '>=' + webkit_minver,
+  required: get_option('webkit')
+)
 conf.set('HAVE_WEBKIT', webkit.found())
 
-
+poppler_minver = '0.69.0'
+poppler_data_minver = '0.4.9'
 if get_option('poppler')
   poppler = [
-    dependency('poppler-glib', version: '>=0.69.0'),
-    dependency('poppler-data', version: '>=0.4.9'),
+    dependency('poppler-glib', version: '>='+poppler_minver),
+    dependency('poppler-data', version: '>='+poppler_data_minver),
   ]
 else
   poppler = no_dep
 endif
 
-
-cairopdf = dependency('cairo-pdf', version: '>=1.12.2', required: get_option('cairo-pdf'))
+cairopdf_minver = '1.12.2'
+cairopdf = dependency('cairo-pdf', version: '>='+cairopdf_minver,
+  required: get_option('cairo-pdf')
+)
 
 # PDF import support is a granted feature.
 MIMEtypes += 'application/pdf'
 
-wmf = dependency('libwmf', version: '>=0.2.8', required: get_option('wmf'))
+wmf_minver = '0.2.8'
+wmf = dependency('libwmf', version: '>='+wmf_minver,
+  required: get_option('wmf')
+)
 if wmf.found()
   MIMEtypes += 'image/x-wmf'
 endif
 
-
-openjpeg = dependency('libopenjp2', version: '>=2.1.0', required: get_option('jpeg2000'))
+openjpeg_minver = '2.1.0'
+openjpeg = dependency('libopenjp2', version: '>='+openjpeg_minver,
+  required: get_option('jpeg2000')
+)
 if openjpeg.found()
   MIMEtypes += [ 'image/jp2', 'image/jpeg2000', 'image/jpx', ]
 endif
@@ -854,7 +886,7 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 # This can be useful in particular when cross-compiling since anyway
 # the interpreter is not useful at build time.
 
-python3_required_version = '>=3.6.0'
+python3_minver = '>=3.6.0'
 
 if get_option('python') == 'never'
   python_warning = '''
@@ -862,8 +894,8 @@ if get_option('python') == 'never'
     as it won't provide the full GIMP experience.
     Note that you may install the Python plug-ins even if you have no Python
     interpreter at build-time by passing the configure option -Dpython=always.
-    Just make sure that a Python @0@ interpreter is available at run-time.
-  '''.format(python3_required_version)
+    Just make sure that a Python >=@0@ interpreter is available at run-time.
+  '''.format(python3_minver)
   warning(python_warning)
   warnings += python_warning
 
@@ -876,7 +908,7 @@ else
 
   python_found = (
     python.found() and
-    python.language_version().version_compare(python3_required_version)
+    python.language_version().version_compare('>='+python3_minver)
   )
   if python_found
     pygobject_found = run_command(
@@ -892,20 +924,20 @@ else
 
   if (not python_found) and (not always_install)
     error('''
-    Python @0@ or PyGObject was not found.
+    Python >=@0@ or PyGObject was not found.
     Note that you may install the Python plug-ins even if you have no Python
     interpreter at build-time by passing the configure option -Dpython=always.
-    Just make sure that a Python @0@ interpreter is available at run-time.
-    '''.format(python3_required_version))
+    Just make sure that a Python >=@0@ interpreter is available at run-time.
+    '''.format(python3_minver))
   endif
 
   if (not python_found) and (always_install)
     python_warning = '''
-    Python @0@ or PyGObject was not found.
+    Python >=@0@ or PyGObject was not found.
     Python plug-ins will be installed anyway but you should make sure that
     a compatible Python interpreter is available at installation, otherwise
     installed plug-ins won't be usable.
-    '''.format(python3_required_version)
+    '''.format(python3_minver)
     warning(python_warning)
     warnings += python_warning
   endif
@@ -1105,42 +1137,49 @@ meson_install_subdir= find_program('tools'/'meson_install_subdir.py')
 
 gimp_mkenums        = find_program('tools'/'gimp-mkenums')
 gimp_mkenums_custom_target_commonargs = [
-  '--fprod','/* enumerations from "@basename@" */',
-  '--vhead','GType\n'+
-            '@enum_name@_get_type (void)\n'+
-            '{\n'+
-            '  static const G@Type@Value values[] =\n'+
-            '  {',
-  '--vprod','    { @VALUENAME@, "@VALUENAME@", "@valuenick@" },',
-  '--vtail','    { 0, NULL, NULL }\n'+
-            '  };\n',
-  '--dhead','  static const Gimp@Type@Desc descs[] =\n'+
-            '  {',
-  '--dprod','    { @VALUENAME@, @valuedesc@, @valuehelp@ },'+
-            '@if (\'@valueabbrev@\' ne \'NULL\')@\n'+
-            '    /* Translators: this is an abbreviated version of @valueudesc@.\n'+
-            '       Keep it short. */\n'+
-            '    { @VALUENAME@, @valueabbrev@, NULL },'+
-            '@endif@',
+  '--fprod',
+    '/* enumerations from "@basename@" */',
+  '--vhead',
+    'GType\n'+
+    '@enum_name@_get_type (void)\n'+
+    '{\n'+
+    '  static const G@Type@Value values[] =\n'+
+    '  {',
+  '--vprod',
+    '    { @VALUENAME@, "@VALUENAME@", "@valuenick@" },',
+  '--vtail',
+    '    { 0, NULL, NULL }\n'+
+    '  };\n',
+  '--dhead',
+    '  static const Gimp@Type@Desc descs[] =\n'+
+    '  {',
+  '--dprod',
+    '    { @VALUENAME@, @valuedesc@, @valuehelp@ },'+
+    '@if (\'@valueabbrev@\' ne \'NULL\')@\n'+
+    '    /* Translators: this is an abbreviated version of @valueudesc@.\n'+
+    '       Keep it short. */\n'+
+    '    { @VALUENAME@, @valueabbrev@, NULL },'+
+    '@endif@',
 ]
 
 libgimp_mkenums_custom_target_commonargs = [
     gimp_mkenums_custom_target_commonargs,
-    '--dtail','    { 0, NULL, NULL }\n'+
-              '  };\n'+
-              '\n'+
-              '  static GType type = 0;\n'+
-              '\n'+
-              '  if (G_UNLIKELY (! type))\n'+
-              '    {\n'+
-              '      type = g_@type@_register_static ("@EnumName@", values);\n'+
-              '      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");\n'+
-              '      gimp_type_set_translation_context (type, "@enumnick@");\n'+
-              '      gimp_@type@_set_value_descriptions (type, descs);\n'+
-              '    }\n'+
-              '\n'+
-              '  return type;\n'+
-              '}\n',
+    '--dtail',
+      '    { 0, NULL, NULL }\n'+
+      '  };\n'+
+      '\n'+
+      '  static GType type = 0;\n'+
+      '\n'+
+      '  if (G_UNLIKELY (! type))\n'+
+      '    {\n'+
+      '      type = g_@type@_register_static ("@EnumName@", values);\n'+
+      '      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");\n'+
+      '      gimp_type_set_translation_context (type, "@enumnick@");\n'+
+      '      gimp_@type@_set_value_descriptions (type, descs);\n'+
+      '    }\n'+
+      '\n'+
+      '  return type;\n'+
+      '}\n',
 ]
 
 conf.set('ENABLE_NLS',   true)
@@ -1367,70 +1406,74 @@ endif
   #####   ####  #    # #      #  ####     #       # ###### ######  ####
 
 
-
-gitversion_h1 = vcs_tag(
-  input : 'app/git-version.h.in',
-  output: 'git-version.h.in.1',
-  command: [ 'git', 'describe', '--always', ],
-  replace_string: '@GIMP_GIT_VERSION@',
-  fallback: '',
-)
-gitversion_h2 = vcs_tag(
-  input : gitversion_h1,
-  output: 'git-version.h.in.2',
-  command: [ 'git', 'rev-parse', '--short', 'HEAD', ],
-  replace_string: '@GIMP_GIT_VERSION_ABBREV@',
-  fallback: '',
-)
-gitversion_h = vcs_tag(
-  input : gitversion_h2,
-  output: 'git-version.h',
-  command: [ 'git', 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
-  replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
-  fallback: '',
-)
-
+if is_dist_tarball
+  gitversion_h = files('git-version.h')
+else
+  gitversion_h1 = vcs_tag(
+    input : 'app/git-version.h.in',
+    output: 'git-version.h.in.1',
+    command: [ 'git', 'describe', '--always', ],
+    replace_string: '@GIMP_GIT_VERSION@',
+    fallback: '',
+  )
+  gitversion_h2 = vcs_tag(
+    input : gitversion_h1,
+    output: 'git-version.h.in.2',
+    command: [ 'git', 'rev-parse', '--short', 'HEAD', ],
+    replace_string: '@GIMP_GIT_VERSION_ABBREV@',
+    fallback: '',
+  )
+  gitversion_h = vcs_tag(
+    input : gitversion_h2,
+    output: 'git-version.h',
+    command: [ 'git', 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
+    replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
+    fallback: '',
+  )
+endif
 
 install_conf = configuration_data()
 install_conf.set('GIMP_APP_VERSION', gimp_app_version)
 install_conf.set('GIMP_PKGCONFIG_VERSION', gimp_version)
 install_conf.set('GIMP_VERSION', gimp_version)
-install_conf.set('APPSTREAM_GLIB_REQUIRED_VERSION', appstream_glib.version())
-install_conf.set('ATK_REQUIRED_VERSION',          atk         .version())
-install_conf.set('BABL_REQUIRED_VERSION',         babl        .version())
-install_conf.set('CAIRO_PDF_REQUIRED_VERSION',    cairopdf    .version())
-install_conf.set('CAIRO_REQUIRED_VERSION',        cairo       .version())
-install_conf.set('FONTCONFIG_REQUIRED_VERSION',   fontconfig  .version())
-install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2   .version())
-install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf  .version())
-install_conf.set('GEGL_REQUIRED_VERSION',         gegl        .version())
-install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2.version())
-install_conf.set('GLIB_REQUIRED_VERSION',         glib        .version())
-install_conf.set('GTK_REQUIRED_VERSION',          gtk3        .version())
-install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz    .version())
+install_conf.set('APPSTREAM_GLIB_REQUIRED_VERSION', appstream_glib_minver)
+install_conf.set('ATK_REQUIRED_VERSION',          atk_minver)
+install_conf.set('BABL_REQUIRED_VERSION',         babl_minver)
+install_conf.set('CAIRO_PDF_REQUIRED_VERSION',    cairopdf_minver)
+install_conf.set('CAIRO_REQUIRED_VERSION',        cairo_minver)
+install_conf.set('FONTCONFIG_REQUIRED_VERSION',   fontconfig_minver)
+install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2_minver)
+install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf_minver)
+install_conf.set('GEGL_REQUIRED_VERSION',         gegl_minver)
+install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2_minver)
+install_conf.set('GLIB_REQUIRED_VERSION',         glib_minver)
+install_conf.set('GTK_REQUIRED_VERSION',          gtk3_minver)
+install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz_minver)
 install_conf.set('INTLTOOL_REQUIRED_VERSION',     '0.40.1')
-install_conf.set('LCMS_REQUIRED_VERSION',         lcms        .version())
-install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif     .version())
-install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma     .version())
-install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint  .version())
-install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng      .version())
-install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr     .version())
-install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg.version())
-install_conf.set('PANGOCAIRO_REQUIRED_VERSION',   pangocairo  .version())
-install_conf.set('POPPLER_DATA_REQUIRED_VERSION', poppler[1]  .version())
-install_conf.set('POPPLER_REQUIRED_VERSION',      poppler[0]  .version())
-install_conf.set('PYTHON3_REQUIRED_VERSION',      '3.6.0')
-install_conf.set('RSVG_REQUIRED_VERSION',         rsvg        .version())
-install_conf.set('WEBKITGTK_REQUIRED_VERSION',    webkit      .version())
-install_conf.set('WEBP_REQUIRED_VERSION',         webp_libs[0].version())
-install_conf.set('WMF_REQUIRED_VERSION',          wmf         .version())
-install_conf.set('XGETTEXT_REQUIRED_VERSION', '0.19')
+install_conf.set('LCMS_REQUIRED_VERSION',         lcms_minver)
+install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
+install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma_minver)
+install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint_minver)
+install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng_minver)
+install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr_minver)
+install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg_minver)
+install_conf.set('PANGOCAIRO_REQUIRED_VERSION',   pangocairo_minver)
+install_conf.set('POPPLER_DATA_REQUIRED_VERSION', poppler_data_minver)
+install_conf.set('POPPLER_REQUIRED_VERSION',      poppler_minver)
+install_conf.set('PYTHON3_REQUIRED_VERSION',      python3_minver)
+install_conf.set('RSVG_REQUIRED_VERSION',         rsvg_minver)
+install_conf.set('WEBKITGTK_REQUIRED_VERSION',    webkit_minver)
+install_conf.set('WEBP_REQUIRED_VERSION',         webp_minver)
+install_conf.set('WMF_REQUIRED_VERSION',          wmf_minver)
+install_conf.set('XGETTEXT_REQUIRED_VERSION',     '0.19')
 
-configure_file(
-  input : 'INSTALL.in',
-  output: 'INSTALL',
-  configuration: install_conf
-)
+if not is_dist_tarball
+  INSTALL = configure_file(
+    input : 'INSTALL.in',
+    output: 'INSTALL',
+    configuration: install_conf
+  )
+endif
 
 
 configure_file(
@@ -1512,6 +1555,8 @@ custom_target('Changelog',
   ],
   build_by_default: false,
 )
+
+meson.add_dist_script('meson_dist_script.sh')
 
 
 ################################################################################
