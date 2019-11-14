@@ -1339,7 +1339,34 @@ conf.set('HAVE_FUNC_ATTRIBUTE_DESTRUCTOR',
 
 # Compiler
 conf.set_quoted('CC',             cc.get_id())
-conf.set_quoted('CC_VERSION',     cc.version())
+
+cc_version=''
+if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
+  cc_cmd = run_command(cc, '-v')
+  # Note: the call might actually fail when using ccache.
+  # See: https://github.com/mesonbuild/meson/issues/6174
+  if cc_cmd.returncode() == 0
+    cc_version = cc_cmd.stdout() + cc_cmd.stderr()
+  endif
+else
+  # Various compilers have various options. Try most common ones. This
+  # list of options comes from autotools checks.
+  foreach arg : [ '--version', '-v', '-V', '-qversion' ]
+    cc_cmd = run_command(cc, arg)
+    if cc_cmd.returncode() == 0
+      cc_version = cc_cmd.stdout()
+    endif
+  endforeach
+endif
+if cc_version == ''
+  # We didn't manage to get a meaningful verbose version from the
+  # compiler. Just save its name and version.
+  cc_version = cc.get_id() + ' ' + cc.version()
+else
+  # See also: https://github.com/mesonbuild/meson/pull/6179
+  cc_version = '\\n'.join(cc_version.split('\n'))
+endif
+conf.set_quoted('CC_VERSION',     cc_version)
 
 # Names
 conf.set_quoted('GIMP_PACKAGE',   meson.project_name())
