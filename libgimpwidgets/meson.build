@@ -219,6 +219,6 @@ test_eevl = executable('test-eevl',
     glib, gtk3,
   ],
   c_args: '-DG_LOG_DOMAIN="LibGimpWidgets"',
-  link_with: [ libgimpwidgets, ],
+  link_with: [ libgimpwidgets, libgimpconfig, libgimpbase, ],
   install: false,
 )
