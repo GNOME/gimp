@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-08 13:11+0000\n"
+"POT-Creation-Date: 2019-11-13 12:28+0000\n"
 "PO-Revision-Date: 2019-11-08 20:34+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -1525,10 +1525,12 @@ msgid "Uniform"
 msgstr "Uniforme"
 
 #: ../plug-ins/common/contrast-retinex.c:319
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Low"
 msgstr "Baix"
 
 #: ../plug-ins/common/contrast-retinex.c:320
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "High"
 msgstr "Alt"
 
@@ -8592,6 +8594,7 @@ msgstr "Tipus de quadrícula:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Normal"
 msgstr "Normal"
 
@@ -11914,6 +11917,203 @@ msgstr "Importa el fitxer de metadades"
 msgid "Export Metadata File"
 msgstr "Exporta el fitxer de metadades"
 
+#: ../plug-ins/metadata/metadata-tags.c:163
+msgid "Original digital capture of a real life scene"
+msgstr "Captura digital original d'una escena de la vida real"
+
+#: ../plug-ins/metadata/metadata-tags.c:164
+msgid "Digitized from a negative on film"
+msgstr "Digitalitzat des d'un negatiu a la pel·lícula"
+
+#: ../plug-ins/metadata/metadata-tags.c:165
+msgid "Digitized from a positive on film"
+msgstr "Digitalitzat des d'un positiu a la pel·lícula"
+
+#: ../plug-ins/metadata/metadata-tags.c:166
+msgid "Digitized from a print on non-transparent medium"
+msgstr "Digitalitzat des d'una impressió a un medi no transparent"
+
+#: ../plug-ins/metadata/metadata-tags.c:167
+msgid "Created by software"
+msgstr "Creat pel programari"
+
+#: ../plug-ins/metadata/metadata-tags.c:176
+#: ../plug-ins/metadata/metadata-tags.c:188
+#: ../plug-ins/metadata/metadata-tags.c:219
+msgid "None"
+msgstr "Cap"
+
+#: ../plug-ins/metadata/metadata-tags.c:177
+#: ../plug-ins/metadata/metadata-tags.c:189
+msgid "Not Applicable"
+msgstr "No aplicable"
+
+#: ../plug-ins/metadata/metadata-tags.c:178
+msgid "Unlimited Model Releases"
+msgstr "Llançament del model il·limitat"
+
+#: ../plug-ins/metadata/metadata-tags.c:179
+msgid "Limited or Incomplete Model Releases"
+msgstr "Llançament del model incomplet o limitat"
+
+#: ../plug-ins/metadata/metadata-tags.c:190
+msgid "Unlimited Property Releases"
+msgstr "Llançament de la propietat il·limitada"
+
+#: ../plug-ins/metadata/metadata-tags.c:191
+msgid "Limited or Incomplete Property Releases"
+msgstr "Llançament de la propietat incompleta o limitada"
+
+#: ../plug-ins/metadata/metadata-tags.c:200
+msgid "Age Unknown"
+msgstr "Edat desconeguda"
+
+#: ../plug-ins/metadata/metadata-tags.c:201
+msgid "Age 25 or Over"
+msgstr "Edat de 25 anys o més"
+
+#: ../plug-ins/metadata/metadata-tags.c:202
+msgid "Age 24"
+msgstr "Edat de 24"
+
+#: ../plug-ins/metadata/metadata-tags.c:203
+msgid "Age 23"
+msgstr "Edat de 23"
+
+#: ../plug-ins/metadata/metadata-tags.c:204
+msgid "Age 22"
+msgstr "Edat de 22"
+
+#: ../plug-ins/metadata/metadata-tags.c:205
+msgid "Age 21"
+msgstr "Edat de 21"
+
+#: ../plug-ins/metadata/metadata-tags.c:206
+msgid "Age 20"
+msgstr "Edat de 20"
+
+#: ../plug-ins/metadata/metadata-tags.c:207
+msgid "Age 19"
+msgstr "Edat de 19"
+
+#: ../plug-ins/metadata/metadata-tags.c:208
+msgid "Age 18"
+msgstr "Edat de 18"
+
+#: ../plug-ins/metadata/metadata-tags.c:209
+msgid "Age 17"
+msgstr "Edat de 17"
+
+#: ../plug-ins/metadata/metadata-tags.c:210
+msgid "Age 16"
+msgstr "Edat de 16"
+
+#: ../plug-ins/metadata/metadata-tags.c:211
+msgid "Age 15"
+msgstr "Edat de 15"
+
+#: ../plug-ins/metadata/metadata-tags.c:212
+msgid "Age 14 or Under"
+msgstr "Edat de 14 o inferior"
+
+#: ../plug-ins/metadata/metadata-tags.c:219
+msgid "2"
+msgstr "2"
+
+#: ../plug-ins/metadata/metadata-tags.c:219
+msgid "3"
+msgstr "3"
+
+#: ../plug-ins/metadata/metadata-tags.c:219
+msgid "4"
+msgstr "4"
+
+#: ../plug-ins/metadata/metadata-tags.c:219
+msgid "6"
+msgstr "6"
+
+#: ../plug-ins/metadata/metadata-tags.c:219
+msgid "7"
+msgstr "7"
+
+#: ../plug-ins/metadata/metadata-tags.c:226
+#: ../plug-ins/metadata/metadata-tags.c:262
+#: ../plug-ins/metadata/metadata-tags.c:269
+#: ../plug-ins/metadata/metadata-tags.c:276
+msgid "Unknown"
+msgstr "Desconegut"
+
+#. DO NOT SAVE
+#: ../plug-ins/metadata/metadata-tags.c:227
+msgid "Copyrighted"
+msgstr "Drets d'autor"
+
+#. TRUE
+#: ../plug-ins/metadata/metadata-tags.c:228
+msgid "Public Domain"
+msgstr "Domini públic"
+
+#: ../plug-ins/metadata/metadata-tags.c:235
+#: ../plug-ins/metadata/metadata-tags.c:252
+msgid "Select a value"
+msgstr "Seleccioneu un valor"
+
+#: ../plug-ins/metadata/metadata-tags.c:236
+msgid "Work"
+msgstr "Treball"
+
+#: ../plug-ins/metadata/metadata-tags.c:237
+msgid "Cell"
+msgstr "Cel·la"
+
+#: ../plug-ins/metadata/metadata-tags.c:238
+msgid "Fax"
+msgstr "Fax"
+
+#: ../plug-ins/metadata/metadata-tags.c:239
+msgid "Home"
+msgstr "Inici"
+
+#: ../plug-ins/metadata/metadata-tags.c:240
+msgid "Pager"
+msgstr "Cercapersones"
+
+#: ../plug-ins/metadata/metadata-tags.c:253
+msgid "Male"
+msgstr "Home"
+
+#: ../plug-ins/metadata/metadata-tags.c:254
+msgid "Female"
+msgstr "Dona"
+
+#: ../plug-ins/metadata/metadata-tags.c:255
+msgid "Other"
+msgstr "Altres"
+
+#: ../plug-ins/metadata/metadata-tags.c:262
+msgid "Above Sea Level"
+msgstr "Per sobre el nivell del mar"
+
+#: ../plug-ins/metadata/metadata-tags.c:262
+msgid "Below Sea Level"
+msgstr "Per sota el nivell del mar"
+
+#: ../plug-ins/metadata/metadata-tags.c:269
+msgid "North"
+msgstr "Nord"
+
+#: ../plug-ins/metadata/metadata-tags.c:269
+msgid "South"
+msgstr "Sud"
+
+#: ../plug-ins/metadata/metadata-tags.c:276
+msgid "East"
+msgstr "Est"
+
+#: ../plug-ins/metadata/metadata-tags.c:276
+msgid "West"
+msgstr "Oest"
+
 #: ../plug-ins/metadata/metadata-viewer.c:120
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Visualitza les metadades (Exif, IPTC, XMP)"
@@ -12463,147 +12663,6 @@ msgstr "E_scàner/càmera..."
 #: ../plug-ins/twain/twain.c:506
 msgid "Transferring data from scanner/camera"
 msgstr "S'estan transferint dades de l'escàner/càmera"
-
-#~ msgid "Original digital capture of a real life scene"
-#~ msgstr "Captura digital original d'una escena de la vida real"
-
-#~ msgid "Digitized from a negative on film"
-#~ msgstr "Digitalitzat des d'un negatiu a la pel·lícula"
-
-#~ msgid "Digitized from a positive on film"
-#~ msgstr "Digitalitzat des d'un positiu a la pel·lícula"
-
-#~ msgid "Digitized from a print on non-transparent medium"
-#~ msgstr "Digitalitzat des d'una impressió a un medi no transparent"
-
-#~ msgid "Created by software"
-#~ msgstr "Creat pel programari"
-
-#~ msgid "None"
-#~ msgstr "Cap"
-
-#~ msgid "Not Applicable"
-#~ msgstr "No aplicable"
-
-#~ msgid "Unlimited Model Releases"
-#~ msgstr "Llançament del model il·limitat"
-
-#~ msgid "Limited or Incomplete Model Releases"
-#~ msgstr "Llançament del model incomplet o limitat"
-
-#~ msgid "Unlimited Property Releases"
-#~ msgstr "Llançament de la propietat il·limitada"
-
-#~ msgid "Limited or Incomplete Property Releases"
-#~ msgstr "Llançament de la propietat incompleta o limitada"
-
-#~ msgid "Age Unknown"
-#~ msgstr "Edat desconeguda"
-
-#~ msgid "Age 25 or Over"
-#~ msgstr "Edat de 25 anys o més"
-
-#~ msgid "Age 24"
-#~ msgstr "Edat de 24"
-
-#~ msgid "Age 23"
-#~ msgstr "Edat de 23"
-
-#~ msgid "Age 22"
-#~ msgstr "Edat de 22"
-
-#~ msgid "Age 21"
-#~ msgstr "Edat de 21"
-
-#~ msgid "Age 20"
-#~ msgstr "Edat de 20"
-
-#~ msgid "Age 19"
-#~ msgstr "Edat de 19"
-
-#~ msgid "Age 18"
-#~ msgstr "Edat de 18"
-
-#~ msgid "Age 17"
-#~ msgstr "Edat de 17"
-
-#~ msgid "Age 16"
-#~ msgstr "Edat de 16"
-
-#~ msgid "Age 15"
-#~ msgstr "Edat de 15"
-
-#~ msgid "Age 14 or Under"
-#~ msgstr "Edat de 14 o inferior"
-
-#~ msgid "2"
-#~ msgstr "2"
-
-#~ msgid "3"
-#~ msgstr "3"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "6"
-#~ msgstr "6"
-
-#~ msgid "7"
-#~ msgstr "7"
-
-#~ msgid "Unknown"
-#~ msgstr "Desconegut"
-
-#~ msgid "Copyrighted"
-#~ msgstr "Drets d'autor"
-
-#~ msgid "Public Domain"
-#~ msgstr "Domini públic"
-
-#~ msgid "Select a value"
-#~ msgstr "Seleccioneu un valor"
-
-#~ msgid "Work"
-#~ msgstr "Treball"
-
-#~ msgid "Cell"
-#~ msgstr "Cel·la"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Home"
-#~ msgstr "Inici"
-
-#~ msgid "Pager"
-#~ msgstr "Cercapersones"
-
-#~ msgid "Male"
-#~ msgstr "Home"
-
-#~ msgid "Female"
-#~ msgstr "Dona"
-
-#~ msgid "Other"
-#~ msgstr "Altres"
-
-#~ msgid "Above Sea Level"
-#~ msgstr "Per sobre el nivell del mar"
-
-#~ msgid "Below Sea Level"
-#~ msgstr "Per sota el nivell del mar"
-
-#~ msgid "North"
-#~ msgstr "Nord"
-
-#~ msgid "South"
-#~ msgstr "Sud"
-
-#~ msgid "East"
-#~ msgstr "Est"
-
-#~ msgid "West"
-#~ msgstr "Oest"
 
 #~ msgid "Adding checkerboard"
 #~ msgstr "S'està afegint un tauler d'escacs"
