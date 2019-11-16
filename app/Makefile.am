@@ -225,7 +225,6 @@ gimp_@GIMP_APP_VERSION@_LDADD = \
 	$(libgimpwidgets)		\
 	$(GTK_LIBS)			\
 	$(GTK_MAC_INTEGRATION_LIBS)	\
-	$(DBUS_GLIB_LIBS)		\
 	$(gimpconsoleldadd)		\
 	$(exchndl)			\
 	$(GIMPRC)
