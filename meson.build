@@ -324,8 +324,6 @@ babl              = dependency('babl',               version: '>='+babl_minver)
 cairo_minver      = '1.12.2'
 cairo             = dependency('cairo',              version: '>='+cairo_minver)
 
-dbus_glib         = dependency('dbus-glib-1')
-
 # fontconfig_name   = platform_windows ? 'fontconfig_win32' : 'fontconfig'
 fontconfig_name   = 'fontconfig'
 fontconfig_minver = '2.12.4'
