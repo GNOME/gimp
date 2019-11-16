@@ -104,7 +104,6 @@ GTKDOC_LIBS = \
         $(FONTCONFIG_LIBS)                                                   \
         $(FREETYPE_LIBS)                                                     \
         $(HARFBUZZ_LIBS)                                                     \
-	$(DBUS_GLIB_LIBS)						     \
 	$(GEGL_LIBS)							     \
 	$(RT_LIBS)							     \
 	$(INTLLIBS)							     \

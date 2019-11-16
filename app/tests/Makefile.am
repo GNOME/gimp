@@ -73,7 +73,6 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/app	\
 	$(PANGOCAIRO_CFLAGS)	\
 	$(GTK_CFLAGS)		\
-	$(DBUS_GLIB_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
 	$(xobjective_c)		\
 	-I$(includedir)
@@ -132,7 +131,6 @@ LDADD = \
 	$(GIMPICONRC)							\
 	$(GTK_LIBS)							\
 	$(GTK_MAC_INTEGRATION_LIBS)					\
-	$(DBUS_GLIB_LIBS)						\
 	$(GDK_PIXBUF_LIBS)						\
 	$(FREETYPE_LIBS)						\
 	$(FONTCONFIG_LIBS)						\

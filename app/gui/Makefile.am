@@ -17,7 +17,6 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	$(GTK_MAC_INTEGRATION_CFLAGS)		\
-	$(DBUS_GLIB_CFLAGS)			\
 	-I$(includedir)
 
 AM_CFLAGS = \
