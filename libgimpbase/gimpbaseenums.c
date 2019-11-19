@@ -49,40 +49,6 @@ gimp_add_mask_type_get_type (void)
 }
 
 GType
-gimp_blend_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_BLEND_FG_BG_RGB, "GIMP_BLEND_FG_BG_RGB", "fg-bg-rgb" },
-    { GIMP_BLEND_FG_BG_HSV, "GIMP_BLEND_FG_BG_HSV", "fg-bg-hsv" },
-    { GIMP_BLEND_FG_TRANSPARENT, "GIMP_BLEND_FG_TRANSPARENT", "fg-transparent" },
-    { GIMP_BLEND_CUSTOM, "GIMP_BLEND_CUSTOM", "custom" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_BLEND_FG_BG_RGB, NC_("blend-mode", "FG to BG (RGB)"), NULL },
-    { GIMP_BLEND_FG_BG_HSV, NC_("blend-mode", "FG to BG (HSV)"), NULL },
-    { GIMP_BLEND_FG_TRANSPARENT, NC_("blend-mode", "FG to transparent"), NULL },
-    { GIMP_BLEND_CUSTOM, NC_("blend-mode", "Custom gradient"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpBlendMode", values);
-      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
-      gimp_type_set_translation_context (type, "blend-mode");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_brush_generated_shape_get_type (void)
 {
   static const GEnumValue values[] =

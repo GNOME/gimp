@@ -63,28 +63,6 @@ typedef enum
 
 
 /**
- * GimpBlendMode:
- * @GIMP_BLEND_FG_BG_RGB:      FG to BG (RGB)
- * @GIMP_BLEND_FG_BG_HSV:      FG to BG (HSV)
- * @GIMP_BLEND_FG_TRANSPARENT: FG to transparent
- * @GIMP_BLEND_CUSTOM:         Custom gradient
- *
- * Types of gradients.
- **/
-#define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())
-
-GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_BLEND_FG_BG_RGB,      /*< desc="FG to BG (RGB)"    >*/
-  GIMP_BLEND_FG_BG_HSV,      /*< desc="FG to BG (HSV)"    >*/
-  GIMP_BLEND_FG_TRANSPARENT, /*< desc="FG to transparent" >*/
-  GIMP_BLEND_CUSTOM          /*< desc="Custom gradient"   >*/
-} GimpBlendMode;
-
-
-/**
  * GimpBrushGeneratedShape:
  * @GIMP_BRUSH_GENERATED_CIRCLE:  Circle
  * @GIMP_BRUSH_GENERATED_SQUARE:  Square

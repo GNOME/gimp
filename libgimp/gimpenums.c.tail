@@ -5,7 +5,6 @@ static const GimpGetTypeFunc get_type_funcs[] =
 {
   gegl_distance_metric_get_type,
   gimp_add_mask_type_get_type,
-  gimp_blend_mode_get_type,
   gimp_brush_application_mode_get_type,
   gimp_brush_generated_shape_get_type,
   gimp_cap_style_get_type,
@@ -70,7 +69,6 @@ static const gchar * const type_names[] =
 {
   "GeglDistanceMetric",
   "GimpAddMaskType",
-  "GimpBlendMode",
   "GimpBrushApplicationMode",
   "GimpBrushGeneratedShape",
   "GimpCapStyle",

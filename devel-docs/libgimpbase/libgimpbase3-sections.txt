@@ -18,7 +18,6 @@ gimp_flags_set_value_descriptions
 <SECTION>
 <FILE>gimpbaseenums</FILE>
 GimpAddMaskType
-GimpBlendMode
 GimpBrushGeneratedShape
 GimpCapStyle
 GimpChannelOps
@@ -73,7 +72,6 @@ GimpTransformResize
 GimpVectorsStrokeType
 <SUBSECTION Standard>
 GIMP_TYPE_ADD_MASK_TYPE
-GIMP_TYPE_BLEND_MODE
 GIMP_TYPE_BRUSH_GENERATED_SHAPE
 GIMP_TYPE_CAP_STYLE
 GIMP_TYPE_CHANNEL_OPS
@@ -146,7 +144,6 @@ gimp_orientation_type_get_type
 gimp_precision_get_type
 gimp_rotation_type_get_type
 gimp_select_criterion_get_type
-gimp_blend_mode_get_type
 gimp_channel_ops_get_type
 gimp_channel_type_get_type
 gimp_check_size_get_type

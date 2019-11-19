@@ -44,16 +44,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_ADD_MASK_COPY => '5',
 		       GIMP_ADD_MASK_CHANNEL => '6' }
 	},
-    GimpBlendMode =>
-	{ contig => 1,
-	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_BLEND_FG_BG_RGB GIMP_BLEND_FG_BG_HSV
-			  GIMP_BLEND_FG_TRANSPARENT GIMP_BLEND_CUSTOM) ],
-	  mapping => { GIMP_BLEND_FG_BG_RGB => '0',
-		       GIMP_BLEND_FG_BG_HSV => '1',
-		       GIMP_BLEND_FG_TRANSPARENT => '2',
-		       GIMP_BLEND_CUSTOM => '3' }
-	},
     GimpBrushGeneratedShape =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
