@@ -1,3 +1,5 @@
+/.deps
+/.dirstamp
 /Makefile
 /Makefile.in
 /imagemap-icon-images.c
