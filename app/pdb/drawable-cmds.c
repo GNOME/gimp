@@ -1893,7 +1893,7 @@ register_drawable_procs (GimpPDB *pdb)
                                                   "mode",
                                                   "The algorithm to use",
                                                   GIMP_TYPE_FOREGROUND_EXTRACT_MODE,
-                                                  GIMP_FOREGROUND_EXTRACT_SIOX,
+                                                  GIMP_FOREGROUND_EXTRACT_MATTING,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable ("mask",

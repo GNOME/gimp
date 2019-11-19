@@ -177,10 +177,8 @@ package Gimp::CodeGen::enums;
     GimpForegroundExtractMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_FOREGROUND_EXTRACT_SIOX
-			  GIMP_FOREGROUND_EXTRACT_MATTING) ],
-	  mapping => { GIMP_FOREGROUND_EXTRACT_SIOX => '0',
-		       GIMP_FOREGROUND_EXTRACT_MATTING => '1' }
+	  symbols => [ qw(GIMP_FOREGROUND_EXTRACT_MATTING) ],
+	  mapping => { GIMP_FOREGROUND_EXTRACT_MATTING => '0' }
 	},
     GimpGradientBlendColorSpace =>
 	{ contig => 1,

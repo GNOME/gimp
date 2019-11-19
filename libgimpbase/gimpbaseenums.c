@@ -537,14 +537,12 @@ gimp_foreground_extract_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_FOREGROUND_EXTRACT_SIOX, "GIMP_FOREGROUND_EXTRACT_SIOX", "siox" },
     { GIMP_FOREGROUND_EXTRACT_MATTING, "GIMP_FOREGROUND_EXTRACT_MATTING", "matting" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_FOREGROUND_EXTRACT_SIOX, "GIMP_FOREGROUND_EXTRACT_SIOX", NULL },
     { GIMP_FOREGROUND_EXTRACT_MATTING, "GIMP_FOREGROUND_EXTRACT_MATTING", NULL },
     { 0, NULL, NULL }
   };
