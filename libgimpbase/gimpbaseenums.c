@@ -1518,32 +1518,32 @@ gimp_select_criterion_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_SELECT_CRITERION_COMPOSITE, "GIMP_SELECT_CRITERION_COMPOSITE", "composite" },
-    { GIMP_SELECT_CRITERION_R, "GIMP_SELECT_CRITERION_R", "r" },
-    { GIMP_SELECT_CRITERION_G, "GIMP_SELECT_CRITERION_G", "g" },
-    { GIMP_SELECT_CRITERION_B, "GIMP_SELECT_CRITERION_B", "b" },
-    { GIMP_SELECT_CRITERION_H, "GIMP_SELECT_CRITERION_H", "h" },
-    { GIMP_SELECT_CRITERION_S, "GIMP_SELECT_CRITERION_S", "s" },
-    { GIMP_SELECT_CRITERION_V, "GIMP_SELECT_CRITERION_V", "v" },
-    { GIMP_SELECT_CRITERION_A, "GIMP_SELECT_CRITERION_A", "a" },
-    { GIMP_SELECT_CRITERION_LCH_L, "GIMP_SELECT_CRITERION_LCH_L", "lch-l" },
-    { GIMP_SELECT_CRITERION_LCH_C, "GIMP_SELECT_CRITERION_LCH_C", "lch-c" },
-    { GIMP_SELECT_CRITERION_LCH_H, "GIMP_SELECT_CRITERION_LCH_H", "lch-h" },
+    { GIMP_SELECT_CRITERION_RGB_RED, "GIMP_SELECT_CRITERION_RGB_RED", "rgb-red" },
+    { GIMP_SELECT_CRITERION_RGB_GREEN, "GIMP_SELECT_CRITERION_RGB_GREEN", "rgb-green" },
+    { GIMP_SELECT_CRITERION_RGB_BLUE, "GIMP_SELECT_CRITERION_RGB_BLUE", "rgb-blue" },
+    { GIMP_SELECT_CRITERION_HSV_HUE, "GIMP_SELECT_CRITERION_HSV_HUE", "hsv-hue" },
+    { GIMP_SELECT_CRITERION_HSV_SATURATION, "GIMP_SELECT_CRITERION_HSV_SATURATION", "hsv-saturation" },
+    { GIMP_SELECT_CRITERION_HSV_VALUE, "GIMP_SELECT_CRITERION_HSV_VALUE", "hsv-value" },
+    { GIMP_SELECT_CRITERION_LCH_LIGHTNESS, "GIMP_SELECT_CRITERION_LCH_LIGHTNESS", "lch-lightness" },
+    { GIMP_SELECT_CRITERION_LCH_CHROMA, "GIMP_SELECT_CRITERION_LCH_CHROMA", "lch-chroma" },
+    { GIMP_SELECT_CRITERION_LCH_HUE, "GIMP_SELECT_CRITERION_LCH_HUE", "lch-hue" },
+    { GIMP_SELECT_CRITERION_ALPHA, "GIMP_SELECT_CRITERION_ALPHA", "alpha" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
     { GIMP_SELECT_CRITERION_COMPOSITE, NC_("select-criterion", "Composite"), NULL },
-    { GIMP_SELECT_CRITERION_R, NC_("select-criterion", "Red"), NULL },
-    { GIMP_SELECT_CRITERION_G, NC_("select-criterion", "Green"), NULL },
-    { GIMP_SELECT_CRITERION_B, NC_("select-criterion", "Blue"), NULL },
-    { GIMP_SELECT_CRITERION_H, NC_("select-criterion", "HSV Hue"), NULL },
-    { GIMP_SELECT_CRITERION_S, NC_("select-criterion", "HSV Saturation"), NULL },
-    { GIMP_SELECT_CRITERION_V, NC_("select-criterion", "HSV Value"), NULL },
-    { GIMP_SELECT_CRITERION_A, NC_("select-criterion", "Alpha"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "LCh Lightness"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "LCh Chroma"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "LCh Hue"), NULL },
+    { GIMP_SELECT_CRITERION_RGB_RED, NC_("select-criterion", "Red"), NULL },
+    { GIMP_SELECT_CRITERION_RGB_GREEN, NC_("select-criterion", "Green"), NULL },
+    { GIMP_SELECT_CRITERION_RGB_BLUE, NC_("select-criterion", "Blue"), NULL },
+    { GIMP_SELECT_CRITERION_HSV_HUE, NC_("select-criterion", "HSV Hue"), NULL },
+    { GIMP_SELECT_CRITERION_HSV_SATURATION, NC_("select-criterion", "HSV Saturation"), NULL },
+    { GIMP_SELECT_CRITERION_HSV_VALUE, NC_("select-criterion", "HSV Value"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_LIGHTNESS, NC_("select-criterion", "LCh Lightness"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_CHROMA, NC_("select-criterion", "LCh Chroma"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_HUE, NC_("select-criterion", "LCh Hue"), NULL },
+    { GIMP_SELECT_CRITERION_ALPHA, NC_("select-criterion", "Alpha"), NULL },
     { 0, NULL, NULL }
   };
 

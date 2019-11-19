@@ -352,6 +352,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x - 1, y - 1, &col);
+
           if (x - 1 >= extent.x && x - 1 < extent.x + extent.width &&
               y >= extent.y && y < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
@@ -359,6 +360,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x - 1, y, &col);
+
           if (x - 1 >= extent.x && x - 1 < extent.x + extent.width &&
               y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
@@ -366,6 +368,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x - 1, y + 1, &col);
+
           if (x >= extent.x && x < extent.x + extent.width &&
               y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
@@ -373,6 +376,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x, y - 1, &col);
+
           if (x >= extent.x && x < extent.x + extent.width &&
               y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
@@ -380,6 +384,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x, y + 1, &col);
+
           if (x + 1 >= extent.x && x + 1 < extent.x + extent.width &&
               y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
@@ -387,6 +392,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x + 1, y - 1, &col);
+
           if (x + 1 >= extent.x && x + 1 < extent.x + extent.width &&
               y >= extent.y && y < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
@@ -394,6 +400,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x + 1, y, &col);
+
           if (x + 1 >= extent.x && x + 1 < extent.x + extent.width &&
               y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
@@ -401,6 +408,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                                     FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x + 1, y + 1, &col);
+
           filled = TRUE;
         }
     }
@@ -633,25 +641,25 @@ choose_format (GeglBuffer          *buffer,
                                    NULL);
       break;
 
-    case GIMP_SELECT_CRITERION_R:
-    case GIMP_SELECT_CRITERION_G:
-    case GIMP_SELECT_CRITERION_B:
-    case GIMP_SELECT_CRITERION_A:
+    case GIMP_SELECT_CRITERION_RGB_RED:
+    case GIMP_SELECT_CRITERION_RGB_GREEN:
+    case GIMP_SELECT_CRITERION_RGB_BLUE:
+    case GIMP_SELECT_CRITERION_ALPHA:
       format = babl_format ("R'G'B'A float");
       break;
 
-    case GIMP_SELECT_CRITERION_H:
-    case GIMP_SELECT_CRITERION_S:
-    case GIMP_SELECT_CRITERION_V:
+    case GIMP_SELECT_CRITERION_HSV_HUE:
+    case GIMP_SELECT_CRITERION_HSV_SATURATION:
+    case GIMP_SELECT_CRITERION_HSV_VALUE:
       format = babl_format ("HSVA float");
       break;
 
-    case GIMP_SELECT_CRITERION_LCH_L:
+    case GIMP_SELECT_CRITERION_LCH_LIGHTNESS:
       format = babl_format ("CIE L alpha float");
       break;
 
-    case GIMP_SELECT_CRITERION_LCH_C:
-    case GIMP_SELECT_CRITERION_LCH_H:
+    case GIMP_SELECT_CRITERION_LCH_CHROMA:
+    case GIMP_SELECT_CRITERION_LCH_HUE:
       format = babl_format ("CIE LCH(ab) alpha float");
       break;
 
@@ -704,23 +712,23 @@ pixel_difference (const gfloat        *col1,
             }
           break;
 
-        case GIMP_SELECT_CRITERION_R:
+        case GIMP_SELECT_CRITERION_RGB_RED:
           max = fabs (col1[0] - col2[0]);
           break;
 
-        case GIMP_SELECT_CRITERION_G:
+        case GIMP_SELECT_CRITERION_RGB_GREEN:
           max = fabs (col1[1] - col2[1]);
           break;
 
-        case GIMP_SELECT_CRITERION_B:
+        case GIMP_SELECT_CRITERION_RGB_BLUE:
           max = fabs (col1[2] - col2[2]);
           break;
 
-        case GIMP_SELECT_CRITERION_A:
+        case GIMP_SELECT_CRITERION_ALPHA:
           max = fabs (col1[3] - col2[3]);
           break;
 
-        case GIMP_SELECT_CRITERION_H:
+        case GIMP_SELECT_CRITERION_HSV_HUE:
           if (col1[1] > EPSILON)
             {
               if (col2[1] > EPSILON)
@@ -748,23 +756,23 @@ pixel_difference (const gfloat        *col1,
             }
           break;
 
-        case GIMP_SELECT_CRITERION_S:
+        case GIMP_SELECT_CRITERION_HSV_SATURATION:
           max = fabs (col1[1] - col2[1]);
           break;
 
-        case GIMP_SELECT_CRITERION_V:
+        case GIMP_SELECT_CRITERION_HSV_VALUE:
           max = fabs (col1[2] - col2[2]);
           break;
 
-        case GIMP_SELECT_CRITERION_LCH_L:
+        case GIMP_SELECT_CRITERION_LCH_LIGHTNESS:
           max = fabs (col1[0] - col2[0]) / 100.0;
           break;
 
-        case GIMP_SELECT_CRITERION_LCH_C:
+        case GIMP_SELECT_CRITERION_LCH_CHROMA:
           max = fabs (col1[1] - col2[1]) / 100.0;
           break;
 
-        case GIMP_SELECT_CRITERION_LCH_H:
+        case GIMP_SELECT_CRITERION_LCH_HUE:
           if (col1[1] > 100.0 * EPSILON)
             {
               if (col2[1] > 100.0 * EPSILON)

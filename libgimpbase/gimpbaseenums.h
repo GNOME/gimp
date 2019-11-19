@@ -1029,17 +1029,17 @@ typedef enum
 
 /**
  * GimpSelectCriterion:
- * @GIMP_SELECT_CRITERION_COMPOSITE: Composite
- * @GIMP_SELECT_CRITERION_R:         Red
- * @GIMP_SELECT_CRITERION_G:         Green
- * @GIMP_SELECT_CRITERION_B:         Blue
- * @GIMP_SELECT_CRITERION_H:         HSV Hue
- * @GIMP_SELECT_CRITERION_S:         HSV Saturation
- * @GIMP_SELECT_CRITERION_V:         HSV Value
- * @GIMP_SELECT_CRITERION_A:         Alpha
- * @GIMP_SELECT_CRITERION_LCH_L:     LCh Lightness
- * @GIMP_SELECT_CRITERION_LCH_C:     LCh Chroma
- * @GIMP_SELECT_CRITERION_LCH_H:     LCh Hue
+ * @GIMP_SELECT_CRITERION_COMPOSITE:      Composite
+ * @GIMP_SELECT_CRITERION_RGB_RED:        Red
+ * @GIMP_SELECT_CRITERION_RGB_GREEN:      Green
+ * @GIMP_SELECT_CRITERION_RGB_BLUE:       Blue
+ * @GIMP_SELECT_CRITERION_HSV_HUE:        HSV Hue
+ * @GIMP_SELECT_CRITERION_HSV_SATURATION: HSV Saturation
+ * @GIMP_SELECT_CRITERION_HSV_VALUE:      HSV Value
+ * @GIMP_SELECT_CRITERION_LCH_LIGHTNESS:  LCh Lightness
+ * @GIMP_SELECT_CRITERION_LCH_CHROMA:     LCh Chroma
+ * @GIMP_SELECT_CRITERION_LCH_HUE:        LCh Hue
+ * @GIMP_SELECT_CRITERION_ALPHA:          Alpha
  *
  * Criterions for color similarity.
  **/
@@ -1049,17 +1049,17 @@ GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"      >*/
-  GIMP_SELECT_CRITERION_R,          /*< desc="Red"            >*/
-  GIMP_SELECT_CRITERION_G,          /*< desc="Green"          >*/
-  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"           >*/
-  GIMP_SELECT_CRITERION_H,          /*< desc="HSV Hue"        >*/
-  GIMP_SELECT_CRITERION_S,          /*< desc="HSV Saturation" >*/
-  GIMP_SELECT_CRITERION_V,          /*< desc="HSV Value"      >*/
-  GIMP_SELECT_CRITERION_A,          /*< desc="Alpha"          >*/
-  GIMP_SELECT_CRITERION_LCH_L,      /*< desc="LCh Lightness"  >*/
-  GIMP_SELECT_CRITERION_LCH_C,      /*< desc="LCh Chroma"     >*/
-  GIMP_SELECT_CRITERION_LCH_H,      /*< desc="LCh Hue"        >*/
+  GIMP_SELECT_CRITERION_COMPOSITE,      /*< desc="Composite"      >*/
+  GIMP_SELECT_CRITERION_RGB_RED,        /*< desc="Red"            >*/
+  GIMP_SELECT_CRITERION_RGB_GREEN,      /*< desc="Green"          >*/
+  GIMP_SELECT_CRITERION_RGB_BLUE,       /*< desc="Blue"           >*/
+  GIMP_SELECT_CRITERION_HSV_HUE,        /*< desc="HSV Hue"        >*/
+  GIMP_SELECT_CRITERION_HSV_SATURATION, /*< desc="HSV Saturation" >*/
+  GIMP_SELECT_CRITERION_HSV_VALUE,      /*< desc="HSV Value"      >*/
+  GIMP_SELECT_CRITERION_LCH_LIGHTNESS,  /*< desc="LCh Lightness"  >*/
+  GIMP_SELECT_CRITERION_LCH_CHROMA,     /*< desc="LCh Chroma"     >*/
+  GIMP_SELECT_CRITERION_LCH_HUE,        /*< desc="LCh Hue"        >*/
+  GIMP_SELECT_CRITERION_ALPHA,          /*< desc="Alpha"          >*/
 } GimpSelectCriterion;
 
 
