@@ -1,0 +1,56 @@
+From 1f6071590d5b4fa3b52aa1456a9648ae354b2c7a Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Wed, 20 Nov 2019 12:21:35 +0100
+Subject: [PATCH] Fix usage of TerminateThread() causing critical section
+ corruption.
+
+This patch was submitted to the GIMP project by a publisher wishing to
+keep confidentiality (hence anonymously). I just pass along the patch.
+Here is the patch explanation which came with:
+
+First they remind us what Microsoft documentation says about
+TerminateThread:
+> TerminateThread is a dangerous function that should only be used in
+> the most extreme cases. You should call TerminateThread only if you
+> know exactly what the target thread is doing, and you control all of
+> the code that the target thread could possibly be running at the time
+> of the termination.
+(https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-terminatethread)
+
+Then they say that 5 milliseconds time-out might not be long enough for
+the thread to exit gracefully. They propose to set it to a much higher
+value (for instance here 5 seconds).
+
+And finally you should always check the return value of
+WaitForSingleObject(). In particular you want to run TerminateThread()
+only if WaitForSingleObject() failed, not on success case.
+---
+ driver/others/blas_server_win32.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/driver/others/blas_server_win32.c b/driver/others/blas_server_win32.c
+index bace54a2..e27725ba 100644
+--- a/driver/others/blas_server_win32.c
++++ b/driver/others/blas_server_win32.c
+@@ -462,11 +462,15 @@ int BLASFUNC(blas_thread_shutdown)(void){
+ 
+     for(i = 0; i < blas_num_threads - 1; i++){
+       // Could also just use WaitForMultipleObjects
+-      WaitForSingleObject(blas_threads[i], 5);  //INFINITE);
++      DWORD wait_thread_value = WaitForSingleObject(blas_threads[i], 5000);
++
+ #ifndef OS_WINDOWSSTORE
+-// TerminateThread is only available with WINAPI_DESKTOP and WINAPI_SYSTEM not WINAPI_APP in UWP
+-      TerminateThread(blas_threads[i],0);
++      // TerminateThread is only available with WINAPI_DESKTOP and WINAPI_SYSTEM not WINAPI_APP in UWP
++      if (WAIT_OBJECT_0 != wait_thread_value) {
++        TerminateThread(blas_threads[i],0);
++      }
+ #endif
++
+       CloseHandle(blas_threads[i]);
+     }
+ 
+-- 
+2.23.0
+
