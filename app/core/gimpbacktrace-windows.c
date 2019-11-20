@@ -90,7 +90,7 @@ static void          gimp_backtrace_set_thread_name   (DWORD                tid,
 
 static gboolean      gimp_backtrace_enumerate_threads (void);
 
-static LONG          gimp_backtrace_exception_handler (PEXCEPTION_POINTERS  info);
+static LONG WINAPI   gimp_backtrace_exception_handler (PEXCEPTION_POINTERS  info);
 
 
 /*  static variables  */
@@ -222,7 +222,7 @@ gimp_backtrace_enumerate_threads (void)
   return n_threads > 0;
 }
 
-static LONG
+static LONG WINAPI
 gimp_backtrace_exception_handler (PEXCEPTION_POINTERS info)
 {
   #define EXCEPTION_SET_THREAD_NAME ((DWORD) 0x406D1388)
