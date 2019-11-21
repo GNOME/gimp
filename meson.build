@@ -1435,36 +1435,40 @@ has_version_h = run_command('python', '-c',
   'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)'
 ).returncode() == 0
 if is_git_repository or not has_version_h
+  git = find_program('git', required: false)
+
   gitversion_h1 = vcs_tag(
     input : 'app/git-version.h.in',
     output: 'git-version.h.in.1',
-    command: [ 'git', 'describe', '--always', ],
+    command: [ git, 'describe', '--always', ],
     replace_string: '@GIMP_GIT_VERSION@',
     fallback: 'unknown (unsupported)',
   )
   gitversion_h2 = vcs_tag(
     input : gitversion_h1,
     output: 'git-version.h.in.2',
-    command: [ 'git', 'rev-parse', '--short', 'HEAD', ],
+    command: [ git, 'rev-parse', '--short', 'HEAD', ],
     replace_string: '@GIMP_GIT_VERSION_ABBREV@',
     fallback: 'unknown (unsupported)',
   )
   gitversion_h = vcs_tag(
     input : gitversion_h2,
     output: 'git-version.h',
-    command: [ 'git', 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
+    command: [ git, 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
     replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
     fallback: 'unknown (unsupported)',
   )
-  if not is_git_repository
+  if not is_git_repository or not git.found()
   # We create git-version.h but know it will be useless because we are
   # not in a git repository. Output a warning.
   git_warning = '''
 
         UNSUPPORTED BUILD!
 
-        This is not a distribution tarball (git-version.h missing) nor is it
-        a git repository. Therefore we have no reference for debugging.
+        This is not a distribution tarball (git-version.h missing) and
+        we could not estabilish the corresponing commit (either this is
+        not a git repository or git command is missing). Therefore
+        we have no reference for debugging.
         Please either use release tarballs or build from the repository.
   '''
   warning(git_warning)
