@@ -65,6 +65,7 @@ conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 conf.set_quoted('GIMP_VERSION', gimp_version)
 
 stable = (gimp_app_version_minor % 2 == 0)
+tagged = (gimp_app_version_micro % 2 == 0)
 conf.set10('GIMP_UNSTABLE', not stable)
 
 versionconfig = configuration_data()
@@ -1442,23 +1443,23 @@ if is_git_repository or not has_version_h
     output: 'git-version.h.in.1',
     command: [ git, 'describe', '--always', ],
     replace_string: '@GIMP_GIT_VERSION@',
-    fallback: 'unknown (unsupported)',
+    fallback: tagged ? meson.project_version() : 'unknown (unsupported)',
   )
   gitversion_h2 = vcs_tag(
     input : gitversion_h1,
     output: 'git-version.h.in.2',
     command: [ git, 'rev-parse', '--short', 'HEAD', ],
     replace_string: '@GIMP_GIT_VERSION_ABBREV@',
-    fallback: 'unknown (unsupported)',
+    fallback: tagged ? meson.project_version() : 'unknown (unsupported)',
   )
   gitversion_h = vcs_tag(
     input : gitversion_h2,
     output: 'git-version.h',
     command: [ git, 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
     replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
-    fallback: 'unknown (unsupported)',
+    fallback: tagged ? meson.project_version() : 'unknown (unsupported)',
   )
-  if not is_git_repository or not git.found()
+  if (not is_git_repository or not git.found()) and not tagged
   # We create git-version.h but know it will be useless because we are
   # not in a git repository. Output a warning.
   git_warning = '''
