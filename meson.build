@@ -16,9 +16,9 @@ conf = configuration_data()
 warnings = []
 
 # git-version.h is already present and not generated if dist tarball
-is_dist_tarball = run_command('python', '-c',
+is_git_repository = run_command('python', '-c',
   'import sys,os; sys.exit(0 if os.path.exists(".git") else 1)'
-).returncode() == 1
+).returncode() == 0
 
 ################################################################################
 # Project info
@@ -1431,30 +1431,47 @@ endif
   #####   ####  #    # #      #  ####     #       # ###### ######  ####
 
 
-if is_dist_tarball
-  gitversion_h = files('git-version.h')
-else
+has_version_h = run_command('python', '-c',
+  'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)'
+).returncode() == 0
+if is_git_repository or not has_version_h
   gitversion_h1 = vcs_tag(
     input : 'app/git-version.h.in',
     output: 'git-version.h.in.1',
     command: [ 'git', 'describe', '--always', ],
     replace_string: '@GIMP_GIT_VERSION@',
-    fallback: '',
+    fallback: 'unknown (unsupported)',
   )
   gitversion_h2 = vcs_tag(
     input : gitversion_h1,
     output: 'git-version.h.in.2',
     command: [ 'git', 'rev-parse', '--short', 'HEAD', ],
     replace_string: '@GIMP_GIT_VERSION_ABBREV@',
-    fallback: '',
+    fallback: 'unknown (unsupported)',
   )
   gitversion_h = vcs_tag(
     input : gitversion_h2,
     output: 'git-version.h',
     command: [ 'git', 'log', '-n1', '--date=format:%Y', '--pretty=%cd', ],
     replace_string: '@GIMP_GIT_LAST_COMMIT_YEAR@',
-    fallback: '',
+    fallback: 'unknown (unsupported)',
   )
+  if not is_git_repository
+  # We create git-version.h but know it will be useless because we are
+  # not in a git repository. Output a warning.
+  git_warning = '''
+
+        UNSUPPORTED BUILD!
+
+        This is not a distribution tarball (git-version.h missing) nor is it
+        a git repository. Therefore we have no reference for debugging.
+        Please either use release tarballs or build from the repository.
+  '''
+  warning(git_warning)
+  warnings += git_warning
+  endif
+else
+  gitversion_h = files('git-version.h')
 endif
 
 install_conf = configuration_data()
@@ -1492,13 +1509,11 @@ install_conf.set('WEBP_REQUIRED_VERSION',         webp_minver)
 install_conf.set('WMF_REQUIRED_VERSION',          wmf_minver)
 install_conf.set('XGETTEXT_REQUIRED_VERSION',     '0.19')
 
-if not is_dist_tarball
-  INSTALL = configure_file(
-    input : 'INSTALL.in',
-    output: 'INSTALL',
-    configuration: install_conf
-  )
-endif
+INSTALL = configure_file(
+  input : 'INSTALL.in',
+  output: 'INSTALL',
+  configuration: install_conf
+)
 
 
 configure_file(
