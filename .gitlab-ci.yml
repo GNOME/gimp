@@ -125,6 +125,7 @@ gimp-autotools:
         --with-lua=force
     - make -j "$(nproc)"
     # - make check
+  needs: ["deps-git"]
 
 gimp-meson:
   extends: .gimp-base
@@ -136,6 +137,7 @@ gimp-meson:
       -Dlua=always
     - ninja -C _build
     # - ninja test
+  needs: ["deps-git"]
 
 deps-x86_64-w64-mingw32:
   image: fedora:31
@@ -242,6 +244,7 @@ gimp-x86_64-w64-mingw32-meson:
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w64 gimp --run="-"
+  needs: ["deps-x86_64-w64-mingw32"]
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
