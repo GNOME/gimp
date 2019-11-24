@@ -1145,6 +1145,7 @@ do_optimizations (GimpRunMode  run_mode,
                                GEGL_AUTO_ROWSTRIDE);
 
               g_object_unref (buffer);
+              gimp_item_transform_translate (GIMP_ITEM (new_layer), bbox_left, bbox_top);
             }
 
           gimp_progress_update (((gdouble) this_frame_num + 1.0) /
