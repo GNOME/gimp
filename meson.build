@@ -16,7 +16,7 @@ conf = configuration_data()
 warnings = []
 
 # git-version.h is already present and not generated if dist tarball
-is_git_repository = run_command('python', '-c',
+is_git_repository = run_command('python3', '-c',
   'import sys,os; sys.exit(0 if os.path.exists(".git") else 1)'
 ).returncode() == 0
 
@@ -1431,7 +1431,7 @@ endif
   #####   ####  #    # #      #  ####     #       # ###### ######  ####
 
 
-has_version_h = run_command('python', '-c',
+has_version_h = run_command('python3', '-c',
   'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)'
 ).returncode() == 0
 if is_git_repository or not has_version_h
