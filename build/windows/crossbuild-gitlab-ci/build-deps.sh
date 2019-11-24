@@ -68,6 +68,11 @@ crossroad meson _build && ninja -C _build install || exit 1
 crossroad mask glib
 cd ..
 
+# Fix a bug in Mingw-w64 headers when building with strict
+# C90-compliance.
+# See my commit fb232993 in mingw-w64-mingw-w64 repository.
+sed -i 's%^//\(.*\)$%/*\1 */%' $CROSSROAD_PREFIX/include/stdlib.h
+
 # Pango (available in crossroad but too old)
 
 crossroad install harfbuzz && \

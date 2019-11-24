@@ -138,7 +138,7 @@ gimp-meson:
     # - ninja test
 
 deps-x86_64-w64-mingw32:
-  image: fedora:30
+  image: fedora:31
   stage: dependencies
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
@@ -195,7 +195,7 @@ deps-x86_64-w64-mingw32:
       - _deps/
 
 gimp-x86_64-w64-mingw32-meson:
-  image: fedora:30
+  image: fedora:31
   stage: gimp
   dependencies:
     - deps-x86_64-w64-mingw32
@@ -220,7 +220,7 @@ gimp-x86_64-w64-mingw32-meson:
         libtool
         libxslt
         make
-        python2
+        python3
         mingw64-gcc
         mingw64-gcc-c++
         mingw64-binutils
