@@ -10,6 +10,8 @@ variables:
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
   PACMAN_CACHE:   "${CI_PROJECT_DIR}/_pacman_cache"
 
+## GNU/Linux 64-bit CIs ##
+
 deps-git:
   stage: dependencies
   cache:
@@ -139,6 +141,8 @@ gimp-meson:
     # - ninja test
   needs: ["deps-git"]
 
+## WINDOWS 64-bit CI ##
+
 deps-x86_64-w64-mingw32:
   image: fedora:31
   stage: dependencies
@@ -245,6 +249,122 @@ gimp-x86_64-w64-mingw32-meson:
             ' |
       crossroad w64 gimp --run="-"
   needs: ["deps-x86_64-w64-mingw32"]
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: always
+    expire_in: 1 week
+    paths:
+      - _build/
+      - gimp-prefix/
+
+## WINDOWS 32-bit CI ##
+
+deps-i686-w64-mingw32:
+  image: fedora:31
+  stage: dependencies
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+  cache:
+    paths:
+    - .cache/crossroad/
+    - dnf_cache
+  before_script:
+    - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
+        automake
+        autoconf
+        meson
+        cmake
+        gettext
+        git
+        gcc
+        gcc-c++
+        gperf
+        intltool
+        libtool
+        libxslt
+        make
+        python2
+        mingw32-gcc
+        mingw32-gcc-c++
+        mingw32-binutils
+        cpio rpm
+        python3-docutils
+        python3-pip
+        python3-setuptools
+        shared-mime-info
+        which
+        libmount-devel
+        gdk-pixbuf2
+        gdk-pixbuf2-devel
+        glib2-devel
+    #- pip3 install wheel
+    #- pip3 install crossroad
+    - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - cd crossroad
+    - ./setup.py install --prefix=`pwd`/../.local
+    - cd ..
+    - gdk-pixbuf-query-loaders-64 > /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders.cache
+  script:
+    - export PATH="`pwd`/.local/bin:$PATH"
+    - crossroad w32 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: always
+    expire_in: 1 week
+    paths:
+      - .local/
+      - _deps/
+
+gimp-i686-w64-mingw32-meson:
+  image: fedora:31
+  stage: gimp
+  dependencies:
+    - deps-x86_64-w64-mingw32
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+  cache:
+    paths:
+    - .cache/crossroad/
+    - dnf_cache
+  before_script:
+    - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
+        automake
+        autoconf
+        meson
+        cmake
+        gettext
+        gcc
+        gcc-c++
+        gperf
+        intltool
+        libtool
+        libxslt
+        make
+        python2
+        python3
+        mingw32-gcc
+        mingw32-gcc-c++
+        mingw32-binutils
+        cpio rpm
+        shared-mime-info
+        which
+        libmount-devel
+        gdk-pixbuf2
+        gdk-pixbuf2-devel
+        glib2-devel
+  script:
+    - export PATH="`pwd`/.local/bin:$PATH"
+    - mkdir _build && cd _build
+    - echo 'crossroad meson ..
+              -Dwmf=disabled  -Dgtk-doc=false
+              -Dpython=always -Dlua=always
+              -Djavascript=always && ninja install &&
+            cp ../build/windows/crossbuild-gitlab-ci/gimp-wrapper.cmd $CROSSROAD_PREFIX/bin/ &&
+            cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
+            ' |
+      crossroad w32 gimp --run="-"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
