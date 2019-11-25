@@ -12,7 +12,7 @@ variables:
 
 ## GNU/Linux 64-bit CIs ##
 
-deps-git:
+deps-linux:
   stage: dependencies
   cache:
     paths:
@@ -65,7 +65,7 @@ deps-git:
 .gimp-base:
   stage: gimp
   dependencies:
-    - deps-git
+    - deps-linux
   artifacts:
     expire_in: 1 week
     when: always
@@ -113,8 +113,9 @@ deps-git:
         intltool
         iso-codes
         xorg-server-xvfb
+  needs: ["deps-linux"]
 
-gimp-autotools:
+gimp-linux-autotools:
   extends: .gimp-base
   script:
     - mkdir _build
@@ -127,9 +128,8 @@ gimp-autotools:
         --with-lua=force
     - make -j "$(nproc)"
     # - make check
-  needs: ["deps-git"]
 
-gimp-meson:
+gimp-linux-meson:
   extends: .gimp-base
   script:
     - meson _build
@@ -139,11 +139,10 @@ gimp-meson:
       -Dlua=always
     - ninja -C _build
     # - ninja test
-  needs: ["deps-git"]
 
 ## WINDOWS 64-bit CI ##
 
-deps-x86_64-w64-mingw32:
+deps-win64:
   image: fedora:31
   stage: dependencies
   variables:
@@ -200,11 +199,11 @@ deps-x86_64-w64-mingw32:
       - .local/
       - _deps/
 
-gimp-x86_64-w64-mingw32-meson:
+gimp-win64:
   image: fedora:31
   stage: gimp
   dependencies:
-    - deps-x86_64-w64-mingw32
+    - deps-win64
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
@@ -248,7 +247,7 @@ gimp-x86_64-w64-mingw32-meson:
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w64 gimp --run="-"
-  needs: ["deps-x86_64-w64-mingw32"]
+  needs: ["deps-win64"]
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
@@ -259,7 +258,7 @@ gimp-x86_64-w64-mingw32-meson:
 
 ## WINDOWS 32-bit CI ##
 
-deps-i686-w64-mingw32:
+deps-win32:
   image: fedora:31
   stage: dependencies
   variables:
@@ -316,11 +315,11 @@ deps-i686-w64-mingw32:
       - .local/
       - _deps/
 
-gimp-i686-w64-mingw32-meson:
+gimp-win32:
   image: fedora:31
   stage: gimp
   dependencies:
-    - deps-x86_64-w64-mingw32
+    - deps-win32
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
@@ -365,6 +364,7 @@ gimp-i686-w64-mingw32-meson:
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w32 gimp --run="-"
+  needs: ["deps-win32"]
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
