@@ -446,7 +446,7 @@ def get_gradient_samples(num_samples):
     reverse_mode = Gimp.context_get_gradient_reverse()
     repeat_mode = Gimp.context_get_gradient_repeat_mode()
 
-    if repeat_mode == REPEAT_TRIANGULAR:
+    if repeat_mode == Gimp.RepeatMode.TRIANGULAR:
         # Get two uniform samples, which are reversed from each other, and connect them.
 
         samples = num_samples/2 + 1
@@ -561,7 +561,7 @@ class StrokeTool(AbstractStrokeTool):
             Gimp.context_set_dynamics('Dynamics Off')
             Gimp.context_set_foreground(color)
 
-        Gimp.context_set_stroke_method(STROKE_LINE)
+        Gimp.context_set_stroke_method(Gimp.StrokeMethod.LINE)
 
 
 class StrokePaintTool(AbstractStrokeTool):
@@ -1039,23 +1039,22 @@ class SpyroWindow(Gtk.Window):
             box.add(w)
             w.show()
 
-        def create_table(rows, columns, border_width):
-            # TODO: GtkTable is deprecated in GTK+3. This should be
-            # reimplemented as a GtkGrid.
-            table = Gtk.Table(n_rows=rows, n_columns=columns, homogeneous=False)
+        def create_table(border_width):
+            table = Gtk.Grid()
+            table.set_column_homogeneous(False)
             table.set_border_width(border_width)
-            #table.set_col_spacings(10)
-            #table.set_row_spacings(10)
+            table.set_column_spacing(10)
+            table.set_row_spacing(10)
             return table
 
         def label_in_table(label_text, table, row, tooltip_text=None):
             """ Create a label and set it in first col of table. """
             label = Gtk.Label(label=label_text)
             label.set_xalign(0.0)
-            label.set_yalign(1.0)
+            label.set_yalign(0.5)
             if tooltip_text:
                 label.set_tooltip_text(tooltip_text)
-            table.attach(label, 0, 1, row, row + 1, xoptions=Gtk.AttachOptions.FILL, yoptions=0)
+            table.attach(label, 0, row, 1, 1)
             label.show()
 
         def hscale_in_table(adj, table, row, callback, digits=0):
@@ -1067,15 +1066,23 @@ class SpyroWindow(Gtk.Window):
             # GTK+3. If we want updates to happen when button is
             # released, we must implement this ourselves.
             #scale.set_update_policy(Gtk.UPDATE_DISCONTINUOUS)
-            table.attach(scale, 1, 2, row, row + 1, xoptions=Gtk.AttachOptions.EXPAND|Gtk.AttachOptions.FILL, yoptions=0)
+            scale.set_hexpand(True)
+            scale.set_halign(Gtk.Align.FILL)
+            table.attach(scale, 1, row, 1, 1)
             scale.show()
 
             spin = Gtk.SpinButton.new(adj, climb_rate=0.5, digits=digits)
             spin.set_numeric(True)
+            # TODO:
+            # For some reason, spinbutton does not allow editing the text directly.
+            # None of the following solve this issue:
+            # spin.set_editable(True)
+            # spin.set_overwrite_mode(True)
+            # spin.set_update_policy(Gtk.SpinButtonUpdatePolicy.ALWAYS)
             spin.set_snap_to_ticks(True)
             spin.set_max_length(5)
             spin.set_width_chars(5)
-            table.attach(spin, 2, 3, row, row + 1, xoptions=0, yoptions=0)
+            table.attach(spin, 2, row, 1, 1)
             spin.show()
 
             adj.connect("value_changed", callback)
@@ -1083,7 +1090,7 @@ class SpyroWindow(Gtk.Window):
             return self.MyScale(scale, spin)
 
         def rotation_in_table(val, table, row, callback):
-            adj = Gtk.Adjustment.new(val, -180.0, 180.0, 1.0, 10.0, 10.0)
+            adj = Gtk.Adjustment.new(val, -180.0, 180.0, 1.0, 10.0, 0.0)
             myscale = hscale_in_table(adj, table, row, callback, digits=1)
             myscale.scale.add_mark(0.0, Gtk.PositionType.BOTTOM, None)
             return adj, myscale
@@ -1092,7 +1099,9 @@ class SpyroWindow(Gtk.Window):
             combo = Gtk.ComboBoxText.new()
             for txt in txt_list:
                 combo.append_text(txt)
-            table.attach(combo, 1, 2, row, row + 1, xoptions=Gtk.AttachOptions.FILL, yoptions=0)
+
+            combo.set_halign(Gtk.Align.FILL)
+            table.attach(combo, 1, row, 1, 1)
             combo.show()
             combo.connect("changed", callback)
             return combo
@@ -1101,7 +1110,7 @@ class SpyroWindow(Gtk.Window):
         def top_table():
 
             # Add table for displaying attributes, each having a label and an input widget.
-            table = create_table(2, 3, 10)
+            table = create_table(10)
 
             # Curve type
             row = 0
@@ -1124,7 +1133,7 @@ class SpyroWindow(Gtk.Window):
                   "based on current gradient and repeat mode from the gradient tool settings.")
             )
             self.long_gradient_checkbox.set_border_width(0)
-            table.attach(self.long_gradient_checkbox, 2, 3, row, row + 1, xoptions=0, yoptions=0)
+            table.attach(self.long_gradient_checkbox, 2, row, 1, 1)
             self.long_gradient_checkbox.show()
             self.long_gradient_checkbox.connect("toggled", self.long_gradient_changed)
 
@@ -1160,7 +1169,7 @@ class SpyroWindow(Gtk.Window):
             # "Gear" pattern notation.
 
             # Add table for displaying attributes, each having a label and an input widget.
-            gear_table = create_table(3, 3, 5)
+            gear_table = create_table(5)
 
             # Teeth
             row = 0
@@ -1180,20 +1189,20 @@ class SpyroWindow(Gtk.Window):
                 "proportional to the number of teeth."
             )
             label_in_table(_("Moving Gear Teeth"), gear_table, row, moving_gear_tooltip)
-            self.inner_teeth_adj = Gtk.Adjustment.new(self.p.inner_teeth, 2, 100, 1, 10, 10)
+            self.inner_teeth_adj = Gtk.Adjustment.new(self.p.inner_teeth, 2, 100, 1, 10, 0)
             hscale_in_table(self.inner_teeth_adj, gear_table, row, self.inner_teeth_changed)
 
             row += 1
             label_in_table(_("Hole percent"), gear_table, row,
                            _("How far is the hole from the center of the moving gear. "
                              "100% means that the hole is at the gear's edge."))
-            self.hole_percent_adj = Gtk.Adjustment.new(self.p.hole_percent, 2.5, 100.0, 0.5, 10, 10)
+            self.hole_percent_adj = Gtk.Adjustment.new(self.p.hole_percent, 2.5, 100.0, 0.5, 10, 0)
             self.hole_percent_myscale = hscale_in_table(self.hole_percent_adj, gear_table,
                                                         row, self.hole_percent_changed, digits=1)
 
             # "Kit" pattern notation.
 
-            kit_table = create_table(3, 3, 5)
+            kit_table = create_table(5)
 
             row = 0
             label_in_table(_("Fixed Gear Teeth"), kit_table, row, fixed_gear_tooltip)
@@ -1210,7 +1219,7 @@ class SpyroWindow(Gtk.Window):
                            _("Hole #1 is at the edge of the gear. "
                              "The maximum hole number is near the center. "
                              "The maximum hole number is different for each gear."))
-            self.kit_hole_adj = Gtk.Adjustment.new(self.p.hole_number, 1, self.p.kit_max_hole_number(), 1, 10, 10)
+            self.kit_hole_adj = Gtk.Adjustment.new(self.p.hole_number, 1, self.p.kit_max_hole_number(), 1, 10, 0)
             self.kit_hole_myscale = hscale_in_table(self.kit_hole_adj, kit_table, row, self.kit_hole_changed)
 
             # Add tables as childs of the pattern notebook
@@ -1232,7 +1241,7 @@ class SpyroWindow(Gtk.Window):
             add_vertical_space(vbox, 14)
 
             hbox = Gtk.HBox(spacing=5)
-            pattern_table = create_table(1, 3, 5)
+            pattern_table = create_table(5)
 
             row = 0
             label_in_table(_("Rotation"), pattern_table, row,
@@ -1256,7 +1265,7 @@ class SpyroWindow(Gtk.Window):
 
             add_vertical_space(vbox, 14)
 
-            table = create_table(4, 2, 10)
+            table = create_table(10)
 
             row = 0
             label_in_table(_("Shape"), table, row,
@@ -1291,7 +1300,7 @@ class SpyroWindow(Gtk.Window):
 
             vbox = Gtk.VBox(spacing=0, homogeneous=False)
             add_vertical_space(vbox, 14)
-            table = create_table(2, 2, 10)
+            table = create_table(10)
 
             row = 0
             label_in_table(_("Margin (px)"), table, row, _("Margin from edge of selection."))
@@ -1304,8 +1313,8 @@ class SpyroWindow(Gtk.Window):
                 _("When unchecked, the pattern will fill the current image or selection. "
                   "When checked, the pattern will have same width and height, and will be centered.")
             )
-            self.equal_w_h_checkbox.set_border_width(15)
-            table.attach(self.equal_w_h_checkbox, 0, 2, row, row + 1)
+            self.equal_w_h_checkbox.set_border_width(30)
+            table.attach(self.equal_w_h_checkbox, 0, row, 3, 1)
             self.equal_w_h_checkbox.show()
             self.equal_w_h_checkbox.connect("toggled", self.equal_w_h_checkbox_changed)
 
@@ -1897,5 +1906,6 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
             engine.draw_full(layer)
 
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+
 
 Gimp.main(SpyrogimpPlusPlugin.__gtype__, sys.argv)
