@@ -461,7 +461,7 @@ gimp_backtrace_new (gboolean include_current_thread)
              StackWalk64 (machine_type, hProcess, hThread, &frame, &context,
                           NULL,
                           SymFunctionTableAccess64,
-                          SymGetModuleBase64,
+                          SymGetModuleBase,
                           NULL))
         {
           thread->frames[thread->n_frames++] = frame.AddrPC.Offset;
@@ -643,7 +643,7 @@ gimp_backtrace_get_address_info (guintptr                  address,
   gboolean         result      = FALSE;
 
   hProcess = GetCurrentProcess ();
-  hModule  = (HMODULE) SymGetModuleBase64 (hProcess, address);
+  hModule  = (HMODULE) SymGetModuleBase (hProcess, address);
 
   if (hModule && GetModuleFileNameExA (hProcess, hModule,
                                        info->object_name,
