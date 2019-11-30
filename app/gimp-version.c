@@ -223,8 +223,12 @@ gimp_version (gboolean be_verbose,
 
       lib_versions = gimp_library_versions (localized);
       verbose_info = g_strdup_printf ("git-describe: %s\n"
-                                      "C compiler:\n%s\n%s",
-                                      GIMP_GIT_VERSION, CC_VERSION,
+                                      "Build: %s rev %s for %s\n"
+                                      "# C compiler #\n%s\n"
+                                      "# Libraries #\n%s",
+                                      GIMP_GIT_VERSION,
+                                      GIMP_BUILD_ID, GIMP_BUILD_REVISION, GIMP_BUILD_PLATFORM,
+                                      CC_VERSION,
                                       lib_versions);
       g_free (lib_versions);
 

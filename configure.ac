@@ -2657,6 +2657,36 @@ NOTE: if you plan on packaging GIMP for distribution, it is recommended
 "
 fi
 
+#####################
+# Build identifiers #
+#####################
+
+AC_ARG_WITH(build-id,
+            [  --with-build-id   A unique string used to define your build],,
+            [with_build_id="unknown"])
+AC_DEFINE_UNQUOTED(GIMP_BUILD_ID, "$with_build_id",
+                   [The string defining the build])
+
+AC_ARG_WITH(revision,
+            [  --with-revision   Revision increment for a same build/version/platform],,
+            [with_revision="0"])
+AC_DEFINE_UNQUOTED(GIMP_BUILD_REVISION, "$with_revision",
+                   [The revision increment for a same build/version/platform])
+
+AC_DEFINE_UNQUOTED(GIMP_BUILD_PLATFORM, "$host_os",
+                   [The OS this was built for])
+if test "x$platform_linux" = xyes; then
+  platform_family="linux"
+elif test "x$platform_win32" = xyes; then
+  platform_family="windows"
+elif test "x$platform_osx" = xyes; then
+  platform_family="macos"
+else
+  platform_family="other"
+fi
+AC_DEFINE_UNQUOTED(GIMP_BUILD_PLATFORM_FAMILY, "$platform_family",
+                   [The OS family this was built for])
+
 #########################
 # Default ICC directory #
 #########################
