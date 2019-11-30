@@ -12,6 +12,8 @@ option('relocatable-bundle',type: 'feature', value: 'auto', description: 'build 
 option('shmem-type',        type: 'combo',   value: 'auto', description: 'Shared memory transport type',
                                              choices: [ 'none', 'sysv', 'posix', 'win32', 'auto' ])
 
+option('build-id',          type: 'string',  value: 'unknown', description: 'Unique string used to define your build')
+option('revision',          type: 'integer', value: 0,    description: 'Revision increment for a same build/version/platform')
 option('bug-report-url',    type: 'string',  value: '',   description: 'URL used by the debug dialog to report bugs')
 option('gimpdir',           type: 'string',  value: '',   description: 'Change default gimpdir from ~/.config/GIMP/2.9 to ~/.config/DIR/2.9 (if relative), or to DIR (if absolute)')
 option('icc-directory',     type: 'string',  value: '',   description: 'Path to default color profiles for this system')

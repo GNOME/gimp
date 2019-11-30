@@ -1087,6 +1087,21 @@ endif
 conf.set_quoted('PACKAGE_BUGREPORT', project_url_issues)
 conf.set_quoted('BUG_REPORT_URL', bug_report_url)
 
+# Build identifiers #
+
+conf.set_quoted('GIMP_BUILD_ID', get_option('build-id'))
+conf.set_quoted('GIMP_BUILD_REVISION', get_option('revision').to_string())
+conf.set_quoted('GIMP_BUILD_PLATFORM', host_os)
+if platform_linux
+  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'linux')
+elif platform_windows
+  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'windows')
+elif platform_osx
+  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'macos')
+else
+  conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'other')
+endif
+
 # Default ICC directory #
 
 # This is necessary because some Unix systems may have a different
@@ -1364,7 +1379,7 @@ else
   # See also: https://github.com/mesonbuild/meson/pull/6179
   cc_version = '\\n'.join(cc_version.split('\n'))
 endif
-conf.set_quoted('CC_VERSION',     cc_version)
+conf.set_quoted('CC_VERSION',     cc_version.strip())
 
 # Names
 conf.set_quoted('GIMP_PACKAGE',   meson.project_name())
