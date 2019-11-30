@@ -7,6 +7,7 @@
 #include <tchar.h>
 #include <tlhelp32.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static BOOL
 resume_process (DWORD dwOwnerPID)
