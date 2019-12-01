@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-08 13:08+0000\n"
-"PO-Revision-Date: 2019-10-25 23:36+0200\n"
+"POT-Creation-Date: 2019-11-12 20:38+0000\n"
+"PO-Revision-Date: 2019-11-12 23:37+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -151,9 +151,9 @@ msgid ""
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
 "available, in particular for curves editing:"
 msgstr ""
-"El GIMP 2.10.12 és una versió amb que corregeix errors significatius, és d'esperar "
-"després d'una 2.10.10 amb tants canvis! Tot i així, també hi ha millores molt "
-"interessants, en particular per a l'edició de corbes:"
+"El GIMP 2.10.12 és una versió que corregeix errors significatius, és "
+"d'esperar després d'una 2.10.10 amb tants canvis! Tot i això, també hi ha "
+"millores molt interessants, en particular per a l'edició de corbes:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Improved curves interaction overall"
@@ -359,7 +359,7 @@ msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
-"Les capes de text ara poden representar textos verticals (amb vàries "
+"Les capes de text ara poden representar textos verticals (amb diverses "
 "orientacions de caràcters i direccions de línia)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
@@ -408,7 +408,7 @@ msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
-"GIMP 2.10.4 inclou la correcció de moltes errades així com vàries "
+"GIMP 2.10.4 inclou la correcció de moltes errades així com diverses "
 "optimitzacions. Les més notables són:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
@@ -821,7 +821,7 @@ msgstr "No utilitzis la memòria compartida entre el GIMP i els seus connectors"
 
 #: ../app/main.c:214
 msgid "Do not use special CPU acceleration functions"
-msgstr "No utilitzis cap funció especial d'acceleració de CPU "
+msgstr "No utilitzis cap funció especial d'acceleració de CPU"
 
 #: ../app/main.c:219
 msgid "Use an alternate sessionrc file"
@@ -3994,19 +3994,19 @@ msgstr "Capgira la imatge verticalment"
 #: ../app/actions/drawable-actions.c:106
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Gira 90º en sentit _horari"
+msgstr "Gira 90° en sentit _horari"
 
 #  please use the degree symbol in the translation
 #  please use the degree symbol in the translation
 #: ../app/actions/drawable-actions.c:107
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
-msgstr "Gira 90º cap a la dreta"
+msgstr "Gira 90° cap a la dreta"
 
 #: ../app/actions/drawable-actions.c:112
 msgctxt "drawable-action"
 msgid "Rotate _180°"
-msgstr "Gira _180º"
+msgstr "Gira _180°"
 
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
@@ -4016,14 +4016,14 @@ msgstr "Posa de cap per avall"
 #: ../app/actions/drawable-actions.c:118
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Gira 90º en sentit _antihorari"
+msgstr "Gira 90° en sentit _antihorari"
 
 #  please use the degree symbol in the translation
 #  please use the degree symbol in the translation
 #: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
-msgstr "Gira 90º cap a l'esquerra"
+msgstr "Gira 90° cap a l'esquerra"
 
 #: ../app/actions/drawable-commands.c:78
 msgid "White Balance operates only on RGB color layers."
@@ -6520,7 +6520,7 @@ msgstr "Capgira la imatge verticalment"
 #: ../app/actions/image-actions.c:286
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Gira 90º en sentit _horari"
+msgstr "Gira 90° en sentit _horari"
 
 #: ../app/actions/image-actions.c:287
 msgctxt "image-action"
@@ -6530,7 +6530,7 @@ msgstr "Gira la imatge 90 graus cap a la dreta"
 #: ../app/actions/image-actions.c:292
 msgctxt "image-action"
 msgid "Rotate _180°"
-msgstr "Gira _180º"
+msgstr "Gira _180°"
 
 #: ../app/actions/image-actions.c:293
 msgctxt "image-action"
@@ -6540,7 +6540,7 @@ msgstr "Capgira del tot la imatge"
 #: ../app/actions/image-actions.c:298
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Gira 90º en sentit _antihorari"
+msgstr "Gira 90° en sentit _antihorari"
 
 #: ../app/actions/image-actions.c:299
 msgctxt "image-action"
@@ -10178,7 +10178,7 @@ msgstr "Restableix el capgirament i l'angle de rotació a 0°"
 #: ../app/actions/view-actions.c:512
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
-msgstr "Gira 15º en sentit _horari"
+msgstr "Gira 15° en sentit _horari"
 
 #: ../app/actions/view-actions.c:513
 msgctxt "view-action"
@@ -10188,7 +10188,7 @@ msgstr "Gira la visualització 15 graus cap a la dreta"
 #: ../app/actions/view-actions.c:518
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Gira 90º en sentit _horari"
+msgstr "Gira 90° en sentit _horari"
 
 #: ../app/actions/view-actions.c:519
 msgctxt "view-action"
@@ -10198,7 +10198,7 @@ msgstr "Gira la visualització 90 graus cap a la dreta"
 #: ../app/actions/view-actions.c:524
 msgctxt "view-action"
 msgid "Rotate _180°"
-msgstr "Gira _180º"
+msgstr "Gira _180°"
 
 #: ../app/actions/view-actions.c:525
 msgctxt "view-action"
@@ -10208,7 +10208,7 @@ msgstr "Capgira del tot la visualització"
 #: ../app/actions/view-actions.c:530
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Gira 90º en sentit _antihorari"
+msgstr "Gira 90° en sentit _antihorari"
 
 #: ../app/actions/view-actions.c:531
 msgctxt "view-action"
@@ -10218,7 +10218,7 @@ msgstr "Gira la visualització 90 graus cap a l'esquerra"
 #: ../app/actions/view-actions.c:536
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
-msgstr "Gira 15º en sentit _antihorari"
+msgstr "Gira 15° en sentit _antihorari"
 
 #: ../app/actions/view-actions.c:537
 msgctxt "view-action"
@@ -10867,7 +10867,7 @@ msgid ""
 "enabled."
 msgstr ""
 "Especifica si s'ha de mantenir la separació del llenç quan està habilitat "
-"«Visualitza -> Mostra-ho tot»"
+"«Visualitza -> Mostra-ho tot»."
 
 #: ../app/config/gimprc-blurbs.h:41
 msgid "Specifies how the area around the image should be drawn."
@@ -10902,7 +10902,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:75
 msgid "Show full image content by default."
-msgstr "Mostra el contingut de la imatge completa per defecte"
+msgstr "Mostra el contingut de la imatge completa per defecte."
 
 #: ../app/config/gimprc-blurbs.h:78
 msgid ""
@@ -11042,10 +11042,8 @@ msgid "Export the image's color profile by default."
 msgstr "Exporta el perfil de color per defecte de la imatge."
 
 #: ../app/config/gimprc-blurbs.h:221
-#, fuzzy
-#| msgid "Export the image's color profile by default."
 msgid "Export the image's comment by default."
-msgstr "Exporta el perfil de color per defecte de la imatge."
+msgstr "Exporta per defecte el comentari de la imatge"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -11795,7 +11793,7 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"Defineix un màxim de memòria que es pot utilitzar per la imatge, per "
+"Defineix un màxim de memòria que es pot utilitzar per a la imatge, per "
 "mantenir operacions a la pila de desfer. Tot i aquests paràmetres, almenys "
 "es poden desfer tants nivells com s'hagin configurat."
 
@@ -13888,15 +13886,15 @@ msgstr "Simetria"
 
 #: ../app/core/gimpimage.c:2399
 msgid " (exported)"
-msgstr "(exportat)"
+msgstr " (exportat)"
 
 #: ../app/core/gimpimage.c:2403
 msgid " (overwritten)"
-msgstr "(sobreescrit)"
+msgstr " (sobreescrit)"
 
 #: ../app/core/gimpimage.c:2412
 msgid " (imported)"
-msgstr "(importat)"
+msgstr " (importat)"
 
 #: ../app/core/gimpimage.c:2586 ../app/core/gimpimage.c:2600
 #: ../app/core/gimpimage.c:2643
@@ -16243,7 +16241,7 @@ msgid ""
 "crashes (please report)."
 msgstr ""
 "Els controladors OpenCL i el suport són experimentals, esperem "
-"desacceleració i possibles fallades (per favor envieu informes)."
+"desacceleració i possibles errades (si us plau envieu informes)."
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1213
@@ -16471,10 +16469,8 @@ msgid "Export the i_mage's color profile by default"
 msgstr "Exporta per defecte el perfil de color de la i_matge"
 
 #: ../app/dialogs/preferences-dialog.c:1531
-#, fuzzy
-#| msgid "Export the image's color profile by default."
 msgid "Export the image's comment by default"
-msgstr "Exporta el perfil de color per defecte de la imatge."
+msgstr "Exporta per defecte el comentari de la imatge"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17570,7 +17566,7 @@ msgstr "Carpetes de mòduls"
 
 #: ../app/dialogs/preferences-dialog.c:3264
 msgid "Reset Module _Folders"
-msgstr "Reini_cia les carpetes del mòduls"
+msgstr "Reini_cia les carpetes dels mòduls"
 
 #: ../app/dialogs/preferences-dialog.c:3265
 msgid "Select Module Folders"
@@ -18739,7 +18735,7 @@ msgstr "No hi ha cap capa activa per desar"
 
 #: ../app/file/file-save.c:119
 msgid "Failed to get file information"
-msgstr "Error en obtindre informació"
+msgstr "Error en obtenir informació"
 
 #: ../app/file/file-save.c:292
 #, c-format
@@ -19610,7 +19606,7 @@ msgstr "Limita els valors de sortida finals."
 
 #: ../app/operations/gimplevelsconfig.c:855
 msgid "not a GIMP Levels file"
-msgstr "no és un fitxer de nivells del GIMP "
+msgstr "no és un fitxer de nivells del GIMP"
 
 #: ../app/operations/gimplevelsconfig.c:930
 msgid "parse error"
@@ -19770,7 +19766,7 @@ msgid_plural ""
 msgstr[0] ""
 "S'ha desat una imatge abans de la fallida. Voleu intentar recuperar-la?"
 msgstr[1] ""
-"S'han desats %d imatges abans de la fallida. Voleu intentar recuperar-les?"
+"S'han desat %d imatges abans de la fallida. Voleu intentar recuperar-les?"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
@@ -20527,7 +20523,7 @@ msgstr "L'objecte de vectors %d no té cap traça amb l'ID %d"
 #: ../app/pdb/gimppdb-utils.c:859
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
-msgstr "El nom del procediment '%s' no és un identificador canònic"
+msgstr "El nom del procediment «%s» no és un identificador canònic"
 
 #: ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:377 ../app/pdb/pdb-cmds.c:69
 #, c-format
@@ -21405,11 +21401,11 @@ msgstr "Tria el color d'opacitat més proper"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:198
 msgid "Rotate matrix 90° counter-clockwise"
-msgstr "Gira la matriu 90º en sentit antihorari"
+msgstr "Gira la matriu 90° en sentit antihorari"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:204
 msgid "Rotate matrix 90° clockwise"
-msgstr "Gira la matriu 90º en sentit horari"
+msgstr "Gira la matriu 90° en sentit horari"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:210
 msgid "Flip matrix horizontally"
@@ -21751,7 +21747,7 @@ msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
 msgstr ""
-"No es pot renderitzar el vostre text ja que possiblement és massa gran. Feu-"
+"No es pot renderitzar el vostre text perquè possiblement és massa gran. Feu-"
 "lo més curt o utilitzeu un tipus de lletra més petit."
 
 #: ../app/text/gimptextlayer-xcf.c:78
@@ -23826,7 +23822,7 @@ msgstr "Gira %-3.3g°"
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
-msgstr "Gira %-3.3gº (%g, %g)"
+msgstr "Gira %-3.3g° (%g, %g)"
 
 #: ../app/tools/gimprotatetool.c:280
 msgid "_Angle:"
@@ -24273,7 +24269,7 @@ msgstr "Mou"
 #: ../app/tools/gimptransformgridoptions.c:517
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
-msgstr "Restringeix el moviment a angles de 45º des del centre (%s)"
+msgstr "Restringeix el moviment a angles de 45° des del centre (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:519
 #, c-format
@@ -24283,7 +24279,7 @@ msgstr "Manté la relació d'aspecte quan s'ajusta la mida (%s)"
 #: ../app/tools/gimptransformgridoptions.c:521
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
-msgstr "Restringeix la rotació a increments de 15º (%s)"
+msgstr "Restringeix la rotació a increments de 15° (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:523
 #, c-format
@@ -26374,7 +26370,7 @@ msgstr "Color de l'extrem esquerre"
 
 #: ../app/widgets/gimpgradienteditor.c:587
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "Color de l'extrem esquerre del segment"
+msgstr "Color de l'extrem esquerre del segment del degradat"
 
 #: ../app/widgets/gimpgradienteditor.c:630
 msgid "Right Endpoint Color"
