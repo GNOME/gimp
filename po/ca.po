@@ -11043,7 +11043,7 @@ msgstr "Exporta el perfil de color per defecte de la imatge."
 
 #: ../app/config/gimprc-blurbs.h:221
 msgid "Export the image's comment by default."
-msgstr "Exporta per defecte el comentari de la imatge"
+msgstr "Exporta per defecte el comentari de la imatge."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -13477,7 +13477,7 @@ msgstr "Dinàmica de la pintura"
 #: ../app/core/gimpcontext.c:710 ../app/core/gimpcontext.c:711
 #: ../app/tools/gimpmybrushtool.c:73
 msgid "MyPaint Brush"
-msgstr "Pinzells MyPaint"
+msgstr "Pinzell MyPaint"
 
 #: ../app/core/gimpcontext.c:717 ../app/core/gimpcontext.c:718
 msgid "Pattern"
@@ -14562,7 +14562,7 @@ msgstr "Longitud recta de tancament (en píxels) per tancar la línia artística
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
-msgstr "El fitxer dels pinzells MyPaint és excessivament gran, s'està ometent."
+msgstr "El fitxer del pinzell MyPaint és excessivament gran, s'està ometent."
 
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
@@ -23395,7 +23395,7 @@ msgstr "Eina de Pinzells MyPaint: utilitza els pinzells MyPaint al GIMP"
 
 #: ../app/tools/gimpmybrushtool.c:75
 msgid "M_yPaint Brush"
-msgstr "_Pinzells MyPaint"
+msgstr "_Pinzell MyPaint"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:78
 #: ../app/tools/gimpnpointdeformationoptions.c:79
