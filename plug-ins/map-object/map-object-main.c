@@ -213,6 +213,7 @@ run (const gchar      *name,
   gint               i;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
