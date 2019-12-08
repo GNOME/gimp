@@ -67,6 +67,7 @@ m4_define([gtkdoc_required_version], [1.0])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([intltool_required_version], [0.40.1])
 m4_define([introspection_required_version], [1.32.0])
+m4_define([json_glib_required_version], [1.2.6])
 m4_define([lcms_required_version], [2.8])
 m4_define([libgudev_required_version], [167])
 m4_define([libheif_required_version], [1.3.2])
@@ -2279,6 +2280,13 @@ AM_CONDITIONAL(WITH_PDBGEN, test "x$with_pdbgen" = xyes)
 #################################
 
 GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
+
+#####################
+# Check for json-glib
+#####################
+
+PKG_CHECK_MODULES(JSON_GLIB, json-glib-1.0 >= json_glib_required_version,,
+                  [add_deps_error([json-glib-1.0 >= json_glib_required_version])])
 
 #######################################
 # Check for python runtime dependencies

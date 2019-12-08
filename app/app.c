@@ -73,6 +73,7 @@
 #include "gimp-debug.h"
 
 #include "gimp-intl.h"
+#include "gimp-update.h"
 
 
 /*  local prototypes  */
@@ -196,6 +197,7 @@ app_run (const gchar         *full_prog_name,
   GimpLangRc         *temprc;
   gchar              *language   = NULL;
   GError             *font_error = NULL;
+  gboolean            save_gimprc_at_exit = FALSE;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -285,6 +287,12 @@ app_run (const gchar         *full_prog_name,
   g_object_unref (gimpdir);
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
+
+  /* We usually only save gimprc when Preferences are edited.
+   * Thus we have to add a special flag when we make an update
+   * check so that the timestamp is saved.
+   */
+  save_gimprc_at_exit = gimp_update_check (gimp->config);
 
   /* Initialize the error handling after creating/migrating the config
    * directory because it will create some folders for backup and crash
@@ -435,6 +443,9 @@ app_run (const gchar         *full_prog_name,
 
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
+
+  if (save_gimprc_at_exit)
+    gimp_rc_save (GIMP_RC (gimp->config));
 
   g_main_loop_unref (loop);
 
