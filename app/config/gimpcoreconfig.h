@@ -102,6 +102,10 @@ struct _GimpCoreConfig
   gboolean                export_metadata_xmp;
   gboolean                export_metadata_iptc;
   GimpDebugPolicy         debug_policy;
+
+  gboolean                check_updates;
+  gint64                  check_update_timestamp;
+  gchar                  *last_known_release;
 };
 
 struct _GimpCoreConfigClass

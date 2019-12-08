@@ -127,6 +127,9 @@ enum
   PROP_EXPORT_METADATA_XMP,
   PROP_EXPORT_METADATA_IPTC,
   PROP_DEBUG_POLICY,
+  PROP_CHECK_UPDATES,
+  PROP_CHECK_UPDATE_TIMESTAMP,
+  PROP_LAST_KNOWN_RELEASE,
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -675,6 +678,27 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_CONFIG_PARAM_AGGREGATE);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CHECK_UPDATES,
+                            "check-updates",
+                            "Check for updates",
+                            CHECK_UPDATES_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT64 (object_class, PROP_CHECK_UPDATE_TIMESTAMP,
+                          "check-update-timestamp",
+                          "timestamp of the last update check",
+                          CHECK_UPDATE_TIMESTAMP_BLURB,
+                          0, G_MAXINT64, 0,
+                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LAST_KNOWN_RELEASE,
+                           "last-known-release",
+                           "last known release of GIMP",
+                           LAST_KNOWN_RELEASE_BLURB,
+                           NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
                             "save-document-history",
                             "Save document history",
@@ -840,6 +864,8 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->default_font);
   g_free (core_config->plug_in_rc_path);
   g_free (core_config->import_raw_plug_in);
+
+  g_clear_pointer (&core_config->last_known_release, g_free);
 
   g_clear_object (&core_config->default_image);
   g_clear_object (&core_config->default_grid);
@@ -1043,6 +1069,15 @@ gimp_core_config_set_property (GObject      *object,
       if (g_value_get_object (value))
         gimp_config_sync (g_value_get_object (value),
                           G_OBJECT (core_config->color_management), 0);
+      break;
+    case PROP_CHECK_UPDATES:
+      core_config->check_updates = g_value_get_boolean (value);
+      break;
+    case PROP_CHECK_UPDATE_TIMESTAMP:
+      core_config->check_update_timestamp = g_value_get_int64 (value);
+      break;
+    case PROP_LAST_KNOWN_RELEASE:
+      core_config->last_known_release = g_value_dup_string (value);
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       core_config->save_document_history = g_value_get_boolean (value);
@@ -1252,6 +1287,15 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_COLOR_MANAGEMENT:
       g_value_set_object (value, core_config->color_management);
+      break;
+    case PROP_CHECK_UPDATES:
+      g_value_set_boolean (value, core_config->check_updates);
+      break;
+    case PROP_CHECK_UPDATE_TIMESTAMP:
+      g_value_set_int64 (value, core_config->check_update_timestamp);
+      break;
+    case PROP_LAST_KNOWN_RELEASE:
+      g_value_set_string (value, core_config->last_known_release);
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       g_value_set_boolean (value, core_config->save_document_history);

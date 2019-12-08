@@ -73,6 +73,8 @@ libapp_sources = \
 	gimp-log.c		\
 	gimp-log.h		\
 	gimp-priorities.h	\
+	gimp-update.c		\
+	gimp-update.h		\
 	gimp-version.c		\
 	gimp-version.h
 

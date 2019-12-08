@@ -40,6 +40,12 @@ _("Specifies whether to keep the canvas padding when \"View -> Show All\" " \
 #define CANVAS_PADDING_MODE_BLURB \
 _("Specifies how the area around the image should be drawn.")
 
+#define CHECK_UPDATES_BLURB \
+_("Check for availability of GIMP updates through background internet queries.")
+
+#define CHECK_UPDATE_TIMESTAMP_BLURB \
+_("Timestamp of the last update check.")
+
 #define COLOR_MANAGEMENT_BLURB \
 "Defines the color management behavior."
 
@@ -254,6 +260,9 @@ _("Sets the level of interpolation used for scaling and other " \
 
 #define LANGUAGE_BLURB \
 _("Specifies the language to use for the user interface.")
+
+#define LAST_KNOWN_RELEASE_BLURB \
+_("The last known release version of GIMP as queried from official website.")
 
 #define LAST_OPENED_SIZE_BLURB \
 _("How many recently opened image filenames to keep on the File menu.")
