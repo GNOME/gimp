@@ -312,7 +312,7 @@ save_image (GFile   *file,
       cmap = gimp_image_get_colormap (image_ID, &colors);
 
       if (! print (output, error,
-                   "static char header_data_cmap[256][3] = {") ||
+                   "static unsigned char header_data_cmap[256][3] = {") ||
           ! print (output, error,
                    "\n\t{%3d,%3d,%3d}",
                    (gint) cmap[0], (gint) cmap[1], (gint) cmap[2]))
@@ -346,7 +346,7 @@ save_image (GFile   *file,
       g_free (cmap);
 
       /* save image */
-      if (! print (output, error, "static char header_data[] = {\n\t"))
+      if (! print (output, error, "static unsigned char header_data[] = {\n\t"))
         goto fail;
 
       data = g_new (guchar, width * 1);
