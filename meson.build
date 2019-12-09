@@ -353,6 +353,7 @@ gtk3_minver       = '3.16.10'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
 harfbuzz_minver   = '0.9.19'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
+json_glib         = dependency('json-glib-1.0',      version: '>=1.2.6')
 lcms_minver       = '2.8'
 lcms              = dependency('lcms2',              version: '>='+lcms_minver)
 libmypaint_minver = '1.3.0'

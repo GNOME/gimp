@@ -52,6 +52,7 @@ libapp_sources = [
   'errors.c',
   'gimp-debug.c',
   'gimp-log.c',
+  'gimp-update.c',
   'gimp-version.c',
   'language.c',
   'sanity.c',
