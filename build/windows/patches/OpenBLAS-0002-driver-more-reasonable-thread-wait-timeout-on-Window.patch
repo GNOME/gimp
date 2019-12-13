@@ -1,0 +1,31 @@
+From 13226e310195c7dd5e051c791c4f0839f2f606c4 Mon Sep 17 00:00:00 2001
+From: Jehan <jehan@girinstud.io>
+Date: Wed, 11 Dec 2019 17:51:42 +0100
+Subject: [PATCH] driver: more reasonable thread wait timeout on Windows.
+
+It used to be 5ms, which might not be long enough in some cases for the
+thread to exit well, but then when set to 5000 (5s), it would slow down
+any program depending on OpenBlas.
+
+Let's just set it to 50ms, which is at least 10 times longer than
+originally, but still reasonable in case of failed thread termination.
+---
+ driver/others/blas_server_win32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/driver/others/blas_server_win32.c b/driver/others/blas_server_win32.c
+index e27725ba..5ecc4428 100644
+--- a/driver/others/blas_server_win32.c
++++ b/driver/others/blas_server_win32.c
+@@ -462,7 +462,7 @@ int BLASFUNC(blas_thread_shutdown)(void){
+ 
+     for(i = 0; i < blas_num_threads - 1; i++){
+       // Could also just use WaitForMultipleObjects
+-      DWORD wait_thread_value = WaitForSingleObject(blas_threads[i], 5000);
++      DWORD wait_thread_value = WaitForSingleObject(blas_threads[i], 50);
+ 
+ #ifndef OS_WINDOWSSTORE
+       // TerminateThread is only available with WINAPI_DESKTOP and WINAPI_SYSTEM not WINAPI_APP in UWP
+-- 
+2.23.0
+
