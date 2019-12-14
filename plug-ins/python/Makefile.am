@@ -3,6 +3,9 @@
 SUBDIRS = \
 	python-console
 
+colorxhtmldir = $(gimpplugindir)/plug-ins/colorxhtml
+colorxhtml_SCRIPTS = colorxhtml.py
+
 file_openrasterdir = $(gimpplugindir)/plug-ins/file-openraster
 file_openraster_SCRIPTS = file-openraster.py
 
@@ -25,7 +28,6 @@ spyro_plusdir = $(gimpplugindir)/plug-ins/spyro-plus
 spyro_plus_SCRIPTS = spyro-plus.py
 
 # TODO: to be ported:
-##	colorxhtml.py
 ##	histogram-export.py
 ##	palette-sort.py
 ##	python-eval.py
@@ -39,6 +41,7 @@ if GIMP_UNSTABLE
 endif
 
 EXTRA_DIST = \
+	colorxhtml.py			\
 	file-openraster.py		\
 	foggify.py			\
 	gradients-save-as-css.py	\

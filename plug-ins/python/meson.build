@@ -1,6 +1,7 @@
 if have_python
 
 plugins = [
+  { 'name': 'colorxhtml' },
   { 'name': 'file-openraster' },
   { 'name': 'foggify' },
   { 'name': 'gradients-save-as-css' },
@@ -9,7 +10,6 @@ plugins = [
   { 'name': 'py-slice' },
   { 'name': 'spyro-plus' },
 
-  # { 'name': 'colorxhtml' },
   # { 'name': 'histogram-export' },
   # { 'name': 'palette-sort' },
   # { 'name': 'python-eval' },
