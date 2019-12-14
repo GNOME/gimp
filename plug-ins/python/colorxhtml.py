@@ -320,9 +320,7 @@ class ColorXhtml(Gimp.PlugIn):
                                       "(c) GPL V3.0 or later",
                                       "2003")
 
-            # Not sure there is a good reason to set the file extension as xhtml
-            # rather than html. Is it possible to have two plugins use the same extensions?
-            procedure.set_extensions ("xhtml");
+            procedure.set_extensions ("html,xhtml");
 
             procedure.add_argument_from_property(self, "source-file")
             procedure.add_argument_from_property(self, "characters")
