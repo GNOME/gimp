@@ -27,12 +27,14 @@ palette_to_gradient_SCRIPTS = palette-to-gradient.py
 py_slicedir = $(gimpplugindir)/plug-ins/py-slice
 py_slice_SCRIPTS = py-slice.py
 
+python_evaldir = $(gimpplugindir)/plug-ins/python-eval
+python_eval_SCRIPTS = python-eval.py
+
 spyro_plusdir = $(gimpplugindir)/plug-ins/spyro-plus
 spyro_plus_SCRIPTS = spyro-plus.py
 
 # TODO: to be ported:
 ##	histogram-export.py
-##	python-eval.py
 
 if GIMP_UNSTABLE
 benchmark_foreground_extractdir = $(gimpplugindir)/plug-ins/benchmark-foreground-extract
@@ -52,6 +54,7 @@ EXTRA_DIST = \
 	palette-sort.py		\
 	palette-to-gradient.py		\
 	py-slice.py			\
+	python-eval.py			\
 	spyro-plus.py
 
 if GIMP_UNSTABLE

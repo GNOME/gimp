@@ -11,10 +11,10 @@ plugins = [
   { 'name': 'palette-sort' },
   { 'name': 'palette-to-gradient' },
   { 'name': 'py-slice' },
+  { 'name': 'python-eval' },
   { 'name': 'spyro-plus' },
 
   # { 'name': 'histogram-export' },
-  # { 'name': 'python-eval' },
 ]
 
 if not stable
