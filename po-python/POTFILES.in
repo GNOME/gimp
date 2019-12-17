@@ -6,11 +6,11 @@
 plug-ins/pygimp/gimpfu.py
 plug-ins/pygimp/gimpui.py
 
-plug-ins/pygimp/plug-ins/colorxhtml.py
 plug-ins/pygimp/plug-ins/histogram-export.py
 plug-ins/pygimp/plug-ins/palette-sort.py
 plug-ins/pygimp/plug-ins/shadow_bevel.py
 
+plug-ins/python/colorxhtml.py
 plug-ins/python/foggify.py
 plug-ins/python/gradients-save-as-css.py
 plug-ins/python/palette-offset.py
