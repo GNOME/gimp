@@ -4,7 +4,7 @@ install_data([
     'polys',
     'ring',
     'ring+star',
-    'simily',
+    'smiley',
     'spirals_and_stars',
     'sprial',
     'star2',
