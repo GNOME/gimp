@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-03 02:04+0000\n"
+"POT-Creation-Date: 2019-11-04 11:35+0000\n"
 "PO-Revision-Date: 2019-11-03 23:31+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -19002,23 +19002,23 @@ msgstr "高"
 msgid "_Sample Merged"
 msgstr "見えている色の情報を表示(_S)"
 
-#: ../app/display/gimpdisplayshell.c:568
+#: ../app/display/gimpdisplayshell.c:575
 msgid "Access the image menu"
 msgstr "画像メニューにアクセス"
 
-#: ../app/display/gimpdisplayshell.c:686
+#: ../app/display/gimpdisplayshell.c:693
 msgid "Zoom image when window size changes"
 msgstr "ウィンドウサイズ変更時に画像をズーム"
 
-#: ../app/display/gimpdisplayshell.c:715
+#: ../app/display/gimpdisplayshell.c:722
 msgid "Toggle Quick Mask"
 msgstr "クイックマスクの切り替え"
 
-#: ../app/display/gimpdisplayshell.c:738
+#: ../app/display/gimpdisplayshell.c:745
 msgid "Navigate the image display"
 msgstr "この画像のナビゲーションプレビューを表示します"
 
-#: ../app/display/gimpdisplayshell.c:797 ../app/display/gimpdisplayshell.c:1452
+#: ../app/display/gimpdisplayshell.c:804 ../app/display/gimpdisplayshell.c:1465
 #: ../app/widgets/gimptoolbox.c:247
 msgid "Drop image files here to open them"
 msgstr ""
@@ -19104,7 +19104,7 @@ msgid "Drop New Path"
 msgstr "新しいパスをドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:364
-#: ../app/tools/gimpbucketfilltool.c:545 ../app/tools/gimpcagetool.c:227
+#: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpfiltertool.c:287 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpselectiontool.c:530
 #, c-format
@@ -19112,7 +19112,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "レイヤーグループのピクセルは変更できません。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:372
-#: ../app/tools/gimpbucketfilltool.c:560 ../app/tools/gimpcagetool.c:234
+#: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
 #: ../app/tools/gimpfiltertool.c:294 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:295
@@ -23188,27 +23188,27 @@ msgstr "選択範囲を反転"
 msgid "(computing...)"
 msgstr ""
 
-#: ../app/tools/gimpbucketfilltool.c:165
+#: ../app/tools/gimpbucketfilltool.c:167
 msgid "Bucket Fill"
 msgstr "塗りつぶし"
 
-#: ../app/tools/gimpbucketfilltool.c:166
+#: ../app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "[塗りつぶし]\n"
 "対象の範囲を色やパターンで塗りつぶします"
 
-#: ../app/tools/gimpbucketfilltool.c:167
+#: ../app/tools/gimpbucketfilltool.c:169
 msgid "_Bucket Fill"
 msgstr "塗りつぶし(_B)"
 
-#: ../app/tools/gimpbucketfilltool.c:335
+#: ../app/tools/gimpbucketfilltool.c:344
 #, fuzzy
 #| msgid "Bucket Fill"
 msgid "Bucket fill"
 msgstr "塗りつぶし"
 
-#: ../app/tools/gimpbucketfilltool.c:553 ../app/tools/gimpcagetool.c:244
+#: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
 #: ../app/tools/gimpfiltertool.c:304
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:323
@@ -23216,18 +23216,18 @@ msgstr "塗りつぶし"
 msgid "The active layer is not visible."
 msgstr "アクティブレイヤーは非表示になっています。"
 
-#: ../app/tools/gimpbucketfilltool.c:569
+#: ../app/tools/gimpbucketfilltool.c:578
 #, fuzzy
 #| msgid "No filter selected"
 msgid "No valid line art source selected."
 msgstr "フィルターが選択されていません"
 
-#: ../app/tools/gimpbucketfilltool.c:752 ../app/tools/gimpbucketfilltool.c:885
+#: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:457
 msgid "Click in any image to pick the background color"
 msgstr "クリックされたピクセルの色を背景色に設定します"
 
-#: ../app/tools/gimpbucketfilltool.c:759 ../app/tools/gimpbucketfilltool.c:894
+#: ../app/tools/gimpbucketfilltool.c:768 ../app/tools/gimpbucketfilltool.c:903
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:451
 msgid "Click in any image to pick the foreground color"
 msgstr "クリックされたピクセルの色を描画色に設定します"
