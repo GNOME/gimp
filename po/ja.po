@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-03 02:04+0000\n"
-"PO-Revision-Date: 2019-11-03 23:31+0900\n"
+"POT-Creation-Date: 2019-11-04 11:35+0000\n"
+"PO-Revision-Date: 2019-12-19 01:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -25,7 +25,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.2.4\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -3816,9 +3815,6 @@ msgid "Search commands by keyword, and run them"
 msgstr "コマンドを検索して実行します"
 
 #: ../app/actions/dialogs-actions.c:357
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "Tool_box"
 msgid "Tool_box"
 msgstr "ツールボックス(_B)"
 
@@ -3827,10 +3823,8 @@ msgid "Raise the toolbox"
 msgstr "ツールボックスを前面に表示します"
 
 #: ../app/actions/dialogs-actions.c:362
-#, fuzzy
-#| msgid "New Toolbox"
 msgid "New Tool_box"
-msgstr "新しいツールボックス"
+msgstr "新しいツールボックス(_B)"
 
 #: ../app/actions/dialogs-actions.c:363
 msgid "Create a new toolbox"
@@ -4525,12 +4519,9 @@ msgid "Paste the content of the clipboard"
 msgstr "クリップボードの内容を貼り付けます"
 
 #: ../app/actions/edit-actions.c:175
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste In Place"
 msgctxt "edit-action"
 msgid "Paste In P_lace"
-msgstr "同じ位置に貼り付け"
+msgstr "同じ位置に貼り付け(_L)"
 
 #: ../app/actions/edit-actions.c:177
 msgctxt "edit-action"
@@ -4548,12 +4539,9 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "クリップボードの内容を選択範囲の中に貼り付けます"
 
 #: ../app/actions/edit-actions.c:189
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste Into Selection In Place"
 msgctxt "edit-action"
 msgid "Paste Int_o Selection In Place"
-msgstr "選択範囲内の同じ位置に貼り付け"
+msgstr "選択範囲内の同じ位置に貼り付け(_O)"
 
 #: ../app/actions/edit-actions.c:191
 msgctxt "edit-action"
@@ -4911,12 +4899,9 @@ msgstr ""
 "戻します"
 
 #: ../app/actions/file-actions.c:107
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "Close all"
 msgctxt "file-action"
 msgid "C_lose All"
-msgstr "すべて閉じる"
+msgstr "すべて閉じる(_L)"
 
 #: ../app/actions/file-actions.c:108
 msgctxt "file-action"
@@ -5247,12 +5232,9 @@ msgid "_Color Enhance"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:115
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Linear Invert"
 msgctxt "filters-action"
 msgid "L_inear Invert"
-msgstr "階調の反転 (リニア)(_L)"
+msgstr "階調の反転 (リニア)(_I)"
 
 # 直訳は「反転(_I)」だが、他にも「反転」が使われている箇所があるので機能を明確にするために「階調を」を補足した。(GIMP2.2 改良版日本語ローカライズより)
 #: ../app/actions/filters-actions.c:120
@@ -10157,12 +10139,9 @@ msgstr ""
 "ウがこの画像のみのときは、画像は閉じられますがウィンドウは閉じられません)"
 
 #: ../app/actions/view-actions.c:101
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Center Image in Window"
 msgctxt "view-action"
 msgid "C_enter Image in Window"
-msgstr "画像を中央に表示"
+msgstr "画像を中央に表示(_E)"
 
 #: ../app/actions/view-actions.c:102
 msgctxt "view-action"
@@ -10286,18 +10265,14 @@ msgid "Connect to another display"
 msgstr "別のディスプレイに接続します"
 
 #: ../app/actions/view-actions.c:178
-#, fuzzy
-#| msgid "Show All Files"
 msgctxt "view-action"
 msgid "Show _All"
-msgstr "すべてのファイルを表示"
+msgstr "すべて表示(_A)"
 
 #: ../app/actions/view-actions.c:179
-#, fuzzy
-#| msgid "Show image size"
 msgctxt "view-action"
 msgid "Show full image content"
-msgstr "キャンバスサイズを表示"
+msgstr ""
 
 # Photoshop の表記を倣う
 #: ../app/actions/view-actions.c:185
@@ -10387,20 +10362,14 @@ msgid "Draw a border around the active layer"
 msgstr "アクティブなレイヤーの境界線を表示します"
 
 #: ../app/actions/view-actions.c:242
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Show _Layer Boundary"
 msgctxt "view-action"
 msgid "Show Canvas Bounda_ry"
-msgstr "レイヤー境界線の表示(_L)"
+msgstr "キャンバス境界線の表示(_R)"
 
 #: ../app/actions/view-actions.c:243
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Draw a border around the active layer"
 msgctxt "view-action"
 msgid "Draw a border around the canvas"
-msgstr "アクティブなレイヤーの境界線を表示します"
+msgstr "キャンバスの境界線を表示します"
 
 #: ../app/actions/view-actions.c:249
 msgctxt "view-action"
@@ -10423,12 +10392,9 @@ msgid "Display the image's grid"
 msgstr "グリッドを表示します"
 
 #: ../app/actions/view-actions.c:263
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Show Sample Points"
 msgctxt "view-action"
 msgid "Sh_ow Sample Points"
-msgstr "サンプルポイントの表示"
+msgstr "サンプルポイントの表示(_O)"
 
 #: ../app/actions/view-actions.c:264
 msgctxt "view-action"
@@ -10436,11 +10402,9 @@ msgid "Display the image's color sample points"
 msgstr "サンプルポイントを表示します"
 
 #: ../app/actions/view-actions.c:270
-#, fuzzy
-#| msgid "Snap to Guides"
 msgctxt "view-action"
 msgid "Snap to Gu_ides"
-msgstr "ガイドにスナップ"
+msgstr "ガイドにスナップ(_I)"
 
 #: ../app/actions/view-actions.c:271
 msgctxt "view-action"
@@ -11119,12 +11083,9 @@ msgid "_Tabs Position"
 msgstr "タブの位置(_T)"
 
 #: ../app/actions/windows-actions.c:127
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "Hide Docks"
 msgctxt "windows-action"
 msgid "_Hide Docks"
-msgstr "ドックを隠す"
+msgstr "ドックを隠す(_H)"
 
 #: ../app/actions/windows-actions.c:128
 msgctxt "windows-action"
@@ -11135,12 +11096,9 @@ msgstr ""
 "ます。"
 
 #: ../app/actions/windows-actions.c:134
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "Show Tabs"
 msgctxt "windows-action"
 msgid "_Show Tabs"
-msgstr "タブを表示"
+msgstr "タブを表示(_S)"
 
 #: ../app/actions/windows-actions.c:135
 msgctxt "windows-action"
@@ -11148,12 +11106,9 @@ msgid "When enabled, the image tabs bar is shown."
 msgstr "この設定がオンのときは、画像タブバーが表示されます。"
 
 #: ../app/actions/windows-actions.c:141
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "Single-Window Mode"
 msgctxt "windows-action"
 msgid "Single-Window _Mode"
-msgstr "シングルウィンドウモード"
+msgstr "シングルウィンドウモード(_M)"
 
 #: ../app/actions/windows-actions.c:142
 msgctxt "windows-action"
@@ -11252,62 +11207,44 @@ msgid "Crosshair only"
 msgstr "十字のみ"
 
 #: ../app/config/config-enums.c:122
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "_New Image"
 msgctxt "export-file-type"
 msgid "PNG Image"
-msgstr "画像(_N)"
+msgstr "PNG"
 
 #: ../app/config/config-enums.c:123
-#, fuzzy
-#| msgid "Image"
 msgctxt "export-file-type"
 msgid "JPEG Image"
-msgstr "画像"
+msgstr "JPEG"
 
 #: ../app/config/config-enums.c:124
-#, fuzzy
-#| msgid "Open Image"
 msgctxt "export-file-type"
 msgid "OpenRaster Image"
-msgstr "画像ファイルを開く"
+msgstr "OpenRaster"
 
 #: ../app/config/config-enums.c:125
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Crop Image"
 msgctxt "export-file-type"
 msgid "Photoshop Image"
-msgstr "画像の切り抜き"
+msgstr "Photoshop"
 
 #: ../app/config/config-enums.c:126
-#, fuzzy
-#| msgid "Clear Document History"
 msgctxt "export-file-type"
 msgid "Portable Document Format"
-msgstr "ファイル履歴の消去"
+msgstr "PDF"
 
 #: ../app/config/config-enums.c:127
-#, fuzzy
-#| msgid "Image"
 msgctxt "export-file-type"
 msgid "TIFF Image"
-msgstr "画像"
+msgstr "TIFF"
 
 #: ../app/config/config-enums.c:128
-#, fuzzy
-#| msgid "Window Management"
 msgctxt "export-file-type"
 msgid "Windows BMP Image"
-msgstr "ウィンドウの設定"
+msgstr "Windows BMP"
 
 #: ../app/config/config-enums.c:129
-#, fuzzy
-#| msgid "Open Image"
 msgctxt "export-file-type"
 msgid "WebP Image"
-msgstr "画像ファイルを開く"
+msgstr "WebP"
 
 #: ../app/config/config-enums.c:157
 msgctxt "handedness"
@@ -17067,10 +17004,8 @@ msgid "Maximum _new image size:"
 msgstr "新しい画像の最大サイズ(_N):"
 
 #: ../app/dialogs/preferences-dialog.c:1194
-#, fuzzy
-#| msgid "Image Properties"
 msgid "S_wap compression:"
-msgstr "画像の情報"
+msgstr "スワップの圧縮(_W):"
 
 #: ../app/dialogs/preferences-dialog.c:1199
 msgid "Number of _threads to use:"
@@ -17082,10 +17017,8 @@ msgid "Hardware Acceleration"
 msgstr "ハードウェアアクセラレーション"
 
 #: ../app/dialogs/preferences-dialog.c:1208
-#, fuzzy
-#| msgid "Use OpenCL"
 msgid "Use O_penCL"
-msgstr "OpenCL を使用する"
+msgstr "OpenCL を使用する(_P)"
 
 #: ../app/dialogs/preferences-dialog.c:1212
 msgid ""
@@ -17107,10 +17040,8 @@ msgid "Maximum _filesize for thumbnailing:"
 msgstr "サムネイルの最大ファイルサイズ(_F):"
 
 #: ../app/dialogs/preferences-dialog.c:1234
-#, fuzzy
-#| msgid "Keep record of used files in the Recent Documents list"
 msgid "_Keep record of used files in the Recent Documents list"
-msgstr "システムの [最近開いたファイル] にも記録・反映する"
+msgstr "システムの [最近開いたファイル] にも記録・反映する(_K)"
 
 #. TODO: icon needed.
 #: ../app/dialogs/preferences-dialog.c:1251
@@ -17152,10 +17083,8 @@ msgid "Color Management"
 msgstr "カラーマネジメント"
 
 #: ../app/dialogs/preferences-dialog.c:1313
-#, fuzzy
-#| msgid "Reset Color Management"
 msgid "R_eset Color Management"
-msgstr "カラーマネジメントをリセットする"
+msgstr "カラーマネジメントをリセットする(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1336
 msgid "Image display _mode:"
@@ -17270,10 +17199,8 @@ msgid "Policies"
 msgstr "ポリシー"
 
 #: ../app/dialogs/preferences-dialog.c:1477
-#, fuzzy
-#| msgid "File Open behaviour:"
 msgid "_File Open behaviour:"
-msgstr "ファイルを開く時の挙動:"
+msgstr "ファイルを開く時の挙動(_F):"
 
 #. Filter Dialogs
 #: ../app/dialogs/preferences-dialog.c:1481
@@ -17282,10 +17209,8 @@ msgid "Filter Dialogs"
 msgstr "フィルターダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:1485
-#, fuzzy
-#| msgid "Show advanced color options"
 msgid "Show _advanced color options"
-msgstr "高度な色オプションを表示する"
+msgstr "高度な色オプションを表示する(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:1499
 #: ../app/dialogs/preferences-dialog.c:1500
@@ -17302,22 +17227,16 @@ msgid "Promote imported images to _floating point precision"
 msgstr "インポートした画像の精度を浮動小数点数にする(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:1523
-#, fuzzy
-#| msgid "Dither images when promoting to floating point"
 msgid "_Dither images when promoting to floating point"
-msgstr "浮動小数点数にするときにディザリングを行う"
+msgstr "浮動小数点数にするときにディザリングを行う(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:1528
-#, fuzzy
-#| msgid "Add an alpha channel to imported images"
 msgid "_Add an alpha channel to imported images"
-msgstr "インポートした画像にアルファチャンネルを追加する"
+msgstr "インポートした画像にアルファチャンネルを追加する(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:1533
-#, fuzzy
-#| msgid "Color profile policy:"
 msgid "Color _profile policy:"
-msgstr "カラープロファイルポリシー:"
+msgstr "カラープロファイルポリシー(_P):"
 
 #. Export Policies
 #: ../app/dialogs/preferences-dialog.c:1537
@@ -17325,10 +17244,8 @@ msgid "Export Policies"
 msgstr "エクスポートポリシー"
 
 #: ../app/dialogs/preferences-dialog.c:1541
-#, fuzzy
-#| msgid "Export the image's color profile by default"
 msgid "Export the i_mage's color profile by default"
-msgstr "画像のカラープロファイルをエクスポートする"
+msgstr "デフォルトで画像のカラープロファイルをエクスポートする(_M)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17336,10 +17253,8 @@ msgstr "画像のカラープロファイルをエクスポートする"
 #. * plug-ins handle Exif by default.
 #.
 #: ../app/dialogs/preferences-dialog.c:1549
-#, fuzzy
-#| msgid "Export Exif metadata by default when available"
 msgid "Export _Exif metadata by default when available"
-msgstr "Exif メタデータをエクスポートする (可能な場合)"
+msgstr "Exif メタデータをエクスポートする (可能な場合)(_E)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17347,10 +17262,8 @@ msgstr "Exif メタデータをエクスポートする (可能な場合)"
 #. * plug-ins handle XMP by default.
 #.
 #: ../app/dialogs/preferences-dialog.c:1557
-#, fuzzy
-#| msgid "Export XMP metadata by default when available"
 msgid "Export _XMP metadata by default when available"
-msgstr "XMP メタデータをエクスポートする (可能な場合)"
+msgstr "XMP メタデータをエクスポートする (可能な場合)(_X)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17358,10 +17271,8 @@ msgstr "XMP メタデータをエクスポートする (可能な場合)"
 #. * plug-ins handle IPTC by default.
 #.
 #: ../app/dialogs/preferences-dialog.c:1565
-#, fuzzy
-#| msgid "Export IPTC metadata by default when available"
 msgid "Export _IPTC metadata by default when available"
-msgstr "IPTC メタデータをエクスポートする (可能な場合)"
+msgstr "IPTC メタデータをエクスポートする (可能な場合)(_I)"
 
 #: ../app/dialogs/preferences-dialog.c:1568
 msgid "Metadata can contain sensitive information."
@@ -17369,16 +17280,12 @@ msgstr "メタデータには機密情報が含まれる可能性があります
 
 #. Export File Type
 #: ../app/dialogs/preferences-dialog.c:1572
-#, fuzzy
-#| msgid "File Type"
 msgid "Export File Type"
-msgstr "ファイル形式"
+msgstr "エクスポートするファイル形式"
 
 #: ../app/dialogs/preferences-dialog.c:1576
-#, fuzzy
-#| msgid "File Type"
 msgid "Default export file t_ype:"
-msgstr "ファイル形式"
+msgstr "エクスポートするデフォルトのファイル形式(_Y):"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1580
@@ -17434,11 +17341,8 @@ msgid "General"
 msgstr "全般"
 
 #: ../app/dialogs/preferences-dialog.c:1662
-#, fuzzy
-#| msgctxt "item-set"
-#| msgid "All visible layers"
 msgid "Allow _editing on non-visible layers"
-msgstr "すべての可視レイヤー"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1666
 msgid "_Save tool options on exit"
@@ -17479,10 +17383,8 @@ msgid "Move Tool"
 msgstr "移動ツール"
 
 #: ../app/dialogs/preferences-dialog.c:1720
-#, fuzzy
-#| msgid "Set layer or path as active"
 msgid "Set _layer or path as active"
-msgstr "つかんだレイヤーやパスをアクティブにする"
+msgstr "つかんだレイヤーやパスをアクティブにする(_L)"
 
 #: ../app/dialogs/preferences-dialog.c:1732
 msgid "Default New Image"
@@ -17636,10 +17538,8 @@ msgid "Dialog Defaults"
 msgstr "ダイアログのデフォルト設定"
 
 #: ../app/dialogs/preferences-dialog.c:2170
-#, fuzzy
-#| msgid "Reset Dialog Defaults"
 msgid "Reset Dialog _Defaults"
-msgstr "ダイアログの設定を既定値に戻す"
+msgstr "ダイアログの設定を既定値に戻す(_D)"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:2178
@@ -17943,10 +17843,8 @@ msgid "Use a locally installed copy"
 msgstr "インストール版"
 
 #: ../app/dialogs/preferences-dialog.c:2506
-#, fuzzy
-#| msgid "User manual:"
 msgid "U_ser manual:"
-msgstr "使用するユーザーマニュアル:"
+msgstr "使用するユーザーマニュアル(_S):"
 
 #: ../app/dialogs/preferences-dialog.c:2517
 msgid "User interface language"
@@ -17980,16 +17878,12 @@ msgid "Show _unavailable actions"
 msgstr "実行できないアクションを表示する(_U)"
 
 #: ../app/dialogs/preferences-dialog.c:2613
-#, fuzzy
-#| msgid "Maximum History Size:"
 msgid "_Maximum History Size:"
-msgstr "履歴の最大サイズ:"
+msgstr "履歴の最大サイズ(_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2617
-#, fuzzy
-#| msgid "Clear Action History"
 msgid "C_lear Action History"
-msgstr "アクション履歴の消去"
+msgstr "アクション履歴の消去(_L)"
 
 #: ../app/dialogs/preferences-dialog.c:2631
 #: ../app/dialogs/preferences-dialog.c:2632
@@ -18096,20 +17990,16 @@ msgid "Image Windows"
 msgstr "画像ウィンドウ"
 
 #: ../app/dialogs/preferences-dialog.c:2822
-#, fuzzy
-#| msgid "Use \"_Dot for dot\" by default"
 msgid "Use \"Show _all\" by default"
-msgstr "ピクセル等倍で表示(_D)"
+msgstr "\"すべて表示\" をデフォルトにする(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:2826
 msgid "Use \"_Dot for dot\" by default"
-msgstr "ピクセル等倍で表示(_D)"
+msgstr "ピクセル等倍で表示する(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:2832
-#, fuzzy
-#| msgid "Marching _ants speed:"
 msgid "Marching ants s_peed:"
-msgstr "蟻の行進速度(_A):"
+msgstr "蟻の行進速度(_P):"
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2836
@@ -18278,26 +18168,20 @@ msgid "Folders"
 msgstr "フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3140
-#, fuzzy
-#| msgid "Theme Folders"
 msgid "Reset _Folders"
-msgstr "テーマ用フォルダー"
+msgstr "フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3156
-#, fuzzy
-#| msgid "Temporary folder:"
 msgid "_Temporary folder:"
-msgstr "一時フォルダー:"
+msgstr "一時フォルダー(_T):"
 
 #: ../app/dialogs/preferences-dialog.c:3157
 msgid "Select Folder for Temporary Files"
 msgstr "一時ファイル用フォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:3161
-#, fuzzy
-#| msgid "Swap folder:"
 msgid "_Swap folder:"
-msgstr "スワップ用フォルダー:"
+msgstr "スワップ用フォルダー(_S):"
 
 #: ../app/dialogs/preferences-dialog.c:3162
 msgid "Select Swap Folder"
@@ -19002,23 +18886,23 @@ msgstr "高"
 msgid "_Sample Merged"
 msgstr "見えている色の情報を表示(_S)"
 
-#: ../app/display/gimpdisplayshell.c:568
+#: ../app/display/gimpdisplayshell.c:575
 msgid "Access the image menu"
 msgstr "画像メニューにアクセス"
 
-#: ../app/display/gimpdisplayshell.c:686
+#: ../app/display/gimpdisplayshell.c:693
 msgid "Zoom image when window size changes"
 msgstr "ウィンドウサイズ変更時に画像をズーム"
 
-#: ../app/display/gimpdisplayshell.c:715
+#: ../app/display/gimpdisplayshell.c:722
 msgid "Toggle Quick Mask"
 msgstr "クイックマスクの切り替え"
 
-#: ../app/display/gimpdisplayshell.c:738
+#: ../app/display/gimpdisplayshell.c:745
 msgid "Navigate the image display"
 msgstr "この画像のナビゲーションプレビューを表示します"
 
-#: ../app/display/gimpdisplayshell.c:797 ../app/display/gimpdisplayshell.c:1452
+#: ../app/display/gimpdisplayshell.c:804 ../app/display/gimpdisplayshell.c:1465
 #: ../app/widgets/gimptoolbox.c:247
 msgid "Drop image files here to open them"
 msgstr ""
@@ -19104,7 +18988,7 @@ msgid "Drop New Path"
 msgstr "新しいパスをドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:364
-#: ../app/tools/gimpbucketfilltool.c:545 ../app/tools/gimpcagetool.c:227
+#: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpfiltertool.c:287 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpselectiontool.c:530
 #, c-format
@@ -19112,7 +18996,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "レイヤーグループのピクセルは変更できません。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:372
-#: ../app/tools/gimpbucketfilltool.c:560 ../app/tools/gimpcagetool.c:234
+#: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
 #: ../app/tools/gimpfiltertool.c:294 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:295
@@ -23188,27 +23072,27 @@ msgstr "選択範囲を反転"
 msgid "(computing...)"
 msgstr ""
 
-#: ../app/tools/gimpbucketfilltool.c:165
+#: ../app/tools/gimpbucketfilltool.c:167
 msgid "Bucket Fill"
 msgstr "塗りつぶし"
 
-#: ../app/tools/gimpbucketfilltool.c:166
+#: ../app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "[塗りつぶし]\n"
 "対象の範囲を色やパターンで塗りつぶします"
 
-#: ../app/tools/gimpbucketfilltool.c:167
+#: ../app/tools/gimpbucketfilltool.c:169
 msgid "_Bucket Fill"
 msgstr "塗りつぶし(_B)"
 
-#: ../app/tools/gimpbucketfilltool.c:335
+#: ../app/tools/gimpbucketfilltool.c:344
 #, fuzzy
 #| msgid "Bucket Fill"
 msgid "Bucket fill"
 msgstr "塗りつぶし"
 
-#: ../app/tools/gimpbucketfilltool.c:553 ../app/tools/gimpcagetool.c:244
+#: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
 #: ../app/tools/gimpfiltertool.c:304
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:323
@@ -23216,18 +23100,18 @@ msgstr "塗りつぶし"
 msgid "The active layer is not visible."
 msgstr "アクティブレイヤーは非表示になっています。"
 
-#: ../app/tools/gimpbucketfilltool.c:569
+#: ../app/tools/gimpbucketfilltool.c:578
 #, fuzzy
 #| msgid "No filter selected"
 msgid "No valid line art source selected."
 msgstr "フィルターが選択されていません"
 
-#: ../app/tools/gimpbucketfilltool.c:752 ../app/tools/gimpbucketfilltool.c:885
+#: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:457
 msgid "Click in any image to pick the background color"
 msgstr "クリックされたピクセルの色を背景色に設定します"
 
-#: ../app/tools/gimpbucketfilltool.c:759 ../app/tools/gimpbucketfilltool.c:894
+#: ../app/tools/gimpbucketfilltool.c:768 ../app/tools/gimpbucketfilltool.c:903
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:451
 msgid "Click in any image to pick the foreground color"
 msgstr "クリックされたピクセルの色を描画色に設定します"
@@ -26733,8 +26617,6 @@ msgid "Only indexed images have a colormap."
 msgstr "カラーマップを持つのはインデックス画像のみです。"
 
 #: ../app/widgets/gimpcompressioncombobox.c:102
-#, fuzzy
-#| msgid "None"
 msgctxt "compression"
 msgid "None"
 msgstr "なし"
@@ -26745,19 +26627,14 @@ msgid "Best performance"
 msgstr ""
 
 #: ../app/widgets/gimpcompressioncombobox.c:120
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Color Balance"
 msgctxt "compression"
 msgid "Balanced"
-msgstr "カラーバランス"
+msgstr ""
 
 #: ../app/widgets/gimpcompressioncombobox.c:126
-#, fuzzy
-#| msgid "Image Properties"
 msgctxt "compression"
 msgid "Best compression"
-msgstr "画像の情報"
+msgstr ""
 
 #: ../app/widgets/gimpcontainerpopup.c:333
 msgid "Smaller Previews"
