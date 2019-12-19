@@ -401,6 +401,14 @@ gimp_layer_tree_view_constructed (GObject *object)
                          button, 5);
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+                                          "layers-merge-down", NULL);
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
+                                  GTK_BUTTON (button),
+                                  GIMP_TYPE_LAYER);
+  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
+                         button, 6);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-mask-add-button",
                                           "layers-mask-add-last-values",
                                           gimp_get_extend_selection_mask (),
@@ -414,7 +422,7 @@ gimp_layer_tree_view_constructed (GObject *object)
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
-                         button, 6);
+                         button, 7);
 }
 
 static void
