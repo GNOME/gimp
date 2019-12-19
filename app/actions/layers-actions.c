@@ -937,7 +937,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower",            layer && !fs && !ac && next);
   SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
-  SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
+  SET_VISIBLE   ("layers-anchor",           layer &&  fs && !ac);
+  SET_VISIBLE   ("layers-merge-down",       !fs);
   SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && visible && next_visible);
   SET_VISIBLE   ("layers-merge-group",      children);
   SET_SENSITIVE ("layers-merge-group",      layer && !fs && !ac && children);
