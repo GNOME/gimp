@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-11-04 11:35+0000\n"
-"PO-Revision-Date: 2019-12-19 01:00+0900\n"
+"PO-Revision-Date: 2019-12-20 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -4110,7 +4110,7 @@ msgstr "消去(_E)"
 
 #: ../app/actions/documents-commands.c:253
 msgid "Clear the Recent Documents list?"
-msgstr "ファイル履歴を消去しますか？"
+msgstr "ファイル履歴を消去しますか?"
 
 #: ../app/actions/documents-commands.c:256
 msgid ""
@@ -4626,7 +4626,7 @@ msgstr "作業履歴の消去"
 
 #: ../app/actions/edit-commands.c:186
 msgid "Really clear image's undo history?"
-msgstr "作業履歴を消去してもよろしいですか？"
+msgstr "作業履歴を消去してもよろしいですか?"
 
 #: ../app/actions/edit-commands.c:199
 #, c-format
@@ -5089,7 +5089,7 @@ msgstr "復帰(_R)"
 #: ../app/actions/file-commands.c:443
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr "編集中の画像 '%s' を画像ファイル '%s' の状態に戻しますか？"
+msgstr "編集中の画像 '%s' を画像ファイル '%s' の状態に戻しますか?"
 
 #: ../app/actions/file-commands.c:448
 msgid ""
@@ -5119,12 +5119,9 @@ msgid "Filte_rs"
 msgstr "フィルター(_R)"
 
 #: ../app/actions/filters-actions.c:61
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "Recently Used"
 msgctxt "filters-action"
 msgid "Recently _Used"
-msgstr "最近使ったフィルター"
+msgstr "最近使ったフィルター(_U)"
 
 #: ../app/actions/filters-actions.c:63
 msgctxt "filters-action"
@@ -5568,7 +5565,7 @@ msgstr "迷路(_M)..."
 #: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr ""
+msgstr "平均曲率ぼかし(_U)..."
 
 #: ../app/actions/filters-actions.c:453
 msgctxt "filters-action"
@@ -10328,11 +10325,9 @@ msgid "Use black point compensation for soft-proofing"
 msgstr "ソフトプルーフで黒点の補正を使用します"
 
 #: ../app/actions/view-actions.c:220
-#, fuzzy
-#| msgid "Mark out of gamut colors"
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
-msgstr "色域外の色をマーキングする"
+msgstr "色域外の色をマーキングする(_M)"
 
 #: ../app/actions/view-actions.c:221
 msgctxt "view-action"
@@ -11519,20 +11514,16 @@ msgid "Snap to guides by default in new image windows."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:110
-#, fuzzy
-#| msgid "Sets the text to appear in image window titles."
 msgid "Snap to the grid by default in new image windows."
-msgstr "画像ウィンドウのタイトルに表示するテキストを設定します。"
+msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:113
 msgid "Snap to the canvas edges by default in new image windows."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:116
-#, fuzzy
-#| msgid "Sets the text to appear in image window titles."
 msgid "Snap to the active path by default in new image windows."
-msgstr "画像ウィンドウのタイトルに表示するテキストを設定します。"
+msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:119
 msgid ""
@@ -11716,10 +11707,8 @@ msgstr ""
 "解像度の情報を X サーバーに問い合わせます。"
 
 #: ../app/config/gimprc-blurbs.h:283
-#, fuzzy
-#| msgid "When enabled, menus can be torn off."
 msgid "When enabled, non-visible layers can be edited as normal."
-msgstr "この設定がオンのときは、メニューの切り離しが可能になります。"
+msgstr "この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
 
 # "This used to be the default behaviour in older versions." の箇所は次の理由により翻訳していない
 # - このバージョンの1つ前のバージョン (ver.2.6.x) では、既に「移動ツールでつかんだレイヤーやパスがアクティブになる」は既定値ではない。
@@ -11914,16 +11903,12 @@ msgstr ""
 "([表示] → [レイヤー境界の表示]で切り替えることもできます。)"
 
 #: ../app/config/gimprc-blurbs.h:414
-#, fuzzy
-#| msgid ""
-#| "When enabled, the layer boundary is visible by default. This can also be "
-#| "toggled with the \"View->Show Layer Boundary\" command."
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
-"この設定がオンのときは、レイヤー境界を表示します。\n"
-"([表示] → [レイヤー境界の表示]で切り替えることもできます。)"
+"この設定がオンのときは、キャンバス境界を表示します。\n"
+"([表示] → [キャンバス境界の表示]で切り替えることもできます。)"
 
 #: ../app/config/gimprc-blurbs.h:418
 msgid ""
@@ -12375,13 +12360,11 @@ msgstr "この設定がオンのときは、いくつかの処理で OpenCL を�
 
 #: ../app/config/gimprc-blurbs.h:713
 msgid "When enabled, a search of actions will also return inactive actions."
-msgstr ""
+msgstr "この設定がオンのときは、操作の検索で無効な操作も表示します。"
 
 #: ../app/config/gimprc-blurbs.h:716
-#, fuzzy
-#| msgid "_Maximum number of colors:"
 msgid "The maximum number of actions saved in history."
-msgstr "最大色数(_M):"
+msgstr "履歴に保存する操作の最大数です。"
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:131
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
@@ -12503,12 +12486,9 @@ msgid "Keep embedded profile"
 msgstr "埋め込まれているプロファイルを使う"
 
 #: ../app/core/core-enums.c:188
-#, fuzzy
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to preferred RGB color profile"
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "優先 RGB カラープロファイルに変換する"
+msgstr "組み込み sRGB またはクレースケールプロファイルに変換する"
 
 #: ../app/core/core-enums.c:282
 msgctxt "convert-dither-type"
@@ -14618,7 +14598,7 @@ msgstr ""
 #, fuzzy, c-format
 #| msgid "Revert '%s' to '%s'?"
 msgid "Converting from '%s' to '%s'"
-msgstr "編集中の画像 '%s' を画像ファイル '%s' の状態に戻しますか？"
+msgstr "編集中の画像 '%s' を画像ファイル '%s' の状態に戻しますか?"
 
 #: ../app/core/gimpimage-color-profile.c:401
 #, fuzzy
@@ -16067,51 +16047,37 @@ msgid "None"
 msgstr "なし"
 
 #: ../app/dialogs/color-profile-import-dialog.c:85
-#, fuzzy
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to RGB workspace"
 msgid "Convert to Grayscale Working Space?"
-msgstr "RGB 作業用スペースに変換"
+msgstr "グレースケール作業用スペースに変換しますか?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:86
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to the built-in grayscale color profile?"
-msgstr "画像を RGB カラースペースに変換します"
+msgstr "画像を組み込みグレースケールカラープロファイルに変換しますか?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:90
-#, fuzzy
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to RGB workspace"
 msgid "Convert to RGB Working Space?"
-msgstr "RGB 作業用スペースに変換"
+msgstr "RGB 作業用スペースに変換しますか?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:91
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to the built-in sRGB color profile?"
-msgstr "画像を RGB カラースペースに変換します"
+msgstr "画像を組み込み sRGB カラープロファイルに変換しますか?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:99
-#, fuzzy
-#| msgid "Import settings from a file"
 msgid "Import the image from a color profile"
-msgstr "プリセットデータをファイルからインポートします"
+msgstr "カラープロファイルから画像のインポート"
 
 #: ../app/dialogs/color-profile-import-dialog.c:104
 msgid "_Keep"
-msgstr ""
+msgstr "維持(_K)"
 
 #: ../app/dialogs/color-profile-import-dialog.c:122
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr ""
+msgstr "'%s' にはカラープロファイルが埋め込まれています"
 
 #: ../app/dialogs/color-profile-import-dialog.c:185
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "次回から確認しない(_D)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -16198,7 +16164,7 @@ msgstr "データオブジェクトの削除"
 #: ../app/dialogs/data-delete-dialog.c:105
 #, c-format
 msgid "Delete '%s'?"
-msgstr "'%s' を削除しますか？"
+msgstr "'%s' を削除しますか?"
 
 #: ../app/dialogs/data-delete-dialog.c:108
 #, c-format
@@ -16363,7 +16329,7 @@ msgstr "指定のファイル拡張子は選択したファイル形式と一致
 
 #: ../app/dialogs/file-save-dialog.c:729
 msgid "Do you want to save the image using this name anyway?"
-msgstr "画像をこの名前で保存してもよろしいですか？"
+msgstr "画像をこの名前で保存してもよろしいですか?"
 
 #: ../app/dialogs/file-save-dialog.c:794
 msgid "Saving canceled"
@@ -16837,7 +16803,7 @@ msgstr "設定リセットの確認"
 
 #: ../app/dialogs/preferences-dialog.c:302
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "すべての設定を初期値に戻してもよろしいですか？"
+msgstr "すべての設定を初期値に戻してもよろしいですか?"
 
 #: ../app/dialogs/preferences-dialog.c:381
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -16857,7 +16823,7 @@ msgstr "キーボードショートカットをすべて消去"
 
 #: ../app/dialogs/preferences-dialog.c:680
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "キーボードショートカットをすべて消去してもよろしいですか？"
+msgstr "キーボードショートカットをすべて消去してもよろしいですか?"
 
 #: ../app/dialogs/preferences-dialog.c:721
 msgid ""
@@ -16896,10 +16862,8 @@ msgid "Show _layer boundary"
 msgstr "レイヤーの境界線(_L)"
 
 #: ../app/dialogs/preferences-dialog.c:967
-#, fuzzy
-#| msgid "Show _layer boundary"
 msgid "Show can_vas boundary"
-msgstr "レイヤーの境界線(_L)"
+msgstr "キャンバスの境界線(_V)"
 
 #: ../app/dialogs/preferences-dialog.c:970
 msgid "Show _guides"
@@ -16910,11 +16874,8 @@ msgid "Show gri_d"
 msgstr "グリッド(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:976
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Show Sample Points"
 msgid "Show _sample points"
-msgstr "サンプルポイントの表示"
+msgstr "サンプルポイント(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:985
 msgid "Show _menubar"
@@ -16951,28 +16912,20 @@ msgid "_Keep canvas padding in \"Show All\" mode"
 msgstr "キャンバス周りの表示モード(_P):"
 
 #: ../app/dialogs/preferences-dialog.c:1041
-#, fuzzy
-#| msgid "Snap to Guides"
 msgid "Snap to _Guides"
-msgstr "ガイドにスナップ"
+msgstr "ガイドにスナップ(_G)"
 
 #: ../app/dialogs/preferences-dialog.c:1044
-#, fuzzy
-#| msgid "Snap to Grid"
 msgid "S_nap to Grid"
-msgstr "グリッドにスナップ"
+msgstr "グリッドにスナップ(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:1052
-#, fuzzy
-#| msgid "Snap to Canvas Edges"
 msgid "Snap to Canvas _Edges"
-msgstr "キャンバス境界にスナップ"
+msgstr "キャンバス境界にスナップ(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1055
-#, fuzzy
-#| msgid "Snap to Active Path"
 msgid "Snap to _Active Path"
-msgstr "アクティブなパスにスナップ"
+msgstr "アクティブなパスにスナップ(_A)"
 
 #: ../app/dialogs/preferences-dialog.c:1127
 msgid "Preferences"
@@ -17084,7 +17037,7 @@ msgstr "カラーマネジメント"
 
 #: ../app/dialogs/preferences-dialog.c:1313
 msgid "R_eset Color Management"
-msgstr "カラーマネジメントをリセットする(_E)"
+msgstr "カラーマネジメントをリセット(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1336
 msgid "Image display _mode:"
@@ -17155,10 +17108,8 @@ msgid "O_ptimize soft-proofing for:"
 msgstr "ソフトプルーフの最適化(_P):"
 
 #: ../app/dialogs/preferences-dialog.c:1425
-#, fuzzy
-#| msgid "Mark out of gamut colors"
 msgid "Mar_k out of gamut colors"
-msgstr "色域外の色をマーキングする"
+msgstr "色域外の色をマーキングする(_K)"
 
 #: ../app/dialogs/preferences-dialog.c:1430
 msgid "Select Warning Color"
@@ -17245,7 +17196,7 @@ msgstr "エクスポートポリシー"
 
 #: ../app/dialogs/preferences-dialog.c:1541
 msgid "Export the i_mage's color profile by default"
-msgstr "デフォルトで画像のカラープロファイルをエクスポートする(_M)"
+msgstr "画像のカラープロファイルをエクスポートする(_M)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17342,7 +17293,7 @@ msgstr "全般"
 
 #: ../app/dialogs/preferences-dialog.c:1662
 msgid "Allow _editing on non-visible layers"
-msgstr ""
+msgstr "不可視レイヤーの編集を許可する(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:1666
 msgid "_Save tool options on exit"
@@ -17866,7 +17817,8 @@ msgstr "使用するヘルプブラウザー(_E):"
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
-msgstr ""
+msgstr "GIMP ヘルプブラウザーがインストールされていません。代わりにウェブ"
+"ブラウザーを使用します。"
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2606
@@ -17875,7 +17827,7 @@ msgstr "操作検索"
 
 #: ../app/dialogs/preferences-dialog.c:2610
 msgid "Show _unavailable actions"
-msgstr "実行できないアクションを表示する(_U)"
+msgstr "実行できない操作を表示する(_U)"
 
 #: ../app/dialogs/preferences-dialog.c:2613
 msgid "_Maximum History Size:"
@@ -17883,7 +17835,7 @@ msgstr "履歴の最大サイズ(_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2617
 msgid "C_lear Action History"
-msgstr "アクション履歴の消去(_L)"
+msgstr "操作履歴の消去(_L)"
 
 #: ../app/dialogs/preferences-dialog.c:2631
 #: ../app/dialogs/preferences-dialog.c:2632
@@ -18192,10 +18144,8 @@ msgid "Brush Folders"
 msgstr "ブラシ用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3198
-#, fuzzy
-#| msgid "Select Brush Folders"
 msgid "Reset Brush _Folders"
-msgstr "ブラシ用フォルダーの選択"
+msgstr "ブラシ用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3199
 msgid "Select Brush Folders"
@@ -18206,10 +18156,8 @@ msgid "Dynamics Folders"
 msgstr "動的特性用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3204
-#, fuzzy
-#| msgid "Select Dynamics Folders"
 msgid "Reset Dynamics _Folders"
-msgstr "動的特性用フォルダーの選択"
+msgstr "動的特性用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3205
 msgid "Select Dynamics Folders"
@@ -18220,10 +18168,8 @@ msgid "Pattern Folders"
 msgstr "パターン用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3210
-#, fuzzy
-#| msgid "Select Pattern Folders"
 msgid "Reset Pattern _Folders"
-msgstr "パターン用フォルダーの選択"
+msgstr "パターン用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3211
 msgid "Select Pattern Folders"
@@ -18234,10 +18180,8 @@ msgid "Palette Folders"
 msgstr "パレット用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3216
-#, fuzzy
-#| msgid "Select Palette Folders"
 msgid "Reset Palette _Folders"
-msgstr "パレット用フォルダーの選択"
+msgstr "パレット用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3217
 msgid "Select Palette Folders"
@@ -18248,10 +18192,8 @@ msgid "Gradient Folders"
 msgstr "グラデーション用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3222
-#, fuzzy
-#| msgid "Select Gradient Folders"
 msgid "Reset Gradient _Folders"
-msgstr "グラデーション用フォルダーの選択"
+msgstr "グラデーション用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3223
 msgid "Select Gradient Folders"
@@ -18262,10 +18204,8 @@ msgid "Font Folders"
 msgstr "フォント用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3228
-#, fuzzy
-#| msgid "Select Font Folders"
 msgid "Reset Font _Folders"
-msgstr "フォント用フォルダーの選択"
+msgstr "フォント用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3229
 msgid "Select Font Folders"
@@ -18276,10 +18216,8 @@ msgid "Tool Preset Folders"
 msgstr "ツールプリセット用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3234
-#, fuzzy
-#| msgid "Select Tool Preset Folders"
 msgid "Reset Tool Preset _Folders"
-msgstr "ツールプリセット用フォルダーの選択"
+msgstr "ツールプリセット用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3235
 msgid "Select Tool Preset Folders"
@@ -18290,10 +18228,8 @@ msgid "MyPaint Brush Folders"
 msgstr "MyPaint ブラシ用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3240
-#, fuzzy
-#| msgid "Select MyPaint Brush Folders"
 msgid "Reset MyPaint Brush _Folders"
-msgstr "MyPaint ブラシ用フォルダーの選択"
+msgstr "MyPaint ブラシ用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3241
 msgid "Select MyPaint Brush Folders"
@@ -18304,10 +18240,8 @@ msgid "Plug-in Folders"
 msgstr "プラグイン用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3246
-#, fuzzy
-#| msgid "Select plug-in Folders"
 msgid "Reset plug-in _Folders"
-msgstr "プラグイン用フォルダーの選択"
+msgstr "プラグイン用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3247
 msgid "Select plug-in Folders"
@@ -18322,10 +18256,8 @@ msgid "Script-Fu Folders"
 msgstr "スクリプト用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3252
-#, fuzzy
-#| msgid "Select Script-Fu Folders"
 msgid "Reset Script-Fu _Folders"
-msgstr "スクリプト用フォルダーの選択"
+msgstr "スクリプト用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3253
 msgid "Select Script-Fu Folders"
@@ -18336,10 +18268,8 @@ msgid "Module Folders"
 msgstr "モジュール用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3258
-#, fuzzy
-#| msgid "Select Module Folders"
 msgid "Reset Module _Folders"
-msgstr "モジュール用フォルダーの選択"
+msgstr "モジュール用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3259
 msgid "Select Module Folders"
@@ -18354,10 +18284,8 @@ msgid "Interpreter Folders"
 msgstr "インタープリター用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3264
-#, fuzzy
-#| msgid "Select Interpreter Folders"
 msgid "Reset Interpreter _Folders"
-msgstr "インタープリター用フォルダーの選択"
+msgstr "インタープリター用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3265
 msgid "Select Interpreter Folders"
@@ -18372,14 +18300,12 @@ msgid "Environment Folders"
 msgstr "設定保存用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3270
-#, fuzzy
-#| msgid "Select Environment Folders"
 msgid "Reset Environment _Folders"
-msgstr "設定を保存するフォルダーの選択"
+msgstr "設定保存用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3271
 msgid "Select Environment Folders"
-msgstr "設定を保存するフォルダーの選択"
+msgstr "設定保存用フォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:3273
 msgid "Themes"
@@ -18390,10 +18316,8 @@ msgid "Theme Folders"
 msgstr "テーマ用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3276
-#, fuzzy
-#| msgid "Select Theme Folders"
 msgid "Reset Theme _Folders"
-msgstr "テーマ用フォルダーの選択"
+msgstr "テーマ用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3277
 msgid "Select Theme Folders"
@@ -18408,10 +18332,8 @@ msgid "Icon Theme Folders"
 msgstr "アイコンテーマ用フォルダー"
 
 #: ../app/dialogs/preferences-dialog.c:3282
-#, fuzzy
-#| msgid "Select Icon Theme Folders"
 msgid "Reset Icon Theme _Folders"
-msgstr "アイコンテーマ用フォルダーの選択"
+msgstr "アイコンテーマ用フォルダーのリセット(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3283
 msgid "Select Icon Theme Folders"
@@ -23652,10 +23574,8 @@ msgstr "選択範囲の境界線(_E)"
 #: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:447
 #: ../app/tools/gimpflipoptions.c:156 ../app/tools/gimptransformoptions.c:108
 #: ../app/tools/gimptransformoptions.c:264
-#, fuzzy
-#| msgid "Clipping:"
 msgid "Clipping"
-msgstr "クリッピング:"
+msgstr "クリッピング"
 
 #: ../app/tools/gimpfilteroptions.c:111 ../app/tools/gimptransformoptions.c:109
 msgid "How to clip"
@@ -27529,7 +27449,7 @@ msgstr "選択したデバイス設定を削除します"
 #: ../app/widgets/gimpdeviceeditor.c:524
 #, c-format
 msgid "Delete \"%s\"?"
-msgstr "\"%s\" を削除しますか？"
+msgstr "\"%s\" を削除しますか?"
 
 #: ../app/widgets/gimpdeviceeditor.c:527
 msgid ""
@@ -27540,10 +27460,8 @@ msgstr ""
 "次回、このデバイスを接続したときには、既定の設定が適用されます。"
 
 #: ../app/widgets/gimpdeviceinfo.c:147
-#, fuzzy
-#| msgid "Pressure"
 msgid "Pressure curve"
-msgstr "筆圧"
+msgstr "筆圧のカーブ"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:161
@@ -28070,43 +27988,29 @@ msgid "Custom icon size"
 msgstr "アイコンサイズをカスタムする"
 
 #: ../app/widgets/gimpiconsizescale.c:273
-#, fuzzy
-#| msgctxt "view-size"
-#| msgid "Small"
 msgctxt "icon-size"
 msgid "Small"
 msgstr "小さい"
 
 #: ../app/widgets/gimpiconsizescale.c:286
-#, fuzzy
-#| msgctxt "view-size"
-#| msgid "Medium"
 msgctxt "icon-size"
 msgid "Medium"
 msgstr "中間"
 
 #: ../app/widgets/gimpiconsizescale.c:299
-#, fuzzy
-#| msgctxt "view-size"
-#| msgid "Large"
 msgctxt "icon-size"
 msgid "Large"
 msgstr "大きい"
 
 #: ../app/widgets/gimpiconsizescale.c:312
-#, fuzzy
-#| msgctxt "view-size"
-#| msgid "Huge"
 msgctxt "icon-size"
 msgid "Huge"
 msgstr "とても大きい"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
-#, fuzzy
-#| msgid "Use default comment"
 msgid "Use _default comment"
-msgstr "既定のコメントを使用"
+msgstr "既定のコメントを使用(_D)"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
@@ -28732,13 +28636,11 @@ msgstr "[元画像]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
 msgid "Lock path strokes"
-msgstr "パスを保護"
+msgstr "パスの描画を保護"
 
 #: ../app/widgets/gimpvectorstreeview.c:114
-#, fuzzy
-#| msgid "Lock path strokes"
 msgid "Lock path position"
-msgstr "パスを保護"
+msgstr "パスの位置を保護"
 
 #: ../app/widgets/gimpviewablebox.c:94
 msgid "Open the brush selection dialog"
@@ -28749,10 +28651,8 @@ msgid "Open the dynamics selection dialog"
 msgstr "[描画の動的特性] ダイアログを開く"
 
 #: ../app/widgets/gimpviewablebox.c:229
-#, fuzzy
-#| msgid "Open the brush selection dialog"
 msgid "Open the MyPaint brush selection dialog"
-msgstr "ブラシダイアログを開く"
+msgstr "MyPaint ブラシダイアログを開く"
 
 #: ../app/widgets/gimpviewablebox.c:292
 msgid "Open the pattern selection dialog"
@@ -28791,10 +28691,9 @@ msgid "%s (try %s, %s, %s)"
 msgstr "%s (%s, %s, %s もできます)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1797
-#, fuzzy, c-format
-#| msgid "Anti erase  (%s)"
+#, c-format
 msgid "Built-in grayscale (%s)"
-msgstr "逆消しゴム  (%s)"
+msgstr "組み込みグレースケール (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1804
 #, c-format
@@ -30883,7 +30782,7 @@ msgstr "fuzzy"
 #~ msgstr "終了時にファイル履歴を保存(_H)"
 
 #~ msgid "Remove all entries from the document history?"
-#~ msgstr "すべてのエントリーをファイル履歴から削除しますか？"
+#~ msgstr "すべてのエントリーをファイル履歴から削除しますか?"
 
 #~ msgid "Toolbox Menu"
 #~ msgstr "ツールボックスメニュー"
