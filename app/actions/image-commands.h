@@ -83,6 +83,9 @@ void   image_crop_to_content_cmd_callback          (GimpAction *action,
 void   image_merge_layers_cmd_callback             (GimpAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
+void   image_merge_layers_last_vals_cmd_callback   (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
 void   image_flatten_image_cmd_callback            (GimpAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
