@@ -401,7 +401,15 @@ gimp_layer_tree_view_constructed (GObject *object)
                          button, 5);
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
-                                          "layers-merge-down", NULL);
+                                          "layers-merge-down-button",
+                                          "layers-merge-group",
+                                          GDK_SHIFT_MASK,
+                                          "layers-merge-layers",
+                                          GDK_CONTROL_MASK,
+                                          "layers-merge-layers-last-values",
+                                          GDK_CONTROL_MASK |
+                                          GDK_SHIFT_MASK,
+                                          NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);

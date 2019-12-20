@@ -955,6 +955,28 @@ image_merge_layers_cmd_callback (GimpAction *action,
 }
 
 void
+image_merge_layers_last_vals_cmd_callback (GimpAction *action,
+                                           GVariant   *value,
+                                           gpointer    data)
+{
+  GimpImage        *image;
+  GimpDisplay      *display;
+  GimpDialogConfig *config;
+  return_if_no_image (image, data);
+  return_if_no_display (display, data);
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+  image_merge_layers_callback (NULL,
+                               image,
+                               action_data_get_context (data),
+                               config->layer_merge_type,
+                               config->layer_merge_active_group_only,
+                               config->layer_merge_discard_invisible,
+                               display);
+}
+
+void
 image_flatten_image_cmd_callback (GimpAction *action,
                                   GVariant   *value,
                                   gpointer    data)

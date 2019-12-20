@@ -177,6 +177,15 @@ static const GimpActionEntry layers_actions[] =
     layers_merge_down_cmd_callback,
     GIMP_HELP_LAYER_MERGE_DOWN },
 
+  /* this is the same as layers-merge-down, except it's sensitive even if
+   * the layer can't be merged down
+   */
+  { "layers-merge-down-button", GIMP_ICON_LAYER_MERGE_DOWN,
+    NC_("layers-action", "Merge Do_wn"), NULL,
+    NC_("layers-action", "Merge this layer with the first visible layer below it"),
+    layers_merge_down_cmd_callback,
+    GIMP_HELP_LAYER_MERGE_DOWN },
+
   { "layers-merge-group", NULL,
     NC_("layers-action", "Merge Layer Group"), NULL,
     NC_("layers-action", "Merge the layer group's layers into one normal layer"),
@@ -187,6 +196,12 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Merge _Visible Layers..."), NULL,
     NC_("layers-action", "Merge all visible layers into one layer"),
     image_merge_layers_cmd_callback,
+    GIMP_HELP_IMAGE_MERGE_LAYERS },
+
+  { "layers-merge-layers-last-values", NULL,
+    NC_("layers-action", "Merge _Visible Layers"), NULL,
+    NC_("layers-action", "Merge all visible layers with last used values"),
+    image_merge_layers_last_vals_cmd_callback,
     GIMP_HELP_IMAGE_MERGE_LAYERS },
 
   { "layers-flatten-image", NULL,
@@ -937,13 +952,15 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower",            layer && !fs && !ac && next);
   SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
-  SET_VISIBLE   ("layers-anchor",           layer &&  fs && !ac);
-  SET_VISIBLE   ("layers-merge-down",       !fs);
-  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && visible && next_visible);
-  SET_VISIBLE   ("layers-merge-group",      children);
-  SET_SENSITIVE ("layers-merge-group",      layer && !fs && !ac && children);
-  SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
-  SET_SENSITIVE ("layers-flatten-image",    layer && !fs && !ac);
+  SET_VISIBLE   ("layers-anchor",            layer &&  fs && !ac);
+  SET_VISIBLE   ("layers-merge-down",        !fs);
+  SET_SENSITIVE ("layers-merge-down",        layer && !fs && !ac && visible && next_visible);
+  SET_VISIBLE   ("layers-merge-down-button", !fs);
+  SET_SENSITIVE ("layers-merge-down-button", layer && !fs && !ac);
+  SET_VISIBLE   ("layers-merge-group",       children);
+  SET_SENSITIVE ("layers-merge-group",       layer && !fs && !ac && children);
+  SET_SENSITIVE ("layers-merge-layers",      layer && !fs && !ac);
+  SET_SENSITIVE ("layers-flatten-image",     layer && !fs && !ac);
 
   SET_VISIBLE   ("layers-text-discard",       text_layer && !ac);
   SET_VISIBLE   ("layers-text-to-vectors",    text_layer && !ac);
