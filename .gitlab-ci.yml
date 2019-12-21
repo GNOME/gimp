@@ -14,6 +14,58 @@ cache:
   paths:
   - _pacman_cache
 
+# set up the build environment for all subsequent steps
+before_script:
+  - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
+    alsa-lib
+    appstream-glib
+    at-spi2-atk
+    at-spi2-core
+    base-devel
+    dbus-glib
+    desktop-file-utils
+    ffmpeg
+    ghostscript
+    git
+    glib-networking
+    gobject-introspection
+    graphviz
+    gtk-doc
+    gtk2
+    hicolor-icon-theme
+    intltool
+    iso-codes
+    jasper
+    json-glib
+    lcms2
+    libexif
+    libgexiv2
+    libgudev
+    libheif
+    libmng
+    libmypaint
+    libraw
+    librsvg
+    libspiro
+    libtiff
+    libwebp
+    libwmf
+    libxmu
+    libxpm
+    luajit
+    meson
+    mypaint-brushes1
+    openexr
+    openexr
+    poppler-data
+    poppler-glib
+    pygtk
+    python
+    sdl2
+    suitesparse
+    xorg-server-xvfb
+    xorgproto
+
 .babl-base:
   stage: babl
   artifacts:
@@ -25,12 +77,6 @@ cache:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        gobject-introspection
-        meson
-        lcms2
     - git clone --depth="${GIT_DEPTH}" https://gitlab.gnome.org/GNOME/babl.git _babl
 
 babl-git:
@@ -40,18 +86,6 @@ babl-git:
     - meson -Dprefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
-
-# babl-min:
-#   extends: .babl-base
-#   script:
-#     - BABL_MIN_VERSION="$(grep babl meson.build | grep version
-#         | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g')"
-#     - cd _babl
-#     - git fetch --no-tags origin "refs/tags/BABL_${BABL_MIN_VERSION}:refs/tags/MIN_VERSION"
-#     - git checkout MIN_VERSION
-#     - meson -Dprefix="${INSTALL_PREFIX}" _build
-#     - ninja -C _build
-#     - ninja -C _build install
 
 .gegl-base:
   stage: gegl
@@ -64,28 +98,6 @@ babl-git:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        meson
-        lcms2
-        base-devel
-        ffmpeg
-        gobject-introspection
-        graphviz
-        jasper
-        json-glib
-        lcms2
-        libgexiv2
-        libraw
-        librsvg
-        libspiro
-        libtiff
-        luajit
-        openexr
-        python
-        sdl2
-        suitesparse
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
 gegl-git:
@@ -95,18 +107,6 @@ gegl-git:
     - meson --prefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
-
-# gegl-min:
-#   extends: .gegl-base
-#   script:
-#     - GEGL_MIN_VERSION="$(grep gegl meson.build | grep version
-#         | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g')"
-#     - cd _gegl
-#     - git fetch --no-tags origin "refs/tags/GEGL_${GEGL_MIN_VERSION}:refs/tags/MIN_VERSION"
-#     - git checkout MIN_VERSION
-#     - meson -Dprefix="${INSTALL_PREFIX}" _build
-#     - ninja -C _build
-#     - ninja -C _build install
 
 .gimp-base:
   stage: gimp
@@ -119,42 +119,6 @@ gegl-git:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        appstream-glib
-        at-spi2-core
-        at-spi2-atk
-        dbus-glib
-        desktop-file-utils
-        ffmpeg
-        glib-networking
-        gobject-introspection
-        gtk2
-        hicolor-icon-theme
-        jasper
-        lcms2
-        libexif
-        libgudev
-        libheif
-        libmng
-        libmypaint
-        librsvg
-        libwebp
-        libwmf
-        libxmu
-        libxpm
-        mypaint-brushes1
-        openexr
-        poppler-data
-        pygtk
-        alsa-lib
-        ghostscript
-        poppler-glib
-        gtk-doc
-        intltool
-        iso-codes
-        xorg-server-xvfb
 
 .gimp-autotools:
   extends: .gimp-base
@@ -166,27 +130,15 @@ gegl-git:
         --enable-debug
     - make -j "$(nproc)"
     # - make check
-  artifacts:
-    name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    when: on_failure
-    expire_in: 1 week
-    paths:
-      - _build/app/tests/
+  # artifacts:
+  #   name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+  #   when: on_failure
+  #   expire_in: 1 week
+  #   paths:
+  #     - _build/app/tests/
 
 build-git-autotools:
   extends: .gimp-autotools
   dependencies:
     - babl-git
     - gegl-git
-
-# build-min-autotools:
-#   extends: .gimp-autotools
-#   dependencies:
-#     - babl-git
-#     - gegl-git
-
-# build-min-meson:
-#   extends: .gimp-meson
-#   dependencies:
-#     - babl-min
-#     - gegl-min
