@@ -141,6 +141,7 @@ static gboolean            use_shm           = TRUE;
 static gboolean            use_shm           = FALSE;
 #endif
 static gboolean            use_cpu_accel     = TRUE;
+static gboolean            use_gpu_accel     = TRUE;
 static gboolean            console_messages  = FALSE;
 static gboolean            use_debug_handler = FALSE;
 
@@ -212,6 +213,11 @@ static const GOptionEntry main_entries[] =
     "no-cpu-accel", 0, G_OPTION_FLAG_REVERSE,
     G_OPTION_ARG_NONE, &use_cpu_accel,
     N_("Do not use special CPU acceleration functions"), NULL
+  },
+  {
+    "no-gpu-accel", 0, G_OPTION_FLAG_REVERSE,
+    G_OPTION_ARG_NONE, &use_gpu_accel,
+    N_("Do not use special GPU acceleration functions"), NULL
   },
   {
     "session", 0, 0,
@@ -648,6 +654,7 @@ main (int    argc,
            be_verbose,
            use_shm,
            use_cpu_accel,
+           use_gpu_accel,
            console_messages,
            use_debug_handler,
            show_playground,

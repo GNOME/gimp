@@ -50,6 +50,7 @@ struct _Gimp
   gboolean                show_gui;
   gboolean                use_shm;
   gboolean                use_cpu_accel;
+  gboolean                use_gpu_accel;
   GimpMessageHandlerType  message_handler;
   gboolean                console_messages;
   gboolean                show_playground;
@@ -159,6 +160,7 @@ Gimp         * gimp_new                    (const gchar         *name,
                                             gboolean             no_interface,
                                             gboolean             use_shm,
                                             gboolean             use_cpu_accel,
+                                            gboolean             use_gpu_accel,
                                             gboolean             console_messages,
                                             gboolean             show_playground,
                                             gboolean             show_debug_menu,
