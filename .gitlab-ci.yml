@@ -155,6 +155,7 @@ gegl-git:
         intltool
         iso-codes
         xorg-server-xvfb
+        xorgproto
 
 .gimp-autotools:
   extends: .gimp-base
