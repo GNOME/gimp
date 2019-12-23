@@ -5219,13 +5219,11 @@ msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "_Pas alt..."
 
-# quim: hi ha una altra eina no avançada
 #: ../app/actions/filters-actions.c:383
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "To-_Croma..."
 
-# quim: hi ha una altra eina no avançada
 #: ../app/actions/filters-actions.c:388
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
@@ -6852,7 +6850,7 @@ msgstr "_Apuja la capa"
 #: ../app/actions/layers-actions.c:146
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
-msgstr "Apuja aquesta capa una posició"
+msgstr "Apuja aquesta capa una posició en la pila de capes"
 
 #: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
@@ -9083,7 +9081,7 @@ msgstr "Duresa de l'eina: maximitza"
 #: ../app/actions/tools-actions.c:507
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 1"
-msgstr "Tool's Hardness: Decrease by 1"
+msgstr  "Duresa de l'eina: disminueix un 1"
 
 #: ../app/actions/tools-actions.c:511
 msgctxt "tools-action"
@@ -18461,7 +18459,7 @@ msgstr "Feu clic-i-arrossega per moure el punt final"
 
 #: ../app/display/gimptoolline.c:1566
 msgid "Release to remove the slider"
-msgstr "Release to remove the slider"
+msgstr "Deixar anar per a suprimir el lliscador"
 
 #: ../app/display/gimptoolline.c:1570
 #, c-format
@@ -26719,7 +26717,7 @@ msgstr "Bloqueja:"
 
 #: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
-msgstr "Idioma"
+msgstr "Idioma del sistema"
 
 #: ../app/widgets/gimplayermodebox.c:152
 msgid "Switch to another group of modes"

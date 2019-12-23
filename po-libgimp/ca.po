@@ -2542,7 +2542,7 @@ msgstr "Dispositiu:"
 
 #: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
-msgstr "El dispositiu d'on ha de rebre esdeveniments DirectInput."
+msgstr "El dispositiu d'on ha de rebre senyals DirectInput."
 
 #: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
@@ -2787,15 +2787,15 @@ msgstr "Controlador de senyals d'entrada del Linux"
 
 #: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
-msgstr "Nom del dispositiu del qual s'han de rebre esdeveniments."
+msgstr "Nom del dispositiu del qual s'han de rebre senyals d'entrada del Linux."
 
 #: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
-msgstr "Senyal del Linux"
+msgstr "Entrada del Linux"
 
 #: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
-msgstr "Senyals del Linux"
+msgstr "Senyals d'entrada Linux"
 
 #: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
 #: ../modules/controller-midi.c:480
@@ -2816,7 +2816,7 @@ msgstr "Fi del fitxer"
 
 #: ../modules/controller-midi.c:164
 msgid "MIDI event controller"
-msgstr "Controlador MIDI"
+msgstr "Controlador de senyals MIDI"
 
 #: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
