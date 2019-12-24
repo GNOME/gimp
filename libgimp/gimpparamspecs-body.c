@@ -383,6 +383,12 @@ gimp_param_spec_layer (const gchar *name,
 
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_LAYER,
                                  name, nick, blurb, flags);
+  /* g_param_spec_internal() may fail if for instance @name is invalid.
+   * We don't want to dereference the pointer and segfault in such a
+   * case, so let's just fail here.
+   * See #4392.
+   */
+  g_return_val_if_fail (ispec, NULL);
 
   ispec->none_ok = none_ok ? TRUE : FALSE;
 
