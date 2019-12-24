@@ -195,7 +195,7 @@ query (void)
 
   static const GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_LAYER, "Curl Layer", "The new layer with the curl." }
+    { GIMP_PDB_LAYER, "curl-layer", "The new layer with the curl." }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
