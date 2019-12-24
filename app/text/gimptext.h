@@ -50,6 +50,16 @@ struct _GimpText
   gchar                 *language;
   GimpTextDirection      base_dir;
   GimpRGB                color;
+  GimpFillStyle          outline_style;
+  GimpPattern           *outline_pattern;
+  GimpRGB                outline_foreground;
+  gdouble                outline_width;
+  GimpCapStyle           outline_cap_style;
+  GimpJoinStyle          outline_join_style;
+  gdouble                outline_miter_limit;
+  gboolean               outline_antialias;
+  gdouble                outline_dash_offset;
+  GArray                *outline_dash_info;
   GimpTextOutline        outline;
   GimpTextJustification  justify;
   gdouble                indent;
@@ -64,6 +74,7 @@ struct _GimpText
   gdouble                offset_y;
 
   gdouble                border;
+  Gimp                  *gimp;
 };
 
 struct _GimpTextClass

@@ -63,18 +63,19 @@ gimp_text_to_parasite (const GimpText *text)
                                             NULL);
 }
 
+
 GimpText *
 gimp_text_from_parasite (const GimpParasite  *parasite,
+                         Gimp                *gimp,
                          GError             **error)
 {
-  GimpText *text;
-
+  GimpText    *text;
   g_return_val_if_fail (parasite != NULL, NULL);
   g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
                                 gimp_text_parasite_name ()) == 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  text = g_object_new (GIMP_TYPE_TEXT, NULL);
+  text = g_object_new (GIMP_TYPE_TEXT, "gimp", gimp, NULL);
 
   if (gimp_parasite_data (parasite))
     {

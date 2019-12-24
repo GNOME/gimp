@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -29,6 +30,11 @@
 #include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdashpattern.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimppattern.h"
+#include "core/gimpstrokeoptions.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpviewable.h"
@@ -38,6 +44,7 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpstrokeeditor.h"
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpviewablebox.h"
@@ -64,6 +71,19 @@ enum
   PROP_LETTER_SPACING,
   PROP_BOX_MODE,
 
+  PROP_OUTLINE,
+  PROP_OUTLINE_STYLE,       /* fill-options */
+  PROP_OUTLINE_FOREGROUND,  /* context */
+  PROP_OUTLINE_PATTERN,     /* context */
+  PROP_OUTLINE_WIDTH,       /* stroke-options */
+  PROP_OUTLINE_UNIT,
+  PROP_OUTLINE_CAP_STYLE,
+  PROP_OUTLINE_JOIN_STYLE,
+  PROP_OUTLINE_MITER_LIMIT,
+  PROP_OUTLINE_ANTIALIAS,   /* fill-options */
+  PROP_OUTLINE_DASH_UNIT, /* NOT USED */
+  PROP_OUTLINE_DASH_OFFSET,
+  PROP_OUTLINE_DASH_INFO,
   PROP_USE_EDITOR,
 
   PROP_FONT_VIEW_TYPE,
@@ -71,7 +91,18 @@ enum
 };
 
 
-static void  gimp_text_options_config_iface_init (GimpConfigInterface *config_iface);
+static void       gimp_text_options_config_iface_init    (GimpConfigInterface *config_iface);
+static gboolean   gimp_text_options_serialize_property   (GimpConfig       *config,
+                                                          guint             property_id,
+                                                          const GValue     *value,
+                                                          GParamSpec       *pspec,
+                                                          GimpConfigWriter *writer);
+static gboolean   gimp_text_options_deserialize_property (GimpConfig       *config,
+                                                          guint             property_id,
+                                                          GValue           *value,
+                                                          GParamSpec       *pspec,
+                                                          GScanner         *scanner,
+                                                          GTokenType       *expected);
 
 static void  gimp_text_options_finalize           (GObject         *object);
 static void  gimp_text_options_set_property       (GObject         *object,
@@ -113,7 +144,10 @@ static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GimpRGB               gray;
+  GParamSpec   *array_spec;
 
+  gimp_rgba_set (&gray, 0.75, 0.75, 0.75, GIMP_OPACITY_OPAQUE);
   object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
@@ -224,6 +258,71 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                         GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                         GIMP_VIEW_SIZE_SMALL,
                         GIMP_PARAM_STATIC_STRINGS);
+
+   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE,
+                                  "outline", NULL,
+                                  GIMP_TYPE_TEXT_OUTLINE,
+                                  GIMP_TEXT_OUTLINE_NONE,
+                                  GIMP_PARAM_STATIC_STRINGS |
+                                  GIMP_CONFIG_PARAM_DEFAULTS);
+   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE_STYLE,
+                                  "outline-style", NULL,
+                                  GIMP_TYPE_FILL_STYLE,
+                                  GIMP_FILL_STYLE_SOLID,
+                                  GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
+                                 "outline-foreground", NULL,
+                                 FALSE, &gray,
+                                 GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
+                                    "outline-pattern", NULL,
+                                    GIMP_TYPE_PATTERN,
+                                    GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OUTLINE_WIDTH,
+                                    "outline-width",
+                                    _("Adjust outline width"),
+                                    0, 8192.0, 2.0,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_DEFAULTS);
+   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_OUTLINE_UNIT,
+                                  "outline-unit", NULL,
+                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
+                                  GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE_CAP_STYLE,
+                                  "outline-cap-style", NULL,
+                                  GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
+                                  GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE_JOIN_STYLE,
+                                  "outline-join-style", NULL,
+                                  GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
+                                  GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OUTLINE_MITER_LIMIT,
+                                    "outline-miter-limit",
+                                    _("Convert a mitered join to a bevelled "
+                                      "join if the miter would extend to a "
+                                      "distance of more than miter-limit * "
+                                      "line-width from the actual join point."),
+                                    0.0, 100.0, 10.0,
+                                    GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_OUTLINE_ANTIALIAS,
+                                     "outline-antialias", NULL,
+                                     TRUE,
+                                     GIMP_PARAM_STATIC_STRINGS);
+   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OUTLINE_DASH_OFFSET,
+                                    "outline-dash-offset", NULL,
+                                    0.0, 2000.0, 0.0,
+                                    GIMP_PARAM_STATIC_STRINGS);
+ 
+   array_spec = g_param_spec_double ("outline-dash-length", NULL, NULL,
+                                     0.0, 2000.0, 1.0, GIMP_PARAM_READWRITE);
+   g_object_class_install_property (object_class, PROP_OUTLINE_DASH_INFO,
+                                    gimp_param_spec_value_array ("outline-dash-info",
+                                                                 NULL, NULL,
+                                                                 array_spec,
+                                                                 GIMP_PARAM_READWRITE |
+                                                                 G_PARAM_CONSTRUCT));
+ 
+
 }
 
 static void
@@ -238,6 +337,13 @@ static void
 gimp_text_options_init (GimpTextOptions *options)
 {
   options->size_entry = NULL;
+}
+
+static void
+gimp_text_options_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->serialize_property   = gimp_text_options_serialize_property;
+  iface->deserialize_property = gimp_text_options_deserialize_property;
 }
 
 static void
@@ -294,6 +400,51 @@ gimp_text_options_get_property (GObject    *object,
       g_value_set_enum (value, options->box_mode);
       break;
 
+    case PROP_OUTLINE:
+      g_value_set_enum (value, options->outline);
+      break;
+    case PROP_OUTLINE_STYLE:
+      g_value_set_enum (value, options->outline_style);
+      break;
+    case PROP_OUTLINE_FOREGROUND:
+      g_value_set_boxed (value, &options->outline_foreground);
+      break;
+    case PROP_OUTLINE_PATTERN:
+      g_value_set_object (value, options->outline_pattern);
+      break;
+    case PROP_OUTLINE_WIDTH:
+      g_value_set_double (value, options->outline_width);
+      break;
+    case PROP_OUTLINE_UNIT:
+      g_value_set_int (value, options->outline_unit);
+      break;
+    case PROP_OUTLINE_CAP_STYLE:
+      g_value_set_enum (value, options->outline_cap_style);
+      break;
+    case PROP_OUTLINE_JOIN_STYLE:
+      g_value_set_enum (value, options->outline_join_style);
+      break;
+    case PROP_OUTLINE_MITER_LIMIT:
+      g_value_set_double (value, options->outline_miter_limit);
+      break;
+    case PROP_OUTLINE_ANTIALIAS:
+      g_value_set_boolean (value, options->outline_antialias);
+      break;
+    case PROP_OUTLINE_DASH_UNIT:
+      /* NOT USED */
+      break;
+    case PROP_OUTLINE_DASH_OFFSET:
+      g_value_set_double (value, options->outline_dash_offset);
+      break;
+    case PROP_OUTLINE_DASH_INFO:
+      {
+        GimpValueArray *value_array;
+
+        value_array = gimp_dash_pattern_to_value_array (options->outline_dash_info);
+        g_value_take_boxed (value, value_array);
+      }
+      break;
+
     case PROP_USE_EDITOR:
       g_value_set_boolean (value, options->use_editor);
       break;
@@ -318,6 +469,7 @@ gimp_text_options_set_property (GObject      *object,
                                 GParamSpec   *pspec)
 {
   GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
+  GimpRGB         *color;
 
   switch (property_id)
     {
@@ -354,6 +506,60 @@ gimp_text_options_set_property (GObject      *object,
       break;
     case PROP_BOX_MODE:
       options->box_mode = g_value_get_enum (value);
+      break;
+
+    case PROP_OUTLINE:
+      options->outline = g_value_get_enum (value);
+      break;
+    case PROP_OUTLINE_STYLE:
+      options->outline_style = g_value_get_enum (value);
+      break;
+    case PROP_OUTLINE_FOREGROUND:
+      color = g_value_get_boxed (value);
+      options->outline_foreground = *color;
+      break;
+    case PROP_OUTLINE_PATTERN:
+      {
+        GimpPattern *pattern = g_value_get_object (value);
+
+        if (options->outline_pattern != pattern)
+          {
+            if (options->outline_pattern)
+              g_object_unref (options->outline_pattern);
+
+            options->outline_pattern = pattern ? g_object_ref (pattern) : pattern;
+          }
+        break;
+      }
+    case PROP_OUTLINE_WIDTH:
+      options->outline_width =  g_value_get_double (value);
+      break;
+    case PROP_OUTLINE_UNIT:
+      options->outline_unit = g_value_get_int (value);
+      break;
+    case PROP_OUTLINE_CAP_STYLE:
+      options->outline_cap_style = g_value_get_enum (value);
+      break;
+    case PROP_OUTLINE_JOIN_STYLE:
+      options->outline_join_style = g_value_get_enum (value);
+      break;
+    case PROP_OUTLINE_MITER_LIMIT:
+      options->outline_miter_limit = g_value_get_double (value);
+      break;
+    case PROP_OUTLINE_ANTIALIAS:
+      options->outline_antialias = g_value_get_boolean (value);
+      break;
+    case PROP_OUTLINE_DASH_UNIT:
+      /* unused */
+      break;
+    case PROP_OUTLINE_DASH_OFFSET:
+      options->outline_dash_offset = g_value_get_double (value);
+      break;
+    case PROP_OUTLINE_DASH_INFO:
+      {
+        GimpValueArray *value_array = g_value_get_boxed (value);
+        options->outline_dash_info = gimp_dash_pattern_from_value_array (value_array);
+      }
       break;
 
     case PROP_USE_EDITOR:
@@ -399,6 +605,21 @@ gimp_text_options_reset (GimpConfig *config)
   gimp_config_reset_property (object, "line-spacing");
   gimp_config_reset_property (object, "letter-spacing");
   gimp_config_reset_property (object, "box-mode");
+
+  gimp_config_reset_property (object, "outline");
+  gimp_config_reset_property (object, "outline-style");
+  gimp_config_reset_property (object, "outline-foreground");
+  gimp_config_reset_property (object, "outline-pattern");
+  gimp_config_reset_property (object, "outline-width");
+  gimp_config_reset_property (object, "outline-unit");
+  gimp_config_reset_property (object, "outline-cap-style");
+  gimp_config_reset_property (object, "outline-join-style");
+  gimp_config_reset_property (object, "outline-miter-limit");
+  gimp_config_reset_property (object, "outline-antialias");
+  //gimp_config_reset_property (object, "outline-dash-unit");
+  gimp_config_reset_property (object, "outline-dash-offset");
+  gimp_config_reset_property (object, "outline-dash-info");
+
   gimp_config_reset_property (object, "use-editor");
 }
 
@@ -523,6 +744,8 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *box;
   GtkWidget       *spinbutton;
   GtkWidget       *combo;
+  GtkWidget       *editor;
+  GimpStrokeOptions *stroke_options;
   GtkSizeGroup    *size_group;
   gint             row = 0;
 
@@ -587,6 +810,12 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
+  button = gimp_prop_enum_combo_box_new (config, "outline", -1, -1);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Outline:"), 0.0, 0.5,
+                             button, 1, TRUE);
+  gtk_size_group_add_widget (size_group, button);
+
   button = gimp_prop_enum_combo_box_new (config, "hint-style", -1, -1);
   gtk_widget_set_halign (button, GTK_ALIGN_START);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
@@ -641,6 +870,37 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                             _("Box:"), 0.0, 0.5,
                             combo, 1);
 
+  stroke_options = gimp_stroke_options_new (GIMP_CONTEXT (options)->gimp,
+                                            NULL,
+                                            FALSE);
+#define BIND(a)                                    \
+  g_object_bind_property (options, "outline-" #a,  \
+                          stroke_options, #a,                           \
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE)
+  BIND (style);
+  BIND (foreground);
+  BIND (pattern);
+  BIND (width);
+  BIND (unit);
+  BIND (cap-style);
+  BIND (join-style);
+  BIND (miter-limit);
+  BIND (antialias);
+  //  BIND (dash-unit);
+  BIND (dash-offset);
+  BIND (dash-info);
+  /*
+    {
+    GimpPattern *pattern = gimp_context_get_pattern (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
+    gimp_context_set_pattern (GIMP_CONTEXT (stroke_options), pattern);
+    }
+  */
+  editor = gimp_stroke_editor_new (stroke_options, 72.0, TRUE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), editor, FALSE, FALSE, 0);
+  gtk_widget_show (editor);
+
+  g_object_unref (stroke_options);
+  
   /*  Only add the language entry if the iso-codes package is available.  */
 
 #ifdef HAVE_ISO_CODES
@@ -744,4 +1004,75 @@ gimp_text_options_editor_new (GtkWindow       *parent,
                            editor, 0);
 
   return editor;
+}
+
+static gboolean
+gimp_text_options_serialize_property (GimpConfig       *config,
+                                      guint             property_id,
+                                      const GValue     *value,
+                                      GParamSpec       *pspec,
+                                      GimpConfigWriter *writer)
+{
+  if (property_id == PROP_OUTLINE_PATTERN)
+    {
+      GimpObject *serialize_obj = g_value_get_object (value);
+
+      gimp_config_writer_open (writer, pspec->name);
+
+      if (serialize_obj)
+        gimp_config_writer_string (writer, gimp_object_get_name (serialize_obj));
+      else
+        gimp_config_writer_print (writer, "NULL", 4);
+
+      gimp_config_writer_close (writer);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_text_options_deserialize_property (GimpConfig *object,
+                                        guint       property_id,
+                                        GValue     *value,
+                                        GParamSpec *pspec,
+                                        GScanner   *scanner,
+                                        GTokenType *expected)
+{
+  if (property_id == PROP_OUTLINE_PATTERN)
+    {
+      gchar *object_name;
+
+      if (gimp_scanner_parse_identifier (scanner, "NULL"))
+        {
+          g_value_set_object (value, NULL);
+        }
+      else if (gimp_scanner_parse_string (scanner, &object_name))
+        {
+          GimpContext   *context = GIMP_CONTEXT (object);
+          GimpContainer *container;
+          GimpObject    *deserialize_obj;
+
+          if (! object_name)
+            object_name = g_strdup ("");
+
+          container = gimp_data_factory_get_container (context->gimp->pattern_factory);
+
+          deserialize_obj = gimp_container_get_child_by_name (container,
+                                                              object_name);
+
+          g_value_set_object (value, deserialize_obj);
+
+          g_free (object_name);
+        }
+      else
+        {
+          *expected = G_TOKEN_STRING;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
