@@ -337,43 +337,43 @@ gimp_text_class_init (GimpTextClass *klass)
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_PARAM_WRITABLE));
 
-   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE_STYLE,
-                                  "outline-style", NULL,
+   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_STYLE,
+                                  "outline-style", NULL, NULL,
                                   GIMP_TYPE_FILL_STYLE,
                                   GIMP_FILL_STYLE_SOLID,
                                   GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
-                                    "outline-pattern", NULL,
+   GIMP_CONFIG_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
+                                    "outline-pattern", NULL, NULL,
                                     GIMP_TYPE_PATTERN,
                                     GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
-                                 "outline-foreground", NULL,
+   GIMP_CONFIG_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
+                                 "outline-foreground", NULL, NULL,
                                  FALSE, &gray,
                                  GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OUTLINE_WIDTH,
-                                    "outline-width", NULL,
+   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_WIDTH,
+                                    "outline-width", NULL, NULL,
                                     0.0, 8192.0, 4.0,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_DEFAULTS);
-   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE_CAP_STYLE,
-                                  "outline-cap-style", NULL,
+   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_CAP_STYLE,
+                                  "outline-cap-style", NULL, NULL,
                                   GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,
                                   GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE_JOIN_STYLE,
-                                  "outline-join-style", NULL,
+   GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_JOIN_STYLE,
+                                  "outline-join-style", NULL, NULL,
                                   GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
                                   GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OUTLINE_MITER_LIMIT,
+   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_MITER_LIMIT,
                                     "outline-miter-limit",
-                                    NULL,
+                                    NULL, NULL,
                                     0.0, 100.0, 10.0,
                                     GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_OUTLINE_ANTIALIAS,
-                                     "outline-antialias", NULL,
+   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_OUTLINE_ANTIALIAS,
+                                     "outline-antialias", NULL, NULL,
                                      TRUE,
                                      GIMP_PARAM_STATIC_STRINGS);
-   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OUTLINE_DASH_OFFSET,
-                                    "outline-dash-offset", NULL,
+   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OUTLINE_DASH_OFFSET,
+                                    "outline-dash-offset", NULL, NULL,
                                     0.0, 2000.0, 0.0,
                                     GIMP_PARAM_STATIC_STRINGS);
 
