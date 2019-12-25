@@ -178,7 +178,7 @@ gimp_update_check (GimpCoreConfig *config)
   current_timestamp = g_get_real_time();
 
   /* Do not check more than once a week. */
-  if (current_timestamp < prev_update_timestamp + G_USEC_PER_SEC * 3600L * 24L * 7L)
+  if (current_timestamp - prev_update_timestamp < (gint64) G_USEC_PER_SEC * 3600L * 24L * 7L)
     return FALSE;
 
   gimp_versions = g_file_new_for_uri ("https://testing.gimp.org/gimp_versions.json");
