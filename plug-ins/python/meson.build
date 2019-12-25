@@ -32,7 +32,7 @@ foreach plugin : plugins
   srcs = plugin.get('srcs', name + '.py')
 
   install_data(srcs, install_dir: gimpplugindir / 'plug-ins' / name,
-               install_mode: 'r-xr-xr-x')
+               install_mode: 'rwxr-xr-x')
 endforeach
 
 
