@@ -41,6 +41,8 @@
 
 #define SEGMENT_FRACTION 0.3
 
+/* round n to the nearest multiple of m */
+#define SNAP(n, m) (RINT((n) / (m)) * (m))
 
 enum
 {
@@ -310,6 +312,9 @@ gimp_dial_button_press_event (GtkWidget      *widget,
       if (dial->priv->clockwise_angles && angle)
         angle = 2.0 * G_PI - angle;
 
+      if (bevent->state & GDK_SHIFT_MASK)
+        angle = SNAP (angle, G_PI / 12.0);
+
       dial->priv->last_angle = angle;
 
       switch (dial->priv->target)
@@ -349,11 +354,16 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
     {
       gdouble delta;
 
+      if (mevent->state & GDK_SHIFT_MASK)
+        angle = SNAP (angle, G_PI / 12.0);
+
       delta = angle - dial->priv->last_angle;
       dial->priv->last_angle = angle;
 
       if (delta != 0.0)
         {
+          gdouble alpha = dial->priv->alpha;
+
           switch (dial->priv->target)
             {
             case DIAL_TARGET_ALPHA:
@@ -365,6 +375,10 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
               break;
 
             case DIAL_TARGET_BOTH:
+              /* snap both by the alpha value */
+              if (mevent->state & GDK_SHIFT_MASK)
+                delta = SNAP (alpha + delta, G_PI / 12.0) - alpha;
+
               g_object_set (dial,
                             "alpha", gimp_dial_normalize_angle (dial->priv->alpha + delta),
                             "beta",  gimp_dial_normalize_angle (dial->priv->beta  + delta),
