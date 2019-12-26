@@ -38,6 +38,8 @@
 
 #include "gimppolar.h"
 
+/* round n to the nearest multiple of m */
+#define SNAP(n, m) (RINT((n) / (m)) * (m))
 
 enum
 {
@@ -235,6 +237,9 @@ gimp_polar_button_press_event (GtkWidget      *widget,
       angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (polar),
                                                    bevent->x, bevent->y,
                                                    &radius);
+      if (bevent->state & GDK_SHIFT_MASK)
+        angle = SNAP (angle, G_PI / 12.0);
+
       radius = MIN (radius, 1.0);
 
       g_object_set (polar,
@@ -261,6 +266,9 @@ gimp_polar_motion_notify_event (GtkWidget      *widget,
   if (_gimp_circle_has_grab (GIMP_CIRCLE (polar)))
     {
       radius = MIN (radius, 1.0);
+
+      if (mevent->state & GDK_SHIFT_MASK)
+        angle = SNAP (angle, G_PI / 12.0);
 
       g_object_set (polar,
                     "angle",  angle,
