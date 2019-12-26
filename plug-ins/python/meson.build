@@ -7,14 +7,13 @@ plugins = [
   { 'name': 'file-openraster' },
   { 'name': 'foggify' },
   { 'name': 'gradients-save-as-css' },
+  { 'name': 'histogram-export' },
   { 'name': 'palette-offset' },
   { 'name': 'palette-sort' },
   { 'name': 'palette-to-gradient' },
   { 'name': 'py-slice' },
   { 'name': 'python-eval' },
   { 'name': 'spyro-plus' },
-
-  # { 'name': 'histogram-export' },
 ]
 
 if not stable
