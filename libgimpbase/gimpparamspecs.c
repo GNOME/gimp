@@ -1448,6 +1448,8 @@ gimp_param_spec_object_array (const gchar *name,
   array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_OBJECT_ARRAY,
                                       name, nick, blurb, flags);
 
+  g_return_val_if_fail (array_spec, NULL);
+
   array_spec->object_type = object_type;
 
   return G_PARAM_SPEC (array_spec);

@@ -123,6 +123,8 @@ gimp_param_spec_image (const gchar *name,
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_IMAGE,
                                  name, nick, blurb, flags);
 
+  g_return_val_if_fail (ispec, NULL);
+
   ispec->none_ok = none_ok ? TRUE : FALSE;
 
   return G_PARAM_SPEC (ispec);
@@ -228,6 +230,8 @@ gimp_param_spec_item (const gchar *name,
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_ITEM,
                                  name, nick, blurb, flags);
 
+  g_return_val_if_fail (ispec, NULL);
+
   ispec->none_ok = none_ok;
 
   return G_PARAM_SPEC (ispec);
@@ -306,6 +310,8 @@ gimp_param_spec_drawable (const gchar *name,
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_DRAWABLE,
                                  name, nick, blurb, flags);
 
+  g_return_val_if_fail (ispec, NULL);
+
   ispec->none_ok = none_ok ? TRUE : FALSE;
 
   return G_PARAM_SPEC (ispec);
@@ -383,11 +389,7 @@ gimp_param_spec_layer (const gchar *name,
 
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_LAYER,
                                  name, nick, blurb, flags);
-  /* g_param_spec_internal() may fail if for instance @name is invalid.
-   * We don't want to dereference the pointer and segfault in such a
-   * case, so let's just fail here.
-   * See #4392.
-   */
+
   g_return_val_if_fail (ispec, NULL);
 
   ispec->none_ok = none_ok ? TRUE : FALSE;
@@ -468,6 +470,8 @@ gimp_param_spec_channel (const gchar *name,
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_CHANNEL,
                                  name, nick, blurb, flags);
 
+  g_return_val_if_fail (ispec, NULL);
+
   ispec->none_ok = none_ok ? TRUE : FALSE;
 
   return G_PARAM_SPEC (ispec);
@@ -545,6 +549,8 @@ gimp_param_spec_layer_mask (const gchar *name,
 
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_LAYER_MASK,
                                  name, nick, blurb, flags);
+
+  g_return_val_if_fail (ispec, NULL);
 
   ispec->none_ok = none_ok ? TRUE : FALSE;
 
@@ -624,6 +630,8 @@ gimp_param_spec_selection (const gchar *name,
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_SELECTION,
                                  name, nick, blurb, flags);
 
+  g_return_val_if_fail (ispec, NULL);
+
   ispec->none_ok = none_ok ? TRUE : FALSE;
 
   return G_PARAM_SPEC (ispec);
@@ -701,6 +709,8 @@ gimp_param_spec_vectors (const gchar *name,
 
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_VECTORS,
                                  name, nick, blurb, flags);
+
+  g_return_val_if_fail (ispec, NULL);
 
   ispec->none_ok = none_ok ? TRUE : FALSE;
 
@@ -806,6 +816,8 @@ gimp_param_spec_display (const gchar *name,
 
   dspec = g_param_spec_internal (GIMP_TYPE_PARAM_DISPLAY,
                                  name, nick, blurb, flags);
+
+  g_return_val_if_fail (dspec, NULL);
 
   dspec->none_ok = none_ok ? TRUE : FALSE;
 
