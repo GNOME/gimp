@@ -129,6 +129,7 @@ struct _GimpPlugInClass
   void             (* quit)             (GimpPlugIn  *plug_in);
 
   /* Padding for future expansion */
+  /*< private >*/
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);

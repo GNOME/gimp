@@ -75,10 +75,12 @@ struct _GimpProcedure
  * @uninstall: called to uninstall the procedure from the main GIMP
  *   application. This is an implementation detail and must never
  *   be called by any plug-in code.
- * @run: called to when the procedure is executed via gimp_procedure_run().
+ * @run: called when the procedure is executed via gimp_procedure_run().
  *   the default implementation simply calls the procedure's #GimpRunFunc,
  *   #GimpProcedure subclasses are free to modify the passed @args and
  *   call their own, subclass-specific run functions.
+ * @create_config: called when a #GimpConfig object is created using
+ *   gimp_procedure_create_config().
  *
  * Since: 3.0
  **/
@@ -97,6 +99,7 @@ struct _GimpProcedureClass
                                            gint                   n_args);
 
   /* Padding for future expansion */
+  /*< private >*/
   void (*_gimp_reserved1) (void);
   void (*_gimp_reserved2) (void);
   void (*_gimp_reserved3) (void);
