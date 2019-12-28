@@ -132,6 +132,8 @@ gimp_action_impl_init (GimpActionImpl *impl)
 {
   impl->ellipsize       = PANGO_ELLIPSIZE_NONE;
   impl->max_width_chars = -1;
+
+  gimp_action_init (GIMP_ACTION (impl));
 }
 
 static void
