@@ -492,6 +492,7 @@ run (const gchar      *name,
   drawable_id = param[2].data.d_drawable;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals = values;
