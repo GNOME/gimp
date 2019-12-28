@@ -28,6 +28,8 @@
 
 #include "dialogs-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
@@ -79,6 +81,9 @@ static void        about_dialog_add_animation (GtkWidget       *vbox,
 static gboolean    about_dialog_anim_expose   (GtkWidget       *widget,
                                                GdkEventExpose  *event,
                                                GimpAboutDialog *dialog);
+static void        about_dialog_add_update    (GtkWidget       *vbox,
+                                               GimpCoreConfig  *config,
+                                               GimpAboutDialog *dialog);
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
@@ -89,11 +94,11 @@ static void        about_dialog_add_unstable_message
 
 
 GtkWidget *
-about_dialog_create (GimpContext *context)
+about_dialog_create (GimpCoreConfig *config)
 {
   static GimpAboutDialog dialog;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CORE_CONFIG (config), NULL);
 
   if (! dialog.dialog)
     {
@@ -156,6 +161,8 @@ about_dialog_create (GimpContext *context)
 
       if (GTK_IS_BOX (children->data))
         {
+          about_dialog_add_update (children->data,
+                                   config, &dialog);
           about_dialog_add_animation (children->data, &dialog);
 #ifdef GIMP_UNSTABLE
           about_dialog_add_unstable_message (children->data);
@@ -235,7 +242,7 @@ about_dialog_add_animation (GtkWidget       *vbox,
 
   dialog->anim_area = gtk_drawing_area_new ();
   gtk_box_pack_start (GTK_BOX (vbox), dialog->anim_area, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (vbox), dialog->anim_area, 4);
+  gtk_box_reorder_child (GTK_BOX (vbox), dialog->anim_area, 5);
   gtk_widget_show (dialog->anim_area);
 
   dialog->layout = gtk_widget_create_pango_layout (dialog->anim_area, NULL);
@@ -249,6 +256,79 @@ about_dialog_add_animation (GtkWidget       *vbox,
   g_signal_connect (dialog->anim_area, "expose-event",
                     G_CALLBACK (about_dialog_anim_expose),
                     dialog);
+}
+
+static void
+about_dialog_add_update (GtkWidget       *vbox,
+                         GimpCoreConfig  *config,
+                         GimpAboutDialog *dialog)
+{
+  if (config->last_known_release != NULL)
+    {
+      /* There is a newer version. */
+      GtkWidget *link;
+      GtkWidget *box2;
+      GtkWidget *image;
+      GtkWidget *frame;
+      GtkWidget *box;
+      GtkWidget *label;
+      GDateTime *datetime;
+      gchar     *date;
+      gchar     *text;
+
+      /* The update frame. */
+      frame = gtk_frame_new (NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 2);
+
+      box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+      gtk_container_add (GTK_CONTAINER (frame), box);
+
+      /* The preferred localized date representation without the time. */
+      datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+      date = g_date_time_format (datetime, "%x");
+      g_date_time_unref (datetime);
+
+      /* We want the frame to stand out. */
+      label = gtk_label_new (NULL);
+      text = g_strdup_printf ("<tt><b><big>%s</big></b></tt>",
+                              _("New version available!"));
+      gtk_label_set_markup (GTK_LABEL (label), text);
+      g_free (text);
+      gtk_widget_show (label);
+      gtk_frame_set_label_widget (GTK_FRAME (frame), label);
+      gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
+      gtk_box_reorder_child (GTK_BOX (vbox), frame, 2);
+
+      /* Explanation text with update image. */
+      box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+      gtk_box_pack_start (GTK_BOX (box), box2, FALSE, FALSE, 0);
+      gtk_widget_show (box2);
+
+      image = gtk_image_new_from_icon_name ("software-update-available",
+                                            GTK_ICON_SIZE_DIALOG);
+      gtk_box_pack_start (GTK_BOX (box2), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+
+      text = g_strdup_printf (_("A new version of GIMP (%s) was released on %s.\n"
+                                "It is recommended to update."),
+                              config->last_known_release, date);
+      label = gtk_label_new (text);
+      g_free (date);
+      g_free (text);
+
+      gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      /* Finally the download link. */
+      link = gtk_link_button_new_with_label ("https://www.gimp.org/downloads/",
+                                             _("Go to download page"));
+      gtk_box_pack_start (GTK_BOX (box), link, FALSE, FALSE, 0);
+      gtk_widget_show (link);
+
+      gtk_widget_show (box);
+      gtk_widget_show (frame);
+    }
 }
 
 static void
