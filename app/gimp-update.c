@@ -145,7 +145,7 @@ gimp_check_updates_callback (GObject      *source,
       if (gimp_version_break (last_version, &major, &minor, &micro))
         {
           g_object_set (config,
-                        "check-update-timestamp", g_get_real_time(),
+                        "check-update-timestamp", g_get_real_time() / G_USEC_PER_SEC,
                         "last-known-release",
                         (major > GIMP_MAJOR_VERSION ||
                          (major == GIMP_MAJOR_VERSION && minor > GIMP_MINOR_VERSION) ||
@@ -175,13 +175,26 @@ gimp_update_check (GimpCoreConfig *config)
   g_object_get (config,
                 "check-update-timestamp", &prev_update_timestamp,
                 NULL);
-  current_timestamp = g_get_real_time();
+  current_timestamp = g_get_real_time() / G_USEC_PER_SEC;
 
+  /* Get rid of invalid saved timestamps. */
+  if (prev_update_timestamp > current_timestamp)
+    prev_update_timestamp = -1;
+
+#ifndef GIMP_UNSTABLE
   /* Do not check more than once a week. */
-  if (current_timestamp - prev_update_timestamp < (gint64) G_USEC_PER_SEC * 3600L * 24L * 7L)
+  if (current_timestamp - prev_update_timestamp < 3600L * 24L * 7L)
     return FALSE;
+#endif
 
-  gimp_versions = g_file_new_for_uri ("https://testing.gimp.org/gimp_versions.json");
+#ifdef GIMP_UNSTABLE
+  if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
+    gimp_versions = g_file_new_for_path (g_getenv ("GIMP_DEV_VERSIONS_JSON"));
+  else
+    gimp_versions = g_file_new_for_uri ("https://testing.gimp.org/gimp_versions.json");
+#else
+  gimp_versions = g_file_new_for_uri ("https://gimp.org/gimp_versions.json");
+#endif
   g_file_read_async (gimp_versions, 0, NULL, gimp_check_updates_callback, config);
   g_object_unref (gimp_versions);
 
