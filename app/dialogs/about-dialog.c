@@ -35,6 +35,7 @@
 
 #include "about-dialog.h"
 #include "authors.h"
+#include "gimp-update.h"
 
 #include "gimp-intl.h"
 
@@ -49,6 +50,8 @@
 typedef struct
 {
   GtkWidget   *dialog;
+
+  GtkWidget   *update_frame;
 
   GtkWidget   *anim_area;
   PangoLayout *layout;
@@ -72,9 +75,8 @@ static void        about_dialog_unmap         (GtkWidget       *widget,
 static GdkPixbuf * about_dialog_load_logo     (void);
 static void        about_dialog_add_animation (GtkWidget       *vbox,
                                                GimpAboutDialog *dialog);
-static void        about_dialog_add_update    (GtkWidget       *vbox,
-                                               GimpCoreConfig  *config,
-                                               GimpAboutDialog *dialog);
+static void        about_dialog_add_update    (GimpAboutDialog *dialog,
+                                               GimpCoreConfig  *config);
 static gboolean    about_dialog_anim_draw     (GtkWidget       *widget,
                                                cairo_t         *cr,
                                                GimpAboutDialog *dialog);
@@ -86,6 +88,10 @@ static void        about_dialog_add_unstable_message
                                               (GtkWidget       *vbox);
 #endif /* GIMP_UNSTABLE */
 
+static void        about_dialog_last_release_changed
+                                              (GimpCoreConfig   *config,
+                                               const GParamSpec *pspec,
+                                               GimpAboutDialog  *dialog);
 
 GtkWidget *
 about_dialog_create (GimpCoreConfig *config)
@@ -153,12 +159,11 @@ about_dialog_create (GimpCoreConfig *config)
 
       if (GTK_IS_BOX (children->data))
         {
-          about_dialog_add_update (children->data,
-                                   config, &dialog);
           about_dialog_add_animation (children->data, &dialog);
 #ifdef GIMP_UNSTABLE
           about_dialog_add_unstable_message (children->data);
 #endif /* GIMP_UNSTABLE */
+          about_dialog_add_update (&dialog, config);
         }
       else
         g_warning ("%s: ooops, no box in this container?", G_STRLOC);
@@ -249,34 +254,44 @@ about_dialog_add_animation (GtkWidget       *vbox,
 }
 
 static void
-about_dialog_add_update (GtkWidget       *vbox,
-                         GimpCoreConfig  *config,
-                         GimpAboutDialog *dialog)
+about_dialog_add_update (GimpAboutDialog *dialog,
+                         GimpCoreConfig  *config)
 {
+  GtkWidget *container;
+  GList     *children;
+  GtkWidget *vbox;
+
+  GtkWidget *frame;
+  GtkWidget *box;
+  GtkWidget *label;
+  GDateTime *datetime;
+  gchar     *date;
+  gchar     *text;
+
+  /* Get the dialog vbox. */
+  container = gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog));
+  children = gtk_container_get_children (GTK_CONTAINER (container));
+  g_return_if_fail (GTK_IS_BOX (children->data));
+  vbox = children->data;
+  g_list_free (children);
+
+  /* The preferred localized date representation without the time. */
+  datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+  date = g_date_time_format (datetime, "%x");
+  g_date_time_unref (datetime);
+
+  /* The update frame. */
+  frame = gtk_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 2);
+
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (frame), box);
   if (config->last_known_release != NULL)
     {
       /* There is a newer version. */
       GtkWidget *link;
       GtkWidget *box2;
       GtkWidget *image;
-      GtkWidget *frame;
-      GtkWidget *box;
-      GtkWidget *label;
-      GDateTime *datetime;
-      gchar     *date;
-      gchar     *text;
-
-      /* The update frame. */
-      frame = gtk_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 2);
-
-      box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-      gtk_container_add (GTK_CONTAINER (frame), box);
-
-      /* The preferred localized date representation without the time. */
-      datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
-      date = g_date_time_format (datetime, "%x");
-      g_date_time_unref (datetime);
 
       /* We want the frame to stand out. */
       label = gtk_label_new (NULL);
@@ -288,7 +303,7 @@ about_dialog_add_update (GtkWidget       *vbox,
       gtk_frame_set_label_widget (GTK_FRAME (frame), label);
       gtk_frame_set_label_align (GTK_FRAME (frame), 0.5, 0.5);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
-      gtk_box_reorder_child (GTK_BOX (vbox), frame, 2);
+      gtk_box_reorder_child (GTK_BOX (vbox), frame, 3);
 
       /* Explanation text with update image. */
       box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -304,7 +319,6 @@ about_dialog_add_update (GtkWidget       *vbox,
                                 "It is recommended to update."),
                               config->last_known_release, date);
       label = gtk_label_new (text);
-      g_free (date);
       g_free (text);
 
       gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
@@ -315,10 +329,43 @@ about_dialog_add_update (GtkWidget       *vbox,
                                              _("Go to download page"));
       gtk_box_pack_start (GTK_BOX (box), link, FALSE, FALSE, 0);
       gtk_widget_show (link);
-
-      gtk_widget_show (box);
-      gtk_widget_show (frame);
     }
+  else
+    {
+      /* Show a check update version. */
+      GtkWidget *button;
+      gchar     *text2;
+
+      gtk_box_reorder_child (GTK_BOX (vbox), frame, 4);
+
+      text2 = g_strdup_printf (_("Last checked on %s"), date);
+      text = g_strdup_printf ("%s\n<i>%s</i>",
+                              _("Check for updates"), text2);
+
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), text);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+      g_free (text);
+      g_free (text2);
+
+      button = gtk_button_new ();
+      gtk_container_add (GTK_CONTAINER (button), label);
+      gtk_widget_show (label);
+
+      g_signal_connect (config, "notify::last-known-release",
+                        (GCallback) about_dialog_last_release_changed,
+                        dialog);
+      g_signal_connect_swapped (button, "clicked",
+                                (GCallback) gimp_update_check, config);
+      gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+    }
+  g_free (date);
+
+  gtk_widget_show (box);
+  gtk_widget_show (frame);
+
+  dialog->update_frame = frame;
 }
 
 static void
@@ -613,3 +660,20 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
 }
 
 #endif /* GIMP_UNSTABLE */
+
+static void
+about_dialog_last_release_changed (GimpCoreConfig   *config,
+                                   const GParamSpec *pspec,
+                                   GimpAboutDialog  *dialog)
+{
+  g_signal_handlers_disconnect_by_func (config,
+                                        (GCallback) about_dialog_last_release_changed,
+                                        dialog);
+  if (dialog->update_frame)
+    {
+      gtk_widget_destroy (dialog->update_frame);
+      dialog->update_frame = NULL;
+    }
+
+  about_dialog_add_update (dialog, config);
+}
