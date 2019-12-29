@@ -22,7 +22,8 @@
 #define __APP_GIMP_UPDATE_H__
 
 
-gboolean gimp_update_check (GimpCoreConfig *config);
+gboolean gimp_update_auto_check (GimpCoreConfig *config);
+gboolean gimp_update_check      (GimpCoreConfig *config);
 
 
 #endif /* __APP_GIMP_UPDATE_H__ */

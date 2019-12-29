@@ -162,10 +162,15 @@ gimp_check_updates_callback (GObject      *source,
     }
 }
 
+/*
+ * gimp_update_auto_check:
+ * @config:
+ *
+ * Run the check for newer versions of GIMP if conditions are right.
+ */
 gboolean
-gimp_update_check (GimpCoreConfig *config)
+gimp_update_auto_check (GimpCoreConfig *config)
 {
-  GFile *gimp_versions;
   gint64 prev_update_timestamp;
   gint64 current_timestamp;
 
@@ -186,6 +191,20 @@ gimp_update_check (GimpCoreConfig *config)
   if (current_timestamp - prev_update_timestamp < 3600L * 24L * 7L)
     return FALSE;
 #endif
+
+  return gimp_update_check (config);
+}
+
+/*
+ * gimp_update_check:
+ * @config:
+ *
+ * Run the check for newer versions of GIMP inconditionnally.
+ */
+gboolean
+gimp_update_check (GimpCoreConfig *config)
+{
+  GFile *gimp_versions;
 
 #ifdef GIMP_UNSTABLE
   if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))

@@ -287,7 +287,7 @@ app_run (const gchar         *full_prog_name,
    * Thus we have to add a special flag when we make an update
    * check so that the timestamp is saved.
    */
-  save_gimprc_at_exit = gimp_update_check (gimp->config);
+  save_gimprc_at_exit = gimp_update_auto_check (gimp->config);
 
   /* Initialize the error handling after creating/migrating the config
    * directory because it will create some folders for backup and crash
