@@ -24,11 +24,19 @@
 #include <json-glib/json-glib.h>
 #include <stdio.h>
 
+#ifndef GIMP_CONSOLE_COMPILATION
+#include <gtk/gtk.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
 
 #include "config/gimpcoreconfig.h"
+
+#ifndef GIMP_CONSOLE_COMPILATION
+#include "dialogs/about-dialog.h"
+#endif
 
 #include "gimp-intl.h"
 #include "gimp-update.h"
@@ -162,6 +170,27 @@ gimp_check_updates_callback (GObject      *source,
     }
 }
 
+static void
+gimp_update_about_dialog (GimpCoreConfig   *config,
+                          const GParamSpec *pspec,
+                          gpointer          user_data)
+{
+  g_signal_handlers_disconnect_by_func (config,
+                                        (GCallback) gimp_update_about_dialog,
+                                        NULL);
+
+  if (config->last_known_release != NULL)
+    {
+#ifndef GIMP_CONSOLE_COMPILATION
+      gtk_widget_show (about_dialog_create (config));
+#else
+      g_warning (_("A new version of GIMP (%s) was released.\n"
+                   "It is recommended to update."),
+                 config->last_known_release);
+#endif
+    }
+}
+
 /*
  * gimp_update_auto_check:
  * @config:
@@ -191,6 +220,10 @@ gimp_update_auto_check (GimpCoreConfig *config)
   if (current_timestamp - prev_update_timestamp < 3600L * 24L * 7L)
     return FALSE;
 #endif
+
+  g_signal_connect (config, "notify::last-known-release",
+                    (GCallback) gimp_update_about_dialog,
+                    NULL);
 
   return gimp_update_check (config);
 }
