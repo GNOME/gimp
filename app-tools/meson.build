@@ -1,5 +1,5 @@
 
-gimp_debug_tool = executable('gimp-debug-tool',
+gimp_debug_tool = executable('gimp-debug-tool-' + gimp_app_version,
   'gimp-debug-tool.c',
   include_directories: rootInclude,
   dependencies: [
@@ -12,4 +12,6 @@ gimp_debug_tool = executable('gimp-debug-tool',
     libapp,
     libappwidgets,
   ],
+  install: true,
+  install_dir: get_option('libexecdir')
 )
