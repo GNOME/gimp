@@ -275,7 +275,7 @@ gimp_param_uint8_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_uint8_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GimpParamSpecUInt8Array),
         0,
         (GInstanceInitFunc) gimp_param_uint8_array_init
       };
@@ -403,7 +403,7 @@ gimp_param_int16_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_int16_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GimpParamSpecInt16Array),
         0,
         (GInstanceInitFunc) gimp_param_int16_array_init
       };
@@ -533,7 +533,7 @@ gimp_param_int32_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_int32_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GimpParamSpecInt32Array),
         0,
         (GInstanceInitFunc) gimp_param_int32_array_init
       };
@@ -663,7 +663,7 @@ gimp_param_float_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_float_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GimpParamSpecFloatArray),
         0,
         (GInstanceInitFunc) gimp_param_float_array_init
       };
@@ -884,7 +884,7 @@ gimp_param_string_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_string_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GimpParamSpecStringArray),
         0,
         (GInstanceInitFunc) gimp_param_string_array_init
       };
@@ -1104,7 +1104,7 @@ gimp_param_rgb_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_rgb_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GimpParamSpecRGBArray),
         0,
         (GInstanceInitFunc) gimp_param_rgb_array_init
       };
