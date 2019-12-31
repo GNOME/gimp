@@ -1332,7 +1332,7 @@ gimp_param_object_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_object_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GimpParamSpecObjectArray),
         0,
         (GInstanceInitFunc) gimp_param_object_array_init
       };
