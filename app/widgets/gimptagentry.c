@@ -736,6 +736,7 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
   gint    i;
   GList  *resource_iter;
   GList  *tag_iter;
+  GList  *selected_items;
   GList  *dont_remove_list = NULL;
   GList  *remove_list      = NULL;
   GList  *add_list         = NULL;
@@ -781,7 +782,14 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
 
   g_list_free (dont_remove_list);
 
-  for (resource_iter = tag_entry->selected_items;
+  /* duplicate tag_entry->selected_items for the add/remove loop
+   * because adding/removing can change tag_entry->selected_items.
+   * See Issue #2227.
+   */
+  selected_items = g_list_copy_deep (tag_entry->selected_items,
+                                     (GCopyFunc) g_object_ref, NULL);
+
+  for (resource_iter = selected_items;
        resource_iter;
        resource_iter = g_list_next (resource_iter))
     {
@@ -797,6 +805,8 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
           gimp_tagged_add_tag (tagged, tag_iter->data);
         }
     }
+
+  g_list_free_full (selected_items, (GDestroyNotify) g_object_unref);
 
   g_list_free_full (add_list,    (GDestroyNotify) g_object_unref);
   g_list_free_full (remove_list, (GDestroyNotify) g_object_unref);
