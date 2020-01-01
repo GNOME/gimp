@@ -653,8 +653,20 @@ get_missing_fonts (GList *layers)
 
       if (gimp_item_is_group (GIMP_ITEM (layer)))
         {
-          missing_fonts = g_list_concat (missing_fonts,
-                                         get_missing_fonts (gimp_item_list_children (GIMP_ITEM (layer))));
+          GList *child_missing_fonts;
+          GList *iter2;
+
+          child_missing_fonts = get_missing_fonts (gimp_item_list_children (GIMP_ITEM (layer)));
+          for (iter2 = child_missing_fonts; iter2; iter2 = iter2->next)
+            {
+              gchar *missing = iter2->data;
+
+              if (g_list_find_custom (missing_fonts, missing, (GCompareFunc) g_strcmp0) == NULL)
+                missing_fonts = g_list_prepend (missing_fonts, missing);
+              else
+                g_free (missing);
+            }
+          g_list_free (child_missing_fonts);
         }
       else if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
         {
