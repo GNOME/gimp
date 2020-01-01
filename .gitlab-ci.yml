@@ -1,4 +1,4 @@
-image: salamandar/archlinux-gimp:latest
+image: debian:testing
 
 stages:
   - dependencies
@@ -28,28 +28,25 @@ deps-linux:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
         git
-        base-devel
         meson
-        lcms2
-        base-devel
+        liblcms2-dev
         ffmpeg
         gobject-introspection
-        graphviz
-        jasper
-        json-glib
-        lcms2
-        libgexiv2
-        libraw
-        librsvg
-        libspiro
-        libtiff
+        graphviz-dev
+        libjson-glib-dev
+        libgexiv2-dev
+        libraw-dev
+        librsvg2-dev
+        libspiro-dev
+        libtiff5-dev
         luajit
-        openexr
-        python
-        sdl2
-        suitesparse
+        libopenexr-dev
+        python3
+        libsuitesparse-dev
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
     - git clone --depth="${GIT_DEPTH}" https://gitlab.gnome.org/GNOME/babl.git _babl
   script:
@@ -77,42 +74,39 @@ deps-linux:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        appstream-glib
+    - apt-get update
+    - apt-get install -y --no-install-recommends
         at-spi2-core
-        at-spi2-atk
-        dbus-glib
+        build-essential
         desktop-file-utils
         ffmpeg
+        hicolor-icon-theme
+        ghostscript
+        git
         glib-networking
         gobject-introspection
-        gtk3
-        hicolor-icon-theme
-        jasper
-        lcms2
-        libexif
-        libgudev
-        libheif
-        libmng
-        libmypaint
-        librsvg
-        libwebp
-        libwmf
-        libxmu
-        libxpm
-        mypaint-brushes1
-        openexr
-        poppler-data
-        pygtk
-        alsa-lib
-        ghostscript
-        poppler-glib
-        gtk-doc
+        gtk-doc-tools
         intltool
         iso-codes
-        xorg-server-xvfb
+        libappstream-glib-dev
+        libdbus-glib-1-dev
+        libexif-dev
+        libgtk-3-dev
+        libgudev-1.0-dev
+        libjasper-dev
+        liblcms2-dev
+        libmng-dev
+        libmypaint-dev
+        libopenexr-dev
+        libpoppler-glib-dev
+        librsvg2-dev
+        libwebp-dev
+        libwmf-dev
+        libxmu-dev
+        libxpm-dev
+        mypaint-brushes
+        poppler-data
+        xvfb
   needs: ["deps-linux"]
 
 gimp-linux-autotools:
