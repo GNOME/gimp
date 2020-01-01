@@ -1896,11 +1896,17 @@ draw_layer (GimpLayer   **layers,
             GError      **error)
 {
   GimpLayer *layer;
+  gdouble    opacity;
 
   if (optimize.reverse_order && optimize.layers_as_pages)
     layer = layers [j];
   else
     layer = layers [n_layers - j - 1];
+
+  opacity = gimp_layer_get_opacity (layer) / 100.0;
+  if ((! gimp_item_get_visible (GIMP_ITEM (layer)) || opacity == 0.0) &&
+      optimize.ignore_hidden)
+    return TRUE;
 
   if (gimp_item_is_group (GIMP_ITEM (layer)))
     {
@@ -1924,89 +1930,81 @@ draw_layer (GimpLayer   **layers,
     {
       cairo_surface_t *mask_image = NULL;
       GimpLayerMask   *mask       = NULL;
-      gdouble          opacity;
+      gint             x, y;
 
-      opacity = gimp_layer_get_opacity (layer) / 100.0;
-
-      if ((gimp_item_get_visible (GIMP_ITEM (layer)) && opacity > 0.0) ||
-          ! optimize.ignore_hidden)
+      mask = gimp_layer_get_mask (layer);
+      if (mask)
         {
-          gint x, y;
+          mask_image = get_cairo_surface (GIMP_DRAWABLE (mask), TRUE,
+                                          error);
 
-          mask = gimp_layer_get_mask (layer);
-          if (mask)
+          if (*error)
+            return FALSE;
+        }
+
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
+
+      if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || optimize.convert_text)
+        {
+          /* For raster layers */
+
+          GimpRGB  layer_color;
+          gboolean single_color = FALSE;
+
+          layer_color = get_layer_color (layer, &single_color);
+
+          cairo_rectangle (cr, x, y,
+                           gimp_drawable_width  (GIMP_DRAWABLE (layer)),
+                           gimp_drawable_height (GIMP_DRAWABLE (layer)));
+
+          if (optimize.vectorize && single_color)
             {
-              mask_image = get_cairo_surface (GIMP_DRAWABLE (mask), TRUE,
-                                              error);
-
-              if (*error)
-                return FALSE;
-            }
-
-          gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
-
-          if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || optimize.convert_text)
-            {
-              /* For raster layers */
-
-              GimpRGB  layer_color;
-              gboolean single_color = FALSE;
-
-              layer_color = get_layer_color (layer, &single_color);
-
-              cairo_rectangle (cr, x, y,
-                               gimp_drawable_width  (GIMP_DRAWABLE (layer)),
-                               gimp_drawable_height (GIMP_DRAWABLE (layer)));
-
-              if (optimize.vectorize && single_color)
-                {
-                  cairo_set_source_rgba (cr,
-                                         layer_color.r,
-                                         layer_color.g,
-                                         layer_color.b,
-                                         layer_color.a * opacity);
-                  if (mask)
-                    cairo_mask_surface (cr, mask_image, x, y);
-                  else
-                    cairo_fill (cr);
-                }
+              cairo_set_source_rgba (cr,
+                                     layer_color.r,
+                                     layer_color.g,
+                                     layer_color.b,
+                                     layer_color.a * opacity);
+              if (mask)
+                cairo_mask_surface (cr, mask_image, x, y);
               else
-                {
-                  cairo_surface_t *layer_image;
-
-                  layer_image = get_cairo_surface (GIMP_DRAWABLE (layer), FALSE,
-                                                   error);
-
-                  if (*error)
-                    return FALSE;
-
-                  cairo_clip (cr);
-
-                  cairo_set_source_surface (cr, layer_image, x, y);
-                  cairo_push_group (cr);
-                  cairo_paint_with_alpha (cr, opacity);
-                  cairo_pop_group_to_source (cr);
-
-                  if (mask)
-                    cairo_mask_surface (cr, mask_image, x, y);
-                  else
-                    cairo_paint (cr);
-
-                  cairo_reset_clip (cr);
-
-                  cairo_surface_destroy (layer_image);
-                }
+                cairo_fill (cr);
             }
           else
             {
-              /* For text layers */
-              drawText (layer, opacity, cr, x_res, y_res);
-            }
+              cairo_surface_t *layer_image;
 
-          /* draw new page if "layers as pages" option is checked */
-          if (optimize.layers_as_pages)
-            cairo_show_page (cr);
+              layer_image = get_cairo_surface (GIMP_DRAWABLE (layer), FALSE,
+                                               error);
+
+              if (*error)
+                return FALSE;
+
+              cairo_clip (cr);
+
+              cairo_set_source_surface (cr, layer_image, x, y);
+              cairo_push_group (cr);
+              cairo_paint_with_alpha (cr, opacity);
+              cairo_pop_group_to_source (cr);
+
+              if (mask)
+                cairo_mask_surface (cr, mask_image, x, y);
+              else
+                cairo_paint (cr);
+
+              cairo_reset_clip (cr);
+
+              cairo_surface_destroy (layer_image);
+            }
         }
+      else
+        {
+          /* For text layers */
+          drawText (layer, opacity, cr, x_res, y_res);
+        }
+
+      /* draw new page if "layers as pages" option is checked */
+      if (optimize.layers_as_pages)
+        cairo_show_page (cr);
 
       /* We are done with the layer - time to free some resources */
       if (mask)
