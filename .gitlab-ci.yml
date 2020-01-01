@@ -106,8 +106,7 @@ deps-linux:
         libopenexr-dev
         libpoppler-glib-dev
         librsvg2-dev
-        libtiff5
-        libtiff5-dev
+        libtiff-dev
         libtool
         libwebp-dev
         libwmf-dev
