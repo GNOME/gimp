@@ -1,4 +1,4 @@
-image: salamandar/archlinux-gimp:latest
+image: debian:testing
 
 stages:
   - dependencies
@@ -25,33 +25,34 @@ deps-linux:
     - _babl/_build
     - _gegl/_build
   before_script:
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
         git
-        base-devel
-        meson
-        lcms2
-        base-devel
         ffmpeg
+        graphviz-dev
         gobject-introspection
-        graphviz
-        jasper
-        json-glib
-        lcms2
-        libgexiv2
-        libraw
-        librsvg
-        libspiro
-        libtiff
+        libjson-glib-dev
+        libgexiv2-dev
+        libgirepository1.0-dev
+        liblcms2-dev
+        libopenexr-dev
+        libraw-dev
+        librsvg2-dev
+        libspiro-dev
+        libsuitesparse-dev
+        libtiff5-dev
         luajit
-        openexr
-        python
-        sdl2
-        suitesparse
+        meson
+        python3
+    - apt-get install -y --reinstall ca-certificates
+    - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
-    - git clone --depth="${GIT_DEPTH}" https://gitlab.gnome.org/GNOME/babl.git _babl
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
+    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
   script:
     - cd _babl
     - meson -Dprefix="${INSTALL_PREFIX}" _build
@@ -74,45 +75,54 @@ deps-linux:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        appstream-glib
+    - apt-get update
+    - apt-get install -y --no-install-recommends
         at-spi2-core
-        at-spi2-atk
-        dbus-glib
+        build-essential
         desktop-file-utils
         ffmpeg
+        hicolor-icon-theme
+        ghostscript
+        git
         glib-networking
         gobject-introspection
-        gtk3
-        hicolor-icon-theme
-        jasper
-        lcms2
-        libexif
-        libgudev
-        libheif
-        libmng
-        libmypaint
-        librsvg
-        libwebp
-        libwmf
-        libxmu
-        libxpm
-        mypaint-brushes1
-        openexr
-        poppler-data
-        pygtk
-        alsa-lib
-        ghostscript
-        poppler-glib
-        gtk-doc
+        gtk-doc-tools
         intltool
         iso-codes
-        xorg-server-xvfb
+        libappstream-glib-dev
+        libbz2-dev
+        libdbus-glib-1-dev
+        libexif-dev
+        libgexiv2-dev
+        libgirepository1.0-dev
+        libgtk-3-bin
+        libgtk-3-dev
+        libgudev-1.0-dev
+        libjson-glib-dev
+        liblcms2-dev
+        liblzma-dev
+        libmng-dev
+        libmypaint-dev
+        libopenexr-dev
+        libpoppler-glib-dev
+        librsvg2-dev
+        libtiff-dev
+        libtool
+        libwebp-dev
+        libwmf-dev
+        libxmu-dev
+        libxpm-dev
+        meson
+        mypaint-brushes
+        poppler-data
+        xvfb
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
+    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
+    - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   needs: ["deps-linux"]
 
 gimp-linux-autotools:
