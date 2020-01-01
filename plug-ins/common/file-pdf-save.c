@@ -144,7 +144,8 @@ typedef enum
   SA_IGNORE_HIDDEN,
   SA_APPLY_MASKS,
   SA_LAYERS_AS_PAGES,
-  SA_REVERSE_ORDER
+  SA_REVERSE_ORDER,
+  SA_CONVERT_TEXT
 } SaveArgs;
 
 typedef enum
@@ -165,6 +166,7 @@ typedef struct
   gboolean apply_masks;
   gboolean layers_as_pages;
   gboolean reverse_order;
+  gboolean convert_text;
 } PdfOptimize;
 
 typedef struct
@@ -297,7 +299,8 @@ static PdfOptimize optimize =
   TRUE,  /* ignore_hidden */
   TRUE,  /* apply_masks */
   FALSE, /* layers_as_pages */
-  FALSE  /* reverse_order */
+  FALSE, /* reverse_order */
+  FALSE  /* convert text layers to raster */
 };
 
 static GtkTreeModel *model;
@@ -394,6 +397,12 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
                              "Reverse order",
                              "Reverse the pages order (top layers first).",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "convert-text-layers",
+                             "Convert text layers to image",
+                             "Convert text layers to raster graphics",
                              FALSE,
                              G_PARAM_READWRITE);
     }
@@ -499,6 +508,7 @@ pdf_save (GimpProcedure        *procedure,
       optimize.ignore_hidden   = GIMP_VALUES_GET_BOOLEAN (args, SA_IGNORE_HIDDEN);
       optimize.layers_as_pages = GIMP_VALUES_GET_BOOLEAN (args, SA_LAYERS_AS_PAGES);
       optimize.reverse_order   = GIMP_VALUES_GET_BOOLEAN (args, SA_REVERSE_ORDER);
+      optimize.convert_text    = GIMP_VALUES_GET_BOOLEAN (args, SA_CONVERT_TEXT);
     }
   else
     defaults = TRUE;
@@ -629,6 +639,62 @@ write_func (void                *fp,
 {
   return fwrite (data, 1, size, fp) == size ? CAIRO_STATUS_SUCCESS
                                             : CAIRO_STATUS_WRITE_ERROR;
+}
+
+static GList *
+get_missing_fonts (GList *layers)
+{
+  GList *missing_fonts = NULL;
+  GList *iter;
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayer *layer = iter->data;
+
+      if (gimp_item_is_group (GIMP_ITEM (layer)))
+        {
+          missing_fonts = g_list_concat (missing_fonts,
+                                         get_missing_fonts (gimp_item_list_children (GIMP_ITEM (layer))));
+        }
+      else if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+        {
+          gchar                *font_family;
+          PangoFontDescription *font_description;
+          PangoFontDescription *font_description2;
+          PangoFontMap         *fontmap;
+          PangoFont            *font;
+          PangoContext         *context;
+
+          fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+          context = pango_font_map_create_context (fontmap);
+
+          font_family = gimp_text_layer_get_font (layer);
+          font_description = pango_font_description_from_string (font_family);
+
+          font = pango_font_map_load_font (fontmap, context, font_description);
+          font_description2 = pango_font_describe (font);
+          if (g_strcmp0 (pango_font_description_get_family (font_description),
+                         pango_font_description_get_family (font_description2)) != 0)
+            {
+              const gchar *missing = pango_font_description_get_family (font_description);
+
+              if (g_list_find_custom (missing_fonts, missing, (GCompareFunc) g_strcmp0) == NULL)
+                missing_fonts = g_list_prepend (missing_fonts,
+                                                g_strdup (missing));
+            }
+
+          g_object_unref (font);
+          pango_font_description_free (font_description);
+          pango_font_description_free (font_description2);
+          g_free (font_family);
+          g_object_unref (context);
+          g_object_unref (fontmap);
+        }
+    }
+
+  g_list_free (layers);
+
+  return missing_fonts;
 }
 
 static GimpValueArray *
@@ -864,11 +930,13 @@ gui_single (void)
   GtkWidget *vbox;
   GtkWidget *vectorize_c;
   GtkWidget *ignore_hidden_c;
+  GtkWidget *convert_text_c;
   GtkWidget *apply_c;
   GtkWidget *layers_as_pages_c;
   GtkWidget *reverse_order_c;
   GtkWidget *frame;
   gchar     *text;
+  GList     *missing_fonts;
   gboolean   run;
   gint32     n_layers;
 
@@ -881,6 +949,67 @@ gui_single (void)
                       vbox, TRUE, TRUE, 0);
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
+
+  convert_text_c = gtk_check_button_new_with_mnemonic (_("_Convert text layers to image"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_text_c),
+                                optimize.convert_text);
+  missing_fonts = get_missing_fonts (gimp_image_list_layers (multi_page.images[0]));
+  if (missing_fonts != NULL)
+    {
+      GtkWidget *label;
+      GtkWidget *image;
+      GtkWidget *warn_box;
+      GList     *iter;
+      gchar     *font_list = NULL;
+
+      frame = gtk_frame_new (NULL);
+      gtk_box_pack_end (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+
+      /* Checkbox is frame label. */
+      gtk_frame_set_label_widget (GTK_FRAME (frame), convert_text_c);
+
+      /* Show warning inside the frame. */
+      warn_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+      gtk_container_add (GTK_CONTAINER (frame), warn_box);
+
+      image = gtk_image_new_from_icon_name (GIMP_ICON_WILBER_EEK,
+                                            GTK_ICON_SIZE_BUTTON);
+      gtk_box_pack_start (GTK_BOX (warn_box), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+
+      for (iter = missing_fonts; iter; iter = iter->next)
+        {
+          gchar *fontname = iter->data;
+
+          if (font_list == NULL)
+            {
+              font_list = g_strdup (fontname);
+            }
+          else
+            {
+              gchar *tmp = font_list;
+
+              font_list = g_strjoin (", ", tmp, fontname, NULL);
+              g_free (tmp);
+            }
+        }
+
+      text = g_strdup_printf (_("The following fonts cannot be found: %s.\n"
+                                "It is recommended to convert your text layers to image "
+                                "or to install the missing fonts before exporting, "
+                                "otherwise your design may not look right."),
+                              font_list);
+      label = gtk_label_new (text);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      g_free (text);
+      gtk_box_pack_start (GTK_BOX (warn_box), label, TRUE, TRUE, 0);
+
+      g_list_free_full (missing_fonts, g_free);
+    }
+  else
+    {
+      gtk_box_pack_end (GTK_BOX (vbox), convert_text_c, TRUE, TRUE, 0);
+    }
 
   ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
@@ -935,6 +1064,8 @@ gui_single (void)
 
   run = gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK;
 
+  optimize.convert_text =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (convert_text_c));
   optimize.ignore_hidden =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
   optimize.vectorize =
@@ -1802,7 +1933,7 @@ draw_layer (GimpLayer   **layers,
 
           gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
-          if (! gimp_item_is_text_layer (GIMP_ITEM (layer)))
+          if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || optimize.convert_text)
             {
               /* For raster layers */
 
