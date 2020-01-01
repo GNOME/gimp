@@ -96,8 +96,8 @@ echo
 echo "## DESIGN ##"
 echo
 
-new_icons=`git log --name-status $PREV..$CUR -- icons/ 2>/dev/null|grep "^A\s"|sed 's%^.*/\([^/]*\)\..*$%\1%' | sort | uniq` 
-icons_n=`printf "$new_icons" | wc -l`
+new_icons=`git log --name-status $PREV..$CUR -- icons/*.svg icons/*.png 2>/dev/null|grep "^A\s"|sed 's%^.*/\([^/]*\)\..*$%\1%' | sort | uniq`
+icons_n=$((`printf "$new_icons" | wc -l` + 1))
 icons_comma=`printf "$new_icons"  | paste -s -d, | sed 's/,/, /g'`
 
 if [ "$icons_n" -lt 20 ]; then
@@ -127,6 +127,12 @@ echo
 
 echo "Core autotools build system:"
 git --no-pager shortlog -sn $PREV..$CUR -- configure.ac "*/Makefile.am" "tools/"
+
+echo "Meson build system:"
+git --no-pager shortlog -sn $PREV..$CUR -- meson_options.txt "*/meson.build"
+
+echo "Gitlab CI:"
+git --no-pager shortlog -sn $PREV..$CUR -- .gitlab-ci.yml
 
 echo "Binary builds:"
 git --no-pager shortlog -sn $PREV..$CUR -- build/
