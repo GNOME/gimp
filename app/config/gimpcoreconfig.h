@@ -106,6 +106,7 @@ struct _GimpCoreConfig
   gboolean                check_updates;
   gint64                  check_update_timestamp;
   gchar                  *last_known_release;
+  gint64                  last_release_timestamp;
 };
 
 struct _GimpCoreConfigClass

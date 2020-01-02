@@ -129,6 +129,7 @@ enum
   PROP_DEBUG_POLICY,
   PROP_CHECK_UPDATES,
   PROP_CHECK_UPDATE_TIMESTAMP,
+  PROP_LAST_RELEASE_TIMESTAMP,
   PROP_LAST_KNOWN_RELEASE,
 
   /* ignored, only for backward compatibility: */
@@ -692,6 +693,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                           0, G_MAXINT64, 0,
                           GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_INT64 (object_class, PROP_LAST_RELEASE_TIMESTAMP,
+                          "last-release-timestamp",
+                          "timestamp of the last release",
+                          LAST_RELEASE_TIMESTAMP_BLURB,
+                          0, G_MAXINT64, 0,
+                          GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_STRING (object_class, PROP_LAST_KNOWN_RELEASE,
                            "last-known-release",
                            "last known release of GIMP",
@@ -1076,6 +1084,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_CHECK_UPDATE_TIMESTAMP:
       core_config->check_update_timestamp = g_value_get_int64 (value);
       break;
+    case PROP_LAST_RELEASE_TIMESTAMP:
+      core_config->last_release_timestamp = g_value_get_int64 (value);
+      break;
     case PROP_LAST_KNOWN_RELEASE:
       core_config->last_known_release = g_value_dup_string (value);
       break;
@@ -1293,6 +1304,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_CHECK_UPDATE_TIMESTAMP:
       g_value_set_int64 (value, core_config->check_update_timestamp);
+      break;
+    case PROP_LAST_RELEASE_TIMESTAMP:
+      g_value_set_int64 (value, core_config->last_release_timestamp);
       break;
     case PROP_LAST_KNOWN_RELEASE:
       g_value_set_string (value, core_config->last_known_release);

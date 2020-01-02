@@ -267,6 +267,9 @@ _("The last known release version of GIMP as queried from official website.")
 #define LAST_OPENED_SIZE_BLURB \
 _("How many recently opened image filenames to keep on the File menu.")
 
+#define LAST_RELEASE_TIMESTAMP_BLURB \
+_("The timestamp for the last known release date.")
+
 #define MARCHING_ANTS_SPEED_BLURB \
 _("Speed of marching ants in the selection outline.  This value is in " \
   "milliseconds (less time indicates faster marching).")
