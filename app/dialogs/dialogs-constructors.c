@@ -222,7 +222,9 @@ dialogs_critical_get (GimpDialogFactory *factory,
                       GimpUIManager     *ui_manager,
                       gint               view_size)
 {
-  return gimp_critical_dialog_new (_("GIMP Debug"));
+  return gimp_critical_dialog_new (_("GIMP Debug"),
+                                   context->gimp->config->last_known_release,
+                                   context->gimp->config->last_release_timestamp);
 }
 
 GtkWidget *

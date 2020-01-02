@@ -75,7 +75,7 @@ main (int    argc,
 
   gtk_init (&argc, &argv);
 
-  dialog = gimp_critical_dialog_new (_("GIMP Crash Debug"));
+  dialog = gimp_critical_dialog_new (_("GIMP Crash Debug"), NULL, 0);
   gimp_critical_dialog_add (dialog, error, trace, TRUE, program,
                             g_ascii_strtoull (pid, NULL, 10));
   g_free (error);
