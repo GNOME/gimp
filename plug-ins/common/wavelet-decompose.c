@@ -100,7 +100,7 @@ query (void)
                           "Miroslav Talasek <miroslav.talasek@seznam.cz>",
                           "19january 2017",
                           N_("_Wavelet-decompose..."),
-                          "RGB*",
+                          "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
