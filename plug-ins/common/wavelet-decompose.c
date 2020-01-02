@@ -122,7 +122,7 @@ wavelet_create_procedure (GimpPlugIn  *plug_in,
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
                                             wavelet_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
       gimp_procedure_set_menu_label (procedure, N_("_Wavelet-decompose..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Enhance");
