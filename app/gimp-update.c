@@ -142,6 +142,7 @@ gimp_check_updates_callback (GObject      *source,
       json_path_compile (path, "$['STABLE']", &error);
       result = json_path_match (path, json_parser_get_root (parser));
       versions = json_array_get_object_element (json_node_get_array (result), 0);
+      json_node_unref (result);
       members = json_object_get_members (versions);
 
       for (iter = members; iter; iter = iter->next)
@@ -152,18 +153,35 @@ gimp_check_updates_callback (GObject      *source,
        */
       if (gimp_version_break (last_version, &major, &minor, &micro))
         {
-          g_object_set (config,
-                        "check-update-timestamp", g_get_real_time() / G_USEC_PER_SEC,
-                        "last-known-release",
-                        (major > GIMP_MAJOR_VERSION ||
-                         (major == GIMP_MAJOR_VERSION && minor > GIMP_MINOR_VERSION) ||
-                         (major == GIMP_MAJOR_VERSION && minor == GIMP_MINOR_VERSION && micro > GIMP_MICRO_VERSION)) ?
-                        last_version : NULL,
-                        NULL);
+          GDateTime *datetime;
+          gchar     *str;
+
+          str = g_strdup_printf ("$['STABLE']['%s']['date']", last_version);
+          json_path_compile (path, str, &error);
+          g_free (str);
+          result = json_path_match (path, json_parser_get_root (parser));
+          str = g_strdup_printf ("%s 00:00:00Z",
+                                 json_array_get_string_element (json_node_get_array (result),
+                                                                0));
+          json_node_unref (result);
+          datetime = g_date_time_new_from_iso8601 (str, NULL);
+          g_free (str);
+          if (datetime)
+            {
+              g_object_set (config,
+                            "check-update-timestamp", g_get_real_time() / G_USEC_PER_SEC,
+                            "last-release-timestamp", g_date_time_to_unix (datetime),
+                            "last-known-release",
+                            (major > GIMP_MAJOR_VERSION ||
+                             (major == GIMP_MAJOR_VERSION && minor > GIMP_MINOR_VERSION) ||
+                             (major == GIMP_MAJOR_VERSION && minor == GIMP_MINOR_VERSION && micro > GIMP_MICRO_VERSION)) ?
+                            last_version : NULL,
+                            NULL);
+              g_date_time_unref (datetime);
+            }
         }
 
       g_list_free (members);
-      json_node_unref (result);
       g_object_unref (path);
       g_object_unref (parser);
       g_object_unref (stream);

@@ -276,7 +276,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   g_list_free (children);
 
   /* The preferred localized date representation without the time. */
-  datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+  datetime = g_date_time_new_from_unix_local (config->last_release_timestamp);
   date = g_date_time_format (datetime, "%x");
   g_date_time_unref (datetime);
 
