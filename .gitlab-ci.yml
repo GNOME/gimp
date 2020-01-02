@@ -12,7 +12,7 @@ variables:
 
 ## GNU/Linux 64-bit CIs ##
 
-deps-linux:
+deps-debian:testing:
   stage: dependencies
   cache:
     paths:
@@ -63,7 +63,7 @@ deps-linux:
     - ninja -C _build
     - ninja -C _build install
 
-.gimp-base:
+.gimp-debian:testing-base:
   stage: gimp
   dependencies:
     - deps-linux
@@ -125,8 +125,8 @@ deps-linux:
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
   needs: ["deps-linux"]
 
-gimp-linux-autotools:
-  extends: .gimp-base
+gimp-debian:testing-autotools:
+  extends: .gimp-debian:testing-base
   script:
     - mkdir _build
     - cd _build
@@ -139,8 +139,8 @@ gimp-linux-autotools:
     - make -j "$(nproc)"
     # - make check
 
-gimp-linux-meson:
-  extends: .gimp-base
+gimp-debian:testing-meson:
+  extends: .gimp-debian:testing-base
   script:
     - meson _build
       --prefix="${INSTALL_PREFIX}"
