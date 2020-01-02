@@ -150,6 +150,23 @@ gimp-debian/testing-meson:
     - ninja -C _build
     # - ninja test
 
+gimp-debian/testing-clang:
+  extends: .gimp-debian/testing-base
+  variables:
+    CC: "clang"
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        clang
+  script:
+    - meson _build
+      --prefix="${INSTALL_PREFIX}"
+      -Dpython=always
+      -Djavascript=always
+      -Dlua=always
+    - ninja -C _build
+    # - ninja test
+
 ## WINDOWS 64-bit CI ##
 
 deps-win64:
