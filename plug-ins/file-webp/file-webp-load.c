@@ -104,14 +104,13 @@ load_image (GFile    *file,
       return NULL;
     }
 
-  g_free (filename);
-
   /* Validate WebP data */
   if (! WebPGetInfo (indata, indatalen, &width, &height))
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Invalid WebP file '%s'"),
                    gimp_file_get_utf8_name (file));
+      g_free (filename);
       return NULL;
     }
 
@@ -120,7 +119,10 @@ load_image (GFile    *file,
 
   mux = WebPMuxCreate (&wp_data, 1);
   if (! mux)
-    return NULL;
+    {
+      g_free (filename);
+      return NULL;
+    }
 
   WebPMuxGetFeatures (mux, &flags);
 
@@ -164,6 +166,7 @@ load_image (GFile    *file,
       if (! outdata)
         {
           WebPMuxDelete (mux);
+          g_free (filename);
           return NULL;
         }
 
@@ -195,6 +198,7 @@ load_image (GFile    *file,
             }
 
           WebPMuxDelete (mux);
+          g_free (filename);
           return NULL;
         }
 
@@ -293,6 +297,7 @@ load_image (GFile    *file,
 
   gimp_image_set_file (image, file);
 
+  g_free (filename);
   if (profile)
     g_object_unref (profile);
 
