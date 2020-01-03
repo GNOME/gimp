@@ -1130,18 +1130,22 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
         {
           GtkWidget *parent = gtk_widget_get_parent (widget);
           GdkWindow *window = gtk_widget_get_window (parent);
-          gint       x, y;
 
-          gdk_window_get_pointer (window, &x, &y, NULL);
-          menu_item = find_widget_under_pointer (window, &x, &y);
-
-          if (menu_item && ! GTK_IS_MENU_ITEM (menu_item))
+          if (window)
             {
-              menu_item = gtk_widget_get_ancestor (menu_item,
-                                                   GTK_TYPE_MENU_ITEM);
+              gint x, y;
 
-              if (! GTK_IS_MENU_ITEM (menu_item))
-                menu_item = NULL;
+              gdk_window_get_pointer (window, &x, &y, NULL);
+              menu_item = find_widget_under_pointer (window, &x, &y);
+
+              if (menu_item && ! GTK_IS_MENU_ITEM (menu_item))
+                {
+                  menu_item = gtk_widget_get_ancestor (menu_item,
+                                                       GTK_TYPE_MENU_ITEM);
+
+                  if (! GTK_IS_MENU_ITEM (menu_item))
+                    menu_item = NULL;
+                }
             }
         }
 
