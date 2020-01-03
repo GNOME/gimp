@@ -376,8 +376,5 @@ webp_save (GimpProcedure        *procedure,
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
 
-  if (metadata)
-    g_object_unref (metadata);
-
   return gimp_procedure_new_return_values (procedure, status, error);
 }
