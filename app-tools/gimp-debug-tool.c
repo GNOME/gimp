@@ -49,14 +49,17 @@ main (int    argc,
   const gchar *pid;
   const gchar *reason;
   const gchar *message;
-  const gchar *bt_file = NULL;
-  gchar       *trace   = NULL;
+  const gchar *bt_file      = NULL;
+  const gchar *last_version = NULL;
+  const gchar *release_date = NULL;
+  gchar       *trace        = NULL;
   gchar       *error;
   GtkWidget   *dialog;
 
-  if (argc != 6)
+  if (argc != 6 && argc != 8)
     {
-      g_print ("Usage: gimp-debug-tool-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE]\n");
+      g_print ("Usage: gimp-debug-tool-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE] "
+               "([LAST_VERSION] [RELEASE_TIMESTAMP])\n");
       exit (EXIT_FAILURE);
     }
 
@@ -73,9 +76,16 @@ main (int    argc,
   if (trace == NULL || strlen (trace) == 0)
     exit (EXIT_FAILURE);
 
+  if (argc == 8)
+    {
+      last_version = argv[6];
+      release_date = argv[7];
+    }
+
   gtk_init (&argc, &argv);
 
-  dialog = gimp_critical_dialog_new (_("GIMP Crash Debug"), NULL, 0);
+  dialog = gimp_critical_dialog_new (_("GIMP Crash Debug"), last_version,
+                                     g_ascii_strtoll (release_date, NULL, 10));
   gimp_critical_dialog_add (dialog, error, trace, TRUE, program,
                             g_ascii_strtoull (pid, NULL, 10));
   g_free (error);

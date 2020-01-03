@@ -569,7 +569,7 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
                       text);
   g_free (text);
 
-  if (is_fatal)
+  if (is_fatal && ! critical->last_version)
     {
       /* Same text as before except that we don't need the last point
        * about saving and restarting since anyway we are crashing and
