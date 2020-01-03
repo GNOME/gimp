@@ -183,7 +183,7 @@ gimp_critical_dialog_constructed (GObject *object)
       GtkWidget *vbox;
       GtkWidget *button;
 
-      expander = gtk_expander_new ("See bug details");
+      expander = gtk_expander_new (_("See bug details"));
       gtk_box_pack_start (GTK_BOX (dialog->main_vbox), expander, TRUE, TRUE, 0);
       gtk_widget_show (expander);
 
