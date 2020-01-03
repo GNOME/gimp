@@ -41,6 +41,8 @@
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "pdb/gimppdb.h"
 
 #include "errors.h"
@@ -361,13 +363,18 @@ gimp_eek (const gchar *reason,
 #else
           const gchar *gimpdebug = LIBEXECDIR "/gimp-debug-tool-" GIMP_TOOL_VERSION;
 #endif
-          gchar *args[7] = { (gchar *) gimpdebug, full_prog_name, NULL,
+          gchar *args[9] = { (gchar *) gimpdebug, full_prog_name, NULL,
                              (gchar *) reason, (gchar *) message,
-                             backtrace_file, NULL };
+                             backtrace_file, the_errors_gimp->config->last_known_release,
+                             NULL, NULL };
           gchar  pid[16];
+          gchar  timestamp[16];
 
           g_snprintf (pid, 16, "%u", (guint) getpid ());
           args[2] = pid;
+
+          g_snprintf (timestamp, 16, "%lu", the_errors_gimp->config->last_release_timestamp);
+          args[7] = timestamp;
 
 #ifndef G_OS_WIN32
           /* On Win32, the trace has already been processed by ExcHnl
