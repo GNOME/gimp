@@ -148,7 +148,7 @@ gimp-debian/testing-meson:
       -Djavascript=always
       -Dlua=always
     - ninja -C _build
-    # - ninja test
+    - ninja -C _build test
 
 gimp-debian/testing-clang:
   extends: .gimp-debian/testing-base
@@ -164,7 +164,7 @@ gimp-debian/testing-clang:
       -Djavascript=always
       -Dlua=always
     - ninja -C _build
-    # - ninja test
+    - ninja -C _build test
 
 ## WINDOWS 64-bit CI ##
 
