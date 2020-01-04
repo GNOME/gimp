@@ -306,7 +306,7 @@ msgstr "Vora de la capa"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
-msgstr "Em_marca..."
+msgstr "_Afegix una vora… ..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
@@ -505,7 +505,7 @@ msgstr "Lluminositat del crom"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Chrome factor"
-msgstr "Brillantor"
+msgstr "Factor del crom"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid "Environment map"
