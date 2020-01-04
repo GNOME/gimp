@@ -188,6 +188,7 @@ deps-win64:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "$CI_COMMIT_REF_SLUG-dnf"
     paths:
     - .cache/crossroad/
     - dnf_cache
@@ -252,6 +253,7 @@ gimp-win64:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "$CI_COMMIT_REF_SLUG-dnf"
     paths:
     - .cache/crossroad/
     - dnf_cache
@@ -313,6 +315,7 @@ deps-win32:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "$CI_COMMIT_REF_SLUG-dnf"
     paths:
     - .cache/crossroad/
     - dnf_cache
@@ -374,6 +377,7 @@ gimp-win32:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "$CI_COMMIT_REF_SLUG-dnf"
     paths:
     - .cache/crossroad/
     - dnf_cache
