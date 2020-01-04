@@ -15,8 +15,9 @@ variables:
 deps-debian/testing:
   stage: dependencies
   cache:
+    key: "${CI_COMMIT_REF_SLUG}-apt"
     paths:
-    - _pacman_cache
+    - apt/
   artifacts:
     expire_in: 1 week
     when: always
@@ -25,6 +26,8 @@ deps-debian/testing:
     - _babl/_build
     - _gegl/_build
   before_script:
+    - ls apt/* || true
+    - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
     - apt-get install -y --no-install-recommends
         build-essential
@@ -46,6 +49,7 @@ deps-debian/testing:
         meson
         python3
     - apt-get install -y --reinstall ca-certificates
+    - ls apt/* || true
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
@@ -67,6 +71,10 @@ deps-debian/testing:
   stage: gimp
   dependencies:
     - deps-debian/testing
+  cache:
+    key: "${CI_COMMIT_REF_SLUG}-apt"
+    paths:
+    - apt/
   artifacts:
     expire_in: 1 week
     when: always
@@ -75,6 +83,8 @@ deps-debian/testing:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
+    - ls apt/* || true
+    - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
     - apt-get install -y --no-install-recommends
         at-spi2-core
@@ -116,6 +126,7 @@ deps-debian/testing:
         mypaint-brushes
         poppler-data
         xvfb
+    - ls apt/* || true
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
@@ -175,10 +186,13 @@ deps-win64:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "${CI_COMMIT_REF_SLUG}-dnf"
     paths:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad || true
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -207,6 +221,7 @@ deps-win64:
         gdk-pixbuf2
         gdk-pixbuf2-devel
         glib2-devel
+    - ls dnf_cache || true
     #- pip3 install wheel
     #- pip3 install crossroad
     - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
@@ -217,6 +232,7 @@ deps-win64:
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
+    - ls .cache/crossroad || true
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
@@ -234,10 +250,12 @@ gimp-win64:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "${CI_COMMIT_REF_SLUG}-dnf"
     paths:
-    - .cache/crossroad/
     - dnf_cache
+    policy: pull
   before_script:
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -262,6 +280,7 @@ gimp-win64:
         gdk-pixbuf2
         gdk-pixbuf2-devel
         glib2-devel
+    - ls dnf_cache || true
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
@@ -291,10 +310,13 @@ deps-win32:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "${CI_COMMIT_REF_SLUG}-dnf"
     paths:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad || true
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -350,10 +372,12 @@ gimp-win32:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
+    key: "${CI_COMMIT_REF_SLUG}-dnf"
     paths:
-    - .cache/crossroad/
     - dnf_cache
+    policy: pull
   before_script:
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
