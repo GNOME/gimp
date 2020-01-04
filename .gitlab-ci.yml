@@ -26,6 +26,7 @@ deps-debian/testing:
     - _babl/_build
     - _gegl/_build
   before_script:
+    - ls apt; true
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
     - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
@@ -80,6 +81,7 @@ deps-debian/testing:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
+    - ls apt; true
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
     - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
@@ -187,6 +189,8 @@ deps-win64:
     - dnf_cache
   before_script:
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
+    - ls .cache/crossroad; true
+    - ls dnf_cache; true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -246,6 +250,8 @@ gimp-win64:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad; true
+    - ls dnf_cache; true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -303,6 +309,8 @@ deps-win32:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad; true
+    - ls dnf_cache; true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -362,6 +370,8 @@ gimp-win32:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad; true
+    - ls dnf_cache; true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
