@@ -26,7 +26,7 @@ deps-debian/testing:
     - _babl/_build
     - _gegl/_build
   before_script:
-    - ls apt || true
+    - ls apt/* || true
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
     - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
@@ -50,7 +50,7 @@ deps-debian/testing:
         meson
         python3
     - apt-get install -y --reinstall ca-certificates
-    - ls apt || true
+    - ls apt/* || true
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
@@ -74,6 +74,8 @@ deps-debian/testing:
     - deps-debian/testing
   cache:
     key: debian-apt
+    paths:
+    - apt/
   artifacts:
     expire_in: 1 week
     when: always
@@ -82,7 +84,7 @@ deps-debian/testing:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
-    - ls apt || true
+    - ls apt/* || true
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
     - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
@@ -126,7 +128,7 @@ deps-debian/testing:
         mypaint-brushes
         poppler-data
         xvfb
-    - ls apt || true
+    - ls apt/* || true
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
