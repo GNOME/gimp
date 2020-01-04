@@ -26,6 +26,7 @@ deps-debian/testing:
     - _babl/_build
     - _gegl/_build
   before_script:
+    - ls apt || true
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
     - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
@@ -49,6 +50,7 @@ deps-debian/testing:
         meson
         python3
     - apt-get install -y --reinstall ca-certificates
+    - ls apt || true
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
@@ -80,6 +82,7 @@ deps-debian/testing:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
+    - ls apt || true
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
     - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
@@ -123,6 +126,7 @@ deps-debian/testing:
         mypaint-brushes
         poppler-data
         xvfb
+    - ls apt || true
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
@@ -187,6 +191,8 @@ deps-win64:
     - dnf_cache
   before_script:
     - echo "CI_COMMIT_REF_SLUG is $CI_COMMIT_REF_SLUG"
+    - ls .cache/crossroad || true
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -215,6 +221,7 @@ deps-win64:
         gdk-pixbuf2
         gdk-pixbuf2-devel
         glib2-devel
+    - ls dnf_cache || true
     #- pip3 install wheel
     #- pip3 install crossroad
     - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
@@ -225,6 +232,7 @@ deps-win64:
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
+    - ls .cache/crossroad || true
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
@@ -246,6 +254,8 @@ gimp-win64:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad || true
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -270,6 +280,7 @@ gimp-win64:
         gdk-pixbuf2
         gdk-pixbuf2-devel
         glib2-devel
+    - ls dnf_cache || true
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
@@ -281,6 +292,7 @@ gimp-win64:
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
       crossroad w64 gimp --run="-"
+    - ls .cache/crossroad || true
   needs: ["deps-win64"]
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
@@ -303,6 +315,8 @@ deps-win32:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad || true
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
@@ -362,6 +376,8 @@ gimp-win32:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - ls .cache/crossroad || true
+    - ls dnf_cache || true
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
