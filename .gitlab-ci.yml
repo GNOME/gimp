@@ -15,8 +15,9 @@ variables:
 deps-debian/testing:
   stage: dependencies
   cache:
+    key: debian-apt
     paths:
-    - _pacman_cache
+    - apt/
   artifacts:
     expire_in: 1 week
     when: always
@@ -25,6 +26,8 @@ deps-debian/testing:
     - _babl/_build
     - _gegl/_build
   before_script:
+    - echo "CI_COMMIT_REF_SLUG is: $CI_COMMIT_REF_SLUG"
+    - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
     - apt-get install -y --no-install-recommends
         build-essential
@@ -67,6 +70,8 @@ deps-debian/testing:
   stage: gimp
   dependencies:
     - deps-debian/testing
+  cache:
+    key: debian-apt
   artifacts:
     expire_in: 1 week
     when: always
@@ -75,6 +80,8 @@ deps-debian/testing:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
+    - echo "CI_COMMIT_REF_SLUG is: $CI_COMMIT_REF_SLUG"
+    - echo "Dir::Cache ${CI_PROJECT_DIR}/apt/;" > /etc/apt/apt.conf.d/99gitlab-cache
     - apt-get update
     - apt-get install -y --no-install-recommends
         at-spi2-core
@@ -179,6 +186,7 @@ deps-win64:
     - .cache/crossroad/
     - dnf_cache
   before_script:
+    - echo "CI_COMMIT_REF_SLUG is: $CI_COMMIT_REF_SLUG"
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
         automake
         autoconf
