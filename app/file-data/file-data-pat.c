@@ -209,7 +209,6 @@ file_pat_pattern_to_image (Gimp        *gimp,
   gimp_config_writer_close (writer);
 
   gimp_config_writer_finish (writer, NULL, NULL);
-  g_object_unref (writer);
 
   parasite = gimp_parasite_new ("GimpProcedureConfig-file-pat-save-last",
                                 GIMP_PARASITE_PERSISTENT,
