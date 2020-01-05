@@ -85,7 +85,7 @@ procedure_commands_get_data_args (GimpProcedure *procedure,
     }
 
   if (gimp_value_array_length (args) > n_args &&
-      GIMP_IS_PARAM_SPEC_STRING (procedure->args[n_args]))
+      G_IS_PARAM_SPEC_STRING (procedure->args[n_args]))
     {
       if (object)
         {

@@ -162,7 +162,7 @@ gimp_batch_run_cmd (Gimp          *gimp,
     }
 
   if (procedure->num_args > i &&
-      GIMP_IS_PARAM_SPEC_STRING (procedure->args[i]))
+      G_IS_PARAM_SPEC_STRING (procedure->args[i]))
     {
       g_value_set_static_string (gimp_value_array_index (args, i++), cmd);
     }
