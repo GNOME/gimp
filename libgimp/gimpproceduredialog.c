@@ -92,12 +92,17 @@ gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
   object_class->set_property = gimp_procedure_dialog_set_property;
 
   props[PROP_PROCEDURE] =
-    g_param_spec_object ("procedure", NULL, NULL,
+    g_param_spec_object ("procedure",
+                         "Procedure",
+                         "The GimpProcedure this dialog is used with",
                          GIMP_TYPE_PROCEDURE,
                          GIMP_PARAM_READWRITE);
 
   props[PROP_CONFIG] =
-    g_param_spec_object ("config", NULL, NULL,
+    g_param_spec_object ("config",
+                         "Config",
+                         "The GimpProcedureConfig with the dialog's default "
+                         "values",
                          GIMP_TYPE_PROCEDURE_CONFIG,
                          GIMP_PARAM_READWRITE |
                          G_PARAM_CONSTRUCT);
