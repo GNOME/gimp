@@ -535,24 +535,24 @@ map_run (GimpProcedure        *procedure,
       mapvals.gamma                   = GIMP_VALUES_GET_DOUBLE  (args, 15);
       mapvals.lightsource.type        = GIMP_VALUES_GET_INT     (args, 16);
 
-      GIMP_VALUES_GET_RGB (args, 0, &mapvals.lightsource.color);
+      GIMP_VALUES_GET_RGB (args, 17, &mapvals.lightsource.color);
 
-      mapvals.lightsource.position.x  = GIMP_VALUES_GET_DOUBLE  (args, 17);
-      mapvals.lightsource.position.y  = GIMP_VALUES_GET_DOUBLE  (args, 18);
-      mapvals.lightsource.position.z  = GIMP_VALUES_GET_DOUBLE  (args, 19);
-      mapvals.lightsource.direction.x = GIMP_VALUES_GET_DOUBLE  (args, 20);
-      mapvals.lightsource.direction.y = GIMP_VALUES_GET_DOUBLE  (args, 21);
-      mapvals.lightsource.direction.z = GIMP_VALUES_GET_DOUBLE  (args, 22);
-      mapvals.material.ambient_int    = GIMP_VALUES_GET_DOUBLE  (args, 23);
-      mapvals.material.diffuse_int    = GIMP_VALUES_GET_DOUBLE  (args, 24);
-      mapvals.material.diffuse_ref    = GIMP_VALUES_GET_DOUBLE  (args, 25);
-      mapvals.material.specular_ref   = GIMP_VALUES_GET_DOUBLE  (args, 26);
-      mapvals.material.highlight      = GIMP_VALUES_GET_DOUBLE  (args, 27);
-      mapvals.antialiasing            = GIMP_VALUES_GET_BOOLEAN (args, 28);
-      mapvals.tiled                   = GIMP_VALUES_GET_BOOLEAN (args, 29);
-      mapvals.create_new_image        = GIMP_VALUES_GET_BOOLEAN (args, 30);
-      mapvals.transparent_background  = GIMP_VALUES_GET_BOOLEAN (args, 31);
-      mapvals.radius                  = GIMP_VALUES_GET_DOUBLE  (args, 32);
+      mapvals.lightsource.position.x  = GIMP_VALUES_GET_DOUBLE  (args, 18);
+      mapvals.lightsource.position.y  = GIMP_VALUES_GET_DOUBLE  (args, 19);
+      mapvals.lightsource.position.z  = GIMP_VALUES_GET_DOUBLE  (args, 20);
+      mapvals.lightsource.direction.x = GIMP_VALUES_GET_DOUBLE  (args, 21);
+      mapvals.lightsource.direction.y = GIMP_VALUES_GET_DOUBLE  (args, 22);
+      mapvals.lightsource.direction.z = GIMP_VALUES_GET_DOUBLE  (args, 23);
+      mapvals.material.ambient_int    = GIMP_VALUES_GET_DOUBLE  (args, 24);
+      mapvals.material.diffuse_int    = GIMP_VALUES_GET_DOUBLE  (args, 25);
+      mapvals.material.diffuse_ref    = GIMP_VALUES_GET_DOUBLE  (args, 26);
+      mapvals.material.specular_ref   = GIMP_VALUES_GET_DOUBLE  (args, 27);
+      mapvals.material.highlight      = GIMP_VALUES_GET_DOUBLE  (args, 28);
+      mapvals.antialiasing            = GIMP_VALUES_GET_BOOLEAN (args, 29);
+      mapvals.tiled                   = GIMP_VALUES_GET_BOOLEAN (args, 30);
+      mapvals.create_new_image        = GIMP_VALUES_GET_BOOLEAN (args, 31);
+      mapvals.transparent_background  = GIMP_VALUES_GET_BOOLEAN (args, 32);
+      mapvals.radius                  =
       mapvals.cylinder_radius         = GIMP_VALUES_GET_DOUBLE  (args, 33);
       mapvals.scale.x                 = GIMP_VALUES_GET_DOUBLE  (args, 34);
       mapvals.scale.y                 = GIMP_VALUES_GET_DOUBLE  (args, 35);
