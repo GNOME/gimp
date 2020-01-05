@@ -101,8 +101,7 @@ gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
   props[PROP_CONFIG] =
     g_param_spec_object ("config",
                          "Config",
-                         "The GimpProcedureConfig with the dialog's default "
-                         "values",
+                         "The GimpProcedureConfig this dialog is editing",
                          GIMP_TYPE_PROCEDURE_CONFIG,
                          GIMP_PARAM_READWRITE |
                          G_PARAM_CONSTRUCT);
