@@ -30,17 +30,6 @@
 #include "gimpcurve-map.h"
 
 
-#if defined (HAVE_ISFINITE)
-#define FINITE(x) isfinite(x)
-#elif defined (HAVE_FINITE)
-#define FINITE(x) finite(x)
-#elif defined (G_OS_WIN32)
-#define FINITE(x) _finite(x)
-#else
-#error "no FINITE() implementation available?!"
-#endif
-
-
 enum
 {
   CURVE_NONE   = 0,
@@ -216,7 +205,7 @@ gimp_curve_map_value_inline (GimpCurve *curve,
 {
   if (curve->identity)
     {
-      if (FINITE (value))
+      if (isfinite (value))
         return CLAMP (value, 0.0, 1.0);
 
       return 0.0;

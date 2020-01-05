@@ -31,16 +31,6 @@
 #include "gimp-utils.h"
 
 
-#if defined (HAVE_ISFINITE)
-#define FINITE(x) isfinite(x)
-#elif defined (HAVE_FINITE)
-#define FINITE(x) finite(x)
-#elif defined (G_OS_WIN32)
-#define FINITE(x) _finite(x)
-#else
-#error "no FINITE() implementation available?!"
-#endif
-
 #define EPSILON 0.00000001
 
 
@@ -160,7 +150,7 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
 
   /*  check if the transformation matrix is valid at all  */
   for (i = 0; i < n_points && valid; i++)
-    valid = (FINITE (points[i].x) && FINITE (points[i].y));
+    valid = (isfinite (points[i].x) && isfinite (points[i].y));
 
   if (! valid)
     {

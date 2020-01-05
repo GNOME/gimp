@@ -69,16 +69,6 @@
 #include "gimp-intl.h"
 
 
-#if defined (HAVE_ISFINITE)
-#define FINITE(x) isfinite(x)
-#elif defined (HAVE_FINITE)
-#define FINITE(x) finite(x)
-#elif defined (G_OS_WIN32)
-#define FINITE(x) _finite(x)
-#else
-#error "no FINITE() implementation available?!"
-#endif
-
 static GimpValueArray *
 image_id_is_valid_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
@@ -2310,9 +2300,9 @@ image_set_resolution_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (! FINITE (xresolution) ||
+      if (! isfinite (xresolution) ||
           xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
-          ! FINITE (yresolution) ||
+          ! isfinite (yresolution) ||
           yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
         {
           g_set_error_literal (error, GIMP_PDB_ERROR,
