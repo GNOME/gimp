@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-04 11:35+0000\n"
+"POT-Creation-Date: 2019-12-19 15:09+0000\n"
 "PO-Revision-Date: 2019-12-20 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -11708,7 +11708,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:283
 msgid "When enabled, non-visible layers can be edited as normal."
-msgstr "この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
+msgstr ""
+"この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
 
 # "This used to be the default behaviour in older versions." の箇所は次の理由により翻訳していない
 # - このバージョンの1つ前のバージョン (ver.2.6.x) では、既に「移動ツールでつかんだレイヤーやパスがアクティブになる」は既定値ではない。
@@ -14505,63 +14506,63 @@ msgstr ""
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2819
+#: ../app/core/gimpimage.c:2821
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "画像解像度の変更"
 
-#: ../app/core/gimpimage.c:2872
+#: ../app/core/gimpimage.c:2873
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "画像単位の変更"
 
-#: ../app/core/gimpimage.c:3815
+#: ../app/core/gimpimage.c:3816
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: ../app/core/gimpimage.c:3874
+#: ../app/core/gimpimage.c:3875
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "画像にパラサイトを付加"
 
-#: ../app/core/gimpimage.c:3916
+#: ../app/core/gimpimage.c:3917
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "画像からパラサイトを削除"
 
-#: ../app/core/gimpimage.c:4647
+#: ../app/core/gimpimage.c:4648
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "レイヤーの追加"
 
-#: ../app/core/gimpimage.c:4689 ../app/core/gimpimage.c:4720
+#: ../app/core/gimpimage.c:4690 ../app/core/gimpimage.c:4721
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "レイヤーの削除"
 
-#: ../app/core/gimpimage.c:4714
+#: ../app/core/gimpimage.c:4715
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "フローティング選択範囲の削除"
 
-#: ../app/core/gimpimage.c:4881
+#: ../app/core/gimpimage.c:4882
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "チャンネルを追加"
 
-#: ../app/core/gimpimage.c:4909 ../app/core/gimpimage.c:4933
+#: ../app/core/gimpimage.c:4910 ../app/core/gimpimage.c:4934
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "チャンネルを削除"
 
-#: ../app/core/gimpimage.c:4989
+#: ../app/core/gimpimage.c:4990
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "パスを追加"
 
-#: ../app/core/gimpimage.c:5019 ../app/core/gimpimage.c:5026
+#: ../app/core/gimpimage.c:5020 ../app/core/gimpimage.c:5027
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "パスを削除"
@@ -17817,8 +17818,9 @@ msgstr "使用するヘルプブラウザー(_E):"
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
-msgstr "GIMP ヘルプブラウザーがインストールされていません。代わりにウェブ"
-"ブラウザーを使用します。"
+msgstr ""
+"GIMP ヘルプブラウザーがインストールされていません。代わりにウェブブラウザーを"
+"使用します。"
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2606
