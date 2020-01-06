@@ -122,7 +122,10 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
         {
           label = generic->matrix_labels[y][x] = gtk_label_new (" ");
           gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-          gtk_label_set_width_chars (GTK_LABEL (label), 12);
+          gtk_label_set_width_chars (GTK_LABEL (label), 8);
+          gimp_label_set_attributes (GTK_LABEL (label),
+                                     PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                                     -1);
           gtk_table_attach (GTK_TABLE (table), label,
                             x, x + 1, y, y + 1, GTK_EXPAND, GTK_FILL, 0, 0);
           gtk_widget_show (label);
@@ -162,7 +165,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
             {
               gchar buf[32];
 
-              g_snprintf (buf, sizeof (buf), "%10.5f", transform.coeff[y][x]);
+              g_snprintf (buf, sizeof (buf), "%.4f", transform.coeff[y][x]);
 
               gtk_label_set_text (GTK_LABEL (generic->matrix_labels[y][x]), buf);
             }
