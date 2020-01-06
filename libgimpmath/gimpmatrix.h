@@ -57,6 +57,15 @@ void          gimp_matrix2_identity        (GimpMatrix2       *matrix);
 void          gimp_matrix2_mult            (const GimpMatrix2 *matrix1,
                                             GimpMatrix2       *matrix2);
 
+gdouble       gimp_matrix2_determinant     (const GimpMatrix2 *matrix);
+void          gimp_matrix2_invert          (GimpMatrix2       *matrix);
+
+void          gimp_matrix2_transform_point (const GimpMatrix2 *matrix,
+                                            gdouble            x,
+                                            gdouble            y,
+                                            gdouble           *newx,
+                                            gdouble           *newy);
+
 
 /*****************/
 /*  GimpMatrix3  */
