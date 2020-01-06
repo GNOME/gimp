@@ -10,14 +10,14 @@
 # Hajime Taira <htaira@redhat.com>, 2018.
 # ONO Yoshio <ohtsuka.yoshio@gmail.com>, 2018.
 # willelz <oyasumi60@gmail.com>, 2018.
-# sicklylife <translation@sicklylife.jp>, 2018-2019.
+# sicklylife <translation@sicklylife.jp>, 2018-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-04 11:35+0000\n"
-"PO-Revision-Date: 2019-12-21 00:00+0900\n"
+"POT-Creation-Date: 2020-01-06 09:43+0000\n"
+"PO-Revision-Date: 2020-01-06 23:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -4627,24 +4627,20 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "この画像の作業履歴を消去すると、使用メモリが %s 減ります"
 
 #: ../app/actions/edit-commands.c:238
-#, fuzzy
-#| msgid "Cut pixels to the clipboard"
 msgid "Cut layer to the clipboard."
-msgstr "ピクセルを切り取り、クリップボードに移動します"
+msgstr "レイヤーをクリップボードに切り取りました"
 
 #: ../app/actions/edit-commands.c:239
-#, fuzzy
-#| msgid "Cut pixels to the clipboard"
 msgid "Cut pixels to the clipboard."
-msgstr "ピクセルを切り取り、クリップボードに移動します"
+msgstr "ピクセルをクリップボードに切り取りました"
 
 #: ../app/actions/edit-commands.c:275
 msgid "Copied layer to the clipboard."
-msgstr "レイヤーをクリップボードにコピーしました。"
+msgstr "レイヤーをクリップボードにコピーしました"
 
 #: ../app/actions/edit-commands.c:276 ../app/actions/edit-commands.c:306
 msgid "Copied pixels to the clipboard."
-msgstr "ピクセルをクリップボードにコピーしました。"
+msgstr "ピクセルをクリップボードにコピーしました"
 
 #: ../app/actions/edit-commands.c:386 ../app/actions/edit-commands.c:629
 #: ../app/tools/gimpseamlessclonetool.c:297
@@ -4670,7 +4666,7 @@ msgstr "可視部分に名前を付けてコピー"
 
 #: ../app/actions/edit-commands.c:539 ../app/tools/gimppainttool.c:872
 msgid "The active layer's alpha channel is locked."
-msgstr "アクティブレイヤー中のアルファチャンネルが保護されています。"
+msgstr "アクティブレイヤー中のアルファチャンネルが保護されています"
 
 #: ../app/actions/edit-commands.c:598 ../app/display/gimpdisplayshell-dnd.c:483
 msgid "Pasted as new layer because the target is a layer group."
@@ -4678,7 +4674,8 @@ msgstr ""
 
 #: ../app/actions/edit-commands.c:605 ../app/display/gimpdisplayshell-dnd.c:492
 msgid "Pasted as new layer because the target's pixels are locked."
-msgstr "対象のすべてのピクセルが保護されているため、新しいレイヤーとして貼り付けました。"
+msgstr ""
+"対象のすべてのピクセルが保護されているため、新しいレイヤーとして貼り付けました"
 
 #: ../app/actions/edit-commands.c:646
 msgid "There is no active layer or channel to cut from."
@@ -6867,16 +6864,12 @@ msgid "Cannot crop because the current selection is empty."
 msgstr "何も選択されてないので切り抜けません。"
 
 #: ../app/actions/image-commands.c:909
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the image has no content."
-msgstr "何も選択されてないので切り抜けません。"
+msgstr "画像の内容がないので切り抜けません"
 
 #: ../app/actions/image-commands.c:915
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "何も選択されてないので切り抜けません。"
+msgstr "画像はすでに内容で切り抜かれているので切り抜けません"
 
 #: ../app/actions/image-commands.c:1059
 #, fuzzy, c-format
@@ -7867,28 +7860,20 @@ msgid "Scale Layer"
 msgstr "レイヤーの拡大・縮小"
 
 #: ../app/actions/layers-commands.c:869
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_Crop to Selection"
 msgid "Crop Layer to Selection"
-msgstr "選択範囲で切り抜き(_C)"
+msgstr "レイヤーを選択範囲で切り抜き"
 
 #: ../app/actions/layers-commands.c:900
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lower Layer to Bottom"
 msgid "Crop Layer to Content"
-msgstr "レイヤーを最背面へ"
+msgstr "レイヤーを内容で切り抜き"
 
 #: ../app/actions/layers-commands.c:913
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the active layer has no content."
-msgstr "何も選択されてないので切り抜けません。"
+msgstr "アクティブレイヤーの内容がないので切り抜けません"
 
 #: ../app/actions/layers-commands.c:920
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "アクティブレイヤーはすでに内容で切り抜きされているので切り抜けません。"
+msgstr "アクティブレイヤーはすでに内容で切り抜きされているので切り抜けません"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8514,12 +8499,9 @@ msgid "_Selected areas continue outside the image"
 msgstr "画像の外側も選択範囲として扱う(_S)"
 
 #: ../app/actions/select-commands.c:178
-#, fuzzy
-#| msgid ""
-#| "When shrinking, act as if selected areas continued outside the image."
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
-"縮小するときに、選択領域が画像の外側に続いているかのように振る舞います。"
+"ぼかすときに、選択領域が画像の外側に続いているかのように振る舞います。"
 
 #: ../app/actions/select-commands.c:237
 msgid "Shrink Selection"
@@ -8921,34 +8903,24 @@ msgid "Tool Preset Editor Menu"
 msgstr "ツールプリセットエディターメニュー"
 
 #: ../app/actions/tool-preset-editor-actions.c:48
-#, fuzzy
-#| msgid "_Save tool options on exit"
 msgctxt "tool-preset-editor-action"
 msgid "_Save Tool Options to Preset"
-msgstr "終了時にツールオプションを保存する(_S)"
+msgstr "ツールオプションをプリセットに保存(_S)"
 
 #: ../app/actions/tool-preset-editor-actions.c:49
-#, fuzzy
-#| msgid "Save the tool options when GIMP exits."
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "この設定がオンのときは、終了時にツールオプションを保存します。"
+msgstr "アクティブなツールオプションをこのツールプリセットに保存します"
 
 #: ../app/actions/tool-preset-editor-actions.c:55
-#, fuzzy
-#| msgctxt "tool-options-action"
-#| msgid "_Restore Tool Preset"
 msgctxt "tool-preset-editor-action"
 msgid "_Restore Tool Preset"
-msgstr "ツールプリセットの更新(_R)"
+msgstr "ツールプリセットの復元(_R)"
 
 #: ../app/actions/tool-preset-editor-actions.c:56
-#, fuzzy
-#| msgctxt "tool-presets-action"
-#| msgid "Delete this tool preset"
 msgctxt "tool-preset-editor-action"
 msgid "Restore this tool preset"
-msgstr "このツールプリセットを削除します"
+msgstr "このツールプリセットを復元します"
 
 #: ../app/actions/tool-preset-editor-actions.c:65
 msgctxt "tool-preset-editor-action"
@@ -11693,7 +11665,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:283
 msgid "When enabled, non-visible layers can be edited as normal."
-msgstr "この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
+msgstr ""
+"この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
 
 # "This used to be the default behaviour in older versions." の箇所は次の理由により翻訳していない
 # - このバージョンの1つ前のバージョン (ver.2.6.x) では、既に「移動ツールでつかんだレイヤーやパスがアクティブになる」は既定値ではない。
@@ -14490,63 +14463,63 @@ msgstr ""
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2819
+#: ../app/core/gimpimage.c:2821
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "画像解像度の変更"
 
-#: ../app/core/gimpimage.c:2872
+#: ../app/core/gimpimage.c:2873
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "画像単位の変更"
 
-#: ../app/core/gimpimage.c:3815
+#: ../app/core/gimpimage.c:3816
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: ../app/core/gimpimage.c:3874
+#: ../app/core/gimpimage.c:3875
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "画像にパラサイトを付加"
 
-#: ../app/core/gimpimage.c:3916
+#: ../app/core/gimpimage.c:3917
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "画像からパラサイトを削除"
 
-#: ../app/core/gimpimage.c:4647
+#: ../app/core/gimpimage.c:4648
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "レイヤーの追加"
 
-#: ../app/core/gimpimage.c:4689 ../app/core/gimpimage.c:4720
+#: ../app/core/gimpimage.c:4690 ../app/core/gimpimage.c:4721
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "レイヤーの削除"
 
-#: ../app/core/gimpimage.c:4714
+#: ../app/core/gimpimage.c:4715
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "フローティング選択範囲の削除"
 
-#: ../app/core/gimpimage.c:4881
+#: ../app/core/gimpimage.c:4882
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "チャンネルを追加"
 
-#: ../app/core/gimpimage.c:4909 ../app/core/gimpimage.c:4933
+#: ../app/core/gimpimage.c:4910 ../app/core/gimpimage.c:4934
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "チャンネルを削除"
 
-#: ../app/core/gimpimage.c:4989
+#: ../app/core/gimpimage.c:4990
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "パスを追加"
 
-#: ../app/core/gimpimage.c:5019 ../app/core/gimpimage.c:5026
+#: ../app/core/gimpimage.c:5020 ../app/core/gimpimage.c:5027
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "パスを削除"
@@ -17802,8 +17775,9 @@ msgstr "使用するヘルプブラウザー(_E):"
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
-msgstr "GIMP ヘルプブラウザーがインストールされていません。代わりにウェブ"
-"ブラウザーを使用します。"
+msgstr ""
+"GIMP ヘルプブラウザーがインストールされていません。代わりにウェブブラウザーを"
+"使用します。"
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2606
@@ -22025,7 +21999,7 @@ msgstr ""
 "プラグインのクラッシュによって GIMP の内部状態が不安定になった可能性がありま"
 "す。作業中の画像を一旦保存して GIMP を再起動した方が良いでしょう。"
 
-#: ../app/plug-in/gimpplugin-message.c:486
+#: ../app/plug-in/gimpplugin-message.c:487
 #, c-format
 msgid ""
 "Calling error for procedure '%s':\n"
@@ -22034,7 +22008,7 @@ msgstr ""
 "プロシージャー '%s' の呼出し時にエラーが発生しました。\n"
 "%s"
 
-#: ../app/plug-in/gimpplugin-message.c:495
+#: ../app/plug-in/gimpplugin-message.c:496
 #, c-format
 msgid ""
 "Execution error for procedure '%s':\n"
@@ -26880,15 +26854,12 @@ msgid "Mouse Wheel Events"
 msgstr "マウスホイールのイベント"
 
 #: ../app/widgets/gimpcriticaldialog.c:54
-#, fuzzy
-#| msgctxt "brushes-action"
-#| msgid "Copy Brush _Location"
 msgid "Copy Bug Information"
-msgstr "ブラシの場所をコピー(_L)"
+msgstr "バグ情報をコピー"
 
 #: ../app/widgets/gimpcriticaldialog.c:55
 msgid "Open Bug Tracker"
-msgstr ""
+msgstr "バグトラッカーを開く"
 
 #: ../app/widgets/gimpcriticaldialog.c:132
 #: ../app/widgets/gimpcriticaldialog.c:455
@@ -26942,34 +26913,33 @@ msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:228
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "オペレーティングシステムのメモリまたはリソースが不足しています。"
 
 #: ../app/widgets/gimpcriticaldialog.c:231
 msgid "The specified file was not found."
-msgstr ""
+msgstr "指定したファイルが見つかりませんでした。"
 
 #: ../app/widgets/gimpcriticaldialog.c:234
-#, fuzzy
-#| msgid "The active path is locked."
 msgid "The specified path was not found."
-msgstr "アクティブなパスは保護されています。"
+msgstr "指定したパスが見つかりませんでした。"
 
 #: ../app/widgets/gimpcriticaldialog.c:237
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
+"不正な .exe ファイルです (Microsoft Win32 .exe でないか、.exe イメージ内にエラーがあります)。"
 
 #: ../app/widgets/gimpcriticaldialog.c:240
 msgid "The operating system denied access to the specified file."
-msgstr ""
+msgstr "オペレーティングシステムが指定ファイルへのアクセスを拒否しました。"
 
 #: ../app/widgets/gimpcriticaldialog.c:243
 msgid "The file name association is incomplete or invalid."
-msgstr ""
+msgstr "ファイル名の関連付けが不完全または無効です。"
 
 #: ../app/widgets/gimpcriticaldialog.c:246
 msgid "DDE transaction busy"
-msgstr ""
+msgstr "DDE トランザクションがビジーです。"
 
 #: ../app/widgets/gimpcriticaldialog.c:249
 msgid "The DDE transaction failed."
@@ -26985,38 +26955,35 @@ msgstr "指定された DLL が見つかりませんでした。"
 
 #: ../app/widgets/gimpcriticaldialog.c:258
 msgid "There is no application associated with the given file name extension."
-msgstr ""
+msgstr "拡張子に関連付けられたアプリケーションがありません。"
 
 #: ../app/widgets/gimpcriticaldialog.c:261
 msgid "There was not enough memory to complete the operation."
-msgstr ""
+msgstr "メモリ不足により処理を完了できませんでした。"
 
 #: ../app/widgets/gimpcriticaldialog.c:264
 msgid "A sharing violation occurred."
-msgstr ""
+msgstr "共有違反が発生しました。"
 
 #: ../app/widgets/gimpcriticaldialog.c:267
 msgid "Unknown Microsoft Windows error."
 msgstr "Microsoft Windows の不明なエラーです。"
 
 #: ../app/widgets/gimpcriticaldialog.c:270
-#, fuzzy, c-format
-#| msgid "Failed to import paths from '%s': %s"
+#, c-format
 msgid "Failed to open '%s': %s"
-msgstr ""
-"'%s' からのパス読み込みに失敗しました。\n"
-"%s"
+msgstr "'%s' のオープンに失敗しました: %s"
 
 #: ../app/widgets/gimpcriticaldialog.c:421
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
-msgstr ""
+msgstr "致命的なエラーで GIMP がクラッシュしました: %s"
 
 #. First error. Let's just display it.
 #: ../app/widgets/gimpcriticaldialog.c:428
 #, c-format
 msgid "GIMP encountered an error: %s"
-msgstr ""
+msgstr "エラーが発生しました: %s"
 
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
@@ -27024,11 +26991,11 @@ msgstr ""
 #: ../app/widgets/gimpcriticaldialog.c:436
 #, c-format
 msgid "GIMP encountered several critical errors!"
-msgstr ""
+msgstr "重大なエラーが複数発生しました!"
 
 #: ../app/widgets/gimpcriticaldialog.c:488
 msgid "_Restart GIMP"
-msgstr ""
+msgstr "GIMP を再起動(_R)"
 
 #: ../app/widgets/gimpdashboard.c:458 ../app/widgets/gimpdashboard.c:510
 msgctxt "dashboard-variable"
@@ -27223,7 +27190,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:698
 msgctxt "dashboard-variable"
 msgid "Assigned"
-msgstr "割り当て済み"
+msgstr "割り当て"
 
 #: ../app/widgets/gimpdashboard.c:699
 msgid "Number of assigned worker threads"
@@ -27537,7 +27504,7 @@ msgstr "位置とサイズを保護"
 
 #: ../app/widgets/gimpdrawabletreeview.c:189
 msgid "Cannot select item while a floating selection is active."
-msgstr "フローティング選択範囲がアクティブな間はアイテムを選択できません。"
+msgstr "フローティング選択範囲がアクティブな間はアイテムを選択できません"
 
 #: ../app/widgets/gimpdynamicseditor.c:162
 #: ../app/widgets/gimpdynamicsoutputeditor.c:71
@@ -27777,8 +27744,7 @@ msgstr "GIMP ヘルプブラウザープラグインを起動できません"
 
 #: ../app/widgets/gimphelp.c:422
 msgid "You may instead use the web browser for reading the help pages."
-msgstr ""
-"ユーザーマニュアルを表示するにはウェブブラウザーを使用してください。"
+msgstr "ユーザーマニュアルを表示するにはウェブブラウザーを使用してください。"
 
 #: ../app/widgets/gimphelp.c:448
 msgid "Use _Web Browser"
@@ -27807,7 +27773,8 @@ msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
-"他言語のマニュアルを選択してください。また、オンライン版を読むこともできます。"
+"他言語のマニュアルを選択してください。また、オンライン版を読むこともできま"
+"す。"
 
 #: ../app/widgets/gimphelp.c:842
 msgid ""
@@ -27883,10 +27850,8 @@ msgid "Paste Icon from Clipboard"
 msgstr "クリップボードの内容を貼り付けます"
 
 #: ../app/widgets/gimpiconpicker.c:480
-#, fuzzy
-#| msgid "command|Crop Image"
 msgid "Load Icon Image"
-msgstr "画像の切り抜き"
+msgstr "アイコン画像の読み込み"
 
 #: ../app/widgets/gimpiconsizescale.c:123
 msgid "Guess icon size from resolution"
@@ -28065,13 +28030,8 @@ msgid "You can drop dockable dialogs here"
 msgstr "ここにドッキング可能なダイアログをドロップできます"
 
 #: ../app/widgets/gimppdbdialog.c:282
-#, fuzzy
-#| msgid ""
-#| "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgid "The corresponding plug-in may have crashed."
-msgstr ""
-"%sコールバックを実行できません。対応するプラグインがクラッシュした可能性があ"
-"ります。"
+msgstr "対応するプラグインがクラッシュした可能性があります。"
 
 #: ../app/widgets/gimppdbdialog.c:286
 #, c-format
@@ -28251,7 +28211,7 @@ msgstr "タグを付ける"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1746
+#: ../app/widgets/gimptagentry.c:1756
 msgid ","
 msgstr ","
 
@@ -28334,15 +28294,9 @@ msgid "Invalid UTF-8 data in file '%s'."
 msgstr "ファイル '%s' に無効な UTF-8 データがあります。"
 
 #: ../app/widgets/gimptextbuffer.c:1780
-#, fuzzy, c-format
-#| msgid ""
-#| "Reverting to '%s' failed:\n"
-#| "\n"
-#| "%s"
+#, c-format
 msgid "Writing text file '%s' failed: %s"
-msgstr ""
-"'%s' の復帰に失敗しました。\n"
-"%s"
+msgstr "テキストファイル '%s' の書き込みに失敗しました: %s"
 
 #: ../app/widgets/gimptexteditor.c:225
 msgid "_Use selected font"
