@@ -1614,6 +1614,10 @@ gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool)
   if (! trans_infos_equal (undo_info->trans_infos, tg_tool->trans_infos))
     {
       GimpTransformOptions *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
+      gboolean              flush = FALSE;
+
+      if (tg_tool->undo_list->next == NULL)
+        flush = TRUE;
 
       undo_info            = undo_info_new ();
       undo_info->direction = tr_options->direction;
@@ -1625,12 +1629,22 @@ gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool)
       /* If we undid anything and started interacting, we have to
        * discard the redo history
        */
-      g_list_free_full (tg_tool->redo_list, (GDestroyNotify) undo_info_free);
-      tg_tool->redo_list = NULL;
+      if (tg_tool->redo_list)
+        {
+          g_list_free_full (tg_tool->redo_list,
+                            (GDestroyNotify) undo_info_free);
+          tg_tool->redo_list = NULL;
+
+          flush = TRUE;
+        }
 
       gimp_transform_grid_tool_update_sensitivity (tg_tool);
 
       /*  update the undo actions / menu items  */
-      gimp_image_flush (gimp_display_get_image (GIMP_TOOL (tg_tool)->display));
+      if (flush)
+        {
+          gimp_image_flush (
+            gimp_display_get_image (GIMP_TOOL (tg_tool)->display));
+        }
     }
 }
