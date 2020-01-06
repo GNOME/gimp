@@ -42,24 +42,27 @@ typedef struct
 
 static gboolean
 test_units (const gchar      *ident,
-            GimpEevlQuantity *result,
+            GimpEevlQuantity *factor,
+            gdouble          *offset,
             gpointer          data)
 {
   gboolean resolved     = FALSE;
   gboolean default_unit = (ident == NULL);
 
+  *offset = 0.0;
+
   if (default_unit ||
       (ident && strcmp ("in", ident) == 0))
     {
-      result->dimension = 1;
-      result->value     = 1.;
+      factor->dimension = 1;
+      factor->value     = 1.;
 
       resolved          = TRUE;
     }
   else if (ident && strcmp ("mm", ident) == 0)
     {
-      result->dimension = 1;
-      result->value     = 25.4;
+      factor->dimension = 1;
+      factor->value     = 25.4;
 
       resolved          = TRUE;
     }
