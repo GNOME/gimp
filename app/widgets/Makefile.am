@@ -310,6 +310,8 @@ libappwidgets_a_sources = \
 	gimppickablebutton.h		\
 	gimppickablepopup.c		\
 	gimppickablepopup.h		\
+	gimppivotselector.c		\
+	gimppivotselector.h		\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
 	gimppluginview.c		\

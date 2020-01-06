@@ -183,6 +183,15 @@ scalable_images = \
 	scalable/gimp-paths.svg					\
 	scalable/gimp-path-stroke.svg				\
 	scalable/gimp-pattern.svg				\
+	scalable/gimp-pivot-center.svg				\
+	scalable/gimp-pivot-east.svg				\
+	scalable/gimp-pivot-north.svg				\
+	scalable/gimp-pivot-north-east.svg			\
+	scalable/gimp-pivot-north-west.svg			\
+	scalable/gimp-pivot-south.svg				\
+	scalable/gimp-pivot-south-east.svg			\
+	scalable/gimp-pivot-south-west.svg			\
+	scalable/gimp-pivot-west.svg				\
 	scalable/gimp-plugin.svg				\
 	scalable/gimp-portrait.svg				\
 	scalable/gimp-prefs-color-management.svg		\
@@ -514,6 +523,15 @@ icons12_images = \
 	12/gimp-linked.png					\
 	12/gimp-menu-left.png					\
 	12/gimp-menu-right.png					\
+	12/gimp-pivot-center.png				\
+	12/gimp-pivot-east.png					\
+	12/gimp-pivot-north.png					\
+	12/gimp-pivot-north-east.png				\
+	12/gimp-pivot-north-west.png				\
+	12/gimp-pivot-south.png					\
+	12/gimp-pivot-south-east.png				\
+	12/gimp-pivot-south-west.png				\
+	12/gimp-pivot-west.png					\
 	12/gimp-quick-mask-off.png				\
 	12/gimp-quick-mask-on.png				\
 	12/gimp-swap-colors.png					\
