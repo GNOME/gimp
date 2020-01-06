@@ -264,6 +264,66 @@ gimp_matrix2_mult (const GimpMatrix2 *matrix1,
   *matrix2 = tmp;
 }
 
+/**
+ * gimp_matrix2_determinant:
+ * @matrix: The input matrix.
+ *
+ * Calculates the determinant of the given matrix.
+ *
+ * Returns: The determinant.
+ */
+
+gdouble
+gimp_matrix2_determinant (const GimpMatrix2 *matrix)
+{
+  return matrix->coeff[0][0] * matrix->coeff[1][1] -
+         matrix->coeff[0][1] * matrix->coeff[1][0];
+}
+
+/**
+ * gimp_matrix2_invert:
+ * @matrix: The matrix that is to be inverted.
+ *
+ * Inverts the given matrix.
+ */
+void
+gimp_matrix2_invert (GimpMatrix2 *matrix)
+{
+  gdouble det = gimp_matrix2_determinant (matrix);
+  gdouble temp;
+
+  if (fabs (det) <= EPSILON)
+    return;
+
+  temp = matrix->coeff[0][0];
+
+  matrix->coeff[0][0]  = matrix->coeff[1][1] / det;
+  matrix->coeff[0][1] /= -det;
+  matrix->coeff[1][0] /= -det;
+  matrix->coeff[1][1]  = temp / det;
+}
+
+/**
+ * gimp_matrix2_transform_point:
+ * @matrix: The transformation matrix.
+ * @x: The source X coordinate.
+ * @y: The source Y coordinate.
+ * @newx: The transformed X coordinate.
+ * @newy: The transformed Y coordinate.
+ *
+ * Transforms a point in 2D as specified by the transformation matrix.
+ */
+void
+gimp_matrix2_transform_point (const GimpMatrix2 *matrix,
+                              gdouble            x,
+                              gdouble            y,
+                              gdouble           *newx,
+                              gdouble           *newy)
+{
+  *newx = matrix->coeff[0][0] * x + matrix->coeff[0][1] * y;
+  *newy = matrix->coeff[1][0] * x + matrix->coeff[1][1] * y;
+}
+
 
 static GimpMatrix3 * matrix3_copy                  (const GimpMatrix3 *matrix);
 
