@@ -390,6 +390,37 @@ gimp_rectangle_precision_get_type (void)
 }
 
 GType
+gimp_transform_3d_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TRANSFORM_3D_MODE_CAMERA, "GIMP_TRANSFORM_3D_MODE_CAMERA", "camera" },
+    { GIMP_TRANSFORM_3D_MODE_MOVE, "GIMP_TRANSFORM_3D_MODE_MOVE", "move" },
+    { GIMP_TRANSFORM_3D_MODE_ROTATE, "GIMP_TRANSFORM_3D_MODE_ROTATE", "rotate" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TRANSFORM_3D_MODE_CAMERA, "GIMP_TRANSFORM_3D_MODE_CAMERA", NULL },
+    { GIMP_TRANSFORM_3D_MODE_MOVE, "GIMP_TRANSFORM_3D_MODE_MOVE", NULL },
+    { GIMP_TRANSFORM_3D_MODE_ROTATE, "GIMP_TRANSFORM_3D_MODE_ROTATE", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpTransform3DMode", values);
+      gimp_type_set_translation_context (type, "transform3-dmode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_transform_function_get_type (void)
 {
   static const GEnumValue values[] =

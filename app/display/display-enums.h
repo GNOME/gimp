@@ -171,6 +171,18 @@ typedef enum
 } GimpRectanglePrecision;
 
 
+#define GIMP_TYPE_TRANSFORM_3D_MODE (gimp_transform_3d_mode_get_type ())
+
+GType gimp_transform_3d_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< lowercase_name=gimp_transform_3d_mode >*/
+{
+  GIMP_TRANSFORM_3D_MODE_CAMERA,
+  GIMP_TRANSFORM_3D_MODE_MOVE,
+  GIMP_TRANSFORM_3D_MODE_ROTATE
+} GimpTransform3DMode;
+
+
 #define GIMP_TYPE_TRANSFORM_FUNCTION (gimp_transform_function_get_type ())
 
 GType gimp_transform_function_get_type (void) G_GNUC_CONST;

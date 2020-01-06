@@ -177,6 +177,7 @@ static GimpCursor gimp_tool_cursors[] =
   { "tool-rotate" },
   { "tool-shear" },
   { "tool-perspective" },
+  { "tool-transform-3d-camera" },
   { "tool-flip-horizontal" },
   { "tool-flip-vertical" },
   { "tool-text" },
