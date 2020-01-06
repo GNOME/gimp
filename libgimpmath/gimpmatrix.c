@@ -886,6 +886,50 @@ gimp_matrix3_is_simple (const GimpMatrix3 *matrix)
 }
 
 /**
+ * gimp_matrix4_identity:
+ * @matrix: A matrix.
+ *
+ * Sets the matrix to the identity matrix.
+ */
+void
+gimp_matrix4_identity (GimpMatrix4 *matrix)
+{
+  gint i, j;
+
+  for (i = 0; i < 4; i++)
+    {
+      for (j = 0; j < 4; j++)
+        matrix->coeff[i][j] = i == j;
+    }
+}
+
+/**
+ * gimp_matrix4_mult:
+ * @matrix1: The first input matrix.
+ * @matrix2: The second input matrix which will be overwritten by the result.
+ *
+ * Multiplies two matrices and puts the result into the second one.
+ */
+void
+gimp_matrix4_mult (const GimpMatrix4 *matrix1,
+                   GimpMatrix4       *matrix2)
+{
+  GimpMatrix4 result = {};
+  gint        i, j, k;
+
+  for (i = 0; i < 4; i++)
+    {
+      for (j = 0; j < 4; j++)
+        {
+          for (k = 0; k < 4; k++)
+            result.coeff[i][j] += matrix1->coeff[i][k] * matrix2->coeff[k][j];
+        }
+    }
+
+  *matrix2 = result;
+}
+
+/**
  * gimp_matrix4_to_deg:
  * @matrix:
  * @a:
@@ -903,4 +947,51 @@ gimp_matrix4_to_deg (const GimpMatrix4 *matrix,
   *a = 180 * (asin (matrix->coeff[1][0]) / G_PI_2);
   *b = 180 * (asin (matrix->coeff[2][0]) / G_PI_2);
   *c = 180 * (asin (matrix->coeff[2][1]) / G_PI_2);
+}
+
+/**
+ * gimp_matrix4_transform_point:
+ * @matrix: The transformation matrix.
+ * @x: The source X coordinate.
+ * @y: The source Y coordinate.
+ * @z: The source Z coordinate.
+ * @newx: The transformed X coordinate.
+ * @newy: The transformed Y coordinate.
+ * @newz: The transformed Z coordinate.
+ *
+ * Transforms a point in 3D as specified by the transformation matrix.
+ */
+gdouble
+gimp_matrix4_transform_point (const GimpMatrix4 *matrix,
+                              gdouble            x,
+                              gdouble            y,
+                              gdouble            z,
+                              gdouble           *newx,
+                              gdouble           *newy,
+                              gdouble           *newz)
+{
+  gdouble neww;
+
+  *newx = matrix->coeff[0][0] * x +
+          matrix->coeff[0][1] * y +
+          matrix->coeff[0][2] * z +
+          matrix->coeff[0][3];
+  *newy = matrix->coeff[1][0] * x +
+          matrix->coeff[1][1] * y +
+          matrix->coeff[1][2] * z +
+          matrix->coeff[1][3];
+  *newz = matrix->coeff[2][0] * x +
+          matrix->coeff[2][1] * y +
+          matrix->coeff[2][2] * z +
+          matrix->coeff[2][3];
+  neww  = matrix->coeff[3][0] * x +
+          matrix->coeff[3][1] * y +
+          matrix->coeff[3][2] * z +
+          matrix->coeff[3][3];
+
+  *newx /= neww;
+  *newy /= neww;
+  *newz /= neww;
+
+  return neww;
 }
