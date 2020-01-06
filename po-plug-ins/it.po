@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2019
+# Marco Ciampa <ciampix@libero.it>, 2003-2020
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-14 16:30+0200\n"
-"PO-Revision-Date: 2019-09-14 16:41+0200\n"
+"POT-Creation-Date: 2020-01-05 23:56+0100\n"
+"PO-Revision-Date: 2020-01-05 23:58+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -36,9 +36,9 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/align-layers.c:630 ../plug-ins/common/blinds.c:225
 #: ../plug-ins/common/border-average.c:362 ../plug-ins/common/busy-dialog.c:219
 #: ../plug-ins/common/cartoon.c:813 ../plug-ins/common/checkerboard.c:428
-#: ../plug-ins/common/cml-explorer.c:1228
-#: ../plug-ins/common/cml-explorer.c:2025
-#: ../plug-ins/common/cml-explorer.c:2158 ../plug-ins/common/colorify.c:313
+#: ../plug-ins/common/cml-explorer.c:1229
+#: ../plug-ins/common/cml-explorer.c:2026
+#: ../plug-ins/common/cml-explorer.c:2159 ../plug-ins/common/colorify.c:313
 #: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/compose.c:1076
 #: ../plug-ins/common/contrast-retinex.c:286
 #: ../plug-ins/common/curve-bend.c:1294 ../plug-ins/common/curve-bend.c:2137
@@ -51,7 +51,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/file-pdf-load.c:698
 #: ../plug-ins/common/file-pdf-load.c:1264
 #: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3398
-#: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:663
+#: ../plug-ins/common/file-raw-data.c:1835 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:677 ../plug-ins/common/hot.c:614
@@ -105,7 +105,7 @@ msgstr "_Annulla"
 
 #: ../plug-ins/common/align-layers.c:631 ../plug-ins/common/blinds.c:226
 #: ../plug-ins/common/border-average.c:363 ../plug-ins/common/cartoon.c:814
-#: ../plug-ins/common/checkerboard.c:429 ../plug-ins/common/cml-explorer.c:1229
+#: ../plug-ins/common/checkerboard.c:429 ../plug-ins/common/cml-explorer.c:1230
 #: ../plug-ins/common/colorify.c:314 ../plug-ins/common/colormap-remap.c:622
 #: ../plug-ins/common/compose.c:1077 ../plug-ins/common/contrast-retinex.c:287
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:822
@@ -441,15 +441,15 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1392
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
+#: ../plug-ins/common/file-raw-data.c:1394
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1108
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:267
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1042
-#: ../plug-ins/file-psd/psd-load.c:1861 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1861 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1033
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -799,32 +799,32 @@ msgstr "Crea motivi astratti Coupled-Map-Lattice"
 msgid "CML _Explorer..."
 msgstr "_Esploratore CML..."
 
-#: ../plug-ins/common/cml-explorer.c:787
+#: ../plug-ins/common/cml-explorer.c:788
 msgid "CML Explorer: evoluting"
 msgstr "Esploratore CML: evoluzione"
 
-#: ../plug-ins/common/cml-explorer.c:1224
+#: ../plug-ins/common/cml-explorer.c:1225
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Esploratore Coupled-Map-Lattice"
 
-#: ../plug-ins/common/cml-explorer.c:1271
+#: ../plug-ins/common/cml-explorer.c:1272
 msgid "New Seed"
 msgstr "Nuovo seme"
 
-#: ../plug-ins/common/cml-explorer.c:1282
+#: ../plug-ins/common/cml-explorer.c:1283
 msgid "Fix Seed"
 msgstr "Seme fisso"
 
-#: ../plug-ins/common/cml-explorer.c:1293
+#: ../plug-ins/common/cml-explorer.c:1294
 msgid "Random Seed"
 msgstr "Seme Casuale"
 
 #. The Load button
-#: ../plug-ins/common/cml-explorer.c:1308
-#: ../plug-ins/common/cml-explorer.c:2159 ../plug-ins/common/curve-bend.c:1555
+#: ../plug-ins/common/cml-explorer.c:1309
+#: ../plug-ins/common/cml-explorer.c:2160 ../plug-ins/common/curve-bend.c:1555
 #: ../plug-ins/common/curve-bend.c:2138 ../plug-ins/common/file-cel.c:952
 #: ../plug-ins/common/file-jp2-load.c:962
-#: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/file-raw-data.c:1836 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:878 ../plug-ins/flame/flame.c:483
@@ -840,8 +840,8 @@ msgid "_Open"
 msgstr "A_pri"
 
 #. The Save button
-#: ../plug-ins/common/cml-explorer.c:1316
-#: ../plug-ins/common/cml-explorer.c:2026 ../plug-ins/common/curve-bend.c:1567
+#: ../plug-ins/common/cml-explorer.c:1317
+#: ../plug-ins/common/cml-explorer.c:2027 ../plug-ins/common/curve-bend.c:1567
 #: ../plug-ins/common/curve-bend.c:2173 ../plug-ins/common/file-pdf-save.c:935
 #: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
 #: ../plug-ins/common/sphere-designer.c:2210
@@ -857,52 +857,52 @@ msgstr "A_pri"
 msgid "_Save"
 msgstr "_Salva"
 
-#: ../plug-ins/common/cml-explorer.c:1335 ../plug-ins/common/filter-pack.c:758
+#: ../plug-ins/common/cml-explorer.c:1336 ../plug-ins/common/filter-pack.c:758
 #: ../plug-ins/common/van-gogh-lic.c:677
 msgid "_Hue"
 msgstr "_Tonalità"
 
-#: ../plug-ins/common/cml-explorer.c:1339
+#: ../plug-ins/common/cml-explorer.c:1340
 msgid "Sat_uration"
 msgstr "Sat_urazione"
 
-#: ../plug-ins/common/cml-explorer.c:1343 ../plug-ins/common/filter-pack.c:766
+#: ../plug-ins/common/cml-explorer.c:1344 ../plug-ins/common/filter-pack.c:766
 msgid "_Value"
 msgstr "_Valore"
 
-#: ../plug-ins/common/cml-explorer.c:1347
+#: ../plug-ins/common/cml-explorer.c:1348
 msgid "_Advanced"
 msgstr "_Avanzate"
 
-#: ../plug-ins/common/cml-explorer.c:1362
+#: ../plug-ins/common/cml-explorer.c:1363
 msgid "Channel Independent Parameters"
 msgstr "Parametri indipendenti dal canale"
 
-#: ../plug-ins/common/cml-explorer.c:1384
+#: ../plug-ins/common/cml-explorer.c:1385
 msgid "Initial value:"
 msgstr "Valore iniziale:"
 
-#: ../plug-ins/common/cml-explorer.c:1390
+#: ../plug-ins/common/cml-explorer.c:1391
 msgid "Zoom scale:"
 msgstr "Valore di zoom:"
 
-#: ../plug-ins/common/cml-explorer.c:1399
+#: ../plug-ins/common/cml-explorer.c:1400
 msgid "Start offset:"
 msgstr "Inizio spostamento:"
 
-#: ../plug-ins/common/cml-explorer.c:1408
+#: ../plug-ins/common/cml-explorer.c:1409
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Seme di Casualità (solo per la modalità \"Da seme\")"
 
-#: ../plug-ins/common/cml-explorer.c:1419
+#: ../plug-ins/common/cml-explorer.c:1420
 msgid "Seed:"
 msgstr "Seme:"
 
-#: ../plug-ins/common/cml-explorer.c:1432
+#: ../plug-ins/common/cml-explorer.c:1433
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Cambia a \"Da Seme\" con l'ultimo Seme"
 
-#: ../plug-ins/common/cml-explorer.c:1444
+#: ../plug-ins/common/cml-explorer.c:1445
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -915,108 +915,108 @@ msgstr ""
 "differente dall'anteprima), (2) tutti i tassi di mutazione sono uguali a "
 "zero."
 
-#: ../plug-ins/common/cml-explorer.c:1452
+#: ../plug-ins/common/cml-explorer.c:1453
 msgid "O_thers"
 msgstr "Al_tri"
 
-#: ../plug-ins/common/cml-explorer.c:1467
+#: ../plug-ins/common/cml-explorer.c:1468
 msgid "Copy Settings"
 msgstr "Impostazioni di copia"
 
-#: ../plug-ins/common/cml-explorer.c:1486
+#: ../plug-ins/common/cml-explorer.c:1487
 msgid "Source channel:"
 msgstr "Canale sorgente:"
 
-#: ../plug-ins/common/cml-explorer.c:1501
-#: ../plug-ins/common/cml-explorer.c:1549
+#: ../plug-ins/common/cml-explorer.c:1502
+#: ../plug-ins/common/cml-explorer.c:1550
 msgid "Destination channel:"
 msgstr "Canale di destinazione:"
 
-#: ../plug-ins/common/cml-explorer.c:1505
+#: ../plug-ins/common/cml-explorer.c:1506
 msgid "Copy Parameters"
 msgstr "Parametri di copia"
 
-#: ../plug-ins/common/cml-explorer.c:1514
+#: ../plug-ins/common/cml-explorer.c:1515
 msgid "Selective Load Settings"
 msgstr "Configurazione di apertura selettiva"
 
-#: ../plug-ins/common/cml-explorer.c:1534
+#: ../plug-ins/common/cml-explorer.c:1535
 msgid "Source channel in file:"
 msgstr "Canale sorgente nel file:"
 
-#: ../plug-ins/common/cml-explorer.c:1555
+#: ../plug-ins/common/cml-explorer.c:1556
 msgid "_Misc Ops."
 msgstr "Opz. _varie"
 
-#: ../plug-ins/common/cml-explorer.c:1614
+#: ../plug-ins/common/cml-explorer.c:1615
 msgid "Function type:"
 msgstr "Tipo di funzione:"
 
-#: ../plug-ins/common/cml-explorer.c:1630
+#: ../plug-ins/common/cml-explorer.c:1631
 msgid "Composition:"
 msgstr "Composizione:"
 
-#: ../plug-ins/common/cml-explorer.c:1644
+#: ../plug-ins/common/cml-explorer.c:1645
 msgid "Misc arrange:"
 msgstr "Arrangiamenti vari:"
 
-#: ../plug-ins/common/cml-explorer.c:1648
+#: ../plug-ins/common/cml-explorer.c:1649
 msgid "Use cyclic range"
 msgstr "Usa campo ciclico"
 
-#: ../plug-ins/common/cml-explorer.c:1658
+#: ../plug-ins/common/cml-explorer.c:1659
 msgid "Mod. rate:"
 msgstr "Mod. velocità:"
 
-#: ../plug-ins/common/cml-explorer.c:1667
+#: ../plug-ins/common/cml-explorer.c:1668
 msgid "Env. sensitivity:"
 msgstr "Sensibilità ambiente:"
 
-#: ../plug-ins/common/cml-explorer.c:1676
+#: ../plug-ins/common/cml-explorer.c:1677
 msgid "Diffusion dist.:"
 msgstr "Diffusione dist.:"
 
-#: ../plug-ins/common/cml-explorer.c:1685
+#: ../plug-ins/common/cml-explorer.c:1686
 msgid "# of subranges:"
 msgstr "# di sottocampi:"
 
-#: ../plug-ins/common/cml-explorer.c:1694
+#: ../plug-ins/common/cml-explorer.c:1695
 msgid "P(ower factor):"
 msgstr "P(otenza, fattore di):"
 
-#: ../plug-ins/common/cml-explorer.c:1703
+#: ../plug-ins/common/cml-explorer.c:1704
 msgid "Parameter k:"
 msgstr "Parametro k:"
 
-#: ../plug-ins/common/cml-explorer.c:1712
+#: ../plug-ins/common/cml-explorer.c:1713
 msgid "Range low:"
 msgstr "Limite inferiore:"
 
-#: ../plug-ins/common/cml-explorer.c:1721
+#: ../plug-ins/common/cml-explorer.c:1722
 msgid "Range high:"
 msgstr "Limite superiore:"
 
-#: ../plug-ins/common/cml-explorer.c:1733
+#: ../plug-ins/common/cml-explorer.c:1734
 msgid "Plot a Graph of the Settings"
 msgstr "Disegna il grafico delle impostazioni"
 
-#: ../plug-ins/common/cml-explorer.c:1778
+#: ../plug-ins/common/cml-explorer.c:1779
 msgid "Ch. sensitivity:"
 msgstr "Sensibilità di canale:"
 
-#: ../plug-ins/common/cml-explorer.c:1788
+#: ../plug-ins/common/cml-explorer.c:1789
 msgid "Mutation rate:"
 msgstr "Velocità di mutazione:"
 
-#: ../plug-ins/common/cml-explorer.c:1798
+#: ../plug-ins/common/cml-explorer.c:1799
 msgid "Mutation dist.:"
 msgstr "Distribuzione della mutazione:"
 
-#: ../plug-ins/common/cml-explorer.c:1891
+#: ../plug-ins/common/cml-explorer.c:1892
 msgid "Graph of the Current Settings"
 msgstr "Grafico delle impostazioni correnti"
 
-#: ../plug-ins/common/cml-explorer.c:1895
+#: ../plug-ins/common/cml-explorer.c:1896
 #: ../plug-ins/common/color-cube-analyze.c:364
 #: ../plug-ins/common/plugin-browser.c:550
 #: ../plug-ins/common/procedure-browser.c:129
@@ -1030,21 +1030,21 @@ msgstr "Grafico delle impostazioni correnti"
 msgid "_Close"
 msgstr "_Chiudi"
 
-#: ../plug-ins/common/cml-explorer.c:1962
+#: ../plug-ins/common/cml-explorer.c:1963
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Attenzione: la sorgente e la destinazione sono lo stesso canale."
 
-#: ../plug-ins/common/cml-explorer.c:2021
+#: ../plug-ins/common/cml-explorer.c:2022
 msgid "Save CML Explorer Parameters"
 msgstr "Salva parametri Esploratore CML"
 
-#: ../plug-ins/common/cml-explorer.c:2077 ../plug-ins/common/curve-bend.c:891
+#: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1614
 #: ../plug-ins/common/file-raw-data.c:1192
-#: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -1058,16 +1058,16 @@ msgstr "Salva parametri Esploratore CML"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire '%s' in scrittura: %s"
 
-#: ../plug-ins/common/cml-explorer.c:2132
+#: ../plug-ins/common/cml-explorer.c:2133
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "I parametri sono stati salvati in '%s'"
 
-#: ../plug-ins/common/cml-explorer.c:2154
+#: ../plug-ins/common/cml-explorer.c:2155
 msgid "Load CML Explorer Parameters"
 msgstr "Carica parametri Esploratore CML"
 
-#: ../plug-ins/common/cml-explorer.c:2250 ../plug-ins/common/curve-bend.c:944
+#: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
@@ -1075,7 +1075,7 @@ msgstr "Carica parametri Esploratore CML"
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
-#: ../plug-ins/common/file-raw-data.c:1301 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:1303 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
@@ -1095,23 +1095,23 @@ msgstr "Carica parametri Esploratore CML"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
 
-#: ../plug-ins/common/cml-explorer.c:2272
+#: ../plug-ins/common/cml-explorer.c:2273
 msgid "Error: it's not CML parameter file."
 msgstr "Errore: non è un file dei parametri CML."
 
-#: ../plug-ins/common/cml-explorer.c:2279
+#: ../plug-ins/common/cml-explorer.c:2280
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Attenzione: '%s' è un vecchio formato file."
 
-#: ../plug-ins/common/cml-explorer.c:2283
+#: ../plug-ins/common/cml-explorer.c:2284
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Attenzione: \"%s\" è un file di parametri per una nuova versione "
 "dell'Esploratore CML."
 
-#: ../plug-ins/common/cml-explorer.c:2346
+#: ../plug-ins/common/cml-explorer.c:2347
 msgid "Error: failed to load parameters"
 msgstr "Errore: fallito caricamento parametri"
 
@@ -1359,7 +1359,7 @@ msgstr "Liv. _rosso cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:174
-#: ../plug-ins/common/file-raw-data.c:1937
+#: ../plug-ins/common/file-raw-data.c:1939
 msgid "RGB"
 msgstr "RGB"
 
@@ -1515,12 +1515,12 @@ msgid "Uniform"
 msgstr "Uniforme"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Low"
 msgstr "Basso"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "High"
 msgstr "Alto"
 
@@ -1952,7 +1952,7 @@ msgstr "Sorgente 2:"
 msgid "O_verlap:"
 msgstr "So_vrapposizione:"
 
-#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1971
+#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1973
 msgid "O_ffset:"
 msgstr "_Compensazione:"
 
@@ -2020,7 +2020,7 @@ msgstr "Destriscia"
 
 #: ../plug-ins/common/destripe.c:500 ../plug-ins/common/file-html-table.c:647
 #: ../plug-ins/common/file-ps.c:3473 ../plug-ins/common/file-ps.c:3678
-#: ../plug-ins/common/file-raw-data.c:1986
+#: ../plug-ins/common/file-raw-data.c:1988
 #: ../plug-ins/common/smooth-palette.c:458 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2172,7 +2172,7 @@ msgstr ""
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
-#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:1296 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
@@ -2264,12 +2264,12 @@ msgstr ""
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
 #: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1040
+#: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
 #: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1570
-#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:954
+#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:954
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Esportazione di \"%s\""
@@ -2667,7 +2667,7 @@ msgstr "HEIF"
 
 #. Create the lossless checkbox
 #: ../plug-ins/common/file-heif.c:1252
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
+#: ../plug-ins/file-webp/file-webp-dialog.c:125
 msgid "_Lossless"
 msgstr "_Senza perdite"
 
@@ -2677,7 +2677,7 @@ msgstr "Qualità:"
 
 #. Color profile
 #: ../plug-ins/common/file-heif.c:1274 ../plug-ins/file-jpeg/jpeg-save.c:974
-#: ../plug-ins/file-webp/file-webp-dialog.c:386
+#: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save color _profile"
 msgstr "Salva il _profilo colore"
@@ -2787,7 +2787,7 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "La larghezza di ogni cella. Può essere un numero o una percentuale."
 
 #: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3486
-#: ../plug-ins/common/file-ps.c:3690 ../plug-ins/common/file-raw-data.c:2002
+#: ../plug-ins/common/file-ps.c:3690 ../plug-ins/common/file-raw-data.c:2004
 #: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -2911,111 +2911,111 @@ msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Impossibile salvare senza degrado la trasparenza; salvataggio dell'opacità."
 
-#: ../plug-ins/common/file-mng.c:1337
+#: ../plug-ins/common/file-mng.c:1342
 msgid "MNG"
 msgstr "MNG"
 
-#: ../plug-ins/common/file-mng.c:1344
+#: ../plug-ins/common/file-mng.c:1349
 msgid "MNG Options"
 msgstr "Opzioni MNG"
 
-#: ../plug-ins/common/file-mng.c:1350
+#: ../plug-ins/common/file-mng.c:1355
 msgid "_Interlace"
 msgstr "_Interlaccia"
 
-#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/ui/plug-in-file-png.ui.h:2
+#: ../plug-ins/common/file-mng.c:1367 ../plug-ins/ui/plug-in-file-png.ui.h:2
 msgid "Save _background color"
 msgstr "Salva colore di s_fondo"
 
-#: ../plug-ins/common/file-mng.c:1373
+#: ../plug-ins/common/file-mng.c:1378
 msgid "Save _gamma"
 msgstr "Salva _gamma"
 
-#: ../plug-ins/common/file-mng.c:1383
+#: ../plug-ins/common/file-mng.c:1388
 msgid "Save resolution"
 msgstr "Salva la risoluzione"
 
-#: ../plug-ins/common/file-mng.c:1394 ../plug-ins/ui/plug-in-file-png.ui.h:6
+#: ../plug-ins/common/file-mng.c:1399 ../plug-ins/ui/plug-in-file-png.ui.h:6
 msgid "Save creation _time"
 msgstr "Salva la da_ta di creazione"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2399
+#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2399
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/file-mng.c:1414
+#: ../plug-ins/common/file-mng.c:1419
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/file-mng.c:1417
+#: ../plug-ins/common/file-mng.c:1422
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: ../plug-ins/common/file-mng.c:1418
+#: ../plug-ins/common/file-mng.c:1423
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: ../plug-ins/common/file-mng.c:1419
+#: ../plug-ins/common/file-mng.c:1424
 msgid "All PNG"
 msgstr "Tutti i PNG"
 
-#: ../plug-ins/common/file-mng.c:1420
+#: ../plug-ins/common/file-mng.c:1425
 msgid "All JNG"
 msgstr "Tutti i JNG"
 
-#: ../plug-ins/common/file-mng.c:1432
+#: ../plug-ins/common/file-mng.c:1437
 msgid "Default chunks type:"
 msgstr "Tipo blocchi predefiniti:"
 
-#: ../plug-ins/common/file-mng.c:1435
+#: ../plug-ins/common/file-mng.c:1440
 msgid "Combine"
 msgstr "Combina"
 
-#: ../plug-ins/common/file-mng.c:1436
+#: ../plug-ins/common/file-mng.c:1441
 msgid "Replace"
 msgstr "Rimpiazza"
 
-#: ../plug-ins/common/file-mng.c:1447
+#: ../plug-ins/common/file-mng.c:1452
 msgid "Default _frame disposal:"
 msgstr "Disposizione predefinita _fotogrammi:"
 
-#: ../plug-ins/common/file-mng.c:1459
+#: ../plug-ins/common/file-mng.c:1464
 msgid "_PNG compression level:"
 msgstr "Livello di compressione _PNG:"
 
-#: ../plug-ins/common/file-mng.c:1467 ../plug-ins/ui/plug-in-file-png.ui.h:9
+#: ../plug-ins/common/file-mng.c:1472 ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Choose a high compression level for small file size"
 msgstr "Scegliere una compressione alta per ottenere file piccoli"
 
-#: ../plug-ins/common/file-mng.c:1481
+#: ../plug-ins/common/file-mng.c:1486
 msgid "JPEG compression quality:"
 msgstr "Livello di compressione JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1498
+#: ../plug-ins/common/file-mng.c:1503
 msgid "JPEG smoothing factor:"
 msgstr "Fattore di sfocatura JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1508
+#: ../plug-ins/common/file-mng.c:1513
 msgid "Animated MNG Options"
 msgstr "Opzioni MNG animata"
 
-#: ../plug-ins/common/file-mng.c:1514
+#: ../plug-ins/common/file-mng.c:1519
 msgid "_Loop"
 msgstr "Cic_lico"
 
-#: ../plug-ins/common/file-mng.c:1528
+#: ../plug-ins/common/file-mng.c:1533
 msgid "Default frame delay:"
 msgstr "Ritardo predefinito fotogrammi:"
 
 #. label for 'ms' adjustment
-#: ../plug-ins/common/file-mng.c:1546
-#: ../plug-ins/file-webp/file-webp-dialog.c:349
+#: ../plug-ins/common/file-mng.c:1551
+#: ../plug-ins/file-webp/file-webp-dialog.c:350
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "millisecondi"
 
-#: ../plug-ins/common/file-mng.c:1559
+#: ../plug-ins/common/file-mng.c:1564
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -3023,7 +3023,7 @@ msgstr ""
 "Queste opzioni sono disponibili quando l'immagine esportata possiede più di "
 "un livello. L'immagine che si sta esportando ha un solo livello."
 
-#: ../plug-ins/common/file-mng.c:1622
+#: ../plug-ins/common/file-mng.c:1627
 msgid "MNG animation"
 msgstr "Animazione MNG"
 
@@ -3387,13 +3387,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 "Errore durante l'esportazione di \"%s\". Impossibile esportare l'immagine."
 
-#: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
 #: ../plug-ins/file-tiff/file-tiff-save.c:1140
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Errore di caricamento file IU \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
 #: ../plug-ins/file-tiff/file-tiff-save.c:1141
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
@@ -3811,7 +3811,7 @@ msgid "Raw image data"
 msgstr "Dati immagine raw"
 
 #: ../plug-ins/common/file-raw-data.c:304
-#: ../plug-ins/common/file-raw-data.c:1882
+#: ../plug-ins/common/file-raw-data.c:1884
 msgid "Digital Elevation Model data"
 msgstr "Dati modello digitale di elevazione"
 
@@ -3840,7 +3840,7 @@ msgstr ""
 "supportati sono: SRTM-1 e SRTM-3. Se si conosce la variante, eseguire con "
 "argomento 1 o 3."
 
-#: ../plug-ins/common/file-raw-data.c:1829
+#: ../plug-ins/common/file-raw-data.c:1831
 msgid "Load Image from Raw Data"
 msgstr "Carica immagine da dati raw"
 
@@ -3848,15 +3848,15 @@ msgstr "Carica immagine da dati raw"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:1878
+#: ../plug-ins/common/file-raw-data.c:1880
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Dati modello di elevazione digitale (1 arco-secondo)"
 
-#: ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-raw-data.c:1882
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Dati modello di elevazione digitale (3 arco-secondi)"
 
-#: ../plug-ins/common/file-raw-data.c:1886
+#: ../plug-ins/common/file-raw-data.c:1888
 msgid "Image"
 msgstr "Immagine"
 
@@ -3868,116 +3868,116 @@ msgstr "Immagine"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:1916
+#: ../plug-ins/common/file-raw-data.c:1918
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 arco-secondo)"
 
-#: ../plug-ins/common/file-raw-data.c:1917
+#: ../plug-ins/common/file-raw-data.c:1919
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 arco-secondi)"
 
-#: ../plug-ins/common/file-raw-data.c:1920
+#: ../plug-ins/common/file-raw-data.c:1922
 msgid "_Sample Spacing:"
 msgstr "_Spaziatura campione:"
 
-#: ../plug-ins/common/file-raw-data.c:1938
+#: ../plug-ins/common/file-raw-data.c:1940
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1939
+#: ../plug-ins/common/file-raw-data.c:1941
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1940
+#: ../plug-ins/common/file-raw-data.c:1942
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1941
+#: ../plug-ins/common/file-raw-data.c:1943
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1942
+#: ../plug-ins/common/file-raw-data.c:1944
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1943
+#: ../plug-ins/common/file-raw-data.c:1945
 msgid "Planar RGB"
 msgstr "RGB planare"
 
-#: ../plug-ins/common/file-raw-data.c:1944
+#: ../plug-ins/common/file-raw-data.c:1946
 msgid "B&W 1 bit"
 msgstr "B&N 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1945
+#: ../plug-ins/common/file-raw-data.c:1947
 msgid "Gray 2 bit"
 msgstr "Grigio 2 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1946
+#: ../plug-ins/common/file-raw-data.c:1948
 msgid "Gray 4 bit"
 msgstr "Grigio 4 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1947
+#: ../plug-ins/common/file-raw-data.c:1949
 msgid "Gray 8 bit"
 msgstr "Grigio 8 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1948
+#: ../plug-ins/common/file-raw-data.c:1950
 msgid "Indexed"
 msgstr "Indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1949
+#: ../plug-ins/common/file-raw-data.c:1951
 msgid "Indexed Alpha"
 msgstr "Alfa indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1950
+#: ../plug-ins/common/file-raw-data.c:1952
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Toni di grigio a 16 bit senza segno Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1951
+#: ../plug-ins/common/file-raw-data.c:1953
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Toni di grigio a 16 bit senza segno Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1952
+#: ../plug-ins/common/file-raw-data.c:1954
 msgid "Gray 16 bit Big Endian"
 msgstr "Toni di grigio a 16 bit Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1953
+#: ../plug-ins/common/file-raw-data.c:1955
 msgid "Gray 16 bit Little Endian"
 msgstr "Toni di grigio a 16 bit Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1958
+#: ../plug-ins/common/file-raw-data.c:1960
 msgid "Image _Type:"
 msgstr "_Tipo immagine:"
 
-#: ../plug-ins/common/file-raw-data.c:2019
+#: ../plug-ins/common/file-raw-data.c:2021
 msgid "Palette"
 msgstr "Tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:2029
+#: ../plug-ins/common/file-raw-data.c:2031
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normale)"
 
-#: ../plug-ins/common/file-raw-data.c:2030
+#: ../plug-ins/common/file-raw-data.c:2032
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (stile bmp)"
 
-#: ../plug-ins/common/file-raw-data.c:2035
+#: ../plug-ins/common/file-raw-data.c:2037
 msgid "_Palette Type:"
 msgstr "_Tipo tavolozza:"
 
-#: ../plug-ins/common/file-raw-data.c:2046
+#: ../plug-ins/common/file-raw-data.c:2048
 msgid "Off_set:"
 msgstr "_Spostamento:"
 
-#: ../plug-ins/common/file-raw-data.c:2058
+#: ../plug-ins/common/file-raw-data.c:2060
 msgid "Select Palette File"
 msgstr "Seleziona il file tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:2064
+#: ../plug-ins/common/file-raw-data.c:2066
 msgid "Pal_ette File:"
 msgstr "Fil_e tavolozza:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:2113
+#: ../plug-ins/common/file-raw-data.c:2115
 msgid "Raw Image"
 msgstr "Immagine raw"
 
@@ -4168,34 +4168,34 @@ msgstr "Immagine TarGA"
 msgid "Cannot read footer from '%s'"
 msgstr "Impossibile leggere il pié di pagina da '%s'"
 
-#: ../plug-ins/common/file-tga.c:474
+#: ../plug-ins/common/file-tga.c:475
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Impossibile leggere l'estensione da '%s'"
 
-#: ../plug-ins/common/file-tga.c:486
+#: ../plug-ins/common/file-tga.c:488
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Impossibile leggere l'intestazione da \"%s\""
 
-#: ../plug-ins/common/file-tga.c:1417
+#: ../plug-ins/common/file-tga.c:1428
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1426 ../plug-ins/file-sgi/sgi.c:678
+#: ../plug-ins/common/file-tga.c:1437 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "Compressione _RLE"
 
-#: ../plug-ins/common/file-tga.c:1440
+#: ../plug-ins/common/file-tga.c:1451
 msgid "Or_igin:"
 msgstr "Or_igine:"
 
-#: ../plug-ins/common/file-tga.c:1444
+#: ../plug-ins/common/file-tga.c:1455
 msgid "Bottom left"
 msgstr "In basso a sinistra"
 
-#: ../plug-ins/common/file-tga.c:1445
+#: ../plug-ins/common/file-tga.c:1456
 msgid "Top left"
 msgstr "In alto a sinistra"
 
@@ -6645,7 +6645,7 @@ msgstr ""
 #. Advanced Options
 #. Advanced expander
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-webp/file-webp-dialog.c:220
+#: ../plug-ins/file-webp/file-webp-dialog.c:221
 msgid "_Advanced Options"
 msgstr "Opzioni avanzate"
 
@@ -6665,19 +6665,19 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
 
-#: ../plug-ins/file-dds/dds.c:137 ../plug-ins/file-dds/dds.c:156
+#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
 msgid "DDS image"
 msgstr "Immagine DDS"
 
-#: ../plug-ins/file-dds/dds.c:173
+#: ../plug-ins/file-dds/dds.c:176
 msgid "Decode YCoCg"
 msgstr "Decodifica YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:186
+#: ../plug-ins/file-dds/dds.c:189
 msgid "Decode YCoCg (scaled)"
 msgstr "Decodifica YCoCg (scalata)"
 
-#: ../plug-ins/file-dds/dds.c:199
+#: ../plug-ins/file-dds/dds.c:202
 msgid "Decode Alpha exponent"
 msgstr "Decodifica esponente alfa"
 
@@ -6982,7 +6982,7 @@ msgstr "Salva dati _Exif"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
-#: ../plug-ins/file-webp/file-webp-dialog.c:376
+#: ../plug-ins/file-webp/file-webp-dialog.c:377
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Save _XMP data"
 msgstr "Salva dati _XMP"
@@ -7349,39 +7349,39 @@ msgstr "Immagine IRIS Silicon Graphics"
 msgid "Could not open '%s' for reading."
 msgstr "Impossibile aprire '%s' in lettura."
 
-#: ../plug-ins/file-sgi/sgi.c:347
+#: ../plug-ins/file-sgi/sgi.c:348
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Larghezza non valida: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:354
+#: ../plug-ins/file-sgi/sgi.c:356
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Altezza non valida: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:361
+#: ../plug-ins/file-sgi/sgi.c:364
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Numero di canali non valido: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:587
+#: ../plug-ins/file-sgi/sgi.c:592
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Impossibile aprire '%s' in scrittura"
 
-#: ../plug-ins/file-sgi/sgi.c:670
+#: ../plug-ins/file-sgi/sgi.c:675
 msgid "SGI"
 msgstr "SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:672
+#: ../plug-ins/file-sgi/sgi.c:677
 msgid "Compression type"
 msgstr "Tipo di compressione"
 
-#: ../plug-ins/file-sgi/sgi.c:676
+#: ../plug-ins/file-sgi/sgi.c:681
 msgid "_No compression"
 msgstr "_No compressione"
 
-#: ../plug-ins/file-sgi/sgi.c:680
+#: ../plug-ins/file-sgi/sgi.c:685
 msgid ""
 "_Aggressive RLE\n"
 "(not supported by SGI)"
@@ -7530,66 +7530,66 @@ msgid "(all frames are keyframes)"
 msgstr "(tutti i quadri sono quadri chiave)"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:107
+#: ../plug-ins/file-webp/file-webp-dialog.c:108
 msgid "WebP"
 msgstr "WebP"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:140
+#: ../plug-ins/file-webp/file-webp-dialog.c:141
 msgid "Image _quality:"
 msgstr "_Qualità immagine:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:148
+#: ../plug-ins/file-webp/file-webp-dialog.c:149
 msgid "Image quality"
 msgstr "Qualità immagine"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:159
+#: ../plug-ins/file-webp/file-webp-dialog.c:160
 msgid "Alpha q_uality:"
 msgstr "Q_ualità alfa:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:167
+#: ../plug-ins/file-webp/file-webp-dialog.c:168
 msgid "Alpha channel quality"
 msgstr "La qualità del canale alfa"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:192
+#: ../plug-ins/file-webp/file-webp-dialog.c:193
 msgid "Source _type:"
 msgstr "_Tipo sorgente:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:195
+#: ../plug-ins/file-webp/file-webp-dialog.c:196
 msgid "WebP encoder \"preset\""
 msgstr "\"Preimpostazione\" encoder WebP"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:227
+#: ../plug-ins/file-webp/file-webp-dialog.c:228
 msgid "As A_nimation"
 msgstr "Come a_nimazione"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:256
+#: ../plug-ins/file-webp/file-webp-dialog.c:257
 msgid "Loop _forever"
 msgstr "Ciclo perenne (_f)"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:273
+#: ../plug-ins/file-webp/file-webp-dialog.c:274
 msgid "Max distance between key-frames:"
 msgstr "Distanza massima tra quadri chiave:"
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:308
+#: ../plug-ins/file-webp/file-webp-dialog.c:309
 msgid "_Minimize output size (slower)"
 msgstr "_Minimizza dimensione risultato (più lento)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:331
+#: ../plug-ins/file-webp/file-webp-dialog.c:332
 msgid "Delay between frames where unspecified:"
 msgstr "Ritardo tra quadri ove non specificato:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:354
+#: ../plug-ins/file-webp/file-webp-dialog.c:355
 msgid "Use _delay entered above for all frames"
 msgstr "Usa il ritardo inserito sopra per tutti i quadri (_d)"
 
 #. Save EXIF data
-#: ../plug-ins/file-webp/file-webp-dialog.c:366
+#: ../plug-ins/file-webp/file-webp-dialog.c:367
 msgid "_Save Exif data"
 msgstr "_Salva dati Exif"
 
@@ -8573,7 +8573,7 @@ msgstr "Tipo di griglia:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Normal"
 msgstr "Normale"
 
@@ -11890,200 +11890,200 @@ msgstr "Importa file metadati"
 msgid "Export Metadata File"
 msgstr "Esporta file metadati"
 
-#: ../plug-ins/metadata/metadata-tags.h:250
+#: ../plug-ins/metadata/metadata-tags.c:163
 msgid "Original digital capture of a real life scene"
 msgstr "Istantanea digitale originale di una scena di vita reale"
 
-#: ../plug-ins/metadata/metadata-tags.h:251
+#: ../plug-ins/metadata/metadata-tags.c:164
 msgid "Digitized from a negative on film"
 msgstr "Digitalizzata da un negativo su pellicola"
 
-#: ../plug-ins/metadata/metadata-tags.h:252
+#: ../plug-ins/metadata/metadata-tags.c:165
 msgid "Digitized from a positive on film"
 msgstr "Digitalizzata da un positivo su pellicola"
 
-#: ../plug-ins/metadata/metadata-tags.h:253
+#: ../plug-ins/metadata/metadata-tags.c:166
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizzata da una stampa su supporto non trasparente"
 
-#: ../plug-ins/metadata/metadata-tags.h:254
+#: ../plug-ins/metadata/metadata-tags.c:167
 msgid "Created by software"
 msgstr "Creato via software"
 
-#: ../plug-ins/metadata/metadata-tags.h:262
-#: ../plug-ins/metadata/metadata-tags.h:273
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:176
+#: ../plug-ins/metadata/metadata-tags.c:188
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "None"
 msgstr "No"
 
-#: ../plug-ins/metadata/metadata-tags.h:263
-#: ../plug-ins/metadata/metadata-tags.h:274
+#: ../plug-ins/metadata/metadata-tags.c:177
+#: ../plug-ins/metadata/metadata-tags.c:189
 msgid "Not Applicable"
 msgstr "Non applicabile"
 
-#: ../plug-ins/metadata/metadata-tags.h:264
+#: ../plug-ins/metadata/metadata-tags.c:178
 msgid "Unlimited Model Releases"
 msgstr "Rilasci modello illimitati"
 
-#: ../plug-ins/metadata/metadata-tags.h:265
+#: ../plug-ins/metadata/metadata-tags.c:179
 msgid "Limited or Incomplete Model Releases"
 msgstr "Rilasci modello limitati o incompleti"
 
-#: ../plug-ins/metadata/metadata-tags.h:275
+#: ../plug-ins/metadata/metadata-tags.c:190
 msgid "Unlimited Property Releases"
 msgstr "Rilasci proprietà illimitati"
 
-#: ../plug-ins/metadata/metadata-tags.h:276
+#: ../plug-ins/metadata/metadata-tags.c:191
 msgid "Limited or Incomplete Property Releases"
 msgstr "Rilasci proprietà limitati o incompleti"
 
-#: ../plug-ins/metadata/metadata-tags.h:284
+#: ../plug-ins/metadata/metadata-tags.c:200
 msgid "Age Unknown"
 msgstr "Età sconosciuta"
 
-#: ../plug-ins/metadata/metadata-tags.h:285
+#: ../plug-ins/metadata/metadata-tags.c:201
 msgid "Age 25 or Over"
 msgstr "Età 25 o più anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:286
+#: ../plug-ins/metadata/metadata-tags.c:202
 msgid "Age 24"
 msgstr "Età 24 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:287
+#: ../plug-ins/metadata/metadata-tags.c:203
 msgid "Age 23"
 msgstr "Età 23 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:288
+#: ../plug-ins/metadata/metadata-tags.c:204
 msgid "Age 22"
 msgstr "Età 22 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:289
+#: ../plug-ins/metadata/metadata-tags.c:205
 msgid "Age 21"
 msgstr "Età 21 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:290
+#: ../plug-ins/metadata/metadata-tags.c:206
 msgid "Age 20"
 msgstr "Età 20 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:291
+#: ../plug-ins/metadata/metadata-tags.c:207
 msgid "Age 19"
 msgstr "Età 19 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:292
+#: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Age 18"
 msgstr "Età 18 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:293
+#: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Age 17"
 msgstr "Età 17 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:294
+#: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Age 16"
 msgstr "Età 16 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:295
+#: ../plug-ins/metadata/metadata-tags.c:211
 msgid "Age 15"
 msgstr "Età 15 anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:296
+#: ../plug-ins/metadata/metadata-tags.c:212
 msgid "Age 14 or Under"
 msgstr "Età 14 o meno anni"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.h:308
-#: ../plug-ins/metadata/metadata-tags.h:341
-#: ../plug-ins/metadata/metadata-tags.h:347
-#: ../plug-ins/metadata/metadata-tags.h:353
+#: ../plug-ins/metadata/metadata-tags.c:226
+#: ../plug-ins/metadata/metadata-tags.c:262
+#: ../plug-ins/metadata/metadata-tags.c:269
+#: ../plug-ins/metadata/metadata-tags.c:276
 msgid "Unknown"
 msgstr "Sconosciuto"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.h:309
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Copyrighted"
 msgstr "Coperto da Copyright"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.h:310
+#: ../plug-ins/metadata/metadata-tags.c:228
 msgid "Public Domain"
 msgstr "Pubblico dominio"
 
-#: ../plug-ins/metadata/metadata-tags.h:316
-#: ../plug-ins/metadata/metadata-tags.h:332
+#: ../plug-ins/metadata/metadata-tags.c:235
+#: ../plug-ins/metadata/metadata-tags.c:252
 msgid "Select a value"
 msgstr "Seleziona un valore"
 
-#: ../plug-ins/metadata/metadata-tags.h:317
+#: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Work"
 msgstr "Lavoro"
 
-#: ../plug-ins/metadata/metadata-tags.h:318
+#: ../plug-ins/metadata/metadata-tags.c:237
 msgid "Cell"
 msgstr "Cell"
 
-#: ../plug-ins/metadata/metadata-tags.h:319
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Fax"
 msgstr "Fax"
 
-#: ../plug-ins/metadata/metadata-tags.h:320
+#: ../plug-ins/metadata/metadata-tags.c:239
 msgid "Home"
 msgstr "Casa"
 
-#: ../plug-ins/metadata/metadata-tags.h:321
+#: ../plug-ins/metadata/metadata-tags.c:240
 msgid "Pager"
 msgstr "Visualizzatore"
 
-#: ../plug-ins/metadata/metadata-tags.h:333
+#: ../plug-ins/metadata/metadata-tags.c:253
 msgid "Male"
 msgstr "Maschio"
 
-#: ../plug-ins/metadata/metadata-tags.h:334
+#: ../plug-ins/metadata/metadata-tags.c:254
 msgid "Female"
 msgstr "Femmina"
 
-#: ../plug-ins/metadata/metadata-tags.h:335
+#: ../plug-ins/metadata/metadata-tags.c:255
 msgid "Other"
 msgstr "Altro"
 
-#: ../plug-ins/metadata/metadata-tags.h:341
+#: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Above Sea Level"
 msgstr "Sopra il livello del mare"
 
-#: ../plug-ins/metadata/metadata-tags.h:341
+#: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Below Sea Level"
 msgstr "Sotto il livello del mare"
 
-#: ../plug-ins/metadata/metadata-tags.h:347
+#: ../plug-ins/metadata/metadata-tags.c:269
 msgid "North"
 msgstr "Nord"
 
-#: ../plug-ins/metadata/metadata-tags.h:347
+#: ../plug-ins/metadata/metadata-tags.c:269
 msgid "South"
 msgstr "Sud"
 
-#: ../plug-ins/metadata/metadata-tags.h:353
+#: ../plug-ins/metadata/metadata-tags.c:276
 msgid "East"
 msgstr "Est"
 
-#: ../plug-ins/metadata/metadata-tags.h:353
+#: ../plug-ins/metadata/metadata-tags.c:276
 msgid "West"
 msgstr "Ovest"
 
@@ -12234,8 +12234,8 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Regola la dimensione e l'orientamento della pagina per la stampa"
 
 #: ../plug-ins/print/print.c:131
-msgid "Page Set_up"
-msgstr "Imposta_zione pagina"
+msgid "Page Set_up..."
+msgstr "Imposta_zione pagina..."
 
 #: ../plug-ins/print/print.c:275
 msgid "Image Settings"
