@@ -17,7 +17,7 @@ pagecurl_icons_images = [
 resourcename = 'pagecurl-icons'
 xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
 xml_content += '<gresources>\n'
-xml_content += '  <gresource prefix="/org/gimp/icons">\n'
+xml_content += '  <gresource prefix="/org/gimp/pagecurl-icons">\n'
 foreach file : pagecurl_icons_images
   xml_content+='    <file preprocess="to-pixdata">'+ file +'</file>\n'
 endforeach
