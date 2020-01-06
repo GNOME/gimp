@@ -300,7 +300,7 @@ shear_x_mag_changed (GtkAdjustment         *adj,
       tg_tool->trans_info[SHEAR_X] = value;
       tg_tool->trans_info[SHEAR_Y] = 0.0;  /* can only shear in one axis */
 
-      gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      gimp_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
 
       gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
@@ -322,7 +322,7 @@ shear_y_mag_changed (GtkAdjustment         *adj,
       tg_tool->trans_info[SHEAR_Y] = value;
       tg_tool->trans_info[SHEAR_X] = 0.0;  /* can only shear in one axis */
 
-      gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      gimp_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
 
       gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
