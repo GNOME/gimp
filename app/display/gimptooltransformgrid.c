@@ -1835,6 +1835,9 @@ gimp_tool_transform_get_area_handle (GimpToolTransformGrid *grid,
 
   switch (function)
     {
+    case GIMP_TRANSFORM_FUNCTION_NONE:
+      break;
+
     case GIMP_TRANSFORM_FUNCTION_MOVE:
       handle = GIMP_TRANSFORM_HANDLE_CENTER;
       break;
