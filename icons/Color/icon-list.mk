@@ -327,9 +327,13 @@ scalable_images = \
 	scalable/gimp-tools.svg					\
 	scalable/gimp-tool-text.svg				\
 	scalable/gimp-tool-threshold.svg			\
+	scalable/gimp-tool-transform-3d.svg			\
 	scalable/gimp-tool-unified-transform.svg		\
 	scalable/gimp-tool-warp.svg				\
 	scalable/gimp-tool-zoom.svg				\
+	scalable/gimp-transform-3d-camera.svg			\
+	scalable/gimp-transform-3d-move.svg			\
+	scalable/gimp-transform-3d-rotate.svg			\
 	scalable/gimp-transparency.svg				\
 	scalable/gimp-undo-history.svg				\
 	scalable/gimp-user-manual.svg				\
@@ -502,6 +506,7 @@ vector24_images = \
 	24/gimp-tool-shear.svg					\
 	24/gimp-tool-smudge.svg					\
 	24/gimp-tool-threshold.svg				\
+	24/gimp-tool-transform-3d.svg				\
 	24/gimp-tool-unified-transform.svg			\
 	24/gimp-tool-text.svg					\
 	24/gimp-tool-warp.svg					\
@@ -801,11 +806,15 @@ icons16_images = \
 	16/gimp-tool-smudge.png					\
 	16/gimp-tool-text.png					\
 	16/gimp-tool-threshold.png				\
+	16/gimp-tool-transform-3d.png				\
 	16/gimp-tool-unified-transform.png			\
 	16/gimp-tool-warp.png					\
 	16/gimp-tool-zoom.png					\
 	16/gimp-tools.png					\
 	16/gimp-transparency.png				\
+	16/gimp-transform-3d-camera.svg				\
+	16/gimp-transform-3d-move.svg				\
+	16/gimp-transform-3d-rotate.svg				\
 	16/gimp-undo-history.png				\
 	16/gimp-user-manual.png					\
 	16/gimp-video.png					\
@@ -1012,6 +1021,7 @@ icons24_images = \
 	24/gimp-tool-smudge.png					\
 	24/gimp-tool-text.png					\
 	24/gimp-tool-threshold.png				\
+	24/gimp-tool-transform-3d.png				\
 	24/gimp-tool-unified-transform.png			\
 	24/gimp-tool-warp.png					\
 	24/gimp-tool-zoom.png					\

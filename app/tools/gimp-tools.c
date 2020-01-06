@@ -84,6 +84,7 @@
 #include "gimpsheartool.h"
 #include "gimpsmudgetool.h"
 #include "gimptexttool.h"
+#include "gimptransform3dtool.h"
 #include "gimpunifiedtransformtool.h"
 #include "gimpvectortool.h"
 #include "gimpwarptool.h"
@@ -149,6 +150,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_shear_tool_register,
     gimp_handle_transform_tool_register,
     gimp_perspective_tool_register,
+    gimp_transform_3d_tool_register,
     gimp_flip_tool_register,
     gimp_cage_tool_register,
     gimp_warp_tool_register,

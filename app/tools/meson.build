@@ -115,6 +115,8 @@ libapptools_sources = [
   'gimptoolcontrol.c',
   'gimptooloptions-gui.c',
   'gimptools-utils.c',
+  'gimptransform3doptions.c',
+  'gimptransform3dtool.c',
   'gimptransformgridoptions.c',
   'gimptransformgridtool.c',
   'gimptransformgridtoolundo.c',

@@ -323,9 +323,13 @@ scalable_images = \
 	scalable/gimp-tools-symbolic.svg					\
 	scalable/gimp-tool-text-symbolic.svg				\
 	scalable/gimp-tool-threshold-symbolic.svg			\
+	scalable/gimp-tool-transform-3d-symbolic.svg			\
 	scalable/gimp-tool-unified-transform-symbolic.svg		\
 	scalable/gimp-tool-warp-symbolic.svg				\
 	scalable/gimp-tool-zoom-symbolic.svg				\
+	scalable/gimp-transform-3d-camera-symbolic.svg			\
+	scalable/gimp-transform-3d-move-symbolic.svg			\
+	scalable/gimp-transform-3d-rotate-symbolic.svg			\
 	scalable/gimp-transparency-symbolic.svg				\
 	scalable/gimp-undo-history-symbolic.svg				\
 	scalable/gimp-user-manual-symbolic.svg				\
@@ -498,6 +502,7 @@ vector24_images = \
 	24/gimp-tool-shear-symbolic.svg					\
 	24/gimp-tool-smudge-symbolic.svg					\
 	24/gimp-tool-threshold-symbolic.svg				\
+	24/gimp-tool-transform-3d-symbolic.svg				\
 	24/gimp-tool-unified-transform-symbolic.svg			\
 	24/gimp-tool-text-symbolic.svg					\
 	24/gimp-tool-warp-symbolic.svg					\
@@ -793,10 +798,14 @@ icons16_images = \
 	16/gimp-tool-smudge-symbolic.symbolic.png				\
 	16/gimp-tool-text-symbolic.symbolic.png					\
 	16/gimp-tool-threshold-symbolic.symbolic.png				\
+	16/gimp-tool-transform-3d-symbolic.symbolic.png				\
 	16/gimp-tool-unified-transform-symbolic.symbolic.png			\
 	16/gimp-tool-warp-symbolic.symbolic.png					\
 	16/gimp-tool-zoom-symbolic.symbolic.png					\
 	16/gimp-tools-symbolic.symbolic.png					\
+	16/gimp-transform-3d-camera-symbolic.symbolic.png			\
+	16/gimp-transform-3d-move-symbolic.symbolic.png				\
+	16/gimp-transform-3d-rotate-symbolic.symbolic.png			\
 	16/gimp-transparency-symbolic.symbolic.png				\
 	16/gimp-undo-history-symbolic.symbolic.png				\
 	16/gimp-user-manual-symbolic.symbolic.png				\
@@ -1004,6 +1013,7 @@ icons24_images = \
 	24/gimp-tool-smudge-symbolic.symbolic.png				\
 	24/gimp-tool-text-symbolic.symbolic.png					\
 	24/gimp-tool-threshold-symbolic.symbolic.png				\
+	24/gimp-tool-transform-3d-symbolic.symbolic.png				\
 	24/gimp-tool-unified-transform-symbolic.symbolic.png			\
 	24/gimp-tool-warp-symbolic.symbolic.png					\
 	24/gimp-tool-zoom-symbolic.symbolic.png					\
