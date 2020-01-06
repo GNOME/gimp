@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-12-19 15:09+0000\n"
-"PO-Revision-Date: 2019-12-20 00:00+0900\n"
+"POT-Creation-Date: 2019-11-04 11:35+0000\n"
+"PO-Revision-Date: 2019-12-21 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -3189,16 +3189,14 @@ msgid "_Reset"
 msgstr "リセット(_R)"
 
 #: ../app/actions/dashboard-actions.c:70
-#, fuzzy
-#| msgid "Relative to:"
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
-msgstr "基準:"
+msgstr "累積したデータをリセットします"
 
 #: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-action"
 msgid "_Low Swap Space Warning"
-msgstr ""
+msgstr "スワップ領域不足の警告(_L)"
 
 #: ../app/actions/dashboard-actions.c:79
 msgctxt "dashboard-action"
@@ -3313,11 +3311,8 @@ msgid "_Cancel"
 msgstr "キャンセル(_C)"
 
 #: ../app/actions/dashboard-commands.c:104
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Decor"
 msgid "_Record"
-msgstr "装飾(_D)"
+msgstr "記録(_R)"
 
 #: ../app/actions/dashboard-commands.c:126
 msgid "All Files"
@@ -3332,10 +3327,8 @@ msgid "Add Marker"
 msgstr "マーカーの追加"
 
 #: ../app/actions/dashboard-commands.c:201
-#, fuzzy
-#| msgid "Enter a name for the settings"
 msgid "Enter a description for the marker"
-msgstr "この設定のプリセット名:"
+msgstr "マーカーの説明を入力してください"
 
 #: ../app/actions/data-commands.c:91 ../app/actions/documents-commands.c:393
 #: ../app/actions/file-commands.c:211 ../app/dialogs/file-open-dialog.c:229
@@ -4646,16 +4639,12 @@ msgid "Cut pixels to the clipboard."
 msgstr "ピクセルを切り取り、クリップボードに移動します"
 
 #: ../app/actions/edit-commands.c:275
-#, fuzzy
-#| msgid "Copied pixels to the clipboard"
 msgid "Copied layer to the clipboard."
-msgstr "クリップボードにコピーされたピクセル"
+msgstr "レイヤーをクリップボードにコピーしました。"
 
 #: ../app/actions/edit-commands.c:276 ../app/actions/edit-commands.c:306
-#, fuzzy
-#| msgid "Copied pixels to the clipboard"
 msgid "Copied pixels to the clipboard."
-msgstr "クリップボードにコピーされたピクセル"
+msgstr "ピクセルをクリップボードにコピーしました。"
 
 #: ../app/actions/edit-commands.c:386 ../app/actions/edit-commands.c:629
 #: ../app/tools/gimpseamlessclonetool.c:297
@@ -4680,20 +4669,16 @@ msgid "Copy Visible Named "
 msgstr "可視部分に名前を付けてコピー"
 
 #: ../app/actions/edit-commands.c:539 ../app/tools/gimppainttool.c:872
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "The active layer's alpha channel is locked."
-msgstr "アクティブレイヤー中のすべてのピクセルが保護されています。"
+msgstr "アクティブレイヤー中のアルファチャンネルが保護されています。"
 
 #: ../app/actions/edit-commands.c:598 ../app/display/gimpdisplayshell-dnd.c:483
 msgid "Pasted as new layer because the target is a layer group."
 msgstr ""
 
 #: ../app/actions/edit-commands.c:605 ../app/display/gimpdisplayshell-dnd.c:492
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "Pasted as new layer because the target's pixels are locked."
-msgstr "アクティブレイヤー中のすべてのピクセルが保護されています。"
+msgstr "対象のすべてのピクセルが保護されているため、新しいレイヤーとして貼り付けました。"
 
 #: ../app/actions/edit-commands.c:646
 msgid "There is no active layer or channel to cut from."
@@ -11708,8 +11693,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:283
 msgid "When enabled, non-visible layers can be edited as normal."
-msgstr ""
-"この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
+msgstr "この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
 
 # "This used to be the default behaviour in older versions." の箇所は次の理由により翻訳していない
 # - このバージョンの1つ前のバージョン (ver.2.6.x) では、既に「移動ツールでつかんだレイヤーやパスがアクティブになる」は既定値ではない。
@@ -14506,63 +14490,63 @@ msgstr ""
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2821
+#: ../app/core/gimpimage.c:2819
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "画像解像度の変更"
 
-#: ../app/core/gimpimage.c:2873
+#: ../app/core/gimpimage.c:2872
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "画像単位の変更"
 
-#: ../app/core/gimpimage.c:3816
+#: ../app/core/gimpimage.c:3815
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: ../app/core/gimpimage.c:3875
+#: ../app/core/gimpimage.c:3874
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "画像にパラサイトを付加"
 
-#: ../app/core/gimpimage.c:3917
+#: ../app/core/gimpimage.c:3916
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "画像からパラサイトを削除"
 
-#: ../app/core/gimpimage.c:4648
+#: ../app/core/gimpimage.c:4647
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "レイヤーの追加"
 
-#: ../app/core/gimpimage.c:4690 ../app/core/gimpimage.c:4721
+#: ../app/core/gimpimage.c:4689 ../app/core/gimpimage.c:4720
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "レイヤーの削除"
 
-#: ../app/core/gimpimage.c:4715
+#: ../app/core/gimpimage.c:4714
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "フローティング選択範囲の削除"
 
-#: ../app/core/gimpimage.c:4882
+#: ../app/core/gimpimage.c:4881
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "チャンネルを追加"
 
-#: ../app/core/gimpimage.c:4910 ../app/core/gimpimage.c:4934
+#: ../app/core/gimpimage.c:4909 ../app/core/gimpimage.c:4933
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "チャンネルを削除"
 
-#: ../app/core/gimpimage.c:4990
+#: ../app/core/gimpimage.c:4989
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "パスを追加"
 
-#: ../app/core/gimpimage.c:5020 ../app/core/gimpimage.c:5027
+#: ../app/core/gimpimage.c:5019 ../app/core/gimpimage.c:5026
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "パスを削除"
@@ -16692,7 +16676,7 @@ msgstr "モジュール"
 
 #: ../app/dialogs/module-dialog.c:472
 msgid "Only in memory"
-msgstr "メモリー中のみ"
+msgstr "メモリ中のみ"
 
 #: ../app/dialogs/module-dialog.c:477
 msgid "No longer available"
@@ -17818,9 +17802,8 @@ msgstr "使用するヘルプブラウザー(_E):"
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
-msgstr ""
-"GIMP ヘルプブラウザーがインストールされていません。代わりにウェブブラウザーを"
-"使用します。"
+msgstr "GIMP ヘルプブラウザーがインストールされていません。代わりにウェブ"
+"ブラウザーを使用します。"
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2606
@@ -22431,18 +22414,13 @@ msgid "Zoom Motion Blur: "
 msgstr "放射形モーションぼかし: "
 
 #: ../app/propgui/gimppropgui-newsprint.c:92
-#, fuzzy
-#| msgctxt "fill-type"
-#| msgid "White"
 msgid "White"
 msgstr "白"
 
 #: ../app/propgui/gimppropgui-newsprint.c:93
 #: ../app/propgui/gimppropgui-newsprint.c:95
-#, fuzzy
-#| msgid "Black:"
 msgid "Black"
-msgstr "K (ブラック):"
+msgstr "黒"
 
 #: ../app/propgui/gimppropgui-newsprint.c:236
 #, fuzzy
@@ -27055,61 +27033,51 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:458 ../app/widgets/gimpdashboard.c:510
 msgctxt "dashboard-variable"
 msgid "Occupied"
-msgstr ""
+msgstr "確保"
 
 #: ../app/widgets/gimpdashboard.c:459
-#, fuzzy
-#| msgid "Tile cache _size:"
 msgid "Tile cache occupied size"
-msgstr "タイルキャッシュサイズ(_S):"
+msgstr "タイルキャッシュの確保サイズです"
 
 #: ../app/widgets/gimpdashboard.c:468
 msgctxt "dashboard-variable"
 msgid "Maximum"
-msgstr ""
+msgstr "最大"
 
 #: ../app/widgets/gimpdashboard.c:469
 msgid "Maximal tile cache occupied size"
-msgstr ""
+msgstr "確保したタイルキャッシュの最大サイズです"
 
 #: ../app/widgets/gimpdashboard.c:478 ../app/widgets/gimpdashboard.c:530
 msgctxt "dashboard-variable"
 msgid "Limit"
-msgstr ""
+msgstr "上限"
 
 #: ../app/widgets/gimpdashboard.c:479
-#, fuzzy
-#| msgid "Tile cache _size:"
 msgid "Tile cache size limit"
-msgstr "タイルキャッシュサイズ(_S):"
+msgstr "タイルキャッシュの上限サイズです"
 
 #: ../app/widgets/gimpdashboard.c:487 ../app/widgets/gimpdashboard.c:613
-#, fuzzy
-#| msgid "Image Properties"
 msgctxt "dashboard-variable"
 msgid "Compression"
-msgstr "画像の情報"
+msgstr "圧縮"
 
 #: ../app/widgets/gimpdashboard.c:488
 msgid "Tile cache compression ratio"
-msgstr ""
+msgstr "タイルキャッシュの圧縮率です"
 
 #: ../app/widgets/gimpdashboard.c:497
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
-msgstr ""
+msgstr "ヒット/ミス"
 
 #: ../app/widgets/gimpdashboard.c:498
-#, fuzzy
-#| msgid "Tile cache _size:"
 msgid "Tile cache hit/miss ratio"
-msgstr "タイルキャッシュサイズ(_S):"
+msgstr "タイルキャッシュのヒット率・ミス率です"
 
 #: ../app/widgets/gimpdashboard.c:511
-#, fuzzy
-#| msgid "Tile cache _size:"
 msgid "Swap file occupied size"
-msgstr "タイルキャッシュサイズ(_S):"
+msgstr "スワップファイルの確保サイズです"
 
 #: ../app/widgets/gimpdashboard.c:520 ../app/widgets/gimpdashboard.c:677
 msgctxt "dashboard-variable"
@@ -27117,109 +27085,95 @@ msgid "Size"
 msgstr "サイズ"
 
 #: ../app/widgets/gimpdashboard.c:521
-#, fuzzy
-#| msgid "Show image size"
 msgid "Swap file size"
-msgstr "キャンバスサイズを表示"
+msgstr "スワップファイルのサイズです"
 
 #: ../app/widgets/gimpdashboard.c:531
 msgid "Swap file size limit"
-msgstr ""
+msgstr "スワップファイルの上限サイズです"
 
 #: ../app/widgets/gimpdashboard.c:538
 msgctxt "dashboard-variable"
 msgid "Queued"
-msgstr ""
+msgstr "キュー"
 
 #: ../app/widgets/gimpdashboard.c:539
 msgid "Size of data queued for writing to the swap"
-msgstr ""
+msgstr "スワップへの書き込みを待機しているデータのサイズです"
 
 #: ../app/widgets/gimpdashboard.c:548
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
-msgstr ""
+msgstr "キュー詰まり"
 
 #: ../app/widgets/gimpdashboard.c:549
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
-msgstr ""
+msgstr "キューが満杯になりスワップへの書き込みを中断した回数です"
 
 #: ../app/widgets/gimpdashboard.c:558
 msgctxt "dashboard-variable"
 msgid "Queue full"
-msgstr ""
+msgstr "キューの満杯"
 
 #: ../app/widgets/gimpdashboard.c:559
 msgid "Whether the swap queue is full"
-msgstr ""
+msgstr "スワップキューが満杯になっているかどうかです"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
 #: ../app/widgets/gimpdashboard.c:570
-#, fuzzy
-#| msgid "Ready"
 msgctxt "dashboard-variable"
 msgid "Read"
-msgstr "準備済み"
+msgstr "読み取り"
 
 #: ../app/widgets/gimpdashboard.c:571
 msgid "Total amount of data read from the swap"
-msgstr ""
+msgstr "スワップから読み取ったデータの総量です"
 
 #: ../app/widgets/gimpdashboard.c:580
 msgctxt "dashboard-variable"
 msgid "Read throughput"
-msgstr ""
+msgstr "読み取りスループット"
 
 #: ../app/widgets/gimpdashboard.c:581
 msgid "The rate at which data is read from the swap"
-msgstr ""
+msgstr "スワップからデータを読み取る速度です"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
 #: ../app/widgets/gimpdashboard.c:593
-#, fuzzy
-#| msgctxt "dynamics-output-type"
-#| msgid "Jitter"
 msgctxt "dashboard-variable"
 msgid "Written"
-msgstr "散布"
+msgstr "書き込み"
 
 #: ../app/widgets/gimpdashboard.c:594
 msgid "Total amount of data written to the swap"
-msgstr ""
+msgstr "スワップに書き込んだデータの総量です"
 
 #: ../app/widgets/gimpdashboard.c:603
-#, fuzzy
-#| msgid "Strikethrough"
 msgctxt "dashboard-variable"
 msgid "Write throughput"
-msgstr "取り消し線"
+msgstr "書き込みスループット"
 
 #: ../app/widgets/gimpdashboard.c:604
 msgid "The rate at which data is written to the swap"
-msgstr ""
+msgstr "スワップにデータを書き込む速度です"
 
 #: ../app/widgets/gimpdashboard.c:614
-#, fuzzy
-#| msgid "Image Properties"
 msgid "Swap compression ratio"
-msgstr "画像の情報"
+msgstr "スワップ圧縮率"
 
 #: ../app/widgets/gimpdashboard.c:627
-#, fuzzy
-#| msgctxt "message-severity"
-#| msgid "Message"
 msgctxt "dashboard-variable"
 msgid "Usage"
-msgstr "メッセージ"
+msgstr "使用率"
 
 #: ../app/widgets/gimpdashboard.c:628
 msgid "Total CPU usage"
-msgstr ""
+msgstr "CPU の総使用率です"
 
 #: ../app/widgets/gimpdashboard.c:636 ../app/widgets/gimpdashboard.c:645
 #: ../app/widgets/gimpdashboard.c:707
@@ -27228,94 +27182,83 @@ msgid "Active"
 msgstr "アクティブ"
 
 #: ../app/widgets/gimpdashboard.c:637
-#, fuzzy
-#| msgid "Set layer or path as active"
 msgid "Whether the CPU is active"
-msgstr "つかんだレイヤーやパスをアクティブにする"
+msgstr "CPU がアクティブかどうかです"
 
 #: ../app/widgets/gimpdashboard.c:646
 msgid "Total amount of time the CPU has been active"
-msgstr ""
+msgstr "CPU がアクティブになった総時間です"
 
 #: ../app/widgets/gimpdashboard.c:659
 msgctxt "dashboard-variable"
 msgid "Used"
-msgstr ""
+msgstr "使用量"
 
 #: ../app/widgets/gimpdashboard.c:660
 msgid "Amount of memory used by the process"
-msgstr ""
+msgstr "プロセスが使用しているメモリ量です"
 
 #: ../app/widgets/gimpdashboard.c:668
-#, fuzzy
-#| msgid "Available types:"
 msgctxt "dashboard-variable"
 msgid "Available"
-msgstr "利用可能な種類:"
+msgstr "利用可能"
 
 #: ../app/widgets/gimpdashboard.c:669
 msgid "Amount of available physical memory"
-msgstr ""
+msgstr "利用可能な物理メモリ量です"
 
 #: ../app/widgets/gimpdashboard.c:678
 msgid "Physical memory size"
-msgstr ""
+msgstr "物理メモリのサイズです"
 
 #: ../app/widgets/gimpdashboard.c:689
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
-msgstr ""
+msgstr "ミップマップ"
 
 #: ../app/widgets/gimpdashboard.c:690
 msgid "Total size of processed mipmapped data"
 msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:698
-#, fuzzy
-#| msgid "Assign"
 msgctxt "dashboard-variable"
 msgid "Assigned"
-msgstr "割当"
+msgstr "割り当て済み"
 
 #: ../app/widgets/gimpdashboard.c:699
 msgid "Number of assigned worker threads"
-msgstr ""
+msgstr "割り当てられたワーカースレッド数です"
 
 #: ../app/widgets/gimpdashboard.c:708
-#, fuzzy
-#| msgctxt "guides-type"
-#| msgid "Number of lines"
 msgid "Number of active worker threads"
-msgstr "グリッド線の数を指定"
+msgstr "アクティブなワーカースレッド数です"
 
 #: ../app/widgets/gimpdashboard.c:716
 msgctxt "dashboard-variable"
 msgid "Async"
-msgstr ""
+msgstr "Async"
 
 #: ../app/widgets/gimpdashboard.c:717
 msgid "Number of ongoing asynchronous operations"
-msgstr ""
+msgstr "継続中の非同期操作数です"
 
 #: ../app/widgets/gimpdashboard.c:725
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr ""
+msgstr "タイル"
 
 #: ../app/widgets/gimpdashboard.c:726
-#, fuzzy
-#| msgid "Size in memory:"
 msgid "Total size of tile memory"
-msgstr "メモリ中のサイズ:"
+msgstr "タイルメモリの合計サイズです"
 
 #: ../app/widgets/gimpdashboard.c:735
 msgctxt "dashboard-variable"
 msgid "Scratch"
-msgstr ""
+msgstr "スクラッチ"
 
 #: ../app/widgets/gimpdashboard.c:736
 msgid "Total size of scratch memory"
-msgstr ""
+msgstr "スクラッチメモリの合計サイズです"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
@@ -27323,11 +27266,11 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:747
 msgctxt "dashboard-variable"
 msgid "TempBuf"
-msgstr ""
+msgstr "TempBuf"
 
 #: ../app/widgets/gimpdashboard.c:748
 msgid "Total size of temporary buffers"
-msgstr ""
+msgstr "一時バッファーの合計サイズです"
 
 #: ../app/widgets/gimpdashboard.c:760
 msgctxt "dashboard-group"
@@ -27336,37 +27279,34 @@ msgstr "キャッシュ"
 
 #: ../app/widgets/gimpdashboard.c:761
 msgid "In-memory tile cache"
-msgstr ""
+msgstr "メモリ内のタイルキャッシュです"
 
 #: ../app/widgets/gimpdashboard.c:797
 msgctxt "dashboard-group"
 msgid "Swap"
-msgstr ""
+msgstr "スワップ"
 
 #: ../app/widgets/gimpdashboard.c:798
 msgid "On-disk tile swap"
-msgstr ""
+msgstr "ディスク上のタイルスワップです"
 
 #: ../app/widgets/gimpdashboard.c:862
 msgctxt "dashboard-group"
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #: ../app/widgets/gimpdashboard.c:863
 msgid "CPU usage"
-msgstr ""
+msgstr "CPU 使用率です"
 
 #: ../app/widgets/gimpdashboard.c:898
 msgctxt "dashboard-group"
 msgid "Memory"
-msgstr "メモリー"
+msgstr "メモリ"
 
 #: ../app/widgets/gimpdashboard.c:899
-#, fuzzy
-#| msgctxt "message-severity"
-#| msgid "Message"
 msgid "Memory usage"
-msgstr "メッセージ"
+msgstr "メモリ使用量です"
 
 #: ../app/widgets/gimpdashboard.c:907
 msgctxt "dashboard-variable"
@@ -27376,20 +27316,15 @@ msgstr "キャッシュ"
 #: ../app/widgets/gimpdashboard.c:941
 msgctxt "dashboard-group"
 msgid "Misc"
-msgstr ""
+msgstr "その他"
 
 #: ../app/widgets/gimpdashboard.c:942
-#, fuzzy
-#| msgid "Discard Text Information"
 msgid "Miscellaneous information"
-msgstr "テキストレイヤーから文字情報を破棄する"
+msgstr "その他の情報です"
 
 #: ../app/widgets/gimpdashboard.c:1135
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Select All"
 msgid "Select fields"
-msgstr "すべて選択"
+msgstr "フィールドの選択"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
 #: ../app/widgets/gimpdashboard.c:3223
@@ -27414,7 +27349,7 @@ msgstr "いいえ"
 #: ../app/widgets/gimpdashboard.c:3317
 #, c-format
 msgid "%g/s"
-msgstr ""
+msgstr "%g/秒"
 
 #. Translators:  This string reports the rate of change of a measured value.
 #. * The first "%s" is replaced by a certain quantity, usually followed by a
@@ -27425,7 +27360,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:4120
 #, c-format
 msgid "%s/s"
-msgstr ""
+msgstr "%s/秒"
 
 #: ../app/widgets/gimpdashboard.c:4198
 msgid "N/A"
@@ -27588,10 +27523,6 @@ msgid "Auto"
 msgstr "自動"
 
 #: ../app/widgets/gimpdockwindow.c:394
-#, fuzzy
-#| msgid ""
-#| "When enabled the dialog automatically follows the image you are working "
-#| "on."
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr "有効にすると、現在作業中の画像にダイアログが自動的に追従します。"
@@ -27605,11 +27536,8 @@ msgid "Lock position and size"
 msgstr "位置とサイズを保護"
 
 #: ../app/widgets/gimpdrawabletreeview.c:189
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "Create a floating selection"
 msgid "Cannot select item while a floating selection is active."
-msgstr "選択範囲をフローティング選択範囲に置き換えます"
+msgstr "フローティング選択範囲がアクティブな間はアイテムを選択できません。"
 
 #: ../app/widgets/gimpdynamicseditor.c:162
 #: ../app/widgets/gimpdynamicsoutputeditor.c:71
@@ -27677,10 +27605,8 @@ msgid "_Help"
 msgstr "ヘルプ(_H)"
 
 #: ../app/widgets/gimpfiledialog.c:769
-#, fuzzy
-#| msgid "Show All Files"
 msgid "Show _All Files"
-msgstr "すべてのファイルを表示"
+msgstr "すべてのファイルを表示(_A)"
 
 #: ../app/widgets/gimpfiledialog.c:802
 #, c-format
@@ -27688,7 +27614,6 @@ msgid "Select File _Type (%s)"
 msgstr "ファイル形式の選択(_T) (現在の設定: %s)"
 
 #: ../app/widgets/gimpfiledialog.c:804
-#, fuzzy
 msgid "Select File _Type"
 msgstr "ファイル形式の選択(_T)"
 
@@ -27851,15 +27776,9 @@ msgid "Could not start the GIMP help browser plug-in."
 msgstr "GIMP ヘルプブラウザープラグインを起動できません"
 
 #: ../app/widgets/gimphelp.c:422
-#, fuzzy
-#| msgid ""
-#| "The GIMP help browser plug-in appears to be missing from your "
-#| "installation. You may instead use the web browser for reading the help "
-#| "pages."
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
-"GIMP ヘルプブラウザープラグインがインストールされなかったようです。ユーザーマ"
-"ニュアルを表示するにはウェブブラウザーを使用してください。"
+"ユーザーマニュアルを表示するにはウェブブラウザーを使用してください。"
 
 #: ../app/widgets/gimphelp.c:448
 msgid "Use _Web Browser"
@@ -27876,27 +27795,19 @@ msgstr ""
 "インストールされていません。"
 
 #: ../app/widgets/gimphelp.c:820
-#, fuzzy
-#| msgid "System Language"
 msgid "Read Selected _Language"
-msgstr "システム設定の言語"
+msgstr "選択した言語で読む(_L)"
 
 #: ../app/widgets/gimphelp.c:824
 msgid "Available manuals..."
 msgstr "利用可能なマニュアル..."
 
 #: ../app/widgets/gimphelp.c:836
-#, fuzzy
-#| msgid ""
-#| "You may either install the additional help package or change your "
-#| "preferences to use the online version."
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
-"GIMP ヘルプパッケージを追加インストールするか、設定ダイアログの [ヘルプ] セク"
-"ションで [使用するユーザーマニュアル] を [オンライン版] に変更すれば利用可能"
-"です。"
+"他言語のマニュアルを選択してください。また、オンライン版を読むこともできます。"
 
 #: ../app/widgets/gimphelp.c:842
 msgid ""
