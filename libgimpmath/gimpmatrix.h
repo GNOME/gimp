@@ -131,10 +131,22 @@ void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
 /*  GimpMatrix4  */
 /*****************/
 
+void          gimp_matrix4_identity        (GimpMatrix4       *matrix);
+void          gimp_matrix4_mult            (const GimpMatrix4 *matrix1,
+                                            GimpMatrix4       *matrix2);
+
 void          gimp_matrix4_to_deg          (const GimpMatrix4 *matrix,
                                             gdouble           *a,
                                             gdouble           *b,
                                             gdouble           *c);
+
+gdouble       gimp_matrix4_transform_point (const GimpMatrix4 *matrix,
+                                            gdouble            x,
+                                            gdouble            y,
+                                            gdouble            z,
+                                            gdouble           *newx,
+                                            gdouble           *newy,
+                                            gdouble           *newz);
 
 
 G_END_DECLS
