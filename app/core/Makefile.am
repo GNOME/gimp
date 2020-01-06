@@ -78,6 +78,8 @@ libappcore_a_sources = \
 	gimp-templates.h			\
 	gimp-transform-resize.c			\
 	gimp-transform-resize.h			\
+	gimp-transform-3d-utils.c		\
+	gimp-transform-3d-utils.h		\
 	gimp-transform-utils.c			\
 	gimp-transform-utils.h			\
 	gimp-units.c				\
