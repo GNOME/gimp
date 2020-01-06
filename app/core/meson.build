@@ -42,6 +42,7 @@ libappcore_sources = [
   'gimp-tags.c',
   'gimp-templates.c',
   'gimp-transform-resize.c',
+  'gimp-transform-3d-utils.c',
   'gimp-transform-utils.c',
   'gimp-units.c',
   'gimp-user-install.c',
