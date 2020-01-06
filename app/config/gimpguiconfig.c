@@ -64,6 +64,7 @@ enum
   PROP_RESTORE_SESSION,
   PROP_RESTORE_MONITOR,
   PROP_SAVE_TOOL_OPTIONS,
+  PROP_COMPACT_SLIDERS,
   PROP_SHOW_TOOLTIPS,
   PROP_TEAROFF_MENUS,
   PROP_CAN_CHANGE_ACCELS,
@@ -233,6 +234,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             "save-tool-options",
                             "Save tool options",
                             SAVE_TOOL_OPTIONS_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COMPACT_SLIDERS,
+                            "compact-sliders",
+                            "Compact sliders",
+                            COMPACT_SLIDERS_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -625,6 +633,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SAVE_TOOL_OPTIONS:
       gui_config->save_tool_options = g_value_get_boolean (value);
       break;
+    case PROP_COMPACT_SLIDERS:
+      gui_config->compact_sliders = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_TOOLTIPS:
       gui_config->show_tooltips = g_value_get_boolean (value);
       break;
@@ -815,6 +826,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SAVE_TOOL_OPTIONS:
       g_value_set_boolean (value, gui_config->save_tool_options);
+      break;
+    case PROP_COMPACT_SLIDERS:
+      g_value_set_boolean (value, gui_config->compact_sliders);
       break;
     case PROP_SHOW_TOOLTIPS:
       g_value_set_boolean (value, gui_config->show_tooltips);

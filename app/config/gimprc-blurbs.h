@@ -49,6 +49,11 @@ _("How to handle embedded color profiles when opening a file.")
 #define COLOR_PROFILE_PATH_BLURB \
 _("Sets the default folder path for all color profile file dialogs.")
 
+#define COMPACT_SLIDERS_BLURB \
+_("Use compact style for sliders. In this mode, left-click is used for " \
+  "absolute adjustment, middle-click is used for relative adjustment, and " \
+  "right-click is used for manual entry.")
+
 #define CURSOR_MODE_BLURB \
 _("Sets the type of mouse pointers to use.")
 

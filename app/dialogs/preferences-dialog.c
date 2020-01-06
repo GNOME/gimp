@@ -1812,6 +1812,13 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_language_combo_box_add (object, "language", GTK_BOX (vbox2));
 #endif
 
+  /*  Style  */
+  vbox2 = prefs_frame_new (_("Style"), GTK_CONTAINER (vbox), FALSE);
+
+  button = prefs_check_button_add (object, "compact-sliders",
+                                   _("Use co_mpact sliders"),
+                                   GTK_BOX (vbox2));
+
   /*  Previews  */
   vbox2 = prefs_frame_new (_("Previews"), GTK_CONTAINER (vbox), FALSE);
 

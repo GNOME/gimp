@@ -41,8 +41,11 @@
 
 /*  local function prototypes  */
 
+static void   themes_write_style         (GimpGuiConfig          *config,
+                                          GOutputStream          *output,
+                                          GError                **error);
 static void   themes_apply_theme         (Gimp                   *gimp,
-                                          const gchar            *theme_name);
+                                          GimpGuiConfig          *config);
 static void   themes_list_themes_foreach (gpointer                key,
                                           gpointer                value,
                                           gpointer                data);
@@ -143,7 +146,7 @@ themes_init (Gimp *gimp)
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
-  themes_apply_theme (gimp, config->theme);
+  themes_apply_theme (gimp, config);
 
   themerc = gimp_personal_rc_file ("themerc");
   gtk_rc_parse (themerc);
@@ -152,6 +155,9 @@ themes_init (Gimp *gimp)
   themes_fix_pixbuf_style ();
 
   g_signal_connect (config, "notify::theme",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
+  g_signal_connect (config, "notify::compact-sliders",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
 }
@@ -272,8 +278,28 @@ themes_get_theme_file (Gimp        *gimp,
 /*  private functions  */
 
 static void
-themes_apply_theme (Gimp        *gimp,
-                    const gchar *theme_name)
+themes_write_style (GimpGuiConfig  *config,
+                    GOutputStream  *output,
+                    GError        **error)
+{
+  if (! *error)
+    {
+      g_output_stream_printf (
+        output, NULL, NULL, error,
+        "style \"gimp-spin-scale-style\"\n"
+        "{\n"
+        "  GimpSpinScale::compact = %d\n"
+        "}\n"
+        "\n"
+        "class \"GimpSpinScale\" style \"gimp-spin-scale-style\"\n"
+        "\n",
+        config->compact_sliders);
+    }
+}
+
+static void
+themes_apply_theme (Gimp          *gimp,
+                    GimpGuiConfig *config)
 {
   GFile         *themerc;
   GOutputStream *output;
@@ -296,7 +322,7 @@ themes_apply_theme (Gimp        *gimp,
     }
   else
     {
-      GFile  *theme_dir   = themes_get_theme_dir (gimp, theme_name);
+      GFile  *theme_dir   = themes_get_theme_dir (gimp, config->theme);
       GFile  *gtkrc_user;
       GSList *gtkrc_files = NULL;
       GSList *iter;
@@ -335,6 +361,8 @@ themes_apply_theme (Gimp        *gimp,
         "# gtkrc file instead (%s).\n"
         "\n",
         gimp_file_get_utf8_name (gtkrc_user));
+
+      themes_write_style (config, output, &error);
 
       for (iter = gtkrc_files; ! error && iter; iter = g_slist_next (iter))
         {
@@ -419,7 +447,7 @@ themes_theme_change_notify (GimpGuiConfig *config,
                             GParamSpec    *pspec,
                             Gimp          *gimp)
 {
-  themes_apply_theme (gimp, config->theme);
+  themes_apply_theme (gimp, config);
 
   gtk_rc_reparse_all ();
 
