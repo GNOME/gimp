@@ -503,6 +503,8 @@ app/tools/gimptool.c
 app/tools/gimptooloptions-gui.c
 app/tools/gimptransformgridoptions.c
 app/tools/gimptransformgridtool.c
+app/tools/gimptransform3doptions.c
+app/tools/gimptransform3dtool.c
 app/tools/gimptransformoptions.c
 app/tools/gimptransformtool.c
 app/tools/gimpunifiedtransformtool.c

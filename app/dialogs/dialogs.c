@@ -244,6 +244,7 @@ static const GimpDialogFactoryEntry entries[] =
   FOREIGN ("gimp-shear-tool-dialog",               TRUE,  FALSE),
   FOREIGN ("gimp-text-tool-dialog",                TRUE,  TRUE),
   FOREIGN ("gimp-threshold-tool-dialog",           TRUE,  FALSE),
+  FOREIGN ("gimp-transform-3d-tool-dialog",        TRUE,  FALSE),
   FOREIGN ("gimp-perspective-tool-dialog",         TRUE,  FALSE),
   FOREIGN ("gimp-unified-transform-tool-dialog",   TRUE,  FALSE),
   FOREIGN ("gimp-handle-transform-tool-dialog",    TRUE,  FALSE),

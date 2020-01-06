@@ -387,9 +387,14 @@ G_BEGIN_DECLS
 #define GIMP_ICON_TOOL_SMUDGE               "gimp-tool-smudge"
 #define GIMP_ICON_TOOL_TEXT                 "gimp-tool-text"
 #define GIMP_ICON_TOOL_THRESHOLD            "gimp-tool-threshold"
+#define GIMP_ICON_TOOL_TRANSFORM_3D         "gimp-tool-transform-3d"
 #define GIMP_ICON_TOOL_UNIFIED_TRANSFORM    "gimp-tool-unified-transform"
 #define GIMP_ICON_TOOL_WARP                 "gimp-tool-warp"
 #define GIMP_ICON_TOOL_ZOOM                 "gimp-tool-zoom"
+
+#define GIMP_ICON_TRANSFORM_3D_CAMERA       "gimp-transform-3d-camera"
+#define GIMP_ICON_TRANSFORM_3D_MOVE         "gimp-transform-3d-move"
+#define GIMP_ICON_TRANSFORM_3D_ROTATE       "gimp-transform-3d-rotate"
 
 #define GIMP_ICON_VIEW_REFRESH              "view-refresh"
 #define GIMP_ICON_VIEW_FULLSCREEN           "view-fullscreen"
