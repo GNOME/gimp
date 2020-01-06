@@ -215,7 +215,7 @@ void
 gimp_tool_shear_grid_motion (GimpToolWidget   *widget,
                              const GimpCoords *coords,
                              guint32           time,
-                              GdkModifierType   state)
+                             GdkModifierType   state)
 {
   GimpToolShearGrid        *grid    = GIMP_TOOL_SHEAR_GRID (widget);
   GimpToolShearGridPrivate *private = grid->private;
