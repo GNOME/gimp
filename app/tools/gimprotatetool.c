@@ -30,6 +30,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimppivotselector.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -53,7 +54,7 @@ enum
 };
 
 
-#define SB_WIDTH 10
+#define SB_WIDTH 8
 #define EPSILON  1e-6
 
 
@@ -79,6 +80,8 @@ static void             gimp_rotate_tool_widget_changed (GimpTransformGridTool *
 static void             rotate_angle_changed            (GtkAdjustment         *adj,
                                                          GimpTransformGridTool *tg_tool);
 static void             rotate_center_changed           (GtkWidget             *entry,
+                                                         GimpTransformGridTool *tg_tool);
+static void             rotate_pivot_changed            (GimpPivotSelector     *selector,
                                                          GimpTransformGridTool *tg_tool);
 
 
@@ -288,7 +291,7 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, rotate->angle_adj);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_widget_set_hexpand (scale, TRUE);
-  gtk_grid_attach (GTK_GRID (grid), scale, 1, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), scale, 1, 1, 2, 1);
   gtk_widget_show (scale);
 
   adj = gtk_adjustment_new (0, -1, 1, 1, 10, 0);
@@ -312,6 +315,14 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
   g_signal_connect (rotate->sizeentry, "value-changed",
                     G_CALLBACK (rotate_center_changed),
                     tg_tool);
+
+  rotate->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 0.0, 0.0);
+  gtk_grid_attach (GTK_GRID (grid), rotate->pivot_selector, 2, 2, 1, 2);
+  gtk_widget_show (rotate->pivot_selector);
+
+  g_signal_connect (rotate->pivot_selector, "changed",
+                    G_CALLBACK (rotate_pivot_changed),
+                    tg_tool);
 }
 
 static void
@@ -333,6 +344,19 @@ gimp_rotate_tool_dialog_update (GimpTransformGridTool *tg_tool)
 
   g_signal_handlers_unblock_by_func (rotate->sizeentry,
                                      rotate_center_changed,
+                                     tg_tool);
+
+  g_signal_handlers_block_by_func (rotate->pivot_selector,
+                                   rotate_pivot_changed,
+                                   tg_tool);
+
+  gimp_pivot_selector_set_position (
+    GIMP_PIVOT_SELECTOR (rotate->pivot_selector),
+    tg_tool->trans_info[PIVOT_X],
+    tg_tool->trans_info[PIVOT_Y]);
+
+  g_signal_handlers_unblock_by_func (rotate->pivot_selector,
+                                     rotate_pivot_changed,
                                      tg_tool);
 }
 
@@ -381,6 +405,10 @@ gimp_rotate_tool_prepare (GimpTransformGridTool *tg_tool)
   g_signal_handlers_unblock_by_func (rotate->sizeentry,
                                      rotate_center_changed,
                                      tg_tool);
+
+  gimp_pivot_selector_set_bounds (GIMP_PIVOT_SELECTOR (rotate->pivot_selector),
+                                  tr_tool->x1, tr_tool->y1,
+                                  tr_tool->x2, tr_tool->y2);
 }
 
 static void
@@ -490,4 +518,20 @@ rotate_center_changed (GtkWidget             *widget,
 
       gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
+}
+
+static void
+rotate_pivot_changed (GimpPivotSelector     *selector,
+                      GimpTransformGridTool *tg_tool)
+{
+  GimpTool          *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
+  gimp_pivot_selector_get_position (selector,
+                                    &tg_tool->trans_info[PIVOT_X],
+                                    &tg_tool->trans_info[PIVOT_Y]);
+
+  gimp_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
+
+  gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
 }
