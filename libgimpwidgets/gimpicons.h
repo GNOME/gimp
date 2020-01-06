@@ -301,6 +301,16 @@ G_BEGIN_DECLS
 #define GIMP_ICON_PATH                      "gimp-path"
 #define GIMP_ICON_PATH_STROKE               "gimp-path-stroke"
 
+#define GIMP_ICON_PIVOT_CENTER              "gimp-pivot-center"
+#define GIMP_ICON_PIVOT_EAST                "gimp-pivot-east"
+#define GIMP_ICON_PIVOT_NORTH               "gimp-pivot-north"
+#define GIMP_ICON_PIVOT_NORTH_EAST          "gimp-pivot-north-east"
+#define GIMP_ICON_PIVOT_NORTH_WEST          "gimp-pivot-north-west"
+#define GIMP_ICON_PIVOT_SOUTH               "gimp-pivot-south"
+#define GIMP_ICON_PIVOT_SOUTH_EAST          "gimp-pivot-south-east"
+#define GIMP_ICON_PIVOT_SOUTH_WEST          "gimp-pivot-south-west"
+#define GIMP_ICON_PIVOT_WEST                "gimp-pivot-west"
+
 #define GIMP_ICON_PREFERENCES_SYSTEM        "preferences-system"
 
 #define GIMP_ICON_PROCESS_STOP              "process-stop"

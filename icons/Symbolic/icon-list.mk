@@ -184,6 +184,15 @@ scalable_images = \
 	scalable/gimp-paths-symbolic.svg					\
 	scalable/gimp-path-stroke-symbolic.svg				\
 	scalable/gimp-pattern-symbolic.svg				\
+	scalable/gimp-pivot-center-symbolic.svg				\
+	scalable/gimp-pivot-east-symbolic.svg				\
+	scalable/gimp-pivot-north-symbolic.svg				\
+	scalable/gimp-pivot-north-east-symbolic.svg			\
+	scalable/gimp-pivot-north-west-symbolic.svg			\
+	scalable/gimp-pivot-south-symbolic.svg				\
+	scalable/gimp-pivot-south-east-symbolic.svg			\
+	scalable/gimp-pivot-south-west-symbolic.svg			\
+	scalable/gimp-pivot-west-symbolic.svg				\
 	scalable/gimp-plugin-symbolic.svg				\
 	scalable/gimp-portrait-symbolic.svg				\
 	scalable/gimp-prefs-color-management-symbolic.svg		\
@@ -508,6 +517,15 @@ icons12_images = \
 	12/gimp-linked-symbolic.symbolic.png					\
 	12/gimp-menu-left-symbolic.symbolic.png					\
 	12/gimp-menu-right-symbolic.symbolic.png				\
+	12/gimp-pivot-center-symbolic.symbolic.png				\
+	12/gimp-pivot-east-symbolic.symbolic.png				\
+	12/gimp-pivot-north-symbolic.symbolic.png				\
+	12/gimp-pivot-north-east-symbolic.symbolic.png				\
+	12/gimp-pivot-north-west-symbolic.symbolic.png				\
+	12/gimp-pivot-south-symbolic.symbolic.png				\
+	12/gimp-pivot-south-east-symbolic.symbolic.png				\
+	12/gimp-pivot-south-west-symbolic.symbolic.png				\
+	12/gimp-pivot-west-symbolic.symbolic.png				\
 	12/gimp-quick-mask-off-symbolic.symbolic.png				\
 	12/gimp-quick-mask-on-symbolic.symbolic.png				\
 	12/gimp-swap-colors-symbolic.symbolic.png				\
