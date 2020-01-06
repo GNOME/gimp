@@ -82,14 +82,18 @@ struct _GimpToolTransformGridClass
 };
 
 
-GType            gimp_tool_transform_grid_get_type (void) G_GNUC_CONST;
+GType                 gimp_tool_transform_grid_get_type   (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_transform_grid_new      (GimpDisplayShell  *shell,
-                                                    const GimpMatrix3 *transform,
-                                                    gdouble            x1,
-                                                    gdouble            y1,
-                                                    gdouble            x2,
-                                                    gdouble            y2);
+GimpToolWidget      * gimp_tool_transform_grid_new        (GimpDisplayShell      *shell,
+                                                           const GimpMatrix3     *transform,
+                                                           gdouble                x1,
+                                                           gdouble                y1,
+                                                           gdouble                x2,
+                                                           gdouble                y2);
+
+/*  protected functions  */
+
+GimpTransformHandle   gimp_tool_transform_grid_get_handle (GimpToolTransformGrid *grid);
 
 
 #endif /* __GIMP_TOOL_TRANSFORM_GRID_H__ */

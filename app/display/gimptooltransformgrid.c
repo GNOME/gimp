@@ -196,7 +196,8 @@ static gboolean gimp_tool_transform_grid_get_cursor     (GimpToolWidget        *
                                                          GimpCursorModifier    *modifier);
 
 static GimpTransformHandle
-                gimp_tool_transform_grid_get_handle     (GimpToolTransformGrid *grid,
+                gimp_tool_transform_grid_get_handle_for_coords
+                                                        (GimpToolTransformGrid *grid,
                                                          const GimpCoords      *coords);
 static void     gimp_tool_transform_grid_update_hilight (GimpToolTransformGrid *grid);
 static void     gimp_tool_transform_grid_update_box     (GimpToolTransformGrid *grid);
@@ -1983,7 +1984,7 @@ gimp_tool_transform_grid_hit (GimpToolWidget   *widget,
   GimpToolTransformGrid *grid = GIMP_TOOL_TRANSFORM_GRID (widget);
   GimpTransformHandle    handle;
 
-  handle = gimp_tool_transform_grid_get_handle (grid, coords);
+  handle = gimp_tool_transform_grid_get_handle_for_coords (grid, coords);
 
   if (handle != GIMP_TRANSFORM_HANDLE_NONE)
     return GIMP_HIT_DIRECT;
@@ -2001,7 +2002,7 @@ gimp_tool_transform_grid_hover (GimpToolWidget   *widget,
   GimpToolTransformGridPrivate *private = grid->private;
   GimpTransformHandle           handle;
 
-  handle = gimp_tool_transform_grid_get_handle (grid, coords);
+  handle = gimp_tool_transform_grid_get_handle_for_coords (grid, coords);
 
   if (handle == GIMP_TRANSFORM_HANDLE_NONE)
     {
@@ -2303,8 +2304,8 @@ gimp_tool_transform_grid_get_cursor (GimpToolWidget     *widget,
 }
 
 static GimpTransformHandle
-gimp_tool_transform_grid_get_handle (GimpToolTransformGrid *grid,
-                                     const GimpCoords      *coords)
+gimp_tool_transform_grid_get_handle_for_coords (GimpToolTransformGrid *grid,
+                                                const GimpCoords      *coords)
 {
   GimpToolTransformGridPrivate *private = grid->private;
   GimpTransformHandle           i;
@@ -2477,4 +2478,16 @@ gimp_tool_transform_grid_new (GimpDisplayShell  *shell,
                        "x2",         x2,
                        "y2",         y2,
                        NULL);
+}
+
+
+/*  protected functions  */
+
+GimpTransformHandle
+gimp_tool_transform_grid_get_handle (GimpToolTransformGrid *grid)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_TRANSFORM_GRID (grid),
+                        GIMP_TRANSFORM_HANDLE_NONE);
+
+  return grid->private->handle;
 }
