@@ -98,6 +98,7 @@ libappdisplay_sources = [
   'gimptoolrectangle.c',
   'gimptoolrotategrid.c',
   'gimptoolsheargrid.c',
+  'gimptooltransform3dgrid.c',
   'gimptooltransformgrid.c',
   'gimptoolwidget.c',
   'gimptoolwidgetgroup.c',

@@ -151,6 +151,8 @@ CURSOR_IMAGES = \
 	tool-smudge-x2.png			\
 	tool-text.png				\
 	tool-text-x2.png			\
+	tool-transform-3d-camera.png		\
+	tool-transform-3d-camera-x2.png		\
 	tool-warp.png				\
 	tool-warp-x2.png			\
 	tool-zoom.png				\

@@ -194,6 +194,8 @@ libappdisplay_a_sources = \
 	gimptoolrotategrid.h			\
 	gimptoolsheargrid.c			\
 	gimptoolsheargrid.h			\
+	gimptooltransform3dgrid.c		\
+	gimptooltransform3dgrid.h		\
 	gimptooltransformgrid.c			\
 	gimptooltransformgrid.h			\
 	gimptoolwidget.c			\
