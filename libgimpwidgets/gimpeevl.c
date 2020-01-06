@@ -237,6 +237,7 @@ gimp_eevl_complete (GimpEevl *eva)
 {
   GimpEevlQuantity result = {0, 0};
   GimpEevlQuantity default_unit_factor;
+  gdouble          default_unit_offset;
 
   /* Empty expression evaluates to 0 */
   if (gimp_eevl_accept (eva, GIMP_EEVL_TOKEN_END, NULL))
@@ -249,6 +250,7 @@ gimp_eevl_complete (GimpEevl *eva)
 
   eva->options.unit_resolver_proc (NULL,
                                    &default_unit_factor,
+                                   &default_unit_offset,
                                    eva->options.data);
 
   /* Entire expression is dimensionless, apply default unit if
@@ -257,6 +259,7 @@ gimp_eevl_complete (GimpEevl *eva)
   if (result.dimension == 0 && default_unit_factor.dimension != 0)
     {
       result.value     /= default_unit_factor.value;
+      result.value     += default_unit_offset;
       result.dimension  = default_unit_factor.dimension;
     }
   return result;
@@ -282,21 +285,25 @@ gimp_eevl_expression (GimpEevl *eva)
       if (new_term.dimension != evaluated_terms.dimension)
         {
           GimpEevlQuantity default_unit_factor;
+          gdouble          default_unit_offset;
 
           eva->options.unit_resolver_proc (NULL,
                                            &default_unit_factor,
+                                           &default_unit_offset,
                                            eva->options.data);
 
           if (new_term.dimension == 0 &&
               evaluated_terms.dimension == default_unit_factor.dimension)
             {
               new_term.value     /= default_unit_factor.value;
+              new_term.value     += default_unit_offset;
               new_term.dimension  = default_unit_factor.dimension;
             }
           else if (evaluated_terms.dimension == 0 &&
                    new_term.dimension == default_unit_factor.dimension)
             {
               evaluated_terms.value     /= default_unit_factor.value;
+              evaluated_terms.value     += default_unit_offset;
               evaluated_terms.dimension  = default_unit_factor.dimension;
             }
           else
@@ -438,7 +445,8 @@ gimp_eevl_quantity (GimpEevl *eva)
   if (eva->current_token.type == GIMP_EEVL_TOKEN_IDENTIFIER)
     {
       gchar            *identifier;
-      GimpEevlQuantity  result;
+      GimpEevlQuantity  factor;
+      gdouble           offset;
 
       gimp_eevl_accept (eva,
                         GIMP_EEVL_TOKEN_ANY,
@@ -450,7 +458,8 @@ gimp_eevl_quantity (GimpEevl *eva)
       identifier[consumed_token.value.size] = '\0';
 
       if (eva->options.unit_resolver_proc (identifier,
-                                           &result,
+                                           &factor,
+                                           &offset,
                                            eva->options.data))
         {
           if (gimp_eevl_accept (eva, '^', NULL))
@@ -465,12 +474,19 @@ gimp_eevl_quantity (GimpEevl *eva)
                                    "Exponent is not a dimensionless quantity");
                 }
 
-              result.value      = pow (result.value, evaluated_exponent.value);
-              result.dimension *= evaluated_exponent.value;
+              if (offset != 0.0)
+                {
+                  gimp_eevl_error (eva,
+                                   "Invalid unit exponent");
+                }
+
+              factor.value      = pow (factor.value, evaluated_exponent.value);
+              factor.dimension *= evaluated_exponent.value;
             }
 
-          evaluated_quantity.value     /= result.value;
-          evaluated_quantity.dimension += result.dimension;
+          evaluated_quantity.value     /= factor.value;
+          evaluated_quantity.value     += offset;
+          evaluated_quantity.dimension += factor.dimension;
         }
       else
         {

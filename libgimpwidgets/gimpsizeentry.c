@@ -139,7 +139,8 @@ static gint      gimp_size_entry_eevl_input_callback (GtkSpinButton      *spinne
                                                       gdouble            *return_val,
                                                       gpointer           *data);
 static gboolean  gimp_size_entry_eevl_unit_resolver  (const gchar        *ident,
-                                                      GimpEevlQuantity   *result,
+                                                      GimpEevlQuantity   *factor,
+                                                      gdouble            *offset,
                                                       gpointer            data);
 
 
@@ -1383,6 +1384,7 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
     {
       GimpSizeEntryField *other_gsef;
       GimpEevlQuantity    default_unit_factor;
+      gdouble             default_unit_offset;
 
       options.ratio_expressions = TRUE;
 
@@ -1399,7 +1401,9 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
           options.ratio_invert = TRUE;
         }
 
-      options.unit_resolver_proc (NULL, &default_unit_factor, options.data);
+      options.unit_resolver_proc (NULL,
+                                  &default_unit_factor, &default_unit_offset,
+                                  options.data);
 
       options.ratio_quantity.value     = other_gsef->value /
                                          default_unit_factor.value;
@@ -1488,7 +1492,8 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
 
 static gboolean
 gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
-                                    GimpEevlQuantity *result,
+                                    GimpEevlQuantity *factor,
+                                    gdouble          *offset,
                                     gpointer          data)
 {
   GimpSizeEntryField   *gsef                 = (GimpSizeEntryField *) data;
@@ -1497,9 +1502,11 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
   GimpUnit              unit;
 
   g_return_val_if_fail (gsef, FALSE);
-  g_return_val_if_fail (result != NULL, FALSE);
+  g_return_val_if_fail (factor != NULL, FALSE);
+  g_return_val_if_fail (offset != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);
 
+  *offset = 0.0;
 
   for (unit = 0;
        unit <= gimp_unit_get_number_of_units ();
@@ -1519,34 +1526,36 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
             case GIMP_UNIT_PERCENT:
               if (priv->unit == GIMP_UNIT_PERCENT)
                 {
-                  result->value = 1;
-                  result->dimension = 0;
+                  factor->value = 1;
+                  factor->dimension = 0;
                 }
               else
                 {
                   /* gsef->upper contains the '100%'-value */
-                  result->value = 100*gsef->resolution/gsef->upper;
-                  result->dimension = 1;
+                  factor->value = 100*gsef->resolution/(gsef->upper - gsef->lower);
+                  /* gsef->lower contains the '0%'-value */
+                  *offset       = gsef->lower/gsef->resolution;
+                  factor->dimension = 1;
                 }
               /* return here, don't perform percentage conversion */
               return TRUE;
             case GIMP_UNIT_PIXEL:
-              result->value     = gsef->resolution;
+              factor->value     = gsef->resolution;
               break;
             default:
-              result->value     = gimp_unit_get_factor (unit);
+              factor->value     = gimp_unit_get_factor (unit);
               break;
             }
 
           if (priv->unit == GIMP_UNIT_PERCENT)
             {
               /* map non-percentages onto percent */
-              result->value = gsef->upper/(100*gsef->resolution);
-              result->dimension = 0;
+              factor->value = gsef->upper/(100*gsef->resolution);
+              factor->dimension = 0;
             }
           else
             {
-              result->dimension = 1;
+              factor->dimension = 1;
             }
 
           /* We are done */

@@ -42,16 +42,18 @@ typedef struct
  * GimpEevlUnitResolverProc:
  * @identifier: Identifier of unit to resolve or %NULL if default unit
  *              should be resolved.
- * @result:     Units per reference unit. For example, in GIMP the
+ * @factor:     Units per reference unit. For example, in GIMP the
  *              reference unit is inches so resolving "mm" should
  *              return 25.4 since there are 25.4 millimeters per inch.
+ * @offset:     Offset to apply after scaling the value according to @factor.
  * @data:       Data given to gimp_eevl_evaluate().
  *
  * Returns: If the unit was successfully resolved or not.
  *
  */
 typedef gboolean (* GimpEevlUnitResolverProc) (const gchar      *identifier,
-                                               GimpEevlQuantity *result,
+                                               GimpEevlQuantity *factor,
+                                               gdouble          *offset,
                                                gpointer          data);
 
 
