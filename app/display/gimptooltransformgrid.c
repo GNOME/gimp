@@ -69,6 +69,7 @@ enum
   PROP_USE_SHEAR_HANDLES,
   PROP_USE_CENTER_HANDLE,
   PROP_USE_PIVOT_HANDLE,
+  PROP_DYNAMIC_HANDLE_SIZE,
   PROP_CONSTRAIN_MOVE,
   PROP_CONSTRAIN_SCALE,
   PROP_CONSTRAIN_ROTATE,
@@ -101,6 +102,7 @@ struct _GimpToolTransformGridPrivate
   gboolean               use_shear_handles;
   gboolean               use_center_handle;
   gboolean               use_pivot_handle;
+  gboolean               dynamic_handle_size;
   gboolean               constrain_move;
   gboolean               constrain_scale;
   gboolean               constrain_rotate;
@@ -374,6 +376,13 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_DYNAMIC_HANDLE_SIZE,
+                                   g_param_spec_boolean ("dynamic-handle-size",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_CONSTRAIN_MOVE,
                                    g_param_spec_boolean ("constrain-move",
                                                          NULL, NULL,
@@ -634,6 +643,10 @@ gimp_tool_transform_grid_set_property (GObject      *object,
       private->use_pivot_handle = g_value_get_boolean (value);
       break;
 
+    case PROP_DYNAMIC_HANDLE_SIZE:
+      private->dynamic_handle_size = g_value_get_boolean (value);
+      break;
+
     case PROP_CONSTRAIN_MOVE:
       private->constrain_move = g_value_get_boolean (value);
       break;
@@ -751,6 +764,10 @@ gimp_tool_transform_grid_get_property (GObject    *object,
       break;
     case PROP_USE_PIVOT_HANDLE:
       g_value_set_boolean (value, private->use_pivot_handle);
+      break;
+
+    case PROP_DYNAMIC_HANDLE_SIZE:
+      g_value_set_boolean (value, private->dynamic_handle_size);
       break;
 
     case PROP_CONSTRAIN_MOVE:
@@ -2406,6 +2423,14 @@ gimp_tool_transform_grid_calc_handles (GimpToolTransformGrid *grid,
   gint                          dx4, dy4;
   gint                          x1, y1;
   gint                          x2, y2;
+
+  if (! private->dynamic_handle_size)
+    {
+      *handle_w = GIMP_CANVAS_HANDLE_SIZE_LARGE;
+      *handle_h = GIMP_CANVAS_HANDLE_SIZE_LARGE;
+
+      return;
+    }
 
   gimp_canvas_item_transform_xy (private->guides,
                                  private->tx1, private->ty1,
