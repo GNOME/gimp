@@ -443,7 +443,7 @@ gimp_scale_tool_size_notify (GtkWidget             *box,
               tg_tool->trans_info[Y1] = tg_tool->trans_info[Y0] + height;
             }
 
-          gimp_transform_grid_tool_push_internal_undo (tg_tool);
+          gimp_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
 
           gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
         }

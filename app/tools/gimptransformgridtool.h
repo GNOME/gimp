@@ -106,7 +106,8 @@ gboolean   gimp_transform_grid_tool_info_to_matrix     (GimpTransformGridTool *t
 void       gimp_transform_grid_tool_matrix_to_info     (GimpTransformGridTool *tg_tool,
                                                         const GimpMatrix3     *transform);
 
-void       gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool);
+void       gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool,
+                                                        gboolean               compress);
 
 
 #endif  /*  __GIMP_TRANSFORM_GRID_TOOL_H__  */

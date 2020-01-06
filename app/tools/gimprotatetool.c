@@ -463,7 +463,7 @@ rotate_angle_changed (GtkAdjustment         *adj,
 
       tg_tool->trans_info[ANGLE] = value;
 
-      gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      gimp_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
 
       gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
@@ -485,7 +485,7 @@ rotate_center_changed (GtkWidget             *widget,
       tg_tool->trans_info[PIVOT_X] = px;
       tg_tool->trans_info[PIVOT_Y] = py;
 
-      gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      gimp_transform_grid_tool_push_internal_undo (tg_tool, TRUE);
 
       gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }

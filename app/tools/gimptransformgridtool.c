@@ -61,12 +61,15 @@
 #define EPSILON 1e-6
 
 
-#define RESPONSE_RESET    1
-#define RESPONSE_READJUST 2
+#define RESPONSE_RESET     1
+#define RESPONSE_READJUST  2
+
+#define UNDO_COMPRESS_TIME (0.5 * G_TIME_SPAN_SECOND)
 
 
 typedef struct
 {
+  gint64                 time;
   GimpTransformDirection direction;
   TransInfo              trans_infos[2];
 } UndoInfo;
@@ -399,7 +402,7 @@ gimp_transform_grid_tool_button_release (GimpTool              *tool,
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
       /* We're done with an interaction, save it on the undo list */
-      gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      gimp_transform_grid_tool_push_internal_undo (tg_tool, FALSE);
     }
   else
     {
@@ -1290,7 +1293,7 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
         tg_options->direction_linked = direction_linked;
 
         /*  push the restored info to the undo stack  */
-        gimp_transform_grid_tool_push_internal_undo (tg_tool);
+        gimp_transform_grid_tool_push_internal_undo (tg_tool, FALSE);
       }
       break;
 
@@ -1356,7 +1359,7 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
           if (transform_valid)
             {
               /*  push the new info to the undo stack  */
-              gimp_transform_grid_tool_push_internal_undo (tg_tool);
+              gimp_transform_grid_tool_push_internal_undo (tg_tool, FALSE);
             }
           else
             {
@@ -1599,7 +1602,8 @@ gimp_transform_grid_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
 }
 
 void
-gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool)
+gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool,
+                                             gboolean               compress)
 {
   UndoInfo *undo_info;
 
@@ -1614,17 +1618,26 @@ gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool)
   if (! trans_infos_equal (undo_info->trans_infos, tg_tool->trans_infos))
     {
       GimpTransformOptions *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
+      gint64                time       = 0;
       gboolean              flush = FALSE;
 
       if (tg_tool->undo_list->next == NULL)
         flush = TRUE;
 
-      undo_info            = undo_info_new ();
+      if (compress)
+        time = g_get_monotonic_time ();
+
+      if (! compress || time - undo_info->time >= UNDO_COMPRESS_TIME)
+        {
+          undo_info = undo_info_new ();
+
+          tg_tool->undo_list = g_list_prepend (tg_tool->undo_list, undo_info);
+        }
+
+      undo_info->time      = time;
       undo_info->direction = tr_options->direction;
       memcpy (undo_info->trans_infos, tg_tool->trans_infos,
               sizeof (tg_tool->trans_infos));
-
-      tg_tool->undo_list = g_list_prepend (tg_tool->undo_list, undo_info);
 
       /* If we undid anything and started interacting, we have to
        * discard the redo history
