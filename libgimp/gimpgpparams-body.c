@@ -785,10 +785,10 @@ gimp_value_to_gp_param (const GValue *value,
     {
       GimpArray *array = g_value_get_boxed (value);
 
+      param->param_type = GP_PARAM_TYPE_ARRAY;
+
       if (array)
         {
-          param->param_type = GP_PARAM_TYPE_ARRAY;
-
           param->data.d_array.size = array->length;
 
           if (full_copy)
@@ -799,6 +799,7 @@ gimp_value_to_gp_param (const GValue *value,
         }
       else
         {
+          param->data.d_array.size = 0;
           param->data.d_array.data = NULL;
         }
     }
@@ -806,10 +807,10 @@ gimp_value_to_gp_param (const GValue *value,
     {
       GimpStringArray *array = g_value_get_boxed (value);
 
+      param->param_type = GP_PARAM_TYPE_STRING_ARRAY;
+
       if (array)
         {
-          param->param_type = GP_PARAM_TYPE_STRING_ARRAY;
-
           param->data.d_string_array.size = array->length;
 
           if (full_copy)
@@ -821,6 +822,7 @@ gimp_value_to_gp_param (const GValue *value,
         }
       else
         {
+          param->data.d_string_array.size = 0,
           param->data.d_string_array.data = NULL;
         }
     }
@@ -828,11 +830,11 @@ gimp_value_to_gp_param (const GValue *value,
     {
       GimpObjectArray *array = g_value_get_boxed (value);
 
+      param->param_type = GP_PARAM_TYPE_ID_ARRAY;
+
       if (array)
         {
           gint i;
-
-          param->param_type = GP_PARAM_TYPE_ID_ARRAY;
 
           if (full_copy)
             param->data.d_id_array.type_name =
@@ -871,6 +873,7 @@ gimp_value_to_gp_param (const GValue *value,
         }
       else
         {
+          param->data.d_id_array.size = 0;
           param->data.d_id_array.data = NULL;
         }
     }
