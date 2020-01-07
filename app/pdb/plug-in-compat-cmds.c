@@ -62,6 +62,29 @@
 
 
 static GeglNode *
+wrap_in_graph (GeglNode *node)
+{
+  GeglNode *new_node;
+  GeglNode *input;
+  GeglNode *output;
+
+  new_node = gegl_node_new ();
+
+  gegl_node_add_child (new_node, node);
+  g_object_unref (node);
+
+  input  = gegl_node_get_input_proxy  (new_node, "input");
+  output = gegl_node_get_output_proxy (new_node, "output");
+
+  gegl_node_link_many (input,
+                       node,
+                       output,
+                       NULL);
+
+  return new_node;
+}
+
+static GeglNode *
 wrap_in_selection_bounds (GeglNode     *node,
                           GimpDrawable *drawable)
 {
@@ -212,6 +235,7 @@ bump_map (GimpDrawable *drawable,
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
+      GeglNode *graph;
       GeglNode *node;
       GeglNode *src_node;
 
@@ -230,14 +254,16 @@ bump_map (GimpDrawable *drawable,
                                   "ambient",    ambient,
                                   NULL);
 
-      src_node = create_buffer_source_node (node, bump_map);
+      graph = wrap_in_graph (node);
+
+      src_node = create_buffer_source_node (graph, bump_map);
 
       gegl_node_connect_to (src_node, "output", node, "aux");
 
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Bump Map"),
-                                     node);
-      g_object_unref (node);
+                                     graph);
+      g_object_unref (graph);
 
       return TRUE;
     }
@@ -264,6 +290,7 @@ displace (GimpDrawable  *drawable,
     {
       if (do_x || do_y)
         {
+          GeglNode *graph;
           GeglNode *node;
           GeglAbyssPolicy abyss_policy = GEGL_ABYSS_NONE;
 
@@ -289,24 +316,26 @@ displace (GimpDrawable  *drawable,
                                       "amount_y",      amount_y,
                                       NULL);
 
+          graph = wrap_in_graph (node);
+
           if (do_x)
             {
               GeglNode *src_node;
-              src_node = create_buffer_source_node (node, displace_map_x);
+              src_node = create_buffer_source_node (graph, displace_map_x);
               gegl_node_connect_to (src_node, "output", node, "aux");
             }
 
           if (do_y)
             {
               GeglNode *src_node;
-              src_node = create_buffer_source_node (node, displace_map_y);
+              src_node = create_buffer_source_node (graph, displace_map_y);
               gegl_node_connect_to (src_node, "output", node, "aux2");
             }
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Displace"),
-                                         node);
-          g_object_unref (node);
+                                         graph);
+          g_object_unref (graph);
         }
 
       return TRUE;
@@ -3085,6 +3114,7 @@ plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
+          GeglNode *graph;
           GeglNode *node;
 
           node = gegl_node_new_child (NULL,
@@ -3094,24 +3124,26 @@ plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
                                       "exponent",    exponent,
                                       NULL);
 
+          graph = wrap_in_graph (node);
+
           if (mask_size_map)
             {
               GeglNode *src_node;
-              src_node = create_buffer_source_node (node, mask_size_map);
+              src_node = create_buffer_source_node (graph, mask_size_map);
               gegl_node_connect_to (src_node, "output", node, "aux");
             }
 
           if (exponent_map)
             {
               GeglNode *src_node;
-              src_node = create_buffer_source_node (node, exponent_map);
+              src_node = create_buffer_source_node (graph, exponent_map);
               gegl_node_connect_to (src_node, "output", node, "aux2");
             }
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Oilify"),
-                                         node);
-          g_object_unref (node);
+                                         graph);
+          g_object_unref (graph);
         }
       else
         success = FALSE;
