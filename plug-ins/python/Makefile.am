@@ -35,7 +35,8 @@ spyro_plus_SCRIPTS = spyro-plus.py
 ##	python-eval.py
 
 if GIMP_UNSTABLE
-##	benchmark-foreground-extract.py
+benchmark_foreground_extractdir = $(gimpplugindir)/plug-ins/benchmark-foreground-extract
+benchmark_foreground_extract_SCRIPTS = benchmark-foreground-extract.py
 ##	clothify.py
 ##	shadow_bevel.py
 ##	sphere.py
@@ -52,6 +53,10 @@ EXTRA_DIST = \
 	palette-to-gradient.py		\
 	py-slice.py			\
 	spyro-plus.py
+
+if GIMP_UNSTABLE
+EXTRA_DIST += benchmark-foreground-extract.py
+endif
 
 # Python interpreter file.
 
