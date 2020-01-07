@@ -1,7 +1,10 @@
 EXPORTS
 	gimp_matrix2_get_type
+	gimp_matrix2_determinant
 	gimp_matrix2_identity
+	gimp_matrix2_invert
 	gimp_matrix2_mult
+	gimp_matrix2_transform_point
 	gimp_matrix3_affine
 	gimp_matrix3_determinant
 	gimp_matrix3_get_type
@@ -18,7 +21,10 @@ EXPORTS
 	gimp_matrix3_translate
 	gimp_matrix3_xshear
 	gimp_matrix3_yshear
+	gimp_matrix4_identity
+	gimp_matrix4_mult
 	gimp_matrix4_to_deg
+	gimp_matrix4_transform_point
 	gimp_param_matrix2_get_type
 	gimp_param_matrix3_get_type
 	gimp_param_spec_matrix2

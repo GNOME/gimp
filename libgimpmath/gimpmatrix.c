@@ -960,6 +960,8 @@ gimp_matrix4_to_deg (const GimpMatrix4 *matrix,
  * @newz: The transformed Z coordinate.
  *
  * Transforms a point in 3D as specified by the transformation matrix.
+ *
+ * Returns: The transformed W coordinate.
  */
 gdouble
 gimp_matrix4_transform_point (const GimpMatrix4 *matrix,
