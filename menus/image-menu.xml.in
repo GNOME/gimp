@@ -668,6 +668,7 @@
         <menuitem action="tools-scale" />
         <menuitem action="tools-shear" />
         <menuitem action="tools-perspective" />
+        <menuitem action="tools-transform-3d" />
         <menuitem action="tools-unified-transform" />
         <menuitem action="tools-handle-transform" />
         <menuitem action="tools-flip" />
