@@ -72,6 +72,8 @@ wrap_in_graph (GeglNode *node)
   gegl_node_add_child (new_node, node);
   g_object_unref (node);
 
+  gimp_gegl_node_set_underlying_operation (new_node, node);
+
   input  = gegl_node_get_input_proxy  (new_node, "input");
   output = gegl_node_get_output_proxy (new_node, "output");
 
@@ -104,6 +106,8 @@ wrap_in_selection_bounds (GeglNode     *node,
 
       gegl_node_add_child (new_node, node);
       g_object_unref (node);
+
+      gimp_gegl_node_set_underlying_operation (new_node, node);
 
       input  = gegl_node_get_input_proxy  (new_node, "input");
       output = gegl_node_get_output_proxy (new_node, "output");
@@ -167,6 +171,8 @@ wrap_in_gamma_cast (GeglNode     *node,
 
       gegl_node_add_child (new_node, node);
       g_object_unref (node);
+
+      gimp_gegl_node_set_underlying_operation (new_node, node);
 
       input  = gegl_node_get_input_proxy  (new_node, "input");
       output = gegl_node_get_output_proxy (new_node, "output");
