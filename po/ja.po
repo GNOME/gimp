@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-01-06 21:21+0000\n"
+"POT-Creation-Date: 2020-01-07 19:00+0000\n"
 "PO-Revision-Date: 2020-01-07 20:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -11395,23 +11395,20 @@ msgstr ""
 "スを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:53
-msgid ""
-"Use compact style for sliders. In this mode, left-click is used for absolute "
-"adjustment, middle-click is used for relative adjustment, and right-click is "
-"used for manual entry."
+msgid "Use compact style for sliders."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:58
+#: ../app/config/gimprc-blurbs.h:56
 msgid "Sets the type of mouse pointers to use."
 msgstr "GIMP が使うカーソルモードを設定します"
 
-#: ../app/config/gimprc-blurbs.h:61
+#: ../app/config/gimprc-blurbs.h:59
 msgid "Sets the handedness for cursor positioning."
 msgstr ""
 "マウスを持つ手を設定します。マウスポインターの表示位置が設定に即した位置に変"
 "更されます。"
 
-#: ../app/config/gimprc-blurbs.h:64
+#: ../app/config/gimprc-blurbs.h:62
 msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
@@ -11419,40 +11416,40 @@ msgstr ""
 "状況適応型のマウスカーソルは有用です。既定では有効になっています。多少のオー"
 "バーヘッドがあるため、無効にすることもできます。"
 
-#: ../app/config/gimprc-blurbs.h:80
+#: ../app/config/gimprc-blurbs.h:78
 #, fuzzy
 #| msgid "Export the image's color profile by default."
 msgid "Show full image content by default."
 msgstr "デフォルトで画像のカラープロファイルをエクスポートします。"
 
-#: ../app/config/gimprc-blurbs.h:83
+#: ../app/config/gimprc-blurbs.h:81
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
 "この設定がオンのときは、画像の 1 ピクセルを画面の 1 ピクセルで表示します。"
 
-#: ../app/config/gimprc-blurbs.h:108
+#: ../app/config/gimprc-blurbs.h:106
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr "ガイドやグリッドへのスナップが有効になる距離をピクセル数で設定します。"
 
-#: ../app/config/gimprc-blurbs.h:112
+#: ../app/config/gimprc-blurbs.h:110
 msgid "Snap to guides by default in new image windows."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:115
+#: ../app/config/gimprc-blurbs.h:113
 msgid "Snap to the grid by default in new image windows."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:118
+#: ../app/config/gimprc-blurbs.h:116
 msgid "Snap to the canvas edges by default in new image windows."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:121
+#: ../app/config/gimprc-blurbs.h:119
 msgid "Snap to the active path by default in new image windows."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:124
+#: ../app/config/gimprc-blurbs.h:122
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -11464,7 +11461,7 @@ msgstr ""
 "す。種-充填は起点となるピクセルから、全方向にピクセルの彩度の変化が指定したし"
 "きい値になるまで展開していきます。ここで指定する値はその初期値です。"
 
-#: ../app/config/gimprc-blurbs.h:137
+#: ../app/config/gimprc-blurbs.h:135
 msgid ""
 "The window type hint that is set on dock windows and the toolbox window. "
 "This may affect the way your window manager decorates and handles these "
@@ -11474,48 +11471,48 @@ msgstr ""
 "す。この設定は、ウィンドウマネージャーがこれらのウィンドウをどう装飾・扱う"
 "か、ということに影響を与えます。"
 
-#: ../app/config/gimprc-blurbs.h:157
+#: ../app/config/gimprc-blurbs.h:155
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr "この設定がオンのときは、選択したブラシをすべてのツールで使用します。"
 
-#: ../app/config/gimprc-blurbs.h:160
+#: ../app/config/gimprc-blurbs.h:158
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr "この設定がオンのときは、選択した動的特性をすべてのツールで使用します。"
 
-#: ../app/config/gimprc-blurbs.h:166
+#: ../app/config/gimprc-blurbs.h:164
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr ""
 "この設定がオンのときは、選択したグラデーションをすべてのツールで使用します。"
 
-#: ../app/config/gimprc-blurbs.h:169
+#: ../app/config/gimprc-blurbs.h:167
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "この設定がオンのときは、選択したパターンをすべてのツールで使用します。"
 
-#: ../app/config/gimprc-blurbs.h:183
+#: ../app/config/gimprc-blurbs.h:181
 msgid "Sets the browser used by the help system."
 msgstr "ヘルプシステムで使うブラウザーを指定します"
 
-#: ../app/config/gimprc-blurbs.h:191
+#: ../app/config/gimprc-blurbs.h:189
 msgid "How many recent settings to keep around in filter tools."
 msgstr "フィルターツールのプリセットで選択できる設定の履歴数です。"
 
-#: ../app/config/gimprc-blurbs.h:194
+#: ../app/config/gimprc-blurbs.h:192
 msgid "Default to the last used settings in filter tools."
 msgstr "フィルターツールで最後に使用した設定をデフォルトにします。"
 
-#: ../app/config/gimprc-blurbs.h:197
+#: ../app/config/gimprc-blurbs.h:195
 msgid "Show advanced color options in filter tools."
 msgstr "フィルターツールで高度な色オプションを表示します。"
 
-#: ../app/config/gimprc-blurbs.h:200
+#: ../app/config/gimprc-blurbs.h:198
 msgid "Sets the text to appear in image window status bars."
 msgstr "画像ウィンドウのステータスバーに表示するテキストを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:203
+#: ../app/config/gimprc-blurbs.h:201
 msgid "Sets the text to appear in image window titles."
 msgstr "画像ウィンドウのタイトルに表示するテキストを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:206
+#: ../app/config/gimprc-blurbs.h:204
 msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
@@ -11523,7 +11520,7 @@ msgstr ""
 "インポートした画像の精度を浮動小数点に引き上げます。インデックス画像には適用"
 "しません。"
 
-#: ../app/config/gimprc-blurbs.h:210
+#: ../app/config/gimprc-blurbs.h:208
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
@@ -11531,51 +11528,51 @@ msgstr ""
 "インポートした画像の精度を浮動小数点に引き上げるときに、最小限のノイズを加え"
 "て色の値を少し分散させます。"
 
-#: ../app/config/gimprc-blurbs.h:214
+#: ../app/config/gimprc-blurbs.h:212
 msgid "Add an alpha channel to all layers of imported images."
 msgstr "インポートした画像のすべてのレイヤーにアルファチャンネルを追加します。"
 
-#: ../app/config/gimprc-blurbs.h:217
+#: ../app/config/gimprc-blurbs.h:215
 msgid "Which plug-in to use for importing raw digital camera files."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:220
+#: ../app/config/gimprc-blurbs.h:218
 #, fuzzy
 #| msgctxt "view-action"
 #| msgid "Display the image's color sample points"
 msgid "Export file type used by default."
 msgstr "サンプルポイントを表示します"
 
-#: ../app/config/gimprc-blurbs.h:223
+#: ../app/config/gimprc-blurbs.h:221
 msgid "Export the image's color profile by default."
 msgstr "デフォルトで画像のカラープロファイルをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
-#: ../app/config/gimprc-blurbs.h:229
+#: ../app/config/gimprc-blurbs.h:227
 msgid "Export Exif metadata by default."
 msgstr "デフォルトで Exif メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
-#: ../app/config/gimprc-blurbs.h:235
+#: ../app/config/gimprc-blurbs.h:233
 msgid "Export XMP metadata by default."
 msgstr "デフォルトで XMP メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
-#: ../app/config/gimprc-blurbs.h:241
+#: ../app/config/gimprc-blurbs.h:239
 msgid "Export IPTC metadata by default."
 msgstr "デフォルトで IPTC メタデータをエクスポートします。"
 
-#: ../app/config/gimprc-blurbs.h:244
+#: ../app/config/gimprc-blurbs.h:242
 msgid "Try generating debug data for bug reporting when appropriate."
 msgstr "必要に応じて、バグ報告用のデバッグデータの生成を試みます。"
 
-#: ../app/config/gimprc-blurbs.h:247
+#: ../app/config/gimprc-blurbs.h:245
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -11583,23 +11580,23 @@ msgstr ""
 "[ウィンドウに合わせる] のときは、画像全体がウィンドウ内に表示されるように表示"
 "倍率が調整されます。[１:１] のときは、等倍 (表示倍率 100％) で表示されます。"
 
-#: ../app/config/gimprc-blurbs.h:251
+#: ../app/config/gimprc-blurbs.h:249
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "画像やレイヤーを拡大・縮小・変形するときに利用する補間方法の既定値を設定しま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:258
+#: ../app/config/gimprc-blurbs.h:256
 msgid "Specifies the language to use for the user interface."
 msgstr "表示に使用する言語を指定します。"
 
-#: ../app/config/gimprc-blurbs.h:261
+#: ../app/config/gimprc-blurbs.h:259
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 "[ファイル] → [最近開いたファイル] で表示されるエントリーの数を設定します"
 
-#: ../app/config/gimprc-blurbs.h:264
+#: ../app/config/gimprc-blurbs.h:262
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -11607,7 +11604,7 @@ msgstr ""
 "選択範囲表示のためのアニメーション (周囲を蟻が行進する) の進行速度をミリ秒単"
 "位で設定します。値を小さくすると速く行進するようになります。"
 
-#: ../app/config/gimprc-blurbs.h:268
+#: ../app/config/gimprc-blurbs.h:266
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -11615,7 +11612,7 @@ msgstr ""
 "ここで指定した以上のメモリ領域を必要とする画像を作成しようとすると、GIMP が警"
 "告します。"
 
-#: ../app/config/gimprc-blurbs.h:278
+#: ../app/config/gimprc-blurbs.h:276
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11624,7 +11621,7 @@ msgstr ""
 "モニターの水平解像度を dpi 単位で設定します。 0 に設定すると、水平および垂直"
 "解像度の情報を X サーバーに問い合わせます。"
 
-#: ../app/config/gimprc-blurbs.h:283
+#: ../app/config/gimprc-blurbs.h:281
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11633,7 +11630,7 @@ msgstr ""
 "モニターの垂直解像度を dpi 単位で設定します。 0 に設定すると、水平および垂直"
 "解像度の情報を X サーバーに問い合わせます。"
 
-#: ../app/config/gimprc-blurbs.h:288
+#: ../app/config/gimprc-blurbs.h:286
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr ""
 "この設定がオンのときは、非表示になっているレイヤーを通常通り編集できます。"
@@ -11641,7 +11638,7 @@ msgstr ""
 # "This used to be the default behaviour in older versions." の箇所は次の理由により翻訳していない
 # - このバージョンの1つ前のバージョン (ver.2.6.x) では、既に「移動ツールでつかんだレイヤーやパスがアクティブになる」は既定値ではない。
 # - 以前のバージョンの既定値をツールチップで積極的に知らせる必要性があるとは思えない。
-#: ../app/config/gimprc-blurbs.h:291
+#: ../app/config/gimprc-blurbs.h:289
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -11649,7 +11646,7 @@ msgstr ""
 "この設定がオンのときは、移動ツールでつかんだレイヤーやパスをアクティブにしま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:300
+#: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -11657,11 +11654,11 @@ msgstr ""
 "画像ウィンドウの右下に表示されるナビゲーションプレビューの大きさを設定しま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:304
+#: ../app/config/gimprc-blurbs.h:302
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr "GIMP での処理で同時に使いたいスレッドの数を指定します。"
 
-#: ../app/config/gimprc-blurbs.h:326
+#: ../app/config/gimprc-blurbs.h:324
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -11670,7 +11667,7 @@ msgstr ""
 "この設定がオンのときは、[レイヤー・チャンネル・パス] ダイアログでプレビューが"
 "表示されます。大きな画像を編集している場合には動作が重くなります。"
 
-#: ../app/config/gimprc-blurbs.h:331
+#: ../app/config/gimprc-blurbs.h:329
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
@@ -11678,7 +11675,7 @@ msgstr ""
 "この設定がオンのときは、レイヤーグループのプレビューが表示されます。レイヤー"
 "グループのプレビューは通常のレイヤープレビューよりも高負荷です。"
 
-#: ../app/config/gimprc-blurbs.h:335
+#: ../app/config/gimprc-blurbs.h:333
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -11687,13 +11684,13 @@ msgstr ""
 "ダイアログから設定が有効になります。)"
 
 # ツールチップ
-#: ../app/config/gimprc-blurbs.h:339
+#: ../app/config/gimprc-blurbs.h:337
 msgid "Sets the default quick mask color."
 msgstr ""
 "クイックマスクモード時のマスク部分の表示色です。ここをクリックすると表示色を"
 "変更できます。"
 
-#: ../app/config/gimprc-blurbs.h:342
+#: ../app/config/gimprc-blurbs.h:340
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -11702,7 +11699,7 @@ msgstr ""
 "この設定がオンのときは、キャンバスサイズ変更時に画像ウィンドウが自動的にサイ"
 "ズ変更されます。この設定はマルチウィンドウモードの時だけ有効になります。"
 
-#: ../app/config/gimprc-blurbs.h:347
+#: ../app/config/gimprc-blurbs.h:345
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -11710,11 +11707,11 @@ msgstr ""
 "この設定がオンのときは、画像の表示倍率変更時に画像ウィンドウが自動的にサイズ"
 "変更されます。この設定はマルチウィンドウモードの時だけ有効になります。"
 
-#: ../app/config/gimprc-blurbs.h:352
+#: ../app/config/gimprc-blurbs.h:350
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "起動時に、前回の状態の復元を試みます"
 
-#: ../app/config/gimprc-blurbs.h:355
+#: ../app/config/gimprc-blurbs.h:353
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -11722,14 +11719,14 @@ msgstr ""
 "有効にすると、GIMP は以前開いていたモニターにウィンドウを復元しようとします。"
 "無効にすると、現在使用中のモニターにウィンドウが表示されます。"
 
-#: ../app/config/gimprc-blurbs.h:360
+#: ../app/config/gimprc-blurbs.h:358
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "この設定がオンのときは、ツール・パターン・色・ブラシの状態を終了時に保存し次"
 "回起動時に引き継ぎます。"
 
-#: ../app/config/gimprc-blurbs.h:364
+#: ../app/config/gimprc-blurbs.h:362
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -11737,7 +11734,7 @@ msgstr ""
 "有効にすると、同じツールとツールオプションがすべての入力デバイスで使用されま"
 "す。入力デバイスの変更時にツールの切り替えが発生しません。"
 
-#: ../app/config/gimprc-blurbs.h:369
+#: ../app/config/gimprc-blurbs.h:367
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
@@ -11747,17 +11744,17 @@ msgstr ""
 "設定がオフのときは、GIMP の [最近開いたファイル] には記録されますが、システム"
 "には記録されません。"
 
-#: ../app/config/gimprc-blurbs.h:373
+#: ../app/config/gimprc-blurbs.h:371
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "この設定がオンのときは、GIMP 終了時のメインダイアログの位置と大きさを保存しま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:376
+#: ../app/config/gimprc-blurbs.h:374
 msgid "Save the tool options when GIMP exits."
 msgstr "この設定がオンのときは、終了時にツールオプションを保存します。"
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -11765,7 +11762,7 @@ msgstr ""
 "この設定がオンのときは、すべてのツールでアクティブなブラシのアウトラインプレ"
 "ビューが表示されます。"
 
-#: ../app/config/gimprc-blurbs.h:386
+#: ../app/config/gimprc-blurbs.h:384
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -11775,13 +11772,13 @@ msgstr ""
 "グに表示します。(このボタンがない場合でも F1 キーでヘルプページを参照できま"
 "す。)"
 
-#: ../app/config/gimprc-blurbs.h:391
+#: ../app/config/gimprc-blurbs.h:389
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
 msgstr "この設定がオンのときは、画像上に描画ツールのアイコンが表示されます。"
 
-#: ../app/config/gimprc-blurbs.h:395
+#: ../app/config/gimprc-blurbs.h:393
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -11789,7 +11786,7 @@ msgstr ""
 "この設定がオンのときは、画像ウィンドウにメニューバーを表示します。\n"
 "([表示] → [メニューバーの表示] で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:399
+#: ../app/config/gimprc-blurbs.h:397
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -11797,7 +11794,7 @@ msgstr ""
 "この設定がオンのときは、画像ウィンドウにルーラーを表示します。\n"
 "([表示] → [ルーラーの表示] で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:401
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -11805,7 +11802,7 @@ msgstr ""
 "この設定がオンのときは、画像ウィンドウにスクロールバーを表示します。\n"
 "([表示] → [スクロールバーの表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:407
+#: ../app/config/gimprc-blurbs.h:405
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -11813,7 +11810,7 @@ msgstr ""
 "この設定がオンのときは、画像ウィンドウにステータスバーを表示します。\n"
 "([表示] → [ステータスバーの表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:411
+#: ../app/config/gimprc-blurbs.h:409
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -11822,7 +11819,7 @@ msgstr ""
 "ンを表示します。\n"
 "([表示] → [選択範囲境界線の表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:413
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -11830,7 +11827,7 @@ msgstr ""
 "この設定がオンのときは、レイヤー境界を表示します。\n"
 "([表示] → [レイヤー境界の表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:419
+#: ../app/config/gimprc-blurbs.h:417
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
@@ -11838,7 +11835,7 @@ msgstr ""
 "この設定がオンのときは、キャンバス境界を表示します。\n"
 "([表示] → [キャンバス境界の表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:423
+#: ../app/config/gimprc-blurbs.h:421
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -11846,7 +11843,7 @@ msgstr ""
 "この設定がオンのときは、ガイドを表示します。\n"
 "([表示] → [ガイドの表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:427
+#: ../app/config/gimprc-blurbs.h:425
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -11854,7 +11851,7 @@ msgstr ""
 "この設定がオンのときは、グリッドを表示します。\n"
 "([表示] → [グリッドの表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:431
+#: ../app/config/gimprc-blurbs.h:429
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -11862,21 +11859,21 @@ msgstr ""
 "この設定がオンのときは、サンプルポイントを表示します。\n"
 "([表示] → [サンプルポイントの表示]で切り替えることもできます。)"
 
-#: ../app/config/gimprc-blurbs.h:435
+#: ../app/config/gimprc-blurbs.h:433
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr ""
 "この設定がオンのときは、アイテム上にマウスポインターを乗せたときにツールチッ"
 "プ (アイテムについての簡単な説明) を表示します。"
 
-#: ../app/config/gimprc-blurbs.h:438
+#: ../app/config/gimprc-blurbs.h:436
 msgid "Use GIMP in a single-window mode."
 msgstr "シングルウィンドウモードで使用する"
 
-#: ../app/config/gimprc-blurbs.h:441
+#: ../app/config/gimprc-blurbs.h:439
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr "ドックとダイアログを隠し、画像ウィンドウのみを表示します。"
 
-#: ../app/config/gimprc-blurbs.h:444
+#: ../app/config/gimprc-blurbs.h:442
 #, fuzzy
 #| msgctxt "windows-action"
 #| msgid "When enabled GIMP is in a single-window mode."
@@ -11884,7 +11881,7 @@ msgid "Show the image tabs bar in single window mode."
 msgstr "この設定がオンのときは、シングルウィンドウモードで表示します"
 
 # 'pointer information' は直訳すれば「ポインター情報」だが、機能内容はポインターが指しているピクセルに関する情報の表示なので、機能を直接的に表す「ピクセル情報」とした
-#: ../app/config/gimprc-blurbs.h:447
+#: ../app/config/gimprc-blurbs.h:445
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
@@ -11893,31 +11890,31 @@ msgstr ""
 "ピクセル情報ダイアログを開きます。ポインターが指すピクセルの情報を表示しま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:450
+#: ../app/config/gimprc-blurbs.h:448
 msgid "Enable the Handle Transform tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:453
+#: ../app/config/gimprc-blurbs.h:451
 msgid "Enable symmetry on painting."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:456
+#: ../app/config/gimprc-blurbs.h:454
 msgid "Enable the MyPaint Brush tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:459
+#: ../app/config/gimprc-blurbs.h:457
 msgid "Enable the Seamless Clone tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:462
+#: ../app/config/gimprc-blurbs.h:460
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "画像ウィンドウでスペースキーが押されたときの挙動を設定します"
 
-#: ../app/config/gimprc-blurbs.h:465
+#: ../app/config/gimprc-blurbs.h:463
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:468
+#: ../app/config/gimprc-blurbs.h:466
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -11934,11 +11931,11 @@ msgstr ""
 "合、非常に動作が遅くなってしまいます。そのため、\"/tmp\" にスワップファイルを"
 "作成するのが望ましいです。"
 
-#: ../app/config/gimprc-blurbs.h:477
+#: ../app/config/gimprc-blurbs.h:475
 msgid "When enabled, menus can be torn off."
 msgstr "この設定がオンのときは、メニューの切り離しが可能になります。"
 
-#: ../app/config/gimprc-blurbs.h:480
+#: ../app/config/gimprc-blurbs.h:478
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -11947,17 +11944,17 @@ msgstr ""
 "を可能にします。(メニューアイテムがハイライトになっているときに割り当てたい"
 "キーの組み合わせを押します。)"
 
-#: ../app/config/gimprc-blurbs.h:484
+#: ../app/config/gimprc-blurbs.h:482
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr ""
 "この設定がオンのときは、変更または新設したキーボードショートカットを GIMP 終"
 "了時に保存します。"
 
-#: ../app/config/gimprc-blurbs.h:487
+#: ../app/config/gimprc-blurbs.h:485
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "GIMP 起動時に保存されているキーボードショートカットを読み込みます。"
 
-#: ../app/config/gimprc-blurbs.h:490
+#: ../app/config/gimprc-blurbs.h:488
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -11968,18 +11965,18 @@ msgstr ""
 "ファイルは GIMP 終了時に削除されますが、いくつかのファイルは残りますので他の"
 "ユーザーと共有されないフォルダーを指定することをお勧めします。"
 
-#: ../app/config/gimprc-blurbs.h:496
+#: ../app/config/gimprc-blurbs.h:494
 msgid "The name of the theme to use."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:511
+#: ../app/config/gimprc-blurbs.h:509
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "[カラープロファイルに変換] ダイアログのデフォルトのレンダリングインテントを設"
 "定します。"
 
-#: ../app/config/gimprc-blurbs.h:514
+#: ../app/config/gimprc-blurbs.h:512
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -11987,13 +11984,13 @@ msgstr ""
 "[カラープロファイルに変換] ダイアログの [黒点の補正] をデフォルトで有効にしま"
 "す。"
 
-#: ../app/config/gimprc-blurbs.h:518
+#: ../app/config/gimprc-blurbs.h:516
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "[精度変換] ダイアログのデフォルトのレイヤーのディザリング方法を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:521
+#: ../app/config/gimprc-blurbs.h:519
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -12001,153 +11998,153 @@ msgstr ""
 "[精度変換] ダイアログのデフォルトのテキストレイヤーのディザリング方法を設定し"
 "ます。"
 
-#: ../app/config/gimprc-blurbs.h:524
+#: ../app/config/gimprc-blurbs.h:522
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "[精度変換] ダイアログのデフォルトのチャンネルのディザリング方法を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:527
+#: ../app/config/gimprc-blurbs.h:525
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:530
+#: ../app/config/gimprc-blurbs.h:528
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:533
+#: ../app/config/gimprc-blurbs.h:531
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:536
+#: ../app/config/gimprc-blurbs.h:534
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:539
+#: ../app/config/gimprc-blurbs.h:537
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:542
+#: ../app/config/gimprc-blurbs.h:540
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:545
+#: ../app/config/gimprc-blurbs.h:543
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:548
+#: ../app/config/gimprc-blurbs.h:546
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:551
+#: ../app/config/gimprc-blurbs.h:549
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:554
+#: ../app/config/gimprc-blurbs.h:552
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "[新しいレイヤー] ダイアログのデフォルトのレイヤー名を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:557
+#: ../app/config/gimprc-blurbs.h:555
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "[新しいレイヤー] ダイアログのデフォルトのモードを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:560
+#: ../app/config/gimprc-blurbs.h:558
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:563
+#: ../app/config/gimprc-blurbs.h:561
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "[新しいレイヤー] ダイアログのデフォルトの合成色空間を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:566
+#: ../app/config/gimprc-blurbs.h:564
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "[新しいレイヤー] ダイアログのデフォルトの合成モードを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:569
+#: ../app/config/gimprc-blurbs.h:567
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "[新しいレイヤー] ダイアログのデフォルトの不透明度を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:572
+#: ../app/config/gimprc-blurbs.h:570
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "[新しいレイヤー] ダイアログのデフォルトの塗りつぶし形式を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:575
+#: ../app/config/gimprc-blurbs.h:573
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 "[レイヤーサイズの変更] ダイアログのデフォルトの塗りつぶし形式を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:578
+#: ../app/config/gimprc-blurbs.h:576
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "[レイヤーマスクの追加] ダイアログのデフォルトのマスクを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:581
+#: ../app/config/gimprc-blurbs.h:579
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "[レイヤーマスクの追加] ダイアログの [マスク反転] をデフォルトで有効にします。"
 
-#: ../app/config/gimprc-blurbs.h:584
+#: ../app/config/gimprc-blurbs.h:582
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr "[可視レイヤーの統合] ダイアログのデフォルトの統合形式を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:587
+#: ../app/config/gimprc-blurbs.h:585
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "[可視レイヤーの統合] ダイアログの [アクティブなレイヤーグループ内のみ] をデ"
 "フォルトで有効にします。"
 
-#: ../app/config/gimprc-blurbs.h:590
+#: ../app/config/gimprc-blurbs.h:588
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "[可視レイヤーの統合] ダイアログの [不可視レイヤーの削除] をデフォルトで有効に"
 "します。"
 
-#: ../app/config/gimprc-blurbs.h:593
+#: ../app/config/gimprc-blurbs.h:591
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "[チャンネルの追加] ダイアログのデフォルトのチャンネル名を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:596
+#: ../app/config/gimprc-blurbs.h:594
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "[チャンネルの追加] ダイアログのデフォルトの色と不透明度を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:599
+#: ../app/config/gimprc-blurbs.h:597
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "[新しいパス] のデフォルトのパス名を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:602
+#: ../app/config/gimprc-blurbs.h:600
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
 "[パスのエクスポート] ダイアログのデフォルトのフォルダーパスを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:605
+#: ../app/config/gimprc-blurbs.h:603
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 "[パスのエクスポート] ダイアログの [現在のパスをエクスポート] をデフォルトで有"
 "効にします。"
 
-#: ../app/config/gimprc-blurbs.h:608
+#: ../app/config/gimprc-blurbs.h:606
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
 "[パスのインポート] ダイアログのデフォルトのフォルダーパスを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:611
+#: ../app/config/gimprc-blurbs.h:609
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "[パスのインポート] ダイアログの [インポートしたパスを統合する] をデフォルトで"
 "有効にします。"
 
-#: ../app/config/gimprc-blurbs.h:614
+#: ../app/config/gimprc-blurbs.h:612
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -12155,11 +12152,11 @@ msgstr ""
 "[パスのインポート] ダイアログの [インポートしたパスを画像に合わせて拡大または"
 "縮小する] をデフォルトで有効にします。"
 
-#: ../app/config/gimprc-blurbs.h:617
+#: ../app/config/gimprc-blurbs.h:615
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "[選択範囲の境界をぼかす] ダイアログの境界の半径の既定値を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:620
+#: ../app/config/gimprc-blurbs.h:618
 #, fuzzy
 #| msgid ""
 #| "Sets the default 'Selected areas continue outside the image' setting for "
@@ -12171,15 +12168,15 @@ msgstr ""
 "[縁取り選択] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで有効"
 "にします。"
 
-#: ../app/config/gimprc-blurbs.h:624
+#: ../app/config/gimprc-blurbs.h:622
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr "[選択範囲の拡大] ダイアログの拡大量の既定値を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:627
+#: ../app/config/gimprc-blurbs.h:625
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr "[選択範囲の縮小] ダイアログの縮小量の既定値を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:630
+#: ../app/config/gimprc-blurbs.h:628
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -12187,11 +12184,11 @@ msgstr ""
 "[選択範囲の縮小] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで"
 "有効にします。"
 
-#: ../app/config/gimprc-blurbs.h:634
+#: ../app/config/gimprc-blurbs.h:632
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr "[縁取り選択] ダイアログの縁取り半径の既定値を設定します。"
 
-#: ../app/config/gimprc-blurbs.h:637
+#: ../app/config/gimprc-blurbs.h:635
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -12199,16 +12196,16 @@ msgstr ""
 "[縁取り選択] ダイアログの [画像の外側も選択範囲として扱う] をデフォルトで有効"
 "にします。"
 
-#: ../app/config/gimprc-blurbs.h:641
+#: ../app/config/gimprc-blurbs.h:639
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr "[縁取り選択] ダイアログのデフォルトの縁取りスタイルを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:650
+#: ../app/config/gimprc-blurbs.h:648
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr ""
 "[画像ファイルを開く] ダイアログで表示されるサムネイルの大きさを設定します"
 
-#: ../app/config/gimprc-blurbs.h:653
+#: ../app/config/gimprc-blurbs.h:651
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -12216,7 +12213,7 @@ msgstr ""
 "ここで設定した値よりもプレビューしているファイルのファイルサイズが小さいとき"
 "は、[画像ファイルを開く] ダイアログのサムネイルが自動的に更新されます。"
 
-#: ../app/config/gimprc-blurbs.h:657
+#: ../app/config/gimprc-blurbs.h:655
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -12229,33 +12226,33 @@ msgstr ""
 "おそれがあります。この値が大きい場合はより多くのメモリが必要ですが、パフォー"
 "マンスがある程度維持されます。"
 
-#: ../app/config/gimprc-blurbs.h:663
+#: ../app/config/gimprc-blurbs.h:661
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "現在の描画色と背景色をツールボックスに表示します"
 
-#: ../app/config/gimprc-blurbs.h:666
+#: ../app/config/gimprc-blurbs.h:664
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "現在のブラシ・パターン・グラデーションをツールボックスに表示します"
 
-#: ../app/config/gimprc-blurbs.h:669
+#: ../app/config/gimprc-blurbs.h:667
 msgid "Show the currently active image in the toolbox."
 msgstr "アクティブな画像のサムネイルをツールボックスに表示します"
 
-#: ../app/config/gimprc-blurbs.h:675
+#: ../app/config/gimprc-blurbs.h:673
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "画像内の透明部分の表示スタイルを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:678
+#: ../app/config/gimprc-blurbs.h:676
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "スタイルが [市松模様] の場合の柄の大きさを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:681
+#: ../app/config/gimprc-blurbs.h:679
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr "この設定がオンのときは、画像に変更がない場合は保存しません"
 
-#: ../app/config/gimprc-blurbs.h:685
+#: ../app/config/gimprc-blurbs.h:683
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -12263,7 +12260,7 @@ msgstr ""
 "作業履歴の最小エントリー回数を指定します。ここで指定した回数分は [作業履歴の"
 "メモリサイズ] に左右されずに作業履歴にエントリーされます。"
 
-#: ../app/config/gimprc-blurbs.h:689
+#: ../app/config/gimprc-blurbs.h:687
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -12274,23 +12271,23 @@ msgstr ""
 "この設定に関わらず、[作業履歴の最小エントリー数] に設定された回数までは、作業"
 "履歴はエントリーされます。"
 
-#: ../app/config/gimprc-blurbs.h:694
+#: ../app/config/gimprc-blurbs.h:692
 msgid "Sets the size of the previews in the Undo History."
 msgstr "作業履歴のプレビューの大きさを設定します。"
 
-#: ../app/config/gimprc-blurbs.h:697
+#: ../app/config/gimprc-blurbs.h:695
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "この設定がオンのときは、F1 キーを押すとヘルプブラウザーが開きます。"
 
-#: ../app/config/gimprc-blurbs.h:700
+#: ../app/config/gimprc-blurbs.h:698
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "この設定がオンのときは、いくつかの処理で OpenCL を使用します。"
 
-#: ../app/config/gimprc-blurbs.h:718
+#: ../app/config/gimprc-blurbs.h:716
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr "この設定がオンのときは、操作の検索で無効な操作も表示します。"
 
-#: ../app/config/gimprc-blurbs.h:721
+#: ../app/config/gimprc-blurbs.h:719
 msgid "The maximum number of actions saved in history."
 msgstr "履歴に保存する操作の最大数です。"
 
@@ -13376,8 +13373,7 @@ msgstr "お待ちください: %s\n"
 #: ../app/core/gimpdata.c:549 ../app/core/gimpdata.c:562
 #, c-format
 msgid "Error saving '%s': "
-msgstr ""
-"'%s' の保存中にエラーが発生しました: "
+msgstr "'%s' の保存中にエラーが発生しました: "
 
 #: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:568
 #, c-format
@@ -21528,71 +21524,71 @@ msgstr "画像の解像度が制限を越えているため、標準解像度を
 msgid "Free Select"
 msgstr "自由選択"
 
-#: ../app/pdb/plug-in-compat-cmds.c:238
+#: ../app/pdb/plug-in-compat-cmds.c:270
 msgctxt "undo-type"
 msgid "Bump Map"
 msgstr "バンプマップ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:307
+#: ../app/pdb/plug-in-compat-cmds.c:342
 msgctxt "undo-type"
 msgid "Displace"
 msgstr "ずらしマップ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:341
+#: ../app/pdb/plug-in-compat-cmds.c:376
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "ガウスぼかし"
 
-#: ../app/pdb/plug-in-compat-cmds.c:447
+#: ../app/pdb/plug-in-compat-cmds.c:482
 msgctxt "undo-type"
 msgid "Alien Map"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:484
+#: ../app/pdb/plug-in-compat-cmds.c:519
 #, fuzzy
 #| msgid "Antialiasing"
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "なめらかに"
 
-#: ../app/pdb/plug-in-compat-cmds.c:527
+#: ../app/pdb/plug-in-compat-cmds.c:562
 msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "キャンバス地"
 
-#: ../app/pdb/plug-in-compat-cmds.c:587
+#: ../app/pdb/plug-in-compat-cmds.c:622
 msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "レンズ効果"
 
-#: ../app/pdb/plug-in-compat-cmds.c:633
+#: ../app/pdb/plug-in-compat-cmds.c:668
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Crop image"
 msgid "Autocrop image"
 msgstr "画像の切り抜き"
 
-#: ../app/pdb/plug-in-compat-cmds.c:695
+#: ../app/pdb/plug-in-compat-cmds.c:730
 #, fuzzy
 #| msgid "Drop layers"
 msgid "Autocrop layer"
 msgstr "レイヤーをドロップ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:742
+#: ../app/pdb/plug-in-compat-cmds.c:777
 #, fuzzy
 #| msgid "Con_trast:"
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "コントラスト(_T):"
 
-#: ../app/pdb/plug-in-compat-cmds.c:896
+#: ../app/pdb/plug-in-compat-cmds.c:931
 #, fuzzy
 #| msgid "Con_trast:"
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "コントラスト(_T):"
 
-#: ../app/pdb/plug-in-compat-cmds.c:975
+#: ../app/pdb/plug-in-compat-cmds.c:1010
 #, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Channels Menu"
@@ -21600,69 +21596,69 @@ msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "チャンネルのメニュー"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1019
+#: ../app/pdb/plug-in-compat-cmds.c:1054
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "色を透明度に"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1065
+#: ../app/pdb/plug-in-compat-cmds.c:1100
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1073
+#: ../app/pdb/plug-in-compat-cmds.c:1108
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1145
+#: ../app/pdb/plug-in-compat-cmds.c:1180
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "コンボリューション行列"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1207
+#: ../app/pdb/plug-in-compat-cmds.c:1242
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "キュービズム"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1252
+#: ../app/pdb/plug-in-compat-cmds.c:1287
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "インターレース除去"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1331
+#: ../app/pdb/plug-in-compat-cmds.c:1366
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "回折模様"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1490
+#: ../app/pdb/plug-in-compat-cmds.c:1525
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "輪郭"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1534
+#: ../app/pdb/plug-in-compat-cmds.c:1569
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "彫金"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1607
+#: ../app/pdb/plug-in-compat-cmds.c:1642
 #, fuzzy
 #| msgid "Color Management"
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "カラーマネジメント"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1655
+#: ../app/pdb/plug-in-compat-cmds.c:1690
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "レンズフレア"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1839
+#: ../app/pdb/plug-in-compat-cmds.c:1874
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "ガラスタイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1892
+#: ../app/pdb/plug-in-compat-cmds.c:1927
 #, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
@@ -21670,130 +21666,130 @@ msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "ノイズ(_N)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2171 ../app/pdb/plug-in-compat-cmds.c:2226
+#: ../app/pdb/plug-in-compat-cmds.c:2206 ../app/pdb/plug-in-compat-cmds.c:2261
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Set color profile"
 msgstr "カラープロファイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2281
+#: ../app/pdb/plug-in-compat-cmds.c:2316
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "幻"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2318
+#: ../app/pdb/plug-in-compat-cmds.c:2353
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "ラプラス"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2394
+#: ../app/pdb/plug-in-compat-cmds.c:2429
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "レンズ補正"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2434
+#: ../app/pdb/plug-in-compat-cmds.c:2469
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "シームレスタイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2501
+#: ../app/pdb/plug-in-compat-cmds.c:2536
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "迷路"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2584 ../app/pdb/plug-in-compat-cmds.c:2668
+#: ../app/pdb/plug-in-compat-cmds.c:2619 ../app/pdb/plug-in-compat-cmds.c:2703
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "モーションぼかし"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2769
+#: ../app/pdb/plug-in-compat-cmds.c:2804
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "モザイク"
 
 # xcf 形式以外の画像ファイルはインポートするように仕様変更されたことに伴い、「（インポート）」を追加した。
-#: ../app/pdb/plug-in-compat-cmds.c:2813
+#: ../app/pdb/plug-in-compat-cmds.c:2848
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "ネオン"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2901
+#: ../app/pdb/plug-in-compat-cmds.c:2936
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "新聞印刷"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2941
+#: ../app/pdb/plug-in-compat-cmds.c:2976
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3003
+#: ../app/pdb/plug-in-compat-cmds.c:3038
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "超新星"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3047 ../app/pdb/plug-in-compat-cmds.c:3112
+#: ../app/pdb/plug-in-compat-cmds.c:3082 ../app/pdb/plug-in-compat-cmds.c:3150
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "油絵化"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3202
+#: ../app/pdb/plug-in-compat-cmds.c:3240
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "紙タイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3243 ../app/pdb/plug-in-compat-cmds.c:3286
+#: ../app/pdb/plug-in-compat-cmds.c:3281 ../app/pdb/plug-in-compat-cmds.c:3324
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "モザイク処理"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3337
+#: ../app/pdb/plug-in-compat-cmds.c:3375
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "プラズマ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3391
+#: ../app/pdb/plug-in-compat-cmds.c:3429
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "極座標"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3431
+#: ../app/pdb/plug-in-compat-cmds.c:3469
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "赤目除去"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3484
+#: ../app/pdb/plug-in-compat-cmds.c:3522
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "不規則"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3537
+#: ../app/pdb/plug-in-compat-cmds.c:3575
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "不規則"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3590
+#: ../app/pdb/plug-in-compat-cmds.c:3628
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "不規則"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3665
+#: ../app/pdb/plug-in-compat-cmds.c:3703
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB ノイズ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3735
+#: ../app/pdb/plug-in-compat-cmds.c:3773
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "波紋"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3860
+#: ../app/pdb/plug-in-compat-cmds.c:3898
 #, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
@@ -21801,90 +21797,90 @@ msgctxt "undo-type"
 msgid "Noisify"
 msgstr "ノイズ(_N)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3904
+#: ../app/pdb/plug-in-compat-cmds.c:3942
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "選択的ガウスぼかし"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3948
+#: ../app/pdb/plug-in-compat-cmds.c:3986
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "半統合"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3991
+#: ../app/pdb/plug-in-compat-cmds.c:4029
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "ずらし"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4094
+#: ../app/pdb/plug-in-compat-cmds.c:4132
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sin 曲線"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4142
+#: ../app/pdb/plug-in-compat-cmds.c:4180
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "ソーベル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4203
+#: ../app/pdb/plug-in-compat-cmds.c:4241
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "ソリッドノイズ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4247
+#: ../app/pdb/plug-in-compat-cmds.c:4285
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "拡散"
 
 # 「閾（しきい）」の漢字が読めない、またはディスプレイ上で識別できない人がいる可能性があるので、「しきい値」とした
-#: ../app/pdb/plug-in-compat-cmds.c:4288
+#: ../app/pdb/plug-in-compat-cmds.c:4326
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "アルファチャンネルのしきい値"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4334
+#: ../app/pdb/plug-in-compat-cmds.c:4372
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "シャープ (アンシャープマスク)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4380
+#: ../app/pdb/plug-in-compat-cmds.c:4418
 msgctxt "undo-type"
 msgid "Video"
 msgstr "ビデオ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4417
+#: ../app/pdb/plug-in-compat-cmds.c:4455
 #, fuzzy
 #| msgid "Invert"
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "反転"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4521
+#: ../app/pdb/plug-in-compat-cmds.c:4559
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "明度伝搬"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4568
+#: ../app/pdb/plug-in-compat-cmds.c:4606
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "明るさの最小値"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4615
+#: ../app/pdb/plug-in-compat-cmds.c:4653
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "明るさの最大値"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4678
+#: ../app/pdb/plug-in-compat-cmds.c:4716
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "波"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4726
+#: ../app/pdb/plug-in-compat-cmds.c:4764
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "渦巻きと吸い込み"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4778
+#: ../app/pdb/plug-in-compat-cmds.c:4816
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "風"
