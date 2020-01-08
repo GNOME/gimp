@@ -44,6 +44,8 @@
  *
  *   - When the spin-button's "wrap" property is TRUE, values input through the
  *     entry are wrapped around.
+ *
+ *   - Modifiers can be used during scrolling for smaller/bigger increments.
  **/
 
 
@@ -58,16 +60,18 @@ struct _GimpSpinButtonPrivate
 
 /*  local function prototypes  */
 
-static gboolean   gimp_spin_button_focus_in  (GtkWidget     *widget,
-                                              GdkEventFocus *event);
-static gboolean   gimp_spin_button_focus_out (GtkWidget     *widget,
-                                              GdkEventFocus *event);
+static gboolean   gimp_spin_button_scroll    (GtkWidget      *widget,
+                                              GdkEventScroll *event);
+static gboolean   gimp_spin_button_focus_in  (GtkWidget      *widget,
+                                              GdkEventFocus  *event);
+static gboolean   gimp_spin_button_focus_out (GtkWidget      *widget,
+                                              GdkEventFocus  *event);
 
-static gint       gimp_spin_button_input     (GtkSpinButton *spin_button,
-                                              gdouble       *new_value);
+static gint       gimp_spin_button_input     (GtkSpinButton  *spin_button,
+                                              gdouble        *new_value);
 
-static void       gimp_spin_button_changed   (GtkEditable   *editable,
-                                              gpointer       data);
+static void       gimp_spin_button_changed   (GtkEditable    *editable,
+                                              gpointer        data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinButton, gimp_spin_button,
@@ -85,6 +89,7 @@ gimp_spin_button_class_init (GimpSpinButtonClass *klass)
   GtkWidgetClass     *widget_class      = GTK_WIDGET_CLASS (klass);
   GtkSpinButtonClass *spin_button_class = GTK_SPIN_BUTTON_CLASS (klass);
 
+  widget_class->scroll_event    = gimp_spin_button_scroll;
   widget_class->focus_in_event  = gimp_spin_button_focus_in;
   widget_class->focus_out_event = gimp_spin_button_focus_out;
 
@@ -99,6 +104,52 @@ gimp_spin_button_init (GimpSpinButton *spin_button)
   g_signal_connect (spin_button, "changed",
                     G_CALLBACK (gimp_spin_button_changed),
                     NULL);
+}
+
+static gboolean
+gimp_spin_button_scroll (GtkWidget      *widget,
+                         GdkEventScroll *event)
+{
+  if (event->direction == GDK_SCROLL_UP ||
+      event->direction == GDK_SCROLL_DOWN)
+    {
+      GtkSpinButton *spin_button = GTK_SPIN_BUTTON (widget);
+      GtkAdjustment *adjustment  = gtk_spin_button_get_adjustment (spin_button);
+      gdouble        step_inc;
+      gdouble        page_inc;
+      gint           digits;
+      gdouble        step;
+
+      step_inc = gtk_adjustment_get_step_increment (adjustment);
+      page_inc = gtk_adjustment_get_page_increment (adjustment);
+      digits   = gtk_spin_button_get_digits (spin_button);
+
+      if (event->state & GDK_SHIFT_MASK)
+        {
+          step = step_inc * step_inc / page_inc;
+          step = MAX (step, pow (10.0, -digits));
+        }
+      else if (event->state & GDK_CONTROL_MASK)
+        {
+          step = page_inc;
+        }
+      else
+        {
+          step = step_inc;
+        }
+
+      if (event->direction == GDK_SCROLL_DOWN)
+        step = -step;
+
+      if (! gtk_widget_has_focus (widget))
+        gtk_widget_grab_focus (widget);
+
+      gtk_spin_button_spin (spin_button, GTK_SPIN_USER_DEFINED, step);
+
+      return TRUE;
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, event);
 }
 
 static gboolean
