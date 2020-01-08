@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-01-07 19:00+0000\n"
-"PO-Revision-Date: 2020-01-07 20:00+0900\n"
+"PO-Revision-Date: 2020-01-09 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -5213,11 +5213,9 @@ msgid "_Value Invert"
 msgstr "光度の反転(_V)"
 
 #: ../app/actions/filters-actions.c:130
-#, fuzzy
-#| msgid "Con_trast:"
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
-msgstr "コントラスト(_T):"
+msgstr "コントラスト HSV 伸長(_S)"
 
 #: ../app/actions/filters-actions.c:138
 msgctxt "filters-action"
@@ -6195,10 +6193,8 @@ msgid "Replicate Gradient Selection"
 msgstr "選択範囲の複製"
 
 #: ../app/actions/gradient-editor-commands.c:410
-#, fuzzy
-#| msgid "Replicate"
 msgid "_Replicate"
-msgstr "複製"
+msgstr "複製(_R)"
 
 #: ../app/actions/gradient-editor-commands.c:431
 msgid ""
@@ -6233,10 +6229,8 @@ msgid "Split Gradient Segments Uniformly"
 msgstr "グラデーションセグメント群を均等に分割"
 
 #: ../app/actions/gradient-editor-commands.c:521
-#, fuzzy
-#| msgid "Split"
 msgid "_Split"
-msgstr "分割"
+msgstr "分割(_S)"
 
 #: ../app/actions/gradient-editor-commands.c:543
 msgid ""
@@ -7199,20 +7193,14 @@ msgid "Merge all visible layers into one layer"
 msgstr "すべての可視レイヤーを１枚のレイヤーに統合します"
 
 #: ../app/actions/layers-actions.c:202
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Merge Visible Layers"
 msgctxt "layers-action"
 msgid "Merge _Visible Layers"
-msgstr "可視レイヤーの統合"
+msgstr "可視レイヤーの統合(_V)"
 
 #: ../app/actions/layers-actions.c:203
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Create a new layer with last used values"
 msgctxt "layers-action"
 msgid "Merge all visible layers with last used values"
-msgstr "前回の設定で新しいレイヤーを追加します"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:208
 msgctxt "layers-action"
@@ -14034,12 +14022,10 @@ msgstr ""
 #: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:96
 #: ../app/file-data/file-data-gih.c:101 ../app/file-data/file-data-pat.c:97
 #: ../app/xcf/xcf.c:452
-#, fuzzy, c-format
-#| msgid "Could not open '%s' for reading: %s"
+#, c-format
 msgid "Could not open '%s' for reading: "
 msgstr ""
-"'%s' を開いて読み込むことができません。\n"
-"%s"
+"'%s' を開いて読み込むことができません: "
 
 #: ../app/core/gimpdataloaderfactory.c:534
 #, c-format
@@ -14246,24 +14232,20 @@ msgid "In line %d of gradient file: "
 msgstr "グラデーション名が無く無効です。"
 
 #: ../app/core/gimpgradient-load.c:337
-#, fuzzy, c-format
-#| msgid "No linear gradients found in '%s'"
+#, c-format
 msgid "No linear gradients found."
-msgstr "'%s' には線形なグラデーションが見つかりません"
+msgstr "線形なグラデーションが見つかりません。"
 
 #: ../app/core/gimpgradient-save.c:202
-#, fuzzy, c-format
-#| msgid "Opening '%s' failed: %s"
+#, c-format
 msgid "Writing POV file '%s' failed: %s"
 msgstr ""
-"'%s' のオープンに失敗しました。\n"
+"POV ファイル '%s' の書き込みに失敗しました。\n"
 "%s"
 
 #: ../app/core/gimpgrid.c:86
-#, fuzzy
-#| msgid "Line _style:"
 msgid "Line style"
-msgstr "線種(_S):"
+msgstr "線種"
 
 #: ../app/core/gimpgrid.c:87
 msgid "Line style used for the grid."
@@ -14280,36 +14262,28 @@ msgstr ""
 "[線種] に \"破線 (2色)\" を指定しているときのグリッドの背景色を指定します。"
 
 #: ../app/core/gimpgrid.c:109
-#, fuzzy
-#| msgid "Spacing"
 msgid "Spacing X"
-msgstr "間隔"
+msgstr "間隔 X"
 
 #: ../app/core/gimpgrid.c:110
 msgid "Horizontal spacing of grid lines."
 msgstr "グリッド線の水平間隔を指定します。"
 
 #: ../app/core/gimpgrid.c:116
-#, fuzzy
-#| msgid "Spacing"
 msgid "Spacing Y"
-msgstr "間隔"
+msgstr "間隔 Y"
 
 #: ../app/core/gimpgrid.c:117
 msgid "Vertical spacing of grid lines."
 msgstr "グリッド線の垂直間隔を指定します。"
 
 #: ../app/core/gimpgrid.c:123
-#, fuzzy
-#| msgid "Spacing"
 msgid "Spacing unit"
-msgstr "間隔"
+msgstr ""
 
 #: ../app/core/gimpgrid.c:130
-#, fuzzy
-#| msgid "Offset"
 msgid "Offset X"
-msgstr "オフセット"
+msgstr "オフセット X"
 
 #: ../app/core/gimpgrid.c:131
 msgid ""
@@ -14317,20 +14291,16 @@ msgid ""
 msgstr "グリッド線の水平方向のオフセットを指定します。負の値も指定可能です。"
 
 #: ../app/core/gimpgrid.c:139
-#, fuzzy
-#| msgid "Offset"
 msgid "Offset Y"
-msgstr "オフセット"
+msgstr "オフセット Y"
 
 #: ../app/core/gimpgrid.c:140
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "グリッド線の垂直方向のオフセットを指定します。負の値も指定可能です。"
 
 #: ../app/core/gimpgrid.c:148
-#, fuzzy
-#| msgid "Offset"
 msgid "Offset unit"
-msgstr "オフセット"
+msgstr ""
 
 #: ../app/core/gimpgrouplayer.c:280
 msgid "Layer Group"
@@ -15140,7 +15110,7 @@ msgstr "'%s' のパレットファイルの種類が不明です。"
 #: ../app/core/gimppalette-load.c:71
 #, c-format
 msgid "Missing magic header."
-msgstr ""
+msgstr "ヘッダーがありません。"
 
 #: ../app/core/gimppalette-load.c:94
 #, c-format
@@ -15148,10 +15118,9 @@ msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "パレット '%s' 中に適切でない UTF-8 文字列があります"
 
 #: ../app/core/gimppalette-load.c:114
-#, fuzzy, c-format
-#| msgid "Invalid shortcut."
+#, c-format
 msgid "Invalid column count."
-msgstr "不正なショートカットです"
+msgstr "列数が不正です。"
 
 #: ../app/core/gimppalette-load.c:121
 #, c-format
@@ -15195,10 +15164,9 @@ msgid "In line %d of palette file: "
 msgstr "'%s' のパレットファイルの種類が不明です。"
 
 #: ../app/core/gimppalette-load.c:427
-#, fuzzy, c-format
-#| msgid "Could not read header from palette file '%s'"
+#, c-format
 msgid "Could not read header from palette file '%s': "
-msgstr "パレット '%s' から ヘッダーを読み込むことができません。"
+msgstr "パレット '%s' から ヘッダーを読み込むことができません: "
 
 #: ../app/core/gimppalette-load.c:459
 msgid "Premature end of file."
@@ -15257,10 +15225,8 @@ msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "GIMP パターンファイル '%s' 中に適切でない UTF-8 文字列があります。"
 
 #: ../app/core/gimppattern-load.c:177
-#, fuzzy
-#| msgid "Fatal parse error in palette file '%s'"
 msgid "Fatal parse error in pattern file: "
-msgstr "パレット '%s' で致命的な解析エラーが発生しました"
+msgstr "パレットファイルで致命的な解析エラーが発生しました: "
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
@@ -15332,10 +15298,8 @@ msgid "Remove Holes"
 msgstr "穴の削除"
 
 #: ../app/core/gimpselection.c:306
-#, fuzzy
-#| msgid "There is no selection to stroke."
 msgid "There is no selection to fill."
-msgstr "ストローク描画する選択範囲がありません"
+msgstr "塗りつぶす選択範囲がありません"
 
 #: ../app/core/gimpselection.c:342
 msgid "There is no selection to stroke."
@@ -15515,20 +15479,16 @@ msgid "Tiling"
 msgstr "拡大または縮小"
 
 #: ../app/core/gimpsymmetry-tiling.c:103
-#, fuzzy
-#| msgid "I_nterval:"
 msgid "Interval X"
-msgstr "間隔(_N):"
+msgstr "間隔 X"
 
 #: ../app/core/gimpsymmetry-tiling.c:104
 msgid "Interval on the X axis (pixels)"
 msgstr ""
 
 #: ../app/core/gimpsymmetry-tiling.c:115
-#, fuzzy
-#| msgid "I_nterval:"
 msgid "Interval Y"
-msgstr "間隔(_N):"
+msgstr "間隔 Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:116
 msgid "Interval on the Y axis (pixels)"
@@ -15569,20 +15529,15 @@ msgid "Maximum number of strokes on the Y axis"
 msgstr "最大色数(_M):"
 
 #: ../app/core/gimptagcache.c:437
-#, fuzzy, c-format
-#| msgid "Error writing '%s': %s"
+#, c-format
 msgid "Error writing '%s': %s\n"
 msgstr ""
-"'%s' への書き込み中にエラーが発生しました。\n"
-"%s"
+"'%s' への書き込み中にエラーが発生しました: %s\n"
 
 #: ../app/core/gimptagcache.c:447
-#, fuzzy, c-format
-#| msgid "Error reading '%s': %s"
+#, c-format
 msgid "Error closing '%s': %s\n"
 msgstr ""
-"'%s' の読み込み中にエラーが発生しました。\n"
-"%s"
 
 #: ../app/core/gimptemplate.c:134
 msgid "Width"
@@ -15600,10 +15555,8 @@ msgstr ""
 "位による実寸で画面上に表示されます。"
 
 #: ../app/core/gimptemplate.c:158 ../app/core/gimptemplate.c:166
-#, fuzzy
-#| msgid "Resolution:"
 msgid "Resolution X"
-msgstr "解像度:"
+msgstr "解像度 X"
 
 #: ../app/core/gimptemplate.c:159
 msgid "The horizontal image resolution."
@@ -15614,16 +15567,11 @@ msgid "The vertical image resolution."
 msgstr "垂直方向の単位あたりのピクセル数を設定します"
 
 #: ../app/core/gimptemplate.c:174
-#, fuzzy
-#| msgid "Resolution:"
 msgid "Resolution unit"
-msgstr "解像度:"
+msgstr ""
 
 #. serialized name
 #: ../app/core/gimptemplate.c:181
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Image type"
 msgid "Image type"
 msgstr "画像の種類"
 
@@ -15655,10 +15603,8 @@ msgid "Color profile"
 msgstr "カラープロファイル"
 
 #: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:110
-#, fuzzy
-#| msgid "Fill by:"
 msgid "Fill type"
-msgstr "判定基準:"
+msgstr "塗りつぶし形式"
 
 #: ../app/core/gimptemplate.c:236
 msgid "Comment"
@@ -19436,14 +19382,12 @@ msgid "Uploaded %s of image data"
 msgstr ""
 
 #: ../app/file/file-save.c:100
-#, fuzzy
-#| msgid "There is no active layer to crop."
 msgid "There is no active layer to save"
-msgstr "切り取り元のアクティブレイヤーがありません。"
+msgstr "保存するアクティブレイヤーがありません"
 
 #: ../app/file/file-save.c:120
 msgid "Failed to get file information"
-msgstr ""
+msgstr "ファイル情報の取得に失敗しました"
 
 #: ../app/file/file-save.c:310
 #, c-format
@@ -21413,10 +21357,8 @@ msgstr "対角に隣接"
 #: ../app/pdb/gimppdbcontext.c:164 ../app/tools/gimptransformoptions.c:100
 #: ../app/tools/gimptransformoptions.c:254 ../app/tools/gimpwarpoptions.c:120
 #: ../app/tools/gimpwarpoptions.c:338
-#, fuzzy
-#| msgid "Interpolation:"
 msgid "Interpolation"
-msgstr "補間アルゴリズム:"
+msgstr "補間アルゴリズム"
 
 #: ../app/pdb/gimppdbcontext.c:172
 #, fuzzy
@@ -21575,18 +21517,14 @@ msgid "Autocrop layer"
 msgstr "レイヤーをドロップ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:777
-#, fuzzy
-#| msgid "Con_trast:"
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr "コントラスト(_T):"
+msgstr "コントラスト HSV 伸長"
 
 #: ../app/pdb/plug-in-compat-cmds.c:931
-#, fuzzy
-#| msgid "Con_trast:"
 msgctxt "undo-type"
 msgid "Stretch Contrast"
-msgstr "コントラスト(_T):"
+msgstr "コントラスト伸長"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1010
 #, fuzzy
@@ -22667,10 +22605,8 @@ msgid "_Airbrush"
 msgstr "エアブラシで描画(_A)"
 
 #: ../app/tools/gimpalignoptions.c:92 ../app/tools/gimpalignoptions.c:291
-#, fuzzy
-#| msgid "Relative to:"
 msgid "Relative to"
-msgstr "基準:"
+msgstr "基準"
 
 #: ../app/tools/gimpalignoptions.c:93
 msgid "Reference image object a layer will be aligned on"
@@ -22801,16 +22737,12 @@ msgid "Adjust Brightness and Contrast"
 msgstr "明るさとコントラストの調整"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:277
-#, fuzzy
-#| msgid "_Brightness:"
 msgid "_Brightness"
-msgstr "明るさ(_B):"
+msgstr "明るさ(_B)"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:285
-#, fuzzy
-#| msgid "Con_trast:"
 msgid "_Contrast"
-msgstr "コントラスト(_T):"
+msgstr "コントラスト(_T)"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:292
 msgid "Edit these Settings as Levels"
@@ -22885,10 +22817,8 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:209
 #: ../app/tools/gimpbucketfilloptions.c:470
-#, fuzzy
-#| msgid "Fill by:"
 msgid "Fill by"
-msgstr "判定基準:"
+msgstr "判定基準"
 
 #: ../app/tools/gimpbucketfilloptions.c:210
 msgid "Criterion used for determining color similarity"
@@ -22951,10 +22881,8 @@ msgid "The active layer is not visible."
 msgstr "アクティブレイヤーは非表示になっています。"
 
 #: ../app/tools/gimpbucketfilltool.c:578
-#, fuzzy
-#| msgid "No filter selected"
 msgid "No valid line art source selected."
-msgstr "フィルターが選択されていません"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:457
@@ -23236,20 +23164,16 @@ msgid "_Crop"
 msgstr "切り抜き(_C)"
 
 #: ../app/tools/gimpcroptool.c:159
-#, fuzzy
-#| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to draw a crop rectangle"
-msgstr "クリック-ドラッグ: 選択範囲を作成します"
+msgstr "クリック-ドラッグ: 切り抜く範囲を選択します"
 
 #: ../app/tools/gimpcroptool.c:279
 msgid "Click or press Enter to crop"
 msgstr "クリックまたは Enter/Return: 切り抜きます"
 
 #: ../app/tools/gimpcroptool.c:386
-#, fuzzy
-#| msgid "Crop"
 msgid "Crop to: "
-msgstr "切り抜き"
+msgstr "切り抜きサイズ: "
 
 #: ../app/tools/gimpcroptool.c:454
 msgid "There is no active layer to crop."
@@ -23331,12 +23255,8 @@ msgid "Curve _type:"
 msgstr "カーブの種類(_T)"
 
 #: ../app/tools/gimpcurvestool.c:788 ../app/tools/gimplevelstool.c:754
-#, fuzzy
-#| msgid "Could not read header from '%s': %s"
 msgid "Could not read header: "
-msgstr ""
-"'%s' からヘッダーを読み込めません。\n"
-"%s"
+msgstr "ヘッダーを読み込めません: "
 
 #: ../app/tools/gimpcurvestool.c:862
 msgid "Use _old curves file format"
@@ -24582,32 +24502,24 @@ msgid "Offset Channel"
 msgstr "オフセットチャンネル"
 
 #: ../app/tools/gimpoffsettool.c:294 ../app/tools/gimpoffsettool.c:391
-#, fuzzy
-#| msgid "Offset"
 msgid "Offset: "
-msgstr "オフセット"
+msgstr "オフセット: "
 
 #: ../app/tools/gimpoffsettool.c:418
-#, fuzzy
-#| msgid "Click to clone"
 msgid "Click-Drag to offset drawable"
-msgstr "クリック: スタンプ描画します"
+msgstr "クリック-ドラッグ: オフセットを変更します"
 
 #: ../app/tools/gimpoffsettool.c:505
 msgid "By width/_2, height/2"
 msgstr "幅/2, 高さ/2(_2)"
 
 #: ../app/tools/gimpoffsettool.c:517
-#, fuzzy
-#| msgid "By width/_2, height/2"
 msgid "By _width/2"
-msgstr "幅/2, 高さ/2(_2)"
+msgstr "幅/2(_W)"
 
 #: ../app/tools/gimpoffsettool.c:525
-#, fuzzy
-#| msgid "By width/_2, height/2"
 msgid "By _height/2"
-msgstr "幅/2, 高さ/2(_2)"
+msgstr "高さ/2(_H)"
 
 #. The edge behavior frame
 #: ../app/tools/gimpoffsettool.c:534
