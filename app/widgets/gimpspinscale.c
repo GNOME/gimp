@@ -36,6 +36,9 @@
 #include "gimp-intl.h"
 
 
+#define RELATIVE_CHANGE_SPEED 0.1
+
+
 enum
 {
   PROP_0,
@@ -707,7 +710,8 @@ gimp_spin_scale_get_limits (GimpSpinScale *scale,
 
 static void
 gimp_spin_scale_change_value (GtkWidget *widget,
-                              gdouble    x)
+                              gdouble    x,
+                              guint      state)
 {
   GimpSpinScalePrivate *private     = GET_PRIVATE (widget);
   GtkSpinButton        *spin_button = GTK_SPIN_BUTTON (widget);
@@ -728,17 +732,23 @@ gimp_spin_scale_change_value (GtkWidget *widget,
 
   if (private->relative_change)
     {
-      gdouble diff;
       gdouble step;
 
-      step = (upper - lower) / text_area.width / 10.0;
+      step = (upper - lower) / text_area.width * RELATIVE_CHANGE_SPEED;
 
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-        diff = x - (text_area.width - private->start_x);
+        step *= x - (text_area.width - private->start_x);
       else
-        diff = x - private->start_x;
+        step *= x - private->start_x;
 
-      value = (private->start_value + diff * step);
+      if (state & GDK_CONTROL_MASK)
+        {
+          gdouble page_inc = gtk_adjustment_get_page_increment (adjustment);
+
+          step = RINT (step / page_inc) * page_inc;
+        }
+
+      value = private->start_value + step;
     }
   else
     {
@@ -749,6 +759,13 @@ gimp_spin_scale_change_value (GtkWidget *widget,
         fraction = pow (fraction, private->gamma);
 
       value = fraction * (upper - lower) + lower;
+
+      if (state & GDK_CONTROL_MASK)
+        {
+          gdouble page_inc = gtk_adjustment_get_page_increment (adjustment);
+
+          value = RINT (value / page_inc) * page_inc;
+        }
     }
 
   digits = gtk_spin_button_get_digits (spin_button);
@@ -793,7 +810,7 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
       gtk_widget_grab_focus (widget);
 
-      gimp_spin_scale_change_value (widget, x);
+      gimp_spin_scale_change_value (widget, x, event->state);
 
       return TRUE;
 
@@ -838,7 +855,7 @@ gimp_spin_scale_button_release (GtkWidget      *widget,
        * gimp_spin_scale_motion_notify().
        */
       if (! private->pointer_warp)
-        gimp_spin_scale_change_value (widget, event->x);
+        gimp_spin_scale_change_value (widget, event->x, event->state);
 
       if (private->relative_change)
         {
@@ -933,7 +950,7 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
             private->start_x = private->pointer_warp_start_x;
         }
 
-      gimp_spin_scale_change_value (widget, event->x);
+      gimp_spin_scale_change_value (widget, event->x, event->state);
 
       if (private->relative_change)
         {
