@@ -101,8 +101,8 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   cairo_region_t    *region;
   gboolean           progress_started   = FALSE;
   gboolean           cancel             = FALSE;
-  gint               all_pixels;
-  gint               done_pixels;
+  gint64             all_pixels;
+  gint64             done_pixels;
 
   g_return_val_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
@@ -180,7 +180,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
         }
     }
 
-  all_pixels  = dest_rect->width * dest_rect->height;
+  all_pixels  = (gint64) dest_rect->width * (gint64) dest_rect->height;
   done_pixels = 0;
 
   region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) dest_rect);
@@ -210,7 +210,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                            (cairo_rectangle_int_t *)
                                            &valid_rect);
 
-          done_pixels += valid_rect.width * valid_rect.height;
+          done_pixels += (gint64) valid_rect.width * (gint64) valid_rect.height;
 
           if (progress)
             {
@@ -328,12 +328,11 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
       while (gimp_chunk_iterator_get_rect (iter, &render_rect))
         {
-          gint rect_pixels = render_rect.width * render_rect.height;
-
           gegl_node_blit (dest_node, 1.0, &render_rect, NULL, NULL, 0,
                           GEGL_BLIT_DEFAULT);
 
-          done_pixels += rect_pixels;
+          done_pixels += (gint64) render_rect.width *
+                         (gint64) render_rect.height;
         }
 
       if (progress)
