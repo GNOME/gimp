@@ -1723,7 +1723,8 @@ struct PaintMaskToCompMask : Base
         for (x = 0; x < rect->width; x++)
           {
             comp_mask_pixel[0] = value_to_float (mask_pixel[0]) *
-                                 state->mask_pixel[0];
+                                 state->mask_pixel[0]           *
+                                 params->paint_opacity;
 
             comp_mask_pixel   += 1;
             mask_pixel        += 1;
@@ -1734,7 +1735,8 @@ struct PaintMaskToCompMask : Base
       {
         for (x = 0; x < rect->width; x++)
           {
-            comp_mask_pixel[0] = value_to_float (mask_pixel[0]);
+            comp_mask_pixel[0] = value_to_float (mask_pixel[0]) *
+                                 params->paint_opacity;
 
             comp_mask_pixel += 1;
             mask_pixel      += 1;
@@ -1841,7 +1843,10 @@ struct DispatchPaintMaskToCompMask
           {
             using NewAlgorithm = typename decltype (algorithm)::type;
 
-            Dispatch<NewAlgorithm> () (visitor, params, algorithms, algorithm);
+            if (params->paint_opacity == GIMP_OPACITY_OPAQUE)
+              Dispatch<NewAlgorithm> () (visitor, params, algorithms, algorithm);
+            else
+              DispatchIndirect       () (visitor, params, algorithms, algorithm);
           },
           params, algorithms, algorithm,
           dispatch_paint_mask,
