@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-01-07 19:00+0000\n"
-"PO-Revision-Date: 2020-01-09 00:00+0900\n"
+"POT-Creation-Date: 2020-01-08 18:13+0000\n"
+"PO-Revision-Date: 2020-01-09 23:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1087,7 +1087,7 @@ msgstr "ブラシの場所をコピー(_L)"
 #: ../app/actions/brushes-actions.c:66
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr "ブラシの場所をクリップボードへコピーします"
+msgstr "ブラシの場所をクリップボードにコピーします"
 
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
@@ -4023,7 +4023,7 @@ msgstr "画像の場所をコピー(_L)"
 #: ../app/actions/documents-actions.c:65
 msgctxt "documents-action"
 msgid "Copy image location to clipboard"
-msgstr "画像の場所(URI)をクリップボードへコピーします"
+msgstr "画像の場所(URI)をクリップボードにコピーします"
 
 #: ../app/actions/documents-actions.c:70
 msgctxt "documents-action"
@@ -4884,7 +4884,7 @@ msgstr "画像の場所をコピー(_I)"
 #: ../app/actions/file-actions.c:114
 msgctxt "file-action"
 msgid "Copy image file location to clipboard"
-msgstr "画像の場所(URI)をクリップボードへコピーします"
+msgstr "画像の場所 (URI) をクリップボードにコピーします"
 
 #: ../app/actions/file-actions.c:119
 msgctxt "file-action"
@@ -7890,7 +7890,7 @@ msgstr "MyPaint ブラシの場所をコピー(_L)"
 #: ../app/actions/mypaint-brushes-actions.c:60
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint brush file location to clipboard"
-msgstr "MyPaint ブラシの場所をクリップボードへコピーします"
+msgstr "MyPaint ブラシの場所をクリップボードにコピーします"
 
 #: ../app/actions/mypaint-brushes-actions.c:65
 msgctxt "mypaint-brushes-action"
@@ -13602,40 +13602,34 @@ msgid "Unknown GIMP brush shape."
 msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:173
-#, fuzzy, c-format
-#| msgid "Invalid empty brush name"
+#, c-format
 msgid "Invalid brush spacing."
-msgstr "ブラシ名が無く無効です。"
+msgstr "不正なブラシ間隔です。"
 
 #: ../app/core/gimpbrushgenerated-load.c:190
-#, fuzzy, c-format
-#| msgid "Invalid shortcut."
+#, c-format
 msgid "Invalid brush radius."
-msgstr "不正なショートカットです"
+msgstr "不正なブラシ半径です。"
 
 #: ../app/core/gimpbrushgenerated-load.c:209
-#, fuzzy, c-format
-#| msgid "Invalid shortcut."
+#, c-format
 msgid "Invalid brush spike count."
-msgstr "不正なショートカットです"
+msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:226
-#, fuzzy, c-format
-#| msgid "Invalid empty brush name"
+#, c-format
 msgid "Invalid brush hardness."
-msgstr "ブラシ名が無く無効です。"
+msgstr "不正なブラシ強度です。"
 
 #: ../app/core/gimpbrushgenerated-load.c:242
-#, fuzzy, c-format
-#| msgid "Brush Aspect Ratio"
+#, c-format
 msgid "Invalid brush aspect ratio."
-msgstr "ブラシの縦横比を指定します"
+msgstr "不正なブラシ縦横比です。"
 
 #: ../app/core/gimpbrushgenerated-load.c:258
-#, fuzzy, c-format
-#| msgid "Invalid empty brush name"
+#, c-format
 msgid "Invalid brush angle."
-msgstr "ブラシ名が無く無効です。"
+msgstr "不正なブラシ角度です。"
 
 #: ../app/core/gimpbrushgenerated-load.c:281
 #, c-format
@@ -14004,28 +13998,21 @@ msgid "You don't have any writable data folder configured."
 msgstr "書き込み可能なデータフォルダーが設定されていません。"
 
 #: ../app/core/gimpdataloaderfactory.c:458
-#, fuzzy, c-format
-#| msgid "Error reading '%s': %s"
+#, c-format
 msgid "Error loading '%s': "
-msgstr ""
-"'%s' の読み込み中にエラーが発生しました。\n"
-"%s"
+msgstr "'%s' の読み込み中にエラーが発生しました: "
 
 #: ../app/core/gimpdataloaderfactory.c:464
-#, fuzzy, c-format
-#| msgid "Error reading '%s': %s"
+#, c-format
 msgid "Error loading '%s'"
-msgstr ""
-"'%s' の読み込み中にエラーが発生しました。\n"
-"%s"
+msgstr "'%s' の読み込み中にエラーが発生しました"
 
 #: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:96
 #: ../app/file-data/file-data-gih.c:101 ../app/file-data/file-data-pat.c:97
 #: ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
-msgstr ""
-"'%s' を開いて読み込むことができません: "
+msgstr "'%s' を開いて読み込むことができません: "
 
 #: ../app/core/gimpdataloaderfactory.c:534
 #, c-format
@@ -14239,9 +14226,7 @@ msgstr "線形なグラデーションが見つかりません。"
 #: ../app/core/gimpgradient-save.c:202
 #, c-format
 msgid "Writing POV file '%s' failed: %s"
-msgstr ""
-"POV ファイル '%s' の書き込みに失敗しました。\n"
-"%s"
+msgstr "POV ファイル '%s' の書き込みに失敗しました: %s"
 
 #: ../app/core/gimpgrid.c:86
 msgid "Line style"
@@ -15120,7 +15105,7 @@ msgstr "パレット '%s' 中に適切でない UTF-8 文字列があります"
 #: ../app/core/gimppalette-load.c:114
 #, c-format
 msgid "Invalid column count."
-msgstr "列数が不正です。"
+msgstr "不正な列数です。"
 
 #: ../app/core/gimppalette-load.c:121
 #, c-format
@@ -15531,8 +15516,7 @@ msgstr "最大色数(_M):"
 #: ../app/core/gimptagcache.c:437
 #, c-format
 msgid "Error writing '%s': %s\n"
-msgstr ""
-"'%s' への書き込み中にエラーが発生しました: %s\n"
+msgstr "'%s' への書き込み中にエラーが発生しました: %s\n"
 
 #: ../app/core/gimptagcache.c:447
 #, c-format
@@ -21040,12 +21024,9 @@ msgstr ""
 "ません)。"
 
 #: ../app/pdb/gimppdb-query.c:142
-#, fuzzy, c-format
-#| msgid "Opening '%s' failed: %s"
+#, c-format
 msgid "Writing PDB file '%s' failed: %s"
-msgstr ""
-"'%s' のオープンに失敗しました。\n"
-"%s"
+msgstr "PDB ファイル '%s' の書き込みに失敗しました: %s"
 
 #: ../app/pdb/gimppdb-query.c:322 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:377
@@ -22742,7 +22723,7 @@ msgstr "明るさ(_B)"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:285
 msgid "_Contrast"
-msgstr "コントラスト(_T)"
+msgstr "コントラスト(_C)"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:292
 msgid "Edit these Settings as Levels"
@@ -25528,14 +25509,12 @@ msgid "Vanishing Point"
 msgstr ""
 
 #: ../app/tools/gimptransform3dtool.c:395
-#, fuzzy
-#| msgid "_X:"
 msgid "_Z:"
-msgstr "X(_X):"
+msgstr "Z(_Z):"
 
 #: ../app/tools/gimptransform3dtool.c:438
 msgid "Z"
-msgstr ""
+msgstr "Z"
 
 #: ../app/tools/gimptransform3dtool.c:442
 msgid "Rotation axis order"
@@ -25554,9 +25533,6 @@ msgid "Transform:"
 msgstr "変形対象:"
 
 #: ../app/tools/gimptransformtool.c:109
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Transform"
 msgid "Transform"
 msgstr "変形"
 
@@ -25565,29 +25541,23 @@ msgid "Transforming"
 msgstr "変形しています"
 
 #: ../app/tools/gimptransformtool.c:429
-#, fuzzy
-#| msgid "Transformation"
 msgid "Confirm Transformation"
-msgstr "変形"
+msgstr "変形の確認"
 
 #: ../app/tools/gimptransformtool.c:449
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgid "Transformation creates a very large item."
-msgstr "変形情報行列"
+msgstr "変形は非常に大きなアイテムを作成します。"
 
 #: ../app/tools/gimptransformtool.c:454
 #, c-format
 msgid ""
 "Applying the transformation will result in an item that is over %g times "
 "larger than the image."
-msgstr ""
+msgstr "変形を適用すると画像の %g 倍以上の大きなアイテムになります。"
 
 #: ../app/tools/gimptransformtool.c:462
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgid "Transformation creates a very large image."
-msgstr "変形情報行列"
+msgstr "変形は非常に大きな画像を作成します。"
 
 #: ../app/tools/gimptransformtool.c:467
 #, c-format
@@ -25696,20 +25666,16 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "ストロークするためのアクティブレイヤーやアクティブパスがありません"
 
 #: ../app/tools/gimpwarpoptions.c:84 ../app/tools/gimpwarpoptions.c:85
-#, fuzzy
-#| msgid "Edge Behavior"
 msgid "Behavior"
-msgstr "境界部分の処理方法"
+msgstr "処理方法"
 
 #: ../app/tools/gimpwarpoptions.c:93
 msgid "Effect Size"
 msgstr "エフェクトサイズ"
 
 #: ../app/tools/gimpwarpoptions.c:100
-#, fuzzy
-#| msgid "Hardness"
 msgid "Effect Hardness"
-msgstr "硬さ"
+msgstr "エフェクトの硬さ"
 
 #: ../app/tools/gimpwarpoptions.c:106
 msgid "Strength"
@@ -25720,57 +25686,48 @@ msgid "Effect Strength"
 msgstr "エフェクトの強さ"
 
 #: ../app/tools/gimpwarpoptions.c:114
-#, fuzzy
-#| msgid "Stroke Selection"
 msgid "Stroke Spacing"
-msgstr "選択範囲の境界線を描画"
+msgstr "描画間隔"
 
 #: ../app/tools/gimpwarpoptions.c:128 ../app/tools/gimpwarpoptions.c:345
 msgid "Abyss policy"
-msgstr ""
+msgstr "存在しないデータの処理方法"
 
 #: ../app/tools/gimpwarpoptions.c:129
 msgid "Out-of-bounds sampling behavior"
-msgstr ""
+msgstr "データの存在しない領域外の処理方法を指定します"
 
 #: ../app/tools/gimpwarpoptions.c:136
 msgid "High quality preview"
 msgstr "高品質プレビュー"
 
 #: ../app/tools/gimpwarpoptions.c:137
-#, fuzzy
-#| msgid "Use an alternate user gimprc file"
 msgid "Use an accurate but slower preview"
-msgstr "指定したユーザー gimprc ファイルを使用する"
+msgstr "高画質ですが遅いプレビューを使います"
 
 #: ../app/tools/gimpwarpoptions.c:143
-#, fuzzy
-#| msgctxt "documents-action"
-#| msgid "Recreate preview"
 msgid "Real-time preview"
-msgstr "選択したエントリーのプレビューを再表示します"
+msgstr "リアルタイムプレビュー"
 
 #: ../app/tools/gimpwarpoptions.c:144
 msgid "Render preview in real time (slower)"
-msgstr ""
+msgstr "リアルタイムでプレビューを描画します (遅いです)"
 
 #: ../app/tools/gimpwarpoptions.c:150
 msgid "During motion"
-msgstr ""
+msgstr "マウス移動"
 
 #: ../app/tools/gimpwarpoptions.c:151
 msgid "Apply effect during motion"
-msgstr ""
+msgstr "マウスカーソルを動かすとエフェクトを適用します"
 
 #: ../app/tools/gimpwarpoptions.c:157
-#, fuzzy
-#| msgid "Vertical"
 msgid "Periodically"
-msgstr "垂直"
+msgstr "一定間隔"
 
 #: ../app/tools/gimpwarpoptions.c:158
 msgid "Apply effect periodically"
-msgstr ""
+msgstr "一定間隔でエフェクトを適用します"
 
 #: ../app/tools/gimpwarpoptions.c:164
 msgid "Rate"
@@ -25778,18 +25735,15 @@ msgstr "割合"
 
 #: ../app/tools/gimpwarpoptions.c:165
 msgid "Periodic stroke rate"
-msgstr ""
+msgstr "ストローク間隔の割合です"
 
 #: ../app/tools/gimpwarpoptions.c:171
 msgid "Frames"
-msgstr ""
+msgstr "フレーム"
 
 #: ../app/tools/gimpwarpoptions.c:172
-#, fuzzy
-#| msgctxt "guides-type"
-#| msgid "Number of lines"
 msgid "Number of animation frames"
-msgstr "グリッド線の数を指定"
+msgstr "アニメーションのフレーム数です"
 
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:359
@@ -25802,11 +25756,8 @@ msgid "Animate"
 msgstr "アニメーション"
 
 #: ../app/tools/gimpwarpoptions.c:397
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "An_imation"
 msgid "Create Animation"
-msgstr "アニメーション(_I)"
+msgstr "アニメーションの作成"
 
 #: ../app/tools/gimpwarptool.c:167
 msgid "Warp Transform"
@@ -25973,8 +25924,6 @@ msgid "Color"
 msgstr "色"
 
 #: ../app/tools/tools-enums.c:248
-#, fuzzy
-#| msgid "Grayscale"
 msgctxt "matting-preview-mode"
 msgid "Grayscale"
 msgstr "グレースケール"
@@ -26166,12 +26115,9 @@ msgid "Transform Path"
 msgstr "パスの変形"
 
 #: ../app/vectors/gimpvectors-export.c:89
-#, fuzzy, c-format
-#| msgid "Opening '%s' failed: %s"
+#, c-format
 msgid "Writing SVG file '%s' failed: %s"
-msgstr ""
-"'%s' のオープンに失敗しました。\n"
-"%s"
+msgstr "SVG ファイル '%s' の書き込みに失敗しました: %s"
 
 #: ../app/vectors/gimpvectors-import.c:344
 msgid "Import Paths"
@@ -26228,8 +26174,6 @@ msgid "Conflicting Shortcuts"
 msgstr "ショートカットが二重定義されています"
 
 #: ../app/widgets/gimpactionview.c:669
-#, fuzzy
-#| msgid "_Reassign shortcut"
 msgid "_Reassign Shortcut"
 msgstr "ショートカット再割り当て(_R)"
 
@@ -26252,10 +26196,8 @@ msgid "Invalid shortcut."
 msgstr "不正なショートカットです"
 
 #: ../app/widgets/gimpactionview.c:791 ../app/widgets/gimpactionview.c:895
-#, fuzzy
-#| msgid "Path cannot be lowered more."
 msgid "F1 cannot be remapped."
-msgstr "パスをこれ以上背面に移動させられません。"
+msgstr "F1 キーは再マップできません"
 
 #: ../app/widgets/gimpactionview.c:799
 #, c-format
@@ -27875,18 +27817,12 @@ msgid "From Named Icons..."
 msgstr ""
 
 #: ../app/widgets/gimpiconpicker.c:259
-#, fuzzy
-#| msgctxt "documents-action"
-#| msgid "Copy image location to clipboard"
 msgid "Copy Icon to Clipboard"
-msgstr "画像の場所(URI)をクリップボードへコピーします"
+msgstr "アイコンをクリップボードにコピー"
 
 #: ../app/widgets/gimpiconpicker.c:268
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard"
 msgid "Paste Icon from Clipboard"
-msgstr "クリップボードの内容を貼り付けます"
+msgstr "アイコンをクリップボードから貼り付け"
 
 #: ../app/widgets/gimpiconpicker.c:480
 msgid "Load Icon Image"
