@@ -596,7 +596,8 @@ gimp_spin_scale_get_target (GtkWidget      *widget,
   if (x >= layout_x && x < layout_x + logical.width  &&
       y >= layout_y && y < layout_y + logical.height &&
       (! private->compact                            ||
-       gdk_event_triggers_context_menu ((GdkEvent *) event)))
+       (gtk_widget_has_focus (widget)                &&
+        gdk_event_triggers_context_menu ((GdkEvent *) event))))
     {
       return TARGET_NUMBER;
     }
