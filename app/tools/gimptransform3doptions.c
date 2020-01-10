@@ -41,6 +41,7 @@ enum
 {
   PROP_0,
   PROP_MODE,
+  PROP_UNIFIED,
   PROP_CONSTRAIN_AXIS,
   PROP_Z_AXIS,
   PROP_LOCAL_FRAME
@@ -78,6 +79,13 @@ gimp_transform_3d_options_class_init (GimpTransform3DOptionsClass *klass)
                          GIMP_TYPE_TRANSFORM_3D_MODE,
                          GIMP_TRANSFORM_3D_MODE_CAMERA,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_UNIFIED,
+                            "unified",
+                            _("Unified interaction"),
+                            _("Combine all interaction modes"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_AXIS,
                             "constrain-axis",
@@ -119,6 +127,9 @@ gimp_transform_3d_options_set_property (GObject      *object,
     case PROP_MODE:
       options->mode = g_value_get_enum (value);
       break;
+    case PROP_UNIFIED:
+      options->unified = g_value_get_boolean (value);
+      break;
 
     case PROP_CONSTRAIN_AXIS:
       options->constrain_axis = g_value_get_boolean (value);
@@ -149,6 +160,9 @@ gimp_transform_3d_options_get_property (GObject    *object,
     case PROP_MODE:
       g_value_set_enum (value, options->mode);
       break;
+    case PROP_UNIFIED:
+      g_value_set_boolean (value, options->unified);
+      break;
 
     case PROP_CONSTRAIN_AXIS:
       g_value_set_boolean (value, options->constrain_axis);
@@ -175,6 +189,10 @@ gimp_transform_3d_options_gui (GimpToolOptions *tool_options)
   gchar           *label;
   GdkModifierType  extend_mask    = gimp_get_extend_selection_mask ();
   GdkModifierType  constrain_mask = gimp_get_constrain_behavior_mask ();
+
+  button = gimp_prop_check_button_new (config, "unified", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   label = g_strdup_printf (_("Constrain axis (%s)"),
                            gimp_get_mod_string (extend_mask));
