@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP Python-Fu 2.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-10 08:47+0300\n"
-"PO-Revision-Date: 2020-01-10 09:45+0300\n"
+"PO-Revision-Date: 2020-01-10 10:06+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -126,7 +126,6 @@ msgid "_Image"
 msgstr "_Изображение"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
-#, fuzzy
 msgid "_Drawable"
 msgstr "_Область рисования"
 
@@ -297,12 +296,10 @@ msgid "Autoslice (fg->bg)"
 msgstr "Автонарезка (п. план -> фон)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
-#, fuzzy
 msgid "Partitioned"
 msgstr "Разделённый"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
-#, fuzzy
 msgid "Slice _expression"
 msgstr "Выражение _нарезки"
 
@@ -324,7 +321,6 @@ msgid "_Quantization"
 msgstr "_Квантование"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
-#, fuzzy
 msgid "_Partitioning channel"
 msgstr "_Канал разделения"
 
