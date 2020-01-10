@@ -275,12 +275,11 @@ gimp_tools_restore (Gimp *gimp)
   if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), file,
                                     NULL, &error))
     {
-      gint n = gimp_container_get_n_children (gimp->tool_info_list);
-      gint i;
+      gint i = 0;
 
-      for (list = GIMP_LIST (gimp_list)->queue->head, i = 0;
+      for (list = GIMP_LIST (gimp_list)->queue->head;
            list;
-           list = g_list_next (list), i++)
+           list = g_list_next (list))
         {
           const gchar *name = gimp_object_get_name (list->data);
 
@@ -289,12 +288,21 @@ gimp_tools_restore (Gimp *gimp)
 
           if (object)
             {
+              while (! gimp_container_get_child_by_name (
+                         gimp_list,
+                         gimp_object_get_name (
+                           gimp_container_get_child_by_index (
+                             gimp->tool_info_list, i))))
+                {
+                  i++;
+                }
+
               g_object_set (object,
                             "visible", GIMP_TOOL_INFO (list->data)->visible,
                             NULL);
 
               gimp_container_reorder (gimp->tool_info_list,
-                                      object, MIN (i, n - 1));
+                                      object, i++);
             }
         }
     }
