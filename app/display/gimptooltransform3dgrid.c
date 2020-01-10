@@ -48,6 +48,7 @@ enum
 {
   PROP_0,
   PROP_MODE,
+  PROP_UNIFIED,
   PROP_CONSTRAIN_AXIS,
   PROP_Z_AXIS,
   PROP_LOCAL_FRAME,
@@ -76,6 +77,7 @@ typedef enum
 struct _GimpToolTransform3DGridPrivate
 {
   GimpTransform3DMode mode;
+  gboolean            unified;
 
   gboolean            constrain_axis;
   gboolean            z_axis;
@@ -150,8 +152,7 @@ static gboolean   gimp_tool_transform_3d_grid_get_cursor              (GimpToolW
                                                                       GimpToolCursorType      *tool_cursor,
                                                                       GimpCursorModifier      *modifier);
 
-static void       gimp_tool_transform_3d_grid_set_mode               (GimpToolTransform3DGrid *grid,
-                                                                      GimpTransform3DMode      mode);
+static void       gimp_tool_transform_3d_grid_update_mode            (GimpToolTransform3DGrid *grid);
 static void       gimp_tool_transform_3d_grid_reset_motion           (GimpToolTransform3DGrid *grid);
 static gboolean   gimp_tool_transform_3d_grid_constrain              (GimpToolTransform3DGrid *grid,
                                                                       gdouble                  x,
@@ -201,6 +202,13 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                       GIMP_TRANSFORM_3D_MODE_CAMERA,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_UNIFIED,
+                                   g_param_spec_boolean ("unified",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CONSTRAIN_AXIS,
                                    g_param_spec_boolean ("constrain-axis",
@@ -368,7 +376,13 @@ gimp_tool_transform_3d_grid_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_MODE:
-      gimp_tool_transform_3d_grid_set_mode (grid, g_value_get_enum (value));
+      priv->mode = g_value_get_enum (value);
+      gimp_tool_transform_3d_grid_update_mode (grid);
+      break;
+
+    case PROP_UNIFIED:
+      priv->unified = g_value_get_boolean (value);
+      gimp_tool_transform_3d_grid_update_mode (grid);
       break;
 
     case PROP_CONSTRAIN_AXIS:
@@ -452,6 +466,9 @@ gimp_tool_transform_3d_grid_get_property (GObject    *object,
     {
     case PROP_MODE:
       g_value_set_enum (value, priv->mode);
+      break;
+    case PROP_UNIFIED:
+      g_value_set_boolean (value, priv->unified);
       break;
 
     case PROP_CONSTRAIN_AXIS:
@@ -659,38 +676,46 @@ gimp_tool_transform_3d_grid_get_cursor (GimpToolWidget     *widget,
 }
 
 static void
-gimp_tool_transform_3d_grid_set_mode (GimpToolTransform3DGrid *grid,
-                                      GimpTransform3DMode      mode)
+gimp_tool_transform_3d_grid_update_mode (GimpToolTransform3DGrid *grid)
 {
   GimpToolTransform3DGridPrivate *priv = grid->priv;
 
-  priv->mode = mode;
-
-  switch (mode)
+  if (priv->unified)
     {
-    case GIMP_TRANSFORM_3D_MODE_CAMERA:
-      g_object_set (grid,
-                    "inside-function",  GIMP_TRANSFORM_FUNCTION_NONE,
-                    "outside-function", GIMP_TRANSFORM_FUNCTION_NONE,
-                    "use-pivot-handle", TRUE,
-                    NULL);
-      break;
-
-    case GIMP_TRANSFORM_3D_MODE_MOVE:
       g_object_set (grid,
                     "inside-function",  GIMP_TRANSFORM_FUNCTION_MOVE,
-                    "outside-function", GIMP_TRANSFORM_FUNCTION_MOVE,
-                    "use-pivot-handle", FALSE,
-                    NULL);
-      break;
-
-    case GIMP_TRANSFORM_3D_MODE_ROTATE:
-      g_object_set (grid,
-                    "inside-function",  GIMP_TRANSFORM_FUNCTION_ROTATE,
                     "outside-function", GIMP_TRANSFORM_FUNCTION_ROTATE,
-                    "use-pivot-handle", FALSE,
+                    "use-pivot-handle", TRUE,
                     NULL);
-      break;
+    }
+  else
+    {
+      switch (priv->mode)
+        {
+        case GIMP_TRANSFORM_3D_MODE_CAMERA:
+          g_object_set (grid,
+                        "inside-function",  GIMP_TRANSFORM_FUNCTION_NONE,
+                        "outside-function", GIMP_TRANSFORM_FUNCTION_NONE,
+                        "use-pivot-handle", TRUE,
+                        NULL);
+          break;
+
+        case GIMP_TRANSFORM_3D_MODE_MOVE:
+          g_object_set (grid,
+                        "inside-function",  GIMP_TRANSFORM_FUNCTION_MOVE,
+                        "outside-function", GIMP_TRANSFORM_FUNCTION_MOVE,
+                        "use-pivot-handle", FALSE,
+                        NULL);
+          break;
+
+        case GIMP_TRANSFORM_3D_MODE_ROTATE:
+          g_object_set (grid,
+                        "inside-function",  GIMP_TRANSFORM_FUNCTION_ROTATE,
+                        "outside-function", GIMP_TRANSFORM_FUNCTION_ROTATE,
+                        "use-pivot-handle", FALSE,
+                        NULL);
+          break;
+        }
     }
 }
 

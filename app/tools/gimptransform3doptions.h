@@ -38,6 +38,8 @@ struct _GimpTransform3DOptions
   GimpTransformGridOptions  parent_instance;
 
   GimpTransform3DMode       mode;
+  gboolean                  unified;
+
   gboolean                  constrain_axis;
   gboolean                  z_axis;
   gboolean                  local_frame;

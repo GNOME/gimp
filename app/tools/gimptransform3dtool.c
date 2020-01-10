@@ -670,6 +670,7 @@ gimp_transform_3d_tool_get_widget (GimpTransformGridTool *tg_tool)
   static const gchar *bound_properties[] =
   {
     "mode",
+    "unified",
     "constrain-axis",
     "z-axis",
     "local-frame",
