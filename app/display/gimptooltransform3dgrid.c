@@ -952,41 +952,68 @@ gimp_tool_transform_3d_grid_motion_rotate (GimpToolTransform3DGrid *grid,
     }
   else
     {
-      GimpVector2 o, u, v;
+      {
+        GimpVector3 o, n, c;
 
-      gimp_matrix4_identity (&matrix);
+        gimp_matrix4_identity (&matrix);
 
-      gimp_transform_3d_matrix4_rotate_euler (&matrix,
-                                              priv->rotation_order,
-                                              priv->angle_x,
-                                              priv->angle_y,
-                                              priv->angle_z,
-                                              0.0, 0.0, 0.0);
+        gimp_transform_3d_matrix4_rotate_euler (&matrix,
+                                                priv->rotation_order,
+                                                priv->angle_x,
+                                                priv->angle_y,
+                                                priv->angle_z,
+                                                priv->pivot_x,
+                                                priv->pivot_y,
+                                                priv->pivot_z);
 
-      z_sign = matrix.coeff[2][2] >= 0.0 ? +1.0 : -1.0;
+        gimp_transform_3d_matrix4_translate (&matrix,
+                                             priv->offset_x,
+                                             priv->offset_y,
+                                             priv->offset_z);
 
-      gimp_matrix3_transform_point (&priv->orig_transform,
-                                    priv->pivot_x, priv->pivot_y,
-                                    &o.x, &o.y);
-      gimp_matrix3_transform_point (&priv->orig_transform,
-                                    priv->pivot_x + 1.0, priv->pivot_y,
-                                    &u.x, &u.y);
-      gimp_matrix3_transform_point (&priv->orig_transform,
-                                    priv->pivot_x, priv->pivot_y + 1.0,
-                                    &v.x, &v.y);
+        gimp_matrix4_transform_point (&matrix,
+                                      0.0,  0.0,  0.0,
+                                      &o.x, &o.y, &o.z);
+        gimp_matrix4_transform_point (&matrix,
+                                      0.0,  0.0,  1.0,
+                                      &n.x, &n.y, &n.z);
 
-      gimp_vector2_sub (&u, &u, &o);
-      gimp_vector2_sub (&v, &v, &o);
+        c.x = priv->camera_x;
+        c.y = priv->camera_y;
+        c.z = priv->camera_z;
 
-      gimp_vector2_normalize (&u);
-      gimp_vector2_normalize (&v);
+        gimp_vector3_sub (&n, &n, &o);
+        gimp_vector3_sub (&c, &c, &o);
 
-      basis_inv.coeff[0][0] = u.x;
-      basis_inv.coeff[1][0] = u.y;
-      basis_inv.coeff[0][1] = v.x;
-      basis_inv.coeff[1][1] = v.y;
+        z_sign = gimp_vector3_inner_product (&c, &n) <= 0.0 ? +1.0 : -1.0;
+      }
 
-      gimp_matrix2_invert (&basis_inv);
+      {
+        GimpVector2 o, u, v;
+
+        gimp_matrix3_transform_point (&priv->orig_transform,
+                                      priv->pivot_x, priv->pivot_y,
+                                      &o.x, &o.y);
+        gimp_matrix3_transform_point (&priv->orig_transform,
+                                      priv->pivot_x + 1.0, priv->pivot_y,
+                                      &u.x, &u.y);
+        gimp_matrix3_transform_point (&priv->orig_transform,
+                                      priv->pivot_x, priv->pivot_y + 1.0,
+                                      &v.x, &v.y);
+
+        gimp_vector2_sub (&u, &u, &o);
+        gimp_vector2_sub (&v, &v, &o);
+
+        gimp_vector2_normalize (&u);
+        gimp_vector2_normalize (&v);
+
+        basis_inv.coeff[0][0] = u.x;
+        basis_inv.coeff[1][0] = u.y;
+        basis_inv.coeff[0][1] = v.x;
+        basis_inv.coeff[1][1] = v.y;
+
+        gimp_matrix2_invert (&basis_inv);
+      }
     }
 
   if (! priv->z_axis)
