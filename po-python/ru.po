@@ -7,55 +7,56 @@
 # AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2011.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2016.
 # Olesya Gerasimenko <gammaray@basealt.ru>, 2018.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2020.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Python-Fu 2.8\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2016-05-09 02:14+0300\n"
-"PO-Revision-Date: 2018-06-13 11:57MSK\n"
-"Last-Translator: Olesya Gerasimenko <gammaray@basealt.ru>\n"
-"Language-Team: Basealt Translation Team\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-10 08:47+0300\n"
+"PO-Revision-Date: 2020-01-10 09:45+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10"
-" || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Gtranslator 3.33.90\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "Отсутствует информация о прерывании"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "При запуске %s произошла ошибка"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "_Подробнее"
 
-#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
-#: ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "Нет"
 
-#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Выбор файла в Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:644
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Выбор каталога в Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:733
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Некорректный ввод для '%s'"
@@ -352,82 +353,82 @@ msgid "Slice"
 msgstr "Нарезка"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Разрезать изображение по направляющим в HTML-таблицу с его фрагментами"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Нарезка для веба..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Каталог экспорта HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Имя экспортируемого файла"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Префикс имени файла"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Формат изображения"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Изображения в отдельном каталоге"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Имя каталога изображений"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Пробел между элементами таблицы"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "JavaScript для действий onmouseover и clicked"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Пропустить анимацию для заголовков таблицы"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Консоль Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Просмотр…"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:144
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Браузер процедур Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:173
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не удалось открыть '%s' для записи: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:188
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Не удалось записать в '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:196
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "Сохранить вывод консоли Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "Интерактивный интерпретатор Python в GIMP"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:227
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Консоль"
 
@@ -458,6 +459,323 @@ msgstr "Смещение тени по _X"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Смещение тени по _Y"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+msgid "Spyro Layer"
+msgstr "Слой спирографа"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+msgid "Circle"
+msgstr "Окружность"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+msgid "Polygon-Star"
+msgstr "Многоугольник / Звезда"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+msgid "Sine"
+msgstr "Синус"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+msgid "Bumps"
+msgstr "Выпуклость"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+msgid "Rack"
+msgstr "Стойка"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+msgid "Frame"
+msgstr "Кадр"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+msgid "Selection"
+msgstr "Выделение"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+msgid "Pencil"
+msgstr "Карандаш"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+msgid "AirBrush"
+msgstr "Аэрограф"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+msgid "Stroke"
+msgstr "Штрих"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+msgid "PaintBrush"
+msgstr "Кисть"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+msgid "Ink"
+msgstr "Перо"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+msgid "MyPaintBrush"
+msgstr "Кисть MyPaint"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+msgid "Spyrograph"
+msgstr "Спирограф"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+msgid "Epitrochoid"
+msgstr "Эпитрохоида"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+msgid "Lissajous"
+msgstr "Лиссажу"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+msgid "Curve Type"
+msgstr "Тип кривой"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Эпитрохоида получается при перемещении движущейся шестеренки снаружи "
+"фиксированной."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+msgid "Tool"
+msgstr "Инструмент"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+msgid ""
+"The tool with which to draw the pattern.The Preview tool just draws quickly."
+msgstr ""
+"Каким инструментом рисовать узор. Инструмент «Предпросмотр» выполняет "
+"быструю отрисовку."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+msgid "Long Gradient"
+msgstr "Длинный градиент"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Задайте узор на одной из вкладок ниже:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"Узор зависит от того, какая вкладка открыта. «Игрушечный набор» похож на "
+"«Шестеренки», но оперирует шестеренками и числом отверстий, т.е. как в "
+"настоящих игрушечных наборах. Если следовать инструкциям из настоящих "
+"наборов, результаты буду схожими."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"Количество зубцов фиксированной шестеренки. Размер этой шестеренки "
+"пропорционален количеству зубцов в ней."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+msgid "Fixed Gear Teeth"
+msgstr "Зубцов фиксированной шестеренки"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"Количество зубцов движущейся шестеренки. Размер этой шестеренки "
+"пропорционален количеству зубцов в ней."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+msgid "Moving Gear Teeth"
+msgstr "Зубцов движущейся шестеренки"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+msgid "Hole percent"
+msgstr "Процент отверстия"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"Как далеко отверстие находится от центра движущейся шестеренки. 100% "
+"означает, что отверстие — на краю шестеренки."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+msgid "Hole Number"
+msgstr "Число отверстий"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"Отверстие №1 находится на краю шестеренки. Максимальное количество отверстий "
+"— ближе к её центру и своё для каждой шестеренки."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+msgid "Toy Kit"
+msgstr "Игрушечный набор"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+msgid "Gears"
+msgstr "Шестеренки"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation"
+msgstr "Вращение"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"Вращение узора в градусах. Точка старта движущейся шестеренки внутри "
+"фиксированной."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+msgid "Shape"
+msgstr "Фигура"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Sides"
+msgstr "Число сторон"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Number of sides of the shape."
+msgstr "Количество сторон у выбранной фигуры"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph"
+msgstr "Морфинг"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "Морфинг фигуры фиксированной передачи. Меняет только некоторые фигуры."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Вращение фиксированной передачи, в градусах"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin (px)"
+msgstr "Отступ (px)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin from edge of selection."
+msgstr "Отступ от края выделения"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+msgid "Make width and height equal"
+msgstr "Сделать ширину и высоту равными"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
+msgid "Re_draw"
+msgstr "_Заново"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
+msgid "_Reset"
+msgstr "_Сбросить"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
+msgid "_Cancel"
+msgstr "О_тмена"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
+msgid "_OK"
+msgstr "_ОК"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+msgid ""
+"Keep\n"
+"Layer"
+msgstr ""
+"Сохранить\n"
+"слой"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
+msgid ""
+"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
+"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
+"redrawn on the layer that was active when the plugin was launched."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+msgid "Spyrogimp"
+msgstr "Спирограф"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "Рисовать узоры спирографа, используя текущие параметры инструментов"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+msgid "Curve Pattern"
+msgstr "Узор кривой"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+msgid "Fixed Gear"
+msgstr "Фикс. передача"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+msgid "Size"
+msgstr "Размер"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+msgid "Rendering Pattern"
+msgstr "Отрисовка узора"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+msgid "Please wait : Rendering Pattern"
+msgstr "Подождите: узор отрисовывается"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+msgid "Spyrogimp..."
+msgstr "Спирограф…"
 
 #~ msgid "Color _model"
 #~ msgstr "Цветовая _модель"
