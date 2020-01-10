@@ -37,10 +37,21 @@ UI:
     and modifier used:
 
     - left-click is used for absolute adjustment,
-    - shift + left-click + drag changes value in small increments,
-    - ctrl + left-click + drag changes value in large increments,
+    - Shift + left-click + drag changes value in small increments,
+    - Ctrl + left-click + drag changes value in large increments,
     - middle-click enables numeric input mode;
     - right-click enables numeric input mode and select the value.
+
+  - Consolidate UI for merging down and anchoring layers:
+    As they are both mutually exclusive and serve an almost identical
+    purpose, the "Merge down" and "Anchor Layer" are given mutually
+    exclusive visibility in menus, and the anchor button is replaced
+    with a merge down button in the Layers dockable whenever there is
+    no active floating selection. Modifier keys are available:
+
+    - Shift: merge layer group
+    - Ctrl: merge visible layers
+    - Ctrl + Shift: merge visible layers from last used values
 
 Plugins:
 
