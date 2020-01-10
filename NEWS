@@ -27,7 +27,8 @@ Tools:
     relative to an item: its center, its corners, and the midpoints of
     its edges. Currently used in Rotate and 3D transform tools.
   - Add "Show all" support to the Bucket Fill tool in line-art mode
-  - Issue #3588 - Add Yu'v' (CIE 1976 UCS) to GIMP color picker
+  - Color picker and sample points now support displaying vlaues in Yu'v'
+    (CIE 1976 UCS) color space.
 
 UI:
 
