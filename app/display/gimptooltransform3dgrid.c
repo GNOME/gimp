@@ -386,7 +386,7 @@ gimp_tool_transform_3d_grid_set_property (GObject      *object,
       break;
 
     case PROP_CONSTRAIN_AXIS:
-      priv->constrain_axis  = g_value_get_boolean (value);
+      priv->constrain_axis = g_value_get_boolean (value);
       gimp_tool_transform_3d_grid_reset_motion (grid);
       break;
     case PROP_Z_AXIS:
