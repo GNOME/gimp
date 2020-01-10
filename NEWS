@@ -11,9 +11,42 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.14 to GIMP 2.10.16
 =====================================================
 
+Core:
+
+  - In gimp_gegl_apply_cached_operation(), use gint64 for storing the
+    total and processed pixel counts used for reporting progress, to
+    avoid overflowing when applying an operation to a large image.
+
 Tools:
 
-  - add "show all" support to the Bucket Fill tool in line-art mode
+  - New 3D Transform tool where you cna set vanishing point, camera's
+    focal length, and the move and rotate layer, selection, path, or
+    image in 2.5 space.
+  - New widget called GimpPivotSelector, a 3x3 grid of toggle buttons,
+    used for selecting a natural pivot position (e.g., for a transform)
+    relative to an item: its center, its corners, and the midpoints of
+    its edges. Currently used in Rotate and 3D transform tools.
+  - Add "Show all" support to the Bucket Fill tool in line-art mode
+  - Issue #3588 - Add Yu'v' (CIE 1976 UCS) to GIMP color picker
+
+UI:
+
+  - New opt-out compact style for sliders with revamped interaction.
+    The widget uses a narrower layout, and the different upper/lower-half
+    behavior is gone. Instead, the behavior depends on the mouse button
+    and modifier used:
+
+    - left-click is used for absolute adjustment,
+    - shift + left-click + drag changes value in small increments,
+    - ctrl + left-click + drag changes value in large increments,
+    - middle-click enables numeric input mode;
+    - right-click enables numeric input mode and select the value.
+
+Plugins:
+
+  - In plug_in_compat.pdb, when wrapping an op node inside a graph,
+    set the op node as the graph node's underlying operation. This
+    allows gimp_gegl_apply_operation() to perform certain optimizations.
 
 Windows:
 
@@ -28,21 +61,25 @@ macOS:
 
 Updated translations:
 
-  - Catalan, Japanese, Spanish, Swedish, Turkish, Ukrainian.
+  - Catalan, French, Japanese, Spanish, Swedish, Turkish, Ukrainian.
 
 Bugfixes:
 
    - #4172, #4194, #4205, #4218, #2543, #4185, #4246, #2794, #4209,
-     #4278, #4372, #4187
+     #4278, #4372, #4187, #4392, #2674, #4338, #2862, #4203, #4204,
+     #4354
 
 Developers:
 
-  - Alex Samorukov, Ell, Jehan, Jernej Simončič, Pascal Terjan.
+  - Alex Samorukov, Cyril Richard, Ell, Elle Stone, Jehan, Jernej
+    Simončič, lillolollo, Massimo Valentini, Michael Natterer, Pascal
+    Terjan, woob.
 
 Translators:
 
-  - Anders Jonsson, Daniel Korostil, Jordi Mas, Rodrigo Lledó Milanca,
-    Ryuta Fujii, Sabri Ünal.
+  - Alexandre Prokoudine, Anders Jonsson, Daniel Korostil, Jordi Mas,
+    Julien Hardelin, Marco Ciampa, Rodrigo Lledó Milanca, Ryuta Fujii,
+    Sabri Ünal, sicklylife.
 
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
