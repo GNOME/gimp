@@ -665,7 +665,6 @@ gui_restore_after_callback (Gimp               *gimp,
                          initial_screen,
                          initial_monitor);
 
-      /*  move keyboard focus to the display  */
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 #ifdef GDK_WINDOWING_QUARTZ
         {
@@ -726,6 +725,7 @@ gui_restore_after_callback (Gimp               *gimp,
           gtkosx_application_ready (osx_app);
         }
 #endif /* GDK_WINDOWING_QUARTZ */
+      /*  move keyboard focus to the display  */
       gtk_window_present (GTK_WINDOW (toplevel));
     }
 
