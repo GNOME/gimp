@@ -52,6 +52,7 @@ enum
   PROP_CENTER_Y,
   PROP_SIZE,
   PROP_DISABLE_TRANSFORMATION,
+  PROP_ENABLE_REFLECTION,
 };
 
 
@@ -155,6 +156,14 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_SYMMETRY_PARAM_GUI);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLE_REFLECTION,
+                            "enable-reflection",
+                            _("Enable reflection"),
+                            _("Enable reflection"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_SYMMETRY_PARAM_GUI);
 }
 
 static void
@@ -244,6 +253,10 @@ gimp_mandala_set_property (GObject      *object,
       mandala->disable_transformation = g_value_get_boolean (value);
       break;
 
+    case PROP_ENABLE_REFLECTION:
+      mandala->enable_reflection = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -271,6 +284,9 @@ gimp_mandala_get_property (GObject    *object,
       break;
     case PROP_DISABLE_TRANSFORMATION:
       g_value_set_boolean (value, mandala->disable_transformation);
+      break;
+    case PROP_ENABLE_REFLECTION:
+      g_value_set_boolean (value, mandala->enable_reflection);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -458,7 +474,15 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
       gimp_matrix3_translate (&matrix,
                               - mandala->center_x,
                               - mandala->center_y);
-      gimp_matrix3_rotate (&matrix, - i * 2.0 * G_PI / (gdouble) mandala->size);
+      if ( mandala->enable_reflection && i % 2 == 1 )
+        {
+          gimp_matrix3_scale (&matrix, -1, 1);
+          gimp_matrix3_rotate (&matrix, G_PI - (i+1) * 2.0 * G_PI / (gdouble) mandala->size);
+        }
+      else
+        {
+          gimp_matrix3_rotate (&matrix, - i * 2.0 * G_PI / (gdouble) mandala->size);
+        }
       gimp_matrix3_translate (&matrix,
                               mandala->center_x,
                               mandala->center_y);

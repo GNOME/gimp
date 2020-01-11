@@ -43,6 +43,7 @@ struct _GimpMandala
   gdouble       center_y;
   gint          size;
   gboolean      disable_transformation;
+  gboolean      enable_reflection;
 
   GimpGuide    *horizontal_guide;
   GimpGuide    *vertical_guide;
