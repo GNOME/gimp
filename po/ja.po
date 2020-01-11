@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-01-10 21:22+0000\n"
-"PO-Revision-Date: 2020-01-09 23:00+0900\n"
+"PO-Revision-Date: 2020-01-12 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -4023,7 +4023,7 @@ msgstr "画像の場所をコピー(_L)"
 #: ../app/actions/documents-actions.c:65
 msgctxt "documents-action"
 msgid "Copy image location to clipboard"
-msgstr "画像の場所(URI)をクリップボードにコピーします"
+msgstr "画像の場所 (URI) をクリップボードにコピーします"
 
 #: ../app/actions/documents-actions.c:70
 msgctxt "documents-action"
@@ -4259,7 +4259,7 @@ msgstr "動的特性の場所をコピー(_L)"
 #: ../app/actions/dynamics-actions.c:60
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
-msgstr "動的特性がある場所をクリップボードにコピーします"
+msgstr "動的特性の場所をクリップボードにコピーします"
 
 #: ../app/actions/dynamics-actions.c:65
 msgctxt "dynamics-action"
@@ -4269,7 +4269,7 @@ msgstr "ファイルマネージャーで開く(_F)"
 #: ../app/actions/dynamics-actions.c:66
 msgctxt "dynamics-action"
 msgid "Show dynamics file location in the file manager"
-msgstr "動的特性がある場所をファイルマネージャーで開きます"
+msgstr "動的特性の場所をファイルマネージャーで開きます"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
@@ -4665,7 +4665,7 @@ msgstr ""
 
 #: ../app/actions/edit-commands.c:646
 msgid "There is no active layer or channel to cut from."
-msgstr "切り取り元のアクティブなレイヤーがありません。"
+msgstr "切り取り元のアクティブレイヤーがありません。"
 
 #: ../app/actions/edit-commands.c:651 ../app/actions/edit-commands.c:683
 #: ../app/actions/edit-commands.c:707
@@ -4674,7 +4674,7 @@ msgstr "(名称未設定のバッファー)"
 
 #: ../app/actions/edit-commands.c:678
 msgid "There is no active layer or channel to copy from."
-msgstr "コピー元のアクティブなレイヤーがありません。"
+msgstr "コピー元のアクティブレイヤーがありません。"
 
 #: ../app/actions/error-console-actions.c:40
 msgctxt "error-console-action"
@@ -6940,7 +6940,7 @@ msgstr "この画像の表示を削除します"
 #, fuzzy
 #| msgid "There is no active layer or channel to cut from."
 msgid "There is no active layer or channel to fill."
-msgstr "切り取り元のアクティブなレイヤーがありません。"
+msgstr "切り取り元のアクティブレイヤーがありません。"
 
 #: ../app/actions/items-commands.c:289 ../app/actions/items-commands.c:334
 msgid "There is no active layer or channel to stroke to."
@@ -10262,7 +10262,7 @@ msgstr "レイヤー境界線の表示(_L)"
 #: ../app/actions/view-actions.c:236
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
-msgstr "アクティブなレイヤーの境界線を表示します"
+msgstr "アクティブレイヤーの境界線を表示します"
 
 #: ../app/actions/view-actions.c:242
 msgctxt "view-action"
@@ -18998,10 +18998,8 @@ msgstr "クリック-ドラッグ: 選択範囲を作成します"
 
 #: ../app/display/gimptoolhandlegrid.c:874
 #: ../app/display/gimptooltransformgrid.c:1819
-#, fuzzy
-#| msgid "Click-Drag to change the shape of the curve"
 msgid "Click-Drag to change perspective"
-msgstr "クリック-ドラッグ: カーブの形状を変えます"
+msgstr "クリック-ドラッグ: 遠近感を変更します"
 
 #: ../app/display/gimptoolhandlegrid.c:885
 #, fuzzy
@@ -19283,10 +19281,8 @@ msgstr "クリック-ドラッグ: このポイントを移動します"
 
 #: ../app/display/gimptooltransformgrid.c:1824
 #: ../app/display/gimptooltransformgrid.c:1829
-#, fuzzy
-#| msgid "Click to clone"
 msgid "Click-Drag to scale"
-msgstr "クリック: スタンプ描画します"
+msgstr "クリック-ドラッグ: 拡大・縮小します"
 
 #: ../app/display/gimptooltransformgrid.c:1833
 #, fuzzy
@@ -23536,10 +23532,8 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:96
 #: ../app/tools/gimpforegroundselectoptions.c:97
-#, fuzzy
-#| msgid "Preview"
 msgid "Preview Mode"
-msgstr "プレビュー"
+msgstr "プレビューモード"
 
 #: ../app/tools/gimpforegroundselectoptions.c:104
 msgid "Stroke width"
@@ -24264,18 +24258,13 @@ msgstr "方向 (%s)"
 #. the straighten frame
 #. the straighten button
 #: ../app/tools/gimpmeasureoptions.c:161 ../app/tools/gimpmeasureoptions.c:171
-#, fuzzy
-#| msgid "_Brightness:"
 msgid "Straighten"
-msgstr "明るさ(_B):"
+msgstr "傾きの修正"
 
 #: ../app/tools/gimpmeasureoptions.c:175
-#, fuzzy
-#| msgid "Rotate Tool: Rotate the layer, selection or path"
 msgid "Rotate the active layer, selection or path by the measured angle"
 msgstr ""
-"[回転]\n"
-"レイヤー、選択範囲、またはパスを回転します"
+"アクティブレイヤー、選択範囲、またはパスをを計測した角度で回転して傾きを修正します"
 
 #: ../app/tools/gimpmeasuretool.c:130
 msgid "Measure"
@@ -24292,44 +24281,35 @@ msgid "_Measure"
 msgstr "定規(_M)"
 
 #: ../app/tools/gimpmeasuretool.c:153
-#, fuzzy
-#| msgid "_Brightness:"
 msgctxt "undo-type"
 msgid "Straighten"
-msgstr "明るさ(_B):"
+msgstr "傾きの修正"
 
 #: ../app/tools/gimpmeasuretool.c:154
 msgid "Straightening"
-msgstr ""
+msgstr "傾きを修正しています"
 
 #: ../app/tools/gimpmeasuretool.c:173
-#, fuzzy
-#| msgid "Drag to create a line"
 msgid "Click-Drag to create a line"
-msgstr "ドラッグ: 直線を引きます"
+msgstr "クリック-ドラッグ: 直線を引きます"
 
 #: ../app/tools/gimpmeasuretool.c:365
-#, fuzzy, c-format
-#| msgid "_Brightness:"
+#, c-format
 msgctxt "undo-type"
 msgid "Straighten by %-3.3g°"
-msgstr "明るさ(_B):"
+msgstr "%-3.3g° で傾き修正"
 
 #: ../app/tools/gimpmeasuretool.c:370
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Shear horizontally by %-3.3g"
+#, c-format
 msgctxt "undo-type"
 msgid "Straighten Horizontally by %-3.3g°"
-msgstr "剪断変形 (水平方向の変形率: %-3.3g)"
+msgstr "%-3.3g° で傾き修正 (水平方向)"
 
 #: ../app/tools/gimpmeasuretool.c:375
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Shear vertically by %-3.3g"
+#, c-format
 msgctxt "undo-type"
 msgid "Straighten Vertically by %-3.3g°"
-msgstr "剪断変形 (垂直方向の変形率: %-3.3g)"
+msgstr "%-3.3g° で傾き修正 (垂直方向)"
 
 #: ../app/tools/gimpmeasuretool.c:452
 msgid "Add Guides"
@@ -24358,7 +24338,7 @@ msgstr "つかんだレイヤーまたはガイドを移動"
 
 #: ../app/tools/gimpmoveoptions.c:155
 msgid "Move the active layer"
-msgstr "アクティブなレイヤーを移動"
+msgstr "アクティブレイヤーを移動"
 
 #: ../app/tools/gimpmoveoptions.c:159
 msgid "Pick a path"
@@ -25291,14 +25271,13 @@ msgstr "元の縦横比を維持して変形します"
 
 #: ../app/tools/gimptransformgridoptions.c:466
 #: ../app/tools/gimptransformgridoptions.c:496
-#, fuzzy, c-format
-#| msgid "Rounded corners"
+#, c-format
 msgid "Around center (%s)"
-msgstr "角を丸める"
+msgstr "中心点から (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:473
 msgid "Scale around the center point"
-msgstr ""
+msgstr "中心点を基準にして拡大・縮小します"
 
 #: ../app/tools/gimptransformgridoptions.c:483
 #, fuzzy, c-format
@@ -25420,7 +25399,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformgridtool.c:1129
 msgid "Re_adjust"
-msgstr ""
+msgstr "再調整(_A)"
 
 #: ../app/tools/gimptransformgridtool.c:1377
 #, fuzzy
@@ -25476,42 +25455,32 @@ msgid "Local frame (%s)"
 msgstr ""
 
 #: ../app/tools/gimptransform3dtool.c:115
-#, fuzzy
-#| msgid "2D Transform"
 msgid "3D Transform"
-msgstr "2D 変換"
+msgstr "3D 変換"
 
 #: ../app/tools/gimptransform3dtool.c:116
-#, fuzzy
-#| msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgid ""
 "3D Transform Tool: Apply a 3D transformation to the layer, selection or path"
 msgstr ""
-"[統合変形]\n"
-"レイヤー、選択範囲、またはパスを変形します"
+"[3D 変換]\n"
+"レイヤー、選択範囲、またはパスに 3D 変換を適用します"
 
 #: ../app/tools/gimptransform3dtool.c:117
-#, fuzzy
-#| msgid "2D Transform"
 msgid "_3D Transform"
-msgstr "2D 変換"
+msgstr "3D 変換(_3)"
 
 #: ../app/tools/gimptransform3dtool.c:140
-#, fuzzy
-#| msgid "2D Transform"
 msgctxt "undo-type"
 msgid "3D Transform"
-msgstr "2D 変換"
+msgstr "3D 変換"
 
 #: ../app/tools/gimptransform3dtool.c:141
-#, fuzzy
-#| msgid "Transformation"
 msgid "3D transformation"
-msgstr "変形"
+msgstr ""
 
 #: ../app/tools/gimptransform3dtool.c:237
 msgid "Camera"
-msgstr ""
+msgstr "カメラ"
 
 #. vanishing-point frame
 #: ../app/tools/gimptransform3dtool.c:245
@@ -25669,7 +25638,7 @@ msgstr "パス(_H)"
 #, fuzzy
 #| msgid "There is no active layer or channel to cut from."
 msgid "There is no active layer or channel to fill"
-msgstr "切り取り元のアクティブなレイヤーがありません。"
+msgstr "切り取り元のアクティブレイヤーがありません。"
 
 #: ../app/tools/gimpvectortool.c:805
 msgid "There is no active layer or channel to stroke to"
@@ -25801,11 +25770,11 @@ msgstr "フィルターが選択されていません"
 
 #: ../app/tools/gimpwarptool.c:731
 msgid "No warp to erase."
-msgstr ""
+msgstr "消去する歪みがありません"
 
 #: ../app/tools/gimpwarptool.c:735
 msgid "No warp to smooth."
-msgstr ""
+msgstr "滑らかにする歪みがありません"
 
 #: ../app/tools/gimpwarptool.c:959
 msgid "Warp transform"
@@ -25927,8 +25896,6 @@ msgid "Draw unknown"
 msgstr "不明部分を描画"
 
 #: ../app/tools/tools-enums.c:247
-#, fuzzy
-#| msgid "Color"
 msgctxt "matting-preview-mode"
 msgid "Color"
 msgstr "色"
@@ -25973,57 +25940,39 @@ msgid "FOV (item)"
 msgstr ""
 
 #: ../app/tools/tools-enums.c:318
-#, fuzzy
-#| msgid "Lock pixels"
 msgctxt "warp-behavior"
 msgid "Move pixels"
-msgstr "すべてのピクセルを保護"
+msgstr "ピクセルの移動"
 
 #: ../app/tools/tools-enums.c:319
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Grow Channel"
 msgctxt "warp-behavior"
 msgid "Grow area"
-msgstr "チャンネルの拡大"
+msgstr "領域を広げる"
 
 #: ../app/tools/tools-enums.c:320
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Shrink _Wrap"
 msgctxt "warp-behavior"
 msgid "Shrink area"
-msgstr "ウィンドウサイズを合わせる(_W)"
+msgstr "領域をすぼめる"
 
 #: ../app/tools/tools-enums.c:321
-#, fuzzy
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (clockwise _hue)"
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr "HSV (色相時計回り)(_H)"
+msgstr "右回りの渦巻き"
 
 #: ../app/tools/tools-enums.c:322
-#, fuzzy
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (_counter-clockwise hue)"
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr "HSV (色相反時計回り)(_C)"
+msgstr "左回りの渦巻き"
 
 #: ../app/tools/tools-enums.c:323
-#, fuzzy
-#| msgid "Eraser"
 msgctxt "warp-behavior"
 msgid "Erase warping"
-msgstr "消しゴム"
+msgstr "歪みを消す"
 
 #: ../app/tools/tools-enums.c:324
-#, fuzzy
-#| msgid "Smoothing:"
 msgctxt "warp-behavior"
 msgid "Smooth warping"
-msgstr "スムージング:"
+msgstr "歪みを滑らかに"
 
 #: ../app/vectors/gimpvectors.c:228
 msgctxt "undo-type"
