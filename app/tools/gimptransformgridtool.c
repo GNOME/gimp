@@ -639,6 +639,11 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
             }
         }
     }
+  else if (! strcmp (pspec->name, "clip") ||
+           ! strcmp (pspec->name, "preview-opacity"))
+    {
+      gimp_transform_grid_tool_update_preview (tg_tool);
+    }
   else if (g_str_has_prefix (pspec->name, "constrain-") ||
            g_str_has_prefix (pspec->name, "frompivot-") ||
            ! strcmp (pspec->name, "fixedpivot") ||
@@ -696,11 +701,6 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
                                  (gpointer) &tg_tool->preview);
 
       gimp_canvas_item_set_visible (tg_tool->preview, show_preview);
-
-      g_object_bind_property (G_OBJECT (options),          "preview-opacity",
-                              G_OBJECT (tg_tool->preview), "opacity",
-                              G_BINDING_SYNC_CREATE |
-                              G_BINDING_BIDIRECTIONAL);
 
       GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
     }
@@ -781,6 +781,8 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
             }
         }
     }
+
+  gimp_transform_grid_tool_update_preview (tg_tool);
 }
 
 static void
@@ -1421,19 +1423,24 @@ gimp_transform_grid_tool_update_sensitivity (GimpTransformGridTool *tg_tool)
 static void
 gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
 {
-  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpTransformGridOptions *options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformOptions     *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
   gint                      i;
 
   if (tg_tool->preview)
     {
-      gboolean show_preview = gimp_transform_grid_options_show_preview (options) &&
-                              tr_tool->transform_valid;
+      gboolean show_preview;
+
+      show_preview = gimp_transform_grid_options_show_preview (tg_options) &&
+                     tr_tool->transform_valid;
 
       gimp_canvas_item_begin_change (tg_tool->preview);
       gimp_canvas_item_set_visible (tg_tool->preview, show_preview);
       g_object_set (tg_tool->preview,
                     "transform", &tr_tool->transform,
+                    "clip",      tr_options->clip,
+                    "opacity",   tg_options->preview_opacity,
                     NULL);
       gimp_canvas_item_end_change (tg_tool->preview);
     }

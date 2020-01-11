@@ -118,13 +118,13 @@ static void      find_maximum_aspect_rectangle       (Rectangle          *r,
 /*
  * This function wants to be passed the inverse transformation matrix!!
  */
-void
+gboolean
 gimp_transform_resize_boundary (const GimpMatrix3   *inv,
                                 GimpTransformResize  resize,
-                                gint                 u1,
-                                gint                 v1,
-                                gint                 u2,
-                                gint                 v2,
+                                gdouble              u1,
+                                gdouble              v1,
+                                gdouble              u2,
+                                gdouble              v2,
                                 gint                *x1,
                                 gint                *y1,
                                 gint                *x2,
@@ -136,17 +136,17 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
   gboolean    valid;
   gint        i;
 
-  g_return_if_fail (inv != NULL);
+  g_return_val_if_fail (inv != NULL, FALSE);
 
   /*  initialize with the original boundary  */
-  *x1 = u1;
-  *y1 = v1;
-  *x2 = u2;
-  *y2 = v2;
+  *x1 = floor (u1);
+  *y1 = floor (v1);
+  *x2 = ceil  (u2);
+  *y2 = ceil  (v2);
 
   /* if clipping then just return the original rectangle */
   if (resize == GIMP_TRANSFORM_RESIZE_CLIP)
-    return;
+    return TRUE;
 
   bounds[0] = (GimpVector2) { u1, v1 };
   bounds[1] = (GimpVector2) { u2, v1 };
@@ -164,11 +164,10 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
 
   if (! valid)
     {
-      g_warning ("invalid transform matrix");
       /* since there is no sensible way to deal with this, just do the same as
        * with GIMP_TRANSFORM_RESIZE_CLIP: return
        */
-      return;
+      return FALSE;
     }
 
   switch (resize)
@@ -188,7 +187,7 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
 
     case GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT:
       gimp_transform_resize_crop (points, n_points,
-                                  ((gdouble) u2 - u1) / (v2 - v1),
+                                  (u2 - u1) / (v2 - v1),
                                   x1, y1, x2, y2);
       break;
 
@@ -205,6 +204,8 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
 
   if (*y1 == *y2)
     (*y2)++;
+
+  return TRUE;
 }
 
 /* this calculates the smallest rectangle (with sides parallel to x- and
