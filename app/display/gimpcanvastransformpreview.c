@@ -36,6 +36,7 @@
 #include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimptilehandlervalidate.h"
 
+#include "core/gimp-transform-resize.h"
 #include "core/gimp-transform-utils.h"
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
@@ -53,6 +54,7 @@ enum
   PROP_0,
   PROP_PICKABLE,
   PROP_TRANSFORM,
+  PROP_CLIP,
   PROP_X1,
   PROP_Y1,
   PROP_X2,
@@ -65,31 +67,32 @@ typedef struct _GimpCanvasTransformPreviewPrivate GimpCanvasTransformPreviewPriv
 
 struct _GimpCanvasTransformPreviewPrivate
 {
-  GimpPickable  *pickable;
-  GimpMatrix3    transform;
-  gdouble        x1, y1;
-  gdouble        x2, y2;
-  gdouble        opacity;
+  GimpPickable        *pickable;
+  GimpMatrix3          transform;
+  GimpTransformResize  clip;
+  gdouble              x1, y1;
+  gdouble              x2, y2;
+  gdouble              opacity;
 
-  GeglNode      *node;
-  GeglNode      *source_node;
-  GeglNode      *convert_format_node;
-  GeglNode      *layer_mask_source_node;
-  GeglNode      *layer_mask_opacity_node;
-  GeglNode      *mask_source_node;
-  GeglNode      *mask_translate_node;
-  GeglNode      *mask_crop_node;
-  GeglNode      *opacity_node;
-  GeglNode      *cache_node;
-  GeglNode      *transform_node;
+  GeglNode            *node;
+  GeglNode            *source_node;
+  GeglNode            *convert_format_node;
+  GeglNode            *layer_mask_source_node;
+  GeglNode            *layer_mask_opacity_node;
+  GeglNode            *mask_source_node;
+  GeglNode            *mask_translate_node;
+  GeglNode            *mask_crop_node;
+  GeglNode            *opacity_node;
+  GeglNode            *cache_node;
+  GeglNode            *transform_node;
 
-  GimpPickable  *node_pickable;
-  GimpDrawable  *node_layer_mask;
-  GimpDrawable  *node_mask;
-  GeglRectangle  node_rect;
-  gdouble        node_opacity;
-  GimpMatrix3    node_matrix;
-  GeglNode      *node_output;
+  GimpPickable        *node_pickable;
+  GimpDrawable        *node_layer_mask;
+  GimpDrawable        *node_mask;
+  GeglRectangle        node_rect;
+  gdouble              node_opacity;
+  GimpMatrix3          node_matrix;
+  GeglNode            *node_output;
 };
 
 #define GET_PRIVATE(transform_preview) \
@@ -155,6 +158,13 @@ gimp_canvas_transform_preview_class_init (GimpCanvasTransformPreviewClass *klass
                                                             NULL,
                                                             GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_CLIP,
+                                   g_param_spec_enum ("clip",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_TRANSFORM_RESIZE,
+                                                      GIMP_TRANSFORM_RESIZE_ADJUST,
+                                                      GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_X1,
                                    g_param_spec_double ("x1",
                                                         NULL, NULL,
@@ -197,6 +207,10 @@ gimp_canvas_transform_preview_class_init (GimpCanvasTransformPreviewClass *klass
 static void
 gimp_canvas_transform_preview_init (GimpCanvasTransformPreview *transform_preview)
 {
+  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (transform_preview);
+
+  private->clip    = GIMP_TRANSFORM_RESIZE_ADJUST;
+  private->opacity = 1.0;
 }
 
 static void
@@ -237,6 +251,10 @@ gimp_canvas_transform_preview_set_property (GObject      *object,
         else
           gimp_matrix3_identity (&private->transform);
       }
+      break;
+
+    case PROP_CLIP:
+      private->clip = g_value_get_enum (value);
       break;
 
     case PROP_X1:
@@ -283,6 +301,10 @@ gimp_canvas_transform_preview_get_property (GObject    *object,
       g_value_set_boxed (value, &private->transform);
       break;
 
+    case PROP_CLIP:
+      g_value_set_enum (value, private->clip);
+      break;
+
     case PROP_X1:
       g_value_set_double (value, private->x1);
       break;
@@ -314,54 +336,28 @@ gimp_canvas_transform_preview_transform (GimpCanvasItem        *item,
                                          cairo_rectangle_int_t *extents)
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
-  GimpVector2                        vertices[4];
-  GimpVector2                        t_vertices[5];
-  gint                               n_t_vertices;
+  gint                               x1,  y1;
+  gint                               x2,  y2;
+  gdouble                            tx1, ty1;
+  gdouble                            tx2, ty2;
 
-  vertices[0] = (GimpVector2) { private->x1, private->y1 };
-  vertices[1] = (GimpVector2) { private->x2, private->y1 };
-  vertices[2] = (GimpVector2) { private->x2, private->y2 };
-  vertices[3] = (GimpVector2) { private->x1, private->y2 };
-
-  gimp_transform_polygon (&private->transform, vertices, 4, TRUE,
-                          t_vertices, &n_t_vertices);
-
-  if (n_t_vertices < 2)
-    return FALSE;
-
-  if (extents)
+  if (! gimp_transform_resize_boundary (&private->transform,
+                                        private->clip,
+                                        private->x1, private->y1,
+                                        private->x2, private->y2,
+                                        &x1,         &y1,
+                                        &x2,         &y2))
     {
-      GimpVector2 top_left;
-      GimpVector2 bottom_right;
-      gint        i;
-
-      for (i = 0; i < n_t_vertices; i++)
-        {
-          GimpVector2 v;
-
-          gimp_canvas_item_transform_xy_f (item,
-                                           t_vertices[i].x,  t_vertices[i].y,
-                                           &v.x, &v.y);
-
-          if (i == 0)
-            {
-              top_left = bottom_right = v;
-            }
-          else
-            {
-              top_left.x     = MIN (top_left.x,     v.x);
-              top_left.y     = MIN (top_left.y,     v.y);
-
-              bottom_right.x = MAX (bottom_right.x, v.x);
-              bottom_right.y = MAX (bottom_right.y, v.y);
-            }
-        }
-
-      extents->x      = (gint) floor (top_left.x);
-      extents->y      = (gint) floor (top_left.y);
-      extents->width  = (gint) ceil  (bottom_right.x) - extents->x;
-      extents->height = (gint) ceil  (bottom_right.y) - extents->y;
+      return FALSE;
     }
+
+  gimp_canvas_item_transform_xy_f (item, x1, y1, &tx1, &ty1);
+  gimp_canvas_item_transform_xy_f (item, x2, y2, &tx2, &ty2);
+
+  extents->x      = (gint) floor (tx1);
+  extents->y      = (gint) floor (ty1);
+  extents->width  = (gint) ceil  (tx2) - extents->x;
+  extents->height = (gint) ceil  (ty2) - extents->y;
 
   return TRUE;
 }
