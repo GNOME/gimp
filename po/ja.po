@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-01-08 18:13+0000\n"
+"POT-Creation-Date: 2020-01-10 21:22+0000\n"
 "PO-Revision-Date: 2020-01-09 23:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -19275,7 +19275,7 @@ msgstr "矩形: "
 msgid "Position: "
 msgstr "左上角の座標:"
 
-#: ../app/display/gimptooltransform3dgrid.c:615
+#: ../app/display/gimptooltransform3dgrid.c:632
 #, fuzzy
 #| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the vanishing point"
@@ -20354,7 +20354,7 @@ msgstr "色をモノクロの階調に変換します (グレースケールへ�
 
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/tools/gimppaintoptions-gui.c:111
-#: ../app/tools/gimptransform3doptions.c:76 ../app/widgets/gimpdeviceinfo.c:116
+#: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:116
 #: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
 msgstr "モード"
@@ -25428,39 +25428,49 @@ msgstr ""
 msgid "Cannot readjust the transformation"
 msgstr "ハンドル変形"
 
-#: ../app/tools/gimptransform3doptions.c:77
+#: ../app/tools/gimptransform3doptions.c:78
 #, fuzzy
 #| msgid "Transforming"
 msgid "Transform mode"
 msgstr "変形しています"
 
 #: ../app/tools/gimptransform3doptions.c:85
+#, fuzzy
+#| msgid "Unified transform"
+msgid "Unified interaction"
+msgstr "統合変形"
+
+#: ../app/tools/gimptransform3doptions.c:86
+msgid "Combine all interaction modes"
+msgstr ""
+
+#: ../app/tools/gimptransform3doptions.c:93
 msgid "Constrain transformation to a single axis"
 msgstr ""
 
-#: ../app/tools/gimptransform3doptions.c:92
+#: ../app/tools/gimptransform3doptions.c:100
 #, fuzzy
 #| msgid "Transformation"
 msgid "Transform along the Z axis"
 msgstr "変形"
 
-#: ../app/tools/gimptransform3doptions.c:99
+#: ../app/tools/gimptransform3doptions.c:107
 msgid "Transform in the local frame of reference"
 msgstr ""
 
-#: ../app/tools/gimptransform3doptions.c:179
+#: ../app/tools/gimptransform3doptions.c:197
 #, fuzzy, c-format
 #| msgid "Anti erase  (%s)"
 msgid "Constrain axis (%s)"
 msgstr "逆消しゴム  (%s)"
 
-#: ../app/tools/gimptransform3doptions.c:188
+#: ../app/tools/gimptransform3doptions.c:206
 #, fuzzy, c-format
 #| msgid "%s (%s)"
 msgid "Z axis (%s)"
 msgstr "%s (%s)"
 
-#: ../app/tools/gimptransform3doptions.c:197
+#: ../app/tools/gimptransform3doptions.c:215
 #, c-format
 msgid "Local frame (%s)"
 msgstr ""
