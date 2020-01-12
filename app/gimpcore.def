@@ -452,21 +452,14 @@ EXPORTS
 	gimp_marshal_BOOLEAN__OBJECT_POINTER
 	gimp_marshal_BOOLEAN__OBJECT_POINTER_STRING
 	gimp_marshal_VOID__DOUBLE_DOUBLE
-	gimp_marshal_VOID__ENUM
 	gimp_marshal_VOID__ENUM_ENUM_BOXED_INT
-	gimp_marshal_VOID__FLAGS
-	gimp_marshal_VOID__INT
 	gimp_marshal_VOID__INT_INT
-	gimp_marshal_VOID__OBJECT
 	gimp_marshal_VOID__OBJECT_OBJECT
 	gimp_marshal_VOID__OBJECT_POINTER
-	gimp_marshal_VOID__POINTER
 	gimp_marshal_VOID__POINTER_BOXED
 	gimp_marshal_VOID__POINTER_ENUM 
-	gimp_marshal_VOID__STRING
 	gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
 	gimp_marshal_VOID__STRING_FLAGS
-	gimp_marshal_VOID__VOID
 	gimp_message
 	gimp_modules_refresh
 	gimp_new

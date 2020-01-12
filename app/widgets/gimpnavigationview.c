@@ -161,8 +161,7 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpNavigationViewClass, scroll),
-                  NULL, NULL,
-                  gimp_marshal_VOID__BOXED,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_EVENT);
 

@@ -70,8 +70,7 @@ gimp_popup_class_init (GimpPopupClass *klass)
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpPopupClass, cancel),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   popup_signals[CONFIRM] =
@@ -79,8 +78,7 @@ gimp_popup_class_init (GimpPopupClass *klass)
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpPopupClass, confirm),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   widget_class->map_event          = gimp_popup_map_event;

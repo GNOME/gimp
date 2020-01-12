@@ -233,8 +233,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpToolPathClass, begin_change),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__STRING,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
@@ -243,8 +242,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpToolPathClass, end_change),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__BOOLEAN,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_BOOLEAN);
 
@@ -253,8 +251,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpToolPathClass, activate),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__FLAGS,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
 

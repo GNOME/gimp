@@ -106,8 +106,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPaletteViewClass, entry_selected),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
@@ -116,8 +115,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPaletteViewClass, entry_activated),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
@@ -126,8 +124,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPaletteViewClass, entry_context),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 

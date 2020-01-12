@@ -141,8 +141,7 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpFgBgEditorClass, color_clicked),
-                  NULL, NULL,
-                  gimp_marshal_VOID__ENUM,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_ACTIVE_COLOR);
 

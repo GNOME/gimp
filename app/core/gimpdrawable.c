@@ -251,8 +251,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDrawableClass, format_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_drawable_signals[ALPHA_CHANGED] =
@@ -260,8 +259,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDrawableClass, alpha_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_drawable_signals[BOUNDING_BOX_CHANGED] =
@@ -269,8 +267,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDrawableClass, bounding_box_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->dispose           = gimp_drawable_dispose;

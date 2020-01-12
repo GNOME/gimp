@@ -27,8 +27,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimpaction.h"
 
 
@@ -63,8 +61,7 @@ gimp_action_default_init (GimpActionInterface *iface)
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpActionInterface, activate),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VARIANT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
 
@@ -73,8 +70,7 @@ gimp_action_default_init (GimpActionInterface *iface)
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpActionInterface, change_state),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VARIANT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
 }

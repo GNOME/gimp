@@ -187,8 +187,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpNumberPairEntryClass, numbers_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   entry_signals[RATIO_CHANGED] =
@@ -196,8 +195,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpNumberPairEntryClass, ratio_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->set_property = gimp_number_pair_entry_set_property;

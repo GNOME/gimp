@@ -154,8 +154,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorAreaClass, color_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->dispose             = gimp_color_area_dispose;

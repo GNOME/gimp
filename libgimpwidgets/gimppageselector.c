@@ -152,8 +152,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPageSelectorClass, selection_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   /**
@@ -170,8 +169,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpPageSelectorClass, activate),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
   widget_class->activate_signal = selector_signals[ACTIVATE];
 

@@ -49,7 +49,6 @@
 #include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
 #include "core/gimpprojection.h"
-#include "core/gimpmarshal.h"
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpdevices.h"
@@ -207,8 +206,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDisplayShellClass, scaled),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   display_shell_signals[SCROLLED] =
@@ -216,8 +214,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDisplayShellClass, scrolled),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   display_shell_signals[ROTATED] =
@@ -225,8 +222,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDisplayShellClass, rotated),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   display_shell_signals[RECONNECT] =
@@ -234,8 +230,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDisplayShellClass, reconnect),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->constructed        = gimp_display_shell_constructed;

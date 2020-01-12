@@ -54,8 +54,7 @@ gimp_tagged_default_init (GimpTaggedInterface *iface)
                   GIMP_TYPE_TAGGED,
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpTaggedInterface, tag_added),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_TAG);
 
@@ -64,8 +63,7 @@ gimp_tagged_default_init (GimpTaggedInterface *iface)
                   GIMP_TYPE_TAGGED,
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpTaggedInterface, tag_removed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_TAG);
 }

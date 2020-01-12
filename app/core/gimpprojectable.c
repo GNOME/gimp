@@ -70,8 +70,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
                   G_TYPE_FROM_CLASS (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProjectableInterface, flush),
-                  NULL, NULL,
-                  gimp_marshal_VOID__BOOLEAN,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_BOOLEAN);
 
@@ -80,8 +79,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
                   G_TYPE_FROM_CLASS (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProjectableInterface, structure_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   projectable_signals[BOUNDS_CHANGED] =
