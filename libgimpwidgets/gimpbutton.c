@@ -85,8 +85,7 @@ gimp_button_class_init (GimpButtonClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpButtonClass, extended_clicked),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__FLAGS,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_MODIFIER_TYPE);
 

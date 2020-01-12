@@ -32,7 +32,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpimageparasiteview.h"
 
@@ -84,8 +83,7 @@ gimp_image_parasite_view_class_init (GimpImageParasiteViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageParasiteViewClass, update),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->constructed  = gimp_image_parasite_view_constructed;

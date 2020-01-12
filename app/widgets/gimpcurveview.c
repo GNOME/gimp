@@ -34,7 +34,6 @@
 #include "core/gimp.h"
 #include "core/gimpcurve.h"
 #include "core/gimpcurve-map.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpclipboard.h"
 #include "gimpcurveview.h"
@@ -187,8 +186,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpCurveViewClass, selection_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   curve_view_signals[CUT_CLIPBOARD] =
@@ -196,8 +194,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpCurveViewClass, cut_clipboard),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   curve_view_signals[COPY_CLIPBOARD] =
@@ -205,8 +202,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpCurveViewClass, copy_clipboard),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   curve_view_signals[PASTE_CLIPBOARD] =
@@ -214,8 +210,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpCurveViewClass, paste_clipboard),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   binding_set = gtk_binding_set_by_class (klass);

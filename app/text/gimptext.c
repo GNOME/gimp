@@ -36,7 +36,6 @@
 
 #include "core/gimp-memsize.h"
 #include "core/gimp-utils.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpstrokeoptions.h"
 
 #include "gimptext.h"
@@ -118,8 +117,7 @@ gimp_text_class_init (GimpTextClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpTextClass, changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->finalize                    = gimp_text_finalize;

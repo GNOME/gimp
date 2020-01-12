@@ -114,8 +114,7 @@ gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpInputDeviceStoreClass, device_added),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__STRING,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
   store_signals[DEVICE_REMOVED] =
@@ -123,8 +122,7 @@ gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpInputDeviceStoreClass, device_removed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__STRING,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
   object_class->finalize = gimp_input_device_store_finalize;

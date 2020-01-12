@@ -87,8 +87,7 @@ gimp_file_proc_view_class_init (GimpFileProcViewClass *klass)
                                         G_SIGNAL_RUN_LAST,
                                         G_STRUCT_OFFSET (GimpFileProcViewClass,
                                                          changed),
-                                        NULL, NULL,
-                                        gimp_marshal_VOID__VOID,
+                                        NULL, NULL, NULL,
                                         G_TYPE_NONE, 0);
 }
 

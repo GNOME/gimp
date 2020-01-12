@@ -29,7 +29,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
 #include "gimpoverlaydialog.h"
@@ -160,8 +159,7 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpOverlayDialogClass, response),
-                  NULL, NULL,
-                  gimp_marshal_VOID__INT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
 
@@ -170,8 +168,7 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpOverlayDialogClass, detach),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   signals[CLOSE] =
@@ -179,8 +176,7 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpOverlayDialogClass, close),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gtk_binding_entry_add_signal (gtk_binding_set_by_class (klass),

@@ -1217,8 +1217,7 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpResolutionEntryClass, value_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_resolution_entry_signals[WIDTH_CHANGED] =
@@ -1226,8 +1225,7 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpResolutionEntryClass, value_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_resolution_entry_signals[X_CHANGED] =
@@ -1235,8 +1233,7 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpResolutionEntryClass, value_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_resolution_entry_signals[Y_CHANGED] =
@@ -1244,8 +1241,7 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpResolutionEntryClass, refval_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_resolution_entry_signals[UNIT_CHANGED] =
@@ -1253,8 +1249,7 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpResolutionEntryClass, unit_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   klass->value_changed  = NULL;

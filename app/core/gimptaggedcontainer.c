@@ -102,8 +102,7 @@ gimp_tagged_container_class_init (GimpTaggedContainerClass *klass)
                   GIMP_TYPE_TAGGED_CONTAINER,
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpTaggedContainerClass, tag_count_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__INT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
 }
