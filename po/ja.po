@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-01-11 23:05+0000\n"
-"PO-Revision-Date: 2020-01-12 00:00+0900\n"
+"PO-Revision-Date: 2020-01-13 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -8591,9 +8591,6 @@ msgstr "テンプレートを削除"
 
 #: ../app/actions/templates-commands.c:250
 #: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:510
-#, fuzzy
-#| msgctxt "text-tool-action"
-#| msgid "_Delete"
 msgid "_Delete"
 msgstr "削除(_D)"
 
@@ -9722,8 +9719,6 @@ msgid "Path Color Tag: Clear"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:199
-#, fuzzy
-#| msgid "Blue"
 msgctxt "vectors-action"
 msgid "Blue"
 msgstr "青"
@@ -9734,8 +9729,6 @@ msgid "Path Color Tag: Set to Blue"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:205
-#, fuzzy
-#| msgid "Green"
 msgctxt "vectors-action"
 msgid "Green"
 msgstr "緑"
@@ -9746,8 +9739,6 @@ msgid "Path Color Tag: Set to Green"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:211
-#, fuzzy
-#| msgid "Yellow"
 msgctxt "vectors-action"
 msgid "Yellow"
 msgstr "イエロー"
@@ -9778,8 +9769,6 @@ msgid "Path Color Tag: Set to Brown"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:229
-#, fuzzy
-#| msgid "Red"
 msgctxt "vectors-action"
 msgid "Red"
 msgstr "赤"
@@ -9800,12 +9789,9 @@ msgid "Path Color Tag: Set to Violet"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:241
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgctxt "vectors-action"
 msgid "Gray"
-msgstr "グレースケール(_G)"
+msgstr "グレー"
 
 #: ../app/actions/vectors-actions.c:242
 #, fuzzy
@@ -13000,12 +12986,9 @@ msgid "Image resolution change"
 msgstr "解像度の変更"
 
 #: ../app/core/core-enums.c:1178
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Change Image Unit"
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr "画像単位の変更"
+msgstr "メタデータの変更"
 
 #: ../app/core/core-enums.c:1179
 msgctxt "undo-type"
@@ -13310,11 +13293,9 @@ msgid "Updating tag cache"
 msgstr "タグキャッシュを更新"
 
 #: ../app/core/gimp-edit.c:88
-#, fuzzy
-#| msgid "Text Layer"
 msgctxt "undo-type"
 msgid "Cut Layer"
-msgstr "テキストレイヤー"
+msgstr "レイヤーの切り取り"
 
 #: ../app/core/gimp-edit.c:327 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
@@ -13389,12 +13370,9 @@ msgid "tags-locale:C"
 msgstr "tags-locale:ja"
 
 #: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:414
-#, fuzzy, c-format
-#| msgid "Error reading '%s': %s"
+#, c-format
 msgid "Error closing '%s': %s"
-msgstr ""
-"'%s' の読み込み中にエラーが発生しました。\n"
-"%s"
+msgstr "'%s' を閉じるときにエラーが発生しました: %s"
 
 #: ../app/core/gimp-user-install.c:215
 #, c-format
@@ -13436,50 +13414,44 @@ msgid "No patterns available for this operation."
 msgstr "有効なパターンがありません。"
 
 #: ../app/core/gimpbrush-load.c:173
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': Width = 0."
+#, c-format
 msgid "Fatal parse error in brush file: Width = 0."
-msgstr "ブラシ '%s' で致命的な解析エラー: 幅が 0 です。"
+msgstr "ブラシで致命的な解析エラー: 幅が 0 です。"
 
 #: ../app/core/gimpbrush-load.c:180
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': Height = 0."
+#, c-format
 msgid "Fatal parse error in brush file: Height = 0."
-msgstr "ブラシ '%s' で致命的な解析エラー: 高さが 0 です。"
+msgstr "ブラシで致命的な解析エラー: 高さが 0 です。"
 
 #: ../app/core/gimpbrush-load.c:187
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': Bytes = 0."
+#, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
-msgstr "ブラシ '%s' で致命的な解析エラー: サイズが 0 バイトです。"
+msgstr "ブラシで致命的な解析エラー: サイズが 0 バイトです。"
 
 #: ../app/core/gimpbrush-load.c:196
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': Width = 0."
+#, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
-msgstr "ブラシ '%s' で致命的な解析エラー: 幅が 0 です。"
+msgstr "ブラシで致命的な解析エラー: 最大サイズを超えています (%dx%d)。"
 
 #: ../app/core/gimpbrush-load.c:222
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': Unknown depth %d."
+#, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
-msgstr "ブラシ '%s' で致命的な解析エラー: %d は不明な深度です。"
+msgstr "ブラシで致命的な解析エラー: %d は不明な深度です。"
 
 #: ../app/core/gimpbrush-load.c:234
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': Unknown version %d."
+#, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
-msgstr "ブラシ '%s' で致命的な解析エラー: %d は不明なバージョンです。"
+msgstr "ブラシで致命的な解析エラー: %d は不明なバージョンです。"
 
 #: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Unsupported brush format"
-msgstr ""
+msgstr "非サポートのブラシフォーマットです"
 
 #: ../app/core/gimpbrush-load.c:254
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr ""
+msgstr "'%s' に不適切なヘッダーデータがあります: ブラシ名が長すぎます: %lu"
 
 #: ../app/core/gimpbrush-load.c:272 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:70
@@ -13494,97 +13466,68 @@ msgid "Unnamed"
 msgstr "名前なし"
 
 #: ../app/core/gimpbrush-load.c:442
-#, fuzzy, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
-#| "GIMP brushes must be GRAY or RGBA."
+#, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
 "Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"ブラシファイル '%s' 中の致命的な解析エラー: 非サポートのブラシ深度 %d で"
-"す。\n"
-"GIMP ブラシは グレースケールか、RGBA でなければなりません。"
+"ブラシで致命的な解析エラー:\n"
+"非サポートのブラシ深度 %d です。\n"
+"GIMP ブラシはグレースケールか RGBA でなければなりません。"
 
 #: ../app/core/gimpbrush-load.c:519
-#, fuzzy, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': unable to decode abr format version "
-#| "%d."
+#, c-format
 msgid "Unable to decode abr format version %d."
-msgstr ""
-"ブラシ '%s' で致命的な解析エラー: abr フォーマットバージョン %d はデコードで"
-"きません。"
+msgstr "abr フォーマットバージョン %d はデコードできません。"
 
 #: ../app/core/gimpbrush-load.c:637 ../app/core/gimpbrush-load.c:856
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': File is corrupt."
+#, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
-msgstr ""
-"ブラシファイル '%s' の解析中に致命的なエラーが発生しました。そのファイルは壊"
-"れています。"
+msgstr "ブラシで致命的な解析エラー: ブラシサイズの値が壊れています。"
 
 #: ../app/core/gimpbrush-load.c:724 ../app/core/gimpbrush-load.c:914
-#, fuzzy, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': Wide brushes are not supported."
+#, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
-msgstr "ブラシ '%s' で致命的な解析エラー: ワイドブラシはサポートされません。"
+msgstr "ブラシで致命的な解析エラー: ブラシが大きすぎます。"
 
 #: ../app/core/gimpbrush-load.c:736
-#, fuzzy, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': Wide brushes are not supported."
+#, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
-msgstr "ブラシ '%s' で致命的な解析エラー: ワイドブラシはサポートされません。"
+msgstr "ブラシで致命的な解析エラー: ワイドブラシはサポートされません。"
 
 #: ../app/core/gimpbrush-load.c:885
-#, fuzzy
-#| msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgid "Fatal parse error in brush file: File appears truncated: "
-msgstr "ブラシ '%s' で致命的な解析エラー: ファイルが切り詰められています。"
+msgstr "ブラシで致命的な解析エラー: ファイルが切り詰められています: "
 
 #: ../app/core/gimpbrush-load.c:922
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': Unknown version %d."
+#, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
-msgstr "ブラシ '%s' で致命的な解析エラー: %d は不明なバージョンです。"
+msgstr "ブラシで致命的な解析エラー: 不明な圧縮方式です。"
 
 #: ../app/core/gimpbrush-load.c:1059
-#, fuzzy, c-format
-#| msgid ""
-#| "Fatal parse error in brush file '%s': unable to decode abr format version "
-#| "%d."
+#, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
-"ブラシ '%s' で致命的な解析エラー: abr フォーマットバージョン %d はデコードで"
-"きません。"
+"ブラシで致命的な解析エラー: abr フォーマットバージョン %d はデコードできません。"
 
 #: ../app/core/gimpbrush-load.c:1180 ../app/core/gimpbrush-load.c:1198
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': File is corrupt."
+#, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
-msgstr ""
-"ブラシファイル '%s' の解析中に致命的なエラーが発生しました。そのファイルは壊"
-"れています。"
+msgstr "ブラシで致命的な解析エラー: 連長圧縮されたブラシデータが壊れています。"
 
 #: ../app/core/gimpbrush.c:156 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
 msgstr "ブラシの間隔"
 
 #: ../app/core/gimpbrushclipboard.c:185
-#, fuzzy
-#| msgid "Clipboard"
 msgid "Clipboard Mask"
-msgstr "クリップボード"
+msgstr ""
 
 #: ../app/core/gimpbrushclipboard.c:187 ../app/core/gimppatternclipboard.c:163
-#, fuzzy
-#| msgid "Clipboard"
 msgid "Clipboard Image"
-msgstr "クリップボード"
+msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:76
 #, c-format
@@ -15226,11 +15169,9 @@ msgid "Move Selection"
 msgstr "選択範囲を移動"
 
 #: ../app/core/gimpselection.c:172
-#, fuzzy
-#| msgid "_Flip Selection"
 msgctxt "undo-type"
 msgid "Fill Selection"
-msgstr "選択範囲の反転(_F)"
+msgstr "選択範囲の境界線を塗りつぶす"
 
 #: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
@@ -15528,7 +15469,7 @@ msgstr "'%s' への書き込み中にエラーが発生しました: %s\n"
 #: ../app/core/gimptagcache.c:447
 #, c-format
 msgid "Error closing '%s': %s\n"
-msgstr ""
+msgstr "'%s' を閉じるときにエラーが発生しました: %s\n"
 
 #: ../app/core/gimptemplate.c:134
 msgid "Width"
@@ -18267,7 +18208,7 @@ msgstr "終了(_Q)"
 
 #: ../app/dialogs/quit-dialog.c:364
 msgid "Cl_ose"
-msgstr ""
+msgstr "閉じる(_O)"
 
 #: ../app/dialogs/quit-dialog.c:388
 #, c-format
@@ -21771,11 +21712,9 @@ msgid "Video"
 msgstr "ビデオ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4455
-#, fuzzy
-#| msgid "Invert"
 msgctxt "undo-type"
 msgid "Value Invert"
-msgstr "反転"
+msgstr "光度の反転"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4559
 msgctxt "undo-type"
@@ -22034,25 +21973,16 @@ msgid "invalid value '%ld' for icon type"
 msgstr "アイコン型として不適切な値 '%ld'"
 
 #: ../app/propgui/gimppropgui-channel-mixer.c:63
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Reorder channel"
 msgid "Red channel"
-msgstr "チャンネルの並び替え"
+msgstr "赤チャンネル"
 
 #: ../app/propgui/gimppropgui-channel-mixer.c:87
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Green channel"
-msgstr "新しいチャンネルの追加"
+msgstr "緑チャンネル"
 
 #: ../app/propgui/gimppropgui-channel-mixer.c:111
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Blue channel"
-msgstr "新しいチャンネルの追加"
+msgstr "青チャンネル"
 
 #: ../app/propgui/gimppropgui-color-balance.c:98
 msgid "Select Range to Adjust"
@@ -22122,9 +22052,6 @@ msgid "Invert Range"
 msgstr "チャンネルの反転"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:134
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Select All"
 msgid "Select All"
 msgstr "すべて選択"
 
@@ -24271,8 +24198,7 @@ msgstr "傾きの修正"
 #: ../app/tools/gimpmeasureoptions.c:175
 msgid "Rotate the active layer, selection or path by the measured angle"
 msgstr ""
-"アクティブレイヤー、選択範囲、またはパスをを計測した角度で回転して傾きを修正"
-"します"
+"アクティブレイヤー、選択範囲、またはパスを計測した角度で回転して傾きを修正します"
 
 #: ../app/tools/gimpmeasuretool.c:130
 msgid "Measure"
@@ -24832,12 +24758,10 @@ msgid "R_otate"
 msgstr "回転(_O)"
 
 #: ../app/tools/gimprotatetool.c:248
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Rotate by %-3.3g° around (%g, %g)"
+#, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g°"
-msgstr "回転 (角度: %-3.3g°中心座標: %g, %g)"
+msgstr "回転 (角度: %-3.3g°)"
 
 #: ../app/tools/gimprotatetool.c:254
 #, c-format
