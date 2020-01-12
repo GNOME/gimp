@@ -33,7 +33,12 @@
 #include <psapi.h>
 #define HAVE_CPU_GROUP
 #define HAVE_MEMORY_GROUP
-#else /* ! G_OS_WIN32 */
+#elif defined(PLATFORM_OSX)
+#include <mach/mach.h>
+#include <sys/times.h>
+#define HAVE_CPU_GROUP
+#define HAVE_MEMORY_GROUP
+#else /* ! G_OS_WIN32 && ! PLATFORM_OSX */
 #ifdef HAVE_SYS_TIMES_H
 #include <sys/times.h>
 #define HAVE_CPU_GROUP
@@ -2378,9 +2383,100 @@ gimp_dashboard_sample_cpu_active_time (GimpDashboard *dashboard,
 #endif /* HAVE_CPU_GROUP */
 
 #ifdef HAVE_MEMORY_GROUP
+#ifdef PLATFORM_OSX
+static void
+gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+                                   Variable       variable)
+{
+  GimpDashboardPrivate        *priv          = dashboard->priv;
+  VariableData                *variable_data = &priv->variables[variable];
 
-#ifndef G_OS_WIN32
+  variable_data->available = FALSE;
+#ifndef TASK_VM_INFO_REV0_COUNT /* phys_footprint added in REV1 */
+  struct mach_task_basic_info info;
+  mach_msg_type_number_t      infoCount      = MACH_TASK_BASIC_INFO_COUNT;
 
+  if( task_info(mach_task_self (), MACH_TASK_BASIC_INFO,
+                             (task_info_t)&info, &infoCount ) != KERN_SUCCESS )
+    return;      /* Can't access? */
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = info.resident_size;
+#else
+  task_vm_info_data_t         info;
+  mach_msg_type_number_t      infoCount      = TASK_VM_INFO_COUNT;
+
+  if( task_info(mach_task_self (), TASK_VM_INFO,
+                             (task_info_t)&info, &infoCount ) != KERN_SUCCESS )
+    return;      /* Can't access? */
+  variable_data->available  = TRUE;
+  variable_data->value.size = info.phys_footprint;
+#endif /* ! TASK_VM_INFO_REV0_COUNT */
+}
+
+static void
+gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+                                        Variable       variable)
+{
+  GimpDashboardPrivate        *priv          = dashboard->priv;
+  VariableData                *variable_data = &priv->variables[variable];
+  vm_statistics_data_t        info;
+  mach_msg_type_number_t      infoCount      = HOST_VM_INFO_COUNT;
+
+  variable_data->available = FALSE;
+
+
+  if( host_statistics(mach_host_self (), HOST_VM_INFO,
+                             (host_info_t)&info, &infoCount ) != KERN_SUCCESS )
+    return;      /* Can't access? */
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = info.free_count * PAGE_SIZE;
+}
+
+#elif defined(G_OS_WIN32)
+static void
+gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+                                   Variable       variable)
+{
+  GimpDashboardPrivate       *priv          = dashboard->priv;
+  VariableData               *variable_data = &priv->variables[variable];
+  PROCESS_MEMORY_COUNTERS_EX  pmc           = {};
+
+  variable_data->available = FALSE;
+
+  if (! GetProcessMemoryInfo (GetCurrentProcess (),
+                              (PPROCESS_MEMORY_COUNTERS) &pmc,
+                              sizeof (pmc)) ||
+      pmc.cb != sizeof (pmc))
+    {
+      return;
+    }
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = pmc.PrivateUsage;
+}
+
+static void
+gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+                                        Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  VariableData         *variable_data = &priv->variables[variable];
+  MEMORYSTATUSEX        ms;
+
+  variable_data->available = FALSE;
+
+  ms.dwLength = sizeof (ms);
+
+  if (! GlobalMemoryStatusEx (&ms))
+    return;
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = ms.ullAvailPhys;
+}
+
+#else /* ! G_OS_WIN32 && ! PLATFORM_OSX */
 static void
 gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
                                    Variable       variable)
@@ -2515,52 +2611,7 @@ gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
   variable_data->value.size = available;
 }
 
-#else /* G_OS_WIN32 */
-
-
-static void
-gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
-                                   Variable       variable)
-{
-  GimpDashboardPrivate       *priv          = dashboard->priv;
-  VariableData               *variable_data = &priv->variables[variable];
-  PROCESS_MEMORY_COUNTERS_EX  pmc           = {};
-
-  variable_data->available = FALSE;
-
-  if (! GetProcessMemoryInfo (GetCurrentProcess (),
-                              (PPROCESS_MEMORY_COUNTERS) &pmc,
-                              sizeof (pmc)) ||
-      pmc.cb != sizeof (pmc))
-    {
-      return;
-    }
-
-  variable_data->available  = TRUE;
-  variable_data->value.size = pmc.PrivateUsage;
-}
-
-static void
-gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
-                                        Variable       variable)
-{
-  GimpDashboardPrivate *priv          = dashboard->priv;
-  VariableData         *variable_data = &priv->variables[variable];
-  MEMORYSTATUSEX        ms;
-
-  variable_data->available = FALSE;
-
-  ms.dwLength = sizeof (ms);
-
-  if (! GlobalMemoryStatusEx (&ms))
-    return;
-
-  variable_data->available  = TRUE;
-  variable_data->value.size = ms.ullAvailPhys;
-}
-
-
-#endif /* G_OS_WIN32 */
+#endif
 
 static void
 gimp_dashboard_sample_memory_size (GimpDashboard *dashboard,
