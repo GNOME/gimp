@@ -31,8 +31,6 @@
 
 #include "display-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimpscalecombobox.h"
 
 
@@ -87,8 +85,7 @@ gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpScaleComboBoxClass, entry_activated),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->constructed = gimp_scale_combo_box_constructed;

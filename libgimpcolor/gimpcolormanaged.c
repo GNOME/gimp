@@ -64,8 +64,7 @@ gimp_color_managed_default_init (GimpColorManagedInterface *iface)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorManagedInterface,
                                    profile_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
 

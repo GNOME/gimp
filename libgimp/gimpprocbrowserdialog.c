@@ -122,8 +122,7 @@ gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpProcBrowserDialogClass,
                                    selection_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   /**
@@ -138,8 +137,7 @@ gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpProcBrowserDialogClass,
                                    row_activated),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   klass->selection_changed = NULL;

@@ -142,8 +142,7 @@ gimp_colormap_selection_class_init (GimpColormapSelectionClass* klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColormapSelectionClass, color_context),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
   signals[COLOR_CLICKED] =
@@ -161,8 +160,7 @@ gimp_colormap_selection_class_init (GimpColormapSelectionClass* klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColormapSelectionClass, color_activated),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 

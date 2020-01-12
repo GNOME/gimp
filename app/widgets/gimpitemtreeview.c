@@ -39,7 +39,6 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem-exclusive.h"
 #include "core/gimpitemundo.h"
-#include "core/gimpmarshal.h"
 #include "core/gimptreehandler.h"
 #include "core/gimpundostack.h"
 
@@ -241,8 +240,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpItemTreeViewClass, set_image),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_OBJECT);
 

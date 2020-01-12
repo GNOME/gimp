@@ -29,7 +29,6 @@
 
 #include "core/gimpextension.h"
 #include "core/gimpextensionmanager.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpextensionlist.h"
 
@@ -91,8 +90,7 @@ gimp_extension_list_class_init (GimpExtensionListClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpExtensionListClass, extension_activated),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_OBJECT);
 }

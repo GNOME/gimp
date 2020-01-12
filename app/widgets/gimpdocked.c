@@ -28,7 +28,6 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpdocked.h"
 #include "gimpsessioninfo-aux.h"
@@ -65,8 +64,7 @@ gimp_docked_default_init (GimpDockedInterface *iface)
                   GIMP_TYPE_DOCKED,
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockedInterface, title_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   iface->get_aux_info = gimp_docked_iface_get_aux_info;

@@ -35,7 +35,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpcursor.h"
 #include "gimpdialogfactory.h"
@@ -126,8 +125,7 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_window_added),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK_WINDOW);
 
@@ -136,8 +134,7 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_window_removed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK_WINDOW);
 }
