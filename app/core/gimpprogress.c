@@ -58,8 +58,7 @@ gimp_progress_default_init (GimpProgressInterface *progress_iface)
                   G_TYPE_FROM_INTERFACE (progress_iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProgressInterface, cancel),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
 

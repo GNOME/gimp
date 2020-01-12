@@ -36,7 +36,6 @@
 #include "gimpbrushcache.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
-#include "gimpmarshal.h"
 #include "gimptagged.h"
 #include "gimptempbuf.h"
 
@@ -121,8 +120,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpBrushClass, spacing_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->finalize            = gimp_brush_finalize;

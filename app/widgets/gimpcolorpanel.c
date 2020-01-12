@@ -94,8 +94,7 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpColorPanelClass, response),
-                  NULL, NULL,
-                  gimp_marshal_VOID__ENUM,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_COLOR_DIALOG_STATE);
 }

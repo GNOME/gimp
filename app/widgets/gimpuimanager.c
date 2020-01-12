@@ -32,7 +32,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpaction.h"
 #include "gimpactiongroup.h"
@@ -144,8 +143,7 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpUIManagerClass, update),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
@@ -154,8 +152,7 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpUIManagerClass, show_tooltip),
-                  NULL, NULL,
-                  gimp_marshal_VOID__STRING,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
@@ -164,8 +161,7 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpUIManagerClass, hide_tooltip),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0,
                   G_TYPE_NONE);
 

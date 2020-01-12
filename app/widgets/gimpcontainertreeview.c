@@ -179,8 +179,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpContainerTreeViewClass, edit_name),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   binding_set = gtk_binding_set_by_class (klass);

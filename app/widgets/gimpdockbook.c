@@ -35,7 +35,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpactiongroup.h"
 #include "gimpdialogfactory.h"
@@ -149,8 +148,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockbookClass, dockable_added),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKABLE);
 
@@ -159,8 +157,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockbookClass, dockable_removed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKABLE);
 
@@ -169,8 +166,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockbookClass, dockable_reordered),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKABLE);
 

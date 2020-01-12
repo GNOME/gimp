@@ -129,8 +129,7 @@ gimp_tool_gui_class_init (GimpToolGuiClass *klass)
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpToolGuiClass, response),
-                  NULL, NULL,
-                  gimp_marshal_VOID__INT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
 }

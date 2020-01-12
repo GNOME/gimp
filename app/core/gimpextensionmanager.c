@@ -208,8 +208,7 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpExtensionManagerClass, extension_removed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__STRING,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 }

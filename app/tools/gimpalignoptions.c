@@ -26,8 +26,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimpalignoptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -82,8 +80,7 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpAlignOptionsClass,
                                    align_button_clicked),
-                  NULL, NULL,
-                  gimp_marshal_VOID__ENUM,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_ALIGNMENT_TYPE);
 

@@ -124,8 +124,7 @@ gimp_color_transform_class_init (GimpColorTransformClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorTransformClass,
                                    progress),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__DOUBLE,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_DOUBLE);
 

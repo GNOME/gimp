@@ -469,8 +469,7 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpToolRectangleClass, change_complete),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   g_object_class_install_property (object_class, PROP_X1,

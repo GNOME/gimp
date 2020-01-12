@@ -29,7 +29,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
@@ -139,8 +138,7 @@ gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockColumnsClass, dock_added),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK);
 
@@ -149,8 +147,7 @@ gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockColumnsClass, dock_removed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK);
 }

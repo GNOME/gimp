@@ -164,8 +164,7 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorSelectionClass, color_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelection");
