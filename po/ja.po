@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-01-10 21:22+0000\n"
+"POT-Creation-Date: 2020-01-11 23:05+0000\n"
 "PO-Revision-Date: 2020-01-12 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -3298,7 +3298,7 @@ msgstr "240秒"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:342
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1130
+#: ../app/tools/gimptransformgridtool.c:1132
 #: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:662
@@ -8213,7 +8213,7 @@ msgstr "全フィルターのリセット"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:341 ../app/tools/gimptransformgridtool.c:1127
+#: ../app/tools/gimpfiltertool.c:341 ../app/tools/gimptransformgridtool.c:1129
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -15372,40 +15372,47 @@ msgstr "アクティブ"
 msgid "Activate symmetry painting"
 msgstr ""
 
-#: ../app/core/gimpsymmetry-mandala.c:113
+#: ../app/core/gimpsymmetry-mandala.c:114
 msgid "Mandala"
 msgstr ""
 
-#: ../app/core/gimpsymmetry-mandala.c:120
+#: ../app/core/gimpsymmetry-mandala.c:121
 #, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Center lines"
 msgid "Center abscissa"
 msgstr "センターライン"
 
-#: ../app/core/gimpsymmetry-mandala.c:132
+#: ../app/core/gimpsymmetry-mandala.c:133
 #, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Center lines"
 msgid "Center ordinate"
 msgstr "センターライン"
 
-#: ../app/core/gimpsymmetry-mandala.c:144
+#: ../app/core/gimpsymmetry-mandala.c:145
 #, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Number of lines"
 msgid "Number of points"
 msgstr "グリッド線の数を指定"
 
-#: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:151
+#: ../app/core/gimpsymmetry-mandala.c:153 ../app/core/gimpsymmetry-mirror.c:151
 #, fuzzy
 #| msgid "Cage transform"
 msgid "Disable brush transform"
 msgstr "ケージ変形"
 
-#: ../app/core/gimpsymmetry-mandala.c:153
+#: ../app/core/gimpsymmetry-mandala.c:154
 msgid "Disable brush rotation"
 msgstr ""
+
+#: ../app/core/gimpsymmetry-mandala.c:161
+#: ../app/core/gimpsymmetry-mandala.c:162
+#, fuzzy
+#| msgid "Save selection"
+msgid "Enable reflection"
+msgstr "選択範囲を保存"
 
 #: ../app/core/gimpsymmetry-mirror.c:120
 msgid "Mirror"
@@ -24264,7 +24271,8 @@ msgstr "傾きの修正"
 #: ../app/tools/gimpmeasureoptions.c:175
 msgid "Rotate the active layer, selection or path by the measured angle"
 msgstr ""
-"アクティブレイヤー、選択範囲、またはパスをを計測した角度で回転して傾きを修正します"
+"アクティブレイヤー、選択範囲、またはパスをを計測した角度で回転して傾きを修正"
+"します"
 
 #: ../app/tools/gimpmeasuretool.c:130
 msgid "Measure"
@@ -25392,16 +25400,16 @@ msgstr "変形(_T)"
 msgid "Transform Step"
 msgstr "アイテムの変形"
 
-#: ../app/tools/gimptransformgridtool.c:906
+#: ../app/tools/gimptransformgridtool.c:908
 #, c-format
 msgid "%s (Corrective)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridtool.c:1129
+#: ../app/tools/gimptransformgridtool.c:1131
 msgid "Re_adjust"
 msgstr "再調整(_A)"
 
-#: ../app/tools/gimptransformgridtool.c:1377
+#: ../app/tools/gimptransformgridtool.c:1379
 #, fuzzy
 #| msgid "Handle transformation"
 msgid "Cannot readjust the transformation"
