@@ -263,7 +263,11 @@ print_image (gint32     image_ID,
   if (interactive)
     {
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
+#ifdef GDK_WINDOWING_QUARTZ
+      GtkWidget * printwindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+      gimp_window_set_transient (GTK_WINDOW (printwindow));
+      gtk_widget_show(printwindow);
+#endif
       g_signal_connect_swapped (operation, "end-print",
                                 G_CALLBACK (print_settings_save),
                                 &data);
