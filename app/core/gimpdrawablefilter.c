@@ -77,6 +77,7 @@ struct _GimpDrawableFilter
   GimpLayerColorSpace     blend_space;
   GimpLayerColorSpace     composite_space;
   GimpLayerCompositeMode  composite_mode;
+  gboolean                add_alpha;
   gboolean                color_managed;
   gboolean                gamma_hack;
 
@@ -420,6 +421,23 @@ gimp_drawable_filter_set_mode (GimpDrawableFilter     *filter,
 }
 
 void
+gimp_drawable_filter_set_add_alpha (GimpDrawableFilter *filter,
+                                    gboolean            add_alpha)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (add_alpha != filter->add_alpha)
+    {
+      filter->add_alpha = add_alpha;
+
+      gimp_drawable_filter_sync_format (filter);
+
+      if (gimp_drawable_filter_is_filtering (filter))
+        gimp_drawable_filter_update_drawable (filter, NULL);
+    }
+}
+
+void
 gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter *filter,
                                      gboolean            gamma_hack)
 {
@@ -466,6 +484,10 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
 
   if (gimp_drawable_filter_is_filtering (filter))
     {
+      const Babl *format;
+
+      format = gimp_applicator_get_output_format (filter->applicator);
+
       gimp_drawable_filter_set_preview (filter, FALSE,
                                         filter->preview_alignment,
                                         filter->preview_position);
@@ -474,6 +496,7 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
                                             GIMP_FILTER (filter),
                                             progress,
                                             gimp_object_get_name (filter),
+                                            format,
                                             filter->filter_clip,
                                             cancellable,
                                             FALSE);
@@ -770,9 +793,14 @@ gimp_drawable_filter_sync_affect (GimpDrawableFilter *filter)
 static void
 gimp_drawable_filter_sync_format (GimpDrawableFilter *filter)
 {
-  gimp_applicator_set_output_format (
-    filter->applicator,
-    gimp_drawable_get_format (filter->drawable));
+  const Babl *format;
+
+  if (filter->add_alpha && GIMP_IS_LAYER (filter->drawable))
+    format = gimp_drawable_get_format_with_alpha (filter->drawable);
+  else
+    format = gimp_drawable_get_format (filter->drawable);
+
+  gimp_applicator_set_output_format (filter->applicator, format);
 }
 
 static void

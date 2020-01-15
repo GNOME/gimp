@@ -73,6 +73,8 @@ void       gimp_drawable_filter_set_mode       (GimpDrawableFilter  *filter,
                                                 GimpLayerColorSpace  blend_space,
                                                 GimpLayerColorSpace  composite_space,
                                                 GimpLayerCompositeMode composite_mode);
+void       gimp_drawable_filter_set_add_alpha  (GimpDrawableFilter  *filter,
+                                                gboolean             add_alpha);
 
 void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter  *filter,
                                                 gboolean             gamma_hack);
