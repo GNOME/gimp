@@ -111,6 +111,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                             GimpFilter   *filter,
                             GimpProgress *progress,
                             const gchar  *undo_desc,
+                            const Babl   *format,
                             gboolean      clip,
                             gboolean      cancellable,
                             gboolean      update)
@@ -121,7 +122,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
   const Babl     *applicator_output_format = NULL;
   GeglBuffer     *buffer                   = NULL;
   GeglBuffer     *dest_buffer;
-  GeglBuffer     *undo_buffer;
+  GeglBuffer     *undo_buffer              = NULL;
   GeglRectangle   undo_rect;
   GeglBuffer     *cache                    = NULL;
   GeglRectangle  *rects                    = NULL;
@@ -136,6 +137,9 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
   image       = gimp_item_get_image (GIMP_ITEM (drawable));
   applicator  = gimp_filter_get_applicator (filter);
   dest_buffer = gimp_drawable_get_buffer (drawable);
+
+  if (format == gimp_drawable_get_format (drawable))
+    format = NULL;
 
   rect = gegl_node_get_bounding_box (gimp_filter_get_node (filter));
 
@@ -153,11 +157,19 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
         {
           return TRUE;
         }
+
+      if (format)
+        {
+          buffer = gegl_buffer_new (gegl_buffer_get_extent (dest_buffer),
+                                    format);
+
+          dest_buffer = buffer;
+        }
     }
   else
     {
       buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
-                                gimp_drawable_get_format (drawable));
+                                format);
 
       dest_buffer = g_object_new (GEGL_TYPE_BUFFER,
                                   "source",  buffer,
@@ -193,7 +205,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
         gimp_applicator_set_output_format (applicator, NULL);
     }
 
-  if (clip)
+  if (! buffer)
     {
       gegl_rectangle_align_to_buffer (
         &undo_rect,
@@ -231,9 +243,19 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
       if (clip)
         {
-          gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
-                                   undo_rect.x, undo_rect.y,
-                                   undo_rect.width, undo_rect.height);
+          if (buffer)
+            {
+              gimp_drawable_set_buffer_full (drawable,
+                                             TRUE, undo_desc,
+                                             buffer, NULL,
+                                             FALSE);
+            }
+          else
+            {
+              gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
+                                       undo_rect.x, undo_rect.y,
+                                       undo_rect.width, undo_rect.height);
+            }
         }
       else
         {
@@ -289,7 +311,8 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
   if (clip)
     {
-      g_object_unref (undo_buffer);
+      g_clear_object (&undo_buffer);
+      g_clear_object (&buffer);
     }
   else
     {
