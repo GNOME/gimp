@@ -921,15 +921,7 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
 static GeglRectangle
 gimp_drawable_real_get_bounding_box (GimpDrawable *drawable)
 {
-  GimpItem      *item = GIMP_ITEM (drawable);
-  GeglRectangle  bounding_box;
-
-  bounding_box.x      = 0;
-  bounding_box.y      = 0;
-  bounding_box.width  = gimp_item_get_width  (item);
-  bounding_box.height = gimp_item_get_height (item);
-
-  return bounding_box;
+  return gegl_node_get_bounding_box (gimp_drawable_get_source_node (drawable));
 }
 
 static void
