@@ -38,6 +38,7 @@ gimp_matrix3_is_identity
 gimp_matrix3_is_diagonal
 gimp_matrix3_is_affine
 gimp_matrix3_is_simple
+gimp_matrix3_equal
 gimp_matrix4_identity
 gimp_matrix4_mult
 gimp_matrix4_to_deg
