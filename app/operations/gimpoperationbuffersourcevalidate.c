@@ -56,9 +56,9 @@ static gboolean       gimp_operation_buffer_source_validate_process          (Ge
                                                                               const GeglRectangle               *result,
                                                                               gint                               level);
 
-static void           gimp_operation_buffer_source_validate_buffer_changed   (GeglBuffer                        *buffer,
+static void           gimp_operation_buffer_source_validate_invalidate       (gpointer                           object,
                                                                               const GeglRectangle               *rect,
-                                                                              gpointer                           data);
+                                                                              GimpOperationBufferSourceValidate *buffer_source_validate);
 
 
 G_DEFINE_TYPE (GimpOperationBufferSourceValidate, gimp_operation_buffer_source_validate,
@@ -110,9 +110,23 @@ gimp_operation_buffer_source_validate_dispose (GObject *object)
 
   if (buffer_source_validate->buffer)
     {
+      GimpTileHandlerValidate *validate_handler;
+
+      validate_handler = gimp_tile_handler_validate_get_assigned (
+        buffer_source_validate->buffer);
+
+      if (validate_handler)
+        {
+          g_signal_connect (
+            validate_handler,
+            "invalidated",
+            G_CALLBACK (gimp_operation_buffer_source_validate_invalidate),
+            buffer_source_validate);
+        }
+
       g_signal_handlers_disconnect_by_func (
         buffer_source_validate->buffer,
-        gimp_operation_buffer_source_validate_buffer_changed,
+        gimp_operation_buffer_source_validate_invalidate,
         buffer_source_validate);
 
       g_clear_object (&buffer_source_validate->buffer);
@@ -155,15 +169,28 @@ gimp_operation_buffer_source_validate_set_property (GObject      *object,
       {
         if (buffer_source_validate->buffer)
           {
-            gimp_operation_buffer_source_validate_buffer_changed (
+            GimpTileHandlerValidate *validate_handler;
+
+            validate_handler = gimp_tile_handler_validate_get_assigned (
+              buffer_source_validate->buffer);
+
+            gimp_operation_buffer_source_validate_invalidate (
               buffer_source_validate->buffer,
               gegl_buffer_get_extent (buffer_source_validate->buffer),
               buffer_source_validate);
 
             g_signal_handlers_disconnect_by_func (
               buffer_source_validate->buffer,
-              G_CALLBACK (gimp_operation_buffer_source_validate_buffer_changed),
+              gimp_operation_buffer_source_validate_invalidate,
               buffer_source_validate);
+
+            if (validate_handler)
+              {
+                g_signal_handlers_disconnect_by_func (
+                  validate_handler,
+                  gimp_operation_buffer_source_validate_invalidate,
+                  buffer_source_validate);
+              }
 
             g_clear_object (&buffer_source_validate->buffer);
           }
@@ -172,13 +199,27 @@ gimp_operation_buffer_source_validate_set_property (GObject      *object,
 
         if (buffer_source_validate->buffer)
           {
+            GimpTileHandlerValidate *validate_handler;
+
+            validate_handler = gimp_tile_handler_validate_get_assigned (
+              buffer_source_validate->buffer);
+
+            if (validate_handler)
+              {
+                g_signal_connect (
+                  validate_handler,
+                  "invalidated",
+                  G_CALLBACK (gimp_operation_buffer_source_validate_invalidate),
+                  buffer_source_validate);
+              }
+
             gegl_buffer_signal_connect (
               buffer_source_validate->buffer,
               "changed",
-              G_CALLBACK (gimp_operation_buffer_source_validate_buffer_changed),
+              G_CALLBACK (gimp_operation_buffer_source_validate_invalidate),
               buffer_source_validate);
 
-            gimp_operation_buffer_source_validate_buffer_changed (
+            gimp_operation_buffer_source_validate_invalidate (
               buffer_source_validate->buffer,
               gegl_buffer_get_extent (buffer_source_validate->buffer),
               buffer_source_validate);
@@ -257,12 +298,10 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
 }
 
 static void
-gimp_operation_buffer_source_validate_buffer_changed (GeglBuffer          *buffer,
-                                                      const GeglRectangle *rect,
-                                                      gpointer             data)
+gimp_operation_buffer_source_validate_invalidate (gpointer                           object,
+                                                  const GeglRectangle               *rect,
+                                                  GimpOperationBufferSourceValidate *buffer_source_validate)
 {
-  GimpOperationBufferSourceValidate *buffer_source_validate = GIMP_OPERATION_BUFFER_SOURCE_VALIDATE (data);
-
   gegl_operation_invalidate (GEGL_OPERATION (buffer_source_validate),
                              rect, FALSE);
 }
