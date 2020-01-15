@@ -251,6 +251,8 @@ gimp_matrix2_mult (const GimpMatrix2 *matrix1,
  * Calculates the determinant of the given matrix.
  *
  * Returns: The determinant.
+ *
+ * Since: 2.10.16
  */
 
 gdouble
@@ -265,6 +267,8 @@ gimp_matrix2_determinant (const GimpMatrix2 *matrix)
  * @matrix: The matrix that is to be inverted.
  *
  * Inverts the given matrix.
+ *
+ * Since: 2.10.16
  */
 void
 gimp_matrix2_invert (GimpMatrix2 *matrix)
@@ -292,6 +296,8 @@ gimp_matrix2_invert (GimpMatrix2 *matrix)
  * @newy: The transformed Y coordinate.
  *
  * Transforms a point in 2D as specified by the transformation matrix.
+ *
+ * Since: 2.10.16
  */
 void
 gimp_matrix2_transform_point (const GimpMatrix2 *matrix,
@@ -890,6 +896,8 @@ gimp_matrix3_is_simple (const GimpMatrix3 *matrix)
  * @matrix: A matrix.
  *
  * Sets the matrix to the identity matrix.
+ *
+ * Since: 2.10.16
  */
 void
 gimp_matrix4_identity (GimpMatrix4 *matrix)
@@ -909,6 +917,8 @@ gimp_matrix4_identity (GimpMatrix4 *matrix)
  * @matrix2: The second input matrix which will be overwritten by the result.
  *
  * Multiplies two matrices and puts the result into the second one.
+ *
+ * Since: 2.10.16
  */
 void
 gimp_matrix4_mult (const GimpMatrix4 *matrix1,
@@ -962,6 +972,8 @@ gimp_matrix4_to_deg (const GimpMatrix4 *matrix,
  * Transforms a point in 3D as specified by the transformation matrix.
  *
  * Returns: The transformed W coordinate.
+ *
+ * Since: 2.10.16
  */
 gdouble
 gimp_matrix4_transform_point (const GimpMatrix4 *matrix,
