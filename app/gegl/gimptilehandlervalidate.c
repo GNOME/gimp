@@ -374,8 +374,16 @@ gimp_tile_handler_validate_validate_tile (GeglTileSource *source,
       for (i = 0; i < n_rects; i++)
         {
           cairo_rectangle_int_t blit_rect;
+          gint                  tile_x;
+          gint                  tile_y;
 
           cairo_region_get_rectangle (tile_region, i, &blit_rect);
+
+          tile_x = blit_rect.x % validate->tile_width;
+          if (tile_x < 0) tile_x += validate->tile_width;
+
+          tile_y = blit_rect.y % validate->tile_height;
+          if (tile_y < 0) tile_y += validate->tile_height;
 
           GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->validate
             (validate,
@@ -385,8 +393,8 @@ gimp_tile_handler_validate_validate_tile (GeglTileSource *source,
                              blit_rect.height),
              validate->format,
              gegl_tile_get_data (tile) +
-             (blit_rect.y % validate->tile_height) * tile_stride +
-             (blit_rect.x % validate->tile_width)  * tile_bpp,
+             tile_y * tile_stride      +
+             tile_x * tile_bpp,
              tile_stride);
         }
 
