@@ -45,28 +45,29 @@ typedef struct _GimpTransformGridToolClass GimpTransformGridToolClass;
 
 struct _GimpTransformGridTool
 {
-  GimpTransformTool  parent_instance;
+  GimpTransformTool   parent_instance;
 
-  TransInfo          init_trans_info;  /*  initial transformation info           */
-  TransInfo          trans_infos[2];   /*  forward/backward transformation info  */
-  gdouble           *trans_info;       /*  current transformation info           */
-  GList             *undo_list;        /*  list of all states,
-                                           head is current == prev_trans_info,
-                                           tail is original == old_trans_info    */
-  GList             *redo_list;        /*  list of all undone states,
-                                           NULL when nothing undone */
+  TransInfo           init_trans_info;  /*  initial transformation info           */
+  TransInfo           trans_infos[2];   /*  forward/backward transformation info  */
+  gdouble            *trans_info;       /*  current transformation info           */
+  GList              *undo_list;        /*  list of all states,
+                                            head is current == prev_trans_info,
+                                            tail is original == old_trans_info    */
+  GList              *redo_list;        /*  list of all undone states,
+                                            NULL when nothing undone */
 
-  GimpObject        *hidden_object;    /*  the object that was hidden during
-                                           the transform                         */
+  GimpObject         *hidden_object;    /*  the object that was hidden during
+                                            the transform                         */
 
-  GimpToolWidget    *widget;
-  GimpToolWidget    *grab_widget;
-  GimpCanvasItem    *preview;
-  GimpCanvasItem    *boundary_in;
-  GimpCanvasItem    *boundary_out;
-  GPtrArray         *strokes;
+  GimpToolWidget     *widget;
+  GimpToolWidget     *grab_widget;
+  GHashTable         *filters;
+  GimpCanvasItem     *preview;
+  GimpCanvasItem     *boundary_in;
+  GimpCanvasItem     *boundary_out;
+  GPtrArray          *strokes;
 
-  GimpToolGui       *gui;
+  GimpToolGui        *gui;
 };
 
 struct _GimpTransformGridToolClass
