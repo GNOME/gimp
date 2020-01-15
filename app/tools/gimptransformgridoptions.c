@@ -49,6 +49,7 @@ enum
   PROP_DIRECTION,
   PROP_DIRECTION_LINKED,
   PROP_SHOW_PREVIEW,
+  PROP_COMPOSITED_PREVIEW,
   PROP_PREVIEW_OPACITY,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
@@ -108,6 +109,13 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
                             _("Show image preview"),
                             _("Show a preview of the transformed image"),
                             TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COMPOSITED_PREVIEW,
+                            "composited-preview",
+                            _("Composited preview"),
+                            _("Show preview as part of the image composition"),
+                            FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PREVIEW_OPACITY,
@@ -227,6 +235,9 @@ gimp_transform_grid_options_set_property (GObject      *object,
     case PROP_SHOW_PREVIEW:
       options->show_preview = g_value_get_boolean (value);
       break;
+    case PROP_COMPOSITED_PREVIEW:
+      options->composited_preview = g_value_get_boolean (value);
+      break;
     case PROP_PREVIEW_OPACITY:
       options->preview_opacity = g_value_get_double (value);
       break;
@@ -292,6 +303,9 @@ gimp_transform_grid_options_get_property (GObject    *object,
     case PROP_SHOW_PREVIEW:
       g_value_set_boolean (value, options->show_preview);
       break;
+    case PROP_COMPOSITED_PREVIEW:
+      g_value_set_boolean (value, options->composited_preview);
+      break;
     case PROP_PREVIEW_OPACITY:
       g_value_set_double (value, options->preview_opacity);
       break;
@@ -351,6 +365,8 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   GObject                    *config = G_OBJECT (tool_options);
   GimpTransformGridToolClass *tg_class;
   GtkWidget                  *vbox;
+  GtkWidget                  *vbox2;
+  GtkWidget                  *button;
   GtkWidget                  *frame;
   GtkWidget                  *combo;
   GtkWidget                  *scale;
@@ -366,9 +382,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   if (tg_class->matrix_to_info)
     {
       GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (tool_options);
-      GtkWidget            *vbox2;
       GtkWidget            *hbox;
-      GtkWidget            *button;
 
       vbox2 = gtk_bin_get_child (GTK_BIN (tr_options->direction_frame));
       g_object_ref (vbox2);
@@ -396,11 +410,25 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   g_type_class_unref (tg_class);
 
   /*  the preview frame  */
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+
+  button = gimp_prop_check_button_new (config, "composited-preview", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   scale = gimp_prop_spin_scale_new (config, "preview-opacity", NULL,
                                     0.01, 0.1, 0);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  g_object_bind_property (config, "composited-preview",
+                          scale,  "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
+
   frame = gimp_prop_expanding_frame_new (config, "show-preview", NULL,
-                                         scale, NULL);
+                                         vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -431,8 +459,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
     {
-      GtkWidget *button;
-      gchar     *label;
+      gchar *label;
 
       label = g_strdup_printf (_("15 degrees (%s)"),
                                gimp_get_mod_string (extend_mask));
@@ -448,8 +475,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
     }
   else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
     {
-      GtkWidget *button;
-      gchar     *label;
+      gchar *label;
 
       label = g_strdup_printf (_("Keep aspect (%s)"),
                                gimp_get_mod_string (extend_mask));
@@ -477,8 +503,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
     }
   else if (tool_options->tool_info->tool_type == GIMP_TYPE_PERSPECTIVE_TOOL)
     {
-      GtkWidget *button;
-      gchar     *label;
+      gchar *label;
 
       label = g_strdup_printf (_("Constrain handles (%s)"),
                                gimp_get_mod_string (extend_mask));
@@ -546,9 +571,8 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
           N_("Lock pivot position to canvas") },
       };
 
-      GtkWidget *button;
-      gchar     *label;
-      gint       i;
+      gchar *label;
+      gint   i;
 
       frame = NULL;
 
