@@ -71,7 +71,7 @@ static gboolean  gimp_window_set_transient_for  (GtkWindow         *window,
                                                  GdkWindow         *parent);
 
 #ifdef GDK_WINDOWING_QUARTZ
-static void      gimp_osx_focus_window          (void);
+static gboolean  gimp_osx_focus_window          (gpointer);
 #endif
 
 
@@ -168,7 +168,7 @@ gimp_ui_init (const gchar *prog_name)
   gimp_dialogs_show_help_button (gimp_show_help_button ());
 
 #ifdef GDK_WINDOWING_QUARTZ
-  g_idle_add ((GSourceFunc) gimp_osx_focus_window, NULL);
+  g_idle_add (gimp_osx_focus_window, NULL);
 #endif
 
   gimp_ui_initialized = TRUE;
@@ -444,9 +444,10 @@ gimp_window_set_transient_for (GtkWindow *window,
 }
 
 #ifdef GDK_WINDOWING_QUARTZ
-static void
-gimp_osx_focus_window (void)
+static gboolean
+gimp_osx_focus_window (gpointer user_data)
 {
   [NSApp activateIgnoringOtherApps:YES];
+  return FALSE;
 }
 #endif
