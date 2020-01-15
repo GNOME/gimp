@@ -511,6 +511,9 @@ gimp_tile_handler_validate_validate (GimpTileHandlerValidate *validate,
 
   klass = GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate);
 
+  if (! rect)
+    rect = gegl_buffer_get_extent (buffer);
+
   if (intersect)
     {
       cairo_region_t *region = cairo_region_copy (validate->dirty_region);
