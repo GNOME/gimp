@@ -1522,12 +1522,25 @@ gimp_layer_set_buffer (GimpDrawable        *drawable,
 static GeglRectangle
 gimp_layer_get_bounding_box (GimpDrawable *drawable)
 {
-  GimpLayer *layer = GIMP_LAYER (drawable);
+  GimpLayer     *layer        = GIMP_LAYER (drawable);
+  GimpLayerMask *mask         = gimp_layer_get_mask (layer);
+  GeglRectangle  bounding_box;
 
-  if (gimp_layer_get_mask (layer))
-    return GIMP_DRAWABLE_CLASS (parent_class)->get_bounding_box (drawable);
+  bounding_box = GIMP_DRAWABLE_CLASS (parent_class)->get_bounding_box (
+    drawable);
 
-  return gegl_node_get_bounding_box (gimp_drawable_get_source_node (drawable));
+  if (mask && gimp_layer_get_apply_mask (layer))
+    {
+      GeglRectangle mask_bounding_box;
+
+      mask_bounding_box = gimp_drawable_get_bounding_box (
+        GIMP_DRAWABLE (mask));
+
+      gegl_rectangle_intersect (&bounding_box,
+                                &bounding_box, &mask_bounding_box);
+    }
+
+  return bounding_box;
 }
 
 static GimpColorProfile *
@@ -2291,6 +2304,8 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
               gegl_node_disconnect (mode_node, "aux2");
             }
         }
+
+      gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
 
       gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
 
