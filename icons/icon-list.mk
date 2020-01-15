@@ -814,9 +814,9 @@ icons16_images = \
 	16/gimp-tool-zoom.png					\
 	16/gimp-tools.png					\
 	16/gimp-transparency.png				\
-	16/gimp-transform-3d-camera.svg				\
-	16/gimp-transform-3d-move.svg				\
-	16/gimp-transform-3d-rotate.svg				\
+	16/gimp-transform-3d-camera.png				\
+	16/gimp-transform-3d-move.png				\
+	16/gimp-transform-3d-rotate.png				\
 	16/gimp-undo-history.png				\
 	16/gimp-user-manual.png					\
 	16/gimp-video.png					\
