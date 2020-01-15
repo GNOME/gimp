@@ -56,6 +56,11 @@ struct _GimpTileHandlerValidateClass
 {
   GeglTileHandlerClass  parent_class;
 
+  /*  signals  */
+  void (* invalidated)     (GimpTileHandlerValidate *validate,
+                            const GeglRectangle     *rect);
+
+  /*  virtual functions  */
   void (* begin_validate)  (GimpTileHandlerValidate *validate);
   void (* end_validate)    (GimpTileHandlerValidate *validate);
   void (* validate)        (GimpTileHandlerValidate *validate,

@@ -22,10 +22,18 @@
 
 #include "gimp-gegl-types.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimp-gegl-loops.h"
 #include "gimp-gegl-utils.h"
 #include "gimptilehandlervalidate.h"
 
+
+enum
+{
+  INVALIDATED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -71,11 +79,23 @@ G_DEFINE_TYPE (GimpTileHandlerValidate, gimp_tile_handler_validate,
 
 #define parent_class gimp_tile_handler_validate_parent_class
 
+static guint gimp_tile_handler_validate_signals[LAST_SIGNAL];
+
 
 static void
 gimp_tile_handler_validate_class_init (GimpTileHandlerValidateClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  gimp_tile_handler_validate_signals[INVALIDATED] =
+    g_signal_new ("invalidated",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpTileHandlerValidateClass, invalidated),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__BOXED,
+                  G_TYPE_NONE, 1,
+                  GEGL_TYPE_RECTANGLE);
 
   object_class->finalize     = gimp_tile_handler_validate_finalize;
   object_class->set_property = gimp_tile_handler_validate_set_property;
@@ -462,6 +482,9 @@ gimp_tile_handler_validate_invalidate (GimpTileHandlerValidate *validate,
                                 (cairo_rectangle_int_t *) rect);
 
   gegl_tile_handler_damage_rect (GEGL_TILE_HANDLER (validate), rect);
+
+  g_signal_emit (validate, gimp_tile_handler_validate_signals[INVALIDATED],
+                 0, rect, NULL);
 }
 
 void
