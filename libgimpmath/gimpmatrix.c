@@ -932,6 +932,35 @@ gimp_matrix3_is_simple (const GimpMatrix3 *matrix)
 }
 
 /**
+ * gimp_matrix3_equal:
+ * @matrix1: The first matrix
+ * @matrix2: The second matrix
+ *
+ * Checks if two matrices are equal.
+ *
+ * Returns: %TRUE the matrices are equal, %FALSE otherwise
+ *
+ * Since: 2.10.16
+ */
+gboolean
+gimp_matrix3_equal (const GimpMatrix3 *matrix1,
+                    const GimpMatrix3 *matrix2)
+{
+  gint i, j;
+
+  for (i = 0; i < 3; i++)
+    {
+      for (j = 0; j < 3; j++)
+        {
+          if (fabs (matrix1->coeff[i][j] - matrix2->coeff[i][j]) > EPSILON)
+            return FALSE;
+        }
+    }
+
+  return TRUE;
+}
+
+/**
  * gimp_matrix4_identity:
  * @matrix: A matrix.
  *
