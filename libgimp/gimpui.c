@@ -81,7 +81,7 @@ static void      gimp_ui_draw_pixbuf_layout     (GtkStyle      *style,
                                                  gint           y,
                                                  PangoLayout   *layout);
 #ifdef GDK_WINDOWING_QUARTZ
-static void      gimp_osx_focus_window           (void);
+static gboolean  gimp_osx_focus_window          (gpointer);
 #endif
 
 static gboolean gimp_ui_initialized = FALSE;
@@ -184,7 +184,7 @@ gimp_ui_init (const gchar *prog_name,
   gimp_dialogs_show_help_button (gimp_show_help_button ());
 
 #ifdef GDK_WINDOWING_QUARTZ
-  g_idle_add ((GSourceFunc) gimp_osx_focus_window, NULL);
+  g_idle_add (gimp_osx_focus_window, NULL);
 #endif
 
   gimp_ui_fix_pixbuf_style ();
@@ -496,9 +496,10 @@ gimp_ui_draw_pixbuf_layout (GtkStyle      *style,
 }
 
 #ifdef GDK_WINDOWING_QUARTZ
-static void
-gimp_osx_focus_window (void)
+static gboolean
+gimp_osx_focus_window (gpointer user_data)
 {
   [NSApp activateIgnoringOtherApps:YES];
+  return FALSE;
 }
 #endif

@@ -97,10 +97,11 @@ gimp_init_icon_theme_for_testing (void)
 }
 
 #ifdef GDK_WINDOWING_QUARTZ
-static void
-gimp_osx_focus_window (void)
+static gboolean
+gimp_osx_focus_window (gpointer user_data)
 {
   [NSApp activateIgnoringOtherApps:YES];
+  return FALSE;
 }
 #endif
 
@@ -142,7 +143,7 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy, NULL);
 #ifdef GDK_WINDOWING_QUARTZ
-  g_idle_add ((GSourceFunc) gimp_osx_focus_window, NULL);
+  g_idle_add (gimp_osx_focus_window, NULL);
 #endif
 
   return gimp;
