@@ -81,6 +81,8 @@ struct _GimpDrawableFilter
   gboolean                color_managed;
   gboolean                gamma_hack;
 
+  gboolean                override_constraints;
+
   GeglRectangle           filter_area;
   gboolean                filter_clip;
 
@@ -488,6 +490,25 @@ gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter *filter,
 }
 
 void
+gimp_drawable_filter_set_override_constraints (GimpDrawableFilter *filter,
+                                               gboolean            override_constraints)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (override_constraints != filter->override_constraints)
+    {
+      filter->override_constraints = override_constraints;
+
+      gimp_drawable_filter_sync_affect (filter);
+      gimp_drawable_filter_sync_format (filter);
+      gimp_drawable_filter_sync_clip   (filter, TRUE);
+
+      if (gimp_drawable_filter_is_filtering (filter))
+        gimp_drawable_filter_update_drawable (filter, NULL);
+    }
+}
+
+void
 gimp_drawable_filter_apply (GimpDrawableFilter  *filter,
                             const GeglRectangle *area)
 {
@@ -565,7 +586,10 @@ gimp_drawable_filter_sync_clip (GimpDrawableFilter *filter,
 {
   gboolean clip;
 
-  clip = gimp_item_get_clip (GIMP_ITEM (filter->drawable), filter->clip);
+  if (filter->override_constraints)
+    clip = filter->clip;
+  else
+    clip = gimp_item_get_clip (GIMP_ITEM (filter->drawable), filter->clip);
 
   if (! clip)
     {
@@ -820,7 +844,14 @@ gimp_drawable_filter_sync_affect (GimpDrawableFilter *filter)
 {
   gimp_applicator_set_affect (
     filter->applicator,
-    gimp_drawable_get_active_mask (filter->drawable));
+    filter->override_constraints ?
+
+      GIMP_COMPONENT_MASK_RED   |
+      GIMP_COMPONENT_MASK_GREEN |
+      GIMP_COMPONENT_MASK_BLUE  |
+      GIMP_COMPONENT_MASK_ALPHA :
+
+      gimp_drawable_get_active_mask (filter->drawable));
 }
 
 static void
@@ -828,10 +859,15 @@ gimp_drawable_filter_sync_format (GimpDrawableFilter *filter)
 {
   const Babl *format;
 
-  if (filter->add_alpha && GIMP_IS_LAYER (filter->drawable))
-    format = gimp_drawable_get_format_with_alpha (filter->drawable);
+  if (filter->add_alpha &&
+      (GIMP_IS_LAYER (filter->drawable) || filter->override_constraints))
+    {
+      format = gimp_drawable_get_format_with_alpha (filter->drawable);
+    }
   else
-    format = gimp_drawable_get_format (filter->drawable);
+    {
+      format = gimp_drawable_get_format (filter->drawable);
+    }
 
   gimp_applicator_set_output_format (filter->applicator, format);
 }
