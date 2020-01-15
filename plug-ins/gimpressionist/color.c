@@ -64,7 +64,7 @@ create_colorpage (GtkNotebook *notebook)
 
   frame = gimp_int_radio_group_new (TRUE, _("Color"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &pcvals.color_type, 0,
+                                    &pcvals.color_type, NULL, 0,
 
                                     _("A_verage under brush"),
                                     COLOR_TYPE_AVERAGE, &colorradio[COLOR_TYPE_AVERAGE],

@@ -529,7 +529,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
   frame = gimp_int_radio_group_new (TRUE, _("Edge Behavior"),
 
                                     G_CALLBACK (gimp_offset_tool_edge_behavior_toggled),
-                                    offset_tool,
+                                    offset_tool, NULL,
 
                                     GIMP_OFFSET_WRAP_AROUND,
 

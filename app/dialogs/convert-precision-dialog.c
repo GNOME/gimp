@@ -179,7 +179,7 @@ convert_precision_dialog_new (GimpImage                    *image,
 
   vbox = gimp_int_radio_group_new (FALSE, NULL,
                                    G_CALLBACK (gimp_radio_button_update),
-                                   &private->trc,
+                                   &private->trc, NULL,
                                    trc,
 
                                    _("Linear light"),

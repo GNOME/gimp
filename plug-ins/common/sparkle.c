@@ -606,7 +606,7 @@ sparkle_dialog (GimpDrawable *drawable)
   /*  colortype  */
   vbox = gimp_int_radio_group_new (FALSE, NULL,
                                    G_CALLBACK (gimp_radio_button_update),
-                                   &svals.colortype, svals.colortype,
+                                   &svals.colortype, NULL, svals.colortype,
 
                                    _("_Natural color"),    NATURAL,    &r1,
                                    _("_Foreground color"), FOREGROUND, &r2,

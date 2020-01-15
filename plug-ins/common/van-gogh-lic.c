@@ -725,7 +725,7 @@ create_main_dialog (void)
 
   frame = gimp_int_radio_group_new (TRUE, _("Effect Channel"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &licvals.effect_channel,
+                                    &licvals.effect_channel, NULL,
                                     licvals.effect_channel,
 
                                     _("_Hue"),        0, NULL,
@@ -738,7 +738,7 @@ create_main_dialog (void)
 
   frame = gimp_int_radio_group_new (TRUE, _("Effect Operator"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &licvals.effect_operator,
+                                    &licvals.effect_operator, NULL,
                                     licvals.effect_operator,
 
                                     _("_Derivative"), 0, NULL,
@@ -750,7 +750,7 @@ create_main_dialog (void)
 
   frame = gimp_int_radio_group_new (TRUE, _("Convolve"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &licvals.effect_convolve,
+                                    &licvals.effect_convolve, NULL,
                                     licvals.effect_convolve,
 
                                     _("_With white noise"),  0, NULL,

@@ -637,7 +637,7 @@ create_orientmap_dialog (GtkWidget *parent)
 
   frame = gimp_int_radio_group_new (TRUE, _("Type"),
                                     G_CALLBACK (vector_type_click_callback),
-                                    &vector_type, 0,
+                                    &vector_type, NULL, 0,
 
                                     _("_Normal"),  0, &vector_types[0],
                                     _("Vorte_x"),  1, &vector_types[1],

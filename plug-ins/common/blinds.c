@@ -307,7 +307,7 @@ blinds_dialog (GimpDrawable *drawable)
   frame =
     gimp_int_radio_group_new (TRUE, _("Orientation"),
                               G_CALLBACK (gimp_radio_button_update),
-                              &bvals.orientation, bvals.orientation,
+                              &bvals.orientation, NULL, bvals.orientation,
 
                               _("_Horizontal"), GIMP_ORIENTATION_HORIZONTAL,
                               &horizontal,

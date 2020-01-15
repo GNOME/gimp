@@ -102,6 +102,7 @@ GtkWidget * gimp_int_radio_group_new (gboolean          in_frame,
                                       const gchar      *frame_title,
                                       GCallback         radio_button_callback,
                                       gpointer          radio_button_callback_data,
+                                      GDestroyNotify    radio_button_callback_destroy,
                                       gint              initial, /* item_data */
                                       ...) G_GNUC_NULL_TERMINATED;
 

@@ -1243,7 +1243,7 @@ save_dialog (GimpImage     *image,
   /* Replace size ? */
   tmpwidget =
     gimp_int_radio_group_new (FALSE, NULL, G_CALLBACK (gimp_radio_button_update),
-                             &xmcvals.size_replace, xmcvals.size_replace,
+                             &xmcvals.size_replace, NULL, xmcvals.size_replace,
                              _("_Use this value only for a frame which size "
                                "is not specified."),
                              FALSE, NULL,
@@ -1294,7 +1294,7 @@ save_dialog (GimpImage     *image,
   /* Replace delay? */
   tmpwidget =
     gimp_int_radio_group_new (FALSE, NULL, G_CALLBACK (gimp_radio_button_update),
-                             &xmcvals.delay_replace, xmcvals.delay_replace,
+                             &xmcvals.delay_replace, NULL, xmcvals.delay_replace,
                              _("_Use this value only for a frame which delay "
                                "is not specified."),
                              FALSE, NULL,

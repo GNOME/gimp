@@ -2591,7 +2591,7 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   frame = gimp_int_radio_group_new (TRUE, _("Jigsaw Style"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &config.style, config.style,
+                                    &config.style, NULL, config.style,
 
                                     _("_Square"), BEZIER_1, &rbutton1,
                                     _("C_urved"), BEZIER_2, &rbutton2,

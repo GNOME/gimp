@@ -71,7 +71,7 @@ create_placementpage (GtkNotebook *notebook)
 
   frame = gimp_int_radio_group_new (TRUE, _("Placement"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &pcvals.place_type, 0,
+                                    &pcvals.place_type, NULL, 0,
 
                                     _("Randomly"),
                                     PLACEMENT_TYPE_RANDOM,

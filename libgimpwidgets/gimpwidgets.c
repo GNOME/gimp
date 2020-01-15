@@ -50,10 +50,11 @@
  *                         radio button group.
  * @frame_title:           The title of the Frame or %NULL if you don't want
  *                         a title.
- * @radio_button_callback: The callback each button's "toggled" signal will
- *                         be connected with.
- * @radio_button_callback_data:
+ * @radio_button_callback: (scope notified): The callback each button's
+ *                         "toggled" signal will be connected with.
+ * @radio_button_callback_data: (closure radio_button_callback):
  *                         The data which will be passed to g_signal_connect().
+ * @radio_button_callback_destroy: (destroy radio_button_callback_data):
  * @initial:               The @item_data of the initially pressed radio button.
  * @...:                   A %NULL-terminated @va_list describing
  *                         the radio buttons.
@@ -70,7 +71,8 @@ GtkWidget *
 gimp_int_radio_group_new (gboolean         in_frame,
                           const gchar     *frame_title,
                           GCallback        radio_button_callback,
-                          gpointer         callback_data,
+                          gpointer         radio_button_callback_data,
+                          GDestroyNotify   radio_button_callback_destroy,
                           gint             initial, /* item_data */
 
                           /* specify radio buttons as va_list:
@@ -96,6 +98,11 @@ gimp_int_radio_group_new (gboolean         in_frame,
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
   group = NULL;
+
+  if (radio_button_callback_destroy)
+    g_object_weak_ref (G_OBJECT (vbox),
+                       (GWeakNotify) radio_button_callback_destroy,
+                       radio_button_callback_data);
 
   /*  create the radio buttons  */
   va_start (args, initial);
@@ -132,7 +139,7 @@ gimp_int_radio_group_new (gboolean         in_frame,
 
       g_signal_connect (button, "toggled",
                         radio_button_callback,
-                        callback_data);
+                        radio_button_callback_data);
 
       gtk_widget_show (button);
 

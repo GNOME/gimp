@@ -1193,7 +1193,7 @@ save_dialog (TiffSaveVals  *tsvals,
 
   frame = gimp_int_radio_group_new (TRUE, _("Compression"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &tsvals->compression, tsvals->compression,
+                                    &tsvals->compression, NULL, tsvals->compression,
 
                                     _("_None"),      COMPRESSION_NONE,          NULL,
                                     _("_LZW"),       COMPRESSION_LZW,           NULL,

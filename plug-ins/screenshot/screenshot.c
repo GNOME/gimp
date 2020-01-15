@@ -828,7 +828,7 @@ shoot_dialog (GdkMonitor **monitor)
   frame = gimp_int_radio_group_new (TRUE,
                                     _("Color Profile"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &shootvals.profile_policy,
+                                    &shootvals.profile_policy, NULL,
                                     shootvals.profile_policy,
 
                                     _("Tag image with _monitor profile"),

@@ -3670,7 +3670,7 @@ load_dialog (GFile *file)
   /* Coloring */
   frame = gimp_int_radio_group_new (TRUE, _("Coloring"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &plvals.pnm_type, plvals.pnm_type,
+                                    &plvals.pnm_type, NULL, plvals.pnm_type,
 
                                     _("B/W"),       4, NULL,
                                     _("Gray"),      5, NULL,
@@ -3688,7 +3688,7 @@ load_dialog (GFile *file)
 
   frame = gimp_int_radio_group_new (TRUE, _("Text antialiasing"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &plvals.textalpha, plvals.textalpha,
+                                    &plvals.textalpha, NULL, plvals.textalpha,
 
                                     C_("antialiasing", "None"), 1, NULL,
                                     _("Weak"),                  2, NULL,
@@ -3700,7 +3700,7 @@ load_dialog (GFile *file)
 
   frame = gimp_int_radio_group_new (TRUE, _("Graphic antialiasing"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &plvals.graphicsalpha, plvals.graphicsalpha,
+                                    &plvals.graphicsalpha, NULL, plvals.graphicsalpha,
 
                                     C_("antialiasing", "None"), 1, NULL,
                                     _("Weak"),                  2, NULL,
@@ -3864,7 +3864,7 @@ save_dialog (void)
   /* Unit */
   uframe = gimp_int_radio_group_new (TRUE, _("Unit"),
                                      G_CALLBACK (save_unit_toggle_update),
-                                     vals, psvals.unit_mm,
+                                     vals, NULL, psvals.unit_mm,
 
                                      _("_Inch"),       FALSE, NULL,
                                      _("_Millimeter"), TRUE,  NULL,
@@ -3880,7 +3880,7 @@ save_dialog (void)
   /* Rotation */
   frame = gimp_int_radio_group_new (TRUE, _("Rotation"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &psvals.rotate, psvals.rotate,
+                                    &psvals.rotate, NULL, psvals.rotate,
 
                                     "_0",   0,   NULL,
                                     "_90",  90,  NULL,

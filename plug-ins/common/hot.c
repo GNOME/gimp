@@ -677,7 +677,7 @@ plugin_dialog (piArgs *argp)
 
   frame = gimp_int_radio_group_new (TRUE, _("Mode"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &argp->mode, argp->mode,
+                                    &argp->mode, NULL, argp->mode,
 
                                     "N_TSC", MODE_NTSC, NULL,
                                     "_PAL",  MODE_PAL,  NULL,
@@ -698,7 +698,7 @@ plugin_dialog (piArgs *argp)
 
   frame = gimp_int_radio_group_new (TRUE, _("Action"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &argp->action, argp->action,
+                                    &argp->action, NULL, argp->action,
 
                                     _("Reduce _Luminance"),  ACT_LREDUX, NULL,
                                     _("Reduce _Saturation"), ACT_SREDUX, NULL,

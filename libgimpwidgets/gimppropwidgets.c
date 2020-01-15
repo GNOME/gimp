@@ -1186,7 +1186,7 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   frame =
     gimp_int_radio_group_new (TRUE, title,
                               G_CALLBACK (gimp_prop_radio_button_callback),
-                              config, value,
+                              config, NULL, value,
 
                               false_text, FALSE, &button,
                               true_text,  TRUE,  NULL,

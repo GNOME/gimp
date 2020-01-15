@@ -1124,7 +1124,7 @@ nlfilter_dialog (GimpDrawable *drawable)
 
   frame = gimp_int_radio_group_new (TRUE, _("Filter"),
                                     G_CALLBACK (gimp_radio_button_update),
-                                    &nlfvals.filter, nlfvals.filter,
+                                    &nlfvals.filter, NULL, nlfvals.filter,
 
                                     _("_Alpha trimmed mean"),
                                     filter_alpha_trim, &alpha_trim,

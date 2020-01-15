@@ -838,7 +838,7 @@ explorer_dialog (void)
   toggle_vbox =
     gimp_int_radio_group_new (FALSE, NULL,
                               G_CALLBACK (explorer_radio_update),
-                              &wvals.fractaltype, wvals.fractaltype,
+                              &wvals.fractaltype, NULL, wvals.fractaltype,
 
                               _("Mandelbrot"), TYPE_MANDELBROT,
                               &(elements->type[TYPE_MANDELBROT]),
@@ -991,7 +991,7 @@ explorer_dialog (void)
   /*  Redmode radio frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Red"),
                                     G_CALLBACK (explorer_radio_update),
-                                    &wvals.redmode, wvals.redmode,
+                                    &wvals.redmode, NULL, wvals.redmode,
 
                                     _("Sine"),                    SINUS,
                                     &elements->redmode[SINUS],
@@ -1032,7 +1032,7 @@ explorer_dialog (void)
   /*  Greenmode radio frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Green"),
                                     G_CALLBACK (explorer_radio_update),
-                                    &wvals.greenmode, wvals.greenmode,
+                                    &wvals.greenmode, NULL, wvals.greenmode,
 
                                     _("Sine"),                    SINUS,
                                     &elements->greenmode[SINUS],
@@ -1073,7 +1073,7 @@ explorer_dialog (void)
   /*  Bluemode radio frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Blue"),
                                     G_CALLBACK (explorer_radio_update),
-                                    &wvals.bluemode, wvals.bluemode,
+                                    &wvals.bluemode, NULL, wvals.bluemode,
 
                                     _("Sine"),                    SINUS,
                                     &elements->bluemode[SINUS],

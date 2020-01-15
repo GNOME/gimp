@@ -1359,7 +1359,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
   frame = gimp_int_radio_group_new (TRUE, _("Curve for Border"),
                                     G_CALLBACK (bender_border_callback),
-                                    &cd->outline, cd->outline,
+                                    &cd->outline, NULL, cd->outline,
 
                                     C_("curve-border", "_Upper"), OUTLINE_UPPER, &upper,
                                     C_("curve-border", "_Lower"), OUTLINE_LOWER, &lower,
@@ -1374,7 +1374,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
   frame = gimp_int_radio_group_new (TRUE, _("Curve Type"),
                                     G_CALLBACK (bender_type_callback),
-                                    &cd->curve_type, cd->curve_type,
+                                    &cd->curve_type, NULL, cd->curve_type,
 
                                     _("Smoot_h"), SMOOTH, &smooth,
                                     _("_Free"),   GFREE,  &freew,

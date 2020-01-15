@@ -1935,7 +1935,7 @@ load_dialog (TIFF              *tif,
 
       extra_radio = gimp_int_radio_group_new (TRUE, _("Process extra channel as:"),
                                               (GCallback) gimp_radio_button_update,
-                                              default_extra, GIMP_TIFF_LOAD_UNASSALPHA,
+                                              default_extra, NULL, GIMP_TIFF_LOAD_UNASSALPHA,
                                               _("_Non-premultiplied alpha"), GIMP_TIFF_LOAD_UNASSALPHA, NULL,
                                               _("Pre_multiplied alpha"),     GIMP_TIFF_LOAD_ASSOCALPHA, NULL,
                                               _("Channe_l"),                 GIMP_TIFF_LOAD_CHANNEL,    NULL,
