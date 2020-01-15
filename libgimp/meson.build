@@ -386,6 +386,7 @@ else
       '-DGIMP_THUMB_COMPILATION',
       '-DGIMP_WIDGETS_COMPILATION',
       '-DGIMP_DISABLE_DEPRECATED',
+      '--quiet',
     ],
 
     includes: [
