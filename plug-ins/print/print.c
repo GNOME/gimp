@@ -267,7 +267,7 @@ print_image (gint32     image_ID,
       printwindow = NULL;
 #ifdef GDK_WINDOWING_QUARTZ
       /* create top level window and make it transient to use correct monitor */
-      printwindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+      printwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       gimp_window_set_transient (GTK_WINDOW (printwindow));
       gtk_widget_show (printwindow);
 #endif
