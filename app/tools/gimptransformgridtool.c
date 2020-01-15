@@ -37,6 +37,7 @@
 #include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpviewable.h"
 
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpstroke.h"
@@ -289,6 +290,9 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   tool->drawable  = drawable;
 
   tr_tool->object = object;
+
+  if (GIMP_IS_DRAWABLE (object))
+    gimp_viewable_preview_freeze (GIMP_VIEWABLE (object));
 
   /*  Initialize the transform_grid tool dialog  */
   if (! tg_tool->gui)
@@ -1086,7 +1090,13 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
   tool->display   = NULL;
   tool->drawable  = NULL;
 
-  tr_tool->object = NULL;
+  if (tr_tool->object)
+    {
+      if (GIMP_IS_DRAWABLE (tr_tool->object))
+        gimp_viewable_preview_thaw (GIMP_VIEWABLE (tr_tool->object));
+
+      tr_tool->object = NULL;
+    }
 }
 
 static void
