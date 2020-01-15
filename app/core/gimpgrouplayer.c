@@ -184,6 +184,7 @@ static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectab
 static void            gimp_group_layer_begin_render (GimpProjectable *projectable);
 static void            gimp_group_layer_end_render   (GimpProjectable *projectable);
 
+static void          gimp_group_layer_pickable_flush (GimpPickable    *pickable);
 static gdouble       gimp_group_layer_get_opacity_at (GimpPickable    *pickable,
                                                       gint             x,
                                                       gint             y);
@@ -324,6 +325,7 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
 static void
 gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
+  iface->flush          = gimp_group_layer_pickable_flush;
   iface->get_opacity_at = gimp_group_layer_get_opacity_at;
 }
 
@@ -1421,6 +1423,14 @@ gimp_group_layer_end_render (GimpProjectable *projectable)
       gegl_node_connect_to (input,          "output",
                             private->graph, "input");
     }
+}
+
+static void
+gimp_group_layer_pickable_flush (GimpPickable *pickable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (pickable);
+
+  gimp_pickable_flush (GIMP_PICKABLE (private->projection));
 }
 
 static gdouble
