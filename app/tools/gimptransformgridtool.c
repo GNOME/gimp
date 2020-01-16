@@ -1513,6 +1513,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
       GHashTableIter  iter;
       GimpDrawable   *drawable;
       Filter         *filter;
+      gboolean        flush = FALSE;
 
       if (! tg_tool->filters)
         {
@@ -1592,7 +1593,35 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
             }
 
           if (update)
-            gimp_drawable_filter_apply (filter->filter, NULL);
+            {
+              if (tg_options->synchronous_preview)
+                {
+                  g_signal_handlers_block_by_func (
+                    filter->filter,
+                    G_CALLBACK (gimp_transform_grid_tool_filter_flush),
+                    tg_tool);
+                }
+
+              gimp_drawable_filter_apply (filter->filter, NULL);
+
+              if (tg_options->synchronous_preview)
+                {
+                  g_signal_handlers_unblock_by_func (
+                    filter->filter,
+                    G_CALLBACK (gimp_transform_grid_tool_filter_flush),
+                    tg_tool);
+
+                  flush = TRUE;
+                }
+            }
+        }
+
+      if (flush)
+        {
+          GimpImage *image = gimp_display_get_image (tool->display);
+
+          gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
+          gimp_display_flush_now (tool->display);
         }
     }
   else
