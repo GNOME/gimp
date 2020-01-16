@@ -50,6 +50,7 @@ enum
   PROP_DIRECTION_LINKED,
   PROP_SHOW_PREVIEW,
   PROP_COMPOSITED_PREVIEW,
+  PROP_SYNCHRONOUS_PREVIEW,
   PROP_PREVIEW_OPACITY,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
@@ -115,6 +116,13 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
                             "composited-preview",
                             _("Composited preview"),
                             _("Show preview as part of the image composition"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SYNCHRONOUS_PREVIEW,
+                            "synchronous-preview",
+                            _("Synchronous preview"),
+                            _("Render the preview synchronously"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -238,6 +246,9 @@ gimp_transform_grid_options_set_property (GObject      *object,
     case PROP_COMPOSITED_PREVIEW:
       options->composited_preview = g_value_get_boolean (value);
       break;
+    case PROP_SYNCHRONOUS_PREVIEW:
+      options->synchronous_preview = g_value_get_boolean (value);
+      break;
     case PROP_PREVIEW_OPACITY:
       options->preview_opacity = g_value_get_double (value);
       break;
@@ -305,6 +316,9 @@ gimp_transform_grid_options_get_property (GObject    *object,
       break;
     case PROP_COMPOSITED_PREVIEW:
       g_value_set_boolean (value, options->composited_preview);
+      break;
+    case PROP_SYNCHRONOUS_PREVIEW:
+      g_value_set_boolean (value, options->synchronous_preview);
       break;
     case PROP_PREVIEW_OPACITY:
       g_value_set_double (value, options->preview_opacity);
@@ -412,9 +426,12 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   /*  the preview frame  */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
-  button = gimp_prop_check_button_new (config, "composited-preview", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  button = gimp_prop_check_button_new (config, "synchronous-preview", NULL);
+
+  frame = gimp_prop_expanding_frame_new (config, "composited-preview", NULL,
+                                         button, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   scale = gimp_prop_spin_scale_new (config, "preview-opacity", NULL,
                                     0.01, 0.1, 0);
