@@ -19,16 +19,34 @@ Core:
 
 Tools:
 
-  - New 3D Transform tool where you cna set vanishing point, camera's
+  - New 3D Transform tool where you can set vanishing point, camera's
     focal length, and the move and rotate layer, selection, path, or
-    image in 2.5 space.
+    image in 2.5 space. With the "Unified interaction" option enabled,
+    all three interaction modes of the grid (camera, move, and rotate)
+    are available simultaneously. In this mode, the inner and outer
+    regions of the item are used for moving and rotation, respectively,
+    and the vanishing point is controlled through through a handle.
+  - Transform tools now respect the Clip option and update the canvas
+    preview accordingly.
+  - New "Composited preview" option allows respecting layer's blending
+    mode and position in the layer stack rather than rendering it as
+    an overlay on top of the overall layer stack. This simplifies
+    creating complex layer compositions greatly. The option requires
+    mipmaps to be used and thus is disabled by default. It also comes
+    with an experimental "Synchronous preview" suboption to render
+    the composited preview synchronously. This reduces the lag for
+    painting the preview, but can harm responsiveness for bigger images,
+    where rendering the preview is slow.
   - New widget called GimpPivotSelector, a 3x3 grid of toggle buttons,
-    used for selecting a natural pivot position (e.g., for a transform)
-    relative to an item: its center, its corners, and the midpoints of
-    its edges. Currently used in Rotate and 3D transform tools.
+    is now used for selecting a natural pivot position (e.g. for
+    a transform) relative to an item: its center, its corners, and the
+    midpoints of its edges. Currently used in Rotate and 3D Transform
+    tools.
   - Add "Show all" support to the Bucket Fill tool in line-art mode
   - Color picker and sample points now support displaying vlaues in Yu'v'
     (CIE 1976 UCS) color space.
+  - The Symmetry Painting dock now has an "Enable reflection" option
+    that allows painting patterns resembling a kaleidoscope. 
 
 UI:
 
@@ -69,17 +87,20 @@ Windows:
 
 macOS:
 
-  - Set required variables if is running from Apple application bundle.
+  - Set required variables if it is running from Apple application bundle.
+  - The macOS build now ships with the dashboard dock for displaying
+    perfomance graphs.
 
 Updated translations:
 
-  - Catalan, French, Japanese, Spanish, Swedish, Turkish, Ukrainian.
+  - Catalan, French, Japanese, Polish, Russian, Spanish, Swedish, Turkish,
+    Ukrainian.
 
 Bugfixes:
 
    - #4172, #4194, #4205, #4218, #2543, #4185, #4246, #2794, #4209,
      #4278, #4372, #4187, #4392, #2674, #4338, #2862, #4203, #4204,
-     #4354
+     #4354, #1266
 
 Developers:
 
@@ -90,8 +111,8 @@ Developers:
 Translators:
 
   - Alexandre Prokoudine, Anders Jonsson, Daniel Korostil, Jordi Mas,
-    Julien Hardelin, Marco Ciampa, Rodrigo Lledó Milanca, Ryuta Fujii,
-    Sabri Ünal, sicklylife.
+    Julien Hardelin, Marco Ciampa, Piotr Drąg, Rodrigo Lledó Milanca,
+    Ryuta Fujii, Sabri Ünal, sicklylife.
 
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
