@@ -170,6 +170,22 @@ gimp_gegl_node_is_area_filter_operation (GeglNode *node)
          GEGL_IS_OPERATION_META (operation);
 }
 
+const gchar *
+gimp_gegl_node_get_key (GeglNode    *node,
+                        const gchar *key)
+{
+  const gchar *operation_name;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), NULL);
+
+  operation_name = gegl_node_get_operation (node);
+
+  if (operation_name)
+    return gegl_operation_get_key (operation_name, key);
+  else
+    return NULL;
+}
+
 const Babl *
 gimp_gegl_node_get_format (GeglNode    *node,
                            const gchar *pad_name)

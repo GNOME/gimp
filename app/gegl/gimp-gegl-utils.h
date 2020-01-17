@@ -22,35 +22,38 @@
 #define __GIMP_GEGL_UTILS_H__
 
 
-GType        gimp_gegl_get_op_enum_type              (const gchar         *operation,
-                                                      const gchar         *property);
+GType         gimp_gegl_get_op_enum_type              (const gchar         *operation,
+                                                       const gchar         *property);
 
-GeglColor  * gimp_gegl_color_new                     (const GimpRGB       *rgb,
-                                                      const Babl          *space);
+GeglColor   * gimp_gegl_color_new                     (const GimpRGB       *rgb,
+                                                       const Babl          *space);
 
-void         gimp_gegl_progress_connect              (GeglNode            *node,
-                                                      GimpProgress        *progress,
-                                                      const gchar         *text);
+void          gimp_gegl_progress_connect              (GeglNode            *node,
+                                                       GimpProgress        *progress,
+                                                       const gchar         *text);
 
-gboolean     gimp_gegl_node_is_source_operation      (GeglNode            *node);
-gboolean     gimp_gegl_node_is_point_operation       (GeglNode            *node);
-gboolean     gimp_gegl_node_is_area_filter_operation (GeglNode            *node);
+gboolean      gimp_gegl_node_is_source_operation      (GeglNode            *node);
+gboolean      gimp_gegl_node_is_point_operation       (GeglNode            *node);
+gboolean      gimp_gegl_node_is_area_filter_operation (GeglNode            *node);
 
-const Babl * gimp_gegl_node_get_format               (GeglNode            *node,
-                                                      const gchar         *pad_name);
+const gchar * gimp_gegl_node_get_key                  (GeglNode            *node,
+                                                      const gchar          *key);
 
-void         gimp_gegl_node_set_underlying_operation (GeglNode           *node,
-                                                      GeglNode           *operation);
-GeglNode   * gimp_gegl_node_get_underlying_operation (GeglNode           *node);
+const Babl  * gimp_gegl_node_get_format               (GeglNode            *node,
+                                                       const gchar         *pad_name);
 
-gboolean     gimp_gegl_param_spec_has_key            (GParamSpec          *pspec,
-                                                      const gchar         *key,
-                                                      const gchar         *value);
+void          gimp_gegl_node_set_underlying_operation (GeglNode           *node,
+                                                       GeglNode           *operation);
+GeglNode    * gimp_gegl_node_get_underlying_operation (GeglNode           *node);
 
-GeglBuffer * gimp_gegl_buffer_dup                    (GeglBuffer          *buffer);
+gboolean      gimp_gegl_param_spec_has_key            (GParamSpec          *pspec,
+                                                       const gchar         *key,
+                                                       const gchar         *value);
 
-gboolean     gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
-                                                      const GeglRectangle *extent);
+GeglBuffer  * gimp_gegl_buffer_dup                    (GeglBuffer          *buffer);
+
+gboolean      gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
+                                                       const GeglRectangle *extent);
 
 
 #endif /* __GIMP_GEGL_UTILS_H__ */
