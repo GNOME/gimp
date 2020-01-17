@@ -188,6 +188,8 @@ static void      gimp_filter_tool_response       (GimpToolGui         *gui,
                                                   gint                 response_id,
                                                   GimpFilterTool      *filter_tool);
 
+static void      gimp_filter_tool_update_filter  (GimpFilterTool      *filter_tool);
+
 static void    gimp_filter_tool_set_has_settings (GimpFilterTool      *filter_tool,
                                                   gboolean             has_settings);
 
@@ -767,66 +769,32 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
             }
         }
 
-      gimp_drawable_filter_set_preview (filter_tool->filter,
-                                        filter_options->preview_split,
-                                        filter_options->preview_alignment,
-                                        filter_options->preview_position);
+      gimp_filter_tool_update_filter (filter_tool);
 
       if (filter_options->preview_split)
         gimp_filter_tool_add_guide (filter_tool);
       else
         gimp_filter_tool_remove_guide (filter_tool);
     }
-  else if (! strcmp (pspec->name, "preview-alignment") &&
-           filter_tool->filter)
+  else if (! strcmp (pspec->name, "preview-alignment") ||
+           ! strcmp (pspec->name, "preview-position"))
     {
-      gimp_drawable_filter_set_preview (filter_tool->filter,
-                                        filter_options->preview_split,
-                                        filter_options->preview_alignment,
-                                        filter_options->preview_position);
+      gimp_filter_tool_update_filter (filter_tool);
 
       if (filter_options->preview_split)
         gimp_filter_tool_move_guide (filter_tool);
     }
-  else if (! strcmp (pspec->name, "preview-position") &&
-           filter_tool->filter)
+  else if (! strcmp (pspec->name, "clip")   ||
+           ! strcmp (pspec->name, "region") ||
+           ! strcmp (pspec->name, "gamma-hack"))
     {
-      gimp_drawable_filter_set_preview (filter_tool->filter,
-                                        filter_options->preview_split,
-                                        filter_options->preview_alignment,
-                                        filter_options->preview_position);
-
-      if (filter_options->preview_split)
-        gimp_filter_tool_move_guide (filter_tool);
+      gimp_filter_tool_update_filter (filter_tool);
     }
   else if (! strcmp (pspec->name, "controller") &&
            filter_tool->widget)
     {
       gimp_tool_widget_set_visible (filter_tool->widget,
                                     filter_options->controller);
-    }
-  else if (! strcmp (pspec->name, "clip") &&
-           filter_tool->filter)
-    {
-      gimp_drawable_filter_set_clip (filter_tool->filter,
-                                     filter_options->clip ==
-                                     GIMP_TRANSFORM_RESIZE_CLIP ||
-                                     ! gimp_drawable_has_alpha (
-                                         tool->drawable));
-    }
-  else if (! strcmp (pspec->name, "region") &&
-           filter_tool->filter)
-    {
-      gimp_drawable_filter_set_region (filter_tool->filter,
-                                       filter_options->region);
-
-      gimp_filter_tool_region_changed (filter_tool);
-    }
-  else if (! strcmp (pspec->name, "gamma-hack") &&
-           filter_tool->filter)
-    {
-      gimp_drawable_filter_set_gamma_hack (filter_tool->filter,
-                                           filter_options->gamma_hack);
     }
 }
 
@@ -1120,15 +1088,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
                                                   filter_tool->operation,
                                                   gimp_tool_get_icon_name (tool));
 
-  gimp_drawable_filter_set_clip       (filter_tool->filter,
-                                       options->clip ==
-                                       GIMP_TRANSFORM_RESIZE_CLIP ||
-                                       ! gimp_drawable_has_alpha (
-                                           tool->drawable));
-  gimp_drawable_filter_set_region     (filter_tool->filter,
-                                       options->region);
-  gimp_drawable_filter_set_gamma_hack (filter_tool->filter,
-                                       options->gamma_hack);
+  gimp_filter_tool_update_filter (filter_tool);
 
   g_signal_connect (filter_tool->filter, "flush",
                     G_CALLBACK (gimp_filter_tool_flush),
@@ -1417,6 +1377,30 @@ gimp_filter_tool_response (GimpToolGui    *gui,
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
       break;
     }
+}
+
+static void
+gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
+{
+  GimpTool          *tool    = GIMP_TOOL (filter_tool);
+  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+
+  if (! filter_tool->filter)
+    return;
+
+  gimp_drawable_filter_set_clip          (filter_tool->filter,
+                                          options->clip ==
+                                          GIMP_TRANSFORM_RESIZE_CLIP ||
+                                          ! gimp_drawable_has_alpha (
+                                              tool->drawable));
+  gimp_drawable_filter_set_region        (filter_tool->filter,
+                                          options->region);
+  gimp_drawable_filter_set_preview       (filter_tool->filter,
+                                          options->preview_split,
+                                          options->preview_alignment,
+                                          options->preview_position);
+  gimp_drawable_filter_set_gamma_hack    (filter_tool->filter,
+                                          options->gamma_hack);
 }
 
 static void
