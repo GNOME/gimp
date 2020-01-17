@@ -146,7 +146,7 @@ AM_LDFLAGS = \
 	$(munix)						\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
+	-Wl,-u,$(SYMPREFIX)gimp_config_param_spec_duplicate		\
 	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\

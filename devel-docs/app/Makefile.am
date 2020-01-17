@@ -62,7 +62,7 @@ GTKDOC_LIBS = \
 	-Wl,-u,$(SYMPREFIX)gimp_coords_mix	   			     \
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore			     \
 	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog				     \
-	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate			     \
+	-Wl,-u,$(SYMPREFIX)gimp_config_param_spec_duplicate			     \
 	$(top_builddir)/app/app.o					     \
         $(top_builddir)/app/batch.o					     \
         $(top_builddir)/app/errors.o					     \
