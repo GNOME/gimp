@@ -895,7 +895,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-dither",                  writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
-  SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && supports_alpha);
+  SET_SENSITIVE ("filters-color-to-alpha",          writable && supports_alpha);
   SET_SENSITIVE ("filters-component-extract",       writable);
   SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);

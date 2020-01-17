@@ -1040,8 +1040,6 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          /* XXX: fixme disable for gray */
-
           GeglColor *gegl_color = gimp_gegl_color_new (&color);
           GeglNode  *node =
             gegl_node_new_child (NULL,
