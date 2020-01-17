@@ -64,6 +64,7 @@ struct _GimpDrawableClass
   void          (* get_active_components) (GimpDrawable         *drawable,
                                            gboolean             *active);
   GimpComponentMask (* get_active_mask)   (GimpDrawable         *drawable);
+  gboolean      (* supports_alpha)        (GimpDrawable         *drawable);
   void          (* convert_type)          (GimpDrawable         *drawable,
                                            GimpImage            *dest_image,
                                            const Babl           *new_format,
@@ -134,6 +135,8 @@ void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
 void         gimp_drawable_get_active_components (GimpDrawable       *drawable,
                                                   gboolean           *active);
 GimpComponentMask gimp_drawable_get_active_mask  (GimpDrawable       *drawable);
+
+gboolean        gimp_drawable_supports_alpha     (GimpDrawable       *drawable);
 
 void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImage          *dest_image,

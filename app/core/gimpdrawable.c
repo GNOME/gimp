@@ -172,6 +172,9 @@ static void       gimp_drawable_real_update_all    (GimpDrawable      *drawable)
 static GimpComponentMask
                 gimp_drawable_real_get_active_mask (GimpDrawable      *drawable);
 
+static gboolean   gimp_drawable_real_supports_alpha
+                                                   (GimpDrawable     *drawable);
+
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
                                                     const Babl        *new_format,
@@ -301,6 +304,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->invalidate_boundary      = NULL;
   klass->get_active_components    = NULL;
   klass->get_active_mask          = gimp_drawable_real_get_active_mask;
+  klass->supports_alpha           = gimp_drawable_real_supports_alpha;
   klass->convert_type             = gimp_drawable_real_convert_type;
   klass->apply_buffer             = gimp_drawable_real_apply_buffer;
   klass->get_buffer               = gimp_drawable_real_get_buffer;
@@ -830,6 +834,12 @@ gimp_drawable_real_get_active_mask (GimpDrawable *drawable)
   return GIMP_COMPONENT_MASK_ALL;
 }
 
+static gboolean
+gimp_drawable_real_supports_alpha (GimpDrawable *drawable)
+{
+  return FALSE;
+}
+
 /* FIXME: this default impl is currently unused because no subclass
  * chains up. the goal is to handle the almost identical subclass code
  * here again.
@@ -1220,6 +1230,14 @@ gimp_drawable_get_active_mask (GimpDrawable *drawable)
     }
 
   return mask;
+}
+
+gboolean
+gimp_drawable_supports_alpha (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  return GIMP_DRAWABLE_GET_CLASS (drawable)->supports_alpha (drawable);
 }
 
 void

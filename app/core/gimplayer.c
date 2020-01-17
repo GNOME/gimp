@@ -183,6 +183,7 @@ static gint64     gimp_layer_estimate_memsize   (GimpDrawable       *drawable,
                                                  GimpComponentType   component_type,
                                                  gint                width,
                                                  gint                height);
+static gboolean   gimp_layer_supports_alpha     (GimpDrawable       *drawable);
 static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
@@ -457,6 +458,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   drawable_class->alpha_changed         = gimp_layer_alpha_changed;
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
+  drawable_class->supports_alpha        = gimp_layer_supports_alpha;
   drawable_class->convert_type          = gimp_layer_convert_type;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
@@ -1360,6 +1362,12 @@ gimp_layer_estimate_memsize (GimpDrawable      *drawable,
          GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
                                                                component_type,
                                                                width, height);
+}
+
+static gboolean
+gimp_layer_supports_alpha (GimpDrawable *drawable)
+{
+  return TRUE;
 }
 
 static void
