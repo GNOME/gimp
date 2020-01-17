@@ -1123,11 +1123,6 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
     {
       GimpImage   *image = gimp_display_get_image (tool->display);
       GimpChannel *mask  = gimp_image_get_mask (image);
-      gchar       *operation_name;
-
-      gegl_node_get (filter_tool->operation,
-                     "operation", &operation_name,
-                     NULL);
 
       if (gimp_channel_is_empty (mask))
         {
@@ -1146,11 +1141,9 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
           gtk_widget_set_visible (
             filter_tool->region_combo,
             ! gimp_gegl_node_is_point_operation (filter_tool->operation) ||
-            (operation_name                                              &&
-             gegl_operation_get_key (operation_name, "position-dependent")));
+            gimp_gegl_node_get_key (filter_tool->operation,
+                                    "position-dependent"));
         }
-
-      g_free (operation_name);
     }
 }
 
@@ -1396,18 +1389,14 @@ gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
-  const gchar       *operation_name;
   gboolean           add_alpha;
   gboolean           clip;
 
   if (! filter_tool->filter)
     return;
 
-  operation_name = gegl_node_get_operation (filter_tool->operation);
-
   add_alpha = gimp_drawable_supports_alpha (tool->drawable) &&
-              operation_name                                &&
-              gegl_operation_get_key (operation_name, "needs-alpha");
+              gimp_gegl_node_get_key (filter_tool->operation, "needs-alpha");
   clip      = options->clip == GIMP_TRANSFORM_RESIZE_CLIP ||
               ! (gimp_drawable_has_alpha (tool->drawable) ||
                  add_alpha);
@@ -1577,7 +1566,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     }
 
   if (gimp_gegl_node_is_point_operation (filter_tool->operation) &&
-      ! gegl_operation_get_key (operation_name, "position-dependent"))
+      ! gimp_gegl_node_get_key (filter_tool->operation, "position-dependent"))
     {
       g_object_set (GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool),
                     "region", GIMP_FILTER_REGION_SELECTION,
