@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawablefilter.h"
@@ -57,6 +59,12 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
     }
 
   filter = gimp_drawable_filter_new (drawable, undo_desc, operation, NULL);
+
+  if (gimp_drawable_supports_alpha (drawable) &&
+      gimp_gegl_node_get_key (operation, "needs-alpha"))
+    {
+      gimp_drawable_filter_set_add_alpha (filter, TRUE);
+    }
 
   gimp_drawable_filter_apply  (filter, NULL);
   gimp_drawable_filter_commit (filter, progress, TRUE);
