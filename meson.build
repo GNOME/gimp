@@ -319,7 +319,7 @@ dbghelp           = platform_windows ? cc.find_library('dbghelp') : no_dep
 winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
-babl_minver       = '0.1.72'
+babl_minver       = '0.1.74'
 babl              = dependency('babl',               version: '>='+babl_minver)
 cairo_minver      = '1.12.2'
 cairo             = dependency('cairo',              version: '>='+cairo_minver)
@@ -332,7 +332,7 @@ freetype2_minver  = '2.1.7'
 freetype2         = dependency('freetype2',          version: '>='+freetype2_minver)
 gdk_pixbuf_minver = '2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
-gegl_minver       = '0.4.18'
+gegl_minver       = '0.4.20'
 gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
 gexiv2_minver     = '0.10.6'
 gexiv2            = dependency('gexiv2',             version: '>='+gexiv2_minver)
