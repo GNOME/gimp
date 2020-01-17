@@ -83,6 +83,7 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
   const gchar *cursor  = " ";
   gchar       *delay   = NULL;
   gchar       *filename;
+  GFile       *tmpfile;
   gchar       *quoted;
   gchar       *command = NULL;
 
@@ -120,7 +121,8 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
 
   delay = g_strdup_printf ("-T %i", shootvals->screenshot_delay);
 
-  filename = gimp_temp_name ("png");
+  tmpfile  = gimp_temp_file ("png");
+  filename = g_file_get_path (tmpfile);
   quoted   = g_shell_quote (filename);
 
   command = g_strjoin (" ",
@@ -140,10 +142,10 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
        */
 
       *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                               filename, filename);
-      gimp_image_set_filename (*image, "screenshot.png");
+                               tmpfile);
+      gimp_image_set_file (*image, g_file_new_for_uri ("screenshot.png"));
 
-      g_unlink (filename);
+      g_file_delete (tmpfile, NULL, NULL);
       g_free (filename);
       g_free (command);
 
