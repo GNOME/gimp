@@ -842,10 +842,11 @@ filters_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
   GimpImage    *image;
-  GimpDrawable *drawable = NULL;
-  gboolean      writable = FALSE;
-  gboolean      gray     = FALSE;
-  gboolean      alpha    = FALSE;
+  GimpDrawable *drawable       = NULL;
+  gboolean      writable       = FALSE;
+  gboolean      gray           = FALSE;
+  gboolean      alpha          = FALSE;
+  gboolean      supports_alpha = FALSE;
 
   image = action_data_get_image (data);
 
@@ -857,8 +858,9 @@ filters_actions_update (GimpActionGroup *group,
         {
           GimpItem *item;
 
-          alpha = gimp_drawable_has_alpha (drawable);
-          gray  = gimp_drawable_is_gray (drawable);
+          gray           = gimp_drawable_is_gray (drawable);
+          alpha          = gimp_drawable_has_alpha (drawable);
+          supports_alpha = gimp_drawable_supports_alpha (drawable);
 
           if (GIMP_IS_LAYER_MASK (drawable))
             item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
@@ -893,7 +895,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-dither",                  writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
-  SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
+  SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && supports_alpha);
   SET_SENSITIVE ("filters-component-extract",       writable);
   SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);

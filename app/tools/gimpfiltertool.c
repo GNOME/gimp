@@ -1396,21 +1396,32 @@ gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  const gchar       *operation_name;
+  gboolean           add_alpha;
+  gboolean           clip;
 
   if (! filter_tool->filter)
     return;
 
+  operation_name = gegl_node_get_operation (filter_tool->operation);
+
+  add_alpha = gimp_drawable_supports_alpha (tool->drawable) &&
+              operation_name                                &&
+              gegl_operation_get_key (operation_name, "needs-alpha");
+  clip      = options->clip == GIMP_TRANSFORM_RESIZE_CLIP ||
+              ! (gimp_drawable_has_alpha (tool->drawable) ||
+                 add_alpha);
+
   gimp_drawable_filter_set_clip          (filter_tool->filter,
-                                          options->clip ==
-                                          GIMP_TRANSFORM_RESIZE_CLIP ||
-                                          ! gimp_drawable_has_alpha (
-                                              tool->drawable));
+                                          clip);
   gimp_drawable_filter_set_region        (filter_tool->filter,
                                           options->region);
   gimp_drawable_filter_set_preview       (filter_tool->filter,
                                           options->preview_split,
                                           options->preview_alignment,
                                           options->preview_position);
+  gimp_drawable_filter_set_add_alpha     (filter_tool->filter,
+                                          add_alpha);
   gimp_drawable_filter_set_color_managed (filter_tool->filter,
                                           options->color_managed);
   gimp_drawable_filter_set_gamma_hack    (filter_tool->filter,
