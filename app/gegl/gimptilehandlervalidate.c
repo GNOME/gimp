@@ -605,13 +605,19 @@ gimp_tile_handler_validate_buffer_set_extent (GeglBuffer          *buffer,
 
   g_return_val_if_fail (validate != NULL, FALSE);
 
+  validate->suspend_validate++;
+
   if (gimp_gegl_buffer_set_extent (buffer, extent))
     {
+      validate->suspend_validate--;
+
       cairo_region_intersect_rectangle (validate->dirty_region,
                                         (const cairo_rectangle_int_t *) extent);
 
       return TRUE;
     }
+
+  validate->suspend_validate--;
 
   return FALSE;
 }
