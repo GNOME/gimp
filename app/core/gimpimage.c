@@ -102,6 +102,7 @@ enum
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
   ACTIVE_VECTORS_CHANGED,
+  LINKED_ITEMS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
@@ -344,6 +345,15 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, active_vectors_changed),
                   NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  gimp_image_signals[LINKED_ITEMS_CHANGED] =
+    g_signal_new ("linked-items-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, linked_items_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
@@ -595,6 +605,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->active_layer_changed         = NULL;
   klass->active_channel_changed       = NULL;
   klass->active_vectors_changed       = NULL;
+  klass->linked_items_changed         = NULL;
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
@@ -3280,6 +3291,14 @@ gimp_image_alpha_changed (GimpImage *image)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   g_signal_emit (image, gimp_image_signals[ALPHA_CHANGED], 0);
+}
+
+void
+gimp_image_linked_items_changed (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_signal_emit (image, gimp_image_signals[LINKED_ITEMS_CHANGED], 0);
 }
 
 void
