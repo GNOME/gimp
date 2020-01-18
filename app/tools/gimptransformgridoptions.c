@@ -50,6 +50,7 @@ enum
   PROP_DIRECTION_LINKED,
   PROP_SHOW_PREVIEW,
   PROP_COMPOSITED_PREVIEW,
+  PROP_PREVIEW_LINKED,
   PROP_SYNCHRONOUS_PREVIEW,
   PROP_PREVIEW_OPACITY,
   PROP_GRID_TYPE,
@@ -116,6 +117,13 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
                             "composited-preview",
                             _("Composited preview"),
                             _("Show preview as part of the image composition"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREVIEW_LINKED,
+                            "preview-linked",
+                            _("Preview linked items"),
+                            _("Include linked items in the preview"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -246,6 +254,9 @@ gimp_transform_grid_options_set_property (GObject      *object,
     case PROP_COMPOSITED_PREVIEW:
       options->composited_preview = g_value_get_boolean (value);
       break;
+    case PROP_PREVIEW_LINKED:
+      options->preview_linked = g_value_get_boolean (value);
+      break;
     case PROP_SYNCHRONOUS_PREVIEW:
       options->synchronous_preview = g_value_get_boolean (value);
       break;
@@ -317,6 +328,9 @@ gimp_transform_grid_options_get_property (GObject    *object,
     case PROP_COMPOSITED_PREVIEW:
       g_value_set_boolean (value, options->composited_preview);
       break;
+    case PROP_PREVIEW_LINKED:
+      g_value_set_boolean (value, options->preview_linked);
+      break;
     case PROP_SYNCHRONOUS_PREVIEW:
       g_value_set_boolean (value, options->synchronous_preview);
       break;
@@ -380,6 +394,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   GimpTransformGridToolClass *tg_class;
   GtkWidget                  *vbox;
   GtkWidget                  *vbox2;
+  GtkWidget                  *vbox3;
   GtkWidget                  *button;
   GtkWidget                  *frame;
   GtkWidget                  *combo;
@@ -426,10 +441,18 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   /*  the preview frame  */
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
+  vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+
+  button = gimp_prop_check_button_new (config, "preview-linked", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox3), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   button = gimp_prop_check_button_new (config, "synchronous-preview", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox3), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   frame = gimp_prop_expanding_frame_new (config, "composited-preview", NULL,
-                                         button, NULL);
+                                         vbox3, NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

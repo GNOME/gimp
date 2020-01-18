@@ -40,6 +40,7 @@
 #include "core/gimpfilter.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-item-list.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
@@ -85,7 +86,7 @@ typedef struct
   GimpDrawable          *drawable;
   GimpDrawableFilter    *filter;
 
-  GimpDrawable          *clip_drawable;
+  GimpDrawable          *root_drawable;
 
   GeglNode              *transform_node;
   GeglNode              *crop_node;
@@ -93,6 +94,12 @@ typedef struct
   GimpMatrix3            transform;
   GeglRectangle          bounds;
 } Filter;
+
+typedef struct
+{
+  GimpTransformGridTool *tg_tool;
+  GimpDrawable          *root_drawable;
+} AddFilterData;
 
 typedef struct
 {
@@ -184,6 +191,10 @@ static void      gimp_transform_grid_tool_widget_response    (GimpToolWidget    
 static void      gimp_transform_grid_tool_filter_flush       (GimpDrawableFilter     *filter,
                                                               GimpTransformGridTool  *tg_tool);
 
+static void      gimp_transform_grid_tool_image_linked_items_changed
+                                                             (GimpImage              *image,
+                                                              GimpTransformGridTool  *tg_tool);
+
 static void      gimp_transform_grid_tool_halt               (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_commit             (GimpTransformGridTool  *tg_tool);
 
@@ -201,12 +212,13 @@ static void      gimp_transform_grid_tool_response           (GimpToolGui       
 static gboolean  gimp_transform_grid_tool_composited_preview (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_update_sensitivity (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_update_preview     (GimpTransformGridTool  *tg_tool);
+static void      gimp_transform_grid_tool_update_filters     (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_hide_active_object (GimpTransformGridTool  *tg_tool,
                                                               GimpObject             *object);
 static void      gimp_transform_grid_tool_show_active_object (GimpTransformGridTool  *tg_tool);
 
 static void      gimp_transform_grid_tool_add_filter         (GimpDrawable           *drawable,
-                                                              GimpTransformGridTool  *tg_tool);
+                                                              AddFilterData          *data);
 static void      gimp_transform_grid_tool_remove_filter      (GimpDrawable           *drawable,
                                                               GimpTransformGridTool  *tg_tool);
 
@@ -216,6 +228,7 @@ static void      gimp_transform_grid_tool_effective_mode_changed
 
 static Filter  * filter_new                                  (GimpTransformGridTool  *tg_tool,
                                                               GimpDrawable           *drawable,
+                                                              GimpDrawable           *root_drawable,
                                                               gboolean                add_filter);
 static void      filter_free                                 (Filter                 *filter);
 
@@ -370,6 +383,11 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   /*  Save the current transformation info  */
   memcpy (undo_info->trans_infos, tg_tool->trans_infos,
           sizeof (tg_tool->trans_infos));
+
+  g_signal_connect (
+    image, "linked-items-changed",
+    G_CALLBACK (gimp_transform_grid_tool_image_linked_items_changed),
+    tg_tool);
 
   return TRUE;
 }
@@ -689,6 +707,12 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
 
           gimp_transform_grid_tool_update_preview (tg_tool);
         }
+    }
+  else if (! strcmp (pspec->name, "preview-linked") &&
+           tg_tool->filters)
+    {
+      gimp_transform_grid_tool_update_filters (tg_tool);
+      gimp_transform_grid_tool_update_preview (tg_tool);
     }
   else if (! strcmp (pspec->name, "interpolation") ||
            ! strcmp (pspec->name, "clip")          ||
@@ -1112,10 +1136,31 @@ gimp_transform_grid_tool_filter_flush (GimpDrawableFilter    *filter,
 }
 
 static void
+gimp_transform_grid_tool_image_linked_items_changed (GimpImage             *image,
+                                                     GimpTransformGridTool *tg_tool)
+{
+  if (tg_tool->filters)
+    {
+      gimp_transform_grid_tool_update_filters (tg_tool);
+      gimp_transform_grid_tool_update_preview (tg_tool);
+    }
+}
+
+static void
 gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (tg_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
+  if (tool->display)
+    {
+      GimpImage *image = gimp_display_get_image (tool->display);
+
+      g_signal_handlers_disconnect_by_func (
+        image,
+        gimp_transform_grid_tool_image_linked_items_changed,
+        tg_tool);
+    }
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tg_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tg_tool));
@@ -1124,6 +1169,7 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
   g_clear_object (&tg_tool->widget);
 
   g_clear_pointer (&tg_tool->filters, g_hash_table_unref);
+  g_clear_pointer (&tg_tool->preview_drawables, g_list_free);
 
   if (tg_tool->gui)
     gimp_tool_gui_hide (tg_tool->gui);
@@ -1507,6 +1553,9 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
   gint                      i;
 
+  if (! tool->display)
+    return;
+
   if (tg_options->show_preview                              &&
       gimp_transform_grid_tool_composited_preview (tg_tool) &&
       tr_tool->transform_valid)
@@ -1522,7 +1571,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
             g_direct_hash, g_direct_equal,
             NULL, (GDestroyNotify) filter_free);
 
-          gimp_transform_grid_tool_add_filter (tool->drawable, tg_tool);
+          gimp_transform_grid_tool_update_filters (tg_tool);
         }
 
       g_hash_table_iter_init (&iter, tg_tool->filters);
@@ -1535,6 +1584,8 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
           GeglRectangle bounds;
           gint          offset_x;
           gint          offset_y;
+          gint          width;
+          gint          height;
           gint          x1, y1;
           gint          x2, y2;
           gboolean      update = FALSE;
@@ -1544,6 +1595,9 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
+          width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          height = gimp_item_get_height (GIMP_ITEM (drawable));
+
           gimp_matrix3_identity (&transform);
           gimp_matrix3_translate (&transform, +offset_x, +offset_y);
           gimp_matrix3_mult (&tr_tool->transform, &transform);
@@ -1551,12 +1605,12 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
 
           gimp_transform_resize_boundary (&tr_tool->transform,
                                           gimp_item_get_clip (
-                                            GIMP_ITEM (filter->clip_drawable),
+                                            GIMP_ITEM (filter->root_drawable),
                                             tr_options->clip),
-                                          tr_tool->x1, tr_tool->y1,
-                                          tr_tool->x2, tr_tool->y2,
-                                          &x1,         &y1,
-                                          &x2,         &y2);
+                                          offset_x,         offset_y,
+                                          offset_x + width, offset_y + height,
+                                          &x1,              &y1,
+                                          &x2,              &y2);
 
           bounds.x      = x1 - offset_x;
           bounds.y      = y1 - offset_y;
@@ -1628,6 +1682,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
   else
     {
       g_clear_pointer (&tg_tool->filters, g_hash_table_unref);
+      g_clear_pointer (&tg_tool->preview_drawables, g_list_free);
     }
 
   if (tg_tool->preview)
@@ -1686,6 +1741,68 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
                     NULL);
       gimp_canvas_item_end_change (item);
     }
+}
+
+static void
+gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
+{
+  GimpTool                 *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformGridOptions *options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GHashTable               *new_drawables;
+  GList                    *drawables;
+  GList                    *iter;
+  GimpDrawable             *drawable;
+  GHashTableIter            hash_iter;
+
+  if (! tg_tool->filters)
+    return;
+
+  if (options->preview_linked &&
+      gimp_item_get_linked (GIMP_ITEM (tool->drawable)))
+    {
+      GimpImage *image = gimp_display_get_image (tool->display);
+
+      drawables = gimp_image_item_list_get_list (image,
+                                                 GIMP_ITEM_TYPE_LAYERS |
+                                                 GIMP_ITEM_TYPE_CHANNELS,
+                                                 GIMP_ITEM_SET_LINKED);
+
+      drawables = gimp_image_item_list_filter (drawables);
+    }
+  else
+    {
+      drawables = g_list_prepend (NULL, tool->drawable);
+    }
+
+  new_drawables = g_hash_table_new (g_direct_hash, g_direct_equal);
+
+  for (iter = drawables; iter; iter = g_list_next (iter))
+    g_hash_table_add (new_drawables, iter->data);
+
+  for (iter = tg_tool->preview_drawables; iter; iter = g_list_next (iter))
+    {
+      drawable = iter->data;
+
+      if (! g_hash_table_remove (new_drawables, drawable))
+        gimp_transform_grid_tool_remove_filter (drawable, tg_tool);
+    }
+
+  g_hash_table_iter_init (&hash_iter, new_drawables);
+
+  while (g_hash_table_iter_next (&hash_iter, (gpointer *) &drawable, NULL))
+    {
+      AddFilterData data;
+
+      data.tg_tool       = tg_tool;
+      data.root_drawable = drawable;
+
+      gimp_transform_grid_tool_add_filter (drawable, &data);
+    }
+
+  g_hash_table_unref (new_drawables);
+
+  g_list_free (tg_tool->preview_drawables);
+  tg_tool->preview_drawables = drawables;
 }
 
 static void
@@ -1751,8 +1868,8 @@ gimp_transform_grid_tool_show_active_object (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_transform_grid_tool_add_filter (GimpDrawable          *drawable,
-                                     GimpTransformGridTool *tg_tool)
+gimp_transform_grid_tool_add_filter (GimpDrawable  *drawable,
+                                     AddFilterData *data)
 {
   Filter        *filter;
   GimpLayerMode  mode = GIMP_LAYER_MODE_NORMAL;
@@ -1765,39 +1882,29 @@ gimp_transform_grid_tool_add_filter (GimpDrawable          *drawable,
 
   if (mode != GIMP_LAYER_MODE_PASS_THROUGH)
     {
-      filter = filter_new (tg_tool, drawable, TRUE);
+      filter = filter_new (data->tg_tool, drawable, data->root_drawable, TRUE);
     }
   else
     {
       GimpContainer *container;
 
-      filter = filter_new (tg_tool, drawable, FALSE);
+      filter = filter_new (data->tg_tool, drawable, data->root_drawable, FALSE);
 
       container = gimp_viewable_get_children (GIMP_VIEWABLE (drawable));
 
       gimp_container_foreach (container,
                               (GFunc) gimp_transform_grid_tool_add_filter,
-                              tg_tool);
+                              data);
     }
 
-  filter->clip_drawable = drawable;
-
-  g_hash_table_insert (tg_tool->filters, drawable, filter);
+  g_hash_table_insert (data->tg_tool->filters, drawable, filter);
 
   if (GIMP_IS_LAYER (drawable))
     {
       GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
 
       if (mask)
-        {
-          Filter *mask_filter;
-
-          gimp_transform_grid_tool_add_filter (GIMP_DRAWABLE (mask), tg_tool);
-
-          mask_filter = g_hash_table_lookup (tg_tool->filters, mask);
-
-          mask_filter->clip_drawable = drawable;
-        }
+        gimp_transform_grid_tool_add_filter (GIMP_DRAWABLE (mask), data);
     }
 }
 
@@ -1845,8 +1952,13 @@ gimp_transform_grid_tool_effective_mode_changed (GimpLayer             *layer,
 
   if (old_pass_through != new_pass_through)
     {
+      AddFilterData data;
+
+      data.tg_tool       = tg_tool;
+      data.root_drawable = filter->root_drawable;
+
       gimp_transform_grid_tool_remove_filter (GIMP_DRAWABLE (layer), tg_tool);
-      gimp_transform_grid_tool_add_filter    (GIMP_DRAWABLE (layer), tg_tool);
+      gimp_transform_grid_tool_add_filter    (GIMP_DRAWABLE (layer), &data);
 
       gimp_transform_grid_tool_update_preview (tg_tool);
     }
@@ -1855,6 +1967,7 @@ gimp_transform_grid_tool_effective_mode_changed (GimpLayer             *layer,
 static Filter *
 filter_new (GimpTransformGridTool *tg_tool,
             GimpDrawable          *drawable,
+            GimpDrawable          *root_drawable,
             gboolean               add_filter)
 {
   Filter   *filter = g_slice_new0 (Filter);
@@ -1862,8 +1975,9 @@ filter_new (GimpTransformGridTool *tg_tool,
   GeglNode *input_node;
   GeglNode *output_node;
 
-  filter->tg_tool  = tg_tool;
-  filter->drawable = drawable;
+  filter->tg_tool       = tg_tool;
+  filter->drawable      = drawable;
+  filter->root_drawable = root_drawable;
 
   if (add_filter)
     {
