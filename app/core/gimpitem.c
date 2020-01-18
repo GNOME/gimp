@@ -2334,17 +2334,17 @@ gimp_item_set_linked (GimpItem *item,
 
   if (gimp_item_get_linked (item) != linked)
     {
-      if (push_undo && gimp_item_is_attached (item))
-        {
-          GimpImage *image = gimp_item_get_image (item);
+      GimpImage *image = gimp_item_get_image (item);
 
-          if (image)
-            gimp_image_undo_push_item_linked (image, NULL, item);
-        }
+      if (push_undo && image && gimp_item_is_attached (item))
+        gimp_image_undo_push_item_linked (image, NULL, item);
 
       GET_PRIVATE (item)->linked = linked;
 
       g_signal_emit (item, gimp_item_signals[LINKED_CHANGED], 0);
+
+      if (image)
+        gimp_image_linked_items_changed (image);
 
       g_object_notify (G_OBJECT (item), "linked");
     }
