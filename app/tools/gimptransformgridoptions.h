@@ -40,6 +40,7 @@ struct _GimpTransformGridOptions
   gboolean              direction_linked;
   gboolean              show_preview;
   gboolean              composited_preview;
+  gboolean              preview_linked;
   gboolean              synchronous_preview;
   gdouble               preview_opacity;
   GimpGuidesType        grid_type;

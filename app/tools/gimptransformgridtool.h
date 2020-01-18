@@ -61,11 +61,13 @@ struct _GimpTransformGridTool
 
   GimpToolWidget     *widget;
   GimpToolWidget     *grab_widget;
-  GHashTable         *filters;
   GimpCanvasItem     *preview;
   GimpCanvasItem     *boundary_in;
   GimpCanvasItem     *boundary_out;
   GPtrArray          *strokes;
+
+  GHashTable         *filters;
+  GList              *preview_drawables;
 
   GimpToolGui        *gui;
 };
