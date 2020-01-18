@@ -118,6 +118,9 @@ static void            gimp_group_layer_resize       (GimpItem        *item,
                                                       gint             new_height,
                                                       gint             offset_x,
                                                       gint             offset_y);
+static GimpTransformResize
+                       gimp_group_layer_get_clip     (GimpItem        *item,
+                                                      GimpTransformResize clip_result);
 
 static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
                                                       GimpComponentType  component_type,
@@ -277,6 +280,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->start_transform            = gimp_group_layer_start_transform;
   item_class->end_transform              = gimp_group_layer_end_transform;
   item_class->resize                     = gimp_group_layer_resize;
+  item_class->get_clip                   = gimp_group_layer_get_clip;
 
   item_class->default_name               = _("Layer Group");
   item_class->rename_desc                = C_("undo-type", "Rename Layer Group");
@@ -695,6 +699,16 @@ gimp_group_layer_resize (GimpItem     *item,
     }
 
   gimp_group_layer_resume_resize (group, TRUE);
+}
+
+static GimpTransformResize
+gimp_group_layer_get_clip (GimpItem            *item,
+                           GimpTransformResize  clip_result)
+{
+  /* TODO: add clipping support, by clipping all sublayers as a unit, instead
+   * of individually.
+   */
+  return GIMP_TRANSFORM_RESIZE_ADJUST;
 }
 
 static gint64
