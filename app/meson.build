@@ -180,6 +180,9 @@ else
   link_args = []
 endif
 
+if platform_osx
+  link_args += osx_ldflags
+endif
 
 gimpconsole_exe = executable('gimp-console-'+gimp_app_version,
   'main.c',

@@ -1,3 +1,6 @@
+if platform_osx
+  add_project_arguments('-ObjC', language : 'c')
+endif
 
 gimpversion = configure_file(
   input : 'gimpversion.h.in',

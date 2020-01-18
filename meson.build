@@ -143,7 +143,9 @@ platform_osx = (
   host_os.contains('darwin')
 )
 
-conf.set('PLATFORM_OSX', platform_osx)
+if platform_osx
+  conf.set('PLATFORM_OSX', 1)
+endif
 
 if platform_windows
   windows = import('windows')
@@ -152,6 +154,14 @@ if platform_windows
   # compiler_args += '-Wl,--large-address-aware'
 endif
 
+# on OSX ObjC and C sources are mixed so adding objc to the linkflags
+
+osx_ldflags = []
+if platform_osx
+  add_languages('objc')
+  osx_ldflags += ['-Wl,-framework,Foundation', '-Wl,-framework,AppKit', '-ObjC']
+  add_project_link_arguments(osx_ldflags, language : ['objc', 'c'])
+endif
 
 if cc.get_id() == 'gcc' and cc.version() == '7.2.0'
   gcc_warning = '''
@@ -1030,7 +1040,7 @@ endif
 
 
 # Check for GTK Mac Integration
-if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('xquartz'))
+if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('quartz'))
   gtk3_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
 else
   gtk3_macos = no_dep
