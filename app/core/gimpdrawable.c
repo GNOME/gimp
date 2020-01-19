@@ -1092,6 +1092,16 @@ gimp_drawable_update (GimpDrawable *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
+  /* TODO: if the drawable has filters, they may influence the region affected
+   * by the update, but we don't currently handle this.  for now, do the most
+   * conservative thing and simply update the entire drawable.
+   */
+  if (! gimp_container_is_empty (drawable->private->filter_stack))
+    {
+      width  = -1;
+      height = -1;
+    }
+
   if (width < 0)
     {
       GeglRectangle bounding_box;
