@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 19:27+0100\n"
-"PO-Revision-Date: 2020-01-12 19:28+0100\n"
+"POT-Creation-Date: 2020-01-19 13:10+0100\n"
+"PO-Revision-Date: 2020-01-19 13:11+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3135,9 +3135,9 @@ msgstr "240 sekund"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:342
+#: ../app/tools/gimpfiltertool.c:344
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1132
+#: ../app/tools/gimptransformgridtool.c:1243
 #: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:662
@@ -3188,7 +3188,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2169
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2180
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -5579,21 +5579,21 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:1100
+#: ../app/actions/filters-actions.c:1102
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:1101
+#: ../app/actions/filters-actions.c:1103
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl „%s” ponownie"
 
-#: ../app/actions/filters-actions.c:1139
+#: ../app/actions/filters-actions.c:1141
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:1141
+#: ../app/actions/filters-actions.c:1143
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -7867,7 +7867,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:341 ../app/tools/gimptransformgridtool.c:1129
+#: ../app/tools/gimpfiltertool.c:343 ../app/tools/gimptransformgridtool.c:1240
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -10436,7 +10436,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:197
-#: ../app/tools/gimpfiltertool.c:343 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:345 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -10790,7 +10790,7 @@ msgstr ""
 "Wystąpił błąd podczas przetwarzania pliku „%s”. Zostaną użyte wartości "
 "domyślne. Utworzono kopię zapasową konfiguracji w pliku „%s”."
 
-#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:441
+#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:442
 msgid "Layer"
 msgstr "Warstwa"
 
@@ -13112,7 +13112,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Zmiękczone zaznaczenie prostokątne"
 
-#: ../app/core/gimpchannel-select.c:421 ../app/core/gimplayer.c:449
+#: ../app/core/gimpchannel-select.c:421 ../app/core/gimplayer.c:450
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Zaznaczenie z kanału alfa"
@@ -13430,7 +13430,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:542 ../app/tools/gimpscaletool.c:121
+#: ../app/core/gimpdrawable.c:546 ../app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
@@ -13503,7 +13503,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:1035 ../app/core/gimplayer.c:448
+#: ../app/core/gimpdrawable-transform.c:1035 ../app/core/gimplayer.c:449
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
@@ -13680,103 +13680,103 @@ msgstr "Pionowe przesunięcie pierwszej linii siatki. Może być liczbą ujemną
 msgid "Offset unit"
 msgstr "Jednostka przesunięcia"
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:285
 msgid "Layer Group"
 msgstr "Grupa warstw"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:286
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Zmiana nazwy grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:287
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Przesunięcie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:288
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Skalowanie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:289
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Zmiana wymiarów grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:290
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Odbicie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:286
+#: ../app/core/gimpgrouplayer.c:291
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Obrót grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:287
+#: ../app/core/gimpgrouplayer.c:292
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Przekształcenie grupy warstw"
 
-#: ../app/core/gimpimage.c:680 ../app/widgets/gimpsymmetryeditor.c:175
+#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:175
 msgid "Symmetry"
 msgstr "Symetria"
 
-#: ../app/core/gimpimage.c:2414
+#: ../app/core/gimpimage.c:2425
 msgid " (exported)"
 msgstr " (wyeksportowany)"
 
-#: ../app/core/gimpimage.c:2418
+#: ../app/core/gimpimage.c:2429
 msgid " (overwritten)"
 msgstr " (zastąpiony)"
 
-#: ../app/core/gimpimage.c:2427
+#: ../app/core/gimpimage.c:2438
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2601 ../app/core/gimpimage.c:2615
-#: ../app/core/gimpimage.c:2658
+#: ../app/core/gimpimage.c:2612 ../app/core/gimpimage.c:2626
+#: ../app/core/gimpimage.c:2669
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Tryb warstwy „%s” został dodany w %s"
 
-#: ../app/core/gimpimage.c:2673
+#: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Grupy warstw zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2680
+#: ../app/core/gimpimage.c:2691
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maski na grupach warstw zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2696
+#: ../app/core/gimpimage.c:2707
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Obrazy o głębi wysokobitowej zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2708
+#: ../app/core/gimpimage.c:2719
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Wewnętrzna kompresja zlib została dodana w %s"
 
-#: ../app/core/gimpimage.c:2725
+#: ../app/core/gimpimage.c:2736
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Obsługa plików obrazów większych niż 4 GB została dodana w %s"
 
-#: ../app/core/gimpimage.c:2821
+#: ../app/core/gimpimage.c:2832
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2873
+#: ../app/core/gimpimage.c:2884
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3816
+#: ../app/core/gimpimage.c:3835
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13784,47 +13784,47 @@ msgstr ""
 "Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
 "powiodło: komentarz zawiera nieprawidłowe UTF-8"
 
-#: ../app/core/gimpimage.c:3875
+#: ../app/core/gimpimage.c:3894
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3917
+#: ../app/core/gimpimage.c:3936
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4648
+#: ../app/core/gimpimage.c:4667
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4690 ../app/core/gimpimage.c:4721
+#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4740
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4715
+#: ../app/core/gimpimage.c:4734
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4882
+#: ../app/core/gimpimage.c:4901
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4910 ../app/core/gimpimage.c:4934
+#: ../app/core/gimpimage.c:4929 ../app/core/gimpimage.c:4953
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4990
+#: ../app/core/gimpimage.c:5009
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:5020 ../app/core/gimpimage.c:5027
+#: ../app/core/gimpimage.c:5039 ../app/core/gimpimage.c:5046
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -14227,7 +14227,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-selection.c:176 ../app/core/gimplayer.c:1045
+#: ../app/core/gimplayer-floating-selection.c:176 ../app/core/gimplayer.c:1047
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14240,76 +14240,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: ../app/core/gimplayer.c:442
+#: ../app/core/gimplayer.c:443
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Zmiana nazwy warstwy"
 
-#: ../app/core/gimplayer.c:443
+#: ../app/core/gimplayer.c:444
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Przesunięcie warstwy"
 
-#: ../app/core/gimplayer.c:444
+#: ../app/core/gimplayer.c:445
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Skalowanie warstwy"
 
-#: ../app/core/gimplayer.c:445
+#: ../app/core/gimplayer.c:446
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Zmiana wymiarów warstwy"
 
-#: ../app/core/gimplayer.c:446
+#: ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Odbicie warstwy"
 
-#: ../app/core/gimplayer.c:447
+#: ../app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Obrót warstwy"
 
-#: ../app/core/gimplayer.c:450
+#: ../app/core/gimplayer.c:451
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Zmiana pozycji warstwy"
 
-#: ../app/core/gimplayer.c:451
+#: ../app/core/gimplayer.c:452
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Podniesienie warstwy"
 
-#: ../app/core/gimplayer.c:452
+#: ../app/core/gimplayer.c:453
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Podniesienie warstwy na wierzch"
 
-#: ../app/core/gimplayer.c:453
+#: ../app/core/gimplayer.c:454
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Obniżenie warstwy"
 
-#: ../app/core/gimplayer.c:454
+#: ../app/core/gimplayer.c:455
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Obniżenie warstwy na dno"
 
-#: ../app/core/gimplayer.c:455
+#: ../app/core/gimplayer.c:456
 msgid "Layer cannot be raised higher."
 msgstr "Nie można bardziej podnieść warstwy."
 
-#: ../app/core/gimplayer.c:456
+#: ../app/core/gimplayer.c:457
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:746 ../app/core/gimplayer.c:1926
-#: ../app/core/gimplayermask.c:270
+#: ../app/core/gimplayer.c:748 ../app/core/gimplayer.c:1947
+#: ../app/core/gimplayermask.c:285
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
 
-#: ../app/core/gimplayer.c:785
+#: ../app/core/gimplayer.c:787
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -14318,75 +14318,75 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1830
+#: ../app/core/gimplayer.c:1851
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1841
+#: ../app/core/gimplayer.c:1862
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1847
+#: ../app/core/gimplayer.c:1868
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1967
+#: ../app/core/gimplayer.c:1988
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:2129
+#: ../app/core/gimplayer.c:2150
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:2130
+#: ../app/core/gimplayer.c:2151
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:2234
+#: ../app/core/gimplayer.c:2255
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2235
+#: ../app/core/gimplayer.c:2256
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2311
+#: ../app/core/gimplayer.c:2334
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2385
+#: ../app/core/gimplayer.c:2408
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:2420
+#: ../app/core/gimplayer.c:2443
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:2441
+#: ../app/core/gimplayer.c:2464
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
 
-#: ../app/core/gimplayermask.c:82
+#: ../app/core/gimplayermask.c:83
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Przesunięcie maski warstwy"
 
-#: ../app/core/gimplayermask.c:83
+#: ../app/core/gimplayermask.c:84
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Maska warstwy na zaznaczenie"
 
-#: ../app/core/gimplayermask.c:194
+#: ../app/core/gimplayermask.c:196
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Nie można zmienić nazwy maski warstwy."
@@ -18040,7 +18040,7 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:364
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:287 ../app/tools/gimpgradienttool.c:254
+#: ../app/tools/gimpfiltertool.c:289 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpselectiontool.c:530
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -18049,7 +18049,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:372
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
-#: ../app/tools/gimpfiltertool.c:294 ../app/tools/gimpgradienttool.c:261
+#: ../app/tools/gimpfiltertool.c:296 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:295
 #: ../app/tools/gimpselectiontool.c:537 ../app/tools/gimptransformtool.c:688
 #: ../app/tools/gimpwarptool.c:683
@@ -20036,8 +20036,8 @@ msgstr "Odwrócenie"
 #: ../app/pdb/drawable-transform-cmds.c:478
 #: ../app/pdb/item-transform-cmds.c:340 ../app/pdb/transform-tools-cmds.c:177
 #: ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformgridoptions.c:529
-#: ../app/tools/gimptransformgridoptions.c:538
+#: ../app/tools/gimptransformgridoptions.c:594
+#: ../app/tools/gimptransformgridoptions.c:603
 msgid "Perspective"
 msgstr "Perspektywa"
 
@@ -20552,271 +20552,271 @@ msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Mikser kanałów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1054
+#: ../app/pdb/plug-in-compat-cmds.c:1052
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Zmiana koloru na alfę"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1100
+#: ../app/pdb/plug-in-compat-cmds.c:1098
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "Macierz „matrix” ma tylko %d elementy, musi mieć 25"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1108
+#: ../app/pdb/plug-in-compat-cmds.c:1106
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "Macierz „channels” ma tylko %d elementy, musi mieć 5"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1180
+#: ../app/pdb/plug-in-compat-cmds.c:1178
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Zniekształcenia macierzowe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1242
+#: ../app/pdb/plug-in-compat-cmds.c:1240
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Kubizm"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1287
+#: ../app/pdb/plug-in-compat-cmds.c:1285
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Usunięcie przeplotu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1366
+#: ../app/pdb/plug-in-compat-cmds.c:1364
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Desenie dyfrakcyjne"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1525
+#: ../app/pdb/plug-in-compat-cmds.c:1523
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Krawędź"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1569
+#: ../app/pdb/plug-in-compat-cmds.c:1567
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Grawerowanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1642
+#: ../app/pdb/plug-in-compat-cmds.c:1640
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Wymiana kolorów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1690
+#: ../app/pdb/plug-in-compat-cmds.c:1688
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Błysk soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1874
+#: ../app/pdb/plug-in-compat-cmds.c:1872
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Szklane płytki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1927
+#: ../app/pdb/plug-in-compat-cmds.c:1925
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Szum HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2206 ../app/pdb/plug-in-compat-cmds.c:2261
+#: ../app/pdb/plug-in-compat-cmds.c:2204 ../app/pdb/plug-in-compat-cmds.c:2259
 msgid "Set color profile"
 msgstr "Ustaw profil kolorów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2316
+#: ../app/pdb/plug-in-compat-cmds.c:2314
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Iluzja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2353
+#: ../app/pdb/plug-in-compat-cmds.c:2351
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2429
+#: ../app/pdb/plug-in-compat-cmds.c:2427
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Zniekształcenie soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2469
+#: ../app/pdb/plug-in-compat-cmds.c:2467
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Bezszwowe kafelki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2536
+#: ../app/pdb/plug-in-compat-cmds.c:2534
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Labirynt"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2619 ../app/pdb/plug-in-compat-cmds.c:2703
+#: ../app/pdb/plug-in-compat-cmds.c:2617 ../app/pdb/plug-in-compat-cmds.c:2701
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Rozmycie ruchu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2804
+#: ../app/pdb/plug-in-compat-cmds.c:2802
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaika"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2848
+#: ../app/pdb/plug-in-compat-cmds.c:2846
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neon"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2936
+#: ../app/pdb/plug-in-compat-cmds.c:2934
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Papier gazetowy"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2976
+#: ../app/pdb/plug-in-compat-cmds.c:2974
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normalizacja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3038
+#: ../app/pdb/plug-in-compat-cmds.c:3036
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernowa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3082 ../app/pdb/plug-in-compat-cmds.c:3150
+#: ../app/pdb/plug-in-compat-cmds.c:3080 ../app/pdb/plug-in-compat-cmds.c:3148
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Farba olejna"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3240
+#: ../app/pdb/plug-in-compat-cmds.c:3238
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Kawałki papieru"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3281 ../app/pdb/plug-in-compat-cmds.c:3324
+#: ../app/pdb/plug-in-compat-cmds.c:3279 ../app/pdb/plug-in-compat-cmds.c:3322
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikselizacja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3375
+#: ../app/pdb/plug-in-compat-cmds.c:3373
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3429
+#: ../app/pdb/plug-in-compat-cmds.c:3427
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Współrzędne polarne"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3469
+#: ../app/pdb/plug-in-compat-cmds.c:3467
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Usunięcie efektu czerwonych oczu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3522
+#: ../app/pdb/plug-in-compat-cmds.c:3520
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Losowe wygniecenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3575
+#: ../app/pdb/plug-in-compat-cmds.c:3573
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Losowe wyciosanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3628
+#: ../app/pdb/plug-in-compat-cmds.c:3626
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Losowe rozszarpanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3703
+#: ../app/pdb/plug-in-compat-cmds.c:3701
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Szum RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3773
+#: ../app/pdb/plug-in-compat-cmds.c:3771
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Falowanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3898
+#: ../app/pdb/plug-in-compat-cmds.c:3896
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Dodanie szumu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3942
+#: ../app/pdb/plug-in-compat-cmds.c:3940
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Wybiórcze rozmycie Gaussa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3986
+#: ../app/pdb/plug-in-compat-cmds.c:3984
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Półspłaszczenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4029
+#: ../app/pdb/plug-in-compat-cmds.c:4027
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Przesunięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4132
+#: ../app/pdb/plug-in-compat-cmds.c:4130
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4180
+#: ../app/pdb/plug-in-compat-cmds.c:4178
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4241
+#: ../app/pdb/plug-in-compat-cmds.c:4239
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Jednolity szum"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4285
+#: ../app/pdb/plug-in-compat-cmds.c:4283
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Rozrzucenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4326
+#: ../app/pdb/plug-in-compat-cmds.c:4324
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Próg alfy"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4372
+#: ../app/pdb/plug-in-compat-cmds.c:4370
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Wyostrzenie (maska wyostrzająca)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4418
+#: ../app/pdb/plug-in-compat-cmds.c:4416
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Wideo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4455
+#: ../app/pdb/plug-in-compat-cmds.c:4453
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Odwrócenie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4559
+#: ../app/pdb/plug-in-compat-cmds.c:4557
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Rozprowadzanie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4606
+#: ../app/pdb/plug-in-compat-cmds.c:4604
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Rozciągnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4653
+#: ../app/pdb/plug-in-compat-cmds.c:4651
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erozja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4716
+#: ../app/pdb/plug-in-compat-cmds.c:4714
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Fale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4764
+#: ../app/pdb/plug-in-compat-cmds.c:4762
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Skręcenie i zaciśnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4816
+#: ../app/pdb/plug-in-compat-cmds.c:4814
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Wiatr"
@@ -21773,7 +21773,7 @@ msgid "Bucket fill"
 msgstr "Wypełnienie kubełkiem"
 
 #: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
-#: ../app/tools/gimpfiltertool.c:304
+#: ../app/tools/gimpfiltertool.c:306
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:323
 #: ../app/tools/gimptransformtool.c:697 ../app/tools/gimpwarptool.c:697
@@ -22272,7 +22272,7 @@ msgstr "_Sterowanie na obszarze rysowania"
 msgid "Show on-canvas filter controls"
 msgstr "Wyświetla sterowanie filtrami na obszarze rysowania"
 
-#: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:447
+#: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:449
 #: ../app/tools/gimpflipoptions.c:156 ../app/tools/gimptransformoptions.c:108
 #: ../app/tools/gimptransformoptions.c:264
 msgid "Clipping"
@@ -22287,50 +22287,50 @@ msgid "Color _managed"
 msgstr "_Zarządzanie kolorami"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:401
+#: ../app/tools/gimpfiltertool.c:403
 msgid "Advanced Color Options"
 msgstr "Zaawansowane opcje kolorów"
 
-#: ../app/tools/gimpfiltertool.c:420
+#: ../app/tools/gimpfiltertool.c:422
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 "Konwertowanie pikseli do wbudowanej przestrzeni sRGB, aby zastosować filtr "
 "(wolne)"
 
-#: ../app/tools/gimpfiltertool.c:421
+#: ../app/tools/gimpfiltertool.c:423
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Przyjmowanie, że piksele są we wbudowanej przestrzeni sRGB (ignorowanie "
 "prawdziwej przestrzeni kolorów obrazu)"
 
-#: ../app/tools/gimpfiltertool.c:665
+#: ../app/tools/gimpfiltertool.c:667
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:669
+#: ../app/tools/gimpfiltertool.c:671
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:673
+#: ../app/tools/gimpfiltertool.c:675
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przemieści prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:675
+#: ../app/tools/gimpfiltertool.c:677
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:676
+#: ../app/tools/gimpfiltertool.c:678
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:1463 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1442 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1465 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1444 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -23180,8 +23180,8 @@ msgid "Show lattice"
 msgstr "Kratka"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:523
-#: ../app/tools/gimptransformgridoptions.c:534
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:588
+#: ../app/tools/gimptransformgridoptions.c:599
 msgid "Scale"
 msgstr "Skalowanie"
 
@@ -23406,7 +23406,7 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr "Używa wszystkich widocznych warstw podczas zmniejszania zaznaczenia"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:123
+#: ../app/tools/gimptransformgridoptions.c:147
 msgid "Composition guides such as rule of thirds"
 msgstr "Prowadnice kompozycji, takie jak jedna trzecia"
 
@@ -23542,7 +23542,7 @@ msgid "Move the mouse to change threshold"
 msgstr "Poruszenie myszą zmieni próg"
 
 #: ../app/tools/gimprotatetool.c:102
-#: ../app/tools/gimptransformgridoptions.c:525
+#: ../app/tools/gimptransformgridoptions.c:590
 #: ../app/tools/gimptransform3dtool.c:422
 msgid "Rotate"
 msgstr "Obrót"
@@ -23691,8 +23691,8 @@ msgstr "Nie można odjąć od pustego zaznaczenia."
 msgid "Cannot intersect with an empty selection."
 msgstr "Nie można przeciąć z pustym zaznaczeniem."
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:527
-#: ../app/tools/gimptransformgridoptions.c:536
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:592
+#: ../app/tools/gimptransformgridoptions.c:601
 msgid "Shear"
 msgstr "Nachylenie"
 
@@ -23934,171 +23934,195 @@ msgstr ""
 "Brak opcji\n"
 "powiązanych z narzędziem."
 
-#: ../app/tools/gimptransformgridoptions.c:108
+#: ../app/tools/gimptransformgridoptions.c:111
 msgid "Show image preview"
 msgstr "Podgląd obrazu"
 
-#: ../app/tools/gimptransformgridoptions.c:109
+#: ../app/tools/gimptransformgridoptions.c:112
 msgid "Show a preview of the transformed image"
-msgstr "Wyświetlenie podglądu przekształcanego obrazu"
+msgstr "Wyświetla podgląd przekształcanego obrazu"
 
-#: ../app/tools/gimptransformgridoptions.c:115
+#: ../app/tools/gimptransformgridoptions.c:118
+msgid "Composited preview"
+msgstr "Podgląd złożony"
+
+#: ../app/tools/gimptransformgridoptions.c:119
+msgid "Show preview as part of the image composition"
+msgstr "Wyświetla podgląd jako część złożenia obrazu"
+
+#: ../app/tools/gimptransformgridoptions.c:125
+msgid "Preview linked items"
+msgstr "Podgląd powiązanych elementów"
+
+#: ../app/tools/gimptransformgridoptions.c:126
+msgid "Include linked items in the preview"
+msgstr "Zawiera powiązane elementy w podglądzie"
+
+#: ../app/tools/gimptransformgridoptions.c:132
+msgid "Synchronous preview"
+msgstr "Podgląd synchroniczny"
+
+#: ../app/tools/gimptransformgridoptions.c:133
+msgid "Render the preview synchronously"
+msgstr "Synchronicznie wyświetla podgląd"
+
+#: ../app/tools/gimptransformgridoptions.c:139
 msgid "Image opacity"
 msgstr "Krycie obrazu"
 
-#: ../app/tools/gimptransformgridoptions.c:116
+#: ../app/tools/gimptransformgridoptions.c:140
 msgid "Opacity of the preview image"
 msgstr "Krycie obrazu podglądu"
 
-#: ../app/tools/gimptransformgridoptions.c:122
-#: ../app/tools/gimptransformgridoptions.c:414
+#: ../app/tools/gimptransformgridoptions.c:146
+#: ../app/tools/gimptransformgridoptions.c:482
 msgid "Guides"
 msgstr "Prowadnice"
 
-#: ../app/tools/gimptransformgridoptions.c:131
+#: ../app/tools/gimptransformgridoptions.c:155
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Rozmiar komórki siatki dla zmiennej liczby prowadnic kompozycji"
 
-#: ../app/tools/gimptransformgridoptions.c:437
+#: ../app/tools/gimptransformgridoptions.c:504
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 stopni (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:444
+#: ../app/tools/gimptransformgridoptions.c:511
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Ograniczenie kroków obrotu do 15 stopni"
 
-#: ../app/tools/gimptransformgridoptions.c:454
+#: ../app/tools/gimptransformgridoptions.c:520
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Stałe proporcje (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:461
+#: ../app/tools/gimptransformgridoptions.c:527
 msgid "Keep the original aspect ratio"
 msgstr "Utrzymywanie pierwotnych proporcji"
 
-#: ../app/tools/gimptransformgridoptions.c:466
-#: ../app/tools/gimptransformgridoptions.c:496
+#: ../app/tools/gimptransformgridoptions.c:532
+#: ../app/tools/gimptransformgridoptions.c:561
 #, c-format
 msgid "Around center (%s)"
 msgstr "Wokół środka (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:473
+#: ../app/tools/gimptransformgridoptions.c:539
 msgid "Scale around the center point"
 msgstr "Skalowanie wokół punktu środkowego"
 
-#: ../app/tools/gimptransformgridoptions.c:483
+#: ../app/tools/gimptransformgridoptions.c:548
 #, c-format
 msgid "Constrain handles (%s)"
 msgstr "Ograniczenie uchwytów (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:491
+#: ../app/tools/gimptransformgridoptions.c:556
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr "Ograniczenie ruchu uchwytów wzdłuż krawędzi i przekątnej (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:504
+#: ../app/tools/gimptransformgridoptions.c:569
 msgid "Transform around the center point"
 msgstr "Przekształcenie wokół punktu środkowego"
 
-#: ../app/tools/gimptransformgridoptions.c:520
+#: ../app/tools/gimptransformgridoptions.c:585
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Ograniczenie (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:521
+#: ../app/tools/gimptransformgridoptions.c:586
 #: ../app/tools/gimptransform3dtool.c:335
 msgid "Move"
 msgstr "Ruch"
 
-#: ../app/tools/gimptransformgridoptions.c:522
+#: ../app/tools/gimptransformgridoptions.c:587
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Ograniczenie ruchu do 45 stopni od środka (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:524
+#: ../app/tools/gimptransformgridoptions.c:589
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Utrzymywanie proporcji podczas skalowania (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:526
+#: ../app/tools/gimptransformgridoptions.c:591
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ograniczenie obrotu do 15-stopniowych kroków (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:528
+#: ../app/tools/gimptransformgridoptions.c:593
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Nachylanie tylko wzdłuż kierunku krawędzi (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:530
+#: ../app/tools/gimptransformgridoptions.c:595
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Ograniczenie ruchu uchwytów perspektywy wzdłuż krawędzi i przekątnej (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:533
+#: ../app/tools/gimptransformgridoptions.c:598
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Od osi  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:535
+#: ../app/tools/gimptransformgridoptions.c:600
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Skalowanie od punktu osi (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:537
+#: ../app/tools/gimptransformgridoptions.c:602
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Nachylanie przeciwległej krawędzi o tę samą wartość (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:539
+#: ../app/tools/gimptransformgridoptions.c:604
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Utrzymywanie położenia osi podczas zmieniania perspektywy (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:542
+#: ../app/tools/gimptransformgridoptions.c:607
 msgid "Pivot"
 msgstr "Oś"
 
-#: ../app/tools/gimptransformgridoptions.c:543
+#: ../app/tools/gimptransformgridoptions.c:608
 #, c-format
 msgid "Snap (%s)"
 msgstr "Przyciąganie (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:544
+#: ../app/tools/gimptransformgridoptions.c:609
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Przyciąganie osi do rogów i środka (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:545
+#: ../app/tools/gimptransformgridoptions.c:610
 msgid "Lock"
 msgstr "Blokowanie"
 
-#: ../app/tools/gimptransformgridoptions.c:546
+#: ../app/tools/gimptransformgridoptions.c:611
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
-#: ../app/tools/gimptransformgridtool.c:233
+#: ../app/tools/gimptransformgridtool.c:291
 #: ../app/tools/gimptransformtool.c:437
 msgid "_Transform"
 msgstr "Prze_kształć"
 
-#: ../app/tools/gimptransformgridtool.c:505
-#: ../app/tools/gimptransformgridtool.c:517
+#: ../app/tools/gimptransformgridtool.c:572
+#: ../app/tools/gimptransformgridtool.c:584
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformgridtool.c:908
+#: ../app/tools/gimptransformgridtool.c:979
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (korekta)"
 
-#: ../app/tools/gimptransformgridtool.c:1131
+#: ../app/tools/gimptransformgridtool.c:1242
 msgid "Re_adjust"
 msgstr "_Dopasuj"
 
-#: ../app/tools/gimptransformgridtool.c:1379
+#: ../app/tools/gimptransformgridtool.c:1490
 msgid "Cannot readjust the transformation"
 msgstr "Nie można dopasować przekształcenia"
 
