@@ -159,8 +159,8 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLE_REFLECTION,
                             "enable-reflection",
-                            _("Enable reflection"),
-                            _("Enable reflection"),
+                            _("Kaleidoscope"),
+                            _("Reflect consecutive strokes"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_SYMMETRY_PARAM_GUI);
@@ -458,12 +458,28 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
   GimpCoords  *coords;
   GimpMatrix3  matrix;
   gint         i;
+  gdouble slice_angle;
+  gdouble mid_slice_angle = 0.0;
 
   g_list_free_full (sym->strokes, g_free);
   sym->strokes = NULL;
 
   coords = g_memdup (sym->origin, sizeof (GimpCoords));
   sym->strokes = g_list_prepend (sym->strokes, coords);
+
+  /* The angle of each slice, in radians. */
+  slice_angle = 2.0 * G_PI / mandala->size;
+
+  if (mandala->enable_reflection)
+    {
+      /* Find out in which slice the user is currently drawing. */
+      gdouble angle = atan2 (sym->origin->y - mandala->center_y,
+                             sym->origin->x - mandala->center_x);
+      gint slice_no = (int) floor(angle/slice_angle);
+
+      /* Angle where the middle of that slice is. */
+      mid_slice_angle = slice_no * slice_angle + slice_angle / 2.0;
+    }
 
   for (i = 1; i < mandala->size; i++)
     {
@@ -474,14 +490,16 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
       gimp_matrix3_translate (&matrix,
                               - mandala->center_x,
                               - mandala->center_y);
-      if ( mandala->enable_reflection && i % 2 == 1 )
+      if (mandala->enable_reflection && i % 2 == 1)
         {
-          gimp_matrix3_scale (&matrix, -1, 1);
-          gimp_matrix3_rotate (&matrix, G_PI - (i+1) * 2.0 * G_PI / (gdouble) mandala->size);
+          /* Reflecting over the mid_slice_angle axis, reflects slice without changing position. */
+          gimp_matrix3_rotate(&matrix, -mid_slice_angle);
+          gimp_matrix3_scale (&matrix, 1, -1);
+          gimp_matrix3_rotate(&matrix, mid_slice_angle - i * slice_angle);
         }
       else
         {
-          gimp_matrix3_rotate (&matrix, - i * 2.0 * G_PI / (gdouble) mandala->size);
+          gimp_matrix3_rotate (&matrix, - i * slice_angle);
         }
       gimp_matrix3_translate (&matrix,
                               mandala->center_x,
@@ -508,11 +526,30 @@ gimp_mandala_get_transform (GimpSymmetry *sym,
                             gboolean     *reflect)
 {
   GimpMandala *mandala = GIMP_MANDALA (sym);
+  gdouble     slice_angle;
 
   if (mandala->disable_transformation)
     return;
 
-  *angle = 360.0 * stroke / mandala->size;
+  slice_angle = 360.0 / mandala->size;
+
+  if (mandala->enable_reflection && stroke % 2 == 1)
+    {
+      /* Find out in which slice the user is currently drawing. */
+      gdouble origin_angle = gimp_rad_to_deg (atan2 (sym->origin->y - mandala->center_y,
+                                                     sym->origin->x - mandala->center_x));
+      gint slice_no = (int) floor(origin_angle/slice_angle);
+
+      /* Angle where the middle of that slice is. */
+      gdouble mid_slice_angle = slice_no * slice_angle + slice_angle / 2.0;
+
+      *angle = 180.0 - (-2 * mid_slice_angle + stroke * slice_angle) ;
+      *reflect = TRUE;
+    }
+  else
+    {
+      *angle = stroke * slice_angle;
+    }
 }
 
 static void
