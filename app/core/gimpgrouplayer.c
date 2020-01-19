@@ -33,6 +33,7 @@
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
 
+#include "gimpdrawable-filters.h"
 #include "gimpgrouplayer.h"
 #include "gimpgrouplayerundo.h"
 #include "gimpimage.h"
@@ -2256,6 +2257,24 @@ gimp_group_layer_proj_update (GimpProjection *proj,
 
   if (! private->pass_through)
     {
+      /* TODO: groups can currently have a gegl:transform op attached as a filter
+       * when using a transform tool, in which case the updated region needs
+       * undergo the same transformation.  more generally, when a drawable has
+       * filters they may influence the area affected by drawable updates.
+       *
+       * this needs to be addressed much more generally at some point, but for now
+       * we just resort to updating the entire group when it has a filter (i.e.,
+       * when it's being used with a transform tool).  we restrict this to groups,
+       * and don't do this more generally in gimp_drawable_update(), because this
+       * negatively impacts the performance of the warp tool, which does perform
+       * accurate drawable updates while using a filter.
+       */
+      if (gimp_drawable_has_filters (GIMP_DRAWABLE (group)))
+        {
+          width  = -1;
+          height = -1;
+        }
+
       /*  the projection speaks in image coordinates, transform to layer
        *  coordinates when emitting our own update signal.
        */
