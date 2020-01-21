@@ -31,6 +31,7 @@
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
@@ -1456,6 +1457,7 @@ gimp_item_scale_by_factors_with_origin (GimpItem              *item,
                                         GimpProgress          *progress)
 {
   GimpItemPrivate *private;
+  GimpContainer   *children;
   gint             new_width, new_height;
   gint             new_offset_x, new_offset_y;
 
@@ -1470,6 +1472,12 @@ gimp_item_scale_by_factors_with_origin (GimpItem              *item,
                  G_STRFUNC);
       return FALSE;
     }
+
+  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+  /* avoid discarding empty layer groups */
+  if (children && gimp_container_is_empty (children))
+    return TRUE;
 
   new_offset_x = SIGNED_ROUND (w_factor * (private->offset_x - origin_x));
   new_offset_y = SIGNED_ROUND (h_factor * (private->offset_y - origin_y));
