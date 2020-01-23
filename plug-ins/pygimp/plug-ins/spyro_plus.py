@@ -42,12 +42,21 @@ pdb = gimp.pdb
 
 two_pi, half_pi = 2 * pi, pi / 2
 layer_name = _("Spyro Layer")
+path_name = _("Spyro Path")
 
 # "Enums"
 GEAR_NOTATION, TOY_KIT_NOTATION, VISUAL_NOTATION = range(3)       # Pattern notations
 
 # Mapping of pattern notation to the corresponding tab in the pattern notation notebook.
 pattern_notation_page = {}
+
+# Save options of the dialog
+SAVE_AS_NEW_LAYER, SAVE_BY_REDRAW, SAVE_AS_PATH = range(3)
+save_options = [
+    _("Save\nas New Layer"),
+    _("Redraw on\nActive layer"),
+    _("Save\nas Path")
+]
 
 ring_teeth = [96, 144, 105, 150]
 
@@ -589,6 +598,25 @@ class StrokePaintTool(AbstractStrokeTool):
         pdb.gimp_context_set_paint_method(self.paint_method)
 
 
+class SaveToPathTool():
+    """ This tool cannot be chosen by the user from the tools menu.
+        We dont add this to the list of tools. """
+
+    def __init__(self, img):
+        self.path = pdb.gimp_vectors_new(img, path_name)
+        pdb.gimp_image_add_vectors(img, self.path, 0)
+
+    def draw(self, layer, strokes, color=None):
+        # We need to multiply every point by 3, because we are creating a path,
+        #  where each point has two additional control points.
+        control_points = []
+        for i, k in zip(strokes[0::2], strokes[1::2]):
+            control_points += [i, k] * 3
+
+        sid = pdb.gimp_vectors_stroke_new_from_points(self.path, 0, len(control_points),
+                                                      control_points, False)
+
+
 tools = [
     PreviewTool(),
     StrokePaintTool(_("PaintBrush"), "gimp-paintbrush"),
@@ -667,8 +695,8 @@ class PatternParameters:
         if not hasattr(self, 'long_gradient'):
             self.long_gradient = False
 
-        if not hasattr(self, 'keep_separate_layer'):
-            self.keep_separate_layer = True
+        if not hasattr(self, 'save_option'):
+            self.save_option = SAVE_AS_NEW_LAYER
 
     def kit_max_hole_number(self):
         return wheel[self.kit_moving_gear_index][1]
@@ -1011,9 +1039,11 @@ class DrawingEngine:
 
     # Methods for incremental drawing.
 
-    def draw_next_chunk(self, layer, fetch_next_drawing=True):
+    def draw_next_chunk(self, layer, fetch_next_drawing=True, tool=None):
         stroke_chunk, color = self.next_chunk(fetch_next_drawing)
-        tools[self.p.tool_index].draw(layer, stroke_chunk, color)
+        if not tool:
+            tool = tools[self.p.tool_index]
+        tool.draw(layer, stroke_chunk, color)
         return len(stroke_chunk)
 
     def set_strokes(self):
@@ -1628,15 +1658,15 @@ class SpyroWindow(gtk.Window):
             add_button_to_box(hbox, _("_Cancel"), self.cancel_window)
             self.ok_btn = add_button_to_box(hbox, _("_OK"), self.ok_window)
 
-            self.keep_separate_layer_checkbox = gtk.CheckButton(_("Keep\nLayer"))
-            self.keep_separate_layer_checkbox.set_tooltip_text(
-                _("If checked, then once OK is pressed, the spyro layer is kept, and the plugin exits quickly. "
-                  "If unchecked, the spyro layer is deleted, and the pattern is redrawn on the layer that was "
-                  "active when the plugin was launched.")
+            self.save_option_combo = gtk.combo_box_new_text()
+            for txt in save_options:
+                self.save_option_combo.append_text(txt)
+            self.save_option_combo.set_tooltip_text(
+                _("Choose whether to save as new layer, redraw on last active layer, or save to path")
             )
-            hbox.add(self.keep_separate_layer_checkbox)
-            self.keep_separate_layer_checkbox.show()
-            self.keep_separate_layer_checkbox.connect("toggled", self.keep_separate_layer_checkbox_changed)
+            hbox.add(self.save_option_combo)
+            self.save_option_combo.show()
+            self.save_option_combo.connect("changed", self.save_option_changed)
 
             return hbox
 
@@ -1731,7 +1761,7 @@ class SpyroWindow(gtk.Window):
 
         shelf_parameters(self.p)
 
-        if self.p.keep_separate_layer:
+        if self.p.save_option == SAVE_AS_NEW_LAYER:
             if self.spyro_layer in self.img.layers:
                 self.img.active_layer = self.spyro_layer
 
@@ -1760,7 +1790,7 @@ class SpyroWindow(gtk.Window):
 
             self.drawing_layer = self.active_layer
 
-            def draw_full():
+            def draw_full(tool):
                 self.progress_start()
                 yield True
 
@@ -1770,7 +1800,7 @@ class SpyroWindow(gtk.Window):
 
                 while self.engine.has_more_strokes():
                     yield True
-                    self.draw_next_chunk(undo_group=False)
+                    self.draw_next_chunk(undo_group=False, tool=tool)
 
                 self.img.undo_group_end()
 
@@ -1779,7 +1809,8 @@ class SpyroWindow(gtk.Window):
                 gtk.main_quit()
                 yield False
 
-            task = draw_full()
+            tool = SaveToPathTool(self.img) if self.p.save_option == SAVE_AS_PATH else None
+            task = draw_full(tool)
             gobject.idle_add(task.next)
 
     def cancel_window(self, widget, what=None):
@@ -1828,7 +1859,7 @@ class SpyroWindow(gtk.Window):
         self.margin_adj.set_value(self.p.margin_pixels)
         self.tool_combo.set_active(self.p.tool_index)
         self.long_gradient_checkbox.set_active(self.p.long_gradient)
-        self.keep_separate_layer_checkbox.set_active(self.p.keep_separate_layer)
+        self.save_option_combo.set_active(self.p.save_option)
 
     def reset_params(self, widget):
         self.engine.p = self.p = PatternParameters()
@@ -1999,8 +2030,8 @@ class SpyroWindow(gtk.Window):
         self.p.long_gradient = val.get_active()
         self.redraw()
 
-    def keep_separate_layer_checkbox_changed(self, val):
-        self.p.keep_separate_layer = self.keep_separate_layer_checkbox.get_active()
+    def save_option_changed(self, val):
+        self.p.save_option = self.save_option_combo.get_active()
 
     # Progress bar of plugin window.
 
@@ -2023,14 +2054,14 @@ class SpyroWindow(gtk.Window):
 
     # Incremental drawing.
 
-    def draw_next_chunk(self, undo_group=True):
+    def draw_next_chunk(self, undo_group=True, tool=None):
         """ Incremental drawing """
 
         t = time.time()
 
         if undo_group:
             self.img.undo_group_start()
-        chunk_size = self.engine.draw_next_chunk(self.drawing_layer)
+        chunk_size = self.engine.draw_next_chunk(self.drawing_layer, tool=tool)
         if undo_group:
             self.img.undo_group_end()
 
