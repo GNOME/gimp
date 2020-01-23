@@ -76,35 +76,6 @@ gimp_version_break (const gchar *v,
   return (*major > 0);
 }
 
-static const gchar *
-gimp_version_max (const gchar *v1,
-                  const gchar *v2)
-{
-  gint major1;
-  gint minor1;
-  gint micro1;
-  gint major2;
-  gint minor2;
-  gint micro2;
-
-  if (v1 == NULL)
-    return v2;
-  else if (v2 == NULL)
-    return v1;
-  else if (gimp_version_break (v1, &major1, &minor1, &micro1) &&
-           gimp_version_break (v2, &major2, &minor2, &micro2))
-    {
-      if (major1 > major2 ||
-          (major1 == major2 && minor1 > minor2) ||
-          (major1 == major2 && minor1 == minor2 && micro1 > micro2))
-        return v1;
-      else
-        return v2;
-    }
-
-  return NULL;
-}
-
 static void
 gimp_check_updates_callback (GObject      *source,
                              GAsyncResult *result,
@@ -117,17 +88,26 @@ gimp_check_updates_callback (GObject      *source,
   stream = g_file_read_finish (G_FILE (source), result, &error);
   if (stream)
     {
-      JsonParser       *parser  = NULL;
-      JsonPath         *path;
-      JsonNode         *result;
-      JsonObject       *versions;
-      GList            *members;
-      GList            *iter;
+      const gchar *build_platform;
+      const gchar *last_version = NULL;
+      const gchar *release_date = NULL;
+      JsonParser  *parser;
+      JsonPath    *path;
+      JsonNode    *result;
+      JsonArray   *versions;
+      gint         major;
+      gint         minor;
+      gint         micro;
+      gint         i;
 
-      const gchar      *last_version   = NULL;
-      gint              major;
-      gint              minor;
-      gint              micro;
+      /* For Windows and macOS, let's look if installers are available.
+       * For other platforms, let's just look for source release.
+       */
+      if (g_strcmp0 (GIMP_BUILD_PLATFORM, "windows") == 0 ||
+          g_strcmp0 (GIMP_BUILD_PLATFORM, "macos") == 0)
+        build_platform = GIMP_BUILD_PLATFORM;
+      else
+        build_platform = "source";
 
       parser = json_parser_new ();
       if (! json_parser_load_from_stream (parser, G_INPUT_STREAM (stream), NULL, &error))
@@ -139,14 +119,32 @@ gimp_check_updates_callback (GObject      *source,
         }
 
       path = json_path_new ();
-      json_path_compile (path, "$['STABLE']", &error);
+      /* Ideally we could just use Json path filters like this to
+       * retrieve only released binaries for a given platform:
+       * g_strdup_printf ("$['STABLE'][?(@.%s)]['version']", build_platform);
+       * json_array_get_string_element (result, 0);
+       * And that would be it! We'd have our last release for given
+       * platform.
+       * Unfortunately json-glib does not support filter syntax, so we
+       * end up looping through releases.
+       */
+      json_path_compile (path, "$['STABLE'][*]", &error);
       result = json_path_match (path, json_parser_get_root (parser));
-      versions = json_array_get_object_element (json_node_get_array (result), 0);
-      json_node_unref (result);
-      members = json_object_get_members (versions);
+      g_return_if_fail (JSON_NODE_HOLDS_ARRAY (result));
 
-      for (iter = members; iter; iter = iter->next)
-        last_version = gimp_version_max (last_version, iter->data);
+      versions = json_node_get_array (result);
+      for (i = 0; i < (gint) json_array_get_length (versions); i++)
+        {
+          JsonObject *version;
+
+          version = json_array_get_object_element (versions, i);
+          if (json_object_has_member (version, build_platform))
+            {
+              last_version = json_object_get_string_member (version, "version");
+              release_date = json_object_get_string_member (version, "date");
+              break;
+            }
+        }
 
       /* If version is not properly parsed, something is wrong with
        * upstream version number or parsing.  This should not happen.
@@ -156,14 +154,7 @@ gimp_check_updates_callback (GObject      *source,
           GDateTime *datetime;
           gchar     *str;
 
-          str = g_strdup_printf ("$['STABLE']['%s']['date']", last_version);
-          json_path_compile (path, str, &error);
-          g_free (str);
-          result = json_path_match (path, json_parser_get_root (parser));
-          str = g_strdup_printf ("%s 00:00:00Z",
-                                 json_array_get_string_element (json_node_get_array (result),
-                                                                0));
-          json_node_unref (result);
+          str = g_strdup_printf ("%s 00:00:00Z", release_date);
           datetime = g_date_time_new_from_iso8601 (str, NULL);
           g_free (str);
           if (datetime)
@@ -181,7 +172,6 @@ gimp_check_updates_callback (GObject      *source,
             }
         }
 
-      g_list_free (members);
       g_object_unref (path);
       g_object_unref (parser);
       g_object_unref (stream);
