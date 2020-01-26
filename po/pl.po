@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-19 13:10+0100\n"
-"PO-Revision-Date: 2020-01-19 13:11+0100\n"
+"POT-Creation-Date: 2020-01-26 14:29+0100\n"
+"PO-Revision-Date: 2020-01-26 14:30+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -13361,11 +13361,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:423 ../app/core/gimpdatafactory.c:426
-#: ../app/core/gimpitem.c:546 ../app/core/gimpitem.c:549
+#: ../app/core/gimpitem.c:547 ../app/core/gimpitem.c:550
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:557
+#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:558
 #, c-format
 msgid "%s copy"
 msgstr "%s. kopia"
@@ -13680,41 +13680,41 @@ msgstr "Pionowe przesunięcie pierwszej linii siatki. Może być liczbą ujemną
 msgid "Offset unit"
 msgstr "Jednostka przesunięcia"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:286
 msgid "Layer Group"
 msgstr "Grupa warstw"
 
-#: ../app/core/gimpgrouplayer.c:286
+#: ../app/core/gimpgrouplayer.c:287
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Zmiana nazwy grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:287
+#: ../app/core/gimpgrouplayer.c:288
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Przesunięcie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:288
+#: ../app/core/gimpgrouplayer.c:289
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Skalowanie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:289
+#: ../app/core/gimpgrouplayer.c:290
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Zmiana wymiarów grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:290
+#: ../app/core/gimpgrouplayer.c:291
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Odbicie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:291
+#: ../app/core/gimpgrouplayer.c:292
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Obrót grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:292
+#: ../app/core/gimpgrouplayer.c:293
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Przekształcenie grupy warstw"
@@ -14199,17 +14199,17 @@ msgstr[2] "%d warstw"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nie można otworzyć miniatury „%s”: %s"
 
-#: ../app/core/gimpitem.c:2140
+#: ../app/core/gimpitem.c:2148
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:2150
+#: ../app/core/gimpitem.c:2158
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Dołączenie do elementu danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:2201 ../app/core/gimpitem.c:2208
+#: ../app/core/gimpitem.c:2209 ../app/core/gimpitem.c:2216
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Usunięcie z elementu danych pasożytniczych"
@@ -14749,9 +14749,12 @@ msgid "Disable brush rotation"
 msgstr "Wyłączenie obrotu pędzla"
 
 #: ../app/core/gimpsymmetry-mandala.c:161
+msgid "Kaleidoscope"
+msgstr "Kalejdoskop"
+
 #: ../app/core/gimpsymmetry-mandala.c:162
-msgid "Enable reflection"
-msgstr "Odbicie"
+msgid "Reflect consecutive strokes"
+msgstr "Odbicie kolejnych pociągnięć"
 
 #: ../app/core/gimpsymmetry-mirror.c:120
 msgid "Mirror"
