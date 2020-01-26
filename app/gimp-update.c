@@ -112,8 +112,13 @@ gimp_check_updates_callback (GObject      *source,
       parser = json_parser_new ();
       if (! json_parser_load_from_stream (parser, G_INPUT_STREAM (stream), NULL, &error))
         {
+#ifdef GIMP_UNSTABLE
+          g_printerr("Parsing of %s failed: %s\n",
+                     g_file_get_uri (G_FILE (source)), error->message);
+#endif
           g_clear_object (&stream);
           g_clear_object (&parser);
+          g_clear_error (&error);
 
           return;
         }
@@ -128,7 +133,17 @@ gimp_check_updates_callback (GObject      *source,
        * Unfortunately json-glib does not support filter syntax, so we
        * end up looping through releases.
        */
-      json_path_compile (path, "$['STABLE'][*]", &error);
+      if (! json_path_compile (path, "$['STABLE'][*]", &error))
+        {
+#ifdef GIMP_UNSTABLE
+          g_printerr("Path compilation failed: %s\n", error->message);
+#endif
+          g_clear_object (&stream);
+          g_clear_object (&parser);
+          g_clear_error (&error);
+
+          return;
+        }
       result = json_path_match (path, json_parser_get_root (parser));
       g_return_if_fail (JSON_NODE_HOLDS_ARRAY (result));
 
