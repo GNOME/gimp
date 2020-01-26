@@ -2095,7 +2095,7 @@ msgstr "Kare olmayan pikseller. Görüntü ezilmiş görünebilir."
 #: ../plug-ins/common/file-gif-load.c:1039
 #, c-format
 msgid "Background (%d%s)"
-msgstr "Artalan (%d%s)"
+msgstr "Arkaplan (%d%s)"
 
 #: ../plug-ins/common/file-gif-load.c:1066
 #, c-format
@@ -2638,7 +2638,7 @@ msgstr "MNG seçenekleri"
 
 #: ../plug-ins/common/file-mng.c:1613 ../plug-ins/common/file-png.c:2219
 msgid "Save _background color"
-msgstr "_Artalan rengini kaydet"
+msgstr "_Arkaplan rengini kaydet"
 
 #: ../plug-ins/common/file-mng.c:1619 ../plug-ins/common/file-png.c:2223
 msgid "Save _gamma"
@@ -5226,7 +5226,7 @@ msgstr "_Önalan rengi"
 
 #: ../plug-ins/common/sparkle.c:613
 msgid "_Background color"
-msgstr "_Artalan rengi"
+msgstr "_Arkaplan rengi"
 
 #: ../plug-ins/common/sparkle.c:620
 msgid "Use the color of the image"
