@@ -68,6 +68,7 @@ static gboolean     gimp_list_have               (GimpContainer *container,
 static void         gimp_list_foreach            (GimpContainer *container,
                                                   GFunc          func,
                                                   gpointer       user_data);
+static gboolean     gimp_list_get_unique_names   (GimpContainer *container);
 static GimpObject * gimp_list_get_child_by_name  (GimpContainer *container,
                                                   const gchar   *name);
 static GimpObject * gimp_list_get_child_by_index (GimpContainer *container,
@@ -105,6 +106,7 @@ gimp_list_class_init (GimpListClass *klass)
   container_class->clear              = gimp_list_clear;
   container_class->have               = gimp_list_have;
   container_class->foreach            = gimp_list_foreach;
+  container_class->get_unique_names   = gimp_list_get_unique_names;
   container_class->get_child_by_name  = gimp_list_get_child_by_name;
   container_class->get_child_by_index = gimp_list_get_child_by_index;
   container_class->get_child_index    = gimp_list_get_child_index;
@@ -326,6 +328,14 @@ gimp_list_foreach (GimpContainer *container,
   GimpList *list = GIMP_LIST (container);
 
   g_queue_foreach (list->queue, func, user_data);
+}
+
+static gboolean
+gimp_list_get_unique_names (GimpContainer *container)
+{
+  GimpList *list = GIMP_LIST (container);
+
+  return list->unique_names;
 }
 
 static GimpObject *
