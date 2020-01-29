@@ -233,6 +233,7 @@ libappcore_sources = [
   'gimptempbuf.c',
   'gimptemplate.c',
   'gimptilehandlerprojectable.c',
+  'gimptoolgroup.c',
   'gimptoolinfo.c',
   'gimptoolitem.c',
   'gimptooloptions.c',
