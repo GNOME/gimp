@@ -270,8 +270,8 @@ gimp_fg_bg_editor_get_preferred_width_for_height (GtkWidget *widget,
                                                   gint      *minimum_width,
                                                   gint      *natural_width)
 {
-  *minimum_width = height * 4/3;
-  *natural_width = height * 4/3;
+  *minimum_width = height;
+  *natural_width = height;
 }
 
 static void

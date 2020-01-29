@@ -578,7 +578,7 @@ toolbox_create_color_area (GimpToolbox *toolbox,
 {
   GtkWidget *col_area;
 
-  col_area = gimp_toolbox_color_area_create (toolbox, 54, 42);
+  col_area = gimp_toolbox_color_area_create (toolbox, 40, 38);
   g_object_set (col_area,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,
