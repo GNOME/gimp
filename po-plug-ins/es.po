@@ -16,14 +16,14 @@
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
 # Rodrigo <rodhos92@gmail.com>, 2000-2019.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
-# Rodrigo Lledó <rodhos92@gmail.com>, 2019.
+# Rodrigo Lledó <rodhos92@gmail.com>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-31 23:26+0000\n"
-"PO-Revision-Date: 2019-11-01 21:27+0100\n"
+"POT-Creation-Date: 2020-01-26 10:41+0000\n"
+"PO-Revision-Date: 2020-01-28 19:31+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 3.32.0\n"
+"X-Generator: Gtranslator 3.34.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/common/align-layers.c:190
@@ -64,7 +64,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/file-heif.c:1086 ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
-#: ../plug-ins/common/file-pdf-save.c:998 ../plug-ins/common/file-ps.c:3535
+#: ../plug-ins/common/file-pdf-save.c:1141 ../plug-ins/common/file-ps.c:3535
 #: ../plug-ins/common/file-raw-data.c:1759 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1320
 #: ../plug-ins/common/grid.c:737 ../plug-ins/common/hot.c:656
@@ -313,7 +313,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-gegl.c:446 ../plug-ins/common/file-gif-load.c:1037
 #: ../plug-ins/common/file-jp2-load.c:1301 ../plug-ins/common/file-pcx.c:468
 #: ../plug-ins/common/file-pcx.c:476 ../plug-ins/common/file-pix.c:409
-#: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:753
+#: ../plug-ins/common/file-png.c:852 ../plug-ins/common/file-pnm.c:742
 #: ../plug-ins/common/file-raw-data.c:1310
 #: ../plug-ins/common/file-sunras.c:1069 ../plug-ins/common/file-tga.c:1095
 #: ../plug-ins/common/file-xbm.c:892 ../plug-ins/common/film.c:795
@@ -324,7 +324,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-psd/psd-image-res-load.c:1042
 #: ../plug-ins/file-psd/psd-load.c:1870 ../plug-ins/file-sgi/sgi.c:409
 #: ../plug-ins/file-tiff/file-tiff-load.c:1032
-#: ../plug-ins/file-webp/file-webp-load.c:170
+#: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:604
@@ -680,7 +680,7 @@ msgstr "_Abrir"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1413
 #: ../plug-ins/common/cml-explorer.c:2121 ../plug-ins/common/curve-bend.c:1461
-#: ../plug-ins/common/curve-bend.c:1999 ../plug-ins/common/file-pdf-save.c:997
+#: ../plug-ins/common/curve-bend.c:1999 ../plug-ins/common/file-pdf-save.c:1140
 #: ../plug-ins/common/qbist.c:793 ../plug-ins/common/qbist.c:922
 #: ../plug-ins/common/sphere-designer.c:2285
 #: ../plug-ins/common/sphere-designer.c:2684 ../plug-ins/flame/flame.c:515
@@ -877,9 +877,9 @@ msgid "Save CML Explorer Parameters"
 msgstr "Guardar los parámetros del Examinador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2172 ../plug-ins/common/curve-bend.c:805
-#: ../plug-ins/common/file-dicom.c:1393 ../plug-ins/common/file-mng.c:892
-#: ../plug-ins/common/file-mng.c:1233 ../plug-ins/common/file-pcx.c:899
-#: ../plug-ins/common/file-pdf-save.c:650 ../plug-ins/common/file-png.c:1427
+#: ../plug-ins/common/file-dicom.c:1393 ../plug-ins/common/file-mng.c:871
+#: ../plug-ins/common/file-mng.c:1221 ../plug-ins/common/file-pcx.c:899
+#: ../plug-ins/common/file-pdf-save.c:728 ../plug-ins/common/file-png.c:1427
 #: ../plug-ins/common/file-raw-data.c:1100
 #: ../plug-ins/common/file-raw-data.c:1130 ../plug-ins/common/file-sunras.c:623
 #: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1561
@@ -908,7 +908,7 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: ../plug-ins/common/cml-explorer.c:2345 ../plug-ins/common/curve-bend.c:858
 #: ../plug-ins/common/file-cel.c:341 ../plug-ins/common/file-cel.c:395
 #: ../plug-ins/common/file-cel.c:635 ../plug-ins/common/file-dicom.c:361
-#: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1407
+#: ../plug-ins/common/file-gif-load.c:407 ../plug-ins/common/file-mng.c:1405
 #: ../plug-ins/common/file-pcx.c:398 ../plug-ins/common/file-png.c:670
 #: ../plug-ins/common/file-ps.c:1133 ../plug-ins/common/file-ps.c:3485
 #: ../plug-ins/common/file-psp.c:1923 ../plug-ins/common/file-psp.c:1977
@@ -1289,12 +1289,12 @@ msgid "Uniform"
 msgstr "Uniforme"
 
 #: ../plug-ins/common/contrast-retinex.c:358
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Low"
 msgstr "Bajo"
 
 #: ../plug-ins/common/contrast-retinex.c:359
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "High"
 msgstr "Alto"
 
@@ -1866,7 +1866,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/common/file-heif.c:358 ../plug-ins/common/file-jp2-load.c:1085
 #: ../plug-ins/common/file-pcx.c:388 ../plug-ins/common/file-pdf-load.c:801
 #: ../plug-ins/common/file-pix.c:366 ../plug-ins/common/file-png.c:660
-#: ../plug-ins/common/file-pnm.c:635 ../plug-ins/common/file-ps.c:1122
+#: ../plug-ins/common/file-pnm.c:623 ../plug-ins/common/file-ps.c:1122
 #: ../plug-ins/common/file-raw-data.c:1209 ../plug-ins/common/file-sunras.c:430
 #: ../plug-ins/common/file-tga.c:423 ../plug-ins/common/file-wmf.c:1035
 #: ../plug-ins/common/file-xbm.c:719 ../plug-ins/common/file-xmc.c:706
@@ -1953,7 +1953,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/common/file-cel.c:834 ../plug-ins/common/file-gif-save.c:870
 #: ../plug-ins/common/file-heif.c:704 ../plug-ins/common/file-html-table.c:349
 #: ../plug-ins/common/file-pcx.c:782 ../plug-ins/common/file-pix.c:547
-#: ../plug-ins/common/file-png.c:1417 ../plug-ins/common/file-pnm.c:1317
+#: ../plug-ins/common/file-png.c:1417 ../plug-ins/common/file-pnm.c:1314
 #: ../plug-ins/common/file-ps.c:1309 ../plug-ins/common/file-sunras.c:612
 #: ../plug-ins/common/file-tga.c:1209 ../plug-ins/common/file-xbm.c:1031
 #: ../plug-ins/common/file-xpm.c:684 ../plug-ins/common/file-xwd.c:663
@@ -2206,7 +2206,7 @@ msgstr ""
 msgid "Export Image as GIF"
 msgstr "Exportar imagen como GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1160 ../plug-ins/common/file-mng.c:1604
+#: ../plug-ins/common/file-gif-save.c:1160 ../plug-ins/common/file-mng.c:1609
 msgid "_Interlace"
 msgstr "_Entrelazar"
 
@@ -2227,7 +2227,7 @@ msgid "_Delay between frames where unspecified:"
 msgstr "Retraso entre cua_dros cuando no esté especificado:"
 
 #. label for 'ms' adjustment
-#: ../plug-ins/common/file-gif-save.c:1236 ../plug-ins/common/file-mng.c:1796
+#: ../plug-ins/common/file-gif-save.c:1236 ../plug-ins/common/file-mng.c:1724
 #: ../plug-ins/file-webp/file-webp-dialog.c:282
 msgid "milliseconds"
 msgstr "milisegundos"
@@ -2635,114 +2635,115 @@ msgstr "No se pudo convertir la imagen xvYCC JP2 «%s» a RGB."
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Espacio de color no soportado en la imagen JP2 «%s»."
 
-#: ../plug-ins/common/file-mng.c:289
+#: ../plug-ins/common/file-mng.c:250
 msgid "MNG animation"
 msgstr "Animación MNG"
+
+#: ../plug-ins/common/file-mng.c:278
+msgid ""
+"PNG compression level, choose a high compression level for small file size"
+msgstr ""
+"Nivel de compresión PNG. Seleccione un nivel de compresión alto para obtener "
+"un tamaño de archivo pequeño"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:775 ../plug-ins/common/file-png.c:2155
+#: ../plug-ins/common/file-mng.c:720 ../plug-ins/common/file-png.c:2155
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No se pudo guardar la transparencia sin pérdidas, guardando la opacidad en "
 "su lugar."
 
-#: ../plug-ins/common/file-mng.c:1591
-msgid "MNG"
-msgstr "MNG"
+#: ../plug-ins/common/file-mng.c:1592
+msgid "Export Image as MNG"
+msgstr "Exportar imagen como MNG"
 
-#: ../plug-ins/common/file-mng.c:1598
+#: ../plug-ins/common/file-mng.c:1600
 msgid "MNG Options"
 msgstr "Opciones de MNG"
 
-#: ../plug-ins/common/file-mng.c:1616 ../plug-ins/common/file-png.c:2219
+#: ../plug-ins/common/file-mng.c:1613 ../plug-ins/common/file-png.c:2219
 msgid "Save _background color"
 msgstr "Guardar el color de _fondo"
 
-#: ../plug-ins/common/file-mng.c:1627 ../plug-ins/common/file-png.c:2223
+#: ../plug-ins/common/file-mng.c:1619 ../plug-ins/common/file-png.c:2223
 msgid "Save _gamma"
 msgstr "Guardar _gamma"
 
-#: ../plug-ins/common/file-mng.c:1637
+#: ../plug-ins/common/file-mng.c:1623
 msgid "Save resolution"
 msgstr "Guardar la resolución"
 
-#: ../plug-ins/common/file-mng.c:1648 ../plug-ins/common/file-png.c:2235
+#: ../plug-ins/common/file-mng.c:1629 ../plug-ins/common/file-png.c:2235
 msgid "Save creation _time"
 msgstr "Guardar la _hora de creación"
 
-#: ../plug-ins/common/file-mng.c:1667
+#: ../plug-ins/common/file-mng.c:1641
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/file-mng.c:1668
+#: ../plug-ins/common/file-mng.c:1642
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/file-mng.c:1671
+#: ../plug-ins/common/file-mng.c:1645
 msgid "PNG + delta PNG"
 msgstr "PNG + PNG Delta"
 
-#: ../plug-ins/common/file-mng.c:1672
+#: ../plug-ins/common/file-mng.c:1646
 msgid "JNG + delta PNG"
 msgstr "JNG + PNG Delta"
 
-#: ../plug-ins/common/file-mng.c:1673
+#: ../plug-ins/common/file-mng.c:1647
 msgid "All PNG"
 msgstr "Todo PNG"
 
-#: ../plug-ins/common/file-mng.c:1674
+#: ../plug-ins/common/file-mng.c:1648
 msgid "All JNG"
 msgstr "Todo JNG"
 
-#: ../plug-ins/common/file-mng.c:1686
+#: ../plug-ins/common/file-mng.c:1657
 msgid "Default chunks type:"
 msgstr "Tipo de bloques predeterminado:"
 
-#: ../plug-ins/common/file-mng.c:1689
+#: ../plug-ins/common/file-mng.c:1660
 msgid "Combine"
 msgstr "Combinar"
 
-#: ../plug-ins/common/file-mng.c:1690
+#: ../plug-ins/common/file-mng.c:1661
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: ../plug-ins/common/file-mng.c:1701
+#: ../plug-ins/common/file-mng.c:1668
 msgid "Default _frame disposal:"
 msgstr "Disposición predeterminada del _cuadro:"
 
-#: ../plug-ins/common/file-mng.c:1712
+#: ../plug-ins/common/file-mng.c:1677
 msgid "_PNG compression level:"
 msgstr "Nivel de compresión de _PNG:"
 
-#: ../plug-ins/common/file-mng.c:1720
-msgid "Choose a high compression level for small file size"
-msgstr ""
-"Seleccione un nivel de compresión alto para obtener un tamaño de archivo "
-"pequeño"
-
-#: ../plug-ins/common/file-mng.c:1733
+#: ../plug-ins/common/file-mng.c:1687
 msgid "JPEG compression quality:"
 msgstr "Calidad de la compresión de JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1749
+#: ../plug-ins/common/file-mng.c:1697
 msgid "JPEG smoothing factor:"
 msgstr "Factor de suavizado de JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1759
+#: ../plug-ins/common/file-mng.c:1700
 msgid "Animated MNG Options"
 msgstr "Opciones del MNG animado"
 
-#: ../plug-ins/common/file-mng.c:1765
+#: ../plug-ins/common/file-mng.c:1709
 msgid "_Loop"
 msgstr "_Bucle"
 
-#: ../plug-ins/common/file-mng.c:1779
+#: ../plug-ins/common/file-mng.c:1716
 msgid "Default frame delay:"
 msgstr "Retardo predeterminado del cuadro:"
 
-#: ../plug-ins/common/file-mng.c:1809
+#: ../plug-ins/common/file-mng.c:1732
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -2802,7 +2803,7 @@ msgstr ""
 msgid "Unusual PCX flavour, giving up"
 msgstr "Versión de PCX inusual, terminando"
 
-#: ../plug-ins/common/file-pcx.c:848 ../plug-ins/common/file-pnm.c:1313
+#: ../plug-ins/common/file-pcx.c:848 ../plug-ins/common/file-pnm.c:1310
 msgid "Cannot export images with alpha channel."
 msgstr "No se pueden exportar imágenes con canales alfa."
 
@@ -2832,7 +2833,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Ocurrió un error al escribir en el archivo «%s»: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:326
-#: ../plug-ins/common/file-pdf-save.c:349
+#: ../plug-ins/common/file-pdf-save.c:352
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -2916,11 +2917,11 @@ msgstr "Usar _Antialias"
 msgid "pixels/%a"
 msgstr "píxeles/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:408
+#: ../plug-ins/common/file-pdf-save.c:417
 msgid "_Create multipage PDF..."
 msgstr "_Crear PDF de varias páginas…"
 
-#: ../plug-ins/common/file-pdf-save.c:662
+#: ../plug-ins/common/file-pdf-save.c:740
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -2933,86 +2934,102 @@ msgstr ""
 "Asegúrese de que ha introducido un nombre de archivo válido y que la carpeta "
 "de destino no es de solo lectura."
 
-#: ../plug-ins/common/file-pdf-save.c:885
-#: ../plug-ins/common/file-pdf-save.c:1045
+#: ../plug-ins/common/file-pdf-save.c:965
+msgid "_Convert text layers to image"
+msgstr "_Convertir capas de texto a imagen"
+
+#: ../plug-ins/common/file-pdf-save.c:1009
+#, c-format
+msgid ""
+"The following fonts cannot be found: %s.\n"
+"It is recommended to convert your text layers to image or to install the "
+"missing fonts before exporting, otherwise your design may not look right."
+msgstr ""
+"Las siguientes tipografías no se pueden encontrar: %s.\n"
+"Se recomienda convertir las capas de texto a imagen o instalar las "
+"tipografías que faltan antes de exportar, de otro modo su diseño podría no "
+"verse bien."
+
+#: ../plug-ins/common/file-pdf-save.c:1026
+#: ../plug-ins/common/file-pdf-save.c:1188
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Omitir las capas ocultas y las que tienen opacidad cero"
 
-#: ../plug-ins/common/file-pdf-save.c:890
-#: ../plug-ins/common/file-pdf-save.c:1050
+#: ../plug-ins/common/file-pdf-save.c:1031
+#: ../plug-ins/common/file-pdf-save.c:1193
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Convertir los mapas de _bit a gráficos vectoriales cuando sea posible"
 
-#: ../plug-ins/common/file-pdf-save.c:895
-#: ../plug-ins/common/file-pdf-save.c:1055
+#: ../plug-ins/common/file-pdf-save.c:1036
+#: ../plug-ins/common/file-pdf-save.c:1198
 msgid "_Apply layer masks before saving"
 msgstr "_Aplicar máscaras de capa antes de guardar"
 
-#: ../plug-ins/common/file-pdf-save.c:899
-#: ../plug-ins/common/file-pdf-save.c:1059
+#: ../plug-ins/common/file-pdf-save.c:1040
+#: ../plug-ins/common/file-pdf-save.c:1202
 msgid "Keeping the masks will not change the output"
 msgstr "Mantener las máscaras no cambiará la salida"
 
-#: ../plug-ins/common/file-pdf-save.c:905
+#: ../plug-ins/common/file-pdf-save.c:1046
 #, c-format
 msgid "_Layers as pages (%s)"
 msgstr "_Capas como páginas (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:907
-#: ../plug-ins/common/file-pdf-save.c:1106
+#: ../plug-ins/common/file-pdf-save.c:1048
+#: ../plug-ins/common/file-pdf-save.c:1249
 msgid "top layers first"
 msgstr "capas superiores primero"
 
-#: ../plug-ins/common/file-pdf-save.c:907
-#: ../plug-ins/common/file-pdf-save.c:1106
+#: ../plug-ins/common/file-pdf-save.c:1048
+#: ../plug-ins/common/file-pdf-save.c:1249
 msgid "bottom layers first"
 msgstr "capas inferiores primero"
 
-#: ../plug-ins/common/file-pdf-save.c:915
+#: ../plug-ins/common/file-pdf-save.c:1056
 msgid "_Reverse the pages order"
 msgstr "Inve_rtir el orden de las páginas"
 
-#: ../plug-ins/common/file-pdf-save.c:989
+#: ../plug-ins/common/file-pdf-save.c:1132
 msgid "Save to:"
 msgstr "Guardar en:"
 
-#: ../plug-ins/common/file-pdf-save.c:993
+#: ../plug-ins/common/file-pdf-save.c:1136
 msgid "Browse..."
 msgstr "Explorar…"
 
-#: ../plug-ins/common/file-pdf-save.c:994
+#: ../plug-ins/common/file-pdf-save.c:1137
 msgid "Multipage PDF export"
 msgstr "Exportación de PDF de varias páginas"
 
-#: ../plug-ins/common/file-pdf-save.c:1030
+#: ../plug-ins/common/file-pdf-save.c:1173
 msgid "Remove the selected pages"
 msgstr "Eliminar las páginas seleccionadas"
 
 # Pendiente hasa que sepa lo que significa. FVD
 # Puede ser una imagen pix de Alias WaveFront
 # Gracias ¿Quién lo dice? pon tus iniciales. FVD
-#: ../plug-ins/common/file-pdf-save.c:1040
+#: ../plug-ins/common/file-pdf-save.c:1183
 msgid "Add this image"
 msgstr "Añadir esta imagen"
 
-#: ../plug-ins/common/file-pdf-save.c:1104
+#: ../plug-ins/common/file-pdf-save.c:1247
 #, c-format
 msgid "Layers as pages (%s)"
 msgstr "Capas como páginas (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:1161
-#: ../plug-ins/common/file-pdf-save.c:1234
-#: ../plug-ins/common/file-pdf-save.c:1332 ../plug-ins/common/file-ps.c:2021
+#: ../plug-ins/common/file-pdf-save.c:1304
+#: ../plug-ins/common/file-pdf-save.c:1377
+#: ../plug-ins/common/file-pdf-save.c:1475 ../plug-ins/common/file-ps.c:2021
 #: ../plug-ins/file-tiff/file-tiff-load.c:1034
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1201
+#: ../plug-ins/common/file-pdf-save.c:1344
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: para guardar el archivo, debe añadirse al menos una imagen."
 
-#: ../plug-ins/common/file-pdf-save.c:1379
+#: ../plug-ins/common/file-pdf-save.c:1522
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -3195,88 +3212,87 @@ msgstr "Formato de _píxel:"
 msgid "Co_mpression level:"
 msgstr "Nivel de co_mpresión:"
 
-#: ../plug-ins/common/file-pnm.c:290
+#: ../plug-ins/common/file-pnm.c:289
 msgid "PNM Image"
 msgstr "Imagen PNM"
 
-#: ../plug-ins/common/file-pnm.c:321
+#: ../plug-ins/common/file-pnm.c:322
 msgid "PNM image"
 msgstr "Imagen PNM"
 
-#: ../plug-ins/common/file-pnm.c:354
+#: ../plug-ins/common/file-pnm.c:357
 msgid "PBM image"
 msgstr "Imagen PBM"
 
-#: ../plug-ins/common/file-pnm.c:387
+#: ../plug-ins/common/file-pnm.c:392
 msgid "PGM image"
 msgstr "Imagen PGM"
 
-#: ../plug-ins/common/file-pnm.c:420
+#: ../plug-ins/common/file-pnm.c:427
 msgid "PPM image"
 msgstr "Imagen PPM"
 
-#: ../plug-ins/common/file-pnm.c:453
+#: ../plug-ins/common/file-pnm.c:462
 msgid "PFM image"
 msgstr "Imagen PFM"
 
-#: ../plug-ins/common/file-pnm.c:668 ../plug-ins/common/file-pnm.c:691
-#: ../plug-ins/common/file-pnm.c:700 ../plug-ins/common/file-pnm.c:713
-#: ../plug-ins/common/file-pnm.c:726 ../plug-ins/common/file-pnm.c:828
-#: ../plug-ins/common/file-pnm.c:923 ../plug-ins/common/file-pnm.c:1008
-#: ../plug-ins/common/file-pnm.c:1069
+#: ../plug-ins/common/file-pnm.c:656 ../plug-ins/common/file-pnm.c:679
+#: ../plug-ins/common/file-pnm.c:688 ../plug-ins/common/file-pnm.c:701
+#: ../plug-ins/common/file-pnm.c:714 ../plug-ins/common/file-pnm.c:817
+#: ../plug-ins/common/file-pnm.c:912 ../plug-ins/common/file-pnm.c:997
+#: ../plug-ins/common/file-pnm.c:1058
 msgid "Premature end of file."
 msgstr "Final prematuro del archivo."
 
-#: ../plug-ins/common/file-pnm.c:670
+#: ../plug-ins/common/file-pnm.c:658
 msgid "Invalid file."
 msgstr "Archivo no válido."
 
-#: ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-pnm.c:673
 msgid "File not in a supported format."
 msgstr "El archivo no está en un formato soportado."
 
-#: ../plug-ins/common/file-pnm.c:694
+#: ../plug-ins/common/file-pnm.c:682
 msgid "Invalid X resolution."
 msgstr "Resolución X no válida."
 
-#: ../plug-ins/common/file-pnm.c:696
+#: ../plug-ins/common/file-pnm.c:684
 msgid "Image width is larger than GIMP can handle."
 msgstr "La anchura de la imagen es mayor de lo que GIMP puede manejar."
 
-#: ../plug-ins/common/file-pnm.c:703
+#: ../plug-ins/common/file-pnm.c:691
 msgid "Invalid Y resolution."
 msgstr "Resolución Y no válida."
 
-#: ../plug-ins/common/file-pnm.c:705
+#: ../plug-ins/common/file-pnm.c:693
 msgid "Image height is larger than GIMP can handle."
 msgstr "La altura de la imagen es mayor de lo que GIMP puede manejar."
 
-#: ../plug-ins/common/file-pnm.c:717
+#: ../plug-ins/common/file-pnm.c:705
 msgid "Bogus scale factor."
 msgstr "Factor de escalado no soportado."
 
-#: ../plug-ins/common/file-pnm.c:719
+#: ../plug-ins/common/file-pnm.c:707
 msgid "Unsupported scale factor."
 msgstr "Factor de escalado no soportado."
 
-#: ../plug-ins/common/file-pnm.c:730
+#: ../plug-ins/common/file-pnm.c:718
 msgid "Unsupported maximum value."
 msgstr "Valor máximo no válido."
 
-#: ../plug-ins/common/file-pnm.c:1683
-msgid "PNM"
-msgstr "PNM"
+#: ../plug-ins/common/file-pnm.c:1690
+msgid "Export Image as PNM"
+msgstr "Exportar imagen como PNM"
 
-#. file save type
-#: ../plug-ins/common/file-pnm.c:1686
+#: ../plug-ins/common/file-pnm.c:1694
 msgid "Data formatting"
 msgstr "Formateado de datos"
 
-#: ../plug-ins/common/file-pnm.c:1690
+#: ../plug-ins/common/file-pnm.c:1695
 msgid "_Raw"
 msgstr "_Bruto"
 
-#: ../plug-ins/common/file-pnm.c:1691
+#: ../plug-ins/common/file-pnm.c:1696
 msgid "_ASCII"
 msgstr "_ASCII"
 
@@ -7117,28 +7133,28 @@ msgstr "Usar el retraso intro_ducido anteriormente para todos los cuadros"
 msgid "_Save Exif data"
 msgstr "_Guardar los datos Exif"
 
-#: ../plug-ins/file-webp/file-webp-load.c:113
+#: ../plug-ins/file-webp/file-webp-load.c:111
 #, c-format
 msgid "Invalid WebP file '%s'"
 msgstr "Archivo WebP «%s» no válido."
 
 # //R ¿Drawables?
-#: ../plug-ins/file-webp/file-webp-load.c:206
+#: ../plug-ins/file-webp/file-webp-load.c:210
 #, c-format
 msgid "Failed to decode animated WebP file '%s'"
 msgstr "Falló al decodificar el archivo WebP animado «%s»"
 
-#: ../plug-ins/file-webp/file-webp-load.c:214
+#: ../plug-ins/file-webp/file-webp-load.c:218
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
 msgstr "Fallo al descodificar la información del WebP animado desde «%s»"
 
-#: ../plug-ins/file-webp/file-webp-load.c:233
+#: ../plug-ins/file-webp/file-webp-load.c:237
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Fallo al descodificar el fotograma del WebP animado desde «%s»"
 
-#: ../plug-ins/file-webp/file-webp-load.c:238
+#: ../plug-ins/file-webp/file-webp-load.c:242
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "Fotograma %d (%dms)"
@@ -8122,7 +8138,7 @@ msgstr "Tipo de rejilla:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1497
 #: ../plug-ins/gradient-flare/gradient-flare.c:745
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Normal"
 msgstr "Normal"
 
@@ -11348,200 +11364,200 @@ msgstr "Exportar archivo de metadatos"
 msgid "_Export"
 msgstr "_Exportar"
 
-#: ../plug-ins/metadata/metadata-tags.h:250
+#: ../plug-ins/metadata/metadata-tags.c:163
 msgid "Original digital capture of a real life scene"
 msgstr "Captura digital original de una escena de la vida real"
 
-#: ../plug-ins/metadata/metadata-tags.h:251
+#: ../plug-ins/metadata/metadata-tags.c:164
 msgid "Digitized from a negative on film"
 msgstr "Digitalizado de un negativo en una película"
 
-#: ../plug-ins/metadata/metadata-tags.h:252
+#: ../plug-ins/metadata/metadata-tags.c:165
 msgid "Digitized from a positive on film"
 msgstr "Digitalizado de un positivo en una película"
 
-#: ../plug-ins/metadata/metadata-tags.h:253
+#: ../plug-ins/metadata/metadata-tags.c:166
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizado de una impresión en un medio no transparente"
 
-#: ../plug-ins/metadata/metadata-tags.h:254
+#: ../plug-ins/metadata/metadata-tags.c:167
 msgid "Created by software"
 msgstr "Creado por software"
 
-#: ../plug-ins/metadata/metadata-tags.h:262
-#: ../plug-ins/metadata/metadata-tags.h:273
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:176
+#: ../plug-ins/metadata/metadata-tags.c:188
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "None"
 msgstr "Ninguna"
 
-#: ../plug-ins/metadata/metadata-tags.h:263
-#: ../plug-ins/metadata/metadata-tags.h:274
+#: ../plug-ins/metadata/metadata-tags.c:177
+#: ../plug-ins/metadata/metadata-tags.c:189
 msgid "Not Applicable"
 msgstr "No es aplicable"
 
-#: ../plug-ins/metadata/metadata-tags.h:264
+#: ../plug-ins/metadata/metadata-tags.c:178
 msgid "Unlimited Model Releases"
 msgstr "Lanzamientos de modelos sin límite"
 
-#: ../plug-ins/metadata/metadata-tags.h:265
+#: ../plug-ins/metadata/metadata-tags.c:179
 msgid "Limited or Incomplete Model Releases"
 msgstr "Lanzamientos de modelos limitados o incompletos"
 
-#: ../plug-ins/metadata/metadata-tags.h:275
+#: ../plug-ins/metadata/metadata-tags.c:190
 msgid "Unlimited Property Releases"
 msgstr "Lanzamientos de propiedades sin límite"
 
-#: ../plug-ins/metadata/metadata-tags.h:276
+#: ../plug-ins/metadata/metadata-tags.c:191
 msgid "Limited or Incomplete Property Releases"
 msgstr "Lanzamientos de propiedades limitados o incompletos"
 
-#: ../plug-ins/metadata/metadata-tags.h:284
+#: ../plug-ins/metadata/metadata-tags.c:200
 msgid "Age Unknown"
 msgstr "Edad desconocida"
 
-#: ../plug-ins/metadata/metadata-tags.h:285
+#: ../plug-ins/metadata/metadata-tags.c:201
 msgid "Age 25 or Over"
 msgstr "25 años o superior"
 
-#: ../plug-ins/metadata/metadata-tags.h:286
+#: ../plug-ins/metadata/metadata-tags.c:202
 msgid "Age 24"
 msgstr "24 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:287
+#: ../plug-ins/metadata/metadata-tags.c:203
 msgid "Age 23"
 msgstr "23 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:288
+#: ../plug-ins/metadata/metadata-tags.c:204
 msgid "Age 22"
 msgstr "22 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:289
+#: ../plug-ins/metadata/metadata-tags.c:205
 msgid "Age 21"
 msgstr "21 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:290
+#: ../plug-ins/metadata/metadata-tags.c:206
 msgid "Age 20"
 msgstr "20 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:291
+#: ../plug-ins/metadata/metadata-tags.c:207
 msgid "Age 19"
 msgstr "19 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:292
+#: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Age 18"
 msgstr "18 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:293
+#: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Age 17"
 msgstr "17 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:294
+#: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Age 16"
 msgstr "16 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:295
+#: ../plug-ins/metadata/metadata-tags.c:211
 msgid "Age 15"
 msgstr "15 años"
 
-#: ../plug-ins/metadata/metadata-tags.h:296
+#: ../plug-ins/metadata/metadata-tags.c:212
 msgid "Age 14 or Under"
 msgstr "14 años o inferior"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.h:302
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "7"
 msgstr "7"
 
-#: ../plug-ins/metadata/metadata-tags.h:308
-#: ../plug-ins/metadata/metadata-tags.h:341
-#: ../plug-ins/metadata/metadata-tags.h:347
-#: ../plug-ins/metadata/metadata-tags.h:353
+#: ../plug-ins/metadata/metadata-tags.c:226
+#: ../plug-ins/metadata/metadata-tags.c:262
+#: ../plug-ins/metadata/metadata-tags.c:269
+#: ../plug-ins/metadata/metadata-tags.c:276
 msgid "Unknown"
 msgstr "Desconocida"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.h:309
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Copyrighted"
 msgstr "Con copyright"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.h:310
+#: ../plug-ins/metadata/metadata-tags.c:228
 msgid "Public Domain"
 msgstr "Dominio público"
 
-#: ../plug-ins/metadata/metadata-tags.h:316
-#: ../plug-ins/metadata/metadata-tags.h:332
+#: ../plug-ins/metadata/metadata-tags.c:235
+#: ../plug-ins/metadata/metadata-tags.c:252
 msgid "Select a value"
 msgstr "Seleccionar un valor"
 
-#: ../plug-ins/metadata/metadata-tags.h:317
+#: ../plug-ins/metadata/metadata-tags.c:236
 msgid "Work"
 msgstr "Trabajo"
 
-#: ../plug-ins/metadata/metadata-tags.h:318
+#: ../plug-ins/metadata/metadata-tags.c:237
 msgid "Cell"
 msgstr "Móvil"
 
-#: ../plug-ins/metadata/metadata-tags.h:319
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Fax"
 msgstr "Fax"
 
-#: ../plug-ins/metadata/metadata-tags.h:320
+#: ../plug-ins/metadata/metadata-tags.c:239
 msgid "Home"
 msgstr "Casa"
 
-#: ../plug-ins/metadata/metadata-tags.h:321
+#: ../plug-ins/metadata/metadata-tags.c:240
 msgid "Pager"
 msgstr "Paginador"
 
-#: ../plug-ins/metadata/metadata-tags.h:333
+#: ../plug-ins/metadata/metadata-tags.c:253
 msgid "Male"
 msgstr "Hombre"
 
-#: ../plug-ins/metadata/metadata-tags.h:334
+#: ../plug-ins/metadata/metadata-tags.c:254
 msgid "Female"
 msgstr "Mujer"
 
-#: ../plug-ins/metadata/metadata-tags.h:335
+#: ../plug-ins/metadata/metadata-tags.c:255
 msgid "Other"
 msgstr "Otras"
 
-#: ../plug-ins/metadata/metadata-tags.h:341
+#: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Above Sea Level"
 msgstr "Por encima del nivel del mar"
 
-#: ../plug-ins/metadata/metadata-tags.h:341
+#: ../plug-ins/metadata/metadata-tags.c:262
 msgid "Below Sea Level"
 msgstr "Por debajo del nivel del mar"
 
-#: ../plug-ins/metadata/metadata-tags.h:347
+#: ../plug-ins/metadata/metadata-tags.c:269
 msgid "North"
 msgstr "Norte"
 
-#: ../plug-ins/metadata/metadata-tags.h:347
+#: ../plug-ins/metadata/metadata-tags.c:269
 msgid "South"
 msgstr "Sur"
 
-#: ../plug-ins/metadata/metadata-tags.h:353
+#: ../plug-ins/metadata/metadata-tags.c:276
 msgid "East"
 msgstr "Este"
 
-#: ../plug-ins/metadata/metadata-tags.h:353
+#: ../plug-ins/metadata/metadata-tags.c:276
 msgid "West"
 msgstr "Oeste"
 
@@ -12102,6 +12118,12 @@ msgstr "_Escáner/Cámara…"
 #: ../plug-ins/twain/twain.c:506
 msgid "Transferring data from scanner/camera"
 msgstr "Transfiriendo datos desde el escáner/cámara"
+
+#~ msgid "MNG"
+#~ msgstr "MNG"
+
+#~ msgid "PNM"
+#~ msgstr "PNM"
 
 #~ msgid "GIF"
 #~ msgstr "GIF"
