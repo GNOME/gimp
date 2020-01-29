@@ -202,6 +202,7 @@ libappwidgets_sources = [
   'gimptoolbox-image-area.c',
   'gimptoolbox-indicator-area.c',
   'gimptoolbox.c',
+  'gimptoolbutton.c',
   'gimptooleditor.c',
   'gimptooloptionseditor.c',
   'gimptoolpalette.c',
