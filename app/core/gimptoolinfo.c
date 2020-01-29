@@ -139,7 +139,6 @@ gimp_tool_info_new (Gimp                *gimp,
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (label != NULL, NULL);
   g_return_val_if_fail (tooltip != NULL, NULL);
-  g_return_val_if_fail (menu_label != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (paint_core_name != NULL, NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
