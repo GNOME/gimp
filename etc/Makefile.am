@@ -6,6 +6,7 @@ gimpsysconf = \
 	menurc		\
 	sessionrc	\
 	templaterc	\
+	toolrc		\
 	unitrc
 
 gimpsysconf_DATA = \
