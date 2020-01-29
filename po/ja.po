@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-01-21 23:19+0000\n"
-"PO-Revision-Date: 2020-01-13 23:00+0900\n"
+"PO-Revision-Date: 2020-01-27 23:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1346,20 +1346,14 @@ msgid "Lower this channel to the bottom of the channel stack"
 msgstr "このチャンネルを最下段 (最背面) へ移動します"
 
 #: ../app/actions/channels-actions.c:113
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
-msgstr "可視/不可視 を切り替えます"
+msgstr "チャンネルの 可視/不可視 を切り替え(_V)"
 
 #: ../app/actions/channels-actions.c:119
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "channels-action"
 msgid "Toggle Channel _Linked State"
-msgstr "連結/非連結 を切り替えます"
+msgstr "チャンネルの 連結/非連結 を切り替え(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/channels-actions.c:125
@@ -4112,29 +4106,20 @@ msgid "Automatic white balance correction"
 msgstr "ホワイトバランスを自動調整します"
 
 #: ../app/actions/drawable-actions.c:60
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Visibility"
-msgstr "可視/不可視 を切り替えます"
+msgstr "描画領域の 可視/不可視 を切り替え(_V)"
 
 #: ../app/actions/drawable-actions.c:66
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Linked State"
-msgstr "連結/非連結 を切り替えます"
+msgstr "描画領域の 連結/非連結 を切り替え(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/drawable-actions.c:72
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "L_ock pixels"
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawable"
-msgstr "ピクセルの保護(_O)"
+msgstr "描画領域のピクセルの保護(_O)"
 
 #: ../app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
@@ -4142,20 +4127,14 @@ msgid "Keep the pixels on this drawable from being modified"
 msgstr "ピクセルが変更されないように保護します"
 
 #: ../app/actions/drawable-actions.c:80
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Reposition channel"
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawable"
-msgstr "チャンネルの再配置"
+msgstr "描画領域の位置の保護(_O)"
 
 #: ../app/actions/drawable-actions.c:82
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Keep the pixels on this drawable from being modified"
 msgctxt "drawable-action"
 msgid "Keep the position on this drawable from being modified"
-msgstr "ピクセルが変更されないように保護します"
+msgstr "位置が変更されないように保護します"
 
 #: ../app/actions/drawable-actions.c:91
 msgctxt "drawable-action"
@@ -5253,11 +5232,9 @@ msgid "_Bump Map..."
 msgstr "バンプマップ(_B)..."
 
 #: ../app/actions/filters-actions.c:203
-#, fuzzy
-#| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "_Color to Gray..."
-msgstr "カラーバランス(_B)..."
+msgstr "グレースケール化(_C)..."
 
 #: ../app/actions/filters-actions.c:208
 msgctxt "filters-action"
@@ -5343,8 +5320,6 @@ msgid "_Deinterlace..."
 msgstr "インターレース除去(_D)..."
 
 #: ../app/actions/filters-actions.c:283
-#, fuzzy
-#| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "脱色(_D)..."
@@ -7355,20 +7330,14 @@ msgid "Dismiss the effect of the layer mask"
 msgstr "レイヤーマスクの効果を無効にします"
 
 #: ../app/actions/layers-actions.c:321
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
-msgstr "可視/不可視 を切り替えます"
+msgstr "レイヤーの 可視/不可視 を切り替え(_V)"
 
 #: ../app/actions/layers-actions.c:327
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
-msgstr "連結/非連結 を切り替えます"
+msgstr "レイヤーの 連結/非連結 を切り替え(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:333
@@ -9659,20 +9628,14 @@ msgid "I_mport Path..."
 msgstr "パスのインポート(_M)..."
 
 #: ../app/actions/vectors-actions.c:166
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "vectors-action"
 msgid "Toggle Path _Visibility"
-msgstr "可視/不可視 を切り替えます"
+msgstr "パスの 可視/不可視 を切り替え(_V)"
 
 #: ../app/actions/vectors-actions.c:172
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "vectors-action"
 msgid "Toggle Path _Linked State"
-msgstr "連結/非連結 を切り替えます"
+msgstr "パスの 連結/非連結 を切り替え(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
@@ -9893,36 +9856,24 @@ msgid "Select the bottommost path"
 msgstr "最背面のレイヤーをアクティブにします"
 
 #: ../app/actions/vectors-actions.c:316
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Previous Layer"
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
-msgstr "前面レイヤーの選択(_P)"
+msgstr "前面パスの選択(_P)"
 
 #: ../app/actions/vectors-actions.c:317
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layer above the current layer"
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
-msgstr "前面のレイヤーをアクティブにします"
+msgstr "前面のパスをアクティブにします"
 
 #: ../app/actions/vectors-actions.c:322
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Next Layer"
 msgctxt "vectors-action"
 msgid "Select _Next Path"
-msgstr "背面レイヤーの選択(_N)"
+msgstr "背面パスの選択(_N)"
 
 #: ../app/actions/vectors-actions.c:323
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layer below the current layer"
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
-msgstr "背面のレイヤーをアクティブにします"
+msgstr "背面のパスをアクティブにします"
 
 #: ../app/actions/vectors-commands.c:164 ../app/actions/vectors-commands.c:750
 msgid "Path Attributes"
@@ -11139,50 +11090,34 @@ msgid "Web browser"
 msgstr "ウェブブラウザー"
 
 #: ../app/config/config-enums.c:219
-#, fuzzy
-#| msgid "Reset size"
 msgctxt "icon-size"
 msgid "Guess ideal size"
-msgstr "大きさをリセット"
+msgstr ""
 
 #: ../app/config/config-enums.c:220
-#, fuzzy
-#| msgid "Reset size"
 msgctxt "icon-size"
 msgid "Theme-set size"
-msgstr "大きさをリセット"
+msgstr ""
 
 #: ../app/config/config-enums.c:221
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Image size"
 msgctxt "icon-size"
 msgid "Small size"
-msgstr "キャンバスサイズ"
+msgstr ""
 
 #: ../app/config/config-enums.c:222
-#, fuzzy
-#| msgctxt "dash-preset"
-#| msgid "Medium dashes"
 msgctxt "icon-size"
 msgid "Medium size"
-msgstr "中破線"
+msgstr ""
 
 #: ../app/config/config-enums.c:223
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Image size"
 msgctxt "icon-size"
 msgid "Large size"
-msgstr "キャンバスサイズ"
+msgstr ""
 
 #: ../app/config/config-enums.c:224
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Image size"
 msgctxt "icon-size"
 msgid "Huge size"
-msgstr "キャンバスサイズ"
+msgstr ""
 
 #: ../app/config/config-enums.c:254
 msgctxt "position"
@@ -12398,9 +12333,6 @@ msgid "Positioned"
 msgstr "ポジション"
 
 #: ../app/core/core-enums.c:346
-#, fuzzy
-#| msgctxt "channel-border-style"
-#| msgid "Smooth"
 msgctxt "curve-point-type"
 msgid "Smooth"
 msgstr "なめらか"
@@ -12408,7 +12340,7 @@ msgstr "なめらか"
 #: ../app/core/core-enums.c:347
 msgctxt "curve-point-type"
 msgid "Corner"
-msgstr ""
+msgstr "角張り"
 
 #: ../app/core/core-enums.c:375
 msgctxt "curve-type"
@@ -12769,11 +12701,9 @@ msgid "Rotate image"
 msgstr "画像の回転"
 
 #: ../app/core/core-enums.c:1138
-#, fuzzy
-#| msgid "Transforming"
 msgctxt "undo-type"
 msgid "Transform image"
-msgstr "変形しています"
+msgstr "画像の変形"
 
 #: ../app/core/core-enums.c:1139
 msgctxt "undo-type"
@@ -14062,10 +13992,8 @@ msgid "Feather edges"
 msgstr "境界をぼかす"
 
 #: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
-#, fuzzy
-#| msgid "Enable feathering of selection edges"
 msgid "Enable feathering of fill edges"
-msgstr "この設定をオンにすると、選択範囲の境界をぼかします"
+msgstr "この設定をオンにすると、塗りつぶしの境界をぼかします"
 
 #: ../app/core/gimpfilloptions.c:130 ../app/paint/gimpmybrushoptions.c:86
 #: ../app/tools/gimpbucketfilloptions.c:166 ../app/tools/gimpcoloroptions.c:85
@@ -14542,7 +14470,7 @@ msgstr "ディザリング"
 #: ../app/core/gimpimage-convert-type.c:84
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
-msgstr "画像をRGBに変換"
+msgstr "画像を RGB に変換"
 
 #: ../app/core/gimpimage-convert-type.c:88
 msgctxt "undo-type"
@@ -14957,7 +14885,7 @@ msgstr "透明部分も選択可"
 
 #: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
-msgstr ""
+msgstr "線画検出のしきい値"
 
 #: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
@@ -15547,10 +15475,8 @@ msgid "Apply stored dynamics"
 msgstr "動的特性を適用"
 
 #: ../app/core/gimptoolpreset.c:168
-#, fuzzy
-#| msgid "Apply stored brush"
 msgid "Apply stored MyPaint brush"
-msgstr "ブラシを適用"
+msgstr "MyPaint ブラシを適用"
 
 #: ../app/core/gimptoolpreset.c:175
 msgid "Apply stored pattern"
@@ -15685,10 +15611,8 @@ msgstr "チャンネル名(_N):"
 
 #: ../app/dialogs/channel-options-dialog.c:128
 #: ../app/dialogs/layer-options-dialog.c:168
-#, fuzzy
-#| msgid "Lock pixels"
 msgid "Lock _pixels"
-msgstr "すべてのピクセルを保護"
+msgstr "すべてのピクセルを保護(_P)"
 
 #: ../app/dialogs/channel-options-dialog.c:129
 #: ../app/dialogs/layer-options-dialog.c:169
@@ -15919,11 +15843,8 @@ msgstr ""
 
 #: ../app/dialogs/convert-precision-dialog.c:205
 #: ../app/widgets/gimptemplateeditor.c:438
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgid "Linear light"
-msgstr "ハードライト"
+msgstr "リニアライト"
 
 #: ../app/dialogs/convert-precision-dialog.c:237
 msgid "_Layers:"
@@ -16222,23 +16143,16 @@ msgid "_Close"
 msgstr "閉じる(_C)"
 
 #: ../app/dialogs/image-properties-dialog.c:84
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Properties"
 msgid "_Properties"
 msgstr "プロパティ(_P)"
 
 #: ../app/dialogs/image-properties-dialog.c:89
-#, fuzzy
-#| msgid "Color Profile"
 msgid "C_olor Profile"
-msgstr "カラープロファイル"
+msgstr "カラープロファイル(_O)"
 
 #: ../app/dialogs/image-properties-dialog.c:94
-#, fuzzy
-#| msgid "Comment"
 msgid "Co_mment"
-msgstr "コメント"
+msgstr "コメント(_M)"
 
 #: ../app/dialogs/image-scale-dialog.c:115
 msgctxt "dialog-title"
@@ -16354,16 +16268,12 @@ msgid "_Blend space:"
 msgstr "色空間:"
 
 #: ../app/dialogs/layer-options-dialog.c:213
-#, fuzzy
-#| msgid "Composite space:"
 msgid "Compos_ite space:"
-msgstr "合成色空間:"
+msgstr "合成色空間(_I):"
 
 #: ../app/dialogs/layer-options-dialog.c:225
-#, fuzzy
-#| msgid "Composite mode:"
 msgid "Composite mo_de:"
-msgstr "合成モード:"
+msgstr "合成モード(_D):"
 
 #: ../app/dialogs/layer-options-dialog.c:239
 msgid "_Opacity:"
@@ -18327,10 +18237,8 @@ msgid "_Stroke"
 msgstr "ストローク(_S)"
 
 #: ../app/dialogs/stroke-dialog.c:238
-#, fuzzy
-#| msgid "Paint tool:"
 msgid "P_aint tool:"
-msgstr "描画ツール:"
+msgstr "描画ツール(_A):"
 
 #: ../app/dialogs/stroke-dialog.c:252
 msgid "_Emulate brush dynamics"
@@ -18865,10 +18773,8 @@ msgid "Click-Drag to move all points"
 msgstr "クリック-ドラッグ: すべてのポイントを移動します"
 
 #: ../app/display/gimptoolgyroscope.c:713
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to zoom"
-msgstr "クリック-ドラッグ: このポイントを移動します"
+msgstr "クリック-ドラッグ: ズームします"
 
 #: ../app/display/gimptoolgyroscope.c:717
 #, fuzzy, c-format
@@ -18878,10 +18784,8 @@ msgstr "%s-ドラッグ: 15 度毎に角度をスナップ"
 
 #: ../app/display/gimptoolgyroscope.c:724
 #: ../app/display/gimptooltransformgrid.c:1840
-#, fuzzy
-#| msgid "Click to erase"
 msgid "Click-Drag to rotate"
-msgstr "クリック: 消します"
+msgstr "クリック-ドラッグ: 回転します"
 
 #: ../app/display/gimptoolgyroscope.c:728 ../app/display/gimptoolline.c:1559
 #: ../app/tools/gimppainttool.c:616
@@ -18915,22 +18819,16 @@ msgstr "%s-クリック: 覆い焼き"
 
 #: ../app/display/gimptoolhandlegrid.c:865
 #: ../app/display/gimptooltransformgrid.c:1831
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move"
-msgstr "クリック-ドラッグ: このポイントを移動します"
+msgstr "クリック-ドラッグ: 移動します"
 
 #: ../app/display/gimptoolhandlegrid.c:868
-#, fuzzy
-#| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to rotate and scale"
-msgstr "クリック-ドラッグ: 選択範囲を作成します"
+msgstr "クリック-ドラッグ: 回転、拡大・縮小します"
 
 #: ../app/display/gimptoolhandlegrid.c:871
-#, fuzzy
-#| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to shear and scale"
-msgstr "クリック-ドラッグ: 選択範囲を作成します"
+msgstr "クリック-ドラッグ: 剪断、拡大・縮小します"
 
 #: ../app/display/gimptoolhandlegrid.c:874
 #: ../app/display/gimptooltransformgrid.c:1819
@@ -18938,22 +18836,16 @@ msgid "Click-Drag to change perspective"
 msgstr "クリック-ドラッグ: 遠近感を変更します"
 
 #: ../app/display/gimptoolhandlegrid.c:885
-#, fuzzy
-#| msgid "Click to heal"
 msgid "Click to add a handle"
-msgstr "クリック: 修復します"
+msgstr "クリック: ハンドルを追加します"
 
 #: ../app/display/gimptoolhandlegrid.c:891
-#, fuzzy
-#| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to move this handle"
-msgstr "クリック-ドラッグ: ハンドルを移動します"
+msgstr "クリック-ドラッグ: このハンドルを移動します"
 
 #: ../app/display/gimptoolhandlegrid.c:896
-#, fuzzy
-#| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to remove this handle"
-msgstr "クリック-ドラッグ: ハンドルを移動します"
+msgstr "クリック-ドラッグ: このハンドルを削除します"
 
 #: ../app/display/gimptoolline.c:347 ../app/display/gimptoolline.c:506
 msgid "Line: "
@@ -19204,10 +19096,8 @@ msgstr "矩形: "
 
 # ツールオプションダイアログで、矩形選択などの左上座標を示す（または入力）するテキストボックスのラベル
 #: ../app/display/gimptoolrectangle.c:2142
-#, fuzzy
-#| msgid "Position:"
 msgid "Position: "
-msgstr "左上角の座標:"
+msgstr ""
 
 #: ../app/display/gimptooltransform3dgrid.c:632
 #, fuzzy
@@ -19221,16 +19111,12 @@ msgid "Click-Drag to scale"
 msgstr "クリック-ドラッグ: 拡大・縮小します"
 
 #: ../app/display/gimptooltransformgrid.c:1833
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the pivot point"
-msgstr "クリック-ドラッグ: このポイントを移動します"
+msgstr "クリック-ドラッグ: 中心点を移動します"
 
 #: ../app/display/gimptooltransformgrid.c:1838
-#, fuzzy
-#| msgid "Click to heal"
 msgid "Click-Drag to shear"
-msgstr "クリック: 修復します"
+msgstr "クリック-ドラッグ: 剪断します"
 
 #: ../app/file/file-open.c:117 ../app/file/file-save.c:127
 msgid "Not a regular file"
@@ -19329,10 +19215,8 @@ msgid "GIMP brush (animated)"
 msgstr "GIMP ブラシ (アニメーション)"
 
 #: ../app/file-data/file-data.c:365 ../app/file-data/file-data.c:426
-#, fuzzy
-#| msgid "Pattern"
 msgid "GIMP pattern"
-msgstr "パターン"
+msgstr "GIMP パターン"
 
 #: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
 #: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
@@ -19424,14 +19308,13 @@ msgid "Create or adjust the cage"
 msgstr "ケージを作成または調整"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#, fuzzy
-#| msgctxt "cage-mode"
-#| msgid "Deform the cage to deform the image"
 msgctxt "cage-mode"
 msgid ""
 "Deform the cage\n"
 "to deform the image"
-msgstr "ケージを移動してオブジェクトを変形"
+msgstr ""
+"ケージを移動して\n"
+"オブジェクトを変形"
 
 #: ../app/operations/operations-enums.c:25
 msgctxt "layer-color-space"
@@ -19970,12 +19853,9 @@ msgid "Pin light"
 msgstr "ハイライト表示"
 
 #: ../app/operations/operations-enums.c:269
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Linear light"
-msgstr "ハードライト"
+msgstr "リニアライト"
 
 #: ../app/operations/operations-enums.c:270
 #, fuzzy
@@ -20536,10 +20416,8 @@ msgid "No MyPaint brushes available for use with this tool."
 msgstr "有効な MyPaint ブラシがありません。"
 
 #: ../app/paint/gimpmybrushoptions.c:93
-#, fuzzy
-#| msgid "Set Opacity"
 msgid "Base Opacity"
-msgstr "透明度の設定"
+msgstr "ベースとなる不透明度"
 
 #: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
 #: ../app/tools/gimpwarpoptions.c:99 ../app/widgets/gimpbrusheditor.c:178
@@ -20547,11 +20425,8 @@ msgid "Hardness"
 msgstr "硬さ"
 
 #: ../app/paint/gimpmybrushoptions.c:107
-#, fuzzy
-#| msgctxt "brushes-action"
-#| msgid "Edit this brush"
 msgid "Erase with this brush"
-msgstr "ブラシエディターで編集します"
+msgstr "このブラシを消しゴムにする"
 
 #: ../app/paint/gimpmybrushoptions.c:114
 msgid "No erasing effect"
@@ -20559,7 +20434,7 @@ msgstr ""
 
 #: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:86
 msgid "Never decrease alpha of existing pixels"
-msgstr ""
+msgstr "既存のピクセルの透明度を下げません"
 
 #: ../app/paint/gimppaintbrush.c:82 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
@@ -20650,11 +20525,11 @@ msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:280
 msgid "Lock brush to view"
-msgstr ""
+msgstr "ブラシの表示を固定"
 
 #: ../app/paint/gimppaintoptions.c:281
 msgid "Keep brush appearance fixed relative to the view"
-msgstr ""
+msgstr "表示倍率を変更してもブラシの大きさが変わらないようにします"
 
 #: ../app/paint/gimppaintoptions.c:287
 msgid "Incremental"
@@ -20771,7 +20646,7 @@ msgstr "割合"
 
 #: ../app/paint/gimpsmudgeoptions.c:72
 msgid "The strength of smudging"
-msgstr ""
+msgstr "にじみの強さです"
 
 #: ../app/paint/gimpsmudgeoptions.c:78
 msgctxt "smudge-tool"
@@ -20780,7 +20655,7 @@ msgstr "流量"
 
 #: ../app/paint/gimpsmudgeoptions.c:79
 msgid "The amount of brush color to blend"
-msgstr ""
+msgstr "混ぜるブラシの色の量です"
 
 #: ../app/paint/gimpsmudgeoptions.c:85
 msgctxt "smudge-tool"
@@ -20806,7 +20681,7 @@ msgstr "位置合わせ"
 #: ../app/paint/paint-enums.c:52
 msgctxt "perspective-clone-mode"
 msgid "Modify Perspective"
-msgstr "パース(遠近感)の設定"
+msgstr "パース (遠近感) の設定"
 
 #: ../app/paint/paint-enums.c:53
 msgctxt "perspective-clone-mode"
@@ -21606,25 +21481,19 @@ msgid "Red Eye Removal"
 msgstr "赤目除去"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3520
-#, fuzzy
-#| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Hurl"
-msgstr "不規則"
+msgstr "ランダムに浴びせる"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3573
-#, fuzzy
-#| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Pick"
-msgstr "不規則"
+msgstr "ランダムにつまむ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3626
-#, fuzzy
-#| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Slur"
-msgstr "不規則"
+msgstr "ランダムにごまかす"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3701
 msgctxt "undo-type"
@@ -22697,10 +22566,8 @@ msgid "Maximum color difference"
 msgstr "最大の色の差"
 
 #: ../app/tools/gimpbucketfilloptions.c:181
-#, fuzzy
-#| msgid "Set Image Print Resolution"
 msgid "Source image for line art computation"
-msgstr "画像印刷解像度の設定"
+msgstr "線画検出の対象です"
 
 #: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
@@ -22737,15 +22604,12 @@ msgid "Finding Similar Colors"
 msgstr "類似色の識別"
 
 #: ../app/tools/gimpbucketfilloptions.c:485
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Invert Selection"
 msgid "Line Art Detection"
-msgstr "選択範囲を反転"
+msgstr "線画検出"
 
 #: ../app/tools/gimpbucketfilloptions.c:495
 msgid "(computing...)"
-msgstr ""
+msgstr "(計算中...)"
 
 #: ../app/tools/gimpbucketfilltool.c:167
 msgid "Bucket Fill"
@@ -22762,8 +22626,6 @@ msgid "_Bucket Fill"
 msgstr "塗りつぶし(_B)"
 
 #: ../app/tools/gimpbucketfilltool.c:344
-#, fuzzy
-#| msgid "Bucket Fill"
 msgid "Bucket fill"
 msgstr "塗りつぶし"
 
@@ -22777,7 +22639,7 @@ msgstr "アクティブレイヤーは非表示になっています。"
 
 #: ../app/tools/gimpbucketfilltool.c:578
 msgid "No valid line art source selected."
-msgstr ""
+msgstr "適切な線画ソースを選択していません。"
 
 #: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:457
@@ -22809,12 +22671,12 @@ msgid "Select by Color"
 msgstr "色域を選択"
 
 #: ../app/tools/gimpcageoptions.c:77
-#, fuzzy
-#| msgid "Fill the original position of the cage with a plain color"
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
-msgstr "初期ケージ内を単色で塗りつぶす"
+msgstr ""
+"初期ケージ内を\n"
+"単色で塗りつぶす"
 
 #: ../app/tools/gimpcagetool.c:162 ../app/tools/gimpcagetool.c:1235
 msgid "Cage Transform"
@@ -22888,10 +22750,8 @@ msgid "Color Picker Average Radius"
 msgstr "色の平均を取る範囲の半径を設定します"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-#, fuzzy
-#| msgid "Pick a path"
 msgid "Pick Target"
-msgstr "つかんだパスを移動"
+msgstr "スポイト対象"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
 #, fuzzy
@@ -22911,10 +22771,9 @@ msgstr "ダイアログを開き、取得した色を各カラーモデルの値
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
-#, fuzzy, c-format
-#| msgid "Pick Mode  (%s)"
+#, c-format
 msgid "Pick Target  (%s)"
-msgstr "スポイトモード  (%s)"
+msgstr "スポイト対象  (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:204
@@ -23091,22 +22950,18 @@ msgid "Click to add control points to all channels"
 msgstr "クリック: すべてのチャンネルにコントロールポイントを追加します"
 
 #: ../app/tools/gimpcurvestool.c:409
-#, fuzzy
-#| msgid "Click to close the curve"
 msgid "Click to locate on curve"
-msgstr "クリック: カーブを閉じます"
+msgstr "クリック: その場所のトーンをダイアログ上に示します"
 
 #: ../app/tools/gimpcurvestool.c:411
-#, fuzzy, c-format
-#| msgid "Click to add a control point"
+#, c-format
 msgid "%s: add control point"
-msgstr "クリック: コントロールポイントを追加します"
+msgstr "%s: コントロールポイントの追加"
 
 #: ../app/tools/gimpcurvestool.c:412
-#, fuzzy, c-format
-#| msgid "Click to add control points to all channels"
+#, c-format
 msgid "%s: add control points to all channels"
-msgstr "クリック: すべてのチャンネルにコントロールポイントを追加します"
+msgstr "%s: すべてのチャンネルへのコントロールポイントの追加"
 
 #: ../app/tools/gimpcurvestool.c:429
 msgid "Adjust Color Curves"
@@ -23123,7 +22978,7 @@ msgstr "チャンネルのリセット(_E)"
 
 #: ../app/tools/gimpcurvestool.c:526
 msgid "Adjust curves in linear light"
-msgstr ""
+msgstr "リニアライトでカーブを調整します"
 
 #: ../app/tools/gimpcurvestool.c:527
 msgid "Adjust curves perceptually"
@@ -23131,19 +22986,15 @@ msgstr ""
 
 #: ../app/tools/gimpcurvestool.c:622
 msgid "_Input:"
-msgstr ""
+msgstr "入力(_I):"
 
 #: ../app/tools/gimpcurvestool.c:636
-#, fuzzy
-#| msgid "Output type"
 msgid "O_utput:"
-msgstr "出力タイプ"
+msgstr "出力(_U):"
 
 #: ../app/tools/gimpcurvestool.c:650
-#, fuzzy
-#| msgid "File Type:"
 msgid "T_ype:"
-msgstr "ファイル形式:"
+msgstr "形式(_Y):"
 
 #: ../app/tools/gimpcurvestool.c:669 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
@@ -23639,8 +23490,6 @@ msgid "Metric to use for the distance calculation"
 msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:109
-#, fuzzy
-#| msgid "Adaptive supersampling"
 msgid "Adaptive Supersampling"
 msgstr "適応型スーパーサンプリング"
 
@@ -23649,28 +23498,20 @@ msgid "Max depth"
 msgstr "最大深度"
 
 #: ../app/tools/gimpgradientoptions.c:135
-#, fuzzy
-#| msgid "Instant update"
 msgid "Instant mode"
-msgstr "即時更新"
+msgstr "即時モード"
 
 #: ../app/tools/gimpgradientoptions.c:136
 msgid "Commit gradient instantly"
-msgstr ""
+msgstr "グラデーションを即反映させます"
 
 #: ../app/tools/gimpgradientoptions.c:142
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "Edit Active Gradient"
 msgid "Modify active gradient"
-msgstr "アクティブなグラデーションの編集"
+msgstr "アクティブなグラデーションの修正"
 
 #: ../app/tools/gimpgradientoptions.c:143
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "Edit Active Gradient"
 msgid "Modify the active gradient in-place"
-msgstr "アクティブなグラデーションの編集"
+msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:274
 #: ../app/tools/gimppaintoptions-gui.c:384
@@ -23679,10 +23520,9 @@ msgstr "このグラデーションを編集します"
 
 #. the instant toggle
 #: ../app/tools/gimpgradientoptions.c:351
-#, fuzzy, c-format
-#| msgid "Instant update"
+#, c-format
 msgid "Instant mode  (%s)"
-msgstr "即時更新"
+msgstr "即時モード  (%s)"
 
 #: ../app/tools/gimpgradientoptions.c:371
 msgid ""
@@ -23871,21 +23711,15 @@ msgstr "ハンドルモード"
 
 #: ../app/tools/gimphandletransformoptions.c:167
 msgid "Add handles and transform the image"
-msgstr ""
+msgstr "ハンドルを追加して画像を変形します"
 
 #: ../app/tools/gimphandletransformoptions.c:172
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Transform Channel"
 msgid "Move transform handles"
-msgstr "チャンネルを変形"
+msgstr "変形ハンドルを移動します"
 
 #: ../app/tools/gimphandletransformoptions.c:177
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Remove Parasite from Image"
 msgid "Remove transform handles"
-msgstr "画像からパラサイトを削除"
+msgstr "変形ハンドルを削除します"
 
 #: ../app/tools/gimphandletransformtool.c:111
 msgid "Handle Transform"
@@ -23983,21 +23817,18 @@ msgid "Intelligent _Scissors"
 msgstr "電脳はさみ(_S)"
 
 #: ../app/tools/gimpiscissorstool.c:905
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click to remove this point"
-msgstr "クリック-ドラッグ: このポイントを移動します"
+msgstr "クリック: このポイントを削除します"
 
 #: ../app/tools/gimpiscissorstool.c:913 ../app/tools/gimpiscissorstool.c:982
 #, c-format
 msgid "%s: disable auto-snap"
-msgstr "%s: 自動スナップを無効に"
+msgstr "%s: 自動スナップの無効"
 
 #: ../app/tools/gimpiscissorstool.c:914
-#, fuzzy, c-format
-#| msgid "Click-Drag to move this point"
+#, c-format
 msgid "%s: remove this point"
-msgstr "クリック-ドラッグ: このポイントを移動します"
+msgstr "%s: このポイントの削除"
 
 #: ../app/tools/gimpiscissorstool.c:934
 msgid "Click to close the curve"
@@ -24097,10 +23928,8 @@ msgid "All Channels"
 msgstr "全チャンネル"
 
 #: ../app/tools/gimplevelstool.c:619
-#, fuzzy
-#| msgid "Input Levels"
 msgid "_Auto Input Levels"
-msgstr "入力レベル"
+msgstr "自動入力レベル(_A)"
 
 #: ../app/tools/gimplevelstool.c:622
 #, fuzzy
@@ -24153,14 +23982,12 @@ msgid "_Zoom"
 msgstr "ズーム(_Z)"
 
 #: ../app/tools/gimpmeasureoptions.c:71
-#, fuzzy
-#| msgid "Interpolation:"
 msgid "Orientation"
-msgstr "補間アルゴリズム:"
+msgstr "方向"
 
 #: ../app/tools/gimpmeasureoptions.c:72
 msgid "Orientation against which the angle is measured"
-msgstr ""
+msgstr "角度を測定する方向です"
 
 #: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
@@ -24168,8 +23995,7 @@ msgstr "ダイアログを開いて計測結果を表示します"
 
 #. the orientation frame
 #: ../app/tools/gimpmeasureoptions.c:148
-#, fuzzy, c-format
-#| msgid "Direction  (%s)"
+#, c-format
 msgid "Orientation  (%s)"
 msgstr "方向 (%s)"
 
@@ -24897,8 +24723,6 @@ msgid "S_hear"
 msgstr "剪断変形(_H)"
 
 #: ../app/tools/gimpsheartool.c:111
-#, fuzzy
-#| msgid "Shear"
 msgctxt "undo-type"
 msgid "Shear"
 msgstr "剪断変形"
@@ -25141,8 +24965,6 @@ msgid "Show image preview"
 msgstr "プレビューを表示"
 
 #: ../app/tools/gimptransformgridoptions.c:112
-#, fuzzy
-#| msgid "Show a preview of the transformed image"
 msgid "Show a preview of the transformed image"
 msgstr "変形画像のプレビューを表示します"
 
@@ -25226,27 +25048,23 @@ msgid "Scale around the center point"
 msgstr "中心点を基準にして拡大・縮小します"
 
 #: ../app/tools/gimptransformgridoptions.c:548
-#, fuzzy, c-format
-#| msgid "Anti erase  (%s)"
+#, c-format
 msgid "Constrain handles (%s)"
-msgstr "逆消しゴム  (%s)"
+msgstr "ハンドルを制限 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:556
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
-msgstr ""
+msgstr "ハンドルを辺方向と対角方向に制限します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:569
-#, fuzzy
-#| msgid "Transformation"
 msgid "Transform around the center point"
-msgstr "変形"
+msgstr "中心点を固定して変形します"
 
 #: ../app/tools/gimptransformgridoptions.c:585
-#, fuzzy, c-format
-#| msgid "Anti erase  (%s)"
+#, c-format
 msgid "Constrain (%s)"
-msgstr "逆消しゴム  (%s)"
+msgstr "制限  (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:586
 #: ../app/tools/gimptransform3dtool.c:335
@@ -25256,74 +25074,69 @@ msgstr "移動"
 #: ../app/tools/gimptransformgridoptions.c:587
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
-msgstr ""
+msgstr "移動方向を水平、垂直、斜め 45 度に制限します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:589
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
-msgstr ""
+msgstr "拡大縮小時に縦横比を維持します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:591
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
-msgstr ""
+msgstr "回転を 15 度刻みに制限します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:593
 #, c-format
 msgid "Shear along edge direction only (%s)"
-msgstr ""
+msgstr "剪断を辺方向のみに制限します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:595
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
-msgstr ""
+msgstr "遠近感の変更を辺方向と対角方向に制限します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:598
 #, c-format
 msgid "From pivot  (%s)"
-msgstr ""
+msgstr "中心点から  (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:600
-#, fuzzy, c-format
-#| msgid "Fill from first point"
+#, c-format
 msgid "Scale from pivot point (%s)"
-msgstr "初期ケージ内を塗りつぶす"
+msgstr "中心点から拡大縮小します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:602
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
-msgstr ""
+msgstr "対辺も同時に剪断します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:604
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
-msgstr ""
+msgstr "中心点の位置を固定したまま遠近感を変更します (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:607
 msgid "Pivot"
-msgstr ""
+msgstr "中心点"
 
 #: ../app/tools/gimptransformgridoptions.c:608
-#, fuzzy, c-format
-#| msgid "Type  (%s)"
+#, c-format
 msgid "Snap (%s)"
-msgstr "種類  (%s)"
+msgstr "スナップ  (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:609
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
-msgstr ""
+msgstr "中心点を移動させたときに、中央または角に近づいたら中心点を自動的に引き寄せます (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:610
 msgid "Lock"
-msgstr ""
+msgstr "固定"
 
 #: ../app/tools/gimptransformgridoptions.c:611
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Reposition channel"
 msgid "Lock pivot position to canvas"
-msgstr "チャンネルの再配置"
+msgstr "キャンバスに中心点を固定します"
 
 #: ../app/tools/gimptransformgridtool.c:291
 #: ../app/tools/gimptransformtool.c:437
@@ -25745,25 +25558,19 @@ msgid "Frame"
 msgstr "フレーム"
 
 #: ../app/tools/tools-enums.c:25
-#, fuzzy
-#| msgid "Fill whole selection"
 msgctxt "bucket-fill-area"
 msgid "Fill whole selection"
 msgstr "選択範囲"
 
 #: ../app/tools/tools-enums.c:26
-#, fuzzy
-#| msgid "Fill similar colors"
 msgctxt "bucket-fill-area"
 msgid "Fill similar colors"
 msgstr "類似色領域"
 
 #: ../app/tools/tools-enums.c:27
-#, fuzzy
-#| msgid "Fill whole selection"
 msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
-msgstr "選択範囲"
+msgstr "線画領域"
 
 #: ../app/tools/tools-enums.c:57
 msgctxt "line-art-source"
@@ -25773,21 +25580,17 @@ msgstr "すべての可視レイヤー"
 #: ../app/tools/tools-enums.c:58
 msgctxt "line-art-source"
 msgid "Active layer"
-msgstr "アクティブなレイヤー"
+msgstr "アクティブレイヤー"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
-#| msgid "Set layer or path as active"
 msgctxt "line-art-source"
 msgid "Layer below the active one"
-msgstr "つかんだレイヤーやパスをアクティブにする"
+msgstr "アクティブレイヤーの背面のレイヤー"
 
 #: ../app/tools/tools-enums.c:60
-#, fuzzy
-#| msgid "Move the active layer"
 msgctxt "line-art-source"
 msgid "Layer above the active one"
-msgstr "アクティブなレイヤーを移動"
+msgstr "アクティブレイヤーの前面のレイヤー"
 
 #: ../app/tools/tools-enums.c:89
 msgctxt "rect-select-mode"
@@ -25820,8 +25623,6 @@ msgid "Path"
 msgstr "パス"
 
 #: ../app/tools/tools-enums.c:124
-#, fuzzy
-#| msgid "Image"
 msgctxt "transform-type"
 msgid "Image"
 msgstr "画像"
@@ -27862,11 +27663,8 @@ msgid "System Language"
 msgstr "システム設定の言語"
 
 #: ../app/widgets/gimplayermodebox.c:153
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "Switch to the previous image"
 msgid "Switch to another group of modes"
-msgstr "前の画像に移動します"
+msgstr "他のモードのグループに切り替えます"
 
 #: ../app/widgets/gimplayertreeview.c:312
 msgid "Lock alpha channel"
