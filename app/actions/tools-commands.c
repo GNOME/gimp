@@ -62,6 +62,14 @@ static void   tools_activate_enum_action (const gchar *action_desc,
                                           GVariant    *value);
 
 
+/*  local variables  */
+
+/* this is a hack to allow GimpToolButton to activate a tool-selection action
+ * without initializing the tool
+ */
+static gint tools_select_cmd_initialize_blocked = 0;
+
+
 /*  public functions  */
 
 void
@@ -102,10 +110,15 @@ tools_select_cmd_callback (GimpAction *action,
 
   /*  always allocate a new tool when selected from the image menu
    */
-  if (gimp_context_get_tool (context) != tool_info)
-    gimp_context_set_tool (context, tool_info);
+  if (gimp_context_get_tool (context) != tool_info ||
+      tools_select_cmd_initialize_blocked)
+    {
+      gimp_context_set_tool (context, tool_info);
+    }
   else
-    gimp_context_tool_changed (context);
+    {
+      gimp_context_tool_changed (context);
+    }
 
   if (set_transform_type)
     {
@@ -115,10 +128,27 @@ tools_select_cmd_callback (GimpAction *action,
                                     transform_type);
     }
 
-  display = gimp_context_get_display (context);
+  if (! tools_select_cmd_initialize_blocked)
+    {
+      display = gimp_context_get_display (context);
 
-  if (display && gimp_display_get_image (display))
-    tool_manager_initialize_active (gimp, display);
+      if (display && gimp_display_get_image (display))
+        tool_manager_initialize_active (gimp, display);
+    }
+}
+
+void
+tools_select_cmd_block_initialize (void)
+{
+  tools_select_cmd_initialize_blocked++;
+}
+
+void
+tools_select_cmd_unblock_initialize (void)
+{
+  g_return_if_fail (tools_select_cmd_initialize_blocked > 0);
+
+  tools_select_cmd_initialize_blocked--;
 }
 
 void

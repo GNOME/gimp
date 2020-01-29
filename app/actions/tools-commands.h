@@ -22,6 +22,8 @@
 void   tools_select_cmd_callback                    (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
+void   tools_select_cmd_block_initialize            (void);
+void   tools_select_cmd_unblock_initialize          (void);
 
 void   tools_color_average_radius_cmd_callback      (GimpAction *action,
                                                      GVariant   *value,

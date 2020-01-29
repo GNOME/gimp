@@ -227,6 +227,7 @@ typedef struct _GimpTagPopup                 GimpTagPopup;
 typedef struct _GimpTemplateEditor           GimpTemplateEditor;
 typedef struct _GimpTextStyleEditor          GimpTextStyleEditor;
 typedef struct _GimpThumbBox                 GimpThumbBox;
+typedef struct _GimpToolButton               GimpToolButton;
 typedef struct _GimpToolPalette              GimpToolPalette;
 typedef struct _GimpTranslationStore         GimpTranslationStore;
 typedef struct _GimpWindow                   GimpWindow;

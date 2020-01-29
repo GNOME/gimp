@@ -1044,7 +1044,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
 {
   gchar *help_id = NULL;
 
-  while (! help_id)
+  while (! help_id && GTK_IS_MENU_SHELL (widget))
     {
       GtkWidget *menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
