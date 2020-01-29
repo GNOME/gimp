@@ -262,6 +262,13 @@ gimp_init (Gimp *gimp)
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
 
+  gimp->tool_item_list = g_object_new (GIMP_TYPE_LIST,
+                                       "children-type", GIMP_TYPE_TOOL_ITEM,
+                                       "append",        TRUE,
+                                       NULL);
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_item_list),
+                               "tool items");
+
   gimp->documents = gimp_document_list_new (gimp);
 
   gimp->templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
@@ -384,6 +391,8 @@ gimp_finalize (GObject *object)
                               (GFunc) g_object_run_dispose, NULL);
       g_clear_object (&gimp->tool_info_list);
     }
+
+  g_clear_object (&gimp->tool_item_list);
 
   file_data_exit (gimp);
   xcf_exit (gimp);
@@ -898,6 +907,14 @@ gimp_get_tool_info_iter (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return GIMP_LIST (gimp->tool_info_list)->queue->head;
+}
+
+GList *
+gimp_get_tool_item_iter (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return GIMP_LIST (gimp->tool_item_list)->queue->head;
 }
 
 GimpObject *

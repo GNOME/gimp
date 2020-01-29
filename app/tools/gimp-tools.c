@@ -31,7 +31,9 @@
 #include "core/gimp.h"
 #include "core/gimp-contexts.h"
 #include "core/gimp-internal-data.h"
+#include "core/gimpcontext.h"
 #include "core/gimplist.h"
+#include "core/gimptoolgroup.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 
@@ -89,23 +91,32 @@
 #include "gimpvectortool.h"
 #include "gimpwarptool.h"
 
+#include "gimp-intl.h"
+
+
+#define TOOL_RC_FILE_VERSION 1
+
 
 /*  local function prototypes  */
 
-static void   gimp_tools_register (GType                   tool_type,
-                                   GType                   tool_options_type,
-                                   GimpToolOptionsGUIFunc  options_gui_func,
-                                   GimpContextPropMask     context_props,
-                                   const gchar            *identifier,
-                                   const gchar            *label,
-                                   const gchar            *tooltip,
-                                   const gchar            *menu_label,
-                                   const gchar            *menu_accel,
-                                   const gchar            *help_domain,
-                                   const gchar            *help_data,
-                                   const gchar            *icon_name,
-                                   gpointer                data);
+static void   gimp_tools_register       (GType                   tool_type,
+                                         GType                   tool_options_type,
+                                         GimpToolOptionsGUIFunc  options_gui_func,
+                                         GimpContextPropMask     context_props,
+                                         const gchar            *identifier,
+                                         const gchar            *label,
+                                         const gchar            *tooltip,
+                                         const gchar            *menu_label,
+                                         const gchar            *menu_accel,
+                                         const gchar            *help_domain,
+                                         const gchar            *help_data,
+                                         const gchar            *icon_name,
+                                         gpointer                data);
 
+static void   gimp_tools_copy_structure (Gimp                   *gimp,
+                                         GimpContainer          *src_container,
+                                         GimpContainer          *dest_container,
+                                         GHashTable             *tools);
 
 /*  private variables  */
 
@@ -225,17 +236,9 @@ gimp_tools_init (Gimp *gimp)
 void
 gimp_tools_exit (Gimp *gimp)
 {
-  GList *default_order;
   GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  default_order = g_object_get_data (G_OBJECT (gimp),
-                                     "gimp-tools-default-order");
-
-  g_list_free_full (default_order, (GDestroyNotify) g_free);
-
-  g_object_set_data (G_OBJECT (gimp), "gimp-tools-default-order", NULL);
 
   tool_manager_exit (gimp);
 
@@ -254,70 +257,14 @@ gimp_tools_exit (Gimp *gimp)
 void
 gimp_tools_restore (Gimp *gimp)
 {
-  GimpContainer *gimp_list;
-  GimpObject    *object;
-  GFile         *file;
-  GList         *list;
-  GError        *error = NULL;
+  GimpObject *object;
+  GList      *list;
+  GError     *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_list = g_object_new (GIMP_TYPE_LIST,
-                            "children-type", GIMP_TYPE_TOOL_INFO,
-                            "append",        TRUE,
-                            NULL);
-
-  file = gimp_directory_file ("toolrc", NULL);
-
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
-
-  if (gimp_config_deserialize_gfile (GIMP_CONFIG (gimp_list), file,
-                                     NULL, &error))
-    {
-      gint i = 0;
-
-      for (list = GIMP_LIST (gimp_list)->queue->head;
-           list;
-           list = g_list_next (list))
-        {
-          const gchar *name = gimp_object_get_name (list->data);
-
-          object = gimp_container_get_child_by_name (gimp->tool_info_list,
-                                                     name);
-
-          if (object)
-            {
-              GimpToolItem *tool_item = list->data;
-
-              while (! gimp_container_get_child_by_name (
-                         gimp_list,
-                         gimp_object_get_name (
-                           gimp_container_get_child_by_index (
-                             gimp->tool_info_list, i))))
-                {
-                  i++;
-                }
-
-              g_object_set (object,
-                            "visible", gimp_tool_item_is_visible (tool_item),
-                            NULL);
-
-              gimp_container_reorder (gimp->tool_info_list,
-                                      object, i++);
-            }
-        }
-    }
-  else
-    {
-      if (error->code != G_IO_ERROR_NOT_FOUND)
-        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING, error->message);
-
-      g_clear_error (&error);
-    }
-
-  g_object_unref (file);
-  g_object_unref (gimp_list);
+  /* restore tool order */
+  gimp_tools_reset (gimp, gimp->tool_item_list, TRUE);
 
   /* make the generic operation tool invisible by default */
   object = gimp_container_get_child_by_name (gimp->tool_info_list,
@@ -395,7 +342,8 @@ gimp_tools_save (Gimp     *gimp,
                  gboolean  save_tool_options,
                  gboolean  always_save)
 {
-  GFile *file;
+  GimpConfigWriter *writer;
+  GFile            *file;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -435,11 +383,15 @@ gimp_tools_save (Gimp     *gimp,
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  gimp_config_serialize_to_gfile (GIMP_CONFIG (gimp->tool_info_list),
-                                  file,
-                                  "GIMP toolrc",
-                                  "end of toolrc",
-                                  NULL, NULL);
+  writer = gimp_config_writer_new_gfile (file, TRUE, "GIMP toolrc", NULL);
+
+  if (writer)
+    {
+      gimp_tools_serialize (gimp, gimp->tool_item_list, writer);
+
+      gimp_config_writer_finish (writer, "end of toolrc", NULL);
+    }
+
   g_object_unref (file);
 }
 
@@ -471,6 +423,214 @@ gimp_tools_clear (Gimp    *gimp,
     tool_options_deleted = TRUE;
 
   return success;
+}
+
+gboolean
+gimp_tools_serialize (Gimp             *gimp,
+                      GimpContainer    *container,
+                      GimpConfigWriter *writer)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+
+  gimp_config_writer_open (writer, "file-version");
+  gimp_config_writer_printf (writer, "%d", TOOL_RC_FILE_VERSION);
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_linefeed (writer);
+
+  return gimp_config_serialize (GIMP_CONFIG (container), writer, NULL);
+}
+
+gboolean
+gimp_tools_deserialize (Gimp          *gimp,
+                        GimpContainer *container,
+                        GScanner      *scanner)
+{
+  enum
+  {
+    FILE_VERSION = 1
+  };
+
+  GimpContainer *src_container;
+  GTokenType     token;
+  guint          scope_id;
+  guint          old_scope_id;
+  gint           file_version = 0;
+  gboolean       result       = FALSE;
+
+  scope_id     = g_type_qname (GIMP_TYPE_TOOL_GROUP);
+  old_scope_id = g_scanner_set_scope (scanner, scope_id);
+
+  g_scanner_scope_add_symbol (scanner, scope_id,
+                              "file-version",
+                              GINT_TO_POINTER (FILE_VERSION));
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token &&
+         (token != G_TOKEN_LEFT_PAREN                 ||
+          ! file_version))
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          switch (GPOINTER_TO_INT (scanner->value.v_symbol))
+            {
+            case FILE_VERSION:
+              token = G_TOKEN_INT;
+              if (gimp_scanner_parse_int (scanner, &file_version))
+                token = G_TOKEN_RIGHT_PAREN;
+              break;
+            }
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  g_scanner_set_scope (scanner, old_scope_id);
+
+  if (token != G_TOKEN_LEFT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                             _("fatal parse error"), TRUE);
+
+      return FALSE;
+    }
+  else if (file_version != TOOL_RC_FILE_VERSION)
+    {
+      g_scanner_error (scanner, "wrong toolrc file format version");
+
+      return FALSE;
+    }
+
+  gimp_container_freeze (container);
+
+  g_type_class_unref (g_type_class_ref (GIMP_TYPE_TOOL_GROUP));
+
+  gimp_container_clear (container);
+
+  src_container = g_object_new (GIMP_TYPE_LIST,
+                                "children-type", GIMP_TYPE_TOOL_ITEM,
+                                "append",        TRUE,
+                                NULL);
+
+  if (gimp_config_deserialize (GIMP_CONFIG (src_container),
+                               scanner, 0, NULL))
+    {
+      GHashTable *tools;
+      GList      *list;
+
+      result = TRUE;
+
+      tools = g_hash_table_new (g_direct_hash, g_direct_equal);
+
+      gimp_tools_copy_structure (gimp, src_container, container, tools);
+
+      for (list = gimp_get_tool_info_iter (gimp);
+           list;
+           list = g_list_next (list))
+        {
+          GimpToolInfo *tool_info = list->data;
+
+          if (! tool_info->hidden && ! g_hash_table_contains (tools, tool_info))
+            {
+              g_scanner_error (scanner, "missing tools in toolrc file");
+
+              result = FALSE;
+
+              break;
+            }
+        }
+
+      g_hash_table_unref (tools);
+    }
+
+  g_object_unref (src_container);
+
+  gimp_container_thaw (container);
+
+  return result;
+}
+
+void
+gimp_tools_reset (Gimp          *gimp,
+                  GimpContainer *container,
+                  gboolean       user_toolrc)
+{
+  GList *files = NULL;
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+
+  if (user_toolrc)
+    files = g_list_prepend (files, gimp_directory_file       ("toolrc", NULL));
+  files = g_list_prepend (files, gimp_sysconf_directory_file ("toolrc", NULL));
+
+  files = g_list_reverse (files);
+
+  gimp_container_freeze (container);
+
+  gimp_container_clear (container);
+
+  for (list = files; list; list = g_list_next (list))
+    {
+      GScanner *scanner;
+      GFile    *file  = list->data;
+      GError   *error = NULL;
+
+      if (gimp->be_verbose)
+        g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+
+      scanner = gimp_scanner_new_gfile (file, &error);
+
+      if (scanner && gimp_tools_deserialize (gimp, container, scanner))
+        {
+          gimp_scanner_destroy (scanner);
+
+          break;
+        }
+      else
+        {
+          if (error->code != G_IO_ERROR_NOT_FOUND)
+            {
+              gimp_message_literal (gimp, NULL,
+                                    GIMP_MESSAGE_WARNING, error->message);
+            }
+
+          g_clear_error (&error);
+
+          gimp_container_clear (container);
+        }
+
+      g_clear_pointer (&scanner, gimp_scanner_destroy);
+    }
+
+  g_list_free_full (files, g_object_unref);
+
+  if (gimp_container_is_empty (container))
+    {
+      if (gimp->be_verbose)
+        g_print ("Using default tool order\n");
+
+      gimp_tools_copy_structure (gimp, gimp->tool_info_list, container, NULL);
+    }
+
+  gimp_container_thaw (container);
 }
 
 GList *
@@ -582,9 +742,9 @@ gimp_tools_register (GType                   tool_type,
 
   visible = (! g_type_is_a (tool_type, GIMP_TYPE_FILTER_TOOL));
 
-  g_object_set (tool_info, "visible", visible, NULL);
+  gimp_tool_item_set_visible (GIMP_TOOL_ITEM (tool_info), visible);
 
-  /* hack to make the operation tools always invisible */
+  /* hack to hide the operation tool entirely */
   if (tool_type == GIMP_TYPE_OPERATION_TOOL)
     tool_info->hidden = TRUE;
 
@@ -599,4 +759,56 @@ gimp_tools_register (GType                   tool_type,
 
   if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
     gimp_tool_info_set_standard (gimp, tool_info);
+}
+
+static void
+gimp_tools_copy_structure (Gimp          *gimp,
+                           GimpContainer *src_container,
+                           GimpContainer *dest_container,
+                           GHashTable    *tools)
+{
+  GList *list;
+
+  for (list = GIMP_LIST (src_container)->queue->head;
+       list;
+       list = g_list_next (list))
+    {
+      GimpToolItem *src_tool_item  = list->data;
+      GimpToolItem *dest_tool_item = NULL;
+
+      if (GIMP_IS_TOOL_GROUP (src_tool_item))
+        {
+          dest_tool_item = GIMP_TOOL_ITEM (gimp_tool_group_new ());
+
+          gimp_tools_copy_structure (
+            gimp,
+            gimp_viewable_get_children (GIMP_VIEWABLE (src_tool_item)),
+            gimp_viewable_get_children (GIMP_VIEWABLE (dest_tool_item)),
+            tools);
+
+          gimp_tool_group_set_active_tool (
+            GIMP_TOOL_GROUP (dest_tool_item),
+            gimp_tool_group_get_active_tool (GIMP_TOOL_GROUP (src_tool_item)));
+        }
+      else
+        {
+          dest_tool_item = GIMP_TOOL_ITEM (
+            gimp_get_tool_info (gimp, gimp_object_get_name (src_tool_item)));
+
+          if (dest_tool_item && GIMP_TOOL_INFO (dest_tool_item)->hidden)
+            dest_tool_item = NULL;
+          else if (tools)
+            g_hash_table_add (tools, dest_tool_item);
+        }
+
+      if (dest_tool_item)
+        {
+          gimp_tool_item_set_visible (
+            dest_tool_item,
+            gimp_tool_item_get_visible (src_tool_item));
+
+          gimp_container_add (dest_container,
+                              GIMP_OBJECT (dest_tool_item));
+        }
+    }
 }
