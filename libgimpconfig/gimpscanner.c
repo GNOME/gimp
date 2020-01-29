@@ -243,11 +243,11 @@ gimp_scanner_new_string (const gchar  *text,
 {
   GimpScanner *scanner;
 
-  g_return_val_if_fail (text != NULL || text_len == 0, NULL);
+  g_return_val_if_fail (text != NULL || text_len <= 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (text_len < 0)
-    text_len = strlen (text);
+    text_len = text ? strlen (text) : 0;
 
   scanner = gimp_scanner_new (NULL, NULL, NULL, error);
 
