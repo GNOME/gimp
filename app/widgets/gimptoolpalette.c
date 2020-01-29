@@ -165,9 +165,9 @@ gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
        list;
        list = list->next)
     {
-      GimpToolInfo *tool_info = list->data;
+      GimpToolItem *tool_item = list->data;
 
-      if (tool_info->visible)
+      if (gimp_tool_item_get_visible (tool_item))
         n_tools++;
     }
 

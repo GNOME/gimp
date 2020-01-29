@@ -197,7 +197,6 @@ app/core/gimpsymmetry-mirror.c
 app/core/gimpsymmetry-tiling.c
 app/core/gimptagcache.c
 app/core/gimptemplate.c
-app/core/gimptoolinfo.c
 app/core/gimptooloptions.c
 app/core/gimptoolpreset.c
 app/core/gimptoolpreset-load.c

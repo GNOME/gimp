@@ -469,6 +469,8 @@ libappcore_a_sources = \
 	gimptilehandlerprojectable.h		\
 	gimptoolinfo.c				\
 	gimptoolinfo.h				\
+	gimptoolitem.c				\
+	gimptoolitem.h				\
 	gimptooloptions.c			\
 	gimptooloptions.h			\
 	gimptoolpreset.c			\
