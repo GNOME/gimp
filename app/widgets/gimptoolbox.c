@@ -682,7 +682,7 @@ toolbox_create_color_area (GimpToolbox *toolbox,
 
   gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_COLOR_AREA);
 
-  col_area = gimp_toolbox_color_area_create (toolbox, 54, 42);
+  col_area = gimp_toolbox_color_area_create (toolbox, 40, 38);
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
   gtk_widget_show (col_area);
 
