@@ -14,6 +14,7 @@ install_data(
     'menurc',
     'sessionrc',
     'templaterc',
+    'toolrc',
     'unitrc',
   ],
   install_dir: gimpsysconfdir,
