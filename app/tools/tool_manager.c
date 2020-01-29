@@ -29,6 +29,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolgroup.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 #include "core/gimptoolpreset.h"
@@ -57,23 +58,25 @@ struct _GimpToolManager
 
 /*  local function prototypes  */
 
-static GimpToolManager * tool_manager_get     (Gimp            *gimp);
+static GimpToolManager * tool_manager_get        (Gimp            *gimp);
 
-static void   tool_manager_select_tool        (Gimp            *gimp,
-                                               GimpTool        *tool);
-static void   tool_manager_tool_changed       (GimpContext     *user_context,
-                                               GimpToolInfo    *tool_info,
-                                               GimpToolManager *tool_manager);
-static void   tool_manager_preset_changed     (GimpContext     *user_context,
-                                               GimpToolPreset  *preset,
-                                               GimpToolManager *tool_manager);
-static void   tool_manager_image_clean_dirty  (GimpImage       *image,
-                                               GimpDirtyMask    dirty_mask,
-                                               GimpToolManager *tool_manager);
-static void   tool_manager_image_saving       (GimpImage       *image,
-                                               GimpToolManager *tool_manager);
+static void   tool_manager_select_tool           (Gimp            *gimp,
+                                                  GimpTool        *tool);
+static void   tool_manager_tool_changed          (GimpContext     *user_context,
+                                                  GimpToolInfo    *tool_info,
+                                                  GimpToolManager *tool_manager);
+static void   tool_manager_preset_changed        (GimpContext     *user_context,
+                                                  GimpToolPreset  *preset,
+                                                  GimpToolManager *tool_manager);
+static void   tool_manager_image_clean_dirty     (GimpImage       *image,
+                                                  GimpDirtyMask    dirty_mask,
+                                                  GimpToolManager *tool_manager);
+static void   tool_manager_image_saving          (GimpImage       *image,
+                                                  GimpToolManager *tool_manager);
+static void   tool_manager_tool_ancestry_changed (GimpToolInfo    *tool_info,
+                                                  GimpToolManager *tool_manager);
 
-static void   tool_manager_cast_spell         (GimpToolInfo    *tool_info);
+static void   tool_manager_cast_spell            (GimpToolInfo    *tool_info);
 
 
 static GQuark tool_manager_quark = 0;
@@ -153,7 +156,15 @@ tool_manager_exit (Gimp *gimp)
   gimp_container_remove_handler (gimp->images,
                                  tool_manager->image_saving_handler_id);
 
-  g_clear_object (&tool_manager->active_tool);
+  if (tool_manager->active_tool)
+    {
+      g_signal_handlers_disconnect_by_func (
+        tool_manager->active_tool->tool_info,
+        tool_manager_tool_ancestry_changed,
+        tool_manager);
+
+      g_clear_object (&tool_manager->active_tool);
+    }
 
   g_slice_free (GimpToolManager, tool_manager);
 
@@ -669,6 +680,8 @@ tool_manager_tool_changed (GimpContext     *user_context,
       return;
     }
 
+  g_return_if_fail (tool_manager->tool_stack == NULL);
+
   if (tool_manager->active_tool)
     {
       GimpTool    *active_tool = tool_manager->active_tool;
@@ -684,7 +697,17 @@ tool_manager_tool_changed (GimpContext     *user_context,
       if (display)
         tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
                                      display);
+
+      g_signal_handlers_disconnect_by_func (active_tool->tool_info,
+                                            tool_manager_tool_ancestry_changed,
+                                            tool_manager);
     }
+
+  g_signal_connect (tool_info, "ancestry-changed",
+                    G_CALLBACK (tool_manager_tool_ancestry_changed),
+                    tool_manager);
+
+  tool_manager_tool_ancestry_changed (tool_info, tool_manager);
 
   new_tool = g_object_new (tool_info->tool_type,
                            "tool-info", tool_info,
@@ -806,6 +829,21 @@ tool_manager_image_saving (GimpImage       *image,
       if (display)
         tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_COMMIT,
                                      display);
+    }
+}
+
+static void
+tool_manager_tool_ancestry_changed (GimpToolInfo    *tool_info,
+                                    GimpToolManager *tool_manager)
+{
+  GimpViewable *parent;
+
+  parent = gimp_viewable_get_parent (GIMP_VIEWABLE (tool_info));
+
+  if (parent)
+    {
+      gimp_tool_group_set_active_tool_info (GIMP_TOOL_GROUP (parent),
+                                            tool_info);
     }
 }
 
