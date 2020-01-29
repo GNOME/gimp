@@ -208,10 +208,8 @@ gimp_button_menu_position (GtkWidget       *button,
       break;
     }
 
-  *y += button_allocation.height / 2;
-
   if (*y + menu_requisition.height > rect.y + rect.height)
-    *y -= menu_requisition.height;
+    *y -= menu_requisition.height - button_allocation.height;
 
   if (*y < rect.y)
     *y = rect.y;
