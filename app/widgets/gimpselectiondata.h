@@ -105,7 +105,7 @@ GimpImagefile * gimp_selection_data_get_imagefile (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 GimpTemplate  * gimp_selection_data_get_template  (GtkSelectionData *selection,
                                                    Gimp             *gimp);
-GimpToolInfo  * gimp_selection_data_get_tool_info (GtkSelectionData *selection,
+GimpToolItem  * gimp_selection_data_get_tool_item (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 
 
