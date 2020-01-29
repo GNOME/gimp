@@ -2150,8 +2150,7 @@ prefs_dialog_new (Gimp       *gimp,
   /* Tool Editor */
   vbox2 = prefs_frame_new (_("Tools Configuration"),
                            GTK_CONTAINER (vbox), TRUE);
-  tool_editor = gimp_tool_editor_new (gimp->tool_info_list, gimp->user_context,
-                                      gimp_tools_get_default_order (gimp),
+  tool_editor = gimp_tool_editor_new (gimp->tool_item_list, gimp->user_context,
                                       GIMP_VIEW_SIZE_SMALL, 1);
 
   gtk_box_pack_start (GTK_BOX (vbox2), tool_editor, TRUE, TRUE, 0);

@@ -42,7 +42,7 @@
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 #include "core/gimptemplate.h"
-#include "core/gimptoolinfo.h"
+#include "core/gimptoolitem.h"
 
 #include "text/gimpfont.h"
 
@@ -98,168 +98,168 @@ struct _GimpDndDataDef
 };
 
 
-static GtkWidget * gimp_dnd_get_viewable_icon  (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_viewable_func,
-                                                gpointer          get_viewable_data);
-static GtkWidget * gimp_dnd_get_component_icon (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_comp_func,
-                                                gpointer          get_comp_data);
-static GtkWidget * gimp_dnd_get_color_icon     (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_color_func,
-                                                gpointer          get_color_data);
+static GtkWidget * gimp_dnd_get_viewable_icon   (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_viewable_func,
+                                                 gpointer          get_viewable_data);
+static GtkWidget * gimp_dnd_get_component_icon  (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_comp_func,
+                                                 gpointer          get_comp_data);
+static GtkWidget * gimp_dnd_get_color_icon      (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_color_func,
+                                                 gpointer          get_color_data);
 
-static void        gimp_dnd_get_uri_list_data  (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_uri_list_func,
-                                                gpointer          get_uri_list_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_uri_list_data  (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_uri_list_func,
-                                                gpointer          set_uri_list_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_uri_list_data   (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_uri_list_func,
+                                                 gpointer          get_uri_list_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_uri_list_data   (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_uri_list_func,
+                                                 gpointer          set_uri_list_data,
+                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_xds_data       (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_image_func,
-                                                gpointer          get_image_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_xds_data        (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_image_func,
+                                                 gpointer          get_image_data,
+                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_color_data     (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_color_func,
-                                                gpointer          get_color_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_color_data     (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_color_func,
-                                                gpointer          set_color_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_color_data      (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_color_func,
+                                                 gpointer          get_color_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_color_data      (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_color_func,
+                                                 gpointer          set_color_data,
+                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_stream_data    (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_stream_func,
-                                                gpointer          get_stream_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_stream_data    (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_stream_func,
-                                                gpointer          set_stream_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_stream_data     (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_stream_func,
+                                                 gpointer          get_stream_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_stream_data     (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_stream_func,
+                                                 gpointer          set_stream_data,
+                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_pixbuf_data    (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_pixbuf_func,
-                                                gpointer          get_pixbuf_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_pixbuf_data    (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_pixbuf_func,
-                                                gpointer          set_pixbuf_data,
-                                                GtkSelectionData *selection);
-static void        gimp_dnd_get_component_data (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_comp_func,
-                                                gpointer          get_comp_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_component_data (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_comp_func,
-                                                gpointer          set_comp_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_pixbuf_data     (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_pixbuf_func,
+                                                 gpointer          get_pixbuf_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_pixbuf_data     (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_pixbuf_func,
+                                                 gpointer          set_pixbuf_data,
+                                                 GtkSelectionData *selection);
+static void        gimp_dnd_get_component_data  (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_comp_func,
+                                                 gpointer          get_comp_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_component_data  (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_comp_func,
+                                                 gpointer          set_comp_data,
+                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_image_data     (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_image_func,
-                                                gpointer          get_image_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_image_data     (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_image_func,
-                                                gpointer          set_image_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_image_data      (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_image_func,
+                                                 gpointer          get_image_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_image_data      (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_image_func,
+                                                 gpointer          set_image_data,
+                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_item_data      (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_item_func,
-                                                gpointer          get_item_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_item_data      (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_item_func,
-                                                gpointer          set_item_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_item_data       (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_item_func,
+                                                 gpointer          get_item_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_item_data       (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_item_func,
+                                                 gpointer          set_item_data,
+                                                 GtkSelectionData *selection);
 
-static void        gimp_dnd_get_object_data    (GtkWidget        *widget,
-                                                GdkDragContext   *context,
-                                                GCallback         get_object_func,
-                                                gpointer          get_object_data,
-                                                GtkSelectionData *selection);
+static void        gimp_dnd_get_object_data     (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_object_func,
+                                                 gpointer          get_object_data,
+                                                 GtkSelectionData *selection);
 
-static gboolean    gimp_dnd_set_brush_data     (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_brush_func,
-                                                gpointer          set_brush_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_pattern_data   (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_pattern_func,
-                                                gpointer          set_pattern_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_gradient_data  (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_gradient_func,
-                                                gpointer          set_gradient_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_palette_data   (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_palette_func,
-                                                gpointer          set_palette_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_font_data      (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_font_func,
-                                                gpointer          set_font_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_buffer_data    (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_buffer_func,
-                                                gpointer          set_buffer_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_imagefile_data (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_imagefile_func,
-                                                gpointer          set_imagefile_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_template_data  (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_template_func,
-                                                gpointer          set_template_data,
-                                                GtkSelectionData *selection);
-static gboolean    gimp_dnd_set_tool_info_data (GtkWidget        *widget,
-                                                gint              x,
-                                                gint              y,
-                                                GCallback         set_tool_info_func,
-                                                gpointer          set_tool_info_data,
-                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_brush_data      (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_brush_func,
+                                                 gpointer          set_brush_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_pattern_data    (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_pattern_func,
+                                                 gpointer          set_pattern_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_gradient_data   (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_gradient_func,
+                                                 gpointer          set_gradient_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_palette_data    (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_palette_func,
+                                                 gpointer          set_palette_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_font_data       (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_font_func,
+                                                 gpointer          set_font_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_buffer_data     (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_buffer_func,
+                                                 gpointer          set_buffer_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_imagefile_data  (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_imagefile_func,
+                                                 gpointer          set_imagefile_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_template_data   (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_template_func,
+                                                 gpointer          set_template_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_tool_item_data  (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_tool_item_func,
+                                                 gpointer          set_tool_item_data,
+                                                 GtkSelectionData *selection);
 
 
 
@@ -585,17 +585,17 @@ static const GimpDndDataDef dnd_data_defs[] =
   },
 
   {
-    GIMP_TARGET_TOOL_INFO,
+    GIMP_TARGET_TOOL_ITEM,
 
-    "gimp-dnd-get-tool-info-func",
-    "gimp-dnd-get-tool-info-data",
+    "gimp-dnd-get-tool-item-func",
+    "gimp-dnd-get-tool-item-data",
 
-    "gimp-dnd-set-tool-info-func",
-    "gimp-dnd-set-tool-info-data",
+    "gimp-dnd-set-tool-item-func",
+    "gimp-dnd-set-tool-item-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_object_data,
-    gimp_dnd_set_tool_info_data
+    gimp_dnd_set_tool_item_data
   },
 
   {
@@ -1923,9 +1923,9 @@ gimp_dnd_data_type_get_by_g_type (GType type)
     {
       dnd_type = GIMP_DND_TYPE_TEMPLATE;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_TOOL_INFO))
+  else if (g_type_is_a (type, GIMP_TYPE_TOOL_ITEM))
     {
-      dnd_type = GIMP_DND_TYPE_TOOL_INFO;
+      dnd_type = GIMP_DND_TYPE_TOOL_ITEM;
     }
 
   return dnd_type;
@@ -2437,29 +2437,29 @@ gimp_dnd_set_template_data (GtkWidget        *widget,
 }
 
 
-/********************************/
-/*  GimpToolInfo dnd functions  */
-/********************************/
+/*********************************/
+/*  GimpToolEntry dnd functions  */
+/*********************************/
 
 static gboolean
-gimp_dnd_set_tool_info_data (GtkWidget        *widget,
+gimp_dnd_set_tool_item_data (GtkWidget        *widget,
                              gint              x,
                              gint              y,
-                             GCallback         set_tool_info_func,
-                             gpointer          set_tool_info_data,
+                             GCallback         set_tool_item_func,
+                             gpointer          set_tool_item_data,
                              GtkSelectionData *selection)
 {
-  GimpToolInfo *tool_info = gimp_selection_data_get_tool_info (selection,
+  GimpToolItem *tool_item = gimp_selection_data_get_tool_item (selection,
                                                                the_dnd_gimp);
 
-  GIMP_LOG (DND, "tool_info %p", tool_info);
+  GIMP_LOG (DND, "tool_item %p", tool_item);
 
-  if (! tool_info)
+  if (! tool_item)
     return FALSE;
 
-  (* (GimpDndDropViewableFunc) set_tool_info_func) (widget, x, y,
-                                                    GIMP_VIEWABLE (tool_info),
-                                                    set_tool_info_data);
+  (* (GimpDndDropViewableFunc) set_tool_item_func) (widget, x, y,
+                                                    GIMP_VIEWABLE (tool_item),
+                                                    set_tool_item_data);
 
   return TRUE;
 }

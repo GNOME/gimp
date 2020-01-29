@@ -34,16 +34,19 @@
 #define GIMP_TOOL_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_EDITOR, GimpToolEditorClass))
 
 
-typedef struct _GimpToolEditorClass  GimpToolEditorClass;
+typedef struct _GimpToolEditorPrivate GimpToolEditorPrivate;
+typedef struct _GimpToolEditorClass   GimpToolEditorClass;
 
 struct _GimpToolEditor
 {
-  GimpContainerTreeView parent_instance;
+  GimpContainerTreeView  parent_instance;
+
+  GimpToolEditorPrivate *priv;
 };
 
 struct _GimpToolEditorClass
 {
-  GimpContainerTreeViewClass parent_class;
+  GimpContainerTreeViewClass  parent_class;
 };
 
 
@@ -51,7 +54,6 @@ GType       gimp_tool_editor_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_tool_editor_new            (GimpContainer  *container,
                                              GimpContext    *context,
-                                             GList          *default_tool_order,
                                              gint            view_size,
                                              gint            view_border_width);
 

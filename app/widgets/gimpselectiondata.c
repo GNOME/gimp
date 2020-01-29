@@ -753,17 +753,29 @@ gimp_selection_data_get_template (GtkSelectionData *selection,
                                                           NULL);
 }
 
-GimpToolInfo *
-gimp_selection_data_get_tool_info (GtkSelectionData *selection,
+GimpToolItem *
+gimp_selection_data_get_tool_item (GtkSelectionData *selection,
                                    Gimp             *gimp)
 {
+  GimpToolItem *tool_item;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  return (GimpToolInfo *)
+  tool_item = (GimpToolItem *)
     gimp_selection_data_get_object (selection,
                                     gimp->tool_info_list,
                                     GIMP_OBJECT (gimp_tool_info_get_standard (gimp)));
+
+  if (! tool_item)
+    {
+      tool_item = (GimpToolItem *)
+        gimp_selection_data_get_object (selection,
+                                        gimp->tool_item_list,
+                                        NULL);
+    }
+
+  return tool_item;
 }
 
 

@@ -88,8 +88,8 @@
 #define GIMP_TARGET_TEMPLATE \
         { "application/x-gimp-template-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TEMPLATE }
 
-#define GIMP_TARGET_TOOL_INFO \
-        { "application/x-gimp-tool-info-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL_INFO }
+#define GIMP_TARGET_TOOL_ITEM \
+        { "application/x-gimp-tool-item-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL_ITEM }
 
 #define GIMP_TARGET_NOTEBOOK_TAB \
         { "GTK_NOTEBOOK_TAB", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_NOTEBOOK_TAB }
