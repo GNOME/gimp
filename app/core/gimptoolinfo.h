@@ -85,6 +85,8 @@ void           gimp_tool_info_set_standard     (Gimp                *gimp,
                                                 GimpToolInfo        *tool_info);
 GimpToolInfo * gimp_tool_info_get_standard     (Gimp                *gimp);
 
+gchar        * gimp_tool_info_get_action_name (GimpToolInfo         *tool_info);
+
 GFile        * gimp_tool_info_get_options_file (GimpToolInfo        *tool_info,
                                                 const gchar         *suffix);
 

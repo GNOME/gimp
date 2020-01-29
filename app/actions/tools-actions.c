@@ -768,18 +768,13 @@ tools_actions_setup (GimpActionGroup *group)
       if (tool_info->menu_label)
         {
           GimpStringActionEntry  entry;
+          gchar                 *name;
           const gchar           *icon_name;
           const gchar           *identifier;
-          gchar                 *tmp;
-          gchar                 *name;
 
+          name       = gimp_tool_info_get_action_name (tool_info);
           icon_name  = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
           identifier = gimp_object_get_name (tool_info);
-
-          tmp = g_strndup (identifier + strlen ("gimp-"),
-                           strlen (identifier) - strlen ("gimp--tool"));
-          name = g_strdup_printf ("tools-%s", tmp);
-          g_free (tmp);
 
           entry.name        = name;
           entry.icon_name   = icon_name;

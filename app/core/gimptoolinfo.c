@@ -220,6 +220,30 @@ gimp_tool_info_get_standard (Gimp *gimp)
   return gimp->standard_tool_info;
 }
 
+gchar *
+gimp_tool_info_get_action_name (GimpToolInfo *tool_info)
+{
+  const gchar *identifier;
+  gchar       *tmp;
+  gchar       *name;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
+
+  identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
+
+  g_return_val_if_fail (g_str_has_prefix (identifier, "gimp-"), NULL);
+  g_return_val_if_fail (g_str_has_suffix (identifier, "-tool"), NULL);
+
+  tmp = g_strndup (identifier + strlen ("gimp-"),
+                    strlen (identifier) - strlen ("gimp--tool"));
+
+  name = g_strdup_printf ("tools-%s", tmp);
+
+  g_free (tmp);
+
+  return name;
+}
+
 GFile *
 gimp_tool_info_get_options_file (GimpToolInfo *tool_info,
                                  const gchar  *suffix)
