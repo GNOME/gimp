@@ -643,24 +643,90 @@ gimp_container_tree_view_real_drop_viewable (GimpContainerTreeView   *tree_view,
                                              GimpViewable            *dest_viewable,
                                              GtkTreeViewDropPosition  drop_pos)
 {
-  GimpContainerView *view      = GIMP_CONTAINER_VIEW (tree_view);
-  GimpContainer     *container = gimp_container_view_get_container (view);
-  gint               src_index;
-  gint               dest_index;
+  GimpContainerView *view       = GIMP_CONTAINER_VIEW (tree_view);
+  GimpContainer     *src_container;
+  GimpContainer     *dest_container;
+  gint               dest_index = 0;
 
-  src_index  = gimp_container_get_child_index (container,
-                                               GIMP_OBJECT (src_viewable));
-  dest_index = gimp_container_get_child_index (container,
-                                               GIMP_OBJECT (dest_viewable));
-
-  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER && src_index > dest_index)
+  if (gimp_viewable_get_parent (src_viewable))
     {
-      dest_index++;
+      src_container = gimp_viewable_get_children (
+        gimp_viewable_get_parent (src_viewable));
     }
-  else if (drop_pos == GTK_TREE_VIEW_DROP_BEFORE && src_index < dest_index)
+  else
     {
-      dest_index--;
+      src_container = gimp_container_view_get_container (view);
     }
 
-  gimp_container_reorder (container, GIMP_OBJECT (src_viewable), dest_index);
+  if ((drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER   ||
+       drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_BEFORE) &&
+      gimp_viewable_get_children (dest_viewable))
+    {
+      dest_container = gimp_viewable_get_children (dest_viewable);
+      dest_viewable  = NULL;
+      drop_pos       = GTK_TREE_VIEW_DROP_BEFORE;
+    }
+  else if (gimp_viewable_get_parent (dest_viewable))
+    {
+      dest_container = gimp_viewable_get_children (
+        gimp_viewable_get_parent (dest_viewable));
+    }
+  else
+    {
+      dest_container = gimp_container_view_get_container (view);
+    }
+
+  if (dest_viewable)
+    {
+      dest_index = gimp_container_get_child_index (dest_container,
+                                                   GIMP_OBJECT (dest_viewable));
+    }
+
+  if (src_container == dest_container)
+    {
+      gint src_index;
+
+      src_index  = gimp_container_get_child_index (src_container,
+                                                   GIMP_OBJECT (src_viewable));
+
+      switch (drop_pos)
+        {
+        case GTK_TREE_VIEW_DROP_AFTER:
+        case GTK_TREE_VIEW_DROP_INTO_OR_AFTER:
+          if (src_index > dest_index)
+            dest_index++;
+          break;
+
+        case GTK_TREE_VIEW_DROP_BEFORE:
+        case GTK_TREE_VIEW_DROP_INTO_OR_BEFORE:
+          if (src_index < dest_index)
+            dest_index--;
+          break;
+        }
+
+      gimp_container_reorder (src_container,
+                              GIMP_OBJECT (src_viewable), dest_index);
+    }
+  else
+    {
+      switch (drop_pos)
+        {
+        case GTK_TREE_VIEW_DROP_AFTER:
+        case GTK_TREE_VIEW_DROP_INTO_OR_AFTER:
+          dest_index++;
+          break;
+
+        case GTK_TREE_VIEW_DROP_BEFORE:
+        case GTK_TREE_VIEW_DROP_INTO_OR_BEFORE:
+          break;
+        }
+
+      g_object_ref (src_viewable);
+
+      gimp_container_remove (src_container,  GIMP_OBJECT (src_viewable));
+      gimp_container_insert (dest_container, GIMP_OBJECT (src_viewable),
+                             dest_index);
+
+      g_object_unref (src_viewable);
+    }
 }
