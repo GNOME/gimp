@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-01-12 16:18+0000\n"
+"POT-Creation-Date: 2020-01-21 23:19+0000\n"
 "PO-Revision-Date: 2020-01-13 23:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -3281,9 +3281,9 @@ msgstr "240秒"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:342
+#: ../app/tools/gimpfiltertool.c:344
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1132
+#: ../app/tools/gimptransformgridtool.c:1243
 #: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:662
@@ -3334,7 +3334,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:116 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2169
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2180
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -5847,21 +5847,21 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "前回使ったフィルターのダイアログを表示します"
 
-#: ../app/actions/filters-actions.c:1100
+#: ../app/actions/filters-actions.c:1102
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" の再適用(_P)"
 
-#: ../app/actions/filters-actions.c:1101
+#: ../app/actions/filters-actions.c:1103
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "\"%s\" の再表示(_E)"
 
-#: ../app/actions/filters-actions.c:1139
+#: ../app/actions/filters-actions.c:1141
 msgid "Repeat Last"
 msgstr "フィルターの再適用"
 
-#: ../app/actions/filters-actions.c:1141
+#: ../app/actions/filters-actions.c:1143
 msgid "Re-Show Last"
 msgstr "フィルターの再表示"
 
@@ -8198,7 +8198,7 @@ msgstr "全フィルターのリセット"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:341 ../app/tools/gimptransformgridtool.c:1129
+#: ../app/tools/gimpfiltertool.c:343 ../app/tools/gimptransformgridtool.c:1240
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -10907,7 +10907,7 @@ msgstr "このウィンドウをスクリーン %s に移動します"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:197
-#: ../app/tools/gimpfiltertool.c:343 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:345 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -11286,7 +11286,7 @@ msgstr ""
 "ファイル '%s' の解析中にエラーが発生しました。デフォルトの値が使用されます。"
 "ユーザー設定のバックアップが '%s' に作成されました。"
 
-#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:441
+#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:442
 msgid "Layer"
 msgstr "レイヤー"
 
@@ -13617,7 +13617,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "角を丸める"
 
-#: ../app/core/gimpchannel-select.c:421 ../app/core/gimplayer.c:449
+#: ../app/core/gimpchannel-select.c:421 ../app/core/gimplayer.c:450
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "不透明部分を選択範囲に"
@@ -13878,11 +13878,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:423 ../app/core/gimpdatafactory.c:426
-#: ../app/core/gimpitem.c:546 ../app/core/gimpitem.c:549
+#: ../app/core/gimpitem.c:547 ../app/core/gimpitem.c:550
 msgid "copy"
 msgstr "コピー"
 
-#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:557
+#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:558
 #, c-format
 msgid "%s copy"
 msgstr "%s コピー"
@@ -13951,7 +13951,7 @@ msgstr ""
 "データ読み込みに失敗しました。\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:542 ../app/tools/gimpscaletool.c:121
+#: ../app/core/gimpdrawable.c:546 ../app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "拡大・縮小"
@@ -14029,7 +14029,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "回転"
 
-#: ../app/core/gimpdrawable-transform.c:1035 ../app/core/gimplayer.c:448
+#: ../app/core/gimpdrawable-transform.c:1035 ../app/core/gimplayer.c:449
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "レイヤーを変形"
@@ -14214,152 +14214,152 @@ msgstr "グリッド線の垂直方向のオフセットを指定します。負
 msgid "Offset unit"
 msgstr ""
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:286
 msgid "Layer Group"
 msgstr "レイヤーグループ"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:287
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "レイヤーグループ名を変更"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:288
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "レイヤーグループを移動"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:289
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "レイヤーグループを拡大・縮小"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:290
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "レイヤーグループのサイズ変更"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:291
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "レイヤーグループを鏡像反転"
 
-#: ../app/core/gimpgrouplayer.c:286
+#: ../app/core/gimpgrouplayer.c:292
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "レイヤーグループを回転"
 
-#: ../app/core/gimpgrouplayer.c:287
+#: ../app/core/gimpgrouplayer.c:293
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "レイヤーグループを変形"
 
-#: ../app/core/gimpimage.c:680 ../app/widgets/gimpsymmetryeditor.c:175
+#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:175
 msgid "Symmetry"
 msgstr ""
 
 # 編集画像をエクスポートした後の画像ウィンドウに表示される
-#: ../app/core/gimpimage.c:2414
+#: ../app/core/gimpimage.c:2425
 msgid " (exported)"
 msgstr " (エクスポート済み)"
 
 # 編集画像を上書きエクスポートした後の画像ウィンドウに表示される
-#: ../app/core/gimpimage.c:2418
+#: ../app/core/gimpimage.c:2429
 msgid " (overwritten)"
 msgstr " (上書き済み)"
 
 # 画像ファイルを開き（インポート）一度も [保存]、[名前を付けて保存] をしていない間に、ウィンドウタイトルにこの表記が使用される。
-#: ../app/core/gimpimage.c:2427
+#: ../app/core/gimpimage.c:2438
 msgid " (imported)"
 msgstr " (インポートされた画像)"
 
-#: ../app/core/gimpimage.c:2601 ../app/core/gimpimage.c:2615
-#: ../app/core/gimpimage.c:2658
+#: ../app/core/gimpimage.c:2612 ../app/core/gimpimage.c:2626
+#: ../app/core/gimpimage.c:2669
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2673
+#: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2680
+#: ../app/core/gimpimage.c:2691
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2696
+#: ../app/core/gimpimage.c:2707
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2708
+#: ../app/core/gimpimage.c:2719
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2725
+#: ../app/core/gimpimage.c:2736
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2821
+#: ../app/core/gimpimage.c:2832
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "画像解像度の変更"
 
-#: ../app/core/gimpimage.c:2873
+#: ../app/core/gimpimage.c:2884
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "画像単位の変更"
 
-#: ../app/core/gimpimage.c:3816
+#: ../app/core/gimpimage.c:3835
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: ../app/core/gimpimage.c:3875
+#: ../app/core/gimpimage.c:3894
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "画像にパラサイトを付加"
 
-#: ../app/core/gimpimage.c:3917
+#: ../app/core/gimpimage.c:3936
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "画像からパラサイトを削除"
 
-#: ../app/core/gimpimage.c:4648
+#: ../app/core/gimpimage.c:4667
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "レイヤーの追加"
 
-#: ../app/core/gimpimage.c:4690 ../app/core/gimpimage.c:4721
+#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4740
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "レイヤーの削除"
 
-#: ../app/core/gimpimage.c:4715
+#: ../app/core/gimpimage.c:4734
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "フローティング選択範囲の削除"
 
-#: ../app/core/gimpimage.c:4882
+#: ../app/core/gimpimage.c:4901
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "チャンネルを追加"
 
-#: ../app/core/gimpimage.c:4910 ../app/core/gimpimage.c:4934
+#: ../app/core/gimpimage.c:4929 ../app/core/gimpimage.c:4953
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "チャンネルを削除"
 
-#: ../app/core/gimpimage.c:4990
+#: ../app/core/gimpimage.c:5009
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "パスを追加"
 
-#: ../app/core/gimpimage.c:5020 ../app/core/gimpimage.c:5027
+#: ../app/core/gimpimage.c:5039 ../app/core/gimpimage.c:5046
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "パスを削除"
@@ -14754,17 +14754,17 @@ msgstr ""
 "サムネイルファイル '%s' が開けません。\n"
 "%s"
 
-#: ../app/core/gimpitem.c:2140
+#: ../app/core/gimpitem.c:2148
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "パラサイトを付加"
 
-#: ../app/core/gimpitem.c:2150
+#: ../app/core/gimpitem.c:2158
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "アイテムにパラサイトを付加"
 
-#: ../app/core/gimpitem.c:2201 ../app/core/gimpitem.c:2208
+#: ../app/core/gimpitem.c:2209 ../app/core/gimpitem.c:2216
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "アイテムからパラサイトを削除"
@@ -14782,7 +14782,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "フローティング選択範囲の固定"
 
-#: ../app/core/gimplayer-floating-selection.c:176 ../app/core/gimplayer.c:1045
+#: ../app/core/gimplayer-floating-selection.c:176 ../app/core/gimplayer.c:1047
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14795,76 +14795,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "フローティング選択範囲をレイヤーに"
 
-#: ../app/core/gimplayer.c:442
+#: ../app/core/gimplayer.c:443
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "レイヤー名を変更"
 
-#: ../app/core/gimplayer.c:443
+#: ../app/core/gimplayer.c:444
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "レイヤーを移動"
 
-#: ../app/core/gimplayer.c:444
+#: ../app/core/gimplayer.c:445
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "レイヤーの拡大・縮小"
 
-#: ../app/core/gimplayer.c:445
+#: ../app/core/gimplayer.c:446
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "レイヤーサイズの変更"
 
-#: ../app/core/gimplayer.c:446
+#: ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "レイヤーを鏡像反転"
 
-#: ../app/core/gimplayer.c:447
+#: ../app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "レイヤーを回転"
 
-#: ../app/core/gimplayer.c:450
+#: ../app/core/gimplayer.c:451
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "レイヤーの並べ替え"
 
-#: ../app/core/gimplayer.c:451
+#: ../app/core/gimplayer.c:452
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "レイヤーを前面へ"
 
-#: ../app/core/gimplayer.c:452
+#: ../app/core/gimplayer.c:453
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "レイヤーを最前面へ"
 
-#: ../app/core/gimplayer.c:453
+#: ../app/core/gimplayer.c:454
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "レイヤーを背面へ"
 
-#: ../app/core/gimplayer.c:454
+#: ../app/core/gimplayer.c:455
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "レイヤーを最背面へ"
 
-#: ../app/core/gimplayer.c:455
+#: ../app/core/gimplayer.c:456
 msgid "Layer cannot be raised higher."
 msgstr "これ以上レイヤーを前面に移動させられません"
 
-#: ../app/core/gimplayer.c:456
+#: ../app/core/gimplayer.c:457
 msgid "Layer cannot be lowered more."
 msgstr "これ以上レイヤーを背面に移動させられません"
 
-#: ../app/core/gimplayer.c:746 ../app/core/gimplayer.c:1926
-#: ../app/core/gimplayermask.c:270
+#: ../app/core/gimplayer.c:748 ../app/core/gimplayer.c:1947
+#: ../app/core/gimplayermask.c:285
 #, c-format
 msgid "%s mask"
 msgstr "%s マスク"
 
-#: ../app/core/gimplayer.c:785
+#: ../app/core/gimplayer.c:787
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -14873,78 +14873,78 @@ msgstr ""
 "フローティング選択範囲\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1830
+#: ../app/core/gimplayer.c:1851
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "既にレイヤーマスクがあります。これ以上レイヤーマスクを付加する事はできませ"
 "ん。"
 
-#: ../app/core/gimplayer.c:1841
+#: ../app/core/gimplayer.c:1862
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません。"
 
-#: ../app/core/gimplayer.c:1847
+#: ../app/core/gimplayer.c:1868
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "レイヤーマスクの追加"
 
-#: ../app/core/gimplayer.c:1967
+#: ../app/core/gimplayer.c:1988
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "アルファチャンネルをマスクに変換"
 
-#: ../app/core/gimplayer.c:2129
+#: ../app/core/gimplayer.c:2150
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "レイヤーマスクを適用"
 
-#: ../app/core/gimplayer.c:2130
+#: ../app/core/gimplayer.c:2151
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "レイヤーマスクを削除"
 
-#: ../app/core/gimplayer.c:2234
+#: ../app/core/gimplayer.c:2255
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "レイヤーマスクを有効化"
 
-#: ../app/core/gimplayer.c:2235
+#: ../app/core/gimplayer.c:2256
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "レイヤーマスクを無効化"
 
-#: ../app/core/gimplayer.c:2311
+#: ../app/core/gimplayer.c:2334
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "レイヤーマスクを表示"
 
-#: ../app/core/gimplayer.c:2385
+#: ../app/core/gimplayer.c:2408
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "アルファチャンネルを追加"
 
-#: ../app/core/gimplayer.c:2420
+#: ../app/core/gimplayer.c:2443
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "アルファチャンネルを削除"
 
-#: ../app/core/gimplayer.c:2441
+#: ../app/core/gimplayer.c:2464
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "レイヤーをキャンバスに合わせる"
 
-#: ../app/core/gimplayermask.c:82
+#: ../app/core/gimplayermask.c:83
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "レイヤーマスクを移動"
 
-#: ../app/core/gimplayermask.c:83
+#: ../app/core/gimplayermask.c:84
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "レイヤーマスクを選択範囲に"
 
-#: ../app/core/gimplayermask.c:194
+#: ../app/core/gimplayermask.c:196
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "レイヤーマスク名を変更できません"
@@ -15333,11 +15333,15 @@ msgid "Disable brush rotation"
 msgstr ""
 
 #: ../app/core/gimpsymmetry-mandala.c:161
-#: ../app/core/gimpsymmetry-mandala.c:162
 #, fuzzy
-#| msgid "Save selection"
-msgid "Enable reflection"
-msgstr "選択範囲を保存"
+#| msgctxt "filters-action"
+#| msgid "_Kaleidoscope..."
+msgid "Kaleidoscope"
+msgstr "万華鏡(_K)..."
+
+#: ../app/core/gimpsymmetry-mandala.c:162
+msgid "Reflect consecutive strokes"
+msgstr ""
 
 #: ../app/core/gimpsymmetry-mirror.c:120
 msgid "Mirror"
@@ -18697,7 +18701,7 @@ msgstr "新しいパスをドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:364
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:287 ../app/tools/gimpgradienttool.c:254
+#: ../app/tools/gimpfiltertool.c:289 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpselectiontool.c:530
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -18706,7 +18710,7 @@ msgstr "レイヤーグループのピクセルは変更できません。"
 #: ../app/display/gimpdisplayshell-dnd.c:372
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
-#: ../app/tools/gimpfiltertool.c:294 ../app/tools/gimpgradienttool.c:261
+#: ../app/tools/gimpfiltertool.c:296 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:295
 #: ../app/tools/gimpselectiontool.c:537 ../app/tools/gimptransformtool.c:688
 #: ../app/tools/gimpwarptool.c:683
@@ -20907,8 +20911,8 @@ msgstr "反転"
 #: ../app/pdb/drawable-transform-cmds.c:478
 #: ../app/pdb/item-transform-cmds.c:340 ../app/pdb/transform-tools-cmds.c:177
 #: ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformgridoptions.c:529
-#: ../app/tools/gimptransformgridoptions.c:538
+#: ../app/tools/gimptransformgridoptions.c:594
+#: ../app/tools/gimptransformgridoptions.c:603
 msgid "Perspective"
 msgstr "遠近法"
 
@@ -21439,69 +21443,69 @@ msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "チャンネルのメニュー"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1054
+#: ../app/pdb/plug-in-compat-cmds.c:1052
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "色を透明度に"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1100
+#: ../app/pdb/plug-in-compat-cmds.c:1098
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1108
+#: ../app/pdb/plug-in-compat-cmds.c:1106
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1180
+#: ../app/pdb/plug-in-compat-cmds.c:1178
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "コンボリューション行列"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1242
+#: ../app/pdb/plug-in-compat-cmds.c:1240
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "キュービズム"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1287
+#: ../app/pdb/plug-in-compat-cmds.c:1285
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "インターレース除去"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1366
+#: ../app/pdb/plug-in-compat-cmds.c:1364
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "回折模様"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1525
+#: ../app/pdb/plug-in-compat-cmds.c:1523
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "輪郭"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1569
+#: ../app/pdb/plug-in-compat-cmds.c:1567
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "彫金"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1642
+#: ../app/pdb/plug-in-compat-cmds.c:1640
 #, fuzzy
 #| msgid "Color Management"
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "カラーマネジメント"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1690
+#: ../app/pdb/plug-in-compat-cmds.c:1688
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "レンズフレア"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1874
+#: ../app/pdb/plug-in-compat-cmds.c:1872
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "ガラスタイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1927
+#: ../app/pdb/plug-in-compat-cmds.c:1925
 #, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
@@ -21509,130 +21513,130 @@ msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "ノイズ(_N)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2206 ../app/pdb/plug-in-compat-cmds.c:2261
+#: ../app/pdb/plug-in-compat-cmds.c:2204 ../app/pdb/plug-in-compat-cmds.c:2259
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Set color profile"
 msgstr "カラープロファイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2316
+#: ../app/pdb/plug-in-compat-cmds.c:2314
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "幻"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2353
+#: ../app/pdb/plug-in-compat-cmds.c:2351
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "ラプラス"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2429
+#: ../app/pdb/plug-in-compat-cmds.c:2427
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "レンズ補正"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2469
+#: ../app/pdb/plug-in-compat-cmds.c:2467
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "シームレスタイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2536
+#: ../app/pdb/plug-in-compat-cmds.c:2534
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "迷路"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2619 ../app/pdb/plug-in-compat-cmds.c:2703
+#: ../app/pdb/plug-in-compat-cmds.c:2617 ../app/pdb/plug-in-compat-cmds.c:2701
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "モーションぼかし"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2804
+#: ../app/pdb/plug-in-compat-cmds.c:2802
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "モザイク"
 
 # xcf 形式以外の画像ファイルはインポートするように仕様変更されたことに伴い、「（インポート）」を追加した。
-#: ../app/pdb/plug-in-compat-cmds.c:2848
+#: ../app/pdb/plug-in-compat-cmds.c:2846
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "ネオン"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2936
+#: ../app/pdb/plug-in-compat-cmds.c:2934
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "新聞印刷"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2976
+#: ../app/pdb/plug-in-compat-cmds.c:2974
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3038
+#: ../app/pdb/plug-in-compat-cmds.c:3036
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "超新星"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3082 ../app/pdb/plug-in-compat-cmds.c:3150
+#: ../app/pdb/plug-in-compat-cmds.c:3080 ../app/pdb/plug-in-compat-cmds.c:3148
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "油絵化"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3240
+#: ../app/pdb/plug-in-compat-cmds.c:3238
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "紙タイル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3281 ../app/pdb/plug-in-compat-cmds.c:3324
+#: ../app/pdb/plug-in-compat-cmds.c:3279 ../app/pdb/plug-in-compat-cmds.c:3322
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "モザイク処理"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3375
+#: ../app/pdb/plug-in-compat-cmds.c:3373
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "プラズマ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3429
+#: ../app/pdb/plug-in-compat-cmds.c:3427
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "極座標"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3469
+#: ../app/pdb/plug-in-compat-cmds.c:3467
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "赤目除去"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3522
+#: ../app/pdb/plug-in-compat-cmds.c:3520
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "不規則"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3575
+#: ../app/pdb/plug-in-compat-cmds.c:3573
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "不規則"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3628
+#: ../app/pdb/plug-in-compat-cmds.c:3626
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "不規則"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3703
+#: ../app/pdb/plug-in-compat-cmds.c:3701
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB ノイズ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3773
+#: ../app/pdb/plug-in-compat-cmds.c:3771
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "波紋"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3898
+#: ../app/pdb/plug-in-compat-cmds.c:3896
 #, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
@@ -21640,88 +21644,88 @@ msgctxt "undo-type"
 msgid "Noisify"
 msgstr "ノイズ(_N)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3942
+#: ../app/pdb/plug-in-compat-cmds.c:3940
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "選択的ガウスぼかし"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3986
+#: ../app/pdb/plug-in-compat-cmds.c:3984
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "半統合"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4029
+#: ../app/pdb/plug-in-compat-cmds.c:4027
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "ずらし"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4132
+#: ../app/pdb/plug-in-compat-cmds.c:4130
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sin 曲線"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4180
+#: ../app/pdb/plug-in-compat-cmds.c:4178
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "ソーベル"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4241
+#: ../app/pdb/plug-in-compat-cmds.c:4239
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "ソリッドノイズ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4285
+#: ../app/pdb/plug-in-compat-cmds.c:4283
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "拡散"
 
 # 「閾（しきい）」の漢字が読めない、またはディスプレイ上で識別できない人がいる可能性があるので、「しきい値」とした
-#: ../app/pdb/plug-in-compat-cmds.c:4326
+#: ../app/pdb/plug-in-compat-cmds.c:4324
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "アルファチャンネルのしきい値"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4372
+#: ../app/pdb/plug-in-compat-cmds.c:4370
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "シャープ (アンシャープマスク)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4418
+#: ../app/pdb/plug-in-compat-cmds.c:4416
 msgctxt "undo-type"
 msgid "Video"
 msgstr "ビデオ"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4455
+#: ../app/pdb/plug-in-compat-cmds.c:4453
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "光度の反転"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4559
+#: ../app/pdb/plug-in-compat-cmds.c:4557
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "明度伝搬"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4606
+#: ../app/pdb/plug-in-compat-cmds.c:4604
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "明るさの最小値"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4653
+#: ../app/pdb/plug-in-compat-cmds.c:4651
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "明るさの最大値"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4716
+#: ../app/pdb/plug-in-compat-cmds.c:4714
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "波"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4764
+#: ../app/pdb/plug-in-compat-cmds.c:4762
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "渦巻きと吸い込み"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4816
+#: ../app/pdb/plug-in-compat-cmds.c:4814
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "風"
@@ -22764,7 +22768,7 @@ msgid "Bucket fill"
 msgstr "塗りつぶし"
 
 #: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
-#: ../app/tools/gimpfiltertool.c:304
+#: ../app/tools/gimpfiltertool.c:306
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:323
 #: ../app/tools/gimptransformtool.c:697 ../app/tools/gimpwarptool.c:697
@@ -23310,7 +23314,7 @@ msgstr ""
 msgid "Show on-canvas filter controls"
 msgstr "選択範囲の境界線(_E)"
 
-#: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:447
+#: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:449
 #: ../app/tools/gimpflipoptions.c:156 ../app/tools/gimptransformoptions.c:108
 #: ../app/tools/gimptransformoptions.c:264
 msgid "Clipping"
@@ -23329,55 +23333,55 @@ msgstr "カラーマネジメント"
 # 表記揺れではない。
 # 非常に高度な設定らしい（設定項目は、多言語への翻訳が許されていない）ので、あえて「高度なオプション」としている。
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:401
+#: ../app/tools/gimpfiltertool.c:403
 #, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Advanced options"
 msgid "Advanced Color Options"
 msgstr "高度なオプション"
 
-#: ../app/tools/gimpfiltertool.c:420
+#: ../app/tools/gimpfiltertool.c:422
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:421
+#: ../app/tools/gimpfiltertool.c:423
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:665
+#: ../app/tools/gimpfiltertool.c:667
 #, fuzzy
 #| msgid "Click to pick this guide as first item"
 msgid "Click to switch the original and filtered sides"
 msgstr "クリック: このガイドを [最初のアイテム] にします"
 
-#: ../app/tools/gimpfiltertool.c:669
+#: ../app/tools/gimpfiltertool.c:671
 #, fuzzy
 #| msgid "Click to place vertical and horizontal guides"
 msgid "Click to switch between vertical and horizontal"
 msgstr "クリック: 垂直方向・水平方向のガイドを配置します"
 
-#: ../app/tools/gimpfiltertool.c:673
+#: ../app/tools/gimpfiltertool.c:675
 #, fuzzy
 #| msgid "Click to dodge the line"
 msgid "Click to move the split guide"
 msgstr "クリック: 直線を覆い焼きします"
 
-#: ../app/tools/gimpfiltertool.c:675
+#: ../app/tools/gimpfiltertool.c:677
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:676
+#: ../app/tools/gimpfiltertool.c:678
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:1463 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1442 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "'%s' の設定のインポート"
 
-#: ../app/tools/gimpfiltertool.c:1465 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1444 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "'%s' の設定のエクスポート"
@@ -24332,8 +24336,8 @@ msgid "Show lattice"
 msgstr "ツールチップを表示する(_T)"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:523
-#: ../app/tools/gimptransformgridoptions.c:534
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:588
+#: ../app/tools/gimptransformgridoptions.c:599
 msgid "Scale"
 msgstr "拡大・縮小"
 
@@ -24576,7 +24580,7 @@ msgstr ""
 "ヤーのみを対象にします。"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:123
+#: ../app/tools/gimptransformgridoptions.c:147
 msgid "Composition guides such as rule of thirds"
 msgstr "選択範囲作成時に [三分割法] などの構図ガイドを表示します"
 
@@ -24719,7 +24723,7 @@ msgid "Move the mouse to change threshold"
 msgstr "マウスを移動させると、しきい値が変化します"
 
 #: ../app/tools/gimprotatetool.c:102
-#: ../app/tools/gimptransformgridoptions.c:525
+#: ../app/tools/gimptransformgridoptions.c:590
 #: ../app/tools/gimptransform3dtool.c:422
 msgid "Rotate"
 msgstr "回転"
@@ -24877,8 +24881,8 @@ msgstr "クリック-ドラッグ: 作成した範囲を選択範囲から引き
 msgid "Cannot intersect with an empty selection."
 msgstr "クリック-ドラッグ: 既存の選択範囲との交差部分を新しい選択範囲にします"
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:527
-#: ../app/tools/gimptransformgridoptions.c:536
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:592
+#: ../app/tools/gimptransformgridoptions.c:601
 msgid "Shear"
 msgstr "剪断変形"
 
@@ -25132,30 +25136,59 @@ msgstr ""
 "このツールには\n"
 "オプションはありません"
 
-#: ../app/tools/gimptransformgridoptions.c:108
+#: ../app/tools/gimptransformgridoptions.c:111
 msgid "Show image preview"
 msgstr "プレビューを表示"
 
-#: ../app/tools/gimptransformgridoptions.c:109
+#: ../app/tools/gimptransformgridoptions.c:112
 #, fuzzy
 #| msgid "Show a preview of the transformed image"
 msgid "Show a preview of the transformed image"
 msgstr "変形画像のプレビューを表示します"
 
-#: ../app/tools/gimptransformgridoptions.c:115
+#: ../app/tools/gimptransformgridoptions.c:118
+#, fuzzy
+#| msgctxt "layers-action"
+#| msgid "Composite Space"
+msgid "Composited preview"
+msgstr "合成色空間"
+
+#: ../app/tools/gimptransformgridoptions.c:119
+msgid "Show preview as part of the image composition"
+msgstr ""
+
+#: ../app/tools/gimptransformgridoptions.c:125
+#, fuzzy
+#| msgid "Preview Mode"
+msgid "Preview linked items"
+msgstr "プレビューモード"
+
+#: ../app/tools/gimptransformgridoptions.c:126
+msgid "Include linked items in the preview"
+msgstr ""
+
+#: ../app/tools/gimptransformgridoptions.c:132
+msgid "Synchronous preview"
+msgstr ""
+
+#: ../app/tools/gimptransformgridoptions.c:133
+msgid "Render the preview synchronously"
+msgstr ""
+
+#: ../app/tools/gimptransformgridoptions.c:139
 msgid "Image opacity"
 msgstr "プレビューの不透明度"
 
-#: ../app/tools/gimptransformgridoptions.c:116
+#: ../app/tools/gimptransformgridoptions.c:140
 msgid "Opacity of the preview image"
 msgstr "プレビュー画像の不透明度を指定します"
 
-#: ../app/tools/gimptransformgridoptions.c:122
-#: ../app/tools/gimptransformgridoptions.c:414
+#: ../app/tools/gimptransformgridoptions.c:146
+#: ../app/tools/gimptransformgridoptions.c:482
 msgid "Guides"
 msgstr "ガイド"
 
-#: ../app/tools/gimptransformgridoptions.c:131
+#: ../app/tools/gimptransformgridoptions.c:155
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
 "[ガイド] を [グリッド線の数を指定] または [グリッド間隔を指定] に設定している"
@@ -25164,157 +25197,157 @@ msgstr ""
 "[グリッド間隔を指定] のときは、値はピクセル単位のグリッド間隔を意味しますが、"
 "実際の間隔は各グリッドセル間で均一になるように調整されます"
 
-#: ../app/tools/gimptransformgridoptions.c:437
+#: ../app/tools/gimptransformgridoptions.c:504
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 度ずつ回転 (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:444
+#: ../app/tools/gimptransformgridoptions.c:511
 msgid "Limit rotation steps to 15 degrees"
 msgstr "回転角度を 15 度刻みにします"
 
-#: ../app/tools/gimptransformgridoptions.c:454
+#: ../app/tools/gimptransformgridoptions.c:520
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "縦横比を維持 (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:461
+#: ../app/tools/gimptransformgridoptions.c:527
 msgid "Keep the original aspect ratio"
 msgstr "元の縦横比を維持して変形します"
 
-#: ../app/tools/gimptransformgridoptions.c:466
-#: ../app/tools/gimptransformgridoptions.c:496
+#: ../app/tools/gimptransformgridoptions.c:532
+#: ../app/tools/gimptransformgridoptions.c:561
 #, c-format
 msgid "Around center (%s)"
 msgstr "中心点から (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:473
+#: ../app/tools/gimptransformgridoptions.c:539
 msgid "Scale around the center point"
 msgstr "中心点を基準にして拡大・縮小します"
 
-#: ../app/tools/gimptransformgridoptions.c:483
+#: ../app/tools/gimptransformgridoptions.c:548
 #, fuzzy, c-format
 #| msgid "Anti erase  (%s)"
 msgid "Constrain handles (%s)"
 msgstr "逆消しゴム  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:491
+#: ../app/tools/gimptransformgridoptions.c:556
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:504
+#: ../app/tools/gimptransformgridoptions.c:569
 #, fuzzy
 #| msgid "Transformation"
 msgid "Transform around the center point"
 msgstr "変形"
 
-#: ../app/tools/gimptransformgridoptions.c:520
+#: ../app/tools/gimptransformgridoptions.c:585
 #, fuzzy, c-format
 #| msgid "Anti erase  (%s)"
 msgid "Constrain (%s)"
 msgstr "逆消しゴム  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:521
+#: ../app/tools/gimptransformgridoptions.c:586
 #: ../app/tools/gimptransform3dtool.c:335
 msgid "Move"
 msgstr "移動"
 
-#: ../app/tools/gimptransformgridoptions.c:522
+#: ../app/tools/gimptransformgridoptions.c:587
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:524
+#: ../app/tools/gimptransformgridoptions.c:589
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:526
+#: ../app/tools/gimptransformgridoptions.c:591
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:528
+#: ../app/tools/gimptransformgridoptions.c:593
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:530
+#: ../app/tools/gimptransformgridoptions.c:595
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:533
+#: ../app/tools/gimptransformgridoptions.c:598
 #, c-format
 msgid "From pivot  (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:535
+#: ../app/tools/gimptransformgridoptions.c:600
 #, fuzzy, c-format
 #| msgid "Fill from first point"
 msgid "Scale from pivot point (%s)"
 msgstr "初期ケージ内を塗りつぶす"
 
-#: ../app/tools/gimptransformgridoptions.c:537
+#: ../app/tools/gimptransformgridoptions.c:602
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:539
+#: ../app/tools/gimptransformgridoptions.c:604
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:542
+#: ../app/tools/gimptransformgridoptions.c:607
 msgid "Pivot"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:543
+#: ../app/tools/gimptransformgridoptions.c:608
 #, fuzzy, c-format
 #| msgid "Type  (%s)"
 msgid "Snap (%s)"
 msgstr "種類  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:544
+#: ../app/tools/gimptransformgridoptions.c:609
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:545
+#: ../app/tools/gimptransformgridoptions.c:610
 msgid "Lock"
 msgstr ""
 
-#: ../app/tools/gimptransformgridoptions.c:546
+#: ../app/tools/gimptransformgridoptions.c:611
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Reposition channel"
 msgid "Lock pivot position to canvas"
 msgstr "チャンネルの再配置"
 
-#: ../app/tools/gimptransformgridtool.c:233
+#: ../app/tools/gimptransformgridtool.c:291
 #: ../app/tools/gimptransformtool.c:437
 msgid "_Transform"
 msgstr "変形(_T)"
 
-#: ../app/tools/gimptransformgridtool.c:505
-#: ../app/tools/gimptransformgridtool.c:517
+#: ../app/tools/gimptransformgridtool.c:572
+#: ../app/tools/gimptransformgridtool.c:584
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Transform Items"
 msgid "Transform Step"
 msgstr "アイテムの変形"
 
-#: ../app/tools/gimptransformgridtool.c:908
+#: ../app/tools/gimptransformgridtool.c:979
 #, c-format
 msgid "%s (Corrective)"
 msgstr ""
 
-#: ../app/tools/gimptransformgridtool.c:1131
+#: ../app/tools/gimptransformgridtool.c:1242
 msgid "Re_adjust"
 msgstr "再調整(_A)"
 
-#: ../app/tools/gimptransformgridtool.c:1379
+#: ../app/tools/gimptransformgridtool.c:1490
 #, fuzzy
 #| msgid "Handle transformation"
 msgid "Cannot readjust the transformation"
@@ -28644,6 +28677,11 @@ msgstr "round"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "fuzzy"
+
+#, fuzzy
+#~| msgid "Save selection"
+#~ msgid "Enable reflection"
+#~ msgstr "選択範囲を保存"
 
 #~ msgctxt "dialogs-action"
 #~ msgid "Paint Dynamics"
