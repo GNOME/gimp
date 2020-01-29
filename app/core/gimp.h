@@ -111,6 +111,8 @@ struct _Gimp
   GimpContainer          *tool_info_list;
   GimpToolInfo           *standard_tool_info;
 
+  GimpContainer          *tool_item_list;
+
   /*  the opened and saved images in MRU order  */
   GimpContainer          *documents;
 
@@ -187,6 +189,7 @@ GList        * gimp_get_display_iter       (Gimp                *gimp);
 GList        * gimp_get_image_windows      (Gimp                *gimp);
 GList        * gimp_get_paint_info_iter    (Gimp                *gimp);
 GList        * gimp_get_tool_info_iter     (Gimp                *gimp);
+GList        * gimp_get_tool_item_iter     (Gimp                *gimp);
 
 GimpObject   * gimp_get_clipboard_object   (Gimp                *gimp);
 
