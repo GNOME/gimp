@@ -170,7 +170,7 @@ gimp_tool_palette_size_allocate (GtkWidget     *widget,
         {
           GimpToolInfo *tool_info = list->data;
 
-          if (tool_info->visible)
+          if (gimp_tool_item_get_visible (GIMP_TOOL_ITEM (tool_info)))
             n_tools++;
         }
 

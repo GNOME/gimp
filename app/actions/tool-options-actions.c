@@ -28,6 +28,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimptoolpreset.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
