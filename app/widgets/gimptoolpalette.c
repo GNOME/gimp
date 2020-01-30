@@ -195,7 +195,7 @@ gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
   max_columns = (workarea.width  * 0.9) / *button_width;
   max_rows    = (workarea.height * 0.7) / *button_height;
 
-  *min_columns = MAX (2, n_tools / max_rows);
+  *min_columns = MAX (1, n_tools / max_rows);
   *min_rows    = MAX (1, n_tools / max_columns);
 
   return n_tools;
