@@ -162,7 +162,10 @@ inv_show_status (void)
 static gboolean
 inv_draw (gpointer data)
 {
-        gtk_widget_queue_draw (data);
+        inv_draw_idle = 0;
+
+        if (geginv)
+                gtk_widget_queue_draw (data);
 
         return FALSE;
 }
