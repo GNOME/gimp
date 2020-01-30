@@ -512,13 +512,10 @@ gimp_tool_button_scroll (GtkWidget      *widget,
 
   if (tool_info && GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
     {
-      GimpContext   *context;
       GimpContainer *children;
       gint           n_children;
       gint           index;
       gint           i;
-
-      context = gimp_toolbox_get_context (tool_button->priv->toolbox);
 
       children = gimp_viewable_get_children (
         GIMP_VIEWABLE (tool_button->priv->tool_item));
@@ -543,9 +540,6 @@ gimp_tool_button_scroll (GtkWidget      *widget,
             {
               gimp_tool_group_set_active_tool_info (
                 GIMP_TOOL_GROUP (tool_button->priv->tool_item), new_tool_info);
-
-              if (tool_info == gimp_context_get_tool (context))
-                gimp_context_set_tool (context, new_tool_info);
 
               break;
             }

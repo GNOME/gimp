@@ -47,36 +47,46 @@ typedef struct _GimpToolManager GimpToolManager;
 
 struct _GimpToolManager
 {
-  GimpTool *active_tool;
-  GSList   *tool_stack;
+  Gimp          *gimp;
 
-  GQuark    image_clean_handler_id;
-  GQuark    image_dirty_handler_id;
-  GQuark    image_saving_handler_id;
+  GimpTool      *active_tool;
+  GSList        *tool_stack;
+
+  GimpToolGroup *active_tool_group;
+
+  GQuark         image_clean_handler_id;
+  GQuark         image_dirty_handler_id;
+  GQuark         image_saving_handler_id;
 };
 
 
 /*  local function prototypes  */
 
-static GimpToolManager * tool_manager_get        (Gimp            *gimp);
+static GimpToolManager * tool_manager_get                       (Gimp            *gimp);
 
-static void   tool_manager_select_tool           (Gimp            *gimp,
-                                                  GimpTool        *tool);
-static void   tool_manager_tool_changed          (GimpContext     *user_context,
-                                                  GimpToolInfo    *tool_info,
-                                                  GimpToolManager *tool_manager);
-static void   tool_manager_preset_changed        (GimpContext     *user_context,
-                                                  GimpToolPreset  *preset,
-                                                  GimpToolManager *tool_manager);
-static void   tool_manager_image_clean_dirty     (GimpImage       *image,
-                                                  GimpDirtyMask    dirty_mask,
-                                                  GimpToolManager *tool_manager);
-static void   tool_manager_image_saving          (GimpImage       *image,
-                                                  GimpToolManager *tool_manager);
-static void   tool_manager_tool_ancestry_changed (GimpToolInfo    *tool_info,
-                                                  GimpToolManager *tool_manager);
+static void              tool_manager_select_tool               (GimpToolManager *tool_manager,
+                                                                 GimpTool        *tool);
 
-static void   tool_manager_cast_spell            (GimpToolInfo    *tool_info);
+static void              tool_manager_set_active_tool_group     (GimpToolManager *tool_manager,
+                                                                 GimpToolGroup   *tool_group);
+
+static void              tool_manager_tool_changed              (GimpContext     *user_context,
+                                                                 GimpToolInfo    *tool_info,
+                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_preset_changed            (GimpContext     *user_context,
+                                                                 GimpToolPreset  *preset,
+                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_image_clean_dirty         (GimpImage       *image,
+                                                                 GimpDirtyMask    dirty_mask,
+                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_image_saving              (GimpImage       *image,
+                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_tool_ancestry_changed     (GimpToolInfo    *tool_info,
+                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_group_active_tool_changed (GimpToolGroup   *tool_group,
+                                                                 GimpToolManager *tool_manager);
+
+static void              tool_manager_cast_spell                (GimpToolInfo    *tool_info);
 
 
 static GQuark tool_manager_quark = 0;
@@ -96,6 +106,8 @@ tool_manager_init (Gimp *gimp)
   tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
 
   tool_manager = g_slice_new0 (GimpToolManager);
+
+  tool_manager->gimp = gimp;
 
   g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
 
@@ -166,6 +178,8 @@ tool_manager_exit (Gimp *gimp)
       g_clear_object (&tool_manager->active_tool);
     }
 
+  tool_manager_set_active_tool_group (tool_manager, NULL);
+
   g_slice_free (GimpToolManager, tool_manager);
 
   g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, NULL);
@@ -205,7 +219,7 @@ tool_manager_push_tool (Gimp     *gimp,
       g_object_ref (tool_manager->tool_stack->data);
     }
 
-  tool_manager_select_tool (gimp, tool);
+  tool_manager_select_tool (tool_manager, tool);
 
   if (focus_display)
     tool_manager_focus_display_active (gimp, focus_display);
@@ -227,7 +241,7 @@ tool_manager_pop_tool (Gimp *gimp)
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
                                                  tool);
 
-      tool_manager_select_tool (gimp, tool);
+      tool_manager_select_tool (tool_manager, tool);
 
       g_object_unref (tool);
     }
@@ -604,15 +618,10 @@ tool_manager_get (Gimp *gimp)
 }
 
 static void
-tool_manager_select_tool (Gimp     *gimp,
-                          GimpTool *tool)
+tool_manager_select_tool (GimpToolManager *tool_manager,
+                          GimpTool        *tool)
 {
-  GimpToolManager *tool_manager;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_TOOL (tool));
-
-  tool_manager = tool_manager_get (gimp);
+  Gimp *gimp = tool_manager->gimp;
 
   /*  reset the previously selected tool, but only if it is not only
    *  temporarily pushed to the tool stack
@@ -634,6 +643,32 @@ tool_manager_select_tool (Gimp     *gimp,
     }
 
   g_set_object (&tool_manager->active_tool, tool);
+}
+
+static void
+tool_manager_set_active_tool_group (GimpToolManager *tool_manager,
+                                    GimpToolGroup   *tool_group)
+{
+  if (tool_group != tool_manager->active_tool_group)
+    {
+      if (tool_manager->active_tool_group)
+        {
+          g_signal_handlers_disconnect_by_func (
+            tool_manager->active_tool_group,
+            tool_manager_group_active_tool_changed,
+            tool_manager);
+        }
+
+      g_set_object (&tool_manager->active_tool_group, tool_group);
+
+      if (tool_manager->active_tool_group)
+        {
+          g_signal_connect (
+            tool_manager->active_tool_group, "active-tool-changed",
+            G_CALLBACK (tool_manager_group_active_tool_changed),
+            tool_manager);
+        }
+    }
 }
 
 static void
@@ -713,7 +748,7 @@ tool_manager_tool_changed (GimpContext     *user_context,
                            "tool-info", tool_info,
                            NULL);
 
-  tool_manager_select_tool (user_context->gimp, new_tool);
+  tool_manager_select_tool (tool_manager, new_tool);
 
   g_object_unref (new_tool);
 
@@ -845,6 +880,16 @@ tool_manager_tool_ancestry_changed (GimpToolInfo    *tool_info,
       gimp_tool_group_set_active_tool_info (GIMP_TOOL_GROUP (parent),
                                             tool_info);
     }
+
+  tool_manager_set_active_tool_group (tool_manager, GIMP_TOOL_GROUP (parent));
+}
+
+static void
+tool_manager_group_active_tool_changed (GimpToolGroup   *tool_group,
+                                        GimpToolManager *tool_manager)
+{
+  gimp_context_set_tool (tool_manager->gimp->user_context,
+                         gimp_tool_group_get_active_tool_info (tool_group));
 }
 
 static void
