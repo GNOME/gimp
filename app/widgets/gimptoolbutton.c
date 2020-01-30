@@ -194,8 +194,7 @@ gimp_tool_button_class_init (GimpToolButtonClass *klass)
                                    g_param_spec_object ("tool-item",
                                                         NULL, NULL,
                                                         GIMP_TYPE_TOOL_ITEM,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void

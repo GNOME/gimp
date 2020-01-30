@@ -503,7 +503,9 @@ gimp_tools_deserialize (Gimp          *gimp,
 
   gimp_container_freeze (container);
 
+  /* make sure the various GimpToolItem types are registered */
   g_type_class_unref (g_type_class_ref (GIMP_TYPE_TOOL_GROUP));
+  g_type_class_unref (g_type_class_ref (GIMP_TYPE_TOOL_INFO));
 
   gimp_container_clear (container);
 
@@ -767,10 +769,20 @@ gimp_tools_copy_structure (Gimp          *gimp,
           dest_tool_item = GIMP_TOOL_ITEM (
             gimp_get_tool_info (gimp, gimp_object_get_name (src_tool_item)));
 
-          if (dest_tool_item && GIMP_TOOL_INFO (dest_tool_item)->hidden)
-            dest_tool_item = NULL;
-          else if (tools)
-            g_hash_table_add (tools, dest_tool_item);
+          if (dest_tool_item)
+            {
+              if (! GIMP_TOOL_INFO (dest_tool_item)->hidden)
+                {
+                  g_object_ref (dest_tool_item);
+
+                  if (tools)
+                    g_hash_table_add (tools, dest_tool_item);
+                }
+              else
+                {
+                  dest_tool_item = NULL;
+                }
+            }
         }
 
       if (dest_tool_item)
@@ -781,6 +793,8 @@ gimp_tools_copy_structure (Gimp          *gimp,
 
           gimp_container_add (dest_container,
                               GIMP_OBJECT (dest_tool_item));
+
+          g_object_unref (dest_tool_item);
         }
     }
 }
