@@ -24005,13 +24005,13 @@ msgstr ""
 #: ../app/widgets/gimpcolorframe.c:928
 msgctxt "CMYK"
 msgid "C:"
-msgstr ""
+msgstr "C:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
 #: ../app/widgets/gimpcolorframe.c:930
 msgctxt "CMYK"
 msgid "M:"
-msgstr ""
+msgstr "M:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
 #: ../app/widgets/gimpcolorframe.c:932
@@ -24019,13 +24019,13 @@ msgstr ""
 #| msgid "Y:"
 msgctxt "CMYK"
 msgid "Y:"
-msgstr "Y："
+msgstr "Y:"
 
 #. TRANSLATORS: K for Key/black (CMYK)
 #: ../app/widgets/gimpcolorframe.c:934
 msgctxt "CMYK"
 msgid "K:"
-msgstr ""
+msgstr "K:"
 
 #: ../app/widgets/gimpcolorframe.c:996
 #, fuzzy
@@ -24111,7 +24111,7 @@ msgstr "選擇控制器事件動作"
 
 #: ../app/widgets/gimpcontrollerinfo.c:112
 msgid "Enabled"
-msgstr ""
+msgstr "啟用"
 
 #: ../app/widgets/gimpcontrollerinfo.c:119
 msgid "Debug events"
@@ -24393,13 +24393,13 @@ msgstr "複製筆刷位址(_L)"
 
 #: ../app/widgets/gimpcriticaldialog.c:55
 msgid "Open Bug Tracker"
-msgstr ""
+msgstr "開啟臭蟲追蹤器"
 
 #: ../app/widgets/gimpcriticaldialog.c:132
 #: ../app/widgets/gimpcriticaldialog.c:452
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
-msgstr ""
+msgstr "為了幫助我們改善GIMP，以下是您可以回報關於臭蟲的幾個簡單的步驟："
 
 #: ../app/widgets/gimpcriticaldialog.c:134
 #: ../app/widgets/gimpcriticaldialog.c:454
