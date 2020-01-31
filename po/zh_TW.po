@@ -258,7 +258,7 @@ msgstr "原地貼上功能"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Many usability improvements"
-msgstr ""
+msgstr "許多使用性改進"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Manual can be displayed in the user's preferred language"
@@ -270,11 +270,11 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Improved compatibility with Photoshop .psd files"
-msgstr ""
+msgstr "改善對Photoshop .psd 檔案的相容性"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "New support for password-protected PDF"
-msgstr ""
+msgstr "新增支援『密碼保護』的PDF檔案"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New support for HGT format (Digital Elevation Model data)"
@@ -24522,7 +24522,7 @@ msgstr ""
 #: ../app/widgets/gimpcriticaldialog.c:425
 #, c-format
 msgid "GIMP encountered an error: %s"
-msgstr ""
+msgstr "GIMP 發生一個錯誤： %s"
 
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
@@ -24530,11 +24530,11 @@ msgstr ""
 #: ../app/widgets/gimpcriticaldialog.c:433
 #, c-format
 msgid "GIMP encountered several critical errors!"
-msgstr ""
+msgstr "GIMP 發生多個嚴重的錯誤！"
 
 #: ../app/widgets/gimpcriticaldialog.c:485
 msgid "_Restart GIMP"
-msgstr ""
+msgstr "重新啟動GIMP"
 
 #: ../app/widgets/gimpdashboard.c:346 ../app/widgets/gimpdashboard.c:398
 msgctxt "dashboard-variable"
@@ -24550,7 +24550,7 @@ msgstr "分塊快取大小(_S):"
 #: ../app/widgets/gimpdashboard.c:356
 msgctxt "dashboard-variable"
 msgid "Maximum"
-msgstr ""
+msgstr "最大"
 
 #: ../app/widgets/gimpdashboard.c:357
 msgid "Maximal tile cache occupied size"
@@ -24611,12 +24611,12 @@ msgstr "顯示圖片尺寸"
 
 #: ../app/widgets/gimpdashboard.c:419
 msgid "Swap file size limit"
-msgstr ""
+msgstr "緩衝檔案大小限制"
 
 #: ../app/widgets/gimpdashboard.c:426
 msgctxt "dashboard-variable"
 msgid "Busy"
-msgstr ""
+msgstr "忙碌中"
 
 #: ../app/widgets/gimpdashboard.c:427
 msgid "Whether there is work queued for the swap file"
@@ -24632,7 +24632,7 @@ msgstr "訊息"
 
 #: ../app/widgets/gimpdashboard.c:441
 msgid "Total CPU usage"
-msgstr ""
+msgstr "CPU 總使用量"
 
 #: ../app/widgets/gimpdashboard.c:449 ../app/widgets/gimpdashboard.c:459
 #, fuzzy
@@ -24664,7 +24664,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:486
 msgctxt "dashboard-group"
 msgid "Cache"
-msgstr ""
+msgstr "快取"
 
 #: ../app/widgets/gimpdashboard.c:487
 msgid "In-memory tile cache"
@@ -24673,7 +24673,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:523
 msgctxt "dashboard-group"
 msgid "Swap"
-msgstr ""
+msgstr "緩衝"
 
 #: ../app/widgets/gimpdashboard.c:524
 msgid "On-disk tile swap"
@@ -24682,7 +24682,7 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:553
 msgctxt "dashboard-group"
 msgid "CPU"
-msgstr ""
+msgstr "中央處理器"
 
 #: ../app/widgets/gimpdashboard.c:554
 msgid "CPU usage"
