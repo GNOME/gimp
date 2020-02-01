@@ -473,6 +473,8 @@ libappcore_a_sources = \
 	gimptoolpreset-save.h			\
 	gimptreehandler.c			\
 	gimptreehandler.h			\
+	gimptreeproxy.c				\
+	gimptreeproxy.h				\
 	gimptriviallycancelablewaitable.c	\
 	gimptriviallycancelablewaitable.h	\
 	gimpuncancelablewaitable.c		\

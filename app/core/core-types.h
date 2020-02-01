@@ -101,6 +101,7 @@ typedef struct _GimpFilterStack                 GimpFilterStack;
 typedef struct _GimpItemStack                   GimpItemStack;
 typedef struct _GimpLayerStack                  GimpLayerStack;
 typedef struct _GimpTaggedContainer             GimpTaggedContainer;
+typedef struct _GimpTreeProxy                   GimpTreeProxy;
 
 
 /*  not really a container  */
