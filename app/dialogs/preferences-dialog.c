@@ -1109,6 +1109,7 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *entry;
   GtkWidget         *calibrate_button;
   GSList            *group;
+  GtkWidget         *separator;
   GtkWidget         *editor;
   gint               i;
 
@@ -2143,6 +2144,15 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add_with_icon (object, "toolbox-image-area",
                                     _("Show active _image"),
                                     GIMP_ICON_IMAGE,
+                                    GTK_BOX (vbox2), size_group);
+
+  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
+  gtk_widget_show (separator);
+
+  prefs_check_button_add_with_icon (object, "toolbox-groups",
+                                    _("Use tool _groups"),
+                                    NULL,
                                     GTK_BOX (vbox2), size_group);
 
   g_clear_object (&size_group);

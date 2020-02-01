@@ -70,6 +70,7 @@
 #include "gimppattern.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
+#include "gimptreeproxy.h"
 
 #include "gimp-intl.h"
 
@@ -269,6 +270,11 @@ gimp_init (Gimp *gimp)
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_item_list),
                                "tool items");
 
+  gimp->tool_item_ui_list = gimp_tree_proxy_new_for_container (
+    gimp->tool_item_list);
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_item_ui_list),
+                               "ui tool items");
+
   gimp->documents = gimp_document_list_new (gimp);
 
   gimp->templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
@@ -385,14 +391,15 @@ gimp_finalize (GObject *object)
 
   gimp_tool_info_set_standard (gimp, NULL);
 
+  g_clear_object (&gimp->tool_item_list);
+  g_clear_object (&gimp->tool_item_ui_list);
+
   if (gimp->tool_info_list)
     {
       gimp_container_foreach (gimp->tool_info_list,
                               (GFunc) g_object_run_dispose, NULL);
       g_clear_object (&gimp->tool_info_list);
     }
-
-  g_clear_object (&gimp->tool_item_list);
 
   file_data_exit (gimp);
   xcf_exit (gimp);
@@ -915,6 +922,14 @@ gimp_get_tool_item_iter (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return GIMP_LIST (gimp->tool_item_list)->queue->head;
+}
+
+GList *
+gimp_get_tool_item_ui_iter (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return GIMP_LIST (gimp->tool_item_ui_list)->queue->head;
 }
 
 GimpObject *

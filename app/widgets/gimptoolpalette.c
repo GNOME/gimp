@@ -274,7 +274,7 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
   gtk_container_add (GTK_CONTAINER (palette), private->group);
   gtk_widget_show (private->group);
 
-  for (list = gimp_get_tool_item_iter (context->gimp);
+  for (list = gimp_get_tool_item_ui_iter (context->gimp);
        list;
        list = g_list_next (list))
     {
@@ -283,13 +283,13 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
       gimp_tool_palette_add_button (palette, tool_item, -1);
     }
 
-  g_signal_connect_object (context->gimp->tool_item_list, "add",
+  g_signal_connect_object (context->gimp->tool_item_ui_list, "add",
                            G_CALLBACK (gimp_tool_palette_tool_add),
                            palette, 0);
-  g_signal_connect_object (context->gimp->tool_item_list, "remove",
+  g_signal_connect_object (context->gimp->tool_item_ui_list, "remove",
                            G_CALLBACK (gimp_tool_palette_tool_remove),
                            palette, 0);
-  g_signal_connect_object (context->gimp->tool_item_list, "reorder",
+  g_signal_connect_object (context->gimp->tool_item_ui_list, "reorder",
                            G_CALLBACK (gimp_tool_palette_tool_reorder),
                            palette, 0);
 

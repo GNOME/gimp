@@ -120,7 +120,8 @@ static void   gimp_tools_copy_structure (Gimp                   *gimp,
 
 /*  private variables  */
 
-static gboolean   tool_options_deleted = FALSE;
+static GBinding *toolbox_groups_binding = NULL;
+static gboolean  tool_options_deleted   = FALSE;
 
 
 /*  public functions  */
@@ -215,6 +216,12 @@ gimp_tools_init (Gimp *gimp)
   gimp_tool_options_manager_init (gimp);
 
   tool_manager_init (gimp);
+
+  toolbox_groups_binding = g_object_bind_property (
+    gimp->config,            "toolbox-groups",
+    gimp->tool_item_ui_list, "flat",
+    G_BINDING_INVERT_BOOLEAN |
+    G_BINDING_SYNC_CREATE);
 }
 
 void
@@ -223,6 +230,8 @@ gimp_tools_exit (Gimp *gimp)
   GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_clear_object (&toolbox_groups_binding);
 
   tool_manager_exit (gimp);
 
