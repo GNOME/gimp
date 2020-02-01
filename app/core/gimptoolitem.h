@@ -49,15 +49,22 @@ struct _GimpToolItemClass
 
   /*  signals  */
   void (* visible_changed) (GimpToolItem *tool_item);
+  void (* shown_changed)   (GimpToolItem *tool_item);
 };
 
 
-GType      gimp_tool_item_get_type    (void) G_GNUC_CONST;
+GType      gimp_tool_item_get_type      (void) G_GNUC_CONST;
+                                        
+void       gimp_tool_item_set_visible   (GimpToolItem *tool_item,
+                                         gboolean      visible);
+gboolean   gimp_tool_item_get_visible   (GimpToolItem *tool_item);
+                                        
+gboolean   gimp_tool_item_get_shown     (GimpToolItem *tool_item);
 
-void       gimp_tool_item_set_visible (GimpToolItem *tool_item,
-                                       gboolean      visible);
-gboolean   gimp_tool_item_get_visible (GimpToolItem *tool_item);
-gboolean   gimp_tool_item_is_visible  (GimpToolItem *tool_item);
+
+/*  protected  */
+
+void       gimp_tool_item_shown_changed (GimpToolItem *tool_item);
 
 
 #endif  /*  __GIMP_TOOL_ITEM_H__  */
