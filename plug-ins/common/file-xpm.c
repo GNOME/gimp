@@ -15,9 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* XPM plugin version 1.2.6 */
+/* XPM plugin version 1.2.7 */
 
 /*
+1.2.7 fixes saving unused transparency (bug #4560)
+
 1.2.6 fixes crash when saving indexed images (bug #109567)
 
 1.2.5 only creates a "None" color entry if the image has alpha (bug #108034)
@@ -622,6 +624,14 @@ create_colormap_from_hash (gpointer gkey,
   set_XpmImage (user_data, *((int *) value), string);
 }
 
+static void
+decrement_hash_values (gpointer gkey,
+                       gpointer value,
+                       gpointer user_data)
+{
+  --(*((guint*) value));
+}
+
 static gboolean
 save_image (GFile         *file,
             GimpImage     *image,
@@ -637,6 +647,7 @@ save_image (GFile         *file,
   gint       *indexno;
   gboolean    indexed;
   gboolean    alpha;
+  gboolean    alpha_used = FALSE;
   XpmColor   *colormap;
   gchar      *filename;
   XpmImage   *xpm_image;
@@ -741,6 +752,7 @@ save_image (GFile         *file,
               if (a < threshold)
                 {
                   *(idata++) = 0;
+                  alpha_used = TRUE;
                 }
               else
                 {
@@ -770,6 +782,17 @@ save_image (GFile         *file,
 
   g_free (buf);
 
+  /* remove alpha if not actually used */
+  if (alpha && !alpha_used)
+    {
+      gint i;
+      --ncolors;
+      for (i = 0; i < width * height; ++i)
+        --ibuff[i];
+
+      g_hash_table_foreach (hash, decrement_hash_values, NULL);
+    }
+
   if (indexed)
     {
       guchar *cmap = gimp_image_get_colormap (image, &ncolors);
@@ -777,17 +800,17 @@ save_image (GFile         *file,
 
       c = cmap;
 
-      if (alpha)
+      if (alpha_used)
         ncolors++;
 
       colormap = g_new (XpmColor, ncolors);
       cpp =
         1 + (gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
 
-      if (alpha)
+      if (alpha_used)
         set_XpmImage (colormap, 0, "None");
 
-      for (i = alpha ? 1 : 0; i < ncolors; i++)
+      for (i = alpha_used ? 1 : 0; i < ncolors; i++)
         {
           gchar *string;
           guchar r, g, b;
@@ -809,7 +832,7 @@ save_image (GFile         *file,
       cpp =
         1 + (gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
 
-      if (alpha)
+      if (alpha_used)
         set_XpmImage (colormap, 0, "None");
 
       g_hash_table_foreach (hash, create_colormap_from_hash, colormap);
