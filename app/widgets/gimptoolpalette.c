@@ -435,10 +435,10 @@ gimp_tool_palette_add_button (GimpToolPalette *palette,
                               tool_button, index);
   gtk_widget_show (GTK_WIDGET (tool_button));
 
-  g_object_bind_property (tool_item,   "visible",
+  g_object_bind_property (tool_item,   "shown",
                           tool_button, "visible-horizontal",
                           G_BINDING_SYNC_CREATE);
-  g_object_bind_property (tool_item,   "visible",
+  g_object_bind_property (tool_item,   "shown",
                           tool_button, "visible-vertical",
                           G_BINDING_SYNC_CREATE);
 

@@ -89,6 +89,8 @@ static void            gimp_tool_group_child_remove    (GimpContainer  *containe
                                                         GimpToolInfo   *tool_info,
                                                         GimpToolGroup  *tool_group);
 
+static void            gimp_tool_group_shown_changed   (GimpToolItem   *tool_item);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpToolGroup, gimp_tool_group, GIMP_TYPE_TOOL_ITEM)
 
@@ -105,6 +107,7 @@ gimp_tool_group_class_init (GimpToolGroupClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpToolItemClass *tool_item_class   = GIMP_TOOL_ITEM_CLASS (klass);
 
   gimp_tool_group_signals[ACTIVE_TOOL_CHANGED] =
     g_signal_new ("active-tool-changed",
@@ -126,6 +129,8 @@ gimp_tool_group_class_init (GimpToolGroupClass *klass)
   viewable_class->get_children      = gimp_tool_group_get_children;
   viewable_class->get_expanded      = gimp_tool_group_get_expanded;
   viewable_class->set_expanded      = gimp_tool_group_set_expanded;
+
+  tool_item_class->shown_changed    = gimp_tool_group_shown_changed;
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_ACTIVE_TOOL,
                            "active-tool", NULL, NULL,
@@ -319,19 +324,39 @@ gimp_tool_group_child_remove (GimpContainer *container,
     }
 }
 
+static void
+gimp_tool_group_shown_changed (GimpToolItem *tool_item)
+{
+  GimpToolGroup *tool_group = GIMP_TOOL_GROUP (tool_item);
+  GList         *iter;
+
+  if (GIMP_TOOL_ITEM_CLASS (parent_class)->shown_changed)
+    GIMP_TOOL_ITEM_CLASS (parent_class)->shown_changed (tool_item);
+
+  for (iter = GIMP_LIST (tool_group->priv->children)->queue->head;
+       iter;
+       iter = g_list_next (iter))
+    {
+      GimpToolItem *tool_item = iter->data;
+
+      if (gimp_tool_item_get_visible (tool_item))
+        gimp_tool_item_shown_changed (tool_item);
+    }
+}
+
 
 /*  public functions  */
 
 GimpToolGroup *
 gimp_tool_group_new (void)
 {
-  GimpToolGroup *group;
+  GimpToolGroup *tool_group;
 
-  group = g_object_new (GIMP_TYPE_TOOL_GROUP, NULL);
+  tool_group = g_object_new (GIMP_TYPE_TOOL_GROUP, NULL);
 
-  gimp_object_set_static_name (GIMP_OBJECT (group), "tool group");
+  gimp_object_set_static_name (GIMP_OBJECT (tool_group), "tool group");
 
-  return group;
+  return tool_group;
 }
 
 void

@@ -38,13 +38,15 @@
 enum
 {
   VISIBLE_CHANGED,
+  SHOWN_CHANGED,
   LAST_SIGNAL
 };
 
 enum
 {
   PROP_0,
-  PROP_VISIBLE
+  PROP_VISIBLE,
+  PROP_SHOWN
 };
 
 
@@ -56,14 +58,14 @@ struct _GimpToolItemPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_tool_item_get_property (GObject      *object,
-                                           guint         property_id,
-                                           GValue       *value,
-                                           GParamSpec   *pspec);
-static void   gimp_tool_item_set_property (GObject      *object,
-                                           guint         property_id,
-                                           const GValue *value,
-                                           GParamSpec   *pspec);
+static void   gimp_tool_item_get_property  (GObject      *object,
+                                            guint         property_id,
+                                            GValue       *value,
+                                            GParamSpec   *pspec);
+static void   gimp_tool_item_set_property  (GObject      *object,
+                                            guint         property_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpToolItem, gimp_tool_item, GIMP_TYPE_VIEWABLE)
@@ -89,6 +91,15 @@ gimp_tool_item_class_init (GimpToolItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gimp_tool_item_signals[SHOWN_CHANGED] =
+    g_signal_new ("shown-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolItemClass, shown_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->get_property = gimp_tool_item_get_property;
   object_class->set_property = gimp_tool_item_set_property;
 
@@ -96,6 +107,11 @@ gimp_tool_item_class_init (GimpToolItemClass *klass)
                             "visible", NULL, NULL,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_SHOWN,
+                                   g_param_spec_boolean ("shown", NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READABLE));
 }
 
 static void
@@ -116,6 +132,9 @@ gimp_tool_item_get_property (GObject    *object,
     {
     case PROP_VISIBLE:
       g_value_set_boolean (value, tool_item->priv->visible);
+      break;
+    case PROP_SHOWN:
+      g_value_set_boolean (value, gimp_tool_item_get_shown (tool_item));
       break;
 
     default:
@@ -155,11 +174,22 @@ gimp_tool_item_set_visible (GimpToolItem *tool_item,
 
   if (visible != tool_item->priv->visible)
     {
+      gboolean old_shown;
+
+      g_object_freeze_notify (G_OBJECT (tool_item));
+
+      old_shown = gimp_tool_item_get_shown (tool_item);
+
       tool_item->priv->visible = visible;
 
       g_signal_emit (tool_item, gimp_tool_item_signals[VISIBLE_CHANGED], 0);
 
+      if (gimp_tool_item_get_shown (tool_item) != old_shown)
+        gimp_tool_item_shown_changed (tool_item);
+
       g_object_notify (G_OBJECT (tool_item), "visible");
+
+      g_object_thaw_notify (G_OBJECT (tool_item));
     }
 }
 
@@ -172,7 +202,7 @@ gimp_tool_item_get_visible (GimpToolItem *tool_item)
 }
 
 gboolean
-gimp_tool_item_is_visible (GimpToolItem *tool_item)
+gimp_tool_item_get_shown (GimpToolItem *tool_item)
 {
   GimpToolItem *parent;
 
@@ -182,5 +212,16 @@ gimp_tool_item_is_visible (GimpToolItem *tool_item)
     gimp_viewable_get_parent (GIMP_VIEWABLE (tool_item)));
 
   return tool_item->priv->visible &&
-         (! parent || gimp_tool_item_is_visible (parent));
+         (! parent || gimp_tool_item_get_shown (parent));
+}
+
+
+/*  protected functions  */
+
+void
+gimp_tool_item_shown_changed (GimpToolItem *tool_item)
+{
+  g_signal_emit (tool_item, gimp_tool_item_signals[SHOWN_CHANGED], 0);
+
+  g_object_notify (G_OBJECT (tool_item), "shown");
 }

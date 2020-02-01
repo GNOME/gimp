@@ -61,7 +61,7 @@ struct _GimpToolEditorPrivate
   GtkWidget       *delete_button;
   GtkWidget       *reset_button;
 
-  GimpTreeHandler *visible_changed_handler;
+  GimpTreeHandler *shown_changed_handler;
 
   /* State of tools at creation of the editor, stored to support
    * reverting changes
@@ -97,7 +97,7 @@ static void            gimp_tool_editor_drop_viewable             (GimpContainer
                                                                    GimpViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
 
-static void            gimp_tool_editor_visible_changed          (GimpToolItem                *tool_item,
+static void            gimp_tool_editor_shown_changed            (GimpToolItem                *tool_item,
                                                                   GimpToolEditor              *tool_editor);
 
 static void            gimp_tool_editor_eye_data_func            (GtkTreeViewColumn           *tree_column,
@@ -575,8 +575,8 @@ gimp_tool_editor_reset_clicked (GtkButton      *button,
 }
 
 static void
-gimp_tool_editor_visible_changed (GimpToolItem   *tool_item,
-                                  GimpToolEditor *tool_editor)
+gimp_tool_editor_shown_changed (GimpToolItem   *tool_item,
+                                GimpToolEditor *tool_editor)
 {
   GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (tool_editor);
   GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (tool_editor);
@@ -587,23 +587,13 @@ gimp_tool_editor_visible_changed (GimpToolItem   *tool_item,
 
   if (iter)
     {
-      GtkTreePath   *path;
-      GimpContainer *children;
+      GtkTreePath *path;
 
       path = gtk_tree_model_get_path (tree_view->model, iter);
 
       gtk_tree_model_row_changed (tree_view->model, path, iter);
 
       gtk_tree_path_free (path);
-
-      children = gimp_viewable_get_children (GIMP_VIEWABLE (tool_item));
-
-      if (children)
-        {
-          gimp_container_foreach (children,
-                                  (GFunc) gimp_tool_editor_visible_changed,
-                                  tool_editor);
-        }
     }
 }
 
@@ -626,7 +616,7 @@ gimp_tool_editor_eye_data_func (GtkTreeViewColumn *tree_column,
   g_object_set (cell,
                 "active",       gimp_tool_item_get_visible (tool_item),
                 "inconsistent", gimp_tool_item_get_visible (tool_item) &&
-                                ! gimp_tool_item_is_visible (tool_item),
+                                ! gimp_tool_item_get_shown (tool_item),
                 NULL);
 
   g_object_unref (renderer);
@@ -725,7 +715,7 @@ gimp_tool_editor_update_container (GimpToolEditor *tool_editor)
   GimpContainer     *container;
   GimpContext       *context;
 
-  g_clear_pointer (&tool_editor->priv->visible_changed_handler,
+  g_clear_pointer (&tool_editor->priv->shown_changed_handler,
                    gimp_tree_handler_disconnect);
 
   g_clear_pointer (&tool_editor->priv->initial_tool_state, g_free);
@@ -741,9 +731,9 @@ gimp_tool_editor_update_container (GimpToolEditor *tool_editor)
       tool_editor->priv->container = container;
       tool_editor->priv->context   = context;
 
-      tool_editor->priv->visible_changed_handler = gimp_tree_handler_connect (
-        container, "visible-changed",
-        G_CALLBACK (gimp_tool_editor_visible_changed),
+      tool_editor->priv->shown_changed_handler = gimp_tree_handler_connect (
+        container, "shown-changed",
+        G_CALLBACK (gimp_tool_editor_shown_changed),
         tool_editor);
 
       /* save initial tool order */
