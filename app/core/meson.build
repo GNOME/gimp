@@ -241,6 +241,7 @@ libappcore_sources = [
   'gimptoolpreset-save.c',
   'gimptoolpreset.c',
   'gimptreehandler.c',
+  'gimptreeproxy.c',
   'gimptriviallycancelablewaitable.c',
   'gimpuncancelablewaitable.c',
   'gimpundo.c',
