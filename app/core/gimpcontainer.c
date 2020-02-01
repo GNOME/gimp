@@ -195,6 +195,7 @@ gimp_container_class_init (GimpContainerClass *klass)
   klass->clear                   = NULL;
   klass->have                    = NULL;
   klass->foreach                 = NULL;
+  klass->search                  = NULL;
   klass->get_unique_names        = NULL;
   klass->get_child_by_name       = NULL;
   klass->get_child_by_index      = NULL;
@@ -819,6 +820,23 @@ gimp_container_foreach (GimpContainer *container,
 
   if (container->priv->n_children > 0)
     GIMP_CONTAINER_GET_CLASS (container)->foreach (container, func, user_data);
+}
+
+GimpObject *
+gimp_container_search (GimpContainer           *container,
+                       GimpContainerSearchFunc  func,
+                       gpointer                 user_data)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (func != NULL, NULL);
+
+  if (container->priv->n_children > 0)
+    {
+      return GIMP_CONTAINER_GET_CLASS (container)->search (container,
+                                                           func, user_data);
+    }
+
+  return NULL;
 }
 
 gboolean
