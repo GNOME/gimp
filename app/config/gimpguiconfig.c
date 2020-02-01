@@ -67,6 +67,7 @@ enum
   PROP_TOOLBOX_FOO_AREA,
   PROP_TOOLBOX_IMAGE_AREA,
   PROP_TOOLBOX_WILBER,
+  PROP_TOOLBOX_GROUPS,
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_PREFER_DARK_THEME,
@@ -275,6 +276,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             "toolbox-wilber",
                             "Show toolbox wilber",
                             TOOLBOX_WILBER_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_GROUPS,
+                            "toolbox-groups",
+                            "Use toolbox groups",
+                            TOOLBOX_GROUPS_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -622,6 +630,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_TOOLBOX_WILBER:
       gui_config->toolbox_wilber = g_value_get_boolean (value);
       break;
+    case PROP_TOOLBOX_GROUPS:
+      gui_config->toolbox_groups = g_value_get_boolean (value);
+      break;
      case PROP_THEME_PATH:
       g_free (gui_config->theme_path);
       gui_config->theme_path = g_value_dup_string (value);
@@ -790,6 +801,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_TOOLBOX_WILBER:
       g_value_set_boolean (value, gui_config->toolbox_wilber);
+      break;
+    case PROP_TOOLBOX_GROUPS:
+      g_value_set_boolean (value, gui_config->toolbox_groups);
       break;
     case PROP_THEME_PATH:
       g_value_set_string (value, gui_config->theme_path);

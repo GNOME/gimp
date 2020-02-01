@@ -672,6 +672,9 @@ _("Show the current foreground and background colors in the toolbox.")
 #define TOOLBOX_FOO_AREA_BLURB \
 _("Show the currently selected brush, pattern and gradient in the toolbox.")
 
+#define TOOLBOX_GROUPS_BLURB \
+_("Use a single toolbox button for grouped tools.")
+
 #define TOOLBOX_IMAGE_AREA_BLURB \
 _("Show the currently active image in the toolbox.")
 

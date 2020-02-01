@@ -62,6 +62,7 @@ struct _GimpGuiConfig
   gboolean             toolbox_foo_area;
   gboolean             toolbox_image_area;
   gboolean             toolbox_wilber;
+  gboolean             toolbox_groups;
   gchar               *theme_path;
   gchar               *theme;
   gboolean             prefer_dark_theme;
