@@ -287,6 +287,9 @@ gimp_tool_group_child_add (GimpContainer *container,
                            GimpToolInfo  *tool_info,
                            GimpToolGroup *tool_group)
 {
+  g_return_if_fail (
+    gimp_viewable_get_parent (GIMP_VIEWABLE (tool_info)) == NULL);
+
   gimp_viewable_set_parent (GIMP_VIEWABLE (tool_info),
                             GIMP_VIEWABLE (tool_group));
 

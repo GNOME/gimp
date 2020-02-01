@@ -659,7 +659,7 @@ tool_manager_set_active_tool_group (GimpToolManager *tool_manager,
             tool_manager);
         }
 
-      g_set_object (&tool_manager->active_tool_group, tool_group);
+      g_set_weak_pointer (&tool_manager->active_tool_group, tool_group);
 
       if (tool_manager->active_tool_group)
         {
