@@ -592,6 +592,14 @@ create_colormap_from_hash (gpointer gkey,
   set_XpmImage (user_data, *((int *) value), string);
 }
 
+static void
+decrement_hash_values (gpointer gkey,
+                       gpointer value,
+                       gpointer user_data)
+{
+  --(*((guint*) value));
+}
+
 static gboolean
 save_image (const gchar  *filename,
             gint32        image_ID,
@@ -606,6 +614,7 @@ save_image (const gchar  *filename,
   gint       *indexno;
   gboolean    indexed;
   gboolean    alpha;
+  gboolean    alpha_used = FALSE;
   XpmColor   *colormap;
   XpmImage   *image;
   guint      *ibuff   = NULL;
@@ -705,6 +714,7 @@ save_image (const gchar  *filename,
               if (a < threshold)
                 {
                   *(idata++) = 0;
+                  alpha_used = TRUE;
                 }
               else
                 {
@@ -734,6 +744,17 @@ save_image (const gchar  *filename,
 
   g_free (buf);
 
+  /* remove alpha if not actually used */
+  if (alpha && !alpha_used)
+    {
+      gint i;
+      --ncolors;
+      for (i = 0; i < width * height; ++i)
+        --ibuff[i];
+
+      g_hash_table_foreach (hash, decrement_hash_values, NULL);
+    }
+
   if (indexed)
     {
       guchar *cmap = gimp_image_get_colormap (image_ID, &ncolors);
@@ -741,17 +762,17 @@ save_image (const gchar  *filename,
 
       c = cmap;
 
-      if (alpha)
+      if (alpha_used)
         ncolors++;
 
       colormap = g_new (XpmColor, ncolors);
       cpp =
         1 + (gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
 
-      if (alpha)
+      if (alpha_used)
         set_XpmImage (colormap, 0, "None");
 
-      for (i = alpha ? 1 : 0; i < ncolors; i++)
+      for (i = alpha_used ? 1 : 0; i < ncolors; i++)
         {
           gchar *string;
           guchar r, g, b;
@@ -773,7 +794,7 @@ save_image (const gchar  *filename,
       cpp =
         1 + (gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
 
-      if (alpha)
+      if (alpha_used)
         set_XpmImage (colormap, 0, "None");
 
       g_hash_table_foreach (hash, create_colormap_from_hash, colormap);
