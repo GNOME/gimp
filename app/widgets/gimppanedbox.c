@@ -43,7 +43,6 @@
 #include "gimpmenudock.h"
 #include "gimppanedbox.h"
 #include "gimptoolbox.h"
-#include "gimpwidgets-utils.h"
 
 #include "gimp-log.h"
 
@@ -458,7 +457,6 @@ gimp_paned_box_drag_leave (GtkWidget      *widget,
   GimpPanedBox *paned_box = GIMP_PANED_BOX (widget);
 
   gimp_paned_box_hide_drop_indicator (paned_box, 0);
-  gimp_highlight_widget (widget, FALSE);
 }
 
 static gboolean
@@ -498,7 +496,6 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
   paned_box->p->insert_index = insert_index;
 
   gdk_drag_status (context, handle ? GDK_ACTION_MOVE : 0, time);
-  gimp_highlight_widget (widget, handle);
 
   /* Return TRUE so drag_leave() is called */
   return handle;
