@@ -82,6 +82,13 @@ static const GimpTabStyle gimp_tab_style_candidates[] =
   GIMP_TAB_STYLE_PREVIEW
 };
 
+
+typedef struct
+{
+  GimpDockbookDragCallback callback;
+  gpointer                 data;
+} GimpDockbookDragCallbackData;
+
 struct _GimpDockbookPrivate
 {
   GimpDock       *dock;
@@ -144,6 +151,9 @@ static void         gimp_dockbook_tab_drag_source_setup       (GtkWidget      *w
 static void         gimp_dockbook_tab_drag_begin              (GtkWidget      *widget,
                                                                GdkDragContext *context,
                                                                GimpDockable   *dockable);
+static void         gimp_dockbook_tab_drag_end                (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               GimpDockable   *dockable);
 static gboolean     gimp_dockbook_tab_drag_failed             (GtkWidget      *widget,
                                                                GdkDragContext *context,
                                                                GtkDragResult   result,
@@ -195,6 +205,8 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
 static guint dockbook_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
+
+static GList *drag_callbacks = NULL;
 
 
 static void
@@ -1173,12 +1185,18 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
   g_signal_connect_object (tab_widget, "drag-begin",
                            G_CALLBACK (gimp_dockbook_tab_drag_begin),
                            dockable, 0);
+  g_signal_connect_object (tab_widget, "drag-end",
+                           G_CALLBACK (gimp_dockbook_tab_drag_end),
+                           dockable, 0);
   g_signal_connect_object (tab_widget, "drag-failed",
                            G_CALLBACK (gimp_dockbook_tab_drag_failed),
                            dockable, 0);
 
   g_signal_connect_object (dockable, "drag-begin",
                            G_CALLBACK (gimp_dockbook_tab_drag_begin),
+                           dockable, 0);
+  g_signal_connect_object (dockable, "drag-end",
+                           G_CALLBACK (gimp_dockbook_tab_drag_end),
                            dockable, 0);
   g_signal_connect_object (dockable, "drag-failed",
                            G_CALLBACK (gimp_dockbook_tab_drag_failed),
@@ -1296,6 +1314,45 @@ gimp_dockbook_drag_source_to_dockable (GtkWidget *drag_source)
   return dockable;
 }
 
+void
+gimp_dockbook_add_drag_callback (GimpDockbookDragCallback callback,
+                                 gpointer                 data)
+{
+  GimpDockbookDragCallbackData *callback_data;
+
+  callback_data = g_slice_new (GimpDockbookDragCallbackData);
+
+  callback_data->callback = callback;
+  callback_data->data     = data;
+
+  drag_callbacks = g_list_prepend (drag_callbacks, callback_data);
+}
+
+void
+gimp_dockbook_remove_drag_callback (GimpDockbookDragCallback callback,
+                                    gpointer                 data)
+{
+  GList *iter;
+
+  iter = drag_callbacks;
+
+  while (iter)
+    {
+      GimpDockbookDragCallbackData *callback_data = iter->data;
+      GList                        *next          = g_list_next (iter);
+
+      if (callback_data->callback == callback &&
+          callback_data->data     == data)
+        {
+          g_slice_free (GimpDockbookDragCallbackData, callback_data);
+
+          drag_callbacks = g_list_delete_link (drag_callbacks, iter);
+        }
+
+      iter = next;
+    }
+}
+
 /*  tab DND source side  */
 
 static void
@@ -1364,6 +1421,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   GtkAllocation   allocation;
   GtkWidget      *window;
   GtkWidget      *view;
+  GList          *iter;
   GtkRequisition  requisition;
   gint            drag_x;
   gint            drag_y;
@@ -1391,6 +1449,36 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
   gimp_dockable_get_drag_pos (dockable, &drag_x, &drag_y);
   gtk_drag_set_icon_widget (context, window, drag_x, drag_y);
+
+  iter = drag_callbacks;
+
+  while (iter)
+    {
+      GimpDockbookDragCallbackData *callback_data = iter->data;
+
+      iter = g_list_next (iter);
+
+      callback_data->callback (context, TRUE, callback_data->data);
+    }
+}
+
+static void
+gimp_dockbook_tab_drag_end (GtkWidget      *widget,
+                            GdkDragContext *context,
+                            GimpDockable   *dockable)
+{
+  GList *iter;
+
+  iter = drag_callbacks;
+
+  while (iter)
+    {
+      GimpDockbookDragCallbackData *callback_data = iter->data;
+
+      iter = g_list_next (iter);
+
+      callback_data->callback (context, FALSE, callback_data->data);
+    }
 }
 
 static gboolean
