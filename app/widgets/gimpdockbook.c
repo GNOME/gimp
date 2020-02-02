@@ -74,6 +74,12 @@ enum
 };
 
 
+typedef struct
+{
+  GimpDockbookDragCallback callback;
+  gpointer                 data;
+} GimpDockbookDragCallbackData;
+
 struct _GimpDockbookPrivate
 {
   GimpDock       *dock;
@@ -90,6 +96,10 @@ struct _GimpDockbookPrivate
 
 static void         gimp_dockbook_finalize          (GObject        *object);
 
+static void         gimp_dockbook_drag_begin        (GtkWidget      *widget,
+                                                     GdkDragContext *context);
+static void         gimp_dockbook_drag_end          (GtkWidget      *widget,
+                                                     GdkDragContext *context);
 static gboolean     gimp_dockbook_drag_motion       (GtkWidget      *widget,
                                                      GdkDragContext *context,
                                                      gint            x,
@@ -136,6 +146,8 @@ static guint dockbook_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_NOTEBOOK_TAB };
 
+static GList *drag_callbacks = NULL;
+
 
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
@@ -176,6 +188,8 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 
   object_class->finalize         = gimp_dockbook_finalize;
 
+  widget_class->drag_begin       = gimp_dockbook_drag_begin;
+  widget_class->drag_end         = gimp_dockbook_drag_end;
   widget_class->drag_motion      = gimp_dockbook_drag_motion;
   widget_class->drag_drop        = gimp_dockbook_drag_drop;
   widget_class->popup_menu       = gimp_dockbook_popup_menu;
@@ -251,6 +265,48 @@ gimp_dockbook_finalize (GObject *object)
   g_clear_object (&dockbook->p->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_dockbook_drag_begin (GtkWidget      *widget,
+                          GdkDragContext *context)
+{
+  GList *iter;
+
+  if (GTK_WIDGET_CLASS (parent_class)->drag_begin)
+    GTK_WIDGET_CLASS (parent_class)->drag_begin (widget, context);
+
+  iter = drag_callbacks;
+
+  while (iter)
+    {
+      GimpDockbookDragCallbackData *callback_data = iter->data;
+
+      iter = g_list_next (iter);
+
+      callback_data->callback (context, TRUE, callback_data->data);
+    }
+}
+
+static void
+gimp_dockbook_drag_end (GtkWidget      *widget,
+                        GdkDragContext *context)
+{
+  GList *iter;
+
+  iter = drag_callbacks;
+
+  while (iter)
+    {
+      GimpDockbookDragCallbackData *callback_data = iter->data;
+
+      iter = g_list_next (iter);
+
+      callback_data->callback (context, FALSE, callback_data->data);
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->drag_end)
+    GTK_WIDGET_CLASS (parent_class)->drag_end (widget, context);
 }
 
 static gboolean
@@ -822,6 +878,45 @@ gimp_dockbook_set_drag_handler (GimpDockbook *dockbook,
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
 
   dockbook->p->drag_handler = drag_handler;
+}
+
+void
+gimp_dockbook_add_drag_callback (GimpDockbookDragCallback callback,
+                                 gpointer                 data)
+{
+  GimpDockbookDragCallbackData *callback_data;
+
+  callback_data = g_slice_new (GimpDockbookDragCallbackData);
+
+  callback_data->callback = callback;
+  callback_data->data     = data;
+
+  drag_callbacks = g_list_prepend (drag_callbacks, callback_data);
+}
+
+void
+gimp_dockbook_remove_drag_callback (GimpDockbookDragCallback callback,
+                                    gpointer                 data)
+{
+  GList *iter;
+
+  iter = drag_callbacks;
+
+  while (iter)
+    {
+      GimpDockbookDragCallbackData *callback_data = iter->data;
+      GList                        *next          = g_list_next (iter);
+
+      if (callback_data->callback == callback &&
+          callback_data->data     == data)
+        {
+          g_slice_free (GimpDockbookDragCallbackData, callback_data);
+
+          drag_callbacks = g_list_delete_link (drag_callbacks, iter);
+        }
+
+      iter = next;
+    }
 }
 
 
