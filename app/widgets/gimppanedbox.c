@@ -46,8 +46,6 @@
 
 #include "gimp-log.h"
 
-#include "gimp-intl.h"
-
 
 /**
  * Defines the size of the area that dockables can be dropped on in
