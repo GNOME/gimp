@@ -61,7 +61,7 @@ struct _GimpToolEditorPrivate
   GtkWidget       *delete_button;
   GtkWidget       *reset_button;
 
-  GimpTreeHandler *shown_changed_handler;
+  GimpTreeHandler *tool_item_notify_handler;
 
   /* State of tools at creation of the editor, stored to support
    * reverting changes
@@ -97,7 +97,8 @@ static void            gimp_tool_editor_drop_viewable             (GimpContainer
                                                                    GimpViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
 
-static void            gimp_tool_editor_shown_changed            (GimpToolItem                *tool_item,
+static void            gimp_tool_editor_tool_item_notify         (GimpToolItem                *tool_item,
+                                                                  GParamSpec                  *pspec,
                                                                   GimpToolEditor              *tool_editor);
 
 static void            gimp_tool_editor_eye_data_func            (GtkTreeViewColumn           *tree_column,
@@ -575,8 +576,9 @@ gimp_tool_editor_reset_clicked (GtkButton      *button,
 }
 
 static void
-gimp_tool_editor_shown_changed (GimpToolItem   *tool_item,
-                                GimpToolEditor *tool_editor)
+gimp_tool_editor_tool_item_notify (GimpToolItem   *tool_item,
+                                   GParamSpec     *pspec,
+                                   GimpToolEditor *tool_editor)
 {
   GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (tool_editor);
   GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (tool_editor);
@@ -715,7 +717,7 @@ gimp_tool_editor_update_container (GimpToolEditor *tool_editor)
   GimpContainer     *container;
   GimpContext       *context;
 
-  g_clear_pointer (&tool_editor->priv->shown_changed_handler,
+  g_clear_pointer (&tool_editor->priv->tool_item_notify_handler,
                    gimp_tree_handler_disconnect);
 
   g_clear_pointer (&tool_editor->priv->initial_tool_state, g_free);
@@ -731,9 +733,9 @@ gimp_tool_editor_update_container (GimpToolEditor *tool_editor)
       tool_editor->priv->container = container;
       tool_editor->priv->context   = context;
 
-      tool_editor->priv->shown_changed_handler = gimp_tree_handler_connect (
-        container, "shown-changed",
-        G_CALLBACK (gimp_tool_editor_shown_changed),
+      tool_editor->priv->tool_item_notify_handler = gimp_tree_handler_connect (
+        container, "notify",
+        G_CALLBACK (gimp_tool_editor_tool_item_notify),
         tool_editor);
 
       /* save initial tool order */
