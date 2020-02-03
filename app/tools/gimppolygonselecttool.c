@@ -33,6 +33,7 @@
 #include "core/gimplayer-floating-selection.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimptoolpolygon.h"
@@ -84,11 +85,6 @@ static void       gimp_polygon_select_tool_modifier_key            (GimpTool    
                                                                     gboolean               press,
                                                                     GdkModifierType        state,
                                                                     GimpDisplay           *display);
-static void       gimp_polygon_select_tool_active_modifier_key     (GimpTool              *tool,
-                                                                    GdkModifierType        key,
-                                                                    gboolean               press,
-                                                                    GdkModifierType        state,
-                                                                    GimpDisplay           *display);
 static void       gimp_polygon_select_tool_oper_update             (GimpTool              *tool,
                                                                     const GimpCoords      *coords,
                                                                     GdkModifierType        state,
@@ -98,7 +94,6 @@ static void       gimp_polygon_select_tool_cursor_update           (GimpTool    
                                                                     const GimpCoords      *coords,
                                                                     GdkModifierType        state,
                                                                     GimpDisplay           *display);
-
 
 static void       gimp_polygon_select_tool_real_confirm            (GimpPolygonSelectTool *poly_sel,
                                                                     GimpDisplay           *display);
@@ -127,20 +122,19 @@ gimp_polygon_select_tool_class_init (GimpPolygonSelectToolClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
-  object_class->finalize          = gimp_polygon_select_tool_finalize;
+  object_class->finalize     = gimp_polygon_select_tool_finalize;
 
-  tool_class->control             = gimp_polygon_select_tool_control;
-  tool_class->button_press        = gimp_polygon_select_tool_button_press;
-  tool_class->button_release      = gimp_polygon_select_tool_button_release;
-  tool_class->motion              = gimp_polygon_select_tool_motion;
-  tool_class->key_press           = gimp_polygon_select_tool_key_press;
-  tool_class->modifier_key        = gimp_polygon_select_tool_modifier_key;
-  tool_class->active_modifier_key = gimp_polygon_select_tool_active_modifier_key;
-  tool_class->oper_update         = gimp_polygon_select_tool_oper_update;
-  tool_class->cursor_update       = gimp_polygon_select_tool_cursor_update;
+  tool_class->control        = gimp_polygon_select_tool_control;
+  tool_class->button_press   = gimp_polygon_select_tool_button_press;
+  tool_class->button_release = gimp_polygon_select_tool_button_release;
+  tool_class->motion         = gimp_polygon_select_tool_motion;
+  tool_class->key_press      = gimp_polygon_select_tool_key_press;
+  tool_class->modifier_key   = gimp_polygon_select_tool_modifier_key;
+  tool_class->oper_update    = gimp_polygon_select_tool_oper_update;
+  tool_class->cursor_update  = gimp_polygon_select_tool_cursor_update;
 
-  klass->change_complete          = NULL;
-  klass->confirm                  = gimp_polygon_select_tool_real_confirm;
+  klass->change_complete     = NULL;
+  klass->confirm             = gimp_polygon_select_tool_real_confirm;
 }
 
 static void
@@ -332,30 +326,18 @@ gimp_polygon_select_tool_modifier_key (GimpTool        *tool,
   if (priv->widget && display == tool->display)
     {
       gimp_tool_widget_hover_modifier (priv->widget, key, press, state);
+
+      /* let GimpSelectTool handle alt+<mod> */
+      if (! (state & GDK_MOD1_MASK))
+        {
+          /* otherwise, shift/ctrl are handled by the widget */
+          state &= ~(gimp_get_extend_selection_mask () |
+                     gimp_get_modify_selection_mask ());
+        }
     }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
                                                 display);
-}
-
-static void
-gimp_polygon_select_tool_active_modifier_key (GimpTool        *tool,
-                                              GdkModifierType  key,
-                                              gboolean         press,
-                                              GdkModifierType  state,
-                                              GimpDisplay     *display)
-{
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
-
-  if (priv->widget)
-    {
-      gimp_tool_widget_motion_modifier (priv->widget, key, press, state);
-
-      GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool,
-                                                           key, press, state,
-                                                           display);
-    }
 }
 
 static void
@@ -371,6 +353,14 @@ gimp_polygon_select_tool_oper_update (GimpTool         *tool,
   if (priv->widget && display == tool->display)
     {
       gimp_tool_widget_hover (priv->widget, coords, state, proximity);
+
+      /* let GimpSelectTool handle alt+<mod> */
+      if (! (state & GDK_MOD1_MASK))
+        {
+          /* otherwise, shift/ctrl are handled by the widget */
+          state &= ~(gimp_get_extend_selection_mask () |
+                     gimp_get_modify_selection_mask ());
+        }
     }
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
@@ -393,6 +383,14 @@ gimp_polygon_select_tool_cursor_update (GimpTool         *tool,
         {
           gimp_tool_widget_get_cursor (priv->widget, coords, state,
                                        NULL, NULL, &modifier);
+
+          /* let GimpSelectTool handle alt+<mod> */
+          if (! (state & GDK_MOD1_MASK))
+            {
+              /* otherwise, shift/ctrl are handled by the widget */
+              state &= ~(gimp_get_extend_selection_mask () |
+                         gimp_get_modify_selection_mask ());
+            }
         }
 
       gimp_tool_set_cursor (tool, display,
