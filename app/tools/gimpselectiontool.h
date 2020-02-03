@@ -54,6 +54,10 @@ struct _GimpSelectionTool
 struct _GimpSelectionToolClass
 {
   GimpDrawToolClass  parent_class;
+
+  /*  virtual functions  */
+  gboolean (* have_selection) (GimpSelectionTool *sel_tool,
+                               GimpDisplay       *display);
 };
 
 

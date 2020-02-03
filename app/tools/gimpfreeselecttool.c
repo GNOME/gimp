@@ -73,6 +73,9 @@ static void       gimp_free_select_tool_options_notify  (GimpTool              *
                                                          GimpToolOptions       *options,
                                                          const GParamSpec      *pspec);
 
+static gboolean   gimp_free_select_tool_have_selection  (GimpSelectionTool     *sel_tool,
+                                                         GimpDisplay           *display);
+
 static void       gimp_free_select_tool_change_complete (GimpPolygonSelectTool *poly_sel,
                                                          GimpDisplay           *display);
 
@@ -112,12 +115,15 @@ static void
 gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 {
   GimpToolClass              *tool_class     = GIMP_TOOL_CLASS (klass);
+  GimpSelectionToolClass     *sel_class      = GIMP_SELECTION_TOOL_CLASS (klass);
   GimpPolygonSelectToolClass *poly_sel_class = GIMP_POLYGON_SELECT_TOOL_CLASS (klass);
 
   tool_class->control             = gimp_free_select_tool_control;
   tool_class->button_press        = gimp_free_select_tool_button_press;
   tool_class->button_release      = gimp_free_select_tool_button_release;
   tool_class->options_notify      = gimp_free_select_tool_options_notify;
+
+  sel_class->have_selection       = gimp_free_select_tool_have_selection;
 
   poly_sel_class->change_complete = gimp_free_select_tool_change_complete;
 }
@@ -246,6 +252,27 @@ gimp_free_select_tool_options_notify (GimpTool         *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+}
+
+static gboolean
+gimp_free_select_tool_have_selection (GimpSelectionTool *sel_tool,
+                                      GimpDisplay       *display)
+{
+  GimpPolygonSelectTool *poly_sel = GIMP_POLYGON_SELECT_TOOL (sel_tool);
+  GimpTool              *tool     = GIMP_TOOL (sel_tool);
+
+  if (display == tool->display)
+    {
+      gint n_points;
+
+      gimp_polygon_select_tool_get_points (poly_sel, NULL, &n_points);
+
+      if (n_points > 2)
+        return TRUE;
+    }
+
+  return GIMP_SELECTION_TOOL_CLASS (parent_class)->have_selection (sel_tool,
+                                                                   display);
 }
 
 static void
