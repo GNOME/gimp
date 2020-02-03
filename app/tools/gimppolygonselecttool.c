@@ -59,15 +59,6 @@ static void       gimp_polygon_select_tool_finalize                (GObject     
 static void       gimp_polygon_select_tool_control                 (GimpTool              *tool,
                                                                     GimpToolAction         action,
                                                                     GimpDisplay           *display);
-static void       gimp_polygon_select_tool_oper_update             (GimpTool              *tool,
-                                                                    const GimpCoords      *coords,
-                                                                    GdkModifierType        state,
-                                                                    gboolean               proximity,
-                                                                    GimpDisplay           *display);
-static void       gimp_polygon_select_tool_cursor_update           (GimpTool              *tool,
-                                                                    const GimpCoords      *coords,
-                                                                    GdkModifierType        state,
-                                                                    GimpDisplay           *display);
 static void       gimp_polygon_select_tool_button_press            (GimpTool              *tool,
                                                                     const GimpCoords      *coords,
                                                                     guint32                time,
@@ -98,6 +89,16 @@ static void       gimp_polygon_select_tool_active_modifier_key     (GimpTool    
                                                                     gboolean               press,
                                                                     GdkModifierType        state,
                                                                     GimpDisplay           *display);
+static void       gimp_polygon_select_tool_oper_update             (GimpTool              *tool,
+                                                                    const GimpCoords      *coords,
+                                                                    GdkModifierType        state,
+                                                                    gboolean               proximity,
+                                                                    GimpDisplay           *display);
+static void       gimp_polygon_select_tool_cursor_update           (GimpTool              *tool,
+                                                                    const GimpCoords      *coords,
+                                                                    GdkModifierType        state,
+                                                                    GimpDisplay           *display);
+
 
 static void       gimp_polygon_select_tool_real_confirm            (GimpPolygonSelectTool *poly_sel,
                                                                     GimpDisplay           *display);
@@ -129,14 +130,14 @@ gimp_polygon_select_tool_class_init (GimpPolygonSelectToolClass *klass)
   object_class->finalize          = gimp_polygon_select_tool_finalize;
 
   tool_class->control             = gimp_polygon_select_tool_control;
-  tool_class->oper_update         = gimp_polygon_select_tool_oper_update;
-  tool_class->cursor_update       = gimp_polygon_select_tool_cursor_update;
   tool_class->button_press        = gimp_polygon_select_tool_button_press;
   tool_class->button_release      = gimp_polygon_select_tool_button_release;
   tool_class->motion              = gimp_polygon_select_tool_motion;
   tool_class->key_press           = gimp_polygon_select_tool_key_press;
   tool_class->modifier_key        = gimp_polygon_select_tool_modifier_key;
   tool_class->active_modifier_key = gimp_polygon_select_tool_active_modifier_key;
+  tool_class->oper_update         = gimp_polygon_select_tool_oper_update;
+  tool_class->cursor_update       = gimp_polygon_select_tool_cursor_update;
 
   klass->change_complete          = NULL;
   klass->confirm                  = gimp_polygon_select_tool_real_confirm;
@@ -195,53 +196,6 @@ gimp_polygon_select_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
-}
-
-static void
-gimp_polygon_select_tool_oper_update (GimpTool         *tool,
-                                      const GimpCoords *coords,
-                                      GdkModifierType   state,
-                                      gboolean          proximity,
-                                      GimpDisplay      *display)
-{
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
-
-  if (priv->widget && display == tool->display)
-    {
-      gimp_tool_widget_hover (priv->widget, coords, state, proximity);
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               display);
-}
-
-static void
-gimp_polygon_select_tool_cursor_update (GimpTool         *tool,
-                                        const GimpCoords *coords,
-                                        GdkModifierType   state,
-                                        GimpDisplay      *display)
-{
-  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
-  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
-  GimpCursorModifier            modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  if (tool->display)
-    {
-      if (priv->widget && display == tool->display)
-        {
-          gimp_tool_widget_get_cursor (priv->widget, coords, state,
-                                       NULL, NULL, &modifier);
-        }
-
-      gimp_tool_set_cursor (tool, display,
-                            gimp_tool_control_get_cursor (tool->control),
-                            gimp_tool_control_get_tool_cursor (tool->control),
-                            modifier);
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
-                                                 display);
 }
 
 static void
@@ -402,6 +356,53 @@ gimp_polygon_select_tool_active_modifier_key (GimpTool        *tool,
                                                            key, press, state,
                                                            display);
     }
+}
+
+static void
+gimp_polygon_select_tool_oper_update (GimpTool         *tool,
+                                      const GimpCoords *coords,
+                                      GdkModifierType   state,
+                                      gboolean          proximity,
+                                      GimpDisplay      *display)
+{
+  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
+  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+
+  if (priv->widget && display == tool->display)
+    {
+      gimp_tool_widget_hover (priv->widget, coords, state, proximity);
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               display);
+}
+
+static void
+gimp_polygon_select_tool_cursor_update (GimpTool         *tool,
+                                        const GimpCoords *coords,
+                                        GdkModifierType   state,
+                                        GimpDisplay      *display)
+{
+  GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
+  GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
+  GimpCursorModifier            modifier = GIMP_CURSOR_MODIFIER_NONE;
+
+  if (tool->display)
+    {
+      if (priv->widget && display == tool->display)
+        {
+          gimp_tool_widget_get_cursor (priv->widget, coords, state,
+                                       NULL, NULL, &modifier);
+        }
+
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            modifier);
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+                                                 display);
 }
 
 static void
