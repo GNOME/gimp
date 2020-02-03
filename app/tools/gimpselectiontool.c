@@ -46,34 +46,40 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_selection_tool_control       (GimpTool           *tool,
-                                                     GimpToolAction      action,
-                                                     GimpDisplay        *display);
-static void       gimp_selection_tool_modifier_key  (GimpTool           *tool,
-                                                     GdkModifierType     key,
-                                                     gboolean            press,
-                                                     GdkModifierType     state,
-                                                     GimpDisplay        *display);
-static void       gimp_selection_tool_oper_update   (GimpTool           *tool,
-                                                     const GimpCoords   *coords,
-                                                     GdkModifierType     state,
-                                                     gboolean            proximity,
-                                                     GimpDisplay        *display);
-static void       gimp_selection_tool_cursor_update (GimpTool           *tool,
-                                                     const GimpCoords   *coords,
-                                                     GdkModifierType     state,
-                                                     GimpDisplay        *display);
+static void       gimp_selection_tool_control             (GimpTool           *tool,
+                                                           GimpToolAction      action,
+                                                           GimpDisplay        *display);
+static void       gimp_selection_tool_modifier_key        (GimpTool           *tool,
+                                                           GdkModifierType     key,
+                                                           gboolean            press,
+                                                           GdkModifierType     state,
+                                                           GimpDisplay        *display);
+static void       gimp_selection_tool_oper_update         (GimpTool           *tool,
+                                                           const GimpCoords   *coords,
+                                                           GdkModifierType     state,
+                                                           gboolean            proximity,
+                                                           GimpDisplay        *display);
+static void       gimp_selection_tool_cursor_update       (GimpTool           *tool,
+                                                           const GimpCoords   *coords,
+                                                           GdkModifierType     state,
+                                                           GimpDisplay        *display);
 
-static void       gimp_selection_tool_commit        (GimpSelectionTool  *sel_tool);
-static void       gimp_selection_tool_halt          (GimpSelectionTool  *sel_tool,
-                                                     GimpDisplay        *display);
+static gboolean   gimp_selection_tool_real_have_selection (GimpSelectionTool  *sel_tool,
+                                                           GimpDisplay        *display);
 
-static gboolean   gimp_selection_tool_check         (GimpSelectionTool  *sel_tool,
-                                                     GimpDisplay        *display,
-                                                     GError            **error);
+static void       gimp_selection_tool_commit              (GimpSelectionTool  *sel_tool);
+static void       gimp_selection_tool_halt                (GimpSelectionTool  *sel_tool,
+                                                           GimpDisplay        *display);
 
-static void       gimp_selection_tool_set_undo_ptr  (GimpUndo          **undo_ptr,
-                                                     GimpUndo           *undo);
+static gboolean   gimp_selection_tool_check               (GimpSelectionTool  *sel_tool,
+                                                           GimpDisplay        *display,
+                                                           GError            **error);
+
+static gboolean   gimp_selection_tool_have_selection      (GimpSelectionTool  *sel_tool,
+                                                           GimpDisplay        *display);
+
+static void       gimp_selection_tool_set_undo_ptr        (GimpUndo          **undo_ptr,
+                                                           GimpUndo           *undo);
 
 
 G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL)
@@ -91,6 +97,8 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
   tool_class->key_press     = gimp_edit_selection_tool_key_press;
   tool_class->oper_update   = gimp_selection_tool_oper_update;
   tool_class->cursor_update = gimp_selection_tool_cursor_update;
+
+  klass->have_selection     = gimp_selection_tool_real_have_selection;
 }
 
 static void
@@ -210,24 +218,24 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options        = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image;
-  GimpChannel          *selection;
   GimpDrawable         *drawable;
   GimpLayer            *layer;
   GimpLayer            *floating_sel;
   GdkModifierType       extend_mask;
   GdkModifierType       modify_mask;
+  gboolean              have_selection;
   gboolean              move_layer        = FALSE;
   gboolean              move_floating_sel = FALSE;
-  gboolean              selection_empty;
 
   image        = gimp_display_get_image (display);
-  selection    = gimp_image_get_mask (image);
   drawable     = gimp_image_get_active_drawable (image);
   layer        = gimp_image_pick_layer (image, coords->x, coords->y, NULL);
   floating_sel = gimp_image_get_floating_selection (image);
 
   extend_mask = gimp_get_extend_selection_mask ();
   modify_mask = gimp_get_modify_selection_mask ();
+
+  have_selection = gimp_selection_tool_have_selection (selection_tool, display);
 
   if (drawable)
     {
@@ -236,14 +244,13 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
           if (layer == floating_sel)
             move_floating_sel = TRUE;
         }
-      else if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+      else if (have_selection &&
+               gimp_item_mask_intersect (GIMP_ITEM (drawable),
                                          NULL, NULL, NULL, NULL))
         {
           move_layer = TRUE;
         }
     }
-
-  selection_empty = gimp_channel_is_empty (selection);
 
   selection_tool->function = SELECTION_SELECT;
 
@@ -260,7 +267,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
       selection_tool->function = SELECTION_MOVE_COPY;
     }
   else if (selection_tool->allow_move &&
-           (state & GDK_MOD1_MASK) && ! selection_empty)
+           (state & GDK_MOD1_MASK) && have_selection)
     {
       /* move the selection mask */
       selection_tool->function = SELECTION_MOVE_MASK;
@@ -291,7 +298,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
       gboolean         free_status = FALSE;
       GdkModifierType  modifiers   = (extend_mask | modify_mask);
 
-      if (! selection_empty)
+      if (have_selection)
         modifiers |= GDK_MOD1_MASK;
 
       switch (selection_tool->function)
@@ -300,7 +307,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
           switch (options->operation)
             {
             case GIMP_CHANNEL_OP_REPLACE:
-              if (! selection_empty)
+              if (have_selection)
                 {
                   status = gimp_suggest_modifiers (_("Click-Drag to replace the "
                                                      "current selection"),
@@ -439,6 +446,16 @@ gimp_selection_tool_cursor_update (GimpTool         *tool,
                         modifier);
 }
 
+static gboolean
+gimp_selection_tool_real_have_selection (GimpSelectionTool *sel_tool,
+                                         GimpDisplay       *display)
+{
+  GimpImage   *image     = gimp_display_get_image (display);
+  GimpChannel *selection = gimp_image_get_mask (image);
+
+  return ! gimp_channel_is_empty (selection);
+}
+
 static void
 gimp_selection_tool_commit (GimpSelectionTool *sel_tool)
 {
@@ -548,6 +565,14 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
     }
 
   return TRUE;
+}
+
+static gboolean
+gimp_selection_tool_have_selection (GimpSelectionTool *sel_tool,
+                                    GimpDisplay       *display)
+{
+  return GIMP_SELECTION_TOOL_GET_CLASS (sel_tool)->have_selection (sel_tool,
+                                                                   display);
 }
 
 static void
