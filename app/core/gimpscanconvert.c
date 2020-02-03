@@ -509,8 +509,8 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   g_return_if_fail (sc != NULL);
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
-  x      = 0;
-  y      = 0;
+  x      = gegl_buffer_get_x      (buffer);
+  y      = gegl_buffer_get_y      (buffer);
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
