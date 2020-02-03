@@ -455,8 +455,8 @@ gimp_channel_combine_buffer (GimpChannel    *mask,
 
   if (gimp_channel_combine_start (mask, op,
                                   GEGL_RECTANGLE (
-                                    off_x,
-                                    off_y,
+                                    off_x + gegl_buffer_get_x (add_on_buffer),
+                                    off_y + gegl_buffer_get_y (add_on_buffer),
                                     gegl_buffer_get_width  (add_on_buffer),
                                     gegl_buffer_get_height (add_on_buffer)),
                                   FALSE, FALSE, &data))

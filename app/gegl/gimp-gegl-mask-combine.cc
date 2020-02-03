@@ -516,7 +516,8 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
 
   if (! gegl_rectangle_intersect (&mask_rect,
                                   GEGL_RECTANGLE (
-                                    off_x, off_y,
+                                    off_x + gegl_buffer_get_x (add_on),
+                                    off_y + gegl_buffer_get_y (add_on),
                                     gegl_buffer_get_width  (add_on),
                                     gegl_buffer_get_height (add_on)),
                                   gegl_buffer_get_abyss (mask)))
