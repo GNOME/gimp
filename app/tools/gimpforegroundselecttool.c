@@ -911,6 +911,7 @@ gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (poly_sel);
   GimpImage                *image     = gimp_display_get_image (display);
   GimpDrawable             *drawable  = gimp_image_get_active_drawable (image);
+  GimpItem                 *item      = GIMP_ITEM (drawable);
 
   if (drawable && fg_select->state == MATTING_STATE_FREE_SELECT)
     {
@@ -923,9 +924,10 @@ gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
       gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
 
       fg_select->trimap =
-        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                         gimp_image_get_width  (image),
-                                         gimp_image_get_height (image)),
+        gegl_buffer_new (GEGL_RECTANGLE (gimp_item_get_offset_x (item),
+                                         gimp_item_get_offset_y (item),
+                                         gimp_item_get_width    (item),
+                                         gimp_item_get_height   (item)),
                          gimp_image_get_mask_format (image));
 
       gimp_scan_convert_render_value (scan_convert, fg_select->trimap,
@@ -1300,10 +1302,13 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
                                  gint                stroke_width)
 
 {
-  StrokeUndo *undo;
-  gint        x1, y1, x2, y2;
-  gint        width, height;
-  gint        i;
+  StrokeUndo          *undo;
+  const GeglRectangle *extent;
+  gint                 x1, y1, x2, y2;
+  gint                 width, height;
+  gint                 i;
+
+  extent = gegl_buffer_get_extent (trimap);
 
   x1 = G_MAXINT;
   y1 = G_MAXINT;
@@ -1325,10 +1330,10 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
   x2 += (stroke_width + 1) / 2;
   y2 += (stroke_width + 1) / 2;
 
-  x1 = MAX (x1, 0);
-  y1 = MAX (y1, 0);
-  x2 = MIN (x2, gegl_buffer_get_width  (trimap));
-  y2 = MIN (y2, gegl_buffer_get_height (trimap));
+  x1 = MAX (x1, extent->x);
+  y1 = MAX (y1, extent->y);
+  x2 = MIN (x2, extent->x + extent->width);
+  y2 = MIN (y2, extent->x + extent->height);
 
   width  = x2 - x1;
   height = y2 - y1;
@@ -1337,13 +1342,13 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
     return NULL;
 
   undo = g_slice_new0 (StrokeUndo);
-  undo->saved_trimap = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+  undo->saved_trimap = gegl_buffer_new (GEGL_RECTANGLE (x1, y1, width, height),
                                         gegl_buffer_get_format (trimap));
 
   gimp_gegl_buffer_copy (
     trimap,             GEGL_RECTANGLE (x1, y1, width, height),
     GEGL_ABYSS_NONE,
-    undo->saved_trimap, GEGL_RECTANGLE (0, 0, width, height));
+    undo->saved_trimap, NULL);
 
   undo->trimap_x = x1;
   undo->trimap_y = y1;
@@ -1370,15 +1375,13 @@ gimp_foreground_select_undo_pop (StrokeUndo *undo,
                          GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
                                          width, height),
                          GEGL_ABYSS_NONE,
-                         undo->saved_trimap,
-                         GEGL_RECTANGLE (0, 0, width, height));
+                         undo->saved_trimap, NULL);
 
   gimp_gegl_buffer_copy (buffer,
-                         GEGL_RECTANGLE (0, 0, width, height),
-                         GEGL_ABYSS_NONE,
-                         trimap,
                          GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
-                                         width, height));
+                                         width, height),
+                         GEGL_ABYSS_NONE,
+                         trimap, NULL);
 
   g_object_unref (buffer);
 }
