@@ -58,6 +58,7 @@ struct _GimpCanvasBufferPreviewPrivate
 
 /*  local function prototypes  */
 
+static void             gimp_canvas_buffer_preview_dispose        (GObject               *object);
 static void             gimp_canvas_buffer_preview_set_property   (GObject               *object,
                                                                    guint                  property_id,
                                                                    const GValue          *value,
@@ -86,6 +87,7 @@ gimp_canvas_buffer_preview_class_init (GimpCanvasBufferPreviewClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
 
+  object_class->dispose      = gimp_canvas_buffer_preview_dispose;
   object_class->set_property = gimp_canvas_buffer_preview_set_property;
   object_class->get_property = gimp_canvas_buffer_preview_get_property;
 
@@ -105,6 +107,16 @@ gimp_canvas_buffer_preview_init (GimpCanvasBufferPreview *transform_preview)
 }
 
 static void
+gimp_canvas_buffer_preview_dispose (GObject *object)
+{
+  GimpCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
+
+  g_clear_object (&private->buffer);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_canvas_buffer_preview_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
@@ -115,7 +127,7 @@ gimp_canvas_buffer_preview_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_BUFFER:
-      private->buffer = g_value_get_object (value); /* don't ref */
+      g_set_object (&private->buffer, g_value_get_object (value));
       break;
 
     default:
