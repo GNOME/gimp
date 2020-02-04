@@ -53,9 +53,10 @@
 #include "gimptoolcontrol.h"
 
 
-#define DRAW_TIMEOUT              4
-#define USE_TIMEOUT               1
-#define MINIMUM_DRAW_INTERVAL 50000 /* 50000 microseconds == 20 fps */
+#define USE_TIMEOUT
+#define DRAW_FPS              120
+#define DRAW_TIMEOUT          (1000 /* milliseconds */ / (2 * DRAW_FPS))
+#define MINIMUM_DRAW_INTERVAL (G_TIME_SPAN_SECOND / DRAW_FPS)
 
 
 static void          gimp_draw_tool_dispose       (GObject          *object);
