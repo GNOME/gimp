@@ -543,11 +543,26 @@ gimp_tools_deserialize (Gimp          *gimp,
 
           if (! tool_info->hidden && ! g_hash_table_contains (tools, tool_info))
             {
-              g_scanner_error (scanner, "missing tools in toolrc file");
+              if (tool_info->experimental)
+                {
+                  /* if an experimental tool is not in the file, just add it to
+                   * the tool-item list.
+                   */
+                  gimp_container_add (container, GIMP_OBJECT (tool_info));
+                }
+              else
+                {
+                  /* otherwise, it means we added a new stable tool.  this must
+                   * be the user toolrc file; rejct it, so that we fall back to
+                   * the default toolrc file, which should contain the missing
+                   * tool.
+                   */
+                  g_scanner_error (scanner, "missing tools in toolrc file");
 
-              result = FALSE;
+                  result = FALSE;
 
-              break;
+                  break;
+                }
             }
         }
 
@@ -733,6 +748,13 @@ gimp_tools_register (GType                   tool_type,
   /* hack to hide the operation tool entirely */
   if (tool_type == GIMP_TYPE_OPERATION_TOOL)
     tool_info->hidden = TRUE;
+
+  /* hack to not require experimental tools to be present in toolrc */
+  if (tool_type == GIMP_TYPE_N_POINT_DEFORMATION_TOOL ||
+      tool_type == GIMP_TYPE_SEAMLESS_CLONE_TOOL)
+    {
+      tool_info->experimental = TRUE;
+    }
 
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
                      options_gui_func);
