@@ -52,7 +52,7 @@
 #include "gimp-intl.h"
 
 
-#define FLUSH_NOW_INTERVAL      20000 /* 20 ms in microseconds */
+#define FLUSH_NOW_INTERVAL      (G_TIME_SPAN_SECOND / 60)
 
 #define PAINT_AREA_CHUNK_WIDTH  32
 #define PAINT_AREA_CHUNK_HEIGHT 32
@@ -912,7 +912,7 @@ gimp_display_flush_whenever (GimpDisplay *display,
 
       if ((now - private->last_flush_now) > FLUSH_NOW_INTERVAL)
         {
-          gimp_display_shell_flush (gimp_display_get_shell (display), now);
+          gimp_display_shell_flush (gimp_display_get_shell (display), TRUE);
 
           private->last_flush_now = now;
         }
