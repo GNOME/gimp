@@ -52,6 +52,7 @@ struct _GimpToolInfo
   gchar               *help_id;
 
   gboolean             hidden;
+  gboolean             experimental;
 
   GimpToolOptions     *tool_options;
   GimpPaintInfo       *paint_info;
