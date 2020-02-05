@@ -77,7 +77,7 @@ gimp_transform_3d_options_class_init (GimpTransform3DOptionsClass *klass)
                          _("Mode"),
                          _("Transform mode"),
                          GIMP_TYPE_TRANSFORM_3D_MODE,
-                         GIMP_TRANSFORM_3D_MODE_CAMERA,
+                         GIMP_TRANSFORM_3D_MODE_ROTATE,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_UNIFIED,
