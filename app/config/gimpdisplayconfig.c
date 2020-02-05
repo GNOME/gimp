@@ -57,6 +57,7 @@ enum
   PROP_CURSOR_MODE,
   PROP_CURSOR_UPDATING,
   PROP_SHOW_BRUSH_OUTLINE,
+  PROP_SNAP_BRUSH_OUTLINE,
   PROP_SHOW_PAINT_TOOL_CURSOR,
   PROP_IMAGE_TITLE_FORMAT,
   PROP_IMAGE_STATUS_FORMAT,
@@ -200,6 +201,13 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                             "Show brush outline",
                             SHOW_BRUSH_OUTLINE_BLURB,
                             TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_BRUSH_OUTLINE,
+                            "snap-brush-outline",
+                            "Snap brush outline",
+                            SNAP_BRUSH_OUTLINE_BLURB,
+                            FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PAINT_TOOL_CURSOR,
@@ -427,6 +435,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_SHOW_BRUSH_OUTLINE:
       display_config->show_brush_outline = g_value_get_boolean (value);
       break;
+    case PROP_SNAP_BRUSH_OUTLINE:
+      display_config->snap_brush_outline = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_PAINT_TOOL_CURSOR:
       display_config->show_paint_tool_cursor = g_value_get_boolean (value);
       break;
@@ -535,6 +546,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_SHOW_BRUSH_OUTLINE:
       g_value_set_boolean (value, display_config->show_brush_outline);
+      break;
+    case PROP_SNAP_BRUSH_OUTLINE:
+      g_value_set_boolean (value, display_config->snap_brush_outline);
       break;
     case PROP_SHOW_PAINT_TOOL_CURSOR:
       g_value_set_boolean (value, display_config->show_paint_tool_cursor);

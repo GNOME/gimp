@@ -53,6 +53,7 @@ struct _GimpDisplayConfig
   GimpCursorMode      cursor_mode;
   gboolean            cursor_updating;
   gboolean            show_brush_outline;
+  gboolean            snap_brush_outline;
   gboolean            show_paint_tool_cursor;
   gchar              *image_title_format;
   gchar              *image_status_format;

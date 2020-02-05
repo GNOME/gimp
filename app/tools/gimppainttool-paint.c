@@ -186,12 +186,14 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
       GimpDisplay  *display   = paint_tool->display;
       GimpImage    *image     = gimp_display_get_image (display);
 
-      gimp_draw_tool_pause (draw_tool);
+      if (paint_tool->snap_brush)
+        gimp_draw_tool_pause (draw_tool);
 
       gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
       gimp_display_flush_now (display);
 
-      gimp_draw_tool_resume (draw_tool);
+      if (paint_tool->snap_brush)
+        gimp_draw_tool_resume (draw_tool);
     }
 
   return G_SOURCE_CONTINUE;

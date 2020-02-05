@@ -210,11 +210,15 @@ gimp_paint_tool_constructed (GObject *object)
 
   paint_tool->show_cursor = display_config->show_paint_tool_cursor;
   paint_tool->draw_brush  = display_config->show_brush_outline;
+  paint_tool->snap_brush  = display_config->snap_brush_outline;
 
   g_signal_connect_object (display_config, "notify::show-paint-tool-cursor",
                            G_CALLBACK (gimp_paint_tool_cursor_notify),
                            paint_tool, 0);
   g_signal_connect_object (display_config, "notify::show-brush-outline",
+                           G_CALLBACK (gimp_paint_tool_cursor_notify),
+                           paint_tool, 0);
+  g_signal_connect_object (display_config, "notify::snap-brush-outline",
                            G_CALLBACK (gimp_paint_tool_cursor_notify),
                            paint_tool, 0);
 }
@@ -413,7 +417,13 @@ gimp_paint_tool_motion (GimpTool         *tool,
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     return;
 
+  if (! paint_tool->snap_brush)
+    gimp_draw_tool_pause  (GIMP_DRAW_TOOL (tool));
+
   gimp_paint_tool_paint_motion (paint_tool, coords, time);
+
+  if (! paint_tool->snap_brush)
+    gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
@@ -685,7 +695,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      if (gimp_paint_tool_paint_is_active (paint_tool))
+      if (gimp_paint_tool_paint_is_active (paint_tool) &&
+          paint_tool->snap_brush)
         {
           cur_x = paint_tool->paint_x + off_x;
           cur_y = paint_tool->paint_y + off_y;
@@ -906,6 +917,7 @@ gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
 
   paint_tool->show_cursor = config->show_paint_tool_cursor;
   paint_tool->draw_brush  = config->show_brush_outline;
+  paint_tool->snap_brush  = config->snap_brush_outline;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
 }
