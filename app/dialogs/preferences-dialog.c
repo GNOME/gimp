@@ -2881,9 +2881,18 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Mouse Pointers"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "show-brush-outline",
-                          _("Show _brush outline"),
-                          GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "show-brush-outline",
+                                   _("Show _brush outline"),
+                                   GTK_BOX (vbox2));
+
+  vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
+  g_object_bind_property (button, "active",
+                          vbox3,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+  prefs_check_button_add (object, "snap-brush-outline",
+                          _("S_nap brush outline to stroke"),
+                          GTK_BOX (vbox3));
+
   prefs_check_button_add (object, "show-paint-tool-cursor",
                           _("Show pointer for paint _tools"),
                           GTK_BOX (vbox2));

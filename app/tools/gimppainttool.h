@@ -47,6 +47,7 @@ struct _GimpPaintTool
 
   gboolean       show_cursor;
   gboolean       draw_brush;
+  gboolean       snap_brush;
   gboolean       draw_fallback;
   gint           fallback_size;
   gboolean       draw_circle;

@@ -380,6 +380,10 @@ _("Save the tool options when GIMP exits.")
 _("When enabled, all paint tools will show a preview of the current " \
   "brush's outline.")
 
+#define SNAP_BRUSH_OUTLINE_BLURB \
+_("When enabled, the brush outline will snap to individual dabs while " \
+  "painting.")
+
 #define SHOW_HELP_BUTTON_BLURB \
 _("When enabled, dialogs will show a help button that gives access to " \
   "the related help page.  Without this button, the help page can still " \
