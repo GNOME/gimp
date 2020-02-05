@@ -41,6 +41,10 @@ struct _GimpWarpTool
 {
   GimpDrawTool        parent_instance;
 
+  gboolean            show_cursor;
+  gboolean            draw_brush;
+  gboolean            snap_brush;
+
   GimpVector2         cursor_pos;    /* Hold the cursor position */
 
   GeglBuffer         *coords_buffer; /* Buffer where coordinates are stored */

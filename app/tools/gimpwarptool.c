@@ -29,6 +29,7 @@
 
 #include "tools-types.h"
 
+#include "config/gimpdisplayconfig.h"
 #include "config/gimpguiconfig.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
@@ -41,6 +42,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsubprogress.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -58,6 +60,8 @@
 #define STROKE_TIMER_MAX_FPS 20
 #define PREVIEW_SAMPLER      GEGL_SAMPLER_NEAREST
 
+
+static void            gimp_warp_tool_constructed               (GObject               *object);
 
 static void            gimp_warp_tool_control                   (GimpTool              *tool,
                                                                  GimpToolAction         action,
@@ -104,6 +108,10 @@ static void            gimp_warp_tool_options_notify            (GimpTool       
                                                                  const GParamSpec      *pspec);
 
 static void            gimp_warp_tool_draw                      (GimpDrawTool          *draw_tool);
+
+static void            gimp_warp_tool_cursor_notify             (GimpDisplayConfig     *config,
+                                                                 GParamSpec            *pspec,
+                                                                 GimpWarpTool          *wt);
 
 static gboolean        gimp_warp_tool_can_stroke                (GimpWarpTool          *wt,
                                                                  GimpDisplay           *display,
@@ -175,8 +183,11 @@ gimp_warp_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_warp_tool_class_init (GimpWarpToolClass *klass)
 {
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+
+  object_class->constructed  = gimp_warp_tool_constructed;
 
   tool_class->control        = gimp_warp_tool_control;
   tool_class->button_press   = gimp_warp_tool_button_press;
@@ -218,6 +229,36 @@ gimp_warp_tool_init (GimpWarpTool *self)
                                          "tools/tools-warp-effect-size-set");
   gimp_tool_control_set_action_hardness (tool->control,
                                          "tools/tools-warp-effect-hardness-set");
+
+  self->show_cursor = TRUE;
+  self->draw_brush  = TRUE;
+  self->snap_brush  = FALSE;
+}
+
+static void
+gimp_warp_tool_constructed (GObject *object)
+{
+  GimpWarpTool      *wt   = GIMP_WARP_TOOL (object);
+  GimpTool          *tool = GIMP_TOOL (object);
+  GimpDisplayConfig *display_config;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  display_config = GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config);
+
+  wt->show_cursor = display_config->show_paint_tool_cursor;
+  wt->draw_brush  = display_config->show_brush_outline;
+  wt->snap_brush  = display_config->snap_brush_outline;
+
+  g_signal_connect_object (display_config, "notify::show-paint-tool-cursor",
+                           G_CALLBACK (gimp_warp_tool_cursor_notify),
+                           wt, 0);
+  g_signal_connect_object (display_config, "notify::show-brush-outline",
+                           G_CALLBACK (gimp_warp_tool_cursor_notify),
+                           wt, 0);
+  g_signal_connect_object (display_config, "notify::snap-brush-outline",
+                           G_CALLBACK (gimp_warp_tool_cursor_notify),
+                           wt, 0);
 }
 
 static void
@@ -369,6 +410,9 @@ gimp_warp_tool_motion (GimpTool         *tool,
   gdouble          step;
   gboolean         stroke_changed = FALSE;
 
+  if (! wt->snap_brush)
+    gimp_draw_tool_pause (GIMP_DRAW_TOOL (wt));
+
   old_cursor_pos = wt->cursor_pos;
 
   wt->cursor_pos.x = coords->x;
@@ -419,6 +463,9 @@ gimp_warp_tool_motion (GimpTool         *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
+
+  if (! wt->snap_brush)
+    gimp_draw_tool_resume (GIMP_DRAW_TOOL (wt));
 }
 
 static gboolean
@@ -515,6 +562,15 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
 #else
       (void) options;
 #endif
+    }
+
+  if (! wt->show_cursor && modifier != GIMP_CURSOR_MODIFIER_BAD)
+    {
+      gimp_tool_set_cursor (tool, display,
+                            GIMP_CURSOR_NONE,
+                            GIMP_TOOL_CURSOR_NONE,
+                            GIMP_CURSOR_MODIFIER_NONE);
+      return;
     }
 
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
@@ -643,14 +699,55 @@ gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpWarpTool    *wt      = GIMP_WARP_TOOL (draw_tool);
   GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  gdouble          x, y;
 
-  gimp_draw_tool_add_arc (draw_tool,
-                          FALSE,
-                          wt->last_pos.x - options->effect_size * 0.5,
-                          wt->last_pos.y - options->effect_size * 0.5,
-                          options->effect_size,
-                          options->effect_size,
-                          0.0, 2.0 * G_PI);
+  if (wt->snap_brush)
+    {
+      x = wt->last_pos.x;
+      y = wt->last_pos.y;
+    }
+  else
+    {
+      x = wt->cursor_pos.x;
+      y = wt->cursor_pos.y;
+    }
+
+  if (wt->draw_brush)
+    {
+      gimp_draw_tool_add_arc (draw_tool,
+                              FALSE,
+                              x - options->effect_size * 0.5,
+                              y - options->effect_size * 0.5,
+                              options->effect_size,
+                              options->effect_size,
+                              0.0, 2.0 * G_PI);
+    }
+  else if (! wt->show_cursor)
+    {
+      /*  don't leave the user without any indication and draw
+       *  a fallback crosshair
+       */
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_CROSSHAIR,
+                                 x, y,
+                                 GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                 GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+    }
+}
+
+static void
+gimp_warp_tool_cursor_notify (GimpDisplayConfig *config,
+                              GParamSpec        *pspec,
+                              GimpWarpTool      *wt)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (wt));
+
+  wt->show_cursor = config->show_paint_tool_cursor;
+  wt->draw_brush  = config->show_brush_outline;
+  wt->snap_brush  = config->snap_brush_outline;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (wt));
 }
 
 static gboolean
