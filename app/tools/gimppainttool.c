@@ -166,6 +166,7 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   paint_tool->show_cursor   = TRUE;
   paint_tool->draw_brush    = TRUE;
+  paint_tool->snap_brush    = FALSE;
   paint_tool->draw_fallback = FALSE;
   paint_tool->fallback_size = 0.0;
   paint_tool->draw_circle   = FALSE;
