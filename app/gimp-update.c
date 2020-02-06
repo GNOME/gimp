@@ -198,8 +198,10 @@ gimp_check_updates_callback (GObject      *source,
                     build_id = json_object_get_string_member (build, "build-id");
                   if (g_strcmp0 (build_id, GIMP_BUILD_ID) == 0)
                     {
-                      build_revision = json_object_get_int_member (build, "revision");
-                      build_date = json_object_get_string_member (build, "date");
+                      if (json_object_has_member (build, "revision"))
+                        build_revision = json_object_get_int_member (build, "revision");
+                      if (json_object_has_member (build, "date"))
+                        build_date = json_object_get_string_member (build, "date");
                       break;
                     }
                 }
