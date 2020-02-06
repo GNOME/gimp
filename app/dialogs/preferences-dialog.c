@@ -1216,12 +1216,14 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
   /*  Internet access  */
+#ifdef CHECK_UPDATE
   vbox2 = prefs_frame_new (_("Network access"), GTK_CONTAINER (vbox),
                            FALSE);
 
   prefs_check_button_add (object, "check-updates",
                           _("Check for updates (requires internet)"),
                           GTK_BOX (vbox2));
+#endif
 
   /*  Image Thumbnails  */
   vbox2 = prefs_frame_new (_("Image Thumbnails"), GTK_CONTAINER (vbox), FALSE);
