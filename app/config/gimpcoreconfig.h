@@ -108,6 +108,7 @@ struct _GimpCoreConfig
   gint64                  check_update_timestamp;
   gchar                  *last_known_release;
   gint64                  last_release_timestamp;
+  gint                    last_revision;
 };
 
 struct _GimpCoreConfigClass

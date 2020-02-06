@@ -270,6 +270,9 @@ _("How many recently opened image filenames to keep on the File menu.")
 #define LAST_RELEASE_TIMESTAMP_BLURB \
 _("The timestamp for the last known release date.")
 
+#define LAST_REVISION_BLURB \
+_("The last revision number for the release.")
+
 #define MARCHING_ANTS_SPEED_BLURB \
 _("Speed of marching ants in the selection outline.  This value is in " \
   "milliseconds (less time indicates faster marching).")
