@@ -1113,6 +1113,8 @@ else
   conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'other')
 endif
 
+conf.set('CHECK_UPDATE', get_option('check-update'))
+
 # Default ICC directory #
 
 # This is necessary because some Unix systems may have a different
@@ -1781,10 +1783,11 @@ final_message = [
 '''  gimp-console:        @0@'''.format(enable_console_bin),
 '',
 '''Optional Features:''',
-'''  Language selection:  @0@'''.format(isocodes.found()),
-'''  Vector icons:        @0@'''.format(have_vector_icons),
-'''  Dr. Mingw (Win32):   @0@'''.format(drmingw.found()),
-'''  Relocatable Bundle:  @0@'''.format(relocatable_bundle),
+'''  Check updates at startup:  @0@'''.format(get_option('check-update')),
+'''  Language selection:        @0@'''.format(isocodes.found()),
+'''  Vector icons:              @0@'''.format(have_vector_icons),
+'''  Dr. Mingw (Win32):         @0@'''.format(drmingw.found()),
+'''  Relocatable Bundle:        @0@'''.format(relocatable_bundle),
 '''  Default ICC directory:     @0@'''.format(icc_directory),
 '''  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder')),
 '''  Detailed backtraces:       @0@'''.format(detailed_backtraces),
