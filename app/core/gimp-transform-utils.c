@@ -895,7 +895,7 @@ polynomial_odd_roots (const gdouble *poly,
     /* general case */
     default:
       {
-        gdouble deriv[degree - 1];
+        gdouble deriv[degree];
         gdouble deriv_roots[degree - 1];
         gint    n_deriv_roots;
         gdouble a;
