@@ -325,9 +325,20 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_box_pack_start (GTK_BOX (box2), image, FALSE, FALSE, 0);
       gtk_widget_show (image);
 
-      text = g_strdup_printf (_("A new version of GIMP (%s) was released on %s.\n"
-                                "It is recommended to update."),
-                              config->last_known_release, date);
+      if (config->last_revision > 0)
+        {
+          /* This is actually a new revision of current version. */
+          text = g_strdup_printf (_("A revision of GIMP %s was released on %s.\n"
+                                    "Even though you use the last version, it is recommended to reinstall.\n"
+                                    "New revisions come with package fixes."),
+                                  config->last_known_release, date);
+        }
+      else
+        {
+          text = g_strdup_printf (_("A new version of GIMP (%s) was released on %s.\n"
+                                    "It is recommended to update."),
+                                  config->last_known_release, date);
+        }
       label = gtk_label_new (text);
       g_free (text);
 

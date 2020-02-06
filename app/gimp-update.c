@@ -89,12 +89,14 @@ gimp_check_updates_callback (GObject      *source,
   if (stream)
     {
       const gchar *build_platform;
-      const gchar *last_version = NULL;
-      const gchar *release_date = NULL;
+      const gchar *last_version   = NULL;
+      const gchar *release_date   = NULL;
       JsonParser  *parser;
       JsonPath    *path;
       JsonNode    *result;
       JsonArray   *versions;
+      JsonArray   *builds;
+      gint         build_revision = 0;
       gint         major;
       gint         minor;
       gint         micro;
@@ -152,11 +154,16 @@ gimp_check_updates_callback (GObject      *source,
         {
           JsonObject *version;
 
+          /* Note that we don't actually look for the highest version,
+           * but for the highest version for which a build for your
+           * platform is available.
+           */
           version = json_array_get_object_element (versions, i);
           if (json_object_has_member (version, build_platform))
             {
               last_version = json_object_get_string_member (version, "version");
               release_date = json_object_get_string_member (version, "date");
+              builds       = json_object_get_array_member (version, build_platform);
               break;
             }
         }
@@ -166,10 +173,44 @@ gimp_check_updates_callback (GObject      *source,
        */
       if (gimp_version_break (last_version, &major, &minor, &micro))
         {
-          GDateTime *datetime;
-          gchar     *str;
+          const gchar *build_date  = NULL;
+          GDateTime   *datetime;
+          gchar       *str;
 
-          str = g_strdup_printf ("%s 00:00:00Z", release_date);
+          if (major < GIMP_MAJOR_VERSION ||
+              (major == GIMP_MAJOR_VERSION && minor < GIMP_MINOR_VERSION) ||
+              (major == GIMP_MAJOR_VERSION && minor == GIMP_MINOR_VERSION && micro < GIMP_MICRO_VERSION))
+            {
+              /* We are using a newer version than last one (somehow). */
+              last_version = NULL;
+            }
+          else if (major == GIMP_MAJOR_VERSION &&
+                   minor == GIMP_MINOR_VERSION &&
+                   micro == GIMP_MICRO_VERSION)
+            {
+              for (i = 0; i < (gint) json_array_get_length (builds); i++)
+                {
+                  const gchar *build_id = NULL;
+                  JsonObject  *build;
+
+                  build = json_array_get_object_element (builds, i);
+                  if (json_object_has_member (build, "build-id"))
+                    build_id = json_object_get_string_member (build, "build-id");
+                  if (g_strcmp0 (build_id, GIMP_BUILD_ID) == 0)
+                    {
+                      build_revision = json_object_get_int_member (build, "revision");
+                      build_date = json_object_get_string_member (build, "date");
+                      break;
+                    }
+                }
+              if (build_revision <= GIMP_BUILD_REVISION)
+                {
+                  /* Already using the last officially released
+                   * revision. */
+                  last_version = NULL;
+                }
+            }
+          str = g_strdup_printf ("%s 00:00:00Z", build_date ? build_date : release_date);
           datetime = g_date_time_new_from_iso8601 (str, NULL);
           g_free (str);
           if (datetime)
@@ -177,11 +218,8 @@ gimp_check_updates_callback (GObject      *source,
               g_object_set (config,
                             "check-update-timestamp", g_get_real_time() / G_USEC_PER_SEC,
                             "last-release-timestamp", g_date_time_to_unix (datetime),
-                            "last-known-release",
-                            (major > GIMP_MAJOR_VERSION ||
-                             (major == GIMP_MAJOR_VERSION && minor > GIMP_MINOR_VERSION) ||
-                             (major == GIMP_MAJOR_VERSION && minor == GIMP_MINOR_VERSION && micro > GIMP_MICRO_VERSION)) ?
-                            last_version : NULL,
+                            "last-known-release",     last_version,
+                            "last-revision",          build_revision,
                             NULL);
               g_date_time_unref (datetime);
             }

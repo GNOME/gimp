@@ -130,6 +130,7 @@ enum
   PROP_CHECK_UPDATES,
   PROP_CHECK_UPDATE_TIMESTAMP,
   PROP_LAST_RELEASE_TIMESTAMP,
+  PROP_LAST_REVISION,
   PROP_LAST_KNOWN_RELEASE,
 
   /* ignored, only for backward compatibility: */
@@ -707,6 +708,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                            NULL,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_INT (object_class, PROP_LAST_REVISION,
+                        "last-revision",
+                        "Last revision of current release",
+                        LAST_RELEASE_TIMESTAMP_BLURB,
+                        0, G_MAXINT, 0,
+                        GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
                             "save-document-history",
                             "Save document history",
@@ -1087,6 +1095,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_LAST_RELEASE_TIMESTAMP:
       core_config->last_release_timestamp = g_value_get_int64 (value);
       break;
+    case PROP_LAST_REVISION:
+      core_config->last_revision = g_value_get_int (value);
+      break;
     case PROP_LAST_KNOWN_RELEASE:
       core_config->last_known_release = g_value_dup_string (value);
       break;
@@ -1307,6 +1318,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_LAST_RELEASE_TIMESTAMP:
       g_value_set_int64 (value, core_config->last_release_timestamp);
+      break;
+    case PROP_LAST_REVISION:
+      g_value_set_int (value, core_config->last_revision);
       break;
     case PROP_LAST_KNOWN_RELEASE:
       g_value_set_string (value, core_config->last_known_release);
