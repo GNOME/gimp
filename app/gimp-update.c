@@ -226,7 +226,10 @@ gimp_update_auto_check (GimpCoreConfig *config)
   gint64 prev_update_timestamp;
   gint64 current_timestamp;
 
+  /* Builds with update check deactivated just always return FALSE. */
+#ifdef CHECK_UPDATE
   if (! config->check_updates)
+#endif
     return FALSE;
 
   g_object_get (config,
