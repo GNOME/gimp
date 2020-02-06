@@ -2652,6 +2652,16 @@ AC_ARG_WITH(revision,
 AC_DEFINE_UNQUOTED(GIMP_BUILD_REVISION, "$with_revision",
                    [The revision increment for a same build/version/platform])
 
+AC_ARG_ENABLE(check-update,
+              [  --disable-check-update
+                          GIMP will not look up new version availability on startup],
+              check_update=no,
+              check_update=yes)
+if test "x$check_update" = xyes; then
+  AC_DEFINE(CHECK_UPDATE, 1,
+              [Define to 1 if automatic update check is enabled])
+fi
+
 AC_DEFINE_UNQUOTED(GIMP_BUILD_PLATFORM, "$host_os",
                    [The OS this was built for])
 if test "x$platform_linux" = xyes; then
@@ -3159,6 +3169,7 @@ Extra Binaries:
   gimp-console:              $enable_gimp_console
 
 Optional Features:
+  Check updates at startup:  $check_update
   Levin matting engine:      $have_matting_levin
   Language selection:        $have_iso_codes
   Vector icons:              $enable_vector_icons
