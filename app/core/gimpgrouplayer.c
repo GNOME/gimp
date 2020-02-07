@@ -400,6 +400,12 @@ gimp_group_layer_finalize (GObject *object)
                                             gimp_group_layer_stack_update,
                                             object);
 
+      /* this is particularly important to avoid reallocating the projection
+       * in response to a "bounding-box-changed" signal, which can be emitted
+       * during layer destruction.  see issue #4584.
+       */
+      gimp_container_remove_handlers_by_data (private->children, object);
+
       g_clear_object (&private->children);
     }
 
