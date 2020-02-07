@@ -138,6 +138,13 @@ GQuark       gimp_container_add_handler        (GimpContainer           *contain
                                                 gpointer                 callback_data);
 void         gimp_container_remove_handler     (GimpContainer           *container,
                                                 GQuark                   id);
+void         gimp_container_remove_handlers_by_func
+                                               (GimpContainer           *container,
+                                                GCallback                callback,
+                                                gpointer                 callback_data);
+void         gimp_container_remove_handlers_by_data
+                                               (GimpContainer           *container,
+                                                gpointer                 callback_data);
 
 
 #endif  /* __GIMP_CONTAINER_H__ */
