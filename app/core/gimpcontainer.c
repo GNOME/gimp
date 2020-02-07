@@ -114,6 +114,9 @@ static gboolean   gimp_container_deserialize     (GimpConfig       *config,
 static void   gimp_container_disconnect_callback (GimpObject       *object,
                                                   gpointer          data);
 
+static void       gimp_container_free_handler    (GimpContainer    *container,
+                                                  GimpContainerHandler *handler);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainer, gimp_container, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpContainer)
@@ -520,6 +523,37 @@ gimp_container_disconnect_callback (GimpObject *object,
   GimpContainer *container = GIMP_CONTAINER (data);
 
   gimp_container_remove (container, object);
+}
+
+static void
+gimp_container_free_handler_foreach_func (GimpObject           *object,
+                                          GimpContainerHandler *handler)
+{
+  gulong handler_id;
+
+  handler_id = GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (object),
+                                                     handler->quark));
+
+  if (handler_id)
+    {
+      g_signal_handler_disconnect (object, handler_id);
+
+      g_object_set_qdata (G_OBJECT (object), handler->quark, NULL);
+    }
+}
+
+static void
+gimp_container_free_handler (GimpContainer        *container,
+                             GimpContainerHandler *handler)
+{
+  D (g_print ("%s: id = %d\n", G_STRFUNC, handler->quark));
+
+  gimp_container_foreach (container,
+                          (GFunc) gimp_container_free_handler_foreach_func,
+                          handler);
+
+  g_free (handler->signame);
+  g_slice_free (GimpContainerHandler, handler);
 }
 
 GType
@@ -1044,23 +1078,6 @@ gimp_container_add_handler (GimpContainer *container,
   return handler->quark;
 }
 
-static void
-gimp_container_remove_handler_foreach_func (GimpObject           *object,
-                                            GimpContainerHandler *handler)
-{
-  gulong handler_id;
-
-  handler_id = GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (object),
-                                                     handler->quark));
-
-  if (handler_id)
-    {
-      g_signal_handler_disconnect (object, handler_id);
-
-      g_object_set_qdata (G_OBJECT (object), handler->quark, NULL);
-    }
-}
-
 void
 gimp_container_remove_handler (GimpContainer *container,
                                GQuark         id)
@@ -1086,14 +1103,65 @@ gimp_container_remove_handler (GimpContainer *container,
       return;
     }
 
-  D (g_print ("%s: id = %d\n", G_STRFUNC, handler->quark));
+  gimp_container_free_handler (container, handler);
 
-  gimp_container_foreach (container,
-                          (GFunc) gimp_container_remove_handler_foreach_func,
-                          handler);
+  container->priv->handlers = g_list_delete_link (container->priv->handlers,
+                                                  list);
+}
 
-  container->priv->handlers = g_list_remove (container->priv->handlers, handler);
+void
+gimp_container_remove_handlers_by_func (GimpContainer *container,
+                                        GCallback      callback,
+                                        gpointer       callback_data)
+{
+  GList *list;
 
-  g_free (handler->signame);
-  g_slice_free (GimpContainerHandler, handler);
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+  g_return_if_fail (callback != NULL);
+
+  list = container->priv->handlers;
+
+  while (list)
+    {
+      GimpContainerHandler *handler = list->data;
+      GList                *next    = g_list_next (list);
+
+      if (handler->callback      == callback &&
+          handler->callback_data == callback_data)
+        {
+          gimp_container_free_handler (container, handler);
+
+          container->priv->handlers = g_list_delete_link (
+            container->priv->handlers, list);
+        }
+
+      list = next;
+    }
+}
+
+void
+gimp_container_remove_handlers_by_data (GimpContainer *container,
+                                        gpointer       callback_data)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+
+  list = container->priv->handlers;
+
+  while (list)
+    {
+      GimpContainerHandler *handler = list->data;
+      GList                *next    = g_list_next (list);
+
+      if (handler->callback_data == callback_data)
+        {
+          gimp_container_free_handler (container, handler);
+
+          container->priv->handlers = g_list_delete_link (
+            container->priv->handlers, list);
+        }
+
+      list = next;
+    }
 }
