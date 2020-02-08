@@ -518,6 +518,9 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
   data->coords.x -= off_x;
   data->coords.y -= off_y;
 
+  paint_tool->cursor_x = data->coords.x;
+  paint_tool->cursor_y = data->coords.y;
+
   gimp_paint_core_smooth_coords (core, paint_options, &data->coords);
 
   /*  Don't paint while the Shift key is pressed for line drawing  */
