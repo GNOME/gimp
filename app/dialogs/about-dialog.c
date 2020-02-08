@@ -274,9 +274,12 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   GtkWidget *frame;
   GtkWidget *box;
   GtkWidget *label;
+  GtkWidget *button;
   GDateTime *datetime;
   gchar     *date;
   gchar     *text;
+  gchar     *text2;
+
 
   /* Get the dialog vbox. */
   container = gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog));
@@ -341,6 +344,7 @@ about_dialog_add_update (GimpAboutDialog *dialog,
         }
       label = gtk_label_new (text);
       g_free (text);
+      g_free (date);
 
       gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
@@ -351,37 +355,35 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_box_pack_start (GTK_BOX (box), link, FALSE, FALSE, 0);
       gtk_widget_show (link);
     }
-  else
-    {
-      /* Show a check update version. */
-      GtkWidget *button;
-      gchar     *text2;
 
-      gtk_box_reorder_child (GTK_BOX (vbox), frame, 4);
+  /* Show a check update button. */
+  gtk_box_reorder_child (GTK_BOX (vbox), frame, 4);
 
-      text2 = g_strdup_printf (_("Last checked on %s"), date);
-      text = g_strdup_printf ("%s\n<i>%s</i>",
-                              _("Check for updates"), text2);
+  datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+  date = g_date_time_format (datetime, "%x");
+  text2 = g_strdup_printf (_("Last checked on %s"), date);
+  text = g_strdup_printf ("%s\n<i>%s</i>",
+                          _("Check for updates"), text2);
+  label = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (label), text);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
 
-      label = gtk_label_new (NULL);
-      gtk_label_set_markup (GTK_LABEL (label), text);
-      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-      g_free (text);
-      g_free (text2);
-
-      button = gtk_button_new ();
-      gtk_container_add (GTK_CONTAINER (button), label);
-      gtk_widget_show (label);
-
-      g_signal_connect (config, "notify::last-known-release",
-                        (GCallback) about_dialog_last_release_changed,
-                        dialog);
-      g_signal_connect_swapped (button, "clicked",
-                                (GCallback) gimp_update_check, config);
-      gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-    }
+  g_date_time_unref (datetime);
   g_free (date);
+  g_free (text);
+  g_free (text2);
+
+  button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (button), label);
+  gtk_widget_show (label);
+
+  g_signal_connect (config, "notify::last-known-release",
+                    (GCallback) about_dialog_last_release_changed,
+                    dialog);
+  g_signal_connect_swapped (button, "clicked",
+                            (GCallback) gimp_update_check, config);
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   gtk_widget_show (box);
   gtk_widget_show (frame);
