@@ -604,6 +604,9 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
       core->cur_coords.x -= off_x;
       core->cur_coords.y -= off_y;
 
+      paint_tool->cursor_x = core->cur_coords.x;
+      paint_tool->cursor_y = core->cur_coords.y;
+
       if (display == tool->display && (state & GIMP_PAINT_TOOL_LINE_MASK))
         {
           /*  If shift is down and this is not the first paint stroke,
@@ -704,8 +707,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
         }
       else
         {
-          cur_x = core->cur_coords.x + off_x;
-          cur_y = core->cur_coords.y + off_y;
+          cur_x = paint_tool->cursor_x + off_x;
+          cur_y = paint_tool->cursor_y + off_y;
 
           if (paint_tool->draw_line &&
               ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
