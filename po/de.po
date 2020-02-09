@@ -15,15 +15,15 @@
 # Christian Kirbach <christian.kirbach@gmail.com>, 2011-2020.
 # Sven Claussner <sclaussner@src.gnome.org>, 2013.
 # Hartmut Kuhse <hatti@gimp.org>, 2016.
-# Tim Sabsch <tim@sabsch.com>, 2018-2019.
+# Tim Sabsch <tim@sabsch.com>, 2018-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-08 09:53+0000\n"
-"PO-Revision-Date: 2020-02-09 02:16+0100\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"POT-Creation-Date: 2020-02-09 13:25+0000\n"
+"PO-Revision-Date: 2020-02-09 18:31+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -786,6 +786,15 @@ msgstr ""
 "Sie sollten eine Kopie der GNU General Public License zusammen mit GIMP "
 "erhalten haben. Falls nicht, finden Sie sie unter http://www.gnu.org/"
 "licenses/"
+
+#: ../app/gimp-update.c:250
+#, c-format
+msgid ""
+"A new version of GIMP (%s) was released.\n"
+"It is recommended to update."
+msgstr ""
+"Eine neue Version von GIMP (%s) wurde veröffentlicht.\n"
+"Es wird eine Aktualisierung empfohlen."
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:185
 #, c-format
@@ -10933,6 +10942,8 @@ msgstr "Legt fest, wie der Bereich um das Bild herum dargestellt werden soll."
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
 msgstr ""
+"Auf verfügbare Aktualisierungen für GIMP über Internet-Abfragen im "
+"Hintergrund prüfen."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -10950,7 +10961,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:59
 msgid "Use compact style for sliders."
-msgstr ""
+msgstr "Kompaktstil für Schieberegler verwenden."
 
 #: ../app/config/gimprc-blurbs.h:62
 msgid "Sets the type of mouse pointers to use."
@@ -11162,7 +11173,7 @@ msgstr "Legt die Sprache für die Benutzerschnittstelle fest."
 #: ../app/config/gimprc-blurbs.h:265
 msgid ""
 "The last known release version of GIMP as queried from official website."
-msgstr ""
+msgstr "Die neueste veröffentlichte GIMP-Version laut offizieller Webseite."
 
 #: ../app/config/gimprc-blurbs.h:268
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -11172,11 +11183,12 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:271
 msgid "The timestamp for the last known release date."
-msgstr ""
+msgstr "Der Zeitstempel des letzten Veröffentlichungsdatums."
 
+# Alternativ Unterversion?
 #: ../app/config/gimprc-blurbs.h:274
 msgid "The last revision number for the release."
-msgstr ""
+msgstr "Die letzte Revisionsnummer der Veröffentlichung."
 
 #: ../app/config/gimprc-blurbs.h:277
 msgid ""
@@ -11349,15 +11361,11 @@ msgstr ""
 "aktuellen Pinselkontur an."
 
 #: ../app/config/gimprc-blurbs.h:399
-#, fuzzy
-#| msgid ""
-#| "When enabled, the mouse pointer will be shown over the image while using "
-#| "a paint tool."
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
-"Wenn diese Option ausgewählt ist, wird der Mauszeiger beim Verwenden eines "
-"Malwerkzeugs über dem Bild angezeigt."
+"Wenn diese Option ausgewählt ist, rastet der Pinselumriss während des Malens "
+"an einzelnen Klecksen ein."
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid ""
@@ -11872,6 +11880,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:686
 msgid "Use a single toolbox button for grouped tools."
 msgstr ""
+"Werkzeuggruppen teilen sich einen einzelnen Knopf in der Werkzeugleiste."
 
 #: ../app/config/gimprc-blurbs.h:689
 msgid "Show the currently active image in the toolbox."
@@ -12034,8 +12043,6 @@ msgid "CIE xyY"
 msgstr "CIE xyY"
 
 #: ../app/core/core-enums.c:159
-#| msgctxt "color-pick-mode"
-#| msgid "CIE xyY"
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
 msgstr "CIE Yu'v'"
@@ -14929,7 +14936,7 @@ msgstr "Kaleidoskop"
 
 #: ../app/core/gimpsymmetry-mandala.c:162
 msgid "Reflect consecutive strokes"
-msgstr ""
+msgstr "Aufeinanderfolgende Striche spiegeln"
 
 #: ../app/core/gimpsymmetry-mirror.c:120
 msgid "Mirror"
@@ -15242,6 +15249,10 @@ msgid ""
 "Even though you use the last version, it is recommended to reinstall.\n"
 "New revisions come with package fixes."
 msgstr ""
+"Eine GIMP-Revision von %s wurde am %s veröffentlicht.\n"
+"Auch wenn Sie bereits die neueste Version verwenden, wird eine "
+"Neuinstallation empfohlen.\n"
+"Neue Revisionen erscheinen mit Fehlerbehebungen."
 
 #. Recommend an update.
 #: ../app/dialogs/about-dialog.c:338 ../app/widgets/gimpcriticaldialog.c:209
@@ -15250,12 +15261,12 @@ msgid ""
 "A new version of GIMP (%s) was released on %s.\n"
 "It is recommended to update."
 msgstr ""
+"Eine neue Version von GIMP (%s) wurde am %s veröffentlicht.\n"
+"Es wird eine Aktualisierung empfohlen."
 
 #: ../app/dialogs/about-dialog.c:350
-#, fuzzy
-#| msgid "%s to dodge"
 msgid "Go to download page"
-msgstr "%s zum Aufhellen"
+msgstr "Zur Download-Seite gehen"
 
 #: ../app/dialogs/about-dialog.c:362
 #, c-format
@@ -16335,7 +16346,7 @@ msgstr "Netzwerkzugriff"
 
 #: ../app/dialogs/preferences-dialog.c:1224
 msgid "Check for updates (requires internet)"
-msgstr ""
+msgstr "Auf Aktualisierungen prüfen (Internet erforderlich)"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1229
@@ -16740,7 +16751,7 @@ msgstr "Sprache"
 
 #: ../app/dialogs/preferences-dialog.c:1830
 msgid "Use co_mpact sliders"
-msgstr ""
+msgstr "Ko_mpakte Schieberegler verwenden"
 
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1834
@@ -16851,7 +16862,7 @@ msgstr "Aktuelles _Bild anzeigen"
 
 #: ../app/dialogs/preferences-dialog.c:2164
 msgid "Use tool _groups"
-msgstr ""
+msgstr "Werkzeug_gruppen verwenden"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:2171
@@ -17370,10 +17381,8 @@ msgid "Show _brush outline"
 msgstr "Pinsel_umriss anzeigen"
 
 #: ../app/dialogs/preferences-dialog.c:2903
-#, fuzzy
-#| msgid "Show _brush outline"
 msgid "S_nap brush outline to stroke"
-msgstr "Pinsel_umriss anzeigen"
+msgstr "Pinselumriss am Pinselstrich einrasten"
 
 #: ../app/dialogs/preferences-dialog.c:2907
 msgid "Show pointer for paint _tools"
@@ -18767,10 +18776,8 @@ msgid "Position: "
 msgstr "Position: "
 
 #: ../app/display/gimptooltransform3dgrid.c:632
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the vanishing point"
-msgstr "Klicken und ziehen Sie zum Verschieben des Punktes"
+msgstr "Klicken und ziehen Sie zum Verschieben des Fluchtpunkts"
 
 #: ../app/display/gimptooltransformgrid.c:1824
 #: ../app/display/gimptooltransformgrid.c:1829
@@ -24238,34 +24245,30 @@ msgstr "Bildvorschau anzeigen"
 msgid "Show a preview of the transformed image"
 msgstr "Eine Vorschau der transformierten Bilds anzeigen"
 
+# Habe hier »Komposition« verwendet, um einheitlich mit den anderen Vorkommen von »composite« zu sein.
 #: ../app/tools/gimptransformgridoptions.c:118
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Composite Space"
 msgid "Composited preview"
-msgstr "Kompositionsraum"
+msgstr "Kompositionsvorschau"
 
 #: ../app/tools/gimptransformgridoptions.c:119
 msgid "Show preview as part of the image composition"
-msgstr ""
+msgstr "Vorschau als Teil der Bildkomposition anzeigen"
 
 #: ../app/tools/gimptransformgridoptions.c:125
-#, fuzzy
-#| msgid "Preview Mode"
 msgid "Preview linked items"
-msgstr "Vorschaumodus"
+msgstr "Vorschau verknüpfter Objekte"
 
 #: ../app/tools/gimptransformgridoptions.c:126
 msgid "Include linked items in the preview"
-msgstr ""
+msgstr "Verknüpfte Objekte in Vorschau anzeigen"
 
 #: ../app/tools/gimptransformgridoptions.c:132
 msgid "Synchronous preview"
-msgstr ""
+msgstr "Synchrone Vorschau"
 
 #: ../app/tools/gimptransformgridoptions.c:133
 msgid "Render the preview synchronously"
-msgstr ""
+msgstr "Die Vorschau synchron verarbeiten"
 
 #: ../app/tools/gimptransformgridoptions.c:139
 msgid "Image opacity"
@@ -24429,27 +24432,20 @@ msgid "Cannot readjust the transformation"
 msgstr "Transformation kann nicht korrigiert werden"
 
 #: ../app/tools/gimptransform3doptions.c:78
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Transform image"
 msgid "Transform mode"
-msgstr "Bild transformieren"
+msgstr "Transformationsmodus"
 
 #: ../app/tools/gimptransform3doptions.c:85
-#, fuzzy
-#| msgid "Unified transform"
 msgid "Unified interaction"
-msgstr "Vereinheitlichte Transformation"
+msgstr "Vereinheitlichte Interaktion"
 
 #: ../app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
-msgstr ""
+msgstr "Alle Interaktionsmodi kombinieren"
 
 #: ../app/tools/gimptransform3doptions.c:93
-#, fuzzy
-#| msgid "Constrain rotation to 15 degree increments (%s)"
 msgid "Constrain transformation to a single axis"
-msgstr "Drehung auf 15-Grad-Abstufungen einschränken (%s)"
+msgstr "Transformation auf eine einzelne Achse einschränken"
 
 #: ../app/tools/gimptransform3doptions.c:100
 msgid "Transform along the Z axis"
@@ -24457,13 +24453,12 @@ msgstr "Entlang der Z-Achse transformieren"
 
 #: ../app/tools/gimptransform3doptions.c:107
 msgid "Transform in the local frame of reference"
-msgstr ""
+msgstr "Im lokalen Referenz-Koordinatensystem transformieren"
 
 #: ../app/tools/gimptransform3doptions.c:197
-#, fuzzy, c-format
-#| msgid "Constrain (%s)"
+#, c-format
 msgid "Constrain axis (%s)"
-msgstr "Beschränkung (%s)"
+msgstr "Achse beschränken (%s)"
 
 #: ../app/tools/gimptransform3doptions.c:206
 #, c-format
@@ -24473,20 +24468,18 @@ msgstr "Z-Achse (%s)"
 #: ../app/tools/gimptransform3doptions.c:215
 #, c-format
 msgid "Local frame (%s)"
-msgstr ""
+msgstr "Lokale Koordinaten (%s)"
 
 #: ../app/tools/gimptransform3dtool.c:115
 msgid "3D Transform"
 msgstr "3D-Transformation"
 
 #: ../app/tools/gimptransform3dtool.c:116
-#, fuzzy
-#| msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgid ""
 "3D Transform Tool: Apply a 3D transformation to the layer, selection or path"
 msgstr ""
-"Vereinheitlichtes Transformationswerkzeug: Ebene, Auswahl oder Pfad "
-"transformieren"
+"3D-Transformationswerkzeug: Eine 3D-Transformation auf die Ebene, Auswahl "
+"oder Pfad anwenden"
 
 #: ../app/tools/gimptransform3dtool.c:117
 msgid "_3D Transform"
@@ -24508,7 +24501,7 @@ msgstr "Kamera"
 #. vanishing-point frame
 #: ../app/tools/gimptransform3dtool.c:245
 msgid "Vanishing Point"
-msgstr ""
+msgstr "Fluchtpunkt"
 
 #: ../app/tools/gimptransform3dtool.c:395
 msgid "_Z:"
@@ -24906,38 +24899,33 @@ msgid "Grayscale"
 msgstr "Graustufen"
 
 #: ../app/tools/tools-enums.c:277
-#, fuzzy
-#| msgid "Fade length"
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Focal length"
-msgstr "Länge des Verblassens"
+msgstr "Brennweite"
 
 #: ../app/tools/tools-enums.c:278
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to image)"
-msgstr ""
+msgstr "Sichtfeld (relativ zum Bild)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:281
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Flip image"
 msgctxt "3-dtrasnform-lens-mode"
 msgid "FOV (image)"
-msgstr "Bild spiegeln"
+msgstr "Sichtfeld (Bild)"
 
 #: ../app/tools/tools-enums.c:282
 msgctxt "3-dtrasnform-lens-mode"
 msgid "Field of view (relative to item)"
-msgstr ""
+msgstr "Sichtfeld (relativ zum Objekt)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
 msgctxt "3-dtrasnform-lens-mode"
 msgid "FOV (item)"
-msgstr ""
+msgstr "Sichtfeld (Objekt)"
 
 #: ../app/tools/tools-enums.c:318
 msgctxt "warp-behavior"
@@ -25359,8 +25347,6 @@ msgstr "Y:"
 
 #. TRANSLATORS: Y from Yu'v' color space
 #: ../app/widgets/gimpcolorframe.c:977
-#, fuzzy
-#| msgid "Y:"
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "Y:"
@@ -25369,13 +25355,13 @@ msgstr "Y:"
 #: ../app/widgets/gimpcolorframe.c:979
 msgctxt "Yu'v' color space"
 msgid "u':"
-msgstr ""
+msgstr "u':"
 
 #. TRANSLATORS: v' from Yu'v' color space
 #: ../app/widgets/gimpcolorframe.c:981
 msgctxt "Yu'v' color space"
 msgid "v':"
-msgstr ""
+msgstr "v':"
 
 #. TRANSLATORS: C for Cyan (CMYK)
 #: ../app/widgets/gimpcolorframe.c:1009
@@ -25800,11 +25786,11 @@ msgstr "Fehlerdatenbank öffnen"
 
 #: ../app/widgets/gimpcriticaldialog.c:185
 msgid "See bug details"
-msgstr ""
+msgstr "Fehlerdetails ansehen"
 
 #: ../app/widgets/gimpcriticaldialog.c:204
 msgid "Go to _Download page"
-msgstr ""
+msgstr "Zur _Download-Seite gehen"
 
 #: ../app/widgets/gimpcriticaldialog.c:215
 msgid "You are running an unsupported version!"
@@ -27403,10 +27389,8 @@ msgstr ""
 "Anklicken öffnet die Farbverlaufsauswahl."
 
 #: ../app/widgets/gimptooleditor.c:243
-#, fuzzy
-#| msgid "Create a new toolbox"
 msgid "Create a new tool group"
-msgstr "Einen neuen Werkzeugkasten erstellen"
+msgstr "Eine neue Werkzeuggruppe erstellen"
 
 #: ../app/widgets/gimptooleditor.c:250
 msgid "Raise this tool"
