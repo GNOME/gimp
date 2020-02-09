@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-02-09 12:11+0000\n"
-"PO-Revision-Date: 2020-02-09 17:10+0000\n"
+"PO-Revision-Date: 2020-02-09 17:27+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -247,7 +247,7 @@ msgstr "Endurbætur á HiDPI-stuðningi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "New preference to choose the default export file type"
-msgstr ""
+msgstr "Ný kjörstilling til að velja sjálfgefna skráartegund útflutnings"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
@@ -21028,7 +21028,7 @@ msgstr ""
 #: ../app/plug-in/gimppluginmanager-restore.c:383
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
-msgstr "Sleppi óþekktri skrá '%s' í möppu fyrir forritsviðbætur.\n"
+msgstr "Sleppi óþekktri skrá '%s' í möppu fyrir hjálparforrit.\n"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:430
 msgid "Resource configuration"
