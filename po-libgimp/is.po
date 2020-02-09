@@ -3,13 +3,13 @@
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-08 18:34+0000\n"
-"PO-Revision-Date: 2019-03-12 12:07+0000\n"
+"POT-Creation-Date: 2020-02-09 13:26+0000\n"
+"PO-Revision-Date: 2020-02-09 17:17+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -20,22 +20,22 @@ msgstr ""
 "X-Generator: Lokalize 2.0\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1267
+#: ../libgimp/gimp.c:1265
 msgid "success"
 msgstr "tókst"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1271
+#: ../libgimp/gimp.c:1269
 msgid "execution error"
 msgstr "keyrsluvilla"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1275
+#: ../libgimp/gimp.c:1273
 msgid "calling error"
 msgstr "villa í kalli"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1279
+#: ../libgimp/gimp.c:1277
 msgid "cancelled"
 msgstr "hætt við"
 
@@ -43,82 +43,88 @@ msgstr "hætt við"
 msgid "Brush Selection"
 msgstr "Penslaval"
 
-#: ../libgimp/gimpbrushselectbutton.c:925
-#: ../libgimp/gimppatternselectbutton.c:723
+#: ../libgimp/gimpbrushselectbutton.c:920
+#: ../libgimp/gimppatternselectbutton.c:718
 msgid "_Browse..."
 msgstr "_Flakka..."
 
-#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s hjálparforritið getur ekki unnið með lög"
 
-#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
 msgid "Merge Visible Layers"
 msgstr "Tvinna sýnileg lög"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:287
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "%s hjálparforritið getur ekki unnið með hliðrun, stærðir eða gegnsæi í lögum"
 
-#: ../libgimp/gimpexport.c:269 ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s hjálparforritið getur aðeins unnið með lög sem ramma í hreyfimyndum"
 
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
 msgid "Save as Animation"
 msgstr "Vista sem hreyfimynd"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
 msgid "Flatten Image"
 msgstr "Fletja mynd"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:323
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s hjálparforritið getur ekki unnið með gegnsæi"
 
-#: ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:332
+#, c-format
+#| msgid "%s plug-in can't handle transparency"
+msgid "%s plug-in can't handle transparent layers"
+msgstr "%s hjálparforritið getur ekki unnið með gegnsæ lög"
+
+#: ../libgimp/gimpexport.c:341
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s hjálparforritið getur ekki unnið með maska á lögum"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:342
 msgid "Apply Layer Masks"
 msgstr "Beita laghulu"
 
-#: ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:350
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s hjálparforritið meðhöndlar einungis RGB myndir"
 
-#: ../libgimp/gimpexport.c:315 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:362
+#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:398
 msgid "Convert to RGB"
 msgstr "Umbreyta í RGB"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s hjálparforritið meðhöndlar einungis grátóna myndir"
 
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:410
 msgid "Convert to Grayscale"
 msgstr "Umbreyta í grátónamynd"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:368
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s hjálparforritið meðhöndlar einungis litraðaðar myndir"
 
-#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:362
-#: ../libgimp/gimpexport.c:372
+#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:408
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -126,13 +132,13 @@ msgstr ""
 "Breyta í litraðað (indexed) með sjálfgefnum stillingum\n"
 "(Breyta handvirkt til að fínstilla)"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:378
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s hjálparforritið meðhöndlar einungis litraðaðar (tveggja lita) bitamyndir"
 
-#: ../libgimp/gimpexport.c:343
+#: ../libgimp/gimpexport.c:379
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -140,63 +146,63 @@ msgstr ""
 "Umbreyta í litraðaða bitamynd (indexed) með sjálfgefnum stillingum\n"
 "(Breyta handvirkt til að fínstilla)"
 
-#: ../libgimp/gimpexport.c:352
+#: ../libgimp/gimpexport.c:388
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s hjálparforritið meðhöndlar einungis RGB eða grátónamyndir"
 
-#: ../libgimp/gimpexport.c:361
+#: ../libgimp/gimpexport.c:397
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "%s hjálparforritið meðhöndlar einungis RGB eða litraðaðar myndir (indexed)"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:407
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s hjálparforritið meðhöndlar einungis grátóna- eða litraðaðar myndir"
 
-#: ../libgimp/gimpexport.c:382
+#: ../libgimp/gimpexport.c:418
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s hjálparforritið þarfnast gegnsæisrásar (alpha channel)"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libgimp/gimpexport.c:419
 msgid "Add Alpha Channel"
 msgstr "Bæta inn alfa-gegnsæislitrás"
 
-#: ../libgimp/gimpexport.c:442
+#: ../libgimp/gimpexport.c:478
 msgid "Confirm Save"
 msgstr "Staðfesta vistun"
 
-#: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:492
+#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
+#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
 msgid "_Cancel"
 msgstr "_Hætta við"
 
-#: ../libgimp/gimpexport.c:448
+#: ../libgimp/gimpexport.c:484
 msgid "C_onfirm"
 msgstr "Stað_festa"
 
-#: ../libgimp/gimpexport.c:524
+#: ../libgimp/gimpexport.c:560
 msgid "Export File"
 msgstr "Flytja út skrá"
 
-#: ../libgimp/gimpexport.c:528
+#: ../libgimp/gimpexport.c:564
 msgid "_Ignore"
 msgstr "_Hunsa"
 
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
+#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
 msgid "_Export"
 msgstr "_Flytja út"
 
 #. the headline
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:596
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -206,11 +212,11 @@ msgstr ""
 "eftirfarandi ástæðum:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:634
+#: ../libgimp/gimpexport.c:670
 msgid "The export conversion won't modify your original image."
 msgstr "Útflutningur breytir ekki upprunalegri mynd."
 
-#: ../libgimp/gimpexport.c:741
+#: ../libgimp/gimpexport.c:774
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -219,7 +225,7 @@ msgstr ""
 "Þú ert að fara að vista laghulu sem %s.\n"
 "Þetta mun ekki vista sýnilegu lögin."
 
-#: ../libgimp/gimpexport.c:747
+#: ../libgimp/gimpexport.c:780
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -228,9 +234,12 @@ msgstr ""
 "Þú ert að fara að vista litrás (vistað val) sem %s.\n"
 "Þetta mun ekki vista sýnilegu lögin."
 
-#: ../libgimp/gimpexport.c:1015
-msgid "Export Image as "
-msgstr "Flytja mynd út sem "
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: ../libgimp/gimpexport.c:1057
+#, c-format
+#| msgid "Export Image as "
+msgid "Export Image as %s"
+msgstr "Flytja mynd út sem %s"
 
 #: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
@@ -1113,338 +1122,332 @@ msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Fletja"
 
-#: ../libgimpbase/gimpbaseenums.c:1222
+#: ../libgimpbase/gimpbaseenums.c:1224
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Lárétt"
 
-#: ../libgimpbase/gimpbaseenums.c:1223
+#: ../libgimpbase/gimpbaseenums.c:1225
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Lóðrétt"
 
-#: ../libgimpbase/gimpbaseenums.c:1224
+#: ../libgimpbase/gimpbaseenums.c:1226
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Óþekkt"
 
-#: ../libgimpbase/gimpbaseenums.c:1253
+#: ../libgimpbase/gimpbaseenums.c:1255
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Fast (constant)"
 
-#: ../libgimpbase/gimpbaseenums.c:1254
+#: ../libgimpbase/gimpbaseenums.c:1256
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Stighækkandi"
 
-#: ../libgimpbase/gimpbaseenums.c:1387
+#: ../libgimpbase/gimpbaseenums.c:1389
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Innri GIMP aðgerð"
 
-#: ../libgimpbase/gimpbaseenums.c:1388
+#: ../libgimpbase/gimpbaseenums.c:1390
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "GIMP hjálparforrit"
 
-#: ../libgimpbase/gimpbaseenums.c:1389
+#: ../libgimpbase/gimpbaseenums.c:1391
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "GIMP viðbót"
 
-#: ../libgimpbase/gimpbaseenums.c:1390
+#: ../libgimpbase/gimpbaseenums.c:1392
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Tímabundin aðgerð"
 
-#: ../libgimpbase/gimpbaseenums.c:1465
+#: ../libgimpbase/gimpbaseenums.c:1467
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8-bita línuleg heiltala"
 
-#: ../libgimpbase/gimpbaseenums.c:1466
+#: ../libgimpbase/gimpbaseenums.c:1468
 msgctxt "precision"
 msgid "8-bit gamma integer"
 msgstr "8-bita litrófs heiltala"
 
-#: ../libgimpbase/gimpbaseenums.c:1467
+#: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16-bita línuleg heiltala"
 
-#: ../libgimpbase/gimpbaseenums.c:1468
+#: ../libgimpbase/gimpbaseenums.c:1470
 msgctxt "precision"
 msgid "16-bit gamma integer"
 msgstr "16-bita litrófs heiltala"
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: ../libgimpbase/gimpbaseenums.c:1471
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32-bita línuleg heiltala"
 
-#: ../libgimpbase/gimpbaseenums.c:1470
+#: ../libgimpbase/gimpbaseenums.c:1472
 msgctxt "precision"
 msgid "32-bit gamma integer"
 msgstr "32-bita litrófs heiltala"
 
-#: ../libgimpbase/gimpbaseenums.c:1471
+#: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16-bita línuleg fleytitala"
 
-#: ../libgimpbase/gimpbaseenums.c:1472
+#: ../libgimpbase/gimpbaseenums.c:1474
 msgctxt "precision"
 msgid "16-bit gamma floating point"
 msgstr "16-bita litrófs fleytitala"
 
-#: ../libgimpbase/gimpbaseenums.c:1473
+#: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32-bita línuleg fleytitala"
 
-#: ../libgimpbase/gimpbaseenums.c:1474
+#: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "precision"
 msgid "32-bit gamma floating point"
 msgstr "32-bita litrófs fleytitala"
 
-#: ../libgimpbase/gimpbaseenums.c:1475
+#: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64-bita línuleg fleytitala"
 
-#: ../libgimpbase/gimpbaseenums.c:1476
+#: ../libgimpbase/gimpbaseenums.c:1478
 msgctxt "precision"
 msgid "64-bit gamma floating point"
 msgstr "6-bita litrófs fleytitala"
 
-#: ../libgimpbase/gimpbaseenums.c:1545
+#: ../libgimpbase/gimpbaseenums.c:1547
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Ekkert (útvíkkað)"
 
-#: ../libgimpbase/gimpbaseenums.c:1546
+#: ../libgimpbase/gimpbaseenums.c:1548
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Sagtennt sveifla"
 
-#: ../libgimpbase/gimpbaseenums.c:1547
+#: ../libgimpbase/gimpbaseenums.c:1549
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Þríhyrningssveifla"
 
-#: ../libgimpbase/gimpbaseenums.c:1548
+#: ../libgimpbase/gimpbaseenums.c:1550
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Klippa"
 
-#: ../libgimpbase/gimpbaseenums.c:1610
+#: ../libgimpbase/gimpbaseenums.c:1612
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Keyra gagnvirkt"
 
-#: ../libgimpbase/gimpbaseenums.c:1611
+#: ../libgimpbase/gimpbaseenums.c:1613
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Keyra ógagnvirkt"
 
-#: ../libgimpbase/gimpbaseenums.c:1612
+#: ../libgimpbase/gimpbaseenums.c:1614
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Keyra með síðast notuðum gildum"
 
-#: ../libgimpbase/gimpbaseenums.c:1650
+#: ../libgimpbase/gimpbaseenums.c:1652
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Samsett (composite)"
 
-#: ../libgimpbase/gimpbaseenums.c:1651
+#: ../libgimpbase/gimpbaseenums.c:1653
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Rautt"
 
-#: ../libgimpbase/gimpbaseenums.c:1652
+#: ../libgimpbase/gimpbaseenums.c:1654
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Grænt"
 
-#: ../libgimpbase/gimpbaseenums.c:1653
+#: ../libgimpbase/gimpbaseenums.c:1655
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Blátt"
 
-#: ../libgimpbase/gimpbaseenums.c:1654
-#| msgid "HSV Hue"
+#: ../libgimpbase/gimpbaseenums.c:1656
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "HSV-litblær"
 
-#: ../libgimpbase/gimpbaseenums.c:1655
-#| msgid "HSV Saturation"
+#: ../libgimpbase/gimpbaseenums.c:1657
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "HSV-litmettun"
 
-#: ../libgimpbase/gimpbaseenums.c:1656
-#| msgid "HSV Value"
+#: ../libgimpbase/gimpbaseenums.c:1658
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "HSV-litgildi"
 
-#: ../libgimpbase/gimpbaseenums.c:1657
+#: ../libgimpbase/gimpbaseenums.c:1659
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa gegnsæi"
 
-#: ../libgimpbase/gimpbaseenums.c:1658
-#| msgid "LCH Lightness"
+#: ../libgimpbase/gimpbaseenums.c:1660
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "LCh-ljósleiki"
 
-#: ../libgimpbase/gimpbaseenums.c:1659
-#| msgid "LCH Chroma"
+#: ../libgimpbase/gimpbaseenums.c:1661
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "LCh-litróf"
 
-#: ../libgimpbase/gimpbaseenums.c:1660
-#| msgid "LCH Hue"
+#: ../libgimpbase/gimpbaseenums.c:1662
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "LCh-litblær"
 
-#: ../libgimpbase/gimpbaseenums.c:1689
+#: ../libgimpbase/gimpbaseenums.c:1691
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Mynddílar"
 
-#: ../libgimpbase/gimpbaseenums.c:1690
+#: ../libgimpbase/gimpbaseenums.c:1692
 msgctxt "size-type"
 msgid "Points"
 msgstr "Punktar"
 
-#: ../libgimpbase/gimpbaseenums.c:1751
+#: ../libgimpbase/gimpbaseenums.c:1753
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Stroklína"
 
-#: ../libgimpbase/gimpbaseenums.c:1752
+#: ../libgimpbase/gimpbaseenums.c:1754
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Strika með málunarverkfæri"
 
-#: ../libgimpbase/gimpbaseenums.c:1785
+#: ../libgimpbase/gimpbaseenums.c:1787
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Frá vinstri til hægri"
 
-#: ../libgimpbase/gimpbaseenums.c:1786
+#: ../libgimpbase/gimpbaseenums.c:1788
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Frá hægri til vinstri"
 
-#: ../libgimpbase/gimpbaseenums.c:1787
+#: ../libgimpbase/gimpbaseenums.c:1789
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Lóðrétt, hægri til vinstri (blönduð stefna)"
 
-#: ../libgimpbase/gimpbaseenums.c:1788
+#: ../libgimpbase/gimpbaseenums.c:1790
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Lóðrétt, hægri til vinstri (upprétt stefna)"
 
-#: ../libgimpbase/gimpbaseenums.c:1789
+#: ../libgimpbase/gimpbaseenums.c:1791
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Lóðrétt, vinstri til hægri (blönduð stefna)"
 
-#: ../libgimpbase/gimpbaseenums.c:1790
+#: ../libgimpbase/gimpbaseenums.c:1792
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
 
-#: ../libgimpbase/gimpbaseenums.c:1821
+#: ../libgimpbase/gimpbaseenums.c:1823
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ekkert"
 
-#: ../libgimpbase/gimpbaseenums.c:1822
+#: ../libgimpbase/gimpbaseenums.c:1824
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Örlítið"
 
-#: ../libgimpbase/gimpbaseenums.c:1823
+#: ../libgimpbase/gimpbaseenums.c:1825
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Miðlungs"
 
-#: ../libgimpbase/gimpbaseenums.c:1824
+#: ../libgimpbase/gimpbaseenums.c:1826
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Fullt"
 
-#: ../libgimpbase/gimpbaseenums.c:1855
+#: ../libgimpbase/gimpbaseenums.c:1857
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Vinstri hliðjafnað"
 
-#: ../libgimpbase/gimpbaseenums.c:1856
+#: ../libgimpbase/gimpbaseenums.c:1858
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Hægri hliðjafnað"
 
-#: ../libgimpbase/gimpbaseenums.c:1857
+#: ../libgimpbase/gimpbaseenums.c:1859
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Miðjað"
 
-#: ../libgimpbase/gimpbaseenums.c:1858
+#: ../libgimpbase/gimpbaseenums.c:1860
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Fyllt"
 
-#: ../libgimpbase/gimpbaseenums.c:1888
+#: ../libgimpbase/gimpbaseenums.c:1890
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Skuggar"
 
-#: ../libgimpbase/gimpbaseenums.c:1889
+#: ../libgimpbase/gimpbaseenums.c:1891
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Miðtónar"
 
-#: ../libgimpbase/gimpbaseenums.c:1890
+#: ../libgimpbase/gimpbaseenums.c:1892
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Hátónar"
 
-#: ../libgimpbase/gimpbaseenums.c:1919
+#: ../libgimpbase/gimpbaseenums.c:1921
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Venjulegt (áfram)"
 
-#: ../libgimpbase/gimpbaseenums.c:1920
+#: ../libgimpbase/gimpbaseenums.c:1922
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Leiðrétt (afturábak)"
 
-#: ../libgimpbase/gimpbaseenums.c:1951
+#: ../libgimpbase/gimpbaseenums.c:1953
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Aðlaga"
 
-#: ../libgimpbase/gimpbaseenums.c:1952
+#: ../libgimpbase/gimpbaseenums.c:1954
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Klemma"
 
-#: ../libgimpbase/gimpbaseenums.c:1953
+#: ../libgimpbase/gimpbaseenums.c:1955
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Utanskera að útkomu"
 
-#: ../libgimpbase/gimpbaseenums.c:1954
+#: ../libgimpbase/gimpbaseenums.c:1956
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Utanskera með stærðarhlutföllum"
@@ -1466,7 +1469,6 @@ msgstr "Get aðeins vistað lýsigögn í staðværar skrár"
 
 #: ../libgimpbase/gimpmetadata.c:1011
 #, c-format
-#| msgid "Parsing Exif data failed."
 msgid "Invalid Exif data size."
 msgstr "Ógild stærð EXIF-gagna."
 
@@ -1781,29 +1783,29 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "gildi teikns %s er ekki gildur UTF-8-strengur"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:466
+#: ../libgimpconfig/gimpconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "vænti 'já' eða 'nei' fyrir bólska teiknið %s, fékk '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:568
+#: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ógilt gildi '%s' fyrir teikn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:583
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ógilt gildi '%ld' fyrir teikn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:652
+#: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "við að þátta teikn '%s': %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:682
-#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:743
-#: ../libgimpconfig/gimpscanner.c:825
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:756
+#: ../libgimpconfig/gimpscanner.c:838
 #: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "banvæn þáttunarvilla"
@@ -1844,36 +1846,36 @@ msgid "invalid UTF-8 string"
 msgstr "ógildur UTF-8 strengur"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:618
+#: ../libgimpconfig/gimpscanner.c:631
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "vænti 'já' eða 'nei' fyrir bólska teiknið, fékk '%s'"
 
-#: ../libgimpconfig/gimpscanner.c:852
+#: ../libgimpconfig/gimpscanner.c:865
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Villa við þáttun '%s' á línu %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
-#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
-#: ../libgimpmodule/gimpmodule.c:442
+#: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
+#: ../libgimpmodule/gimpmodule.c:275 ../libgimpmodule/gimpmodule.c:302
+#: ../libgimpmodule/gimpmodule.c:428
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Villa við hleðslu '%s' einingar: %s"
 
-#: ../libgimpmodule/gimpmodule.c:384
+#: ../libgimpmodule/gimpmodule.c:370
 msgid "Module error"
 msgstr "Villa í einingu"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmodule.c:371
 msgid "Loaded"
 msgstr "Lesið inn"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmodule.c:372
 msgid "Load failed"
 msgstr "Lestur mistókst"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmodule.c:373
 msgid "Not loaded"
 msgstr "Ólesið"
 
@@ -1891,12 +1893,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Mistókst að búa til smámyndamöppu '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:508
+#: ../libgimpthumb/gimpthumbnail.c:479
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Smámynd inniheldur ekki Thumb::URI merki"
 
-#: ../libgimpthumb/gimpthumbnail.c:905
+#: ../libgimpthumb/gimpthumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Get ekki búið til smámynd fyrir %s: %s"
@@ -1905,30 +1907,30 @@ msgstr "Get ekki búið til smámynd fyrir %s: %s"
 msgid "_Search:"
 msgstr "_Leita:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:152
+#: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_Foreground Color"
 msgstr "_Forgrunnslitur"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:156
+#: ../libgimpwidgets/gimpcolorbutton.c:151
 msgid "_Background Color"
 msgstr "_Bakgrunnslitur"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:160
+#: ../libgimpwidgets/gimpcolorbutton.c:155
 msgid "Blac_k"
 msgstr "Svar_t"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:164
+#: ../libgimpwidgets/gimpcolorbutton.c:159
 msgid "_White"
 msgstr "H_vítt"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:571 ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpcolorbutton.c:548 ../libgimpwidgets/gimpicons.c:68
 msgid "_Reset"
 msgstr "_Frumstilla"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:573
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:493
+#: ../libgimpwidgets/gimpcolorbutton.c:550
+#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
 msgid "_OK"
 msgstr "Í _lagi"
 
@@ -1940,28 +1942,28 @@ msgstr ""
 "Hexadesímal litakóði eins og notaður er í HTML og CSS.  Þessi færsla tekur "
 "einnig við CSS litanöfnum."
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:98
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Allar skrár (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:103
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC litasnið (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:164
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "Vi_sta"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Opna"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:336
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:345
 #: ../libgimpwidgets/gimppatheditor.c:270
 msgid "Folder"
 msgstr "Mappa"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:341
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:350
 msgid "Not a regular file."
 msgstr "Ekki venjuleg skrá."
 
@@ -1974,11 +1976,11 @@ msgctxt "profile"
 msgid "None"
 msgstr "Ekkert"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:159
+#: ../libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Framleiðandi: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:171
+#: ../libgimpwidgets/gimpcolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Höfundarréttur: "
 
@@ -1995,7 +1997,6 @@ msgid "0..255"
 msgstr "0..255"
 
 #: ../libgimpwidgets/gimpcolorscales.c:460
-#| msgid "LCH"
 msgid "LCh"
 msgstr "LCh"
 
@@ -2120,15 +2121,15 @@ msgstr "Umbrey_ta"
 msgid "_Shear"
 msgstr "_Skekkja"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "Kílóbæti"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Megabytes"
 msgstr "Megabæti"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "Gígabæti"
 
@@ -2209,7 +2210,7 @@ msgstr "Athuga stærð"
 msgid "Check Style"
 msgstr "Athuga stíl"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2177
+#: ../libgimpwidgets/gimppropwidgets.c:2178
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2351,7 +2352,6 @@ msgid "_L"
 msgstr "_L"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-#| msgid "LCH Lightness"
 msgid "LCh Lightness"
 msgstr "LCh-ljósleiki"
 
@@ -2361,7 +2361,6 @@ msgid "_C"
 msgstr "_C"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
-#| msgid "LCH Chroma"
 msgid "LCh Chroma"
 msgstr "LCh-litróf"
 
@@ -2371,7 +2370,6 @@ msgid "_h"
 msgstr "_h"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
-#| msgid "LCH Hue"
 msgid "LCh Hue"
 msgstr "LCh-litblær"
 
@@ -2390,7 +2388,6 @@ msgid "LCH"
 msgstr "LCH"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
-#| msgid "CIELCh color model"
 msgid "CIE LCh color model"
 msgstr "CIE LCh litakerfi"
 
@@ -2403,22 +2400,22 @@ msgstr "HSV"
 msgid "HSV color model"
 msgstr "HSV litakerfi"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:199
+#: ../libgimpwidgets/gimpwidgetsenums.c:231
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Lög"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:200
+#: ../libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Myndir"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:261
+#: ../libgimpwidgets/gimpwidgetsenums.c:293
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Renna að"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:262
+#: ../libgimpwidgets/gimpwidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Renna frá"
