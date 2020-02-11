@@ -278,8 +278,6 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   GDateTime *datetime;
   gchar     *date;
   gchar     *text;
-  gchar     *text2;
-
 
   /* Get the dialog vbox. */
   container = gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog));
@@ -359,19 +357,28 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   /* Show a check update button. */
   gtk_box_reorder_child (GTK_BOX (vbox), frame, 4);
 
-  datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
-  date = g_date_time_format (datetime, "%x");
-  text2 = g_strdup_printf (_("Last checked on %s"), date);
-  text = g_strdup_printf ("%s\n<i>%s</i>",
-                          _("Check for updates"), text2);
+  if (config->check_update_timestamp > 0)
+    {
+      gchar *subtext;
+
+      datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
+      date = g_date_time_format (datetime, "%x");
+      subtext = g_strdup_printf (_("Last checked on %s"), date);
+      g_date_time_unref (datetime);
+      g_free (date);
+
+      text = g_strdup_printf ("%s\n<i>%s</i>",
+                              _("Check for updates"), subtext);
+      g_free (subtext);
+    }
+  else
+    {
+      text = g_strdup_printf ("%s", _("Check for updates"));
+    }
   label = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (label), text);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-
-  g_date_time_unref (datetime);
-  g_free (date);
   g_free (text);
-  g_free (text2);
 
   button = gtk_button_new ();
   gtk_container_add (GTK_CONTAINER (button), label);
