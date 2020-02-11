@@ -3,13 +3,14 @@
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
 # Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019.
+# Olexandr Pylypchuk <lxlalexlxl@ukr.net>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-08 18:35+0000\n"
-"PO-Revision-Date: 2019-03-10 10:17+0200\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"POT-Creation-Date: 2019-09-23 14:17+0000\n"
+"PO-Revision-Date: 2019-09-23 22:28+0200\n"
+"Last-Translator: Olexandr Pylypchuk <lxlalexlxl@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 19.03.70\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
@@ -478,7 +479,6 @@ msgid "Frame"
 msgstr "Рамка"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
-#| msgid "Se_lections"
 msgid "Selection"
 msgstr "Вибране"
 
@@ -531,8 +531,8 @@ msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
-"Візерунок епітрохоїди отримуємо, якщо рухома шестерня перебуває ззовні від"
-" нерухомої шестерні."
+"Візерунок епітрохоїди отримуємо, якщо рухома шестерня перебуває ззовні від "
+"нерухомої шестерні."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
 msgid "Tool"
@@ -542,11 +542,10 @@ msgstr "Інструмент"
 msgid ""
 "The tool with which to draw the pattern.The Preview tool just draws quickly."
 msgstr ""
-"Засіб малювання візерунків. Засіб попереднього перегляду малює візерунок дещо"
-" швидше."
+"Засіб малювання візерунків. Засіб попереднього перегляду малює візерунок "
+"дещо швидше."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
-#| msgid "Palette to _Gradient"
 msgid "Long Gradient"
 msgstr "Довгий градієнт"
 
@@ -556,10 +555,10 @@ msgid ""
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr ""
-"Якщо не позначено, буде використано поточні параметри засобу. Якщо позначено,"
-" буде використано довгий градієнт за довжиною візерунка на основі поточних"
-" параметрів градієнта та режиму повторення з параметрів засобу створення"
-" градієнтів."
+"Якщо не позначено, буде використано поточні параметри засобу. Якщо "
+"позначено, буде використано довгий градієнт за довжиною візерунка на основі "
+"поточних параметрів градієнта та режиму повторення з параметрів засобу "
+"створення градієнтів."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
 msgid "Specify pattern using one of the following tabs:"
@@ -572,19 +571,19 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
-"Візерунок встановлюється лише за активною вкладкою. Режим «Іграшковий набір»"
-" є подібним до режиму «Шестерні», але використовує параметри шестерень та"
-" кількість заглиблень, які вказано для іграшкових наборів. Якщо ви"
-" скористаєтеся настановами із підручників щодо іграшкових наборів, результати"
-" мають бути подібними."
+"Візерунок встановлюється лише за активною вкладкою. Режим «Іграшковий набір» "
+"є подібним до режиму «Шестерні», але використовує параметри шестерень та "
+"кількість заглиблень, які вказано для іграшкових наборів. Якщо ви "
+"скористаєтеся настановами із підручників щодо іграшкових наборів, результати "
+"мають бути подібними."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
-"Кількість зубців нерухомої шестерні. Розмір нерухомої шестерні є пропорційним"
-" до кількості зубців."
+"Кількість зубців нерухомої шестерні. Розмір нерухомої шестерні є "
+"пропорційним до кількості зубців."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
@@ -596,8 +595,8 @@ msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 msgstr ""
-"Кількість зубців рухомої шестерні. Розмір рухомої шестерні є пропорційним до"
-" кількості зубців."
+"Кількість зубців рухомої шестерні. Розмір рухомої шестерні є пропорційним до "
+"кількості зубців."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
@@ -605,7 +604,6 @@ msgid "Moving Gear Teeth"
 msgstr "Зубець рухомої шестерні"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
-#| msgid "Percent"
 msgid "Hole percent"
 msgstr "Відсоток заглиблення"
 
@@ -614,11 +612,10 @@ msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 msgstr ""
-"Наскільки глибоким є заглиблення від центру рухомої шестерні. 100% означає,"
-" що заглиблення розташовано на краю шестерні."
+"Наскільки глибоким є заглиблення від центру рухомої шестерні. 100% означає, "
+"що заглиблення розташовано на краю шестерні."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
-#| msgid "File Name"
 msgid "Hole Number"
 msgstr "Кількість прорізів"
 
@@ -627,8 +624,8 @@ msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr ""
-"Заглибину 1 розташовано на краю шестерні. Максимальної кількості заглибин"
-" можна досягти поблизу центра."
+"Заглибину 1 розташовано на краю шестерні. Максимальної кількості заглибин "
+"можна досягти поблизу центра."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
 msgid "Toy Kit"
@@ -640,7 +637,6 @@ msgstr "Шестерні"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
-#| msgid "Saturation"
 msgid "Rotation"
 msgstr "Обертання"
 
@@ -649,8 +645,8 @@ msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr ""
-"Кут обертання візерунка у градусах. Початкова позиція рухомої шестерні на"
-" нерухомій шестерні."
+"Кут обертання візерунка у градусах. Початкова позиція рухомої шестерні на "
+"нерухомій шестерні."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
 msgid "Shape"
@@ -664,11 +660,11 @@ msgid ""
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
 msgstr ""
-"Форма нерухомої шестерні, яку буде використано у позначеній ділянці."
-" Кремальєра — зубчаста рейка, яка є частиною іграшкових наборів. Рамка"
-" огортає межі прямокутної позначеної ділянки. Скористайтеся значенням"
-" заглиблення 100 для шестерні, щоб шестерня торкалася межі ділянки. Якщо"
-" створити правильну ділянку не вдасться, спробуйте щось непрямокутне."
+"Форма нерухомої шестерні, яку буде використано у позначеній ділянці. "
+"Кремальєра — зубчаста рейка, яка є частиною іграшкових наборів. Рамка "
+"огортає межі прямокутної позначеної ділянки. Скористайтеся значенням "
+"заглиблення 100 для шестерні, щоб шестерня торкалася межі ділянки. Якщо "
+"створити правильну ділянку не вдасться, спробуйте щось непрямокутне."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
 msgid "Sides"
@@ -707,34 +703,38 @@ msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr ""
-"Якщо не позначено, візерунок заповнить поточне зображення або позначену"
-" ділянку. Якщо позначено, програма автоматично зберігатиме однакову ширину і"
-" довжину ділянки візерунка і центруватиме його."
+"Якщо не позначено, візерунок заповнить поточне зображення або позначену "
+"ділянку. Якщо позначено, програма автоматично зберігатиме однакову ширину і "
+"довжину ділянки візерунка і центруватиме його."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Перемалювати"
+#| msgid "Redraw"
+msgid "Re_draw"
+msgstr "_Перемалювати"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
-"Якщо вами було змінено параметри роботи засобу, змінено колір або змінено"
-" позначені фрагменти, натисніть цю кнопку, щоб переглянути тестову версію"
-" візерунка."
+"Якщо вами було змінено параметри роботи засобу, змінено колір або змінено "
+"позначені фрагменти, натисніть цю кнопку, щоб переглянути тестову версію "
+"візерунка."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Скинути"
+#| msgid "Reset"
+msgid "_Reset"
+msgstr "_Скинути"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Скасувати"
+#| msgid "Cancel"
+msgid "_Cancel"
+msgstr "С_касувати"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "Гаразд"
+#| msgid "OK"
+msgid "_OK"
+msgstr "_Гаразд"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
 msgid ""
@@ -750,10 +750,10 @@ msgid ""
 "exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
 "redrawn on the layer that was active when the plugin was launched."
 msgstr ""
-"Якщо позначено, після натискання кнопки «Гаразд» шар спіро буде збережено, а"
-" додаток швидко завершить роботу. Якщо не позначено, шар спіро буде вилучено,"
-" а візерунок буде перемальовуватися на шарі, який був активним на момент"
-" запуску додатка."
+"Якщо позначено, після натискання кнопки «Гаразд» шар спіро буде збережено, а "
+"додаток швидко завершить роботу. Якщо не позначено, шар спіро буде вилучено, "
+"а візерунок буде перемальовуватися на шарі, який був активним на момент "
+"запуску додатка."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
 msgid "Spyrogimp"
@@ -763,8 +763,8 @@ msgstr "Спіроґімп"
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
-"Малює спірографи на основі поточних параметрів засобів та позначених"
-" фрагментів."
+"Малює спірографи на основі поточних параметрів засобів та позначених "
+"фрагментів."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
 msgid "Curve Pattern"
