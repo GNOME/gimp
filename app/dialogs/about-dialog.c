@@ -689,6 +689,9 @@ about_dialog_last_release_changed (GimpCoreConfig   *config,
   g_signal_handlers_disconnect_by_func (config,
                                         (GCallback) about_dialog_last_release_changed,
                                         dialog);
+  if (! dialog->dialog)
+    return;
+
   if (dialog->update_frame)
     {
       gtk_widget_destroy (dialog->update_frame);
