@@ -1193,16 +1193,16 @@ abr_rle_decode (GDataInputStream  *input,
             }
         }
 
-      gegl_scratch_free (cdata);
+      g_clear_pointer (&cdata, gegl_scratch_free);
     }
 
-  gegl_scratch_free (cscanline_len);
+  g_clear_pointer (&cscanline_len, gegl_scratch_free);
 
   return TRUE;
 
 err:
-  gegl_scratch_free (cdata);
-  gegl_scratch_free (cscanline_len);
+  g_clear_pointer (&cdata, gegl_scratch_free);
+  g_clear_pointer (&cscanline_len, gegl_scratch_free);
   if (error && ! *error)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
