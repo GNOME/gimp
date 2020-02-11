@@ -1131,7 +1131,7 @@ abr_rle_decode (GDataInputStream  *input,
   for (i = 0; i < height; i++)
     {
       cscanline_len[i] = abr_read_short (input, error);
-      if (error && *error)
+      if ((error && *error) || cscanline_len[i] <= 0)
         goto err;
     }
 
