@@ -1121,36 +1121,41 @@ abr_rle_decode (GDataInputStream  *input,
                 gint32             height,
                 GError           **error)
 {
-  gchar   ch;
-  gint    i, j, c;
-  gshort *cscanline_len;
-  gchar  *data = buffer;
+  gint    i, j;
+  gshort *cscanline_len = NULL;
+  gchar  *cdata         = NULL;
+  gchar  *data          = buffer;
 
   /* read compressed size foreach scanline */
-  cscanline_len = g_new0 (gshort, height);
+  cscanline_len = gegl_scratch_new (gshort, height);
   for (i = 0; i < height; i++)
     {
       cscanline_len[i] = abr_read_short (input, error);
       if (error && *error)
-        {
-          g_free (cscanline_len);
-          return FALSE;
-        }
+        goto err;
     }
 
   /* unpack each scanline data */
   for (i = 0; i < height; i++)
     {
-      for (j = 0; j < cscanline_len[i];)
-        {
-          gint32 n = abr_read_char (input, error);
-          if (error && *error)
-            {
-              g_free (cscanline_len);
-              return FALSE;
-            }
+      gint  len;
+      gsize bytes_read;
 
-          j++;
+      len = cscanline_len[i];
+
+      cdata = gegl_scratch_alloc (len);
+
+      if (! g_input_stream_read_all (G_INPUT_STREAM (input),
+                                     cdata, len,
+                                     &bytes_read, NULL, error) ||
+          bytes_read != len)
+        {
+          goto err;
+        }
+
+      for (j = 0; j < len;)
+        {
+          gint32 n = cdata[j++];
 
           if (n >= 128)     /* force sign */
             n -= 256;
@@ -1163,55 +1168,46 @@ abr_rle_decode (GDataInputStream  *input,
                 continue;
 
               n = -n + 1;
-              ch = abr_read_char (input, error);
-              if (error && *error)
-                {
-                  g_free (cscanline_len);
-                  return FALSE;
-                }
-              j++;
 
-              for (c = 0; c < n; c++, data++)
-                {
-                  if (data >= buffer + buffer_size)
-                    {
-                      g_free (cscanline_len);
-                      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                                   _("Fatal parse error in brush file: "
-                                     "RLE compressed brush data corrupt."));
-                      return FALSE;
-                    }
+              if (j + 1 > len || (data - buffer) + n > buffer_size)
+                goto err;
 
-                  *data = ch;
-                }
+              memset (data, cdata[j], n);
+
+              j    += 1;
+              data += n;
             }
           else
             {
               /* read the following n + 1 chars (no compr) */
 
-              for (c = 0; c < n + 1; c++, j++, data++)
-                {
-                  if (data >= buffer + buffer_size)
-                    {
-                      g_free (cscanline_len);
-                      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                                   _("Fatal parse error in brush file: "
-                                     "RLE compressed brush data corrupt."));
-                      return FALSE;
-                    }
+              n = n + 1;
 
-                  *data = abr_read_char (input, error);
-                  if (error && *error)
-                    {
-                      g_free (cscanline_len);
-                      return FALSE;
-                    }
-                }
+              if (j + n > len || (data - buffer) + n > buffer_size)
+                goto err;
+
+              memcpy (data, &cdata[j], n);
+
+              j    += n;
+              data += n;
             }
         }
+
+      gegl_scratch_free (cdata);
     }
 
-  g_free (cscanline_len);
+  gegl_scratch_free (cscanline_len);
 
   return TRUE;
+
+err:
+  gegl_scratch_free (cdata);
+  gegl_scratch_free (cscanline_len);
+  if (error && ! *error)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file: "
+                     "RLE compressed brush data corrupt."));
+    }
+  return FALSE;
 }
