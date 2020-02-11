@@ -17,6 +17,28 @@ Core:
     total and processed pixel counts used for reporting progress, to
     avoid overflowing when applying an operation to a large image.
 
+  - In GimpFilterTool and gimp_drawable_apply_operation(), use
+    gimp_drawable_filter_set_add_alpha() to add an alpha channel
+    when applying an operation that specifies "needs-alpha"
+    to a drawable that can have alpha.
+
+  - In GimpFilterTool, move all the drawable-filter option setup to a
+    new gimp_filter_tool_update_filter() function, and call it whenever
+    the drawable-filter's options need to be updated.  This avoids
+    duplicating logic in various places.
+
+  - Improve the efficiency of decoding RLE data when loading ABR
+    brushes, by reading entire scanlines into a buffer all-at-once,
+    instead of reading the stream byte-by-byte.
+
+  - GIMP now optionally phones home to find out if there's a new version
+    available and then tells the user if there is one indeed. It also
+    keeps track of the installer revision and then warns if there's
+    a newer installer available. This can be disabled in Preferences.
+    In that case, users still have the option to manually check for
+    an update via the About dialog. The feature can be disabled entirely
+    with the '--disable-check-update' configure switch.
+
 Tools:
 
   - New 3D Transform tool where you can set vanishing point, camera's
@@ -26,8 +48,10 @@ Tools:
     are available simultaneously. In this mode, the inner and outer
     regions of the item are used for moving and rotation, respectively,
     and the vanishing point is controlled through through a handle.
+
   - Transform tools now respect the Clip option and update the canvas
     preview accordingly.
+
   - New "Composited preview" option allows respecting layer's blending
     mode and position in the layer stack rather than rendering it as
     an overlay on top of the overall layer stack. This simplifies
@@ -37,19 +61,53 @@ Tools:
     the composited preview synchronously. This reduces the lag for
     painting the preview, but can harm responsiveness for bigger images,
     where rendering the preview is slow.
+
+  - Add a new "Preview linked items" option to the transform-grid
+    tools. When this option is enabled, together with composited
+    previews, the transform preview includes all linked layers and
+    channels when transforming a layer/channel. Paths are currently
+    unsupported.
+
   - New widget called GimpPivotSelector, a 3x3 grid of toggle buttons,
     is now used for selecting a natural pivot position (e.g. for
     a transform) relative to an item: its center, its corners, and the
     midpoints of its edges. Currently used in Rotate and 3D Transform
     tools.
+ 
   - Add "Show all" support to the Bucket Fill tool in line-art mode
+
   - Color picker and sample points now support displaying vlaues in Yu'v'
     (CIE 1976 UCS) color space.
+
   - The Symmetry Painting dock now has an "Enable reflection" option
     that allows painting patterns resembling a kaleidoscope. 
 
+  - Transform clipping is temporarily disabled for layer groups.
+    No preview other than 'Adjust' works anyway. This will be fixed
+    later on.
+
+  - Now that painting is done in a separate thread, the display update
+    rate has a far smaller impact on it. Increase the GimpDisplay
+    update rate, which handles image updates, to 60 FPS, and the
+    GimpDrawTool update rate to 120 FPS. In particular, the latter
+    change makes the brush outline motion much smoother.
+
+  - Add a new "Snap brush outline to stroke" toggle to the "Image
+    Windows" preferences page. When enabled, the brush outline in
+    paint tools snaps to the individual dabs while painting, which is
+    how it worked before version 2.10.16. Disable the option by default.
+    This seems to be what most other programs are doing, and it does
+    give paitning a smoother feel.
+
+  - The Warp Transform tool now respects settings for painting tools:
+    showing the brush outline, snapping to dabs, and showing the paint
+    tool cursor.
+
 UI:
 
+  - Tools are now logically grouped in the toolbox by default. Users
+    can customize the groups to their liking or disable this feature
+    altogether in the Preferences dialog (Interface / Toolbox page).
   - New opt-out compact style for sliders with revamped interaction.
     The widget uses a narrower layout, and the different upper/lower-half
     behavior is gone. Instead, the behavior depends on the mouse button
@@ -59,7 +117,12 @@ UI:
     - Shift + left-click + drag changes value in small increments,
     - Ctrl + left-click + drag changes value in large increments,
     - middle-click enables numeric input mode;
-    - right-click enables numeric input mode and select the value.
+    - right-click enables numeric input mode and selects the value.
+
+  - The "You can drop dockable dialogs here" message is gone from
+    the toolbox for good. Instead, highlight dockable areas when
+    a user starts dragging a dockable dialog, and intensify
+    the highlight as the dialog goes over a dockable area.
 
   - Consolidate UI for merging down and anchoring layers:
     As they are both mutually exclusive and serve an almost identical
@@ -78,6 +141,18 @@ Plugins:
     set the op node as the graph node's underlying operation. This
     allows gimp_gegl_apply_operation() to perform certain optimizations.
 
+Filters:
+
+  - Don't disable gegl:color-to-alpha (which has "needs-alpha") 
+    when the drawable doesn't have an alpha channel, if one can be
+    added.
+
+  - Don't disable color-to-alpha for grayscale drawable, since the
+    operation is applicable to grayscale images (in particular, it
+    doesn't add color where there was none), and since GIMP no longer
+    distinguishes between layers and channels according to the
+    drawable format when updating the filters actions.  
+
 Windows:
 
   - Installer: unofficial languages, ghostscript 9.50.
@@ -93,26 +168,26 @@ macOS:
 
 Updated translations:
 
-  - Catalan, French, Japanese, Polish, Russian, Spanish, Swedish, Turkish,
-    Ukrainian.
+  - Catalan, French, German, Icelandic, Italian, Japanese, Polish,
+    Russian, Spanish, Swedish, Turkish, Ukrainian.
 
 Bugfixes:
 
    - #4172, #4194, #4205, #4218, #2543, #4185, #4246, #2794, #4209,
      #4278, #4372, #4187, #4392, #2674, #4338, #2862, #4203, #4204,
-     #4354, #1266
+     #4354, #1266, #4584, #4174, #4285, #4366, #1975, #4605
 
 Developers:
 
-  - Alex Samorukov, Cyril Richard, Ell, Elle Stone, Jehan, Jernej
-    Simončič, lillolollo, Massimo Valentini, Michael Natterer, Pascal
-    Terjan, woob.
+  - Alex Samorukov, Cyril Richard, Elad Shahar, Ell, Elle Stone, Jehan,
+    Jernej Simončič, lillolollo, Massimo Valentini, Michael Natterer,
+    Pascal Terjan, woob.
 
 Translators:
 
   - Alexandre Prokoudine, Anders Jonsson, Daniel Korostil, Jordi Mas,
     Julien Hardelin, Marco Ciampa, Piotr Drąg, Rodrigo Lledó Milanca,
-    Ryuta Fujii, Sabri Ünal, sicklylife.
+    Ryuta Fujii, Sabri Ünal, sicklylife, Sveinn í Felli, Tim Sabsch.
 
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
