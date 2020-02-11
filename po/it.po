@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-11 00:06+0100\n"
-"PO-Revision-Date: 2020-02-11 07:53+0100\n"
+"PO-Revision-Date: 2020-02-11 10:46+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -4949,7 +4949,7 @@ msgstr "_Natura"
 #: ../app/actions/filters-actions.c:93
 msgctxt "filters-action"
 msgid "N_oise"
-msgstr "_Disturbi"
+msgstr "Rum_ore"
 
 #: ../app/actions/filters-actions.c:95
 msgctxt "filters-action"
