@@ -72,6 +72,39 @@
   </provides>
 
   <releases>
+    <release version="2.10.16" date="2020-10-14">
+      <url type="details">https://www.gimp.org/news/2020/02/14/gimp-2-10-16-released/</url>
+      <description>
+        <_p>
+          GIMP 2.10.16 delivers several major usability improvements, a new tool
+          for transformations in 3D space, new release checker, and the usual amount
+          of bug fixes. Notable improvements:
+        </_p>
+        <ul>
+          <_li>
+            Tools are now grouped in the toolbox by default 
+          </_li>
+          <_li>
+            Sliders now use a compact style with improved user interaction
+          </_li>
+          <_li>
+            Vastly improved user experience for the transformation preview
+          </_li>
+          <_li>
+            Dockable areas now highlighted when a dockable dialog is being dragged      
+          </_li>
+          <_li>
+            New 3D Transform tool to rotate and pan items
+          </_li>
+          <_li>
+            Much smoother brush outline preview on the canvas
+          </_li>
+          <_li>
+            Consolidated user interface for merging down and anchoring layers
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.14" date="2019-10-27">
       <url type="details">https://www.gimp.org/news/2019/10/27/gimp-2-10-14-released/</url>
       <description>
