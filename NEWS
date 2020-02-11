@@ -108,6 +108,7 @@ UI:
   - Tools are now logically grouped in the toolbox by default. Users
     can customize the groups to their liking or disable this feature
     altogether in the Preferences dialog (Interface / Toolbox page).
+
   - New opt-out compact style for sliders with revamped interaction.
     The widget uses a narrower layout, and the different upper/lower-half
     behavior is gone. Instead, the behavior depends on the mouse button
@@ -168,8 +169,8 @@ macOS:
 
 Updated translations:
 
-  - Catalan, French, German, Icelandic, Italian, Japanese, Polish,
-    Russian, Spanish, Swedish, Turkish, Ukrainian.
+  - British English, Catalan, French, German, Icelandic, Italian, Japanese,
+    Polish, Russian, Spanish, Swedish, Turkish, Ukrainian.
 
 Bugfixes:
 
@@ -185,9 +186,10 @@ Developers:
 
 Translators:
 
-  - Alexandre Prokoudine, Anders Jonsson, Daniel Korostil, Jordi Mas,
-    Julien Hardelin, Marco Ciampa, Piotr Drąg, Rodrigo Lledó Milanca,
-    Ryuta Fujii, Sabri Ünal, sicklylife, Sveinn í Felli, Tim Sabsch.
+  - Alexandre Prokoudine, Anders Jonsson, Bruce Cowan, Daniel Korostil,
+    Jordi Mas, Julien Hardelin, Marco Ciampa, Piotr Drąg, Rodrigo Lledó
+    Milanca, Ryuta Fujii, Sabri Ünal, sicklylife, Sveinn í Felli, Tim
+    Sabsch, Zander Brown.
 
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
