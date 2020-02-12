@@ -169,8 +169,9 @@ macOS:
 
 Updated translations:
 
-  - British English, Catalan, French, German, Icelandic, Italian, Japanese,
-    Polish, Russian, Spanish, Swedish, Turkish, Ukrainian.
+  - British English, Catalan, Danish, French, German, Hungarian,
+    Icelandic, Italian, Japanese, Polish, Russian, Spanish, Swedish,
+    Turkish, Ukrainian.
 
 Bugfixes:
 
@@ -186,10 +187,10 @@ Developers:
 
 Translators:
 
-  - Alexandre Prokoudine, Anders Jonsson, Bruce Cowan, Daniel Korostil,
-    Jordi Mas, Julien Hardelin, Marco Ciampa, Piotr Drąg, Rodrigo Lledó
-    Milanca, Ryuta Fujii, Sabri Ünal, sicklylife, Sveinn í Felli, Tim
-    Sabsch, Zander Brown.
+  - Alan Mortensen, Alexandre Prokoudine, Anders Jonsson, Balázs Meskó,
+    Bruce Cowan, Daniel Korostil, Jordi Mas, Julien Hardelin,
+    Marco Ciampa, Piotr Drąg, Rodrigo Lledó Milanca, Ryuta Fujii,
+    Sabri Ünal, sicklylife, Sveinn í Felli, Tim Sabsch, Zander Brown.
 
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
