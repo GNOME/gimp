@@ -74,11 +74,15 @@ gimp_brush_real_transform_size (GimpBrush *brush,
                                 gint      *height)
 {
   GimpMatrix3 matrix;
+  gdouble     scale_x, scale_y;
   gint        x, y;
+
+  gimp_brush_transform_get_scale (scale, aspect_ratio,
+                                  &scale_x, &scale_y);
 
   gimp_brush_transform_matrix (gimp_brush_get_width  (brush),
                                gimp_brush_get_height (brush),
-                               scale, aspect_ratio, angle, reflect, &matrix);
+                               scale_x, scale_y, angle, reflect, &matrix);
 
   gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
 }
@@ -121,6 +125,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   GimpTempBuf  *source;
   const guchar *src;
   GimpMatrix3   matrix;
+  gdouble       scale_x, scale_y;
   gint          src_width;
   gint          src_height;
   gint          src_width_minus_one;
@@ -174,13 +179,16 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits) - 1 ;
 
+  gimp_brush_transform_get_scale (scale, aspect_ratio,
+                                  &scale_x, &scale_y);
+
   source = gimp_brush_get_mask (brush);
 
   src_width  = gimp_brush_get_width  (brush);
   src_height = gimp_brush_get_height (brush);
 
   gimp_brush_transform_matrix (src_width, src_height,
-                               scale, aspect_ratio, angle, reflect, &matrix);
+                               scale_x, scale_y, angle, reflect, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
     return gimp_temp_buf_copy (source);
@@ -202,7 +210,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       gint        unrotated_dest_height;
 
       gimp_brush_transform_matrix (src_width, src_height,
-                                   scale, aspect_ratio, 0.0, FALSE,
+                                   scale_x, scale_y, 0.0, FALSE,
                                    &unrotated_matrix);
 
       gimp_brush_transform_bounding_box (brush, &unrotated_matrix,
@@ -431,6 +439,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   GimpTempBuf  *source;
   const guchar *src;
   GimpMatrix3   matrix;
+  gdouble       scale_x, scale_y;
   gint          src_width;
   gint          src_height;
   gint          src_width_minus_one;
@@ -484,13 +493,16 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits) - 1 ;
 
+  gimp_brush_transform_get_scale (scale, aspect_ratio,
+                                  &scale_x, &scale_y);
+
   source = gimp_brush_get_pixmap (brush);
 
   src_width  = gimp_brush_get_width  (brush);
   src_height = gimp_brush_get_height (brush);
 
   gimp_brush_transform_matrix (src_width, src_height,
-                               scale, aspect_ratio, angle, reflect, &matrix);
+                               scale_x, scale_y, angle, reflect, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
     return gimp_temp_buf_copy (source);
@@ -512,7 +524,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
       gint        unrotated_dest_height;
 
       gimp_brush_transform_matrix (src_width, src_height,
-                                   scale, aspect_ratio, 0.0, FALSE,
+                                   scale_x, scale_y, 0.0, FALSE,
                                    &unrotated_matrix);
 
       gimp_brush_transform_bounding_box (brush, &unrotated_matrix,
@@ -714,29 +726,34 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 }
 
 void
+gimp_brush_transform_get_scale (gdouble  scale,
+                                gdouble  aspect_ratio,
+                                gdouble *scale_x,
+                                gdouble *scale_y)
+{
+  if (aspect_ratio < 0.0)
+    {
+      *scale_x = scale * (1.0 + (aspect_ratio / 20.0));
+      *scale_y = scale;
+    }
+  else
+    {
+      *scale_x = scale;
+      *scale_y = scale * (1.0 - (aspect_ratio / 20.0));
+    }
+}
+
+void
 gimp_brush_transform_matrix (gdouble      width,
                              gdouble      height,
-                             gdouble      scale,
-                             gdouble      aspect_ratio,
+                             gdouble      scale_x,
+                             gdouble      scale_y,
                              gdouble      angle,
                              gboolean     reflect,
                              GimpMatrix3 *matrix)
 {
   const gdouble center_x = width  / 2;
   const gdouble center_y = height / 2;
-  gdouble       scale_x  = scale;
-  gdouble       scale_y  = scale;
-
-  if (aspect_ratio < 0.0)
-    {
-      scale_x = scale * (1.0 - (fabs (aspect_ratio) / 20.0));
-      scale_y = scale;
-    }
-  else if (aspect_ratio > 0.0)
-    {
-      scale_x = scale;
-      scale_y = scale * (1.0 - (aspect_ratio  / 20.0));
-    }
 
   gimp_matrix3_identity (matrix);
   gimp_matrix3_scale (matrix, scale_x, scale_y);
