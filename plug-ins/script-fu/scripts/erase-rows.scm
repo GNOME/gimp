@@ -1,4 +1,8 @@
 (define (script-fu-erase-rows img drawable orientation which type)
+  (script-fu-erase-nth-rows img drawable orientation which type 2)
+)
+
+(define (script-fu-erase-nth-rows img drawable orientation offset type nth)
   (let* (
         (width (car (gimp-drawable-width drawable)))
         (height (car (gimp-drawable-height drawable)))
@@ -10,7 +14,6 @@
     (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
     (gimp-context-set-opacity 100.0)
     (gimp-context-set-feather FALSE)
-
     (gimp-image-undo-group-start img)
     (letrec ((loop (lambda (i max)
                      (if (< i max)
@@ -21,10 +24,8 @@
                            (if (= type 0)
                                (gimp-drawable-edit-clear drawable)
                                (gimp-drawable-edit-fill drawable FILL-BACKGROUND))
-                           (loop (+ i 2) max))))))
-      (loop (if (= which 0)
-                0
-                1)
+                           (loop (+ i nth) max))))))
+      (loop offset
             (if (= orientation 0)
                 height
                 width)
@@ -35,6 +36,21 @@
     (gimp-context-pop)
     (gimp-displays-flush)
   )
+)
+
+(script-fu-register "script-fu-erase-nth-rows"
+  _"_Erase Every Nth Row..."
+  _"Erase every nth row or column"
+  "Federico Mena Quintero, Nikc M. (Altered)"
+  "Federico Mena Quintero"
+  "June 1997, February 2020"
+  "RGB* GRAY* INDEXED*"
+  SF-IMAGE       "Image"      0
+  SF-DRAWABLE    "Drawable"   0
+  SF-OPTION     _"Rows/cols"  '(_"Rows" _"Columns")
+  SF-ADJUSTMENT  "Offset"     '(0 0 1024 1 10 0 SF-SPINNER)
+  SF-OPTION     _"Erase/fill" '(_"Erase" _"Fill with BG")
+  SF-ADJUSTMENT  "Skip by"    '(1 1 1024 1 10 0 SF-SPINNER)
 )
 
 (script-fu-register "script-fu-erase-rows"
