@@ -59,6 +59,7 @@ libappcore_sources = [
   'gimpboundary.c',
   'gimpbrush-boundary.c',
   'gimpbrush-load.c',
+  'gimpbrush-mipmap.cc',
   'gimpbrush-save.c',
   'gimpbrush-transform.cc',
   'gimpbrush.c',

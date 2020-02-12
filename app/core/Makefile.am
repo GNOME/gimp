@@ -114,6 +114,8 @@ libappcore_a_sources = \
 	gimpbrush-header.h			\
 	gimpbrush-load.c			\
 	gimpbrush-load.h			\
+	gimpbrush-mipmap.cc			\
+	gimpbrush-mipmap.h			\
 	gimpbrush-private.h			\
 	gimpbrush-save.c			\
 	gimpbrush-save.h			\
