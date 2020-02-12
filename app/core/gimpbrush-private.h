@@ -21,21 +21,26 @@
 
 struct _GimpBrushPrivate
 {
-  GimpTempBuf    *mask;           /*  the actual mask                    */
-  GimpTempBuf    *blurred_mask;    /*  blurred actual mask cached          */
-  GimpTempBuf    *pixmap;         /*  optional pixmap data               */
-  GimpTempBuf    *blurred_pixmap;  /*  optional pixmap data blurred cache  */
+  GimpTempBuf     *mask;           /*  the actual mask                    */
+  GimpTempBuf     *blurred_mask;    /*  blurred actual mask cached          */
+  GimpTempBuf     *pixmap;         /*  optional pixmap data               */
+  GimpTempBuf     *blurred_pixmap;  /*  optional pixmap data blurred cache  */
 
-  gdouble         blur_hardness;
+  gdouble          blur_hardness;
 
-  gint            spacing;    /*  brush's spacing                */
-  GimpVector2     x_axis;     /*  for calculating brush spacing  */
-  GimpVector2     y_axis;     /*  for calculating brush spacing  */
+  gint             n_horz_mipmaps;
+  gint             n_vert_mipmaps;
+  GimpTempBuf    **mask_mipmaps;
+  GimpTempBuf    **pixmap_mipmaps;
 
-  gint            use_count;  /*  for keeping the caches alive   */
-  GimpBrushCache *mask_cache;
-  GimpBrushCache *pixmap_cache;
-  GimpBrushCache *boundary_cache;
+  gint             spacing;    /*  brush's spacing                */
+  GimpVector2      x_axis;     /*  for calculating brush spacing  */
+  GimpVector2      y_axis;     /*  for calculating brush spacing  */
+
+  gint             use_count;  /*  for keeping the caches alive   */
+  GimpBrushCache  *mask_cache;
+  GimpBrushCache  *pixmap_cache;
+  GimpBrushCache  *boundary_cache;
 };
 
 

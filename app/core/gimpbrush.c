@@ -30,6 +30,7 @@
 #include "gimpbrush.h"
 #include "gimpbrush-boundary.h"
 #include "gimpbrush-load.h"
+#include "gimpbrush-mipmap.h"
 #include "gimpbrush-private.h"
 #include "gimpbrush-save.h"
 #include "gimpbrush-transform.h"
@@ -189,6 +190,8 @@ gimp_brush_finalize (GObject *object)
   g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
   g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
 
+  gimp_brush_mipmap_clear (brush);
+
   g_clear_object (&brush->priv->mask_cache);
   g_clear_object (&brush->priv->pixmap_cache);
   g_clear_object (&brush->priv->boundary_cache);
@@ -245,6 +248,8 @@ gimp_brush_get_memsize (GimpObject *object,
 
   memsize += gimp_temp_buf_get_memsize (brush->priv->mask);
   memsize += gimp_temp_buf_get_memsize (brush->priv->pixmap);
+
+  memsize += gimp_brush_mipmap_get_memsize (brush);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -409,6 +414,8 @@ gimp_brush_dirty (GimpData *data)
 
   if (brush->priv->boundary_cache)
     gimp_brush_cache_clear (brush->priv->boundary_cache);
+
+  gimp_brush_mipmap_clear (brush);
 
   g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
   g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
