@@ -30,7 +30,7 @@
 #include "gimp-intl.h"
 
 
-#define AIRBRUSH_DEFAULT_RATE        80.0
+#define AIRBRUSH_DEFAULT_RATE        50.0
 #define AIRBRUSH_DEFAULT_FLOW        10.0
 #define AIRBRUSH_DEFAULT_MOTION_ONLY FALSE
 
@@ -70,7 +70,7 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
                            "rate",
                            C_("airbrush-tool", "Rate"),
                            NULL,
-                           0.0, 150.0, AIRBRUSH_DEFAULT_RATE,
+                           0.0, 100.0, AIRBRUSH_DEFAULT_RATE,
                            GIMP_PARAM_STATIC_STRINGS);
 
 

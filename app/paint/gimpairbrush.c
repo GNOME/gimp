@@ -36,6 +36,9 @@
 #include "gimp-intl.h"
 
 
+#define STAMP_MAX_FPS 60
+
+
 enum
 {
   STAMP,
@@ -178,11 +181,13 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
                                                          paint_options,
                                                          fade_point);
 
-          timeout = 10000 / (options->rate * dynamic_rate);
+          timeout = (1000.0 / STAMP_MAX_FPS) /
+                    ((options->rate / 100.0) * dynamic_rate);
 
-          airbrush->timeout_id = g_timeout_add (timeout,
-                                                gimp_airbrush_timeout,
-                                                airbrush);
+          airbrush->timeout_id = g_timeout_add_full (G_PRIORITY_HIGH,
+                                                     timeout,
+                                                     gimp_airbrush_timeout,
+                                                     airbrush, NULL);
         }
       break;
 
