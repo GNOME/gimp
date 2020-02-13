@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-13 00:06+0000\n"
-"PO-Revision-Date: 2020-02-13 09:24+0100\n"
+"POT-Creation-Date: 2020-02-13 08:58+0000\n"
+"PO-Revision-Date: 2020-02-13 10:47+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -109,7 +109,6 @@ msgstr ""
 "mejorada con el usuario"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
-#| msgid "Most tools improved, several new transformation tools"
 msgid "Vastly improved user experience for the transformation preview"
 msgstr ""
 "Experiencia de usuario enormemente mejorada en la vista previa de "
@@ -1778,7 +1777,7 @@ msgstr "_Añadir color desde el frente"
 #: ../app/actions/colormap-actions.c:59
 msgctxt "colormap-action"
 msgid "Add current foreground color"
-msgstr "Añade el color de frente actual"
+msgstr "Añade el color del primer plano actual"
 
 #: ../app/actions/colormap-actions.c:64
 msgctxt "colormap-action"
@@ -1919,7 +1918,8 @@ msgstr "Colores pre_definidos"
 #: ../app/actions/context-actions.c:83
 msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
-msgstr "Pone el color de frente a negro y el color de fondo a blanco"
+msgstr ""
+"Establece el color de primer plano a negro y el color de fondo a blanco"
 
 #: ../app/actions/context-actions.c:88
 msgctxt "context-action"
@@ -1929,7 +1929,7 @@ msgstr "In_tercambiar los colores"
 #: ../app/actions/context-actions.c:89
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "Intercambia los colores de frente y fondo"
+msgstr "Intercambia los colores de primer plano y de fondo"
 
 #: ../app/actions/context-actions.c:97
 msgctxt "context-action"
@@ -2219,12 +2219,12 @@ msgstr "Primer plano azul: establecer"
 #: ../app/actions/context-actions.c:357
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "Fondo verde: establecer al mínimo"
+msgstr "Primer plano verde: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:361
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "Fondo verde: establecer al máximo"
+msgstr "Primer plano verde: establecer al máximo"
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
@@ -4417,7 +4417,7 @@ msgstr "Rellenar con el color de _frente"
 #: ../app/actions/edit-actions.c:215
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
-msgstr "Rellenar la selección utilizando el color de frente"
+msgstr "Rellenar la selección utilizando el color de primer plano"
 
 #: ../app/actions/edit-actions.c:220
 msgctxt "edit-action"
@@ -4427,7 +4427,7 @@ msgstr "Rellenar con el color de fo_ndo"
 #: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
-msgstr "Rellenar la selección con el color del fondo"
+msgstr "Rellenar la selección con el color de fondo"
 
 #: ../app/actions/edit-actions.c:226
 msgctxt "edit-action"
@@ -5784,13 +5784,13 @@ msgstr "Punto final _derecho"
 #: ../app/actions/gradient-editor-actions.c:214
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
-msgstr "Color del _frente"
+msgstr "Color de _primer plano"
 
 #: ../app/actions/gradient-editor-actions.c:171
 #: ../app/actions/gradient-editor-actions.c:219
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
-msgstr "Color del _fondo"
+msgstr "Color de _fondo"
 
 #: ../app/actions/gradient-editor-actions.c:204
 msgctxt "gradient-editor-action"
@@ -5812,19 +5812,19 @@ msgstr "_Fijo"
 #: ../app/actions/gradient-editor-actions.c:293
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
-msgstr "Color del _frente"
+msgstr "Color de _primer plano"
 
 #: ../app/actions/gradient-editor-actions.c:269
 #: ../app/actions/gradient-editor-actions.c:299
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
-msgstr "_Color de frente (transparente)"
+msgstr "_Color de p_rimer plano (transparente)"
 
 #: ../app/actions/gradient-editor-actions.c:274
 #: ../app/actions/gradient-editor-actions.c:304
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
-msgstr "Color del _fondo"
+msgstr "Color de _fondo"
 
 #: ../app/actions/gradient-editor-actions.c:280
 #: ../app/actions/gradient-editor-actions.c:310
@@ -7729,7 +7729,7 @@ msgstr "Color nuevo desde el _frente"
 #: ../app/actions/palette-editor-actions.c:74
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the foreground color"
-msgstr "Crear una entrada nueva a partir del color del frente"
+msgstr "Crear una entrada nueva a partir del color de primer plano"
 
 #: ../app/actions/palette-editor-actions.c:79
 msgctxt "palette-editor-action"
@@ -7739,7 +7739,7 @@ msgstr "Color nuevo desde el f_ondo"
 #: ../app/actions/palette-editor-actions.c:81
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
-msgstr "Crear una entrada nueva a partir del color del fondo"
+msgstr "Crear una entrada nueva a partir del color de fondo"
 
 #: ../app/actions/palette-editor-actions.c:89
 msgid "Zoom _In"
@@ -11911,7 +11911,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:680
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
-"Mostrar los colores de frente y fondo actuales en la caja de herramientas."
+"Mostrar los colores de primer plano y fondo actuales en la caja de "
+"herramientas."
 
 #: ../app/config/gimprc-blurbs.h:683
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
@@ -13490,11 +13491,11 @@ msgstr "Máscara de selección"
 
 #: ../app/core/gimpcontext.c:684
 msgid "Foreground"
-msgstr "Frente"
+msgstr "Primer plano"
 
 #: ../app/core/gimpcontext.c:685 ../app/core/gimpgrid.c:94
 msgid "Foreground color"
-msgstr "Color de frente"
+msgstr "Color de primer plano"
 
 #: ../app/core/gimpcontext.c:691 ../app/core/gimpimage-new.c:150
 msgid "Background"
@@ -13757,12 +13758,12 @@ msgstr "Radio del difuminado"
 #: ../app/core/gimpfilloptions.c:355
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
-msgstr "Rellenar con el color del frente"
+msgstr "Rellenar con el color de primer plano"
 
 #: ../app/core/gimpfilloptions.c:360
 msgctxt "undo-type"
 msgid "Fill with Background Color"
-msgstr "Rellenar con el color del fondo"
+msgstr "Rellenar con el color de fondo"
 
 #: ../app/core/gimpfilloptions.c:365
 msgctxt "undo-type"
@@ -13836,7 +13837,7 @@ msgstr "Estilo de línea utilizado por la rejilla."
 
 #: ../app/core/gimpgrid.c:95
 msgid "The foreground color of the grid."
-msgstr "El color de frente de la rejilla."
+msgstr "El color de primer plano de la rejilla."
 
 #: ../app/core/gimpgrid.c:102
 msgid ""
@@ -15259,7 +15260,6 @@ msgstr ""
 "Francisco Vila"
 
 #: ../app/dialogs/about-dialog.c:309
-#| msgid "No longer available"
 msgid "New version available!"
 msgstr "¡Nueva versión disponible!"
 
@@ -15286,13 +15286,11 @@ msgstr ""
 "Se recomienda actualizar."
 
 #: ../app/dialogs/about-dialog.c:350
-#| msgid "%s to dodge"
 msgid "Go to download page"
 msgstr "Ir a la página de descarga"
 
 #: ../app/dialogs/about-dialog.c:362
 #, c-format
-#| msgid "Last used: %s"
 msgid "Last checked on %s"
 msgstr "Comprobado por última vez el %s"
 
@@ -16865,7 +16863,7 @@ msgstr "Mostrar el _logotipo de GIMP (arrastrar y soltar el objetivo)"
 
 #: ../app/dialogs/preferences-dialog.c:2147
 msgid "Show _foreground & background color"
-msgstr "Mostrar color de _fondo y frente"
+msgstr "Mostrar el color de _primer plano y de fondo"
 
 #: ../app/dialogs/preferences-dialog.c:2151
 msgid "Show active _brush, pattern & gradient"
@@ -20315,7 +20313,7 @@ msgstr "Complemento"
 #: ../app/pdb/drawable-cmds.c:993 ../app/tools/gimpforegroundselecttool.c:1020
 msgctxt "command"
 msgid "Foreground Select"
-msgstr "Selección del frente"
+msgstr "Selección del primer plano"
 
 #: ../app/pdb/drawable-color-cmds.c:507
 msgctxt "undo-type"
@@ -22092,7 +22090,7 @@ msgstr "Pulse sobre cualquier imagen para recoger el color de fondo"
 #: ../app/tools/gimpbucketfilltool.c:768 ../app/tools/gimpbucketfilltool.c:903
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:462
 msgid "Click in any image to pick the foreground color"
-msgstr "Pulse sobre cualquier imagen para recoger el color de frente"
+msgstr "Pulse sobre cualquier imagen para recoger el color de primer plano"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
@@ -22759,21 +22757,21 @@ msgstr "Reiniciar tamaño nativo de la anchura del trazo"
 
 #: ../app/tools/gimpforegroundselecttool.c:193
 msgid "Foreground Select"
-msgstr "Selección del frente"
+msgstr "Selección del primer plano"
 
 #: ../app/tools/gimpforegroundselecttool.c:194
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
 "Herramienta de selección del primer plano: seleccionar una zona que contiene "
-"objetos en el frente"
+"objetos en el primer plano"
 
 #: ../app/tools/gimpforegroundselecttool.c:195
 msgid "F_oreground Select"
-msgstr "Selección del _frente"
+msgstr "Selección del _primer plano"
 
 #: ../app/tools/gimpforegroundselecttool.c:314
 msgid "Dialog for foreground select"
-msgstr "Diálogo para la selección del frente"
+msgstr "Diálogo para la selección del primer plano"
 
 #: ../app/tools/gimpforegroundselecttool.c:332
 msgid "_Preview mask"
@@ -22781,7 +22779,7 @@ msgstr "Máscara de _vista previa"
 
 #: ../app/tools/gimpforegroundselecttool.c:343
 msgid "Select foreground pixels"
-msgstr "Seleccionar píxeles del frente"
+msgstr "Seleccionar píxeles del primer plano"
 
 #: ../app/tools/gimpforegroundselecttool.c:619
 #: ../app/tools/gimpforegroundselecttool.c:624
@@ -22794,19 +22792,19 @@ msgstr "Pulse Intro para depurar."
 
 #: ../app/tools/gimpforegroundselecttool.c:647
 msgid "Selecting foreground"
-msgstr "Seleccionando primer plano"
+msgstr "Seleccionando el primer plano"
 
 #: ../app/tools/gimpforegroundselecttool.c:649
 msgid "Selecting background"
-msgstr "Seleccionando fondo"
+msgstr "Seleccionando el fondo"
 
 #: ../app/tools/gimpforegroundselecttool.c:651
 msgid "Selecting unknown"
-msgstr "Seleccionando desconocido"
+msgstr "Seleccionando lo desconocido"
 
 #: ../app/tools/gimpforegroundselecttool.c:654
 msgid "press Enter to preview."
-msgstr "Presione «Retorno» para vista previa."
+msgstr "Presione «Intro» para ver una vista previa."
 
 #: ../app/tools/gimpforegroundselecttool.c:656
 msgid "press Escape to exit preview or Enter to apply."
@@ -23955,7 +23953,7 @@ msgstr "_Clonado continuo"
 
 #: ../app/tools/gimpseamlessclonetool.c:791
 msgid "Cloning the foreground object"
-msgstr "Clonar el objeto de frente"
+msgstr "Clonar el objeto de primer plano"
 
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Enable feathering of selection edges"
@@ -24898,7 +24896,7 @@ msgstr "Imagen"
 #: ../app/tools/tools-enums.c:217
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
-msgstr "Dibujar el frente"
+msgstr "Dibujar el primer plano"
 
 #: ../app/tools/tools-enums.c:218
 msgctxt "matting-draw-mode"
@@ -24908,7 +24906,7 @@ msgstr "Dibujar el fondo"
 #: ../app/tools/tools-enums.c:219
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
-msgstr "Dibujar desconocido"
+msgstr "Dibujar lo desconocido"
 
 #: ../app/tools/tools-enums.c:247
 msgctxt "matting-preview-mode"
@@ -26394,7 +26392,7 @@ msgstr "Guardar estado del dispositivo"
 #: ../app/widgets/gimpdevicestatus.c:551
 #, c-format
 msgid "Foreground: %d, %d, %d"
-msgstr "Frente: %d, %d, %d"
+msgstr "Primer plano: %d, %d, %d"
 
 #: ../app/widgets/gimpdevicestatus.c:556
 #, c-format
@@ -26621,7 +26619,7 @@ msgstr "RGB (%d, %d, %d)"
 
 #: ../app/widgets/gimpgradienteditor.c:1288
 msgid "Foreground color set to:"
-msgstr "Color de frente establecido a:"
+msgstr "Color de primer plano establecido a:"
 
 #: ../app/widgets/gimpgradienteditor.c:1295
 msgid "Background color set to:"
@@ -26672,11 +26670,11 @@ msgstr "E_stilo de la línea:"
 
 #: ../app/widgets/gimpgrideditor.c:151
 msgid "Change grid foreground color"
-msgstr "Cambiar el color de frente de la rejilla"
+msgstr "Cambiar el color de primer plano de la rejilla"
 
 #: ../app/widgets/gimpgrideditor.c:158
 msgid "_Foreground color:"
-msgstr "Color de _frente:"
+msgstr "Color de _primer plano:"
 
 #: ../app/widgets/gimpgrideditor.c:162
 msgid "Change grid background color"
@@ -27332,7 +27330,7 @@ msgstr "Creando la vista previa…"
 
 #: ../app/widgets/gimptoolbox-color-area.c:220
 msgid "Change Foreground Color"
-msgstr "Cambiar el color de frente"
+msgstr "Cambiar el color de primer plano"
 
 #: ../app/widgets/gimptoolbox-color-area.c:225
 msgid "Change Background Color"
@@ -27533,7 +27531,7 @@ msgstr "RGB preferido (%s)"
 #: ../app/widgets/widgets-enums.c:23
 msgctxt "active-color"
 msgid "Foreground"
-msgstr "Frente"
+msgstr "Primer plano"
 
 #: ../app/widgets/widgets-enums.c:24
 msgctxt "active-color"
@@ -27558,7 +27556,7 @@ msgstr "Sólo seleccionar"
 #: ../app/widgets/widgets-enums.c:115
 msgctxt "color-pick-target"
 msgid "Set foreground color"
-msgstr "Definir el color de frente"
+msgstr "Definir el color de primer plano"
 
 #: ../app/widgets/widgets-enums.c:116
 msgctxt "color-pick-target"
