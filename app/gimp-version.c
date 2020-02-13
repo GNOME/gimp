@@ -227,7 +227,9 @@ gimp_version (gboolean be_verbose,
                                       "# C compiler #\n%s\n"
                                       "# Libraries #\n%s",
                                       GIMP_GIT_VERSION,
-                                      GIMP_BUILD_ID, GIMP_BUILD_REVISION, GIMP_BUILD_PLATFORM,
+                                      GIMP_BUILD_ID,
+                                      gimp_version_get_revision (),
+                                      GIMP_BUILD_PLATFORM,
                                       CC_VERSION,
                                       lib_versions);
       g_free (lib_versions);
@@ -239,4 +241,34 @@ gimp_version (gboolean be_verbose,
     }
 
   return version;
+}
+
+gint
+gimp_version_get_revision (void)
+{
+  GKeyFile *key_file;
+  gchar    *gimp_release;
+  gint      revision = 0;
+
+  key_file = g_key_file_new ();
+
+  /* The gimp-release file is inspired by /etc/os-release and similar
+   * distribution files. Right now its main use is to number the package
+   * revision. This information is not a build variable because a new
+   * package version does not necessarily imply a rebuild (maybe just
+   * installed data or dependencies change).
+   */
+  gimp_release = g_build_filename (gimp_data_directory (), "gimp-release", NULL);
+  /* Absence of the file is not an error. Actually most third-party
+   * builds probably won't install such file.
+   */
+  if (g_key_file_load_from_file (key_file, gimp_release, G_KEY_FILE_NONE, NULL))
+    {
+      if (g_key_file_has_key (key_file, "package", "revision", NULL))
+        revision = g_key_file_get_integer (key_file, "package", "revision", NULL);
+    }
+  g_key_file_free (key_file);
+  g_free (gimp_release);
+
+  return revision;
 }
