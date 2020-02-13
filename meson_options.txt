@@ -13,7 +13,7 @@ option('shmem-type',        type: 'combo',   value: 'auto', description: 'Shared
                                              choices: [ 'none', 'sysv', 'posix', 'win32', 'auto' ])
 
 option('build-id',          type: 'string',  value: 'unknown', description: 'Unique string used to define your build')
-option('revision',          type: 'integer', value: 0,    description: 'Revision increment for a same build/version/platform')
+option('revision',          type: 'integer', value: 0,    description: 'Revision increment for a package')
 option('check-update',      type: 'boolean', value: true, description: 'GIMP will look up new version availability on startup')
 
 option('bug-report-url',    type: 'string',  value: '',   description: 'URL used by the debug dialog to report bugs')

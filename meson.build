@@ -1101,7 +1101,6 @@ conf.set_quoted('BUG_REPORT_URL', bug_report_url)
 # Build identifiers #
 
 conf.set_quoted('GIMP_BUILD_ID', get_option('build-id'))
-conf.set('GIMP_BUILD_REVISION', get_option('revision'))
 conf.set_quoted('GIMP_BUILD_PLATFORM', host_os)
 if platform_linux
   conf.set_quoted('GIMP_BUILD_PLATFORM_FAMILY', 'linux')
