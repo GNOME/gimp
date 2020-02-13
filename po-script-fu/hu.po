@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-12 17:33+0000\n"
-"PO-Revision-Date: 2020-02-12 18:45+0100\n"
-"Last-Translator: Balázs Meskó <mesko.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2020-02-13 17:01+0000\n"
+"PO-Revision-Date: 2020-02-13 18:50+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -626,32 +626,26 @@ msgid "Distress the selection"
 msgstr "A kijelölés torzítása"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-#| msgid "Threshold (bigger 1<-->254 smaller)"
 msgid "_Threshold (bigger 1<-->254 smaller)"
 msgstr "_Küszöb (nagyobb 1 <--> 254 kisebb)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-#| msgid "Spread"
 msgid "_Spread"
 msgstr "Szó_rás"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-#| msgid "Granularity (1 is low)"
 msgid "_Granularity (1 is low)"
 msgstr "Sz_emcsézettség (1 a legkisebb)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-#| msgid "Smooth"
 msgid "S_mooth"
 msgstr "_Simítás"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#| msgid "Smooth horizontally"
 msgid "Smooth hor_izontally"
 msgstr "_Vízszintes simítás"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-#| msgid "Smooth vertically"
 msgid "Smooth _vertically"
 msgstr "_Függőleges simítás"
 
@@ -694,49 +688,65 @@ msgstr "Átlátszatlanság"
 msgid "Allow resizing"
 msgstr "Átméretezés engedélyezése"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Minden második sor törlése…"
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Minden második sor vagy oszlop törlése"
+#| msgid "_Erase Every Other Row..."
+msgid "_Erase Every Nth Row..."
+msgstr "_Minden N. sor törlése…"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+#| msgid "Erase every other row or column"
+msgid "Erase every nth row or column"
+msgstr "Minden N. sor vagy oszlop törlése"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Sorok/oszlopok"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Sorok"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Oszlopok"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Páros/páratlan"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Páros"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Páratlan"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Törlés/kitöltés"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Törlés"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Kitöltés háttérszínnel"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Minden második sor törlése…"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Minden második sor vagy oszlop törlése"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Páros/páratlan"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Páros"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Páratlan"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -968,7 +978,6 @@ msgstr "Segédvonal felvétele a képméret százalékában megadott helyen"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-#| msgid "Direction"
 msgid "_Direction"
 msgstr "_Irány"
 
@@ -983,7 +992,6 @@ msgid "Vertical"
 msgstr "Függőleges"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#| msgid "Position (in %)"
 msgid "_Position (in %)"
 msgstr "_Pozíció (százalékban)"
 
@@ -997,7 +1005,6 @@ msgstr ""
 "Segédvonal felvétele a megadott tájolással a (képpontban) megadott helyen"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-#| msgid "Position"
 msgid "_Position"
 msgstr "_Pozíció"
 
@@ -1205,7 +1212,6 @@ msgstr "A vágólap tartalmának beillesztése egy új ecsetbe"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-#| msgid "Brush name"
 msgid "_Brush name"
 msgstr "_Ecset neve"
 
@@ -1213,13 +1219,11 @@ msgstr "_Ecset neve"
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-#| msgid "File name"
 msgid "_File name"
 msgstr "_Fájlnév"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
-#| msgid "Spacing"
 msgid "_Spacing"
 msgstr "_Térköz"
 
@@ -1233,7 +1237,6 @@ msgstr "A vágólap tartalmának beillesztése egy új mintába"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#| msgid "Pattern name"
 msgid "_Pattern name"
 msgstr "_Minta neve"
 
@@ -1378,12 +1381,10 @@ msgid "Round the corners of the current selection"
 msgstr "A jelenlegi kijelölés sarkainak lekerekítése"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-#| msgid "Radius (%)"
 msgid "R_adius (%)"
 msgstr "_Sugár (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-#| msgid "Concave"
 msgid "Co_ncave"
 msgstr "_Konkáv"
 
