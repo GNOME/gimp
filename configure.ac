@@ -2647,10 +2647,10 @@ AC_DEFINE_UNQUOTED(GIMP_BUILD_ID, "$with_build_id",
                    [The string defining the build])
 
 AC_ARG_WITH(revision,
-            [  --with-revision   Revision increment for a same build/version/platform],,
+            [  --with-revision   Revision increment for a package],,
             [with_revision="0"])
-AC_DEFINE_UNQUOTED(GIMP_BUILD_REVISION, $with_revision,
-                   [The revision increment for a same build/version/platform])
+GIMP_PACKAGE_REVISION=$with_revision
+AC_SUBST(GIMP_PACKAGE_REVISION)
 
 AC_ARG_ENABLE(check-update,
               [  --disable-check-update
