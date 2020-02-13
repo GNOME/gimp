@@ -8,14 +8,14 @@
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2008.
 # Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007-2009.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011, 2017.
-# Tim Sabsch <tim@sabsch.com>, 2019.
+# Tim Sabsch <tim@sabsch.com>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-20 16:59+0000\n"
-"PO-Revision-Date: 2019-11-08 18:51+0100\n"
+"POT-Creation-Date: 2020-02-12 23:19+0000\n"
+"PO-Revision-Date: 2020-02-13 20:02+0100\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -143,7 +143,7 @@ msgstr "Ausgabe der Skript-Fu-Konsole speichern"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
 #: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: ../plug-ins/script-fu/script-fu-server.c:836
 msgid "_Cancel"
 msgstr "A_bbrechen"
 
@@ -241,27 +241,27 @@ msgstr "Zu wenig Argumente für Aufruf von »script-fu-register«"
 msgid "Error while loading %s:"
 msgstr "Fehler beim Laden von %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:832
 msgid "Script-Fu Server Options"
 msgstr "Skript-Fu-Server-Einstellungen"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: ../plug-ins/script-fu/script-fu-server.c:837
 msgid "_Start Server"
 msgstr "_Server starten"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: ../plug-ins/script-fu/script-fu-server.c:870
 msgid "Listen on IP:"
 msgstr "IP-Schnittstelle überwachen:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: ../plug-ins/script-fu/script-fu-server.c:877
 msgid "Server port:"
 msgstr "Server-Port:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: ../plug-ins/script-fu/script-fu-server.c:883
 msgid "Server logfile:"
 msgstr "Server-Logdatei:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: ../plug-ins/script-fu/script-fu-server.c:896
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -692,49 +692,63 @@ msgstr "Deckkraft"
 msgid "Allow resizing"
 msgstr "Größenänderung zulassen"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Jede zweite Zeile löschen …"
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Jede zweite Zeile oder Spalte löschen"
+msgid "_Erase Every Nth Row..."
+msgstr "_Jede x-te Zeile löschen …"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Jede x-te Zeile oder Spalte löschen"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Zeilen/Spalten"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Zeilen"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Spalten"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Gerade/Ungerade"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Gerade"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Ungerade"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Löschen/Füllen"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Löschen"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Mit HG-Farbe füllen"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Jede zweite Zeile löschen …"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Jede zweite Zeile oder Spalte löschen"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Gerade/Ungerade"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Gerade"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Ungerade"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
