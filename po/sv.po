@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-02-13 00:06+0000\n"
-"PO-Revision-Date: 2020-02-13 14:20+0100\n"
+"PO-Revision-Date: 2020-02-13 17:55+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -81,10 +81,13 @@ msgid ""
 "transformations in 3D space, new release checker, and the usual amount of "
 "bug fixes. Notable improvements:"
 msgstr ""
+"GIMP 2.10.16 levererar flera stora användbarhetsförbättringar, ett nytt "
+"verktyg för transformeringar i 3d-rymden, sökning av nya utgåvor, och den "
+"vanliga mängden felfixar. Nämnvärda förbättringar:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "Tools are now grouped in the toolbox by default"
-msgstr ""
+msgstr "Verktyg grupperas nu i verktygslådan som standard"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Sliders now use a compact style with improved user interaction"
@@ -98,19 +101,19 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
-msgstr ""
+msgstr "Dockningsbara områden markeras nu då en dockningsbar dialogruta dras"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "New 3D Transform tool to rotate and pan items"
-msgstr ""
+msgstr "Nytt 3d-transformeringsverktyg för att rotera och panorera objekt"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Much smoother brush outline preview on the canvas"
-msgstr ""
+msgstr "Mycket mjukare förhandsvisning av penselkontur på ritytan"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Consolidated user interface for merging down and anchoring layers"
-msgstr ""
+msgstr "Förenat användargränssnitt för att sammanfoga nedåt och ankra lager"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
@@ -118,24 +121,33 @@ msgid ""
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
 "has a few noteworthy improvements:"
 msgstr ""
+"GIMP 2.10.14 är återigen främst en utgåva med felfixar, för att göra GIMP så "
+"stabilt som möjligt. Vidare har många gamla filter slutligen porterats till "
+"GEGL. Den innehåller förstås också några nämnvärda förbättringar:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr ""
+"Visa-menyn: nytt ”Visa allt”-alternativ för att visa bildpunkter utanför "
+"ritytans gräns"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
+"Filter: nytt ”Klippning”-alternativ för att möjliggöra storleksändring av "
+"lager då det är relevant"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
-msgstr ""
+msgstr "Verktyget Förgrundsmarkering: nytt förhandsvisningsläge ”Gråskala”"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
+"Verktyget Förgrundsmarkering: färg/opacitetsväljare för ”Färg”-"
+"förhandsvisning"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Free Select tool: improved copy-paste interaction"
@@ -144,6 +156,8 @@ msgstr "Verktyget Fri markering: förbättrad kopiera-klistra in-interaktion"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
+"Transformeringsverktyg: ny transformeringstyp Bild för att transformera hela "
+"bilden"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
@@ -151,15 +165,15 @@ msgstr "Inställningar: ny inställning ”Tillåt redigering på ej synliga lag
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "HEIF import/export: color profile support"
-msgstr ""
+msgstr "HEIF-import/export: färgprofilstöd"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "PDF export: text layers in layer groups now exported as texts"
-msgstr ""
+msgstr "PDF-export: textlager i lagergrupper exporteras nu som texter"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
-msgstr ""
+msgstr "TIFF-import: frågar nu hur ospecificerade TIFF-kanaler ska bearbetas"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
@@ -173,11 +187,11 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Improved curves interaction overall"
-msgstr ""
+msgstr "Överlag förbättrad kurvinteraktion"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "A few enhancements specific to the Curves tool"
-msgstr ""
+msgstr "Några förbättringar specifika för verktyget Kurvor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "Layer support in TIFF"
@@ -189,7 +203,7 @@ msgstr "Upptäckt av användarinstallerade typsnitt i Windows"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Incremental mode in the Dodge/Burn tool"
-msgstr ""
+msgstr "Inkrementellt läge i Skugga/Efterbelys-verktyget"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Free Select tool creates preliminary selection"
@@ -5347,12 +5361,9 @@ msgid "Sp_read..."
 msgstr "Sp_rid…"
 
 #: ../app/actions/filters-actions.c:548
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Bump Map..."
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr "_Bumpmap…"
+msgstr "_Normalmappning…"
 
 #: ../app/actions/filters-actions.c:553
 msgctxt "filters-action"
