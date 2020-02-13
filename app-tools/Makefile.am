@@ -4,6 +4,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 libapp = $(top_builddir)/app/libapp.a
 libappwidgets = $(top_builddir)/app/widgets/libappwidgets.a
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
@@ -41,6 +42,7 @@ gimp_debug_tool_@GIMP_TOOL_VERSION@_CPPFLAGS = \
 gimp_debug_tool_@GIMP_TOOL_VERSION@_LDADD = \
 	$(libappwidgets)	\
 	$(libapp)		\
+	$(libgimpbase)						\
 	$(GIO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\

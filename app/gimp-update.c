@@ -40,6 +40,7 @@
 
 #include "gimp-intl.h"
 #include "gimp-update.h"
+#include "gimp-version.h"
 
 
 static gboolean
@@ -205,7 +206,7 @@ gimp_check_updates_callback (GObject      *source,
                       break;
                     }
                 }
-              if (build_revision <= GIMP_BUILD_REVISION)
+              if (build_revision <= gimp_version_get_revision ())
                 {
                   /* Already using the last officially released
                    * revision. */
