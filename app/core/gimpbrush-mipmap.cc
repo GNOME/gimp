@@ -483,7 +483,7 @@ gimp_brush_mipmap_get_memsize (GimpBrush *brush)
     {
       gint i;
 
-      for (i = 0;
+      for (i = 1;
            i < brush->priv->n_horz_mipmaps * brush->priv->n_vert_mipmaps;
            i++)
         {
@@ -495,7 +495,7 @@ gimp_brush_mipmap_get_memsize (GimpBrush *brush)
     {
       gint i;
 
-      for (i = 0;
+      for (i = 1;
            i < brush->priv->n_horz_mipmaps * brush->priv->n_vert_mipmaps;
            i++)
         {
