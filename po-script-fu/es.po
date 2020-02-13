@@ -12,21 +12,22 @@
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Rodrigo <rodhos92@gmail.com>, 2018, 2019.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
+# Rodrigo Lledó <rodhos92@gmail.com>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-08 00:18+0000\n"
-"PO-Revision-Date: 2019-09-09 09:51+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
-"Language: es_ES\n"
+"POT-Creation-Date: 2020-02-12 23:19+0000\n"
+"PO-Revision-Date: 2020-02-13 09:44+0100\n"
+"Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 3.32.1\n"
+"X-Generator: Gtranslator 3.34.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
@@ -147,7 +148,7 @@ msgstr "Guardar salida de la consola Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
 #: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: ../plug-ins/script-fu/script-fu-server.c:836
 msgid "_Cancel"
 msgstr "C_ancelar"
 
@@ -245,27 +246,27 @@ msgstr "Faltan argumentos para la llamada a «script-fu-register»"
 msgid "Error while loading %s:"
 msgstr "Error al cargar %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:832
 msgid "Script-Fu Server Options"
 msgstr "Opciones de servidor de Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: ../plug-ins/script-fu/script-fu-server.c:837
 msgid "_Start Server"
 msgstr "_Iniciar servidor"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: ../plug-ins/script-fu/script-fu-server.c:870
 msgid "Listen on IP:"
 msgstr "Escuchando en la IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: ../plug-ins/script-fu/script-fu-server.c:877
 msgid "Server port:"
 msgstr "Puerto del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: ../plug-ins/script-fu/script-fu-server.c:883
 msgid "Server logfile:"
 msgstr "Archivo de registro del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: ../plug-ins/script-fu/script-fu-server.c:896
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -616,7 +617,6 @@ msgid "Darken only"
 msgstr "Color oscuro"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-#| msgid "Difference Clouds..."
 msgid "_Difference Clouds..."
 msgstr "Nubes de _diferencia…"
 
@@ -633,32 +633,26 @@ msgid "Distress the selection"
 msgstr "Destruir la selección"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-#| msgid "Threshold (bigger 1<-->254 smaller)"
 msgid "_Threshold (bigger 1<-->254 smaller)"
 msgstr "_Umbral (mayor 1<-->254 menor)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-#| msgid "Spread"
 msgid "_Spread"
 msgstr "Difu_sión"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-#| msgid "Granularity (1 is low)"
 msgid "_Granularity (1 is low)"
 msgstr "_Granularidad (1 es la más baja)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-#| msgid "Smooth"
 msgid "S_mooth"
 msgstr "Sua_ve"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#| msgid "Smooth horizontally"
 msgid "Smooth hor_izontally"
 msgstr "Suavizado hor_izontal"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-#| msgid "Smooth vertically"
 msgid "Smooth _vertically"
 msgstr "Suavizado _vertical"
 
@@ -704,50 +698,66 @@ msgstr "Opacidad"
 msgid "Allow resizing"
 msgstr "Permitir redimensionado"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Borrar las otras filas…"
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Borra las otras filas o columnas"
+#| msgid "_Erase Every Other Row..."
+msgid "_Erase Every Nth Row..."
+msgstr "_Borrar cada fila enésima…"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+#| msgid "Erase every other row or column"
+msgid "Erase every nth row or column"
+msgstr "Borrar cada fila o columna enésima"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Filas/columnas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Filas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Columnas"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Pares/impares"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Pares"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Impares"
-
 # //R COMPROBAR
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Borrar/Rellenar"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Borrar"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Rellenar con fondo"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Borrar las otras filas…"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Borra las otras filas o columnas"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Pares/impares"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Pares"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Impares"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -983,7 +993,6 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-#| msgid "Direction"
 msgid "_Direction"
 msgstr "_Dirección"
 
@@ -998,7 +1007,6 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#| msgid "Position (in %)"
 msgid "_Position (in %)"
 msgstr "_Posición (en %)"
 
@@ -1012,7 +1020,6 @@ msgstr ""
 "Añadir una línea guía en la orientación y posición especificadas en píxeles"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-#| msgid "Position"
 msgid "_Position"
 msgstr "_Posición"
 
@@ -1225,7 +1232,6 @@ msgstr "Pegar el contenido del portapapeles en un pincel nuevo"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-#| msgid "Brush name"
 msgid "_Brush name"
 msgstr "Nom_bre del pincel"
 
@@ -1233,13 +1239,11 @@ msgstr "Nom_bre del pincel"
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-#| msgid "File name"
 msgid "_File name"
 msgstr "Nombre de _archivo"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
-#| msgid "Spacing"
 msgid "_Spacing"
 msgstr "E_spaciado"
 
@@ -1253,7 +1257,6 @@ msgstr "Pegar el contenido del portapapeles en un patrón nuevo"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#| msgid "Pattern name"
 msgid "_Pattern name"
 msgstr "Nombre del _patrón"
 
@@ -1305,7 +1308,6 @@ msgid "Pixel amount"
 msgstr "Tamaño del píxel"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-#| msgid "Reverse Layer Order"
 msgid "Reverse Layer _Order"
 msgstr "_Orden inverso de las capas"
 
@@ -1401,12 +1403,10 @@ msgid "Round the corners of the current selection"
 msgstr "Redondea las esquinas de la selección actual"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-#| msgid "Radius (%)"
 msgid "R_adius (%)"
 msgstr "R_adio (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-#| msgid "Concave"
 msgid "Co_ncave"
 msgstr "Có_ncavo"
 
