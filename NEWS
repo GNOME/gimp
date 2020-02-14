@@ -86,11 +86,19 @@ Tools:
     No preview other than 'Adjust' works anyway. This will be fixed
     later on.
 
+  - Construct a box-filtered mipmap hierarchy for the original brush
+    on-demand, and the closest mipmap is used as the resampling source
+    for downscaled brushes, significantly improving the output quality.
+
   - Now that painting is done in a separate thread, the display update
     rate has a far smaller impact on it. Increase the GimpDisplay
     update rate, which handles image updates, to 60 FPS, and the
     GimpDrawTool update rate to 120 FPS. In particular, the latter
     change makes the brush outline motion much smoother.
+
+  - In the Airbrush tool, increase the maximal stamp FPS from 15 to 60,
+    and change the corresponding maximal Rate value from 150 to 100.
+    This technically affects tool presets, but we'll live.
 
   - Add a new "Snap brush outline to stroke" toggle to the "Image
     Windows" preferences page. When enabled, the brush outline in
@@ -142,6 +150,11 @@ Plugins:
     set the op node as the graph node's underlying operation. This
     allows gimp_gegl_apply_operation() to perform certain optimizations.
 
+  - The Spyrogimp plugin now features a Visual tab where the inner
+    mechanics of a spirograph is abstracted away, and you operate
+    on amount of petals etc. The plugin now also allows saving a pattern
+    as a path rather than rendering it to a layer as a bitmap.
+
 Filters:
 
   - Don't disable gegl:color-to-alpha (which has "needs-alpha") 
@@ -188,7 +201,7 @@ Developers:
 Translators:
 
   - Alan Mortensen, Alexandre Prokoudine, Anders Jonsson, Balázs Meskó,
-    Bruce Cowan, Daniel Korostil, Jordi Mas, Julien Hardelin,
+    Balázs Úr, Bruce Cowan, Daniel Korostil, Jordi Mas, Julien Hardelin,
     Marco Ciampa, Piotr Drąg, Rodrigo Lledó Milanca, Ryuta Fujii,
     Sabri Ünal, sicklylife, Sveinn í Felli, Tim Sabsch, Zander Brown.
 
