@@ -167,8 +167,8 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 
   g_mutex_lock (&paint_mutex);
 
-  paint_tool->paint_x = core->cur_coords.x;
-  paint_tool->paint_y = core->cur_coords.y;
+  paint_tool->paint_x = core->last_paint.x;
+  paint_tool->paint_y = core->last_paint.y;
 
   update = gimp_drawable_flush_paint (drawable);
 
