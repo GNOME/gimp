@@ -1,6 +1,6 @@
 EXPORTS
-	gimp_matrix2_get_type
 	gimp_matrix2_determinant
+	gimp_matrix2_get_type
 	gimp_matrix2_identity
 	gimp_matrix2_invert
 	gimp_matrix2_mult
