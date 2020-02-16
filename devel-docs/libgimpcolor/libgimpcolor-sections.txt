@@ -86,6 +86,7 @@ GIMP_RGB_INTENSITY_BLUE
 GIMP_TYPE_RGB
 GIMP_TYPE_PARAM_RGB
 gimp_param_spec_rgb
+gimp_param_spec_rgb_get_default
 gimp_param_spec_rgb_has_alpha
 GIMP_VALUE_HOLDS_RGB
 gimp_value_get_rgb

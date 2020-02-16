@@ -668,6 +668,7 @@ gimp_image_get_channel_position
 gimp_image_flatten
 gimp_image_merge_visible_layers
 gimp_image_merge_down
+gimp_image_merge_layer_group
 gimp_image_clean_all
 gimp_image_is_dirty
 gimp_image_get_active_layer
