@@ -353,6 +353,8 @@ screenshot_run (GimpProcedure        *procedure,
     {
       gchar *comment = gimp_get_default_comment ();
 
+      gimp_image_undo_disable (image);
+
       if (shootvals.profile_policy == SCREENSHOT_PROFILE_POLICY_SRGB)
         {
           GimpColorProfile *srgb_profile = gimp_color_profile_new_rgb_srgb ();
@@ -378,7 +380,7 @@ screenshot_run (GimpProcedure        *procedure,
           g_free (comment);
         }
 
-      gimp_image_clean_all (image);
+      gimp_image_undo_enable (image);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
