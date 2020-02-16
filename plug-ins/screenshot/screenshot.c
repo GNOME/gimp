@@ -317,6 +317,8 @@ run (const gchar      *name,
     {
       gchar *comment = gimp_get_default_comment ();
 
+      gimp_image_undo_disable (image_ID);
+
       if (shootvals.profile_policy == SCREENSHOT_PROFILE_POLICY_SRGB)
         {
           GimpColorProfile *srgb_profile = gimp_color_profile_new_rgb_srgb ();
@@ -342,7 +344,7 @@ run (const gchar      *name,
           g_free (comment);
         }
 
-      gimp_image_clean_all (image_ID);
+      gimp_image_undo_enable (image_ID);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
