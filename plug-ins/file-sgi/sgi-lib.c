@@ -333,7 +333,18 @@ sgiOpenFile(FILE *file, /* I - File to open */
           fseek(sgip->file, 512, SEEK_SET);
 
           sgip->table    = calloc(sgip->zsize, sizeof(long *));
+          if (sgip->table == NULL)
+            {
+              free(sgip);
+              return (NULL);
+            }
           sgip->table[0] = calloc(sgip->ysize * sgip->zsize, sizeof(long));
+          if (sgip->table[0] == NULL)
+            {
+              free(sgip->table);
+              free(sgip);
+              return (NULL);
+            }
           for (i = 1; i < sgip->zsize; i ++)
             sgip->table[i] = sgip->table[0] + i * sgip->ysize;
 
@@ -403,6 +414,11 @@ sgiOpenFile(FILE *file, /* I - File to open */
 
           case SGI_COMP_ARLE : /* Aggressive RLE */
               sgip->arle_row    = (unsigned short *)calloc(xsize, sizeof(unsigned short));
+              if (sgip->arle_row == NULL)
+                {
+                  free(sgip);
+                  return (NULL);
+                }
               sgip->arle_offset = 0;
 
           case SGI_COMP_RLE : /* Run-Length Encoding */
@@ -416,7 +432,20 @@ sgiOpenFile(FILE *file, /* I - File to open */
               sgip->firstrow = ftell(sgip->file);
               sgip->nextrow  = ftell(sgip->file);
               sgip->table    = calloc(sgip->zsize, sizeof(long *));
+              if (sgip->table == NULL)
+                {
+                  free(sgip->arle_row);
+                  free(sgip);
+                  return (NULL);
+                }
               sgip->table[0] = calloc(sgip->ysize * sgip->zsize, sizeof(long));
+              if (sgip->table[0] == NULL)
+                {
+                  free(sgip->table);
+                  free(sgip->arle_row);
+                  free(sgip);
+                  return (NULL);
+                }
               for (i = 1; i < sgip->zsize; i ++)
                 sgip->table[i] = sgip->table[0] + i * sgip->ysize;
               sgip->length    = calloc(sgip->zsize, sizeof(long *));
