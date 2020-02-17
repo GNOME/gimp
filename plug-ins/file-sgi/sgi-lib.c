@@ -38,38 +38,38 @@
  *   Revision 1.9  2005/03/04 13:23:31  neo
  *   2005-03-04  Sven Neumann  <sven@gimp.org>
  *
- *   	* plug-ins/FractalExplorer
- *   	* plug-ins/Lighting
- *   	* plug-ins/bmp
- *   	* plug-ins/dbbrowser
- *   	* plug-ins/faxg3
- *   	* plug-ins/fits
- *   	* plug-ins/flame
- *   	* plug-ins/gfig
- *   	* plug-ins/gflare
- *   	* plug-ins/gfli
- *   	* plug-ins/gimpressionist
- *   	* plug-ins/ifscompose
- *   	* plug-ins/jpeg
- *   	* plug-ins/maze
- *   	* plug-ins/pagecurl
- *   	* plug-ins/print
- *   	* plug-ins/rcm
- *   	* plug-ins/script-fu
- *   	* plug-ins/sel2path
- *   	* plug-ins/sgi
- *   	* plug-ins/twain
- *   	* plug-ins/winicon
- *   	* plug-ins/xjt: ported to gstdio, removed unnecessary includes,
- *   	minor fixes to filename handling here and there.
+ *      * plug-ins/FractalExplorer
+ *      * plug-ins/Lighting
+ *      * plug-ins/bmp
+ *      * plug-ins/dbbrowser
+ *      * plug-ins/faxg3
+ *      * plug-ins/fits
+ *      * plug-ins/flame
+ *      * plug-ins/gfig
+ *      * plug-ins/gflare
+ *      * plug-ins/gfli
+ *      * plug-ins/gimpressionist
+ *      * plug-ins/ifscompose
+ *      * plug-ins/jpeg
+ *      * plug-ins/maze
+ *      * plug-ins/pagecurl
+ *      * plug-ins/print
+ *      * plug-ins/rcm
+ *      * plug-ins/script-fu
+ *      * plug-ins/sel2path
+ *      * plug-ins/sgi
+ *      * plug-ins/twain
+ *      * plug-ins/winicon
+ *      * plug-ins/xjt: ported to gstdio, removed unnecessary includes,
+ *      minor fixes to filename handling here and there.
  *
  *   Revision 1.8  2003/04/07 11:59:33  neo
  *   2003-04-07  Sven Neumann  <sven@gimp.org>
  *
- *   	* plug-ins/sgi/sgi.h
- *   	* plug-ins/sgi/sgilib.c: applied a patch from marek@aki.cz that
- *   	adds support for reading SGI files in little-endian format. Fixes
- *   	bug #106610.
+ *      * plug-ins/sgi/sgi.h
+ *      * plug-ins/sgi/sgilib.c: applied a patch from marek@aki.cz that
+ *      adds support for reading SGI files in little-endian format. Fixes
+ *      bug #106610.
  *
  *   Revision 1.7  1998/06/06 23:22:21  yosh
  *   * adding Lighting plugin
@@ -113,14 +113,14 @@
  * Local functions...
  */
 
-static int	getlong(sgi_t*);
-static int	getshort(sgi_t*);
-static int	putlong(long, sgi_t*);
-static int	putshort(unsigned short, sgi_t*);
-static int	read_rle8(sgi_t*, unsigned short *, int);
-static int	read_rle16(sgi_t*, unsigned short *, int);
-static int	write_rle8(sgi_t*, unsigned short *, int);
-static int	write_rle16(sgi_t*, unsigned short *, int);
+static int      getlong(sgi_t*);
+static int      getshort(sgi_t*);
+static int      putlong(long, sgi_t*);
+static int      putshort(unsigned short, sgi_t*);
+static int      read_rle8(sgi_t*, unsigned short *, int);
+static int      read_rle16(sgi_t*, unsigned short *, int);
+static int      write_rle8(sgi_t*, unsigned short *, int);
+static int      write_rle16(sgi_t*, unsigned short *, int);
 
 
 /*
@@ -128,10 +128,10 @@ static int	write_rle16(sgi_t*, unsigned short *, int);
  */
 
 int
-sgiClose(sgi_t *sgip)	/* I - SGI image */
+sgiClose(sgi_t *sgip)   /* I - SGI image */
 {
-  int	i;		/* Return status */
-  long	*offset;	/* Looping var for offset table */
+  int   i;              /* Return status */
+  long  *offset;        /* Looping var for offset table */
 
 
   if (sgip == NULL)
@@ -185,13 +185,13 @@ sgiClose(sgi_t *sgip)	/* I - SGI image */
  */
 
 int
-sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
-          unsigned short *row,	/* O - Row to read */
-          int            y,	/* I - Line to read */
-          int            z)	/* I - Channel to read */
+sgiGetRow(sgi_t          *sgip, /* I - SGI image */
+          unsigned short *row,  /* O - Row to read */
+          int            y,     /* I - Line to read */
+          int            z)     /* I - Channel to read */
 {
-  int	x;		/* X coordinate */
-  long	offset;		/* File offset */
+  int   x;              /* X coordinate */
+  long  offset;         /* File offset */
 
 
   if (sgip == NULL ||
@@ -245,16 +245,16 @@ sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
  */
 
 sgi_t *
-sgiOpen(const char *filename,	/* I - File to open */
-        int         mode,	/* I - Open mode (SGI_READ or SGI_WRITE) */
-        int         comp,	/* I - Type of compression */
-        int         bpp,	/* I - Bytes per pixel */
-        int         xsize,	/* I - Width of image in pixels */
-        int         ysize,	/* I - Height of image in pixels */
-        int         zsize)	/* I - Number of channels */
+sgiOpen(const char *filename,   /* I - File to open */
+        int         mode,       /* I - Open mode (SGI_READ or SGI_WRITE) */
+        int         comp,       /* I - Type of compression */
+        int         bpp,        /* I - Bytes per pixel */
+        int         xsize,      /* I - Width of image in pixels */
+        int         ysize,      /* I - Height of image in pixels */
+        int         zsize)      /* I - Number of channels */
 {
-  sgi_t	*sgip;		/* New SGI image file */
-  FILE	*file;		/* Image file pointer */
+  sgi_t *sgip;          /* New SGI image file */
+  FILE  *file;          /* Image file pointer */
 
 
   if (mode == SGI_READ)
@@ -277,18 +277,18 @@ sgiOpen(const char *filename,	/* I - File to open */
  */
 
 sgi_t *
-sgiOpenFile(FILE *file,	/* I - File to open */
-            int  mode,	/* I - Open mode (SGI_READ or SGI_WRITE) */
-            int  comp,	/* I - Type of compression */
-            int  bpp,	/* I - Bytes per pixel */
-            int  xsize,	/* I - Width of image in pixels */
-            int  ysize,	/* I - Height of image in pixels */
-            int  zsize)	/* I - Number of channels */
+sgiOpenFile(FILE *file, /* I - File to open */
+            int  mode,  /* I - Open mode (SGI_READ or SGI_WRITE) */
+            int  comp,  /* I - Type of compression */
+            int  bpp,   /* I - Bytes per pixel */
+            int  xsize, /* I - Width of image in pixels */
+            int  ysize, /* I - Height of image in pixels */
+            int  zsize) /* I - Number of channels */
 {
-  int	i, j;		/* Looping var */
-  char	name[80];	/* Name of file in image header */
-  short	magic;		/* Magic number */
-  sgi_t	*sgip;		/* New image pointer */
+  int   i, j;           /* Looping var */
+  char  name[80];       /* Name of file in image header */
+  short magic;          /* Magic number */
+  sgi_t *sgip;          /* New image pointer */
 
 
   if ((sgip = calloc(sizeof(sgi_t), 1)) == NULL)
@@ -305,24 +305,24 @@ sgiOpenFile(FILE *file,	/* I - File to open */
         magic = getshort(sgip);
         if (magic != SGI_MAGIC)
         {
-	  /* try little endian format */
-	  magic = ((magic >> 8) & 0x00ff) | ((magic << 8) & 0xff00);
-	  if(magic != SGI_MAGIC) {
+          /* try little endian format */
+          magic = ((magic >> 8) & 0x00ff) | ((magic << 8) & 0xff00);
+          if(magic != SGI_MAGIC) {
             free(sgip);
             return (NULL);
           } else {
-	    sgip->swapBytes = 1;
-	  }
-	}
+            sgip->swapBytes = 1;
+          }
+        }
 
         sgip->comp  = getc(sgip->file);
         sgip->bpp   = getc(sgip->file);
-        getshort(sgip);		/* Dimensions */
+        getshort(sgip);         /* Dimensions */
         sgip->xsize = getshort(sgip);
         sgip->ysize = getshort(sgip);
         sgip->zsize = getshort(sgip);
-        getlong(sgip);		/* Minimum pixel */
-        getlong(sgip);		/* Maximum pixel */
+        getlong(sgip);          /* Minimum pixel */
+        getlong(sgip);          /* Maximum pixel */
 
         if (sgip->comp)
         {
@@ -344,11 +344,11 @@ sgiOpenFile(FILE *file,	/* I - File to open */
         break;
 
     case SGI_WRITE :
-	if (xsize < 1 ||
-	    ysize < 1 ||
-	    zsize < 1 ||
-	    bpp < 1 || bpp > 2 ||
-	    comp < SGI_COMP_NONE || comp > SGI_COMP_ARLE)
+        if (xsize < 1 ||
+            ysize < 1 ||
+            zsize < 1 ||
+            bpp < 1 || bpp > 2 ||
+            comp < SGI_COMP_NONE || comp > SGI_COMP_ARLE)
         {
           free(sgip);
           return (NULL);
@@ -359,21 +359,21 @@ sgiOpenFile(FILE *file,	/* I - File to open */
         putshort(SGI_MAGIC, sgip);
         putc((sgip->comp = comp) != 0, sgip->file);
         putc(sgip->bpp = bpp, sgip->file);
-        putshort(3, sgip);		/* Dimensions */
+        putshort(3, sgip);              /* Dimensions */
         putshort(sgip->xsize = xsize, sgip);
         putshort(sgip->ysize = ysize, sgip);
         putshort(sgip->zsize = zsize, sgip);
         if (bpp == 1)
         {
-          putlong(0, sgip);	/* Minimum pixel */
-          putlong(255, sgip);	/* Maximum pixel */
+          putlong(0, sgip);     /* Minimum pixel */
+          putlong(255, sgip);   /* Maximum pixel */
         }
         else
         {
-          putlong(-32768, sgip);	/* Minimum pixel */
-          putlong(32767, sgip);	/* Maximum pixel */
+          putlong(-32768, sgip);        /* Minimum pixel */
+          putlong(32767, sgip); /* Maximum pixel */
         };
-        putlong(0, sgip);		/* Reserved */
+        putlong(0, sgip);               /* Reserved */
 
         memset(name, 0, sizeof(name));
         fwrite(name, sizeof(name), 1, sgip->file);
@@ -391,13 +391,13 @@ sgiOpenFile(FILE *file,	/* I - File to open */
 
               if (bpp == 1)
               {
-        	for (i = xsize * ysize * zsize; i > 0; i --)
-        	  putc(0, sgip->file);
+                for (i = xsize * ysize * zsize; i > 0; i --)
+                  putc(0, sgip->file);
               }
               else
               {
-        	for (i = xsize * ysize * zsize; i > 0; i --)
-        	  putshort(0, sgip);
+                for (i = xsize * ysize * zsize; i > 0; i --)
+                  putshort(0, sgip);
               };
               break;
 
@@ -411,18 +411,18 @@ sgiOpenFile(FILE *file,	/* I - File to open */
               */
 
               for (i = 2 * ysize * zsize; i > 0; i --)
-        	putlong(0, sgip);
+                putlong(0, sgip);
 
               sgip->firstrow = ftell(sgip->file);
               sgip->nextrow  = ftell(sgip->file);
               sgip->table    = calloc(sgip->zsize, sizeof(long *));
               sgip->table[0] = calloc(sgip->ysize * sgip->zsize, sizeof(long));
               for (i = 1; i < sgip->zsize; i ++)
-        	sgip->table[i] = sgip->table[0] + i * sgip->ysize;
+                sgip->table[i] = sgip->table[0] + i * sgip->ysize;
               sgip->length    = calloc(sgip->zsize, sizeof(long *));
               sgip->length[0] = calloc(sgip->ysize * sgip->zsize, sizeof(long));
               for (i = 1; i < sgip->zsize; i ++)
-        	sgip->length[i] = sgip->length[0] + i * sgip->ysize;
+                sgip->length[i] = sgip->length[0] + i * sgip->ysize;
               break;
         };
         break;
@@ -441,13 +441,13 @@ sgiOpenFile(FILE *file,	/* I - File to open */
  */
 
 int
-sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
-          unsigned short *row,	/* I - Row to write */
-          int            y,	/* I - Line to write */
-          int            z)	/* I - Channel to write */
+sgiPutRow(sgi_t          *sgip, /* I - SGI image */
+          unsigned short *row,  /* I - Row to write */
+          int            y,     /* I - Line to write */
+          int            z)     /* I - Channel to write */
 {
-  int	x;		/* X coordinate */
-  long	offset;		/* File offset */
+  int   x;              /* X coordinate */
+  long  offset;         /* File offset */
 
 
   if (sgip == NULL ||
@@ -521,7 +521,7 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
 
             for (x = 0; x < sgip->xsize; x ++)
               if (row[x] != sgip->arle_row[x])
-        	break;
+                break;
           }
           while (x < sgip->xsize);
         }
@@ -538,19 +538,19 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
 
             for (x = 0; x < sgip->xsize; x ++)
               if (row[x] != sgip->arle_row[x])
-        	break;
+                break;
           }
           while (x < sgip->xsize);
         };
 
-	if (x == sgip->xsize)
-	{
+        if (x == sgip->xsize)
+        {
           sgip->table[z][y]  = sgip->arle_offset;
           sgip->length[z][y] = sgip->arle_length;
           return (0);
-	}
-	else
-	  fseek(sgip->file, 0, SEEK_END);	/* Clear EOF */
+        }
+        else
+          fseek(sgip->file, 0, SEEK_END);       /* Clear EOF */
 
     case SGI_COMP_RLE :
         if (sgip->table[z][y] != 0)
@@ -588,9 +588,9 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
  */
 
 static int
-getlong(sgi_t *sgip)	/* I - SGI image to read from */
+getlong(sgi_t *sgip)    /* I - SGI image to read from */
 {
-  unsigned char	b[4];
+  unsigned char b[4];
 
 
   fread(b, 4, 1, sgip->file);
@@ -606,9 +606,9 @@ getlong(sgi_t *sgip)	/* I - SGI image to read from */
  */
 
 static int
-getshort(sgi_t *sgip)	/* I - SGI image to read from */
+getshort(sgi_t *sgip)   /* I - SGI image to read from */
 {
-  unsigned char	b[2];
+  unsigned char b[2];
 
 
   fread(b, 2, 1, sgip->file);
@@ -624,8 +624,8 @@ getshort(sgi_t *sgip)	/* I - SGI image to read from */
  */
 
 static int
-putlong(long n,		/* I - Long to write */
-        sgi_t *sgip)	/* I - File to write to */
+putlong(long n,         /* I - Long to write */
+        sgi_t *sgip)    /* I - File to write to */
 {
   if (putc(n >> 24, sgip->file) == EOF)
     return (EOF);
@@ -645,8 +645,8 @@ putlong(long n,		/* I - Long to write */
  */
 
 static int
-putshort(unsigned short n,	/* I - Short to write */
-         sgi_t *sgip)		/* I - File to write to */
+putshort(unsigned short n,      /* I - Short to write */
+         sgi_t *sgip)           /* I - File to write to */
 {
   if (putc(n >> 8, sgip->file) == EOF)
     return (EOF);
@@ -662,14 +662,14 @@ putshort(unsigned short n,	/* I - Short to write */
  */
 
 static int
-read_rle8(sgi_t *sgip,		/* I - SGI image to read from */
-          unsigned short *row,	/* O - Data */
-          int            xsize)	/* I - Width of data in pixels */
+read_rle8(sgi_t *sgip,          /* I - SGI image to read from */
+          unsigned short *row,  /* O - Data */
+          int            xsize) /* I - Width of data in pixels */
 {
-  int	i,		/* Looping var */
-	ch,		/* Current character */
-	count,		/* RLE count */
-	length;		/* Number of bytes read... */
+  int   i,              /* Looping var */
+        ch,             /* Current character */
+        count,          /* RLE count */
+        length;         /* Number of bytes read... */
 
 
   length = 0;
@@ -707,14 +707,14 @@ read_rle8(sgi_t *sgip,		/* I - SGI image to read from */
  */
 
 static int
-read_rle16(sgi_t *sgip,		/* I - SGI image to read from */
-           unsigned short *row,	/* O - Data */
+read_rle16(sgi_t *sgip,         /* I - SGI image to read from */
+           unsigned short *row, /* O - Data */
            int            xsize)/* I - Width of data in pixels */
 {
-  int	i,		/* Looping var */
-	ch,		/* Current character */
-	count,		/* RLE count */
-	length;		/* Number of bytes read... */
+  int   i,              /* Looping var */
+        ch,             /* Current character */
+        count,          /* RLE count */
+        length;         /* Number of bytes read... */
 
 
   length = 0;
@@ -752,16 +752,16 @@ read_rle16(sgi_t *sgip,		/* I - SGI image to read from */
  */
 
 static int
-write_rle8(sgi_t *sgip,		/* I - SGI image to write to */
-           unsigned short *row,	/* I - Data */
+write_rle8(sgi_t *sgip,         /* I - SGI image to write to */
+           unsigned short *row, /* I - Data */
            int            xsize)/* I - Width of data in pixels */
 {
-  int			length,	/* Length of output line */
-			count,	/* Number of repeated/non-repeated pixels */
-			i,	/* Looping var */
-			x;	/* Looping var */
-  unsigned short	*start,	/* Start of sequence */
-			repeat;	/* Repeated pixel */
+  int                   length, /* Length of output line */
+                        count,  /* Number of repeated/non-repeated pixels */
+                        i,      /* Looping var */
+                        x;      /* Looping var */
+  unsigned short        *start, /* Start of sequence */
+                        repeat; /* Repeated pixel */
 
 
   for (x = xsize, length = 0; x > 0;)
@@ -791,7 +791,7 @@ write_rle8(sgi_t *sgip,		/* I - SGI image to write to */
 
       while (i > 0)
       {
-	if (putc(*start, sgip->file) == EOF)
+        if (putc(*start, sgip->file) == EOF)
           return (-1);
         start ++;
         i --;
@@ -844,16 +844,16 @@ write_rle8(sgi_t *sgip,		/* I - SGI image to write to */
  */
 
 static int
-write_rle16(sgi_t *sgip,	/* I - SGI image to write to */
+write_rle16(sgi_t *sgip,        /* I - SGI image to write to */
             unsigned short *row,/* I - Data */
             int            xsize)/* I - Width of data in pixels */
 {
-  int			length,	/* Length of output line */
-			count,	/* Number of repeated/non-repeated pixels */
-			i,	/* Looping var */
-			x;	/* Looping var */
-  unsigned short	*start,	/* Start of sequence */
-			repeat;	/* Repeated pixel */
+  int                   length, /* Length of output line */
+                        count,  /* Number of repeated/non-repeated pixels */
+                        i,      /* Looping var */
+                        x;      /* Looping var */
+  unsigned short        *start, /* Start of sequence */
+                        repeat; /* Repeated pixel */
 
 
   for (x = xsize, length = 0; x > 0;)
@@ -883,7 +883,7 @@ write_rle16(sgi_t *sgip,	/* I - SGI image to write to */
 
       while (i > 0)
       {
-	if (putshort(*start, sgip) == EOF)
+        if (putshort(*start, sgip) == EOF)
           return (-1);
         start ++;
         i --;
