@@ -389,6 +389,28 @@
 # 
 # (debug-policy fatal)
 
+# Check for availability of GIMP updates through background internet queries.
+#  Possible values are yes and no.
+# 
+# (check-updates yes)
+
+# Timestamp of the last update check.  (null)
+# 
+# (check-update-timestamp 0)
+
+# The timestamp for the last known release date.  (null)
+# 
+# (last-release-timestamp 0)
+
+# The timestamp for the last known release date.  This is an integer value.
+# 
+# (last-revision 0)
+
+# The last known release version of GIMP as queried from official website. 
+# This is a string value.
+# 
+# 
+
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
 # 
@@ -453,6 +475,11 @@
 # outline.  Possible values are yes and no.
 # 
 # (show-brush-outline yes)
+
+# When enabled, the brush outline will snap to individual dabs while
+# painting.  Possible values are yes and no.
+# 
+# (snap-brush-outline no)
 
 # When enabled, the mouse pointer will be shown over the image while using a
 # paint tool.  Possible values are yes and no.
@@ -687,6 +714,10 @@
 # 
 # (save-tool-options yes)
 
+# Use compact style for sliders.  Possible values are yes and no.
+# 
+# (compact-sliders yes)
+
 # Show a tooltip when the pointer hovers over an item.  Possible values are
 # yes and no.
 # 
@@ -744,6 +775,11 @@
 # and no.
 # 
 # (toolbox-wilber yes)
+
+# Use a single toolbox button for grouped tools.  Possible values are yes and
+# no.
+# 
+# (toolbox-groups yes)
 
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.

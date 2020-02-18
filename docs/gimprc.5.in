@@ -475,6 +475,32 @@ Try generating debug data for bug reporting when appropriate.  Possible values
 are warning, critical, fatal and never.
 
 .TP
+(check-updates yes)
+
+Check for availability of GIMP updates through background internet queries. 
+Possible values are yes and no.
+
+.TP
+(check-update-timestamp 0)
+
+Timestamp of the last update check.  (null)
+
+.TP
+(last-release-timestamp 0)
+
+The timestamp for the last known release date.  (null)
+
+.TP
+(last-revision 0)
+
+The timestamp for the last known release date.  This is an integer value.
+
+.TP
+
+The last known release version of GIMP as queried from official website.  This
+is a string value.
+
+.TP
 (transparency-size medium-checks)
 
 Sets the size of the checkerboard used to display transparency.  Possible
@@ -549,6 +575,12 @@ values are yes and no.
 
 When enabled, all paint tools will show a preview of the current brush's
 outline.  Possible values are yes and no.
+
+.TP
+(snap-brush-outline no)
+
+When enabled, the brush outline will snap to individual dabs while painting. 
+Possible values are yes and no.
 
 .TP
 (show-paint-tool-cursor yes)
@@ -877,6 +909,11 @@ Possible values are yes and no.
 Save the tool options when GIMP exits.  Possible values are yes and no.
 
 .TP
+(compact-sliders yes)
+
+Use compact style for sliders.  Possible values are yes and no.
+
+.TP
 (show-tooltips yes)
 
 Show a tooltip when the pointer hovers over an item.  Possible values are yes
@@ -943,6 +980,12 @@ no.
 (toolbox-wilber yes)
 
 Show the GIMP mascot at the top of the toolbox.  Possible values are yes and
+no.
+
+.TP
+(toolbox-groups yes)
+
+Use a single toolbox button for grouped tools.  Possible values are yes and
 no.
 
 .TP
