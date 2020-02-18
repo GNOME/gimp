@@ -18,26 +18,27 @@ Core:
     avoid overflowing when applying an operation to a large image.
 
   - In GimpFilterTool and gimp_drawable_apply_operation(), use
-    gimp_drawable_filter_set_add_alpha() to add an alpha channel
-    when applying an operation that specifies "needs-alpha"
-    to a drawable that can have alpha.
+    gimp_drawable_filter_set_add_alpha() to add an alpha channel when
+    applying an operation that specifies "needs-alpha" to a drawable
+    that can have alpha.
 
   - In GimpFilterTool, move all the drawable-filter option setup to a
-    new gimp_filter_tool_update_filter() function, and call it whenever
-    the drawable-filter's options need to be updated.  This avoids
-    duplicating logic in various places.
+    new gimp_filter_tool_update_filter() function, and call it
+    whenever the drawable-filter's options need to be updated. This
+    avoids duplicating logic in various places.
 
   - Improve the efficiency of decoding RLE data when loading ABR
     brushes, by reading entire scanlines into a buffer all-at-once,
     instead of reading the stream byte-by-byte.
 
-  - GIMP now optionally phones home to find out if there's a new version
-    available and then tells the user if there is one indeed. It also
-    keeps track of the installer revision and then warns if there's
-    a newer installer available. This can be disabled in Preferences.
-    In that case, users still have the option to manually check for
-    an update via the About dialog. The feature can be disabled entirely
-    with the '--disable-check-update' configure switch.
+  - GIMP now optionally phones home to find out if there's a new
+    version available and then tells the user if there is one
+    indeed. It also keeps track of the installer revision and then
+    warns if there's a newer installer available. This can be disabled
+    in Preferences. In that case, users still have the option to
+    manually check for an update via the About dialog. The feature can
+    be disabled entirely with the '--disable-check-update' configure
+    switch.
 
 Tools:
 
@@ -57,10 +58,10 @@ Tools:
     an overlay on top of the overall layer stack. This simplifies
     creating complex layer compositions greatly. The option requires
     mipmaps to be used and thus is disabled by default. It also comes
-    with an experimental "Synchronous preview" suboption to render
-    the composited preview synchronously. This reduces the lag for
-    painting the preview, but can harm responsiveness for bigger images,
-    where rendering the preview is slow.
+    with an experimental "Synchronous preview" suboption to render the
+    composited preview synchronously. This reduces the lag for
+    painting the preview, but can harm responsiveness for bigger
+    images, where rendering the preview is slow.
 
   - Add a new "Preview linked items" option to the transform-grid
     tools. When this option is enabled, together with composited
@@ -69,26 +70,27 @@ Tools:
     unsupported.
 
   - New widget called GimpPivotSelector, a 3x3 grid of toggle buttons,
-    is now used for selecting a natural pivot position (e.g. for
-    a transform) relative to an item: its center, its corners, and the
+    is now used for selecting a natural pivot position (e.g. for a
+    transform) relative to an item: its center, its corners, and the
     midpoints of its edges. Currently used in Rotate and 3D Transform
     tools.
  
   - Add "Show all" support to the Bucket Fill tool in line-art mode
 
-  - Color picker and sample points now support displaying vlaues in Yu'v'
-    (CIE 1976 UCS) color space.
+  - Color picker and sample points now support displaying vlaues in
+    Yu'v' (CIE 1976 UCS) color space.
 
   - The Symmetry Painting dock now has an "Enable reflection" option
-    that allows painting patterns resembling a kaleidoscope. 
+    that allows painting patterns resembling a kaleidoscope.
 
-  - Transform clipping is temporarily disabled for layer groups.
-    No preview other than 'Adjust' works anyway. This will be fixed
-    later on.
+  - Transform clipping is temporarily disabled for layer groups. No
+    preview other than 'Adjust' works anyway. This will be fixed later
+    on.
 
   - Construct a box-filtered mipmap hierarchy for the original brush
     on-demand, and the closest mipmap is used as the resampling source
-    for downscaled brushes, significantly improving the output quality.
+    for downscaled brushes, significantly improving the output
+    quality.
 
   - Now that painting is done in a separate thread, the display update
     rate has a far smaller impact on it. Increase the GimpDisplay
@@ -96,16 +98,16 @@ Tools:
     GimpDrawTool update rate to 120 FPS. In particular, the latter
     change makes the brush outline motion much smoother.
 
-  - In the Airbrush tool, increase the maximal stamp FPS from 15 to 60,
-    and change the corresponding maximal Rate value from 150 to 100.
-    This technically affects tool presets, but we'll live.
+  - In the Airbrush tool, increase the maximal stamp FPS from 15 to
+    60, and change the corresponding maximal Rate value from 150 to
+    100. This technically affects tool presets, but we'll live.
 
   - Add a new "Snap brush outline to stroke" toggle to the "Image
     Windows" preferences page. When enabled, the brush outline in
     paint tools snaps to the individual dabs while painting, which is
-    how it worked before version 2.10.16. Disable the option by default.
-    This seems to be what most other programs are doing, and it does
-    give paitning a smoother feel.
+    how it worked before version 2.10.16. Disable the option by
+    default.  This seems to be what most other programs are doing, and
+    it does give paitning a smoother feel.
 
   - The Warp Transform tool now respects settings for painting tools:
     showing the brush outline, snapping to dabs, and showing the paint
@@ -118,9 +120,9 @@ UI:
     altogether in the Preferences dialog (Interface / Toolbox page).
 
   - New opt-out compact style for sliders with revamped interaction.
-    The widget uses a narrower layout, and the different upper/lower-half
-    behavior is gone. Instead, the behavior depends on the mouse button
-    and modifier used:
+    The widget uses a narrower layout, and the different
+    upper/lower-half behavior is gone. Instead, the behavior depends
+    on the mouse button and modifier used:
 
     - left-click is used for absolute adjustment,
     - Shift + left-click + drag changes value in small increments,
@@ -128,10 +130,10 @@ UI:
     - middle-click enables numeric input mode;
     - right-click enables numeric input mode and selects the value.
 
-  - The "You can drop dockable dialogs here" message is gone from
-    the toolbox for good. Instead, highlight dockable areas when
-    a user starts dragging a dockable dialog, and intensify
-    the highlight as the dialog goes over a dockable area.
+  - The "You can drop dockable dialogs here" message is gone from the
+    toolbox for good. Instead, highlight dockable areas when a user
+    starts dragging a dockable dialog, and intensify the highlight as
+    the dialog goes over a dockable area.
 
   - Consolidate UI for merging down and anchoring layers:
     As they are both mutually exclusive and serve an almost identical
@@ -148,11 +150,12 @@ Plugins:
 
   - In plug_in_compat.pdb, when wrapping an op node inside a graph,
     set the op node as the graph node's underlying operation. This
-    allows gimp_gegl_apply_operation() to perform certain optimizations.
+    allows gimp_gegl_apply_operation() to perform certain
+    optimizations.
 
   - The Spyrogimp plugin now features a Visual tab where the inner
-    mechanics of a spirograph is abstracted away, and you operate
-    on amount of petals etc. The plugin now also allows saving a pattern
+    mechanics of a spirograph is abstracted away, and you operate on
+    amount of petals etc. The plugin now also allows saving a pattern
     as a path rather than rendering it to a layer as a bitmap.
 
 Filters:
@@ -165,18 +168,19 @@ Filters:
     operation is applicable to grayscale images (in particular, it
     doesn't add color where there was none), and since GIMP no longer
     distinguishes between layers and channels according to the
-    drawable format when updating the filters actions.  
+    drawable format when updating the filters actions.
 
 Windows:
 
   - Installer: unofficial languages, ghostscript 9.50.
   - Installer: skip .debug files when they don't exist.
-  - Installer: properly remove old icons on 32-bit installs and per-user
-    installs.
+  - Installer: properly remove old icons on 32-bit installs and
+    per-user installs.
 
 macOS:
 
-  - Set required variables if it is running from Apple application bundle.
+  - Set required variables if it is running from Apple application
+    bundle.
   - The macOS build now ships with the dashboard dock for displaying
     perfomance graphs.
 
@@ -194,16 +198,18 @@ Bugfixes:
 
 Developers:
 
-  - Alex Samorukov, Cyril Richard, Elad Shahar, Ell, Elle Stone, Jehan,
-    Jernej Simončič, lillolollo, Massimo Valentini, Michael Natterer,
-    Pascal Terjan, woob.
+  - Alex Samorukov, Cyril Richard, Elad Shahar, Ell, Elle Stone,
+    Jehan, Jernej Simončič, lillolollo, Massimo Valentini, Michael
+    Natterer, Pascal Terjan, woob.
 
 Translators:
 
-  - Alan Mortensen, Alexandre Prokoudine, Anders Jonsson, Balázs Meskó,
-    Balázs Úr, Bruce Cowan, Daniel Korostil, Jordi Mas, Julien Hardelin,
-    Marco Ciampa, Piotr Drąg, Rodrigo Lledó Milanca, Ryuta Fujii,
-    Sabri Ünal, sicklylife, Sveinn í Felli, Tim Sabsch, Zander Brown.
+  - Alan Mortensen, Alexandre Prokoudine, Anders Jonsson, Balázs
+    Meskó, Balázs Úr, Bruce Cowan, Daniel Korostil, Jordi Mas, Julien
+    Hardelin, Marco Ciampa, Piotr Drąg, Rodrigo Lledó Milanca, Ryuta
+    Fujii, Sabri Ünal, sicklylife, Sveinn í Felli, Tim Sabsch, Zander
+    Brown.
+
 
 Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
 =====================================================
