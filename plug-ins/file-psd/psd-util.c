@@ -489,7 +489,6 @@ decode_packbits (const gchar *src,
    */
 
   gint    n;
-  gchar   dat;
   gint32  unpack_left = unpacked_len;
   gint32  pack_left = packed_len;
   gint32  error_code = 0;
@@ -508,67 +507,51 @@ decode_packbits (const gchar *src,
 
       if (n < 0)        /* replicate next gchar |n|+ 1 times */
         {
-          n  = 1 - n;
-          if (! pack_left)
+          n = 1 - n;
+          if (pack_left < 1)
             {
               IFDBG(2) g_debug ("Input buffer exhausted in replicate");
               error_code = 1;
               break;
             }
-          if (n > unpack_left)
+          if (unpack_left < n)
             {
               IFDBG(2) g_debug ("Overrun in packbits replicate of %d chars", n - unpack_left);
               error_code = 2;
             }
-          dat = *src;
-          for (; n > 0; --n)
-            {
-              if (! unpack_left)
-                break;
-              *dst = dat;
-              dst++;
-              unpack_left--;
-            }
-          if (unpack_left)
-            {
-              src++;
-              pack_left--;
-            }
+          memset (dst, *src, n);
+          src++;
+          pack_left--;
+          dst         += n;
+          unpack_left -= n;
         }
       else              /* copy next n+1 gchars literally */
         {
           n++;
-          for (; n > 0; --n)
+          if (pack_left < n)
             {
-              if (! pack_left)
-                {
-                  IFDBG(2) g_debug ("Input buffer exhausted in copy");
-                  error_code = 3;
-                  break;
-                }
-              if (! unpack_left)
-                {
-                  IFDBG(2) g_debug ("Output buffer exhausted in copy");
-                  error_code = 4;
-                  break;
-                }
-              *dst = *src;
-              dst++;
-              unpack_left--;
-              src++;
-              pack_left--;
+              IFDBG(2) g_debug ("Input buffer exhausted in copy");
+              error_code = 3;
+              break;
             }
+          if (unpack_left < n)
+            {
+              IFDBG(2) g_debug ("Output buffer exhausted in copy");
+              error_code = 4;
+              break;
+            }
+          memcpy (dst, src, n);
+          src         += n;
+          pack_left   -= n;
+          dst         += n;
+          unpack_left -= n;
         }
     }
 
   if (unpack_left > 0)
     {
       /* Pad with zeros to end of output buffer */
-      for (n = 0; n < pack_left; ++n)
-        {
-          *dst = 0;
-          dst++;
-        }
+      memset (dst, 0, unpack_left);
     }
 
   if (unpack_left)

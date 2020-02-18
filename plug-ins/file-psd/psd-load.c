@@ -1131,7 +1131,6 @@ add_layers (GimpImage *image,
   PSDchannel          **lyr_chn;
   GArray               *parent_group_stack;
   GimpLayer            *parent_group = NULL;
-  guchar               *pixels;
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels;
@@ -1146,15 +1145,12 @@ add_layers (GimpImage *image,
   gint32                lm_y;                  /* Layer mask y */
   gint32                lm_w;                  /* Layer mask width */
   gint32                lm_h;                  /* Layer mask height */
-  gint32                layer_size;
   GimpLayer            *layer        = NULL;
   GimpLayerMask        *mask         = NULL;
   GimpLayer            *active_layer = NULL;
   gint                  lidx;                  /* Layer index */
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
-  gint                  coli;                  /* Column index */
-  gint                  i;
   gboolean              alpha;
   gboolean              user_mask;
   gboolean              empty;
@@ -1539,29 +1535,66 @@ add_layers (GimpImage *image,
                     }
                   else
                     {
-                      layer_size = l_w * l_h;
+                      GeglBufferIterator *iter;
+
                       bps = img_a->bps / 8;
                       if (bps == 0)
                         bps++;
-                      pixels = g_malloc (layer_size * layer_channels * bps);
-                      for (cidx = 0; cidx < layer_channels; ++cidx)
-                        {
-                          IFDBG(3) g_debug ("Start channel %d", channel_idx[cidx]);
-                          for (i = 0; i < layer_size; ++i)
-                            memcpy (&pixels[((i * layer_channels) + cidx) * bps],
-                                    &lyr_chn[channel_idx[cidx]]->data[i * bps], bps);
-                          g_free (lyr_chn[channel_idx[cidx]]->data);
-                        }
 
                       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-                      gegl_buffer_set (buffer,
-                                       GEGL_RECTANGLE (0, 0,
-                                                       gegl_buffer_get_width (buffer),
-                                                       gegl_buffer_get_height (buffer)),
-                                       0, get_layer_format (img_a, alpha),
-                                       pixels, GEGL_AUTO_ROWSTRIDE);
+
+                      iter = gegl_buffer_iterator_new (
+                        buffer, NULL, 0, get_layer_format (img_a, alpha),
+                        GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
+
+                      while (gegl_buffer_iterator_next (iter))
+                        {
+                          const GeglRectangle *roi      = &iter->items[0].roi;
+                          guint8              *dst0     = iter->items[0].data;
+                          gint                 src_step = bps;
+                          gint                 dst_step = bps * layer_channels;
+
+                          for (cidx = 0; cidx < layer_channels; ++cidx)
+                            {
+                              gint b;
+
+                              if (roi->x == 0 && roi->y == 0)
+                                IFDBG(3) g_debug ("Start channel %d", channel_idx[cidx]);
+
+                              for (b = 0; b < bps; ++b)
+                                {
+                                  guint8 *dst;
+                                  gint    y;
+
+                                  dst = &dst0[cidx * bps + b];
+
+                                  for (y = 0; y < roi->height; y++)
+                                    {
+                                      const guint8 *src;
+                                      gint          x;
+
+                                      src = (const guint8 *)
+                                        &lyr_chn[channel_idx[cidx]]->data[
+                                          ((roi->y + y) * l_w +
+                                           roi->x)      * bps +
+                                          b];
+
+                                      for (x = 0; x < roi->width; ++x)
+                                        {
+                                          *dst = *src;
+
+                                          src += src_step;
+                                          dst += dst_step;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                      for (cidx = 0; cidx < layer_channels; ++cidx)
+                        g_free (lyr_chn[channel_idx[cidx]]->data);
+
                       g_object_unref (buffer);
-                      g_free (pixels);
                     }
                 }
 
@@ -1583,69 +1616,27 @@ add_layers (GimpImage *image,
                     }
                   else
                     {
+                      GeglRectangle mask_rect;
+
                       /* Load layer mask data */
                       lm_x = lyr_a[lidx]->layer_mask.left - l_x;
                       lm_y = lyr_a[lidx]->layer_mask.top - l_y;
                       lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
                       lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
                       IFDBG(3) g_debug ("Mask channel index %d", user_mask_chn);
-                      bps = (img_a->bps + 1) / 8;
-                      layer_size = lm_w * lm_h * bps;
-                      pixels = g_malloc (layer_size);
-                      IFDBG(3) g_debug ("Allocate Pixels %d", layer_size);
-                      /* Crop mask at layer boundary */
                       IFDBG(3) g_debug ("Original Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
-                      if (lm_x < 0
-                          || lm_y < 0
-                          || lm_w + lm_x > l_w
-                          || lm_h + lm_y > l_h)
-                        {
-                          if (CONVERSION_WARNINGS)
-                            g_message ("Warning\n"
-                                       "The layer mask is partly outside the "
-                                       "layer boundary. The mask will be "
-                                       "cropped which may result in data loss.");
-                          i = 0;
-                          for (rowi = 0; rowi < lm_h; ++rowi)
-                            {
-                              if (rowi + lm_y >= 0 && rowi + lm_y < l_h)
-                                {
-                                  for (coli = 0; coli < lm_w; ++coli)
-                                    {
-                                      if (coli + lm_x >= 0 && coli + lm_x < l_w)
-                                        {
-                                          memcpy (&pixels[i * bps], &lyr_chn[user_mask_chn]->data[(rowi * lm_w + coli) * bps], bps);
-                                          i++;
-                                        }
-                                    }
-                                }
-                            }
-                          if (lm_x < 0)
-                            {
-                              lm_w += lm_x;
-                              lm_x = 0;
-                            }
-                          if (lm_y < 0)
-                            {
-                              lm_h += lm_y;
-                              lm_y = 0;
-                            }
-                          if (lm_w + lm_x > l_w)
-                            lm_w = l_w - lm_x;
-                          if (lm_h + lm_y > l_h)
-                            lm_h = l_h - lm_y;
-                        }
-                      else
-                        {
-                          memcpy (pixels, lyr_chn[user_mask_chn]->data, layer_size);
-                          i = layer_size;
-                        }
-                      g_free (lyr_chn[user_mask_chn]->data);
-                      /* Draw layer mask data, if any */
-                      if (i > 0)
+                      /* Crop mask at layer boundary, and draw layer mask data,
+                       * if any
+                       */
+                      if (gegl_rectangle_intersect (
+                            &mask_rect,
+                            GEGL_RECTANGLE (0, 0, l_w, l_h),
+                            GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h)))
                         {
                           IFDBG(3) g_debug ("Layer %d %d %d %d", l_x, l_y, l_w, l_h);
-                          IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
+                          IFDBG(3) g_debug ("Mask %d %d %d %d",
+                                            mask_rect.x,     mask_rect.y,
+                                            mask_rect.width, mask_rect.height);
 
                           if (lyr_a[lidx]->layer_mask.def_color == 255)
                             mask = gimp_layer_create_mask (layer,
@@ -1654,18 +1645,25 @@ add_layers (GimpImage *image,
                             mask = gimp_layer_create_mask (layer,
                                                            GIMP_ADD_MASK_BLACK);
 
+                          bps = img_a->bps / 8;
+                          if (bps == 0)
+                            bps++;
+
                           IFDBG(3) g_debug ("New layer mask %d", gimp_item_get_id (GIMP_ITEM (mask)));
                           gimp_layer_add_mask (layer, mask);
                           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
                           gegl_buffer_set (buffer,
-                                           GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h),
+                                           &mask_rect,
                                            0, get_mask_format (img_a),
-                                           pixels, GEGL_AUTO_ROWSTRIDE);
+                                           lyr_chn[user_mask_chn]->data + (
+                                             (mask_rect.y - lm_y)  * lm_w +
+                                             (mask_rect.x - lm_x)) * bps,
+                                           lm_w * bps);
                           g_object_unref (buffer);
                           gimp_layer_set_apply_mask (layer,
                                                      ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                         }
-                      g_free (pixels);
+                      g_free (lyr_chn[user_mask_chn]->data);
                     }
                 }
 
@@ -2131,7 +2129,6 @@ read_channel_data (PSDchannel     *channel,
 {
   gchar    *raw_data;
   gchar    *src;
-  gchar    *dst;
   guint32   readline_len;
   gint      i, j;
 
@@ -2166,8 +2163,7 @@ read_channel_data (PSDchannel     *channel,
       case PSD_COMP_RLE:
         for (i = 0; i < channel->rows; ++i)
           {
-            src = g_malloc (rle_pack_len[i]);
-            dst = g_malloc (readline_len);
+            src = gegl_scratch_alloc (rle_pack_len[i]);
 /*      FIXME check for over-run
             if (ftell (f) + rle_pack_len[i] > block_end)
               {
@@ -2178,15 +2174,13 @@ read_channel_data (PSDchannel     *channel,
             if (fread (src, rle_pack_len[i], 1, f) < 1)
               {
                 psd_set_error (feof (f), errno, error);
-                g_free (src);
-                g_free (dst);
+                gegl_scratch_free (src);
                 return -1;
               }
             /* FIXME check for errors returned from decode packbits */
-            decode_packbits (src, dst, rle_pack_len[i], readline_len);
-            g_free (src);
-            memcpy (raw_data + i * readline_len, dst, readline_len);
-            g_free (dst);
+            decode_packbits (src, raw_data + i * readline_len,
+                             rle_pack_len[i], readline_len);
+            gegl_scratch_free (src);
           }
         break;
       case PSD_COMP_ZIP:
@@ -2232,45 +2226,45 @@ read_channel_data (PSDchannel     *channel,
     {
     case 32:
       {
-        guint32 *src = (guint32*) raw_data;
-        guint32 *dst = g_malloc (channel->rows * channel->columns * 4);
+        guint32 *data = (guint32*) raw_data;
 
-        channel->data = (gchar*) dst;
+        channel->data = raw_data;
+        raw_data      = NULL;
 
         for (i = 0; i < channel->rows * channel->columns; ++i)
-          dst[i] = GUINT32_FROM_BE (src[i]);
+          data[i] = GUINT32_FROM_BE (data[i]);
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
             for (i = 0; i < channel->rows; ++i)
               for (j = 1; j < channel->columns; ++j)
-                dst[i * channel->columns + j] += dst[i * channel->columns + j - 1];
+                data[i * channel->columns + j] += data[i * channel->columns + j - 1];
           }
         break;
       }
 
     case 16:
       {
-        guint16 *src = (guint16*) raw_data;
-        guint16 *dst = g_malloc (channel->rows * channel->columns * 2);
+        guint16 *data = (guint16*) raw_data;
 
-        channel->data = (gchar*) dst;
+        channel->data = raw_data;
+        raw_data      = NULL;
 
         for (i = 0; i < channel->rows * channel->columns; ++i)
-          dst[i] = GUINT16_FROM_BE (src[i]);
+          data[i] = GUINT16_FROM_BE (data[i]);
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
             for (i = 0; i < channel->rows; ++i)
               for (j = 1; j < channel->columns; ++j)
-                dst[i * channel->columns + j] += dst[i * channel->columns + j - 1];
+                data[i * channel->columns + j] += data[i * channel->columns + j - 1];
           }
         break;
       }
 
       case 8:
-        channel->data = g_malloc (channel->rows * channel->columns * bps / 8 );
-        memcpy (channel->data, raw_data, (channel->rows * channel->columns * bps / 8));
+        channel->data = raw_data;
+        raw_data      = NULL;
 
         if (compression == PSD_COMP_ZIP_PRED)
           {
