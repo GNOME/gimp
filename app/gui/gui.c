@@ -632,65 +632,67 @@ gui_restore_after_callback (Gimp               *gimp,
         session_restore (gimp, initial_monitor);
 
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
 #ifdef GDK_WINDOWING_QUARTZ
-        {
-          GtkosxApplication *osx_app;
-          GtkWidget         *menu;
-          GtkWidget         *item;
+      {
+        GtkosxApplication *osx_app;
+        GtkWidget         *menu;
+        GtkWidget         *item;
 
-          [[NSUserDefaults standardUserDefaults] setObject:@"NO"
-                                                 forKey:@"NSTreatUnknownArgumentsAsOpen"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"NO"
+                                                  forKey:@"NSTreatUnknownArgumentsAsOpen"];
 
-          osx_app = gtkosx_application_get ();
+        osx_app = gtkosx_application_get ();
 
-          menu = gimp_ui_manager_get_widget (image_ui_manager,
-                                             "/image-menubar");
-          /* menu should have window parent for accelerator support */
-          gtk_widget_set_parent(menu, toplevel);
+        menu = gimp_ui_manager_get_widget (image_ui_manager,
+                                           "/image-menubar");
+        /* menu should have window parent for accelerator support */
+        gtk_widget_set_parent(menu, toplevel);
 
-          if (GTK_IS_MENU_ITEM (menu))
-            menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+        if (GTK_IS_MENU_ITEM (menu))
+          menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-          /* do not activate OSX menu if tests are running */
-          if (!getenv("GIMP_TESTING_ABS_TOP_SRCDIR"))
-            gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
+        /* do not activate OSX menu if tests are running */
+        if (! getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"))
+          gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
 
-          gtkosx_application_set_use_quartz_accelerators (osx_app, FALSE);
+        gtkosx_application_set_use_quartz_accelerators (osx_app, FALSE);
 
-          gui_add_to_app_menu (image_ui_manager, osx_app,
-                               "/image-menubar/Help/dialogs-about", 0);
-          gui_add_to_app_menu (image_ui_manager, osx_app,
-                               "/image-menubar/Help/dialogs-search-action", 1);
+        gui_add_to_app_menu (image_ui_manager, osx_app,
+                             "/image-menubar/Help/dialogs-about", 0);
+        gui_add_to_app_menu (image_ui_manager, osx_app,
+                             "/image-menubar/Help/dialogs-search-action", 1);
 
 #define PREFERENCES "/image-menubar/Edit/Preferences/"
 
-          gui_add_to_app_menu (image_ui_manager, osx_app,
-                               PREFERENCES "dialogs-preferences", 3);
-          gui_add_to_app_menu (image_ui_manager, osx_app,
-                               PREFERENCES "dialogs-input-devices", 4);
-          gui_add_to_app_menu (image_ui_manager, osx_app,
-                               PREFERENCES "dialogs-keyboard-shortcuts", 5);
-          gui_add_to_app_menu (image_ui_manager, osx_app,
-                               PREFERENCES "dialogs-module-dialog", 6);
-          gui_add_to_app_menu (image_ui_manager, osx_app,
-                               PREFERENCES "plug-in-unit-editor", 7);
+        gui_add_to_app_menu (image_ui_manager, osx_app,
+                             PREFERENCES "dialogs-preferences", 3);
+        gui_add_to_app_menu (image_ui_manager, osx_app,
+                             PREFERENCES "dialogs-input-devices", 4);
+        gui_add_to_app_menu (image_ui_manager, osx_app,
+                             PREFERENCES "dialogs-keyboard-shortcuts", 5);
+        gui_add_to_app_menu (image_ui_manager, osx_app,
+                             PREFERENCES "dialogs-module-dialog", 6);
+        gui_add_to_app_menu (image_ui_manager, osx_app,
+                             PREFERENCES "plug-in-unit-editor", 7);
 
 #undef PREFERENCES
 
-          item = gtk_separator_menu_item_new ();
-          gtkosx_application_insert_app_menu_item (osx_app, item, 8);
+        item = gtk_separator_menu_item_new ();
+        gtkosx_application_insert_app_menu_item (osx_app, item, 8);
 
-          item = gimp_ui_manager_get_widget (image_ui_manager,
-                                             "/image-menubar/File/file-quit");
-          gtk_widget_hide (item);
+        item = gimp_ui_manager_get_widget (image_ui_manager,
+                                           "/image-menubar/File/file-quit");
+        gtk_widget_hide (item);
 
-          g_signal_connect (osx_app, "NSApplicationBlockTermination",
-                            G_CALLBACK (gui_quartz_quit_callback),
-                            image_ui_manager);
+        g_signal_connect (osx_app, "NSApplicationBlockTermination",
+                          G_CALLBACK (gui_quartz_quit_callback),
+                          image_ui_manager);
 
-          gtkosx_application_ready (osx_app);
-        }
+        gtkosx_application_ready (osx_app);
+      }
 #endif /* GDK_WINDOWING_QUARTZ */
+
       /*  move keyboard focus to the display  */
       gtk_window_present (GTK_WINDOW (toplevel));
     }
