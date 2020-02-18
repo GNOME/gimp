@@ -257,9 +257,19 @@ warning_cflags_common = [
   '-Wtype-limits',
 ]
 warning_cflags_c = [
+  '-Wabsolute-value',
   '-Wdeclaration-after-statement',
-  '-Wold-style-definition',
+  '-Wenum-conversion',
+  '-Wliteral-conversion',
   '-Wno-strict-prototypes',
+  '-Wold-style-definition',
+  '-Wparentheses-equality',
+  '-W#pragma-messages',
+  '-Wsometimes-uninitialized',
+  '-Wtautological-unsigned-enum-zero-compare',
+  '-Wunneeded-internal-declaration',
+  '-Wunused-function',
+  '-Wunused-value',
 
   '-Werror=implicit-function-declaration',
 ]
