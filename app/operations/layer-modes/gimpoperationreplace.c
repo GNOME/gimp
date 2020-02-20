@@ -137,7 +137,11 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
                                        const GeglRectangle  *result,
                                        gint                  level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  GimpOperationLayerMode   *layer_mode = (gpointer) op;
+  GimpLayerCompositeRegion  included_region;
+
+  included_region = gimp_layer_mode_get_included_region
+    (layer_mode->layer_mode, layer_mode->real_composite_mode);
 
   /* if the layer's opacity is 100%, it has no mask, and its composite mode
    * contains "aux" (the latter should always be the case in practice,
@@ -145,9 +149,7 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
    */
   if (layer_mode->opacity == 1.0                            &&
       ! gegl_operation_context_get_object (context, "aux2") &&
-      (gimp_layer_mode_get_included_region (layer_mode->layer_mode,
-                                            layer_mode->real_composite_mode) &
-       GIMP_LAYER_COMPOSITE_REGION_SOURCE))
+      (included_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE))
     {
       GObject *aux;
 
@@ -160,6 +162,58 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
   /* the opposite case, where the opacity is 0%, is handled by
    * GimpOperationLayerMode.
    */
+  else if (layer_mode->opacity == 0.0)
+    {
+    }
+  /* if both buffers are included in the result, and if both of them have the
+   * same content -- i.e., if they share the same storage, same alignment, and
+   * same abyss (or if the abyss is irrelevant) -- we can just pass either of
+   * them directly as output.
+   */
+  else if (included_region == GIMP_LAYER_COMPOSITE_REGION_UNION)
+    {
+      GObject *input;
+      GObject *aux;
+
+      input = gegl_operation_context_get_object (context, "input");
+      aux   = gegl_operation_context_get_object (context, "aux");
+
+      if (input && aux &&
+          gegl_buffer_share_storage (GEGL_BUFFER (input), GEGL_BUFFER (aux)))
+        {
+          gint input_shift_x;
+          gint input_shift_y;
+          gint aux_shift_x;
+          gint aux_shift_y;
+
+          g_object_get (input,
+                        "shift-x", &input_shift_x,
+                        "shift-y", &input_shift_y,
+                        NULL);
+          g_object_get (aux,
+                        "shift-x", &aux_shift_x,
+                        "shift-y", &aux_shift_y,
+                        NULL);
+
+          if (input_shift_x == aux_shift_x && input_shift_y == aux_shift_y)
+            {
+              const GeglRectangle *input_abyss;
+              const GeglRectangle *aux_abyss;
+
+              input_abyss = gegl_buffer_get_abyss (GEGL_BUFFER (input));
+              aux_abyss   = gegl_buffer_get_abyss (GEGL_BUFFER (aux));
+
+              if (gegl_rectangle_equal (input_abyss, aux_abyss)  ||
+                  (gegl_rectangle_contains (input_abyss, result) &&
+                   gegl_rectangle_contains (aux_abyss,   result)))
+                {
+                  gegl_operation_context_set_object (context, "output", input);
+
+                  return TRUE;
+                }
+            }
+        }
+    }
 
   return GEGL_OPERATION_CLASS (parent_class)->process (op, context, output_prop,
                                                        result, level);
