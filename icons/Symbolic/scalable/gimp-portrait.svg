@@ -104,7 +104,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(556.16667,245.70615)"
@@ -158,7 +158,7 @@
          cx="49.5"
          transform="matrix(0.8,0,0,0.8,89.4002,253)"
          id="path20580-9"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient7907);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient7907);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
       <path
          style="opacity:0.3;fill:url(#linearGradient7910);fill-opacity:1;stroke:none"
          d="m 127.0002,529 c -1.19566,0.86451 -2,2 -2,4 l 8,0 c 0,-2 -0.80434,-3.13549 -2,-4 l 0,1 -4,0 z"

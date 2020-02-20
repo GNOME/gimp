@@ -105,7 +105,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(774.93754,420.28591)"
@@ -139,7 +139,7 @@
          transform="translate(15,-40)"
          id="rect3845" />
       <path
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
          d="m 15,-40 h 16 v 16 H 15 Z"
          id="rect14152" />
     </g>

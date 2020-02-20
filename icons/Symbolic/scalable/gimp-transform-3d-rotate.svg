@@ -46,7 +46,7 @@
       <path
          id="path2579"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#bebebe;stroke-width:1pt;stroke-opacity:1;fill:#bebebe;fill-opacity:1"
+         style="fill-rule:evenodd;stroke:#d6d6d6;stroke-width:1pt;stroke-opacity:1;fill:#d6d6d6;fill-opacity:1"
          transform="scale(0.4) translate(10,0)" />
     </marker>
   </defs>
@@ -93,7 +93,7 @@
      transform="translate(0,-292.76666)"
      style="display:inline">
     <circle
-       style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.10583334;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.10583334;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path3956"
        cy="294.88333"
        cx="2.1166666"
@@ -101,7 +101,7 @@
     <g
        id="g12965">
       <path
-         style="display:inline;fill:none;fill-opacity:1;stroke:#bebebe;stroke-width:0.39687499;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:none;fill-opacity:1;stroke:#d6d6d6;stroke-width:0.39687499;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path3958"
          sodipodi:type="arc"
          sodipodi:cx="2.1166666"
@@ -114,7 +114,7 @@
          sodipodi:open="true" />
       <path
          sodipodi:type="star"
-         style="display:inline;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.27536848;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.27536848;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path4166"
          sodipodi:sides="3"
          sodipodi:cx="0.79374999"

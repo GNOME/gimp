@@ -70,7 +70,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(403.12162,-929.27501)"
@@ -87,11 +87,11 @@
     <g
        transform="matrix(0.032,0,0,-0.03203203,15.6128,10.4745)"
        id="g5594-6"
-       style="fill:#bebebe;fill-opacity:1" />
+       style="fill:#d6d6d6;fill-opacity:1" />
     <g
        transform="matrix(0.032,0,0,-0.03203203,9.67296,15.8401)"
        id="g5598-5"
-       style="fill:#bebebe;fill-opacity:1" />
+       style="fill:#d6d6d6;fill-opacity:1" />
     <path
        inkscape:connector-curvature="0"
        style="display:inline;fill:url(#linearGradient10250);fill-opacity:1;stroke:none;stroke-width:0.78246117"
@@ -102,6 +102,6 @@
        id="path4"
        d="M 9.45,6.4433307 5.8725,0.27915212 C 6.3975,0.16721185 6.9375,0.10004768 7.5,0.10004768 c 1.8,0 3.45,0.63432824 4.74,1.67910422 L 9.495,6.5179576 Z M 0.345,5.3239279 C 1.035,3.1448233 2.7075,1.398555 4.845,0.5925849 L 7.59,5.3239279 Z M 0.15,6.0701965 H 5.7675 L 5.55,6.4433307 1.98,12.600048 C 0.75,11.27169 0,9.5104943 0,7.5627335 0,7.0478082 0.0525,6.555271 0.15,6.0701965 Z m 9.945,1.492537 2.925,-5.0373131 C 14.2425,3.8537786 15,5.6149727 15,7.5627335 15,8.0776587 14.9475,8.570196 14.85,9.0552705 H 9.2325 Z"
        inkscape:connector-curvature="0"
-       style="fill:#bebebe;fill-opacity:1;stroke-width:0.74813193" />
+       style="fill:#d6d6d6;fill-opacity:1;stroke-width:0.74813193" />
   </g>
 </svg>

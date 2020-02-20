@@ -28,7 +28,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-482.61525,330.965)">
       <stop
-         style="stop-color:#bebebe;stop-opacity:1;"
+         style="stop-color:#d6d6d6;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -250,7 +250,7 @@
        id="gimp-tool-airbrush-24"
        transform="translate(-0.50000001,3.0000174)">
       <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:1.5;marker:none"
+         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:1.5;marker:none"
          id="rect2941-2"
          width="24"
          height="24"

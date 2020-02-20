@@ -90,27 +90,27 @@
         <path
            inkscape:connector-curvature="0"
            d="m 105,652 v 1 c 1e-5,0.2653 0.0931,0.53058 0.28125,0.71875 l 3,3 L 108.5625,657 h 0.875 l 0.28125,-0.28125 3,-3 C 112.90694,653.53058 112.99999,653.2653 113,653 v -1 h -1 c -0.2653,10e-6 -0.53059,0.0931 -0.71875,0.28125 l -2.2812,2.2812 -2.2812,-2.2812 c -0.19,-0.19 -0.45,-0.28 -0.72,-0.28 h -1 z"
-           style="color:#000000;text-indent:0;text-transform:none;fill:#bebebe"
+           style="color:#000000;text-indent:0;text-transform:none;fill:#d6d6d6"
            id="path3613-6" />
         <path
            inkscape:connector-curvature="0"
            d="m 108,650 v 5 h 2 v -5 z"
-           style="color:#000000;text-indent:0;text-transform:none;fill:#bebebe"
+           style="color:#000000;text-indent:0;text-transform:none;fill:#d6d6d6"
            id="path4388-5" />
         <path
            inkscape:connector-curvature="0"
            d="m 104,658 v 4 h 10 v -4 z m 3.3438,1.4375 c 0.0208,-10e-4 0.0417,-10e-4 0.0625,0 0.29096,-0.0556 0.59898,0.20383 0.59375,0.5 V 660 h 2 v -0.0625 c -0.004,-0.26416 0.23582,-0.50712 0.5,-0.50712 0.26418,0 0.50373,0.24296 0.5,0.50712 V 660 c 0,0.54535 -0.45465,1 -1,1 h -2 c -0.54535,0 -1,-0.45465 -1,-1 v -0.0625 c -0.0108,-0.21706 0.13723,-0.43234 0.34375,-0.5 z"
-           style="color:#000000;fill:#bebebe;fill-rule:evenodd"
+           style="color:#000000;fill:#d6d6d6;fill-rule:evenodd"
            id="rect11668-7-5-4" />
         <path
            inkscape:connector-curvature="0"
            d="m 104,647 c -0.54535,0 -1,0.45465 -1,1 v 2 c 0,0.54535 0.45465,1 1,1 h 10 c 0.54535,0 1,-0.45465 1,-1 v -2 c 0,-0.54535 -0.45465,-1 -1,-1 z m 0,1 h 10 v 2 h -10 z"
-           style="color:#bebebe;text-indent:0;text-transform:none;fill:#bebebe"
+           style="color:#d6d6d6;text-indent:0;text-transform:none;fill:#d6d6d6"
            id="rect4390" />
         <path
            inkscape:connector-curvature="0"
            d="m 105.41,656 a 0.50005,0.50005 0 0 0 -0.3125,0.21875 l -1,1.5 a 0.50005,0.50005 0 1 0 0.8125,0.5625 l 1,-1.5 A 0.50005,0.50005 0 0 0 105.41,656 Z m 7,0 a 0.50005,0.50005 0 0 0 -0.3125,0.78125 l 1,1.5 a 0.50005,0.50005 0 1 0 0.8125,-0.5625 l -1,-1.5 A 0.50005,0.50005 0 0 0 112.41,656 Z"
-           style="color:#bebebe;text-indent:0;text-transform:none;fill:#bebebe"
+           style="color:#d6d6d6;text-indent:0;text-transform:none;fill:#d6d6d6"
            id="rect4390-9-1" />
       </g>
     </g>

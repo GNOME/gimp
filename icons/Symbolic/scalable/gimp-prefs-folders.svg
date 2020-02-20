@@ -25,7 +25,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.23667958,0,0,0.20304569,-208.29645,97.782765)">
       <stop
-         style="stop-color:#bebebe;stop-opacity:1;"
+         style="stop-color:#d6d6d6;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -115,7 +115,7 @@
            id="rect3845-7"
            sodipodi:nodetypes="ccccccccccsccccccccccc" />
         <rect
-           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+           style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
            id="rect14152-53"
            width="16"
            height="16"
@@ -134,7 +134,7 @@
            d="m 1383.3477,196.71484 c -0.1808,0 -0.3321,0.15133 -0.3321,0.33204 v 5.66796 h 1.25 v -3.1875 c 0,-0.17312 0.1394,-0.3125 0.3125,-0.3125 h 1.8555 5.332 v -0.8789 c 0,-0.2045 -0.1666,-0.3711 -0.3711,-0.3711 h -4.6289 v -0.91796 c 0,-0.18072 -0.1513,-0.33204 -0.332,-0.33204 z m 1.5429,3.125 v 2.875 h 4.125 v 4 h 3.668 c 0.1866,0 0.332,-0.1454 0.332,-0.33203 v -6.21093 c 0,-0.18069 -0.1513,-0.33204 -0.332,-0.33204 z"
            style="display:inline;fill:url(#linearGradient9290);fill-opacity:1;stroke:none" />
         <rect
-           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+           style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
            id="rect14152-53-3"
            width="16"
            height="16"

@@ -105,9 +105,9 @@
          id="rect7228"
          transform="translate(0,1028.3622)"
          d="M 1 4 L 1.0175781 19 L 8.3417969 19 C 8.9014392 17.819821 10.071669 17.049457 11.376953 17.001953 C 12.77115 16.954547 14.060372 17.739591 14.658203 19 L 16.71875 19 L 23 19 L 19 6 L 18.564453 5.8789062 A 3.5 3.5 0 0 1 16.123047 6.9980469 A 3.5 3.5 0 0 1 12.574219 4.2128906 L 12.167969 4.0996094 L 8.953125 4.0703125 A 3.5 3.5 0 0 1 5.6230469 6.9980469 A 3.5 3.5 0 0 1 2.0410156 4.0078125 L 1.1601562 4 L 1 4 z "
-         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.66121233;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="opacity:1;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.66121233;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
-         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.86097741;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:1;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.86097741;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path7231-1-8"
          sodipodi:type="arc"
          sodipodi:cx="11.5"
@@ -118,7 +118,7 @@
          sodipodi:end="6.2478424"
          d="m 13.998483,1048.7751 a 2.5,2.5 0 0 1 -2.411092,2.5856 2.5,2.5 0 0 1 -2.585852,-2.4108 2.5,2.5 0 0 1 2.410438,-2.5862 2.5,2.5 0 0 1 2.586462,2.4101 L 11.5,1048.8622 Z" />
       <path
-         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.86097741;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:1;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.86097741;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path7231-1-8-0"
          sodipodi:type="arc"
          sodipodi:cx="5.5"
@@ -129,7 +129,7 @@
          sodipodi:end="6.2478424"
          d="m 7.9984831,1031.7751 a 2.5,2.5 0 0 1 -2.4110926,2.5856 2.5,2.5 0 0 1 -2.5858515,-2.4108 2.5,2.5 0 0 1 2.4104382,-2.5862 2.5,2.5 0 0 1 2.5864616,2.4101 L 5.5,1031.8622 Z" />
       <path
-         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.86097741;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:1;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.86097741;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path7231-1-8-0-5"
          sodipodi:type="arc"
          sodipodi:cx="16"

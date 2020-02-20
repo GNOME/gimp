@@ -113,7 +113,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(-575.59033,297.76585)"
@@ -173,7 +173,7 @@
                style="display:inline"
                transform="translate(-204.6252,556.1747)">
               <path
-                 style="fill:#bebebe;fill-opacity:1;stroke:url(#linearGradient7611)"
+                 style="fill:#d6d6d6;fill-opacity:1;stroke:url(#linearGradient7611)"
                  d="m -59,263 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"
                  transform="translate(241.0002,217)"
                  id="rect6573-9"
@@ -197,7 +197,7 @@
                id="path6582-3"
                inkscape:connector-curvature="0" />
             <path
-               style="display:inline;opacity:0;fill:#bebebe;fill-opacity:1;stroke:none"
+               style="display:inline;opacity:0;fill:#d6d6d6;fill-opacity:1;stroke:none"
                d="m -19.625,1038.2997 8,0 -4,4 z"
                id="path6582-2"
                inkscape:connector-curvature="0" />

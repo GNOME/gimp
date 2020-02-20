@@ -104,7 +104,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(399.67546,153.30453)"
@@ -155,11 +155,11 @@
          id="g4">
         <g
            id="g14"
-           style="fill:#bebebe">
+           style="fill:#d6d6d6">
           <g
              transform="translate(4.614,-3)"
              id="g8"
-             style="fill:#bebebe">
+             style="fill:#d6d6d6">
             <path
                id="path10"
                transform="matrix(1,0,0,1.000125,-385.65583,889.78331)"

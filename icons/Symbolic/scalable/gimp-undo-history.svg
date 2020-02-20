@@ -108,7 +108,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(461.8282,152.73591)"
@@ -197,7 +197,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
     <rect
-       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:2;marker:none"
+       style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:2;marker:none"
        id="rect35735-0-1"
        width="16"
        height="16"

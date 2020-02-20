@@ -27,7 +27,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(246.52189,191.51971)"
@@ -116,7 +116,7 @@
          id="path2"
          transform="translate(0,1028.3622)"
          d="M 12,0 C 11.561656,0 10.677902,0.47588125 10.595703,0.80078125 L 9.3300781,3 H 0 V 18 H 3 L 1.5,24 H 3 l 0.75,-3 h 16.5 L 21,24 h 1.5 L 21,18 h 3 V 5 L 23,6 V 17 H 1 V 4 H 17 L 18,3 H 14.824219 L 13.310547,0.65039062 C 13.030484,0.28469062 12.431369,0 12,0 Z m 0,1.5 0.75,1.5 h -1.5 z M 4.5,18 h 15 v 1.5 h -15 z"
-         style="fill:#bebebe;fill-opacity:1;stroke-width:0.13086028" />
+         style="fill:#d6d6d6;fill-opacity:1;stroke-width:0.13086028" />
       <g
          id="tools"
          style="display:inline"

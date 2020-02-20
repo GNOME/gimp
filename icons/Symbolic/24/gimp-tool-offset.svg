@@ -29,7 +29,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-482.61525,330.965)">
       <stop
-         style="stop-color:#bebebe;stop-opacity:1;"
+         style="stop-color:#d6d6d6;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -140,7 +140,7 @@
          height="21"
          width="21"
          id="rect3623"
-         style="fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         style="fill:none;fill-rule:evenodd;stroke:#d6d6d6;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <g
          inkscape:export-ydpi="123.75"
          inkscape:export-xdpi="123.75"

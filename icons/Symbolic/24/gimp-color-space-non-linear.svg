@@ -82,7 +82,7 @@
          id="rect814"
          transform="matrix(0.26458334,0,0,0.26458334,0,292.76665)"
          d="M 0.99999998,-7.0000124 1,15 23,14.999987 V -7.0000124 Z M 2,-6.0000124 H 22 V 13.999987 H 2 Z"
-         style="color:#000000;overflow:visible;opacity:1;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
+         style="color:#000000;overflow:visible;opacity:1;fill:#d6d6d6;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccccccccc" />
       <path
@@ -90,7 +90,7 @@
          inkscape:connector-curvature="0"
          id="path819"
          d="M 0.52916668,296.47082 C 1.1812825,293.95031 2.5894277,291.2872 5.8208334,291.17915"
-         style="fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         style="fill:none;fill-rule:evenodd;stroke:#d6d6d6;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
   </g>
 </svg>

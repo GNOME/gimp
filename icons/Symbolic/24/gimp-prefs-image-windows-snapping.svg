@@ -68,7 +68,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#bebebe;stop-opacity:1;" />
+         style="stop-color:#d6d6d6;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="matrix(0.99999747,0,0,1.047619,897.4869,348.10277)"
@@ -144,16 +144,16 @@
            style="stroke:none;stroke-opacity:1">
           <path
              inkscape:connector-curvature="0"
-             style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-opacity:1"
+             style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-opacity:1"
              d="m 562.5,505.36212 c 0.831,0 1.5,0.669 1.5,1.5 0,0.831 -0.669,1.5 -1.5,1.5 -0.831,0 -1.5,-0.669 -1.5,-1.5 0,-0.831 0.669,-1.5 1.5,-1.5 z"
              id="rect22373" />
           <path
              inkscape:connector-curvature="0"
-             style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-opacity:1"
+             style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-opacity:1"
              d="m 562.5,518.36212 c 0.831,0 1.5,0.669 1.5,1.5 0,0.831 -0.669,1.5 -1.5,1.5 -0.831,0 -1.5,-0.669 -1.5,-1.5 0,-0.831 0.669,-1.5 1.5,-1.5 z"
              id="rect22375" />
           <path
-             style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:3;stroke-opacity:1;marker:none;enable-background:new"
+             style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:3;stroke-opacity:1;marker:none;enable-background:new"
              d="m 565,505.34375 v 3 h 1.53125 c 3.11834,0 5.53125,2.31067 5.53125,5.03125 0,2.72057 -2.41291,5 -5.53125,5 -0.11744,0 -0.23004,-0.0246 -0.34375,-0.0312 h -0.0312 -0.0312 -1.15625 v 3 h 1.0625 0.0937 c 0.14249,0.007 0.26588,0.0312 0.40625,0.0312 4.62356,0 8.53125,-3.53305 8.53125,-8 0,-4.46696 -3.90769,-8.03125 -8.53125,-8.03125 h -1.53125 z"
              id="path14123"
              inkscape:connector-curvature="0" />

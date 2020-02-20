@@ -28,7 +28,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-482.61525,330.965)">
       <stop
-         style="stop-color:#bebebe;stop-opacity:1;"
+         style="stop-color:#d6d6d6;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -116,7 +116,7 @@
     <g
        id="g9134">
       <g
-         style="fill:#bebebe;fill-opacity:1;stroke:none"
+         style="fill:#d6d6d6;fill-opacity:1;stroke:none"
          transform="matrix(1.3748443,0,0,1.4226056,40.183063,1011.7472)"
          id="g9272">
         <path

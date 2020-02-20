@@ -119,7 +119,7 @@
          x="0"
          y="1028.3622" />
       <path
-         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.5"
+         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.5"
          d="m 16.5,1042.3622 -6,3 H 9 l -3.75,-1.875 -1.265625,1.875 -3.984375,6 h 18 l 6,-9 z"
          id="path13520"
          inkscape:connector-curvature="0" />
@@ -128,7 +128,7 @@
          inkscape:connector-curvature="0"
          id="path3826"
          d="m 3,1029.3622 v 7.5087 c 0,2.6653 3.1219512,4.8927 6.9756098,6.4913 C 13.926829,1041.7636 17,1039.959 17,1036.9678 v -7.6056 z m 1.5609756,3.1004 h 4.6829269 v 1.5501 1.5502 l -3.1219513,-1.5502 z m 6.2439024,0 h 4.682927 l -1.560976,1.5501 -3.121951,1.5502 z m -4.6829268,4.6505 h 7.8048778 c -3.863218,6.9593 -7.8048778,0 -7.8048778,0 z"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.55556107;marker:none" />
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#d6d6d6;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.55556107;marker:none" />
     </g>
   </g>
 </svg>

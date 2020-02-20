@@ -28,7 +28,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-482.61525,330.965)">
       <stop
-         style="stop-color:#bebebe;stop-opacity:1;"
+         style="stop-color:#d6d6d6;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -506,7 +506,7 @@
        id="gimp-tool-foreground-select-24">
       <path
          inkscape:connector-curvature="0"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient10698-5);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.79999971;marker:none;enable-background:accumulate"
+         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient10698-5);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.79999971;marker:none;enable-background:accumulate"
          d="m 13,1039.8622 a 3.5,3.5 0 0 1 -3.5,3.5 3.5,3.5 0 0 1 -3.5,-3.5 3.5,3.5 0 0 1 3.5,-3.5 3.5,3.5 0 0 1 3.5,3.5 z"
          id="path20580-1-7" />
       <path

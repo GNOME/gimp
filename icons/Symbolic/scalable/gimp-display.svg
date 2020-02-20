@@ -60,12 +60,12 @@
       <path
          inkscape:connector-curvature="0"
          d="m 164,448 c -1.662,0 -3,1.338 -3,3 v 7 c 0,1.662 1.338,3 3,3 h 10 c 1.662,0 3,-1.338 3,-3 v -7 c 0,-1.662 -1.338,-3 -3,-3 z m 0,2 h 10 c 0.554,0 1,0.446 1,1 v 7 c 0,0.554 -0.446,1 -1,1 h -10 c -0.554,0 -1,-0.446 -1,-1 v -7 c 0,-0.554 0.446,-1 1,-1 z"
-         style="fill:#bebebe"
+         style="fill:#d6d6d6"
          id="rect3773-3" />
       <path
          inkscape:connector-curvature="0"
          d="m 169,463 c 3,0 4,-1 4,-1 h -1 -6 -1 c 0,0 1,1 4,1 z"
-         style="fill:#bebebe"
+         style="fill:#d6d6d6"
          id="rect3778-2" />
     </g>
   </g>

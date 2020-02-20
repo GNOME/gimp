@@ -32,7 +32,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.23667958,0,0,0.20304569,-212.51307,96.938703)">
       <stop
-         style="stop-color:#bebebe;stop-opacity:1;"
+         style="stop-color:#d6d6d6;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -128,12 +128,12 @@
          inkscape:connector-curvature="0"
          id="path27972"
          d="m 148.8125,522 c 1.64243,-0.092 3.0955,1.17008 3.1875,2.8125 -1e-4,1.40136 -0.37771,1.92177 -1.59375,2.84375 -0.19093,0.14364 -0.3256,0.2506 -0.375,0.3125 C 149.98185,528.03085 150,528.002 150,528 c 0.007,0.52831 -0.47163,1 -1,1 -0.52837,0 -1.007,-0.47169 -1,-1 0,-0.50239 0.22424,-0.94342 0.46875,-1.25 0.24451,-0.30663 0.4913,-0.51638 0.71875,-0.6875 0.20405,-0.16056 0.46083,-0.38454 0.6875,-0.65625 0.0935,-0.1121 0.129,-0.30766 0.125,-0.4375 v -0.0312 c -0.0316,-0.56324 -0.49926,-0.9691 -1.0625,-0.9375 -0.56324,0.0316 -0.9691,0.43676 -0.9375,1 h -2 c -0.092,-1.64243 1.17007,-2.9079 2.8125,-3 z"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7762);fill-opacity:1;stroke:none;stroke-width:2;marker:none" />
+         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7762);fill-opacity:1;stroke:none;stroke-width:2;marker:none" />
       <path
          inkscape:connector-curvature="0"
          id="path19592"
          d="m 149,530 c 0.55228,0 1,0.44772 1,1 0,0.55228 -0.44772,1 -1,1 -0.55228,0 -1,-0.44772 -1,-1 0,-0.55228 0.44772,-1 1,-1 z"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7774);fill-opacity:1;stroke:none;stroke-width:2;marker:none" />
+         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7774);fill-opacity:1;stroke:none;stroke-width:2;marker:none" />
       <path
          inkscape:connector-curvature="0"
          id="path27976"

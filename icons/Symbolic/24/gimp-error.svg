@@ -33,7 +33,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.23667958,0,0,0.20304569,-212.51307,96.938703)">
       <stop
-         style="stop-color:#bebebe;stop-opacity:1;"
+         style="stop-color:#d6d6d6;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -112,7 +112,7 @@
          class="error"
          id="path10839-3"
          d="m 169.0002,399.66666 c -4.05486,0 -7.33333,3.27847 -7.33333,7.33334 0,4.05486 3.27847,7.33333 7.33333,7.33333 4.05486,0 7.33334,-3.27847 7.33334,-7.33333 0,-4.05487 -3.27848,-7.33334 -7.33334,-7.33334 z m -4.66667,6.00001 h 9.33334 v 2.66666 h -9.33334 z"
-         style="color:#bebebe;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Andale Mono';-inkscape-font-specification:'Andale Mono';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient6839);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.87443936;marker:none;enable-background:new"
+         style="color:#d6d6d6;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Andale Mono';-inkscape-font-specification:'Andale Mono';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient6839);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.87443936;marker:none;enable-background:new"
          sodipodi:nodetypes="sssssccccc" />
     </g>
   </g>

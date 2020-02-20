@@ -84,7 +84,7 @@
        id="g30"
        transform="matrix(1,0,0,-1,0,2088.7244)">
       <path
-         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:2.07036519;marker:none;enable-background:accumulate"
+         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:2.07036519;marker:none;enable-background:accumulate"
          id="path8378"
          d="m 2.8176596,1038.3881 a 0.99538919,1.0767821 0 0 0 -0.4976448,1.8505 l 4.9764483,5.3834 0.7153644,0.7402 0.7153644,-0.7402 4.9764491,-5.3834 a 1.0116781,1.094403 0 1 0 -1.430729,-1.5477 l -4.2610845,4.6096 -4.2610838,-4.6096 a 0.99538919,1.0767821 0 0 0 -0.9330841,-0.3028 z"
          inkscape:connector-curvature="0" />
@@ -93,7 +93,7 @@
          x="1048.3622"
          width="2"
          transform="rotate(90)"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:#d6d6d6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
          ry="0"
          rx="0"
          id="rect8382"
