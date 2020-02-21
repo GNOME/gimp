@@ -138,8 +138,8 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
   applicator  = gimp_filter_get_applicator (filter);
   dest_buffer = gimp_drawable_get_buffer (drawable);
 
-  if (format == gimp_drawable_get_format (drawable))
-    format = NULL;
+  if (! format)
+    format = gimp_drawable_get_format (drawable);
 
   rect = gegl_node_get_bounding_box (gimp_filter_get_node (filter));
 
@@ -158,7 +158,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
           return TRUE;
         }
 
-      if (format)
+      if (format != gimp_drawable_get_format (drawable))
         {
           buffer = gegl_buffer_new (gegl_buffer_get_extent (dest_buffer),
                                     format);
@@ -201,7 +201,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
       applicator_output_format = gimp_applicator_get_output_format (applicator);
 
       gimp_applicator_set_cache (applicator, FALSE);
-      if (applicator_output_format == gimp_drawable_get_format (drawable))
+      if (applicator_output_format == format)
         gimp_applicator_set_output_format (applicator, NULL);
     }
 
