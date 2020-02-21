@@ -62,7 +62,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
       const __v4sf one       = _mm_set1_ps (1.0f);
       const __v4sf v_opacity = _mm_set1_ps (opacity);
 
-      switch (layer_mode->real_composite_mode)
+      switch (layer_mode->composite_mode)
         {
         case GIMP_LAYER_COMPOSITE_UNION:
         case GIMP_LAYER_COMPOSITE_AUTO:

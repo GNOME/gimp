@@ -1883,14 +1883,13 @@ struct DoLayerBlend : Base
   DoLayerBlend (const GimpPaintCoreLoopsParams *params) :
     Base (params)
   {
-    layer_mode.layer_mode          = params->paint_mode;
-    layer_mode.opacity             = params->image_opacity;
-    layer_mode.function            = gimp_layer_mode_get_function (params->paint_mode);
-    layer_mode.blend_function      = gimp_layer_mode_get_blend_function (params->paint_mode);
-    layer_mode.blend_space         = gimp_layer_mode_get_blend_space (params->paint_mode);
-    layer_mode.composite_space     = gimp_layer_mode_get_composite_space (params->paint_mode);
-    layer_mode.composite_mode      = gimp_layer_mode_get_paint_composite_mode (params->paint_mode);
-    layer_mode.real_composite_mode = layer_mode.composite_mode;
+    layer_mode.layer_mode      = params->paint_mode;
+    layer_mode.opacity         = params->image_opacity;
+    layer_mode.function        = gimp_layer_mode_get_function (params->paint_mode);
+    layer_mode.blend_function  = gimp_layer_mode_get_blend_function (params->paint_mode);
+    layer_mode.blend_space     = gimp_layer_mode_get_blend_space (params->paint_mode);
+    layer_mode.composite_space = gimp_layer_mode_get_composite_space (params->paint_mode);
+    layer_mode.composite_mode  = gimp_layer_mode_get_paint_composite_mode (params->paint_mode);
 
     iterator_format = gimp_layer_mode_get_format (params->paint_mode,
                                                   layer_mode.blend_space,

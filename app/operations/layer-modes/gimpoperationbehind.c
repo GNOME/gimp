@@ -80,7 +80,7 @@ gimp_operation_behind_process (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  switch (layer_mode->real_composite_mode)
+  switch (layer_mode->composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_UNION:
     case GIMP_LAYER_COMPOSITE_AUTO:
