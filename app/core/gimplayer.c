@@ -263,6 +263,8 @@ static void       gimp_layer_real_convert_type  (GimpLayer          *layer,
                                                  GeglDitherMethod    mask_dither_type,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
+static GeglRectangle
+               gimp_layer_real_get_bounding_box (GimpLayer          *layer);
 static void  gimp_layer_real_get_effective_mode (GimpLayer          *layer,
                                                  GimpLayerMode          *mode,
                                                  GimpLayerColorSpace    *blend_space,
@@ -484,6 +486,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   klass->rotate                       = gimp_layer_real_rotate;
   klass->transform                    = gimp_layer_real_transform;
   klass->convert_type                 = gimp_layer_real_convert_type;
+  klass->get_bounding_box             = gimp_layer_real_get_bounding_box;
   klass->get_effective_mode           = gimp_layer_real_get_effective_mode;
   klass->get_excludes_backdrop        = gimp_layer_real_get_excludes_backdrop;
 
@@ -1513,22 +1516,28 @@ gimp_layer_set_buffer (GimpDrawable        *drawable,
 static GeglRectangle
 gimp_layer_get_bounding_box (GimpDrawable *drawable)
 {
-  GimpLayer     *layer        = GIMP_LAYER (drawable);
-  GimpLayerMask *mask         = gimp_layer_get_mask (layer);
+  GimpLayer     *layer = GIMP_LAYER (drawable);
+  GimpLayerMask *mask  = gimp_layer_get_mask (layer);
   GeglRectangle  bounding_box;
 
-  bounding_box = GIMP_DRAWABLE_CLASS (parent_class)->get_bounding_box (
-    drawable);
-
-  if (mask && gimp_layer_get_apply_mask (layer))
+  if (mask && gimp_layer_get_show_mask (layer))
     {
-      GeglRectangle mask_bounding_box;
+      bounding_box = gimp_drawable_get_bounding_box (GIMP_DRAWABLE (mask));
+    }
+  else
+    {
+      bounding_box = GIMP_LAYER_GET_CLASS (layer)->get_bounding_box (layer);
 
-      mask_bounding_box = gimp_drawable_get_bounding_box (
-        GIMP_DRAWABLE (mask));
+      if (mask && gimp_layer_get_apply_mask (layer))
+        {
+          GeglRectangle mask_bounding_box;
 
-      gegl_rectangle_intersect (&bounding_box,
-                                &bounding_box, &mask_bounding_box);
+          mask_bounding_box = gimp_drawable_get_bounding_box (
+            GIMP_DRAWABLE (mask));
+
+          gegl_rectangle_intersect (&bounding_box,
+                                    &bounding_box, &mask_bounding_box);
+        }
     }
 
   return bounding_box;
@@ -1765,6 +1774,13 @@ gimp_layer_real_convert_type (GimpLayer        *layer,
 
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
+}
+
+static GeglRectangle
+gimp_layer_real_get_bounding_box (GimpLayer *layer)
+{
+  return GIMP_DRAWABLE_CLASS (parent_class)->get_bounding_box (
+    GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -2372,6 +2388,8 @@ gimp_layer_set_show_mask (GimpLayer *layer,
 
           gimp_layer_update_mode_node (layer);
         }
+
+      gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
 
       gimp_layer_update_effective_mode (layer);
       gimp_layer_update_excludes_backdrop (layer);
