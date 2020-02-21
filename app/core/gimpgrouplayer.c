@@ -1182,8 +1182,6 @@ gimp_group_layer_mask_changed (GimpLayer *layer)
 
   g_warn_if_fail (GET_PRIVATE (layer)->suspend_mask == 0);
 
-  gimp_layer_update_effective_mode (layer);
-
   /* if we've already computed a bounding box, update it now, since the mask
    * limits the bounding box to the group's size.  if we haven't computed a
    * bounding box yet we can skip this, and, in fact, we have to, or else the
@@ -1226,7 +1224,8 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
        *
        *   - and,
        *
-       *     - the group's opacity is 100%, and it has no mask; or,
+       *     - the group's opacity is 100%, and it has no mask (or the mask
+       *       isn't applied); or,
        *
        *     - the group's composite space equals the active children's
        *       composite space.
@@ -1301,9 +1300,14 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
 
       if (reduce)
         {
+          gboolean has_mask;
+
+          has_mask = gimp_layer_get_mask (layer) &&
+                     gimp_layer_get_apply_mask (layer);
+
           if (first                                                  ||
               (gimp_layer_get_opacity (layer) == GIMP_OPACITY_OPAQUE &&
-               ! gimp_layer_get_mask (layer))                        ||
+               ! has_mask)                                           ||
               *composite_space == gimp_layer_get_real_composite_space (layer))
             {
               /* strength reduction succeeded! */
