@@ -45,10 +45,13 @@ struct _GimpOperationLayerMode
   GimpLayerColorSpace          composite_space;
   GimpLayerCompositeMode       composite_mode;
 
-  GimpLayerCompositeMode       real_composite_mode;
+  gdouble                      prop_opacity;
+  GimpLayerCompositeMode       prop_composite_mode;
+
   GimpLayerModeFunc            function;
   GimpLayerModeBlendFunc       blend_function;
   gboolean                     is_last_node;
+  gboolean                     has_mask;
 };
 
 struct _GimpOperationLayerModeClass
@@ -56,6 +59,11 @@ struct _GimpOperationLayerModeClass
   GeglOperationPointComposer3Class  parent_class;
 
   /*  virtual functions  */
+  gboolean                 (* parent_process)      (GeglOperation          *operation,
+                                                    GeglOperationContext   *context,
+                                                    const gchar            *output_prop,
+                                                    const GeglRectangle    *result,
+                                                    gint                    level);
   gboolean                 (* process)             (GeglOperation          *operation,
                                                     void                   *in,
                                                     void                   *aux,
