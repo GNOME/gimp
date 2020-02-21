@@ -1939,6 +1939,9 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
 
+  gimp_layer_update_effective_mode (layer);
+  gimp_layer_update_excludes_backdrop (layer);
+
   if (gimp_layer_get_apply_mask (layer) ||
       gimp_layer_get_show_mask (layer))
     {
@@ -2259,6 +2262,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
   gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
 
+  gimp_layer_update_effective_mode (layer);
+  gimp_layer_update_excludes_backdrop (layer);
+
   /*  If applying actually changed the view  */
   if (view_changed)
     {
@@ -2314,6 +2320,9 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
         }
 
       gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
+
+      gimp_layer_update_effective_mode (layer);
+      gimp_layer_update_excludes_backdrop (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
 
@@ -2400,6 +2409,9 @@ gimp_layer_set_show_mask (GimpLayer *layer,
 
           gimp_layer_update_mode_node (layer);
         }
+
+      gimp_layer_update_effective_mode (layer);
+      gimp_layer_update_excludes_backdrop (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
 
@@ -2889,11 +2901,28 @@ gimp_layer_update_effective_mode (GimpLayer *layer)
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  GIMP_LAYER_GET_CLASS (layer)->get_effective_mode (layer,
-                                                    &mode,
-                                                    &blend_space,
-                                                    &composite_space,
-                                                    &composite_mode);
+  if (layer->mask && layer->show_mask)
+    {
+      mode            = GIMP_LAYER_MODE_NORMAL;
+      blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
+      composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+      composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
+
+      /* This makes sure that masks of LEGACY-mode layers are
+       * composited in PERCEPTUAL space, and non-LEGACY layers in
+       * LINEAR space, or whatever composite space was chosen in the
+       * layer attributes dialog
+       */
+      composite_space = gimp_layer_get_real_composite_space (layer);
+    }
+  else
+    {
+      GIMP_LAYER_GET_CLASS (layer)->get_effective_mode (layer,
+                                                        &mode,
+                                                        &blend_space,
+                                                        &composite_space,
+                                                        &composite_mode);
+    }
 
   if (mode            != layer->effective_mode            ||
       blend_space     != layer->effective_blend_space     ||
