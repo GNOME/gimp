@@ -171,7 +171,8 @@ static void         gimp_group_layer_opacity_changed (GimpLayer         *layer);
 static void  gimp_group_layer_effective_mode_changed (GimpLayer         *layer);
 static void
           gimp_group_layer_excludes_backdrop_changed (GimpLayer         *layer);
-static void            gimp_group_layer_mask_changed (GimpLayer         *layer);
+static GeglRectangle
+                   gimp_group_layer_get_bounding_box (GimpLayer         *layer);
 static void      gimp_group_layer_get_effective_mode (GimpLayer         *layer,
                                                       GimpLayerMode          *mode,
                                                       GimpLayerColorSpace    *blend_space,
@@ -182,7 +183,7 @@ static gboolean
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglRectangle
-                   gimp_group_layer_get_bounding_box (GimpProjectable *projectable);
+       gimp_group_layer_projectable_get_bounding_box (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static void            gimp_group_layer_begin_render (GimpProjectable *projectable);
 static void            gimp_group_layer_end_render   (GimpProjectable *projectable);
@@ -299,13 +300,13 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   layer_class->opacity_changed           = gimp_group_layer_opacity_changed;
   layer_class->effective_mode_changed    = gimp_group_layer_effective_mode_changed;
   layer_class->excludes_backdrop_changed = gimp_group_layer_excludes_backdrop_changed;
-  layer_class->mask_changed              = gimp_group_layer_mask_changed;
   layer_class->translate                 = gimp_group_layer_translate;
   layer_class->scale                     = gimp_group_layer_scale;
   layer_class->flip                      = gimp_group_layer_flip;
   layer_class->rotate                    = gimp_group_layer_rotate;
   layer_class->transform                 = gimp_group_layer_transform;
   layer_class->convert_type              = gimp_group_layer_convert_type;
+  layer_class->get_bounding_box          = gimp_group_layer_get_bounding_box;
   layer_class->get_effective_mode        = gimp_group_layer_get_effective_mode;
   layer_class->get_excludes_backdrop     = gimp_group_layer_get_excludes_backdrop;
 
@@ -319,7 +320,7 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->get_image          = (GimpImage * (*) (GimpProjectable *)) gimp_item_get_image;
   iface->get_format         = gimp_group_layer_get_format;
   iface->get_offset         = (void (*) (GimpProjectable*, gint*, gint*)) gimp_item_get_offset;
-  iface->get_bounding_box   = gimp_group_layer_get_bounding_box;
+  iface->get_bounding_box   = gimp_group_layer_projectable_get_bounding_box;
   iface->get_graph          = gimp_group_layer_get_graph;
   iface->begin_render       = gimp_group_layer_begin_render;
   iface->end_render         = gimp_group_layer_end_render;
@@ -1130,29 +1131,38 @@ gimp_group_layer_opacity_changed (GimpLayer *layer)
 static void
 gimp_group_layer_effective_mode_changed (GimpLayer *layer)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+  GimpGroupLayer        *group               = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private             = GET_PRIVATE (layer);
   GimpLayerMode          mode;
   gboolean               pass_through;
+  gboolean               update_bounding_box = FALSE;
 
   gimp_layer_get_effective_mode (layer, &mode, NULL, NULL, NULL);
 
   pass_through = (mode == GIMP_LAYER_MODE_PASS_THROUGH);
 
-  if (private->pass_through && ! pass_through)
+  if (pass_through != private->pass_through)
     {
-      /* when switching from pass-through mode to a non-pass-through mode,
-       * flush the pickable in order to make sure the projection's buffer
-       * gets properly invalidated synchronously, so that it can be used
-       * as a source for the rest of the composition.
-       */
-      gimp_pickable_flush (GIMP_PICKABLE (private->projection));
-    }
+      if (private->pass_through && ! pass_through)
+        {
+          /* when switching from pass-through mode to a non-pass-through mode,
+           * flush the pickable in order to make sure the projection's buffer
+           * gets properly invalidated synchronously, so that it can be used
+           * as a source for the rest of the composition.
+           */
+          gimp_pickable_flush (GIMP_PICKABLE (private->projection));
+        }
 
-  private->pass_through = pass_through;
+      private->pass_through = pass_through;
+
+      update_bounding_box = TRUE;
+    }
 
   gimp_group_layer_update_source_node (group);
   gimp_group_layer_update_mode_node (group);
+
+  if (update_bounding_box)
+    gimp_drawable_update_bounding_box (GIMP_DRAWABLE (group));
 
   if (GIMP_LAYER_CLASS (parent_class)->effective_mode_changed)
     GIMP_LAYER_CLASS (parent_class)->effective_mode_changed (layer);
@@ -1170,25 +1180,23 @@ gimp_group_layer_excludes_backdrop_changed (GimpLayer *layer)
     GIMP_LAYER_CLASS (parent_class)->excludes_backdrop_changed (layer);
 }
 
-static void
-gimp_group_layer_mask_changed (GimpLayer *layer)
+static GeglRectangle
+gimp_group_layer_get_bounding_box (GimpLayer *layer)
 {
-  GimpGroupLayer        *group = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
 
-  g_warn_if_fail (GET_PRIVATE (layer)->suspend_mask == 0);
-
-  /* if we've already computed a bounding box, update it now, since the mask
-   * limits the bounding box to the group's size.  if we haven't computed a
-   * bounding box yet we can skip this, and, in fact, we have to, or else the
-   * mask will be improperly clipped when the group is duplicated, discarding
-   * its data.
+  /* for pass-through groups, use the group's calculated bounding box, instead
+   * of the source-node's bounding box, since we don't update the bounding box
+   * on all events that may affect the latter, and since it includes the
+   * bounding box of the backdrop.  this means we can't attach filters that may
+   * affect the bounding box to a pass-through group (since their effect weon't
+   * be reflected by the group's bounding box), but attaching filters to pass-
+   * through groups makes little sense anyway.
    */
-  if (! gegl_rectangle_is_empty (&private->bounding_box))
-    gimp_group_layer_update (group);
-
-  if (GIMP_LAYER_CLASS (parent_class)->mask_changed)
-    GIMP_LAYER_CLASS (parent_class)->mask_changed (layer);
+  if (private->pass_through)
+    return private->bounding_box;
+  else
+    return GIMP_LAYER_CLASS (parent_class)->get_bounding_box (layer);
 }
 
 static void
@@ -1363,7 +1371,7 @@ gimp_group_layer_get_format (GimpProjectable *projectable)
 }
 
 static GeglRectangle
-gimp_group_layer_get_bounding_box (GimpProjectable *projectable)
+gimp_group_layer_projectable_get_bounding_box (GimpProjectable *projectable)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
 
@@ -1910,15 +1918,15 @@ gimp_group_layer_update (GimpGroupLayer *group)
 static void
 gimp_group_layer_update_size (GimpGroupLayer *group)
 {
-  GimpGroupLayerPrivate *private    = GET_PRIVATE (group);
-  GimpItem              *item       = GIMP_ITEM (group);
-  GimpLayer             *layer      = GIMP_LAYER (group);
-  GimpItem              *mask       = GIMP_ITEM (gimp_layer_get_mask (layer));
+  GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+  GimpItem              *item    = GIMP_ITEM (group);
+  GimpLayer             *layer   = GIMP_LAYER (group);
+  GimpItem              *mask    = GIMP_ITEM (gimp_layer_get_mask (layer));
   GeglRectangle          old_bounds;
   GeglRectangle          bounds;
   GeglRectangle          old_bounding_box;
   GeglRectangle          bounding_box;
-  gboolean               first      = TRUE;
+  gboolean               first   = TRUE;
   gboolean               size_changed;
   gboolean               resize_mask;
   GList                 *list;
@@ -1976,9 +1984,6 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
                                        &bounding_box, &child_bounding_box);
         }
     }
-
-  if (mask)
-    bounding_box = bounds;
 
   bounding_box.x -= bounds.x;
   bounding_box.y -= bounds.y;
