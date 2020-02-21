@@ -7,6 +7,48 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+Overview of Changes from GIMP 2.10.16 to GIMP 2.10.18
+=====================================================
+
+Core:
+
+  - In gimp:replace, when compositing the same content over itself,
+    i.e., when the input and aux buffers share the same storage and
+    same tile alignment, pass the input buffer directly as output,
+    instead of doing actual processing. In particular, this happens
+    when processing a pass-through group outside of its actual bounds.
+
+User interface:
+
+  - Bump the symbolic theme contrast just a little due to popular complaint
+
+Tools:
+
+  - In GimpPaintTool, when not snapping brush outline to stroke, make
+    sure to properly snap the cursor position to 15-degree angle
+    multiples in line mode, not only when painting the line, but also
+    during motion.
+
+Plug-ins:
+
+  - Add naive support for CMYK 8-bit PSD files
+
+Updated translations:
+
+  - Catalan, Danish, Spanish, Ukrainian
+
+Bug fixes:
+
+  #4643
+
+Developers:
+
+  - Alexandre Prokoudine, Ell, Massimo Valentini
+
+Translators:
+
+  - Alan Mortensen, Daniel Korostil, Jordi Mas, Rodrigo Lledó Milanca
+
 
 Overview of Changes from GIMP 2.10.14 to GIMP 2.10.16
 =====================================================
@@ -157,6 +199,9 @@ Plugins:
     mechanics of a spirograph is abstracted away, and you operate on
     amount of petals etc. The plugin now also allows saving a pattern
     as a path rather than rendering it to a layer as a bitmap.
+
+  - Improve the loading speed for PSD files, mostly by eliminating
+    excessive copies.
 
 Filters:
 
