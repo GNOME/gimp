@@ -2032,7 +2032,17 @@ xcf_load_layer (XcfInfo    *info,
   return layer;
 
  error:
+  if (info->active_layer == layer)
+    info->active_layer = NULL;
+
+  if (info->floating_sel == layer)
+    info->floating_sel = NULL;
+
+  if (info->floating_sel_drawable == GIMP_DRAWABLE (layer))
+    info->floating_sel_drawable = NULL;
+
   g_object_unref (layer);
+
   return NULL;
 }
 
@@ -2094,7 +2104,15 @@ xcf_load_channel (XcfInfo   *info,
  error:
   /* don't unref the selection of a partially loaded XCF */
   if (channel != gimp_image_get_mask (image))
-    g_object_unref (channel);
+    {
+      if (info->active_channel == channel)
+        info->active_channel = NULL;
+
+      if (info->floating_sel_drawable == GIMP_DRAWABLE (channel))
+        info->floating_sel_drawable = NULL;
+
+      g_object_unref (channel);
+    }
 
   return NULL;
 }
@@ -2158,7 +2176,14 @@ xcf_load_layer_mask (XcfInfo   *info,
   return layer_mask;
 
  error:
+  if (info->active_channel == GIMP_CHANNEL (layer_mask))
+    info->active_channel = NULL;
+
+  if (info->floating_sel_drawable == GIMP_DRAWABLE (layer_mask))
+    info->floating_sel_drawable = NULL;
+
   g_object_unref (layer_mask);
+
   return NULL;
 }
 
