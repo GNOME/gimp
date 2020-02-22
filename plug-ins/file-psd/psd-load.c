@@ -1642,44 +1642,8 @@ add_layers (GimpImage *image,
 
                           if (img_a->color_mode == PSD_CMYK)
                             {
-                              guchar              *cmyk = g_new (guchar, layer_channels * iter->length);
-
-                              for (cidx = 0; cidx < layer_channels; ++cidx)
-                                {
-                                  gint b, y, x;
-
-                                  if (roi->x == 0 && roi->y == 0)
-                                    IFDBG(3) g_debug ("Start channel %d", channel_idx[cidx]);
-
-                                  for (b = 0; b < bps; ++b)
-                                    {
-                                      guint8 *dst = &cmyk[cidx * bps + b];
-
-                                      for (y = 0; y < roi->height; y++)
-                                        {
-                                          const guint8 *src;
-
-                                          src = (const guint8 *)
-                                            &lyr_chn[channel_idx[cidx]]->data[
-                                            ((roi->y + y) * l_w +
-                                             roi->x)      * bps +
-                                              b];
-
-                                          for (x = 0; x < roi->width; ++x)
-                                            {
-                                              *dst = *src;
-
-                                              src += src_step;
-                                              dst += dst_step;
-                                            }
-                                        }
-                                    }
-                                }
-
-                              psd_convert_cmyk_to_srgb (img_a, dst0, cmyk, roi->width, roi->height, alpha);
-
-                              g_free (cmyk);
-                              continue;
+                              dst0 = gegl_scratch_alloc (layer_channels *
+                                                         iter->length);
                             }
 
                           for (cidx = 0; cidx < layer_channels; ++cidx)
@@ -1716,6 +1680,17 @@ add_layers (GimpImage *image,
                                         }
                                     }
                                 }
+                            }
+
+                          if (img_a->color_mode == PSD_CMYK)
+                            {
+                              psd_convert_cmyk_to_srgb (
+                                img_a,
+                                iter->items[0].data, dst0,
+                                roi->width, roi->height,
+                                alpha);
+
+                              gegl_scratch_free (dst0);
                             }
                         }
 
