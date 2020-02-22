@@ -175,6 +175,7 @@ xcf_load_image (Gimp     *gimp,
   gint                n_broken_layers         = 0;
   gint                n_broken_channels       = 0;
   GList              *broken_paths            = NULL;
+  GList              *group_layers            = NULL;
   GList              *syms;
   GList              *iter;
 
@@ -513,6 +514,16 @@ xcf_load_image (Gimp     *gimp,
 
       xcf_progress_update (info);
 
+      /* suspend layer-group size updates */
+      if (GIMP_IS_GROUP_LAYER (layer))
+        {
+          GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
+
+          group_layers = g_list_prepend (group_layers, group);
+
+          gimp_group_layer_suspend_resize (group, FALSE);
+        }
+
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
         {
@@ -565,6 +576,15 @@ xcf_load_image (Gimp     *gimp,
       if (! xcf_seek_pos (info, saved_pos, NULL))
         goto error;
     }
+
+  /* resume layer-group size updates, in reverse order */
+  for (iter = group_layers; iter; iter = g_list_next (iter))
+    {
+      GimpGroupLayer *group = iter->data;
+
+      gimp_group_layer_resume_resize (group, FALSE);
+    }
+  g_clear_pointer (&group_layers, g_list_free);
 
   if (broken_paths)
     {
@@ -659,11 +679,16 @@ xcf_load_image (Gimp     *gimp,
   return image;
 
  error:
-  if (broken_paths)
-    g_list_free_full (broken_paths, (GDestroyNotify) g_list_free);
-
   if (num_successful_elements == 0)
     goto hard_error;
+
+  g_clear_pointer (&group_layers, g_list_free);
+
+  if (broken_paths)
+    {
+      g_list_free_full (broken_paths, (GDestroyNotify) g_list_free);
+      broken_paths = NULL;
+    }
 
   gimp_message_literal (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_WARNING,
                         _("This XCF file is corrupt!  I have loaded as much "
@@ -676,12 +701,19 @@ xcf_load_image (Gimp     *gimp,
   return image;
 
  hard_error:
+  g_clear_pointer (&group_layers, g_list_free);
+
+  if (broken_paths)
+    {
+      g_list_free_full (broken_paths, (GDestroyNotify) g_list_free);
+      broken_paths = NULL;
+    }
+
   g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("This XCF file is corrupt!  I could not even "
                          "salvage any partial image data from it."));
 
-  if (image)
-    g_object_unref (image);
+  g_clear_object (&image);
 
   return NULL;
 }
