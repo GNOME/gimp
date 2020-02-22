@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <gegl-plugin.h>
+#include <gegl-buffer-backend.h>
 
 #include "../operations-types.h"
 
@@ -178,38 +179,46 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
       input = gegl_operation_context_get_object (context, "input");
       aux   = gegl_operation_context_get_object (context, "aux");
 
-      if (input && aux &&
-          gegl_buffer_share_storage (GEGL_BUFFER (input), GEGL_BUFFER (aux)))
+      if (input && aux)
         {
-          gint input_shift_x;
-          gint input_shift_y;
-          gint aux_shift_x;
-          gint aux_shift_y;
+          GObject *buffer = aux;
 
-          g_object_get (input,
-                        "shift-x", &input_shift_x,
-                        "shift-y", &input_shift_y,
-                        NULL);
-          g_object_get (aux,
-                        "shift-x", &aux_shift_x,
-                        "shift-y", &aux_shift_y,
-                        NULL);
+          while (buffer != input && GEGL_IS_BUFFER (buffer))
+            buffer = (GObject *) gegl_tile_handler_get_source (buffer);
 
-          if (input_shift_x == aux_shift_x && input_shift_y == aux_shift_y)
+          if (buffer == input)
             {
-              const GeglRectangle *input_abyss;
-              const GeglRectangle *aux_abyss;
+              gint input_shift_x;
+              gint input_shift_y;
+              gint aux_shift_x;
+              gint aux_shift_y;
 
-              input_abyss = gegl_buffer_get_abyss (GEGL_BUFFER (input));
-              aux_abyss   = gegl_buffer_get_abyss (GEGL_BUFFER (aux));
+              g_object_get (input,
+                            "shift-x", &input_shift_x,
+                            "shift-y", &input_shift_y,
+                            NULL);
+              g_object_get (aux,
+                            "shift-x", &aux_shift_x,
+                            "shift-y", &aux_shift_y,
+                            NULL);
 
-              if (gegl_rectangle_equal (input_abyss, aux_abyss)  ||
-                  (gegl_rectangle_contains (input_abyss, result) &&
-                   gegl_rectangle_contains (aux_abyss,   result)))
+              if (input_shift_x == aux_shift_x && input_shift_y == aux_shift_y)
                 {
-                  gegl_operation_context_set_object (context, "output", input);
+                  const GeglRectangle *input_abyss;
+                  const GeglRectangle *aux_abyss;
 
-                  return TRUE;
+                  input_abyss = gegl_buffer_get_abyss (GEGL_BUFFER (input));
+                  aux_abyss   = gegl_buffer_get_abyss (GEGL_BUFFER (aux));
+
+                  if (gegl_rectangle_equal (input_abyss, aux_abyss)  ||
+                      (gegl_rectangle_contains (input_abyss, result) &&
+                       gegl_rectangle_contains (aux_abyss,   result)))
+                    {
+                      gegl_operation_context_set_object (context,
+                                                         "output", input);
+
+                      return TRUE;
+                    }
                 }
             }
         }
