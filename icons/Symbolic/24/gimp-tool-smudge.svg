@@ -28,7 +28,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-482.61525,330.965)">
       <stop
-         style="stop-color:#d6d6d6;stop-opacity:1;"
+         style="stop-color:#bebebe;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -110,7 +110,7 @@
        inkscape:label="gimp-tool-smudge"
        transform="matrix(1.5,0,0,1.5,-211.5003,702.8622)">
       <g
-         style="fill:#d6d6d6;fill-opacity:1"
+         style="fill:#bebebe;fill-opacity:1"
          transform="matrix(0.13687821,0,0,-0.13687821,68.843525,244.68735)"
          id="g12900">
         <path

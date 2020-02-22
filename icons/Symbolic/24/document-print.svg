@@ -82,7 +82,7 @@
        id="g4309">
       <path
          inkscape:connector-curvature="0"
-         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.53529894"
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.53529894"
          d="m 2.5714286,1034.3622 c -0.7857143,0 -1.5714286,0.75 -1.5714286,1.5 v 6 c 0,0.75 0.7857143,1.5 1.5714286,1.5 H 4 v -4 h 16 v 4 h 1.428571 c 0.785715,0 1.571429,-0.75 1.571429,-1.5 v -6 c 0,-0.75 -0.785714,-1.5 -1.571429,-1.5 z"
          id="path3520"
          sodipodi:nodetypes="ccccccccccccc" />
@@ -91,27 +91,27 @@
          sodipodi:nodetypes="ccccc"
          id="path4804"
          d="m 5,1029.3622 v 4 h 14 v -4 z"
-         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.87082863" />
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.87082863" />
       <path
          sodipodi:nodetypes="ccccccccccccccccccccccc"
          inkscape:connector-curvature="0"
          id="rect17148"
          d="m 5,1040.3622 v 11 h 14 v -11 z m 3.5,3 v -2 H 13.75 17 v 2 1.7143 h -1.5 v -1.7143 H 14 v 5 H 7 v -5 z m 6.625,5 h 1.75 v 2 h -1.75 z"
-         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.65831232" />
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.65831232" />
       <path
          inkscape:connector-curvature="0"
          id="rect17153"
          d="m 7.5,1041.8622 v 3 H 9 v 1.5 h 1.5 v 1.5 h 3 v -1.5 H 12 v -1.5 h -1.5 v -1.5 H 12 v 1.5 h 1.5 v -3 z m 1.5,4.5 H 7.5 v 1.5 H 9 Z"
-         style="opacity:0.3;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.5" />
+         style="opacity:0.3;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.5" />
       <rect
          y="1043.3622"
          x="10.5"
          height="1.5"
          width="2"
          id="rect17173"
-         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.73205078" />
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.73205078" />
       <rect
-         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.73205078"
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.73205078"
          id="rect17175"
          width="2"
          height="1.5"
@@ -123,9 +123,9 @@
          height="1.5"
          width="2"
          id="rect17177"
-         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.73205078" />
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.73205078" />
       <rect
-         style="fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.73205078"
+         style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.73205078"
          id="rect17179"
          width="2"
          height="1.5"
@@ -137,21 +137,21 @@
          height="1.5"
          width="2"
          id="rect17181"
-         style="opacity:0.3;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.73205078" />
+         style="opacity:0.3;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.73205078" />
       <rect
          y="1041.8622"
          x="13.5"
          height="1.5"
          width="3"
          id="rect17186"
-         style="opacity:0.3;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.5" />
+         style="opacity:0.3;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.5" />
       <rect
          y="1043.3622"
          x="15"
          height="1.5"
          width="1.5"
          id="rect17191"
-         style="opacity:0.3;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.5" />
+         style="opacity:0.3;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.5" />
     </g>
   </g>
 </svg>

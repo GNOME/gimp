@@ -34,7 +34,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.23667958,0,0,0.20304569,-208.29645,97.782765)">
       <stop
-         style="stop-color:#d6d6d6;stop-opacity:1;"
+         style="stop-color:#bebebe;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -128,7 +128,7 @@
              height="16"
              width="16"
              id="rect14152-53-7"
-             style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+             style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
         </g>
         <g
            style="display:inline"
@@ -147,7 +147,7 @@
              height="16"
              width="16"
              id="rect14152-53-3-0"
-             style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+             style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
         </g>
       </g>
       <g
@@ -166,7 +166,7 @@
            height="16"
            width="16"
            id="rect14152-53-3-0-9"
-           style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
+           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
       </g>
     </g>
   </g>

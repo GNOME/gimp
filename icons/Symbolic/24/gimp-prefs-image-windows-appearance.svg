@@ -68,7 +68,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="matrix(0.99999747,0,0,1.047619,897.4869,348.10277)"
@@ -134,10 +134,10 @@
     <path
        id="rect4242"
        d="M 4 8 L 4 20 L 6 20 L 6 19 L 5 19 L 5 18 L 6 18 L 6 17 L 5 17 L 5 16 L 6 16 L 6 15 L 5 15 L 5 14 L 6 14 L 6 13 L 5 13 L 5 12 L 6 12 L 6 8 L 4 8 z "
-       style="opacity:0.83300003;fill:#d6d6d6;fill-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="opacity:0.83300003;fill:#bebebe;fill-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
     <path
        id="rect4242-2"
        d="M 6 8 L 6 10 L 8 10 L 8 9 L 9 9 L 9 10 L 10 10 L 10 9 L 11 9 L 11 10 L 12 10 L 12 9 L 13 9 L 13 10 L 14 10 L 14 9 L 15 9 L 15 10 L 16 10 L 16 9 L 17 9 L 17 10 L 18 10 L 18 9 L 19 9 L 19 10 L 20 10 L 20 8 L 6 8 z "
-       style="opacity:0.83300003;fill:#d6d6d6;fill-opacity:1;stroke-width:1.08012342;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="opacity:0.83300003;fill:#bebebe;fill-opacity:1;stroke-width:1.08012342;stroke-miterlimit:4;stroke-dasharray:none" />
   </g>
 </svg>

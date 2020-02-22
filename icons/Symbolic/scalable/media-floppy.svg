@@ -62,12 +62,12 @@
       <path
          inkscape:connector-curvature="0"
          d="m 123.97,468.0008 c -1.0753,0 -1.9688,0.89336 -1.9688,1.96869 v 9.03068 0.43748 l 0.3125,0.28123 1.6875,1.6874 v -11.40534 h 10 v 9.99942 h -2 v 1.99989 h 2.0312 c 1.0753,0 1.9688,-0.89336 1.9688,-1.96869 v -10.06142 c 0,-1.07994 -0.89,-1.96989 -1.97,-1.96989 z"
-         style="color:#d6d6d6;text-indent:0;text-transform:none;fill:#d6d6d6;stroke-width:0.99997145"
+         style="color:#bebebe;text-indent:0;text-transform:none;fill:#bebebe;stroke-width:0.99997145"
          id="rect2860" />
       <path
          inkscape:connector-curvature="0"
          d="m 126,476 c -0.554,0 -1,0.446 -1,1 v 4 c 0,0.554 0.446,1 1,1 h 4 c 0.554,0 1,-0.446 1,-1 v -4 c 0,-0.554 -0.446,-1 -1,-1 z m 0,1 h 2 v 4 h -2 z"
-         style="color:#d6d6d6;fill:#d6d6d6"
+         style="color:#bebebe;fill:#bebebe"
          id="rect2880" />
     </g>
   </g>

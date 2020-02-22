@@ -90,12 +90,12 @@
          height="24"
          width="24"
          id="rect8663"
-         style="opacity:0;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.61777443;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.61777443;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
       <path
          inkscape:connector-curvature="0"
          id="rect4399"
          d="m 21.599499,1028.3622 -6.26786,8.2777 a 8.00036,8.0003665 0 0 0 -4.613489,-1.2714 8.00036,8.0003665 0 0 0 -7.7132378,8.2757 8.00036,8.0003665 0 0 0 8.2738108,7.7132 8.00036,8.0003665 0 0 0 7.717144,-8.2738 l -7.996454,0.2793 7.994501,-0.2832 a 8.00036,8.0003665 0 0 0 -1.484442,-4.3615 l 6.490526,-8.5727 z"
-         style="opacity:1;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.63998938;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.63998938;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
       <path
          d="m 19.994539,1043.0487 a 9,9 0 0 1 -8.679914,9.308 9,9 0 0 1 -9.3090834,-8.6787 9,9 0 0 1 8.6775194,-9.3102 9,9 0 0 1 9.311316,8.6763 L 11,1043.3622 Z"
          sodipodi:end="6.247834"
@@ -106,7 +106,7 @@
          sodipodi:cx="11"
          sodipodi:type="arc"
          id="path4390"
-         style="opacity:0.66000001;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:2.26778674;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="opacity:0.66000001;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:2.26778674;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </g>
 </svg>

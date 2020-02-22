@@ -68,7 +68,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(422.09652,197.2137)"
@@ -116,7 +116,7 @@
       </g>
     </g>
     <circle
-       style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient7907);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.4000001;marker:none;enable-background:accumulate"
+       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient7907);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.4000001;marker:none;enable-background:accumulate"
        id="path20580-9"
        cx="12.000001"
        cy="12"

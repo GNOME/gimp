@@ -108,7 +108,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(157.27763,191.51971)"
@@ -369,7 +369,7 @@
      transform="translate(-20,-178)"
      inkscape:label="gimp-tool-airbrush">
     <rect
-       style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:1;marker:none"
+       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:1;marker:none"
        id="rect2941"
        width="16"
        height="16"

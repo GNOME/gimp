@@ -287,7 +287,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(655.67052,297.46741)"
@@ -366,7 +366,7 @@
          id="rect6886-9"
          inkscape:connector-curvature="0" />
       <rect
-         style="opacity:0.2;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4404)"
+         style="opacity:0.2;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4404)"
          id="rect3938-3"
          width="12"
          height="12"

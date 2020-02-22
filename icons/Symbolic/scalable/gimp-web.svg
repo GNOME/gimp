@@ -63,7 +63,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(599.20271,203.31844)"
@@ -115,7 +115,7 @@
          style="display:inline"
          id="emblem-web">
         <rect
-           style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1.78100002;marker:none;enable-background:new"
+           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1.78100002;marker:none;enable-background:new"
            id="rect9174"
            y="401"
            x="501.00018"
@@ -124,7 +124,7 @@
         <path
            id="path9278"
            d="m 509.0002,401 c -4.40471,0 -8,3.59527 -8,8 0,4.40472 3.59529,8 8,8 4.40472,0 8,-3.59528 8,-8 0,-4.40473 -3.59528,-8 -8,-8 z m 0,2.1875 c 3.22175,0 5.8125,2.59075 5.8125,5.8125 0,3.22176 -2.59075,5.8125 -5.8125,5.8125 -3.22175,0 -5.8125,-2.59074 -5.8125,-5.8125 0,-3.22175 2.59075,-5.8125 5.8125,-5.8125 z"
-           style="color:#d6d6d6;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7011);fill-opacity:1;stroke:none;stroke-width:1.47313595;marker:none;enable-background:new"
+           style="color:#bebebe;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7011);fill-opacity:1;stroke:none;stroke-width:1.47313595;marker:none;enable-background:new"
            inkscape:connector-curvature="0" />
         <path
            id="path11004"

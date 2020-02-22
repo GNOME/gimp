@@ -104,7 +104,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(300.28381,248.85583)"
@@ -214,7 +214,7 @@
        id="gimp-tool-gradient"
        transform="translate(9.6501258,-722.98286)">
       <rect
-         style="opacity:1;fill:#d6d6d6;fill-opacity:0.12455325;stroke:none"
+         style="opacity:1;fill:#bebebe;fill-opacity:0.12455325;stroke:none"
          id="rect91"
          width="3"
          height="3"
@@ -296,7 +296,7 @@
          x="11"
          y="1037.3622" />
       <rect
-         style="opacity:0;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.97624689"
+         style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.97624689"
          id="rect4462"
          width="16"
          height="1"

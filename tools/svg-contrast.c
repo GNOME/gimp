@@ -1,4 +1,4 @@
-/* invert-svg-grey.c
+/* svg-contrast.c
  * Copyright (C) 2016 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 
 #include <gio/gio.h>
 #include <glib/gprintf.h>
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -30,23 +31,30 @@
  * format "#RRGGBB" and we use regular expression to update these.
  */
 static gboolean
-invert_rgb_color (const GMatchInfo *info,
-                  GString          *res,
-                  gpointer          data)
+rgb_color_contrast (const GMatchInfo *info,
+                    GString          *res,
+                    gpointer          data)
 {
-  gchar *match;
-  gchar *inverted;
-  gint   value;
+  gchar   *match;
+  gchar   *adjusted;
+  gdouble  contrast;
+  gdouble  value;
+  gint     value_u8;
 
-  /* We only invert grey colors, so we just need the first channel. */
+  contrast = *(const gdouble *) data;
+
+  /* We only adjust grey colors, so we just need the first channel. */
   match = g_match_info_fetch (info, 1);
-  value = strtol (match, NULL, 16);
-  value = 255 - value;
-  inverted = g_strdup_printf ("#%02x%02x%02x",
-                              value, value, value);
+  value_u8 = strtol (match, NULL, 16);
+  value = value_u8 / 255.0;
+  value = 0.5 + contrast * (value - 0.5);
+  value = CLAMP (value, 0.0, 1.0);
+  value_u8 = floor (255.0 * value + 0.5);
+  adjusted = g_strdup_printf ("#%02x%02x%02x",
+                              value_u8, value_u8, value_u8);
 
-  g_string_append (res, inverted);
-  g_free (inverted);
+  g_string_append (res, adjusted);
+  g_free (adjusted);
   g_free (match);
 
   return FALSE;
@@ -54,27 +62,29 @@ invert_rgb_color (const GMatchInfo *info,
 
 int main (int argc, char **argv)
 {
-  gchar  *input;
-  gchar  *output;
-  GFile  *file;
-  gchar  *contents;
-  gchar  *replaced;
-  GRegex *regex;
-  gint    retval = 0;
+  gchar   *input;
+  gchar   *output;
+  gdouble  contrast;
+  GFile   *file;
+  gchar   *contents;
+  gchar   *replaced;
+  GRegex  *regex;
+  gint     retval = 0;
 
-  if (argc != 3)
+  if (argc != 4)
     {
-      g_fprintf (stderr, "Usage: invert-svg svg-image inverted-svg-output\n");
+      g_fprintf (stderr, "Usage: svg-contrast input output [contrast]\n");
       return 1;
     }
-  input  = argv[1];
-  output = argv[2];
+  input    = argv[1];
+  output   = argv[2];
+  contrast = atof (argv[3]);
 
   file = g_file_new_for_path (input);
   if (! g_file_load_contents (file, NULL, &contents, NULL, NULL, NULL))
     {
       g_fprintf (stderr,
-                 "Error: invert-svg could not load contents of file %s.\n",
+                 "Error: svg-contrast could not load contents of file %s.\n",
                  input);
       g_object_unref (file);
       return 1;
@@ -84,7 +94,7 @@ int main (int argc, char **argv)
   /* Replace grey colors only. */
   regex = g_regex_new ("#([0-9a-fA-F]{2}){3}\\b", 0, 0, NULL);
   replaced = g_regex_replace_eval (regex, contents, -1, 0, 0,
-                                   invert_rgb_color, NULL, NULL);
+                                   rgb_color_contrast, &contrast, NULL);
 
   file = g_file_new_for_path (output);
   if (! g_file_replace_contents (file, replaced, strlen (replaced),
@@ -93,7 +103,7 @@ int main (int argc, char **argv)
                                  NULL, NULL, NULL))
     {
       g_fprintf (stderr,
-                 "Error: invert-svg could not save file %s.\n",
+                 "Error: svg-contrast could not save file %s.\n",
                  output);
       retval = 1;
     }

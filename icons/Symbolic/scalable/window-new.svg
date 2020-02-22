@@ -67,7 +67,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(882.47628,333.46232)"
@@ -115,12 +115,12 @@
      height="7.9999976"
      width="2"
      id="rect11686"
-     style="fill:#d6d6d6;fill-opacity:0.99607843;stroke:none" />
+     style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
   <rect
      y="3"
      x="8"
      height="2"
      width="8"
      id="rect11688"
-     style="fill:#d6d6d6;fill-opacity:0.99607843;stroke:none" />
+     style="fill:#bebebe;fill-opacity:0.99607843;stroke:none" />
 </svg>

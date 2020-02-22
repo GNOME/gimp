@@ -25,7 +25,7 @@
        osb:paint="solid"
        gradientTransform="matrix(0.34682586,0,0,0.30620888,-482.61525,330.965)">
       <stop
-         style="stop-color:#d6d6d6;stop-opacity:1;"
+         style="stop-color:#bebebe;stop-opacity:1;"
          offset="0"
          id="stop19284-0" />
     </linearGradient>
@@ -153,7 +153,7 @@
          inkscape:connector-curvature="0"
          id="path4316"
          d="m 12,1028.3622 a 12,12 0 0 0 -12,12 12,12 0 0 0 12,12 12,12 0 0 0 12,-12 12,12 0 0 0 -12,-12 z m 0,2 a 10,10 0 0 1 10,10 10,10 0 0 1 -10,10 10,10 0 0 1 -10,-10 10,10 0 0 1 10,-10 z"
-         style="opacity:1;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.44092333;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.44092333;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </g>
 </svg>

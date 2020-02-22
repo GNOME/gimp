@@ -108,7 +108,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(-92.563007,1002.1929)"
@@ -180,7 +180,7 @@
        height="24"
        width="23.979013"
        id="rect4380"
-       style="opacity:0;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:0.99956268;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+       style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.99956268;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <g
        inkscape:label="stock-hchain"
        id="g6797"

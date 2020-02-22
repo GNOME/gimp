@@ -89,7 +89,7 @@
          style="display:inline"
          transform="translate(-141.0002,517.3622)">
         <path
-           style="fill:#d6d6d6;fill-opacity:1;stroke:none"
+           style="fill:#bebebe;fill-opacity:1;stroke:none"
            d="m -92,302 c -4.418278,0 -8,3.58172 -8,8 0,4.41828 3.581722,8 8,8 4.418278,0 8,-3.58172 8,-8 0,-4.41828 -3.581722,-8 -8,-8 z m 0,2 c 3.313708,0 6,2.68629 6,6 0,3.31371 -2.686292,6 -6,6 -3.313708,0 -6,-2.68629 -6,-6 0,-3.31371 2.686292,-6 6,-6 z"
            transform="translate(241.0002,217)"
            id="path27976"
@@ -98,7 +98,7 @@
       <g
          aria-label="i"
          transform="scale(1.4540049,0.68775559)"
-         style="font-style:normal;font-weight:normal;font-size:20.41338539px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#d6d6d6;fill-opacity:1;stroke:none;stroke-width:1.17801654px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-weight:normal;font-size:20.41338539px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.17801654px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          id="text3956">
         <path
            d="m 4.5850376,1515.5998 h 1.8340151 v 10.6627 H 4.5850376 Z m 0,-4.8467 h 1.8340151 v 2.908 H 4.5850376 Z"

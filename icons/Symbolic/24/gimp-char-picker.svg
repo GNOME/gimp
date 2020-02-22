@@ -74,7 +74,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(614.97003,108.01812)"
@@ -121,7 +121,7 @@
       <path
          sodipodi:nodetypes="sssssssssccssccssc"
          inkscape:connector-curvature="0"
-         style="color:#d6d6d6;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7483);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
+         style="color:#bebebe;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7483);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
          d="m 225.70228,383 c -1.53288,0 -2.71875,1.31948 -2.71875,2.84375 v 8.34375 c 0,1.52427 1.18587,2.84375 2.71875,2.84375 h 8.57897 c 1.53288,0 2.75,-1.31948 2.75,-2.84375 v -8.34375 c 0,-1.52427 -1.21712,-2.84375 -2.75,-2.84375 z m 0.78125,1.40312 c 3.52668,0.25598 5.31717,0.13378 7.04772,0 0.75419,-0.0583 1.5844,0.24397 1.5844,1.06563 v 7.55357 c 0,0.66541 -0.58434,1.11085 -1.24065,1.20268 -2.83642,0.39685 -4.75306,0.44007 -7.67272,0 -0.65529,-0.0988 -1.30315,-0.53727 -1.30315,-1.20268 V 385.5 c 0,-0.82166 0.82994,-1.15164 1.5844,-1.09688 z"
          transform="matrix(0.99886409,0,0,1,-99.747824,17)"
          id="rect11749-5-9-2-7-3-5" />

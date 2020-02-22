@@ -20,6 +20,10 @@ bin_PROGRAMS += gimp-debug-resume
 
 gimp_debug_resume_SOURCES = gimp-debug-resume.c
 
+else
+
+libm = -lm
+
 endif
 
 EXTRA_PROGRAMS = \
@@ -45,8 +49,8 @@ kernelgen_SOURCES = kernelgen.c
 
 
 if ENABLE_VECTOR_ICONS
-invert-svg$(BUILD_EXEEXT): invert-svg.c
-	$(CC_FOR_BUILD) -fPIC -o $@ $< $(NATIVE_GLIB_LIBS) $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $(NATIVE_GLIB_CFLAGS)
+svg-contrast$(BUILD_EXEEXT): svg-contrast.c
+	$(CC_FOR_BUILD) -fPIC -o $@ $< $(NATIVE_GLIB_LIBS) $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $(NATIVE_GLIB_CFLAGS) $(libm)
 
 
 # compute_svg_viewbox is not built or used because librsvg is just too buggy
@@ -60,9 +64,9 @@ invert-svg$(BUILD_EXEEXT): invert-svg.c
 #compute_svg_viewbox_LDADD = $(SVG_LIBS)
 
 # Build tools which must be built for the host platform.
-all-local: invert-svg$(BUILD_EXEEXT)
+all-local: svg-contrast$(BUILD_EXEEXT)
 
-DISTCLEANFILES = invert-svg$(BUILD_EXEEXT)
+DISTCLEANFILES = svg-contrast$(BUILD_EXEEXT)
 endif
 
 AM_CPPFLAGS = \
@@ -103,7 +107,7 @@ EXTRA_DIST = \
 	defcheck.py			\
 	gimp-mkenums			\
 	gimppath2svg.py			\
-	invert-svg.c			\
+	svg-contrast.c			\
 	mnemonic-clashes		\
 	performance-log-coalesce.py	\
 	performance-log-deduce.py	\

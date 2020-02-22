@@ -104,7 +104,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <filter
        id="5"
@@ -390,7 +390,7 @@
           <g
              transform="translate(0,-1036.36)"
              id="g93-0"
-             style="fill:#d6d6d6">
+             style="fill:#bebebe">
             <path
                d="m 0.79999995,1037.16 0,14.4 14.40000005,0 0,-14.4 -14.40000005,0 m 1.02857145,1.0286 12.3428576,0 0,12.3428 -12.3428576,0 0,-12.3428"
                id="path95-3"

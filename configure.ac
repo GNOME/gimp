@@ -3002,7 +3002,9 @@ icons/Makefile
 icons/Color/Makefile
 icons/Legacy/Makefile
 icons/Symbolic/Makefile
+icons/Symbolic-High-Contrast/Makefile
 icons/Symbolic-Inverted/Makefile
+icons/Symbolic-Inverted-High-Contrast/Makefile
 themes/Makefile
 themes/System/Makefile
 themes/Dark/Makefile

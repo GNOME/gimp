@@ -104,7 +104,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(422.47376,283.03651)"
@@ -174,21 +174,21 @@
          id="rect7356"
          height="2.0002136"
          width="9"
-         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7562);fill-opacity:1;stroke:none;stroke-width:0.94870222;marker:none" />
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7562);fill-opacity:1;stroke:none;stroke-width:0.94870222;marker:none" />
       <rect
          x="5"
          y="1043.3619"
          id="rect7358"
          height="2.0002136"
          width="9"
-         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7560);fill-opacity:1;stroke:none;stroke-width:0.94870222;marker:none" />
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7560);fill-opacity:1;stroke:none;stroke-width:0.94870222;marker:none" />
       <rect
          x="5"
          y="1047.3619"
          id="rect7360"
          height="2.0002136"
          width="9"
-         style="color:#d6d6d6;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7558);fill-opacity:1;stroke:none;stroke-width:0.94870222;marker:none" />
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient7558);fill-opacity:1;stroke:none;stroke-width:0.94870222;marker:none" />
       <path
          style="opacity:1;fill:url(#linearGradient7572);fill-opacity:1;stroke:none;stroke-width:0.33225408;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path3148"

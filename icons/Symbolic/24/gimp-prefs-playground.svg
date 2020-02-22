@@ -67,7 +67,7 @@
       <stop
          id="stop19284-0"
          offset="0"
-         style="stop-color:#d6d6d6;stop-opacity:1;" />
+         style="stop-color:#bebebe;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(832.7537,355.51115)"
@@ -147,7 +147,7 @@
      style="display:inline"
      id="preferences">
     <g
-       style="display:inline;opacity:1;fill:#d6d6d6;fill-opacity:1;stroke:#d6d6d6;stroke-opacity:1"
+       style="display:inline;opacity:1;fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-opacity:1"
        transform="translate(219.43309,-842.85104)"
        id="gimp-prefs-playground">
       <path
