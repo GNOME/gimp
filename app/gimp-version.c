@@ -229,7 +229,7 @@ gimp_version (gboolean be_verbose,
                                       GIMP_GIT_VERSION,
                                       GIMP_BUILD_ID,
                                       gimp_version_get_revision (),
-                                      GIMP_BUILD_PLATFORM,
+                                      GIMP_BUILD_PLATFORM_FAMILY,
                                       CC_VERSION,
                                       lib_versions);
       g_free (lib_versions);

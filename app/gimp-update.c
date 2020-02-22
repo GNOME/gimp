@@ -89,7 +89,7 @@ gimp_check_updates_callback (GObject      *source,
   stream = g_file_read_finish (G_FILE (source), result, &error);
   if (stream)
     {
-      const gchar *build_platform;
+      const gchar *platform;
       const gchar *last_version   = NULL;
       const gchar *release_date   = NULL;
       JsonParser  *parser;
@@ -106,11 +106,11 @@ gimp_check_updates_callback (GObject      *source,
       /* For Windows and macOS, let's look if installers are available.
        * For other platforms, let's just look for source release.
        */
-      if (g_strcmp0 (GIMP_BUILD_PLATFORM, "windows") == 0 ||
-          g_strcmp0 (GIMP_BUILD_PLATFORM, "macos") == 0)
-        build_platform = GIMP_BUILD_PLATFORM;
+      if (g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "windows") == 0 ||
+          g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "macos") == 0)
+        platform = GIMP_BUILD_PLATFORM_FAMILY;
       else
-        build_platform = "source";
+        platform = "source";
 
       parser = json_parser_new ();
       if (! json_parser_load_from_stream (parser, G_INPUT_STREAM (stream), NULL, &error))
@@ -129,7 +129,7 @@ gimp_check_updates_callback (GObject      *source,
       path = json_path_new ();
       /* Ideally we could just use Json path filters like this to
        * retrieve only released binaries for a given platform:
-       * g_strdup_printf ("$['STABLE'][?(@.%s)]['version']", build_platform);
+       * g_strdup_printf ("$['STABLE'][?(@.%s)]['version']", platform);
        * json_array_get_string_element (result, 0);
        * And that would be it! We'd have our last release for given
        * platform.
@@ -160,11 +160,11 @@ gimp_check_updates_callback (GObject      *source,
            * platform is available.
            */
           version = json_array_get_object_element (versions, i);
-          if (json_object_has_member (version, build_platform))
+          if (json_object_has_member (version, platform))
             {
               last_version = json_object_get_string_member (version, "version");
               release_date = json_object_get_string_member (version, "date");
-              builds       = json_object_get_array_member (version, build_platform);
+              builds       = json_object_get_array_member (version, platform);
               break;
             }
         }
