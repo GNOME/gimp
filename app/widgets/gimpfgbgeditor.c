@@ -113,6 +113,16 @@ static void     gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor   *editor);
 static void     gimp_fg_bg_editor_image_changed     (GimpFgBgEditor   *editor,
                                                      GimpImage        *image);
 
+static void     gimp_fg_bg_editor_draw_color_frame  (GimpFgBgEditor   *editor,
+                                                     cairo_t          *cr,
+                                                     const GimpRGB    *color,
+                                                     gint              x,
+                                                     gint              y,
+                                                     gint              width,
+                                                     gint              height,
+                                                     gint              corner_dx,
+                                                     gint              corner_dy);
+
 G_DEFINE_TYPE (GimpFgBgEditor, gimp_fg_bg_editor, GTK_TYPE_EVENT_BOX)
 
 #define parent_class gimp_fg_bg_editor_parent_class
@@ -289,19 +299,16 @@ static gboolean
 gimp_fg_bg_editor_draw (GtkWidget *widget,
                         cairo_t   *cr)
 {
-  GimpFgBgEditor    *editor = GIMP_FG_BG_EDITOR (widget);
-  GtkStyleContext   *style  = gtk_widget_get_style_context (widget);
-  GimpPalette       *colormap_palette = NULL;
-  GtkBorder          border;
-  GtkBorder          padding;
-  GdkRectangle       rect;
-  gint               scale_factor;
-  gint               width, height;
-  gint               default_w, default_h;
-  gint               swap_w, swap_h;
-  GimpRGB            color;
-  GimpRGB            transformed_color;
-  GimpImageBaseType  base_type = GIMP_RGB;
+  GimpFgBgEditor  *editor = GIMP_FG_BG_EDITOR (widget);
+  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
+  GtkBorder        border;
+  GtkBorder        padding;
+  GdkRectangle     rect;
+  gint             scale_factor;
+  gint             width, height;
+  gint             default_w, default_h;
+  gint             swap_w, swap_h;
+  GimpRGB          color;
 
   gtk_style_context_save (style);
 
@@ -382,143 +389,29 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   editor->rect_width  = rect.width;
   editor->rect_height = rect.height;
 
-
   if (! editor->transform)
     gimp_fg_bg_editor_create_transform (editor);
 
-  if (editor->active_image)
-    {
-      base_type = gimp_image_get_base_type (editor->active_image);
-
-      if (base_type == GIMP_INDEXED)
-        colormap_palette = gimp_image_get_colormap_palette (editor->active_image);
-    }
-
-  /*  draw the background area  */
-
-  rect.x = width  - rect.width  - border.right;
-  rect.y = height - rect.height - border.bottom;
-
   if (editor->context)
     {
+      /*  draw the background frame  */
       gimp_context_get_background (editor->context, &color);
+      rect.x = width  - rect.width  - border.right;
+      rect.y = height - rect.height - border.bottom;
+      gimp_fg_bg_editor_draw_color_frame (editor, cr, &color,
+                                          rect.x,     rect.y,
+                                          rect.width, rect.height,
+                                          +1,         +1);
 
-      if (editor->transform)
-        gimp_color_transform_process_pixels (editor->transform,
-                                             babl_format ("R'G'B'A double"),
-                                             &color,
-                                             babl_format ("R'G'B'A double"),
-                                             &transformed_color,
-                                             1);
-      else
-        transformed_color = color;
-
-      gimp_cairo_set_source_rgb (cr, &transformed_color);
-
-      cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
-      cairo_fill (cr);
-
-
-      if (editor->color_config &&
-          /* Common out-of-gamut case */
-          ((color.r < 0.0 || color.r > 1.0 ||
-            color.g < 0.0 || color.g > 1.0 ||
-            color.b < 0.0 || color.b > 1.0) ||
-           /* Indexed images */
-           (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL)) ||
-           /* Grayscale images */
-           (base_type == GIMP_GRAY &&
-            (ABS (color.r - color.g) > CHANNEL_EPSILON ||
-             ABS (color.r - color.b) > CHANNEL_EPSILON ||
-             ABS (color.g - color.b) > CHANNEL_EPSILON))))
-        {
-          GimpRGB color;
-          gint    side     = MIN (rect.width, rect.height) * 2 / 3;
-          gint    corner_x = rect.x + rect.width;
-          gint    corner_y = rect.y + rect.height;
-
-          cairo_move_to (cr, corner_x, corner_y);
-          cairo_line_to (cr, corner_x - side, corner_y);
-          cairo_line_to (cr, corner_x, corner_y - side);
-          cairo_close_path (cr);
-
-          gimp_color_config_get_out_of_gamut_color (editor->color_config,
-                                                    &color);
-          gimp_cairo_set_source_rgb (cr, &color);
-          cairo_fill (cr);
-        }
-    }
-
-  gtk_style_context_set_state (style,
-                               editor->active_color ==
-                               GIMP_ACTIVE_COLOR_FOREGROUND ?
-                               0 : GTK_STATE_FLAG_ACTIVE);
-
-  gtk_style_context_add_class (style, GTK_STYLE_CLASS_FRAME);
-
-  gtk_render_frame (style, cr, rect.x, rect.y, rect.width, rect.height);
-
-
-  /*  draw the foreground area  */
-
-  rect.x = border.left;
-  rect.y = border.top;
-
-  if (editor->context)
-    {
+      /*  draw the foreground frame  */
       gimp_context_get_foreground (editor->context, &color);
-
-      if (editor->transform)
-        gimp_color_transform_process_pixels (editor->transform,
-                                             babl_format ("R'G'B'A double"),
-                                             &color,
-                                             babl_format ("R'G'B'A double"),
-                                             &transformed_color,
-                                             1);
-      else
-        transformed_color = color;
-
-      gimp_cairo_set_source_rgb (cr, &transformed_color);
-
-      cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
-      cairo_fill (cr);
-
-      if (editor->color_config &&
-          /* Common out-of-gamut case */
-          ((color.r < 0.0 || color.r > 1.0 ||
-            color.g < 0.0 || color.g > 1.0 ||
-            color.b < 0.0 || color.b > 1.0) ||
-           /* Indexed images */
-           (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL)) ||
-           /* Grayscale images */
-           (base_type == GIMP_GRAY &&
-            (ABS (color.r - color.g) > CHANNEL_EPSILON ||
-             ABS (color.r - color.b) > CHANNEL_EPSILON ||
-             ABS (color.g - color.b) > CHANNEL_EPSILON))))
-        {
-          GimpRGB color;
-          gint    side     = MIN (rect.width, rect.height) * 2 / 3;
-          gint    corner_x = rect.x;
-          gint    corner_y = rect.y;
-
-          cairo_move_to (cr, corner_x, corner_y);
-          cairo_line_to (cr, corner_x + side, corner_y);
-          cairo_line_to (cr, corner_x, corner_y + side);
-          cairo_close_path (cr);
-
-          gimp_color_config_get_out_of_gamut_color (editor->color_config,
-                                                    &color);
-          gimp_cairo_set_source_rgb (cr, &color);
-          cairo_fill (cr);
-        }
+      rect.x = border.left;
+      rect.y = border.top;
+      gimp_fg_bg_editor_draw_color_frame (editor, cr, &color,
+                                          rect.x,     rect.y,
+                                          rect.width, rect.height,
+                                          +1,         +1);
     }
-
-  gtk_style_context_set_state (style,
-                               editor->active_color ==
-                               GIMP_ACTIVE_COLOR_BACKGROUND ?
-                               0 : GTK_STATE_FLAG_ACTIVE);
-
-  gtk_render_frame (style, cr, rect.x, rect.y, rect.width, rect.height);
 
   gtk_style_context_restore (style);
 
@@ -917,4 +810,94 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
                                     editor);
         }
     }
+}
+
+static void
+gimp_fg_bg_editor_draw_color_frame (GimpFgBgEditor *editor,
+                                    cairo_t        *cr,
+                                    const GimpRGB  *color,
+                                    gint            x,
+                                    gint            y,
+                                    gint            width,
+                                    gint            height,
+                                    gint            corner_dx,
+                                    gint            corner_dy)
+{
+  GimpPalette       *colormap_palette = NULL;
+  GimpImageBaseType  base_type        = GIMP_RGB;
+  GimpRGB            transformed_color;
+
+  if (editor->active_image)
+    {
+      base_type = gimp_image_get_base_type (editor->active_image);
+
+      if (base_type == GIMP_INDEXED)
+        {
+          colormap_palette = gimp_image_get_colormap_palette (
+            editor->active_image);
+        }
+    }
+
+  if (editor->transform)
+    {
+      gimp_color_transform_process_pixels (editor->transform,
+                                           babl_format ("R'G'B'A double"),
+                                           color,
+                                           babl_format ("R'G'B'A double"),
+                                           &transformed_color,
+                                           1);
+    }
+  else
+    {
+      transformed_color = *color;
+    }
+
+  cairo_save (cr);
+
+  gimp_cairo_set_source_rgb (cr, &transformed_color);
+
+  cairo_rectangle (cr, x, y, width, height);
+  cairo_fill (cr);
+
+  if (editor->color_config &&
+      /* Common out-of-gamut case */
+      ((color->r < 0.0 || color->r > 1.0 ||
+        color->g < 0.0 || color->g > 1.0 ||
+        color->b < 0.0 || color->b > 1.0) ||
+       /* Indexed images */
+       (colormap_palette &&
+        ! gimp_palette_find_entry (colormap_palette, color, NULL)) ||
+       /* Grayscale images */
+       (base_type == GIMP_GRAY &&
+        (ABS (color->r - color->g) > CHANNEL_EPSILON ||
+         ABS (color->r - color->b) > CHANNEL_EPSILON ||
+         ABS (color->g - color->b) > CHANNEL_EPSILON))))
+    {
+      gint    corner_x = x + 0.5 * (1.0 + corner_dx) * width;
+      gint    corner_y = y + 0.5 * (1.0 + corner_dy) * height;
+      gint    side     = MIN (width, height) * 2 / 3;
+      GimpRGB out_of_gamut_color;
+
+      cairo_move_to (cr, corner_x, corner_y);
+      cairo_line_to (cr, corner_x + side * corner_dx, corner_y);
+      cairo_line_to (cr, corner_x, corner_y + side * corner_dy);
+      cairo_close_path (cr);
+
+      gimp_color_config_get_out_of_gamut_color (editor->color_config,
+                                                &out_of_gamut_color);
+      gimp_cairo_set_source_rgb (cr, &out_of_gamut_color);
+      cairo_fill (cr);
+    }
+
+  cairo_set_line_width (cr, 1.0);
+
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+  cairo_rectangle (cr, x + 0.5, y + 0.5, width - 1.0, height - 1.0);
+  cairo_stroke (cr);
+
+  cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+  cairo_rectangle (cr, x + 1.5, y + 1.5, width - 3.0, height - 3.0);
+  cairo_stroke (cr);
+
+  cairo_restore (cr);
 }
