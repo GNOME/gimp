@@ -72,12 +72,12 @@
   </provides>
 
   <releases>
-    <release version="2.10.18" date="2020-02-22">
+    <release version="2.10.18" date="2020-02-23">
       <url type="details">https://www.gimp.org/news/2020/02/22/gimp-2-10-18-released/</url>
       <description>
         <_p>
-          GIMP 2.10.18 fixes some critical bugs and introduces naive support for
-          CMYK PSD files.
+          GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD files,
+          and adds a higher-contrast variation of the symbolic icon theme.
         </_p>
       </description>
     </release>
