@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp gimp-2-10\n"
+"Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-23 17:29+0000\n"
-"PO-Revision-Date: 2020-02-23 19:57+0200\n"
+"POT-Creation-Date: 2020-02-23 17:03+0000\n"
+"PO-Revision-Date: 2020-02-23 20:08+0200\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
