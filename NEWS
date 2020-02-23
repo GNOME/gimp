@@ -7,6 +7,7 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+
 Overview of Changes from GIMP 2.10.16 to GIMP 2.10.18
 =====================================================
 
@@ -21,9 +22,9 @@ Core:
 User interface:
 
   - Add new Symbolic-High-Contrast and Symbolic-Inverted-High-Contrast
-    themes, which are automatically-generated high-contrast variants of
-    the (original) Symbolic theme.  The contrast factor is settable in
-    the makefile, and is currently at 1.5 for both themes.
+    themes, which are automatically-generated high-contrast variants
+    of the (original) Symbolic theme.  The contrast factor is settable
+    in the makefile, and is currently at 1.5 for both themes.
     
   - Rename tools/invert-svg to tools/svg-contrast, which now takes a
     contrast-factor argument, and adjusts the input SVG contrast,
@@ -31,13 +32,13 @@ User interface:
     to invert icons, using a contrast of -1.
 
   - Allow horizontal scrollbars in all the Preferences dialog tree-
-    views, so that they don't limit the minimal width of the dialog (in
-    particular, the UI- and icon-theme tree-views may contain
+    views, so that they don't limit the minimal width of the dialog
+    (in particular, the UI- and icon-theme tree-views may contain
     arbitrarily-long paths).
 
-  - Draw a border around the color FG/BG color areas as a pair of black
-    and white rectangles instead of letting GTK do this. This imporoves
-    the legibility of borders, especially in dark themes.
+  - Draw a border around the color FG/BG color areas as a pair of
+    black and white rectangles instead of letting GTK do this. This
+    imporoves the legibility of borders, especially in dark themes.
 
 Tools:
 
