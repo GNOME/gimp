@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-13 18:48+0000\n"
-"PO-Revision-Date: 2019-11-08 19:53+0100\n"
+"POT-Creation-Date: 2020-02-24 18:08+0000\n"
+"PO-Revision-Date: 2020-02-24 21:28+0100\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -114,7 +114,7 @@ msgstr "Sichtbare Ebenen ausrichten"
 #: ../plug-ins/metadata/metadata-editor.c:765
 #: ../plug-ins/metadata/metadata-editor.c:5648
 #: ../plug-ins/metadata/metadata-editor.c:5683
-#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:497
+#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "Abbre_chen"
@@ -465,8 +465,8 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:267
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
-#: ../plug-ins/file-psd/psd-image-res-load.c:1042
-#: ../plug-ins/file-psd/psd-load.c:1861 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-image-res-load.c:1043
+#: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1033
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1101,7 +1101,7 @@ msgstr "CML-Explorer-Parameter laden"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
-#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:141
+#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:143
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:419
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:913
@@ -2207,7 +2207,7 @@ msgstr "EOF oder Fehler beim Lesen der Bildkopfzeile"
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
 #: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
-#: ../plug-ins/file-psd/psd-load.c:133
+#: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:170
@@ -3084,13 +3084,13 @@ msgid "'%s' is not a PCX file"
 msgstr "»%s« ist keine PCX-Datei"
 
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/file-bmp/bmp-load.c:723
-#: ../plug-ins/file-psd/psd-load.c:313
+#: ../plug-ins/file-psd/psd-load.c:315
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nicht unterstützte oder ungültige Bildbreite: %d"
 
 #: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:729
-#: ../plug-ins/file-psd/psd-load.c:305
+#: ../plug-ins/file-psd/psd-load.c:307
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
@@ -4229,7 +4229,7 @@ msgstr "_RLE-Kompression"
 
 #: ../plug-ins/common/file-tga.c:1451
 msgid "Or_igin:"
-msgstr "Or_iginal:"
+msgstr "_Ursprung:"
 
 #: ../plug-ins/common/file-tga.c:1455
 msgid "Bottom left"
@@ -4237,7 +4237,7 @@ msgstr "Unten links"
 
 #: ../plug-ins/common/file-tga.c:1456
 msgid "Top left"
-msgstr "Open links"
+msgstr "Oben links"
 
 #: ../plug-ins/common/file-wmf.c:129
 msgid "Microsoft WMF file"
@@ -7143,98 +7143,98 @@ msgstr "JPEG-Bild"
 msgid "Export Preview"
 msgstr "Exportvorschau"
 
-#: ../plug-ins/file-psd/psd-load.c:226
+#: ../plug-ins/file-psd/psd-load.c:228
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Fehler beim Öffnen der PSD-Datei: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:281
+#: ../plug-ins/file-psd/psd-load.c:283
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Kein gültiges Photoshop-Dokument"
 
-#: ../plug-ins/file-psd/psd-load.c:288
+#: ../plug-ins/file-psd/psd-load.c:290
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Nicht unterstützte Dateiformatversion: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:295
+#: ../plug-ins/file-psd/psd-load.c:297
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Zu viele Kanäle in der Datei: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:322
+#: ../plug-ins/file-psd/psd-load.c:324
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Nicht unterstützte oder ungültige Bildgröße: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:335
+#: ../plug-ins/file-psd/psd-load.c:338 ../plug-ins/file-psd/psd-load.c:348
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Farbmodus wird nicht unterstützt: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:361
+#: ../plug-ins/file-psd/psd-load.c:375
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Farbtiefe wird nicht unterstützt: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:395 ../plug-ins/file-psd/psd-load.c:405
-#: ../plug-ins/file-psd/psd-load.c:616 ../plug-ins/file-psd/psd-load.c:838
+#: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
+#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:852
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Die Datei ist beschädigt!"
 
-#: ../plug-ins/file-psd/psd-load.c:544
+#: ../plug-ins/file-psd/psd-load.c:558
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Zu viele Ebenenkanäle: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:552
+#: ../plug-ins/file-psd/psd-load.c:566
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Nicht unterstützte oder ungültige Ebenenhöhe: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:560
+#: ../plug-ins/file-psd/psd-load.c:574
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Nicht unterstützte oder ungültige Ebenenbreite: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:569
+#: ../plug-ins/file-psd/psd-load.c:583
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Nicht unterstützte oder ungültige Ebenengröße: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:755
+#: ../plug-ins/file-psd/psd-load.c:769
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Nicht unterstützte oder ungültige Höhe der Maskenebene: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:763
+#: ../plug-ins/file-psd/psd-load.c:777
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Nicht unterstützte oder ungültige Breite der Maskenebene: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:772
+#: ../plug-ins/file-psd/psd-load.c:786
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nicht unterstützte oder ungültige Größe der Maskenebene: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1337 ../plug-ins/file-psd/psd-load.c:1835
+#: ../plug-ins/file-psd/psd-load.c:1417 ../plug-ins/file-psd/psd-load.c:1934
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nicht unterstützte Komprimierung: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1963
+#: ../plug-ins/file-psd/psd-load.c:2065
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2142
+#: ../plug-ins/file-psd/psd-load.c:2243
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nicht unterstützte oder ungültige Kanalgröße"
 
-#: ../plug-ins/file-psd/psd-load.c:2211
+#: ../plug-ins/file-psd/psd-load.c:2309
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Daten konnten nicht entpackt werden"
@@ -12357,103 +12357,103 @@ msgstr "Ein Bild aus einem Bildschirmausschnitt erstellen"
 msgid "_Screenshot..."
 msgstr "_Bildschirmfoto …"
 
-#: ../plug-ins/screenshot/screenshot.c:493
+#: ../plug-ins/screenshot/screenshot.c:495
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Bildschirmfoto"
 
-#: ../plug-ins/screenshot/screenshot.c:498
+#: ../plug-ins/screenshot/screenshot.c:500
 msgid "S_nap"
 msgstr "A_uslösen"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:525
+#: ../plug-ins/screenshot/screenshot.c:527
 msgid "Area"
 msgstr "Bereich"
 
-#: ../plug-ins/screenshot/screenshot.c:537
+#: ../plug-ins/screenshot/screenshot.c:539
 msgid "Take a screenshot of a single _window"
 msgstr "Ein Bildschirmfoto eines einzelnen _Fensters machen"
 
-#: ../plug-ins/screenshot/screenshot.c:560
+#: ../plug-ins/screenshot/screenshot.c:562
 msgid "Include window _decoration"
 msgstr "Fenster_rahmen einbeziehen"
 
-#: ../plug-ins/screenshot/screenshot.c:581
-#: ../plug-ins/screenshot/screenshot.c:626
+#: ../plug-ins/screenshot/screenshot.c:583
+#: ../plug-ins/screenshot/screenshot.c:628
 msgid "Include _mouse pointer"
 msgstr "_Mauszeiger einbeziehen"
 
-#: ../plug-ins/screenshot/screenshot.c:603
+#: ../plug-ins/screenshot/screenshot.c:605
 msgid "Take a screenshot of the entire _screen"
 msgstr "Ein Foto des gesamten _Bildschirms machen"
 
-#: ../plug-ins/screenshot/screenshot.c:654
+#: ../plug-ins/screenshot/screenshot.c:656
 msgid "Select a _region to grab"
 msgstr "Einen Bereich _auswählen"
 
-#: ../plug-ins/screenshot/screenshot.c:672
+#: ../plug-ins/screenshot/screenshot.c:674
 msgid "Delay"
 msgstr "Verzögerung"
 
-#: ../plug-ins/screenshot/screenshot.c:692
+#: ../plug-ins/screenshot/screenshot.c:694
 msgid "Selection delay: "
 msgstr "Auswahlverzögerung: "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:711
-#: ../plug-ins/screenshot/screenshot.c:775
+#: ../plug-ins/screenshot/screenshot.c:713
+#: ../plug-ins/screenshot/screenshot.c:777
 msgid "seconds"
 msgstr "Sekunden"
 
-#: ../plug-ins/screenshot/screenshot.c:725
+#: ../plug-ins/screenshot/screenshot.c:727
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Wählen Sie nach der Verzögerung mit der Maus den zu fotografierenden Bereich "
 "aus."
 
-#: ../plug-ins/screenshot/screenshot.c:729
+#: ../plug-ins/screenshot/screenshot.c:731
 msgid "Click in a window to snap it after delay."
 msgstr "Klicken Sie in das am Ende der Verzögerung zu fotografierende Fenster."
 
-#: ../plug-ins/screenshot/screenshot.c:734
+#: ../plug-ins/screenshot/screenshot.c:736
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Klicken Sie am Ende der Verzögerung in das zu fotografierende Fenster."
 
-#: ../plug-ins/screenshot/screenshot.c:755
+#: ../plug-ins/screenshot/screenshot.c:757
 msgid "Screenshot dela_y: "
 msgstr "Bildschirmfoto-_Verzögerung: "
 
-#: ../plug-ins/screenshot/screenshot.c:787
+#: ../plug-ins/screenshot/screenshot.c:789
 msgid "After the delay, the screenshot is taken."
 msgstr "Nach der Verzögerung wird das Bildschirmfoto erstellt."
 
-#: ../plug-ins/screenshot/screenshot.c:789
+#: ../plug-ins/screenshot/screenshot.c:791
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr ""
 "Sobald der Bereich ausgewählt ist, wird die Aufnahme nach dieser Verzögerung "
 "ausgeführt."
 
-#: ../plug-ins/screenshot/screenshot.c:794
+#: ../plug-ins/screenshot/screenshot.c:796
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 "Sobald das Fenster ausgewählt ist, wird die Aufnahme nach dieser Verzögerung "
 "ausgeführt."
 
-#: ../plug-ins/screenshot/screenshot.c:800
+#: ../plug-ins/screenshot/screenshot.c:802
 msgid "After the delay, the active window will be captured."
 msgstr "Nach der Verzögerung, wird das aktive Fenster aufgenommen."
 
-#: ../plug-ins/screenshot/screenshot.c:807
+#: ../plug-ins/screenshot/screenshot.c:809
 msgid "Color Profile"
 msgstr "Farbprofil"
 
-#: ../plug-ins/screenshot/screenshot.c:812
+#: ../plug-ins/screenshot/screenshot.c:814
 msgid "Tag image with _monitor profile"
 msgstr "_Monitorprofil im Bild speichern"
 
-#: ../plug-ins/screenshot/screenshot.c:816
+#: ../plug-ins/screenshot/screenshot.c:818
 msgid "Convert image to sR_GB"
 msgstr "Bild nach sR_GB umwandeln"
 
