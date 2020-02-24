@@ -17,6 +17,7 @@ languages = \
 	eo:[eo]:ISO-8859-3		\
 	es:[es]:WINDOWS-1252		\
 	eu:[eu]:WINDOWS-1252		\
+	fi:[fi]:WINDOWS-1252		\
 	fr:[fr]:WINDOWS-1252		\
 	hu:[hu]:WINDOWS-1250		\
 	id:[id]:ISO-8859-1		\
