@@ -4818,7 +4818,7 @@ msgstr ""
 #: ../app/actions/file-actions.c:172
 msgctxt "file-action"
 msgid "E_xport As..."
-msgstr "Anomena i e_xporta..."
+msgstr "E_xporta com a..."
 
 #: ../app/actions/file-actions.c:173
 msgctxt "file-action"
@@ -15731,7 +15731,7 @@ msgid ""
 msgstr ""
 "Podeu utilitzar aquest diàleg per desar la imatge amb el format XCF del "
 "GIMP. Si voleu desar-la en un altre format de fitxer, utilitzeu "
-"Fitxer→Exporta."
+"Fitxer→Exporta a."
 
 #: ../app/dialogs/file-save-dialog.c:629
 msgid "Take me to the Export dialog"
