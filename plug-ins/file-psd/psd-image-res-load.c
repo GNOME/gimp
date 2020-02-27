@@ -480,7 +480,7 @@ load_resource_unknown (const PSDimageres  *res_a,
   IFDBG(2) g_debug ("Process unknown image resource block: %d", res_a->id);
 
   data = g_malloc (res_a->data_len);
-  if (fread (data, res_a->data_len, 1, f) < 1)
+  if (res_a->data_len > 0 && fread (data, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
       g_free (data);
