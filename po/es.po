@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-26 02:09+0000\n"
-"PO-Revision-Date: 2020-02-27 14:47+0100\n"
+"POT-Creation-Date: 2020-02-27 13:51+0000\n"
+"PO-Revision-Date: 2020-02-28 20:15+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -760,7 +760,7 @@ msgstr ""
 # La traducción de Photoshop es «Pegar en contexto»
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "Paste in place feature"
-msgstr "Característica para pegar en contexto"
+msgstr "Característica de pegar en su lugar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "Many usability improvements"
@@ -1407,37 +1407,38 @@ msgstr "Pegar el búfer _en la selección"
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Pega el búfer seleccionado en la selección"
+msgstr "Pegar el búfer seleccionado en la selección"
 
 #: ../app/actions/buffers-actions.c:79
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "Pega el búfer en la selección en su lugar"
+msgstr "Pegar el búfer en la selección en su lugar"
 
 #: ../app/actions/buffers-actions.c:81
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
-msgstr "Pegue el búfer seleccionado en la selección en su posición original"
+msgstr "Pegar el búfer seleccionado en la selección en su posición original"
 
 #: ../app/actions/buffers-actions.c:86
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr "Pegar búfer como _nueva capa"
+msgstr "Pegar el búfer como una _capa nueva"
 
 #: ../app/actions/buffers-actions.c:87
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr "Pegar el búfer seleccionado como nueva capa"
+msgstr "Pegar el búfer seleccionado como una capa nueva"
 
 #: ../app/actions/buffers-actions.c:92
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "Pegar búfer como _nueva capa en su lugar"
+msgstr "Pegar el búfer como una _capa nueva en su lugar"
 
 #: ../app/actions/buffers-actions.c:94
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "Pegar el búfer seleccionado como nueva capa en su posición original"
+msgstr ""
+"Pegar el búfer seleccionado como una capa nueva en su posición original"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -1542,12 +1543,12 @@ msgstr "Bajar este canal hasta el fondo de la pila de canales"
 #: ../app/actions/channels-actions.c:113
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
-msgstr "Conmutar la _visibilidad del canal"
+msgstr "Alternar la _visibilidad del canal"
 
 #: ../app/actions/channels-actions.c:119
 msgctxt "channels-action"
 msgid "Toggle Channel _Linked State"
-msgstr "Conmutar el estado _vinculado al canal"
+msgstr "Alternar el estado _vinculado al canal"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/channels-actions.c:125
@@ -1787,7 +1788,7 @@ msgstr "Editar este color"
 #: ../app/actions/colormap-actions.c:58
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
-msgstr "_Añadir color desde el frente"
+msgstr "_Añadir color desde el primer plano"
 
 #: ../app/actions/colormap-actions.c:59
 msgctxt "colormap-action"
@@ -3303,7 +3304,7 @@ msgstr "_Opciones de herramienta"
 #: ../app/actions/dialogs-actions.c:54
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "Abre el diálogo de opciones de herramienta"
+msgstr "Abrir el diálogo de opciones de herramienta"
 
 #: ../app/actions/dialogs-actions.c:59
 msgctxt "dialogs-action"
@@ -3313,7 +3314,7 @@ msgstr "Estado del _dispositivo"
 #: ../app/actions/dialogs-actions.c:60
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
-msgstr "Abre el diálogo de estado de los dispositivos"
+msgstr "Abrir el diálogo de estado de los dispositivos"
 
 #: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
@@ -3323,7 +3324,7 @@ msgstr "_Pintado simétrico"
 #: ../app/actions/dialogs-actions.c:66
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "Abre el diálogo de simetría"
+msgstr "Abrir el diálogo de simetría"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -3333,7 +3334,7 @@ msgstr "_Capas"
 #: ../app/actions/dialogs-actions.c:72
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
-msgstr "Abre el diálogo de capas"
+msgstr "Abrir el diálogo de capas"
 
 #: ../app/actions/dialogs-actions.c:77
 msgctxt "dialogs-action"
@@ -3343,7 +3344,7 @@ msgstr "_Canales"
 #: ../app/actions/dialogs-actions.c:78
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
-msgstr "Abre el diálogo de canales"
+msgstr "Abrir el diálogo de canales"
 
 #: ../app/actions/dialogs-actions.c:83
 msgctxt "dialogs-action"
@@ -3353,7 +3354,7 @@ msgstr "_Rutas"
 #: ../app/actions/dialogs-actions.c:84
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
-msgstr "Abre el diálogo de rutas"
+msgstr "Abrir el diálogo de rutas"
 
 #: ../app/actions/dialogs-actions.c:89
 msgctxt "dialogs-action"
@@ -3363,7 +3364,7 @@ msgstr "_Mapa de colores"
 #: ../app/actions/dialogs-actions.c:90
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Abre el diálogo de mapas de color"
+msgstr "Abrir el diálogo de mapas de color"
 
 #: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
@@ -3373,7 +3374,7 @@ msgstr "Histogra_ma"
 #: ../app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
-msgstr "Abre el diálogo de histograma"
+msgstr "Abrir el diálogo de histograma"
 
 #: ../app/actions/dialogs-actions.c:101
 msgctxt "dialogs-action"
@@ -3393,7 +3394,7 @@ msgstr "Na_vegación"
 #: ../app/actions/dialogs-actions.c:108
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
-msgstr "Abre el diálogo de navegación por la presentación"
+msgstr "Abrir el diálogo de mostrar navegación"
 
 #: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
@@ -3403,7 +3404,7 @@ msgstr "_Histórico de deshacer"
 #: ../app/actions/dialogs-actions.c:114
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "Abre el diálogo del histórico de deshacer"
+msgstr "Abrir el diálogo de deshacer histórico"
 
 #: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
@@ -3413,7 +3414,7 @@ msgstr "_Puntero"
 #: ../app/actions/dialogs-actions.c:120
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
-msgstr "Abre el diálogo de información del puntero"
+msgstr "Abrir el diálogo de información del puntero"
 
 #: ../app/actions/dialogs-actions.c:125
 msgctxt "dialogs-action"
@@ -3423,7 +3424,7 @@ msgstr "Punto_s de muestra"
 #: ../app/actions/dialogs-actions.c:126
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
-msgstr "Abre el diálogo de puntos de muestreo"
+msgstr "Abrir el diálogo de puntos de muestra"
 
 #: ../app/actions/dialogs-actions.c:131
 msgctxt "dialogs-action"
@@ -3433,7 +3434,7 @@ msgstr "Colo_res"
 #: ../app/actions/dialogs-actions.c:132
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Abre el diálogo de colores de frente/fondo"
+msgstr "Abrir el diálogo de colores de primer plano y fondo"
 
 #: ../app/actions/dialogs-actions.c:137
 msgctxt "dialogs-action"
@@ -3443,7 +3444,7 @@ msgstr "_Pinceles"
 #: ../app/actions/dialogs-actions.c:138
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
-msgstr "Abre el diálogo de pinceles"
+msgstr "Abrir el diálogo de pinceles"
 
 #: ../app/actions/dialogs-actions.c:143
 msgctxt "dialogs-action"
@@ -3463,7 +3464,7 @@ msgstr "_Dinámica de la pintura"
 #: ../app/actions/dialogs-actions.c:150
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
-msgstr "Abre el diálogo de dinámica de la pintura"
+msgstr "Abrir el diálogo de dinámica de la pintura"
 
 #: ../app/actions/dialogs-actions.c:155
 msgctxt "dialogs-action"
@@ -3483,7 +3484,7 @@ msgstr "_Pinceles MyPaint"
 #: ../app/actions/dialogs-actions.c:162
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "Abre el diálogo de pinceles mypaint"
+msgstr "Abrir el diálogo de pinceles mypaint"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
@@ -3493,7 +3494,7 @@ msgstr "_Patrones"
 #: ../app/actions/dialogs-actions.c:168
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
-msgstr "Abre el diálogo de patrones"
+msgstr "Abrir el diálogo de patrones"
 
 # Es Degradado
 #: ../app/actions/dialogs-actions.c:173
@@ -3504,7 +3505,7 @@ msgstr "_Degradados"
 #: ../app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
-msgstr "Abre el diálogo de degradados"
+msgstr "Abrir el diálogo de degradados"
 
 #: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
@@ -3524,7 +3525,7 @@ msgstr "Pal_etas"
 #: ../app/actions/dialogs-actions.c:186
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
-msgstr "Abre el diálogo de paletas"
+msgstr "Abrir el diálogo de paletas"
 
 #: ../app/actions/dialogs-actions.c:191
 msgctxt "dialogs-action"
@@ -3544,7 +3545,7 @@ msgstr "Ajustes pre_fijados de las herramientas"
 #: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Abre el diálogo de ajustes prefijados de herramienta"
+msgstr "Abrir el diálogo de ajustes prefijados de herramienta"
 
 #: ../app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
@@ -3554,7 +3555,7 @@ msgstr "_Tipografías"
 #: ../app/actions/dialogs-actions.c:204
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
-msgstr "Abre el diálogo de tipografías"
+msgstr "Abrir el diálogo de tipografías"
 
 #: ../app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
@@ -3564,7 +3565,7 @@ msgstr "B_úferes"
 #: ../app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Abre el diálogo de búferes con nombre"
+msgstr "Abrir el diálogo de búferes con nombre"
 
 #: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
@@ -3574,7 +3575,7 @@ msgstr "_Imágenes"
 #: ../app/actions/dialogs-actions.c:216
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
-msgstr "Abre el diálogo de imágenes"
+msgstr "Abrir el diálogo de imágenes"
 
 #: ../app/actions/dialogs-actions.c:221
 msgctxt "dialogs-action"
@@ -3584,7 +3585,7 @@ msgstr "_Histórico del documento"
 #: ../app/actions/dialogs-actions.c:222
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
-msgstr "Abre el diálogo de la historia del documento"
+msgstr "Abrir el diálogo del histórico del documento"
 
 #: ../app/actions/dialogs-actions.c:227
 msgctxt "dialogs-action"
@@ -3594,7 +3595,7 @@ msgstr "Plan_tillas"
 #: ../app/actions/dialogs-actions.c:228
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
-msgstr "Abre el diálogo de las plantillas de imagen"
+msgstr "Abrir el diálogo de las plantillas de imagen"
 
 #: ../app/actions/dialogs-actions.c:233
 msgctxt "dialogs-action"
@@ -3624,7 +3625,7 @@ msgstr "_Preferencias"
 #: ../app/actions/dialogs-actions.c:251
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
-msgstr "Abre el diálogo de preferencias"
+msgstr "Abrir el diálogo de preferencias"
 
 #: ../app/actions/dialogs-actions.c:256
 msgctxt "dialogs-action"
@@ -3654,7 +3655,7 @@ msgstr "_Módulos"
 #: ../app/actions/dialogs-actions.c:269
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "Abre el diálogo del gestor de módulos"
+msgstr "Abrir el diálogo del gestor de módulos"
 
 #: ../app/actions/dialogs-actions.c:274
 msgctxt "dialogs-action"
@@ -4018,12 +4019,12 @@ msgstr "Corrección automática del balance de blancos"
 #: ../app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Visibility"
-msgstr "Conmutar la _visibilidad del dibujable "
+msgstr "Alternar la _visibilidad del dibujable"
 
 #: ../app/actions/drawable-actions.c:66
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Linked State"
-msgstr "Conmutar el estado del dibujable _vinculado"
+msgstr "Alternar el estado _vinculado del dibujable"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/drawable-actions.c:72
@@ -4413,7 +4414,7 @@ msgstr "Crear una capa nueva a partir del contenido del portapapeles"
 #: ../app/actions/edit-actions.c:203
 msgctxt "edit-action"
 msgid "New Layer In _Place"
-msgstr "Nueva capa _en su lugar"
+msgstr "Capa nueva _en su lugar"
 
 #: ../app/actions/edit-actions.c:205
 msgctxt "edit-action"
@@ -4421,13 +4422,13 @@ msgid ""
 "Create a new layer from the content of the clipboard and place it at its "
 "original position"
 msgstr ""
-"Crea una nueva capa a partir del contenido del portapapeles y colocarla en "
+"Crear una capa nueva a partir del contenido del portapapeles y colocarla en "
 "su posición original"
 
 #: ../app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Rellenar con el color de _frente"
+msgstr "Rellenar con el color de _primer plano"
 
 #: ../app/actions/edit-actions.c:215
 msgctxt "edit-action"
@@ -4531,12 +4532,12 @@ msgstr "El canal alfa de la capa activa está bloqueado."
 
 #: ../app/actions/edit-commands.c:598 ../app/display/gimpdisplayshell-dnd.c:483
 msgid "Pasted as new layer because the target is a layer group."
-msgstr "Pegado como una nueva capa porque el objetivo es un grupo de capas"
+msgstr "Pegado como una capa nueva porque el objetivo es un grupo de capas."
 
 #: ../app/actions/edit-commands.c:605 ../app/display/gimpdisplayshell-dnd.c:492
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
-"Pegado como una nueva capa porque los píxeles del objetivo están bloqueados"
+"Pegado como una capa nueva porque los píxeles del objetivo están bloqueados."
 
 #: ../app/actions/edit-commands.c:646
 msgid "There is no active layer or channel to cut from."
@@ -4712,7 +4713,7 @@ msgstr "Crear _plantilla…"
 #: ../app/actions/file-actions.c:96
 msgctxt "file-action"
 msgid "Create a new template from this image"
-msgstr "Crear una nueva plantilla a partir de esta imagen"
+msgstr "Crear una plantilla nueva a partir de esta imagen"
 
 #: ../app/actions/file-actions.c:101
 msgctxt "file-action"
@@ -6738,7 +6739,7 @@ msgstr "Vista _nueva"
 #: ../app/actions/images-actions.c:54
 msgctxt "images-action"
 msgid "Create a new display for this image"
-msgstr "Crear una nueva vista para esta imagen"
+msgstr "Crear una vista nueva para esta imagen"
 
 #: ../app/actions/images-actions.c:59
 msgctxt "images-action"
@@ -7172,7 +7173,7 @@ msgstr "Alternar la _visibilidad de la capa"
 #: ../app/actions/layers-actions.c:327
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
-msgstr "Alternar el estado de en_lazado"
+msgstr "Alternar el estado en_lazado de la capa"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:333
@@ -7739,7 +7740,7 @@ msgstr "Editar paleta activa"
 #: ../app/actions/palette-editor-actions.c:72
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
-msgstr "Color nuevo desde el _frente"
+msgstr "Color nuevo desde el _primer plano"
 
 #: ../app/actions/palette-editor-actions.c:74
 msgctxt "palette-editor-action"
@@ -8006,12 +8007,12 @@ msgstr "_Configurar el color y la opacidad…"
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
 msgid "Toggle _Quick Mask"
-msgstr "Activar máscara _rápida"
+msgstr "Alternar la máscara _rápida"
 
 #: ../app/actions/quick-mask-actions.c:56
 msgctxt "quick-mask-action"
 msgid "Toggle Quick Mask on/off"
-msgstr "Activar o desactiva la máscara rápida"
+msgstr "Activar o desactivar la máscara rápida"
 
 #: ../app/actions/quick-mask-actions.c:65
 msgctxt "quick-mask-action"
@@ -9647,7 +9648,7 @@ msgstr "Editar atributos de la ruta"
 
 #: ../app/actions/vectors-commands.c:206
 msgid "New Path"
-msgstr "Nueva ruta"
+msgstr "Ruta nueva"
 
 #: ../app/actions/vectors-commands.c:209
 msgid "Create a New Path"
@@ -10064,7 +10065,7 @@ msgstr "Pantalla compl_eta"
 #: ../app/actions/view-actions.c:327
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
-msgstr "Activa o desactiva la vista de pantalla completa"
+msgstr "Alterna la vista de pantalla completa"
 
 #: ../app/actions/view-actions.c:336
 msgctxt "view-zoom-action"
@@ -11465,8 +11466,8 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "Cuando está activado la barra de estado es visible de forma predeterminada. "
-"Esto también puede puede activarse con la instrucción «Ver->Mostrar la barra "
-"de estado»."
+"Esto también se puede activar con la instrucción «Ver->Mostrar la barra de "
+"estado»."
 
 #: ../app/config/gimprc-blurbs.h:428
 msgid ""
@@ -11474,7 +11475,7 @@ msgid ""
 "with the \"View->Show Selection\" command."
 msgstr ""
 "Cuando está activado la selección es visible de forma predeterminada. Esto "
-"también puede activarse con la instrucción «Ver->Mostrar la selección»."
+"también se puede activar con la instrucción «Ver->Mostrar la selección»."
 
 #: ../app/config/gimprc-blurbs.h:432
 msgid ""
@@ -11482,7 +11483,7 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Cuando está activado el límite de la capa es visible de forma "
-"predeterminada. Esto también puede activarse con la instrucción «Ver-"
+"predeterminada. Esto también se puede activar con la instrucción «Ver-"
 ">Mostrar el límite de la capa»."
 
 #: ../app/config/gimprc-blurbs.h:436
@@ -11491,7 +11492,7 @@ msgid ""
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
 "Cuando está activado, el límite del lienzo es visible de forma "
-"predeterminada. Esto también puede activarse con la instrucción «Ver-"
+"predeterminada. Esto también se puede activar con la instrucción «Ver-"
 ">Mostrar el límite del lienzo»."
 
 #: ../app/config/gimprc-blurbs.h:440
@@ -11500,7 +11501,7 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "Cuando está activado las reglas están visibles de forma predeterminada. Esto "
-"también puede activarse con la instrucción «Ver->Mostrar las reglas»."
+"también se puede activar con la instrucción «Ver->Mostrar las reglas»."
 
 #: ../app/config/gimprc-blurbs.h:444
 msgid ""
@@ -11508,7 +11509,7 @@ msgid ""
 "the \"View->Show Grid\" command."
 msgstr ""
 "Cuando está activado la rejilla es visible de forma predeterminada. Esto "
-"también puede activarse con la instrucción «Ver->Mostrar la rejilla»."
+"también se puede activar con la instrucción «Ver->Mostrar la rejilla»."
 
 #: ../app/config/gimprc-blurbs.h:448
 msgid ""
@@ -11516,7 +11517,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Cuando está activado los puntos de muestra están visibles de forma "
-"predeterminada. Esto también puede activarse con la instrucción «Ver-"
+"predeterminada. Esto también se puede activar con la instrucción «Ver-"
 ">Mostrar puntos de muestra»."
 
 #: ../app/config/gimprc-blurbs.h:452
@@ -11543,7 +11544,7 @@ msgstr "Activar la herramienta de deformación N-Point."
 
 #: ../app/config/gimprc-blurbs.h:467
 msgid "Enable the Handle Transform tool."
-msgstr "Activar la herramienta de transformación del tirador."
+msgstr "Activar la herramienta de transformación de tirador."
 
 #: ../app/config/gimprc-blurbs.h:470
 msgid "Enable symmetry on painting."
@@ -12832,7 +12833,7 @@ msgstr "Color del canal"
 #: ../app/core/core-enums.c:1216
 msgctxt "undo-type"
 msgid "New path"
-msgstr "Nueva ruta"
+msgstr "Ruta nueva"
 
 #: ../app/core/core-enums.c:1217
 msgctxt "undo-type"
@@ -12994,23 +12995,23 @@ msgstr "Personalizado"
 
 #: ../app/core/gimp-gradients.c:74
 msgid "FG to BG (RGB)"
-msgstr "Frente a fondo (RGB)"
+msgstr "Primer plano a fondo (RGB)"
 
 #: ../app/core/gimp-gradients.c:82
 msgid "FG to BG (Hardedge)"
-msgstr "Frente a fondo (bordes duros)"
+msgstr "Primer plano a fondo (bordes duros)"
 
 #: ../app/core/gimp-gradients.c:90
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "Frente a fondo (HSV en sentido antihorario)"
+msgstr "Primer plano a fondo (HSV en sentido antihorario)"
 
 #: ../app/core/gimp-gradients.c:98
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Frente a fondo (HSV tono en sentido horario)"
+msgstr "Primer plano a fondo (HSV tono en sentido horario)"
 
 #: ../app/core/gimp-gradients.c:106
 msgid "FG to Transparent"
-msgstr "Frente a transparente"
+msgstr "Primer plano a transparente"
 
 #. Translator:  This message is displayed while GIMP is waiting for
 #. * some operation to finish.  The %s argument is a message describing
@@ -15635,11 +15636,11 @@ msgstr "Navegación de la vista"
 
 #: ../app/dialogs/dialogs.c:416
 msgid "FG/BG"
-msgstr "PP/SP"
+msgstr "Primer plano y fondo"
 
 #: ../app/dialogs/dialogs.c:416
 msgid "FG/BG Color"
-msgstr "Color PP/SP"
+msgstr "Color de primer plano y fondo"
 
 # ¿O es abrir capas? depende del contexto. FVD
 #: ../app/dialogs/file-open-dialog.c:261
@@ -18234,7 +18235,7 @@ msgstr "Ampliar imagen cuando cambia el tamaño de ventana"
 
 #: ../app/display/gimpdisplayshell.c:722
 msgid "Toggle Quick Mask"
-msgstr "Activar máscara rápida"
+msgstr "Alternar la máscara rápida"
 
 #: ../app/display/gimpdisplayshell.c:745
 msgid "Navigate the image display"
@@ -23112,7 +23113,7 @@ msgstr ""
 
 #: ../app/tools/gimphandletransformtool.c:114
 msgid "_Handle Transform"
-msgstr "_Transformar tirador"
+msgstr "_Transformación de tirador"
 
 #: ../app/tools/gimphandletransformtool.c:138
 msgctxt "undo-type"
@@ -23121,7 +23122,7 @@ msgstr "Transformación de tirador"
 
 #: ../app/tools/gimphandletransformtool.c:139
 msgid "Handle transformation"
-msgstr "Transformación del tirador"
+msgstr "Transformación de tirador"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
@@ -23425,10 +23426,11 @@ msgstr "Distancia:"
 msgid "Move selection"
 msgstr "Mover la selección"
 
+# Al usar la herramienta, si se pulsa una tecla como Mayús, señalada entre paréntesis, la herramienta alterna su funcionamiento y se comporta de manera diferente.
 #: ../app/tools/gimpmoveoptions.c:146 ../app/tools/gimpmoveoptions.c:209
 #, c-format
 msgid "Tool Toggle  (%s)"
-msgstr "Activar herramienta  (%s)"
+msgstr "Alternar de la herramienta  (%s)"
 
 #: ../app/tools/gimpmoveoptions.c:154
 msgid "Pick a layer or guide"
