@@ -109,6 +109,8 @@ scalable_images = \
 	scalable/gimp-convert-rgb-symbolic.svg				\
 	scalable/gimp-cursor-symbolic.svg				\
 	scalable/gimp-curve-free-symbolic.svg				\
+	scalable/gimp-curve-point-corner-symbolic.svg			\
+	scalable/gimp-curve-point-smooth-symbolic.svg			\
 	scalable/gimp-curve-smooth-symbolic.svg				\
 	scalable/gimp-dashboard-symbolic.svg				\
 	scalable/gimp-default-colors-symbolic.svg			\
@@ -637,6 +639,8 @@ icons16_images = \
 	16/gimp-convert-rgb-symbolic.symbolic.png				\
 	16/gimp-cursor-symbolic.symbolic.png					\
 	16/gimp-curve-free-symbolic.symbolic.png				\
+	16/gimp-curve-point-corner.symbolic.png					\
+	16/gimp-curve-point-smooth.symbolic.png					\
 	16/gimp-curve-smooth-symbolic.symbolic.png				\
 	16/gimp-dashboard-symbolic.symbolic.png					\
 	16/gimp-device-status-symbolic.symbolic.png				\
