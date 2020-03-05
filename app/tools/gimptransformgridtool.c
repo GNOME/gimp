@@ -1385,6 +1385,12 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
   GimpDisplay              *display    = tool->display;
 
+  /* we can get here while already committing a transformation.  just return in
+   * this case.  see issue #4734.
+   */
+  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tg_tool)))
+    return;
+
   switch (response_id)
     {
     case RESPONSE_RESET:
