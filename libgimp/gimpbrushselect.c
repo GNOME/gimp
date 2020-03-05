@@ -94,7 +94,7 @@ gimp_brush_select_new (const gchar          *title,
   GIMP_PROC_ARG_DOUBLE (procedure, "opacity",
                         "Opacity",
                         NULL,
-                        0.0, 1.0, 1.0,
+                        0.0, 100.0, 100.0,
                         G_PARAM_READWRITE);
 
   GIMP_PROC_ARG_INT (procedure, "spacing",
