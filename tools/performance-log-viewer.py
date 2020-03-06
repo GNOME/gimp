@@ -1687,7 +1687,7 @@ class MarkersViewer (Gtk.ScrolledWindow):
         DESC = 2
 
         def __init__ (self):
-            Gtk.ListStore.__init__ (self, int, int, str)
+            Gtk.ListStore.__init__ (self, int, GObject.TYPE_INT64, str)
 
             for marker in markers:
                 self.append ((marker.id, marker.t, marker.description))
