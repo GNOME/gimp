@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-27 13:51+0000\n"
-"PO-Revision-Date: 2020-02-28 20:15+0100\n"
+"POT-Creation-Date: 2020-03-02 10:38+0000\n"
+"PO-Revision-Date: 2020-03-05 13:26+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -499,15 +499,15 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Fast startup: fonts loading is not blocking startup anymore"
-msgstr "Inicio rápido: la carga de fuentes ya no bloquea el inicio"
+msgstr "Inicio rápido: la carga de tipografías ya no bloquea el inicio"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
-"Etiquetado de fuentes con la misma interfaz de usuario que para pinceles, "
-"patrones y degradados"
+"Etiquetado de tipografías con la misma interfaz de usuario que para "
+"pinceles, patrones y degradados"
 
 # PSD es el formato de Adobe
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
@@ -2760,27 +2760,27 @@ msgstr "Selección de degradado: cambiar al siguiente"
 #: ../app/actions/context-actions.c:845
 msgctxt "context-action"
 msgid "Font Selection: Select by Index"
-msgstr "Selección de fuente: seleccionar por índice"
+msgstr "Selección de tipografía: seleccionar por índice"
 
 #: ../app/actions/context-actions.c:849
 msgctxt "context-action"
 msgid "Font Selection: Switch to First"
-msgstr "Selección de fuente: cambiar a la primera"
+msgstr "Selección de tipografía: cambiar a la primera"
 
 #: ../app/actions/context-actions.c:853
 msgctxt "context-action"
 msgid "Font Selection: Switch to Last"
-msgstr "Selección de fuente: cambiar a la última"
+msgstr "Selección de tipografía: cambiar a la última"
 
 #: ../app/actions/context-actions.c:857
 msgctxt "context-action"
 msgid "Font Selection: Switch to Previous"
-msgstr "Selección de fuente: cambiar a la anterior"
+msgstr "Selección de tipografía: cambiar a la anterior"
 
 #: ../app/actions/context-actions.c:861
 msgctxt "context-action"
 msgid "Font Selection: Switch to Next"
-msgstr "Selección de fuente: cambiar a la siguiente"
+msgstr "Selección de tipografía: cambiar a la siguiente"
 
 #: ../app/actions/context-actions.c:869
 msgctxt "context-action"
@@ -4828,7 +4828,7 @@ msgstr "_Sobreescribir"
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
 msgstr ""
-"Volver a exportar la imagen a la fuente de importación en el formato de "
+"Volver a exportar la imagen al origen de importación en el formato de "
 "importación"
 
 #: ../app/actions/file-actions.c:172
@@ -6872,7 +6872,7 @@ msgstr "Capa _nueva"
 #: ../app/actions/layers-actions.c:114
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
-msgstr "Crea una capa nueva con los últimos valores utilizados"
+msgstr "Crear una capa nueva con los últimos valores utilizados"
 
 #: ../app/actions/layers-actions.c:119
 msgctxt "layers-action"
@@ -6892,7 +6892,7 @@ msgstr "_Grupo de capas nuevo"
 #: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
-msgstr "Crear un grupo de capas nuevo y lo añade a la imagen"
+msgstr "Crear un grupo de capas nuevo y añadirlo a la imagen"
 
 #: ../app/actions/layers-actions.c:132
 msgctxt "layers-action"
@@ -6902,7 +6902,7 @@ msgstr "D_uplicar la capa"
 #: ../app/actions/layers-actions.c:134
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr "Crear un duplicado de la capa y la añade a la imagen"
+msgstr "Crear un duplicado de la capa y añadirlo a la imagen"
 
 #: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
@@ -9697,7 +9697,7 @@ msgstr "Prueba de _renderizado en pantalla"
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "Pseudoprueba de renderizado"
+msgstr "Pseudoprueba de re_nderizado"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -9914,8 +9914,8 @@ msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
 "color space"
 msgstr ""
-"Cuando realiza una pseudoprueba, marque los colores que no se pueden "
-"representar en el espacio de color destino"
+"Cuando realiza una pseudoprueba, marcar los colores que no se pueden "
+"representar en el espacio de color de destino"
 
 #: ../app/actions/view-actions.c:228
 msgctxt "view-action"
@@ -10310,7 +10310,7 @@ msgstr "_Perceptual"
 #: ../app/actions/view-actions.c:547
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "Prueba de renderizado en pantalla es perceptual"
+msgstr "La prueba de renderizado en pantalla es perceptual"
 
 #: ../app/actions/view-actions.c:552 ../app/actions/view-actions.c:579
 msgctxt "view-action"
@@ -10320,7 +10320,7 @@ msgstr "Colorimétrico _relativo"
 #: ../app/actions/view-actions.c:553
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "Prueba de renderizado en pantalla es colorimétrico relativo"
+msgstr "La prueba de renderizado en pantalla es colorimétrico relativo"
 
 #: ../app/actions/view-actions.c:558 ../app/actions/view-actions.c:585
 msgctxt "view-action"
@@ -10330,7 +10330,7 @@ msgstr "_Saturación"
 #: ../app/actions/view-actions.c:559
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "Prueba de renderizado en pantalla es la saturación"
+msgstr "La prueba de renderizado en pantalla es saturación"
 
 #: ../app/actions/view-actions.c:564 ../app/actions/view-actions.c:591
 msgctxt "view-action"
@@ -10340,32 +10340,32 @@ msgstr "Colorimétrico _absoluto"
 #: ../app/actions/view-actions.c:565
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr "Prueba de renderizado en pantalla es colorimétrico absoluto"
+msgstr "La prueba de renderizado en pantalla es colorimétrico absoluto"
 
 #: ../app/actions/view-actions.c:574
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "Prueba de renderizado de pseudoprueba es perceptual"
+msgstr "La pseudoprueba de renderizado es perceptual"
 
 #: ../app/actions/view-actions.c:580
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "Prueba de renderizado de pseudoprueba es colorimétrico relativo"
+msgstr "La pseudoprueba de renderizado es colorimétrico relativo"
 
 #: ../app/actions/view-actions.c:586
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "Prueba de renderizado de pseudoprueba es la saturación"
+msgstr "La pseudoprueba de renderizado es saturación"
 
 #: ../app/actions/view-actions.c:592
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "Prueba de renderizado de pseudoprueba es colorimétrico absoluto"
+msgstr "La pseudoprueba de renderizado es colorimétrico absoluto"
 
 #: ../app/actions/view-actions.c:600
 msgctxt "view-padding-color"
 msgid "From _Theme"
-msgstr "Del _tema"
+msgstr "Desde el _tema"
 
 #: ../app/actions/view-actions.c:601
 msgctxt "view-padding-color"
@@ -11630,8 +11630,8 @@ msgstr "El nombre del tema que usar."
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"Establece la intención de renderizado predeterminada para el diálogo "
-"«Convertir en perfil de color»."
+"Establece la prueba de renderizado predeterminada para el diálogo «Convertir "
+"en perfil de color»."
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid ""
@@ -16171,7 +16171,7 @@ msgstr "Vista previa"
 
 #: ../app/dialogs/palette-import-dialog.c:381
 msgid "The selected source contains no colors."
-msgstr "La fuente seleccionada no contiene colores."
+msgstr "El origen seleccionado no contiene colores."
 
 #: ../app/dialogs/palette-import-dialog.c:466
 msgid "There is no palette to import."
@@ -21426,7 +21426,7 @@ msgstr "Seleccionar todo"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:214
 msgid "Source Range"
-msgstr "Rango fuente"
+msgstr "Rango de origen"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:225
 msgid "Destination Range"
