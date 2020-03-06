@@ -642,8 +642,8 @@ icons16_images = \
 	16/gimp-convert-rgb-symbolic.symbolic.png				\
 	16/gimp-cursor-symbolic.symbolic.png					\
 	16/gimp-curve-free-symbolic.symbolic.png				\
-	16/gimp-curve-point-corner.symbolic.png					\
-	16/gimp-curve-point-smooth.symbolic.png					\
+	16/gimp-curve-point-corner-symbolic.symbolic.png			\
+	16/gimp-curve-point-smooth-symbolic.symbolic.png			\
 	16/gimp-curve-smooth-symbolic.symbolic.png				\
 	16/gimp-dashboard-symbolic.symbolic.png					\
 	16/gimp-device-status-symbolic.symbolic.png				\
