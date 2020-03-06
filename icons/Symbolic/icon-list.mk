@@ -42,6 +42,7 @@ scalable_images = \
 	scalable/media-optical-symbolic.svg				\
 	scalable/media-playback-pause-symbolic.svg			\
 	scalable/media-playback-start-symbolic.svg			\
+	scalable/media-record-symbolic.svg				\
 	scalable/media-seek-backward-symbolic.svg			\
 	scalable/media-skip-backward-symbolic.svg			\
 	scalable/media-skip-forward-symbolic.svg				\
@@ -175,6 +176,7 @@ scalable_images = \
 	scalable/gimp-line-spacing-symbolic.svg				\
 	scalable/gimp-linked-symbolic.svg				\
 	scalable/gimp-list-symbolic.svg					\
+	scalable/gimp-marker-symbolic.svg				\
 	scalable/gimp-menu-left-symbolic.svg				\
 	scalable/gimp-menu-right-symbolic.svg				\
 	scalable/gimp-merge-down-symbolic.svg				\
@@ -576,6 +578,7 @@ icons16_images = \
 	16/media-optical-symbolic.symbolic.png					\
 	16/media-playback-pause-symbolic.symbolic.png				\
 	16/media-playback-start-symbolic.symbolic.png				\
+	16/media-record.symbolic.png						\
 	16/media-seek-backward-symbolic.symbolic.png				\
 	16/media-skip-backward-symbolic.symbolic.png				\
 	16/media-skip-forward-symbolic.symbolic.png				\
@@ -688,6 +691,7 @@ icons16_images = \
 	16/gimp-layer-symbolic.symbolic.png					\
 	16/gimp-layers-symbolic.symbolic.png					\
 	16/gimp-list-symbolic.symbolic.png					\
+	16/gimp-marker-symbolic.symbolic.png					\
 	16/gimp-merge-down-symbolic.symbolic.png				\
 	16/gimp-move-to-screen-symbolic.symbolic.png				\
 	16/gimp-navigation-symbolic.symbolic.png				\
