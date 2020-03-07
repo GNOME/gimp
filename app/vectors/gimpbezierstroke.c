@@ -2277,7 +2277,7 @@ gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
   gimp_coords_mix (1.0,    &p3, -circlemagic, &dx, &p2);
   gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
-  handle = g_queue_peek_tail (stroke->anchors);
+  handle = g_queue_peek_head (stroke->anchors);
   gimp_coords_mix (1.0,    &p3,  circlemagic, &dx, &handle->position);
 
   gimp_stroke_close (stroke);
