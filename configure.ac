@@ -705,6 +705,11 @@ PKG_CHECK_MODULES(GEGL, gegl-gegl_major_minor_version >= gegl_required_version,,
 PKG_CHECK_MODULES(ATK, atk >= atk_required_version,,
                   [add_deps_error([atk >= atk_required_version])])
 
+AM_PATH_GLIB_2_0(glib_required_version,,
+                 [add_deps_error([glib >= glib_required_version],
+                                 [Test for GLIB failed])],
+                 gobject)
+
 PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0,,
                   [add_deps_error([gmodule-no-export-2.0])])
 
