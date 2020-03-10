@@ -7,6 +7,35 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+Overview of Changes from GIMP 2.10.16 to GIMP 2.10.18
+=====================================================
+
+Plugins:
+
+  - In file-psd, make the data_start and data_len fields of the
+    PSDimageres and PSDlayerres structs unsigned, to avoid potential
+    overflow/sign-extension
+
+Updated translations:
+
+  - Dutch, Finnish, German, Polish, Spanish, Swedish, Ukrainian
+
+Bug fixes:
+
+  - #4663, #4734, #4641, #4328, #4094
+
+Developers:
+
+  - Ell
+
+Contributors:
+
+  - Nikc, Sabri Ünal
+
+Translators:
+
+  - Anders Jonsson, Daniel Korostil, Jiri Grönroos, Nathan Follens,
+    Piotr Drąg, Rodrigo Lledó Milanca, Tim Sabsch
 
 Overview of Changes from GIMP 2.10.16 to GIMP 2.10.18
 =====================================================
