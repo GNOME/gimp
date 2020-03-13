@@ -101,6 +101,13 @@ gboolean     gimp_ascii_strtod                     (const gchar     *nptr,
 gint         gimp_g_list_compare                   (GList           *list1,
                                                     GList           *list2);
 
+GimpAsync  * gimp_idle_run_async                   (GimpRunAsyncFunc func,
+                                                    gpointer         user_data);
+GimpAsync  * gimp_idle_run_async_full              (gint             priority,
+                                                    GimpRunAsyncFunc func,
+                                                    gpointer         user_data,
+                                                    GDestroyNotify   user_data_destroy_func);
+
 GimpImage  * gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer,
                                                     const gchar     *image_name);

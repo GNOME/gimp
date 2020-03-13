@@ -58,6 +58,7 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpasync.h"
 #include "gimpcontext.h"
 #include "gimperror.h"
 
@@ -879,6 +880,108 @@ gimp_g_list_compare (GList *list1,
     return +1;
 
   return 0;
+}
+
+typedef struct
+{
+  GimpAsync        *async;
+  gint              idle_id;
+
+  GimpRunAsyncFunc  func;
+  gpointer          user_data;
+  GDestroyNotify    user_data_destroy_func;
+
+} GimpIdleRunAsyncData;
+
+static GimpIdleRunAsyncData *
+gimp_idle_run_async_data_new (void)
+{
+  return g_slice_new0 (GimpIdleRunAsyncData);
+}
+
+static void
+gimp_idle_run_async_data_free (GimpIdleRunAsyncData *data)
+{
+  g_signal_handlers_disconnect_by_data (data->async, data);
+
+  if (data->user_data && data->user_data_destroy_func)
+    data->user_data_destroy_func (data->user_data);
+
+  if (! gimp_async_is_stopped (data->async))
+    gimp_async_abort (data->async);
+
+  g_object_unref (data->async);
+
+  g_slice_free (GimpIdleRunAsyncData, data);
+}
+
+static void
+gimp_idle_run_async_cancel (GimpAsync            *async,
+                            GimpIdleRunAsyncData *data)
+{
+  g_source_remove (data->idle_id);
+}
+
+static gboolean
+gimp_idle_run_async_idle (GimpIdleRunAsyncData *data)
+{
+  g_signal_handlers_block_by_func (data->async,
+                                   gimp_idle_run_async_cancel,
+                                   data);
+
+  data->func (data->async, data->user_data);
+
+  g_signal_handlers_unblock_by_func (data->async,
+                                     gimp_idle_run_async_cancel,
+                                     data);
+
+  if (gimp_async_is_stopped (data->async))
+    {
+      data->user_data = NULL;
+
+      return G_SOURCE_REMOVE;
+    }
+
+  return G_SOURCE_CONTINUE;
+}
+
+GimpAsync *
+gimp_idle_run_async (GimpRunAsyncFunc func,
+                     gpointer         user_data)
+{
+  return gimp_idle_run_async_full (G_PRIORITY_DEFAULT_IDLE, func,
+                                   user_data, NULL);
+}
+
+GimpAsync *
+gimp_idle_run_async_full (gint             priority,
+                          GimpRunAsyncFunc func,
+                          gpointer         user_data,
+                          GDestroyNotify   user_data_destroy_func)
+{
+  GimpIdleRunAsyncData *data;
+
+  g_return_val_if_fail (func != NULL, NULL);
+
+  data = gimp_idle_run_async_data_new ();
+
+  data->func                   = func;
+  data->user_data              = user_data;
+  data->user_data_destroy_func = user_data_destroy_func;
+
+  data->async = gimp_async_new ();
+
+  g_signal_connect (data->async, "cancel",
+                    G_CALLBACK (gimp_idle_run_async_cancel),
+                    data);
+
+  data->idle_id = g_idle_add_full (
+    priority,
+    (GSourceFunc) gimp_idle_run_async_idle,
+    data,
+    (GDestroyNotify) gimp_idle_run_async_data_free);
+
+  return g_object_ref (data->async);
 }
 
 
