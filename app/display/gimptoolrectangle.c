@@ -143,7 +143,7 @@ struct _GimpToolRectanglePrivate
   gboolean                is_first;
 
   /* Whether or not the rectangle currently being rubber-banded was
-   * created from scatch.
+   * created from scratch.
    */
   gboolean                is_new;
 
