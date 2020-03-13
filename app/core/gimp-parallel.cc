@@ -51,11 +51,11 @@ extern "C"
 
 typedef struct
 {
-  GimpAsync                *async;
-  gint                      priority;
-  GimpParallelRunAsyncFunc  func;
-  gpointer                  user_data;
-  GDestroyNotify            user_data_destroy_func;
+  GimpAsync        *async;
+  gint              priority;
+  GimpRunAsyncFunc  func;
+  gpointer          user_data;
+  GDestroyNotify    user_data_destroy_func;
 } GimpParallelRunAsyncTask;
 
 typedef struct
@@ -129,17 +129,17 @@ gimp_parallel_exit (Gimp *gimp)
 }
 
 GimpAsync *
-gimp_parallel_run_async (GimpParallelRunAsyncFunc func,
-                         gpointer                 user_data)
+gimp_parallel_run_async (GimpRunAsyncFunc func,
+                         gpointer         user_data)
 {
   return gimp_parallel_run_async_full (0, func, user_data, NULL);
 }
 
 GimpAsync *
-gimp_parallel_run_async_full (gint                     priority,
-                              GimpParallelRunAsyncFunc func,
-                              gpointer                 user_data,
-                              GDestroyNotify           user_data_destroy_func)
+gimp_parallel_run_async_full (gint             priority,
+                              GimpRunAsyncFunc func,
+                              gpointer         user_data,
+                              GDestroyNotify   user_data_destroy_func)
 {
   GimpAsync                *async;
   GimpParallelRunAsyncTask *task;
@@ -182,16 +182,16 @@ gimp_parallel_run_async_full (gint                     priority,
 }
 
 GimpAsync *
-gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc func,
-                                     gpointer                 user_data)
+gimp_parallel_run_async_independent (GimpRunAsyncFunc func,
+                                     gpointer         user_data)
 {
   return gimp_parallel_run_async_independent_full (0, func, user_data);
 }
 
 GimpAsync *
-gimp_parallel_run_async_independent_full (gint                     priority,
-                                          GimpParallelRunAsyncFunc func,
-                                          gpointer                 user_data)
+gimp_parallel_run_async_independent_full (gint             priority,
+                                          GimpRunAsyncFunc func,
+                                          gpointer         user_data)
 {
   GimpAsync                *async;
   GimpParallelRunAsyncTask *task;
