@@ -107,6 +107,13 @@ gint         gimp_g_list_compare                   (GList             *list1,
 GimpTRCType  gimp_suggest_trc_for_component_type   (GimpComponentType  component_type,
                                                     GimpTRCType        old_trc);
 
+GimpAsync  * gimp_idle_run_async                   (GimpRunAsyncFunc func,
+                                                    gpointer         user_data);
+GimpAsync  * gimp_idle_run_async_full              (gint             priority,
+                                                    GimpRunAsyncFunc func,
+                                                    gpointer         user_data,
+                                                    GDestroyNotify   user_data_destroy_func);
+
 GimpImage  * gimp_create_image_from_buffer         (Gimp              *gimp,
                                                     GeglBuffer        *buffer,
                                                     const gchar       *image_name);
