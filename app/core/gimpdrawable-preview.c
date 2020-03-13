@@ -356,13 +356,14 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
                                      gint          dest_width,
                                      gint          dest_height)
 {
-  GimpItem    *item;
-  GimpImage   *image;
-  GeglBuffer  *buffer;
-  gdouble      scale;
-  gint         scaled_x;
-  gint         scaled_y;
-  static gint  no_async_drawable_previews = -1;
+  GimpItem       *item;
+  GimpImage      *image;
+  GeglBuffer     *buffer;
+  SubPreviewData *data;
+  gdouble         scale;
+  gint            scaled_x;
+  gint            scaled_y;
+  static gint     no_async_drawable_previews = -1;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -413,16 +414,18 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
   scaled_x = RINT ((gdouble) src_x * scale);
   scaled_y = RINT ((gdouble) src_y * scale);
 
+  data = sub_preview_data_new (
+    gimp_drawable_get_preview_format (drawable),
+    buffer,
+    GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
+    scale);
+
   if (gimp_tile_handler_validate_get_assigned (buffer))
     {
       return gimp_idle_run_async_full (
         GIMP_PRIORITY_VIEWABLE_IDLE,
         (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
-        sub_preview_data_new (
-          gimp_drawable_get_preview_format (drawable),
-          buffer,
-          GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
-          scale),
+        data,
         (GDestroyNotify) sub_preview_data_free);
     }
   else
@@ -430,11 +433,7 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
       return gimp_parallel_run_async_full (
         +1,
         (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
-        sub_preview_data_new (
-          gimp_drawable_get_preview_format (drawable),
-          buffer,
-          GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
-          scale),
+        data,
         (GDestroyNotify) sub_preview_data_free);
     }
 }
