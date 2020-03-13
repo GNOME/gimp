@@ -135,7 +135,7 @@ Troubleshooting
 ---------------
 
 If your GtkComboBox doesn't draw any items it's probably because it
-doesn't have a cell renderer. Appearently there is no UI to add one in
+doesn't have a cell renderer. Apparently there is no UI to add one in
 GLade-3, so add it manually in the UI file, see the GTK+ doc for
 GtkCellLayout; this is what you need to add:
 
