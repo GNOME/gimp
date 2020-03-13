@@ -890,7 +890,6 @@ typedef struct
   GimpRunAsyncFunc  func;
   gpointer          user_data;
   GDestroyNotify    user_data_destroy_func;
-
 } GimpIdleRunAsyncData;
 
 static GimpIdleRunAsyncData *
