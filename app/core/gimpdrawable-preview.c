@@ -36,6 +36,7 @@
 
 #include "gimp.h"
 #include "gimp-parallel.h"
+#include "gimp-utils.h"
 #include "gimpasync.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
@@ -44,6 +45,8 @@
 #include "gimpdrawable-private.h"
 #include "gimplayer.h"
 #include "gimptempbuf.h"
+
+#include "gimp-priorities.h"
 
 
 typedef struct
@@ -384,8 +387,7 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
         (g_getenv ("GIMP_NO_ASYNC_DRAWABLE_PREVIEWS") != NULL);
     }
 
-  if (no_async_drawable_previews ||
-      gimp_tile_handler_validate_get_assigned (buffer))
+  if (no_async_drawable_previews)
     {
       GimpAsync *async = gimp_async_new ();
 
@@ -408,13 +410,28 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
   scaled_x = RINT ((gdouble) src_x * scale);
   scaled_y = RINT ((gdouble) src_y * scale);
 
-  return gimp_parallel_run_async_full (
-    +1,
-    (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
-    sub_preview_data_new (
-      gimp_drawable_get_preview_format (drawable),
-      buffer,
-      GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
-      scale),
-    (GDestroyNotify) sub_preview_data_free);
+  if (gimp_tile_handler_validate_get_assigned (buffer))
+    {
+      return gimp_idle_run_async_full (
+        GIMP_PRIORITY_VIEWABLE_IDLE,
+        (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
+        sub_preview_data_new (
+          gimp_drawable_get_preview_format (drawable),
+          buffer,
+          GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
+          scale),
+        (GDestroyNotify) sub_preview_data_free);
+    }
+  else
+    {
+      return gimp_parallel_run_async_full (
+        +1,
+        (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
+        sub_preview_data_new (
+          gimp_drawable_get_preview_format (drawable),
+          buffer,
+          GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
+          scale),
+        (GDestroyNotify) sub_preview_data_free);
+    }
 }
