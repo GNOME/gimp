@@ -267,6 +267,9 @@ typedef gboolean (* GimpObjectFilterFunc)  (GimpObject  *object,
 typedef gint64   (* GimpMemsizeFunc)       (gpointer     instance,
                                             gint64      *gui_size);
 
+typedef void     (* GimpRunAsyncFunc)      (GimpAsync   *async,
+                                            gpointer     user_data);
+
 
 /*  structs  */
 

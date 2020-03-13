@@ -666,7 +666,7 @@ gimp_line_art_prepare_async (GimpLineArt *line_art,
 
   async = gimp_parallel_run_async_full (
     priority,
-    (GimpParallelRunAsyncFunc) gimp_line_art_prepare_async_func,
+    (GimpRunAsyncFunc) gimp_line_art_prepare_async_func,
     data, (GDestroyNotify) line_art_data_free);
 
   return async;

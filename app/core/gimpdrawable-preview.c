@@ -410,7 +410,7 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
 
   return gimp_parallel_run_async_full (
     +1,
-    (GimpParallelRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
+    (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
     sub_preview_data_new (
       gimp_drawable_get_preview_format (drawable),
       buffer,
