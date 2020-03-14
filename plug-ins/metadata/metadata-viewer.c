@@ -330,8 +330,15 @@ metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
       gchar *value_utf8;
       glong  size;
 
-      value      = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
-      value_utf8 = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+      value = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
+      if (g_utf8_validate (value, -1, NULL))
+        {
+          value_utf8 = g_strdup (value);
+        }
+      else 
+        {
+          value_utf8 = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+        }
 
       g_free (value);
 
