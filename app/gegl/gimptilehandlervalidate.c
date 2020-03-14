@@ -22,6 +22,7 @@
 
 #include "gimp-gegl-types.h"
 
+#include "core/gimpchunkiterator.h"
 #include "core/gimpmarshal.h"
 
 #include "gimp-gegl-loops.h"
@@ -529,9 +530,11 @@ void
 gimp_tile_handler_validate_validate (GimpTileHandlerValidate *validate,
                                      GeglBuffer              *buffer,
                                      const GeglRectangle     *rect,
-                                     gboolean                 intersect)
+                                     gboolean                 intersect,
+                                     gboolean                 chunked)
 {
   GimpTileHandlerValidateClass *klass;
+  cairo_region_t               *region = NULL;
 
   g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
   g_return_if_fail (gimp_tile_handler_validate_get_assigned (buffer) ==
@@ -544,30 +547,56 @@ gimp_tile_handler_validate_validate (GimpTileHandlerValidate *validate,
 
   if (intersect)
     {
-      cairo_region_t *region = cairo_region_copy (validate->dirty_region);
+      region = cairo_region_copy (validate->dirty_region);
 
       cairo_region_intersect_rectangle (region,
                                         (const cairo_rectangle_int_t *) rect);
+    }
+  else if (chunked)
+    {
+      region = cairo_region_create_rectangle (
+        (const cairo_rectangle_int_t *) rect);
+    }
 
+  if (region)
+    {
       if (! cairo_region_is_empty (region))
         {
-          gint n_rects;
-          gint i;
-
           gimp_tile_handler_validate_begin_validate (validate);
 
-          n_rects = cairo_region_num_rectangles (region);
-
-          for (i = 0; i < n_rects; i++)
+          if (chunked)
             {
-              cairo_rectangle_int_t blit_rect;
+              GimpChunkIterator *iter;
 
-              cairo_region_get_rectangle (region, i, &blit_rect);
+              iter   = gimp_chunk_iterator_new (region);
+              region = NULL;
 
-              klass->validate_buffer (validate,
-                                      (const GeglRectangle *) &blit_rect,
-                                      buffer);
+              while (gimp_chunk_iterator_next (iter))
+                {
+                  GeglRectangle blit_rect;
+
+                  while (gimp_chunk_iterator_get_rect (iter, &blit_rect))
+                    klass->validate_buffer (validate, &blit_rect, buffer);
+                }
             }
+          else
+            {
+              gint n_rects;
+              gint i;
+
+              n_rects = cairo_region_num_rectangles (region);
+
+              for (i = 0; i < n_rects; i++)
+                {
+                  cairo_rectangle_int_t blit_rect;
+
+                  cairo_region_get_rectangle (region, i, &blit_rect);
+
+                  klass->validate_buffer (validate,
+                                          (const GeglRectangle *) &blit_rect,
+                                          buffer);
+                }
+              }
 
           gimp_tile_handler_validate_end_validate (validate);
 
@@ -576,7 +605,7 @@ gimp_tile_handler_validate_validate (GimpTileHandlerValidate *validate,
             (const cairo_rectangle_int_t *) rect);
         }
 
-      cairo_region_destroy (region);
+      g_clear_pointer (&region, cairo_region_destroy);
     }
   else
     {

@@ -286,7 +286,7 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
           gimp_tile_handler_validate_validate (validate_handler,
                                                buffer_source_validate->buffer,
                                                &rect,
-                                               TRUE);
+                                               TRUE, FALSE);
         }
 
       gegl_operation_context_set_object (context, "output", G_OBJECT (buffer));

@@ -900,7 +900,7 @@ gimp_projection_paint_area (GimpProjection *proj,
             proj->priv->validate_handler,
             proj->priv->buffer,
             &rect,
-            FALSE);
+            FALSE, FALSE);
         }
       else
         {
