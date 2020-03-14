@@ -1793,7 +1793,14 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 }
             }
 
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+          if (g_utf8_validate (value_clean, -1, NULL))
+            {
+              value_utf = g_strdup (value_clean);
+            }
+          else 
+            {
+              value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+            }
 
           if (! strcmp ("single", imageSupplierInfoTags[i].mode))
             {
@@ -1853,7 +1860,14 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 }
             }
 
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+          if (g_utf8_validate (value_clean, -1, NULL))
+            {
+              value_utf = g_strdup (value_clean);
+            }
+          else 
+            {
+              value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+            }
 
           if (! strcmp ("single", locationCreationInfoTags[i].mode))
             {
@@ -1907,7 +1921,14 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 }
             }
 
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+          if (g_utf8_validate (value_clean, -1, NULL))
+            {
+              value_utf = g_strdup (value_clean);
+            }
+          else 
+            {
+              value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+            }
 
           if (! strcmp ("single", creatorContactInfoTags[i].mode))
             {
@@ -1990,7 +2011,14 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
               strcpy (value_clean, new_value_clean[0]);
             }
 
-          value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+          if (g_utf8_validate (value_clean, -1, NULL))
+            {
+              value_utf = g_strdup (value_clean);
+            }
+          else 
+            {
+              value_utf = g_locale_to_utf8 (value_clean, -1, NULL, NULL, NULL);
+            }
 
           if (! strcmp ("single", default_metadata_tags[i].mode))
             {
