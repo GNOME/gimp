@@ -979,6 +979,8 @@ gimp_suggest_trc_for_component_type (GimpComponentType component_type,
 
 typedef struct
 {
+  gint              ref_count;
+
   GimpAsync        *async;
   gint              idle_id;
 
@@ -990,35 +992,92 @@ typedef struct
 static GimpIdleRunAsyncData *
 gimp_idle_run_async_data_new (void)
 {
-  return g_slice_new0 (GimpIdleRunAsyncData);
+  GimpIdleRunAsyncData *data;
+
+  data = g_slice_new0 (GimpIdleRunAsyncData);
+
+  data->ref_count = 1;
+
+  return data;
 }
 
 static void
-gimp_idle_run_async_data_free (GimpIdleRunAsyncData *data)
+gimp_idle_run_async_data_inc_ref (GimpIdleRunAsyncData *data)
 {
-  g_signal_handlers_disconnect_by_data (data->async, data);
+  data->ref_count++;
+}
 
-  if (data->user_data && data->user_data_destroy_func)
-    data->user_data_destroy_func (data->user_data);
+static void
+gimp_idle_run_async_data_dec_ref (GimpIdleRunAsyncData *data)
+{
+  data->ref_count--;
 
-  if (! gimp_async_is_stopped (data->async))
-    gimp_async_abort (data->async);
+  if (data->ref_count == 0)
+    {
+      g_signal_handlers_disconnect_by_data (data->async, data);
 
-  g_object_unref (data->async);
+      if (! gimp_async_is_stopped (data->async))
+        gimp_async_abort (data->async);
 
-  g_slice_free (GimpIdleRunAsyncData, data);
+      g_object_unref (data->async);
+
+      if (data->user_data && data->user_data_destroy_func)
+        data->user_data_destroy_func (data->user_data);
+
+      g_slice_free (GimpIdleRunAsyncData, data);
+    }
 }
 
 static void
 gimp_idle_run_async_cancel (GimpAsync            *async,
                             GimpIdleRunAsyncData *data)
 {
-  g_source_remove (data->idle_id);
+  gimp_idle_run_async_data_inc_ref (data);
+
+  if (data->idle_id)
+    {
+      g_source_remove (data->idle_id);
+
+      data->idle_id = 0;
+    }
+
+  gimp_idle_run_async_data_dec_ref (data);
+}
+
+static void
+gimp_idle_run_async_waiting (GimpAsync            *async,
+                             GimpIdleRunAsyncData *data)
+{
+  gimp_idle_run_async_data_inc_ref (data);
+
+  if (data->idle_id)
+    {
+      g_source_remove (data->idle_id);
+
+      data->idle_id = 0;
+    }
+
+  g_signal_handlers_block_by_func (data->async,
+                                   gimp_idle_run_async_cancel,
+                                   data);
+
+  while (! gimp_async_is_stopped (data->async))
+    data->func (data->async, data->user_data);
+
+  g_signal_handlers_unblock_by_func (data->async,
+                                     gimp_idle_run_async_cancel,
+                                     data);
+
+  data->user_data = NULL;
+
+  gimp_idle_run_async_data_dec_ref (data);
 }
 
 static gboolean
 gimp_idle_run_async_idle (GimpIdleRunAsyncData *data)
 {
+  gimp_idle_run_async_data_inc_ref (data);
+
   g_signal_handlers_block_by_func (data->async,
                                    gimp_idle_run_async_cancel,
                                    data);
@@ -1033,8 +1092,12 @@ gimp_idle_run_async_idle (GimpIdleRunAsyncData *data)
     {
       data->user_data = NULL;
 
+      gimp_idle_run_async_data_dec_ref (data);
+
       return G_SOURCE_REMOVE;
     }
+
+  gimp_idle_run_async_data_dec_ref (data);
 
   return G_SOURCE_CONTINUE;
 }
@@ -1068,12 +1131,15 @@ gimp_idle_run_async_full (gint             priority,
   g_signal_connect (data->async, "cancel",
                     G_CALLBACK (gimp_idle_run_async_cancel),
                     data);
+  g_signal_connect (data->async, "waiting",
+                    G_CALLBACK (gimp_idle_run_async_waiting),
+                    data);
 
   data->idle_id = g_idle_add_full (
     priority,
     (GSourceFunc) gimp_idle_run_async_idle,
     data,
-    (GDestroyNotify) gimp_idle_run_async_data_free);
+    (GDestroyNotify) gimp_idle_run_async_data_dec_ref);
 
   return g_object_ref (data->async);
 }
