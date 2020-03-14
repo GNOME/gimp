@@ -327,10 +327,29 @@ static void
 gimp_drawable_get_sub_preview_async_func (GimpAsync      *async,
                                           SubPreviewData *data)
 {
-  GimpTempBuf *preview;
+  GimpTempBuf             *preview;
+  GimpTileHandlerValidate *validate;
 
   preview = gimp_temp_buf_new (data->rect.width, data->rect.height,
                                data->format);
+
+  validate = gimp_tile_handler_validate_get_assigned (data->buffer);
+
+  if (validate)
+    {
+      GeglRectangle rect;
+
+      rect.x      = floor (data->rect.x / data->scale);
+      rect.y      = floor (data->rect.y / data->scale);
+      rect.width  = ceil ((data->rect.x + data->rect.width)  / data->scale) -
+                    rect.x;
+      rect.height = ceil ((data->rect.x + data->rect.height) / data->scale) -
+                    rect.y;
+
+      gimp_tile_handler_validate_validate (validate,
+                                           data->buffer, &rect,
+                                           TRUE, TRUE);
+    }
 
   gegl_buffer_get (data->buffer, &data->rect, data->scale,
                    gimp_temp_buf_get_format (preview),
