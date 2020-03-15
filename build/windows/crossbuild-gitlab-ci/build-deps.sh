@@ -35,9 +35,12 @@ cd ..
 
 # json-c
 
+# TODO: implicit-fallthrough and no-return-type warnings must be
+# reenabled once the following patch has been merged into json-c source:
+# https://github.com/json-c/json-c/pull/556
 git clone --depth 1 https://github.com/json-c/json-c.git && \
 mkdir json-c/_build && cd json-c/_build && \
-CFLAGS="-Wno-expansion-to-defined" crossroad ../configure && make install || exit 1
+CFLAGS="-Wno-expansion-to-defined -Wimplicit-fallthrough=0 -Wno-return-type" crossroad ../configure && make install || exit 1
 cd ../..
 
 # libmypaint
