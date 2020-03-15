@@ -157,7 +157,7 @@ gimp-debian/testing-clang:
     CXX: "clang++"
   script:
     - apt-get install -y --no-install-recommends
-        clang
+        clang libomp-dev
     - meson _build
       --prefix="${INSTALL_PREFIX}"
       -Dpython=always
