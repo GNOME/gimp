@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-01 14:50+0100\n"
-"PO-Revision-Date: 2020-03-01 14:51+0100\n"
+"POT-Creation-Date: 2020-03-15 14:14+0100\n"
+"PO-Revision-Date: 2020-03-15 14:15+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -12967,7 +12967,7 @@ msgstr "Tworzenie katalogu „%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu „%s”: %s"
 
-#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:382
+#: ../app/core/gimp-utils.c:533 ../app/core/gimpfilloptions.c:382
 msgid "No patterns available for this operation."
 msgstr "Brak deseni dostępnych dla tego działania."
 
@@ -19790,8 +19790,8 @@ msgid "Anti erase"
 msgstr "Cofanie wycierania"
 
 #: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
-msgid "Heal"
-msgstr "Łatka"
+msgid "Healing"
+msgstr "Łatanie"
 
 #: ../app/paint/gimpheal.c:158
 msgid "Healing does not operate on indexed layers."
@@ -20086,8 +20086,8 @@ msgstr "Próbkowanie wszystkich warstw"
 msgid "Set a source image first."
 msgstr "Należy najpierw wybrać źródło obrazu."
 
-#: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpcloneoptions-gui.c:102
-#: ../app/tools/gimphealtool.c:105
+#: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpaligntool.c:123
+#: ../app/tools/gimpcloneoptions-gui.c:102 ../app/tools/gimphealtool.c:105
 msgid "Alignment"
 msgstr "Wyrównanie"
 
@@ -21697,7 +21697,7 @@ msgstr "Poziome przesunięcie dla rozmieszczania"
 msgid "Vertical offset for distribution"
 msgstr "Pionowe przesunięcie dla rozmieszczania"
 
-#: ../app/tools/gimpalignoptions.c:282 ../app/tools/gimpaligntool.c:123
+#: ../app/tools/gimpalignoptions.c:282
 msgid "Align"
 msgstr "Wyrównanie"
 
@@ -23015,8 +23015,8 @@ msgstr ""
 "kontrolnego"
 
 #: ../app/tools/gimpiscissorstool.c:292
-msgid "Scissors"
-msgstr "Nożyce"
+msgid "Scissors Select"
+msgstr "Inteligentne nożyce"
 
 #: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
@@ -24284,7 +24284,7 @@ msgstr "%s (korekta)"
 msgid "Re_adjust"
 msgstr "_Dopasuj"
 
-#: ../app/tools/gimptransformgridtool.c:1490
+#: ../app/tools/gimptransformgridtool.c:1496
 msgid "Cannot readjust the transformation"
 msgstr "Nie można dopasować przekształcenia"
 
