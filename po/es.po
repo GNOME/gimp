@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-03-02 10:38+0000\n"
-"PO-Revision-Date: 2020-03-05 13:26+0100\n"
+"POT-Creation-Date: 2020-03-10 19:00+0000\n"
+"PO-Revision-Date: 2020-03-13 12:01+0100\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -19937,8 +19937,9 @@ msgid "Anti erase"
 msgstr "Antiborrado"
 
 #: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
-msgid "Heal"
-msgstr "Sanear"
+#| msgid "Heal"
+msgid "Healing"
+msgstr "Saneado"
 
 #: ../app/paint/gimpheal.c:158
 msgid "Healing does not operate on indexed layers."
@@ -20233,8 +20234,8 @@ msgstr "Muestra combinada"
 msgid "Set a source image first."
 msgstr "Establezca una imagen de origen primero."
 
-#: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpcloneoptions-gui.c:102
-#: ../app/tools/gimphealtool.c:105
+#: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpaligntool.c:123
+#: ../app/tools/gimpcloneoptions-gui.c:102 ../app/tools/gimphealtool.c:105
 msgid "Alignment"
 msgstr "Alineación"
 
@@ -21852,7 +21853,7 @@ msgstr "Desplazamiento horizontal para la distribución"
 msgid "Vertical offset for distribution"
 msgstr "Desplazamiento vertical para la distribución"
 
-#: ../app/tools/gimpalignoptions.c:282 ../app/tools/gimpaligntool.c:123
+#: ../app/tools/gimpalignoptions.c:282
 msgid "Align"
 msgstr "Alineado"
 
@@ -23178,13 +23179,14 @@ msgstr ""
 "Mostrar el segmento de selección futuro al arrastrar un nodo de control"
 
 #: ../app/tools/gimpiscissorstool.c:292
-msgid "Scissors"
-msgstr "Tijeras"
+#| msgid "Scissors"
+msgid "Scissors Select"
+msgstr "Selección de tijeras"
 
 #: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr ""
-"Herramienta de tijeras de selección: seleccionar formas utilizando una "
+"Herramienta de selección de tijeras: seleccionar formas utilizando una "
 "ajuste inteligente de los bordes"
 
 #: ../app/tools/gimpiscissorstool.c:294
@@ -24468,7 +24470,7 @@ msgstr "%s (Correctivo)"
 msgid "Re_adjust"
 msgstr "Re_ajustar"
 
-#: ../app/tools/gimptransformgridtool.c:1490
+#: ../app/tools/gimptransformgridtool.c:1496
 msgid "Cannot readjust the transformation"
 msgstr "No se puede reajustar la transformación"
 
