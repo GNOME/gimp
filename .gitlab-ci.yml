@@ -137,7 +137,7 @@ gimp-debian/testing-autotools:
         --with-javascript=force
         --with-lua=force
     - make -j "$(nproc)"
-    # - make check
+    - make check
 
 gimp-debian/testing-meson:
   extends: .gimp-debian/testing-base
