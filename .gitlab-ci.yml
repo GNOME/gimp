@@ -117,6 +117,7 @@ deps-debian/testing:
         meson
         mypaint-brushes
         poppler-data
+        xauth
         xvfb
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
@@ -139,7 +140,7 @@ gimp-debian/testing-autotools:
         --with-javascript=force
         --with-lua=force
     - make -j "$(nproc)"
-    # - make check
+    - make check
 
 gimp-debian/testing-meson:
   extends: .gimp-debian/testing-base
