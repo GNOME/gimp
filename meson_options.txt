@@ -7,9 +7,9 @@ option('enable-multiproc',  type: 'boolean', value: true,   description: 'Suppor
 option('profiling',         type: 'boolean', value: false,  description: 'Enable profiling')
 option('windows-installer', type: 'boolean', value: false,  description: 'Generate files needed for the Windows installer')
 
-option('relocatable-bundle',type: 'combo', value: 'auto', description: 'build with resources considered bundled under the same prefix',
-  choices: [ 'enabled', 'disabled', 'auto' ]
-)
+option('relocatable-bundle', type: 'combo', value: 'platform-default',
+                             description: 'build with resources considered bundled under the same prefix',
+                             choices: [ 'yes', 'no', 'platform-default' ])
 
 option('shmem-type',        type: 'combo',   value: 'auto', description: 'Shared memory transport type',
                                              choices: [ 'none', 'sysv', 'posix', 'win32', 'auto' ])
