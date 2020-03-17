@@ -305,11 +305,11 @@ no_dep = dependency('', required: false)
 ################################################################################
 # Mandatory Dependencies
 
-if get_option('relocatable-bundle').enabled()
+if get_option('relocatable-bundle') == 'enabled'
   relocatable_bundle = true
-elif get_option('relocatable-bundle').disabled()
+elif get_option('relocatable-bundle') == 'disabled'
   relocatable_bundle = false
-else # .auto()
+else # == 'auto'
   # By default, assume building for Windows or macOS everything to be on
   # the same prefix and can be relocated.
   # On other platforms, build-time paths are meaningful.
