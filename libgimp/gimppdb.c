@@ -375,7 +375,7 @@ gimp_pdb_dump_to_file (GimpPDB *pdb,
                        GFile   *file)
 {
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
-  g_return_val_if_fail (G_IS_FILE (pdb), FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
   return _gimp_pdb_dump (file);
 }
