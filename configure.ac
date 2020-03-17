@@ -1058,7 +1058,7 @@ intrinsics_save_CFLAGS="$CFLAGS"
 GIMP_DETECT_CFLAGS(SSE_MATH_CFLAG, '-mfpmath=sse')
 GIMP_DETECT_CFLAGS(SSE2_CFLAG, '-msse2')
 SSE2_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE2_CFLAG"
-CFLAGS="$intrinsics_save_CFLAGS $SSE2_EXTRA_CFLAGS"
+CFLAGS="$SSE2_EXTRA_CFLAGS $intrinsics_save_CFLAGS"
 
 AC_MSG_CHECKING(whether we can compile SSE2 intrinsics)
 AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <emmintrin.h>]],[[__m128i one = _mm_set1_epi32 (1);]])],
@@ -1073,7 +1073,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <emmintrin.h>]],[[__m128i one = _mm_s
 
 GIMP_DETECT_CFLAGS(SSE4_1_CFLAG, '-msse4.1')
 SSE4_1_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE4_1_CFLAG"
-CFLAGS="$intrinsics_save_CFLAGS $SSE4_1_EXTRA_CFLAGS"
+CFLAGS="$SSE4_1_EXTRA_CFLAGS $intrinsics_save_CFLAGS"
 
 AC_MSG_CHECKING(whether we can compile SSE4.1 intrinsics)
 AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <smmintrin.h>]],[[__v4sf a, b, c; c = _mm_blend_ps(a, b, 0x08);]])],
