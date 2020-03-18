@@ -252,11 +252,12 @@ gimp_procedure_config_set_values (GimpProcedureConfig  *config,
   gimp_procedure_get_aux_arguments (config->priv->procedure, &n_aux_args);
   n_values = gimp_value_array_length (values);
 
-  g_return_if_fail (n_pspecs == n_values + n_aux_args);
+  /* The first property is the procedure, all others are arguments. */
+  g_return_if_fail (n_pspecs == n_values + n_aux_args + 1);
 
   for (i = 0; i < n_values; i++)
     {
-      GParamSpec *pspec = pspecs[i];
+      GParamSpec *pspec = pspecs[i + 1];
       GValue     *value = gimp_value_array_index (values, i);
 
       g_object_set_property (G_OBJECT (config), pspec->name, value);
