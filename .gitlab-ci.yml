@@ -37,11 +37,13 @@ deps-debian/testing:
         libgirepository1.0-dev
         liblcms2-dev
         libopenexr-dev
+        libraw19
         libraw-dev
         librsvg2-dev
         libspiro-dev
         libsuitesparse-dev
         libtiff5-dev
+        libumfpack5
         luajit
         meson
         python3
