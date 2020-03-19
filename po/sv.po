@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-23 16:28+0000\n"
-"PO-Revision-Date: 2020-02-24 14:16+0100\n"
+"POT-Creation-Date: 2020-03-19 10:42+0000\n"
+"PO-Revision-Date: 2020-03-19 21:52+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -12891,7 +12891,7 @@ msgstr "Skapar mappen ”%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan inte skapa mappen ”%s”: %s"
 
-#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:382
+#: ../app/core/gimp-utils.c:533 ../app/core/gimpfilloptions.c:382
 msgid "No patterns available for this operation."
 msgstr "Inga mönster tillgängliga för denna åtgärd."
 
@@ -19670,8 +19670,8 @@ msgid "Anti erase"
 msgstr "Antisudda"
 
 #: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
-msgid "Heal"
-msgstr "Läk"
+msgid "Healing"
+msgstr "Läkning"
 
 #: ../app/paint/gimpheal.c:158
 msgid "Healing does not operate on indexed layers."
@@ -19968,8 +19968,8 @@ msgstr "Sampla sammanfogade"
 msgid "Set a source image first."
 msgstr "Ställ in en källbild först."
 
-#: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpcloneoptions-gui.c:102
-#: ../app/tools/gimphealtool.c:105
+#: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpaligntool.c:123
+#: ../app/tools/gimpcloneoptions-gui.c:102 ../app/tools/gimphealtool.c:105
 msgid "Alignment"
 msgstr "Arrangemang"
 
@@ -20945,7 +20945,7 @@ msgstr ""
 "Insticksmodulen som dog kan ha skadat GIMP:s interna tillstånd. Du bör "
 "kanske spara dina bilder och starta om GIMP för att vara på den säkra sidan."
 
-#: ../app/plug-in/gimpplugin-message.c:487
+#: ../app/plug-in/gimpplugin-message.c:486
 #, c-format
 msgid ""
 "Calling error for procedure '%s':\n"
@@ -20954,7 +20954,7 @@ msgstr ""
 "Anropsfel för proceduren ”%s”:\n"
 "%s"
 
-#: ../app/plug-in/gimpplugin-message.c:496
+#: ../app/plug-in/gimpplugin-message.c:495
 #, c-format
 msgid ""
 "Execution error for procedure '%s':\n"
@@ -21571,7 +21571,7 @@ msgstr "Horisontell förskjutning för distribution"
 msgid "Vertical offset for distribution"
 msgstr "Vertikal förskjutning för distribution"
 
-#: ../app/tools/gimpalignoptions.c:282 ../app/tools/gimpaligntool.c:123
+#: ../app/tools/gimpalignoptions.c:282
 msgid "Align"
 msgstr "Arrangera"
 
@@ -22884,8 +22884,8 @@ msgid "Display future selection segment as you drag a control node"
 msgstr "Visa kommande markeringssegment medan du drar en kontrollnod"
 
 #: ../app/tools/gimpiscissorstool.c:292
-msgid "Scissors"
-msgstr "Saxar"
+msgid "Scissors Select"
+msgstr "Saxmarkering"
 
 #: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
@@ -24154,7 +24154,7 @@ msgstr "%s (Korrektiv)"
 msgid "Re_adjust"
 msgstr "Juster_a om"
 
-#: ../app/tools/gimptransformgridtool.c:1490
+#: ../app/tools/gimptransformgridtool.c:1496
 msgid "Cannot readjust the transformation"
 msgstr "Det går inte att justera om transformeringen"
 
