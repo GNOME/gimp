@@ -381,6 +381,8 @@ gui_dbus_bus_acquired (GDBusConnection *connection,
   GDBusObjectSkeleton *object;
   GObject             *service;
 
+  g_print ("INIT: %s\n", G_STRFUNC);
+
   /* this should use GIMP_DBUS_SERVICE_PATH, but that's historically wrong */
   dbus_manager = g_dbus_object_manager_server_new ("/org/gimp/GIMP");
 
@@ -402,6 +404,7 @@ gui_dbus_name_acquired (GDBusConnection *connection,
                         const gchar     *name,
                         Gimp            *gimp)
 {
+  g_print ("INIT: %s\n", G_STRFUNC);
 }
 
 static void
@@ -409,6 +412,7 @@ gui_dbus_name_lost (GDBusConnection *connection,
                     const gchar     *name,
                     Gimp            *gimp)
 {
+  g_print ("INIT: %s\n", G_STRFUNC);
 }
 
 static void
@@ -417,6 +421,7 @@ gui_dbus_service_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (dbus_name_id == 0);
 
+  g_print ("INIT: %s\n", G_STRFUNC);
   dbus_name_id = g_bus_own_name (G_BUS_TYPE_SESSION,
                                  GIMP_DBUS_SERVICE_NAME,
                                  G_BUS_NAME_OWNER_FLAGS_NONE,
@@ -431,7 +436,7 @@ gui_dbus_service_exit (void)
 {
   g_print ("EXIT: %s\n", G_STRFUNC);
   g_bus_unown_name (dbus_name_id);
-  g_object_unref (dbus_manager);
+  g_clear_object (&dbus_manager);
   g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
