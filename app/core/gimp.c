@@ -868,7 +868,7 @@ gimp_exit (Gimp     *gimp,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimp->be_verbose)
+  /*if (gimp->be_verbose)*/
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
@@ -887,7 +887,9 @@ gimp_exit (Gimp     *gimp,
     {
       GimpImage *image = image_iter->data;
 
+      printf("deleting image %d\n", image);
       g_object_unref (image);
+      printf("image deleted\n");
     }
 }
 
