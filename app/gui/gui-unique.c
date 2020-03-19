@@ -429,8 +429,10 @@ gui_dbus_service_init (Gimp *gimp)
 static void
 gui_dbus_service_exit (void)
 {
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_bus_unown_name (dbus_name_id);
   g_object_unref (dbus_manager);
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 #endif

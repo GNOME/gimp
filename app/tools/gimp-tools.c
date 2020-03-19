@@ -229,6 +229,7 @@ gimp_tools_exit (Gimp *gimp)
 {
   GList *list;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_clear_object (&toolbox_groups_binding);
@@ -245,6 +246,7 @@ gimp_tools_exit (Gimp *gimp)
 
       gimp_tools_set_tool_options_gui (tool_info->tool_options, NULL);
     }
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 void
@@ -338,6 +340,7 @@ gimp_tools_save (Gimp     *gimp,
   GimpConfigWriter *writer;
   GFile            *file;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (save_tool_options && (! tool_options_deleted || always_save))
@@ -386,6 +389,7 @@ gimp_tools_save (Gimp     *gimp,
     }
 
   g_object_unref (file);
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 gboolean

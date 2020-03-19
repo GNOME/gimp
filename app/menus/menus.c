@@ -438,6 +438,7 @@ menus_save (Gimp     *gimp,
   GFile *file;
   gchar *filename;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (menurc_deleted && ! always_save)
@@ -455,6 +456,7 @@ menus_save (Gimp     *gimp,
   g_object_unref (file);
 
   menurc_deleted = FALSE;
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 gboolean

@@ -272,8 +272,10 @@ gimp_language_store_parser_init (void)
 void
 gimp_language_store_parser_clean (void)
 {
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_hash_table_destroy (l10n_lang_list);
   g_hash_table_destroy (all_lang_list);
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 /*

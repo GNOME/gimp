@@ -157,12 +157,14 @@ gimp_displays_delete (Gimp *gimp)
   /*  this removes the GimpDisplay from the list, so do a while loop
    *  "around" the first element to get them all
    */
+  g_print ("EXIT: %s\n", G_STRFUNC);
   while (! gimp_container_is_empty (gimp->displays))
     {
       GimpDisplay *display = gimp_get_display_iter (gimp)->data;
 
       gimp_display_delete (display);
     }
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 /**

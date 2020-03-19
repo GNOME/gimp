@@ -357,6 +357,7 @@ session_save (Gimp     *gimp,
   GFile            *file;
   GError           *error = NULL;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (sessionrc_deleted && ! always_save)
@@ -425,6 +426,7 @@ session_save (Gimp     *gimp,
   dialogs_save_recent_docks (gimp);
 
   sessionrc_deleted = FALSE;
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 gboolean

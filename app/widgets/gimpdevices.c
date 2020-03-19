@@ -160,6 +160,7 @@ gimp_devices_save (Gimp     *gimp,
   GFile             *file;
   GError            *error = NULL;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   manager = gimp_devices_get_manager (gimp);
@@ -197,6 +198,7 @@ gimp_devices_save (Gimp     *gimp,
   g_object_unref (file);
 
   devicerc_deleted = FALSE;
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 gboolean

@@ -770,6 +770,7 @@ gui_exit_callback (Gimp     *gimp,
 
   gimp_language_store_parser_clean ();
 
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
   return FALSE; /* continue exiting */
 }
 

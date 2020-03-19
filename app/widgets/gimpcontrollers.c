@@ -194,6 +194,7 @@ gimp_controllers_save (Gimp *gimp)
   GFile                 *file;
   GError                *error = NULL;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   manager = gimp_controller_manager_get (gimp);
@@ -215,6 +216,7 @@ gimp_controllers_save (Gimp *gimp)
     }
 
   g_object_unref (file);
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 GimpContainer *
