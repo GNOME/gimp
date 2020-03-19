@@ -385,7 +385,7 @@ main(int    argc,
                                        "app/tests/gimpdir-output");
 
   /* Exit properly so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
+  /*gimp_exit (gimp, TRUE);*/
 
   return result;
 }
