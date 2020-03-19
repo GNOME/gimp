@@ -646,6 +646,7 @@ gimp_extension_manager_exit (GimpExtensionManager *manager)
   GFile  *file;
   GError *error = NULL;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_EXTENSION_MANAGER (manager));
 
   file = gimp_directory_file ("extensionrc", NULL);
@@ -665,6 +666,7 @@ gimp_extension_manager_exit (GimpExtensionManager *manager)
     }
 
   g_object_unref (file);
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 const GList *

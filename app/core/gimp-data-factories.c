@@ -423,6 +423,7 @@ gimp_data_factories_load (Gimp               *gimp,
 void
 gimp_data_factories_save (Gimp *gimp)
 {
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_tag_cache_save (gimp->tag_cache);

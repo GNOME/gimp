@@ -572,7 +572,7 @@ static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  force)
 {
-  if (gimp->be_verbose)
+  /*if (gimp->be_verbose)*/
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
@@ -585,6 +585,7 @@ gimp_real_exit (Gimp     *gimp,
   gimp_parasiterc_save (gimp);
   gimp_unitrc_save (gimp);
 
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
   return FALSE; /* continue exiting */
 }
 
@@ -868,12 +869,13 @@ gimp_exit (Gimp     *gimp,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimp->be_verbose)
+  /*if (gimp->be_verbose)*/
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
                  force ? TRUE : FALSE,
                  &handled);
+  g_print ("EXIT signal run: %s\n", G_STRFUNC);
 
   if (handled)
     return;
@@ -887,7 +889,9 @@ gimp_exit (Gimp     *gimp,
     {
       GimpImage *image = image_iter->data;
 
+      printf("deleting image %ld\n", image);
       g_object_unref (image);
+      printf("image deleted\n");
     }
 }
 

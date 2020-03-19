@@ -711,7 +711,7 @@ gui_exit_callback (Gimp     *gimp,
   GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
   GimpTool      *active_tool;
 
-  if (gimp->be_verbose)
+  /*if (gimp->be_verbose)*/
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   if (! force && gimp_displays_dirty (gimp))
@@ -777,7 +777,7 @@ static gboolean
 gui_exit_after_callback (Gimp     *gimp,
                          gboolean  force)
 {
-  if (gimp->be_verbose)
+  /*if (gimp->be_verbose)*/
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   g_signal_handlers_disconnect_by_func (gimp->config,

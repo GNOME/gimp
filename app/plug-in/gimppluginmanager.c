@@ -264,6 +264,7 @@ gimp_plug_in_manager_exit (GimpPlugInManager *manager)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   while (manager->open_plug_ins)
     gimp_plug_in_close (manager->open_plug_ins->data, TRUE);
 

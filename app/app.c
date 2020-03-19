@@ -490,7 +490,7 @@ app_exit_after_callback (Gimp       *gimp,
                          gboolean    kill_it,
                          GMainLoop **loop)
 {
-  if (gimp->be_verbose)
+  /*if (gimp->be_verbose)*/
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   /*

@@ -295,6 +295,7 @@ gimp_unitrc_save (Gimp *gimp)
   gint              i;
   GError           *error = NULL;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   file = gimp_directory_file ("unitrc", NULL);
