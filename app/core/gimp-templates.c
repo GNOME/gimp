@@ -92,6 +92,7 @@ gimp_templates_save (Gimp *gimp)
   GFile  *file;
   GError *error = NULL;
 
+  g_print ("EXIT: %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_LIST (gimp->templates));
 

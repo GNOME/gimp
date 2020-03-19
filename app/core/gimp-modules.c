@@ -172,6 +172,7 @@ add_to_inhibit_string (gpointer data,
 void
 gimp_modules_unload (Gimp *gimp)
 {
+  g_print ("EXIT : %s\n", G_STRFUNC);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (! gimp->no_interface && gimp->write_modulerc)
@@ -220,6 +221,7 @@ gimp_modules_unload (Gimp *gimp)
           g_clear_error (&error);
         }
     }
+  g_print ("EXIT DONE: %s\n", G_STRFUNC);
 }
 
 void
