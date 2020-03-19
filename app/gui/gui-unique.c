@@ -409,6 +409,12 @@ gui_dbus_name_lost (GDBusConnection *connection,
                     const gchar     *name,
                     Gimp            *gimp)
 {
+  if (connection == NULL)
+    g_printerr ("%s: connection to the bus cannot be established.\n",
+                G_STRFUNC);
+  else
+    g_printerr ("%s: the name \"%s\" could not be acquired on the bus.\n",
+                G_STRFUNC, name);
 }
 
 static void
@@ -430,7 +436,7 @@ static void
 gui_dbus_service_exit (void)
 {
   g_bus_unown_name (dbus_name_id);
-  g_object_unref (dbus_manager);
+  g_clear_object (&dbus_manager);
 }
 
 #endif
