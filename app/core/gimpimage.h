@@ -367,10 +367,13 @@ GList         * gimp_image_get_channel_list      (GimpImage          *image);
 GList         * gimp_image_get_vectors_list      (GimpImage          *image);
 
 GimpDrawable  * gimp_image_get_active_drawable   (GimpImage          *image);
+GList         * gimp_image_get_selected_layers   (GimpImage          *image);
 GimpLayer     * gimp_image_get_active_layer      (GimpImage          *image);
 GimpChannel   * gimp_image_get_active_channel    (GimpImage          *image);
 GimpVectors   * gimp_image_get_active_vectors    (GimpImage          *image);
 
+GList         * gimp_image_set_selected_layers   (GimpImage          *image,
+                                                  GList              *layers);
 GimpLayer     * gimp_image_set_active_layer      (GimpImage          *image,
                                                   GimpLayer          *layer);
 GimpChannel   * gimp_image_set_active_channel    (GimpImage          *image,
