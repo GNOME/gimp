@@ -111,7 +111,7 @@ static void          gimp_container_tree_view_name_canceled     (GtkCellRenderer
 
 static void          gimp_container_tree_view_selection_changed (GtkTreeSelection            *sel,
                                                                  GimpContainerTreeView       *tree_view);
-static gboolean      gimp_container_tree_view_button_press      (GtkWidget                   *widget,
+static gboolean      gimp_container_tree_view_button            (GtkWidget                   *widget,
                                                                  GdkEventButton              *bevent,
                                                                  GimpContainerTreeView       *tree_view);
 static gboolean      gimp_container_tree_view_tooltip           (GtkWidget                   *widget,
@@ -663,7 +663,7 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
             }
 
           g_signal_handlers_disconnect_by_func (tree_view->view,
-                                                gimp_container_tree_view_button_press,
+                                                gimp_container_tree_view_button,
                                                 tree_view);
         }
     }
@@ -689,7 +689,10 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
        *  selecting the item on button2
        */
       g_signal_connect (tree_view->view, "button-press-event",
-                        G_CALLBACK (gimp_container_tree_view_button_press),
+                        G_CALLBACK (gimp_container_tree_view_button),
+                        tree_view);
+      g_signal_connect (tree_view->view, "button-release-event",
+                        G_CALLBACK (gimp_container_tree_view_button),
                         tree_view);
     }
 
@@ -1210,9 +1213,9 @@ gimp_container_tree_view_find_click_cell (GtkWidget         *widget,
 }
 
 static gboolean
-gimp_container_tree_view_button_press (GtkWidget             *widget,
-                                       GdkEventButton        *bevent,
-                                       GimpContainerTreeView *tree_view)
+gimp_container_tree_view_button (GtkWidget             *widget,
+                                 GdkEventButton        *bevent,
+                                 GimpContainerTreeView *tree_view)
 {
   GimpContainerView *container_view = GIMP_CONTAINER_VIEW (tree_view);
   GtkTreeViewColumn *column;
@@ -1294,18 +1297,21 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
           g_list_free (cells);
         }
 
-      toggled_cell =
-        gimp_container_tree_view_find_click_cell (widget,
-                                                  tree_view->priv->toggle_cells,
-                                                  column, &column_area,
-                                                  bevent->x, bevent->y);
+      if (bevent->type == GDK_BUTTON_RELEASE)
+        {
+          toggled_cell =
+            gimp_container_tree_view_find_click_cell (widget,
+                                                      tree_view->priv->toggle_cells,
+                                                      column, &column_area,
+                                                      bevent->x, bevent->y);
 
-      if (! toggled_cell)
-        clicked_cell = (GimpCellRendererViewable *)
-          gimp_container_tree_view_find_click_cell (widget,
-                                                    tree_view->priv->renderer_cells,
-                                                    column, &column_area,
-                                                    bevent->x, bevent->y);
+          if (! toggled_cell)
+            clicked_cell = (GimpCellRendererViewable *)
+              gimp_container_tree_view_find_click_cell (widget,
+                                                        tree_view->priv->renderer_cells,
+                                                        column, &column_area,
+                                                        bevent->x, bevent->y);
+        }
 
       if (! toggled_cell && ! clicked_cell)
         edit_cell =
@@ -1318,17 +1324,20 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
-          if (gimp_container_view_item_selected (container_view,
-                                                 renderer->viewable))
-            {
-              if (gimp_container_view_get_container (container_view))
-                gimp_container_view_item_context (container_view,
-                                                  renderer->viewable);
-            }
+          /* If the clicked item is not selected, it becomes the new
+           * selection. Otherwise, we use the current selection. This
+           * allows to not break multiple selection when right-clicking.
+           */
+          if (! gimp_container_view_is_item_selected (container_view, renderer->viewable))
+            gimp_container_view_item_selected (container_view, renderer->viewable);
+          /* Show the context menu. */
+          if (gimp_container_view_get_container (container_view))
+            gimp_container_view_item_context (container_view, renderer->viewable);
         }
       else if (bevent->button == 1)
         {
-          if (bevent->type == GDK_BUTTON_PRESS)
+          handled = TRUE;
+          if (bevent->type == GDK_BUTTON_PRESS || bevent->type == GDK_BUTTON_RELEASE)
             {
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
@@ -1343,19 +1352,17 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                                                path_str,
                                                                bevent->state);
 
-                  if (! handled)
+                  if (! handled && bevent->type == GDK_BUTTON_RELEASE && ! multisel_mode)
                     {
-                      if (multisel_mode)
-                        {
-                          /* Will be handled by gimp_container_tree_view_selection_changed() */
-                        }
-                      else
-                        {
-                          handled =
-                            gimp_container_view_item_selected (container_view,
-                                                               renderer->viewable);
-                        }
+                      /* Handle single click on release only for them to
+                       * not change the selection in case this click
+                       * becomes a drag'n drop action.
+                       */
+                      handled =
+                        gimp_container_view_item_selected (container_view,
+                                                           renderer->viewable);
                     }
+                  /* Multi selection will be handled by gimp_container_tree_view_selection_changed() */
 
                   g_free (path_str);
                 }

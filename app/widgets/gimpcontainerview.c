@@ -839,6 +839,21 @@ gimp_container_view_get_selected (GimpContainerView  *view,
   return GIMP_CONTAINER_VIEW_GET_IFACE (view)->get_selected (view, items, items_data);
 }
 
+gboolean
+gimp_container_view_is_item_selected (GimpContainerView *view,
+                                      GimpViewable      *viewable)
+{
+  GList    *items;
+  gboolean  found;
+
+  gimp_container_view_get_selected (view, &items, NULL);
+  found = (g_list_find (items, viewable) != NULL);
+
+  g_list_free (items);
+
+  return found;
+}
+
 static gint
 gimp_container_view_real_get_selected (GimpContainerView    *view,
                                        GList               **items,

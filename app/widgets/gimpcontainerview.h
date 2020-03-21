@@ -138,6 +138,8 @@ void               gimp_container_view_context_item       (GimpContainerView  *v
 gint               gimp_container_view_get_selected       (GimpContainerView  *view,
                                                            GList             **items,
                                                            GList             **items_data);
+gboolean           gimp_container_view_is_item_selected   (GimpContainerView  *view,
+                                                           GimpViewable       *viewable);
 
 /*  protected  */
 
