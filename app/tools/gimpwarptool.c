@@ -761,7 +761,21 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
   GimpImage       *image    = gimp_display_get_image (display);
   GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+  if (! drawable)
+    {
+      if (show_message)
+        {
+          if (g_list_length (gimp_image_get_selected_layers (image)) > 1)
+            gimp_tool_message_literal (tool, display,
+                                       _("Cannot warp multiple layers. Select only one layer."));
+          else
+            gimp_tool_message_literal (tool, display,
+                                       _("No active drawable."));
+        }
+
+      return FALSE;
+    }
+  else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       if (show_message)
         {
