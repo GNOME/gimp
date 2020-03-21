@@ -480,7 +480,7 @@ action_data_sel_count (gpointer data)
       GimpContainerEditor  *editor;
 
       editor = GIMP_CONTAINER_EDITOR (data);
-      return gimp_container_view_get_selected (editor->view, NULL);
+      return gimp_container_view_get_selected (editor->view, NULL, NULL);
     }
   else
     {

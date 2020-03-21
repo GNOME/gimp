@@ -46,6 +46,7 @@
 enum
 {
   SELECT_ITEM,
+  SELECT_ITEMS,
   ACTIVATE_ITEM,
   CONTEXT_ITEM,
   LAST_SIGNAL
@@ -139,7 +140,8 @@ static void  gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
                                                           GimpViewable *viewable,
                                                           gpointer      data);
 static gint  gimp_container_view_real_get_selected (GimpContainerView    *view,
-                                                    GList               **list);
+                                                    GList               **list,
+                                                    GList               **paths);
 
 
 G_DEFINE_INTERFACE (GimpContainerView, gimp_container_view, GTK_TYPE_WIDGET)
@@ -160,6 +162,17 @@ gimp_container_view_default_init (GimpContainerViewInterface *iface)
                   gimp_marshal_BOOLEAN__OBJECT_POINTER,
                   G_TYPE_BOOLEAN, 2,
                   GIMP_TYPE_OBJECT,
+                  G_TYPE_POINTER);
+
+  view_signals[SELECT_ITEMS] =
+    g_signal_new ("select-items",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpContainerViewInterface, select_items),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_BOOLEAN, 2,
+                  G_TYPE_POINTER,
                   G_TYPE_POINTER);
 
   view_signals[ACTIVATE_ITEM] =
@@ -185,6 +198,7 @@ gimp_container_view_default_init (GimpContainerViewInterface *iface)
                   G_TYPE_POINTER);
 
   iface->select_item        = NULL;
+  iface->select_items       = NULL;
   iface->activate_item      = NULL;
   iface->context_item       = NULL;
 
@@ -767,10 +781,11 @@ gimp_container_view_item_selected (GimpContainerView *view,
 
 gboolean
 gimp_container_view_multi_selected (GimpContainerView *view,
-                                    GList             *items)
+                                    GList             *items,
+                                    GList             *items_data)
 {
-  guint                     selected_count;
-  gboolean                  success = FALSE;
+  gboolean success = FALSE;
+  guint    selected_count;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
 
@@ -786,33 +801,64 @@ gimp_container_view_multi_selected (GimpContainerView *view,
     }
   else
     {
-      success = FALSE;
-      g_signal_emit (view, view_signals[SELECT_ITEM], 0,
-                     NULL, items, &success);
+      g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
+                     items, items_data, &success);
     }
 
   return success;
 }
 
+/**
+ * gimp_container_view_get_selected:
+ * @view:
+ * @items:
+ * @items_data:
+ *
+ * Get the selected items in @view.
+ *
+ * If @items is not %NULL, fills it with a newly allocated #GList of the
+ * selected items.
+ * If @items_data is not %NULL and if the implementing class associates
+ * data to its contents, it will be filled with a newly allocated #GList
+ * of the same size as @items, or will be %NULL otherwise. It is up to
+ * the class to decide what type of data is passed along.
+ *
+ * Note that by default, the interface only implements some basic single
+ * selection. Override select_item() and select_items() signals to get
+ * more complete selection support.
+ *
+ * Returns: the number of selected items.
+ */
 gint
 gimp_container_view_get_selected (GimpContainerView  *view,
-                                  GList             **list)
+                                  GList             **items,
+                                  GList             **items_data)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), 0);
 
-  return GIMP_CONTAINER_VIEW_GET_IFACE (view)->get_selected (view, list);
+  return GIMP_CONTAINER_VIEW_GET_IFACE (view)->get_selected (view, items, items_data);
 }
 
 static gint
 gimp_container_view_real_get_selected (GimpContainerView    *view,
-                                       GList               **list)
+                                       GList               **items,
+                                       GList               **items_data)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
   GType                     children_type;
   GimpObject               *object;
 
-  if (list)
-    *list = NULL;
+  if (items)
+    *items = NULL;
+
+  /* In base interface, @items_data just stays NULL. We don't have a
+   * concept for it. Classes implementing this interface may want to
+   * store and pass data for their items, but they will have to
+   * implement themselves which data, and pass through with this
+   * parameter.
+   */
+  if (items_data)
+    *items_data = NULL;
 
   if (! private->container || ! private->context)
     return 0;
@@ -821,8 +867,12 @@ gimp_container_view_real_get_selected (GimpContainerView    *view,
   object = gimp_context_get_by_type (private->context,
                                      children_type);
 
-  if (list && object)
-    *list = g_list_append (*list, object);
+  /* Base interface provides the API for multi-selection but only
+   * implements single selection. Classes must implement their own
+   * multi-selection.
+   */
+  if (items && object)
+    *items = g_list_append (*items, object);
 
   return object ? 1 : 0;
 }

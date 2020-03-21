@@ -455,7 +455,7 @@ gimp_device_editor_delete_response (GtkWidget        *dialog,
       GList *selected;
 
       if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
-                                            &selected))
+                                            &selected, NULL))
         {
           GimpContainer *devices;
 
@@ -479,7 +479,7 @@ gimp_device_editor_delete_clicked (GtkWidget        *button,
   GList                   *selected;
 
   if (! gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
-                                          &selected))
+                                          &selected, NULL))
     return;
 
   dialog = gimp_message_dialog_new (_("Delete Device Settings"),

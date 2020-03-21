@@ -105,8 +105,9 @@ static GdkPixbuf    * gimp_container_icon_view_drag_pixbuf        (GtkWidget *wi
                                                                    gpointer   data);
 static gboolean      gimp_container_icon_view_get_selected_single (GimpContainerIconView  *icon_view,
                                                                    GtkTreeIter            *iter);
-static gint          gimp_container_icon_view_get_selected        (GimpContainerView    *view,
-                                                                   GList               **items);
+static gint          gimp_container_icon_view_get_selected        (GimpContainerView      *view,
+                                                                   GList                 **items,
+                                                                   GList                 **paths);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerIconView, gimp_container_icon_view,
@@ -604,9 +605,11 @@ gimp_container_icon_view_selection_changed (GtkIconView           *gtk_icon_view
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (icon_view);
   GList             *items;
+  GList             *paths;
 
-  gimp_container_icon_view_get_selected (view, &items);
-  gimp_container_view_multi_selected (view, items);
+  gimp_container_icon_view_get_selected (view, &items, &paths);
+  gimp_container_view_multi_selected (view, items, paths);
+  g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
   g_list_free (items);
 }
 
@@ -773,22 +776,24 @@ gimp_container_icon_view_get_selected_single (GimpContainerIconView  *icon_view,
 
 static gint
 gimp_container_icon_view_get_selected (GimpContainerView    *view,
-                                       GList               **items)
+                                       GList               **items,
+                                       GList               **paths)
 {
   GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (view);
-  GList                 *selected_items;
+  GList                 *selected_paths;
   gint                   selected_count;
 
-  selected_items = gtk_icon_view_get_selected_items (icon_view->view);
-  selected_count = g_list_length (selected_items);
+  selected_paths = gtk_icon_view_get_selected_items (icon_view->view);
+  selected_count = g_list_length (selected_paths);
 
   if (items)
     {
+      GList *removed_paths = NULL;
       GList *list;
 
       *items = NULL;
 
-      for (list = selected_items;
+      for (list = selected_paths;
            list;
            list = g_list_next (list))
         {
@@ -804,14 +809,30 @@ gimp_container_icon_view_get_selected (GimpContainerView    *view,
 
           if (renderer->viewable)
             *items = g_list_prepend (*items, renderer->viewable);
+          else
+            /* Remove from the selected_paths list but at the end, in order not
+             * to break the for loop.
+             */
+            removed_paths = g_list_prepend (removed_paths, list);
 
           g_object_unref (renderer);
         }
-
       *items = g_list_reverse (*items);
+
+      for (list = removed_paths; list; list = list->next)
+        {
+          GList *remove_list = list->data;
+
+          selected_paths = g_list_remove_link (selected_paths, remove_list);
+          gtk_tree_path_free (remove_list->data);
+        }
+      g_list_free_full (removed_paths, (GDestroyNotify) g_list_free);
     }
 
-  g_list_free_full (selected_items, (GDestroyNotify) gtk_tree_path_free);
+  if (paths)
+    *paths = selected_paths;
+  else
+    g_list_free_full (selected_paths, (GDestroyNotify) gtk_tree_path_free);
 
   return selected_count;
 }

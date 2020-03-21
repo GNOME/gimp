@@ -372,7 +372,7 @@ gimp_pickable_popup_get_pickable (GimpPickablePopup *popup)
       GList *selected;
 
       if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (popup->priv->layer_view),
-                                            &selected))
+                                            &selected, NULL))
         {
           pickable = selected->data;
           g_list_free (selected);
@@ -383,7 +383,7 @@ gimp_pickable_popup_get_pickable (GimpPickablePopup *popup)
       GList *selected;
 
       if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (popup->priv->channel_view),
-                                            &selected))
+                                            &selected, NULL))
         {
           pickable = selected->data;
           g_list_free (selected);

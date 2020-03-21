@@ -102,6 +102,9 @@ static gpointer   gimp_layer_tree_view_insert_item                (GimpContainer
 static gboolean   gimp_layer_tree_view_select_item                (GimpContainerView          *view,
                                                                    GimpViewable               *item,
                                                                    gpointer                    insert_data);
+static gboolean   gimp_layer_tree_view_select_items               (GimpContainerView          *view,
+                                                                   GList                      *items,
+                                                                   GList                      *paths);
 static void       gimp_layer_tree_view_set_view_size              (GimpContainerView          *view);
 static gboolean   gimp_layer_tree_view_drop_possible              (GimpContainerTreeView      *view,
                                                                    GimpDndType                 src_type,
@@ -210,6 +213,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->get_container   = gimp_image_get_layers;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;
   item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_layer;
+  item_view_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_layers;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_layer;
   item_view_class->new_item        = gimp_layer_tree_view_item_new;
@@ -237,6 +241,7 @@ gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->set_context   = gimp_layer_tree_view_set_context;
   iface->insert_item   = gimp_layer_tree_view_insert_item;
   iface->select_item   = gimp_layer_tree_view_select_item;
+  iface->select_items  = gimp_layer_tree_view_select_items;
   iface->set_view_size = gimp_layer_tree_view_set_view_size;
 
   iface->model_is_tree = TRUE;
@@ -592,6 +597,48 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
                                                (GtkTreeIter *) insert_data);
           gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (item));
           gimp_layer_tree_view_update_menu (layer_view, GIMP_LAYER (item));
+        }
+    }
+
+  if (! success)
+    {
+      GimpEditor *editor = GIMP_EDITOR (view);
+
+      /* currently, select_item() only ever fails when there is a floating
+       * selection, which can be committed/canceled through the editor buttons.
+       */
+      gimp_widget_blink (GTK_WIDGET (gimp_editor_get_button_box (editor)));
+    }
+
+  return success;
+}
+
+static gboolean
+gimp_layer_tree_view_select_items (GimpContainerView *view,
+                                   GList             *items,
+                                   GList             *paths)
+{
+  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
+  GList             *layers = items;
+  GList             *path   = paths;
+  gboolean           success;
+
+  success = parent_view_iface->select_items (view, items, paths);
+
+  if (layers)
+    {
+      if (success)
+        {
+          for (layers = items, path = paths; layers && path; layers = layers->next, path = path->next)
+            {
+              GtkTreeIter iter;
+
+              gtk_tree_model_get_iter (tree_view->model, &iter, path->data);
+              gimp_layer_tree_view_update_borders (layer_view, &iter);
+              gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (layers->data));
+              gimp_layer_tree_view_update_menu (layer_view, GIMP_LAYER (layers->data));
+            }
         }
     }
 

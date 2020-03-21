@@ -29,6 +29,8 @@ typedef GimpContainer * (* GimpGetContainerFunc) (GimpImage *image);
 typedef GimpItem      * (* GimpGetItemFunc)      (GimpImage *image);
 typedef void            (* GimpSetItemFunc)      (GimpImage *image,
                                                   GimpItem  *item);
+typedef void            (* GimpSetItemsFunc)     (GimpImage *image,
+                                                  GList     *items);
 typedef void            (* GimpAddItemFunc)      (GimpImage *image,
                                                   GimpItem  *item,
                                                   GimpItem  *parent,
@@ -74,6 +76,7 @@ struct _GimpItemTreeViewClass
   GimpGetContainerFunc  get_container;
   GimpGetItemFunc       get_active_item;
   GimpSetItemFunc       set_active_item;
+  GimpSetItemsFunc      set_selected_items;
   GimpAddItemFunc       add_item;
   GimpRemoveItemFunc    remove_item;
   GimpNewItemFunc       new_item;
