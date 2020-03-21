@@ -627,10 +627,52 @@ layers_delete_cmd_callback (GimpAction *action,
                             gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *removed_layers;
 
-  gimp_image_remove_layer (image, layer, TRUE, NULL);
+  return_if_no_image (image, data);
+
+  layers = gimp_image_get_selected_layers (image);
+
+  /*TODO: we should have a failsafe to determine when we are going to
+   * delete all layers (i.e. all layers of first level at least) and
+   * forbid it. */
+
+  /* Copy of the original selection. */
+  removed_layers = g_list_copy (layers);
+
+  if (g_list_length (removed_layers) > 1)
+    {
+      gchar *undo_name;
+
+      undo_name = g_strdup_printf (C_("undo-type", "Remove %d Layers"),
+                                   g_list_length (removed_layers));
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+                                   undo_name);
+    }
+
+  while (layers)
+    {
+      /* Stop when the selected layers contain a layer which was not in
+       * the originally selected list (it means we delete them all).
+       */
+      if (g_list_find (removed_layers, layers->data) == NULL)
+        break;
+
+      gimp_image_remove_layer (image, layers->data, TRUE, NULL);
+
+      /* Instead of iterating, I re-check the selected layers after each
+       * removal, because the selection may have changed, in particular
+       * in case a layer group got removed and some of its children were
+       * also selected.
+       */
+      layers = gimp_image_get_selected_layers (image);
+    }
+
+  if (g_list_length (removed_layers) > 1)
+    gimp_image_undo_group_end (image);
+
+  g_list_free (removed_layers);
   gimp_image_flush (image);
 }
 

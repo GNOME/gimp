@@ -4282,17 +4282,24 @@ gimp_image_set_selected_layers (GimpImage *image,
   GimpLayer        *floating_sel;
   GimpLayer        *active_layer;
   GList            *selected_layers;
+  GList            *layers2;
   GList            *iter;
   gboolean          selection_changed = TRUE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
+  layers2 = g_list_copy (layers);
   for (iter = layers; iter; iter = iter->next)
     {
       g_return_val_if_fail (GIMP_IS_LAYER (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
-                            gimp_item_get_image (GIMP_ITEM (iter->data)) == image,
-                            NULL);
+      g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+
+      /* Silently remove non-attached layers from selection. Do not
+       * error out on it as it may happen for instance when selection
+       * changes while in the process of removing a layer group.
+       */
+      if (! gimp_item_is_attached (GIMP_ITEM (iter->data)))
+        layers2 = g_list_remove (layers2, iter->data);
     }
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
@@ -4300,16 +4307,16 @@ gimp_image_set_selected_layers (GimpImage *image,
   floating_sel = gimp_image_get_floating_selection (image);
 
   /*  Make sure the floating_sel always is the active layer  */
-  if (floating_sel && (g_list_length (layers) != 1 || layers->data != floating_sel))
+  if (floating_sel && (g_list_length (layers2) != 1 || layers2->data != floating_sel))
     return g_list_prepend (NULL, floating_sel);
 
   selected_layers = gimp_image_get_selected_layers (image);
   active_layer = gimp_image_get_active_layer (image);
 
-  if (g_list_length (layers) == g_list_length (selected_layers))
+  if (g_list_length (layers2) == g_list_length (selected_layers))
     {
       selection_changed = FALSE;
-      for (iter = layers; iter; iter = iter->next)
+      for (iter = layers2; iter; iter = iter->next)
         {
           if (g_list_find (selected_layers, iter->data) == NULL)
             {
@@ -4325,8 +4332,11 @@ gimp_image_set_selected_layers (GimpImage *image,
       if (active_layer)
         gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (active_layer));
 
-      gimp_item_tree_set_selected_items (private->layers,
-                                         g_list_copy (layers));
+      gimp_item_tree_set_selected_items (private->layers, layers2);
+    }
+  else
+    {
+      g_list_free (layers2);
     }
 
   return g_list_copy (gimp_image_get_selected_layers (image));

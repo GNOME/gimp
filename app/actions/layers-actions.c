@@ -136,8 +136,8 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_DUPLICATE },
 
   { "layers-delete", GIMP_ICON_EDIT_DELETE,
-    NC_("layers-action", "_Delete Layer"), NULL,
-    NC_("layers-action", "Delete this layer"),
+    NC_("layers-action", "_Delete Layers"), NULL,
+    NC_("layers-action", "Delete selected layers"),
     layers_delete_cmd_callback,
     GIMP_HELP_LAYER_DELETE },
 
@@ -763,6 +763,7 @@ layers_actions_update (GimpActionGroup *group,
 {
   GimpImage     *image          = action_data_get_image (data);
   GimpLayer     *layer          = NULL;
+  GList         *layers         = NULL;
   GimpLayerMask *mask           = NULL;     /*  layer mask             */
   gboolean       fs             = FALSE;    /*  floating sel           */
   gboolean       ac             = FALSE;    /*  active channel         */
@@ -793,6 +794,7 @@ layers_actions_update (GimpActionGroup *group,
       indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
 
       layer = gimp_image_get_active_layer (image);
+      layers = gimp_image_get_selected_layers (image);
 
       if (layer)
         {
@@ -935,7 +937,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new-from-visible", image);
   SET_SENSITIVE ("layers-new-group",        image && !indexed);
   SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
-  SET_SENSITIVE ("layers-delete",           layer && !ac);
+  SET_SENSITIVE ("layers-delete",           g_list_length (layers) > 0 && !ac);
 
   SET_SENSITIVE ("layers-mode-first",       layer && !ac && prev_mode);
   SET_SENSITIVE ("layers-mode-last",        layer && !ac && next_mode);
