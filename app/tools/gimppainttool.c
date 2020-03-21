@@ -287,7 +287,17 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+  if (! drawable)
+    {
+      if (g_list_length (gimp_image_get_selected_layers (image)) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot paint on multiple layer. Select only one layer."));
+      else
+        gimp_tool_message_literal (tool, display,
+                                   _("No active drawable."));
+      return;
+    }
+  else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       gimp_tool_message_literal (tool, display,
                                  _("Cannot paint on layer groups."));
@@ -509,6 +519,9 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
     {
       GimpImage    *image    = gimp_display_get_image (display);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+      if (! drawable)
+        return;
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
           gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
