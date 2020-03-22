@@ -377,8 +377,11 @@ gimp_item_tree_set_selected_items (GimpItemTree *tree,
       private->selected_items = items;
       g_object_notify (G_OBJECT (tree), "selected-items");
 
-      if (selected_count == 1 || prev_selected_count == 1)
-        g_object_notify (G_OBJECT (tree), "active-item");
+      /* XXX: if we add back a proper concept of active item (not just
+       * meaning selection of 1), we may also notify of active item
+       * update.
+       */
+      /*g_object_notify (G_OBJECT (tree), "active-item");*/
     }
   else
     {
