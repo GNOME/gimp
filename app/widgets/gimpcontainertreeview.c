@@ -1525,9 +1525,9 @@ gimp_container_tree_view_drag_pixbuf (GtkWidget *widget,
 
 static gboolean
 gimp_container_tree_view_get_selected_single (GimpContainerTreeView  *tree_view,
-                                               GtkTreeIter            *iter)
+                                              GtkTreeIter            *iter)
 {
-  GtkTreeSelection         *selection;
+  GtkTreeSelection *selection;
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view->view));
 
