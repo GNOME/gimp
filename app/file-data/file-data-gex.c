@@ -248,10 +248,10 @@ file_gex_validate (GFile   *file,
                     {
                       if (g_strcmp0 (appdata_path, archive_entry_pathname (entry)) == 0)
                         {
-                          const void *buffer;
-                          GString    *appstring = g_string_new ("");
-                          off_t       offset;
-                          size_t      size;
+                          const void      *buffer;
+                          GString         *appstring = g_string_new ("");
+                          la_int64_t       offset;
+                          size_t           size;
 
                           while (TRUE)
                             {
@@ -393,9 +393,9 @@ file_gex_decompress (GFile   *file,
                                              gimp_file_get_utf8_name (file),
                                              TRUE, &plugin_id, error))
                 {
-                  gchar  *path;
-                  size_t  size;
-                  off_t   offset;
+                  gchar       *path;
+                  size_t       size;
+                  la_int64_t   offset;
 
                   path = g_build_filename (g_file_get_path (ext_dir), archive_entry_pathname (entry), NULL);
 
