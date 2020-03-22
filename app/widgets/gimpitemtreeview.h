@@ -110,6 +110,7 @@ GType       gimp_item_tree_view_get_type          (void) G_GNUC_CONST;
 GtkWidget * gimp_item_tree_view_new               (GType             view_type,
                                                    gint              view_size,
                                                    gint              view_border_width,
+                                                   gboolean          multiple_selection,
                                                    GimpImage        *image,
                                                    GimpMenuFactory  *menu_facotry,
                                                    const gchar      *menu_identifier,

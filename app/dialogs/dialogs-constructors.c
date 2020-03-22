@@ -728,7 +728,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
     view_size = context->gimp->config->layer_preview_size;
 
   return gimp_item_tree_view_new (GIMP_TYPE_LAYER_TREE_VIEW,
-                                  view_size, 2,
+                                  view_size, 2, TRUE,
                                   gimp_context_get_image (context),
                                   gimp_dialog_factory_get_menu_factory (factory),
                                   "<Layers>",
@@ -745,7 +745,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
     view_size = context->gimp->config->layer_preview_size;
 
   return gimp_item_tree_view_new (GIMP_TYPE_CHANNEL_TREE_VIEW,
-                                  view_size, 1,
+                                  view_size, 1, FALSE,
                                   gimp_context_get_image (context),
                                   gimp_dialog_factory_get_menu_factory (factory),
                                   "<Channels>",
@@ -762,7 +762,7 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
     view_size = context->gimp->config->layer_preview_size;
 
   return gimp_item_tree_view_new (GIMP_TYPE_VECTORS_TREE_VIEW,
-                                  view_size, 1,
+                                  view_size, 1, FALSE,
                                   gimp_context_get_image (context),
                                   gimp_dialog_factory_get_menu_factory (factory),
                                   "<Vectors>",

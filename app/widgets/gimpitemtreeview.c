@@ -613,6 +613,7 @@ GtkWidget *
 gimp_item_tree_view_new (GType            view_type,
                          gint             view_size,
                          gint             view_border_width,
+                         gboolean         multiple_selection,
                          GimpImage       *image,
                          GimpMenuFactory *menu_factory,
                          const gchar     *menu_identifier,
@@ -636,6 +637,7 @@ gimp_item_tree_view_new (GType            view_type,
                             "menu-factory",    menu_factory,
                             "menu-identifier", menu_identifier,
                             "ui-path",         ui_path,
+                            "selection-mode",  multiple_selection ? GTK_SELECTION_MULTIPLE : GTK_SELECTION_SINGLE,
                             NULL);
 
   gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (item_view),
