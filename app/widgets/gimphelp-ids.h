@@ -347,6 +347,7 @@
 #define GIMP_HELP_FILTER_APPLY_CANVAS             "gimp-filter-apply-canvas"
 #define GIMP_HELP_FILTER_APPLY_LENS               "gimp-filter-apply-lens"
 #define GIMP_HELP_FILTER_BAYER_MATRIX             "gimp-filter-bayer-matrix"
+#define GIMP_HELP_FILTER_BLOOM                    "gimp-filter-bloom"
 #define GIMP_HELP_FILTER_BUMP_MAP                 "gimp-filter-bump-map"
 #define GIMP_HELP_FILTER_C2G                      "gimp-filter-c2g"
 #define GIMP_HELP_FILTER_CARTOON                  "gimp-filter-cartoon"

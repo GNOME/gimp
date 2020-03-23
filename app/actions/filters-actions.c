@@ -189,6 +189,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:bayer-matrix",
     GIMP_HELP_FILTER_BAYER_MATRIX },
 
+  { "filters-bloom", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Bloom..."), NULL, NULL,
+    "gegl:bloom",
+    GIMP_HELP_FILTER_BLOOM },
+
   { "filters-brightness-contrast", GIMP_ICON_TOOL_BRIGHTNESS_CONTRAST,
     NC_("filters-action", "B_rightness-Contrast..."), NULL, NULL,
     "gimp:brightness-contrast",
@@ -882,6 +887,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-apply-canvas",            writable);
   SET_SENSITIVE ("filters-apply-lens",              writable);
   SET_SENSITIVE ("filters-bayer-matrix",            writable);
+  SET_SENSITIVE ("filters-bloom",                   writable);
   SET_SENSITIVE ("filters-brightness-contrast",     writable);
   SET_SENSITIVE ("filters-bump-map",                writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);

@@ -606,6 +606,7 @@ sanity_check_gegl_ops (void)
   {
     "gegl:alien-map",
     "gegl:bayer-matrix",
+    "gegl:bloom",
     "gegl:buffer-sink",
     "gegl:buffer-source",
     "gegl:c2g",
