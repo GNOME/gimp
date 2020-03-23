@@ -1731,7 +1731,8 @@ class SpyroWindow(gtk.Window):
         self.engine = DrawingEngine(img, self.p)
 
         # Make a new GIMP layer to draw on
-        self.spyro_layer = gimp.Layer(img, layer_name, img.width, img.height, RGBA_IMAGE, 100, NORMAL_MODE)
+        self.spyro_layer = gimp.Layer(img, layer_name, img.width, img.height,
+                                      layer.type_with_alpha, 100, NORMAL_MODE)
         img.add_layer(self.spyro_layer, 0)
 
         self.drawing_layer = self.spyro_layer
