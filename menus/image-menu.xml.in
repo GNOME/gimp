@@ -736,6 +736,7 @@
       </menu>
       <menu action="filters-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light">
+	  <menuitem action="filters-bloom" />
 	  <menuitem action="filters-supernova" />
 	  <menuitem action="filters-lens-flare" />
 	</placeholder>
