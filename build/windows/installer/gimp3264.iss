@@ -279,6 +279,22 @@ Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Compone
 ;ghostscript TODO: detect version automatically
 Source: "{#DEPS_DIR32}\share\ghostscript\9.50\lib\*.*"; DestDir: "{app}\share\ghostscript\9.50\lib"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
+#ifdef PYTHON
+;*.py files are the same on 32 and 64-bit
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#endif
+
+;64bit
+#define PLATFORM 64
+#include "files.isi"
+
+;32bit
+#define PLATFORM 32
+#include "files.isi"
+;special case, since 64bit version doesn't work, and is excluded in files.isi
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}"; Components: deps32\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+
 ;32-on-64bit
 #include "32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
@@ -289,22 +305,6 @@ Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 ;compat libraries
 Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}\32\"; Components: gimp32on64\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-
-#ifdef PYTHON
-;*.py files are the same on 32 and 64-bit
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-#endif
-
-;32bit
-#define PLATFORM 32
-#include "files.isi"
-;special case, since 64bit version doesn't work, and is excluded in files.isi
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}"; Components: deps32\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-
-;64bit
-#define PLATFORM 64
-#include "files.isi"
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
