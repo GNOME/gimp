@@ -86,14 +86,14 @@ static void            gimp_tool_editor_set_context               (GimpContainer
 
 static gboolean        gimp_tool_editor_drop_possible             (GimpContainerTreeView      *tree_view,
                                                                    GimpDndType                 src_type,
-                                                                   GimpViewable               *src_viewable,
+                                                                   GList                      *src_viewables,
                                                                    GimpViewable               *dest_viewable,
                                                                    GtkTreePath                *drop_path,
                                                                    GtkTreeViewDropPosition     drop_pos,
                                                                    GtkTreeViewDropPosition    *return_drop_pos,
                                                                    GdkDragAction              *return_drag_action);
-static void            gimp_tool_editor_drop_viewable             (GimpContainerTreeView      *tree_view,
-                                                                   GimpViewable               *src_viewable,
+static void            gimp_tool_editor_drop_viewables            (GimpContainerTreeView      *tree_view,
+                                                                   GList                      *src_viewables,
                                                                    GimpViewable               *dest_viewable,
                                                                    GtkTreeViewDropPosition     drop_pos);
 
@@ -155,10 +155,10 @@ gimp_tool_editor_class_init (GimpToolEditorClass *klass)
   GObjectClass               *object_class    = G_OBJECT_CLASS (klass);
   GimpContainerTreeViewClass *tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
 
-  object_class->constructed      = gimp_tool_editor_constructed;
+  object_class->constructed       = gimp_tool_editor_constructed;
 
-  tree_view_class->drop_possible = gimp_tool_editor_drop_possible;
-  tree_view_class->drop_viewable = gimp_tool_editor_drop_viewable;
+  tree_view_class->drop_possible  = gimp_tool_editor_drop_possible;
+  tree_view_class->drop_viewables = gimp_tool_editor_drop_viewables;
 }
 
 static void
@@ -319,7 +319,7 @@ gimp_tool_editor_set_context (GimpContainerView *container_view,
 static gboolean
 gimp_tool_editor_drop_possible (GimpContainerTreeView   *tree_view,
                                 GimpDndType              src_type,
-                                GimpViewable            *src_viewable,
+                                GList                   *src_viewables,
                                 GimpViewable            *dest_viewable,
                                 GtkTreePath             *drop_path,
                                 GtkTreeViewDropPosition  drop_pos,
@@ -328,7 +328,7 @@ gimp_tool_editor_drop_possible (GimpContainerTreeView   *tree_view,
 {
   if (GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (
         tree_view,
-        src_type, src_viewable, dest_viewable, drop_path, drop_pos,
+        src_type, src_viewables, dest_viewable, drop_path, drop_pos,
         return_drop_pos, return_drag_action))
     {
       if (gimp_viewable_get_parent (dest_viewable)       ||
@@ -336,7 +336,15 @@ gimp_tool_editor_drop_possible (GimpContainerTreeView   *tree_view,
            (drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER ||
             drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_BEFORE)))
         {
-          return ! gimp_viewable_get_children (src_viewable);
+          GList *iter;
+
+          for (iter = src_viewables; iter; iter = iter->next)
+            {
+              GimpViewable *src_viewable = iter->data;
+
+              if (gimp_viewable_get_children (src_viewable))
+                return FALSE;
+            }
         }
 
       return TRUE;
@@ -346,19 +354,20 @@ gimp_tool_editor_drop_possible (GimpContainerTreeView   *tree_view,
 }
 
 static void
-gimp_tool_editor_drop_viewable (GimpContainerTreeView   *tree_view,
-                                GimpViewable            *src_viewable,
-                                GimpViewable            *dest_viewable,
-                                GtkTreeViewDropPosition  drop_pos)
+gimp_tool_editor_drop_viewables (GimpContainerTreeView   *tree_view,
+                                 GList                   *src_viewables,
+                                 GimpViewable            *dest_viewable,
+                                 GtkTreeViewDropPosition  drop_pos)
 {
   GimpContainerView *container_view = GIMP_CONTAINER_VIEW (tree_view);
 
-  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewable (tree_view,
-                                                                src_viewable,
-                                                                dest_viewable,
-                                                                drop_pos);
+  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewables (tree_view,
+                                                                 src_viewables,
+                                                                 dest_viewable,
+                                                                 drop_pos);
 
-  gimp_container_view_select_item (container_view, src_viewable);
+  if (src_viewables)
+    gimp_container_view_select_item (container_view, src_viewables->data);
 }
 
 static void

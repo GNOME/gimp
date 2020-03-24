@@ -123,6 +123,9 @@ static gboolean      gimp_container_tree_view_tooltip           (GtkWidget      
 static GimpViewable *gimp_container_tree_view_drag_viewable     (GtkWidget                   *widget,
                                                                  GimpContext                **context,
                                                                  gpointer                     data);
+static GList       * gimp_container_tree_view_drag_viewable_list (GtkWidget    *widget,
+                                                                   GimpContext **context,
+                                                                   gpointer      data);
 static GdkPixbuf    *gimp_container_tree_view_drag_pixbuf       (GtkWidget                   *widget,
                                                                  gpointer                     data);
 
@@ -171,7 +174,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 
   klass->edit_name            = gimp_container_tree_view_real_edit_name;
   klass->drop_possible        = gimp_container_tree_view_real_drop_possible;
-  klass->drop_viewable        = gimp_container_tree_view_real_drop_viewable;
+  klass->drop_viewables       = gimp_container_tree_view_real_drop_viewables;
   klass->drop_color           = NULL;
   klass->drop_uri_list        = NULL;
   klass->drop_svg             = NULL;
@@ -653,8 +656,8 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
                                             tree_view);
       if (! container)
         {
-          if (gimp_dnd_viewable_source_remove (GTK_WIDGET (tree_view->view),
-                                               gimp_container_get_children_type (old_container)))
+          if (gimp_dnd_viewable_list_source_remove (GTK_WIDGET (tree_view->view),
+                                                    gimp_container_get_children_type (old_container)))
             {
               if (GIMP_VIEWABLE_CLASS (g_type_class_peek (gimp_container_get_children_type (old_container)))->get_size)
                 gimp_dnd_pixbuf_source_remove (GTK_WIDGET (tree_view->view));
@@ -674,6 +677,10 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
                                             gimp_container_get_children_type (container),
                                             GDK_ACTION_COPY))
         {
+          gimp_dnd_viewable_list_source_add (GTK_WIDGET (tree_view->view),
+                                             gimp_container_get_children_type (container),
+                                             gimp_container_tree_view_drag_viewable_list,
+                                             tree_view);
           gimp_dnd_viewable_source_add (GTK_WIDGET (tree_view->view),
                                         gimp_container_get_children_type (container),
                                         gimp_container_tree_view_drag_viewable,
@@ -1542,6 +1549,21 @@ gimp_container_tree_view_drag_viewable (GtkWidget    *widget,
     return tree_view->priv->dnd_renderer->viewable;
 
   return NULL;
+}
+
+static GList *
+gimp_container_tree_view_drag_viewable_list (GtkWidget    *widget,
+                                             GimpContext **context,
+                                             gpointer      data)
+{
+  GList *items = NULL;
+
+  if (context)
+    *context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (data));
+
+  gimp_container_tree_view_get_selected (GIMP_CONTAINER_VIEW (data), &items, NULL);
+
+  return items;
 }
 
 static GdkPixbuf *

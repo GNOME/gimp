@@ -176,7 +176,7 @@ static GList *
 gimp_document_view_drag_uri_list (GtkWidget *widget,
                                   gpointer   data)
 {
-  GimpViewable *viewable = gimp_dnd_get_drag_data (widget);
+  GimpViewable *viewable = gimp_dnd_get_drag_viewable (widget);
 
   if (viewable)
     {

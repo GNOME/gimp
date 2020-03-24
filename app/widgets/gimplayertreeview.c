@@ -108,7 +108,7 @@ static gboolean   gimp_layer_tree_view_select_items               (GimpContainer
 static void       gimp_layer_tree_view_set_view_size              (GimpContainerView          *view);
 static gboolean   gimp_layer_tree_view_drop_possible              (GimpContainerTreeView      *view,
                                                                    GimpDndType                 src_type,
-                                                                   GimpViewable               *src_viewable,
+                                                                   GList                      *src_viewables,
                                                                    GimpViewable               *dest_viewable,
                                                                    GtkTreePath                *drop_path,
                                                                    GtkTreeViewDropPosition     drop_pos,
@@ -716,7 +716,7 @@ gimp_layer_tree_view_set_view_size (GimpContainerView *view)
 static gboolean
 gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                     GimpDndType              src_type,
-                                    GimpViewable            *src_viewable,
+                                    GList                   *src_viewables,
                                     GimpViewable            *dest_viewable,
                                     GtkTreePath             *drop_path,
                                     GtkTreeViewDropPosition  drop_pos,
@@ -731,7 +731,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
        src_type == GIMP_DND_TYPE_NETSCAPE_URL ||
        src_type == GIMP_DND_TYPE_COMPONENT    ||
        src_type == GIMP_DND_TYPE_PIXBUF       ||
-       GIMP_IS_DRAWABLE (src_viewable))
+       g_list_length (src_viewables) > 0)
     {
       GimpImage *dest_image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (tree_view));
 
@@ -741,7 +741,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 
   return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
                                                                        src_type,
-                                                                       src_viewable,
+                                                                       src_viewables,
                                                                        dest_viewable,
                                                                        drop_path,
                                                                        drop_pos,

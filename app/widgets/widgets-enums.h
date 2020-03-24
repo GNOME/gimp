@@ -167,7 +167,9 @@ typedef enum  /*< skip >*/
   GIMP_DND_TYPE_TOOL_ITEM    = 23,
   GIMP_DND_TYPE_NOTEBOOK_TAB = 24,
 
-  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_NOTEBOOK_TAB
+  GIMP_DND_TYPE_LAYER_LIST   = 25,
+
+  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_LAYER_LIST
 } GimpDndType;
 
 typedef enum  /*< skip >*/

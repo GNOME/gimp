@@ -120,7 +120,7 @@ gimp_image_view_new (GimpViewType     view_type,
       dnd_widget = gimp_container_view_get_dnd_widget (editor->view);
 
       gimp_dnd_xds_source_add (dnd_widget,
-                               (GimpDndDragViewableFunc) gimp_dnd_get_drag_data,
+                               (GimpDndDragViewableFunc) gimp_dnd_get_drag_viewable,
                                NULL);
     }
 

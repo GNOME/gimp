@@ -245,7 +245,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
 
   dnd_widget = gimp_container_view_get_dnd_widget (GIMP_CONTAINER_VIEW (view));
   gimp_dnd_xds_source_add (dnd_widget,
-                           (GimpDndDragViewableFunc) gimp_dnd_get_drag_data,
+                           (GimpDndDragViewableFunc) gimp_dnd_get_drag_viewable,
                            NULL);
 
   g_signal_connect (tree_view->view, "query-tooltip",

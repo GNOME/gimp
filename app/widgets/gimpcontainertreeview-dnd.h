@@ -55,17 +55,17 @@ void     gimp_container_tree_view_drag_data_received
 gboolean
 gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
                                              GimpDndType              src_type,
-                                             GimpViewable            *src_viewable,
+                                             GList                   *src_viewables,
                                              GimpViewable            *dest_viewable,
                                              GtkTreePath             *drop_path,
                                              GtkTreeViewDropPosition  drop_pos,
                                              GtkTreeViewDropPosition *return_drop_pos,
                                              GdkDragAction           *return_drag_action);
 void
-gimp_container_tree_view_real_drop_viewable (GimpContainerTreeView   *tree_view,
-                                             GimpViewable            *src_viewable,
-                                             GimpViewable            *dest_viewable,
-                                             GtkTreeViewDropPosition  drop_pos);
+gimp_container_tree_view_real_drop_viewables (GimpContainerTreeView   *tree_view,
+                                              GList                   *src_viewables,
+                                              GimpViewable            *dest_viewable,
+                                              GtkTreeViewDropPosition  drop_pos);
 
 
 #endif  /*  __GIMP_CONTAINER_TREE_VIEW_DND_H__  */

@@ -66,14 +66,14 @@ struct _GimpContainerTreeViewClass
 
   gboolean (* drop_possible)  (GimpContainerTreeView   *tree_view,
                                GimpDndType              src_type,
-                               GimpViewable            *src_viewable,
+                               GList                   *src_viewables,
                                GimpViewable            *dest_viewable,
                                GtkTreePath             *drop_path,
                                GtkTreeViewDropPosition  drop_pos,
                                GtkTreeViewDropPosition *return_drop_pos,
                                GdkDragAction           *return_drag_action);
-  void     (* drop_viewable)  (GimpContainerTreeView   *tree_view,
-                               GimpViewable            *src_viewable,
+  void     (* drop_viewables) (GimpContainerTreeView   *tree_view,
+                               GList                   *src_viewables,
                                GimpViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
   void     (* drop_color)     (GimpContainerTreeView   *tree_view,

@@ -61,8 +61,8 @@ static void  gimp_channel_tree_view_view_iface_init   (GimpContainerViewInterfac
 
 static void   gimp_channel_tree_view_constructed      (GObject                 *object);
 
-static void   gimp_channel_tree_view_drop_viewable    (GimpContainerTreeView   *view,
-                                                       GimpViewable            *src_viewable,
+static void   gimp_channel_tree_view_drop_viewables   (GimpContainerTreeView   *view,
+                                                       GList                   *src_viewables,
                                                        GimpViewable            *dest_viewable,
                                                        GtkTreeViewDropPosition  drop_pos);
 static void   gimp_channel_tree_view_drop_component   (GimpContainerTreeView   *tree_view,
@@ -99,7 +99,7 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 
   object_class->constructed  = gimp_channel_tree_view_constructed;
 
-  view_class->drop_viewable  = gimp_channel_tree_view_drop_viewable;
+  view_class->drop_viewables = gimp_channel_tree_view_drop_viewables;
   view_class->drop_component = gimp_channel_tree_view_drop_component;
 
   iv_class->set_image        = gimp_channel_tree_view_set_image;
@@ -189,46 +189,52 @@ gimp_channel_tree_view_constructed (GObject *object)
 /*  GimpContainerTreeView methods  */
 
 static void
-gimp_channel_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
-                                      GimpViewable            *src_viewable,
-                                      GimpViewable            *dest_viewable,
-                                      GtkTreeViewDropPosition  drop_pos)
+gimp_channel_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
+                                       GList                   *src_viewables,
+                                       GimpViewable            *dest_viewable,
+                                       GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpImage             *image     = gimp_item_tree_view_get_image (item_view);
   GimpItemTreeViewClass *item_view_class;
+  GList                 *iter;
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
-  if (GIMP_IS_DRAWABLE (src_viewable) &&
-      (image != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
-       G_TYPE_FROM_INSTANCE (src_viewable) != item_view_class->item_type))
+  for (iter = src_viewables; iter; iter = iter->next)
     {
-      GimpItem *new_item;
-      GimpItem *parent;
-      gint      index;
+      GimpViewable *src_viewable = iter->data;
 
-      index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
-                                                  drop_pos,
-                                                  (GimpViewable **) &parent);
+      if (GIMP_IS_DRAWABLE (src_viewable) &&
+          (image != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
+           G_TYPE_FROM_INSTANCE (src_viewable) != item_view_class->item_type))
+        {
+          GimpItem *new_item;
+          GimpItem *parent;
+          gint      index;
 
-      new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
-                                    gimp_item_tree_view_get_image (item_view),
-                                    item_view_class->item_type);
+          index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
+                                                      drop_pos,
+                                                      (GimpViewable **) &parent);
 
-      gimp_item_set_linked (new_item, FALSE, FALSE);
+          new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
+                                        gimp_item_tree_view_get_image (item_view),
+                                        item_view_class->item_type);
 
-      item_view_class->add_item (image, new_item, parent, index, TRUE);
+          gimp_item_set_linked (new_item, FALSE, FALSE);
 
-      gimp_image_flush (image);
+          item_view_class->add_item (image, new_item, parent, index, TRUE);
 
-      return;
+          gimp_image_flush (image);
+
+          return;
+        }
     }
 
-  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewable (tree_view,
-                                                                src_viewable,
-                                                                dest_viewable,
-                                                                drop_pos);
+  GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_viewables (tree_view,
+                                                                 src_viewables,
+                                                                 dest_viewable,
+                                                                 drop_pos);
 }
 
 static void

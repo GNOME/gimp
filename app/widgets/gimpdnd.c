@@ -98,6 +98,10 @@ struct _GimpDndDataDef
 };
 
 
+static GtkWidget * gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
+                                                    GdkDragContext *context,
+                                                    GCallback       get_viewable_list_func,
+                                                    gpointer        get_viewable_list_data);
 static GtkWidget * gimp_dnd_get_viewable_icon   (GtkWidget        *widget,
                                                  GdkDragContext   *context,
                                                  GCallback         get_viewable_func,
@@ -194,6 +198,18 @@ static void        gimp_dnd_get_item_data       (GtkWidget        *widget,
                                                  gpointer          get_item_data,
                                                  GtkSelectionData *selection);
 static gboolean    gimp_dnd_set_item_data       (GtkWidget        *widget,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GCallback         set_item_func,
+                                                 gpointer          set_item_data,
+                                                 GtkSelectionData *selection);
+
+static void        gimp_dnd_get_item_list_data  (GtkWidget        *widget,
+                                                 GdkDragContext   *context,
+                                                 GCallback         get_item_func,
+                                                 gpointer          get_item_data,
+                                                 GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_item_list_data  (GtkWidget        *widget,
                                                  gint              x,
                                                  gint              y,
                                                  GCallback         set_item_func,
@@ -610,7 +626,22 @@ static const GimpDndDataDef dnd_data_defs[] =
     NULL,
     NULL,
     NULL
-  }
+  },
+
+  {
+    GIMP_TARGET_LAYER_LIST,
+
+    "gimp-dnd-get-layer-list-func",
+    "gimp-dnd-get-layer-list-data",
+
+    "gimp-dnd-set-layer-list-func",
+    "gimp-dnd-set-layer-list-data",
+
+    gimp_dnd_get_viewable_list_icon,
+    gimp_dnd_get_item_list_data,
+    gimp_dnd_set_item_list_data,
+  },
+
 };
 
 
@@ -1867,63 +1898,64 @@ gimp_dnd_get_viewable_icon (GtkWidget      *widget,
 }
 
 static GimpDndType
-gimp_dnd_data_type_get_by_g_type (GType type)
+gimp_dnd_data_type_get_by_g_type (GType    type,
+                                  gboolean list)
 {
   GimpDndType dnd_type = GIMP_DND_TYPE_NONE;
 
-  if (g_type_is_a (type, GIMP_TYPE_IMAGE))
+  if (g_type_is_a (type, GIMP_TYPE_IMAGE) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_IMAGE;
     }
   else if (g_type_is_a (type, GIMP_TYPE_LAYER))
     {
-      dnd_type = GIMP_DND_TYPE_LAYER;
+      dnd_type = list ? GIMP_DND_TYPE_LAYER_LIST : GIMP_DND_TYPE_LAYER;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_LAYER_MASK))
+  else if (g_type_is_a (type, GIMP_TYPE_LAYER_MASK) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_LAYER_MASK;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_CHANNEL))
+  else if (g_type_is_a (type, GIMP_TYPE_CHANNEL) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_CHANNEL;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_VECTORS))
+  else if (g_type_is_a (type, GIMP_TYPE_VECTORS) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_VECTORS;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_BRUSH))
+  else if (g_type_is_a (type, GIMP_TYPE_BRUSH) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_BRUSH;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_PATTERN))
+  else if (g_type_is_a (type, GIMP_TYPE_PATTERN) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_PATTERN;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_GRADIENT))
+  else if (g_type_is_a (type, GIMP_TYPE_GRADIENT) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_GRADIENT;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_PALETTE))
+  else if (g_type_is_a (type, GIMP_TYPE_PALETTE) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_PALETTE;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_FONT))
+  else if (g_type_is_a (type, GIMP_TYPE_FONT) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_FONT;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_BUFFER))
+  else if (g_type_is_a (type, GIMP_TYPE_BUFFER) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_BUFFER;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_IMAGEFILE))
+  else if (g_type_is_a (type, GIMP_TYPE_IMAGEFILE) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_IMAGEFILE;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_TEMPLATE))
+  else if (g_type_is_a (type, GIMP_TYPE_TEMPLATE) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_TEMPLATE;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_TOOL_ITEM))
+  else if (g_type_is_a (type, GIMP_TYPE_TOOL_ITEM) && ! list)
     {
       dnd_type = GIMP_DND_TYPE_TOOL_ITEM;
     }
@@ -1941,7 +1973,7 @@ gimp_dnd_drag_source_set_by_type (GtkWidget       *widget,
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
-  dnd_type = gimp_dnd_data_type_get_by_g_type (type);
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, FALSE);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return FALSE;
@@ -1957,24 +1989,56 @@ gboolean
 gimp_dnd_drag_dest_set_by_type (GtkWidget       *widget,
                                 GtkDestDefaults  flags,
                                 GType            type,
+                                gboolean         list_accepted,
                                 GdkDragAction    actions)
 {
-  GimpDndType dnd_type;
+  GtkTargetEntry target_entries[2];
+  GimpDndType    dnd_type;
+  gint           target_entries_n = 0;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
-  dnd_type = gimp_dnd_data_type_get_by_g_type (type);
+  if (list_accepted)
+    {
+      dnd_type = gimp_dnd_data_type_get_by_g_type (type, TRUE);
 
-  if (dnd_type == GIMP_DND_TYPE_NONE)
+      if (dnd_type != GIMP_DND_TYPE_NONE)
+        {
+          target_entries[target_entries_n] = dnd_data_defs[dnd_type].target_entry;
+          target_entries_n++;
+        }
+    }
+
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, FALSE);
+  if (dnd_type != GIMP_DND_TYPE_NONE)
+    {
+      target_entries[target_entries_n] = dnd_data_defs[dnd_type].target_entry;
+      target_entries_n++;
+    }
+
+  if (target_entries_n == 0)
     return FALSE;
 
   gtk_drag_dest_set (widget, flags,
-                     &dnd_data_defs[dnd_type].target_entry, 1,
+                     (const GtkTargetEntry *) &target_entries,
+                     target_entries_n,
                      actions);
 
   return TRUE;
 }
 
+/**
+ * gimp_dnd_viewable_source_add:
+ * @widget:
+ * @type:
+ * @get_viewable_func:
+ * @data:
+ *
+ * Sets up @widget as a drag source for a #GimpViewable object, as
+ * returned by @get_viewable_func on @widget and @data.
+ *
+ * @type must be a list type for drag operations.
+ */
 gboolean
 gimp_dnd_viewable_source_add (GtkWidget               *widget,
                               GType                    type,
@@ -1986,7 +2050,7 @@ gimp_dnd_viewable_source_add (GtkWidget               *widget,
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
   g_return_val_if_fail (get_viewable_func != NULL, FALSE);
 
-  dnd_type = gimp_dnd_data_type_get_by_g_type (type);
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, FALSE);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return FALSE;
@@ -2006,7 +2070,7 @@ gimp_dnd_viewable_source_remove (GtkWidget *widget,
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
-  dnd_type = gimp_dnd_data_type_get_by_g_type (type);
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, FALSE);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return FALSE;
@@ -2024,7 +2088,7 @@ gimp_dnd_viewable_dest_add (GtkWidget               *widget,
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
-  dnd_type = gimp_dnd_data_type_get_by_g_type (type);
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, FALSE);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return FALSE;
@@ -2044,7 +2108,7 @@ gimp_dnd_viewable_dest_remove (GtkWidget *widget,
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
 
-  dnd_type = gimp_dnd_data_type_get_by_g_type (type);
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, FALSE);
 
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return FALSE;
@@ -2055,7 +2119,7 @@ gimp_dnd_viewable_dest_remove (GtkWidget *widget,
 }
 
 GimpViewable *
-gimp_dnd_get_drag_data (GtkWidget *widget)
+gimp_dnd_get_drag_viewable (GtkWidget *widget)
 {
   const GimpDndDataDef    *dnd_data;
   GimpDndType              data_type;
@@ -2085,6 +2149,201 @@ gimp_dnd_get_drag_data (GtkWidget *widget)
     return NULL;
 
   return (GimpViewable *) (* get_data_func) (widget, &context, get_data_data);
+}
+
+
+/*************************************************/
+/*  GimpViewable (by GType) GList dnd functions  */
+/*************************************************/
+
+static GtkWidget *
+gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
+                                 GdkDragContext *context,
+                                 GCallback       get_list_func,
+                                 gpointer        get_list_data)
+{
+  GList        *viewables;
+  GimpViewable *viewable;
+  GimpContext  *gimp_context;
+  GtkWidget    *view;
+  gchar        *desc;
+
+  viewables = (* (GimpDndDragViewableListFunc) get_list_func) (widget,
+                                                               &gimp_context,
+                                                               get_list_data);
+
+  if (! viewables)
+    return NULL;
+
+  /* Should we just show one of the viewable? Add a number to show we
+   * are dragging several viewables? Something else? XXX
+   */
+  viewable = viewables->data;
+
+  GIMP_LOG (DND, "viewable %p", viewable);
+
+  g_object_set_data_full (G_OBJECT (context),
+                          "gimp-dnd-viewable", g_object_ref (viewable),
+                          (GDestroyNotify) g_object_unref);
+
+  view = gimp_view_new (gimp_context, viewable,
+                        DRAG_PREVIEW_SIZE, 0, TRUE);
+
+  desc = gimp_viewable_get_description (viewable, NULL);
+
+  if (desc)
+    {
+      GtkWidget *hbox;
+      GtkWidget *label;
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
+      gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
+      gtk_widget_show (view);
+
+      label = g_object_new (GTK_TYPE_LABEL,
+                            "label",           desc,
+                            "xalign",          0.0,
+                            "yalign",          0.5,
+                            "max-width-chars", 30,
+                            "width-chars",     MIN (strlen (desc), 10),
+                            "ellipsize",       PANGO_ELLIPSIZE_END,
+                            NULL);
+
+      g_free (desc);
+
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+      gtk_widget_show (label);
+
+      return hbox;
+    }
+
+  return view;
+}
+
+/**
+ * gimp_dnd_viewable_list_source_add:
+ * @widget:
+ * @type:
+ * @get_viewable_func:
+ * @data:
+ *
+ * Sets up @widget as a drag source for a #GList of #GimpViewable
+ * object, as returned by @get_viewable_func on @widget and @data.
+ *
+ * @type must be a list type for drag operations (only GimpLayer so
+ * far).
+ */
+gboolean
+gimp_dnd_viewable_list_source_add (GtkWidget                   *widget,
+                                   GType                        type,
+                                   GimpDndDragViewableListFunc  get_viewable_list_func,
+                                   gpointer                     data)
+{
+  GimpDndType dnd_type;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+  g_return_val_if_fail (get_viewable_list_func != NULL, FALSE);
+
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, TRUE);
+
+  if (dnd_type == GIMP_DND_TYPE_NONE)
+    return FALSE;
+
+  gimp_dnd_data_source_add (dnd_type, widget,
+                            G_CALLBACK (get_viewable_list_func),
+                            data);
+
+  return TRUE;
+}
+
+gboolean
+gimp_dnd_viewable_list_source_remove (GtkWidget *widget,
+                                      GType      type)
+{
+  GimpDndType dnd_type;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, TRUE);
+
+  if (dnd_type == GIMP_DND_TYPE_NONE)
+    return FALSE;
+
+  return gimp_dnd_data_source_remove (dnd_type, widget);
+}
+
+gboolean
+gimp_dnd_viewable_list_dest_add (GtkWidget                   *widget,
+                                 GType                        type,
+                                 GimpDndDropViewableListFunc  set_viewable_func,
+                                 gpointer                     data)
+{
+  GimpDndType dnd_type;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, TRUE);
+
+  if (dnd_type == GIMP_DND_TYPE_NONE)
+    return FALSE;
+
+  gimp_dnd_data_dest_add (dnd_type, widget,
+                          G_CALLBACK (set_viewable_func),
+                          data);
+
+  return TRUE;
+}
+
+gboolean
+gimp_dnd_viewable_list_dest_remove (GtkWidget *widget,
+                                    GType      type)
+{
+  GimpDndType dnd_type;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+
+  dnd_type = gimp_dnd_data_type_get_by_g_type (type, TRUE);
+
+  if (dnd_type == GIMP_DND_TYPE_NONE)
+    return FALSE;
+
+  gimp_dnd_data_dest_remove (dnd_type, widget);
+
+  return TRUE;
+}
+
+GList *
+gimp_dnd_get_drag_list (GtkWidget *widget)
+{
+  const GimpDndDataDef    *dnd_data;
+  GimpDndType              data_type;
+  GimpDndDragViewableListFunc  get_data_func = NULL;
+  gpointer                 get_data_data = NULL;
+  GimpContext             *context;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
+
+  data_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-dnd-get-data-type"));
+
+  if (! data_type)
+    return NULL;
+
+  dnd_data = dnd_data_defs + data_type;
+
+  if (dnd_data->get_data_func_name)
+    get_data_func = g_object_get_data (G_OBJECT (widget),
+                                       dnd_data->get_data_func_name);
+
+  if (dnd_data->get_data_data_name)
+    get_data_data = g_object_get_data (G_OBJECT (widget),
+                                       dnd_data->get_data_data_name);
+
+  if (! get_data_func)
+    return NULL;
+
+  return (GList *) (* get_data_func) (widget, &context, get_data_data);
 }
 
 
@@ -2187,6 +2446,48 @@ gimp_dnd_set_item_data (GtkWidget        *widget,
   return TRUE;
 }
 
+
+/**********************************/
+/*  GimpItem GList dnd functions  */
+/**********************************/
+
+static void
+gimp_dnd_get_item_list_data (GtkWidget        *widget,
+                             GdkDragContext   *context,
+                             GCallback         get_item_func,
+                             gpointer          get_item_data,
+                             GtkSelectionData *selection)
+{
+  GList       *items;
+  GimpContext *gimp_context;
+
+  items = (* (GimpDndDragViewableListFunc) get_item_func) (widget, &gimp_context,
+                                                           get_item_data);
+
+  if (items)
+    gimp_selection_data_set_item_list (selection, items);
+  g_list_free (items);
+}
+
+static gboolean
+gimp_dnd_set_item_list_data (GtkWidget        *widget,
+                             gint              x,
+                             gint              y,
+                             GCallback         set_item_func,
+                             gpointer          set_item_data,
+                             GtkSelectionData *selection)
+{
+  GList *items = gimp_selection_data_get_item_list (selection, the_dnd_gimp);
+
+  if (! items)
+    return FALSE;
+
+  (* (GimpDndDropViewableListFunc) set_item_func) (widget, x, y, items,
+                                                   set_item_data);
+  g_list_free (items);
+
+  return TRUE;
+}
 
 /******************************/
 /*  GimpObject dnd functions  */

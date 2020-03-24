@@ -84,6 +84,14 @@ GimpItem      * gimp_selection_data_get_item      (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 
 
+/*  item list  */
+
+void            gimp_selection_data_set_item_list (GtkSelectionData *selection,
+                                                   GList            *items);
+GList         * gimp_selection_data_get_item_list (GtkSelectionData *selection,
+                                                   Gimp             *gimp);
+
+
 /*  various data  */
 
 void            gimp_selection_data_set_object    (GtkSelectionData *selection,
