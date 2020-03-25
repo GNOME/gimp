@@ -636,6 +636,25 @@ gimp_container_view_enable_dnd (GimpContainerView *view,
 }
 
 gboolean
+gimp_container_view_select_items (GimpContainerView *view,
+                                  GList             *viewables)
+{
+  GimpContainerViewPrivate *private;
+  gboolean                  success = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
+
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  if (gimp_container_frozen (private->container))
+    return TRUE;
+
+  g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
+                 viewables, NULL, &success);
+
+  return success;
+}
+gboolean
 gimp_container_view_select_item (GimpContainerView *view,
                                  GimpViewable      *viewable)
 {
@@ -791,15 +810,27 @@ gimp_container_view_multi_selected (GimpContainerView *view,
 
   selected_count = g_list_length (items);
 
-  if (selected_count == 0)
+  if (selected_count == 1)
     {
-      /* do nothing */
+      GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+      /* HACK for some specific types managed by context. */
+      if (private->container && private->context)
+        {
+          GType        children_type;
+          const gchar *signal_name;
+
+          children_type = gimp_container_get_children_type (private->container);
+          signal_name   = gimp_context_type_to_signal_name (children_type);
+
+          if (signal_name)
+            {
+              gimp_context_set_by_type (private->context, children_type,
+                                        GIMP_OBJECT (items->data));
+            }
+        }
     }
-  else if (selected_count == 1)
-    {
-      success = gimp_container_view_item_selected (view, items->data);
-    }
-  else
+  if (selected_count > 0)
     {
       g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
                      items, items_data, &success);

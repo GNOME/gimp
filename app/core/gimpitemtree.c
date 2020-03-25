@@ -688,6 +688,7 @@ gimp_item_tree_reorder_item (GimpItemTree *tree,
   if (new_container != container ||
       new_index     != gimp_item_get_index (item))
     {
+      GList *selected_items = g_list_copy (private->selected_items);
       if (push_undo)
         gimp_image_undo_push_item_reorder (private->image, undo_desc, item);
 
@@ -708,6 +709,10 @@ gimp_item_tree_reorder_item (GimpItemTree *tree,
         {
           gimp_container_reorder (container, GIMP_OBJECT (item), new_index);
         }
+      /* After reorder, selection is likely lost. We must recreate it as
+       * it was.
+       */
+      gimp_item_tree_set_selected_items (tree, selected_items);
     }
 
   return TRUE;

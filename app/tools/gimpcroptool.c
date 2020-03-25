@@ -644,7 +644,7 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
                                G_CALLBACK (gimp_crop_tool_image_size_changed),
                                crop_tool,
                                G_CONNECT_SWAPPED);
-      g_signal_connect_object (crop_tool->current_image, "active-layer-changed",
+      g_signal_connect_object (crop_tool->current_image, "selected-layers-changed",
                                G_CALLBACK (gimp_crop_tool_image_active_layer_changed),
                                crop_tool,
                                G_CONNECT_SWAPPED);

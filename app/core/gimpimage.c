@@ -99,9 +99,9 @@ enum
   PRECISION_CHANGED,
   ALPHA_CHANGED,
   FLOATING_SELECTION_CHANGED,
-  ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
   ACTIVE_VECTORS_CHANGED,
+  SELECTED_LAYERS_CHANGED,
   LINKED_ITEMS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
@@ -323,11 +323,11 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[ACTIVE_LAYER_CHANGED] =
-    g_signal_new ("active-layer-changed",
+  gimp_image_signals[SELECTED_LAYERS_CHANGED] =
+    g_signal_new ("selected-layers-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, active_layer_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, selected_layers_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -584,7 +584,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->precision_changed            = gimp_image_real_precision_changed;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
-  klass->active_layer_changed         = NULL;
   klass->active_channel_changed       = NULL;
   klass->active_vectors_changed       = NULL;
   klass->linked_items_changed         = NULL;
@@ -770,13 +769,13 @@ gimp_image_init (GimpImage *image)
                     G_CALLBACK (gimp_image_projection_buffer_notify),
                     image);
 
-  g_signal_connect (private->layers, "notify::active-item",
+  g_signal_connect (private->layers, "notify::selected-items",
                     G_CALLBACK (gimp_image_active_layer_notify),
                     image);
-  g_signal_connect (private->channels, "notify::active-item",
+  g_signal_connect (private->channels, "notify::selected-items",
                     G_CALLBACK (gimp_image_active_channel_notify),
                     image);
-  g_signal_connect (private->vectors, "notify::active-item",
+  g_signal_connect (private->vectors, "notify::selected-items",
                     G_CALLBACK (gimp_image_active_vectors_notify),
                     image);
 
@@ -1736,7 +1735,7 @@ gimp_image_active_layer_notify (GimpItemTree     *tree,
       private->layer_stack = g_slist_prepend (private->layer_stack, layer);
     }
 
-  g_signal_emit (image, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
+  g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
 
   if (layer && gimp_image_get_active_channel (image))
     gimp_image_set_active_channel (image, NULL);
@@ -4224,18 +4223,6 @@ gimp_image_get_active_drawable (GimpImage *image)
   return NULL;
 }
 
-GList *
-gimp_image_get_selected_layers (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  return gimp_item_tree_get_selected_items (private->layers);
-}
-
 GimpLayer *
 gimp_image_get_active_layer (GimpImage *image)
 {
@@ -4272,74 +4259,6 @@ gimp_image_get_active_vectors (GimpImage *image)
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   return GIMP_VECTORS (gimp_item_tree_get_active_item (private->vectors));
-}
-
-GList *
-gimp_image_set_selected_layers (GimpImage *image,
-                                GList     *layers)
-{
-  GimpImagePrivate *private;
-  GimpLayer        *floating_sel;
-  GimpLayer        *active_layer;
-  GList            *selected_layers;
-  GList            *layers2;
-  GList            *iter;
-  gboolean          selection_changed = TRUE;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  layers2 = g_list_copy (layers);
-  for (iter = layers; iter; iter = iter->next)
-    {
-      g_return_val_if_fail (GIMP_IS_LAYER (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
-
-      /* Silently remove non-attached layers from selection. Do not
-       * error out on it as it may happen for instance when selection
-       * changes while in the process of removing a layer group.
-       */
-      if (! gimp_item_is_attached (GIMP_ITEM (iter->data)))
-        layers2 = g_list_remove (layers2, iter->data);
-    }
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  floating_sel = gimp_image_get_floating_selection (image);
-
-  /*  Make sure the floating_sel always is the active layer  */
-  if (floating_sel && (g_list_length (layers2) != 1 || layers2->data != floating_sel))
-    return g_list_prepend (NULL, floating_sel);
-
-  selected_layers = gimp_image_get_selected_layers (image);
-  active_layer = gimp_image_get_active_layer (image);
-
-  if (g_list_length (layers2) == g_list_length (selected_layers))
-    {
-      selection_changed = FALSE;
-      for (iter = layers2; iter; iter = iter->next)
-        {
-          if (g_list_find (selected_layers, iter->data) == NULL)
-            {
-              selection_changed = TRUE;
-              break;
-            }
-        }
-    }
-
-  if (selection_changed)
-    {
-      /*  Don't cache selection info for the previous active layer  */
-      if (active_layer)
-        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (active_layer));
-
-      gimp_item_tree_set_selected_items (private->layers, layers2);
-    }
-  else
-    {
-      g_list_free (layers2);
-    }
-
-  return g_list_copy (gimp_image_get_selected_layers (image));
 }
 
 GimpLayer *
@@ -4439,6 +4358,110 @@ gimp_image_set_active_vectors (GimpImage   *image,
     }
 
   return gimp_image_get_active_vectors (image);
+}
+
+GList *
+gimp_image_get_selected_layers (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return gimp_item_tree_get_selected_items (private->layers);
+}
+
+GList *
+gimp_image_get_selected_channels (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return gimp_item_tree_get_selected_items (private->channels);
+}
+
+GList *
+gimp_image_get_selected_vectors (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return gimp_item_tree_get_selected_items (private->vectors);
+}
+
+GList *
+gimp_image_set_selected_layers (GimpImage *image,
+                                GList     *layers)
+{
+  GimpImagePrivate *private;
+  GimpLayer        *floating_sel;
+  GimpLayer        *active_layer;
+  GList            *selected_layers;
+  GList            *layers2;
+  GList            *iter;
+  gboolean          selection_changed = TRUE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  layers2 = g_list_copy (layers);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_LAYER (iter->data), NULL);
+      g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+
+      /* Silently remove non-attached layers from selection. Do not
+       * error out on it as it may happen for instance when selection
+       * changes while in the process of removing a layer group.
+       */
+      if (! gimp_item_is_attached (GIMP_ITEM (iter->data)))
+        layers2 = g_list_remove (layers2, iter->data);
+    }
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  floating_sel = gimp_image_get_floating_selection (image);
+
+  /*  Make sure the floating_sel always is the active layer  */
+  if (floating_sel && (g_list_length (layers2) != 1 || layers2->data != floating_sel))
+    return g_list_prepend (NULL, floating_sel);
+
+  selected_layers = gimp_image_get_selected_layers (image);
+  active_layer = gimp_image_get_active_layer (image);
+
+  if (g_list_length (layers2) == g_list_length (selected_layers))
+    {
+      selection_changed = FALSE;
+      for (iter = layers2; iter; iter = iter->next)
+        {
+          if (g_list_find (selected_layers, iter->data) == NULL)
+            {
+              selection_changed = TRUE;
+              break;
+            }
+        }
+    }
+
+  if (selection_changed)
+    {
+      /*  Don't cache selection info for the previous active layer  */
+      if (active_layer)
+        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (active_layer));
+
+      gimp_item_tree_set_selected_items (private->layers, layers2);
+    }
+  else
+    {
+      g_list_free (layers2);
+    }
+
+  return g_list_copy (gimp_image_get_selected_layers (image));
 }
 
 

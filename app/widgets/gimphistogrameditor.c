@@ -366,7 +366,7 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       g_signal_connect_object (image, "mode-changed",
                                G_CALLBACK (gimp_histogram_editor_menu_update),
                                editor, G_CONNECT_SWAPPED);
-      g_signal_connect_object (image, "active-layer-changed",
+      g_signal_connect_object (image, "selected-layers-changed",
                                G_CALLBACK (gimp_histogram_editor_layer_changed),
                                editor, 0);
       g_signal_connect_object (image, "mask-changed",
@@ -494,7 +494,7 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
            * gimp_histogram_editor_view_expose()) executed through
            * gtk_tree_view_clamp_node_visible(), as a result of the
            * GimpLayerTreeView in the Layers dialog receiving the image's
-           * "active-layer-changed" signal before us.  See bug #795716,
+           * "selected-layers-changed" signal before us.  See bug #795716,
            * comment 6.
            */
           gimp_item_is_attached (GIMP_ITEM (editor->drawable)))

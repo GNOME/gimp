@@ -522,7 +522,7 @@ palette_import_image_changed (GimpContext  *context,
 
   if (private->image)
     {
-      g_signal_connect (private->image, "active-layer-changed",
+      g_signal_connect (private->image, "selected-layers-changed",
                         G_CALLBACK (palette_import_layer_changed),
                         private);
       g_signal_connect (private->image, "mask-changed",

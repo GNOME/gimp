@@ -268,6 +268,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->get_container           = NULL;
   klass->get_active_item         = NULL;
   klass->set_active_item         = NULL;
+  klass->get_selected_items      = NULL;
   klass->set_selected_items      = NULL;
   klass->add_item                = NULL;
   klass->remove_item             = NULL;
@@ -1035,14 +1036,12 @@ gimp_item_tree_view_insert_item_after (GimpContainerView *view,
 {
   GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpItemTreeViewClass *item_view_class;
-  GimpItem              *active_item;
+  GList                 *selected_items;
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
-  active_item = item_view_class->get_active_item (item_view->priv->image);
-
-  if (active_item == (GimpItem *) viewable)
-    gimp_container_view_select_item (view, viewable);
+  selected_items = item_view_class->get_selected_items (item_view->priv->image);
+  gimp_container_view_select_items (view, selected_items);
 }
 
 static gboolean
@@ -1366,12 +1365,11 @@ static void
 gimp_item_tree_view_item_changed (GimpImage        *image,
                                   GimpItemTreeView *view)
 {
-  GimpItem *item;
+  GList *items;
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (view->priv->image);
+  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (view->priv->image);
 
-  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
-                                   (GimpViewable *) item);
+  gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view), items);
 }
 
 static void

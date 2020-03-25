@@ -129,6 +129,8 @@ void               gimp_container_view_enable_dnd         (GimpContainerView  *e
                                                            GtkButton          *button,
                                                            GType               children_type);
 
+gboolean           gimp_container_view_select_items       (GimpContainerView  *view,
+                                                           GList              *viewables);
 gboolean           gimp_container_view_select_item        (GimpContainerView  *view,
                                                            GimpViewable       *viewable);
 void               gimp_container_view_activate_item      (GimpContainerView  *view,

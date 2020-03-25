@@ -54,9 +54,9 @@ struct _GimpImageClass
   void (* precision_changed)            (GimpImage            *image);
   void (* alpha_changed)                (GimpImage            *image);
   void (* floating_selection_changed)   (GimpImage            *image);
-  void (* active_layer_changed)         (GimpImage            *image);
   void (* active_channel_changed)       (GimpImage            *image);
   void (* active_vectors_changed)       (GimpImage            *image);
+  void (* selected_layers_changed)      (GimpImage            *image);
   void (* linked_items_changed)         (GimpImage            *image);
   void (* component_visibility_changed) (GimpImage            *image,
                                          GimpChannelType       channel);
@@ -367,13 +367,10 @@ GList         * gimp_image_get_channel_list      (GimpImage          *image);
 GList         * gimp_image_get_vectors_list      (GimpImage          *image);
 
 GimpDrawable  * gimp_image_get_active_drawable   (GimpImage          *image);
-GList         * gimp_image_get_selected_layers   (GimpImage          *image);
 GimpLayer     * gimp_image_get_active_layer      (GimpImage          *image);
 GimpChannel   * gimp_image_get_active_channel    (GimpImage          *image);
 GimpVectors   * gimp_image_get_active_vectors    (GimpImage          *image);
 
-GList         * gimp_image_set_selected_layers   (GimpImage          *image,
-                                                  GList              *layers);
 GimpLayer     * gimp_image_set_active_layer      (GimpImage          *image,
                                                   GimpLayer          *layer);
 GimpChannel   * gimp_image_set_active_channel    (GimpImage          *image,
@@ -381,6 +378,13 @@ GimpChannel   * gimp_image_set_active_channel    (GimpImage          *image,
 GimpChannel   * gimp_image_unset_active_channel  (GimpImage          *image);
 GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
                                                   GimpVectors        *vectors);
+
+GList         * gimp_image_get_selected_layers   (GimpImage          *image);
+GList         * gimp_image_get_selected_channels (GimpImage          *image);
+GList         * gimp_image_get_selected_vectors  (GimpImage          *image);
+
+GList         * gimp_image_set_selected_layers   (GimpImage          *image,
+                                                  GList              *layers);
 
 GimpLayer     * gimp_image_get_layer_by_tattoo   (GimpImage          *image,
                                                   GimpTattoo          tattoo);

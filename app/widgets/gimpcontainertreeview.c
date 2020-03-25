@@ -144,6 +144,12 @@ static void          gimp_container_tree_view_expand_rows         (GtkTreeModel 
 
 static void          gimp_container_tree_view_monitor_changed     (GimpContainerTreeView    *view);
 
+static gboolean      gimp_container_tree_view_search_path_foreach (GtkTreeModel             *model,
+                                                                   GtkTreePath              *path,
+                                                                   GtkTreeIter              *iter,
+                                                                   gpointer                  data);
+static GtkTreePath * gimp_container_tree_view_get_path            (GimpContainerTreeView    *tree_view,
+                                                                   GimpViewable             *viewable);
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
                          GIMP_TYPE_CONTAINER_BOX,
@@ -936,8 +942,25 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GList                 *item;
   GList                 *path;
+  gboolean               free_paths = FALSE;
 
-  /*gtk_tree_selection_unselect_all (tree_view->priv->selection);*/
+  /* If @paths is not set, compute it ourselves. */
+  if (g_list_length (items) != g_list_length (paths))
+    {
+      paths = NULL;
+      for (item = items; item; item = item->next)
+        {
+          GtkTreePath *path;
+          path = gimp_container_tree_view_get_path (tree_view, item->data);
+          g_return_val_if_fail (path, FALSE);
+          paths = g_list_prepend (paths, path);
+        }
+
+      paths = g_list_reverse (paths);
+      free_paths = TRUE;
+    }
+
+  gtk_tree_selection_unselect_all (tree_view->priv->selection);
   for (item = items, path = paths; item && path; item = item->next, path = path->next)
     {
       GtkTreePath *parent_path;
@@ -965,6 +988,9 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
       /* TODO: better implementation: only scroll if none of the items
        * are visible. */
     }
+
+  if (free_paths)
+    g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
 
   return TRUE;
 }
@@ -1774,4 +1800,47 @@ gimp_container_tree_view_monitor_changed (GimpContainerTreeView *view)
   gtk_tree_model_foreach (view->model,
                           gimp_container_tree_view_monitor_changed_foreach,
                           NULL);
+}
+
+typedef struct
+{
+    GimpViewable *viewable;
+    GtkTreePath  *path;
+} SearchData;
+
+static gboolean
+gimp_container_tree_view_search_path_foreach (GtkTreeModel *model,
+                                              GtkTreePath  *path,
+                                              GtkTreeIter  *iter,
+                                              gpointer      data)
+{
+  SearchData       *search_data = data;
+  GimpViewRenderer *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  if (renderer->viewable == search_data->viewable)
+    search_data->path = gtk_tree_path_copy (path);
+
+  g_object_unref (renderer);
+
+  return (search_data->path != NULL);
+}
+
+static GtkTreePath *
+gimp_container_tree_view_get_path (GimpContainerTreeView *tree_view,
+                                   GimpViewable          *viewable)
+{
+  SearchData search_data;
+
+  search_data.viewable = viewable;
+  search_data.path     = NULL;
+
+  gtk_tree_model_foreach (GTK_TREE_MODEL (tree_view->model),
+                          (GtkTreeModelForeachFunc) gimp_container_tree_view_search_path_foreach,
+                          &search_data);
+
+  return search_data.path;
 }

@@ -1866,7 +1866,7 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
       g_object_add_weak_pointer (G_OBJECT (text_tool->image),
                                  (gpointer) &text_tool->image);
 
-      g_signal_connect_object (text_tool->image, "active-layer-changed",
+      g_signal_connect_object (text_tool->image, "selected-layers-changed",
                                G_CALLBACK (gimp_text_tool_layer_changed),
                                text_tool, 0);
 
