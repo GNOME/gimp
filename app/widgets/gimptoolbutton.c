@@ -129,6 +129,9 @@ static void         gimp_tool_button_icon_size_notify    (GtkToolPalette      *p
                                                           const GParamSpec    *pspec,
                                                           GimpToolButton      *tool_button);
 
+static gboolean     gimp_tool_button_menu_leave_notify   (GtkMenu             *menu,
+                                                          GdkEventCrossing    *event,
+                                                          GimpToolButton      *tool_button);
 static void         gimp_tool_button_menu_popped_up      (GtkMenu             *menu,
                                                           const GdkRectangle  *flipped_rect,
                                                           const GdkRectangle  *final_rect,
@@ -142,6 +145,7 @@ static gboolean     gimp_tool_button_menu_timeout        (GimpToolButton      *t
 
 static void         gimp_tool_button_update              (GimpToolButton      *tool_button);
 static void         gimp_tool_button_update_toggled      (GimpToolButton      *tool_button);
+static void         gimp_tool_button_update_menu         (GimpToolButton      *tool_button);
 
 static void         gimp_tool_button_add_menu_item       (GimpToolButton      *tool_button,
                                                           GimpToolInfo        *tool_info,
@@ -615,6 +619,20 @@ gimp_tool_button_menu_popped_up (GtkMenu             *menu,
 }
 
 static gboolean
+gimp_tool_button_menu_leave_notify (GtkMenu          *menu,
+                                    GdkEventCrossing *event,
+                                    GimpToolButton   *tool_button)
+{
+  if (event->mode == GDK_CROSSING_NORMAL &&
+      gtk_widget_get_visible (tool_button->priv->menu))
+    {
+      gimp_tool_button_update_menu (tool_button);
+    }
+
+  return FALSE;
+}
+
+static gboolean
 gimp_tool_button_menu_deactivate_idle (gpointer data)
 {
   tools_select_cmd_unblock_initialize ();
@@ -680,6 +698,7 @@ gimp_tool_button_update (GimpToolButton *tool_button)
     }
 
   gimp_tool_button_update_toggled (tool_button);
+  gimp_tool_button_update_menu    (tool_button);
 }
 
 static void
@@ -695,6 +714,23 @@ gimp_tool_button_update_toggled (GimpToolButton *tool_button)
   gtk_toggle_tool_button_set_active (
     GTK_TOGGLE_TOOL_BUTTON (tool_button),
     tool_info && tool_info == gimp_context_get_tool (context));
+}
+
+static void
+gimp_tool_button_update_menu (GimpToolButton *tool_button)
+{
+  if (tool_button->priv->menu &&
+      gtk_widget_get_visible (tool_button->priv->menu))
+    {
+      GimpToolInfo *tool_info = gimp_tool_button_get_tool_info (tool_button);
+
+      if (tool_info)
+        {
+          gtk_menu_shell_select_item (
+            GTK_MENU_SHELL (tool_button->priv->menu),
+            g_hash_table_lookup (tool_button->priv->menu_items, tool_info));
+        }
+    }
 }
 
 static void
@@ -806,6 +842,9 @@ gimp_tool_button_reconstruct_menu (GimpToolButton *tool_button)
       gtk_menu_attach_to_widget (GTK_MENU (tool_button->priv->menu),
                                  GTK_WIDGET (tool_button), NULL);
 
+      g_signal_connect (tool_button->priv->menu, "leave-notify-event",
+                        G_CALLBACK (gimp_tool_button_menu_leave_notify),
+                        tool_button);
       g_signal_connect (tool_button->priv->menu, "popped-up",
                         G_CALLBACK (gimp_tool_button_menu_popped_up),
                         tool_button);
@@ -865,6 +904,8 @@ gimp_tool_button_show_menu (GimpToolButton *tool_button,
     GDK_GRAVITY_NORTH_EAST,
     GDK_GRAVITY_NORTH_WEST,
     trigger_event);
+
+  gimp_tool_button_update_menu (tool_button);
 
   return TRUE;
 }
