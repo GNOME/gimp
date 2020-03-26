@@ -457,9 +457,16 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
   GimpMandala *mandala = GIMP_MANDALA (sym);
   GimpCoords  *coords;
   GimpMatrix3  matrix;
+  gdouble      slice_angle;
+  gdouble      mid_slice_angle = 0.0;
+  gdouble      center_x, center_y;
+  gint         offset_x, offset_y;
   gint         i;
-  gdouble slice_angle;
-  gdouble mid_slice_angle = 0.0;
+
+  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+
+  center_x = mandala->center_x - offset_x;
+  center_y = mandala->center_y - offset_y;
 
   g_list_free_full (sym->strokes, g_free);
   sym->strokes = NULL;
@@ -473,8 +480,8 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
   if (mandala->enable_reflection)
     {
       /* Find out in which slice the user is currently drawing. */
-      gdouble angle = atan2 (sym->origin->y - mandala->center_y,
-                             sym->origin->x - mandala->center_x);
+      gdouble angle = atan2 (sym->origin->y - center_y,
+                             sym->origin->x - center_x);
       gint slice_no = (int) floor(angle/slice_angle);
 
       /* Angle where the middle of that slice is. */
@@ -488,8 +495,8 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
       coords = g_memdup (sym->origin, sizeof (GimpCoords));
       gimp_matrix3_identity (&matrix);
       gimp_matrix3_translate (&matrix,
-                              - mandala->center_x,
-                              - mandala->center_y);
+                              -center_x,
+                              -center_y);
       if (mandala->enable_reflection && i % 2 == 1)
         {
           /* Reflecting over the mid_slice_angle axis, reflects slice without changing position. */
@@ -502,8 +509,8 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
           gimp_matrix3_rotate (&matrix, - i * slice_angle);
         }
       gimp_matrix3_translate (&matrix,
-                              mandala->center_x,
-                              mandala->center_y);
+                              +center_x,
+                              +center_y);
       gimp_matrix3_transform_point (&matrix,
                                     coords->x,
                                     coords->y,
