@@ -143,7 +143,7 @@ typedef enum
 {
   GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_CLICK,               /*< desc="Show on click"                   >*/
   GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER,               /*< desc="Show on hover"                   >*/
-  GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN  /*< desc="Show on hover in single-column"  >*/
+  GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN  /*< desc="Show on hover in single column"  >*/
 } GimpToolGroupMenuMode;
 
 
