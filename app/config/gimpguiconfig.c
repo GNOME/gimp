@@ -77,6 +77,7 @@ enum
   PROP_TOOLBOX_IMAGE_AREA,
   PROP_TOOLBOX_WILBER,
   PROP_TOOLBOX_GROUPS,
+  PROP_TOOLBOX_GROUP_MENU_MODE,
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_ICON_THEME_PATH,
@@ -330,6 +331,14 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             TOOLBOX_GROUPS_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TOOLBOX_GROUP_MENU_MODE,
+                         "toolbox-group-menu-mode",
+                         "Toolbox group menu mode",
+                         TOOLBOX_GROUP_MENU_MODE_BLURB,
+                         GIMP_TYPE_TOOL_GROUP_MENU_MODE,
+                         GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   path = gimp_config_build_data_path ("themes");
   GIMP_CONFIG_PROP_PATH (object_class, PROP_THEME_PATH,
@@ -680,6 +689,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_TOOLBOX_GROUPS:
       gui_config->toolbox_groups = g_value_get_boolean (value);
       break;
+    case PROP_TOOLBOX_GROUP_MENU_MODE:
+      gui_config->toolbox_group_menu_mode = g_value_get_enum (value);
+      break;
      case PROP_THEME_PATH:
       g_free (gui_config->theme_path);
       gui_config->theme_path = g_value_dup_string (value);
@@ -876,6 +888,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_TOOLBOX_GROUPS:
       g_value_set_boolean (value, gui_config->toolbox_groups);
+      break;
+    case PROP_TOOLBOX_GROUP_MENU_MODE:
+      g_value_set_enum (value, gui_config->toolbox_group_menu_mode);
       break;
     case PROP_THEME_PATH:
       g_value_set_string (value, gui_config->theme_path);

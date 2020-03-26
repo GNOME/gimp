@@ -64,30 +64,36 @@ struct _GimpToolPalettePrivate
 #define GET_PRIVATE(p) ((GimpToolPalettePrivate *) gimp_tool_palette_get_instance_private ((GimpToolPalette *) (p)))
 
 
-static void   gimp_tool_palette_finalize            (GObject        *object);
+static void       gimp_tool_palette_finalize                  (GObject          *object);
 
-static void   gimp_tool_palette_size_allocate       (GtkWidget       *widget,
-                                                     GtkAllocation   *allocation);
-static void   gimp_tool_palette_style_set           (GtkWidget       *widget,
-                                                     GtkStyle        *previous_style);
+static void       gimp_tool_palette_size_allocate             (GtkWidget        *widget,
+                                                               GtkAllocation    *allocation);
+static void       gimp_tool_palette_style_set                 (GtkWidget        *widget,
+                                                               GtkStyle         *previous_style);
 
-static void   gimp_tool_palette_tool_add            (GimpContainer   *container,
-                                                     GimpToolItem    *tool_item,
-                                                     GimpToolPalette *palette);
-static void   gimp_tool_palette_tool_remove         (GimpContainer   *container,
-                                                     GimpToolItem    *tool_item,
-                                                     GimpToolPalette *palette);
-static void   gimp_tool_palette_tool_reorder        (GimpContainer   *container,
-                                                     GimpToolItem    *tool_item,
-                                                     gint             index,
-                                                     GimpToolPalette *palette);
+static void       gimp_tool_palette_tool_add                  (GimpContainer    *container,
+                                                               GimpToolItem     *tool_item,
+                                                               GimpToolPalette  *palette);
+static void       gimp_tool_palette_tool_remove               (GimpContainer    *container,
+                                                               GimpToolItem     *tool_item,
+                                                               GimpToolPalette  *palette);
+static void       gimp_tool_palette_tool_reorder              (GimpContainer    *container,
+                                                               GimpToolItem     *tool_item,
+                                                               gint              index,
+                                                               GimpToolPalette  *palette);
 
-static void   gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
-                                                     GimpToolPalette *palette);
+static void       gimp_tool_palette_config_menu_mode_notify   (GimpGuiConfig    *config,
+                                                               const GParamSpec *pspec,
+                                                               GimpToolPalette  *palette);
+static void       gimp_tool_palette_config_size_changed       (GimpGuiConfig    *config,
+                                                               GimpToolPalette  *palette);
 
-static void   gimp_tool_palette_add_button          (GimpToolPalette *palette,
-                                                     GimpToolItem    *tool_item,
-                                                     gint             index);
+static void       gimp_tool_palette_add_button                (GimpToolPalette *palette,
+                                                               GimpToolItem    *tool_item,
+                                                               gint             index);
+
+static gboolean   gimp_tool_palette_get_show_menu_on_hover    (GimpToolPalette *palette);
+static void       gimp_tool_palette_update_show_menu_on_hover (GimpToolPalette *palette);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPalette, gimp_tool_palette,
@@ -144,9 +150,16 @@ gimp_tool_palette_finalize (GObject *object)
       GimpContext *context = gimp_toolbox_get_context (private->toolbox);
 
       if (context)
-        g_signal_handlers_disconnect_by_func (context->gimp->config,
-                                              G_CALLBACK (gimp_tool_palette_config_size_changed),
-                                              object);
+        {
+          g_signal_handlers_disconnect_by_func (
+            context->gimp->config,
+            G_CALLBACK (gimp_tool_palette_config_menu_mode_notify),
+            object);
+          g_signal_handlers_disconnect_by_func (
+            context->gimp->config,
+            G_CALLBACK (gimp_tool_palette_config_size_changed),
+            object);
+        }
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -156,13 +169,14 @@ static void
 gimp_tool_palette_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
+  GimpToolPalette        *palette = GIMP_TOOL_PALETTE (widget);
   GimpToolPalettePrivate *private = GET_PRIVATE (widget);
   gint                    button_width;
   gint                    button_height;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (widget),
+  if (gimp_tool_palette_get_button_size (palette,
                                          &button_width, &button_height))
     {
       GimpToolItem   *tool_item;
@@ -195,6 +209,8 @@ gimp_tool_palette_size_allocate (GtkWidget     *widget,
 
           gtk_widget_set_size_request (widget, -1,
                                        tool_rows * button_height);
+
+          gimp_tool_palette_update_show_menu_on_hover (palette);
         }
     }
 }
@@ -260,10 +276,17 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
   if (private->toolbox)
     {
       context = gimp_toolbox_get_context (private->toolbox);
-      g_signal_handlers_disconnect_by_func (GIMP_GUI_CONFIG (context->gimp->config),
-                                            G_CALLBACK (gimp_tool_palette_config_size_changed),
-                                            palette);
+
+      g_signal_handlers_disconnect_by_func (
+        GIMP_GUI_CONFIG (context->gimp->config),
+        G_CALLBACK (gimp_tool_palette_config_menu_mode_notify),
+        palette);
+      g_signal_handlers_disconnect_by_func (
+        GIMP_GUI_CONFIG (context->gimp->config),
+        G_CALLBACK (gimp_tool_palette_config_size_changed),
+        palette);
     }
+
   private->toolbox = toolbox;
 
   context = gimp_toolbox_get_context (toolbox);
@@ -292,6 +315,12 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
   g_signal_connect_object (context->gimp->tool_item_ui_list, "reorder",
                            G_CALLBACK (gimp_tool_palette_tool_reorder),
                            palette, 0);
+
+  g_signal_connect (GIMP_GUI_CONFIG (context->gimp->config),
+                    "notify::toolbox-group-menu-mode",
+                    G_CALLBACK (gimp_tool_palette_config_menu_mode_notify),
+                    palette);
+  gimp_tool_palette_update_show_menu_on_hover (palette);
 
   /* Update the toolbox icon size on config change. */
   g_signal_connect (GIMP_GUI_CONFIG (context->gimp->config),
@@ -386,6 +415,14 @@ gimp_tool_palette_tool_reorder (GimpContainer   *container,
 }
 
 static void
+gimp_tool_palette_config_menu_mode_notify (GimpGuiConfig    *config,
+                                           const GParamSpec *pspec,
+                                           GimpToolPalette  *palette)
+{
+  gimp_tool_palette_update_show_menu_on_hover (palette);
+}
+
+static void
 gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
                                        GimpToolPalette *palette)
 {
@@ -433,6 +470,9 @@ gimp_tool_palette_add_button (GimpToolPalette *palette,
   tool_button = gimp_tool_button_new (private->toolbox, tool_item);
   gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (private->group),
                               tool_button, index);
+  gimp_tool_button_set_show_menu_on_hover (
+    GIMP_TOOL_BUTTON (tool_button),
+    gimp_tool_palette_get_show_menu_on_hover (palette));
   gtk_widget_show (GTK_WIDGET (tool_button));
 
   g_object_bind_property (tool_item,   "shown",
@@ -451,4 +491,52 @@ gimp_tool_palette_add_button (GimpToolPalette *palette,
   gtk_button_set_relief (GTK_BUTTON (button), relief);
 
   g_hash_table_insert (private->buttons, tool_item, tool_button);
+}
+
+static gboolean
+gimp_tool_palette_get_show_menu_on_hover (GimpToolPalette *palette)
+{
+  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+
+  if (private->toolbox)
+    {
+      GimpContext *context = gimp_toolbox_get_context (private->toolbox);
+
+      if (context)
+        {
+          GimpGuiConfig *config = GIMP_GUI_CONFIG (context->gimp->config);
+
+          switch (config->toolbox_group_menu_mode)
+            {
+            case GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_CLICK:
+              return FALSE;
+
+            case GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER:
+              return TRUE;
+
+            case GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN:
+              return private->tool_columns == 1;
+            }
+        }
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_tool_palette_update_show_menu_on_hover (GimpToolPalette *palette)
+{
+  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+  GHashTableIter          iter;
+  GimpToolButton         *tool_button;
+  gboolean                show_menu_on_hover;
+
+  show_menu_on_hover = gimp_tool_palette_get_show_menu_on_hover (palette);
+
+  g_hash_table_iter_init (&iter, private->buttons);
+
+  while (g_hash_table_iter_next (&iter, NULL, (gpointer *) &tool_button))
+    {
+      gimp_tool_button_set_show_menu_on_hover (tool_button, show_menu_on_hover);
+    }
 }

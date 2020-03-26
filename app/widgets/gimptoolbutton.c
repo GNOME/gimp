@@ -59,7 +59,8 @@ enum
 {
   PROP_0,
   PROP_TOOLBOX,
-  PROP_TOOL_ITEM
+  PROP_TOOL_ITEM,
+  PROP_SHOW_MENU_ON_HOVER
 };
 
 
@@ -67,14 +68,17 @@ struct _GimpToolButtonPrivate
 {
   GimpToolbox  *toolbox;
   GimpToolItem *tool_item;
+  gboolean      show_menu_on_hover;
 
   GtkWidget    *palette;
 
   GtkWidget    *menu;
   GHashTable   *menu_items;
+  gint          menu_idle_id;
   gint          menu_timeout_id;
   gint          menu_timeout_button;
   guint32       menu_timeout_time;
+  gint          menu_select_idle_id;
 };
 
 
@@ -98,6 +102,12 @@ static gboolean     gimp_tool_button_expose              (GtkWidget           *w
 
 static void         gimp_tool_button_toggled             (GtkToggleToolButton *toggle_tool_button);
 
+static gboolean     gimp_tool_button_enter_notify        (GtkWidget           *widget,
+                                                          GdkEventCrossing    *event,
+                                                          GimpToolButton      *tool_button);
+static gboolean     gimp_tool_button_leave_notify        (GtkWidget           *widget,
+                                                          GdkEventCrossing    *event,
+                                                          GimpToolButton      *tool_button);
 static gboolean     gimp_tool_button_button_press        (GtkWidget           *widget,
                                                           GdkEventButton      *event,
                                                           GimpToolButton      *tool_button);
@@ -130,12 +140,16 @@ static void         gimp_tool_button_icon_size_notify    (GtkToolPalette      *p
                                                           const GParamSpec    *pspec,
                                                           GimpToolButton      *tool_button);
 
+static gboolean     gimp_tool_button_menu_enter_notify   (GtkMenu             *menu,
+                                                          GdkEventCrossing    *event,
+                                                          GimpToolButton      *tool_button);
 static gboolean     gimp_tool_button_menu_leave_notify   (GtkMenu             *menu,
                                                           GdkEventCrossing    *event,
                                                           GimpToolButton      *tool_button);
 static void         gimp_tool_button_menu_deactivate     (GtkMenu             *menu,
                                                           GimpToolButton      *tool_button);
 
+static gboolean     gimp_tool_button_menu_idle           (GimpToolButton      *tool_button);
 static gboolean     gimp_tool_button_menu_timeout        (GimpToolButton      *tool_button);
 
 static void         gimp_tool_button_update              (GimpToolButton      *tool_button);
@@ -195,6 +209,12 @@ gimp_tool_button_class_init (GimpToolButtonClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_TOOL_ITEM,
                                                         GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_SHOW_MENU_ON_HOVER,
+                                   g_param_spec_boolean ("show-menu-on-hover",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -222,6 +242,14 @@ gimp_tool_button_constructed (GObject *object)
   gtk_widget_add_events (gtk_bin_get_child (GTK_BIN (tool_button)),
                          GDK_SCROLL_MASK);
 
+  g_signal_connect (gtk_bin_get_child (GTK_BIN (tool_button)),
+                    "enter-notify-event",
+                    G_CALLBACK (gimp_tool_button_enter_notify),
+                    tool_button);
+  g_signal_connect (gtk_bin_get_child (GTK_BIN (tool_button)),
+                    "leave-notify-event",
+                    G_CALLBACK (gimp_tool_button_leave_notify),
+                    tool_button);
   g_signal_connect (gtk_bin_get_child (GTK_BIN (tool_button)),
                     "button-press-event",
                     G_CALLBACK (gimp_tool_button_button_press),
@@ -271,6 +299,11 @@ gimp_tool_button_set_property (GObject      *object,
       gimp_tool_button_set_tool_item (tool_button, g_value_get_object (value));
       break;
 
+    case PROP_SHOW_MENU_ON_HOVER:
+      gimp_tool_button_set_show_menu_on_hover (tool_button,
+                                               g_value_get_boolean (value));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -293,6 +326,10 @@ gimp_tool_button_get_property (GObject    *object,
 
     case PROP_TOOL_ITEM:
       g_value_set_object (value, tool_button->priv->tool_item);
+      break;
+
+    case PROP_SHOW_MENU_ON_HOVER:
+      g_value_set_boolean (value, tool_button->priv->show_menu_on_hover);
       break;
 
     default:
@@ -424,17 +461,72 @@ gimp_tool_button_toggled (GtkToggleToolButton *toggle_tool_button)
 }
 
 static gboolean
+gimp_tool_button_enter_notify (GtkWidget        *widget,
+                               GdkEventCrossing *event,
+                               GimpToolButton   *tool_button)
+{
+  if (tool_button->priv->menu                            &&
+      tool_button->priv->show_menu_on_hover              &&
+      ! gtk_widget_get_visible (tool_button->priv->menu) &&
+      event->mode == GDK_CROSSING_NORMAL                 &&
+      event->state == 0)
+    {
+      if (tool_button->priv->menu_idle_id)
+        {
+          g_source_remove (tool_button->priv->menu_idle_id);
+
+          tool_button->priv->menu_idle_id = 0;
+        }
+
+      gimp_tool_button_show_menu (tool_button, 0, event->time);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_tool_button_leave_notify (GtkWidget        *widget,
+                               GdkEventCrossing *event,
+                               GimpToolButton   *tool_button)
+{
+  if (tool_button->priv->menu               &&
+      tool_button->priv->show_menu_on_hover &&
+      gtk_widget_get_visible (tool_button->priv->menu))
+    {
+      if (event->mode == GDK_CROSSING_NORMAL)
+        {
+          if (! tool_button->priv->menu_idle_id)
+            {
+              tool_button->priv->menu_idle_id = g_idle_add (
+                (GSourceFunc) gimp_tool_button_menu_idle,
+                tool_button);
+            }
+        }
+      else
+        {
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
 gimp_tool_button_button_press (GtkWidget      *widget,
                                GdkEventButton *event,
                                GimpToolButton *tool_button)
 {
-  if (GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
+  if (tool_button->priv->menu)
     {
-      if (gdk_event_triggers_context_menu ((GdkEvent *) event) &&
-          gimp_tool_button_show_menu (tool_button,
-                                      event->button, event->time))
+      if (gtk_widget_get_visible (tool_button->priv->menu))
         {
-          return TRUE;
+          gtk_menu_shell_deactivate (GTK_MENU_SHELL (tool_button->priv->menu));
+        }
+      else if (gdk_event_triggers_context_menu ((GdkEvent *) event) ||
+               tool_button->priv->show_menu_on_hover)
+        {
+          return gimp_tool_button_show_menu (tool_button,
+                                             event->button, event->time);
         }
       else if (event->type == GDK_BUTTON_PRESS && event->button == 1 &&
                ! tool_button->priv->menu_timeout_id)
@@ -603,6 +695,25 @@ gimp_tool_button_icon_size_notify (GtkToolPalette   *palette,
 }
 
 static gboolean
+gimp_tool_button_menu_enter_notify (GtkMenu          *menu,
+                                    GdkEventCrossing *event,
+                                    GimpToolButton   *tool_button)
+{
+  if (tool_button->priv->show_menu_on_hover &&
+      event->mode == GDK_CROSSING_NORMAL)
+    {
+      if (tool_button->priv->menu_idle_id)
+        {
+          g_source_remove (tool_button->priv->menu_idle_id);
+
+          tool_button->priv->menu_idle_id = 0;
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
 gimp_tool_button_menu_leave_notify (GtkMenu          *menu,
                                     GdkEventCrossing *event,
                                     GimpToolButton   *tool_button)
@@ -611,6 +722,14 @@ gimp_tool_button_menu_leave_notify (GtkMenu          *menu,
       gtk_widget_get_visible (tool_button->priv->menu))
     {
       gimp_tool_button_update_menu (tool_button);
+
+      if (tool_button->priv->show_menu_on_hover &&
+          ! tool_button->priv->menu_idle_id)
+        {
+          tool_button->priv->menu_idle_id = g_idle_add (
+            (GSourceFunc) gimp_tool_button_menu_idle,
+            tool_button);
+        }
     }
 
   return FALSE;
@@ -628,7 +747,24 @@ static void
 gimp_tool_button_menu_deactivate (GtkMenu        *menu,
                                   GimpToolButton *tool_button)
 {
+  if (tool_button->priv->menu_select_idle_id)
+    {
+      g_source_remove (tool_button->priv->menu_select_idle_id);
+
+      tool_button->priv->menu_select_idle_id = 0;
+    }
+
   g_idle_add (gimp_tool_button_menu_deactivate_idle, NULL);
+}
+
+static gboolean
+gimp_tool_button_menu_idle (GimpToolButton *tool_button)
+{
+  tool_button->priv->menu_idle_id = 0;
+
+  gtk_menu_shell_deactivate (GTK_MENU_SHELL (tool_button->priv->menu));
+
+  return G_SOURCE_REMOVE;
 }
 
 static gboolean
@@ -664,14 +800,21 @@ gimp_tool_button_update (GimpToolButton *tool_button)
     tool_info ? gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)) :
                 NULL);
 
-  if (action)
+  if (! tool_button->priv->menu || ! tool_button->priv->show_menu_on_hover)
     {
-      gimp_widget_set_accel_help (GTK_WIDGET (tool_button), action);
-    }
-  else if (tool_info)
-    {
-      gimp_help_set_help_data (GTK_WIDGET (tool_button),
-                               tool_info->tooltip, tool_info->help_id);
+      if (action)
+        {
+          gimp_widget_set_accel_help (GTK_WIDGET (tool_button), action);
+        }
+      else if (tool_info)
+        {
+          gimp_help_set_help_data (GTK_WIDGET (tool_button),
+                                   tool_info->tooltip, tool_info->help_id);
+        }
+      else
+        {
+          gimp_help_set_help_data (GTK_WIDGET (tool_button), NULL, NULL);
+        }
     }
   else
     {
@@ -823,6 +966,9 @@ gimp_tool_button_reconstruct_menu (GimpToolButton *tool_button)
       gtk_menu_attach_to_widget (GTK_MENU (tool_button->priv->menu),
                                  GTK_WIDGET (tool_button), NULL);
 
+      g_signal_connect (tool_button->priv->menu, "enter-notify-event",
+                        G_CALLBACK (gimp_tool_button_menu_enter_notify),
+                        tool_button);
       g_signal_connect (tool_button->priv->menu, "leave-notify-event",
                         G_CALLBACK (gimp_tool_button_menu_leave_notify),
                         tool_button);
@@ -857,11 +1003,25 @@ gimp_tool_button_destroy_menu (GimpToolButton *tool_button)
 
       g_clear_pointer (&tool_button->priv->menu_items, g_hash_table_unref);
 
+      if (tool_button->priv->menu_idle_id)
+        {
+          g_source_remove (tool_button->priv->menu_idle_id);
+
+          tool_button->priv->menu_idle_id = 0;
+        }
+
       if (tool_button->priv->menu_timeout_id)
         {
           g_source_remove (tool_button->priv->menu_timeout_id);
 
           tool_button->priv->menu_timeout_id = 0;
+        }
+
+      if (tool_button->priv->menu_select_idle_id)
+        {
+          g_source_remove (tool_button->priv->menu_select_idle_id);
+
+          tool_button->priv->menu_select_idle_id = 0;
         }
     }
 }
@@ -875,6 +1035,16 @@ gimp_tool_button_show_menu_position_func (GtkMenu        *menu,
 {
   gimp_button_menu_position (GTK_WIDGET (tool_button),
                              menu, GTK_POS_RIGHT, x, y);
+}
+
+static gboolean
+gimp_tool_button_show_menu_select_idle (GimpToolButton *tool_button)
+{
+  tool_button->priv->menu_select_idle_id = 0;
+
+  gimp_tool_button_update_menu (tool_button);
+
+  return G_SOURCE_REMOVE;
 }
 
 static gboolean
@@ -895,7 +1065,15 @@ gimp_tool_button_show_menu (GimpToolButton *tool_button,
     tool_button,
     button, activate_time);
 
-  gimp_tool_button_update_menu (tool_button);
+  if (tool_button->priv->show_menu_on_hover)
+    gtk_grab_remove (tool_button->priv->menu);
+
+  if (! tool_button->priv->menu_select_idle_id)
+    {
+      tool_button->priv->menu_select_idle_id = g_idle_add (
+        (GSourceFunc) gimp_tool_button_show_menu_select_idle,
+        tool_button);
+    }
 
   return TRUE;
 }
@@ -1049,4 +1227,28 @@ gimp_tool_button_get_tool_info (GimpToolButton *tool_button)
     }
 
   return NULL;
+}
+
+void
+gimp_tool_button_set_show_menu_on_hover (GimpToolButton *tool_button,
+                                         gboolean        show_menu_on_hover)
+{
+  g_return_if_fail (GIMP_IS_TOOL_BUTTON (tool_button));
+
+  if (show_menu_on_hover != tool_button->priv->show_menu_on_hover)
+    {
+      tool_button->priv->show_menu_on_hover = show_menu_on_hover;
+
+      gimp_tool_button_update (tool_button);
+
+      g_object_notify (G_OBJECT (tool_button), "show-menu-on-hover");
+    }
+}
+
+gboolean
+gimp_tool_button_get_show_menu_on_hover (GimpToolButton *tool_button)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_BUTTON (tool_button), FALSE);
+
+  return tool_button->priv->show_menu_on_hover;
 }

@@ -2160,10 +2160,33 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
 
-  prefs_check_button_add_with_icon (object, "toolbox-groups",
-                                    _("Use tool _groups"),
-                                    NULL,
-                                    GTK_BOX (vbox2), size_group);
+  button = prefs_check_button_add_with_icon (object, "toolbox-groups",
+                                             _("Use tool _groups"),
+                                             NULL,
+                                             GTK_BOX (vbox2), size_group);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (NULL);
+  gtk_misc_set_padding (GTK_MISC (label), 2, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_size_group_add_widget (size_group, label);
+
+  vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (hbox), TRUE);
+  g_object_bind_property (button, "active",
+                          vbox3,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox3));
+
+  prefs_enum_combo_box_add (object, "toolbox-group-menu-mode", 0, 0,
+                            _("_Menu mode:"),
+                            GTK_TABLE (table), 0,
+                            NULL);
 
   g_clear_object (&size_group);
 
