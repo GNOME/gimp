@@ -1214,10 +1214,13 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
                                     GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeViewClass *item_view_class;
-  GimpItemTreeView      *item_view  = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpItemTreeView      *item_view         = GIMP_ITEM_TREE_VIEW (tree_view);
   GList                 *iter;
+  GimpImage             *src_image         = NULL;
   GType                  src_viewable_type = G_TYPE_NONE;
-  gint                   dest_index = -1;
+  gint                   dest_index        = -1;
+
+  g_return_if_fail (g_list_length (src_viewables) > 0);
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
@@ -1225,11 +1228,29 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
     {
       GimpViewable *src_viewable = iter->data;
 
-      /* All dropped viewables must be of the same finale type. */
+      /* All dropped viewables must be of the same finale type and come
+       * from the same source image.
+       */
       if (src_viewable_type == G_TYPE_NONE)
         src_viewable_type = G_TYPE_FROM_INSTANCE (src_viewable);
       else
-        g_return_if_fail (src_viewable_type == G_TYPE_FROM_INSTANCE (src_viewable));
+        {
+          if (g_type_is_a (src_viewable_type,
+                           G_TYPE_FROM_INSTANCE (src_viewable)))
+            /* It is possible to move different types of a same
+             * parenting hierarchy, for instance GimpLayer and
+             * GimpGroupLayer.
+             */
+            src_viewable_type = G_TYPE_FROM_INSTANCE (src_viewable);
+
+          g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
+                                         src_viewable_type));
+        }
+
+      if (src_image == NULL)
+        src_image = gimp_item_get_image (GIMP_ITEM (iter->data));
+      else
+        g_return_if_fail (src_image == gimp_item_get_image (GIMP_ITEM (iter->data)));
     }
 
   if (drop_pos == GTK_TREE_VIEW_DROP_AFTER ||
@@ -1238,16 +1259,20 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
        gimp_viewable_get_children (dest_viewable)))
     src_viewables = g_list_reverse (src_viewables);
 
-  for (iter = src_viewables; iter; iter = iter->next)
+  if (item_view->priv->image != src_image ||
+      ! g_type_is_a (src_viewable_type, item_view_class->item_type))
     {
-      GimpViewable *src_viewable = iter->data;
+      GType item_type = item_view_class->item_type;
 
-      if (item_view->priv->image != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
-          ! g_type_is_a (src_viewable_type, item_view_class->item_type))
+      gimp_image_undo_group_start (item_view->priv->image,
+                                   GIMP_UNDO_GROUP_LAYER_ADD,
+                                   _("Drop layers"));
+
+      for (iter = src_viewables; iter; iter = iter->next)
         {
-          GType     item_type = item_view_class->item_type;
-          GimpItem *new_item;
-          GimpItem *parent;
+          GimpViewable *src_viewable = iter->data;
+          GimpItem     *new_item;
+          GimpItem     *parent;
 
           if (g_type_is_a (src_viewable_type, item_type))
             item_type = G_TYPE_FROM_INSTANCE (src_viewable);
@@ -1264,12 +1289,20 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
           item_view_class->add_item (item_view->priv->image, new_item,
                                      parent, dest_index, TRUE);
         }
-      else if (dest_viewable)
+    }
+  else if (dest_viewable)
+    {
+      gimp_image_undo_group_start (item_view->priv->image,
+                                   GIMP_UNDO_GROUP_IMAGE_ITEM_REORDER,
+                                   GIMP_ITEM_GET_CLASS (src_viewables->data)->reorder_desc);
+
+      for (iter = src_viewables; iter; iter = iter->next)
         {
-          GimpItem *src_parent;
-          GimpItem *dest_parent;
-          gint      src_index;
-          gint      dest_index;
+          GimpViewable *src_viewable = iter->data;
+          GimpItem     *src_parent;
+          GimpItem     *dest_parent;
+          gint          src_index;
+          gint          dest_index;
 
           src_parent = GIMP_ITEM (gimp_viewable_get_parent (src_viewable));
           src_index  = gimp_item_get_index (GIMP_ITEM (src_viewable));
@@ -1292,6 +1325,7 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
         }
     }
 
+  gimp_image_undo_group_end (item_view->priv->image);
   gimp_image_flush (item_view->priv->image);
 }
 
