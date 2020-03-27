@@ -501,14 +501,18 @@ gimp_critical_dialog_new (const gchar *title,
                           gint64       release_timestamp)
 {
   GtkWidget *dialog;
-  GDateTime *datetime;
-  gchar     *date;
+  gchar     *date = NULL;
 
   g_return_val_if_fail (title != NULL, NULL);
 
-  datetime = g_date_time_new_from_unix_local (release_timestamp);
-  date = g_date_time_format (datetime, "%x");
-  g_date_time_unref (datetime);
+  if (release_timestamp > 0)
+    {
+      GDateTime *datetime;
+
+      datetime = g_date_time_new_from_unix_local (release_timestamp);
+      date = g_date_time_format (datetime, "%x");
+      g_date_time_unref (datetime);
+    }
 
   dialog = g_object_new (GIMP_TYPE_CRITICAL_DIALOG,
                          "title",        title,
