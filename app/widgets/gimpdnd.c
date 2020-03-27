@@ -19,6 +19,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <math.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -2167,6 +2168,9 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
   GimpContext  *gimp_context;
   GtkWidget    *view;
   gchar        *desc;
+  gboolean      desc_use_markup = FALSE;
+  gfloat        desc_yalign     = 0.5f;
+  gint          desc_width_chars;
 
   viewables = (* (GimpDndDragViewableListFunc) get_list_func) (widget,
                                                                &gimp_context,
@@ -2175,9 +2179,6 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
   if (! viewables)
     return NULL;
 
-  /* Should we just show one of the viewable? Add a number to show we
-   * are dragging several viewables? Something else? XXX
-   */
   viewable = viewables->data;
 
   GIMP_LOG (DND, "viewable %p", viewable);
@@ -2189,7 +2190,22 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
   view = gimp_view_new (gimp_context, viewable,
                         DRAG_PREVIEW_SIZE, 0, TRUE);
 
-  desc = gimp_viewable_get_description (viewable, NULL);
+  if (g_list_length (viewables) > 1)
+    {
+      /* When dragging multiple viewable, just show the first of them in the
+       * icon box, and the number of viewables being dragged in the
+       * description label (instead of the viewable name).
+       */
+      desc = g_strdup_printf ("<sup><i>(%d)</i></sup>", g_list_length (viewables));
+      desc_use_markup  = TRUE;
+      desc_yalign      = 0.0f;
+      desc_width_chars = (gint) log10 (g_list_length (viewables)) + 3;
+    }
+  else
+    {
+      desc = gimp_viewable_get_description (viewable, NULL);
+      desc_width_chars =  MIN (strlen (desc), 10);
+    }
 
   if (desc)
     {
@@ -2203,10 +2219,11 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
 
       label = g_object_new (GTK_TYPE_LABEL,
                             "label",           desc,
+                            "use-markup",      desc_use_markup,
                             "xalign",          0.0,
-                            "yalign",          0.5,
+                            "yalign",          desc_yalign,
                             "max-width-chars", 30,
-                            "width-chars",     MIN (strlen (desc), 10),
+                            "width-chars",     desc_width_chars,
                             "ellipsize",       PANGO_ELLIPSIZE_END,
                             NULL);
 
