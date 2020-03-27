@@ -1385,15 +1385,18 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                                path_str,
                                                                bevent->state);
 
-                  if (! handled && bevent->type == GDK_BUTTON_RELEASE && ! multisel_mode)
+                  if (! handled && ! multisel_mode)
                     {
-                      /* Handle single click on release only for them to
-                       * not change the selection in case this click
-                       * becomes a drag'n drop action.
-                       */
-                      handled =
-                        gimp_container_view_item_selected (container_view,
-                                                           renderer->viewable);
+                      if (bevent->type == GDK_BUTTON_RELEASE ||
+                          ! gimp_container_view_is_item_selected (container_view, renderer->viewable))
+                        /* If we click on currently selected item,
+                         * handle simple click on release only for it
+                         * to not change a multi-selection in case this
+                         * click becomes a drag'n drop action.
+                         */
+                        handled =
+                          gimp_container_view_item_selected (container_view,
+                                                             renderer->viewable);
                     }
                   /* Multi selection will be handled by gimp_container_tree_view_selection_changed() */
 
