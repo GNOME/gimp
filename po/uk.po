@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-03-17 23:49+0000\n"
-"PO-Revision-Date: 2020-03-18 11:16+0200\n"
+"POT-Creation-Date: 2020-03-26 11:35+0000\n"
+"PO-Revision-Date: 2020-03-28 19:08+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1017,7 +1017,7 @@ msgstr "Редактор пензлів"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:114 ../app/core/gimp-data-factories.c:349
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:3230
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:3253
 msgid "Brushes"
 msgstr "Пензлі"
 
@@ -1101,7 +1101,7 @@ msgstr "Фільтри"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:171 ../app/core/gimp-data-factories.c:383
-#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3260
+#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3283
 msgid "Fonts"
 msgstr "Шрифти"
 
@@ -1112,12 +1112,12 @@ msgstr "Редактор градієнтів"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:177 ../app/core/gimp-data-factories.c:374
-#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3254
+#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3277
 msgid "Gradients"
 msgstr "Градієнти"
 
 #: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:361 ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/dialogs.c:361 ../app/dialogs/preferences-dialog.c:3289
 msgid "Tool Presets"
 msgstr "Шаблони інструментів"
 
@@ -1146,7 +1146,7 @@ msgstr "Шари"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:359
-#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:3295
 msgid "MyPaint Brushes"
 msgstr "Пензлі MyPaint"
 
@@ -1157,17 +1157,17 @@ msgstr "Редактор палітри"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:204 ../app/core/gimp-data-factories.c:369
-#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3248
+#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3271
 msgid "Palettes"
 msgstr "Палітри"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:207 ../app/core/gimp-data-factories.c:364
-#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3242
+#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3265
 msgid "Patterns"
 msgstr "Текстури"
 
-#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3278
+#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3301
 msgid "Plug-ins"
 msgstr "Додатки"
 
@@ -1204,7 +1204,7 @@ msgstr "Текстовий редактор"
 msgid "Tool Options"
 msgstr "Параметри інструменту"
 
-#: ../app/actions/actions.c:234 ../app/widgets/gimptoolpalette.c:271
+#: ../app/actions/actions.c:234 ../app/widgets/gimptoolpalette.c:294
 msgid "Tools"
 msgstr "Інструменти"
 
@@ -5063,600 +5063,605 @@ msgstr "_Матриця Баєра…"
 
 #: ../app/actions/filters-actions.c:193
 msgctxt "filters-action"
+msgid "_Bloom..."
+msgstr "_Флуоресценція…"
+
+#: ../app/actions/filters-actions.c:198
+msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "Яс_кравість-контрастність…"
 
-#: ../app/actions/filters-actions.c:198
+#: ../app/actions/filters-actions.c:203
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "_Мапа рельєфу…"
 
-#: ../app/actions/filters-actions.c:203
+#: ../app/actions/filters-actions.c:208
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "_Колір у відтінки у сірого…"
 
-#: ../app/actions/filters-actions.c:208
+#: ../app/actions/filters-actions.c:213
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "Ескіз…"
 
-#: ../app/actions/filters-actions.c:213
+#: ../app/actions/filters-actions.c:218
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "_Змішувач каналів…."
 
-#: ../app/actions/filters-actions.c:218
+#: ../app/actions/filters-actions.c:223
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "_Шахова дошка…"
 
-#: ../app/actions/filters-actions.c:223
+#: ../app/actions/filters-actions.c:228
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "_Баланс кольорів…"
 
-#: ../app/actions/filters-actions.c:228
+#: ../app/actions/filters-actions.c:233
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "З_амінити колір…"
 
-#: ../app/actions/filters-actions.c:233
+#: ../app/actions/filters-actions.c:238
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Тонування…"
 
-#: ../app/actions/filters-actions.c:238
+#: ../app/actions/filters-actions.c:243
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "З_мішати…"
 
-#: ../app/actions/filters-actions.c:243
+#: ../app/actions/filters-actions.c:248
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "_Повернути кольори…"
 
-#: ../app/actions/filters-actions.c:248
+#: ../app/actions/filters-actions.c:253
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Тем_пература кольору…"
 
-#: ../app/actions/filters-actions.c:253
+#: ../app/actions/filters-actions.c:258
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Колір у _альфу…"
 
-#: ../app/actions/filters-actions.c:258
+#: ../app/actions/filters-actions.c:263
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "_Видобути компонент..."
 
-#: ../app/actions/filters-actions.c:263
+#: ../app/actions/filters-actions.c:268
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "_Матриця згортання…"
 
-#: ../app/actions/filters-actions.c:268
+#: ../app/actions/filters-actions.c:273
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Кубізм…"
 
-#: ../app/actions/filters-actions.c:273
+#: ../app/actions/filters-actions.c:278
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Криві…"
 
-#: ../app/actions/filters-actions.c:278
+#: ../app/actions/filters-actions.c:283
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Усунення черезрядковості…"
 
-#: ../app/actions/filters-actions.c:283
+#: ../app/actions/filters-actions.c:288
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Знебарвити…"
 
-#: ../app/actions/filters-actions.c:288
+#: ../app/actions/filters-actions.c:293
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "Різниця _гаусіанів…"
 
-#: ../app/actions/filters-actions.c:293
+#: ../app/actions/filters-actions.c:298
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "_Дифракційні візерунки…"
 
-#: ../app/actions/filters-actions.c:298
+#: ../app/actions/filters-actions.c:303
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "З_міщення…"
 
-#: ../app/actions/filters-actions.c:303
+#: ../app/actions/filters-actions.c:308
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "Мапа ві_дстані…"
 
-#: ../app/actions/filters-actions.c:308
+#: ../app/actions/filters-actions.c:313
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Опустити тінь…"
 
-#: ../app/actions/filters-actions.c:313
+#: ../app/actions/filters-actions.c:318
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Межа…"
 
-#: ../app/actions/filters-actions.c:318
+#: ../app/actions/filters-actions.c:323
 msgctxt "filters-action"
 msgid "_Laplace"
 msgstr "_Лаплас"
 
-#: ../app/actions/filters-actions.c:323
+#: ../app/actions/filters-actions.c:328
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Неон…"
 
-#: ../app/actions/filters-actions.c:328
+#: ../app/actions/filters-actions.c:333
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Собель…"
 
-#: ../app/actions/filters-actions.c:333
+#: ../app/actions/filters-actions.c:338
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Карбування…"
 
-#: ../app/actions/filters-actions.c:338
+#: ../app/actions/filters-actions.c:343
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Гравірування…"
 
-#: ../app/actions/filters-actions.c:343
+#: ../app/actions/filters-actions.c:348
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Експозиція…"
 
-#: ../app/actions/filters-actions.c:348
+#: ../app/actions/filters-actions.c:353
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Фаттал та ін. 2002…"
 
-#: ../app/actions/filters-actions.c:353
+#: ../app/actions/filters-actions.c:358
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "_Фрактальний слід…"
 
-#: ../app/actions/filters-actions.c:358
+#: ../app/actions/filters-actions.c:363
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Розмиття за Гаусом…"
 
-#: ../app/actions/filters-actions.c:363
+#: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Вибіркове розмиття за Гаусом…"
 
-#: ../app/actions/filters-actions.c:368
+#: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_GEGL graph..."
 msgstr "_Граф GEGL…"
 
-#: ../app/actions/filters-actions.c:373
+#: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Сітка…"
 
-#: ../app/actions/filters-actions.c:378
+#: ../app/actions/filters-actions.c:383
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "В_исокі частоти…"
 
-#: ../app/actions/filters-actions.c:383
+#: ../app/actions/filters-actions.c:388
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Відтінок та _колірність…"
 
-#: ../app/actions/filters-actions.c:388
+#: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Відтінок та _насиченість…"
 
-#: ../app/actions/filters-actions.c:393
+#: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Ілюзія"
 
-#: ../app/actions/filters-actions.c:398
+#: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "Г_радієнт зображення…"
 
-#: ../app/actions/filters-actions.c:403
+#: ../app/actions/filters-actions.c:408
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Калейдоскоп…"
 
-#: ../app/actions/filters-actions.c:408
+#: ../app/actions/filters-actions.c:413
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Ви_кривлення об'єктивом…"
 
-#: ../app/actions/filters-actions.c:413
+#: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "Від_блиск об'єктива…"
 
-#: ../app/actions/filters-actions.c:418
+#: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Рівні…"
 
-#: ../app/actions/filters-actions.c:423
+#: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Лінійний синусоїдальний…"
 
-#: ../app/actions/filters-actions.c:428
+#: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "_Мала планета..."
 
-#: ../app/actions/filters-actions.c:433
+#: ../app/actions/filters-actions.c:438
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Довга тінь…"
 
-#: ../app/actions/filters-actions.c:438
+#: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Мантюк 2006…"
 
-#: ../app/actions/filters-actions.c:443
+#: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Лабіринт…"
 
-#: ../app/actions/filters-actions.c:448
+#: ../app/actions/filters-actions.c:453
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "Розмиття за медіанною _кривиною…"
 
-#: ../app/actions/filters-actions.c:453
+#: ../app/actions/filters-actions.c:458
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "М_едіанне розмиття…"
 
-#: ../app/actions/filters-actions.c:458
+#: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "Мо_номікшер…"
 
-#: ../app/actions/filters-actions.c:463
+#: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Мозаїка"
 
-#: ../app/actions/filters-actions.c:468
+#: ../app/actions/filters-actions.c:473
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Кругове розмиття рухом…"
 
-#: ../app/actions/filters-actions.c:473
+#: ../app/actions/filters-actions.c:478
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Лінійне розмиття рухом…"
 
-#: ../app/actions/filters-actions.c:478
+#: ../app/actions/filters-actions.c:483
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Масштабоване розмиття рухом"
 
-#: ../app/actions/filters-actions.c:483
+#: ../app/actions/filters-actions.c:488
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Клітинковий шум…"
 
-#: ../app/actions/filters-actions.c:488
+#: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "_Газетний папір…"
 
-#: ../app/actions/filters-actions.c:493
+#: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "Ш_ум CIE lch…"
 
-#: ../app/actions/filters-actions.c:498
+#: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "_Шум HSV…"
 
-#: ../app/actions/filters-actions.c:503
+#: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Жбурляння…"
 
-#: ../app/actions/filters-actions.c:508
+#: ../app/actions/filters-actions.c:513
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "Шу_м Перліна…"
 
-#: ../app/actions/filters-actions.c:513
+#: ../app/actions/filters-actions.c:518
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Відібрати…"
 
-#: ../app/actions/filters-actions.c:518
+#: ../app/actions/filters-actions.c:523
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB Шум…"
 
-#: ../app/actions/filters-actions.c:523
+#: ../app/actions/filters-actions.c:528
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Зменшення _шуму…"
 
-#: ../app/actions/filters-actions.c:528
+#: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Симплексний шум…"
 
-#: ../app/actions/filters-actions.c:533
+#: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Пляма…"
 
-#: ../app/actions/filters-actions.c:538
+#: ../app/actions/filters-actions.c:543
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Суцільний шум…"
 
-#: ../app/actions/filters-actions.c:543
+#: ../app/actions/filters-actions.c:548
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Роз_сіювання…"
 
-#: ../app/actions/filters-actions.c:548
+#: ../app/actions/filters-actions.c:553
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Мапа нормалей…"
 
-#: ../app/actions/filters-actions.c:553
+#: ../app/actions/filters-actions.c:558
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "З_сув…"
 
-#: ../app/actions/filters-actions.c:558
+#: ../app/actions/filters-actions.c:563
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "_Олійна фарба…"
 
-#: ../app/actions/filters-actions.c:563
+#: ../app/actions/filters-actions.c:568
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Панорамна проєкція…"
 
-#: ../app/actions/filters-actions.c:568
+#: ../app/actions/filters-actions.c:573
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Фотокопія…"
 
-#: ../app/actions/filters-actions.c:573
+#: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Пікселізація…"
 
-#: ../app/actions/filters-actions.c:578
+#: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Плазма…"
 
-#: ../app/actions/filters-actions.c:583
+#: ../app/actions/filters-actions.c:588
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "П_олярні координати…"
 
-#: ../app/actions/filters-actions.c:588
+#: ../app/actions/filters-actions.c:593
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "По_стеризація…"
 
-#: ../app/actions/filters-actions.c:593
+#: ../app/actions/filters-actions.c:598
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Рекурсивне перетворення…"
 
-#: ../app/actions/filters-actions.c:598
+#: ../app/actions/filters-actions.c:603
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Усунення червоних очей…"
 
-#: ../app/actions/filters-actions.c:603
+#: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Райнгард 2005…"
 
-#: ../app/actions/filters-actions.c:608
+#: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_Обрізання RGB…"
 
-#: ../app/actions/filters-actions.c:613
+#: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Брижі…"
 
-#: ../app/actions/filters-actions.c:618
+#: ../app/actions/filters-actions.c:623
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Насиченість…"
 
-#: ../app/actions/filters-actions.c:623
+#: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Напівсплющення…"
 
-#: ../app/actions/filters-actions.c:628
+#: ../app/actions/filters-actions.c:633
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Сепія..."
 
-#: ../app/actions/filters-actions.c:633
+#: ../app/actions/filters-actions.c:638
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Тіні-виблиски…"
 
-#: ../app/actions/filters-actions.c:638
+#: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Зсув..."
 
-#: ../app/actions/filters-actions.c:643
+#: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Синус…"
 
-#: ../app/actions/filters-actions.c:648
+#: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Проста лінійна ітеративна кластеризація…"
 
-#: ../app/actions/filters-actions.c:653
+#: ../app/actions/filters-actions.c:658
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Найближча сусідня симетрія…"
 
-#: ../app/actions/filters-actions.c:658
+#: ../app/actions/filters-actions.c:663
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_М'яке світло…"
 
-#: ../app/actions/filters-actions.c:663
+#: ../app/actions/filters-actions.c:668
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "С_феричність…"
 
-#: ../app/actions/filters-actions.c:668
+#: ../app/actions/filters-actions.c:673
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "С_піраль…"
 
-#: ../app/actions/filters-actions.c:673
+#: ../app/actions/filters-actions.c:678
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Розтягнути контрастність…"
 
-#: ../app/actions/filters-actions.c:678
+#: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Напруження…"
 
-#: ../app/actions/filters-actions.c:683
+#: ../app/actions/filters-actions.c:688
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Наднова..."
 
-#: ../app/actions/filters-actions.c:688
+#: ../app/actions/filters-actions.c:693
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Поріг…"
 
-#: ../app/actions/filters-actions.c:693
+#: ../app/actions/filters-actions.c:698
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Порогова альфа…"
 
-#: ../app/actions/filters-actions.c:698
+#: ../app/actions/filters-actions.c:703
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Скляна плитка…"
 
-#: ../app/actions/filters-actions.c:703
+#: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Паперова плитка…"
 
-#: ../app/actions/filters-actions.c:708
+#: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Плитка без швів…"
 
-#: ../app/actions/filters-actions.c:713
+#: ../app/actions/filters-actions.c:718
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Чіткість (_нечітка маска)..."
 
-#: ../app/actions/filters-actions.c:718
+#: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "По_ширення значення…"
 
-#: ../app/actions/filters-actions.c:723
+#: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Деградація відео…"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Віньєтка…"
 
-#: ../app/actions/filters-actions.c:733
+#: ../app/actions/filters-actions.c:738
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "Во_дяні пікселі…"
 
-#: ../app/actions/filters-actions.c:738
+#: ../app/actions/filters-actions.c:743
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Хвилі…"
 
-#: ../app/actions/filters-actions.c:743
+#: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Вихор та щипок..."
 
-#: ../app/actions/filters-actions.c:748
+#: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Вітер…"
 
-#: ../app/actions/filters-actions.c:756
+#: ../app/actions/filters-actions.c:761
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Повторити останній"
 
-#: ../app/actions/filters-actions.c:758
+#: ../app/actions/filters-actions.c:763
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Повторно застосувати останній використаний фільтр із тими самими параметрами"
 
-#: ../app/actions/filters-actions.c:763
+#: ../app/actions/filters-actions.c:768
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "П_овторити зі змінами"
 
-#: ../app/actions/filters-actions.c:764
+#: ../app/actions/filters-actions.c:769
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Знову відкрити діалог останнього використаного фільтру"
 
-#: ../app/actions/filters-actions.c:1102
+#: ../app/actions/filters-actions.c:1108
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Пов_торити \"%s\""
 
-#: ../app/actions/filters-actions.c:1103
+#: ../app/actions/filters-actions.c:1109
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторити з налаштуванням «%s»"
 
-#: ../app/actions/filters-actions.c:1141
+#: ../app/actions/filters-actions.c:1147
 msgid "Repeat Last"
 msgstr "Повторити останній"
 
-#: ../app/actions/filters-actions.c:1143
+#: ../app/actions/filters-actions.c:1149
 msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
 
@@ -10794,26 +10799,44 @@ msgid "Switch to Move tool"
 msgstr "Перемикнутися на інструмент переміщення"
 
 #: ../app/config/config-enums.c:317
+#| msgid "How to clip"
+msgctxt "tool-group-menu-mode"
+msgid "Show on click"
+msgstr "Показувати при клацанні"
+
+#: ../app/config/config-enums.c:318
+#| msgctxt "dockable-action"
+#| msgid "Show _Button Bar"
+msgctxt "tool-group-menu-mode"
+msgid "Show on hover"
+msgstr "Показувати при наведенні"
+
+#: ../app/config/config-enums.c:319
+msgctxt "tool-group-menu-mode"
+msgid "Show on hover in single-column"
+msgstr "Показувати у один стовпчик при наведенні"
+
+#: ../app/config/config-enums.c:348
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "Звичайне вікно"
 
-#: ../app/config/config-enums.c:318
+#: ../app/config/config-enums.c:349
 msgctxt "window-hint"
 msgid "Utility window"
 msgstr "Допоміжне вікно"
 
-#: ../app/config/config-enums.c:319
+#: ../app/config/config-enums.c:350
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "Завжди згори"
 
-#: ../app/config/config-enums.c:347
+#: ../app/config/config-enums.c:378
 msgctxt "zoom-quality"
 msgid "Low"
 msgstr "Низька"
 
-#: ../app/config/config-enums.c:348
+#: ../app/config/config-enums.c:379
 msgctxt "zoom-quality"
 msgid "High"
 msgstr "Висока"
@@ -11780,31 +11803,36 @@ msgstr ""
 "Показувати активний пензель, текстуру та градієнт у панелі інструментів."
 
 #: ../app/config/gimprc-blurbs.h:686
+#| msgid "Use a single toolbox button for grouped tools."
+msgid "Menu mode of grouped tools."
+msgstr "Режим меню для згрупованих інструментів."
+
+#: ../app/config/gimprc-blurbs.h:689
 msgid "Use a single toolbox button for grouped tools."
 msgstr ""
 "Використовувати єдину кнопку набору інструментів для згрупованих "
 "інструментів."
 
-#: ../app/config/gimprc-blurbs.h:689
+#: ../app/config/gimprc-blurbs.h:692
 msgid "Show the currently active image in the toolbox."
 msgstr "Показувати активне зображення у панелі інструментів."
 
-#: ../app/config/gimprc-blurbs.h:695
+#: ../app/config/gimprc-blurbs.h:698
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Визначає як показувати прозорість у зображенні."
 
-#: ../app/config/gimprc-blurbs.h:698
+#: ../app/config/gimprc-blurbs.h:701
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Встановлює розмір шахових клітин, що показують прозорість."
 
-#: ../app/config/gimprc-blurbs.h:701
+#: ../app/config/gimprc-blurbs.h:704
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
 "Якщо увімкнено, файли, що не змінилися після завантаження не зберігатимуться."
 
-#: ../app/config/gimprc-blurbs.h:705
+#: ../app/config/gimprc-blurbs.h:708
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -11813,7 +11841,7 @@ msgstr ""
 "скасування операцій доступна доки не вичерпається пам'ять, відведена для "
 "скасування операцій."
 
-#: ../app/config/gimprc-blurbs.h:709
+#: ../app/config/gimprc-blurbs.h:712
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -11823,25 +11851,25 @@ msgstr ""
 "зображенні. Незалежно від цього параметра, можна зробити принаймні стільки "
 "скасувань операцій, скільки вказано в конфігурації."
 
-#: ../app/config/gimprc-blurbs.h:714
+#: ../app/config/gimprc-blurbs.h:717
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Встановлює розмір попереднього перегляду у вікні історії скасувань."
 
-#: ../app/config/gimprc-blurbs.h:717
+#: ../app/config/gimprc-blurbs.h:720
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Якщо ввімкнено, при натисканні на F1 відкривається довідка."
 
-#: ../app/config/gimprc-blurbs.h:720
+#: ../app/config/gimprc-blurbs.h:723
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "При увімкненні меню використовується OpenCL для деяких операцій."
 
-#: ../app/config/gimprc-blurbs.h:738
+#: ../app/config/gimprc-blurbs.h:741
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 "Якщо позначено, під час пошуку дій програма показуватиме знайдені неактивні "
 "дії."
 
-#: ../app/config/gimprc-blurbs.h:741
+#: ../app/config/gimprc-blurbs.h:744
 msgid "The maximum number of actions saved in history."
 msgstr "Максимальна кількість записів дій, які зберігатимуться у журналі."
 
@@ -12780,7 +12808,7 @@ msgid "Parasites"
 msgstr "Шуми"
 
 #. initialize the module list
-#: ../app/core/gimp.c:813 ../app/dialogs/preferences-dialog.c:3290
+#: ../app/core/gimp.c:813 ../app/dialogs/preferences-dialog.c:3313
 msgid "Modules"
 msgstr "Модулі"
 
@@ -12800,7 +12828,7 @@ msgstr "Не вдалось вилучити «%s»: %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:354 ../app/core/gimpcontext.c:722
-#: ../app/dialogs/preferences-dialog.c:3236
+#: ../app/dialogs/preferences-dialog.c:3259
 #: ../app/tools/gimppaintoptions-gui.c:221
 msgid "Dynamics"
 msgstr "Динаміка малювання"
@@ -16029,12 +16057,12 @@ msgstr ""
 "типові значення."
 
 #: ../app/dialogs/preferences-dialog.c:850
-#: ../app/dialogs/preferences-dialog.c:2575
+#: ../app/dialogs/preferences-dialog.c:2598
 msgid "There's a local installation of the user manual."
 msgstr "Посібник користувача встановлено локально"
 
 #: ../app/dialogs/preferences-dialog.c:855
-#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/dialogs/preferences-dialog.c:2604
 msgid "The user manual is not installed locally."
 msgstr "Посібник користувача не встановлено локально"
 
@@ -16351,7 +16379,7 @@ msgstr "Поведінка при відкриванні _файла:"
 
 #. Filter Dialogs
 #: ../app/dialogs/preferences-dialog.c:1492
-#: ../app/dialogs/preferences-dialog.c:2286
+#: ../app/dialogs/preferences-dialog.c:2309
 msgid "Filter Dialogs"
 msgstr "Вікна фільтрування"
 
@@ -16479,9 +16507,9 @@ msgstr "Параметри інструменту"
 #. General
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1670
-#: ../app/dialogs/preferences-dialog.c:2519
-#: ../app/dialogs/preferences-dialog.c:2845
-#: ../app/dialogs/preferences-dialog.c:3089
+#: ../app/dialogs/preferences-dialog.c:2542
+#: ../app/dialogs/preferences-dialog.c:2868
+#: ../app/dialogs/preferences-dialog.c:3112
 #: ../app/widgets/gimpcontrollereditor.c:187
 msgid "General"
 msgstr "Загальне"
@@ -16657,7 +16685,7 @@ msgstr "Панель інструментів"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2139
-#: ../app/dialogs/preferences-dialog.c:2928 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2951 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
@@ -16681,325 +16709,330 @@ msgstr "Показувати _активне зображення"
 msgid "Use tool _groups"
 msgstr "_Групувати інструменти"
 
+#: ../app/dialogs/preferences-dialog.c:2187
+#| msgid "_Mode:"
+msgid "_Menu mode:"
+msgstr "Режим _меню:"
+
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:2171
+#: ../app/dialogs/preferences-dialog.c:2194
 msgid "Tools Configuration"
 msgstr "Конфігурація інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:2186
-#: ../app/dialogs/preferences-dialog.c:2187
+#: ../app/dialogs/preferences-dialog.c:2209
+#: ../app/dialogs/preferences-dialog.c:2210
 msgid "Dialog Defaults"
 msgstr "Типові параметри вікон"
 
-#: ../app/dialogs/preferences-dialog.c:2196
+#: ../app/dialogs/preferences-dialog.c:2219
 msgid "Reset Dialog _Defaults"
 msgstr "Відновити _типові параметри"
 
 #. Color profile import dialog
-#: ../app/dialogs/preferences-dialog.c:2204
+#: ../app/dialogs/preferences-dialog.c:2227
 msgid "Color Profile Import Dialog"
 msgstr "Вікно імпортування профілю кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2209
+#: ../app/dialogs/preferences-dialog.c:2232
 msgid "Color profile policy:"
 msgstr "Правила профілів кольорів:"
 
 #. All color profile chooser dialogs
-#: ../app/dialogs/preferences-dialog.c:2213
+#: ../app/dialogs/preferences-dialog.c:2236
 msgid "Color Profile File Dialogs"
 msgstr "Вікна файлів профілів кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2218
+#: ../app/dialogs/preferences-dialog.c:2241
 msgid "Profile folder:"
 msgstr "Тека профілів:"
 
-#: ../app/dialogs/preferences-dialog.c:2219
+#: ../app/dialogs/preferences-dialog.c:2242
 msgid "Select Default Folder for Color Profiles"
 msgstr "Виберіть типову теку для профілів кольорів"
 
 #. Convert to Color Profile Dialog
-#: ../app/dialogs/preferences-dialog.c:2223
+#: ../app/dialogs/preferences-dialog.c:2246
 msgid "Convert to Color Profile Dialog"
 msgstr "Вікно перетворення до профілю кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2228
+#: ../app/dialogs/preferences-dialog.c:2251
 msgid "Rendering intent:"
 msgstr "Відтворення кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:2232
+#: ../app/dialogs/preferences-dialog.c:2255
 msgid "Black point compensation"
 msgstr "Компенсація чорної точки"
 
 #. Convert Precision Dialog
-#: ../app/dialogs/preferences-dialog.c:2236
+#: ../app/dialogs/preferences-dialog.c:2259
 msgid "Precision Conversion Dialog"
 msgstr "Вікно перетворення точності"
 
-#: ../app/dialogs/preferences-dialog.c:2243
+#: ../app/dialogs/preferences-dialog.c:2266
 msgid "Dither layers:"
 msgstr "Розмивання шарів:"
 
-#: ../app/dialogs/preferences-dialog.c:2248
+#: ../app/dialogs/preferences-dialog.c:2271
 msgid "Dither text layers:"
 msgstr "Розмивання текстових шарів:"
 
-#: ../app/dialogs/preferences-dialog.c:2253
+#: ../app/dialogs/preferences-dialog.c:2276
 msgid "Dither channels/masks:"
 msgstr "Розмивання каналів/масок:"
 
 #. Convert Indexed Dialog
-#: ../app/dialogs/preferences-dialog.c:2257
+#: ../app/dialogs/preferences-dialog.c:2280
 msgid "Indexed Conversion Dialog"
 msgstr "Вікно перетворення зображення на індексоване"
 
-#: ../app/dialogs/preferences-dialog.c:2262
+#: ../app/dialogs/preferences-dialog.c:2285
 msgid "Colormap:"
 msgstr "Мапа кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:2265
+#: ../app/dialogs/preferences-dialog.c:2288
 msgid "Maximum number of colors:"
 msgstr "Максимальна кількість кольорів:"
 
-#: ../app/dialogs/preferences-dialog.c:2269
+#: ../app/dialogs/preferences-dialog.c:2292
 msgid "Remove unused and duplicate colors from colormap"
 msgstr "Вилучити невикористані кольори та дублікати з мапи кольорів"
 
-#: ../app/dialogs/preferences-dialog.c:2275
+#: ../app/dialogs/preferences-dialog.c:2298
 msgid "Color dithering:"
 msgstr "Розмиття кольору:"
 
-#: ../app/dialogs/preferences-dialog.c:2279
+#: ../app/dialogs/preferences-dialog.c:2302
 msgid "Enable dithering of transparency"
 msgstr "Увімкнути розмивання прозорості"
 
-#: ../app/dialogs/preferences-dialog.c:2282
+#: ../app/dialogs/preferences-dialog.c:2305
 msgid "Enable dithering of text layers"
 msgstr "Увімкнути розмивання _текстових шарів"
 
-#: ../app/dialogs/preferences-dialog.c:2291
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "Keep recent settings:"
 msgstr "К-ть збережених параметрів:"
 
-#: ../app/dialogs/preferences-dialog.c:2295
+#: ../app/dialogs/preferences-dialog.c:2318
 msgid "Default to the last used settings"
 msgstr "Типово використовувати останні параметри"
 
-#: ../app/dialogs/preferences-dialog.c:2298
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "Show advanced color options"
 msgstr "Показати розширені параметри кольорів"
 
 #. Canvas Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2302
+#: ../app/dialogs/preferences-dialog.c:2325
 msgid "Canvas Size Dialog"
 msgstr "Вікно розмірів полотна"
 
-#: ../app/dialogs/preferences-dialog.c:2307
-#: ../app/dialogs/preferences-dialog.c:2336
+#: ../app/dialogs/preferences-dialog.c:2330
+#: ../app/dialogs/preferences-dialog.c:2359
 msgid "Fill with:"
 msgstr "Заповнення:"
 
-#: ../app/dialogs/preferences-dialog.c:2310
+#: ../app/dialogs/preferences-dialog.c:2333
 msgid "Resize layers:"
 msgstr "Змінити розмір шарів:"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2337
 msgid "Resize text layers"
 msgstr "Змінити розмір текстових шарів"
 
 #. New Layer Dialog
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2341
 msgid "New Layer Dialog"
 msgstr "Вікно створення шару"
 
-#: ../app/dialogs/preferences-dialog.c:2323
+#: ../app/dialogs/preferences-dialog.c:2346
 msgid "Layer name:"
 msgstr "Назва шару:"
 
-#: ../app/dialogs/preferences-dialog.c:2327
+#: ../app/dialogs/preferences-dialog.c:2350
 msgid "Fill type:"
 msgstr "Тип заповнення:"
 
 #. Layer Boundary Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2331
+#: ../app/dialogs/preferences-dialog.c:2354
 msgid "Layer Boundary Size Dialog"
 msgstr "Вікно розмірів меж шару"
 
 #. Add Layer Mask Dialog
-#: ../app/dialogs/preferences-dialog.c:2340
+#: ../app/dialogs/preferences-dialog.c:2363
 msgid "Add Layer Mask Dialog"
 msgstr "Вікно додавання маски шару"
 
-#: ../app/dialogs/preferences-dialog.c:2345
+#: ../app/dialogs/preferences-dialog.c:2368
 msgid "Layer mask type:"
 msgstr "Тип маски шару:"
 
-#: ../app/dialogs/preferences-dialog.c:2349
+#: ../app/dialogs/preferences-dialog.c:2372
 msgid "Invert mask"
 msgstr "Інвертувати маску"
 
 #. Merge Layers Dialog
-#: ../app/dialogs/preferences-dialog.c:2353
+#: ../app/dialogs/preferences-dialog.c:2376
 msgid "Merge Layers Dialog"
 msgstr "Вікно об'єднання шарів"
 
-#: ../app/dialogs/preferences-dialog.c:2360
+#: ../app/dialogs/preferences-dialog.c:2383
 msgid "Merged layer size:"
 msgstr "Розмір об'єднаного шару:"
 
-#: ../app/dialogs/preferences-dialog.c:2364
+#: ../app/dialogs/preferences-dialog.c:2387
 msgid "Merge within active group only"
 msgstr "Об'єднувати лише у межах активної групи"
 
-#: ../app/dialogs/preferences-dialog.c:2367
+#: ../app/dialogs/preferences-dialog.c:2390
 msgid "Discard invisible layers"
 msgstr "Відкинути невидимі шари"
 
 #. New Channel Dialog
-#: ../app/dialogs/preferences-dialog.c:2371
+#: ../app/dialogs/preferences-dialog.c:2394
 msgid "New Channel Dialog"
 msgstr "Діалог Новий канал"
 
-#: ../app/dialogs/preferences-dialog.c:2376
+#: ../app/dialogs/preferences-dialog.c:2399
 msgid "Channel name:"
 msgstr "Назва каналу:"
 
-#: ../app/dialogs/preferences-dialog.c:2380
+#: ../app/dialogs/preferences-dialog.c:2403
 msgid "Color and opacity:"
 msgstr "Колір і непрозорість:"
 
-#: ../app/dialogs/preferences-dialog.c:2381
+#: ../app/dialogs/preferences-dialog.c:2404
 msgid "Default New Channel Color and Opacity"
 msgstr "Типовий колір та прозорість нового каналу"
 
 #. New Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2386
+#: ../app/dialogs/preferences-dialog.c:2409
 msgid "New Path Dialog"
 msgstr "Вікно створення контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2391
+#: ../app/dialogs/preferences-dialog.c:2414
 msgid "Path name:"
 msgstr "Назва контуру:"
 
 #. Export Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2395
+#: ../app/dialogs/preferences-dialog.c:2418
 msgid "Export Paths Dialog"
 msgstr "Вікно експортування контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2400
+#: ../app/dialogs/preferences-dialog.c:2423
 msgid "Export folder:"
 msgstr "Тека експортування:"
 
-#: ../app/dialogs/preferences-dialog.c:2401
+#: ../app/dialogs/preferences-dialog.c:2424
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Виберіть типову теку для експортованих контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2405
+#: ../app/dialogs/preferences-dialog.c:2428
 msgid "Export the active path only"
 msgstr "Експортувати лише активний контур"
 
 #. Import Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2409
+#: ../app/dialogs/preferences-dialog.c:2432
 msgid "Import Paths Dialog"
 msgstr "Діалог Шлях імпорту"
 
-#: ../app/dialogs/preferences-dialog.c:2414
+#: ../app/dialogs/preferences-dialog.c:2437
 msgid "Import folder:"
 msgstr "Тека імпорту:"
 
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2438
 msgid "Select Default Folder for Importing Paths"
 msgstr "Виберіть типову теку для імпортування контурів"
 
-#: ../app/dialogs/preferences-dialog.c:2419
+#: ../app/dialogs/preferences-dialog.c:2442
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
 
-#: ../app/dialogs/preferences-dialog.c:2422
+#: ../app/dialogs/preferences-dialog.c:2445
 msgid "Scale imported paths"
 msgstr "Масштабувати імпортовані контури"
 
 #. Feather Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/preferences-dialog.c:2449
 msgid "Feather Selection Dialog"
 msgstr "Вікно вибору розмиванням"
 
-#: ../app/dialogs/preferences-dialog.c:2431
+#: ../app/dialogs/preferences-dialog.c:2454
 msgid "Feather radius:"
 msgstr "Радіус пера:"
 
-#: ../app/dialogs/preferences-dialog.c:2435
-#: ../app/dialogs/preferences-dialog.c:2457
-#: ../app/dialogs/preferences-dialog.c:2474
+#: ../app/dialogs/preferences-dialog.c:2458
+#: ../app/dialogs/preferences-dialog.c:2480
+#: ../app/dialogs/preferences-dialog.c:2497
 msgid "Selected areas continue outside the image"
 msgstr "Позначені ділянки продовжити за межі зображення"
 
 #. Grow Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2439
+#: ../app/dialogs/preferences-dialog.c:2462
 msgid "Grow Selection Dialog"
 msgstr "Вікно збільшення позначеного"
 
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2467
 msgid "Grow radius:"
 msgstr "Радіус збільшення:"
 
 #. Shrink Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2448
+#: ../app/dialogs/preferences-dialog.c:2471
 msgid "Shrink Selection Dialog"
 msgstr "Вікно зменшення позначеного"
 
-#: ../app/dialogs/preferences-dialog.c:2453
+#: ../app/dialogs/preferences-dialog.c:2476
 msgid "Shrink radius:"
 msgstr "Радіус зменшення:"
 
 #. Border Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2461
+#: ../app/dialogs/preferences-dialog.c:2484
 msgid "Border Selection Dialog"
 msgstr "Вікно вибору рамки"
 
-#: ../app/dialogs/preferences-dialog.c:2466
+#: ../app/dialogs/preferences-dialog.c:2489
 msgid "Border radius:"
 msgstr "Радіус рамки:"
 
-#: ../app/dialogs/preferences-dialog.c:2470
+#: ../app/dialogs/preferences-dialog.c:2493
 msgid "Border style:"
 msgstr "Стиль рамки:"
 
 #. Fill Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2478
+#: ../app/dialogs/preferences-dialog.c:2501
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "Вікна «Заповнити контур позначеного» та «Заповнити контур»"
 
 #. Stroke Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2487
+#: ../app/dialogs/preferences-dialog.c:2510
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Вікна «Обвести позначене» і «Обвести контур»"
 
-#: ../app/dialogs/preferences-dialog.c:2510
-#: ../app/dialogs/preferences-dialog.c:2511
+#: ../app/dialogs/preferences-dialog.c:2533
+#: ../app/dialogs/preferences-dialog.c:2534
 msgid "Help System"
 msgstr "Система довідки"
 
-#: ../app/dialogs/preferences-dialog.c:2522
+#: ../app/dialogs/preferences-dialog.c:2545
 msgid "Show _tooltips"
 msgstr "Показувати п_ідказки"
 
-#: ../app/dialogs/preferences-dialog.c:2525
+#: ../app/dialogs/preferences-dialog.c:2548
 msgid "Show help _buttons"
 msgstr "Показувати _кнопку \"Довідка\""
 
-#: ../app/dialogs/preferences-dialog.c:2530
+#: ../app/dialogs/preferences-dialog.c:2553
 msgid "Use the online version"
 msgstr "Використовувати версію з Інтернету"
 
-#: ../app/dialogs/preferences-dialog.c:2531
+#: ../app/dialogs/preferences-dialog.c:2554
 msgid "Use a locally installed copy"
 msgstr "Використовувати локальну копію"
 
-#: ../app/dialogs/preferences-dialog.c:2532
+#: ../app/dialogs/preferences-dialog.c:2555
 msgid "U_ser manual:"
 msgstr "Підру_чник користувача:"
 
-#: ../app/dialogs/preferences-dialog.c:2543
+#: ../app/dialogs/preferences-dialog.c:2566
 msgid "User interface language"
 msgstr "Мова інтерфейсу користувача"
 
@@ -17007,15 +17040,15 @@ msgstr "Мова інтерфейсу користувача"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: ../app/dialogs/preferences-dialog.c:2602
+#: ../app/dialogs/preferences-dialog.c:2625
 msgid "Help Browser"
 msgstr "Перегляд довідки"
 
-#: ../app/dialogs/preferences-dialog.c:2609
+#: ../app/dialogs/preferences-dialog.c:2632
 msgid "H_elp browser to use:"
 msgstr "П_рограма перегляду довідки:"
 
-#: ../app/dialogs/preferences-dialog.c:2615
+#: ../app/dialogs/preferences-dialog.c:2638
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
@@ -17024,525 +17057,525 @@ msgstr ""
 "замість нього вашу програму для перегляду сторінок інтернету."
 
 #. Action Search
-#: ../app/dialogs/preferences-dialog.c:2632
+#: ../app/dialogs/preferences-dialog.c:2655
 msgid "Action Search"
 msgstr "Пошук дії"
 
-#: ../app/dialogs/preferences-dialog.c:2636
+#: ../app/dialogs/preferences-dialog.c:2659
 msgid "Show _unavailable actions"
 msgstr "Показувати _недоступні дії"
 
-#: ../app/dialogs/preferences-dialog.c:2639
+#: ../app/dialogs/preferences-dialog.c:2662
 msgid "_Maximum History Size:"
 msgstr "_Максимальний розмір історії:"
 
-#: ../app/dialogs/preferences-dialog.c:2643
+#: ../app/dialogs/preferences-dialog.c:2666
 msgid "C_lear Action History"
 msgstr "_Очистити історію дій"
 
-#: ../app/dialogs/preferences-dialog.c:2657
-#: ../app/dialogs/preferences-dialog.c:2658
+#: ../app/dialogs/preferences-dialog.c:2680
+#: ../app/dialogs/preferences-dialog.c:2681
 msgid "Display"
 msgstr "Показ"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2666
+#: ../app/dialogs/preferences-dialog.c:2689
 msgid "Transparency"
 msgstr "Прозорість"
 
-#: ../app/dialogs/preferences-dialog.c:2670
+#: ../app/dialogs/preferences-dialog.c:2693
 msgid "_Check style:"
 msgstr "_Стиль кліток:"
 
-#: ../app/dialogs/preferences-dialog.c:2673
+#: ../app/dialogs/preferences-dialog.c:2696
 msgid "Check _size:"
 msgstr "_Розмір клітин:"
 
-#: ../app/dialogs/preferences-dialog.c:2676
+#: ../app/dialogs/preferences-dialog.c:2699
 msgid "Monitor Resolution"
 msgstr "Роздільність монітора"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2680 ../app/display/gimpcursorview.c:212
+#: ../app/dialogs/preferences-dialog.c:2703 ../app/display/gimpcursorview.c:212
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "Точок"
 
-#: ../app/dialogs/preferences-dialog.c:2698 ../app/widgets/gimpgrideditor.c:195
+#: ../app/dialogs/preferences-dialog.c:2721 ../app/widgets/gimpgrideditor.c:195
 #: ../app/widgets/gimpgrideditor.c:230
 msgid "Horizontal"
 msgstr "Горизонтальне"
 
-#: ../app/dialogs/preferences-dialog.c:2700 ../app/widgets/gimpgrideditor.c:197
+#: ../app/dialogs/preferences-dialog.c:2723 ../app/widgets/gimpgrideditor.c:197
 #: ../app/widgets/gimpgrideditor.c:232
 msgid "Vertical"
 msgstr "Вертикальне"
 
-#: ../app/dialogs/preferences-dialog.c:2702
+#: ../app/dialogs/preferences-dialog.c:2725
 #: ../app/widgets/gimpimagepropview.c:457
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/preferences-dialog.c:2744
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Визначити автоматично (наразі %d × %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2739
+#: ../app/dialogs/preferences-dialog.c:2762
 msgid "_Enter manually"
 msgstr "Вр_учну"
 
-#: ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/preferences-dialog.c:2777
 msgid "C_alibrate..."
 msgstr "_Калібрувати"
 
-#: ../app/dialogs/preferences-dialog.c:2781
-#: ../app/dialogs/preferences-dialog.c:2782
+#: ../app/dialogs/preferences-dialog.c:2804
+#: ../app/dialogs/preferences-dialog.c:2805
 msgid "Window Management"
 msgstr "Поведінка вікон"
 
-#: ../app/dialogs/preferences-dialog.c:2787
+#: ../app/dialogs/preferences-dialog.c:2810
 msgid "Window Manager Hints"
 msgstr "Керування зовнішнім виглядом виглядом вікон"
 
-#: ../app/dialogs/preferences-dialog.c:2793
+#: ../app/dialogs/preferences-dialog.c:2816
 msgid "Hint for _docks and toolbox:"
 msgstr "Тип вікна для _панелей:"
 
-#: ../app/dialogs/preferences-dialog.c:2796
+#: ../app/dialogs/preferences-dialog.c:2819
 msgid "Focus"
 msgstr "Фокус вводу"
 
-#: ../app/dialogs/preferences-dialog.c:2800
+#: ../app/dialogs/preferences-dialog.c:2823
 msgid "Activate the _focused image"
 msgstr "Робити активним зображення під _фокусом"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2804
+#: ../app/dialogs/preferences-dialog.c:2827
 msgid "Window Positions"
 msgstr "Позиція вікна"
 
-#: ../app/dialogs/preferences-dialog.c:2807
+#: ../app/dialogs/preferences-dialog.c:2830
 msgid "_Save window positions on exit"
 msgstr "З_берігати позиції вікон при виході"
 
-#: ../app/dialogs/preferences-dialog.c:2810
+#: ../app/dialogs/preferences-dialog.c:2833
 msgid "Open windows on the same _monitor they were open before"
 msgstr ""
 "Відкривати вікна на тому самому _моніторі, на якому були відкриті перед цим"
 
-#: ../app/dialogs/preferences-dialog.c:2814
+#: ../app/dialogs/preferences-dialog.c:2837
 msgid "Save Window Positions _Now"
 msgstr "Зберегти позицію вікон _зараз"
 
-#: ../app/dialogs/preferences-dialog.c:2821
+#: ../app/dialogs/preferences-dialog.c:2844
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Відновити позиції вікон на типові"
 
-#: ../app/dialogs/preferences-dialog.c:2836
-#: ../app/dialogs/preferences-dialog.c:2837
+#: ../app/dialogs/preferences-dialog.c:2859
+#: ../app/dialogs/preferences-dialog.c:2860
 msgid "Image Windows"
 msgstr "Вікна зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2848
+#: ../app/dialogs/preferences-dialog.c:2871
 msgid "Use \"Show _all\" by default"
 msgstr "Типово використовувати «Показувати _усе»"
 
-#: ../app/dialogs/preferences-dialog.c:2852
+#: ../app/dialogs/preferences-dialog.c:2875
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Типово використовувати \"То_чка за точкою\""
 
-#: ../app/dialogs/preferences-dialog.c:2858
+#: ../app/dialogs/preferences-dialog.c:2881
 msgid "Marching ants s_peed:"
 msgstr "Швидкість _мурашиної доріжки:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2862
+#: ../app/dialogs/preferences-dialog.c:2885
 msgid "Zoom & Resize Behavior"
 msgstr "Правила масштабування та зміни розміру"
 
-#: ../app/dialogs/preferences-dialog.c:2866
+#: ../app/dialogs/preferences-dialog.c:2889
 msgid "Resize window on _zoom"
 msgstr "Змінювати розмір вікна при мас_штабуванні"
 
-#: ../app/dialogs/preferences-dialog.c:2869
+#: ../app/dialogs/preferences-dialog.c:2892
 msgid "Resize window on image _size change"
 msgstr "Змінювати розмір вікна при зміні _розміру зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2875
+#: ../app/dialogs/preferences-dialog.c:2898
 msgid "Show entire image"
 msgstr "Повністю показувати зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2877
+#: ../app/dialogs/preferences-dialog.c:2900
 msgid "Initial zoom _ratio:"
 msgstr "Початкові пр_опорції масштабу:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2881
+#: ../app/dialogs/preferences-dialog.c:2904
 msgid "Space Bar"
 msgstr "Пробіл"
 
-#: ../app/dialogs/preferences-dialog.c:2887
+#: ../app/dialogs/preferences-dialog.c:2910
 msgid "_While space bar is pressed:"
 msgstr "_При натисканні пробілу:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2891
+#: ../app/dialogs/preferences-dialog.c:2914
 msgid "Mouse Pointers"
 msgstr "Вказівник миші"
 
-#: ../app/dialogs/preferences-dialog.c:2895
+#: ../app/dialogs/preferences-dialog.c:2918
 msgid "Show _brush outline"
 msgstr "Показувати контур _пензля"
 
-#: ../app/dialogs/preferences-dialog.c:2903
+#: ../app/dialogs/preferences-dialog.c:2926
 msgid "S_nap brush outline to stroke"
 msgstr "При_липання пензля до контуру мазків"
 
-#: ../app/dialogs/preferences-dialog.c:2907
+#: ../app/dialogs/preferences-dialog.c:2930
 msgid "Show pointer for paint _tools"
 msgstr "Показувати вказівник у режимі _малювання"
 
-#: ../app/dialogs/preferences-dialog.c:2913
+#: ../app/dialogs/preferences-dialog.c:2936
 msgid "Pointer _mode:"
 msgstr "_Режим курсору:"
 
-#: ../app/dialogs/preferences-dialog.c:2916
+#: ../app/dialogs/preferences-dialog.c:2939
 msgid "Pointer _handedness:"
 msgstr "Хіральність _курсору:"
 
-#: ../app/dialogs/preferences-dialog.c:2927
+#: ../app/dialogs/preferences-dialog.c:2950
 msgid "Image Window Appearance"
 msgstr "Вигляд вікна зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2935
+#: ../app/dialogs/preferences-dialog.c:2958
 msgid "Default Appearance in Normal Mode"
 msgstr "Зовнішній вигляд з звичайному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:2940
+#: ../app/dialogs/preferences-dialog.c:2963
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Зовнішній вигляд у повноекранному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:2949
+#: ../app/dialogs/preferences-dialog.c:2972
 msgid "Image Title & Statusbar Format"
 msgstr "Формат заголовку зображення та рядок сану"
 
-#: ../app/dialogs/preferences-dialog.c:2950
+#: ../app/dialogs/preferences-dialog.c:2973
 msgid "Title & Status"
 msgstr "Заголовок та стан"
 
-#: ../app/dialogs/preferences-dialog.c:2968
+#: ../app/dialogs/preferences-dialog.c:2991
 msgid "Current format"
 msgstr "Поточний формат"
 
-#: ../app/dialogs/preferences-dialog.c:2969
+#: ../app/dialogs/preferences-dialog.c:2992
 msgid "Default format"
 msgstr "Типовий формат"
 
-#: ../app/dialogs/preferences-dialog.c:2970
+#: ../app/dialogs/preferences-dialog.c:2993
 msgid "Show zoom percentage"
 msgstr "Показувати масштаб у відсотках"
 
-#: ../app/dialogs/preferences-dialog.c:2971
+#: ../app/dialogs/preferences-dialog.c:2994
 msgid "Show zoom ratio"
 msgstr "Показувати масштабний коефіцієнт"
 
-#: ../app/dialogs/preferences-dialog.c:2972
+#: ../app/dialogs/preferences-dialog.c:2995
 msgid "Show image size"
 msgstr "Показувати розмір зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2973
+#: ../app/dialogs/preferences-dialog.c:2996
 msgid "Show drawable size"
 msgstr "Показувати розмір промальованого"
 
-#: ../app/dialogs/preferences-dialog.c:2986
+#: ../app/dialogs/preferences-dialog.c:3009
 msgid "Image Title Format"
 msgstr "Формат заголовку зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2988
+#: ../app/dialogs/preferences-dialog.c:3011
 msgid "Image Statusbar Format"
 msgstr "Формат рядка стану"
 
-#: ../app/dialogs/preferences-dialog.c:3073
+#: ../app/dialogs/preferences-dialog.c:3096
 msgid "Image Window Snapping Behavior"
 msgstr "Поведінка щодо прилипання у вікні зображення"
 
-#: ../app/dialogs/preferences-dialog.c:3074
+#: ../app/dialogs/preferences-dialog.c:3097
 msgid "Snapping"
 msgstr "Прилипання"
 
-#: ../app/dialogs/preferences-dialog.c:3081
+#: ../app/dialogs/preferences-dialog.c:3104
 msgid "Default Behavior in Normal Mode"
 msgstr "Типова поведінка у звичайному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:3085
+#: ../app/dialogs/preferences-dialog.c:3108
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Типовий поведінка у повноекранному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:3094
+#: ../app/dialogs/preferences-dialog.c:3117
 msgid "_Snapping distance:"
 msgstr "Відстань прилипанн_я:"
 
-#: ../app/dialogs/preferences-dialog.c:3103
-#: ../app/dialogs/preferences-dialog.c:3104
+#: ../app/dialogs/preferences-dialog.c:3126
+#: ../app/dialogs/preferences-dialog.c:3127
 msgid "Input Devices"
 msgstr "Пристрої вводу"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:3110
+#: ../app/dialogs/preferences-dialog.c:3133
 msgid "Extended Input Devices"
 msgstr "Додаткові пристрої вводу"
 
-#: ../app/dialogs/preferences-dialog.c:3114
+#: ../app/dialogs/preferences-dialog.c:3137
 msgid "S_hare tool and tool options between input devices"
 msgstr "Сп_ільне використання інструментів і параметрів для пристроїв введення"
 
-#: ../app/dialogs/preferences-dialog.c:3118
+#: ../app/dialogs/preferences-dialog.c:3141
 msgid "Configure E_xtended Input Devices..."
 msgstr "Налаштувати _додаткові пристрої вводу…"
 
-#: ../app/dialogs/preferences-dialog.c:3125
+#: ../app/dialogs/preferences-dialog.c:3148
 msgid "_Save input device settings on exit"
 msgstr "З_берігати параметри пристроїв вводу при виході"
 
-#: ../app/dialogs/preferences-dialog.c:3129
+#: ../app/dialogs/preferences-dialog.c:3152
 msgid "Save Input Device Settings _Now"
 msgstr "Зберегти параметри пристроїв вводу _зараз"
 
-#: ../app/dialogs/preferences-dialog.c:3136
+#: ../app/dialogs/preferences-dialog.c:3159
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Відновити типові параметри пристроїв вводу"
 
-#: ../app/dialogs/preferences-dialog.c:3151
+#: ../app/dialogs/preferences-dialog.c:3174
 msgid "Additional Input Controllers"
 msgstr "Додаткові способи керування"
 
-#: ../app/dialogs/preferences-dialog.c:3152
+#: ../app/dialogs/preferences-dialog.c:3175
 msgid "Input Controllers"
 msgstr "Способи керування"
 
-#: ../app/dialogs/preferences-dialog.c:3167
-#: ../app/dialogs/preferences-dialog.c:3168
+#: ../app/dialogs/preferences-dialog.c:3190
+#: ../app/dialogs/preferences-dialog.c:3191
 msgid "Folders"
 msgstr "Теки"
 
-#: ../app/dialogs/preferences-dialog.c:3175
+#: ../app/dialogs/preferences-dialog.c:3198
 msgid "Reset _Folders"
 msgstr "Скинути _теки"
 
-#: ../app/dialogs/preferences-dialog.c:3191
+#: ../app/dialogs/preferences-dialog.c:3214
 msgid "_Temporary folder:"
 msgstr "Тека тим_часових файлів:"
 
-#: ../app/dialogs/preferences-dialog.c:3192
+#: ../app/dialogs/preferences-dialog.c:3215
 msgid "Select Folder for Temporary Files"
 msgstr "Виберіть каталог для тимчасових файлів"
 
-#: ../app/dialogs/preferences-dialog.c:3196
+#: ../app/dialogs/preferences-dialog.c:3219
 msgid "_Swap folder:"
 msgstr "_Каталог резервної пам'яті:"
 
-#: ../app/dialogs/preferences-dialog.c:3197
+#: ../app/dialogs/preferences-dialog.c:3220
 msgid "Select Swap Folder"
 msgstr "Виберіть теку свопінгу"
 
-#: ../app/dialogs/preferences-dialog.c:3230
+#: ../app/dialogs/preferences-dialog.c:3253
 msgid "Brush Folders"
 msgstr "Теки пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3233
+#: ../app/dialogs/preferences-dialog.c:3256
 msgid "Reset Brush _Folders"
 msgstr "Скинути _теки пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3234
+#: ../app/dialogs/preferences-dialog.c:3257
 msgid "Select Brush Folders"
 msgstr "Виберіть теку пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3236
+#: ../app/dialogs/preferences-dialog.c:3259
 msgid "Dynamics Folders"
 msgstr "Теки з файлами динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3239
+#: ../app/dialogs/preferences-dialog.c:3262
 msgid "Reset Dynamics _Folders"
 msgstr "Скинути _теки динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3240
+#: ../app/dialogs/preferences-dialog.c:3263
 msgid "Select Dynamics Folders"
 msgstr "Виберіть теку з файлами динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3242
+#: ../app/dialogs/preferences-dialog.c:3265
 msgid "Pattern Folders"
 msgstr "Теки текстур"
 
-#: ../app/dialogs/preferences-dialog.c:3245
+#: ../app/dialogs/preferences-dialog.c:3268
 msgid "Reset Pattern _Folders"
 msgstr "Скинути _теки текстур"
 
-#: ../app/dialogs/preferences-dialog.c:3246
+#: ../app/dialogs/preferences-dialog.c:3269
 msgid "Select Pattern Folders"
 msgstr "Виберіть теку текстури"
 
-#: ../app/dialogs/preferences-dialog.c:3248
+#: ../app/dialogs/preferences-dialog.c:3271
 msgid "Palette Folders"
 msgstr "Теки палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3251
+#: ../app/dialogs/preferences-dialog.c:3274
 msgid "Reset Palette _Folders"
 msgstr "Скинути _теки палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3252
+#: ../app/dialogs/preferences-dialog.c:3275
 msgid "Select Palette Folders"
 msgstr "Виберіть теку палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3254
+#: ../app/dialogs/preferences-dialog.c:3277
 msgid "Gradient Folders"
 msgstr "Теки градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3257
+#: ../app/dialogs/preferences-dialog.c:3280
 msgid "Reset Gradient _Folders"
 msgstr "Скинути _теки градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3258
+#: ../app/dialogs/preferences-dialog.c:3281
 msgid "Select Gradient Folders"
 msgstr "Виберіть теку градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3260
+#: ../app/dialogs/preferences-dialog.c:3283
 msgid "Font Folders"
 msgstr "Теки шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3263
+#: ../app/dialogs/preferences-dialog.c:3286
 msgid "Reset Font _Folders"
 msgstr "Скинути _теки шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3264
+#: ../app/dialogs/preferences-dialog.c:3287
 msgid "Select Font Folders"
 msgstr "Виберіть теку шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3289
 msgid "Tool Preset Folders"
 msgstr "Теки шаблону інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3269
+#: ../app/dialogs/preferences-dialog.c:3292
 msgid "Reset Tool Preset _Folders"
 msgstr "Скинути _теки типових наборів інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3270
+#: ../app/dialogs/preferences-dialog.c:3293
 msgid "Select Tool Preset Folders"
 msgstr "Вибрати теки шаблону інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3272
+#: ../app/dialogs/preferences-dialog.c:3295
 msgid "MyPaint Brush Folders"
 msgstr "Теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3275
+#: ../app/dialogs/preferences-dialog.c:3298
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Скинути _теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3276
+#: ../app/dialogs/preferences-dialog.c:3299
 msgid "Select MyPaint Brush Folders"
 msgstr "Виберіть теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3278
+#: ../app/dialogs/preferences-dialog.c:3301
 msgid "Plug-in Folders"
 msgstr "Теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3281
+#: ../app/dialogs/preferences-dialog.c:3304
 msgid "Reset plug-in _Folders"
 msgstr "Скинути _теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3282
+#: ../app/dialogs/preferences-dialog.c:3305
 msgid "Select plug-in Folders"
 msgstr "Виберіть теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Scripts"
 msgstr "Скрипти"
 
-#: ../app/dialogs/preferences-dialog.c:3284
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Script-Fu Folders"
 msgstr "Теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3287
+#: ../app/dialogs/preferences-dialog.c:3310
 msgid "Reset Script-Fu _Folders"
 msgstr "Скинути _теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3288
+#: ../app/dialogs/preferences-dialog.c:3311
 msgid "Select Script-Fu Folders"
 msgstr "Виберіть теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3313
 msgid "Module Folders"
 msgstr "Теки модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3293
+#: ../app/dialogs/preferences-dialog.c:3316
 msgid "Reset Module _Folders"
 msgstr "Скинути _теки модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3294
+#: ../app/dialogs/preferences-dialog.c:3317
 msgid "Select Module Folders"
 msgstr "Виберіть теку модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3319
 msgid "Interpreters"
 msgstr "Інтерпретатори"
 
-#: ../app/dialogs/preferences-dialog.c:3296
+#: ../app/dialogs/preferences-dialog.c:3319
 msgid "Interpreter Folders"
 msgstr "Каталоги інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3299
+#: ../app/dialogs/preferences-dialog.c:3322
 msgid "Reset Interpreter _Folders"
 msgstr "Скинути _теки інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3300
+#: ../app/dialogs/preferences-dialog.c:3323
 msgid "Select Interpreter Folders"
 msgstr "Виберіть каталоги інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3325
 msgid "Environment"
 msgstr "Середовище"
 
-#: ../app/dialogs/preferences-dialog.c:3302
+#: ../app/dialogs/preferences-dialog.c:3325
 msgid "Environment Folders"
 msgstr "Теки середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3305
+#: ../app/dialogs/preferences-dialog.c:3328
 msgid "Reset Environment _Folders"
 msgstr "Скинути _теки середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3306
+#: ../app/dialogs/preferences-dialog.c:3329
 msgid "Select Environment Folders"
 msgstr "Виберіть теку середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3331
 msgid "Themes"
 msgstr "Теми"
 
-#: ../app/dialogs/preferences-dialog.c:3308
+#: ../app/dialogs/preferences-dialog.c:3331
 msgid "Theme Folders"
 msgstr "Теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3311
+#: ../app/dialogs/preferences-dialog.c:3334
 msgid "Reset Theme _Folders"
 msgstr "Скинути _теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3312
+#: ../app/dialogs/preferences-dialog.c:3335
 msgid "Select Theme Folders"
 msgstr "Виберіть теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3337
 msgid "Icon Themes"
 msgstr "Теми піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3314
+#: ../app/dialogs/preferences-dialog.c:3337
 msgid "Icon Theme Folders"
 msgstr "Теки тем піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3317
+#: ../app/dialogs/preferences-dialog.c:3340
 msgid "Reset Icon Theme _Folders"
 msgstr "Скинути _теки тем піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3318
+#: ../app/dialogs/preferences-dialog.c:3341
 msgid "Select Icon Theme Folders"
 msgstr "Виберіть теки тем піктограм"
 
@@ -19719,7 +19752,6 @@ msgid "Anti erase"
 msgstr "Антигумка"
 
 #: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
-#| msgid "Heal"
 msgid "Healing"
 msgstr "Лікування"
 
@@ -22620,8 +22652,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Вибір зв'язаної ділянки"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:548
-#: ../app/tools/gimpgegltool.c:549 ../app/tools/gimpoperationtool.c:136
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:549
+#: ../app/tools/gimpgegltool.c:550 ../app/tools/gimpoperationtool.c:136
 msgid "GEGL Operation"
 msgstr "Операція GEGL"
 
@@ -22634,7 +22666,7 @@ msgid "_GEGL Operation..."
 msgstr "Опера_ція GEGL…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:493
+#: ../app/tools/gimpgegltool.c:494
 msgid "Select an operation from the list above"
 msgstr "Виберіть операцію зі списку згори"
 
@@ -22931,7 +22963,6 @@ msgstr ""
 "Показати майбутній позначений сегмент, коли перетягується керувальний вузол"
 
 #: ../app/tools/gimpiscissorstool.c:292
-#| msgid "Scissors"
 msgid "Scissors Select"
 msgstr "Вибір ножицями"
 
