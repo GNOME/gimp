@@ -23,7 +23,7 @@ void   items_actions_setup  (GimpActionGroup *group,
                              const gchar     *prefix);
 void   items_actions_update (GimpActionGroup *group,
                              const gchar     *prefix,
-                             GimpItem        *item);
+                             GList           *items);
 
 
 #endif /* __ITEMS_ACTIONS_H__ */

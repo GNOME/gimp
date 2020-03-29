@@ -279,12 +279,13 @@ void
 channels_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *image     = action_data_get_image (data);
-  GimpChannel *channel   = NULL;
-  gboolean     fs        = FALSE;
-  gboolean     component = FALSE;
-  GList       *next      = NULL;
-  GList       *prev      = NULL;
+  GimpImage   *image      = action_data_get_image (data);
+  GList       *channels   = NULL;
+  gboolean     fs         = FALSE;
+  gboolean     component  = FALSE;
+  GList       *next       = NULL;
+  GList       *prev       = NULL;
+  gint         n_channels = 0;
 
   if (image)
     {
@@ -297,16 +298,17 @@ channels_actions_update (GimpActionGroup *group,
         }
       else
         {
-          channel = gimp_image_get_active_channel (image);
+          channels = gimp_image_get_selected_channels (image);
+          n_channels = g_list_length (channels);
 
-          if (channel)
+          if (n_channels == 1)
             {
               GList *channel_list;
               GList *list;
 
-              channel_list = gimp_item_get_container_iter (GIMP_ITEM (channel));
+              channel_list = gimp_item_get_container_iter (GIMP_ITEM (channels->data));
 
-              list = g_list_find (channel_list, channel);
+              list = g_list_find (channel_list, channels->data);
 
               if (list)
                 {
@@ -320,29 +322,29 @@ channels_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("channels-edit-attributes", !fs && channel);
+  SET_SENSITIVE ("channels-edit-attributes", !fs && n_channels == 1);
 
   SET_SENSITIVE ("channels-new",             !fs && image);
   SET_SENSITIVE ("channels-new-last-values", !fs && image);
-  SET_SENSITIVE ("channels-duplicate",       !fs && (channel || component));
-  SET_SENSITIVE ("channels-delete",          !fs && channel);
+  SET_SENSITIVE ("channels-duplicate",       !fs && (n_channels == 1 || component));
+  SET_SENSITIVE ("channels-delete",          !fs && n_channels > 0);
 
-  SET_SENSITIVE ("channels-raise",           !fs && channel && prev);
-  SET_SENSITIVE ("channels-raise-to-top",    !fs && channel && prev);
-  SET_SENSITIVE ("channels-lower",           !fs && channel && next);
-  SET_SENSITIVE ("channels-lower-to-bottom", !fs && channel && next);
+  SET_SENSITIVE ("channels-raise",           !fs && n_channels == 1 && prev);
+  SET_SENSITIVE ("channels-raise-to-top",    !fs && n_channels == 1 && prev);
+  SET_SENSITIVE ("channels-lower",           !fs && n_channels == 1 && next);
+  SET_SENSITIVE ("channels-lower-to-bottom", !fs && n_channels == 1 && next);
 
-  SET_SENSITIVE ("channels-selection-replace",   !fs && (channel || component));
-  SET_SENSITIVE ("channels-selection-add",       !fs && (channel || component));
-  SET_SENSITIVE ("channels-selection-subtract",  !fs && (channel || component));
-  SET_SENSITIVE ("channels-selection-intersect", !fs && (channel || component));
+  SET_SENSITIVE ("channels-selection-replace",   !fs && (n_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-add",       !fs && (n_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-subtract",  !fs && (n_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-intersect", !fs && (n_channels == 1 || component));
 
-  SET_SENSITIVE ("channels-select-top",      !fs && channel && prev);
-  SET_SENSITIVE ("channels-select-bottom",   !fs && channel && next);
-  SET_SENSITIVE ("channels-select-previous", !fs && channel && prev);
-  SET_SENSITIVE ("channels-select-next",     !fs && channel && next);
+  SET_SENSITIVE ("channels-select-top",      !fs && n_channels == 1 && prev);
+  SET_SENSITIVE ("channels-select-bottom",   !fs && n_channels == 1 && next);
+  SET_SENSITIVE ("channels-select-previous", !fs && n_channels == 1 && prev);
+  SET_SENSITIVE ("channels-select-next",     !fs && n_channels == 1 && next);
 
 #undef SET_SENSITIVE
 
-  items_actions_update (group, "channels", GIMP_ITEM (channel));
+  items_actions_update (group, "channels", channels);
 }

@@ -111,6 +111,7 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->get_active_item  = (GimpGetItemFunc) gimp_image_get_active_channel;
   iv_class->set_active_item  = (GimpSetItemFunc) gimp_image_set_active_channel;
   iv_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_channels;
+  iv_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_channels;
   iv_class->add_item         = (GimpAddItemFunc) gimp_image_add_channel;
   iv_class->remove_item      = (GimpRemoveItemFunc) gimp_image_remove_channel;
   iv_class->new_item         = gimp_channel_tree_view_item_new;

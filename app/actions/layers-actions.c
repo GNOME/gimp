@@ -762,8 +762,8 @@ layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
   GimpImage     *image          = action_data_get_image (data);
-  GimpLayer     *layer          = NULL;
   GList         *layers         = NULL;
+  GimpLayer     *layer          = NULL;
   GimpLayerMask *mask           = NULL;     /*  layer mask             */
   gboolean       fs             = FALSE;    /*  floating sel           */
   gboolean       ac             = FALSE;    /*  active channel         */
@@ -785,6 +785,7 @@ layers_actions_update (GimpActionGroup *group,
   GList         *prev           = NULL;
   gboolean       next_mode      = FALSE;
   gboolean       prev_mode      = FALSE;
+  gint           n_layers       = 0;
 
   if (image)
     {
@@ -793,19 +794,21 @@ layers_actions_update (GimpActionGroup *group,
       sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
       indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
 
-      layer = gimp_image_get_active_layer (image);
       layers = gimp_image_get_selected_layers (image);
+      n_layers = g_list_length (layers);
 
-      if (layer)
+      if (n_layers == 1)
         {
           GimpLayerMode *modes;
-          GimpLayerMode  mode   = gimp_layer_get_mode (layer);
+          GimpLayerMode  mode;
           const gchar   *action = NULL;
           GList         *layer_list;
           GList         *list;
           gint           n_modes;
           gint           i = 0;
 
+          layer  = layers->data;
+          mode   = gimp_layer_get_mode (layer);
           switch (gimp_layer_get_blend_space (layer))
             {
             case GIMP_LAYER_COLOR_SPACE_AUTO:
@@ -937,7 +940,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new-from-visible", image);
   SET_SENSITIVE ("layers-new-group",        image && !indexed);
   SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
-  SET_SENSITIVE ("layers-delete",           g_list_length (layers) > 0 && !ac);
+  SET_SENSITIVE ("layers-delete",           n_layers > 0 && !ac);
 
   SET_SENSITIVE ("layers-mode-first",       layer && !ac && prev_mode);
   SET_SENSITIVE ("layers-mode-last",        layer && !ac && next_mode);
@@ -1025,5 +1028,5 @@ layers_actions_update (GimpActionGroup *group,
 #undef SET_ACTIVE
 #undef SET_LABEL
 
-  items_actions_update (group, "layers", GIMP_ITEM (layer));
+  items_actions_update (group, "layers", layers);
 }

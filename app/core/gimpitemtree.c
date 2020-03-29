@@ -145,7 +145,8 @@ gimp_item_tree_init (GimpItemTree *tree)
 {
   GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  private->name_hash = g_hash_table_new (g_str_hash, g_str_equal);
+  private->name_hash      = g_hash_table_new (g_str_hash, g_str_equal);
+  private->selected_items = NULL;
 }
 
 static void
@@ -383,7 +384,7 @@ gimp_item_tree_set_selected_items (GimpItemTree *tree,
        */
       /*g_object_notify (G_OBJECT (tree), "active-item");*/
     }
-  else
+  else if (items != private->selected_items)
     {
       g_list_free (items);
     }

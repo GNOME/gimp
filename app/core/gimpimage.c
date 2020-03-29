@@ -4291,7 +4291,9 @@ GimpChannel *
 gimp_image_set_active_channel (GimpImage   *image,
                                GimpChannel *channel)
 {
-  GimpImagePrivate *private;
+  GimpChannel *active_channel;
+  GList       *channels = NULL;
+  GList       *new_channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -4300,18 +4302,20 @@ gimp_image_set_active_channel (GimpImage   *image,
                          gimp_item_get_image (GIMP_ITEM (channel)) == image),
                         NULL);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
   /*  Not if there is a floating selection  */
   if (channel && gimp_image_get_floating_selection (image))
     return NULL;
 
-  if (channel != gimp_image_get_active_channel (image))
-    {
-      gimp_item_tree_set_active_item (private->channels, GIMP_ITEM (channel));
-    }
+  if (channel)
+    channels = g_list_prepend (NULL, channel);
 
-  return gimp_image_get_active_channel (image);
+  new_channels = gimp_image_set_selected_channels (image, channels);
+  g_list_free (channels);
+
+  active_channel = g_list_length (new_channels) == 1 ? new_channels->data : NULL;
+  g_list_free (new_channels);
+
+  return active_channel;
 }
 
 GimpChannel *
@@ -4341,7 +4345,9 @@ GimpVectors *
 gimp_image_set_active_vectors (GimpImage   *image,
                                GimpVectors *vectors)
 {
-  GimpImagePrivate *private;
+  GList       *all_vectors = NULL;
+  GList       *new_vectors;
+  GimpVectors *active_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
@@ -4349,15 +4355,16 @@ gimp_image_set_active_vectors (GimpImage   *image,
                         (gimp_item_is_attached (GIMP_ITEM (vectors)) &&
                          gimp_item_get_image (GIMP_ITEM (vectors)) == image),
                         NULL);
+  if (vectors)
+    all_vectors = g_list_prepend (NULL, vectors);
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  new_vectors = gimp_image_set_selected_vectors (image, all_vectors);
+  g_list_free (all_vectors);
 
-  if (vectors != gimp_image_get_active_vectors (image))
-    {
-      gimp_item_tree_set_active_item (private->vectors, GIMP_ITEM (vectors));
-    }
+  active_vectors = (g_list_length (new_vectors) == 1 ? new_vectors->data : NULL);
+  g_list_free (new_vectors);
 
-  return gimp_image_get_active_vectors (image);
+  return active_vectors;
 }
 
 GList *
@@ -4462,6 +4469,55 @@ gimp_image_set_selected_layers (GimpImage *image,
     }
 
   return g_list_copy (gimp_image_get_selected_layers (image));
+}
+
+GList *
+gimp_image_set_selected_channels (GimpImage *image,
+                                  GList     *channels)
+{
+  GimpImagePrivate *private;
+  GList            *iter;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  for (iter = channels; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_CHANNEL (iter->data), NULL);
+      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
+                            gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+    }
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  /*  Not if there is a floating selection  */
+  if (g_list_length (channels) > 0 && gimp_image_get_floating_selection (image))
+    return NULL;
+
+  gimp_item_tree_set_selected_items (private->channels, g_list_copy (channels));
+
+  return g_list_copy (gimp_image_get_selected_channels (image));
+}
+
+GList *
+gimp_image_set_selected_vectors (GimpImage *image,
+                                 GList     *vectors)
+{
+  GimpImagePrivate *private;
+  GList            *iter;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  for (iter = vectors; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_VECTORS (iter->data), NULL);
+      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
+                            gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+    }
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  gimp_item_tree_set_selected_items (private->vectors, g_list_copy (vectors));
+
+  return g_list_copy (gimp_image_get_selected_vectors (image));
 }
 
 

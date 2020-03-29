@@ -385,6 +385,10 @@ GList         * gimp_image_get_selected_vectors  (GimpImage          *image);
 
 GList         * gimp_image_set_selected_layers   (GimpImage          *image,
                                                   GList              *layers);
+GList         * gimp_image_set_selected_channels (GimpImage          *image,
+                                                  GList              *channels);
+GList         * gimp_image_set_selected_vectors  (GimpImage          *image,
+                                                  GList              *vectors);
 
 GimpLayer     * gimp_image_get_layer_by_tattoo   (GimpImage          *image,
                                                   GimpTattoo          tattoo);

@@ -363,8 +363,10 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage    *image         = action_data_get_image (data);
-  GimpVectors  *vectors       = NULL;
+  GimpImage    *image              = action_data_get_image (data);
+  GList        *selected_vectors   = NULL;
+  gint          n_selected_vectors = 0;
+
   GimpDrawable *drawable      = NULL;
   gint          n_vectors     = 0;
   gboolean      mask_empty    = TRUE;
@@ -378,16 +380,16 @@ vectors_actions_update (GimpActionGroup *group,
       n_vectors  = gimp_image_get_n_vectors (image);
       mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
-      vectors = gimp_image_get_active_vectors (image);
-
-      if (vectors)
+      selected_vectors = gimp_image_get_selected_vectors (image);
+      n_selected_vectors = g_list_length (selected_vectors);
+      if (n_selected_vectors == 1)
         {
           GList *vectors_list;
           GList *list;
 
-          vectors_list = gimp_item_get_container_iter (GIMP_ITEM (vectors));
+          vectors_list = gimp_item_get_container_iter (GIMP_ITEM (selected_vectors->data));
 
-          list = g_list_find (vectors_list, vectors);
+          list = g_list_find (vectors_list, selected_vectors->data);
 
           if (list)
             {
@@ -412,54 +414,54 @@ vectors_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vectors-edit",            vectors);
-  SET_SENSITIVE ("vectors-edit-attributes", vectors);
+  SET_SENSITIVE ("vectors-edit",            n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-edit-attributes", n_selected_vectors == 1);
 
   SET_SENSITIVE ("vectors-new",             image);
   SET_SENSITIVE ("vectors-new-last-values", image);
-  SET_SENSITIVE ("vectors-duplicate",       vectors);
-  SET_SENSITIVE ("vectors-delete",          vectors);
+  SET_SENSITIVE ("vectors-duplicate",       n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-delete",          n_selected_vectors > 0);
   SET_SENSITIVE ("vectors-merge-visible",   n_vectors > 1);
 
-  SET_SENSITIVE ("vectors-raise",           vectors && prev);
-  SET_SENSITIVE ("vectors-raise-to-top",    vectors && prev);
-  SET_SENSITIVE ("vectors-lower",           vectors && next);
-  SET_SENSITIVE ("vectors-lower-to-bottom", vectors && next);
+  SET_SENSITIVE ("vectors-raise",           n_selected_vectors == 1 && prev);
+  SET_SENSITIVE ("vectors-raise-to-top",    n_selected_vectors == 1 && prev);
+  SET_SENSITIVE ("vectors-lower",           n_selected_vectors == 1 && next);
+  SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_vectors == 1 && next);
 
-  SET_SENSITIVE ("vectors-copy",   vectors);
+  SET_SENSITIVE ("vectors-copy",   n_selected_vectors == 1);
   SET_SENSITIVE ("vectors-paste",  image);
-  SET_SENSITIVE ("vectors-export", vectors);
+  SET_SENSITIVE ("vectors-export", n_selected_vectors == 1);
   SET_SENSITIVE ("vectors-import", image);
 
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
-  SET_SENSITIVE ("vectors-fill",                          vectors &&
+  SET_SENSITIVE ("vectors-fill",                          n_selected_vectors == 1 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-fill-last-values",              vectors &&
+  SET_SENSITIVE ("vectors-fill-last-values",              n_selected_vectors == 1 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-stroke",                        vectors &&
+  SET_SENSITIVE ("vectors-stroke",                        n_selected_vectors == 1 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-stroke-last-values",            vectors &&
+  SET_SENSITIVE ("vectors-stroke-last-values",            n_selected_vectors == 1 &&
                                                           dr_writable &&
                                                           !dr_children);
 
-  SET_SENSITIVE ("vectors-selection-replace",      vectors);
-  SET_SENSITIVE ("vectors-selection-from-vectors", vectors);
-  SET_SENSITIVE ("vectors-selection-add",          vectors);
-  SET_SENSITIVE ("vectors-selection-subtract",     vectors);
-  SET_SENSITIVE ("vectors-selection-intersect",    vectors);
+  SET_SENSITIVE ("vectors-selection-replace",      n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-selection-from-vectors", n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-selection-add",          n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-selection-subtract",     n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-selection-intersect",    n_selected_vectors == 1);
 
-  SET_SENSITIVE ("vectors-select-top",       vectors && prev);
-  SET_SENSITIVE ("vectors-select-bottom",    vectors && next);
-  SET_SENSITIVE ("vectors-select-previous",  vectors && prev);
-  SET_SENSITIVE ("vectors-select-next",      vectors && next);
+  SET_SENSITIVE ("vectors-select-top",       n_selected_vectors == 1 && prev);
+  SET_SENSITIVE ("vectors-select-bottom",    n_selected_vectors == 1 && next);
+  SET_SENSITIVE ("vectors-select-previous",  n_selected_vectors == 1 && prev);
+  SET_SENSITIVE ("vectors-select-next",      n_selected_vectors == 1 && next);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
 
-  items_actions_update (group, "vectors", GIMP_ITEM (vectors));
+  items_actions_update (group, "vectors", selected_vectors);
 }
