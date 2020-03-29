@@ -47,6 +47,9 @@ struct _GimpCropOptions
 
   /* How to fill new areas created by 'allow_growing. */
   GimpFillType     fill_type;
+
+  /* Whether to discard layer data that falls out of the crop region */
+  gboolean         delete_pixels;
 };
 
 
