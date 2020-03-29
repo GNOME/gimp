@@ -40,7 +40,8 @@ enum
 {
   PROP_LAYER_ONLY = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
   PROP_ALLOW_GROWING,
-  PROP_FILL_TYPE
+  PROP_FILL_TYPE,
+  PROP_DELETE_PIXELS
 };
 
 
@@ -96,6 +97,13 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DELETE_PIXELS,
+                            "delete-pixels",
+                            _("Delete cropped pixels"),
+                            _("Discard layer data that falls out of the crop region"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
                             "allow-growing",
                             _("Allow growing"),
@@ -139,6 +147,10 @@ gimp_crop_options_set_property (GObject      *object,
       options->layer_only = g_value_get_boolean (value);
       break;
 
+    case PROP_DELETE_PIXELS:
+      options->delete_pixels = g_value_get_boolean (value);
+      break;
+
     case PROP_ALLOW_GROWING:
       options->allow_growing = g_value_get_boolean (value);
       break;
@@ -167,6 +179,10 @@ gimp_crop_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->layer_only);
       break;
 
+    case PROP_DELETE_PIXELS:
+      g_value_set_boolean (value, options->delete_pixels);
+      break;
+
     case PROP_ALLOW_GROWING:
       g_value_set_boolean (value, options->allow_growing);
       break;
@@ -188,12 +204,22 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *vbox_rectangle;
   GtkWidget *button;
+  GtkWidget *button2;
   GtkWidget *combo;
   GtkWidget *frame;
 
   /*  layer toggle  */
   button = gimp_prop_check_button_new (config, "layer-only", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+  /*  delete pixels toggle  */
+  button2 = gimp_prop_check_button_new (config, "delete-pixels", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button2, FALSE, FALSE, 0);
+
+  g_object_bind_property (G_OBJECT (config),  "layer-only",
+                          G_OBJECT (button2), "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
 
   /*  fill type combo  */
   combo = gimp_prop_enum_combo_box_new (config, "fill-type", 0, 0);
