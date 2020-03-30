@@ -350,12 +350,15 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   if (config->check_update_timestamp > 0)
     {
       gchar *subtext;
+      gchar *time;
 
       datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
       date = g_date_time_format (datetime, "%x");
-      subtext = g_strdup_printf (_("Last checked on %s"), date);
+      time = g_date_time_format (datetime, "%X");
+      subtext = g_strdup_printf (_("Last checked on %s at %s"), date, time);
       g_date_time_unref (datetime);
       g_free (date);
+      g_free (time);
 
       text = g_strdup_printf ("%s\n<i>%s</i>",
                               _("Check for updates"), subtext);
