@@ -1223,7 +1223,7 @@ PROP_COMPOSITE_SPACE (since GIMP 2.10.0, essential, commit 8634b5cbc31)
   PROP_COMPOSITE_SPACE.
 
 PROP_BLEND_SPACE (since GIMP 2.10.0, essential, commit 8634b5cbc31)
-  uint32  36         Type identification
+  uint32  37         Type identification
   uint32  4          Four bytes of payload
   int32   space      Composite space of the layer; one of:
                        1: RGB (linear)
