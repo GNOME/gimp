@@ -3989,7 +3989,7 @@ msgstr "Unten links"
 
 #: ../plug-ins/common/file-tga.c:1445
 msgid "Top left"
-msgstr "Open links"
+msgstr "Oben links"
 
 #: ../plug-ins/common/file-wmf.c:129
 msgid "Microsoft WMF file"
