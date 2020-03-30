@@ -36,6 +36,7 @@
 #include "about-dialog.h"
 #include "authors.h"
 #include "gimp-update.h"
+#include "gimp-version.h"
 
 #include "gimp-intl.h"
 
@@ -105,19 +106,25 @@ about_dialog_create (GimpCoreConfig *config)
       GdkPixbuf *pixbuf;
       GList     *children;
       gchar     *copyright;
+      gchar     *version;
 
       dialog.n_authors = G_N_ELEMENTS (authors) - 1;
 
       pixbuf = about_dialog_load_logo ();
 
       copyright = g_strdup_printf (GIMP_COPYRIGHT, GIMP_GIT_LAST_COMMIT_YEAR);
+      if (gimp_version_get_revision () > 0)
+        version = g_strdup_printf ("%s (revision %d)", GIMP_VERSION,
+                                   gimp_version_get_revision ());
+      else
+        version = g_strdup (GIMP_VERSION);
 
       widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
                              "role",               "gimp-about",
                              "window-position",    GTK_WIN_POS_CENTER,
                              "title",              _("About GIMP"),
                              "program-name",       GIMP_ACRONYM,
-                             "version",            GIMP_VERSION,
+                             "version",            version,
                              "copyright",          copyright,
                              "comments",           GIMP_NAME,
                              "license",            GIMP_LICENSE,
@@ -137,6 +144,7 @@ about_dialog_create (GimpCoreConfig *config)
         g_object_unref (pixbuf);
 
       g_free (copyright);
+      g_free (version);
 
       dialog.dialog = widget;
 
