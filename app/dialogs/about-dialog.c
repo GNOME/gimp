@@ -337,11 +337,27 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      /* Finally the download link. */
+      /* The download link. */
       link = gtk_link_button_new_with_label ("https://www.gimp.org/downloads/",
                                              _("Go to download page"));
       gtk_box_pack_start (GTK_BOX (box), link, FALSE, FALSE, 0);
       gtk_widget_show (link);
+
+      /* Finally an optional release comment. */
+      if (config->last_release_comment)
+        {
+          /* Translators: <> tags are Pango markup. Please keep these
+           * markups in your translation. */
+          text = g_strdup_printf (_("<u>Release comment</u>: <i>%s</i>"), config->last_release_comment);
+          label = gtk_label_new (NULL);
+          gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
+          gtk_label_set_markup (GTK_LABEL (label), text);
+          gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+          g_free (text);
+
+          gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+          gtk_widget_show (label);
+        }
     }
 
   /* Show a check update button. */

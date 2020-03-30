@@ -172,7 +172,8 @@ gimp_check_updates_callback (GObject      *source,
        */
       if (gimp_version_break (last_version, &major, &minor, &micro))
         {
-          const gchar *build_date  = NULL;
+          const gchar *build_date    = NULL;
+          const gchar *build_comment = NULL;
           GDateTime   *datetime;
           gchar       *str;
 
@@ -201,6 +202,8 @@ gimp_check_updates_callback (GObject      *source,
                         build_revision = json_object_get_int_member (build, "revision");
                       if (json_object_has_member (build, "date"))
                         build_date = json_object_get_string_member (build, "date");
+                      if (json_object_has_member (build, "comment"))
+                        build_comment = json_object_get_string_member (build, "comment");
                       break;
                     }
                 }
@@ -221,6 +224,7 @@ gimp_check_updates_callback (GObject      *source,
                             "last-release-timestamp", g_date_time_to_unix (datetime),
                             "last-known-release",     last_version,
                             "last-revision",          build_revision,
+                            "last-release-comment",   build_comment,
                             NULL);
               g_date_time_unref (datetime);
             }
