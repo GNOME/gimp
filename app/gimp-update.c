@@ -115,10 +115,8 @@ gimp_check_updates_callback (GObject      *source,
       parser = json_parser_new ();
       if (! json_parser_load_from_stream (parser, G_INPUT_STREAM (stream), NULL, &error))
         {
-#ifdef GIMP_UNSTABLE
-          g_printerr("Parsing of %s failed: %s\n",
+          g_printerr("%s: parsing of %s failed: %s\n", G_STRFUNC,
                      g_file_get_uri (G_FILE (source)), error->message);
-#endif
           g_clear_object (&stream);
           g_clear_object (&parser);
           g_clear_error (&error);
