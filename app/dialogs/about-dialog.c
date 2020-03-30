@@ -93,6 +93,9 @@ static void        about_dialog_last_release_changed
                                               (GimpCoreConfig   *config,
                                                const GParamSpec *pspec,
                                                GimpAboutDialog  *dialog);
+static void        about_dialog_download_clicked
+                                              (GtkButton   *button,
+                                               const gchar *link);
 
 GtkWidget *
 about_dialog_create (GimpCoreConfig *config)
@@ -271,8 +274,11 @@ about_dialog_add_update (GimpAboutDialog *dialog,
 
   GtkWidget *frame;
   GtkWidget *box;
+  GtkWidget *box2;
   GtkWidget *label;
   GtkWidget *button;
+  GtkWidget *button_image;
+  GtkWidget *button_label;
   GDateTime *datetime;
   gchar     *date;
   gchar     *text;
@@ -295,17 +301,34 @@ about_dialog_add_update (GimpAboutDialog *dialog,
 
   box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), box);
+
+  /* Button in the frame. */
+  button = gtk_button_new ();
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_container_add (GTK_CONTAINER (button), box2);
+  gtk_widget_show (box2);
+
+  button_image = gtk_image_new_from_icon_name (NULL, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (box2), button_image, FALSE, FALSE, 0);
+  gtk_widget_show (button_image);
+
+  button_label = gtk_label_new (NULL);
+  gtk_box_pack_start (GTK_BOX (box2), button_label, FALSE, FALSE, 0);
+  gtk_container_child_set (GTK_CONTAINER (box2), button_label, "expand", TRUE, NULL);
+  gtk_widget_show (button_label);
+
   if (config->last_known_release != NULL)
     {
       /* There is a newer version. */
-      GtkWidget *link;
-      GtkWidget *box2;
-      GtkWidget *image;
+      gchar *comment = NULL;
 
       /* We want the frame to stand out. */
       label = gtk_label_new (NULL);
       text = g_strdup_printf ("<tt><b><big>%s</big></b></tt>",
-                              _("New version available!"));
+                              _("Update available!"));
       gtk_label_set_markup (GTK_LABEL (label), text);
       g_free (text);
       gtk_widget_show (label);
@@ -314,62 +337,91 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
       gtk_box_reorder_child (GTK_BOX (vbox), frame, 3);
 
-      /* Explanation text with update image. */
-      box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-      gtk_box_pack_start (GTK_BOX (box), box2, FALSE, FALSE, 0);
-      gtk_widget_show (box2);
-
-      image = gtk_image_new_from_icon_name ("software-update-available",
-                                            GTK_ICON_SIZE_DIALOG);
-      gtk_box_pack_start (GTK_BOX (box2), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      /* Button is an update link. */
+      gtk_image_set_from_icon_name (GTK_IMAGE (button_image),
+                                    "software-update-available",
+                                    GTK_ICON_SIZE_DIALOG);
+      g_signal_connect (button, "clicked",
+                        (GCallback) about_dialog_download_clicked,
+                        "https://www.gimp.org/downloads/");
 
       if (config->last_revision > 0)
         {
           /* This is actually a new revision of current version. */
-          text = g_strdup_printf (_("A revision of GIMP %s was released on %s.\n"
-                                    "Even though you use the last version, it is recommended to reinstall.\n"
-                                    "New revisions come with package fixes."),
-                                  config->last_known_release, date);
+          text = g_strdup_printf (_("Download GIMP %s revision %d (released on %s)\n"),
+                                  config->last_known_release,
+                                  config->last_revision,
+                                  date);
+
+          /* Finally an optional release comment. */
+          if (config->last_release_comment)
+            {
+              /* Translators: <> tags are Pango markup. Please keep these
+               * markups in your translation. */
+              comment = g_strdup_printf (_("<u>Release comment</u>: <i>%s</i>"), config->last_release_comment);
+            }
+          else
+            {
+              comment = g_strdup_printf ("<i>%s</i>",
+                                         _("Even though you use the last version, it is recommended to reinstall.\n"
+                                           "New revisions come with package fixes."));
+            }
         }
       else
         {
-          text = g_strdup_printf (_("A new version of GIMP (%s) was released on %s.\n"
-                                    "It is recommended to update."),
+          text = g_strdup_printf (_("Download GIMP %s (released on %s)\n"),
                                   config->last_known_release, date);
+          comment = g_strdup ("It is recommended to update.");
         }
-      label = gtk_label_new (text);
+      gtk_label_set_text (GTK_LABEL (button_label), text);
       g_free (text);
       g_free (date);
 
-      gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      /* The download link. */
-      link = gtk_link_button_new_with_label ("https://www.gimp.org/downloads/",
-                                             _("Go to download page"));
-      gtk_box_pack_start (GTK_BOX (box), link, FALSE, FALSE, 0);
-      gtk_widget_show (link);
-
-      /* Finally an optional release comment. */
-      if (config->last_release_comment)
+      if (comment)
         {
-          /* Translators: <> tags are Pango markup. Please keep these
-           * markups in your translation. */
-          text = g_strdup_printf (_("<u>Release comment</u>: <i>%s</i>"), config->last_release_comment);
           label = gtk_label_new (NULL);
           gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
-          gtk_label_set_markup (GTK_LABEL (label), text);
+          gtk_label_set_markup (GTK_LABEL (label), comment);
           gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-          g_free (text);
+          g_free (comment);
 
           gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
           gtk_widget_show (label);
         }
     }
+  else
+    {
+      /* Button is a "Check for updates" action. */
+      gtk_image_set_from_icon_name (GTK_IMAGE (button_image),
+                                    "view-refresh",
+                                    GTK_ICON_SIZE_MENU);
+      gtk_label_set_text (GTK_LABEL (button_label), _("Check for updates"));
+      g_signal_connect_swapped (button, "clicked",
+                                (GCallback) gimp_update_check, config);
 
-  /* Show a check update button. */
+    }
+
   gtk_box_reorder_child (GTK_BOX (vbox), frame, 4);
+
+  /* Last check date box. */
+  box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  if (config->last_known_release != NULL)
+    gtk_widget_set_margin_top (box2, 20);
+  gtk_container_add (GTK_CONTAINER (box), box2);
+  gtk_widget_show (box2);
+
+  /* Show a small "Check for updates" button only if the big one has
+   * been replaced by a download button.
+   */
+  if (config->last_known_release != NULL)
+    {
+      button = gtk_button_new_from_icon_name ("view-refresh", GTK_ICON_SIZE_MENU);
+      gtk_widget_set_tooltip_text (button, _("Check for updates"));
+      gtk_box_pack_start (GTK_BOX (box2), button, FALSE, FALSE, 0);
+      g_signal_connect_swapped (button, "clicked",
+                                (GCallback) gimp_update_check, config);
+      gtk_widget_show (button);
+    }
 
   if (config->check_update_timestamp > 0)
     {
@@ -384,35 +436,26 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       g_free (date);
       g_free (time);
 
-      text = g_strdup_printf ("%s\n<i>%s</i>",
-                              _("Check for updates"), subtext);
+      text = g_strdup_printf ("<i>%s</i>", subtext);
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), text);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+      gtk_box_pack_start (GTK_BOX (box2), label, FALSE, FALSE, 0);
+      gtk_container_child_set (GTK_CONTAINER (box2), label, "expand", TRUE, NULL);
+      gtk_widget_show (label);
+      g_free (text);
       g_free (subtext);
     }
-  else
-    {
-      text = g_strdup_printf ("%s", _("Check for updates"));
-    }
-  label = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL (label), text);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-  g_free (text);
-
-  button = gtk_button_new ();
-  gtk_container_add (GTK_CONTAINER (button), label);
-  gtk_widget_show (label);
-
-  g_signal_connect (config, "notify::last-known-release",
-                    (GCallback) about_dialog_last_release_changed,
-                    dialog);
-  g_signal_connect_swapped (button, "clicked",
-                            (GCallback) gimp_update_check, config);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   gtk_widget_show (box);
   gtk_widget_show (frame);
 
   dialog->update_frame = frame;
+
+  /* Reconstruct the dialog when release info changes. */
+  g_signal_connect (config, "notify::last-known-release",
+                    (GCallback) about_dialog_last_release_changed,
+                    dialog);
 }
 
 static void
@@ -726,4 +769,16 @@ about_dialog_last_release_changed (GimpCoreConfig   *config,
     }
 
   about_dialog_add_update (dialog, config);
+}
+
+static void
+about_dialog_download_clicked (GtkButton   *button,
+                               const gchar *link)
+{
+  GtkWidget *window;
+
+  window = gtk_widget_get_ancestor (GTK_WIDGET (button), GTK_TYPE_WINDOW);
+
+  if (window)
+    gtk_show_uri_on_window (GTK_WINDOW (window), link, GDK_CURRENT_TIME, NULL);
 }
