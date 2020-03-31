@@ -276,6 +276,11 @@ warning_cflags_c = [
 warning_cflags_cpp = [
 ]
 
+if platform_windows
+  warning_cflags_common += '-Wno-deprecated-declarations'
+endif
+
+
 compiler_args += cc.get_supported_arguments(warning_cflags_common)
 add_project_arguments(cc .get_supported_arguments(warning_cflags_c),   language: 'c')
 add_project_arguments(cxx.get_supported_arguments(warning_cflags_cpp), language: 'cpp')
