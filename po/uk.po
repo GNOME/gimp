@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-03-30 13:39+0000\n"
-"PO-Revision-Date: 2020-03-30 18:33+0300\n"
+"POT-Creation-Date: 2020-03-30 18:39+0000\n"
+"PO-Revision-Date: 2020-03-31 09:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -15131,17 +15131,17 @@ msgctxt "plural"
 msgid "percent"
 msgstr "відсотки"
 
-#: ../app/dialogs/about-dialog.c:118
+#: ../app/dialogs/about-dialog.c:128
 msgid "About GIMP"
 msgstr "Про програму GIMP"
 
-#: ../app/dialogs/about-dialog.c:127
+#: ../app/dialogs/about-dialog.c:137
 msgid "Visit the GIMP website"
 msgstr "Відвідайте сайт GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:133
+#: ../app/dialogs/about-dialog.c:143
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота\n"
@@ -15149,59 +15149,56 @@ msgstr ""
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: ../app/dialogs/about-dialog.c:300
-msgid "New version available!"
-msgstr "Випущено нову версію!"
+#: ../app/dialogs/about-dialog.c:331
+#| msgid "New version available!"
+msgid "Update available!"
+msgstr "Маємо оновлення!"
 
 #. This is actually a new revision of current version.
-#: ../app/dialogs/about-dialog.c:322
+#: ../app/dialogs/about-dialog.c:351
 #, c-format
-msgid ""
-"A revision of GIMP %s was released on %s.\n"
-"Even though you use the last version, it is recommended to reinstall.\n"
-"New revisions come with package fixes."
-msgstr ""
-"Випущено модифікацію GIMP %s, %s.\n"
-"Хоча ви користуєтеся найновішою версією, рекомендуємо перевстановити її з "
-"пакунка з новою модифікацією.\n"
-"Модифікації є виправленими варіантами версій програми."
-
-#. Recommend an update.
-#: ../app/dialogs/about-dialog.c:329 ../app/widgets/gimpcriticaldialog.c:210
-#, c-format
-msgid ""
-"A new version of GIMP (%s) was released on %s.\n"
-"It is recommended to update."
-msgstr ""
-"Нову версію GIMP (%s) було випущено %s.\n"
-"Рекомендуємо встановити оновлення."
-
-#: ../app/dialogs/about-dialog.c:342
-msgid "Go to download page"
-msgstr "Перейти до сторінки отримання"
+msgid "Download GIMP %s revision %d (released on %s)\n"
+msgstr "Отримати GIMP %s, модифікація %d (випущено %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: ../app/dialogs/about-dialog.c:351
+#: ../app/dialogs/about-dialog.c:361
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Коментар до випуску</u>: <i>%s</i>"
 
-#: ../app/dialogs/about-dialog.c:374
-#, c-format
-#| msgid "Last checked on %s"
-msgid "Last checked on %s at %s"
-msgstr "Остання перевірка на %s, %s"
+#: ../app/dialogs/about-dialog.c:366
+#| msgid ""
+#| "A revision of GIMP %s was released on %s.\n"
+#| "Even though you use the last version, it is recommended to reinstall.\n"
+#| "New revisions come with package fixes."
+msgid ""
+"Even though you use the last version, it is recommended to reinstall.\n"
+"New revisions come with package fixes."
+msgstr ""
+"Хоча ви користуєтеся найновішою версією, рекомендуємо перевстановити її з "
+"пакунка з новою модифікацією.\n"
+"Модифікації є виправленими варіантами версій програми."
 
-#: ../app/dialogs/about-dialog.c:380 ../app/dialogs/about-dialog.c:385
+#: ../app/dialogs/about-dialog.c:372
+#, c-format
+msgid "Download GIMP %s (released on %s)\n"
+msgstr "Отримати GIMP %s (випущено %s)\n"
+
+#: ../app/dialogs/about-dialog.c:398 ../app/dialogs/about-dialog.c:419
 msgid "Check for updates"
 msgstr "Шукати оновлення"
 
-#: ../app/dialogs/about-dialog.c:610
+#: ../app/dialogs/about-dialog.c:434
+#, c-format
+msgid "Last checked on %s at %s"
+msgstr "Остання перевірка на %s, %s"
+
+#: ../app/dialogs/about-dialog.c:661
 msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
-#: ../app/dialogs/about-dialog.c:686
+#: ../app/dialogs/about-dialog.c:737
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -25745,6 +25742,16 @@ msgstr "Переглянути відомості щодо вади"
 msgid "Go to _Download page"
 msgstr "Перейти на сторінку _отримання пакунків"
 
+#. Recommend an update.
+#: ../app/widgets/gimpcriticaldialog.c:210
+#, c-format
+msgid ""
+"A new version of GIMP (%s) was released on %s.\n"
+"It is recommended to update."
+msgstr ""
+"Нову версію GIMP (%s) було випущено %s.\n"
+"Рекомендуємо встановити оновлення."
+
 #: ../app/widgets/gimpcriticaldialog.c:216
 msgid "You are running an unsupported version!"
 msgstr "Ви працюєте з версією, підтримка якої не здійснюється розробниками!"
@@ -27678,6 +27685,9 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "Go to download page"
+#~ msgstr "Перейти до сторінки отримання"
 
 #~ msgid ""
 #~ "For more information, see https://www.gimp.org/news/2018/04/27/"
