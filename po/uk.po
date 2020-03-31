@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-03-26 11:35+0000\n"
-"PO-Revision-Date: 2020-03-28 19:08+0200\n"
+"POT-Creation-Date: 2020-03-31 09:31+0000\n"
+"PO-Revision-Date: 2020-03-31 21:04+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 20.07.70\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -832,7 +832,7 @@ msgstr ""
 "Разом з програмою ви маєте отримати копію Стандартної Суспільної Ліцензії "
 "GNU. Якщо це не так, дивіться https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:251
+#: ../app/gimp-update.c:249
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -10799,14 +10799,11 @@ msgid "Switch to Move tool"
 msgstr "Перемикнутися на інструмент переміщення"
 
 #: ../app/config/config-enums.c:317
-#| msgid "How to clip"
 msgctxt "tool-group-menu-mode"
 msgid "Show on click"
 msgstr "Показувати при клацанні"
 
 #: ../app/config/config-enums.c:318
-#| msgctxt "dockable-action"
-#| msgid "Show _Button Bar"
 msgctxt "tool-group-menu-mode"
 msgid "Show on hover"
 msgstr "Показувати при наведенні"
@@ -11803,7 +11800,6 @@ msgstr ""
 "Показувати активний пензель, текстуру та градієнт у панелі інструментів."
 
 #: ../app/config/gimprc-blurbs.h:686
-#| msgid "Use a single toolbox button for grouped tools."
 msgid "Menu mode of grouped tools."
 msgstr "Режим меню для згрупованих інструментів."
 
@@ -12057,7 +12053,7 @@ msgstr "Короткі тире"
 #: ../app/core/core-enums.c:418
 msgctxt "dash-preset"
 msgid "Sparse dots"
-msgstr "Рідкі крапки"
+msgstr "Розсіяні крапки"
 
 #: ../app/core/core-enums.c:419
 msgctxt "dash-preset"
@@ -16710,7 +16706,6 @@ msgid "Use tool _groups"
 msgstr "_Групувати інструменти"
 
 #: ../app/dialogs/preferences-dialog.c:2187
-#| msgid "_Mode:"
 msgid "_Menu mode:"
 msgstr "Режим _меню:"
 
@@ -27165,24 +27160,29 @@ msgid "Create a new tool group"
 msgstr "Створити групу інструментів"
 
 #: ../app/widgets/gimptooleditor.c:250
-msgid "Raise this tool"
-msgstr "Підняти інструмент"
+#| msgid "Raise this tool"
+msgid "Raise this item"
+msgstr "Підняти цей пункт"
 
 #: ../app/widgets/gimptooleditor.c:251
-msgid "Raise this tool to the top"
-msgstr "Підняти інструмент вгору"
+#| msgid "Raise this tool to the top"
+msgid "Raise this item to the top"
+msgstr "Підняти цей пункт на вершину"
 
 #: ../app/widgets/gimptooleditor.c:258
-msgid "Lower this tool"
-msgstr "Опустити інструмент"
+#| msgid "Lower this tool"
+msgid "Lower this item"
+msgstr "Опустити цей пункт"
 
 #: ../app/widgets/gimptooleditor.c:259
-msgid "Lower this tool to the bottom"
-msgstr "Опустити інструмент донизу"
+#| msgid "Lower this tool to the bottom"
+msgid "Lower this item to the bottom"
+msgstr "Опустити цей пункт на дно"
 
 #: ../app/widgets/gimptooleditor.c:266
-msgid "Delete this tool"
-msgstr "Вилучити цей інструмент"
+#| msgid "Delete this tool"
+msgid "Delete this tool group"
+msgstr "Вилучити цю групу інструментів"
 
 #: ../app/widgets/gimptooleditor.c:273
 msgid "Reset tool order and visibility"
