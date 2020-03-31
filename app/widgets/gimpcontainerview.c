@@ -134,6 +134,11 @@ static void   gimp_container_view_viewable_dropped (GtkWidget          *widget,
                                                     gint                y,
                                                     GimpViewable       *viewable,
                                                     gpointer            data);
+static void gimp_container_view_button_viewables_dropped (GtkWidget *widget,
+                                                          gint        x,
+                                                          gint        y,
+                                                          GList      *viewables,
+                                                          gpointer    data);
 static void  gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
                                                           gint          x,
                                                           gint          y,
@@ -629,6 +634,10 @@ gimp_container_view_enable_dnd (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (GTK_IS_BUTTON (button));
 
+  gimp_dnd_viewable_list_dest_add (GTK_WIDGET (button),
+                                   children_type,
+                                   gimp_container_view_button_viewables_dropped,
+                                   view);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (button),
                               children_type,
                               gimp_container_view_button_viewable_dropped,
@@ -1408,6 +1417,23 @@ gimp_container_view_viewable_dropped (GtkWidget    *widget,
 }
 
 static void
+gimp_container_view_button_viewables_dropped (GtkWidget *widget,
+                                              gint        x,
+                                              gint        y,
+                                              GList      *viewables,
+                                              gpointer    data)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (data);
+
+  if (viewables)
+    {
+      gimp_container_view_multi_selected (view, viewables, NULL);
+
+      gtk_button_clicked (GTK_BUTTON (widget));
+    }
+}
+
+static void
 gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
                                              gint          x,
                                              gint          y,
@@ -1423,4 +1449,3 @@ gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
       gtk_button_clicked (GTK_BUTTON (widget));
     }
 }
-
