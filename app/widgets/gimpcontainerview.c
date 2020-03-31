@@ -206,7 +206,7 @@ gimp_container_view_default_init (GimpContainerViewInterface *iface)
   iface->set_context        = gimp_container_view_real_set_context;
   iface->set_selection_mode = gimp_container_view_real_set_selection_mode;
   iface->insert_item        = NULL;
-  iface->insert_item_after  = NULL;
+  iface->insert_items_after = NULL;
   iface->remove_item        = NULL;
   iface->reorder_item       = NULL;
   iface->rename_item        = NULL;
@@ -654,6 +654,7 @@ gimp_container_view_select_items (GimpContainerView *view,
 
   return success;
 }
+
 gboolean
 gimp_container_view_select_item (GimpContainerView *view,
                                  GimpViewable      *viewable)
@@ -1115,9 +1116,6 @@ gimp_container_view_add_foreach (GimpViewable      *viewable,
 
   g_hash_table_insert (private->item_hash, viewable, insert_data);
 
-  if (view_iface->insert_item_after)
-    view_iface->insert_item_after (view, viewable, insert_data);
-
   children = gimp_viewable_get_children (viewable);
 
   if (children)
@@ -1153,8 +1151,8 @@ gimp_container_view_add (GimpContainerView *view,
 
   g_hash_table_insert (private->item_hash, viewable, insert_data);
 
-  if (view_iface->insert_item_after)
-    view_iface->insert_item_after (view, viewable, insert_data);
+  if (view_iface->insert_items_after)
+    view_iface->insert_items_after (view);
 
   children = gimp_viewable_get_children (viewable);
 
