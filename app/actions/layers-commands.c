@@ -629,6 +629,8 @@ layers_delete_cmd_callback (GimpAction *action,
   GimpImage *image;
   GList     *layers;
   GList     *removed_layers;
+  GList     *iter;
+  GList     *iter2;
 
   return_if_no_image (image, data);
 
@@ -641,6 +643,23 @@ layers_delete_cmd_callback (GimpAction *action,
   /* Copy of the original selection. */
   removed_layers = g_list_copy (layers);
 
+  /* Removing children layers (they will be removed anyway by removing
+   * the parent.
+   */
+  for (iter = removed_layers; iter; iter = iter->next)
+    {
+      for (iter2 = removed_layers; iter2; iter2 = iter2->next)
+        {
+          if (iter->data != iter2->data &&
+              gimp_item_is_ancestor (iter->data, iter2->data))
+            {
+              removed_layers = g_list_delete_link (removed_layers, iter);
+              iter = removed_layers;
+              break;
+            }
+        }
+    }
+
   if (g_list_length (removed_layers) > 1)
     {
       gchar *undo_name;
@@ -651,23 +670,8 @@ layers_delete_cmd_callback (GimpAction *action,
                                    undo_name);
     }
 
-  while (layers)
-    {
-      /* Stop when the selected layers contain a layer which was not in
-       * the originally selected list (it means we delete them all).
-       */
-      if (g_list_find (removed_layers, layers->data) == NULL)
-        break;
-
-      gimp_image_remove_layer (image, layers->data, TRUE, NULL);
-
-      /* Instead of iterating, I re-check the selected layers after each
-       * removal, because the selection may have changed, in particular
-       * in case a layer group got removed and some of its children were
-       * also selected.
-       */
-      layers = gimp_image_get_selected_layers (image);
-    }
+  for (iter = removed_layers; iter; iter = iter->next)
+    gimp_image_remove_layer (image, iter->data, TRUE, NULL);
 
   if (g_list_length (removed_layers) > 1)
     gimp_image_undo_group_end (image);
