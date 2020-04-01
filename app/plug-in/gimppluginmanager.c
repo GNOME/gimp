@@ -88,8 +88,7 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpPlugInManagerClass,
                                    plug_in_opened),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_PLUG_IN);
 
@@ -99,8 +98,7 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpPlugInManagerClass,
                                    plug_in_closed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_PLUG_IN);
 

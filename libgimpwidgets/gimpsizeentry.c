@@ -161,8 +161,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpSizeEntryClass, value_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_size_entry_signals[REFVAL_CHANGED] =
@@ -170,8 +169,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpSizeEntryClass, refval_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_size_entry_signals[UNIT_CHANGED] =
@@ -179,8 +177,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpSizeEntryClass, unit_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->finalize = gimp_size_entry_finalize;

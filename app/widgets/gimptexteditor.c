@@ -29,7 +29,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimpmarshal.h"
 
 #include "text/gimptext.h"
 
@@ -81,8 +80,7 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpTextEditorClass, text_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   text_editor_signals[DIR_CHANGED] =
@@ -90,8 +88,7 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpTextEditorClass, dir_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
 

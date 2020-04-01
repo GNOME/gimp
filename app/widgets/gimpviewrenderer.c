@@ -138,8 +138,7 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpViewRendererClass, update),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->dispose  = gimp_view_renderer_dispose;

@@ -88,8 +88,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPickButtonClass, color_picked),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 

@@ -27,8 +27,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "display/display-types.h"
 #include "display/gimpcanvas.h"
 
@@ -79,8 +77,7 @@ gimp_window_class_init (GimpWindowClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpWindowClass, monitor_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GDK_TYPE_MONITOR);
 

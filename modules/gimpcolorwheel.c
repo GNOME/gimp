@@ -175,8 +175,7 @@ gimp_color_wheel_class_init (GimpColorWheelClass *class)
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorWheelClass, changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   wheel_signals[MOVE] =
@@ -184,8 +183,7 @@ gimp_color_wheel_class_init (GimpColorWheelClass *class)
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpColorWheelClass, move),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__ENUM,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   GTK_TYPE_DIRECTION_TYPE);
 

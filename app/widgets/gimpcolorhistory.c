@@ -35,7 +35,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "app/core/gimpimage-colormap.h"
-#include "core/gimpmarshal.h"
 #include "core/gimppalettemru.h"
 
 #include "gimpcolorhistory.h"
@@ -129,8 +128,7 @@ gimp_color_history_class_init (GimpColorHistoryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorHistoryClass, color_selected),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 

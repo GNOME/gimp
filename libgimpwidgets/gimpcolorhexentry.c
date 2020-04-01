@@ -101,8 +101,7 @@ gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorHexEntryClass, color_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->constructed = gimp_color_hex_entry_constructed;
