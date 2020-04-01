@@ -415,8 +415,6 @@ about_dialog_add_update (GimpAboutDialog *dialog,
 
   /* Last check date box. */
   box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  if (config->last_known_release != NULL)
-    gtk_widget_set_margin_top (box2, 20);
   gtk_container_add (GTK_CONTAINER (box), box2);
   gtk_widget_show (box2);
 
@@ -425,12 +423,15 @@ about_dialog_add_update (GimpAboutDialog *dialog,
    */
   if (config->last_known_release != NULL)
     {
-      button = gtk_button_new_from_icon_name ("view-refresh", GTK_ICON_SIZE_MENU);
+      button = gtk_button_new ();
+      button_image = gtk_image_new_from_icon_name ("view-refresh", GTK_ICON_SIZE_MENU);
+      gtk_container_add (GTK_CONTAINER (button), button_image);
       gtk_widget_set_tooltip_text (button, _("Check for updates"));
       gtk_box_pack_start (GTK_BOX (box2), button, FALSE, FALSE, 0);
       g_signal_connect_swapped (button, "clicked",
                                 (GCallback) gimp_update_check, config);
       gtk_widget_show (button);
+      gtk_widget_show (button_image);
     }
 
   if (config->check_update_timestamp > 0)
@@ -865,5 +866,8 @@ about_dialog_download_clicked (GtkButton   *button,
   window = gtk_widget_get_ancestor (GTK_WIDGET (button), GTK_TYPE_WINDOW);
 
   if (window)
-    gtk_show_uri_on_window (GTK_WINDOW (window), link, GDK_CURRENT_TIME, NULL);
+    gtk_show_uri (gdk_screen_get_default (),
+                  link,
+                  gtk_get_current_event_time(),
+                  NULL);
 }
