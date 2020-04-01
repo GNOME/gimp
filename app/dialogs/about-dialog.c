@@ -360,18 +360,11 @@ about_dialog_add_update (GimpAboutDialog *dialog,
                * markups in your translation. */
               comment = g_strdup_printf (_("<u>Release comment</u>: <i>%s</i>"), config->last_release_comment);
             }
-          else
-            {
-              comment = g_strdup_printf ("<i>%s</i>",
-                                         _("Even though you use the last version, it is recommended to reinstall.\n"
-                                           "New revisions come with package fixes."));
-            }
         }
       else
         {
           text = g_strdup_printf (_("Download GIMP %s (released on %s)\n"),
                                   config->last_known_release, date);
-          comment = g_strdup ("It is recommended to update.");
         }
       gtk_label_set_text (GTK_LABEL (button_label), text);
       g_free (text);
