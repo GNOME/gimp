@@ -100,7 +100,7 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                             "delete-pixels",
                             _("Delete cropped pixels"),
                             _("Discard non-locked layer data that falls out of the crop region"),
-                            TRUE,
+                            FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
