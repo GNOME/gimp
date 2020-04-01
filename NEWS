@@ -10,8 +10,21 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
 
+Tools:
+
+  - Crop tool now has a "Delete cropped pixels" option active only in
+    image crop mode, allowing to choose whether to crop layers or only
+    the canvas (cropped pixels will be made invisible as out-of-canvas
+    but would still be present). The option is unchecked by default,
+    as it is the non-destructive behavior, which also means the default
+    behavior is changed.
+  - Crop tool in image crop mode will not layers with "Lock pixels" on,
+    anymore, even if "Delete cropped pixels" is checked.
+
 User interface:
 
+  - Tool groups can now display their tool list on hover rather than on
+    click. This can be in Preferences, in the Toolbox tab.
   - Improved update notification GUI in About dialog, and now also
     showing an update comment when one was set in gimp_versions.json.
 
