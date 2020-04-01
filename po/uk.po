@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-04-01 16:31+0000\n"
-"PO-Revision-Date: 2020-04-01 21:28+0300\n"
+"POT-Creation-Date: 2020-04-01 19:26+0000\n"
+"PO-Revision-Date: 2020-04-01 22:33+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -15108,7 +15108,6 @@ msgstr ""
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
 #: ../app/dialogs/about-dialog.c:341
-#| msgid "New version available!"
 msgid "Update available!"
 msgstr "Маємо оновлення!"
 
@@ -15136,7 +15135,6 @@ msgstr "Шукати оновлення"
 
 #: ../app/dialogs/about-dialog.c:438
 #, c-format
-#| msgid "Last checked on %s"
 msgid "Last checked on %s at %s"
 msgstr "Остання перевірка — %s о %s"
 
@@ -22086,49 +22084,59 @@ msgstr "%s для розмиття"
 msgid "Convolve Type  (%s)"
 msgstr "Тип згортання (%s)"
 
-#: ../app/tools/gimpcropoptions.c:78
+#: ../app/tools/gimpcropoptions.c:79
 #: ../app/tools/gimprectangleselectoptions.c:79
 msgid "Highlight"
 msgstr "Затемнити непозначене"
 
-#: ../app/tools/gimpcropoptions.c:79
+#: ../app/tools/gimpcropoptions.c:80
 #: ../app/tools/gimprectangleselectoptions.c:80
 msgid "Dim everything outside selection"
 msgstr "Затемнити все за межами позначеного"
 
-#: ../app/tools/gimpcropoptions.c:86
+#: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:87
 msgid "Highlight opacity"
 msgstr "Непрозорість підсвічування"
 
-#: ../app/tools/gimpcropoptions.c:87
+#: ../app/tools/gimpcropoptions.c:88
 #: ../app/tools/gimprectangleselectoptions.c:88
 msgid "How much to dim everything outside selection"
 msgstr "Міра затемнення усього поза позначеною ділянкою"
 
-#: ../app/tools/gimpcropoptions.c:93
+#: ../app/tools/gimpcropoptions.c:94
 msgid "Current layer only"
 msgstr "Лише поточний шар"
 
-#: ../app/tools/gimpcropoptions.c:94
+#: ../app/tools/gimpcropoptions.c:95
 msgid "Crop only currently selected layer"
 msgstr "Обрізати лише поточнийпозначенийй шар"
 
-#: ../app/tools/gimpcropoptions.c:100
+#: ../app/tools/gimpcropoptions.c:101
+#| msgid "Select foreground pixels"
+msgid "Delete cropped pixels"
+msgstr "Вилучити обрізані пікселі"
+
+#: ../app/tools/gimpcropoptions.c:102
+msgid "Discard non-locked layer data that falls out of the crop region"
+msgstr ""
+"Відкинути незаблоковані дані шару, які потрапляють за межі ділянки обрізання"
+
+#: ../app/tools/gimpcropoptions.c:108
 msgid "Allow growing"
 msgstr "Дозволити зростання"
 
-#: ../app/tools/gimpcropoptions.c:101
+#: ../app/tools/gimpcropoptions.c:109
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
 "Дозволити зміну розміру полотна через перетягування рамки обтинання за "
 "межами зображення"
 
-#: ../app/tools/gimpcropoptions.c:108 ../app/tools/gimpcropoptions.c:200
+#: ../app/tools/gimpcropoptions.c:116 ../app/tools/gimpcropoptions.c:226
 msgid "Fill with"
 msgstr "Заповнення"
 
-#: ../app/tools/gimpcropoptions.c:109
+#: ../app/tools/gimpcropoptions.c:117
 msgid "How to fill new areas created by 'Allow growing'"
 msgstr ""
 "Спосіб заповнення нових ділянок, які створено за допомогою «Дозволити "
