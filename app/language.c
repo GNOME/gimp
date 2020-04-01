@@ -735,6 +735,5 @@ language_init (const gchar *language)
     return;
 
   g_setenv ("LANGUAGE", language, TRUE);
-  g_setenv ("LC_TIME", language, TRUE);
   setlocale (LC_ALL, "");
 }
