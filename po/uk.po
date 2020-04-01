@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-03-31 09:31+0000\n"
-"PO-Revision-Date: 2020-03-31 21:04+0300\n"
+"POT-Creation-Date: 2020-04-01 16:31+0000\n"
+"PO-Revision-Date: 2020-04-01 21:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -832,7 +832,7 @@ msgstr ""
 "Разом з програмою ви маєте отримати копію Стандартної Суспільної Ліцензії "
 "GNU. Якщо це не так, дивіться https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:249
+#: ../app/gimp-update.c:253
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -15089,17 +15089,17 @@ msgctxt "plural"
 msgid "percent"
 msgstr "відсотки"
 
-#: ../app/dialogs/about-dialog.c:126
+#: ../app/dialogs/about-dialog.c:136
 msgid "About GIMP"
 msgstr "Про програму GIMP"
 
-#: ../app/dialogs/about-dialog.c:135
+#: ../app/dialogs/about-dialog.c:145
 msgid "Visit the GIMP website"
 msgstr "Відвідайте сайт GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:141
+#: ../app/dialogs/about-dialog.c:151
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота\n"
@@ -15107,51 +15107,44 @@ msgstr ""
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: ../app/dialogs/about-dialog.c:310
-msgid "New version available!"
-msgstr "Випущено нову версію!"
+#: ../app/dialogs/about-dialog.c:341
+#| msgid "New version available!"
+msgid "Update available!"
+msgstr "Маємо оновлення!"
 
 #. This is actually a new revision of current version.
-#: ../app/dialogs/about-dialog.c:332
+#: ../app/dialogs/about-dialog.c:361
 #, c-format
-msgid ""
-"A revision of GIMP %s was released on %s.\n"
-"Even though you use the last version, it is recommended to reinstall.\n"
-"New revisions come with package fixes."
-msgstr ""
-"Випущено модифікацію GIMP %s, %s.\n"
-"Хоча ви користуєтеся найновішою версією, рекомендуємо перевстановити її з "
-"пакунка з новою модифікацією.\n"
-"Модифікації є виправленими варіантами версій програми."
+msgid "Download GIMP %s revision %d (released on %s)\n"
+msgstr "Отримати GIMP %s, модифікація %d (випущено %s)\n"
 
-#. Recommend an update.
-#: ../app/dialogs/about-dialog.c:339 ../app/widgets/gimpcriticaldialog.c:209
+#. Translators: <> tags are Pango markup. Please keep these
+#. * markups in your translation.
+#: ../app/dialogs/about-dialog.c:371
 #, c-format
-msgid ""
-"A new version of GIMP (%s) was released on %s.\n"
-"It is recommended to update."
-msgstr ""
-"Нову версію GIMP (%s) було випущено %s.\n"
-"Рекомендуємо встановити оновлення."
+msgid "<u>Release comment</u>: <i>%s</i>"
+msgstr "<u>Коментар до випуску</u>: <i>%s</i>"
 
-#: ../app/dialogs/about-dialog.c:352
-msgid "Go to download page"
-msgstr "Перейти до сторінки отримання"
-
-#: ../app/dialogs/about-dialog.c:366
+#: ../app/dialogs/about-dialog.c:376
 #, c-format
-msgid "Last checked on %s"
-msgstr "Остання перевірка — %s"
+msgid "Download GIMP %s (released on %s)\n"
+msgstr "Отримати GIMP %s (випущено %s)\n"
 
-#: ../app/dialogs/about-dialog.c:371 ../app/dialogs/about-dialog.c:376
+#: ../app/dialogs/about-dialog.c:401 ../app/dialogs/about-dialog.c:422
 msgid "Check for updates"
 msgstr "Шукати оновлення"
 
-#: ../app/dialogs/about-dialog.c:676
+#: ../app/dialogs/about-dialog.c:438
+#, c-format
+#| msgid "Last checked on %s"
+msgid "Last checked on %s at %s"
+msgstr "Остання перевірка — %s о %s"
+
+#: ../app/dialogs/about-dialog.c:740
 msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
-#: ../app/dialogs/about-dialog.c:752
+#: ../app/dialogs/about-dialog.c:816
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -25581,12 +25574,22 @@ msgstr "Переглянути відомості щодо вади"
 msgid "Go to _Download page"
 msgstr "Перейти на сторінку _отримання пакунків"
 
+#. Recommend an update.
+#: ../app/widgets/gimpcriticaldialog.c:209
+#, c-format
+msgid ""
+"A new version of GIMP (%s) was released on %s.\n"
+"It is recommended to update."
+msgstr ""
+"Нову версію GIMP (%s) було випущено %s.\n"
+"Рекомендуємо встановити оновлення."
+
 #: ../app/widgets/gimpcriticaldialog.c:215
 msgid "You are running an unsupported version!"
 msgstr "Ви працюєте з версією, підтримка якої не здійснюється розробниками!"
 
 #: ../app/widgets/gimpcriticaldialog.c:238
-#: ../app/widgets/gimpcriticaldialog.c:584
+#: ../app/widgets/gimpcriticaldialog.c:588
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -25594,27 +25597,27 @@ msgstr ""
 "виконавши такі кроки:"
 
 #: ../app/widgets/gimpcriticaldialog.c:240
-#: ../app/widgets/gimpcriticaldialog.c:586
+#: ../app/widgets/gimpcriticaldialog.c:590
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Скопіюйте дані вади до буфера обміну натисканням"
 
 #: ../app/widgets/gimpcriticaldialog.c:242
-#: ../app/widgets/gimpcriticaldialog.c:588
+#: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Відкрийте сторінку стеження за вадами натисканням"
 
 #: ../app/widgets/gimpcriticaldialog.c:244
-#: ../app/widgets/gimpcriticaldialog.c:590
+#: ../app/widgets/gimpcriticaldialog.c:594
 msgid "Create a login if you don't have one yet."
 msgstr "Створіть обліковий запис, якщо у вас його ще немає."
 
 #: ../app/widgets/gimpcriticaldialog.c:245
-#: ../app/widgets/gimpcriticaldialog.c:591
+#: ../app/widgets/gimpcriticaldialog.c:595
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Вставте вміст буфера обміну до поля звіту щодо вади."
 
 #: ../app/widgets/gimpcriticaldialog.c:246
-#: ../app/widgets/gimpcriticaldialog.c:592
+#: ../app/widgets/gimpcriticaldialog.c:596
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -25701,14 +25704,14 @@ msgstr "Невідома помилка Microsoft Windows."
 msgid "Failed to open '%s': %s"
 msgstr "Не вдалося відкрити «%s»: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:550
+#: ../app/widgets/gimpcriticaldialog.c:554
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr ""
 "Програма GIMP аварійно завершила роботу внаслідок критичної помилки: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:557
+#: ../app/widgets/gimpcriticaldialog.c:561
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "Сталася помилка у GIMP: %s"
@@ -25716,12 +25719,12 @@ msgstr "Сталася помилка у GIMP: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:565
+#: ../app/widgets/gimpcriticaldialog.c:569
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "Сталося декілька критичних помилок у GIMP!"
 
-#: ../app/widgets/gimpcriticaldialog.c:617
+#: ../app/widgets/gimpcriticaldialog.c:621
 msgid "_Restart GIMP"
 msgstr "Пе_резапустити GIMP"
 
@@ -27160,27 +27163,22 @@ msgid "Create a new tool group"
 msgstr "Створити групу інструментів"
 
 #: ../app/widgets/gimptooleditor.c:250
-#| msgid "Raise this tool"
 msgid "Raise this item"
 msgstr "Підняти цей пункт"
 
 #: ../app/widgets/gimptooleditor.c:251
-#| msgid "Raise this tool to the top"
 msgid "Raise this item to the top"
 msgstr "Підняти цей пункт на вершину"
 
 #: ../app/widgets/gimptooleditor.c:258
-#| msgid "Lower this tool"
 msgid "Lower this item"
 msgstr "Опустити цей пункт"
 
 #: ../app/widgets/gimptooleditor.c:259
-#| msgid "Lower this tool to the bottom"
 msgid "Lower this item to the bottom"
 msgstr "Опустити цей пункт на дно"
 
 #: ../app/widgets/gimptooleditor.c:266
-#| msgid "Delete this tool"
 msgid "Delete this tool group"
 msgstr "Вилучити цю групу інструментів"
 
@@ -27521,6 +27519,19 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid ""
+#~ "A revision of GIMP %s was released on %s.\n"
+#~ "Even though you use the last version, it is recommended to reinstall.\n"
+#~ "New revisions come with package fixes."
+#~ msgstr ""
+#~ "Випущено модифікацію GIMP %s, %s.\n"
+#~ "Хоча ви користуєтеся найновішою версією, рекомендуємо перевстановити її з "
+#~ "пакунка з новою модифікацією.\n"
+#~ "Модифікації є виправленими варіантами версій програми."
+
+#~ msgid "Go to download page"
+#~ msgstr "Перейти до сторінки отримання"
 
 #~ msgid "You can drop dockable dialogs here"
 #~ msgstr "Можете залишити панельні вікна тут"
