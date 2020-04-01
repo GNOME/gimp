@@ -10,11 +10,18 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.18 to GIMP 2.10.20
 =====================================================
 
+User interface:
+
+  - Improved update notification GUI in About dialog, and now also
+    showing an update comment when one was set in gimp_versions.json.
+
 Plugins:
 
   - In file-psd, make the data_start and data_len fields of the
     PSDimageres and PSDlayerres structs unsigned, to avoid potential
     overflow/sign-extension
+  - file-raw: Canon CR3 files are now properly recognized by GIMP and
+    sent to your raw developer software of choice.
 
 Updated translations:
 
@@ -29,7 +36,7 @@ Icons:
 
 Bug fixes:
 
-  - #4663, #4734, #4641, #4328, #4094, #872, 4793
+  - #4663, #4734, #4641, #4328, #4094, #872, 4793, #4618, #4745, #4871.
 
 Developers:
 
