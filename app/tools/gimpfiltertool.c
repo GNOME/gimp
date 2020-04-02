@@ -724,6 +724,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
   if (! strcmp (pspec->name, "preview") &&
       filter_tool->filter)
     {
+      gimp_filter_tool_update_filter (filter_tool);
+
       if (filter_options->preview)
         {
           gimp_drawable_filter_apply (filter_tool->filter, NULL);
@@ -733,8 +735,6 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
         }
       else
         {
-          gimp_drawable_filter_abort (filter_tool->filter);
-
           if (filter_options->preview_split)
             gimp_filter_tool_remove_guide (filter_tool);
         }
@@ -1406,6 +1406,8 @@ gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
                                           clip);
   gimp_drawable_filter_set_region        (filter_tool->filter,
                                           options->region);
+  gimp_drawable_filter_set_preview       (filter_tool->filter,
+                                          options->preview);
   gimp_drawable_filter_set_preview_split (filter_tool->filter,
                                           options->preview_split,
                                           options->preview_alignment,
