@@ -203,7 +203,6 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *vbox_rectangle;
   GtkWidget *button;
-  GtkWidget *button2;
   GtkWidget *combo;
   GtkWidget *frame;
 
@@ -213,11 +212,12 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  delete pixels toggle  */
-  button2 = gimp_prop_check_button_new (config, "delete-pixels", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button2, FALSE, FALSE, 0);
+  button = gimp_prop_check_button_new (config, "delete-pixels", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   g_object_bind_property (G_OBJECT (config),  "layer-only",
-                          G_OBJECT (button2), "sensitive",
+                          G_OBJECT (button), "sensitive",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
