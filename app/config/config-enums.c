@@ -316,7 +316,7 @@ gimp_tool_group_menu_mode_get_type (void)
   {
     { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_CLICK, NC_("tool-group-menu-mode", "Show on click"), NULL },
     { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER, NC_("tool-group-menu-mode", "Show on hover"), NULL },
-    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN, NC_("tool-group-menu-mode", "Show on hover in single-column"), NULL },
+    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN, NC_("tool-group-menu-mode", "Show on hover in single column"), NULL },
     { 0, NULL, NULL }
   };
 
