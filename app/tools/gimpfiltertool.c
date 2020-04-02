@@ -1398,8 +1398,8 @@ gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
                                           options->preview);
   gimp_drawable_filter_set_preview_split (filter_tool->filter,
                                           options->preview_split,
-                                          options->preview_alignment,
-                                          options->preview_position);
+                                          options->preview_split_alignment,
+                                          options->preview_split_position);
   gimp_drawable_filter_set_add_alpha     (filter_tool->filter,
                                           add_alpha);
   gimp_drawable_filter_set_gamma_hack    (filter_tool->filter,
