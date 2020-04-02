@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 11:30+0100\n"
-"PO-Revision-Date: 2020-02-11 10:52+0100\n"
+"POT-Creation-Date: 2020-04-02 10:10+0200\n"
+"PO-Revision-Date: 2020-04-02 11:32+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -453,86 +453,114 @@ msgstr "Spiazzamento _X ombra generata"
 msgid "Drop shadow _Y displacement"
 msgstr "Spiazzamento _Y ombra generata"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
 msgid "Spyro Layer"
 msgstr "Livello Spiro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+msgid "Spyro Path"
+msgstr "Percorso spirografo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+msgid ""
+"Save\n"
+"as New Layer"
+msgstr ""
+"Salva\n"
+"come nuovo livello"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+msgid ""
+"Redraw on\n"
+"Active layer"
+msgstr ""
+"Ridisegna sul\n"
+"livello attivo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+msgid ""
+"Save\n"
+"as Path"
+msgstr ""
+"Salva\n"
+"come percorso"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
 msgid "Circle"
 msgstr "Cerchio"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
 msgid "Polygon-Star"
 msgstr "Poligono-stella"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
 msgid "Sine"
 msgstr "Seno"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
 msgid "Bumps"
 msgstr "Gobbe"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
 msgid "Rack"
 msgstr "Barra"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
 msgid "Frame"
 msgstr "Quadro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
 msgid "Selection"
 msgstr "Selezione"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
 msgid "Pencil"
 msgstr "Matita"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
 msgid "AirBrush"
 msgstr "Aerografo"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
 msgid "Stroke"
 msgstr "Tratto"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
 msgid "PaintBrush"
 msgstr "Pennello"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
 msgid "Ink"
 msgstr "Inchiostro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
 msgid "MyPaintBrush"
 msgstr "Pennello MyPaint"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
 msgid "Spyrograph"
 msgstr "Spirografo"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
 msgid "Epitrochoid"
 msgstr "Epitrocoide"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
 msgid "Curve Type"
 msgstr "Tipo curva"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -540,22 +568,22 @@ msgstr ""
 "Un motivo epitrocoidale si ottiene quando la rotella mobile è sull'esterno "
 "della rotella fissa."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
 msgid "Tool"
 msgstr "Strumento"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
 msgid ""
 "The tool with which to draw the pattern.The Preview tool just draws quickly."
 msgstr ""
 "Lo strumento con il quale si disegna il motivo. Lo strumento anteprima "
 "semplicemente disegna più velocemente."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
 msgid "Long Gradient"
 msgstr "Gradiente lungo"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -566,11 +594,11 @@ msgstr ""
 "motivo, basandosi sul gradiente corrente e sulla modalità di ripetizione "
 "dalle impostazioni dello strumento gradiente."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Specifica il motivo usando una delle seguenti schede:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -582,7 +610,7 @@ msgstr ""
 "kit dei giocattoli. Se si seguono le istruzioni allegate ai giocattoli "
 "reali, i risultati dovrebbero essere simili."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -590,12 +618,12 @@ msgstr ""
 "Numero di denti della rotella fissa. La dimensione della rotella fissa è "
 "proporzionale al numero di denti."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
 msgid "Fixed Gear Teeth"
 msgstr "Denti rotella fissa"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -603,16 +631,16 @@ msgstr ""
 "Numero di denti della rotella mobile. La dimensione della rotella mobile è "
 "proporzionale al numero di denti."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
 msgid "Moving Gear Teeth"
 msgstr "Denti rotella mobile"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
 msgid "Hole percent"
 msgstr "Percentuale foro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -620,11 +648,11 @@ msgstr ""
 "Quanto distante è il foro dal centro della rotella mobile. 100% significa "
 "che il foro è sul bordo della rotella."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
 msgid "Hole Number"
 msgstr "Numero foro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -632,20 +660,62 @@ msgstr ""
 "Il foro n.1 è sul bordo della rotella. Il numero foro massimo è vicino al "
 "centro. Il numero foro massimo è diverso per ogni rotella."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+msgid "Flower Petals"
+msgstr "Petali di fiore"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+msgid "The number of petals in the pattern."
+msgstr "Il numero di petali nel motivo."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+msgid "Petal Skip"
+msgstr "Salta petalo"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "Il numero di petali per avanzare al disegno del prossimo petalo."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+msgid "Hole Radius(%)"
+msgstr "Raggio foro(%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr "Il raggio del foro al centro del motivo dove non viene disegnato niente. Dato come percentuale della dimensione del motivo. Un valore di 0 non produrrà nessun foro. Un valore di 99 produrrà solo una linea sottile sul bordo."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+msgid "Width(%)"
+msgstr "Larghezza(%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr "La larghezza del motivo come percentuale della dimensione del motivo. Un valore di 1 disegnerà solo un motivo sottile. Un valore di 100 riempirà interamente la rotella fissa."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+msgid "Visual"
+msgstr "Visuale"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
 msgid "Toy Kit"
 msgstr "Kit giocattolo"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
 msgid "Gears"
 msgstr "Rotelle"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
 msgid "Rotation"
 msgstr "Rotazione"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -653,11 +723,11 @@ msgstr ""
 "La rotazione del motivo, in gradi. La posizione iniziale della rotella "
 "mobile in quella fissa."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
 msgid "Shape"
 msgstr "Forma"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -671,41 +741,41 @@ msgstr ""
 "notazione rotella per toccare i bordi. Selezione abbraccerà i bordi della "
 "selezione corrente - provare qualcosa di non rettangolare."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
 msgid "Sides"
 msgstr "Lati"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
 msgid "Number of sides of the shape."
 msgstr "Numero di lati della forma."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
 msgid "Morph"
 msgstr "Metamorfosi"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr ""
 "Metamorfosi della forma della rotella fissa. Riguarda solo alcune delle "
 "forme."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotazione della rotella fissa, in gradi."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
 msgid "Margin (px)"
 msgstr "Margine (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
 msgid "Margin from edge of selection."
 msgstr "Margine dal bordo della selezione."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
 msgid "Make width and height equal"
 msgstr "Rendi larghezza e altezza uguali"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -713,11 +783,11 @@ msgstr ""
 "Se non selezionata, il motivo riempirà l'immagine o la selezione corrente. "
 "Se selezionata, il motivo avrà larghezza e altezza uguali e sarà centrato."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
 msgid "Re_draw"
 msgstr "Ri_disegna"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -726,67 +796,55 @@ msgstr ""
 "selezione, premere questo pulsante per avere un'anteprima di come apparirà "
 "il motivo."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
 msgid "_Reset"
 msgstr "_Reimposta"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
 msgid "_Cancel"
 msgstr "Ann_ulla"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
 msgid "_OK"
 msgstr "_OK"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
 msgid ""
-"Keep\n"
-"Layer"
-msgstr ""
-"Tieni il\n"
-"livello"
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr "Scegliere se salvare come un nuovo livello, ridisegnare sull'ultimo livello attivo o salvare su un percorso"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
-msgid ""
-"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
-"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
-"redrawn on the layer that was active when the plugin was launched."
-msgstr ""
-"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
-"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
-"redrawn on the layer that was active when the plugin was launched."
-
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
 msgid "Spyrogimp"
 msgstr "Spirogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Disegna spirogrammi usando le impostazioni dello strumento e la selezione "
 "correnti."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
 msgid "Curve Pattern"
 msgstr "Motivo curva"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
 msgid "Fixed Gear"
 msgstr "Rotella fissa"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
 msgid "Rendering Pattern"
 msgstr "Rendering motivo"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
 msgid "Please wait : Rendering Pattern"
 msgstr "Attendere: rendering motivo"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
 msgid "Spyrogimp..."
 msgstr "Spirogimp..."
