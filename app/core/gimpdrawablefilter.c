@@ -492,7 +492,7 @@ gimp_drawable_filter_set_color_managed (GimpDrawableFilter *filter,
 
       gimp_drawable_filter_sync_transform (filter);
 
-      if (gimp_drawable_filter_is_filtering (filter))
+      if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
