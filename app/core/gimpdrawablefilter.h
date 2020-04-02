@@ -62,7 +62,8 @@ void       gimp_drawable_filter_set_region     (GimpDrawableFilter  *filter,
 void       gimp_drawable_filter_set_crop       (GimpDrawableFilter  *filter,
                                                 const GeglRectangle *rect,
                                                 gboolean             update);
-void       gimp_drawable_filter_set_preview    (GimpDrawableFilter  *filter,
+void       gimp_drawable_filter_set_preview_split
+                                               (GimpDrawableFilter  *filter,
                                                 gboolean             enabled,
                                                 GimpAlignmentType    alignment,
                                                 gdouble              split_position);

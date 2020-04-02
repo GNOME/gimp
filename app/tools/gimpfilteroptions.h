@@ -38,8 +38,8 @@ struct _GimpFilterOptions
 
   gboolean             preview;
   gboolean             preview_split;
-  GimpAlignmentType    preview_alignment;
-  gdouble              preview_position;
+  GimpAlignmentType    preview_split_alignment;
+  gdouble              preview_split_position;
   gboolean             controller;
   GimpTransformResize  clip;
   GimpFilterRegion     region;

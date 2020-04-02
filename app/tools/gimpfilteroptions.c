@@ -34,8 +34,8 @@ enum
   PROP_0,
   PROP_PREVIEW,
   PROP_PREVIEW_SPLIT,
-  PROP_PREVIEW_ALIGNMENT,
-  PROP_PREVIEW_POSITION,
+  PROP_PREVIEW_SPLIT_ALIGNMENT,
+  PROP_PREVIEW_SPLIT_POSITION,
   PROP_CONTROLLER,
   PROP_CLIP,
   PROP_REGION,
@@ -83,16 +83,16 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_PREVIEW_ALIGNMENT,
-                                   g_param_spec_enum ("preview-alignment",
+  g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT_ALIGNMENT,
+                                   g_param_spec_enum ("preview-split-alignment",
                                                       NULL, NULL,
                                                       GIMP_TYPE_ALIGNMENT_TYPE,
                                                       GIMP_ALIGN_LEFT,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_PREVIEW_POSITION,
-                                   g_param_spec_double ("preview-position",
+  g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT_POSITION,
+                                   g_param_spec_double ("preview-split-position",
                                                         NULL, NULL,
                                                         0.0, 1.0, 0.5,
                                                         GIMP_PARAM_READWRITE |
@@ -161,12 +161,12 @@ gimp_filter_options_set_property (GObject      *object,
       options->preview_split = g_value_get_boolean (value);
       break;
 
-    case PROP_PREVIEW_ALIGNMENT:
-      options->preview_alignment = g_value_get_enum (value);
+    case PROP_PREVIEW_SPLIT_ALIGNMENT:
+      options->preview_split_alignment = g_value_get_enum (value);
       break;
 
-    case PROP_PREVIEW_POSITION:
-      options->preview_position = g_value_get_double (value);
+    case PROP_PREVIEW_SPLIT_POSITION:
+      options->preview_split_position = g_value_get_double (value);
       break;
 
     case PROP_CONTROLLER:
@@ -213,12 +213,12 @@ gimp_filter_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->preview_split);
       break;
 
-    case PROP_PREVIEW_ALIGNMENT:
-      g_value_set_enum (value, options->preview_alignment);
+    case PROP_PREVIEW_SPLIT_ALIGNMENT:
+      g_value_set_enum (value, options->preview_split_alignment);
       break;
 
-    case PROP_PREVIEW_POSITION:
-      g_value_set_double (value, options->preview_position);
+    case PROP_PREVIEW_SPLIT_POSITION:
+      g_value_set_double (value, options->preview_split_position);
       break;
 
     case PROP_CONTROLLER:
@@ -257,7 +257,7 @@ gimp_filter_options_switch_preview_side (GimpFilterOptions *options)
 
   g_return_if_fail (GIMP_IS_FILTER_OPTIONS (options));
 
-  switch (options->preview_alignment)
+  switch (options->preview_split_alignment)
     {
     case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_RIGHT;  break;
     case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_LEFT;   break;
@@ -267,7 +267,7 @@ gimp_filter_options_switch_preview_side (GimpFilterOptions *options)
       g_return_if_reached ();
     }
 
-  g_object_set (options, "preview-alignment", alignment, NULL);
+  g_object_set (options, "preview-split-alignment", alignment, NULL);
 }
 
 void
@@ -280,7 +280,7 @@ gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
 
   g_return_if_fail (GIMP_IS_FILTER_OPTIONS (options));
 
-  switch (options->preview_alignment)
+  switch (options->preview_split_alignment)
     {
     case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_TOP;    break;
     case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_BOTTOM; break;
@@ -301,7 +301,7 @@ gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
     }
 
   g_object_set (options,
-                "preview-alignment", alignment,
-                "preview-position",  CLAMP (position, 0.0, 1.0),
+                "preview-split-alignment", alignment,
+                "preview-split-position",  CLAMP (position, 0.0, 1.0),
                 NULL);
 }

@@ -760,8 +760,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
             {
               gdouble position;
 
-              if (filter_options->preview_alignment == GIMP_ALIGN_LEFT ||
-                  filter_options->preview_alignment == GIMP_ALIGN_RIGHT)
+              if (filter_options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+                  filter_options->preview_split_alignment == GIMP_ALIGN_RIGHT)
                 {
                   position = ((gdouble) ((x + width / 2) -
                                          gimp_item_get_offset_x (item)) /
@@ -774,9 +774,10 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
                               (gdouble) gimp_item_get_height (item));
                 }
 
-              g_object_set (options,
-                            "preview-position", CLAMP (position, 0.0, 1.0),
-                            NULL);
+              g_object_set (
+                options,
+                "preview-split-position", CLAMP (position, 0.0, 1.0),
+                NULL);
             }
         }
 
@@ -787,8 +788,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       else
         gimp_filter_tool_remove_guide (filter_tool);
     }
-  else if (! strcmp (pspec->name, "preview-alignment") ||
-           ! strcmp (pspec->name, "preview-position"))
+  else if (! strcmp (pspec->name, "preview-split-alignment") ||
+           ! strcmp (pspec->name, "preview-split-position"))
     {
       gimp_filter_tool_update_filter (filter_tool);
 
@@ -1224,14 +1225,14 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   item  = GIMP_ITEM (tool->drawable);
   image = gimp_item_get_image (item);
 
-  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
-      options->preview_alignment == GIMP_ALIGN_RIGHT)
+  if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       orientation = GIMP_ORIENTATION_VERTICAL;
 
       position = (gimp_item_get_offset_x (item) +
                   gimp_item_get_width (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
   else
     {
@@ -1239,7 +1240,7 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
 
       position = (gimp_item_get_offset_y (item) +
                   gimp_item_get_height (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
 
   filter_tool->preview_guide =
@@ -1285,14 +1286,14 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
 
   item = GIMP_ITEM (tool->drawable);
 
-  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
-      options->preview_alignment == GIMP_ALIGN_RIGHT)
+  if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       orientation = GIMP_ORIENTATION_VERTICAL;
 
       position = (gimp_item_get_offset_x (item) +
                   gimp_item_get_width (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
   else
     {
@@ -1300,7 +1301,7 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
 
       position = (gimp_item_get_offset_y (item) +
                   gimp_item_get_height (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
 
   if (orientation != gimp_guide_get_orientation (filter_tool->preview_guide) ||
@@ -1342,8 +1343,8 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
   GimpItem          *item    = GIMP_ITEM (tool->drawable);
   gdouble            position;
 
-  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
-      options->preview_alignment == GIMP_ALIGN_RIGHT)
+  if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       position = ((gdouble) (gimp_guide_get_position (guide) -
                              gimp_item_get_offset_x (item)) /
@@ -1357,7 +1358,7 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
     }
 
   g_object_set (options,
-                "preview-position", CLAMP (position, 0.0, 1.0),
+                "preview-split-position", CLAMP (position, 0.0, 1.0),
                 NULL);
 }
 
@@ -1405,7 +1406,7 @@ gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
                                           clip);
   gimp_drawable_filter_set_region        (filter_tool->filter,
                                           options->region);
-  gimp_drawable_filter_set_preview       (filter_tool->filter,
+  gimp_drawable_filter_set_preview_split (filter_tool->filter,
                                           options->preview_split,
                                           options->preview_alignment,
                                           options->preview_position);
@@ -1578,8 +1579,8 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   g_free (operation_name);
 
   g_object_set (GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool),
-                "preview-split",    FALSE,
-                "preview-position", 0.5,
+                "preview-split",          FALSE,
+                "preview-split-position", 0.5,
                 NULL);
 
   g_signal_connect_object (filter_tool->config, "notify",
