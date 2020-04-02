@@ -41,6 +41,8 @@ struct _GimpApplicator
   GeglNode               *aux_node;
   GeglNode               *output_node;
 
+  gboolean                active;
+
   GeglBuffer             *apply_buffer;
   GeglNode               *apply_src_node;
 
@@ -91,6 +93,9 @@ struct _GimpApplicatorClass
 GType        gimp_applicator_get_type          (void) G_GNUC_CONST;
 
 GimpApplicator * gimp_applicator_new           (GeglNode             *parent);
+
+void         gimp_applicator_set_active        (GimpApplicator       *applicator,
+                                                gboolean              active);
 
 void         gimp_applicator_set_src_buffer    (GimpApplicator       *applicator,
                                                 GeglBuffer           *dest_buffer);
