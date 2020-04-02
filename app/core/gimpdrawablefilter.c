@@ -68,6 +68,7 @@ struct _GimpDrawableFilter
   GimpFilterRegion        region;
   gboolean                crop_enabled;
   GeglRectangle           crop_rect;
+  gboolean                preview_enabled;
   gboolean                preview_split_enabled;
   GimpAlignmentType       preview_split_alignment;
   gdouble                 preview_split_position;
@@ -97,6 +98,7 @@ struct _GimpDrawableFilter
 static void       gimp_drawable_filter_dispose               (GObject             *object);
 static void       gimp_drawable_filter_finalize              (GObject             *object);
 
+static void       gimp_drawable_filter_sync_active           (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_clip             (GimpDrawableFilter  *filter,
                                                               gboolean             sync_region);
 static void       gimp_drawable_filter_sync_region           (GimpDrawableFilter  *filter);
@@ -114,7 +116,8 @@ static void       gimp_drawable_filter_sync_format           (GimpDrawableFilter
 static void       gimp_drawable_filter_sync_mask             (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_gamma_hack       (GimpDrawableFilter  *filter);
 
-static gboolean   gimp_drawable_filter_is_filtering          (GimpDrawableFilter  *filter);
+static gboolean   gimp_drawable_filter_is_added              (GimpDrawableFilter  *filter);
+static gboolean   gimp_drawable_filter_is_active             (GimpDrawableFilter  *filter);
 static gboolean   gimp_drawable_filter_add_filter            (GimpDrawableFilter  *filter);
 static gboolean   gimp_drawable_filter_remove_filter         (GimpDrawableFilter  *filter);
 
@@ -165,6 +168,7 @@ gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
 {
   drawable_filter->clip                    = TRUE;
   drawable_filter->region                  = GIMP_FILTER_REGION_SELECTION;
+  drawable_filter->preview_enabled         = TRUE;
   drawable_filter->preview_split_enabled   = FALSE;
   drawable_filter->preview_split_alignment = GIMP_ALIGN_LEFT;
   drawable_filter->preview_split_position  = 1.0;
@@ -304,7 +308,7 @@ gimp_drawable_filter_set_region (GimpDrawableFilter *filter,
 
       gimp_drawable_filter_sync_region (filter);
 
-      if (gimp_drawable_filter_is_filtering (filter))
+      if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
@@ -339,6 +343,27 @@ gimp_drawable_filter_set_crop (GimpDrawableFilter  *filter,
                                       filter->preview_split_alignment,
                                       filter->preview_split_position,
                                       update);
+    }
+}
+
+void
+gimp_drawable_filter_set_preview (GimpDrawableFilter *filter,
+                                  gboolean            enabled)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (enabled != filter->preview_enabled)
+    {
+      filter->preview_enabled = enabled;
+
+      gimp_drawable_filter_sync_active (filter);
+
+      if (gimp_drawable_filter_is_added (filter))
+        {
+          gimp_drawable_update_bounding_box (filter->drawable);
+
+          gimp_drawable_filter_update_drawable (filter, NULL);
+        }
     }
 }
 
@@ -390,7 +415,7 @@ gimp_drawable_filter_set_opacity (GimpDrawableFilter *filter,
 
       gimp_drawable_filter_sync_opacity (filter);
 
-      if (gimp_drawable_filter_is_filtering (filter))
+      if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
@@ -416,7 +441,7 @@ gimp_drawable_filter_set_mode (GimpDrawableFilter     *filter,
 
       gimp_drawable_filter_sync_mode (filter);
 
-      if (gimp_drawable_filter_is_filtering (filter))
+      if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
@@ -433,7 +458,7 @@ gimp_drawable_filter_set_add_alpha (GimpDrawableFilter *filter,
 
       gimp_drawable_filter_sync_format (filter);
 
-      if (gimp_drawable_filter_is_filtering (filter))
+      if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
@@ -450,7 +475,7 @@ gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter *filter,
 
       gimp_drawable_filter_sync_gamma_hack (filter);
 
-      if (gimp_drawable_filter_is_filtering (filter))
+      if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
@@ -469,7 +494,7 @@ gimp_drawable_filter_set_override_constraints (GimpDrawableFilter *filter,
       gimp_drawable_filter_sync_format (filter);
       gimp_drawable_filter_sync_clip   (filter, TRUE);
 
-      if (gimp_drawable_filter_is_filtering (filter))
+      if (gimp_drawable_filter_is_active (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
     }
 }
@@ -485,9 +510,12 @@ gimp_drawable_filter_apply (GimpDrawableFilter  *filter,
 
   gimp_drawable_filter_sync_clip (filter, TRUE);
 
-  gimp_drawable_update_bounding_box (filter->drawable);
+  if (gimp_drawable_filter_is_active (filter))
+    {
+      gimp_drawable_update_bounding_box (filter->drawable);
 
-  gimp_drawable_filter_update_drawable (filter, area);
+      gimp_drawable_filter_update_drawable (filter, area);
+    }
 }
 
 gboolean
@@ -502,7 +530,7 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
                         FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
-  if (gimp_drawable_filter_is_filtering (filter))
+  if (gimp_drawable_filter_is_added (filter))
     {
       const Babl *format;
 
@@ -511,6 +539,7 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
       gimp_drawable_filter_set_preview_split (filter, FALSE,
                                               filter->preview_split_alignment,
                                               filter->preview_split_position);
+      gimp_drawable_filter_set_preview (filter, TRUE);
 
       success = gimp_drawable_merge_filter (filter->drawable,
                                             GIMP_FILTER (filter),
@@ -545,6 +574,12 @@ gimp_drawable_filter_abort (GimpDrawableFilter *filter)
 
 
 /*  private functions  */
+
+static void
+gimp_drawable_filter_sync_active (GimpDrawableFilter *filter)
+{
+  gimp_applicator_set_active (filter->applicator, filter->preview_enabled);
+}
 
 static void
 gimp_drawable_filter_sync_clip (GimpDrawableFilter *filter,
@@ -663,7 +698,7 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
       gimp_applicator_set_apply_offset (filter->applicator, 0, 0);
     }
 
-  if (gimp_drawable_filter_is_filtering (filter))
+  if (gimp_drawable_filter_is_active (filter))
     {
       if (gimp_drawable_update_bounding_box (filter->drawable))
         g_signal_emit (filter, drawable_filter_signals[FLUSH], 0);
@@ -761,7 +796,7 @@ gimp_drawable_filter_sync_crop (GimpDrawableFilter  *filter,
   gimp_applicator_set_crop (filter->applicator, enabled ? &new_rect : NULL);
 
   if (update                                     &&
-      gimp_drawable_filter_is_filtering (filter) &&
+      gimp_drawable_filter_is_active (filter) &&
       ! gegl_rectangle_equal (&old_rect, &new_rect))
     {
       GeglRectangle diff_rects[4];
@@ -926,21 +961,29 @@ gimp_drawable_filter_sync_gamma_hack (GimpDrawableFilter *filter)
 }
 
 static gboolean
-gimp_drawable_filter_is_filtering (GimpDrawableFilter *filter)
+gimp_drawable_filter_is_added (GimpDrawableFilter *filter)
 {
   return gimp_drawable_has_filter (filter->drawable,
                                    GIMP_FILTER (filter));
 }
 
 static gboolean
+gimp_drawable_filter_is_active (GimpDrawableFilter *filter)
+{
+  return gimp_drawable_filter_is_added (filter) &&
+         filter->preview_enabled;
+}
+
+static gboolean
 gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
 {
-  if (! gimp_drawable_filter_is_filtering (filter))
+  if (! gimp_drawable_filter_is_added (filter))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
 
       gimp_viewable_preview_freeze (GIMP_VIEWABLE (filter->drawable));
 
+      gimp_drawable_filter_sync_active (filter);
       gimp_drawable_filter_sync_mask (filter);
       gimp_drawable_filter_sync_clip (filter, FALSE);
       gimp_drawable_filter_sync_region (filter);
@@ -994,7 +1037,7 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
 static gboolean
 gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
 {
-  if (gimp_drawable_filter_is_filtering (filter))
+  if (gimp_drawable_filter_is_added (filter))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
 
