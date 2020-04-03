@@ -595,7 +595,12 @@ gimp_paned_box_drag_callback (GdkDragContext *context,
   paned = gtk_widget_get_ancestor (GTK_WIDGET (paned_box),
                                    GTK_TYPE_PANED);
 
-  if (begin)
+  /* apparently, we can be called multiple times when beginning a drag
+   * (possibly a gtk bug); make sure not to leak the idle.
+   *
+   * see issue #4895.
+   */
+  if (begin && ! paned_box->p->dnd_context)
     {
       paned_box->p->dnd_context = context;
 
@@ -639,7 +644,7 @@ gimp_paned_box_drag_callback (GdkDragContext *context,
         (GSourceFunc) gimp_paned_box_drag_callback_idle,
         paned_box);
     }
-  else
+  else if (! begin && paned_box->p->dnd_context)
     {
       if (paned_box->p->dnd_idle_id)
         {
