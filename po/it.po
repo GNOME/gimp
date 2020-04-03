@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 09:46+0200\n"
-"PO-Revision-Date: 2020-04-03 14:34+0200\n"
+"PO-Revision-Date: 2020-04-03 18:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -16506,7 +16506,7 @@ msgstr "Mostra opzioni colore _avanzate"
 #: ../app/dialogs/preferences-dialog.c:1510
 #: ../app/dialogs/preferences-dialog.c:1511
 msgid "Image Import & Export"
-msgstr "Importazione e esportazione immagine"
+msgstr "Importazione ed esportazione immagine"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1521
