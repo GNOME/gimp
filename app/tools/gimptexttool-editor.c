@@ -446,6 +446,8 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
   GtkTextIter       cursor;
   GtkTextIter       selection;
   gboolean          retval = TRUE;
+  //GtkTextIter start;
+  //GtkTextIter end;
 
   if (! gtk_widget_has_focus (shell->canvas))
     {
@@ -512,6 +514,41 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
                          GIMP_TOOL (text_tool)->display);
       break;
 
+    //Janky keyboard shortcuts
+
+    case GDK_CONTROL_MASK:
+    case GDK_KEY_b:
+    
+    gimp_text_tool_reset_im_context (text_tool);
+    gtk_text_buffer_apply_tag (buffer,
+                                                     text_tool->buffer->bold_tag,
+                                                     &cursor, &selection);
+    break;
+
+    case GDK_KEY_i:
+    gimp_text_tool_reset_im_context (text_tool);
+    gtk_text_buffer_apply_tag (buffer,
+                                                     text_tool->buffer->italic_tag,
+                                                     &cursor, &selection);
+    break;
+
+    case GDK_KEY_u:
+    gimp_text_tool_reset_im_context (text_tool);
+    gtk_text_buffer_apply_tag (buffer,
+                                                     text_tool->buffer->underline_tag,
+                                                     &cursor, &selection);
+    break;
+    //Text size
+    case GDK_SHIFT_MASK:
+    case GDK_KEY_KP_Add:
+      gimp_text_tool_reset_im_context (text_tool);
+      gimp_text_tool_change_size(text_tool, 1.0);  
+      break;
+    case GDK_KEY_KP_Subtract:
+      gimp_text_tool_reset_im_context (text_tool);
+      gimp_text_tool_change_size(text_tool, -1.0);   
+      break;                     
+    
     default:
       retval = FALSE;
     }
