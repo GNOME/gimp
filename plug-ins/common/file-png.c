@@ -279,7 +279,7 @@ png_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
                              "Save transparent",
                              "Preserve color of transparent pixels?",
-                             TRUE,
+                             FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_INT (procedure, "format",
