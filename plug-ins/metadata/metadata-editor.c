@@ -606,12 +606,12 @@ static void
 remove_substring (const gchar *string,
                   const gchar *substring)
 {
-  if (string != NULL && substring != NULL)
+  if (string != NULL && substring != NULL && substring[0] != '\0')
     {
       gchar *p = strstr (string, substring);
       if (p)
         {
-          strcpy (p, p + (gint) strlen (substring));
+          memmove (p, p + strlen (substring), strlen (p + strlen (substring)) + 1);
         }
     }
 }
