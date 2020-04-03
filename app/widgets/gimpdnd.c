@@ -1848,10 +1848,10 @@ gimp_dnd_get_viewable_icon (GtkWidget      *widget,
 
       label = g_object_new (GTK_TYPE_LABEL,
                             "label",           desc,
-                            "xpad",            3,
                             "xalign",          0.0,
                             "yalign",          0.5,
                             "max-width-chars", 30,
+                            "width-chars",     MIN (strlen (desc), 10),
                             "ellipsize",       PANGO_ELLIPSIZE_END,
                             NULL);
 
