@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 09:46+0200\n"
-"PO-Revision-Date: 2020-04-02 10:08+0200\n"
+"PO-Revision-Date: 2020-04-03 14:34+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -22106,7 +22106,7 @@ msgstr "Usa il valore di colore fuso fra tutti i livelli compositi visibili"
 
 #: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:71
 msgid "Sample average"
-msgstr "Media di campionamento"
+msgstr "Media campione"
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 msgid "Use averaged color value from nearby pixels"
@@ -22118,7 +22118,7 @@ msgstr "Raggio medio del prelievo colore"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
 msgid "Pick Target"
-msgstr "Preleva tracciato"
+msgstr "Obiettivo del prelievo"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
 msgid "Choose what the color picker will do"
