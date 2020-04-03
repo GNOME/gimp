@@ -2,7 +2,7 @@
     "app-id": "org.gimp.GIMP",
     "branch": "master",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.32",
+    "runtime-version": "3.36",
     "sdk": "org.gnome.Sdk",
     "command": "gimp-2.99",
     "separate-locales": false,
@@ -12,6 +12,7 @@
                     "--socket=x11", "--socket=wayland",
                     "--filesystem=host", "--filesystem=xdg-config/GIMP",
                     "--filesystem=xdg-config/gtk-3.0", "--filesystem=/tmp",
+                    "--filesystem=xdg-run/gvfs",
                     "--talk-name=org.gtk.vfs", "--talk-name=org.gtk.vfs.*",
                     "--talk-name=org.freedesktop.FileManager1"],
     "tags": ["GTK+3", "nightly"],
@@ -57,7 +58,7 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "http://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.1.tar.gz",
+                            "url": "https://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.1.tar.gz",
                             "sha256": "cac206e63be68136ef556c2b555df659f45098c159ce24804e9d5e9e0286609e"
                         },
                         {
@@ -72,7 +73,7 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://download.savannah.nongnu.org/releases/openexr/openexr-2.2.1.tar.gz",
+                    "url": "https://download.savannah.nongnu.org/releases/openexr/openexr-2.2.1.tar.gz",
                     "sha256": "8f9a5af6131583404261931d9a5c83de0a425cb4b8b25ddab2b169fbf113aecd"
                 },
                 {
@@ -105,8 +106,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-0.75.0.tar.xz",
-                    "sha256": "3bbaedb0fa2797cac933a0659d144303e4d09eec6892c65600da987d8707199a"
+                    "url": "https://poppler.freedesktop.org/poppler-0.87.0.tar.xz",
+                    "sha256": "6f602b9c24c2d05780be93e7306201012e41459f289b8279a27a79431ad4150e"
                 }
             ]
         },
@@ -163,8 +164,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostscript-9.27.tar.gz",
-                    "sha512": "9ad7bd24b6d9b7d258e943783817be036a2e0234517baffa1016804ef9b6f3062fb5da20a890a0bfc9e58203ddcf25dc4465f5b3bf5e4a61db87bef0606a0884"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs952/ghostscript-9.52.tar.xz",
+                    "sha512": "4c4a33884e1138bad553eee61fac1a72158297ad5c2ce46a4b36150848dea8158affaf2b902f4ff03e4f72ebc8154c198b618112624f409230a610b7648faa67"
                 },
                 {
                     "type": "shell",
@@ -196,8 +197,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.4.0/libmypaint-1.4.0.tar.xz",
-                    "sha256": "59d13b14c6aca0497095f29ee7228ca2499a923ba8e1dd718a2f2ecb45a9cbff"
+                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.5.1/libmypaint-1.5.1.tar.xz",
+                    "sha256": "aef8150a0c84ce2ff6fb24de8d5ffc564845d006f8bad7ed84ee32ed1dd90c2b"
                 }
             ]
         },
@@ -205,9 +206,9 @@
             "name": "mypaint-brushes",
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/mypaint/mypaint-brushes.git",
-                    "branch": "v1.3.x"
+                    "type": "archive",
+                    "url": "https://github.com/mypaint/mypaint-brushes/releases/download/v1.3.1/mypaint-brushes-1.3.1.tar.xz",
+                    "sha256": "fef66ffc241b7c5cd29e9c518e933c739618cb51c4ed4d745bf648a1afc3fe70"
                 }
             ]
         },
@@ -237,8 +238,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.5.tar.gz",
-                            "sha256": "0950c14bd77c90a6427e26210d6dab422271bc86f9fc69126725833ecdaa0e85"
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.9.tar.gz",
+                            "sha256": "17d4677264dfbc4433e97076220adc79b050e4f8a083ea3f853a53af253bc380"
                         }
                     ]
                 }
@@ -256,16 +257,16 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.3/libde265-1.0.3.tar.gz",
-                            "sha256": "e4206185a7c67d3b797d6537df8dcaa6e5fd5a5f93bd14e65a755c33cd645f7a"
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
+                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
                         }
                     ]
                 }
             ],
             "sources" : [
                 {
-                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.4.0/libheif-1.4.0.tar.gz",
-                    "sha256" : "977a9831f1d61b5005566945c7e16e31de35a57a8dd6eb715ae0f40a3595cb60",
+                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.6.2/libheif-1.6.2.tar.gz",
+                    "sha256" : "bb229e855621deb374f61bee95c4642f60c2a2496bded35df3d3c42cc6d8eefc",
                     "type" : "archive"
                 }
             ]
@@ -299,7 +300,9 @@
             "name": "gimp",
             "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html",
                              "--with-icc-directory=/run/host/usr/share/color/icc/",
-			     "--with-lua=force", "--with-python=force", "--with-javascript=force" ],
+                             "--with-lua=force", "--with-python=force", "--with-javascript=force",
+                             "--with-build-id=org.gimp.GIMP.flatpak.stable",
+                             "--disable-check-update" ],
             "cleanup": [ "/bin/gimptool-3.0", "/bin/gimp-console-2.99" ],
             "sources": [
                 {
