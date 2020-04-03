@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-02 10:10+0200\n"
-"PO-Revision-Date: 2020-04-02 11:32+0200\n"
+"PO-Revision-Date: 2020-04-04 01:52+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -133,7 +133,7 @@ msgstr "File istogramma "
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "_Bucket Size"
-msgstr "Dimensione _colore"
+msgstr "Dimensione _secchiello"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "Sample _Average"
