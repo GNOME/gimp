@@ -34,11 +34,12 @@ enum
   PROP_0,
   PROP_PREV_PARENT,
   PROP_PREV_POSITION,
-  PROP_PREV_LAYER
+  PROP_PREV_LAYERS
 };
 
 
 static void     gimp_layer_undo_constructed  (GObject             *object);
+static void     gimp_layer_undo_finalize     (GObject             *object);
 static void     gimp_layer_undo_set_property (GObject             *object,
                                               guint                property_id,
                                               const GValue        *value,
@@ -69,6 +70,7 @@ gimp_layer_undo_class_init (GimpLayerUndoClass *klass)
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
   object_class->constructed      = gimp_layer_undo_constructed;
+  object_class->finalize         = gimp_layer_undo_finalize;
   object_class->set_property     = gimp_layer_undo_set_property;
   object_class->get_property     = gimp_layer_undo_get_property;
 
@@ -89,16 +91,16 @@ gimp_layer_undo_class_init (GimpLayerUndoClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_PREV_LAYER,
-                                   g_param_spec_object ("prev-layer", NULL, NULL,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_PREV_LAYERS,
+                                   g_param_spec_pointer ("prev-layers", NULL, NULL,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_layer_undo_init (GimpLayerUndo *undo)
 {
+  undo->prev_layers = NULL;
 }
 
 static void
@@ -109,6 +111,15 @@ gimp_layer_undo_constructed (GObject *object)
   gimp_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
 }
 
+static void
+gimp_layer_undo_finalize (GObject *object)
+{
+  GimpLayerUndo *undo = GIMP_LAYER_UNDO (object);
+
+  g_clear_pointer (&undo->prev_layers, g_list_free);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
 static void
 gimp_layer_undo_set_property (GObject      *object,
                               guint         property_id,
@@ -125,8 +136,8 @@ gimp_layer_undo_set_property (GObject      *object,
     case PROP_PREV_POSITION:
       layer_undo->prev_position = g_value_get_int (value);
       break;
-    case PROP_PREV_LAYER:
-      layer_undo->prev_layer = g_value_get_object (value);
+    case PROP_PREV_LAYERS:
+      layer_undo->prev_layers = g_list_copy (g_value_get_pointer (value));
       break;
 
     default:
@@ -151,8 +162,8 @@ gimp_layer_undo_get_property (GObject    *object,
     case PROP_PREV_POSITION:
       g_value_set_int (value, layer_undo->prev_position);
       break;
-    case PROP_PREV_LAYER:
-      g_value_set_object (value, layer_undo->prev_layer);
+    case PROP_PREV_LAYERS:
+      g_value_set_pointer (value, layer_undo->prev_layers);
       break;
 
     default:
@@ -198,14 +209,15 @@ gimp_layer_undo_pop (GimpUndo            *undo,
       layer_undo->prev_position = gimp_item_get_index (GIMP_ITEM (layer));
 
       gimp_image_remove_layer (undo->image, layer, FALSE,
-                               layer_undo->prev_layer);
+                               layer_undo->prev_layers);
     }
   else
     {
       /*  restore layer  */
 
       /*  record the active layer  */
-      layer_undo->prev_layer = gimp_image_get_active_layer (undo->image);
+      g_clear_pointer (&layer_undo->prev_layers, g_list_free);
+      layer_undo->prev_layers = g_list_copy (gimp_image_get_selected_layers (undo->image));
 
       gimp_image_add_layer (undo->image, layer,
                             layer_undo->prev_parent,

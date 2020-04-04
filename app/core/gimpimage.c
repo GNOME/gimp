@@ -99,8 +99,8 @@ enum
   PRECISION_CHANGED,
   ALPHA_CHANGED,
   FLOATING_SELECTION_CHANGED,
-  ACTIVE_CHANNEL_CHANGED,
-  ACTIVE_VECTORS_CHANGED,
+  SELECTED_CHANNELS_CHANGED,
+  SELECTED_VECTORS_CHANGED,
   SELECTED_LAYERS_CHANGED,
   LINKED_ITEMS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
@@ -255,20 +255,27 @@ static void     gimp_image_channel_name_changed  (GimpChannel       *channel,
                                                   GimpImage         *image);
 static void     gimp_image_channel_color_changed (GimpChannel       *channel,
                                                   GimpImage         *image);
-static void     gimp_image_active_layer_notify   (GimpItemTree      *tree,
-                                                  const GParamSpec  *pspec,
-                                                  GimpImage         *image);
-static void     gimp_image_active_channel_notify (GimpItemTree      *tree,
-                                                  const GParamSpec  *pspec,
-                                                  GimpImage         *image);
-static void     gimp_image_active_vectors_notify (GimpItemTree      *tree,
-                                                  const GParamSpec  *pspec,
-                                                  GimpImage         *image);
+
+static void     gimp_image_selected_layers_notify   (GimpItemTree      *tree,
+                                                     const GParamSpec  *pspec,
+                                                     GimpImage         *image);
+static void     gimp_image_selected_channels_notify (GimpItemTree      *tree,
+                                                     const GParamSpec  *pspec,
+                                                     GimpImage         *image);
+static void     gimp_image_selected_vectors_notify  (GimpItemTree      *tree,
+                                                     const GParamSpec  *pspec,
+                                                     GimpImage         *image);
 
 static void     gimp_image_freeze_bounding_box   (GimpImage         *image);
 static void     gimp_image_thaw_bounding_box     (GimpImage         *image);
 static void     gimp_image_update_bounding_box   (GimpImage         *image);
 
+static gint     gimp_image_layer_stack_cmp         (GList           *layers1,
+                                                    GList           *layers2);
+static void     gimp_image_remove_from_layer_stack (GimpImage       *image,
+                                                    GimpLayer       *layer);
+static gint     gimp_image_selected_is_descendant  (GimpViewable    *selected,
+                                                    GimpViewable    *viewable);
 
 G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
                          G_ADD_PRIVATE (GimpImage)
@@ -331,19 +338,19 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[ACTIVE_CHANNEL_CHANGED] =
-    g_signal_new ("active-channel-changed",
+  gimp_image_signals[SELECTED_CHANNELS_CHANGED] =
+    g_signal_new ("selected-channels-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, active_channel_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, selected_channels_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[ACTIVE_VECTORS_CHANGED] =
-    g_signal_new ("active-vectors-changed",
+  gimp_image_signals[SELECTED_VECTORS_CHANGED] =
+    g_signal_new ("selected-vectors-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, active_vectors_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, selected_vectors_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -584,8 +591,9 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->precision_changed            = gimp_image_real_precision_changed;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
-  klass->active_channel_changed       = NULL;
-  klass->active_vectors_changed       = NULL;
+  klass->selected_layers_changed      = NULL;
+  klass->selected_channels_changed    = NULL;
+  klass->selected_vectors_changed     = NULL;
   klass->linked_items_changed         = NULL;
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
@@ -770,13 +778,13 @@ gimp_image_init (GimpImage *image)
                     image);
 
   g_signal_connect (private->layers, "notify::selected-items",
-                    G_CALLBACK (gimp_image_active_layer_notify),
+                    G_CALLBACK (gimp_image_selected_layers_notify),
                     image);
   g_signal_connect (private->channels, "notify::selected-items",
-                    G_CALLBACK (gimp_image_active_channel_notify),
+                    G_CALLBACK (gimp_image_selected_channels_notify),
                     image);
   g_signal_connect (private->vectors, "notify::selected-items",
-                    G_CALLBACK (gimp_image_active_vectors_notify),
+                    G_CALLBACK (gimp_image_selected_vectors_notify),
                     image);
 
   g_signal_connect_swapped (private->layers->container, "update",
@@ -1110,7 +1118,8 @@ gimp_image_finalize (GObject *object)
 
   if (private->layer_stack)
     {
-      g_slist_free (private->layer_stack);
+      g_slist_free_full (private->layer_stack,
+                         (GDestroyNotify) g_list_free);
       private->layer_stack = NULL;
     }
 
@@ -1721,45 +1730,56 @@ gimp_image_channel_color_changed (GimpChannel *channel,
 }
 
 static void
-gimp_image_active_layer_notify (GimpItemTree     *tree,
-                                const GParamSpec *pspec,
-                                GimpImage        *image)
+gimp_image_selected_layers_notify (GimpItemTree     *tree,
+                                   const GParamSpec *pspec,
+                                   GimpImage        *image)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpLayer        *layer   = gimp_image_get_active_layer (image);
+  GList            *layers  = gimp_image_get_selected_layers (image);
 
-  if (layer)
+  if (layers)
     {
       /*  Configure the layer stack to reflect this change  */
-      private->layer_stack = g_slist_remove (private->layer_stack, layer);
-      private->layer_stack = g_slist_prepend (private->layer_stack, layer);
+      GSList *prev_layers;
+
+      prev_layers = g_slist_find_custom (private->layer_stack, layers,
+                                         (GCompareFunc) gimp_image_layer_stack_cmp);
+
+      if (prev_layers)
+        {
+          g_list_free (prev_layers->data);
+          private->layer_stack = g_slist_delete_link (private->layer_stack,
+                                                      prev_layers);
+        }
+      private->layer_stack = g_slist_prepend (private->layer_stack,
+                                              g_list_copy (layers));
     }
 
   g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
 
-  if (layer && gimp_image_get_active_channel (image))
-    gimp_image_set_active_channel (image, NULL);
+  if (layers && gimp_image_get_selected_channels (image))
+    gimp_image_set_selected_channels (image, NULL);
 }
 
 static void
-gimp_image_active_channel_notify (GimpItemTree     *tree,
-                                  const GParamSpec *pspec,
-                                  GimpImage        *image)
+gimp_image_selected_channels_notify (GimpItemTree     *tree,
+                                     const GParamSpec *pspec,
+                                     GimpImage        *image)
 {
-  GimpChannel *channel = gimp_image_get_active_channel (image);
+  GList *channels = gimp_image_get_selected_channels (image);
 
-  g_signal_emit (image, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
+  g_signal_emit (image, gimp_image_signals[SELECTED_CHANNELS_CHANGED], 0);
 
-  if (channel && gimp_image_get_active_layer (image))
-    gimp_image_set_active_layer (image, NULL);
+  if (channels && gimp_image_get_selected_layers (image))
+    gimp_image_set_selected_layers (image, NULL);
 }
 
 static void
-gimp_image_active_vectors_notify (GimpItemTree     *tree,
-                                  const GParamSpec *pspec,
-                                  GimpImage        *image)
+gimp_image_selected_vectors_notify (GimpItemTree     *tree,
+                                    const GParamSpec *pspec,
+                                    GimpImage        *image)
 {
-  g_signal_emit (image, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
+  g_signal_emit (image, gimp_image_signals[SELECTED_VECTORS_CHANGED], 0);
 }
 
 static void
@@ -1836,6 +1856,96 @@ gimp_image_update_bounding_box (GimpImage *image)
 
       gimp_projectable_bounds_changed (GIMP_PROJECTABLE (image), 0, 0);
     }
+}
+
+static gint
+gimp_image_layer_stack_cmp (GList *layers1,
+                            GList *layers2)
+{
+  if (g_list_length (layers1) != g_list_length (layers2))
+    {
+      /* We don't really need to order lists of layers, and only care
+       * about identity.
+       */
+      return 1;
+    }
+  else
+    {
+      GList *iter;
+
+      for (iter = layers1; iter; iter = iter->next)
+        {
+          if (! g_list_find (layers2, iter))
+            return 1;
+        }
+      return 0;
+    }
+}
+
+static void
+gimp_image_remove_from_layer_stack (GimpImage *image,
+                                    GimpLayer *layer)
+{
+  GimpImagePrivate *private;
+  GSList           *slist;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  /* Remove layer itself from the MRU layer stack. */
+  for (slist = private->layer_stack; slist; slist = slist->next)
+    {
+      GList *layers = slist->data;
+
+      layers = g_list_remove (layers, layer);
+      if (layers == NULL)
+        private->layer_stack = g_slist_delete_link (private->layer_stack, slist);
+      else
+        slist->data = layers;
+    }
+
+  /*  Also remove all children of a group layer from the layer_stack  */
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+    {
+      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      GList         *children;
+      GList         *list;
+
+      children = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (stack));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          GimpLayer *child = list->data;
+
+          for (slist = private->layer_stack; slist; slist = slist->next)
+            {
+              GList *layers = slist->data;
+
+              layers = g_list_remove (layers, child);
+              if (layers == NULL)
+                private->layer_stack = g_slist_delete_link (private->layer_stack, slist);
+              else
+                slist->data = layers;
+            }
+        }
+
+      g_list_free (children);
+    }
+}
+
+static gint
+gimp_image_selected_is_descendant (GimpViewable *selected,
+                                   GimpViewable *viewable)
+{
+  /* Used as a GCompareFunc to g_list_find_custom() in order to know if
+   * one of the selected items is a descendant to @viewable.
+   */
+  if (gimp_viewable_is_ancestor (viewable, selected))
+    return 0;
+  else
+    return 1;
 }
 
 
@@ -3076,7 +3186,7 @@ gimp_image_set_component_active (GimpImage       *image,
       /*  If there is an active channel and we mess with the components,
        *  the active channel gets unset...
        */
-      gimp_image_unset_active_channel (image);
+      gimp_image_unset_selected_channels (image);
 
       g_signal_emit (image,
                      gimp_image_signals[COMPONENT_ACTIVE_CHANGED], 0,
@@ -4266,7 +4376,6 @@ gimp_image_set_active_layer (GimpImage *image,
                              GimpLayer *layer)
 {
   GList     *layers = NULL;
-  GList     *new_layers;
   GimpLayer *active_layer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -4278,11 +4387,11 @@ gimp_image_set_active_layer (GimpImage *image,
   if (layer)
     layers = g_list_prepend (NULL, layer);
 
-  new_layers = gimp_image_set_selected_layers (image, layers);
+  gimp_image_set_selected_layers (image, layers);
   g_list_free (layers);
 
-  active_layer = g_list_length (new_layers) == 1 ? new_layers->data : NULL;
-  g_list_free (new_layers);
+  layers = gimp_image_get_selected_layers (image);
+  active_layer = g_list_length (layers) == 1 ? layers->data : NULL;
 
   return active_layer;
 }
@@ -4293,7 +4402,6 @@ gimp_image_set_active_channel (GimpImage   *image,
 {
   GimpChannel *active_channel;
   GList       *channels = NULL;
-  GList       *new_channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
@@ -4309,36 +4417,34 @@ gimp_image_set_active_channel (GimpImage   *image,
   if (channel)
     channels = g_list_prepend (NULL, channel);
 
-  new_channels = gimp_image_set_selected_channels (image, channels);
+  gimp_image_set_selected_channels (image, channels);
   g_list_free (channels);
 
-  active_channel = g_list_length (new_channels) == 1 ? new_channels->data : NULL;
-  g_list_free (new_channels);
+  channels = gimp_image_get_selected_channels (image);
+  active_channel = g_list_length (channels) == 1 ? channels->data : NULL;
 
   return active_channel;
 }
 
-GimpChannel *
-gimp_image_unset_active_channel (GimpImage *image)
+void
+gimp_image_unset_selected_channels (GimpImage *image)
 {
   GimpImagePrivate *private;
-  GimpChannel      *channel;
+  GList            *channels;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  channel = gimp_image_get_active_channel (image);
+  channels = gimp_image_get_selected_channels (image);
 
-  if (channel)
+  if (channels)
     {
-      gimp_image_set_active_channel (image, NULL);
+      gimp_image_set_selected_channels (image, NULL);
 
       if (private->layer_stack)
-        gimp_image_set_active_layer (image, private->layer_stack->data);
+        gimp_image_set_selected_layers (image, private->layer_stack->data);
     }
-
-  return channel;
 }
 
 GimpVectors *
@@ -4346,7 +4452,6 @@ gimp_image_set_active_vectors (GimpImage   *image,
                                GimpVectors *vectors)
 {
   GList       *all_vectors = NULL;
-  GList       *new_vectors;
   GimpVectors *active_vectors;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -4358,11 +4463,11 @@ gimp_image_set_active_vectors (GimpImage   *image,
   if (vectors)
     all_vectors = g_list_prepend (NULL, vectors);
 
-  new_vectors = gimp_image_set_selected_vectors (image, all_vectors);
+  gimp_image_set_selected_vectors (image, all_vectors);
   g_list_free (all_vectors);
 
-  active_vectors = (g_list_length (new_vectors) == 1 ? new_vectors->data : NULL);
-  g_list_free (new_vectors);
+  all_vectors = gimp_image_get_selected_vectors (image);
+  active_vectors = (g_list_length (all_vectors) == 1 ? all_vectors->data : NULL);
 
   return active_vectors;
 }
@@ -4403,25 +4508,24 @@ gimp_image_get_selected_vectors (GimpImage *image)
   return gimp_item_tree_get_selected_items (private->vectors);
 }
 
-GList *
+void
 gimp_image_set_selected_layers (GimpImage *image,
                                 GList     *layers)
 {
   GimpImagePrivate *private;
   GimpLayer        *floating_sel;
-  GimpLayer        *active_layer;
   GList            *selected_layers;
   GList            *layers2;
   GList            *iter;
   gboolean          selection_changed = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   layers2 = g_list_copy (layers);
   for (iter = layers; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_LAYER (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+      g_return_if_fail (GIMP_IS_LAYER (iter->data));
+      g_return_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image);
 
       /* Silently remove non-attached layers from selection. Do not
        * error out on it as it may happen for instance when selection
@@ -4437,10 +4541,9 @@ gimp_image_set_selected_layers (GimpImage *image,
 
   /*  Make sure the floating_sel always is the active layer  */
   if (floating_sel && (g_list_length (layers2) != 1 || layers2->data != floating_sel))
-    return g_list_prepend (NULL, floating_sel);
+    return;
 
   selected_layers = gimp_image_get_selected_layers (image);
-  active_layer = gimp_image_get_active_layer (image);
 
   if (g_list_length (layers2) == g_list_length (selected_layers))
     {
@@ -4458,8 +4561,8 @@ gimp_image_set_selected_layers (GimpImage *image,
   if (selection_changed)
     {
       /*  Don't cache selection info for the previous active layer  */
-      if (active_layer)
-        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (active_layer));
+      if (selected_layers)
+        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (selected_layers->data));
 
       gimp_item_tree_set_selected_items (private->layers, layers2);
     }
@@ -4467,57 +4570,51 @@ gimp_image_set_selected_layers (GimpImage *image,
     {
       g_list_free (layers2);
     }
-
-  return g_list_copy (gimp_image_get_selected_layers (image));
 }
 
-GList *
+void
 gimp_image_set_selected_channels (GimpImage *image,
                                   GList     *channels)
 {
   GimpImagePrivate *private;
   GList            *iter;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   for (iter = channels; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_CHANNEL (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
-                            gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+      g_return_if_fail (GIMP_IS_CHANNEL (iter->data));
+      g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
+                        gimp_item_get_image (GIMP_ITEM (iter->data)) == image);
     }
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   /*  Not if there is a floating selection  */
   if (g_list_length (channels) > 0 && gimp_image_get_floating_selection (image))
-    return NULL;
+    return;
 
   gimp_item_tree_set_selected_items (private->channels, g_list_copy (channels));
-
-  return g_list_copy (gimp_image_get_selected_channels (image));
 }
 
-GList *
+void
 gimp_image_set_selected_vectors (GimpImage *image,
                                  GList     *vectors)
 {
   GimpImagePrivate *private;
   GList            *iter;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   for (iter = vectors; iter; iter = iter->next)
     {
-      g_return_val_if_fail (GIMP_IS_VECTORS (iter->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
-                            gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+      g_return_if_fail (GIMP_IS_VECTORS (iter->data));
+      g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
+                        gimp_item_get_image (GIMP_ITEM (iter->data)) == image);
     }
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   gimp_item_tree_set_selected_items (private->vectors, g_list_copy (vectors));
-
-  return g_list_copy (gimp_image_get_selected_vectors (image));
 }
 
 
@@ -4759,6 +4856,7 @@ gimp_image_add_layer (GimpImage *image,
                       gboolean   push_undo)
 {
   GimpImagePrivate *private;
+  GList            *selected_layers;
   gboolean          old_has_alpha;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -4787,12 +4885,14 @@ gimp_image_add_layer (GimpImage *image,
   if (push_undo)
     gimp_image_undo_push_layer_add (image, C_("undo-type", "Add Layer"),
                                     layer,
-                                    gimp_image_get_active_layer (image));
+                                    gimp_image_get_selected_layers (image));
 
   gimp_item_tree_add_item (private->layers, GIMP_ITEM (layer),
                            GIMP_ITEM (parent), position);
 
-  gimp_image_set_active_layer (image, layer);
+  selected_layers = g_list_prepend (NULL, layer);
+  gimp_image_set_selected_layers (image, selected_layers);
+  g_list_free (selected_layers);
 
   /*  If the layer is a floating selection, attach it to the drawable  */
   if (gimp_layer_is_floating_sel (layer))
@@ -4809,10 +4909,10 @@ void
 gimp_image_remove_layer (GimpImage *image,
                          GimpLayer *layer,
                          gboolean   push_undo,
-                         GimpLayer *new_active)
+                         GList     *new_selected)
 {
   GimpImagePrivate *private;
-  GimpLayer        *active_layer;
+  GList            *selected_layers;
   gboolean          old_has_alpha;
   const gchar      *undo_desc;
 
@@ -4846,7 +4946,7 @@ gimp_image_remove_layer (GimpImage *image,
                                TRUE, NULL);
     }
 
-  active_layer = gimp_image_get_active_layer (image);
+  selected_layers = g_list_copy (gimp_image_get_selected_layers (image));
 
   old_has_alpha = gimp_image_has_alpha (image);
 
@@ -4865,38 +4965,20 @@ gimp_image_remove_layer (GimpImage *image,
     gimp_image_undo_push_layer_remove (image, undo_desc, layer,
                                        gimp_layer_get_parent (layer),
                                        gimp_item_get_index (GIMP_ITEM (layer)),
-                                       active_layer);
+                                       selected_layers);
 
   g_object_ref (layer);
 
   /*  Make sure we're not caching any old selection info  */
-  if (layer == active_layer)
+  if (g_list_find (selected_layers, layer))
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
-  private->layer_stack = g_slist_remove (private->layer_stack, layer);
+  /* Remove layer and its children from the MRU layer stack. */
+  gimp_image_remove_from_layer_stack (image, layer);
 
-  /*  Also remove all children of a group layer from the layer_stack  */
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-    {
-      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
-      GList         *children;
-      GList         *list;
-
-      children = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (stack));
-
-      for (list = children; list; list = g_list_next (list))
-        {
-          private->layer_stack = g_slist_remove (private->layer_stack,
-                                                 list->data);
-        }
-
-      g_list_free (children);
-    }
-
-  new_active =
-    GIMP_LAYER (gimp_item_tree_remove_item (private->layers,
-                                            GIMP_ITEM (layer),
-                                            GIMP_ITEM (new_active)));
+  new_selected = gimp_item_tree_remove_item (private->layers,
+                                             GIMP_ITEM (layer),
+                                             new_selected);
 
   if (gimp_layer_is_floating_sel (layer))
     {
@@ -4904,17 +4986,20 @@ gimp_image_remove_layer (GimpImage *image,
        */
       floating_sel_activate_drawable (layer);
     }
-  else if (active_layer &&
-           (layer == active_layer ||
-            gimp_viewable_is_ancestor (GIMP_VIEWABLE (layer),
-                                       GIMP_VIEWABLE (active_layer))))
+  else if (selected_layers &&
+           (g_list_find (selected_layers, layer) ||
+            g_list_find_custom (selected_layers, layer,
+                                (GCompareFunc) gimp_image_selected_is_descendant)))
     {
-      gimp_image_set_active_layer (image, new_active);
+      gimp_image_set_selected_layers (image, new_selected);
     }
 
   gimp_item_end_move (GIMP_ITEM (layer), push_undo);
 
   g_object_unref (layer);
+  g_list_free (selected_layers);
+  if (new_selected)
+    g_list_free (new_selected);
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
@@ -4989,7 +5074,7 @@ gimp_image_add_layers (GimpImage   *image,
     }
 
   if (layers)
-    gimp_image_set_active_layer (image, layers->data);
+    gimp_image_set_selected_layers (image, layers);
 
   gimp_image_undo_group_end (image);
 }
@@ -5005,6 +5090,7 @@ gimp_image_add_channel (GimpImage   *image,
                         gboolean     push_undo)
 {
   GimpImagePrivate *private;
+  GList            *channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
@@ -5021,12 +5107,14 @@ gimp_image_add_channel (GimpImage   *image,
   if (push_undo)
     gimp_image_undo_push_channel_add (image, C_("undo-type", "Add Channel"),
                                       channel,
-                                      gimp_image_get_active_channel (image));
+                                      gimp_image_get_selected_channels (image));
 
   gimp_item_tree_add_item (private->channels, GIMP_ITEM (channel),
                            GIMP_ITEM (parent), position);
 
-  gimp_image_set_active_channel (image, channel);
+  channels = g_list_prepend (NULL, channel);
+  gimp_image_set_selected_channels (image, channels);
+  g_list_free (channels);
 
   return TRUE;
 }
@@ -5035,10 +5123,10 @@ void
 gimp_image_remove_channel (GimpImage   *image,
                            GimpChannel *channel,
                            gboolean     push_undo,
-                           GimpChannel *new_active)
+                           GList       *new_selected)
 {
   GimpImagePrivate *private;
-  GimpChannel      *active_channel;
+  GList            *selected_channels;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -5068,35 +5156,36 @@ gimp_image_remove_channel (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  active_channel = gimp_image_get_active_channel (image);
+  selected_channels = gimp_image_get_selected_channels (image);
 
   if (push_undo)
     gimp_image_undo_push_channel_remove (image, C_("undo-type", "Remove Channel"), channel,
                                          gimp_channel_get_parent (channel),
                                          gimp_item_get_index (GIMP_ITEM (channel)),
-                                         active_channel);
+                                         selected_channels);
 
   g_object_ref (channel);
 
-  new_active =
-    GIMP_CHANNEL (gimp_item_tree_remove_item (private->channels,
-                                              GIMP_ITEM (channel),
-                                              GIMP_ITEM (new_active)));
+  new_selected = gimp_item_tree_remove_item (private->channels,
+                                             GIMP_ITEM (channel),
+                                             new_selected);
 
-  if (active_channel &&
-      (channel == active_channel ||
-       gimp_viewable_is_ancestor (GIMP_VIEWABLE (channel),
-                                  GIMP_VIEWABLE (active_channel))))
+  if (selected_channels &&
+      (g_list_find (selected_channels, channel) ||
+       g_list_find_custom (selected_channels, channel,
+                           (GCompareFunc) gimp_image_selected_is_descendant)))
     {
-      if (new_active)
-        gimp_image_set_active_channel (image, new_active);
+      if (new_selected)
+        gimp_image_set_selected_channels (image, new_selected);
       else
-        gimp_image_unset_active_channel (image);
+        gimp_image_unset_selected_channels (image);
     }
 
   gimp_item_end_move (GIMP_ITEM (channel), push_undo);
 
   g_object_unref (channel);
+  if (new_selected)
+    g_list_free (new_selected);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
@@ -5129,7 +5218,7 @@ gimp_image_add_vectors (GimpImage   *image,
   if (push_undo)
     gimp_image_undo_push_vectors_add (image, C_("undo-type", "Add Path"),
                                       vectors,
-                                      gimp_image_get_active_vectors (image));
+                                      gimp_image_get_selected_vectors (image));
 
   gimp_item_tree_add_item (private->vectors, GIMP_ITEM (vectors),
                            GIMP_ITEM (parent), position);
@@ -5143,10 +5232,10 @@ void
 gimp_image_remove_vectors (GimpImage   *image,
                            GimpVectors *vectors,
                            gboolean     push_undo,
-                           GimpVectors *new_active)
+                           GList       *new_selected)
 {
   GimpImagePrivate *private;
-  GimpVectors      *active_vectors;
+  GList            *selected_vectors;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
@@ -5161,32 +5250,33 @@ gimp_image_remove_vectors (GimpImage   *image,
 
   gimp_item_start_move (GIMP_ITEM (vectors), push_undo);
 
-  active_vectors = gimp_image_get_active_vectors (image);
+  selected_vectors = gimp_image_get_selected_vectors (image);
 
   if (push_undo)
     gimp_image_undo_push_vectors_remove (image, C_("undo-type", "Remove Path"), vectors,
                                          gimp_vectors_get_parent (vectors),
                                          gimp_item_get_index (GIMP_ITEM (vectors)),
-                                         active_vectors);
+                                         selected_vectors);
 
   g_object_ref (vectors);
 
-  new_active =
-    GIMP_VECTORS (gimp_item_tree_remove_item (private->vectors,
-                                              GIMP_ITEM (vectors),
-                                              GIMP_ITEM (new_active)));
+  new_selected = gimp_item_tree_remove_item (private->vectors,
+                                             GIMP_ITEM (vectors),
+                                             new_selected);
 
-  if (active_vectors &&
-      (vectors == active_vectors ||
-       gimp_viewable_is_ancestor (GIMP_VIEWABLE (vectors),
-                                  GIMP_VIEWABLE (active_vectors))))
+  if (selected_vectors &&
+      (g_list_find (selected_vectors, vectors) ||
+       g_list_find_custom (selected_vectors, vectors,
+                           (GCompareFunc) gimp_image_selected_is_descendant)))
     {
-      gimp_image_set_active_vectors (image, new_active);
+      gimp_image_set_selected_vectors (image, new_selected);
     }
 
   gimp_item_end_move (GIMP_ITEM (vectors), push_undo);
 
   g_object_unref (vectors);
+  if (new_selected)
+    g_list_free (new_selected);
 
   if (push_undo)
     gimp_image_undo_group_end (image);

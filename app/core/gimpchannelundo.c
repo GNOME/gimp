@@ -34,11 +34,12 @@ enum
   PROP_0,
   PROP_PREV_PARENT,
   PROP_PREV_POSITION,
-  PROP_PREV_CHANNEL
+  PROP_PREV_CHANNELS
 };
 
 
 static void    gimp_channel_undo_constructed  (GObject             *object);
+static void    gimp_channel_undo_finalize     (GObject             *object);
 static void    gimp_channel_undo_set_property (GObject             *object,
                                                guint                property_id,
                                                const GValue        *value,
@@ -69,6 +70,7 @@ gimp_channel_undo_class_init (GimpChannelUndoClass *klass)
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
   object_class->constructed      = gimp_channel_undo_constructed;
+  object_class->finalize         = gimp_channel_undo_finalize;
   object_class->set_property     = gimp_channel_undo_set_property;
   object_class->get_property     = gimp_channel_undo_get_property;
 
@@ -90,17 +92,17 @@ gimp_channel_undo_class_init (GimpChannelUndoClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_PREV_CHANNEL,
-                                   g_param_spec_object ("prev-channel",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_CHANNEL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_PREV_CHANNELS,
+                                   g_param_spec_pointer ("prev-channels",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_channel_undo_init (GimpChannelUndo *undo)
 {
+  undo->prev_channels = NULL;
 }
 
 static void
@@ -109,6 +111,16 @@ gimp_channel_undo_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
+}
+
+static void
+gimp_channel_undo_finalize (GObject *object)
+{
+  GimpChannelUndo *channel_undo = GIMP_CHANNEL_UNDO (object);
+
+  g_clear_pointer (&channel_undo->prev_channels, g_list_free);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -127,8 +139,8 @@ gimp_channel_undo_set_property (GObject      *object,
     case PROP_PREV_POSITION:
       channel_undo->prev_position = g_value_get_int (value);
       break;
-    case PROP_PREV_CHANNEL:
-      channel_undo->prev_channel = g_value_get_object (value);
+    case PROP_PREV_CHANNELS:
+      channel_undo->prev_channels = g_list_copy (g_value_get_pointer (value));
       break;
 
     default:
@@ -153,8 +165,8 @@ gimp_channel_undo_get_property (GObject    *object,
     case PROP_PREV_POSITION:
       g_value_set_int (value, channel_undo->prev_position);
       break;
-    case PROP_PREV_CHANNEL:
-      g_value_set_object (value, channel_undo->prev_channel);
+    case PROP_PREV_CHANNELS:
+      g_value_set_pointer (value, channel_undo->prev_channels);
       break;
 
     default:
@@ -200,14 +212,15 @@ gimp_channel_undo_pop (GimpUndo            *undo,
       channel_undo->prev_position = gimp_item_get_index (GIMP_ITEM (channel));
 
       gimp_image_remove_channel (undo->image, channel, FALSE,
-                                 channel_undo->prev_channel);
+                                 channel_undo->prev_channels);
     }
   else
     {
       /*  restore channel  */
 
       /*  record the active channel  */
-      channel_undo->prev_channel = gimp_image_get_active_channel (undo->image);
+      g_clear_pointer (&channel_undo->prev_channels, g_list_free);
+      channel_undo->prev_channels = g_list_copy (gimp_image_get_selected_channels (undo->image));
 
       gimp_image_add_channel (undo->image, channel,
                               channel_undo->prev_parent,

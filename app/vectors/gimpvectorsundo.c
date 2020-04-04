@@ -40,6 +40,7 @@ enum
 
 
 static void     gimp_vectors_undo_constructed  (GObject             *object);
+static void     gimp_vectors_undo_finalize     (GObject             *object);
 static void     gimp_vectors_undo_set_property (GObject             *object,
                                                 guint                property_id,
                                                 const GValue        *value,
@@ -70,6 +71,7 @@ gimp_vectors_undo_class_init (GimpVectorsUndoClass *klass)
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
   object_class->constructed      = gimp_vectors_undo_constructed;
+  object_class->finalize         = gimp_vectors_undo_finalize;
   object_class->set_property     = gimp_vectors_undo_set_property;
   object_class->get_property     = gimp_vectors_undo_get_property;
 
@@ -91,15 +93,15 @@ gimp_vectors_undo_class_init (GimpVectorsUndoClass *klass)
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PREV_VECTORS,
-                                   g_param_spec_object ("prev-vectors", NULL, NULL,
-                                                        GIMP_TYPE_VECTORS,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_pointer ("prev-vectors", NULL, NULL,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_vectors_undo_init (GimpVectorsUndo *undo)
 {
+  undo->prev_vectors = NULL;
 }
 
 static void
@@ -108,6 +110,16 @@ gimp_vectors_undo_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+}
+
+static void
+gimp_vectors_undo_finalize (GObject *object)
+{
+  GimpVectorsUndo *undo = GIMP_VECTORS_UNDO (object);
+
+  g_clear_pointer (&undo->prev_vectors, g_list_free);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -127,7 +139,7 @@ gimp_vectors_undo_set_property (GObject      *object,
       vectors_undo->prev_position = g_value_get_int (value);
       break;
     case PROP_PREV_VECTORS:
-      vectors_undo->prev_vectors = g_value_get_object (value);
+      vectors_undo->prev_vectors = g_list_copy (g_value_get_pointer (value));
       break;
 
     default:
@@ -153,7 +165,7 @@ gimp_vectors_undo_get_property (GObject    *object,
       g_value_set_int (value, vectors_undo->prev_position);
       break;
     case PROP_PREV_VECTORS:
-      g_value_set_object (value, vectors_undo->prev_vectors);
+      g_value_set_pointer (value, vectors_undo->prev_vectors);
       break;
 
     default:
@@ -206,7 +218,8 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       /*  restore vectors  */
 
       /*  record the active vectors  */
-      vectors_undo->prev_vectors = gimp_image_get_active_vectors (undo->image);
+      g_clear_pointer (&vectors_undo->prev_vectors, g_list_free);
+      vectors_undo->prev_vectors = g_list_copy (gimp_image_get_selected_vectors (undo->image));
 
       gimp_image_add_vectors (undo->image, vectors,
                               vectors_undo->prev_parent,

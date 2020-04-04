@@ -565,10 +565,10 @@ gimp_item_tree_add_item (GimpItemTree *tree,
     gimp_item_unset_removed (item);
 }
 
-GimpItem *
+GList *
 gimp_item_tree_remove_item (GimpItemTree *tree,
                             GimpItem     *item,
-                            GimpItem     *new_active)
+                            GList        *new_selected)
 {
   GimpItemTreePrivate *private;
   GimpItem            *parent;
@@ -615,26 +615,34 @@ gimp_item_tree_remove_item (GimpItemTree *tree,
 
   gimp_item_removed (item);
 
-  if (! new_active)
+  if (! new_selected)
     {
-      gint n_children = gimp_container_get_n_children (container);
+      GimpItem *selected   = NULL;
+      gint      n_children = gimp_container_get_n_children (container);
 
       if (n_children > 0)
         {
           index = CLAMP (index, 0, n_children - 1);
 
-          new_active =
+          selected =
             GIMP_ITEM (gimp_container_get_child_by_index (container, index));
         }
       else if (parent)
         {
-          new_active = parent;
+          selected = parent;
         }
+
+      if (selected)
+        new_selected = g_list_prepend (NULL, selected);
+    }
+  else
+    {
+      new_selected = g_list_copy (new_selected);
     }
 
   g_object_unref (item);
 
-  return new_active;
+  return new_selected;
 }
 
 gboolean

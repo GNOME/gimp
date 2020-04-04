@@ -155,8 +155,8 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 
   move_tool->saved_type         = GIMP_TRANSFORM_TYPE_LAYER;
 
-  move_tool->old_active_layer   = NULL;
-  move_tool->old_active_vectors = NULL;
+  move_tool->old_selected_layers   = NULL;
+  move_tool->old_selected_vectors = NULL;
 }
 
 static void
@@ -165,6 +165,8 @@ gimp_move_tool_finalize (GObject *object)
   GimpMoveTool *move = GIMP_MOVE_TOOL (object);
 
   g_clear_pointer (&move->guides, g_list_free);
+  g_clear_pointer (&move->old_selected_layers, g_list_free);
+  g_clear_pointer (&move->old_selected_vectors, g_list_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -206,10 +208,13 @@ gimp_move_tool_button_press (GimpTool            *tool,
                                              FUNSCALEY (shell, snap_distance));
           if (vectors)
             {
-              move->old_active_vectors =
-                gimp_image_get_active_vectors (image);
+              GList *new_selected_vectors = g_list_prepend (NULL, vectors);
 
-              gimp_image_set_active_vectors (image, vectors);
+              move->old_selected_vectors =
+                g_list_copy (gimp_image_get_selected_vectors (image));
+
+              gimp_image_set_selected_vectors (image, new_selected_vectors);
+              g_list_free (new_selected_vectors);
             }
           else
             {
@@ -254,9 +259,12 @@ gimp_move_tool_button_press (GimpTool            *tool,
                 }
               else
                 {
-                  move->old_active_layer = gimp_image_get_active_layer (image);
+                  GList *new_selected_layers = g_list_prepend (NULL, layer);
 
-                  gimp_image_set_active_layer (image, layer);
+                  move->old_selected_layers = g_list_copy (gimp_image_get_selected_layers (image));
+
+                  gimp_image_set_selected_layers (image, new_selected_layers);
+                  g_list_free (new_selected_layers);
                 }
             }
           else
@@ -388,18 +396,18 @@ gimp_move_tool_button_release (GimpTool              *tool,
   if (! config->move_tool_changes_active ||
       (release_type == GIMP_BUTTON_RELEASE_CANCEL))
     {
-      if (move->old_active_layer)
+      if (move->old_selected_layers)
         {
-          gimp_image_set_active_layer (image, move->old_active_layer);
-          move->old_active_layer = NULL;
+          gimp_image_set_selected_layers (image, move->old_selected_layers);
+          g_clear_pointer (&move->old_selected_layers, g_list_free);
 
           flush = TRUE;
         }
 
-      if (move->old_active_vectors)
+      if (move->old_selected_vectors)
         {
-          gimp_image_set_active_vectors (image, move->old_active_vectors);
-          move->old_active_vectors = NULL;
+          gimp_image_set_selected_vectors (image, move->old_selected_vectors);
+          g_clear_pointer (&move->old_selected_vectors, g_list_free);
 
           flush = TRUE;
         }

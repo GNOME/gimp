@@ -593,7 +593,7 @@ image_unset_active_channel_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_image_unset_active_channel (image);
+      gimp_image_unset_selected_channels (image);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

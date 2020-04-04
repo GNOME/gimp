@@ -38,8 +38,8 @@ struct _GimpVectorsUndo
   GimpItemUndo  parent_instance;
 
   GimpVectors  *prev_parent;
-  gint          prev_position;   /*  former position in list  */
-  GimpVectors  *prev_vectors;    /*  previous active vectors  */
+  gint          prev_position;   /*  former position in list    */
+  GList        *prev_vectors;    /*  previous selected vectors  */
 };
 
 struct _GimpVectorsUndoClass

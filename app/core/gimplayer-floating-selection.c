@@ -228,11 +228,19 @@ floating_sel_activate_drawable (GimpLayer *layer)
     }
   else if (GIMP_IS_CHANNEL (drawable))
     {
-      gimp_image_set_active_channel (image, GIMP_CHANNEL (drawable));
+      GList *channels = g_list_prepend (NULL, drawable);
+
+      gimp_image_set_selected_channels (image, channels);
+
+      g_list_free (channels);
     }
   else
     {
-      gimp_image_set_active_layer (image, GIMP_LAYER (drawable));
+      GList *layers = g_list_prepend (NULL, drawable);
+
+      gimp_image_set_selected_layers (image, layers);
+
+      g_list_free (layers);
     }
 }
 

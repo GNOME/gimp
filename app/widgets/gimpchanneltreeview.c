@@ -105,7 +105,7 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->set_image        = gimp_channel_tree_view_set_image;
 
   iv_class->item_type        = GIMP_TYPE_CHANNEL;
-  iv_class->signal_name      = "active-channel-changed";
+  iv_class->signal_name      = "selected-channels-changed";
 
   iv_class->get_container    = gimp_image_get_channels;
   iv_class->get_active_item  = (GimpGetItemFunc) gimp_image_get_active_channel;

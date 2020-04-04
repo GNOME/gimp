@@ -387,7 +387,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_unset_active_channel (image);
+  gimp_image_unset_selected_channels (image);
 }
 CODE
     );

@@ -72,9 +72,9 @@ void           gimp_item_tree_add_item         (GimpItemTree  *tree,
                                                 GimpItem      *item,
                                                 GimpItem      *parent,
                                                 gint           position);
-GimpItem     * gimp_item_tree_remove_item      (GimpItemTree  *tree,
+GList        * gimp_item_tree_remove_item      (GimpItemTree  *tree,
                                                 GimpItem      *item,
-                                                GimpItem      *new_active);
+                                                GList         *new_selected);
 
 gboolean       gimp_item_tree_reorder_item     (GimpItemTree  *tree,
                                                 GimpItem      *item,

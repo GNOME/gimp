@@ -609,7 +609,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   vector_tool->vectors = g_object_ref (vectors);
 
-  g_signal_connect_object (gimp_item_get_image (item), "active-vectors-changed",
+  g_signal_connect_object (gimp_item_get_image (item), "selected-vectors-changed",
                            G_CALLBACK (gimp_vector_tool_vectors_changed),
                            vector_tool, 0);
   g_signal_connect_object (vectors, "removed",

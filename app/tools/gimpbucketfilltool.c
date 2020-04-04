@@ -961,7 +961,7 @@ gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool *tool)
           g_signal_connect_swapped (image, "selected-layers-changed",
                                     G_CALLBACK (gimp_bucket_fill_tool_reset_line_art),
                                     tool);
-          g_signal_connect_swapped (image, "active-channel-changed",
+          g_signal_connect_swapped (image, "selected-channels-changed",
                                     G_CALLBACK (gimp_bucket_fill_tool_reset_line_art),
                                     tool);
 

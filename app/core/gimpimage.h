@@ -54,8 +54,8 @@ struct _GimpImageClass
   void (* precision_changed)            (GimpImage            *image);
   void (* alpha_changed)                (GimpImage            *image);
   void (* floating_selection_changed)   (GimpImage            *image);
-  void (* active_channel_changed)       (GimpImage            *image);
-  void (* active_vectors_changed)       (GimpImage            *image);
+  void (* selected_channels_changed)    (GimpImage            *image);
+  void (* selected_vectors_changed)     (GimpImage            *image);
   void (* selected_layers_changed)      (GimpImage            *image);
   void (* linked_items_changed)         (GimpImage            *image);
   void (* component_visibility_changed) (GimpImage            *image,
@@ -375,7 +375,7 @@ GimpLayer     * gimp_image_set_active_layer      (GimpImage          *image,
                                                   GimpLayer          *layer);
 GimpChannel   * gimp_image_set_active_channel    (GimpImage          *image,
                                                   GimpChannel        *channel);
-GimpChannel   * gimp_image_unset_active_channel  (GimpImage          *image);
+void          gimp_image_unset_selected_channels (GimpImage          *image);
 GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
                                                   GimpVectors        *vectors);
 
@@ -383,11 +383,11 @@ GList         * gimp_image_get_selected_layers   (GimpImage          *image);
 GList         * gimp_image_get_selected_channels (GimpImage          *image);
 GList         * gimp_image_get_selected_vectors  (GimpImage          *image);
 
-GList         * gimp_image_set_selected_layers   (GimpImage          *image,
+void            gimp_image_set_selected_layers   (GimpImage          *image,
                                                   GList              *layers);
-GList         * gimp_image_set_selected_channels (GimpImage          *image,
+void            gimp_image_set_selected_channels (GimpImage          *image,
                                                   GList              *channels);
-GList         * gimp_image_set_selected_vectors  (GimpImage          *image,
+void            gimp_image_set_selected_vectors  (GimpImage          *image,
                                                   GList              *vectors);
 
 GimpLayer     * gimp_image_get_layer_by_tattoo   (GimpImage          *image,
@@ -429,7 +429,7 @@ gboolean        gimp_image_add_layer             (GimpImage          *image,
 void            gimp_image_remove_layer          (GimpImage          *image,
                                                   GimpLayer          *layer,
                                                   gboolean            push_undo,
-                                                  GimpLayer          *new_active);
+                                                  GList              *new_selected);
 
 void            gimp_image_add_layers            (GimpImage          *image,
                                                   GList              *layers,
@@ -449,7 +449,7 @@ gboolean        gimp_image_add_channel           (GimpImage          *image,
 void            gimp_image_remove_channel        (GimpImage          *image,
                                                   GimpChannel        *channel,
                                                   gboolean            push_undo,
-                                                  GimpChannel        *new_active);
+                                                  GList              *new_selected);
 
 gboolean        gimp_image_add_vectors           (GimpImage          *image,
                                                   GimpVectors        *vectors,
@@ -459,7 +459,7 @@ gboolean        gimp_image_add_vectors           (GimpImage          *image,
 void            gimp_image_remove_vectors        (GimpImage          *image,
                                                   GimpVectors        *vectors,
                                                   gboolean            push_undo,
-                                                  GimpVectors        *new_active);
+                                                  GList              *new_selected);
 
 gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   const GimpCoords   *coords,

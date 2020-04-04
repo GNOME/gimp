@@ -88,7 +88,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   view_class->drop_svg      = gimp_vectors_tree_view_drop_svg;
 
   iv_class->item_type       = GIMP_TYPE_VECTORS;
-  iv_class->signal_name     = "active-vectors-changed";
+  iv_class->signal_name     = "selected-vectors-changed";
 
   iv_class->get_container   = gimp_image_get_vectors;
   iv_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;

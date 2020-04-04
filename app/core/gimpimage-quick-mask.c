@@ -132,7 +132,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           gimp_image_remove_channel (image, mask, TRUE, NULL);
 
           if (! channel_was_active)
-            gimp_image_unset_active_channel (image);
+            gimp_image_unset_selected_channels (image);
 
           gimp_image_undo_group_end (image);
         }

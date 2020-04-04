@@ -295,7 +295,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_exported_handler),
                     shell);
 
-  g_signal_connect (image, "active-vectors-changed",
+  g_signal_connect (image, "selected-vectors-changed",
                     G_CALLBACK (gimp_display_shell_active_vectors_handler),
                     shell);
 

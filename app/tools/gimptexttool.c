@@ -487,12 +487,15 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
           if (text_layer && text_layer != text_tool->layer)
             {
+              GList *selection = g_list_prepend (NULL, text_layer);
+
               if (text_tool->image == image)
                 g_signal_handlers_block_by_func (image,
                                                  gimp_text_tool_layer_changed,
                                                  text_tool);
 
-              gimp_image_set_active_layer (image, GIMP_LAYER (text_layer));
+              gimp_image_set_selected_layers (image, selection);
+              g_list_free (selection);
 
               if (text_tool->image == image)
                 g_signal_handlers_unblock_by_func (image,
@@ -1806,18 +1809,27 @@ static void
 gimp_text_tool_layer_changed (GimpImage    *image,
                               GimpTextTool *text_tool)
 {
-  GimpLayer *layer = gimp_image_get_active_layer (image);
+  GList *layers = gimp_image_get_selected_layers (image);
 
-  if (layer != GIMP_LAYER (text_tool->layer))
+  if (g_list_length (layers) != 1 || layers->data != text_tool->layer)
     {
       GimpTool    *tool    = GIMP_TOOL (text_tool);
       GimpDisplay *display = tool->display;
 
       if (display)
         {
+          GimpLayer *layer = NULL;
+
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
-          if (gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer),
+          if (g_list_length (layers) == 1)
+            layer = layers->data;
+
+          /* The tool can only be started when a single layer is
+           * selected and this is a text layer.
+           */
+          if (layer &&
+              gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer),
                                            FALSE) &&
               GIMP_LAYER (text_tool->layer) == layer)
             {
