@@ -538,6 +538,7 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
                                                      text_tool->buffer->underline_tag,
                                                      &cursor, &selection);
     break;
+    
     //Text size
     case GDK_SHIFT_MASK:
     case GDK_KEY_KP_Add:

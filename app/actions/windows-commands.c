@@ -100,6 +100,23 @@ windows_show_tabs_cmd_callback (GimpAction *action,
                   NULL);
 }
 
+void
+windows_thingy_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
+{
+  Gimp     *gimp;
+  gboolean  active;
+  return_if_no_gimp (gimp, data);
+
+  active = g_variant_get_boolean (value);
+
+  if (active != GIMP_GUI_CONFIG (gimp->config)->prefer_dark_theme)
+    g_object_set (gimp->config,
+                  "prefer_dark_theme", active,
+                  NULL);
+}
+
 
 void
 windows_set_tabs_position_cmd_callback (GimpAction *action,
