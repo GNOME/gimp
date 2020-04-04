@@ -117,6 +117,22 @@ windows_thingy_cmd_callback (GimpAction *action,
                   NULL);
 }
 
+void
+windows_thingy_2_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
+{
+  Gimp     *gimp;
+  gboolean  active;
+  return_if_no_gimp (gimp, data);
+
+  active = g_variant_get_boolean (value);
+
+  if (active != GIMP_GUI_CONFIG (gimp->config)->prefer_symbolic_icons)
+    g_object_set (gimp->config,
+                  "prefer_symbolic_icons", active,
+                  NULL);
+}
 
 void
 windows_set_tabs_position_cmd_callback (GimpAction *action,

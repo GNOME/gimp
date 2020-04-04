@@ -864,6 +864,7 @@
       <menuitem action="windows-use-single-window-mode" />
       <separator />
        <menuitem action="windows-thingy" />
+       <menuitem action="windows-thingy_2" />
       <separator />
     </menu>
 
