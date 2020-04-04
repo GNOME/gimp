@@ -117,7 +117,11 @@ about_dialog_create (GimpCoreConfig *config)
 
       copyright = g_strdup_printf (GIMP_COPYRIGHT, GIMP_GIT_LAST_COMMIT_YEAR);
       if (gimp_version_get_revision () > 0)
-        version = g_strdup_printf ("%s (revision %d)", GIMP_VERSION,
+        /* Translators: the %s is GIMP version, the %d is the
+         * installer/package revision.
+         * For instance: "2.10.18 (revision 2)"
+         */
+        version = g_strdup_printf (_("%s (revision %d)"), GIMP_VERSION,
                                    gimp_version_get_revision ());
       else
         version = g_strdup (GIMP_VERSION);
@@ -424,6 +428,10 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       datetime = g_date_time_new_from_unix_local (config->check_update_timestamp);
       date = g_date_time_format (datetime, "%x");
       time = g_date_time_format (datetime, "%X");
+      /* Translators: first string is the date in the locale's date
+       * representation (e.g., 12/31/99), second is the time in the
+       * locale's time representation (e.g., 23:13:48).
+       */
       subtext = g_strdup_printf (_("Last checked on %s at %s"), date, time);
       g_date_time_unref (datetime);
       g_free (date);
