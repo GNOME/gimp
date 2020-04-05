@@ -447,6 +447,7 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
   GtkTextIter       selection;
   gboolean          retval = TRUE;
 
+
   if (! gtk_widget_has_focus (shell->canvas))
     {
       /*  The focus is in the floating style editor, and the event
@@ -510,8 +511,8 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
     case GDK_KEY_Escape:
       gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
                          GIMP_TOOL (text_tool)->display);
-      break;
-
+      break;                   
+    
     default:
       retval = FALSE;
     }

@@ -136,6 +136,20 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
     windows_show_tabs_cmd_callback,
     FALSE,
     GIMP_HELP_WINDOWS_SHOW_TABS },
+    
+    { "windows-thingy", NULL,
+    NC_("windows-action", "_Switch Theme"), NULL,
+    NC_("windows-action", "Toggle light/dark."),
+    windows_thingy_cmd_callback,
+    FALSE,
+    GIMP_HELP_WINDOWS_THINGY },
+
+    { "windows-thingy_2", NULL,
+    NC_("windows-action", "_Switch Icon Theme"), NULL,
+    NC_("windows-action", "Toggle Symbolic."),
+    windows_thingy_2_cmd_callback,
+    FALSE,
+    GIMP_HELP_WINDOWS_THINGY },
 
   { "windows-use-single-window-mode", NULL,
     NC_("windows-action", "Single-Window _Mode"), NULL,
