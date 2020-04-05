@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-21 11:43+0000\n"
-"PO-Revision-Date: 2019-11-21 20:18+0100\n"
+"POT-Creation-Date: 2020-04-01 21:38+0000\n"
+"PO-Revision-Date: 2020-02-17 22:41+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -55,7 +55,7 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/common/file-heif.c:1086 ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:645
 #: ../plug-ins/common/file-pdf-load.c:1041
-#: ../plug-ins/common/file-pdf-save.c:998 ../plug-ins/common/file-ps.c:3535
+#: ../plug-ins/common/file-pdf-save.c:1141 ../plug-ins/common/file-ps.c:3535
 #: ../plug-ins/common/file-raw-data.c:1759 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:549 ../plug-ins/common/film.c:1320
 #: ../plug-ins/common/grid.c:737 ../plug-ins/common/hot.c:656
@@ -99,7 +99,7 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/metadata/metadata-editor.c:781
 #: ../plug-ins/metadata/metadata-editor.c:5664
 #: ../plug-ins/metadata/metadata-editor.c:5699
-#: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:527
+#: ../plug-ins/pagecurl/pagecurl.c:473 ../plug-ins/screenshot/screenshot.c:529
 #: ../plug-ins/selection-to-path/selection-to-path.c:406
 msgid "_Cancel"
 msgstr "_Cancel·la"
@@ -312,10 +312,10 @@ msgstr "_Vertical"
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:275
 #: ../plug-ins/file-faxg3/faxg3.c:547 ../plug-ins/file-fits/fits.c:550
 #: ../plug-ins/file-jpeg/jpeg-load.c:231
-#: ../plug-ins/file-psd/psd-image-res-load.c:1042
-#: ../plug-ins/file-psd/psd-load.c:1870 ../plug-ins/file-sgi/sgi.c:409
+#: ../plug-ins/file-psd/psd-image-res-load.c:1043
+#: ../plug-ins/file-psd/psd-load.c:1971 ../plug-ins/file-sgi/sgi.c:409
 #: ../plug-ins/file-tiff/file-tiff-load.c:1032
-#: ../plug-ins/file-webp/file-webp-load.c:170
+#: ../plug-ins/file-webp/file-webp-load.c:173
 #: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:604
@@ -668,7 +668,7 @@ msgstr "_Obre"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1413
 #: ../plug-ins/common/cml-explorer.c:2121 ../plug-ins/common/curve-bend.c:1461
-#: ../plug-ins/common/curve-bend.c:1999 ../plug-ins/common/file-pdf-save.c:997
+#: ../plug-ins/common/curve-bend.c:1999 ../plug-ins/common/file-pdf-save.c:1140
 #: ../plug-ins/common/qbist.c:793 ../plug-ins/common/qbist.c:922
 #: ../plug-ins/common/sphere-designer.c:2285
 #: ../plug-ins/common/sphere-designer.c:2684 ../plug-ins/flame/flame.c:515
@@ -865,7 +865,7 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: ../plug-ins/common/cml-explorer.c:2172 ../plug-ins/common/curve-bend.c:805
 #: ../plug-ins/common/file-dicom.c:1393 ../plug-ins/common/file-mng.c:871
 #: ../plug-ins/common/file-mng.c:1221 ../plug-ins/common/file-pcx.c:899
-#: ../plug-ins/common/file-pdf-save.c:650 ../plug-ins/common/file-png.c:1427
+#: ../plug-ins/common/file-pdf-save.c:728 ../plug-ins/common/file-png.c:1427
 #: ../plug-ins/common/file-raw-data.c:1100
 #: ../plug-ins/common/file-raw-data.c:1130 ../plug-ins/common/file-sunras.c:623
 #: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1561
@@ -908,7 +908,7 @@ msgstr "Carrega els paràmetres de l'explorador CML"
 #: ../plug-ins/file-fits/fits.c:370 ../plug-ins/file-fli/fli-gimp.c:455
 #: ../plug-ins/file-fli/fli-gimp.c:505 ../plug-ins/file-ico/ico-load.c:676
 #: ../plug-ins/file-ico/ico-load.c:758 ../plug-ins/file-jpeg/jpeg-load.c:102
-#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:150
+#: ../plug-ins/file-jpeg/jpeg-load.c:543 ../plug-ins/file-psd/psd-load.c:152
 #: ../plug-ins/file-psd/psd-thumb-load.c:90 ../plug-ins/flame/flame.c:451
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1864
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1015
@@ -1797,10 +1797,8 @@ msgid "ASCII art"
 msgstr "Art ASCII"
 
 #: ../plug-ins/common/file-aa.c:369
-#, fuzzy
-#| msgid "Export Image as WebP"
 msgid "Export Image as Text"
-msgstr "Exporta la imatge com a WebP"
+msgstr "Exporta la imatge com a text"
 
 #: ../plug-ins/common/file-aa.c:377 ../plug-ins/file-dds/ddswrite.c:2014
 msgid "_Format:"
@@ -1864,7 +1862,7 @@ msgstr ""
 #: ../plug-ins/file-bmp/bmp-load.c:219 ../plug-ins/file-exr/file-exr.c:188
 #: ../plug-ins/file-faxg3/faxg3.c:238 ../plug-ins/file-fli/fli-gimp.c:495
 #: ../plug-ins/file-ico/ico-load.c:666 ../plug-ins/file-jpeg/jpeg-load.c:91
-#: ../plug-ins/file-psd/psd-load.c:139
+#: ../plug-ins/file-psd/psd-load.c:141
 #: ../plug-ins/file-raw/file-darktable.c:419
 #: ../plug-ins/file-raw/file-rawtherapee.c:345 ../plug-ins/file-sgi/sgi.c:315
 #: ../plug-ins/file-tiff/file-tiff-load.c:170
@@ -1966,10 +1964,8 @@ msgid "C source code"
 msgstr "Codi font C"
 
 #: ../plug-ins/common/file-csource.c:948
-#, fuzzy
-#| msgid "Export Image as DDS"
 msgid "Export Image as C-Source"
-msgstr "Exporta la imatge com a DDS"
+msgstr "Exporta la imatge com a C-Source"
 
 #: ../plug-ins/common/file-csource.c:966
 msgid "_Prefixed name:"
@@ -2139,16 +2135,12 @@ msgstr ""
 "ser que l'animació no es reprodueixi o no es torni a desar perfectament."
 
 #: ../plug-ins/common/file-gif-save.c:224
-#, fuzzy
-#| msgid "_Save comment to file"
 msgid "Save the image comment in the GIF file"
-msgstr "De_sa el comentari al fitxer"
+msgstr "Desa el comentari d’imatge al fitxer GIF"
 
 #: ../plug-ins/common/file-gif-save.c:230
-#, fuzzy
-#| msgid "image content"
 msgid "Image comment"
-msgstr "contingut de la imatge"
+msgstr "Comentari d’imatge"
 
 #: ../plug-ins/common/file-gif-save.c:528
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
@@ -2242,13 +2234,11 @@ msgstr "Capes acumulatives (combina)"
 
 #: ../plug-ins/common/file-gif-save.c:1244
 msgid "One frame per layer (replace)"
-msgstr "Un marc per capa (substitueix)"
+msgstr "Un fotograma per capa (substitueix)"
 
 #: ../plug-ins/common/file-gif-save.c:1252
-#, fuzzy
-#| msgid "_Frame disposal where unspecified:"
 msgid "_Frame disposal where unspecified"
-msgstr "Disposició dels _fragments per defecte:"
+msgstr "Disposició dels _fotogrames quan no s'especifiqui"
 
 #: ../plug-ins/common/file-gif-save.c:1258
 msgid "_Use delay entered above for all frames"
@@ -2259,22 +2249,16 @@ msgid "U_se disposal entered above for all frames"
 msgstr "Utilitza la disposició anterior a tot_s els fotogrames"
 
 #: ../plug-ins/common/file-gif-save.c:1271
-#, fuzzy
-#| msgid "Animated GIF Options"
 msgid "Animated GIF"
-msgstr "Opcions del GIF animat"
+msgstr "GIF animat"
 
 #: ../plug-ins/common/file-gif-save.c:1275
-#, fuzzy
-#| msgid ""
-#| "You can only export as animation when the image has more than one layer. "
-#| "The image you are trying to export only has one layer."
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
 msgstr ""
-"Si voleu exportar com a animació cal que la imatge tingui més d'una capa. La "
-"imatge que voleu exportar només en té una."
+"Només podeu exportar com a animació quan la imatge tingui més d'una capa.\n"
+"La imatge que intenteu exportar només en té una."
 
 #: ../plug-ins/common/file-gih.c:175
 msgid "GIMP brush (animated)"
@@ -2420,8 +2404,6 @@ msgid "HTML table"
 msgstr "Taula HTML"
 
 #: ../plug-ins/common/file-html-table.c:171
-#, fuzzy
-#| msgid "Check if you would like to have the table captioned."
 msgid "Enable if you would like to have the table captioned."
 msgstr "Habiliteu-ho si voleu la taula amb títol."
 
@@ -2434,60 +2416,42 @@ msgid "The text to go into each cell."
 msgstr "Text que ha d'anar en cada cel·la."
 
 #: ../plug-ins/common/file-html-table.c:190
-#, fuzzy
-#| msgid "The width for each table cell.  Can be a number or a percent."
 msgid "The width for each table cell. Can be a number or a percent."
 msgstr ""
 "Amplada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
 #: ../plug-ins/common/file-html-table.c:197
-#, fuzzy
-#| msgid "The height for each table cell.  Can be a number or a percent."
 msgid "The height for each table cell. Can be a number or a percent."
 msgstr "Alçada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
 #: ../plug-ins/common/file-html-table.c:204
-#, fuzzy
-#| msgid ""
-#| "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
-#| "tags instead of just the table html."
 msgid ""
 "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
-"Si es marca l'opció, el GTM generarà un document HTML sencer amb els "
-"marcadors <HTML>, <BODY>, etc. en comptes de només la taula HTML."
+"Si es marca l'opció GTM, es generarà un document HTML sencer amb les "
+"etiquetes <HTML>, <BODY>, etc. en comptes de només la taula html."
 
 #: ../plug-ins/common/file-html-table.c:212
 msgid "The number of pixels in the table border."
 msgstr "Nombre de píxels a la vora de la taula."
 
 #: ../plug-ins/common/file-html-table.c:218
-#, fuzzy
-#| msgid ""
-#| "If checked GTM will replace any rectangular sections of identically "
-#| "colored blocks with one large cell with ROWSPAN and COLSPAN values."
 msgid ""
 "If enabled GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"Si es marca l'opció, el GTM reemplaçarà les seccions rectangulars dels blocs "
-"de color idèntic per una cel·la gran amb els valors de ROWSPAN i els de "
-"COLSPAN."
+"Si es marca l'opció GTM, substituirà qualsevol secció rectangular de blocs "
+"de colors idèntics per una cel·la gran amb valors ROWSPAN i COLSPAN."
 
 #: ../plug-ins/common/file-html-table.c:227
-#, fuzzy
-#| msgid ""
-#| "Checking this tag will cause GTM to leave no whitespace between the TD "
-#| "tags and the cellcontent.  This is only necessary for pixel level "
-#| "positioning control."
 msgid ""
 "Enabling this will cause GTM to leave no whitespace between the TD tags and "
 "the cell content. This is only necessary for pixel level positioning control."
 msgstr ""
-"Si es marca l'opció, el GTM no deixarà espais en blanc entre els marcadors "
-"TD i el contingut de la cel·la. Només és necessari per al control de "
-"posicionament de nivell de píxels."
+"Si activeu l'opció GTM, no deixarà espais en blanc entre les etiquetes TD i "
+"el contingut de la cel·la. Només és necessari per al control de "
+"posicionament a nivell de píxels."
 
 #: ../plug-ins/common/file-html-table.c:237
 msgid "The amount of cell padding."
@@ -2498,10 +2462,8 @@ msgid "The amount of cell spacing."
 msgstr "La quantitat d'espaiat de les cel·les."
 
 #: ../plug-ins/common/file-html-table.c:596
-#, fuzzy
-#| msgid "Export Image as XPM"
 msgid "Export Image as HTML Table"
-msgstr "Exporta la imatge com a XPM"
+msgstr "Exporta la imatge com a taula HTML"
 
 #: ../plug-ins/common/file-html-table.c:610
 msgid "Warning"
@@ -2667,11 +2629,11 @@ msgid "MNG animation"
 msgstr "Animació MNG"
 
 #: ../plug-ins/common/file-mng.c:278
-#, fuzzy
-#| msgid "Choose a high compression level for small file size"
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
-msgstr "Escull un nivell de compressió alt per a una mida de fitxer petita"
+msgstr ""
+"Nivell de compressió PNG, trieu un nivell alt de compressió per a una mida "
+"de fitxer petita"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -2682,10 +2644,8 @@ msgstr ""
 "No s'ha pogut desar la transparència sense pèrdues. Es desarà l'opacitat."
 
 #: ../plug-ins/common/file-mng.c:1592
-#, fuzzy
-#| msgid "Export Image as PNG"
 msgid "Export Image as MNG"
-msgstr "Exporta imatges com a PNG"
+msgstr "Exporta la imatge com a MNG"
 
 #: ../plug-ins/common/file-mng.c:1600
 msgid "MNG Options"
@@ -2802,13 +2762,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s»: no és un fitxer PCX"
 
 #: ../plug-ins/common/file-pcx.c:433 ../plug-ins/file-bmp/bmp-load.c:726
-#: ../plug-ins/file-psd/psd-load.c:322
+#: ../plug-ins/file-psd/psd-load.c:324
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "No s'accepten imatges d'aquesta amplada: %d"
 
 #: ../plug-ins/common/file-pcx.c:439 ../plug-ins/file-bmp/bmp-load.c:732
-#: ../plug-ins/file-psd/psd-load.c:314
+#: ../plug-ins/file-psd/psd-load.c:316
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "No s'accepten imatges d'aquesta alçada: %d"
@@ -2860,7 +2820,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "No s'ha pogut escriure al fitxer «%s» : %s"
 
 #: ../plug-ins/common/file-pdf-load.c:326
-#: ../plug-ins/common/file-pdf-save.c:349
+#: ../plug-ins/common/file-pdf-save.c:352
 msgid "Portable Document Format"
 msgstr "Format de document portable"
 
@@ -2937,18 +2897,18 @@ msgstr "_Resolució:"
 msgid "Use _Anti-aliasing"
 msgstr "Utilitza _antialiàsing"
 
-#: ../plug-ins/common/file-pdf-load.c:1407
-#: ../plug-ins/common/file-pdf-load.c:1408 ../plug-ins/common/file-svg.c:857
+#: ../plug-ins/common/file-pdf-load.c:1402
+#: ../plug-ins/common/file-pdf-load.c:1403 ../plug-ins/common/file-svg.c:857
 #: ../plug-ins/common/file-wmf.c:725 ../plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
 msgstr "píxels/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:408
+#: ../plug-ins/common/file-pdf-save.c:417
 msgid "_Create multipage PDF..."
 msgstr "_Crea un PDF amb múltiples pàgines..."
 
-#: ../plug-ins/common/file-pdf-save.c:662
+#: ../plug-ins/common/file-pdf-save.c:740
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -2961,84 +2921,100 @@ msgstr ""
 "Assegureu-vos que heu introduït un nom de fitxer vàlid i que la ubicació no "
 "és només de lectura."
 
-#: ../plug-ins/common/file-pdf-save.c:885
-#: ../plug-ins/common/file-pdf-save.c:1045
+#: ../plug-ins/common/file-pdf-save.c:965
+msgid "_Convert text layers to image"
+msgstr "_Converteix les capes de text a imatge"
+
+#: ../plug-ins/common/file-pdf-save.c:1009
+#, c-format
+msgid ""
+"The following fonts cannot be found: %s.\n"
+"It is recommended to convert your text layers to image or to install the "
+"missing fonts before exporting, otherwise your design may not look right."
+msgstr ""
+"No es poden trobar les següents lletres tipogràfiques: %s.\n"
+"Es recomana convertir les capes de text en imatge o instal·lar les lletres "
+"tipogràfiques que falten abans d'exportar-lo, altrament pot ser que el "
+"disseny no sembli correcte."
+
+#: ../plug-ins/common/file-pdf-save.c:1026
+#: ../plug-ins/common/file-pdf-save.c:1188
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Omet les capes i capes ocultes amb opacitat zero"
 
-#: ../plug-ins/common/file-pdf-save.c:890
-#: ../plug-ins/common/file-pdf-save.c:1050
+#: ../plug-ins/common/file-pdf-save.c:1031
+#: ../plug-ins/common/file-pdf-save.c:1193
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr ""
 "Converteix els mapes de _bits en gràfics vectorials quan sigui possible"
 
-#: ../plug-ins/common/file-pdf-save.c:895
-#: ../plug-ins/common/file-pdf-save.c:1055
+#: ../plug-ins/common/file-pdf-save.c:1036
+#: ../plug-ins/common/file-pdf-save.c:1198
 msgid "_Apply layer masks before saving"
 msgstr "_Aplica les màscares de la capa abans de desar"
 
-#: ../plug-ins/common/file-pdf-save.c:899
-#: ../plug-ins/common/file-pdf-save.c:1059
+#: ../plug-ins/common/file-pdf-save.c:1040
+#: ../plug-ins/common/file-pdf-save.c:1202
 msgid "Keeping the masks will not change the output"
 msgstr "Si es conserven les màscares no afectarà la sortida"
 
-#: ../plug-ins/common/file-pdf-save.c:905
+#: ../plug-ins/common/file-pdf-save.c:1046
 #, c-format
 msgid "_Layers as pages (%s)"
 msgstr "_Capes com a pàgines (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:907
-#: ../plug-ins/common/file-pdf-save.c:1106
+#: ../plug-ins/common/file-pdf-save.c:1048
+#: ../plug-ins/common/file-pdf-save.c:1249
 msgid "top layers first"
 msgstr "primer les capes superiors"
 
-#: ../plug-ins/common/file-pdf-save.c:907
-#: ../plug-ins/common/file-pdf-save.c:1106
+#: ../plug-ins/common/file-pdf-save.c:1048
+#: ../plug-ins/common/file-pdf-save.c:1249
 msgid "bottom layers first"
 msgstr "primer les capes inferiors"
 
-#: ../plug-ins/common/file-pdf-save.c:915
+#: ../plug-ins/common/file-pdf-save.c:1056
 msgid "_Reverse the pages order"
 msgstr "Inve_rteix l'ordre de les pàgines"
 
-#: ../plug-ins/common/file-pdf-save.c:989
+#: ../plug-ins/common/file-pdf-save.c:1132
 msgid "Save to:"
 msgstr "Desa-ho a:"
 
-#: ../plug-ins/common/file-pdf-save.c:993
+#: ../plug-ins/common/file-pdf-save.c:1136
 msgid "Browse..."
 msgstr "Navega..."
 
-#: ../plug-ins/common/file-pdf-save.c:994
+#: ../plug-ins/common/file-pdf-save.c:1137
 msgid "Multipage PDF export"
 msgstr "Exporta com a PDF amb pàgines"
 
-#: ../plug-ins/common/file-pdf-save.c:1030
+#: ../plug-ins/common/file-pdf-save.c:1173
 msgid "Remove the selected pages"
 msgstr "Suprimeix les pàgines seleccionades"
 
-#: ../plug-ins/common/file-pdf-save.c:1040
+#: ../plug-ins/common/file-pdf-save.c:1183
 msgid "Add this image"
 msgstr "Afegeix aquesta Imatge"
 
-#: ../plug-ins/common/file-pdf-save.c:1104
+#: ../plug-ins/common/file-pdf-save.c:1247
 #, c-format
 msgid "Layers as pages (%s)"
 msgstr "Capes com pàgines  (%s)"
 
-#: ../plug-ins/common/file-pdf-save.c:1161
-#: ../plug-ins/common/file-pdf-save.c:1234
-#: ../plug-ins/common/file-pdf-save.c:1332 ../plug-ins/common/file-ps.c:2021
+#: ../plug-ins/common/file-pdf-save.c:1304
+#: ../plug-ins/common/file-pdf-save.c:1377
+#: ../plug-ins/common/file-pdf-save.c:1475 ../plug-ins/common/file-ps.c:2021
 #: ../plug-ins/file-tiff/file-tiff-load.c:1034
 #, c-format
 msgid "Page %d"
 msgstr "Pàgina %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1201
+#: ../plug-ins/common/file-pdf-save.c:1344
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: per tal de desar el fitxer, cal afegir com a mínim una imatge."
 
-#: ../plug-ins/common/file-pdf-save.c:1379
+#: ../plug-ins/common/file-pdf-save.c:1522
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "No es pot gestionar la mida (amplada o alçada) de la imatge."
@@ -3292,10 +3268,8 @@ msgid "Unsupported maximum value."
 msgstr "El valor màxim no és compatible."
 
 #: ../plug-ins/common/file-pnm.c:1690
-#, fuzzy
-#| msgid "Export Image as PNG"
 msgid "Export Image as PNM"
-msgstr "Exporta imatges com a PNG"
+msgstr "Exporta la imatge com a PNM"
 
 #: ../plug-ins/common/file-pnm.c:1694
 msgid "Data formatting"
@@ -3481,10 +3455,8 @@ msgid "Paint Shop Pro image"
 msgstr "Imatge del Paint Shop Pro"
 
 #: ../plug-ins/common/file-psp.c:788
-#, fuzzy
-#| msgid "Export Image as PNG"
 msgid "Export Image as PSP"
-msgstr "Exporta imatges com a PNG"
+msgstr "Exporta la imatge com a PSP"
 
 #. file save type
 #: ../plug-ins/common/file-psp.c:791
@@ -3803,10 +3775,8 @@ msgid "Pal_ette File:"
 msgstr "Fitxer de pal_eta de colors:"
 
 #: ../plug-ins/common/file-raw-data.c:2021
-#, fuzzy
-#| msgid "Export Image as DDS"
 msgid "Export Image as Raw Data"
-msgstr "Exporta la imatge com a DDS"
+msgstr "Exporta la imatge com a dada sense format"
 
 #. Image type combo
 #: ../plug-ins/common/file-raw-data.c:2030
@@ -3818,8 +3788,6 @@ msgid "_Planar (RRR,GGG,BBB)"
 msgstr "(RRR, GGG, BBB) _planar"
 
 #: ../plug-ins/common/file-raw-data.c:2034
-#, fuzzy
-#| msgid "Image Types"
 msgid "Image Type"
 msgstr "Tipus d'imatge"
 
@@ -3833,10 +3801,8 @@ msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (estil BMP)"
 
 #: ../plug-ins/common/file-raw-data.c:2044
-#, fuzzy
-#| msgid "_Palette Type:"
 msgid "Palette Type"
-msgstr "Tipus de _paleta:"
+msgstr "Tipus de paleta"
 
 #: ../plug-ins/common/file-sunras.c:270 ../plug-ins/common/file-sunras.c:296
 msgid "SUN Rasterfile image"
@@ -4035,10 +4001,8 @@ msgid "Cannot read header from '%s'"
 msgstr "No es pot llegir la capçalera de «%s»"
 
 #: ../plug-ins/common/file-tga.c:1432
-#, fuzzy
-#| msgid "Export Image as PNG"
 msgid "Export Image as TGA"
-msgstr "Exporta imatges com a PNG"
+msgstr "Exporta la imatge com a TGA"
 
 #: ../plug-ins/common/file-tga.c:1442
 msgid "_RLE compression"
@@ -4082,7 +4046,7 @@ msgstr "Mapa de bits d'X"
 
 #: ../plug-ins/common/file-xbm.c:207
 msgid "Write a comment at the beginning of the file."
-msgstr ""
+msgstr "Escriu un comentari al començament del fitxer."
 
 #: ../plug-ins/common/file-xbm.c:809
 #, c-format
@@ -4124,10 +4088,8 @@ msgstr ""
 "que no té un canal alfa."
 
 #: ../plug-ins/common/file-xbm.c:1235
-#, fuzzy
-#| msgid "Export Image as XPM"
 msgid "Export Image as XBM"
-msgstr "Exporta la imatge com a XPM"
+msgstr "Exporta la imatge com a XBM"
 
 #: ../plug-ins/common/file-xbm.c:1245
 msgid "_X10 format bitmap"
@@ -4138,16 +4100,17 @@ msgid "_Identifier prefix:"
 msgstr "Prefix de l'_identificador:"
 
 #: ../plug-ins/common/file-xbm.c:1266
-#, fuzzy
-#| msgid "_GIF comment:"
 msgid "_Write comment"
-msgstr "Comentari del _GIF:"
+msgstr "Escriu un Comentari"
 
 #: ../plug-ins/common/file-xbm.c:1277
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
 msgstr ""
+"En escriure un comentari, el fitxer XBM serà il·legible per algunes "
+"aplicacions.\n"
+"El comentari no afectarà la incrustació de la XBM en codi font C."
 
 #: ../plug-ins/common/file-xbm.c:1292
 msgid "Comment:"
@@ -6191,20 +6154,14 @@ msgid "RGB Encoding"
 msgstr "Codificació RGB"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1005
-#, fuzzy
-#| msgid "16 bit (R5 G6 B5"
 msgid "16 bit (R5 G6 B5)"
 msgstr "16 bits (R5 G6 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1006
-#, fuzzy
-#| msgid "16 bit (A1 R5 G5 B5"
 msgid "16 bit (A1 R5 G5 B5)"
 msgstr "16 bits (A1 R5 G5 B5)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:1007
-#, fuzzy
-#| msgid "16 bit (X1 R5 G5 B5"
 msgid "16 bit (X1 R5 G5 B5)"
 msgstr "16 bits (X1 R5 G5 B5)"
 
@@ -6405,10 +6362,8 @@ msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Només es poden exportar imatges indexades i grises."
 
 #: ../plug-ins/file-fli/fli-gimp.c:905
-#, fuzzy
-#| msgid "AutoDesk FLIC animation"
 msgid "Open FLIC Animation"
-msgstr "Animació FLIC d'Autodesk"
+msgstr "Obre l'animació FLIC"
 
 #: ../plug-ins/file-fli/fli-gimp.c:923 ../plug-ins/file-fli/fli-gimp.c:979
 msgctxt "frame-range"
@@ -6421,10 +6376,8 @@ msgid "_To:"
 msgstr "_A:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:961
-#, fuzzy
-#| msgid "Export Image as Pattern"
 msgid "Export Image as FLI Animation"
-msgstr "Exporta la imatge com a Patró"
+msgstr "Exporta la imatge com a animació FLI"
 
 #: ../plug-ins/file-ico/ico-dialog.c:54
 msgid "Windows Icon"
@@ -6664,98 +6617,98 @@ msgstr "Imatge JPEG"
 msgid "Export Preview"
 msgstr "Previsualitza l'exportació"
 
-#: ../plug-ins/file-psd/psd-load.c:235
+#: ../plug-ins/file-psd/psd-load.c:237
 #: ../plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "S'ha produït un error en obrir el fitxer PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:290
+#: ../plug-ins/file-psd/psd-load.c:292
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "El fitxer no és un document vàlid del Photoshop"
 
-#: ../plug-ins/file-psd/psd-load.c:297
+#: ../plug-ins/file-psd/psd-load.c:299
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "No s'accepten fitxers amb aquesta versió del format: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:304
+#: ../plug-ins/file-psd/psd-load.c:306
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Hi ha massa canals en el fitxer: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:331
+#: ../plug-ins/file-psd/psd-load.c:333
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "No s'accepten imatges d'aquesta mida: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:344
+#: ../plug-ins/file-psd/psd-load.c:347 ../plug-ins/file-psd/psd-load.c:357
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Mode de color no compatible: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:370
+#: ../plug-ins/file-psd/psd-load.c:384
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profunditat de bits no compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:404 ../plug-ins/file-psd/psd-load.c:414
-#: ../plug-ins/file-psd/psd-load.c:625 ../plug-ins/file-psd/psd-load.c:847
+#: ../plug-ins/file-psd/psd-load.c:418 ../plug-ins/file-psd/psd-load.c:428
+#: ../plug-ins/file-psd/psd-load.c:639 ../plug-ins/file-psd/psd-load.c:861
 #, c-format
 msgid "The file is corrupt!"
 msgstr "El fitxer és corrupte!"
 
-#: ../plug-ins/file-psd/psd-load.c:553
+#: ../plug-ins/file-psd/psd-load.c:567
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Massa canals en la capa: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:561
+#: ../plug-ins/file-psd/psd-load.c:575
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "L'alçada de la capa no és vàlida o no és compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:569
+#: ../plug-ins/file-psd/psd-load.c:583
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "L'amplada de la capa no és vàlida o no és compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:578
+#: ../plug-ins/file-psd/psd-load.c:592
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "L'amplada de la capa no és vàlida o no és compatible: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:764
+#: ../plug-ins/file-psd/psd-load.c:778
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "L'alçada de la capa no és vàlida o no és compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:772
+#: ../plug-ins/file-psd/psd-load.c:786
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "L'amplada de la capa no és vàlida o no és compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:781
+#: ../plug-ins/file-psd/psd-load.c:795
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "L'amplada de la capa no és vàlida o no és compatible: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1346 ../plug-ins/file-psd/psd-load.c:1844
+#: ../plug-ins/file-psd/psd-load.c:1428 ../plug-ins/file-psd/psd-load.c:1945
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Mode de compressió no compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1972
+#: ../plug-ins/file-psd/psd-load.c:2076
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2151
+#: ../plug-ins/file-psd/psd-load.c:2254
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "La mida del canal no és vàlida o no és compatible"
 
-#: ../plug-ins/file-psd/psd-load.c:2220
+#: ../plug-ins/file-psd/psd-load.c:2320
 #, c-format
 msgid "Failed to decompress data"
 msgstr "No s'han pogut descomprimir les dades"
@@ -6798,99 +6751,99 @@ msgstr "Imatge del Photoshop (fusionada)"
 msgid "Raw Canon"
 msgstr "Canon en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:58
+#: ../plug-ins/file-raw/file-raw-formats.h:59
 msgid "Raw Nikon"
 msgstr "Nikon en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:69
+#: ../plug-ins/file-raw/file-raw-formats.h:70
 msgid "Raw Hasselblad"
 msgstr "Hasselblad en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:80
+#: ../plug-ins/file-raw/file-raw-formats.h:81
 msgid "Raw Sony"
 msgstr "Sony en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:91
+#: ../plug-ins/file-raw/file-raw-formats.h:92
 msgid "Raw Casio BAY"
 msgstr "Casio BAY en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:102
+#: ../plug-ins/file-raw/file-raw-formats.h:103
 msgid "Raw Phantom Software CINE"
 msgstr "Phantom Software CINE en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:113
+#: ../plug-ins/file-raw/file-raw-formats.h:114
 msgid "Raw Sinar"
 msgstr "Sinar en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:124
+#: ../plug-ins/file-raw/file-raw-formats.h:125
 msgid "Raw Kodak"
 msgstr "Kodaken brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:135
+#: ../plug-ins/file-raw/file-raw-formats.h:136
 msgid "Raw Adobe DNG Digital Negative"
 msgstr "Adobe DNG negatiu digital en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:146
+#: ../plug-ins/file-raw/file-raw-formats.h:147
 msgid "Raw Epson ERF"
 msgstr "Epson ERF en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:157
+#: ../plug-ins/file-raw/file-raw-formats.h:158
 msgid "Raw Phase One"
 msgstr "Phase One en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:168
+#: ../plug-ins/file-raw/file-raw-formats.h:169
 msgid "Raw Minolta"
 msgstr "Minolta en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:179
+#: ../plug-ins/file-raw/file-raw-formats.h:180
 msgid "Raw Mamiya MEF"
 msgstr "Mamiya MEF en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:189
+#: ../plug-ins/file-raw/file-raw-formats.h:190
 msgid "Raw Leaf MOS"
 msgstr "Leaf MOS en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:200
+#: ../plug-ins/file-raw/file-raw-formats.h:201
 msgid "Raw Olympus ORF"
 msgstr "Olympus ORF en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:211
+#: ../plug-ins/file-raw/file-raw-formats.h:212
 msgid "Raw Pentax PEF"
 msgstr "Pentax PEF en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:222
+#: ../plug-ins/file-raw/file-raw-formats.h:223
 msgid "Raw Logitech PXN"
 msgstr "Logitech PXN en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:233
+#: ../plug-ins/file-raw/file-raw-formats.h:234
 msgid "Raw Apple QuickTake QTK"
 msgstr "Apple QuickTake QTK en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:244
+#: ../plug-ins/file-raw/file-raw-formats.h:245
 msgid "Raw Fujifilm RAF"
 msgstr "Fujifilm RAF en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:255
+#: ../plug-ins/file-raw/file-raw-formats.h:256
 msgid "Raw Panasonic"
 msgstr "Panasonic en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:266
+#: ../plug-ins/file-raw/file-raw-formats.h:267
 msgid "Raw Digital Foto Maker RDC"
 msgstr "Foto digital Maker RDC en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:277
+#: ../plug-ins/file-raw/file-raw-formats.h:278
 msgid "Raw Leica RWL"
 msgstr "Leica RWL en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:288
+#: ../plug-ins/file-raw/file-raw-formats.h:289
 msgid "Raw Samsung SRW"
 msgstr "Samsung SRW en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:299
+#: ../plug-ins/file-raw/file-raw-formats.h:300
 msgid "Raw Sigma X3F"
 msgstr "Sigma X3F en brut"
 
-#: ../plug-ins/file-raw/file-raw-formats.h:310
+#: ../plug-ins/file-raw/file-raw-formats.h:311
 msgid "Raw Arriflex ARI"
 msgstr "Arriflex ARI en brut"
 
@@ -7161,7 +7114,7 @@ msgstr "Utilitza el retar_d en tots els fotogrames"
 msgid "_Save Exif data"
 msgstr "De_sa les dades Exif"
 
-#: ../plug-ins/file-webp/file-webp-load.c:113
+#: ../plug-ins/file-webp/file-webp-load.c:111
 #, c-format
 msgid "Invalid WebP file '%s'"
 msgstr "El fitxer WebP no és vàlid «%s»"
@@ -7169,22 +7122,22 @@ msgstr "El fitxer WebP no és vàlid «%s»"
 #  * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #  * that need not and should not be freed. So this call is OK.
 #  *
-#: ../plug-ins/file-webp/file-webp-load.c:206
+#: ../plug-ins/file-webp/file-webp-load.c:210
 #, c-format
 msgid "Failed to decode animated WebP file '%s'"
 msgstr "No s'ha pogut descodificar el fitxer WebP animat «%s»"
 
-#: ../plug-ins/file-webp/file-webp-load.c:214
+#: ../plug-ins/file-webp/file-webp-load.c:218
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
 msgstr "No s'ha pogut descodificar la informació WebP animada de «%s»"
 
-#: ../plug-ins/file-webp/file-webp-load.c:233
+#: ../plug-ins/file-webp/file-webp-load.c:237
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "No s'ha pogut descodificar el fotograma WebP animat de «%s»"
 
-#: ../plug-ins/file-webp/file-webp-load.c:238
+#: ../plug-ins/file-webp/file-webp-load.c:242
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "Fotograma %d (%dms)"
@@ -11720,10 +11673,8 @@ msgid "Print the image"
 msgstr "Imprimeix la imatge"
 
 #: ../plug-ins/print/print.c:184
-#, fuzzy
-#| msgid "Page Set_up"
 msgid "Page Set_up..."
-msgstr "_Configuració de la pàgina"
+msgstr "Config_uració de la pàgina..."
 
 #: ../plug-ins/print/print.c:189
 msgid "Adjust page size and orientation for printing"
@@ -11749,101 +11700,101 @@ msgstr "Captura de _pantalla..."
 msgid "Create an image from an area of the screen"
 msgstr "Crea una imatge a partir d'una àrea de la pantalla"
 
-#: ../plug-ins/screenshot/screenshot.c:523
+#: ../plug-ins/screenshot/screenshot.c:525
 #: ../plug-ins/screenshot/screenshot-x11.c:427
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: ../plug-ins/screenshot/screenshot.c:528
+#: ../plug-ins/screenshot/screenshot.c:530
 msgid "S_nap"
 msgstr "_Captura"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:555
+#: ../plug-ins/screenshot/screenshot.c:557
 msgid "Area"
 msgstr "Àrea"
 
-#: ../plug-ins/screenshot/screenshot.c:567
+#: ../plug-ins/screenshot/screenshot.c:569
 msgid "Take a screenshot of a single _window"
 msgstr "Obtén una captura de pantalla d'una _finestra única"
 
-#: ../plug-ins/screenshot/screenshot.c:590
+#: ../plug-ins/screenshot/screenshot.c:592
 msgid "Include window _decoration"
 msgstr "Inclou la _decoració de la finestra"
 
-#: ../plug-ins/screenshot/screenshot.c:611
-#: ../plug-ins/screenshot/screenshot.c:656
+#: ../plug-ins/screenshot/screenshot.c:613
+#: ../plug-ins/screenshot/screenshot.c:658
 msgid "Include _mouse pointer"
 msgstr "Inclou el punter del _ratolí"
 
-#: ../plug-ins/screenshot/screenshot.c:633
+#: ../plug-ins/screenshot/screenshot.c:635
 msgid "Take a screenshot of the entire _screen"
 msgstr "Obtén una captura de la pantalla _sencera"
 
-#: ../plug-ins/screenshot/screenshot.c:684
+#: ../plug-ins/screenshot/screenshot.c:686
 msgid "Select a _region to grab"
 msgstr "Selecciona una _regió"
 
-#: ../plug-ins/screenshot/screenshot.c:702
+#: ../plug-ins/screenshot/screenshot.c:704
 msgid "Delay"
 msgstr "Retard"
 
-#: ../plug-ins/screenshot/screenshot.c:722
+#: ../plug-ins/screenshot/screenshot.c:724
 msgid "Selection delay: "
 msgstr "Retard en la selecció: "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:738
-#: ../plug-ins/screenshot/screenshot.c:798
+#: ../plug-ins/screenshot/screenshot.c:740
+#: ../plug-ins/screenshot/screenshot.c:800
 msgid "seconds"
 msgstr "segons"
 
-#: ../plug-ins/screenshot/screenshot.c:751
+#: ../plug-ins/screenshot/screenshot.c:753
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Després del retard arrossegueu el vostre ratolí per a seleccionar la regió "
 "de la pantalla que voleu capturar."
 
-#: ../plug-ins/screenshot/screenshot.c:755
+#: ../plug-ins/screenshot/screenshot.c:757
 msgid "Click in a window to snap it after delay."
 msgstr "Feu clic en una finestra perquè hi encaixi després d'un retard."
 
-#: ../plug-ins/screenshot/screenshot.c:760
+#: ../plug-ins/screenshot/screenshot.c:762
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Al final del retard feu clic a la finestra per a capturar-la."
 
-#: ../plug-ins/screenshot/screenshot.c:781
+#: ../plug-ins/screenshot/screenshot.c:783
 msgid "Screenshot dela_y: "
 msgstr "_Retard en la captura de pantalla:"
 
-#: ../plug-ins/screenshot/screenshot.c:809
+#: ../plug-ins/screenshot/screenshot.c:811
 msgid "After the delay, the screenshot is taken."
 msgstr "Després del retard es farà la captura de pantalla."
 
-#: ../plug-ins/screenshot/screenshot.c:811
+#: ../plug-ins/screenshot/screenshot.c:813
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr "Un cop seleccionada la regió, es capturarà després d’aquest retard."
 
-#: ../plug-ins/screenshot/screenshot.c:816
+#: ../plug-ins/screenshot/screenshot.c:818
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 "Un cop la finestra està seleccionada, es capturarà després d'aquest retard."
 
-#: ../plug-ins/screenshot/screenshot.c:822
+#: ../plug-ins/screenshot/screenshot.c:824
 msgid "After the delay, the active window will be captured."
 msgstr ""
 "Després del retard, es farà la captura de pantalla en la finestra activa."
 
-#: ../plug-ins/screenshot/screenshot.c:829
+#: ../plug-ins/screenshot/screenshot.c:831
 msgid "Color Profile"
 msgstr "Color de perfil"
 
-#: ../plug-ins/screenshot/screenshot.c:834
+#: ../plug-ins/screenshot/screenshot.c:836
 msgid "Tag image with _monitor profile"
 msgstr "Marca la imatge amb el perfil del _monitor"
 
-#: ../plug-ins/screenshot/screenshot.c:838
+#: ../plug-ins/screenshot/screenshot.c:840
 msgid "Convert image to sR_GB"
 msgstr "Converteix la imatge a sR_GB"
 
