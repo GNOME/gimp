@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 12:57+0200\n"
-"PO-Revision-Date: 2020-03-29 12:59+0200\n"
+"POT-Creation-Date: 2020-04-05 12:14+0200\n"
+"PO-Revision-Date: 2020-04-05 12:15+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -824,7 +824,7 @@ msgstr ""
 "Powszechnej Licencji Publicznej GNU (GNU General Public License); jeśli nie "
 "— proszę odwiedzić stronę internetową https://www.gnu.org/licenses/"
 
-#: ../app/gimp-update.c:251
+#: ../app/gimp-update.c:261
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -10809,7 +10809,7 @@ msgstr "Otwieranie po najechaniu"
 
 #: ../app/config/config-enums.c:319
 msgctxt "tool-group-menu-mode"
-msgid "Show on hover in single-column"
+msgid "Show on hover in single column"
 msgstr "Otwieranie po najechaniu w jednej kolumnie"
 
 #: ../app/config/config-enums.c:348
@@ -15148,17 +15148,26 @@ msgctxt "plural"
 msgid "percent"
 msgstr "procent"
 
-#: ../app/dialogs/about-dialog.c:126
+#. Translators: the %s is GIMP version, the %d is the
+#. * installer/package revision.
+#. * For instance: "2.10.18 (revision 2)"
+#.
+#: ../app/dialogs/about-dialog.c:132
+#, c-format
+msgid "%s (revision %d)"
+msgstr "%s (%d. korekta)"
+
+#: ../app/dialogs/about-dialog.c:140
 msgid "About GIMP"
 msgstr "Informacje o programie GIMP"
 
-#: ../app/dialogs/about-dialog.c:135
+#: ../app/dialogs/about-dialog.c:149
 msgid "Visit the GIMP website"
 msgstr "Witryna programu GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:141
+#: ../app/dialogs/about-dialog.c:155
 msgid "translator-credits"
 msgstr ""
 "Paweł Dziekoński, 1999-2000\n"
@@ -15168,50 +15177,46 @@ msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2011-2020\n"
 "Aviary.pl <community-poland@mozilla.org>, 2011-2020"
 
-#: ../app/dialogs/about-dialog.c:310
-msgid "New version available!"
-msgstr "Dostępna jest nowa wersja!"
+#: ../app/dialogs/about-dialog.c:345
+msgid "Update available!"
+msgstr "Dostępna jest aktualizacja!"
 
 #. This is actually a new revision of current version.
-#: ../app/dialogs/about-dialog.c:332
+#: ../app/dialogs/about-dialog.c:365
 #, c-format
-msgid ""
-"A revision of GIMP %s was released on %s.\n"
-"Even though you use the last version, it is recommended to reinstall.\n"
-"New revisions come with package fixes."
-msgstr ""
-"W dniu %2$s wydano korektę wersji %1$s programu GIMP.\n"
-"Chociaż używana jest najnowsza wersja, zalecana jest ponowna instalacja.\n"
-"Nowe korekty zawierają poprawki instalatora, co wpływa na działanie programu."
+msgid "Download GIMP %s revision %d (released on %s)\n"
+msgstr "Pobierz %2$d. korektę wersji %1$s programu GIMP (wydaną %3$s)\n"
 
-#. Recommend an update.
-#: ../app/dialogs/about-dialog.c:339 ../app/widgets/gimpcriticaldialog.c:209
+#. Translators: <> tags are Pango markup. Please keep these
+#. * markups in your translation.
+#: ../app/dialogs/about-dialog.c:375
 #, c-format
-msgid ""
-"A new version of GIMP (%s) was released on %s.\n"
-"It is recommended to update."
-msgstr ""
-"W dniu %2$s wydano nową wersję programu GIMP (%1$s).\n"
-"Aktualizacja jest zalecana."
+msgid "<u>Release comment</u>: <i>%s</i>"
+msgstr "<u>Komentarz do wydania</u>: <i>%s</i>"
 
-#: ../app/dialogs/about-dialog.c:352
-msgid "Go to download page"
-msgstr "Otwórz stronę pobierania"
-
-#: ../app/dialogs/about-dialog.c:366
+#: ../app/dialogs/about-dialog.c:380
 #, c-format
-msgid "Last checked on %s"
-msgstr "Ostatnio wyszukano: %s"
+msgid "Download GIMP %s (released on %s)\n"
+msgstr "Pobierz GIMP %s (wydany %s)\n"
 
-#: ../app/dialogs/about-dialog.c:371 ../app/dialogs/about-dialog.c:376
+#: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
 msgid "Check for updates"
 msgstr "Wyszukaj aktualizacje"
 
-#: ../app/dialogs/about-dialog.c:676
+#. Translators: first string is the date in the locale's date
+#. * representation (e.g., 12/31/99), second is the time in the
+#. * locale's time representation (e.g., 23:13:48).
+#.
+#: ../app/dialogs/about-dialog.c:446
+#, c-format
+msgid "Last checked on %s at %s"
+msgstr "Ostatnio wyszukano %s o %s"
+
+#: ../app/dialogs/about-dialog.c:748
 msgid "GIMP is brought to you by"
 msgstr "GIMP jest tworzony przez"
 
-#: ../app/dialogs/about-dialog.c:752
+#: ../app/dialogs/about-dialog.c:824
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -22174,49 +22179,57 @@ msgstr "%s rozmyje"
 msgid "Convolve Type  (%s)"
 msgstr "Typ działania  (%s)"
 
-#: ../app/tools/gimpcropoptions.c:78
+#: ../app/tools/gimpcropoptions.c:79
 #: ../app/tools/gimprectangleselectoptions.c:79
 msgid "Highlight"
 msgstr "Podświetlenie"
 
-#: ../app/tools/gimpcropoptions.c:79
+#: ../app/tools/gimpcropoptions.c:80
 #: ../app/tools/gimprectangleselectoptions.c:80
 msgid "Dim everything outside selection"
 msgstr "Przyciemnienie wszystkiego poza zaznaczeniem"
 
-#: ../app/tools/gimpcropoptions.c:86
+#: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:87
 msgid "Highlight opacity"
 msgstr "Krycie podświetlenia"
 
-#: ../app/tools/gimpcropoptions.c:87
+#: ../app/tools/gimpcropoptions.c:88
 #: ../app/tools/gimprectangleselectoptions.c:88
 msgid "How much to dim everything outside selection"
 msgstr "Jak bardzo przyciemniać wszystko poza zaznaczeniem"
 
-#: ../app/tools/gimpcropoptions.c:93
+#: ../app/tools/gimpcropoptions.c:94
 msgid "Current layer only"
 msgstr "Tylko bieżąca warstwa"
 
-#: ../app/tools/gimpcropoptions.c:94
+#: ../app/tools/gimpcropoptions.c:95
 msgid "Crop only currently selected layer"
 msgstr "Kadrowanie tylko obecnie zaznaczonej warstwy"
 
-#: ../app/tools/gimpcropoptions.c:100
+#: ../app/tools/gimpcropoptions.c:101
+msgid "Delete cropped pixels"
+msgstr "Usuwanie wykadrowanych pikseli"
+
+#: ../app/tools/gimpcropoptions.c:102
+msgid "Discard non-locked layer data that falls out of the crop region"
+msgstr "Odrzuca niezablokowane dane warstwy spoza kadrowanego obszaru"
+
+#: ../app/tools/gimpcropoptions.c:108
 msgid "Allow growing"
 msgstr "Umożliwienie powiększania"
 
-#: ../app/tools/gimpcropoptions.c:101
+#: ../app/tools/gimpcropoptions.c:109
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
 "Umożliwia zmianę wymiarów płótna przez przeciągnięcie ramki kadrowania poza "
 "granice obrazu"
 
-#: ../app/tools/gimpcropoptions.c:108 ../app/tools/gimpcropoptions.c:200
+#: ../app/tools/gimpcropoptions.c:116 ../app/tools/gimpcropoptions.c:226
 msgid "Fill with"
 msgstr "Wypełnienie"
 
-#: ../app/tools/gimpcropoptions.c:109
+#: ../app/tools/gimpcropoptions.c:117
 msgid "How to fill new areas created by 'Allow growing'"
 msgstr "Jak wypełniać nowe obszary tworzone przez „Umożliwienie powiększania”"
 
@@ -22515,12 +22528,12 @@ msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:1442 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1445 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1444 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1447 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -25665,12 +25678,22 @@ msgstr "Informacje o błędzie"
 msgid "Go to _Download page"
 msgstr "_Otwórz stronę pobierania"
 
+#. Recommend an update.
+#: ../app/widgets/gimpcriticaldialog.c:209
+#, c-format
+msgid ""
+"A new version of GIMP (%s) was released on %s.\n"
+"It is recommended to update."
+msgstr ""
+"%2$s wydano nową wersję programu GIMP (%1$s).\n"
+"Aktualizacja jest zalecana."
+
 #: ../app/widgets/gimpcriticaldialog.c:215
 msgid "You are running an unsupported version!"
 msgstr "Używana jest niewspierana wersja!"
 
 #: ../app/widgets/gimpcriticaldialog.c:238
-#: ../app/widgets/gimpcriticaldialog.c:584
+#: ../app/widgets/gimpcriticaldialog.c:588
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -25678,27 +25701,27 @@ msgstr ""
 "program GIMP:"
 
 #: ../app/widgets/gimpcriticaldialog.c:240
-#: ../app/widgets/gimpcriticaldialog.c:586
+#: ../app/widgets/gimpcriticaldialog.c:590
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Skopiuj informacje o błędzie do schowka klikając: "
 
 #: ../app/widgets/gimpcriticaldialog.c:242
-#: ../app/widgets/gimpcriticaldialog.c:588
+#: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Otwórz system śledzenia błędów w przeglądarce klikając: "
 
 #: ../app/widgets/gimpcriticaldialog.c:244
-#: ../app/widgets/gimpcriticaldialog.c:590
+#: ../app/widgets/gimpcriticaldialog.c:594
 msgid "Create a login if you don't have one yet."
 msgstr "Utwórz konto, jeśli jeszcze go nie masz."
 
 #: ../app/widgets/gimpcriticaldialog.c:245
-#: ../app/widgets/gimpcriticaldialog.c:591
+#: ../app/widgets/gimpcriticaldialog.c:595
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Wklej tekst ze schowka do nowego zgłoszenia błędu."
 
 #: ../app/widgets/gimpcriticaldialog.c:246
-#: ../app/widgets/gimpcriticaldialog.c:592
+#: ../app/widgets/gimpcriticaldialog.c:596
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -25786,13 +25809,13 @@ msgstr "Nieznany błąd systemu Microsoft Windows."
 msgid "Failed to open '%s': %s"
 msgstr "Otwarcie „%s” się nie powiodło: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:550
+#: ../app/widgets/gimpcriticaldialog.c:554
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "Program GIMP uległ awarii z błędem krytycznym: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:557
+#: ../app/widgets/gimpcriticaldialog.c:561
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "Wystąpił błąd programu GIMP: %s"
@@ -25800,12 +25823,12 @@ msgstr "Wystąpił błąd programu GIMP: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:565
+#: ../app/widgets/gimpcriticaldialog.c:569
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "Wystąpiło kilka krytycznych błędów programu GIMP."
 
-#: ../app/widgets/gimpcriticaldialog.c:617
+#: ../app/widgets/gimpcriticaldialog.c:621
 msgid "_Restart GIMP"
 msgstr "_Uruchom program GIMP ponownie"
 
@@ -27242,24 +27265,24 @@ msgid "Create a new tool group"
 msgstr "Utwórz nową grupę narzędzi"
 
 #: ../app/widgets/gimptooleditor.c:250
-msgid "Raise this tool"
-msgstr "Podnieś to narzędzie"
+msgid "Raise this item"
+msgstr "Podnieś ten element"
 
 #: ../app/widgets/gimptooleditor.c:251
-msgid "Raise this tool to the top"
-msgstr "Podnosi to narzędzie na górę"
+msgid "Raise this item to the top"
+msgstr "Podnosi ten element na górę"
 
 #: ../app/widgets/gimptooleditor.c:258
-msgid "Lower this tool"
-msgstr "Obniż to narzędzie"
+msgid "Lower this item"
+msgstr "Obniż ten element"
 
 #: ../app/widgets/gimptooleditor.c:259
-msgid "Lower this tool to the bottom"
-msgstr "Obniża to narzędzie na dół"
+msgid "Lower this item to the bottom"
+msgstr "Obniża ten element na dół"
 
 #: ../app/widgets/gimptooleditor.c:266
-msgid "Delete this tool"
-msgstr "Usuń to narzędzie"
+msgid "Delete this tool group"
+msgstr "Usuń tę grupę narzędzi"
 
 #: ../app/widgets/gimptooleditor.c:273
 msgid "Reset tool order and visibility"
