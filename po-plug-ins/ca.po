@@ -4398,7 +4398,7 @@ msgid ""
 msgstr ""
 "El cursor s'ha exportat correctament però conté un o més marcs que "
 "excedeixen l'alçada o l'amplada en 8 digits .\n"
-"L'hem fixat a %dpx. Heu de comprovar el cursor exportat.."
+"L'hem fixat a %dpx. Heu de comprovar el cursor exportat."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2314
@@ -11319,7 +11319,7 @@ msgstr "Estableix la data"
 
 #: ../plug-ins/metadata/metadata-editor.c:1636
 msgid "Unrated"
-msgstr "Sense velocitat"
+msgstr "Sense valoració"
 
 #: ../plug-ins/metadata/metadata-editor.c:5661
 msgid "Import Metadata File"

@@ -678,7 +678,7 @@ msgid ""
 "report bugs"
 msgstr ""
 "Nou diàleg de depuració que produeix traces i altres dades depuració, "
-"encoratjant a que s'enviïn informes d'error"
+"encoratjant a què s'enviïn informes d'error"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Unsaved images can now be recovered after a crash"
@@ -6996,7 +6996,7 @@ msgstr "Fusiona totes les capes visibles en una capa"
 #: ../app/actions/layers-actions.c:202
 msgctxt "layers-action"
 msgid "Merge _Visible Layers"
-msgstr "Fusiona les capes _visibles..."
+msgstr "Fusiona les capes _visibles"
 
 #: ../app/actions/layers-actions.c:203
 msgctxt "layers-action"
@@ -11195,7 +11195,7 @@ msgstr "Marca de temps de la darrera versió coneguda."
 
 #: ../app/config/gimprc-blurbs.h:274
 msgid "The last revision number for the release."
-msgstr "L'últim número revisat per a la versió"
+msgstr "L'últim número revisat per a la versió."
 
 #: ../app/config/gimprc-blurbs.h:277
 msgid ""
@@ -12060,7 +12060,7 @@ msgstr "Conserva el perfil"
 #: ../app/core/core-enums.c:221
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "Converteix per fer-ho en un perfil sRGB o en escala de grisos"
+msgstr "Converteix al perfil incorporat sRGB o d'escala de grisos"
 
 #: ../app/core/core-enums.c:315
 msgctxt "convert-dither-type"
@@ -15477,7 +15477,7 @@ msgstr "Converteix l'espai de treball a escala de grisos?"
 #: ../app/dialogs/color-profile-import-dialog.c:86
 msgid "Convert the image to the built-in grayscale color profile?"
 msgstr ""
-"Converteix la imatge per fer-ho en un perfil de color a escala de grisos?"
+"Converteix la imatge al perfil incorporat d'escala de grisos?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert to RGB Working Space?"
@@ -15485,7 +15485,7 @@ msgstr "Converteix a l'espai de treball RGB?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:91
 msgid "Convert the image to the built-in sRGB color profile?"
-msgstr "Converteix la imatge per fer-ho en un perfil de color sRGB?"
+msgstr "Converteix la imatge al perfil incorporat de color sRGB?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:99
 msgid "Import the image from a color profile"
@@ -22093,7 +22093,7 @@ msgstr "_Alinea"
 #: ../app/tools/gimpaligntool.c:541
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Feu clic en la capa, al camí o a la guia o feu clic-i-arrossega per agafar "
+"Feu clic en la capa, al camí o a la guia o feu clic i arrossega per agafar "
 "diverses capes"
 
 #: ../app/tools/gimpaligntool.c:549
@@ -27663,7 +27663,7 @@ msgstr "Obre el diàleg de selecció de la lletra tipogràfica"
 #: ../app/widgets/gimpwidgets-utils.c:609
 #, c-format
 msgid "%s (try %s)"
-msgstr "%s (proveu i %s)"
+msgstr "%s (proveu %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:609
 #, c-format
