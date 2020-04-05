@@ -130,8 +130,13 @@ windows_thingy_2_cmd_callback (GimpAction *action,
 
   if (active != GIMP_GUI_CONFIG (gimp->config)->prefer_symbolic_icons)
     g_object_set (gimp->config,
-                  "prefer_symbolic_icons", active,
+                  "theme", "Color",
                   NULL);
+  else
+  g_object_set (gimp->config,
+                  "theme", "Symbolic",
+                  NULL);
+
 }
 
 void

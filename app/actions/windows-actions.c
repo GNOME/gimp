@@ -139,14 +139,14 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
     
     { "windows-thingy", NULL,
     NC_("windows-action", "_Switch Theme"), NULL,
-    NC_("windows-action", "When enabled, something happens."),
+    NC_("windows-action", "Toggle light/dark."),
     windows_thingy_cmd_callback,
     FALSE,
     GIMP_HELP_WINDOWS_THINGY },
 
     { "windows-thingy_2", NULL,
     NC_("windows-action", "_Switch Icon Theme"), NULL,
-    NC_("windows-action", "When enabled, something happens."),
+    NC_("windows-action", "Toggle Symbolic."),
     windows_thingy_2_cmd_callback,
     FALSE,
     GIMP_HELP_WINDOWS_THINGY },
