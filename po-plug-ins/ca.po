@@ -11907,7 +11907,7 @@ msgstr "Estableix la data"
 
 #: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
-msgstr "Sense velocitat"
+msgstr "Sense valoració"
 
 #: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "Import Metadata File"

@@ -27470,7 +27470,7 @@ msgstr "Obre el diàleg de selecció de la lletra tipogràfica"
 #: ../app/widgets/gimpwidgets-utils.c:713
 #, c-format
 msgid "%s (try %s)"
-msgstr "%s (proveu i %s)"
+msgstr "%s (proveu %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:713
 #, c-format
