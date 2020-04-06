@@ -59,7 +59,7 @@ static gboolean gimp_brightness_contrast_config_equal        (GimpConfig   *a,
 
 G_DEFINE_TYPE_WITH_CODE (GimpBrightnessContrastConfig,
                          gimp_brightness_contrast_config,
-                         GIMP_TYPE_SETTINGS,
+                         GIMP_TYPE_OPERATION_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_brightness_contrast_config_iface_init))
 
@@ -156,7 +156,8 @@ gimp_brightness_contrast_config_equal (GimpConfig *a,
   GimpBrightnessContrastConfig *config_a = GIMP_BRIGHTNESS_CONTRAST_CONFIG (a);
   GimpBrightnessContrastConfig *config_b = GIMP_BRIGHTNESS_CONTRAST_CONFIG (b);
 
-  if (config_a->brightness != config_b->brightness ||
+  if (! gimp_operation_settings_config_equal_base (a, b) ||
+      config_a->brightness != config_b->brightness       ||
       config_a->contrast   != config_b->contrast)
     {
       return FALSE;

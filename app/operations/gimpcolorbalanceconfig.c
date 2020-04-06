@@ -73,7 +73,7 @@ static gboolean gimp_color_balance_config_copy         (GimpConfig       *src,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorBalanceConfig, gimp_color_balance_config,
-                         GIMP_TYPE_SETTINGS,
+                         GIMP_TYPE_OPERATION_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_color_balance_config_iface_init))
 
@@ -224,7 +224,7 @@ gimp_color_balance_config_serialize (GimpConfig       *config,
   GimpTransferMode        old_range;
   gboolean                success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time", writer))
+  if (! gimp_operation_settings_config_serialize_base (config, writer, data))
     return FALSE;
 
   old_range = bc_config->range;
@@ -289,6 +289,9 @@ gimp_color_balance_config_equal (GimpConfig *a,
   GimpColorBalanceConfig *config_b = GIMP_COLOR_BALANCE_CONFIG (b);
   GimpTransferMode        range;
 
+  if (! gimp_operation_settings_config_equal_base (a, b))
+    return FALSE;
+
   for (range = GIMP_TRANSFER_SHADOWS;
        range <= GIMP_TRANSFER_HIGHLIGHTS;
        range++)
@@ -313,6 +316,8 @@ gimp_color_balance_config_reset (GimpConfig *config)
   GimpColorBalanceConfig *cb_config = GIMP_COLOR_BALANCE_CONFIG (config);
   GimpTransferMode        range;
 
+  gimp_operation_settings_config_reset_base (config);
+
   for (range = GIMP_TRANSFER_SHADOWS;
        range <= GIMP_TRANSFER_HIGHLIGHTS;
        range++)
@@ -333,6 +338,9 @@ gimp_color_balance_config_copy (GimpConfig  *src,
   GimpColorBalanceConfig *src_config  = GIMP_COLOR_BALANCE_CONFIG (src);
   GimpColorBalanceConfig *dest_config = GIMP_COLOR_BALANCE_CONFIG (dest);
   GimpTransferMode        range;
+
+  if (! gimp_operation_settings_config_copy_base (src, dest, flags))
+    return FALSE;
 
   for (range = GIMP_TRANSFER_SHADOWS;
        range <= GIMP_TRANSFER_HIGHLIGHTS;

@@ -39,6 +39,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "operations/gimp-operation-config.h"
+#include "operations/gimpoperationsettings.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -1526,7 +1527,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     g_object_new (gimp_operation_config_get_type (tool->tool_info->gimp,
                                                   operation_name,
                                                   gimp_tool_get_icon_name (tool),
-                                                  GIMP_TYPE_SETTINGS),
+                                                  GIMP_TYPE_OPERATION_SETTINGS),
                   NULL);
 
   gimp_operation_config_sync_node (filter_tool->config,

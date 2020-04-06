@@ -306,6 +306,7 @@ app/operations/gimpoperationlevels.c
 app/operations/gimpoperationoffset.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
+app/operations/gimpoperationsettings.c
 app/operations/gimpoperationthreshold.c
 app/operations/gimpoperationthresholdalpha.c
 

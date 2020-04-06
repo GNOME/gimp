@@ -22,7 +22,7 @@
 #define __GIMP_COLOR_BALANCE_CONFIG_H__
 
 
-#include "core/gimpsettings.h"
+#include "gimpoperationsettings.h"
 
 
 #define GIMP_TYPE_COLOR_BALANCE_CONFIG            (gimp_color_balance_config_get_type ())
@@ -37,20 +37,20 @@ typedef struct _GimpColorBalanceConfigClass GimpColorBalanceConfigClass;
 
 struct _GimpColorBalanceConfig
 {
-  GimpSettings      parent_instance;
+  GimpOperationSettings  parent_instance;
 
-  GimpTransferMode  range;
+  GimpTransferMode       range;
 
-  gdouble           cyan_red[3];
-  gdouble           magenta_green[3];
-  gdouble           yellow_blue[3];
+  gdouble                cyan_red[3];
+  gdouble                magenta_green[3];
+  gdouble                yellow_blue[3];
 
-  gboolean          preserve_luminosity;
+  gboolean               preserve_luminosity;
 };
 
 struct _GimpColorBalanceConfigClass
 {
-  GimpSettingsClass  parent_class;
+  GimpOperationSettingsClass  parent_class;
 };
 
 

@@ -71,7 +71,7 @@ static gboolean gimp_hue_saturation_config_copy         (GimpConfig       *src,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
-                         GIMP_TYPE_SETTINGS,
+                         GIMP_TYPE_OPERATION_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_hue_saturation_config_iface_init))
 
@@ -222,7 +222,7 @@ gimp_hue_saturation_config_serialize (GimpConfig       *config,
   GimpHueRange             old_range;
   gboolean                 success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time", writer))
+  if (! gimp_operation_settings_config_serialize_base (config, writer, data))
     return FALSE;
 
   old_range = hs_config->range;
@@ -280,6 +280,9 @@ gimp_hue_saturation_config_equal (GimpConfig *a,
   GimpHueSaturationConfig *config_b = GIMP_HUE_SATURATION_CONFIG (b);
   GimpHueRange             range;
 
+  if (! gimp_operation_settings_config_equal_base (a, b))
+    return FALSE;
+
   for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
     {
       if (config_a->hue[range]        != config_b->hue[range]        ||
@@ -302,6 +305,8 @@ gimp_hue_saturation_config_reset (GimpConfig *config)
   GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
   GimpHueRange             range;
 
+  gimp_operation_settings_config_reset_base (config);
+
   for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
     {
       hs_config->range = range;
@@ -320,6 +325,9 @@ gimp_hue_saturation_config_copy (GimpConfig   *src,
   GimpHueSaturationConfig *src_config  = GIMP_HUE_SATURATION_CONFIG (src);
   GimpHueSaturationConfig *dest_config = GIMP_HUE_SATURATION_CONFIG (dest);
   GimpHueRange             range;
+
+  if (! gimp_operation_settings_config_copy_base (src, dest, flags))
+    return FALSE;
 
   for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
     {
