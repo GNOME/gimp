@@ -36,6 +36,8 @@ typedef struct _GimpOperationLayerMode          GimpOperationLayerMode;
 
 /*  operation config objects  */
 
+typedef struct _GimpOperationSettings           GimpOperationSettings;
+
 typedef struct _GimpBrightnessContrastConfig    GimpBrightnessContrastConfig;
 typedef struct _GimpCageConfig                  GimpCageConfig;
 typedef struct _GimpColorBalanceConfig          GimpColorBalanceConfig;

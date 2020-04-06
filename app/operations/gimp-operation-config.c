@@ -38,6 +38,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-operation-config.h"
+#include "gimpoperationsettings.h"
 
 
 /*  local function prototypes  */
@@ -216,7 +217,7 @@ gimp_operation_config_equal (GimpConfig *a,
         {
           GParamSpec *pspec = list->data;
 
-          if (pspec->owner_type == G_TYPE_FROM_INSTANCE (a))
+          if (g_type_is_a (pspec->owner_type, GIMP_TYPE_OPERATION_SETTINGS))
             {
               equal = FALSE;
               break;

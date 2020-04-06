@@ -86,7 +86,7 @@ static gboolean gimp_levels_config_copy         (GimpConfig       *src,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpLevelsConfig, gimp_levels_config,
-                         GIMP_TYPE_SETTINGS,
+                         GIMP_TYPE_OPERATION_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_levels_config_iface_init))
 
@@ -295,7 +295,7 @@ gimp_levels_config_serialize (GimpConfig       *config,
   GimpHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time",         writer) ||
+  if (! gimp_operation_settings_config_serialize_base (config, writer, data)    ||
       ! gimp_config_serialize_property_by_name (config, "linear",       writer) ||
       ! gimp_config_serialize_property_by_name (config, "clamp-input",  writer) ||
       ! gimp_config_serialize_property_by_name (config, "clamp-output", writer))
@@ -311,8 +311,8 @@ gimp_levels_config_serialize (GimpConfig       *config,
 
       /*  serialize the channel properties manually (not using
        *  gimp_config_serialize_properties()), so the parent class'
-       *  "time" property doesn't end up in the config file one per
-       *  channel. See bug #700653.
+       *  properties don't end up in the config file one per channel.
+       *  See bug #700653.
        */
       success =
         (gimp_config_serialize_property_by_name (config, "channel",     writer) &&
@@ -358,8 +358,9 @@ gimp_levels_config_equal (GimpConfig *a,
   GimpLevelsConfig     *config_b = GIMP_LEVELS_CONFIG (b);
   GimpHistogramChannel  channel;
 
-  if (config_a->linear       != config_b->linear      ||
-      config_a->clamp_input  != config_b->clamp_input ||
+  if (! gimp_operation_settings_config_equal_base (a, b) ||
+      config_a->linear       != config_b->linear         ||
+      config_a->clamp_input  != config_b->clamp_input    ||
       config_a->clamp_output != config_b->clamp_output)
     return FALSE;
 
@@ -386,6 +387,8 @@ gimp_levels_config_reset (GimpConfig *config)
   GimpLevelsConfig     *l_config = GIMP_LEVELS_CONFIG (config);
   GimpHistogramChannel  channel;
 
+  gimp_operation_settings_config_reset_base (config);
+
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
@@ -408,6 +411,9 @@ gimp_levels_config_copy (GimpConfig  *src,
   GimpLevelsConfig     *src_config  = GIMP_LEVELS_CONFIG (src);
   GimpLevelsConfig     *dest_config = GIMP_LEVELS_CONFIG (dest);
   GimpHistogramChannel  channel;
+
+  if (! gimp_operation_settings_config_copy_base (src, dest, flags))
+    return FALSE;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
