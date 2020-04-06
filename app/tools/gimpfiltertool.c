@@ -1124,6 +1124,12 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
     {
       GimpImage   *image = gimp_display_get_image (tool->display);
       GimpChannel *mask  = gimp_image_get_mask (image);
+      const Babl  *format;
+
+      if (filter_tool->filter)
+        format = gimp_drawable_filter_get_format (filter_tool->filter);
+      else
+        format = gimp_drawable_get_format (tool->drawable);
 
       if (gimp_channel_is_empty (mask))
         {
@@ -1131,7 +1137,7 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
             filter_tool->clip_combo,
             gimp_item_get_clip (GIMP_ITEM (tool->drawable), FALSE) == FALSE &&
             ! gimp_gegl_node_is_point_operation (filter_tool->operation)    &&
-            gimp_drawable_has_alpha (tool->drawable));
+            babl_format_has_alpha (format));
 
           gtk_widget_hide (filter_tool->region_combo);
         }
