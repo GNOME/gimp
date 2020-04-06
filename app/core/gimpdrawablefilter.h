@@ -55,6 +55,10 @@ GimpDrawableFilter *
                                                 GeglNode            *operation,
                                                 const gchar         *icon_name);
 
+GimpDrawable *
+           gimp_drawable_filter_get_drawable   (GimpDrawableFilter  *filter);
+GeglNode * gimp_drawable_filter_get_operation  (GimpDrawableFilter  *filter);
+
 void       gimp_drawable_filter_set_clip       (GimpDrawableFilter  *filter,
                                                 gboolean             clip);
 void       gimp_drawable_filter_set_region     (GimpDrawableFilter  *filter,
@@ -88,6 +92,9 @@ void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter  *filter,
 void       gimp_drawable_filter_set_override_constraints
                                                (GimpDrawableFilter  *filter,
                                                 gboolean             override_constraints);
+
+const Babl *
+           gimp_drawable_filter_get_format     (GimpDrawableFilter  *filter);
 
 void       gimp_drawable_filter_apply          (GimpDrawableFilter  *filter,
                                                 const GeglRectangle *area);

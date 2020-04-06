@@ -299,6 +299,22 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   return filter;
 }
 
+GimpDrawable *
+gimp_drawable_filter_get_drawable (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  return filter->drawable;
+}
+
+GeglNode *
+gimp_drawable_filter_get_operation (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  return filter->operation;
+}
+
 void
 gimp_drawable_filter_set_clip (GimpDrawableFilter *filter,
                                gboolean            clip)
@@ -534,6 +550,21 @@ gimp_drawable_filter_set_override_constraints (GimpDrawableFilter *filter,
     }
 }
 
+const Babl *
+gimp_drawable_filter_get_format (GimpDrawableFilter *filter)
+{
+  const Babl *format;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  format = gimp_applicator_get_output_format (filter->applicator);
+
+  if (! format)
+    format = gimp_drawable_get_format (filter->drawable);
+
+  return format;
+}
+
 void
 gimp_drawable_filter_apply (GimpDrawableFilter  *filter,
                             const GeglRectangle *area)
@@ -569,7 +600,7 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
     {
       const Babl *format;
 
-      format = gimp_applicator_get_output_format (filter->applicator);
+      format = gimp_drawable_filter_get_format (filter);
 
       gimp_drawable_filter_set_preview_split (filter, FALSE,
                                               filter->preview_split_alignment,
