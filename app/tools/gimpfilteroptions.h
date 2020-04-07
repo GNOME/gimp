@@ -41,6 +41,9 @@ struct _GimpFilterOptions
   GimpAlignmentType  preview_split_alignment;
   gdouble            preview_split_position;
   gboolean           controller;
+
+  gboolean           fade_expanded;
+  gboolean           color_options_expanded;
 };
 
 struct _GimpFilterOptionsClass

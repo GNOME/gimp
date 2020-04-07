@@ -1101,6 +1101,11 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
                               FALSE, FALSE, 0);
           gtk_widget_show (expander);
 
+          g_object_bind_property (options,  "fade-expanded",
+                                  expander, "expanded",
+                                  G_BINDING_SYNC_CREATE |
+                                  G_BINDING_BIDIRECTIONAL);
+
           frame = gimp_frame_new (NULL);
           gtk_container_add (GTK_CONTAINER (expander), frame);
           gtk_widget_show (frame);
@@ -1138,6 +1143,10 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
                                   "filter-tool-show-color-options",
                                   expander, "visible",
                                   G_BINDING_SYNC_CREATE);
+          g_object_bind_property (options,  "color-options-expanded",
+                                  expander, "expanded",
+                                  G_BINDING_SYNC_CREATE |
+                                  G_BINDING_BIDIRECTIONAL);
 
           frame = gimp_frame_new (NULL);
           gtk_container_add (GTK_CONTAINER (expander), frame);

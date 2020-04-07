@@ -36,7 +36,9 @@ enum
   PROP_PREVIEW_SPLIT,
   PROP_PREVIEW_SPLIT_ALIGNMENT,
   PROP_PREVIEW_SPLIT_POSITION,
-  PROP_CONTROLLER
+  PROP_CONTROLLER,
+  PROP_FADE_EXPANDED,
+  PROP_COLOR_OPTIONS_EXPANDED
 };
 
 
@@ -100,6 +102,18 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                             _("Show on-canvas filter controls"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FADE_EXPANDED,
+                            "fade-expanded",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_OPTIONS_EXPANDED,
+                            "color-options-expanded",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -137,6 +151,14 @@ gimp_filter_options_set_property (GObject      *object,
       options->controller = g_value_get_boolean (value);
       break;
 
+    case PROP_FADE_EXPANDED:
+      options->fade_expanded = g_value_get_boolean (value);
+      break;
+
+    case PROP_COLOR_OPTIONS_EXPANDED:
+      options->color_options_expanded = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -171,6 +193,14 @@ gimp_filter_options_get_property (GObject    *object,
 
     case PROP_CONTROLLER:
       g_value_set_boolean (value, options->controller);
+      break;
+
+    case PROP_FADE_EXPANDED:
+      g_value_set_boolean (value, options->fade_expanded);
+      break;
+
+    case PROP_COLOR_OPTIONS_EXPANDED:
+      g_value_set_boolean (value, options->color_options_expanded);
       break;
 
     default:
