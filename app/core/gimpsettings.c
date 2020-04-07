@@ -75,7 +75,8 @@ gimp_settings_class_init (GimpSettingsClass *klass)
                           "time",
                           "Time",
                           "Time of settings creation",
-                          0, G_MAXINT64, 0, 0);
+                          0, G_MAXINT64, 0,
+                          GIMP_CONFIG_PARAM_DONT_COMPARE);
 }
 
 static void
