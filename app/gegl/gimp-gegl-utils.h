@@ -37,7 +37,9 @@ gboolean      gimp_gegl_node_is_point_operation       (GeglNode            *node
 gboolean      gimp_gegl_node_is_area_filter_operation (GeglNode            *node);
 
 const gchar * gimp_gegl_node_get_key                  (GeglNode            *node,
-                                                      const gchar          *key);
+                                                       const gchar         *key);
+gboolean      gimp_gegl_node_has_key                  (GeglNode            *node,
+                                                       const gchar         *key);
 
 const Babl  * gimp_gegl_node_get_format               (GeglNode            *node,
                                                        const gchar         *pad_name);

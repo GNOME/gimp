@@ -1136,7 +1136,7 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
           gtk_widget_set_visible (
             filter_tool->region_combo,
             ! gimp_gegl_node_is_point_operation (filter_tool->operation) ||
-            gimp_gegl_node_get_key (filter_tool->operation,
+            gimp_gegl_node_has_key (filter_tool->operation,
                                     "position-dependent"));
         }
     }
@@ -1391,7 +1391,7 @@ gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
     return;
 
   add_alpha = gimp_drawable_supports_alpha (tool->drawable) &&
-              gimp_gegl_node_get_key (filter_tool->operation, "needs-alpha");
+              gimp_gegl_node_has_key (filter_tool->operation, "needs-alpha");
   clip      = options->clip == GIMP_TRANSFORM_RESIZE_CLIP ||
               ! (gimp_drawable_has_alpha (tool->drawable) ||
                  add_alpha);
@@ -1561,7 +1561,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     }
 
   if (gimp_gegl_node_is_point_operation (filter_tool->operation) &&
-      ! gimp_gegl_node_get_key (filter_tool->operation, "position-dependent"))
+      ! gimp_gegl_node_has_key (filter_tool->operation, "position-dependent"))
     {
       g_object_set (GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool),
                     "region", GIMP_FILTER_REGION_SELECTION,

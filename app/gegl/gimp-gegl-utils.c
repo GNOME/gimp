@@ -186,6 +186,13 @@ gimp_gegl_node_get_key (GeglNode    *node,
     return NULL;
 }
 
+gboolean
+gimp_gegl_node_has_key (GeglNode    *node,
+                        const gchar *key)
+{
+  return gimp_gegl_node_get_key (node, key) != NULL;
+}
+
 const Babl *
 gimp_gegl_node_get_format (GeglNode    *node,
                            const gchar *pad_name)

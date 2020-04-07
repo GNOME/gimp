@@ -61,7 +61,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
   filter = gimp_drawable_filter_new (drawable, undo_desc, operation, NULL);
 
   if (gimp_drawable_supports_alpha (drawable) &&
-      gimp_gegl_node_get_key (operation, "needs-alpha"))
+      gimp_gegl_node_has_key (operation, "needs-alpha"))
     {
       gimp_drawable_filter_set_add_alpha (filter, TRUE);
     }
