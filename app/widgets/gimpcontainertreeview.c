@@ -368,6 +368,8 @@ gimp_container_tree_view_finalize (GObject *object)
       tree_view->priv->editable_cells = NULL;
     }
 
+  g_clear_pointer (&tree_view->priv->editing_path, g_free);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -1121,9 +1123,12 @@ gimp_container_tree_view_edit_focus_out (GtkWidget *widget,
                                          GdkEvent  *event,
                                          gpointer   user_data)
 {
+  GimpContainerTreeView *tree_view = user_data;
+
   /*  When focusing out of a tree view, we want its content to be
    *  updated as though it had been activated.
    */
+  g_clear_pointer (&tree_view->priv->editing_path, g_free);
   g_signal_emit_by_name (widget, "activate", 0);
 
   return TRUE;
@@ -1139,6 +1144,8 @@ gimp_container_tree_view_name_started (GtkCellRendererText   *cell,
   GtkTreeIter  iter;
 
   path = gtk_tree_path_new_from_string (path_str);
+
+  tree_view->priv->editing_path = g_strdup (path_str);
 
   g_signal_connect (GTK_ENTRY (editable), "focus-out-event",
                     G_CALLBACK (gimp_container_tree_view_edit_focus_out),
@@ -1256,7 +1263,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
 
   tree_view->priv->dnd_renderer = NULL;
 
-  if (! gtk_widget_has_focus (widget))
+  if (bevent->type != GDK_BUTTON_RELEASE && ! gtk_widget_has_focus (widget))
     gtk_widget_grab_focus (widget);
 
   if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
@@ -1347,11 +1354,37 @@ gimp_container_tree_view_button (GtkWidget             *widget,
         }
 
       if (! toggled_cell && ! clicked_cell)
-        edit_cell =
-          gimp_container_tree_view_find_click_cell (widget,
-                                                    tree_view->priv->editable_cells,
-                                                    column, &column_area,
-                                                    bevent->x, bevent->y);
+        {
+          edit_cell =
+            gimp_container_tree_view_find_click_cell (widget,
+                                                      tree_view->priv->editable_cells,
+                                                      column, &column_area,
+                                                      bevent->x, bevent->y);
+
+          if (edit_cell && bevent->type == GDK_BUTTON_RELEASE)
+            {
+              gchar *editing_path;
+
+              editing_path = gtk_tree_path_to_string (path);
+              if (tree_view->priv->editing_path &&
+                  g_strcmp0 (tree_view->priv->editing_path, editing_path) == 0)
+                {
+                  /* Bail out when releasing over an edit cell we are
+                   * already editing.
+                   * The reason is that GDK_2BUTTON_PRESS happens before
+                   * the last GDK_BUTTON_RELEASE in a double click. So
+                   * if we were to proceed, the edit-in-progress would
+                   * end up being canceled (by updating the selection)
+                   * nearly immediately.
+                   */
+                  g_free (editing_path);
+                  gtk_tree_path_free (path);
+                  g_object_unref (renderer);
+                  return handled;
+                }
+              g_free (editing_path);
+            }
+        }
 
       g_object_ref (tree_view);
 

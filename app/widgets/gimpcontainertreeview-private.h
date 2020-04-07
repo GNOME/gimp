@@ -29,6 +29,7 @@ struct _GimpContainerTreeViewPrivate
   GtkCellRenderer    *name_cell;
 
   GList              *editable_cells;
+  gchar              *editing_path;
 
   GimpViewRenderer   *dnd_renderer;
 
