@@ -31,26 +31,21 @@
 
 /*  local function prototypes  */
 
-static void       gimp_config_class_init        (GObjectClass         *klass,
-                                                 GParamSpec          **pspecs);
-static void       gimp_config_config_iface_init (GimpConfigInterface  *iface);
+static void     gimp_config_class_init   (GObjectClass  *klass,
+                                          GParamSpec   **pspecs);
+static void     gimp_config_set_property (GObject       *object,
+                                          guint          property_id,
+                                          const GValue  *value,
+                                          GParamSpec    *pspec);
+static void     gimp_config_get_property (GObject       *object,
+                                          guint          property_id,
+                                          GValue        *value,
+                                          GParamSpec    *pspec);
 
-static void       gimp_config_set_property      (GObject              *object,
-                                                 guint                 property_id,
-                                                 const GValue         *value,
-                                                 GParamSpec           *pspec);
-static void       gimp_config_get_property      (GObject              *object,
-                                                 guint                 property_id,
-                                                 GValue               *value,
-                                                 GParamSpec           *pspec);
-
-static gboolean   gimp_config_equal             (GimpConfig           *a,
-                                                 GimpConfig           *b);
-
-static GValue   * gimp_config_value_get         (GObject              *object,
-                                                 GParamSpec           *pspec);
-static GValue   * gimp_config_value_new         (GParamSpec           *pspec);
-static void       gimp_config_value_free        (GValue               *value);
+static GValue * gimp_config_value_get    (GObject       *object,
+                                          GParamSpec    *pspec);
+static GValue * gimp_config_value_new    (GParamSpec    *pspec);
+static void     gimp_config_value_free   (GValue        *value);
 
 
 /*  public functions  */
@@ -105,17 +100,21 @@ gimp_config_type_register (GType         parent_type,
       (GInstanceInitFunc) NULL,
     };
 
-    const GInterfaceInfo config_info =
-    {
-      (GInterfaceInitFunc) gimp_config_config_iface_init,
-      NULL, /* interface_finalize */
-      NULL  /* interface_data     */
-    };
-
     config_type = g_type_register_static (parent_type, type_name,
                                           &info, 0);
-    g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
-                                 &config_info);
+
+    if (! g_type_is_a (parent_type, GIMP_TYPE_CONFIG))
+      {
+        const GInterfaceInfo config_info =
+        {
+          NULL, /* interface_init     */
+          NULL, /* interface_finalize */
+          NULL  /* interface_data     */
+        };
+
+        g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
+                                     &config_info);
+      }
   }
 
   return config_type;
@@ -154,12 +153,6 @@ gimp_config_class_init (GObjectClass  *klass,
 }
 
 static void
-gimp_config_config_iface_init (GimpConfigInterface *iface)
-{
-  iface->equal = gimp_config_equal;
-}
-
-static void
 gimp_config_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
@@ -179,41 +172,6 @@ gimp_config_get_property (GObject    *object,
   GValue *val = gimp_config_value_get (object, pspec);
 
   g_value_copy (val, value);
-}
-
-static gboolean
-gimp_config_equal (GimpConfig *a,
-                   GimpConfig *b)
-{
-  GList    *diff;
-  gboolean  equal = TRUE;
-
-  diff = gimp_config_diff (G_OBJECT (a), G_OBJECT (b),
-                           GIMP_CONFIG_PARAM_SERIALIZE);
-
-  if (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b))
-    {
-      GList *list;
-
-      for (list = diff; list; list = g_list_next (list))
-        {
-          GParamSpec *pspec = list->data;
-
-          if (pspec->owner_type == G_TYPE_FROM_INSTANCE (a))
-            {
-              equal = FALSE;
-              break;
-            }
-        }
-    }
-  else if (diff)
-    {
-      equal = FALSE;
-    }
-
-  g_list_free (diff);
-
-  return equal;
 }
 
 static GValue *
