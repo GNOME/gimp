@@ -891,8 +891,9 @@ gimp_drawable_filter_sync_format (GimpDrawableFilter *filter)
 {
   const Babl *format;
 
-  if (filter->add_alpha &&
-      (GIMP_IS_LAYER (filter->drawable) || filter->override_constraints))
+  if (filter->add_alpha                                &&
+      (gimp_drawable_supports_alpha (filter->drawable) ||
+       filter->override_constraints))
     {
       format = gimp_drawable_get_format_with_alpha (filter->drawable);
     }
