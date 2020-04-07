@@ -60,6 +60,8 @@
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimplayermodebox.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpsettingsbox.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -913,6 +915,8 @@ gimp_filter_tool_real_config_notify (GimpFilterTool   *filter_tool,
   if (filter_tool->filter)
     {
       if (! strcmp (pspec->name, "gimp-clip")          ||
+          ! strcmp (pspec->name, "gimp-mode")          ||
+          ! strcmp (pspec->name, "gimp-opacity")       ||
           ! strcmp (pspec->name, "gimp-color-managed") ||
           ! strcmp (pspec->name, "gimp-gamma-hack"))
         {
@@ -1050,8 +1054,9 @@ gimp_filter_tool_dialog (GimpFilterTool *filter_tool)
 static void
 gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
 {
-  GimpTool  *tool  = GIMP_TOOL (filter_tool);
-  GimpImage *image = gimp_display_get_image (tool->display);
+  GimpTool          *tool    = GIMP_TOOL (filter_tool);
+  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpImage         *image   = gimp_display_get_image (tool->display);
 
   if (filter_tool->operation_settings_box)
     {
@@ -1065,6 +1070,8 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           GtkWidget *frame;
           GtkWidget *vbox2;
           GtkWidget *combo;
+          GtkWidget *mode_box;
+          GtkWidget *scale;
           GtkWidget *toggle;
 
           vbox = filter_tool->operation_settings_box;
@@ -1087,6 +1094,40 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
                                           0, 0);
           gtk_box_pack_start (GTK_BOX (vbox), filter_tool->region_combo,
                               FALSE, FALSE, 0);
+
+          /*  The Fade expander  */
+          expander = gtk_expander_new (_("Fade"));
+          gtk_box_pack_start (GTK_BOX (vbox), expander,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (expander);
+
+          frame = gimp_frame_new (NULL);
+          gtk_container_add (GTK_CONTAINER (expander), frame);
+          gtk_widget_show (frame);
+
+          vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+          gtk_container_add (GTK_CONTAINER (frame), vbox2);
+          gtk_widget_show (vbox2);
+
+          /*  The mode box  */
+          mode_box = gimp_prop_layer_mode_box_new (
+            filter_tool->config, "gimp-mode",
+            GIMP_LAYER_MODE_CONTEXT_FADE);
+          gimp_layer_mode_box_set_label (GIMP_LAYER_MODE_BOX (mode_box),
+                                         _("Mode"));
+          gtk_box_pack_start (GTK_BOX (vbox2), mode_box,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (mode_box);
+
+          /*  The opacity scale  */
+          scale = gimp_prop_spin_scale_new (filter_tool->config,
+                                            "gimp-opacity",
+                                            NULL,
+                                            1.0, 10.0, 1);
+          gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+          gtk_box_pack_start (GTK_BOX (vbox2), scale,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (scale);
 
           /*  The Color Options expander  */
           expander = gtk_expander_new (_("Advanced Color Options"));
