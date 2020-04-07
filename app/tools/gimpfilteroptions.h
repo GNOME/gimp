@@ -34,17 +34,13 @@ typedef struct _GimpFilterOptionsClass GimpFilterOptionsClass;
 
 struct _GimpFilterOptions
 {
-  GimpColorOptions     parent_instance;
+  GimpColorOptions   parent_instance;
 
-  gboolean             preview;
-  gboolean             preview_split;
-  GimpAlignmentType    preview_split_alignment;
-  gdouble              preview_split_position;
-  gboolean             controller;
-  GimpTransformResize  clip;
-  GimpFilterRegion     region;
-  gboolean             color_managed;
-  gboolean             gamma_hack;
+  gboolean           preview;
+  gboolean           preview_split;
+  GimpAlignmentType  preview_split_alignment;
+  gdouble            preview_split_position;
+  gboolean           controller;
 };
 
 struct _GimpFilterOptionsClass

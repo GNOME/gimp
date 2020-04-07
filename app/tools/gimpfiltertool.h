@@ -59,6 +59,7 @@ struct _GimpFilterTool
   GimpToolGui        *gui;
   GtkWidget          *settings_box;
   GtkWidget          *controller_toggle;
+  GtkWidget          *operation_settings_box;
   GtkWidget          *clip_combo;
   GtkWidget          *region_combo;
   GtkWidget          *active_picker;

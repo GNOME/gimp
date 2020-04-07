@@ -36,11 +36,7 @@ enum
   PROP_PREVIEW_SPLIT,
   PROP_PREVIEW_SPLIT_ALIGNMENT,
   PROP_PREVIEW_SPLIT_POSITION,
-  PROP_CONTROLLER,
-  PROP_CLIP,
-  PROP_REGION,
-  PROP_COLOR_MANAGED,
-  PROP_GAMMA_HACK
+  PROP_CONTROLLER
 };
 
 
@@ -104,38 +100,6 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                             _("Show on-canvas filter controls"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CLIP,
-                         "clip",
-                         _("Clipping"),
-                         _("How to clip"),
-                         GIMP_TYPE_TRANSFORM_RESIZE,
-                         GIMP_TRANSFORM_RESIZE_ADJUST,
-                         GIMP_PARAM_STATIC_STRINGS);
-
-  g_object_class_install_property (object_class, PROP_REGION,
-                                   g_param_spec_enum ("region",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_FILTER_REGION,
-                                                      GIMP_FILTER_REGION_SELECTION,
-                                                      GIMP_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_COLOR_MANAGED,
-                                   g_param_spec_boolean ("color-managed",
-                                                         _("Color _managed"),
-                                                         NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_GAMMA_HACK,
-                                   g_param_spec_boolean ("gamma-hack",
-                                                         "Gamma hack (temp hack, please ignore)",
-                                                         NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -173,22 +137,6 @@ gimp_filter_options_set_property (GObject      *object,
       options->controller = g_value_get_boolean (value);
       break;
 
-    case PROP_CLIP:
-      options->clip = g_value_get_enum (value);
-      break;
-
-    case PROP_REGION:
-      options->region = g_value_get_enum (value);
-      break;
-
-    case PROP_COLOR_MANAGED:
-      options->color_managed = g_value_get_boolean (value);
-      break;
-
-    case PROP_GAMMA_HACK:
-      options->gamma_hack = g_value_get_boolean (value);
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -223,22 +171,6 @@ gimp_filter_options_get_property (GObject    *object,
 
     case PROP_CONTROLLER:
       g_value_set_boolean (value, options->controller);
-      break;
-
-    case PROP_CLIP:
-      g_value_set_enum (value, options->clip);
-      break;
-
-    case PROP_REGION:
-      g_value_set_enum (value, options->region);
-      break;
-
-    case PROP_COLOR_MANAGED:
-      g_value_set_boolean (value, options->color_managed);
-      break;
-
-    case PROP_GAMMA_HACK:
-      g_value_set_boolean (value, options->gamma_hack);
       break;
 
     default:
