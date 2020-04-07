@@ -220,8 +220,11 @@ gimp_config_iface_equal (GimpConfig *a,
 
       prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & G_PARAM_READABLE))
-        continue;
+      if (! (prop_spec->flags & G_PARAM_READABLE) ||
+            (prop_spec->flags & GIMP_CONFIG_PARAM_DONT_COMPARE))
+        {
+          continue;
+        }
 
       g_value_init (&a_value, prop_spec->value_type);
       g_value_init (&b_value, prop_spec->value_type);

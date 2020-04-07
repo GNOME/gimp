@@ -77,6 +77,13 @@ G_BEGIN_DECLS
 #define GIMP_CONFIG_PARAM_IGNORE       (1 << (5 + G_PARAM_USER_SHIFT))
 
 /**
+ * GIMP_CONFIG_PARAM_DONT_COMPARE:
+ *
+ * Ignore this property when comparing objects.
+ **/
+#define GIMP_CONFIG_PARAM_DONT_COMPARE (1 << (6 + G_PARAM_USER_SHIFT))
+
+/**
  * GIMP_CONFIG_PARAM_FLAGS:
  *
  * The default flags that should be used for serializable #GimpConfig
