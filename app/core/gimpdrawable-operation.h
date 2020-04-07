@@ -24,15 +24,20 @@
 #define __GIMP_DRAWABLE_OPERATION_H__
 
 
-void   gimp_drawable_apply_operation         (GimpDrawable *drawable,
-                                              GimpProgress *progress,
-                                              const gchar  *undo_desc,
-                                              GeglNode     *operation);
-void   gimp_drawable_apply_operation_by_name (GimpDrawable *drawable,
-                                              GimpProgress *progress,
-                                              const gchar  *undo_desc,
-                                              const gchar  *operation_type,
-                                              GObject      *config);
+void   gimp_drawable_apply_operation             (GimpDrawable *drawable,
+                                                  GimpProgress *progress,
+                                                  const gchar  *undo_desc,
+                                                  GeglNode     *operation);
+void   gimp_drawable_apply_operation_with_config (GimpDrawable *drawable,
+                                                  GimpProgress *progress,
+                                                  const gchar  *undo_desc,
+                                                  GeglNode     *operation,
+                                                  GObject      *config);
+void   gimp_drawable_apply_operation_by_name     (GimpDrawable *drawable,
+                                                  GimpProgress *progress,
+                                                  const gchar  *undo_desc,
+                                                  const gchar  *operation_type,
+                                                  GObject      *config);
 
 
 #endif /* __GIMP_DRAWABLE_OPERATION_H__ */

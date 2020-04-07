@@ -248,12 +248,12 @@ gimp_gegl_procedure_execute (GimpProcedure   *procedure,
   node = gegl_node_new_child (NULL,
                               "operation", procedure->original_name,
                               NULL);
-  if (config)
-    gimp_operation_config_sync_node (config, node);
 
-  gimp_drawable_apply_operation (drawable, progress,
-                                 gimp_procedure_get_label (procedure),
-                                 node);
+  gimp_drawable_apply_operation_with_config (
+    drawable,
+    progress, gimp_procedure_get_label (procedure),
+    node, config);
+
   g_object_unref (node);
 
   gimp_image_flush (image);
