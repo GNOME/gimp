@@ -41,6 +41,8 @@ struct _GimpOperationSettings
 
   GimpTransformResize  clip;
   GimpFilterRegion     region;
+  GimpLayerMode        mode;
+  gdouble              opacity;
   gboolean             gamma_hack;
 };
 
