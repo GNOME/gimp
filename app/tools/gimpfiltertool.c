@@ -1095,13 +1095,13 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           gtk_box_pack_start (GTK_BOX (vbox), filter_tool->region_combo,
                               FALSE, FALSE, 0);
 
-          /*  The Fade expander  */
-          expander = gtk_expander_new (_("Fade"));
+          /*  The blending-options expander  */
+          expander = gtk_expander_new (_("Blending Options"));
           gtk_box_pack_start (GTK_BOX (vbox), expander,
                               FALSE, FALSE, 0);
           gtk_widget_show (expander);
 
-          g_object_bind_property (options,  "fade-expanded",
+          g_object_bind_property (options,  "blending-options-expanded",
                                   expander, "expanded",
                                   G_BINDING_SYNC_CREATE |
                                   G_BINDING_BIDIRECTIONAL);
@@ -1117,7 +1117,7 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           /*  The mode box  */
           mode_box = gimp_prop_layer_mode_box_new (
             filter_tool->config, "gimp-mode",
-            GIMP_LAYER_MODE_CONTEXT_FADE);
+            GIMP_LAYER_MODE_CONTEXT_FILTER);
           gimp_layer_mode_box_set_label (GIMP_LAYER_MODE_BOX (mode_box),
                                          _("Mode"));
           gtk_box_pack_start (GTK_BOX (vbox2), mode_box,
