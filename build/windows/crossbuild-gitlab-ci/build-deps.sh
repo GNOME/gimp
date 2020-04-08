@@ -37,7 +37,7 @@ cd ..
 
 git clone --depth 1 https://github.com/json-c/json-c.git && \
 mkdir json-c/_build && cd json-c/_build && \
-CFLAGS="-Wno-expansion-to-defined" crossroad ../configure && make install || exit 1
+CFLAGS="-Wno-expansion-to-defined" crossroad cmake .. && make install || exit 1
 cd ../..
 
 # libmypaint
