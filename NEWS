@@ -38,6 +38,10 @@ Plugins:
   - PNG and TIFF export: "Save color values from transparent pixels"
     defaults now to not saving color values (i.e. channels set to 0)
     when alpha channel is present and 0 itself.
+  - PDF import: multi-pages are now imported in bottom-first order,
+    similar to animated formats, and also similar to defaults for PDF
+    export. This brings consistency but break existing behavior, hence
+    needs to be noted.
 
 Updated translations:
 
