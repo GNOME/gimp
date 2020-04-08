@@ -1078,7 +1078,7 @@ load_image (PopplerDocument        *doc,
 
       surface = render_page_to_surface (page, width, height, scale, antialias);
 
-      layer_from_surface (image_ID, page_label, i, surface,
+      layer_from_surface (image_ID, page_label, 0, surface,
                           doc_progress, 1.0 / pages->n_pages);
 
       g_free (page_label);
