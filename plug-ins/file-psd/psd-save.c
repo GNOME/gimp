@@ -196,6 +196,7 @@ static void          write_pixel_data     (FILE          *fd,
 
 static gint32        create_merged_image  (gint32         imageID);
 
+static gint          get_bpc              (gint32         imageID);
 static const Babl  * get_pixel_format     (gint32         drawableID);
 static const Babl  * get_channel_format   (gint32         drawableID);
 static const Babl  * get_mask_format      (gint32         drawableID);
@@ -387,7 +388,6 @@ write_datablock_luni (FILE        *fd,
 static gint32
 pack_pb_line (guchar *start,
               gint32  length,
-              gint32  stride,
               guchar *dest_ptr)
 {
   gint32  remaining = length;
@@ -401,7 +401,7 @@ pack_pb_line (guchar *start,
       i = 0;
       while ((i < 128) &&
              (remaining - i > 0) &&
-             (start[0] == start[i*stride]))
+             (start[0] == start[i]))
         i++;
 
       if (i > 1)              /* Match found */
@@ -410,17 +410,17 @@ pack_pb_line (guchar *start,
           *dest_ptr++ = -(i - 1);
           *dest_ptr++ = *start;
 
-          start += i*stride;
+          start += i;
           remaining -= i;
           length += 2;
         }
       else       /* Look for characters different from the previous */
         {
           i = 0;
-          while ((i < 128)             &&
+          while ((i < 128)                 &&
                  (remaining - (i + 1) > 0) &&
-                 (start[i*stride] != start[(i + 1)*stride] ||
-                  remaining - (i + 2) <= 0  || start[i*stride] != start[(i+2)*stride]))
+                 (start[i] != start[i + 1] ||
+                  remaining - (i + 2) <= 0 || start[i] != start[i+2]))
             i++;
 
           /* If there's only 1 remaining, the previous WHILE stmt doesn't
@@ -436,9 +436,9 @@ pack_pb_line (guchar *start,
               *dest_ptr++ = i - 1;
               for (j = 0; j < i; j++)
                 {
-                  *dest_ptr++ = start[j*stride];
+                  *dest_ptr++ = start[j];
                 }
-              start += i*stride;
+              start += i;
               remaining -= i;
               length += i + 1;
             }
@@ -535,7 +535,7 @@ save_header (FILE   *fd,
                 "channels");
   write_gint32 (fd, PSDImageData.image_height, "rows");
   write_gint32 (fd, PSDImageData.image_width, "columns");
-  write_gint16 (fd, 8, "depth");  /* Exporting can only be done in 8 bits at the moment. */
+  write_gint16 (fd, 8 * get_bpc (image_id), "depth");
   write_gint16 (fd, gimpBaseTypeToPsdMode (PSDImageData.baseType), "mode");
 }
 
@@ -837,6 +837,7 @@ get_compress_channel_data (guchar  *channel_data,
                            gint32   channel_cols,
                            gint32   channel_rows,
                            gint32   stride,
+                           gint32   bpc,
                            gint16  *LengthsTable,
                            guchar  *remdata)
 {
@@ -844,16 +845,73 @@ get_compress_channel_data (guchar  *channel_data,
   gint32  len;                 /* Length of compressed data */
   guchar *start;               /* Starting position of a row in channel_data */
 
+  stride /= bpc;
+
+  /* Pack channel data, and perform byte-order conversion */
+  switch (bpc)
+    {
+    case 1:
+      {
+        if (stride > 1)
+          {
+            const guint8 *src  = (const guint8 *) channel_data;
+            guint8       *dest = (guint8       *) channel_data;
+
+            for (i = 0; i < channel_rows * channel_cols; i++)
+              {
+                *dest = *src;
+
+                dest++;
+                src += stride;
+              }
+          }
+      }
+      break;
+
+    case 2:
+      {
+        const guint16 *src  = (const guint16 *) channel_data;
+        guint16       *dest = (guint16       *) channel_data;
+
+        for (i = 0; i < channel_rows * channel_cols; i++)
+          {
+            *dest = GUINT16_TO_BE (*src);
+
+            dest++;
+            src += stride;
+          }
+      }
+      break;
+
+    case 4:
+      {
+        const guint32 *src  = (const guint32 *) channel_data;
+        guint32       *dest = (guint32       *) channel_data;
+
+        for (i = 0; i < channel_rows * channel_cols; i++)
+          {
+            *dest = GUINT32_TO_BE (*src);
+
+            dest++;
+            src += stride;
+          }
+      }
+      break;
+
+    default:
+      g_return_val_if_reached (0);
+    }
+
   /* For every row in the channel */
 
   len = 0;
   for (i = 0; i < channel_rows; i++)
     {
-      start = channel_data + (i * channel_cols * stride);
+      start = channel_data + i * channel_cols * bpc;
 
       /* Create packed data for this row */
-      LengthsTable[i] = pack_pb_line (start, channel_cols, stride,
-                                       &remdata[len]);
+      LengthsTable[i] = pack_pb_line (start, channel_cols * bpc,
+                                      &remdata[len]);
       len += LengthsTable[i];
     }
 
@@ -879,6 +937,7 @@ save_layer_and_mask (FILE   *fd,
   gchar        *layerName;              /* Layer name */
   gint          mask;                   /* Layer mask */
   gint          depth;                  /* Layer group nesting depth */
+  gint          bpc;                    /* Image BPC */
 
   glong         eof_pos;                /* Position: End of file */
   glong         ExtraDataPos;           /* Position: Extra data length */
@@ -911,6 +970,8 @@ save_layer_and_mask (FILE   *fd,
     write_gint16 (fd, PSDImageData.nLayers, "Layer structure count");
 
   depth = 0;
+
+  bpc = get_bpc (image_id);
 
   /* Layer records section */
   /* GIMP layers must be written in reverse order */
@@ -992,7 +1053,7 @@ save_layer_and_mask (FILE   *fd,
              will modify it later when writing data.  */
 
           ChannelLengthPos[i][j] = ftell (fd);
-          ChanSize = sizeof (gint16) + (layerWidth * layerHeight);
+          ChanSize = sizeof (gint16) + (layerWidth * layerHeight * bpc);
 
           write_gint32 (fd, ChanSize, "Channel Size");
           IFDBG printf ("\t\t\tLength: %d\n", ChanSize);
@@ -1192,6 +1253,8 @@ write_pixel_data (FILE     *fd,
   gint32        height = gegl_buffer_get_height (buffer);
   gint32        width  = gegl_buffer_get_width (buffer);
   gint32        bytes;
+  gint32        components;
+  gint32        bpc;
   gint32        colors;
   gint32        y;
   gint32        len;                  /* Length of compressed data */
@@ -1221,9 +1284,11 @@ write_pixel_data (FILE     *fd,
   else
     format = get_pixel_format (drawableID);
 
-  bytes = babl_format_get_bytes_per_pixel (format);
+  bytes      = babl_format_get_bytes_per_pixel (format);
+  components = babl_format_get_n_components    (format);
+  bpc        = bytes / components;
 
-  colors = bytes;
+  colors = components;
 
   if (gimp_drawable_has_alpha  (drawableID) &&
       ! gimp_drawable_is_indexed (drawableID))
@@ -1231,7 +1296,7 @@ write_pixel_data (FILE     *fd,
 
   LengthsTable = g_new (gint16, height);
   rledata = g_new (guchar, (MIN (height, tile_height) *
-                            (width + 10 + (width / 100))));
+                            (width + 10 + (width / 100))) * bpc);
 
   data = g_new (guchar, MIN (height, tile_height) * width * bytes);
 
@@ -1242,17 +1307,17 @@ write_pixel_data (FILE     *fd,
       height = 0;
     }
 
-  for (i = 0; i < bytes; i++)
+  for (i = 0; i < components; i++)
     {
       gint chan;
 
       len = 0;
 
-      if (bytes != colors && ltable_offset == 0) /* Need to write alpha channel first, except in image data section */
+      if (components != colors && ltable_offset == 0) /* Need to write alpha channel first, except in image data section */
         {
           if (i == 0)
             {
-              chan = bytes - 1;
+              chan = components - 1;
             }
           else
             {
@@ -1293,12 +1358,12 @@ write_pixel_data (FILE     *fd,
                                            MIN (height - y, tile_height)),
                            1.0, format, data,
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-          tlen = get_compress_channel_data (&data[chan],
-                                             width,
-                                             MIN(height - y, tile_height),
-                                             bytes,
-                                             &LengthsTable[y],
-                                             rledata);
+          tlen = get_compress_channel_data (&data[chan * bpc],
+                                            width,
+                                            MIN(height - y, tile_height),
+                                            bytes, bpc,
+                                            &LengthsTable[y],
+                                            rledata);
           len += tlen;
           xfwrite (fd, rledata, tlen, "Compressed pixel data");
           IF_DEEP_DBG printf ("\t\t\t\t. Writing compressed pixels, stream of %d\n", tlen);
@@ -1339,7 +1404,7 @@ write_pixel_data (FILE     *fd,
 
       if (ltable_offset > 0)
         {
-          length_table_pos = ltable_offset + 2 * (bytes+1) * height;
+          length_table_pos = ltable_offset + 2 * (components+1) * height;
           IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld\n",
                               length_table_pos);
         }
@@ -1366,7 +1431,7 @@ write_pixel_data (FILE     *fd,
           tlen = get_compress_channel_data (&data[0],
                                             width,
                                             MIN(height - y, tile_height),
-                                            1,
+                                            bpc, bpc,
                                             &LengthsTable[y],
                                             rledata);
           len += tlen;
@@ -1635,64 +1700,96 @@ save_image (const gchar  *filename,
   return TRUE;
 }
 
+static gint
+get_bpc (gint32 image_id)
+{
+  switch (gimp_image_get_precision (image_id))
+    {
+    case GIMP_PRECISION_U8_LINEAR:
+    case GIMP_PRECISION_U8_GAMMA:
+      return 1;
+
+    case GIMP_PRECISION_U16_LINEAR:
+    case GIMP_PRECISION_U16_GAMMA:
+    case GIMP_PRECISION_HALF_LINEAR:
+    case GIMP_PRECISION_HALF_GAMMA:
+      return 2;
+
+    case GIMP_PRECISION_U32_LINEAR:
+    case GIMP_PRECISION_U32_GAMMA:
+    case GIMP_PRECISION_FLOAT_LINEAR:
+    case GIMP_PRECISION_FLOAT_GAMMA:
+    default:
+      /* FIXME: we *should* encode the image as u32 in this case, but simply
+       * using the same code as for the other cases produces invalid psd files
+       * (they're rejected by photoshop, although they can be read by the
+       * corresponding psd-load.c code, which in turn can't actually read
+       * photoshop-generated u32 files.)
+       *
+       * simply encode the image as u16 for now.
+       */
+      /* return 4; */
+      return 2;
+    }
+}
+
 static const Babl *
 get_pixel_format (gint32 drawableID)
 {
-  const Babl *format;
+  const gchar *model;
+  gint         bpc;
+  gchar        format[32];
 
   switch (gimp_drawable_type (drawableID))
     {
     case GIMP_GRAY_IMAGE:
-      format = babl_format ("Y' u8");
+      model = "Y'";
       break;
 
     case GIMP_GRAYA_IMAGE:
-      format = babl_format ("Y'A u8");
+      model = "Y'A";
       break;
 
     case GIMP_RGB_IMAGE:
-      format = babl_format ("R'G'B' u8");
+      model = "R'G'B'";
       break;
 
     case GIMP_RGBA_IMAGE:
-      format = babl_format ("R'G'B'A u8");
+      model = "R'G'B'A";
       break;
 
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      format = gimp_drawable_get_format(drawableID);
-      break;
+      return gimp_drawable_get_format (drawableID);
 
     default:
-      return NULL;
-      break;
+      g_return_val_if_reached (NULL);
     }
 
-  return format;
+  bpc = get_bpc (gimp_item_get_image (drawableID));
+
+  sprintf (format, "%s u%d", model, 8 * bpc);
+
+  return babl_format (format);
 }
 
 static const Babl *
 get_channel_format (gint32 drawableID)
 {
-  const Babl *format;
+  gint  bpc;
+  gchar format[32];
 
-  /* eventually we'll put a switch statement for bit depth here to
-   * support higher depth exports */
-  format = babl_format ("Y u8");
+  bpc = get_bpc (gimp_item_get_image (drawableID));
 
-  return format;
+  sprintf (format, "Y u%d", 8 * bpc);
+
+  return babl_format (format);
 }
 
 static const Babl *
 get_mask_format (gint32 drawableID)
 {
-  const Babl *format;
-
-  /* eventually we'll put a switch statement for bit depth here to
-   * support higher depth exports */
-  format = babl_format ("Y u8");
-
-  return format;
+  return get_channel_format (drawableID);
 }
 
 static void
