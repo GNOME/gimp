@@ -42,7 +42,7 @@ struct _GimpFilterOptions
   gdouble            preview_split_position;
   gboolean           controller;
 
-  gboolean           fade_expanded;
+  gboolean           blending_options_expanded;
   gboolean           color_options_expanded;
 };
 

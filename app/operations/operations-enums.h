@@ -150,15 +150,15 @@ GType gimp_layer_mode_context_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_LAYER_MODE_CONTEXT_LAYER = 1 << 0,
-  GIMP_LAYER_MODE_CONTEXT_GROUP = 1 << 1,
-  GIMP_LAYER_MODE_CONTEXT_PAINT = 1 << 2,
-  GIMP_LAYER_MODE_CONTEXT_FADE  = 1 << 3,
+  GIMP_LAYER_MODE_CONTEXT_LAYER  = 1 << 0,
+  GIMP_LAYER_MODE_CONTEXT_GROUP  = 1 << 1,
+  GIMP_LAYER_MODE_CONTEXT_PAINT  = 1 << 2,
+  GIMP_LAYER_MODE_CONTEXT_FILTER = 1 << 3,
 
   GIMP_LAYER_MODE_CONTEXT_ALL = (GIMP_LAYER_MODE_CONTEXT_LAYER |
                                  GIMP_LAYER_MODE_CONTEXT_GROUP |
                                  GIMP_LAYER_MODE_CONTEXT_PAINT |
-                                 GIMP_LAYER_MODE_CONTEXT_FADE)
+                                 GIMP_LAYER_MODE_CONTEXT_FILTER)
 } GimpLayerModeContext;
 
 

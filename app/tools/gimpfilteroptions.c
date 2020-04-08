@@ -38,7 +38,7 @@ enum
   PROP_PREVIEW_SPLIT_ALIGNMENT,
   PROP_PREVIEW_SPLIT_POSITION,
   PROP_CONTROLLER,
-  PROP_FADE_EXPANDED,
+  PROP_BLENDING_OPTIONS_EXPANDED,
   PROP_COLOR_OPTIONS_EXPANDED
 };
 
@@ -104,8 +104,8 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FADE_EXPANDED,
-                            "fade-expanded",
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BLENDING_OPTIONS_EXPANDED,
+                            "blending-options-expanded",
                             NULL, NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -152,8 +152,8 @@ gimp_filter_options_set_property (GObject      *object,
       options->controller = g_value_get_boolean (value);
       break;
 
-    case PROP_FADE_EXPANDED:
-      options->fade_expanded = g_value_get_boolean (value);
+    case PROP_BLENDING_OPTIONS_EXPANDED:
+      options->blending_options_expanded = g_value_get_boolean (value);
       break;
 
     case PROP_COLOR_OPTIONS_EXPANDED:
@@ -196,8 +196,8 @@ gimp_filter_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->controller);
       break;
 
-    case PROP_FADE_EXPANDED:
-      g_value_set_boolean (value, options->fade_expanded);
+    case PROP_BLENDING_OPTIONS_EXPANDED:
+      g_value_set_boolean (value, options->blending_options_expanded);
       break;
 
     case PROP_COLOR_OPTIONS_EXPANDED:
