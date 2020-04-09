@@ -42,6 +42,7 @@ Plugins:
     similar to animated formats, and also similar to defaults for PDF
     export. This brings consistency but break existing behavior, hence
     needs to be noted.
+  - Added support for exporting 16-bit PSDs.
 
 Updated translations:
 
