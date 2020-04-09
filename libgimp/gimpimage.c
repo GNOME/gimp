@@ -253,6 +253,40 @@ gimp_image_list_layers (GimpImage *image)
 }
 
 /**
+ * gimp_image_list_selected_layers:
+ * @image: The image.
+ *
+ * Returns the list of layers selected in the specified image.
+ *
+ * This procedure returns the list of layers selected in the specified
+ * image.
+ *
+ * Returns: (element-type GimpImage) (transfer container):
+ *          The list of layers contained in the image.
+ *          The returned list must be freed with g_list_free(). Layer
+ *          elements belong to libgimp and must not be freed.
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_image_list_selected_layers (GimpImage *image)
+{
+  GimpLayer **layers;
+  gint        num_layers;
+  GList      *list = NULL;
+  gint        i;
+
+  layers = gimp_image_get_selected_layers (image, &num_layers);
+
+  for (i = 0; i < num_layers; i++)
+    list = g_list_prepend (list, layers[i]);
+
+  g_free (layers);
+
+  return g_list_reverse (list);
+}
+
+/**
  * gimp_image_list_channels:
  * @image: The image.
  *

@@ -77,6 +77,8 @@ GList        * gimp_image_list_layers        (GimpImage    *image);
 GList        * gimp_image_list_channels      (GimpImage    *image);
 GList        * gimp_image_list_vectors       (GimpImage    *image);
 
+GList      * gimp_image_list_selected_layers (GimpImage    *image);
+
 guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
 gboolean       gimp_image_set_colormap       (GimpImage    *image,

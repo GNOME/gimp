@@ -2290,6 +2290,52 @@ gimp_image_set_active_vectors (GimpImage   *image,
 }
 
 /**
+ * gimp_image_get_selected_layers:
+ * @image: The image.
+ * @num_layers: (out): The number of selected layers in the image.
+ *
+ * Returns the specified image's selected layers.
+ *
+ * This procedure returns the list of selected layers in the specified
+ * image.
+ *
+ * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ *          The list of selected layers in the image.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 2.10.20
+ **/
+GimpLayer **
+gimp_image_get_selected_layers (GimpImage *image,
+                                gint      *num_layers)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpLayer **layers = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-get-selected-layers",
+                                              args);
+  gimp_value_array_unref (args);
+
+  *num_layers = 0;
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup (a->data, a->length * sizeof (gpointer)); };
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return layers;
+}
+
+/**
  * gimp_image_get_selection:
  * @image: The image.
  *

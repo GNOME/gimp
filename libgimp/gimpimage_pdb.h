@@ -142,6 +142,8 @@ gboolean                 gimp_image_set_active_channel         (GimpImage       
 GimpVectors*             gimp_image_get_active_vectors         (GimpImage           *image);
 gboolean                 gimp_image_set_active_vectors         (GimpImage           *image,
                                                                 GimpVectors         *active_vectors);
+GimpLayer**              gimp_image_get_selected_layers        (GimpImage           *image,
+                                                                gint                *num_layers);
 GimpSelection*           gimp_image_get_selection              (GimpImage           *image);
 gboolean                 gimp_image_get_component_active       (GimpImage           *image,
                                                                 GimpChannelType      component);

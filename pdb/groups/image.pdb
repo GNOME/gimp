@@ -1767,6 +1767,48 @@ CODE
     );
 }
 
+sub image_get_selected_layers {
+    $blurb = "Returns the specified image's selected layers.";
+
+    $help = <<'HELP';
+This procedure returns the list of selected layers in the specified image.
+HELP
+
+    &jehan_pdb_misc('2020', '2.10.20');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'layers', type => 'layerarray',
+          desc => 'The list of selected layers in the image.',
+          array => { name => 'num_layers',
+                     desc => 'The number of selected layers in the image' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *list = gimp_image_get_selected_layers (image);
+
+  num_layers = g_list_length (list);
+
+  if (num_layers)
+    {
+      gint i;
+
+      layers = g_new (GimpLayer *, num_layers);
+
+      for (i = 0; i < num_layers; i++, list = g_list_next (list))
+        layers[i] = g_object_ref (list->data);
+    }
+}
+CODE
+    );
+}
+
 sub image_get_active_layer {
     $blurb = "Returns the specified image's active layer.";
 
@@ -2940,6 +2982,7 @@ CODE
             image_get_active_layer image_set_active_layer
             image_get_active_channel image_set_active_channel
             image_get_active_vectors image_set_active_vectors
+            image_get_selected_layers
             image_get_selection
             image_get_component_active image_set_component_active
             image_get_component_visible image_set_component_visible
