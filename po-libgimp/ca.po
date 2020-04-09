@@ -400,7 +400,7 @@ msgstr[1] "%d procediments es corresponen amb la vostra cerca"
 #: ../libgimp/gimpprocedure.c:1721
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr "El procediment '%s' no ha tornat cap valor de retorn"
+msgstr "El procediment «%s» no ha tornat cap valor de retorn"
 
 #: ../libgimp/gimpprocedure.c:1813
 #, c-format
@@ -408,7 +408,7 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"El procediment '%s' ha tornat un tipus de valor incorrecte per al valor de "
+"El procediment «%s» ha tornat un tipus de valor incorrecte per al valor de "
 "retorn '%s' (#%d). Esperat %s, obtingut %s."
 
 #: ../libgimp/gimpprocedure.c:1825
@@ -418,7 +418,7 @@ msgid ""
 "%d). Expected %s, got %s."
 msgstr ""
 "El procediment '%s' s'ha cridat amb un tipus de valor erroni per a "
-"l'argument '%s' (#%d). Esperat %s, obtingut %s."
+"l'argument «%s» (#%d). Esperat %s, obtingut %s."
 
 #: ../libgimp/gimpprocedure.c:1860
 #, c-format
@@ -426,7 +426,7 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"El procediment '%s' ha tornat '%s' com a valor de retorn '%s' (#%d, tipus "
+"El procediment «%s» ha tornat «%s» com a valor de retorn «%s» (#%d, tipus "
 "%s). Aquest valor està fora de l'interval."
 
 #: ../libgimp/gimpprocedure.c:1874
@@ -435,15 +435,15 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"El procediment '%s' s'ha cridat amb un valor '%s' per a l'argument '%s'  (#"
+"El procediment «%s» s'ha cridat amb un valor «%s» per a l'argument «%s» (#"
 "%d, tipus %s). Aquest valor està fora de l'interval."
 
 #: ../libgimp/gimpprocedure.c:1924
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
-"El procediment '%s' ha tornat una cadena UTF-8 no vàlida per a l'argument "
-"'%s'."
+"El procediment «%s» ha tornat una cadena UTF-8 no vàlida per a l'argument "
+"«%s»."
 
 #: ../libgimp/gimpprocedure.c:1934
 #, c-format
@@ -2824,7 +2824,7 @@ msgstr "Nom del dispositiu que rebrà els senyals MIDI."
 
 #: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Escriviu 'alsa' si voleu utilitzar el seqüenciador ALSA."
+msgstr "Escriviu «alsa» si voleu utilitzar el seqüenciador ALSA."
 
 #: ../modules/controller-midi.c:221
 msgid "Channel:"
@@ -2879,7 +2879,7 @@ msgstr ""
 "ACES RRT (RRT = Reference Rendering Transform). Un filtre de  pantalla de "
 "prova en color de HDR a SDR que utilitza una aproximació de lluminositat de "
 "l'ACES RRT, un aspecte cinematogràfic predefinit que s’utilitzarà abans "
-"d’ODT (perfil ICC d’espai de sortida o de visualtzació)"
+"d’ODT (perfil ICC d’espai de sortida o de visualització)"
 
 #: ../modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
