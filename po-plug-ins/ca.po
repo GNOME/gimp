@@ -7156,11 +7156,11 @@ msgstr "Paràmetre nul"
 
 #: ../plug-ins/file-webp/file-webp-save.c:107
 msgid "invalid configuration"
-msgstr "Configuració invàlida"
+msgstr "configuració invàlida"
 
 #: ../plug-ins/file-webp/file-webp-save.c:109
 msgid "bad image dimensions"
-msgstr "Dimensions dolentes de la imatge"
+msgstr "dimensions dolentes de la imatge"
 
 #: ../plug-ins/file-webp/file-webp-save.c:111
 msgid "partition is bigger than 512K"
@@ -8721,9 +8721,7 @@ msgstr "Desa la configuració actual al fitxer especificat"
 # Albert: M'ha semblat més entenedor de la funció aquest text, ja que es tracta d'una ajuda contextual.
 #: ../plug-ins/gimpressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
-msgstr ""
-"Llegeix la preconfiguració de l'efecte seleccionat a la llista dins la "
-"memòria. Cal fer clic a Actualitza per veure'n la previsualització."
+msgstr "Llegeix la preconfiguració de l'efecte seleccionat a la llista dins la memòria"
 
 #: ../plug-ins/gimpressionist/presets.c:1071
 msgid "Deletes the selected Preset"
