@@ -4517,7 +4517,7 @@ msgstr "En la pel·lícula:"
 
 #: ../plug-ins/common/film.c:973 ../plug-ins/common/unit-editor.c:242
 msgid "_Add"
-msgstr "_Additiu"
+msgstr "_Afegeix"
 
 #: ../plug-ins/common/film.c:973 ../plug-ins/imagemap/imap_polygon.c:529
 msgid "_Remove"
@@ -4551,7 +4551,7 @@ msgstr "Co_lor:"
 #. Film numbering: Startindex/Font/color
 #: ../plug-ins/common/film.c:1088
 msgid "Numbering"
-msgstr "S'està numerant"
+msgstr "Numeració"
 
 #: ../plug-ins/common/film.c:1109
 msgid "Start _index:"
