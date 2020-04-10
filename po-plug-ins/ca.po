@@ -3335,8 +3335,8 @@ msgstr ""
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
-"S'ha produït un error en la lectura de «%s». No s'ha pogut crear la "
-"estructura d'informació a la capçalera PNG."
+"S'ha produït un error en la lectura de «%s». No s'ha pogut crear "
+"l'estructura d'informació a la capçalera PNG."
 
 #: ../plug-ins/common/file-png.c:916
 #, c-format
@@ -3393,8 +3393,8 @@ msgstr ""
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
-"S'ha produït un error en l'exportació de «%s». No s'ha pogut crear la "
-"estructura d'informació a la capçalera PNG."
+"S'ha produït un error en l'exportació de «%s». No s'ha pogut crear "
+"l'estructura d'informació a la capçalera PNG."
 
 #: ../plug-ins/common/file-png.c:1590
 #, c-format
@@ -3598,7 +3598,7 @@ msgstr "Fort"
 
 #: ../plug-ins/common/file-ps.c:3564
 msgid "Graphic antialiasing"
-msgstr "Antiàliasing gràfic"
+msgstr "Antialiàsing gràfic"
 
 #: ../plug-ins/common/file-ps.c:3642
 msgid "PostScript"
@@ -6205,7 +6205,7 @@ msgstr "Falten dades"
 
 #: ../plug-ins/common/unit-editor.c:353
 msgid "Please fill in all text fields."
-msgstr "Ompliu tot els camps."
+msgstr "Ompliu tots els camps."
 
 #: ../plug-ins/common/unit-editor.c:412
 msgid "Unit Editor"
@@ -7655,7 +7655,7 @@ msgstr "Paràmetre nul"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "invalid configuration"
-msgstr "Configuració invàlida."
+msgstr "configuració invàlida"
 
 #: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "bad image dimensions"
@@ -9631,7 +9631,7 @@ msgstr "Urgència"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
 msgid "Job Identifier\t"
-msgstr "Identificador de tasca "
+msgstr "Identificador de tasca\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
 msgid "Instructions"
