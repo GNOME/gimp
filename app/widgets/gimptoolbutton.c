@@ -1058,6 +1058,9 @@ gimp_tool_button_show_menu (GimpToolButton *tool_button,
   /* avoid initializing the selected tool */
   tools_select_cmd_block_initialize ();
 
+  gtk_menu_shell_set_take_focus (GTK_MENU_SHELL (tool_button->priv->menu),
+                                 ! tool_button->priv->show_menu_on_hover);
+
   gtk_menu_popup (
     GTK_MENU (tool_button->priv->menu),
     NULL, NULL,
