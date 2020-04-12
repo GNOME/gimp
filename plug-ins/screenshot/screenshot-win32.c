@@ -523,6 +523,9 @@ GetAccurateWindowRect (HWND hwndTarget,
       if (GetWindowPlacement (hwndTarget, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
         {
           RECT *rectScreens = NULL;
+          int   xCenter;
+          int   yCenter;
+          int   i;
 
           /* If this is not the first time we call this function for some
            * reason then we reset the rectScreens count
@@ -548,11 +551,10 @@ GetAccurateWindowRect (HWND hwndTarget,
               rectScreensCount = 1;
             }
 
-          int xCenter = outRect->left + (outRect->right - outRect->left) / 2;
-          int yCenter = outRect->top + (outRect->bottom - outRect->top) / 2;
+          xCenter = outRect->left + (outRect->right - outRect->left) / 2;
+          yCenter = outRect->top + (outRect->bottom - outRect->top) / 2;
 
           /* find on which screen the window exist */
-          int i;
           for (i = 0; i < rectScreensCount; i++)
             if (xCenter > rectScreens[i].left && xCenter < rectScreens[i].right &&
                 yCenter > rectScreens[i].top && yCenter < rectScreens[i].bottom)
