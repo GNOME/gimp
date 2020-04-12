@@ -211,10 +211,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
   config = GIMP_CURVES_CONFIG (filter_tool->config);
 
-  gegl_node_set (filter_tool->operation,
-                 "linear", config->linear,
-                 NULL);
-
   histogram = gimp_histogram_new (config->linear);
   g_object_unref (gimp_drawable_calculate_histogram_async (
     drawable, histogram, FALSE));
@@ -749,10 +745,6 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
   if (! strcmp (pspec->name, "linear"))
     {
       GimpHistogram *histogram;
-
-      gegl_node_set (filter_tool->operation,
-                     "linear", curves_config->linear,
-                     NULL);
 
       histogram = gimp_histogram_new (curves_config->linear);
       g_object_unref (gimp_drawable_calculate_histogram_async (
