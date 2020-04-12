@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-05 12:14+0200\n"
-"PO-Revision-Date: 2020-04-05 12:15+0200\n"
+"POT-Creation-Date: 2020-04-12 10:29+0200\n"
+"PO-Revision-Date: 2020-04-12 10:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3195,7 +3195,7 @@ msgstr "240 sekund"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:344
+#: ../app/tools/gimpfiltertool.c:346
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:1243
 #: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
@@ -5677,7 +5677,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Odświeża listę zainstalowanych czcionek"
 
-#: ../app/actions/gimpgeglprocedure.c:321
+#: ../app/actions/gimpgeglprocedure.c:322
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -7932,7 +7932,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:343 ../app/tools/gimptransformgridtool.c:1240
+#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1240
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -10501,7 +10501,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:197
-#: ../app/tools/gimpfiltertool.c:345 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:347 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -13421,6 +13421,7 @@ msgid "Background color"
 msgstr "Kolor tła"
 
 #: ../app/core/gimpcontext.c:698 ../app/core/gimpcontext.c:699
+#: ../app/operations/gimpoperationsettings.c:104
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity"
 msgstr "Krycie"
@@ -18235,7 +18236,7 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:364
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:289 ../app/tools/gimpgradienttool.c:254
+#: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpselectiontool.c:547
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -18244,7 +18245,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:372
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
-#: ../app/tools/gimpfiltertool.c:296 ../app/tools/gimpgradienttool.c:261
+#: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
 #: ../app/tools/gimpselectiontool.c:554 ../app/tools/gimptransformtool.c:688
 #: ../app/tools/gimpwarptool.c:780
@@ -19495,15 +19496,15 @@ msgstr "Uwzględniany kanał"
 msgid "Curve"
 msgstr "Krzywa"
 
-#: ../app/operations/gimpcurvesconfig.c:544
+#: ../app/operations/gimpcurvesconfig.c:550
 msgid "not a GIMP Curves file"
 msgstr "nie jest plikiem krzywych programu GIMP"
 
-#: ../app/operations/gimpcurvesconfig.c:575
+#: ../app/operations/gimpcurvesconfig.c:581
 msgid "Parse error, didn't find 2 integers"
 msgstr "Błąd podczas przetwarzania, nie odnaleziono dwóch liczb całkowitych"
 
-#: ../app/operations/gimpcurvesconfig.c:681
+#: ../app/operations/gimpcurvesconfig.c:687
 msgid "Writing curves file failed: "
 msgstr "Zapisanie pliku krzywych się nie powiodło: "
 
@@ -19570,15 +19571,15 @@ msgstr "Zaciskanie wyjścia"
 msgid "Clamp final output values."
 msgstr "Zaciskanie końcowych wartości wyjściowych."
 
-#: ../app/operations/gimplevelsconfig.c:836
+#: ../app/operations/gimplevelsconfig.c:842
 msgid "not a GIMP Levels file"
 msgstr "nie jest plikiem poziomów programu GIMP"
 
-#: ../app/operations/gimplevelsconfig.c:911
+#: ../app/operations/gimplevelsconfig.c:917
 msgid "parse error"
 msgstr "błąd podczas przetwarzania"
 
-#: ../app/operations/gimplevelsconfig.c:946
+#: ../app/operations/gimplevelsconfig.c:952
 msgid "Writing levels file failed: "
 msgstr "Zapisanie pliku poziomów się nie powiodło: "
 
@@ -19630,7 +19631,8 @@ msgid "Turn colors into shades of gray"
 msgstr "Zamienia kolory na odcienie szarości"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
-#: ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/operations/gimpoperationsettings.c:95
+#: ../app/tools/gimpfiltertool.c:1122 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:116
 #: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
@@ -19668,6 +19670,22 @@ msgstr "Zastąpienie częściowej przezroczystości kolorem"
 #: ../app/operations/gimpoperationsemiflatten.c:96
 msgid "The color"
 msgstr "Kolor"
+
+#: ../app/operations/gimpoperationsettings.c:78
+#: ../app/tools/gimpfiltertool.c:1086 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimptransformoptions.c:108
+#: ../app/tools/gimptransformoptions.c:264
+msgid "Clipping"
+msgstr "Przycinanie"
+
+#: ../app/operations/gimpoperationsettings.c:79
+#: ../app/tools/gimptransformoptions.c:109
+msgid "How to clip"
+msgstr "Jak przycinać"
+
+#: ../app/operations/gimpoperationsettings.c:112
+msgid "Color _managed"
+msgstr "_Zarządzanie kolorami"
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
@@ -21968,7 +21986,7 @@ msgid "Bucket fill"
 msgstr "Wypełnienie kubełkiem"
 
 #: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
-#: ../app/tools/gimpfiltertool.c:306
+#: ../app/tools/gimpfiltertool.c:312
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:328
 #: ../app/tools/gimptransformtool.c:697 ../app/tools/gimpwarptool.c:794
@@ -22459,81 +22477,72 @@ msgstr "%s wybierze kolor tła"
 msgid "Anti erase  (%s)"
 msgstr "Cofanie wycierania  (%s)"
 
-#: ../app/tools/gimpfilteroptions.c:73
+#: ../app/tools/gimpfilteroptions.c:71
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: ../app/tools/gimpfilteroptions.c:80
+#: ../app/tools/gimpfilteroptions.c:78
 msgid "Split _view"
 msgstr "Po_dzielony widok"
 
-#: ../app/tools/gimpfilteroptions.c:103
+#: ../app/tools/gimpfilteroptions.c:101
 msgid "On-canvas con_trols"
 msgstr "_Sterowanie na obszarze rysowania"
 
-#: ../app/tools/gimpfilteroptions.c:104
+#: ../app/tools/gimpfilteroptions.c:102
 msgid "Show on-canvas filter controls"
 msgstr "Wyświetla sterowanie filtrami na obszarze rysowania"
 
-#: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:449
-#: ../app/tools/gimpflipoptions.c:156 ../app/tools/gimptransformoptions.c:108
-#: ../app/tools/gimptransformoptions.c:264
-msgid "Clipping"
-msgstr "Przycinanie"
+#: ../app/tools/gimpfiltertool.c:627
+msgid "Click to switch the original and filtered sides"
+msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfilteroptions.c:111 ../app/tools/gimptransformoptions.c:109
-msgid "How to clip"
-msgstr "Jak przycinać"
+#: ../app/tools/gimpfiltertool.c:631
+msgid "Click to switch between vertical and horizontal"
+msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfilteroptions.c:126
-msgid "Color _managed"
-msgstr "_Zarządzanie kolorami"
+#: ../app/tools/gimpfiltertool.c:635
+msgid "Click to move the split guide"
+msgstr "Kliknięcie przemieści prowadnicę podziału"
+
+#: ../app/tools/gimpfiltertool.c:637
+#, c-format
+msgid "%s: switch original and filtered"
+msgstr "%s: przełącza oryginalną i filtrowaną stronę"
+
+#: ../app/tools/gimpfiltertool.c:638
+#, c-format
+msgid "%s: switch horizontal and vertical"
+msgstr "%s: przełącza między poziomym a pionowym widokiem"
+
+#. The blending-options expander
+#: ../app/tools/gimpfiltertool.c:1099
+msgid "Blending Options"
+msgstr "Opcje mieszania"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:403
+#: ../app/tools/gimpfiltertool.c:1138
 msgid "Advanced Color Options"
 msgstr "Zaawansowane opcje kolorów"
 
-#: ../app/tools/gimpfiltertool.c:422
+#: ../app/tools/gimpfiltertool.c:1162
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 "Konwertowanie pikseli do wbudowanej przestrzeni sRGB, aby zastosować filtr "
 "(wolne)"
 
-#: ../app/tools/gimpfiltertool.c:423
+#: ../app/tools/gimpfiltertool.c:1163
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Przyjmowanie, że piksele są we wbudowanej przestrzeni sRGB (ignorowanie "
 "prawdziwej przestrzeni kolorów obrazu)"
 
-#: ../app/tools/gimpfiltertool.c:667
-msgid "Click to switch the original and filtered sides"
-msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
-
-#: ../app/tools/gimpfiltertool.c:671
-msgid "Click to switch between vertical and horizontal"
-msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
-
-#: ../app/tools/gimpfiltertool.c:675
-msgid "Click to move the split guide"
-msgstr "Kliknięcie przemieści prowadnicę podziału"
-
-#: ../app/tools/gimpfiltertool.c:677
-#, c-format
-msgid "%s: switch original and filtered"
-msgstr "%s: przełącza oryginalną i filtrowaną stronę"
-
-#: ../app/tools/gimpfiltertool.c:678
-#, c-format
-msgid "%s: switch horizontal and vertical"
-msgstr "%s: przełącza między poziomym a pionowym widokiem"
-
-#: ../app/tools/gimpfiltertool.c:1445 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1552 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1447 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1554 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
