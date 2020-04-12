@@ -201,10 +201,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 
   config = GIMP_LEVELS_CONFIG (filter_tool->config);
 
-  gegl_node_set (filter_tool->operation,
-                 "trc", config->trc,
-                 NULL);
-
   g_clear_object (&l_tool->histogram);
   g_clear_object (&l_tool->histogram_async);
   l_tool->histogram = gimp_histogram_new (config->trc);
@@ -678,10 +674,6 @@ gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
 
   if (! strcmp (pspec->name, "trc"))
     {
-      gegl_node_set (filter_tool->operation,
-                     "trc", levels_config->trc,
-                     NULL);
-
       g_clear_object (&levels_tool->histogram);
       g_clear_object (&levels_tool->histogram_async);
       levels_tool->histogram = gimp_histogram_new (levels_config->trc);

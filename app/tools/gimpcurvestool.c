@@ -211,10 +211,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
   config = GIMP_CURVES_CONFIG (filter_tool->config);
 
-  gegl_node_set (filter_tool->operation,
-                 "trc", config->trc,
-                 NULL);
-
   histogram = gimp_histogram_new (config->trc);
   g_object_unref (gimp_drawable_calculate_histogram_async (drawable, histogram,
                                                            FALSE));
@@ -743,10 +739,6 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
   if (! strcmp (pspec->name, "trc"))
     {
       GimpHistogram *histogram;
-
-      gegl_node_set (filter_tool->operation,
-                     "trc", curves_config->trc,
-                     NULL);
 
       histogram = gimp_histogram_new (curves_config->trc);
       g_object_unref (gimp_drawable_calculate_histogram_async
