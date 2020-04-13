@@ -1884,7 +1884,7 @@ color_error (guchar ref_red, guchar ref_green, guchar ref_blue,
   cmp_h = (3 * cmp_red + 6 * cmp_green + cmp_blue) / 10;
   ref_h = (3 * ref_red + 6 * ref_green + ref_blue) / 10;
 
-  fs = abs (ref_h - cmp_h);
+  fs = labs (ref_h - cmp_h);
   ff = fs * fs;
 
   /* 2. add Red Color differences */
