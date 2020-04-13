@@ -23,6 +23,7 @@
 
 #include "config.h"
 
+#include <math.h>
 #include <stdlib.h>
 
 #include <libgimp/gimp.h>
@@ -309,8 +310,8 @@ find_grid_pos (GdkPoint *p,
       m_hi_n_lo = m_lo_n_lo + 1;
 
      /* figure out which is the better candidate */
-      if (abs ((m_lo_n_lo * r + (0.5 * r * (n_lo % 2))) - y) <
-          abs ((m_hi_n_lo * r + (0.5 * r * (n_lo % 2))) - y))
+      if (fabs ((m_lo_n_lo * r + (0.5 * r * (n_lo % 2))) - y) <
+          fabs ((m_hi_n_lo * r + (0.5 * r * (n_lo % 2))) - y))
         {
           m_n_lo = m_lo_n_lo;
         }
@@ -324,8 +325,8 @@ find_grid_pos (GdkPoint *p,
       m_hi_n_hi = m_lo_n_hi + 1;
 
       /* figure out which is the better candidate */
-      if (abs((m_lo_n_hi * r + (0.5 * r * (n_hi % 2))) - y) <
-          abs((m_hi_n_hi * r + (0.5 * r * (n_hi % 2))) - y))
+      if (fabs((m_lo_n_hi * r + (0.5 * r * (n_hi % 2))) - y) <
+          fabs((m_hi_n_hi * r + (0.5 * r * (n_hi % 2))) - y))
         {
           m_n_hi = m_lo_n_hi;
         }
