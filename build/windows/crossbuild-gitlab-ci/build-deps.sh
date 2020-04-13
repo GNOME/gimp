@@ -42,7 +42,7 @@ cd ../..
 
 # libmypaint
 
-git clone --depth 1 --branch libmypaint-v1 https://github.com/mypaint/libmypaint.git && \
+git clone --depth 1 --branch libmypaint-v1.5.x https://github.com/mypaint/libmypaint.git && \
 mkdir libmypaint/_build && cd libmypaint/_build && \
 crossroad ../configure --enable-introspection=no && make install || exit 1
 cd ../..
