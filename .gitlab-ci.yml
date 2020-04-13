@@ -107,6 +107,7 @@ deps-debian/testing:
         libpoppler-glib-dev
         libraw19
         librsvg2-dev
+        libspiro-dev
         libtiff-dev
         libtool
         libumfpack5
