@@ -4473,6 +4473,47 @@ gimp_image_set_active_vectors (GimpImage   *image,
 }
 
 GList *
+gimp_image_get_selected_drawables (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  GList            *selected_channels;
+  GList            *selected_layers;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  selected_channels = gimp_item_tree_get_selected_items (private->channels);
+  selected_layers   = gimp_item_tree_get_selected_items (private->layers);
+
+  /*  If there is an active channel (a saved selection, etc.),
+   *  we ignore the active layer
+   */
+  if (selected_channels)
+    {
+      return selected_channels;
+    }
+  else if (selected_layers)
+    {
+      if (g_list_length (selected_layers) == 1)
+        {
+          /* As a special case, if only one layer is selected and mask
+           * edit is in progress, we return the mask as selected
+           * drawable instead of the layer.
+           */
+          GimpLayer     *layer = GIMP_LAYER (selected_layers->data);
+          GimpLayerMask *mask  = gimp_layer_get_mask (layer);
+
+          if (mask && gimp_layer_get_edit_mask (layer))
+            selected_layers->data = mask;
+        }
+      return selected_layers;
+    }
+
+  return NULL;
+}
+
+GList *
 gimp_image_get_selected_layers (GimpImage *image)
 {
   GimpImagePrivate *private;
