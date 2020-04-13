@@ -42,6 +42,8 @@
 
 #include "gimp-intl.h"
 
+#include <stdlib.h>
+
 
 enum
 {
