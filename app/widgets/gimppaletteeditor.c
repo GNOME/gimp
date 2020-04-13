@@ -249,7 +249,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gimp_label_set_attributes (GTK_LABEL (editor->index_label),
                              PANGO_ATTR_FAMILY, "Monospace", -1);
   gtk_widget_show (editor->index_label);
-  
+
   /*  The color name entry  */
   editor->color_name = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), editor->color_name, TRUE, TRUE, 0);
@@ -779,14 +779,14 @@ palette_editor_entry_selected (GimpPaletteView   *view,
   if (editor->color != entry)
     {
       gchar index[8];
-      
+
       editor->color = entry;
 
       if (entry)
         g_snprintf (index, sizeof (index), "%04i", entry->position);
       else
         g_snprintf (index, sizeof (index), "####");
-      
+
       gtk_label_set_text (GTK_LABEL (editor->index_label), index);
 
       g_signal_handlers_block_by_func (editor->color_name,
