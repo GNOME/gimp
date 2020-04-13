@@ -43,11 +43,7 @@
  *
  * This procedure invokes the correct file load handler using magic if
  * possible, and falling back on the file's extension and/or prefix if
- * not. The name of the file to load is typically a full pathname, and
- * the name entered is what the user actually typed before prepending a
- * directory path. The reason for this is that if the user types
- * https://www.gimp.org/foo.png he wants to fetch a URL, and the full
- * pathname will not look like a URL.
+ * not.
  *
  * Returns: (transfer none): The output image.
  **/
@@ -186,12 +182,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * Saves a file by extension.
  *
  * This procedure invokes the correct file save handler according to
- * the file's extension and/or prefix. The name of the file to save is
- * typically a full pathname, and the name entered is what the user
- * actually typed before prepending a directory path. The reason for
- * this is that if the user types https://www.gimp.org/foo.png she
- * wants to fetch a URL, and the full pathname will not look like a
- * URL.
+ * the file's extension and/or prefix.
  *
  * Returns: TRUE on success.
  **/
@@ -233,10 +224,10 @@ gimp_file_save (GimpRunMode   run_mode,
  *
  * This procedure saves a thumbnail for the given image according to
  * the Free Desktop Thumbnail Managing Standard. The thumbnail is saved
- * so that it belongs to the file with the given filen. This means you
- * have to save the image under this name first, otherwise this
- * procedure will fail. This procedure may become useful if you want to
- * explicitly save a thumbnail with a file.
+ * so that it belongs to the given file. This means you have to save
+ * the image under this name first, otherwise this procedure will fail.
+ * This procedure may become useful if you want to explicitly save a
+ * thumbnail with a file.
  *
  * Returns: TRUE on success.
  **/

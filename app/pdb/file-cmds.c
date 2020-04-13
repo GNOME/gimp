@@ -362,7 +362,7 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-load");
   gimp_procedure_set_static_help (procedure,
                                   "Loads an image file by invoking the right load handler.",
-                                  "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png he wants to fetch a URL, and the full pathname will not look like a URL.",
+                                  "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
@@ -494,7 +494,7 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-save");
   gimp_procedure_set_static_help (procedure,
                                   "Saves a file by extension.",
-                                  "This procedure invokes the correct file save handler according to the file's extension and/or prefix. The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png she wants to fetch a URL, and the full pathname will not look like a URL.",
+                                  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
@@ -536,7 +536,7 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-load-thumbnail");
   gimp_procedure_set_static_help (procedure,
                                   "Loads the thumbnail for a file.",
-                                  "This procedure tries to load a thumbnail that belongs to the file with the given file. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
+                                  "This procedure tries to load a thumbnail that belongs to the given file. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Adam D. Moss, Sven Neumann",
@@ -582,7 +582,7 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-save-thumbnail");
   gimp_procedure_set_static_help (procedure,
                                   "Saves a thumbnail for the given image",
-                                  "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the file with the given filen. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
+                                  "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the given file. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
