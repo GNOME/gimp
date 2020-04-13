@@ -2079,9 +2079,9 @@ bender_graph_events (GtkWidget    *widget,
   for (i = 0; i < 17; i++)
     {
       if (cd->points[cd->outline][i][0] != -1)
-        if (abs (x - (cd->points[cd->outline][i][0] * 255.0)) < distance)
+        if (abs ((int) (x - (cd->points[cd->outline][i][0] * 255.0))) < distance)
           {
-            distance = abs (x - (cd->points[cd->outline][i][0] * 255.0));
+            distance = abs ((int) (x - (cd->points[cd->outline][i][0] * 255.0)));
             closest_point = i;
           }
     }
