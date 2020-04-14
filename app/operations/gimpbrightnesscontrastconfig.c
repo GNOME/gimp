@@ -181,6 +181,10 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
 
   levels = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
 
+  gimp_operation_settings_config_copy_base (GIMP_CONFIG (config),
+                                            GIMP_CONFIG (levels),
+                                            0);
+
   brightness = config->brightness / 2.0;
   slant = tan ((config->contrast + 1) * G_PI_4);
 
