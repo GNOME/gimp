@@ -259,6 +259,8 @@ file_save_invoker (GimpProcedure         *procedure,
                      gimp_value_array_index (new_args, 2));
   g_value_transform (gimp_value_array_index (args, 3),
                      gimp_value_array_index (new_args, 3));
+  g_value_transform (gimp_value_array_index (args, 4),
+                     gimp_value_array_index (new_args, 4));
 
   for (i = 4; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
@@ -514,11 +516,17 @@ register_file_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Drawable to save",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables to save",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "Drawables to save",
+                                                             GIMP_TYPE_ITEM,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",

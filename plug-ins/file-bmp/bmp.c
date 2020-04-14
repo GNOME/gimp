@@ -97,7 +97,8 @@ static GimpValueArray * bmp_load             (GimpProcedure        *procedure,
 static GimpValueArray * bmp_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -245,7 +246,8 @@ static GimpValueArray *
 bmp_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -267,7 +269,7 @@ bmp_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "BMP",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "BMP",
                                   GIMP_EXPORT_CAN_HANDLE_RGB   |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY  |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA |
@@ -283,7 +285,17 @@ bmp_save (GimpProcedure        *procedure,
       break;
     }
 
-  status = save_image (file, image, drawable, run_mode,
+  if (n_drawables != 1)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("BMP format does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+
+  status = save_image (file, image, drawables[0], run_mode,
                        procedure, G_OBJECT (config),
                        &error);
 
@@ -291,7 +303,10 @@ bmp_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

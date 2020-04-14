@@ -102,7 +102,8 @@ static GimpValueArray * fli_load             (GimpProcedure        *procedure,
 static GimpValueArray * fli_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -334,7 +335,8 @@ static GimpValueArray *
 fli_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -356,7 +358,7 @@ fli_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "FLI",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "FLI",
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA   |
@@ -391,7 +393,10 @@ fli_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

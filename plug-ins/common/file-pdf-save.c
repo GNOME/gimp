@@ -224,7 +224,8 @@ static GimpProcedure  * pdf_create_procedure     (GimpPlugIn           *plug_in,
 static GimpValueArray * pdf_save                 (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
-                                                  GimpDrawable         *drawable,
+                                                  gint                  n_drawables,
+                                                  GimpDrawable        **drawables,
                                                   GFile                *file,
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
@@ -485,7 +486,8 @@ static GimpValueArray *
 pdf_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -763,24 +765,29 @@ pdf_save_image (GimpProcedure *procedure,
 
   for (i = 0; i < multi_page.image_count; i++)
     {
-      GimpImage    *image = multi_page.images[i];
-      GimpLayer   **layers;
-      gint32        n_layers;
-      gdouble       x_res, y_res;
-      gdouble       x_scale, y_scale;
-      GimpDrawable *temp;
-      gint          j;
+      GimpImage     *image = multi_page.images[i];
+      GimpLayer    **layers;
+      gint32         n_layers;
+      gdouble        x_res, y_res;
+      gdouble        x_scale, y_scale;
+      GimpDrawable **temp;
+      GimpDrawable **temp_out;
+      gint           temp_size = 1;
+      gint           j;
 
-      temp = gimp_image_get_active_drawable (image);
-      if (! temp)
+      if (! gimp_image_get_active_drawable (image))
         continue;
+
+      temp = g_new (GimpDrawable *, 1);
+      temp[0] = gimp_image_get_active_drawable (image);
+      temp_out = temp;
 
       /* Save the state of the surface before any changes, so that
        * settings from one page won't affect all the others
        */
       cairo_save (cr);
 
-      if (! (gimp_export_image (&image, &temp, NULL,
+      if (! (gimp_export_image (&image, &temp_size, &temp, NULL,
                                 capabilities) == GIMP_EXPORT_EXPORT))
         {
           /* gimp_drawable_histogram() only works within the bounds of
@@ -791,6 +798,10 @@ pdf_save_image (GimpProcedure *procedure,
            */
           image = gimp_image_duplicate (image);
         }
+
+      if (temp != temp_out)
+        g_free (temp_out);
+      g_free (temp);
 
       gimp_selection_none (image);
 

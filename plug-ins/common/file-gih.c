@@ -107,7 +107,8 @@ static GimpProcedure  * gih_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * gih_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -265,7 +266,8 @@ static GimpValueArray *
 gih_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -287,7 +289,7 @@ gih_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "GIH",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "GIH",
                                   GIMP_EXPORT_CAN_HANDLE_RGB   |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY  |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA |
@@ -427,12 +429,13 @@ gih_save (GimpProcedure        *procedure,
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-gih-save-internal",
                                 GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE,    image,
-                                GIMP_TYPE_DRAWABLE, drawable,
-                                G_TYPE_FILE,        file,
-                                G_TYPE_INT,         info.spacing,
-                                G_TYPE_STRING,      info.description,
-                                G_TYPE_STRING,      paramstring,
+                                GIMP_TYPE_IMAGE,        image,
+                                G_TYPE_INT,             n_drawables,
+                                GIMP_TYPE_OBJECT_ARRAY, drawables,
+                                G_TYPE_FILE,            file,
+                                G_TYPE_INT,             info.spacing,
+                                G_TYPE_STRING,          info.description,
+                                G_TYPE_STRING,          paramstring,
                                 G_TYPE_NONE);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
@@ -479,7 +482,10 @@ gih_save (GimpProcedure        *procedure,
 
  out:
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

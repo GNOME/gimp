@@ -502,7 +502,8 @@ combine_buffers (GeglBuffer *layer_buffer,
 gboolean
 save_animation (GFile         *file,
                 GimpImage     *image,
-                GimpDrawable  *drawable,
+                gint           n_drawables,
+                GimpDrawable **drawables,
                 GObject       *config,
                 GError       **error)
 {
@@ -535,6 +536,8 @@ save_animation (GFile         *file,
   gdouble                alpha_quality;
   gint                   default_delay;
   gboolean               force_delay;
+
+  g_return_val_if_fail (n_drawables > 0, FALSE);
 
   g_object_get (config,
                 "preset",             &preset,
@@ -575,7 +578,7 @@ save_animation (GFile         *file,
     }
 
   if (! space)
-    space = gimp_drawable_get_format (drawable);
+    space = gimp_drawable_get_format (drawables[0]);
 
   gimp_image_undo_freeze (image);
 

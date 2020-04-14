@@ -78,7 +78,8 @@ static GimpProcedure   * gif_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray  * gif_save             (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
                                                GFile                *file,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
@@ -239,7 +240,8 @@ static GimpValueArray *
 gif_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -308,7 +310,7 @@ gif_save (GimpProcedure        *procedure,
             if (as_animation)
               capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
-            export = gimp_export_image (&image, &drawable, "GIF",
+            export = gimp_export_image (&image, &n_drawables, &drawables, "GIF",
                                         capabilities);
 
             if (export == GIMP_EXPORT_CANCEL)
@@ -327,7 +329,17 @@ gif_save (GimpProcedure        *procedure,
           break;
         }
 
-      if (! save_image (file, image, drawable, orig_image, G_OBJECT (config),
+      if (n_drawables != 1)
+        {
+          g_set_error (&error, G_FILE_ERROR, 0,
+                       _("GIF format does not support multiple layers."));
+
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CALLING_ERROR,
+                                                   error);
+        }
+
+      if (! save_image (file, image, drawables[0], orig_image, G_OBJECT (config),
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -340,7 +352,10 @@ gif_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

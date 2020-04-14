@@ -92,7 +92,8 @@ static GimpValueArray * png_load             (GimpProcedure        *procedure,
 static GimpValueArray * png_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -397,7 +398,8 @@ static GimpValueArray *
 png_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -425,7 +427,7 @@ png_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "PNG",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "PNG",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -440,7 +442,20 @@ png_save (GimpProcedure        *procedure,
       break;
     }
 
-  alpha = gimp_drawable_has_alpha (drawable);
+  if (n_drawables != 1)
+    {
+      /* PNG images have no layer concept. Export image should have a
+       * single drawable selected.
+       */
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("PNG format does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+
+  alpha = gimp_drawable_has_alpha (drawables[0]);
 
   /* If the image has no transparency, then there is usually no need
    * to save a bKGD chunk. For more information, see:
@@ -461,7 +476,7 @@ png_save (GimpProcedure        *procedure,
     {
       gint bits_per_sample;
 
-      if (save_image (file, image, drawable, orig_image, G_OBJECT (config),
+      if (save_image (file, image, drawables[0], orig_image, G_OBJECT (config),
                       &bits_per_sample, &error))
         {
           if (metadata)
@@ -477,7 +492,10 @@ png_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

@@ -71,7 +71,8 @@ static GimpValueArray * jpeg_load_thumb       (GimpProcedure        *procedure,
 static GimpValueArray * jpeg_save             (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
                                                GFile                *file,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
@@ -381,7 +382,8 @@ static GimpValueArray *
 jpeg_save (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
            GimpImage            *image,
-           GimpDrawable         *drawable,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
            GFile                *file,
            const GimpValueArray *args,
            gpointer              run_data)
@@ -408,7 +410,7 @@ jpeg_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "JPEG",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "JPEG",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY);
 
@@ -443,6 +445,16 @@ jpeg_save (GimpProcedure        *procedure,
 
     default:
       break;
+    }
+
+  if (n_drawables != 1)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("JPEG format does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
     }
 
   /* Initialize with hardcoded defaults */
@@ -568,10 +580,10 @@ jpeg_save (GimpProcedure        *procedure,
       /* prepare for the preview */
       preview_image     = image;
       orig_image_global = orig_image;
-      drawable_global   = drawable;
+      drawable_global   = drawables[0];
 
       /*  First acquire information with a dialog  */
-      if (! save_dialog (drawable))
+      if (! save_dialog (drawables[0]))
         {
           status = GIMP_PDB_CANCEL;
         }
@@ -588,7 +600,7 @@ jpeg_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawable, orig_image, FALSE,
+      if (! save_image (file, image, drawables[0], orig_image, FALSE,
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -604,6 +616,8 @@ jpeg_save (GimpProcedure        *procedure,
         gimp_display_delete (display);
       else
         gimp_image_delete (image);
+
+      g_free (drawables);
     }
 
   if (status == GIMP_PDB_SUCCESS)

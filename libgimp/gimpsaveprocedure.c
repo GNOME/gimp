@@ -86,11 +86,17 @@ gimp_save_procedure_constructed (GObject *object)
                        FALSE,
                        G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_DRAWABLE (procedure, "drawable",
-                          "Drawable",
-                          "The drawable to save",
-                          FALSE,
-                          G_PARAM_READWRITE);
+  GIMP_PROC_ARG_INT (procedure, "num-drawables",
+                     "Number of drawables",
+                     "Number of drawables to be saved",
+                     0, G_MAXINT, 1,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_OBJECT_ARRAY (procedure, "drawables",
+                              "Drawables",
+                              "The drawables to save",
+                              GIMP_TYPE_DRAWABLE,
+                              G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
 
   GIMP_PROC_ARG_FILE (procedure, "file",
                       "File",
@@ -147,14 +153,16 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   GimpValueArray    *return_values;
   GimpRunMode        run_mode;
   GimpImage         *image;
-  GimpDrawable      *drawable;
+  GimpDrawable     **drawables;
   GFile             *file;
+  gint               n_drawables;
   gint               i;
 
-  run_mode = GIMP_VALUES_GET_ENUM     (args, 0);
-  image    = GIMP_VALUES_GET_IMAGE    (args, 1);
-  drawable = GIMP_VALUES_GET_DRAWABLE (args, 2);
-  file     = GIMP_VALUES_GET_FILE     (args, 3);
+  run_mode    = GIMP_VALUES_GET_ENUM         (args, 0);
+  image       = GIMP_VALUES_GET_IMAGE        (args, 1);
+  n_drawables = GIMP_VALUES_GET_INT          (args, 2);
+  drawables   = GIMP_VALUES_GET_OBJECT_ARRAY (args, 3);
+  file        = GIMP_VALUES_GET_FILE         (args, 4);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
@@ -167,11 +175,12 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
 
   return_values = save_proc->priv->run_func (procedure,
                                              run_mode,
-                                             image, drawable,
+                                             image,
+                                             n_drawables,
+                                             drawables,
                                              file,
                                              remaining,
                                              save_proc->priv->run_data);
-
   gimp_value_array_unref (remaining);
 
   return return_values;

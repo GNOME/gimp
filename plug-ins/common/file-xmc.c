@@ -180,7 +180,8 @@ static GimpValueArray * xmc_load_thumb       (GimpProcedure        *procedure,
 static GimpValueArray * xmc_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -200,7 +201,8 @@ static guint32          read32               (FILE             *f,
 
 static gboolean         save_image           (GFile            *file,
                                               GimpImage        *image,
-                                              GimpDrawable     *drawable,
+                                              gint              n_drawables,
+                                              GimpDrawable    **drawables,
                                               GimpImage        *orig_image,
                                               GError          **error);
 
@@ -539,7 +541,8 @@ static GimpValueArray *
 xmc_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -576,7 +579,7 @@ xmc_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "XMC",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "XMC",
                                   GIMP_EXPORT_CAN_HANDLE_RGB    |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA  |
                                   GIMP_EXPORT_CAN_HANDLE_LAYERS |
@@ -657,8 +660,8 @@ xmc_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (save_image (file, image, drawable, orig_image,
-                  &error))
+  if (save_image (file, image, n_drawables, drawables,
+                  orig_image, &error))
     {
       gimp_set_data (SAVE_PROC, &xmcvals, sizeof (XmcSaveVals));
     }
@@ -668,7 +671,10 @@ xmc_save (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   g_free (hotspotRange);
 
@@ -1501,11 +1507,12 @@ load_default_hotspot (GimpImage     *image,
  */
 
 static gboolean
-save_image (GFile        *file,
-            GimpImage    *image,
-            GimpDrawable *drawable,
-            GimpImage    *orig_image,
-            GError      **error)
+save_image (GFile         *file,
+            GimpImage     *image,
+            gint           n_drawables,
+            GimpDrawable **drawables,
+            GimpImage     *orig_image,
+            GError       **error)
 {
   gchar           *filename;
   FILE            *fp;                     /* File pointer */

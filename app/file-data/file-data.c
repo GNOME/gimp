@@ -25,6 +25,7 @@
 #include "core/core-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpparamspecs.h"
 
 #include "plug-in/gimppluginmanager.h"
@@ -285,12 +286,17 @@ file_data_init (Gimp *gimp)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "Drawable",
-                                                         "Active drawable "
-                                                         "of input image",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables to save",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "Drawables to save",
+                                                             GIMP_TYPE_DRAWABLE,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "File",

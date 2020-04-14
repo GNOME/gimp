@@ -231,8 +231,12 @@ HELP
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Input image' },
-        { name => 'drawable', type => 'drawable',
-          desc => 'Drawable to save' },
+	{ name => 'drawables', type => 'itemarray',
+          desc => 'Drawables to save',
+          no_validate => 1,
+	  array => { name => 'num_drawables',
+                     type => '1 <= int32',
+		     desc => "The number of drawables to save" } },
         { name => 'file', type => 'file',
           desc => 'The file to save the image in' }
     );
@@ -276,6 +280,8 @@ HELP
                      gimp_value_array_index (new_args, 2));
   g_value_transform (gimp_value_array_index (args, 3),
                      gimp_value_array_index (new_args, 3));
+  g_value_transform (gimp_value_array_index (args, 4),
+                     gimp_value_array_index (new_args, 4));
 
   for (i = 4; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))

@@ -78,7 +78,8 @@ static GimpValueArray * dds_load             (GimpProcedure        *procedure,
 static GimpValueArray * dds_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -409,7 +410,8 @@ static GimpValueArray *
 dds_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -432,7 +434,7 @@ dds_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init ("dds");
 
-      export = gimp_export_image (&image, &drawable, "DDS",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "DDS",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -462,12 +464,18 @@ dds_save (GimpProcedure        *procedure,
                   "gamma", 2.2,
                   NULL);
 
-  status = write_dds (file, image, drawable,
+  /* TODO: support multiple-layers selection, especially as DDS has
+   * DDS_SAVE_SELECTED_LAYER option support.
+   */
+  status = write_dds (file, image, drawables[0],
                       run_mode == GIMP_RUN_INTERACTIVE,
                       procedure, G_OBJECT (config));
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   gimp_procedure_config_end_run (config, status);
   g_object_unref (config);

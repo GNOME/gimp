@@ -91,7 +91,8 @@ static GimpValueArray * tiff_load             (GimpProcedure        *procedure,
 static GimpValueArray * tiff_save             (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               gint                  n_drawables,
+                                               GimpDrawable        **drawables,
                                                GFile                *file,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
@@ -287,12 +288,13 @@ tiff_load (GimpProcedure        *procedure,
 
 static GimpValueArray *
 tiff_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
-          GimpDrawable         *drawable,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
+           GFile                *file,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
   GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
   GimpMetadata          *metadata;
@@ -356,7 +358,7 @@ tiff_save (GimpProcedure        *procedure,
       /*  First acquire information with a dialog  */
       if (! save_dialog (&tsvals,
                          SAVE_PROC,
-                         gimp_drawable_has_alpha (drawable),
+                         n_drawables == 1 ? gimp_drawable_has_alpha (drawables[0]) : TRUE,
                          image_is_monochrome (image),
                          gimp_image_base_type (image) == GIMP_INDEXED,
                          image_is_multi_layer (image),
@@ -423,7 +425,7 @@ tiff_save (GimpProcedure        *procedure,
         if (tsvals.save_layers && image_is_multi_layer (image))
           capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
-        export = gimp_export_image (&image, &drawable, "TIFF", capabilities);
+        export = gimp_export_image (&image, &n_drawables, &drawables, "TIFF", capabilities);
 
         if (export == GIMP_EXPORT_CANCEL)
           return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
@@ -432,6 +434,16 @@ tiff_save (GimpProcedure        *procedure,
       break;
     default:
       break;
+    }
+
+  if (n_drawables != 1 && tsvals.save_layers)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("\"Save layers\" option not set while trying to export multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -451,7 +463,10 @@ tiff_save (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   if (metadata)
     g_object_unref (metadata);

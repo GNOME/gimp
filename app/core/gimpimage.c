@@ -4491,10 +4491,11 @@ gimp_image_get_selected_drawables (GimpImage *image)
    */
   if (selected_channels)
     {
-      return selected_channels;
+      return g_list_copy (selected_channels);
     }
   else if (selected_layers)
     {
+      selected_layers = g_list_copy (selected_layers);
       if (g_list_length (selected_layers) == 1)
         {
           /* As a special case, if only one layer is selected and mask

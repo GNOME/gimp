@@ -86,7 +86,8 @@ static GimpValueArray * xbm_load             (GimpProcedure        *procedure,
 static GimpValueArray * xbm_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -328,7 +329,8 @@ static GimpValueArray *
 xbm_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -351,7 +353,7 @@ xbm_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "XBM",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "XBM",
                                   GIMP_EXPORT_CAN_HANDLE_BITMAP |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
@@ -363,6 +365,16 @@ xbm_save (GimpProcedure        *procedure,
 
     default:
       break;
+    }
+
+  if (n_drawables != 1)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("XBM format does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
     }
 
   if (run_mode == GIMP_RUN_INTERACTIVE ||
@@ -394,7 +406,7 @@ xbm_save (GimpProcedure        *procedure,
           gimp_parasite_free (parasite);
         }
 
-      if (! save_dialog (drawable, procedure, G_OBJECT (config)))
+      if (! save_dialog (drawables[0], procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -440,7 +452,7 @@ xbm_save (GimpProcedure        *procedure,
       if (! save_image (file,
                         prefix,
                         FALSE,
-                        image, drawable,
+                        image, drawables[0],
                         G_OBJECT (config),
                         &error)
 
@@ -450,7 +462,7 @@ xbm_save (GimpProcedure        *procedure,
            ! save_image (mask_file,
                          mask_prefix,
                          TRUE,
-                         image, drawable,
+                         image, drawables[0],
                          G_OBJECT (config),
                          &error)))
         {
@@ -469,7 +481,10 @@ xbm_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

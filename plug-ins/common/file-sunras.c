@@ -118,7 +118,8 @@ static GimpValueArray * sunras_load             (GimpProcedure        *procedure
 static GimpValueArray * sunras_save             (GimpProcedure        *procedure,
                                                  GimpRunMode           run_mode,
                                                  GimpImage            *image,
-                                                 GimpDrawable         *drawable,
+                                                 gint                  n_drawables,
+                                                 GimpDrawable        **drawables,
                                                  GFile                *file,
                                                  const GimpValueArray *args,
                                                  gpointer              run_data);
@@ -356,7 +357,8 @@ static GimpValueArray *
 sunras_save (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             GimpDrawable         *drawable,
+             gint                  n_drawables,
+             GimpDrawable        **drawables,
              GFile                *file,
              const GimpValueArray *args,
              gpointer              run_data)
@@ -378,7 +380,7 @@ sunras_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "SUNRAS",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "SUNRAS",
                                   GIMP_EXPORT_CAN_HANDLE_RGB  |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED);
@@ -393,6 +395,19 @@ sunras_save (GimpProcedure        *procedure,
       break;
     }
 
+  if (n_drawables != 1)
+    {
+      /* PNG images have no layer concept. Export image should have a
+       * single drawable selected.
+       */
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("SUNRAS format does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
@@ -401,7 +416,7 @@ sunras_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawable, G_OBJECT (config),
+      if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -412,7 +427,10 @@ sunras_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

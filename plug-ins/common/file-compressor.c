@@ -155,8 +155,9 @@ static GimpProcedure  * compressor_create_procedure (GimpPlugIn           *plug_
 
 static GimpValueArray * compressor_save             (GimpProcedure        *procedure,
                                                      GimpRunMode           run_mode,
-                                                     GimpImage             *image,
-                                                     GimpDrawable          *drawable,
+                                                     GimpImage            *image,
+                                                     gint                  n_drawables,
+                                                     GimpDrawable        **drawables,
                                                      GFile                *file,
                                                      const GimpValueArray *args,
                                                      gpointer              run_data);
@@ -174,7 +175,8 @@ static GimpImage         * load_image     (const CompressorEntry *compressor,
 static GimpPDBStatusType   save_image     (const CompressorEntry *compressor,
                                            GFile                 *file,
                                            GimpImage             *image,
-                                           GimpDrawable          *drawable,
+                                           gint                   n_drawables,
+                                           GimpDrawable         **drawables,
                                            gint32                 run_mode,
                                            GError               **error);
 
@@ -393,7 +395,8 @@ static GimpValueArray *
 compressor_save (GimpProcedure        *procedure,
                  GimpRunMode           run_mode,
                  GimpImage            *image,
-                 GimpDrawable         *drawable,
+                 gint                  n_drawables,
+                 GimpDrawable        **drawables,
                  GFile                *file,
                  const GimpValueArray *args,
                  gpointer              run_data)
@@ -408,8 +411,8 @@ compressor_save (GimpProcedure        *procedure,
   gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
                                       GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  status = save_image (compressor, file, image, drawable, run_mode,
-                       &error);
+  status = save_image (compressor, file, image, n_drawables, drawables,
+                       run_mode, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -418,7 +421,8 @@ static GimpPDBStatusType
 save_image (const CompressorEntry  *compressor,
             GFile                  *file,
             GimpImage              *image,
-            GimpDrawable           *drawable,
+            gint                    n_drawables,
+            GimpDrawable          **drawables,
             gint32                  run_mode,
             GError                **error)
 {
@@ -440,7 +444,8 @@ save_image (const CompressorEntry  *compressor,
 
   if (! (gimp_file_save (run_mode,
                          image,
-                         drawable,
+                         n_drawables,
+                         (const GimpItem **) drawables,
                          tmp_file) &&
          valid_file (tmp_file)))
     {

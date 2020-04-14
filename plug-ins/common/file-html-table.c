@@ -87,7 +87,8 @@ static GimpProcedure  * html_create_procedure  (GimpPlugIn           *plug_in,
 static GimpValueArray * html_save              (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
-                                                GimpDrawable         *drawable,
+                                                gint                  n_drawables,
+                                                GimpDrawable        **drawables,
                                                 GFile                *file,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
@@ -252,7 +253,8 @@ static GimpValueArray *
 html_save (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
            GimpImage            *image,
-           GimpDrawable         *drawable,
+           gint                  n_drawables,
+           GimpDrawable        **drawables,
            GFile                *file,
            const GimpValueArray *args,
            gpointer              run_data)
@@ -278,7 +280,17 @@ html_save (GimpProcedure        *procedure,
                                              GIMP_PDB_CANCEL,
                                              NULL);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  if (n_drawables != 1)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("HTML table plug-in does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+
+  buffer = gimp_drawable_get_buffer (drawables[0]);
 
   if (! save_image (file, buffer, G_OBJECT (config),
                     &error))

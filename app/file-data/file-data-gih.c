@@ -131,10 +131,13 @@ file_gih_save_invoker (GimpProcedure         *procedure,
   gimp_set_busy (gimp);
 
   image   = g_value_get_object (gimp_value_array_index (args, 1));
-  file    = g_value_get_object (gimp_value_array_index (args, 3));
-  spacing = g_value_get_int    (gimp_value_array_index (args, 4));
-  name    = g_value_get_string (gimp_value_array_index (args, 5));
-  params  = g_value_get_string (gimp_value_array_index (args, 6));
+  /* XXX: drawable list is currently unused. GIH saving just uses the
+   * whole layer list.
+   */
+  file    = g_value_get_object (gimp_value_array_index (args, 4));
+  spacing = g_value_get_int    (gimp_value_array_index (args, 5));
+  name    = g_value_get_string (gimp_value_array_index (args, 6));
+  params  = g_value_get_string (gimp_value_array_index (args, 7));
 
   pipe = file_gih_image_to_pipe (image, name, spacing, params);
 

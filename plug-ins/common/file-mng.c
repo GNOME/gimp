@@ -160,7 +160,8 @@ static GimpProcedure  * mng_create_procedure     (GimpPlugIn           *plug_in,
 static GimpValueArray * mng_save                 (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
-                                                  GimpDrawable         *drawable,
+                                                  gint                  n_drawables,
+                                                  GimpDrawable        **drawables,
                                                   GFile                *file,
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
@@ -197,7 +198,8 @@ static gboolean  respin_cmap     (png_structp       png_ptr,
 
 static gboolean  mng_save_image  (GFile            *file,
                                   GimpImage        *image,
-                                  GimpDrawable     *drawable,
+                                  gint              n_drawables,
+                                  GimpDrawable    **drawables,
                                   GObject          *config,
                                   GError          **error);
 static gboolean  mng_save_dialog (GimpImage        *image,
@@ -352,7 +354,8 @@ static GimpValueArray *
 mng_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -373,7 +376,7 @@ mng_save (GimpProcedure        *procedure,
     {
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "MNG",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "MNG",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -394,8 +397,8 @@ mng_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! mng_save_image (file, image, drawable, G_OBJECT (config),
-                            &error))
+      if (! mng_save_image (file, image, n_drawables, drawables,
+                            G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -405,7 +408,10 @@ mng_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -770,7 +776,8 @@ mng_putchunk_trns_wrapper (mng_handle    handle,
 static gboolean
 mng_save_image (GFile         *file,
                 GimpImage     *image,
-                GimpDrawable  *drawable,
+                gint           n_drawables,
+                GimpDrawable **drawables,
                 GObject       *config,
                 GError       **error)
 {

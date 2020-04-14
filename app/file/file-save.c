@@ -63,13 +63,15 @@ file_save (Gimp                *gimp,
            gboolean             export_forward,
            GError             **error)
 {
-  GimpDrawable      *drawable;
   GimpValueArray    *return_vals;
   GFile             *orig_file;
   GimpPDBStatusType  status     = GIMP_PDB_EXECUTION_ERROR;
   GFile             *local_file = NULL;
   gboolean           mounted    = TRUE;
   GError            *my_error   = NULL;
+  GList             *drawables_list;
+  GimpDrawable     **drawables  = NULL;
+  gint               n_drawables;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
@@ -91,9 +93,21 @@ file_save (Gimp                *gimp,
 
   gimp_image_saving (image);
 
-  drawable = gimp_image_get_active_drawable (image);
+  drawables_list = gimp_image_get_selected_drawables (image);
 
-  if (! drawable)
+  if (drawables_list)
+    {
+      GList *iter;
+      gint   i;
+
+      n_drawables = g_list_length (drawables_list);
+      drawables = g_new (GimpDrawable *, n_drawables);
+      for (iter = drawables_list, i = 0; iter; iter = iter->next, i++)
+        drawables[i] = iter->data;
+
+      g_list_free (drawables_list);
+    }
+  else
     {
       g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("There is no active layer to save"));
@@ -190,15 +204,16 @@ file_save (Gimp                *gimp,
                                         gimp_get_user_context (gimp),
                                         progress, error,
                                         gimp_object_get_name (file_proc),
-                                        GIMP_TYPE_RUN_MODE, run_mode,
-                                        GIMP_TYPE_IMAGE,    image,
-                                        GIMP_TYPE_DRAWABLE, drawable,
-                                        G_TYPE_FILE,        file,
+                                        GIMP_TYPE_RUN_MODE,     run_mode,
+                                        GIMP_TYPE_IMAGE,        image,
+                                        G_TYPE_INT,             n_drawables,
+                                        GIMP_TYPE_OBJECT_ARRAY, drawables,
+                                        G_TYPE_FILE,            file,
                                         G_TYPE_NONE);
-
   status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
   gimp_value_array_unref (return_vals);
+  g_clear_pointer (&drawables, g_free);
 
   if (local_file)
     {

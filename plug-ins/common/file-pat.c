@@ -57,7 +57,8 @@ static GimpProcedure  * pat_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * pat_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -140,7 +141,8 @@ static GimpValueArray *
 pat_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          GimpDrawable         *drawable,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -183,7 +185,7 @@ pat_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &drawable, "PAT",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "PAT",
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -196,6 +198,16 @@ pat_save (GimpProcedure        *procedure,
 
     default:
       break;
+    }
+
+  if (n_drawables != 1)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("PAT format does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
     }
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -215,11 +227,12 @@ pat_save (GimpProcedure        *procedure,
       save_retvals =
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-pat-save-internal",
-                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE,    image,
-                                GIMP_TYPE_DRAWABLE, drawable,
-                                G_TYPE_FILE,        file,
-                                G_TYPE_STRING,      description,
+                                GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
+                                GIMP_TYPE_IMAGE,        image,
+                                G_TYPE_INT,             n_drawables,
+                                GIMP_TYPE_OBJECT_ARRAY, drawables,
+                                G_TYPE_FILE,            file,
+                                G_TYPE_STRING,          description,
                                 G_TYPE_NONE);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
@@ -239,7 +252,10 @@ pat_save (GimpProcedure        *procedure,
   g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

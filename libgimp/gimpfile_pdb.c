@@ -176,7 +176,8 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * gimp_file_save:
  * @run_mode: The run mode.
  * @image: Input image.
- * @drawable: Drawable to save.
+ * @num_drawables: The number of drawables to save.
+ * @drawables: (array length=num_drawables) (element-type GimpItem): Drawables to save.
  * @file: The file to save the image in.
  *
  * Saves a file by extension.
@@ -187,10 +188,11 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save (GimpRunMode   run_mode,
-                GimpImage    *image,
-                GimpDrawable *drawable,
-                GFile        *file)
+gimp_file_save (GimpRunMode      run_mode,
+                GimpImage       *image,
+                gint             num_drawables,
+                const GimpItem **drawables,
+                GFile           *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -199,9 +201,11 @@ gimp_file_save (GimpRunMode   run_mode,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_INT, num_drawables,
+                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
+  gimp_value_set_object_array (gimp_value_array_index (args, 3), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-file-save",

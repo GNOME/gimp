@@ -34,7 +34,8 @@ G_BEGIN_DECLS
  * @procedure:   the #GimpProcedure that runs.
  * @run_mode:    the #GimpRunMode.
  * @image:       the image to save.
- * @drawable:    the drawable to save.
+ * @n_drawables: the number of drawables to save.
+ * @drawables:   the drawables to save.
  * @file:        the #GFile to save to.
  * @args:        the @procedure's remaining arguments.
  * @run_data: (closure): the run_data given in gimp_save_procedure_new().
@@ -49,7 +50,8 @@ G_BEGIN_DECLS
 typedef GimpValueArray * (* GimpRunSaveFunc) (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);

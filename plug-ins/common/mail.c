@@ -327,6 +327,7 @@ send_image (const gchar  *filename,
             gint32        run_mode)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpItem         **drawables;
   gchar             *ext;
   GFile             *tmpfile;
   gchar             *tmpname;
@@ -352,14 +353,18 @@ send_image (const gchar  *filename,
   tmpfile = gimp_temp_file (ext + 1);
   tmpname = g_file_get_path (tmpfile);
 
+  drawables = g_new (GimpItem *, 1);
+  drawables[0] = (GimpItem *) drawable;
   if (! (gimp_file_save (run_mode,
-                         image,
-                         drawable,
+                         image, 1,
+                         (const GimpItem **) drawables,
                          tmpfile) &&
          valid_file (tmpfile)))
     {
+      g_free (drawables);
       goto error;
     }
+  g_free (drawables);
 
 #ifndef SENDMAIL /* xdg-email */
   /* From xdg-email doc:

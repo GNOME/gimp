@@ -91,7 +91,8 @@ static GimpValueArray * dicom_load             (GimpProcedure        *procedure,
 static GimpValueArray * dicom_save             (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
                                                 GimpImage            *image,
-                                                GimpDrawable         *drawable,
+                                                gint                  n_drawables,
+                                                GimpDrawable        **drawables,
                                                 GFile                *file,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
@@ -260,7 +261,8 @@ static GimpValueArray *
 dicom_save (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *image,
-            GimpDrawable         *drawable,
+            gint                  n_drawables,
+            GimpDrawable        **drawables,
             GFile                *file,
             const GimpValueArray *args,
             gpointer              run_data)
@@ -277,7 +279,7 @@ dicom_save (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
-      export = gimp_export_image (&image, &drawable, "DICOM",
+      export = gimp_export_image (&image, &n_drawables, &drawables, "DICOM",
                                   GIMP_EXPORT_CAN_HANDLE_RGB |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY);
 
@@ -291,9 +293,19 @@ dicom_save (GimpProcedure        *procedure,
       break;
     }
 
+  if (n_drawables != 1)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("Dicom format does not support multiple layers."));
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
+    }
+
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawable,
+      if (! save_image (file, image, drawables[0],
                         &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -301,7 +313,10 @@ dicom_save (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image);
+    {
+      gimp_image_delete (image);
+      g_free (drawables);
+    }
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
