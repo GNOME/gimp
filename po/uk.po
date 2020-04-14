@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-04-04 14:41+0000\n"
-"PO-Revision-Date: 2020-04-05 12:17+0300\n"
+"POT-Creation-Date: 2020-04-13 18:42+0000\n"
+"PO-Revision-Date: 2020-04-14 15:30+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3198,7 +3198,7 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:342
+#: ../app/tools/gimpfiltertool.c:345
 #: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:1242
 #: ../app/tools/gimptransformtool.c:439 ../app/widgets/gimpactionview.c:601
@@ -5685,7 +5685,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Повторно просканувати встановлені шрифти"
 
-#: ../app/actions/gimpgeglprocedure.c:284
+#: ../app/actions/gimpgeglprocedure.c:285
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -7936,7 +7936,7 @@ msgstr "Перезавантажити усі фільтри"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:341 ../app/tools/gimptransformgridtool.c:1239
+#: ../app/tools/gimpfiltertool.c:344 ../app/tools/gimptransformgridtool.c:1239
 #: ../app/widgets/gimpcolordialog.c:459
 #: ../app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
@@ -10505,7 +10505,7 @@ msgstr "Перемістити це вікно на екран %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
-#: ../app/tools/gimpfiltertool.c:343 ../app/widgets/gimpcolordialog.c:461
+#: ../app/tools/gimpfiltertool.c:346 ../app/widgets/gimpcolordialog.c:461
 #: ../app/widgets/gimpcontrollereditor.c:662
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:176
 msgid "_OK"
@@ -13456,6 +13456,7 @@ msgid "Background color"
 msgstr "Колір тла"
 
 #: ../app/core/gimpcontext.c:679 ../app/core/gimpcontext.c:680
+#: ../app/operations/gimpoperationsettings.c:100
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:286
 msgid "Opacity"
 msgstr "Непрозорість"
@@ -14783,7 +14784,7 @@ msgstr "Рухомий вибір"
 msgid "Floated Layer"
 msgstr "Рухомий шар"
 
-#: ../app/core/gimpsettings.c:151
+#: ../app/core/gimpsettings.c:152
 #, c-format
 msgid "Last used: %s"
 msgstr "Дата використання: %s"
@@ -15137,7 +15138,6 @@ msgstr "відсотки"
 #.
 #: ../app/dialogs/about-dialog.c:124
 #, c-format
-#| msgid "%s version %s"
 msgid "%s (revision %d)"
 msgstr "%s (модифікація %d)"
 
@@ -15413,7 +15413,7 @@ msgstr "Перетворення точності"
 #. gamma
 #: ../app/dialogs/convert-precision-dialog.c:176
 #: ../app/operations/gimplevelsconfig.c:149
-#: ../app/operations/gimplevelsconfig.c:150 ../app/tools/gimplevelstool.c:502
+#: ../app/operations/gimplevelsconfig.c:150 ../app/tools/gimplevelstool.c:498
 msgid "Gamma"
 msgstr "Гама"
 
@@ -18252,7 +18252,7 @@ msgstr "Опускання нового контуру"
 
 #: ../app/display/gimpdisplayshell-dnd.c:363
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:289 ../app/tools/gimpgradienttool.c:254
+#: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpselectiontool.c:547
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -18261,7 +18261,7 @@ msgstr "Неможливо змінити точки растру групи ш�
 #: ../app/display/gimpdisplayshell-dnd.c:371
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1148
-#: ../app/tools/gimpfiltertool.c:296 ../app/tools/gimpgradienttool.c:261
+#: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
 #: ../app/tools/gimpselectiontool.c:554 ../app/tools/gimptransformtool.c:691
 #: ../app/tools/gimpwarptool.c:780
@@ -19579,15 +19579,15 @@ msgstr "Охоплений канал"
 msgid "Curve"
 msgstr "Крива"
 
-#: ../app/operations/gimpcurvesconfig.c:563
+#: ../app/operations/gimpcurvesconfig.c:569
 msgid "not a GIMP Curves file"
 msgstr "не файл кривих GIMP"
 
-#: ../app/operations/gimpcurvesconfig.c:594
+#: ../app/operations/gimpcurvesconfig.c:600
 msgid "Parse error, didn't find 2 integers"
 msgstr "Помилка аналізу. Не знайдено 2 цілих чисел"
 
-#: ../app/operations/gimpcurvesconfig.c:700
+#: ../app/operations/gimpcurvesconfig.c:706
 msgid "Writing curves file failed: "
 msgstr "Запис у файл кривих не вдався:"
 
@@ -19653,15 +19653,15 @@ msgstr "Затиснути виведення"
 msgid "Clamp final output values."
 msgstr "Затиснути остаточні виведені значення."
 
-#: ../app/operations/gimplevelsconfig.c:855
+#: ../app/operations/gimplevelsconfig.c:861
 msgid "not a GIMP Levels file"
 msgstr "не є файлом рівнів GIMP"
 
-#: ../app/operations/gimplevelsconfig.c:930
+#: ../app/operations/gimplevelsconfig.c:936
 msgid "parse error"
 msgstr "помилка при синтаксичному розборі"
 
-#: ../app/operations/gimplevelsconfig.c:965
+#: ../app/operations/gimplevelsconfig.c:971
 msgid "Writing levels file failed: "
 msgstr "Запис у файл рівнів не вдався:"
 
@@ -19713,7 +19713,8 @@ msgid "Turn colors into shades of gray"
 msgstr "Перетворити кольори на градації сірого"
 
 #: ../app/operations/gimpoperationdesaturate.c:91
-#: ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/operations/gimpoperationsettings.c:92
+#: ../app/tools/gimpfiltertool.c:1117 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:124
 #: ../app/widgets/gimplayertreeview.c:271
 msgid "Mode"
@@ -19751,6 +19752,18 @@ msgstr "Замінити часткову прозорість кольором"
 #: ../app/operations/gimpoperationsemiflatten.c:96
 msgid "The color"
 msgstr "Колір"
+
+#: ../app/operations/gimpoperationsettings.c:77
+#: ../app/tools/gimpfiltertool.c:1081 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimptransformoptions.c:109
+#: ../app/tools/gimptransformoptions.c:262
+msgid "Clipping"
+msgstr "Обрізування"
+
+#: ../app/operations/gimpoperationsettings.c:78
+#: ../app/tools/gimptransformoptions.c:110
+msgid "How to clip"
+msgstr "Як обрізати"
 
 #: ../app/operations/gimpoperationthreshold.c:85
 #: ../app/tools/gimpthresholdtool.c:94
@@ -21354,7 +21367,7 @@ msgid "Select Range to Adjust"
 msgstr "Вибір ділянки для зміни"
 
 #: ../app/propgui/gimppropgui-color-balance.c:100
-#: ../app/tools/gimplevelstool.c:256
+#: ../app/tools/gimplevelstool.c:252
 msgid "Adjust Color Levels"
 msgstr "Коригування рівнів кольорів"
 
@@ -22071,7 +22084,7 @@ msgid "Bucket fill"
 msgstr "Заповнення"
 
 #: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
-#: ../app/tools/gimpfiltertool.c:306
+#: ../app/tools/gimpfiltertool.c:312
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:328
 #: ../app/tools/gimptransformtool.c:700 ../app/tools/gimpwarptool.c:794
@@ -22314,7 +22327,6 @@ msgid "Crop only currently selected layer"
 msgstr "Обрізати лише поточнийпозначенийй шар"
 
 #: ../app/tools/gimpcropoptions.c:102
-#| msgid "Select foreground pixels"
 msgid "Delete cropped pixels"
 msgstr "Вилучити обрізані пікселі"
 
@@ -22379,62 +22391,62 @@ msgstr "Криві"
 msgid "_Curves..."
 msgstr "_Криві…"
 
-#: ../app/tools/gimpcurvestool.c:399
+#: ../app/tools/gimpcurvestool.c:395
 msgid "Click to add a control point"
 msgstr "Натисніть, щоб додати керувальну точку"
 
-#: ../app/tools/gimpcurvestool.c:404
+#: ../app/tools/gimpcurvestool.c:400
 msgid "Click to add control points to all channels"
 msgstr "Натисніть, щоб додати керувальні точки до усіх каналів"
 
-#: ../app/tools/gimpcurvestool.c:409
+#: ../app/tools/gimpcurvestool.c:405
 msgid "Click to locate on curve"
 msgstr "Натисніть, щоб вказати криву"
 
-#: ../app/tools/gimpcurvestool.c:411
+#: ../app/tools/gimpcurvestool.c:407
 #, c-format
 msgid "%s: add control point"
 msgstr "%s:  додати керувальну точку"
 
-#: ../app/tools/gimpcurvestool.c:412
+#: ../app/tools/gimpcurvestool.c:408
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: додати керувальні точки до всіх каналів"
 
-#: ../app/tools/gimpcurvestool.c:429
+#: ../app/tools/gimpcurvestool.c:425
 msgid "Adjust Color Curves"
 msgstr "Коригування кривих кольору"
 
-#: ../app/tools/gimpcurvestool.c:474 ../app/tools/gimplevelstool.c:354
+#: ../app/tools/gimpcurvestool.c:470 ../app/tools/gimplevelstool.c:350
 #: ../app/tools/gimpthresholdtool.c:230
 msgid "Cha_nnel:"
 msgstr "_Канал:"
 
-#: ../app/tools/gimpcurvestool.c:506 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:502 ../app/tools/gimplevelstool.c:380
 msgid "R_eset Channel"
 msgstr "В_ідновити канал"
 
-#: ../app/tools/gimpcurvestool.c:616
+#: ../app/tools/gimpcurvestool.c:612
 msgid "_Input:"
 msgstr "В_хід:"
 
-#: ../app/tools/gimpcurvestool.c:630
+#: ../app/tools/gimpcurvestool.c:626
 msgid "O_utput:"
 msgstr "В_ихід:"
 
-#: ../app/tools/gimpcurvestool.c:644
+#: ../app/tools/gimpcurvestool.c:640
 msgid "T_ype:"
 msgstr "_Тип:"
 
-#: ../app/tools/gimpcurvestool.c:663 ../app/widgets/gimpdeviceinfoeditor.c:500
+#: ../app/tools/gimpcurvestool.c:659 ../app/widgets/gimpdeviceinfoeditor.c:500
 msgid "Curve _type:"
 msgstr "_Тип кривої:"
 
-#: ../app/tools/gimpcurvestool.c:782 ../app/tools/gimplevelstool.c:741
+#: ../app/tools/gimpcurvestool.c:774 ../app/tools/gimplevelstool.c:733
 msgid "Could not read header: "
 msgstr "Не вдалось прочитати заголовок: "
 
-#: ../app/tools/gimpcurvestool.c:856
+#: ../app/tools/gimpcurvestool.c:848
 msgid "Use _old curves file format"
 msgstr "_Використовувати старий формат кривих"
 
@@ -22559,65 +22571,61 @@ msgstr "%s, щоб взяти піпеткою колір тла"
 msgid "Anti erase  (%s)"
 msgstr "Антигумка  (%s)"
 
-#: ../app/tools/gimpfilteroptions.c:73
+#: ../app/tools/gimpfilteroptions.c:72
 msgid "_Preview"
 msgstr "_Попередній перегляд"
 
-#: ../app/tools/gimpfilteroptions.c:80
+#: ../app/tools/gimpfilteroptions.c:79
 msgid "Split _view"
 msgstr "Роз_ділити перегляд"
 
-#: ../app/tools/gimpfilteroptions.c:103
+#: ../app/tools/gimpfilteroptions.c:102
 msgid "On-canvas con_trols"
 msgstr "Керування на _полотгі"
 
-#: ../app/tools/gimpfilteroptions.c:104
+#: ../app/tools/gimpfilteroptions.c:103
 msgid "Show on-canvas filter controls"
 msgstr "Показувати засоби керування фільтром на полотні"
 
-#: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:437
-#: ../app/tools/gimpflipoptions.c:156 ../app/tools/gimptransformoptions.c:109
-#: ../app/tools/gimptransformoptions.c:262
-msgid "Clipping"
-msgstr "Обрізування"
-
-#: ../app/tools/gimpfilteroptions.c:111 ../app/tools/gimptransformoptions.c:110
-msgid "How to clip"
-msgstr "Як обрізати"
-
-#. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:399
-msgid "Advanced Color Options"
-msgstr "Додаткові параметри кольорів"
-
-#: ../app/tools/gimpfiltertool.c:656
+#: ../app/tools/gimpfiltertool.c:624
 msgid "Click to switch the original and filtered sides"
 msgstr "Натисніть, щоб поміняти місцями оригінал і результат обробки"
 
-#: ../app/tools/gimpfiltertool.c:660
+#: ../app/tools/gimpfiltertool.c:628
 msgid "Click to switch between vertical and horizontal"
 msgstr "Натисніть, щоб перемкнутися між вертикальним і горизонтальним"
 
-#: ../app/tools/gimpfiltertool.c:664
+#: ../app/tools/gimpfiltertool.c:632
 msgid "Click to move the split guide"
 msgstr "Натисніть, щоб пересунути межу поділу"
 
-#: ../app/tools/gimpfiltertool.c:666
+#: ../app/tools/gimpfiltertool.c:634
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: перемикання оригінал/фільтрування"
 
-#: ../app/tools/gimpfiltertool.c:667
+#: ../app/tools/gimpfiltertool.c:635
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
-#: ../app/tools/gimpfiltertool.c:1431 ../app/tools/gimpfiltertool-settings.c:71
+#. The blending-options expander
+#: ../app/tools/gimpfiltertool.c:1094
+#| msgid "Insane Options"
+msgid "Blending Options"
+msgstr "Параметри змішування"
+
+#. The Color Options expander
+#: ../app/tools/gimpfiltertool.c:1133
+msgid "Advanced Color Options"
+msgstr "Додаткові параметри кольорів"
+
+#: ../app/tools/gimpfiltertool.c:1537 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Імпортувати параметри «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1433 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1539 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Експортувати параметри «%s»"
@@ -23190,70 +23198,70 @@ msgstr "Змінити криву ножиць"
 msgid "_Levels..."
 msgstr "_Рівні…"
 
-#: ../app/tools/gimplevelstool.c:280
+#: ../app/tools/gimplevelstool.c:276
 msgid "Pick black point for all channels"
 msgstr "Вибрати чорну точку для всіх каналів"
 
-#: ../app/tools/gimplevelstool.c:282
+#: ../app/tools/gimplevelstool.c:278
 msgid "Pick black point for the selected channel"
 msgstr "Вибрати чорну точку для позначеного каналу"
 
-#: ../app/tools/gimplevelstool.c:289
+#: ../app/tools/gimplevelstool.c:285
 msgid "Pick gray point for all channels"
 msgstr "Вибрати сіру точку для всіх каналів"
 
-#: ../app/tools/gimplevelstool.c:291
+#: ../app/tools/gimplevelstool.c:287
 msgid "Pick gray point for the selected channel"
 msgstr "Вибрати сіру точку для позначеного каналу"
 
-#: ../app/tools/gimplevelstool.c:298
+#: ../app/tools/gimplevelstool.c:294
 msgid "Pick white point for all channels"
 msgstr "Вибрати білу точку для всіх каналів"
 
-#: ../app/tools/gimplevelstool.c:300
+#: ../app/tools/gimplevelstool.c:296
 msgid "Pick white point for the selected channel"
 msgstr "Вибрати білу точку для позначеного каналу"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:409
+#: ../app/tools/gimplevelstool.c:405
 msgid "Input Levels"
 msgstr "Рівні на вході"
 
-#: ../app/tools/gimplevelstool.c:495
+#: ../app/tools/gimplevelstool.c:491
 msgid "Clamp _input"
 msgstr "Затиснуте _введення"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:534
+#: ../app/tools/gimplevelstool.c:530
 msgid "Output Levels"
 msgstr "Рівні на виході"
 
-#: ../app/tools/gimplevelstool.c:581
+#: ../app/tools/gimplevelstool.c:577
 msgid "Clamp outpu_t"
 msgstr "Затиснуте в_иведення"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:594
+#: ../app/tools/gimplevelstool.c:590
 msgid "All Channels"
 msgstr "Всі канали"
 
-#: ../app/tools/gimplevelstool.c:606
+#: ../app/tools/gimplevelstool.c:602
 msgid "_Auto Input Levels"
 msgstr "_Авторівні на вході"
 
-#: ../app/tools/gimplevelstool.c:609
+#: ../app/tools/gimplevelstool.c:605
 msgid "Adjust levels for all channels automatically"
 msgstr "Підібрати рівні для всіх каналів автоматично"
 
-#: ../app/tools/gimplevelstool.c:636
+#: ../app/tools/gimplevelstool.c:632
 msgid "Edit these Settings as Curves"
 msgstr "Змінити ці параметри як криві"
 
-#: ../app/tools/gimplevelstool.c:857
+#: ../app/tools/gimplevelstool.c:849
 msgid "Use _old levels file format"
 msgstr "_Використовувати старий формат рівнів"
 
-#: ../app/tools/gimplevelstool.c:1000 ../app/tools/gimpthresholdtool.c:408
+#: ../app/tools/gimplevelstool.c:992 ../app/tools/gimpthresholdtool.c:408
 msgid "Calculating histogram..."
 msgstr "Обчислюємо гістограму…"
 
