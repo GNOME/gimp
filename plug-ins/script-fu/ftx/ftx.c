@@ -293,13 +293,13 @@ pointer foreign_time(scheme *sc, pointer args)
 
 pointer foreign_gettimeofday(scheme *sc, pointer args)
 {
-  GTimeVal tv;
-  pointer  ret;
+  pointer ret;
+  gint64  time;
 
-  g_get_current_time(&tv);
+  time = g_get_real_time ();
 
-  ret = sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) tv.tv_sec),
-         sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) tv.tv_usec),
+  ret = sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) time / G_USEC_PER_SEC),
+         sc->vptr->cons(sc, sc->vptr->mk_integer(sc,(long) time % G_USEC_PER_SEC),
           sc->NIL));
 
   return ret;
