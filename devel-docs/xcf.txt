@@ -175,6 +175,11 @@ Adds many layer modes, layer group masks, high-bit depth (precisions
 other than 8-bit gamma), zlib compression and 64-bit offsets for XCF
 files bigger than 4GB.
 
+Version 14:
+Since GIMP 2.10.20, released on 2020-MM-DD.
+Allows multiple layers to have the property PROP_ACTIVE_LAYER, hence
+multiple layers selected at once.
+
 
 1. BASIC CONCEPTS
 =================
@@ -533,7 +538,7 @@ The floating selection must not have a layer mask of its own, but if
 an ordinary (not floating) selection also exists, it will be used as
 a layer mask for the floating selection.
 
-If a floating selection exists, it must also be the active layer.
+If a floating selection exists, it must also be the only selected layer.
 
 Because the floating selection is modal and ephemeral, users rarely
 save XCF files containing a floating selection. It may be acceptable
@@ -1157,9 +1162,11 @@ PROP_ACTIVE_LAYER (editing state)
   uint32  2        Type identification
   uint32  0        PROP_ACTIVE_LAYER has no payload
 
-  The presence of PROP_ACTIVE_LAYER indicates that the channel is the
-  currently active layer.
-  Only zero or one layer must have this property at any time.
+  The presence of PROP_ACTIVE_LAYER indicates that the layer is
+  currently selected.
+  Up to XCF 13 and below, only zero or one layer could have this
+  property at any time. Since XCF 14 and over, there can be any number
+  of layers selected together.
 
 PROP_APPLY_MASK (essential)
   uint32  11       Type identification
