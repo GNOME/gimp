@@ -695,6 +695,10 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
 
   curves = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
 
+  gimp_operation_settings_config_copy_base (GIMP_CONFIG (config),
+                                            GIMP_CONFIG (curves),
+                                            0);
+
   curves->linear = config->linear;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
