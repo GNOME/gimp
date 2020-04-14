@@ -659,8 +659,11 @@ xcf_load_image (Gimp     *gimp,
       floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
     }
 
-  if (info->active_layer)
-    gimp_image_set_active_layer (image, info->active_layer);
+  if (info->selected_layers)
+    {
+      gimp_image_set_selected_layers (image, info->selected_layers);
+      g_clear_pointer (&info->selected_layers, g_list_free);
+    }
 
   if (info->active_channel)
     gimp_image_set_active_channel (image, info->active_channel);
@@ -1171,7 +1174,7 @@ xcf_load_layer_props (XcfInfo    *info,
           return TRUE;
 
         case PROP_ACTIVE_LAYER:
-          info->active_layer = *layer;
+          info->selected_layers = g_list_prepend (info->selected_layers, *layer);
           break;
 
         case PROP_FLOATING_SELECTION:
@@ -1450,15 +1453,15 @@ xcf_load_layer_props (XcfInfo    *info,
         case PROP_GROUP_ITEM:
           {
             GimpLayer *group;
-            gboolean   is_active_layer;
+            gboolean   is_selected_layer;
 
             /* We're going to delete *layer, Don't leave its pointers
              * in @info.  After that, we'll restore them back with the
              * new pointer. See bug #767873.
              */
-            is_active_layer = (*layer == info->active_layer);
-            if (is_active_layer)
-              info->active_layer = NULL;
+            is_selected_layer = (g_list_find (info->selected_layers, *layer ) != NULL);
+            if (is_selected_layer)
+              info->selected_layers = g_list_remove (info->selected_layers, *layer);
 
             if (*layer == info->floating_sel)
               info->floating_sel = NULL;
@@ -1472,8 +1475,8 @@ xcf_load_layer_props (XcfInfo    *info,
             g_object_unref (*layer);
             *layer = group;
 
-            if (is_active_layer)
-              info->active_layer = *layer;
+            if (is_selected_layer)
+              info->selected_layers = g_list_prepend (info->selected_layers, *layer);
 
             /* Don't restore info->floating_sel because group layers
              * can't be floating selections
@@ -1858,7 +1861,7 @@ xcf_load_layer (XcfInfo    *info,
   gboolean           apply_mask = TRUE;
   gboolean           edit_mask  = FALSE;
   gboolean           show_mask  = FALSE;
-  gboolean           active;
+  GList             *selected;
   gboolean           floating;
   guint32            group_layer_flags = 0;
   guint32            text_layer_flags = 0;
@@ -1979,7 +1982,7 @@ xcf_load_layer (XcfInfo    *info,
   xcf_progress_update (info);
 
   /* call the evil text layer hack that might change our layer pointer */
-  active   = (info->active_layer == layer);
+  selected = g_list_find (info->selected_layers, layer);
   floating = (info->floating_sel == layer);
 
   if (gimp_text_layer_xcf_load_hack (&layer))
@@ -1987,8 +1990,11 @@ xcf_load_layer (XcfInfo    *info,
       gimp_text_layer_set_xcf_flags (GIMP_TEXT_LAYER (layer),
                                      text_layer_flags);
 
-      if (active)
-        info->active_layer = layer;
+      if (selected)
+        {
+          info->selected_layers = g_list_delete_link (info->selected_layers, selected);
+          info->selected_layers = g_list_prepend (info->selected_layers, layer);
+        }
       if (floating)
         info->floating_sel = layer;
     }
@@ -2064,8 +2070,7 @@ xcf_load_layer (XcfInfo    *info,
   return layer;
 
  error:
-  if (info->active_layer == layer)
-    info->active_layer = NULL;
+  info->selected_layers = g_list_remove (info->selected_layers, layer);
 
   if (info->floating_sel == layer)
     info->floating_sel = NULL;

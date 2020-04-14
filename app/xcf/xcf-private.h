@@ -105,7 +105,7 @@ struct _XcfInfo
   gint                bytes_per_offset;
   GFile              *file;
   GimpTattoo          tattoo_state;
-  GimpLayer          *active_layer;
+  GList              *selected_layers;
   GimpChannel        *active_channel;
   GimpDrawable       *floating_sel_drawable;
   GimpLayer          *floating_sel;

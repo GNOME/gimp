@@ -515,7 +515,7 @@ xcf_save_layer_props (XcfInfo    *info,
       g_list_free (path);
     }
 
-  if (layer == gimp_image_get_active_layer (image))
+  if (g_list_find (gimp_image_get_selected_layers (image), layer))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_LAYER, error));
 
   if (layer == gimp_image_get_floating_selection (image))
