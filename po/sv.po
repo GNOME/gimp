@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-04-05 19:06+0000\n"
-"PO-Revision-Date: 2020-04-06 20:33+0200\n"
+"POT-Creation-Date: 2020-04-14 15:06+0000\n"
+"PO-Revision-Date: 2020-04-15 02:58+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -673,7 +673,7 @@ msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
-"GIMP 2.9.8 introducerar redigering av toningar på ritytan och diverse "
+"GIMP 2.9.8 introducerar redigering av gradienter på ritytan och diverse "
 "förbättringar men fokus ligger på felfixar och stabilitet."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
@@ -726,7 +726,7 @@ msgstr "Extrafiler för GIMP"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:2
 msgid "Patterns, gradients, and other extra files for GIMP"
-msgstr "Mönster, toningar och andra extrafiler för GIMP"
+msgstr "Mönster, gradienter och andra extrafiler för GIMP"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -3154,7 +3154,7 @@ msgstr "240 sekunder"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:344
+#: ../app/tools/gimpfiltertool.c:346
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:1243
 #: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
@@ -5638,7 +5638,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Sök igenom installerade typsnitt igen"
 
-#: ../app/actions/gimpgeglprocedure.c:321
+#: ../app/actions/gimpgeglprocedure.c:322
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -7893,7 +7893,7 @@ msgstr "Återställ alla filter"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:343 ../app/tools/gimptransformgridtool.c:1240
+#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1240
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -10466,7 +10466,7 @@ msgstr "Flytta det här fönstret till skärmen %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:197
-#: ../app/tools/gimpfiltertool.c:345 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:347 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:663
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -13327,6 +13327,7 @@ msgid "Background color"
 msgstr "Bakgrundsfärg"
 
 #: ../app/core/gimpcontext.c:698 ../app/core/gimpcontext.c:699
+#: ../app/operations/gimpoperationsettings.c:104
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity"
 msgstr "Opacitet"
@@ -13359,7 +13360,7 @@ msgstr "Mönster"
 #: ../app/tools/gimpgradientoptions.c:268 ../app/tools/gimpgradienttool.c:164
 #: ../app/tools/gimppaintoptions-gui.c:378
 msgid "Gradient"
-msgstr "Färgskala"
+msgstr "Gradient"
 
 #: ../app/core/gimpcontext.c:750 ../app/core/gimpcontext.c:751
 #: ../app/widgets/gimpcolorselectorpalette.c:59
@@ -13375,8 +13376,8 @@ msgstr "Typsnitt"
 msgid "Tool Preset"
 msgstr "Verktygsförinställning"
 
-#: ../app/core/gimpdatafactory.c:350 ../app/core/gimpdatafactory.c:384
-#: ../app/core/gimpdatafactory.c:718 ../app/core/gimpdatafactory.c:749
+#: ../app/core/gimpdatafactory.c:351 ../app/core/gimpdatafactory.c:385
+#: ../app/core/gimpdatafactory.c:719 ../app/core/gimpdatafactory.c:750
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -13387,22 +13388,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:423 ../app/core/gimpdatafactory.c:426
+#: ../app/core/gimpdatafactory.c:424 ../app/core/gimpdatafactory.c:427
 #: ../app/core/gimpitem.c:547 ../app/core/gimpitem.c:550
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:558
+#: ../app/core/gimpdatafactory.c:436 ../app/core/gimpitem.c:558
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
 
-#: ../app/core/gimpdatafactory.c:586 ../app/tools/gimptextoptions.c:532
+#: ../app/core/gimpdatafactory.c:587 ../app/tools/gimptextoptions.c:532
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Läser in typsnitt (det här kan ta en stund…)"
 
-#: ../app/core/gimpdatafactory.c:908
+#: ../app/core/gimpdatafactory.c:909
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13413,7 +13414,7 @@ msgstr ""
 "Skapa mappen eller justera din konfiguration i delen ”kataloger” i "
 "Inställningsdialogrutan."
 
-#: ../app/core/gimpdatafactory.c:927
+#: ../app/core/gimpdatafactory.c:928
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -13424,7 +13425,7 @@ msgstr ""
 "din datasökväg. Du redigerade förmodligen gimprc-filen manuellt, justera "
 "detta i delen ”kataloger” i Inställningsdialogrutan."
 
-#: ../app/core/gimpdatafactory.c:937
+#: ../app/core/gimpdatafactory.c:938
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Du har ingen skrivbar datamapp konfigurerad."
@@ -13498,7 +13499,7 @@ msgstr "Rendera penseldrag"
 #: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1055
 msgctxt "undo-type"
 msgid "Gradient"
-msgstr "Toning"
+msgstr "Gradient"
 
 #: ../app/core/gimpdrawable-gradient.c:226
 msgid "Calculating distance map"
@@ -14909,7 +14910,7 @@ msgstr "Precision"
 #. gamma
 #: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:140
-#: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:509
+#: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:505
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -15051,7 +15052,6 @@ msgstr "procent"
 #.
 #: ../app/dialogs/about-dialog.c:132
 #, c-format
-#| msgid "%s version %s"
 msgid "%s (revision %d)"
 msgstr "%s (revision %d)"
 
@@ -18004,23 +18004,23 @@ msgstr "N"
 msgid "_Sample Merged"
 msgstr "Sa_mpla sammanfogade"
 
-#: ../app/display/gimpdisplayshell.c:575
+#: ../app/display/gimpdisplayshell.c:576
 msgid "Access the image menu"
 msgstr "Kom åt bildmenyn"
 
-#: ../app/display/gimpdisplayshell.c:693
+#: ../app/display/gimpdisplayshell.c:694
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när fönsterstorlek ändras"
 
-#: ../app/display/gimpdisplayshell.c:722
+#: ../app/display/gimpdisplayshell.c:723
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
-#: ../app/display/gimpdisplayshell.c:745
+#: ../app/display/gimpdisplayshell.c:746
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
-#: ../app/display/gimpdisplayshell.c:804 ../app/display/gimpdisplayshell.c:1465
+#: ../app/display/gimpdisplayshell.c:805 ../app/display/gimpdisplayshell.c:1466
 #: ../app/widgets/gimptoolbox.c:247
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
@@ -18118,7 +18118,7 @@ msgstr "Släpp ny bana"
 
 #: ../app/display/gimpdisplayshell-dnd.c:364
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:289 ../app/tools/gimpgradienttool.c:254
+#: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpselectiontool.c:547
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -18127,7 +18127,7 @@ msgstr "Kan inte ändra bildpunkterna i lagergrupper."
 #: ../app/display/gimpdisplayshell-dnd.c:372
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
-#: ../app/tools/gimpfiltertool.c:296 ../app/tools/gimpgradienttool.c:261
+#: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
 #: ../app/tools/gimpselectiontool.c:554 ../app/tools/gimptransformtool.c:688
 #: ../app/tools/gimpwarptool.c:780
@@ -19378,15 +19378,15 @@ msgstr "Den påverkade kanalen"
 msgid "Curve"
 msgstr "Kurva"
 
-#: ../app/operations/gimpcurvesconfig.c:544
+#: ../app/operations/gimpcurvesconfig.c:550
 msgid "not a GIMP Curves file"
 msgstr "inte en GIMP-kurvfil"
 
-#: ../app/operations/gimpcurvesconfig.c:575
+#: ../app/operations/gimpcurvesconfig.c:581
 msgid "Parse error, didn't find 2 integers"
 msgstr "Tolkningsfel, hittade inte två heltal"
 
-#: ../app/operations/gimpcurvesconfig.c:681
+#: ../app/operations/gimpcurvesconfig.c:687
 msgid "Writing curves file failed: "
 msgstr "Skrivning av kurvfil misslyckades: "
 
@@ -19452,15 +19452,15 @@ msgstr "Begränsa utdata"
 msgid "Clamp final output values."
 msgstr "Begränsa slutliga utdatavärden."
 
-#: ../app/operations/gimplevelsconfig.c:836
+#: ../app/operations/gimplevelsconfig.c:846
 msgid "not a GIMP Levels file"
 msgstr "inte en GIMP-nivåfil"
 
-#: ../app/operations/gimplevelsconfig.c:911
+#: ../app/operations/gimplevelsconfig.c:921
 msgid "parse error"
 msgstr "tolkningsfel"
 
-#: ../app/operations/gimplevelsconfig.c:946
+#: ../app/operations/gimplevelsconfig.c:956
 msgid "Writing levels file failed: "
 msgstr "Skrivning av nivåfil misslyckades: "
 
@@ -19512,7 +19512,8 @@ msgid "Turn colors into shades of gray"
 msgstr "Gör om färger till gråskalor"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
-#: ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/operations/gimpoperationsettings.c:95
+#: ../app/tools/gimpfiltertool.c:1122 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:116
 #: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
@@ -19550,6 +19551,22 @@ msgstr "Ersätt partiell transparens med en färg"
 #: ../app/operations/gimpoperationsemiflatten.c:96
 msgid "The color"
 msgstr "Färgen"
+
+#: ../app/operations/gimpoperationsettings.c:78
+#: ../app/tools/gimpfiltertool.c:1086 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimptransformoptions.c:108
+#: ../app/tools/gimptransformoptions.c:264
+msgid "Clipping"
+msgstr "Klippning"
+
+#: ../app/operations/gimpoperationsettings.c:79
+#: ../app/tools/gimptransformoptions.c:109
+msgid "How to clip"
+msgstr "Hur att klippa"
+
+#: ../app/operations/gimpoperationsettings.c:112
+msgid "Color _managed"
+msgstr "Färg_hanterad"
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
@@ -21123,7 +21140,7 @@ msgid "Select Range to Adjust"
 msgstr "Välj intervall att justera"
 
 #: ../app/propgui/gimppropgui-color-balance.c:103
-#: ../app/tools/gimplevelstool.c:256
+#: ../app/tools/gimplevelstool.c:252
 msgid "Adjust Color Levels"
 msgstr "Justera färgnivåer"
 
@@ -21842,7 +21859,7 @@ msgid "Bucket fill"
 msgstr "Fyll"
 
 #: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
-#: ../app/tools/gimpfiltertool.c:306
+#: ../app/tools/gimpfiltertool.c:312
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:328
 #: ../app/tools/gimptransformtool.c:697 ../app/tools/gimpwarptool.c:794
@@ -22140,70 +22157,70 @@ msgstr "Kurvor"
 msgid "_Curves..."
 msgstr "_Kurvor…"
 
-#: ../app/tools/gimpcurvestool.c:399
+#: ../app/tools/gimpcurvestool.c:395
 msgid "Click to add a control point"
 msgstr "Klicka för att lägga till en kontrollpunkt"
 
-#: ../app/tools/gimpcurvestool.c:404
+#: ../app/tools/gimpcurvestool.c:400
 msgid "Click to add control points to all channels"
 msgstr "Klicka för att lägga till kontrollpunkter till alla kanaler"
 
-#: ../app/tools/gimpcurvestool.c:409
+#: ../app/tools/gimpcurvestool.c:405
 msgid "Click to locate on curve"
 msgstr "Klicka för att söka på kurva"
 
-#: ../app/tools/gimpcurvestool.c:411
+#: ../app/tools/gimpcurvestool.c:407
 #, c-format
 msgid "%s: add control point"
 msgstr "%s: lägg till kontrollpunkt"
 
-#: ../app/tools/gimpcurvestool.c:412
+#: ../app/tools/gimpcurvestool.c:408
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: lägga till kontrollpunkter till alla kanaler"
 
-#: ../app/tools/gimpcurvestool.c:429
+#: ../app/tools/gimpcurvestool.c:425
 msgid "Adjust Color Curves"
 msgstr "Justera färgkurvor"
 
-#: ../app/tools/gimpcurvestool.c:474 ../app/tools/gimplevelstool.c:354
+#: ../app/tools/gimpcurvestool.c:470 ../app/tools/gimplevelstool.c:350
 #: ../app/tools/gimpthresholdtool.c:230
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:506 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:502 ../app/tools/gimplevelstool.c:380
 msgid "R_eset Channel"
 msgstr "Återstäl_l kanal"
 
-#: ../app/tools/gimpcurvestool.c:526
+#: ../app/tools/gimpcurvestool.c:522
 msgid "Adjust curves in linear light"
 msgstr "Justera kurvor i linjärt ljus"
 
-#: ../app/tools/gimpcurvestool.c:527
+#: ../app/tools/gimpcurvestool.c:523
 msgid "Adjust curves perceptually"
 msgstr "Justera kurvor perceptuellt"
 
-#: ../app/tools/gimpcurvestool.c:622
+#: ../app/tools/gimpcurvestool.c:618
 msgid "_Input:"
 msgstr "_Indata:"
 
-#: ../app/tools/gimpcurvestool.c:636
+#: ../app/tools/gimpcurvestool.c:632
 msgid "O_utput:"
 msgstr "_Utdata:"
 
-#: ../app/tools/gimpcurvestool.c:650
+#: ../app/tools/gimpcurvestool.c:646
 msgid "T_ype:"
 msgstr "T_yp:"
 
-#: ../app/tools/gimpcurvestool.c:669 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:665 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "Kurv_typ:"
 
-#: ../app/tools/gimpcurvestool.c:788 ../app/tools/gimplevelstool.c:754
+#: ../app/tools/gimpcurvestool.c:751 ../app/tools/gimplevelstool.c:746
 msgid "Could not read header: "
 msgstr "Kunde inte läsa huvud: "
 
-#: ../app/tools/gimpcurvestool.c:862
+#: ../app/tools/gimpcurvestool.c:825
 msgid "Use _old curves file format"
 msgstr "Använd filformat för _gamla kurvor"
 
@@ -22331,80 +22348,71 @@ msgstr "%s för att välja en bakgrundsfärg"
 msgid "Anti erase  (%s)"
 msgstr "Antisudda  (%s)"
 
-#: ../app/tools/gimpfilteroptions.c:73
+#: ../app/tools/gimpfilteroptions.c:71
 msgid "_Preview"
 msgstr "_Förhandsvisning"
 
-#: ../app/tools/gimpfilteroptions.c:80
+#: ../app/tools/gimpfilteroptions.c:78
 msgid "Split _view"
 msgstr "Dela _vy"
 
-#: ../app/tools/gimpfilteroptions.c:103
+#: ../app/tools/gimpfilteroptions.c:101
 msgid "On-canvas con_trols"
 msgstr "Kon_troller på ritytan"
 
-#: ../app/tools/gimpfilteroptions.c:104
+#: ../app/tools/gimpfilteroptions.c:102
 msgid "Show on-canvas filter controls"
 msgstr "Visa filterkontroller på ritytan"
 
-#: ../app/tools/gimpfilteroptions.c:110 ../app/tools/gimpfiltertool.c:449
-#: ../app/tools/gimpflipoptions.c:156 ../app/tools/gimptransformoptions.c:108
-#: ../app/tools/gimptransformoptions.c:264
-msgid "Clipping"
-msgstr "Klippning"
+#: ../app/tools/gimpfiltertool.c:627
+msgid "Click to switch the original and filtered sides"
+msgstr "Klicka för att växla mellan original och filtrerade sidor"
 
-#: ../app/tools/gimpfilteroptions.c:111 ../app/tools/gimptransformoptions.c:109
-msgid "How to clip"
-msgstr "Hur att klippa"
+#: ../app/tools/gimpfiltertool.c:631
+msgid "Click to switch between vertical and horizontal"
+msgstr "Klicka för att växla mellan vertikal och horisontell"
 
-#: ../app/tools/gimpfilteroptions.c:126
-msgid "Color _managed"
-msgstr "Färg_hanterad"
+#: ../app/tools/gimpfiltertool.c:635
+msgid "Click to move the split guide"
+msgstr "Klicka för att flytta delningsguide"
+
+#: ../app/tools/gimpfiltertool.c:637
+#, c-format
+msgid "%s: switch original and filtered"
+msgstr "%s: växla original och filtrerad"
+
+#: ../app/tools/gimpfiltertool.c:638
+#, c-format
+msgid "%s: switch horizontal and vertical"
+msgstr "%s: växla horisontell och vertikal"
+
+#. The blending-options expander
+#: ../app/tools/gimpfiltertool.c:1099
+msgid "Blending Options"
+msgstr "Toningsalternativ"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:403
+#: ../app/tools/gimpfiltertool.c:1138
 msgid "Advanced Color Options"
 msgstr "Avancerade färgalternativ"
 
-#: ../app/tools/gimpfiltertool.c:422
+#: ../app/tools/gimpfiltertool.c:1162
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 "Konvertera bildpunkter till inbyggd sRGB för att tillämpa filter (långsamt)"
 
-#: ../app/tools/gimpfiltertool.c:423
+#: ../app/tools/gimpfiltertool.c:1163
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Antag att bildpunkter följer inbyggd sRGB (ignorera faktisk färgrymd för "
 "bilden)"
 
-#: ../app/tools/gimpfiltertool.c:667
-msgid "Click to switch the original and filtered sides"
-msgstr "Klicka för att växla mellan original och filtrerade sidor"
-
-#: ../app/tools/gimpfiltertool.c:671
-msgid "Click to switch between vertical and horizontal"
-msgstr "Klicka för att växla mellan vertikal och horisontell"
-
-#: ../app/tools/gimpfiltertool.c:675
-msgid "Click to move the split guide"
-msgstr "Klicka för att flytta delningsguide"
-
-#: ../app/tools/gimpfiltertool.c:677
-#, c-format
-msgid "%s: switch original and filtered"
-msgstr "%s: växla original och filtrerad"
-
-#: ../app/tools/gimpfiltertool.c:678
-#, c-format
-msgid "%s: switch horizontal and vertical"
-msgstr "%s: växla horisontell och vertikal"
-
-#: ../app/tools/gimpfiltertool.c:1445 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1552 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importera ”%s”-inställningar"
 
-#: ../app/tools/gimpfiltertool.c:1447 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1554 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportera ”%s”-inställningar"
@@ -22979,78 +22987,78 @@ msgstr "Modifiera saxkurva"
 msgid "_Levels..."
 msgstr "_Nivåer…"
 
-#: ../app/tools/gimplevelstool.c:280
+#: ../app/tools/gimplevelstool.c:276
 msgid "Pick black point for all channels"
 msgstr "Välj svartpunkt för alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:282
+#: ../app/tools/gimplevelstool.c:278
 msgid "Pick black point for the selected channel"
 msgstr "Välj svartpunkt för den markerade kanalen"
 
-#: ../app/tools/gimplevelstool.c:289
+#: ../app/tools/gimplevelstool.c:285
 msgid "Pick gray point for all channels"
 msgstr "Välj gråpunkt för alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:291
+#: ../app/tools/gimplevelstool.c:287
 msgid "Pick gray point for the selected channel"
 msgstr "Välj gråpunkt för den markerade kanalen"
 
-#: ../app/tools/gimplevelstool.c:298
+#: ../app/tools/gimplevelstool.c:294
 msgid "Pick white point for all channels"
 msgstr "Välj vitpunkt för alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:300
+#: ../app/tools/gimplevelstool.c:296
 msgid "Pick white point for the selected channel"
 msgstr "Välj vitpunkt för den markerade kanalen"
 
-#: ../app/tools/gimplevelstool.c:404
+#: ../app/tools/gimplevelstool.c:400
 msgid "Adjust levels in linear light"
 msgstr "Justera nivåer i linjärt ljus"
 
-#: ../app/tools/gimplevelstool.c:405
+#: ../app/tools/gimplevelstool.c:401
 msgid "Adjust levels perceptually"
 msgstr "Justera nivåer perceptuellt"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:414
+#: ../app/tools/gimplevelstool.c:410
 msgid "Input Levels"
 msgstr "Inmatningsnivåer"
 
-#: ../app/tools/gimplevelstool.c:501
+#: ../app/tools/gimplevelstool.c:497
 msgid "Clamp _input"
 msgstr "Begränsa _indata"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:544
+#: ../app/tools/gimplevelstool.c:540
 msgid "Output Levels"
 msgstr "Utmatningsnivåer"
 
-#: ../app/tools/gimplevelstool.c:592
+#: ../app/tools/gimplevelstool.c:588
 msgid "Clamp outpu_t"
 msgstr "Begränsa utda_ta"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:607
+#: ../app/tools/gimplevelstool.c:603
 msgid "All Channels"
 msgstr "Alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:619
+#: ../app/tools/gimplevelstool.c:615
 msgid "_Auto Input Levels"
 msgstr "_Automatiska inmatningsnivåer"
 
-#: ../app/tools/gimplevelstool.c:622
+#: ../app/tools/gimplevelstool.c:618
 msgid "Adjust levels for all channels automatically"
 msgstr "Justera nivåer för alla kanaler automatiskt"
 
-#: ../app/tools/gimplevelstool.c:649
+#: ../app/tools/gimplevelstool.c:645
 msgid "Edit these Settings as Curves"
 msgstr "Redigera dessa inställningar som kurvor"
 
-#: ../app/tools/gimplevelstool.c:870
+#: ../app/tools/gimplevelstool.c:862
 msgid "Use _old levels file format"
 msgstr "Använd filformat för _gamla nivåer"
 
-#: ../app/tools/gimplevelstool.c:1013 ../app/tools/gimpthresholdtool.c:412
+#: ../app/tools/gimplevelstool.c:1005 ../app/tools/gimpthresholdtool.c:412
 msgid "Calculating histogram..."
 msgstr "Beräknar histogram…"
 
@@ -26708,20 +26716,20 @@ msgstr "Identifiera automatiskt"
 msgid "Detach dialog from canvas"
 msgstr "Koppla loss dialog från rityta"
 
-#: ../app/widgets/gimppaletteeditor.c:250
-#: ../app/widgets/gimppaletteeditor.c:781
+#: ../app/widgets/gimppaletteeditor.c:257
+#: ../app/widgets/gimppaletteeditor.c:797
 msgid "Undefined"
 msgstr "Odefinierad"
 
-#: ../app/widgets/gimppaletteeditor.c:269
+#: ../app/widgets/gimppaletteeditor.c:276
 msgid "Set the number of columns"
 msgstr "Ställ in antalet kolumner"
 
-#: ../app/widgets/gimppaletteeditor.c:477
+#: ../app/widgets/gimppaletteeditor.c:484
 msgid "Edit Palette Color"
 msgstr "Redigera palettfärg"
 
-#: ../app/widgets/gimppaletteeditor.c:479
+#: ../app/widgets/gimppaletteeditor.c:486
 msgid "Edit Color Palette Entry"
 msgstr "Redigera färgpalettpost"
 
