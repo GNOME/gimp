@@ -35,9 +35,15 @@ cd ..
 
 # json-c
 
+# XXX: warnings promotion to errors disabled because of some
+# -Wstrict-prototypes warnings happening on Mingw-w64.
+# The DISABLE_WERROR option can be removed once json-c removes this
+# warning for Windows: https://github.com/json-c/json-c/pull/581
+# Or when patches are published for all Mingw-w64 headers. See ML patch
+# and followup emails: https://sourceforge.net/p/mingw-w64/mailman/message/36981783/
 git clone --depth 1 https://github.com/json-c/json-c.git && \
 mkdir json-c/_build && cd json-c/_build && \
-CFLAGS="-Wno-expansion-to-defined" crossroad cmake .. && make install || exit 1
+CFLAGS="-Wno-expansion-to-defined" crossroad cmake -DDISABLE_WERROR=ON .. && make install || exit 1
 cd ../..
 
 # libmypaint
