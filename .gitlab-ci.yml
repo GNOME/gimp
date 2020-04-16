@@ -192,25 +192,19 @@ deps-win64:
         git
         gcc
         gcc-c++
-        gperf
         intltool
         libtool
         libxslt
         make
-        python2
         mingw64-gcc
         mingw64-gcc-c++
         mingw64-binutils
         cpio rpm
         python3-docutils
-        python3-pip
         python3-setuptools
         shared-mime-info
         which
-        libmount-devel
         gdk-pixbuf2
-        gdk-pixbuf2-devel
-        glib2-devel
     #- pip3 install wheel
     #- pip3 install crossroad
     - git clone --depth=1 --branch wip/Jehan/msys2-support git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
@@ -243,27 +237,21 @@ gimp-win64:
     - dnf_cache
   before_script:
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
-        automake
-        autoconf
         meson
-        cmake
         gettext
         gcc
         gcc-c++
-        gperf
+        git
         intltool
         libtool
         libxslt
         make
-        python3
         mingw64-gcc
         mingw64-gcc-c++
         mingw64-binutils
         cpio rpm
         shared-mime-info
         which
-        libmount-devel
-        gdk-pixbuf2
         gdk-pixbuf2-devel
         glib2-devel
   script:
@@ -308,25 +296,19 @@ deps-win32:
         git
         gcc
         gcc-c++
-        gperf
         intltool
         libtool
         libxslt
         make
-        python2
         mingw32-gcc
         mingw32-gcc-c++
         mingw32-binutils
         cpio rpm
         python3-docutils
-        python3-pip
         python3-setuptools
         shared-mime-info
         which
-        libmount-devel
         gdk-pixbuf2
-        gdk-pixbuf2-devel
-        glib2-devel
     #- pip3 install wheel
     #- pip3 install crossroad
     - git clone --depth=1 --branch wip/Jehan/msys2-support git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
