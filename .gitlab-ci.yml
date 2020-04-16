@@ -306,8 +306,6 @@ deps-win32:
         cmake
         gettext
         git
-        gcc
-        gcc-c++
         gperf
         intltool
         libtool
@@ -319,14 +317,10 @@ deps-win32:
         mingw32-binutils
         cpio rpm
         python3-docutils
-        python3-pip
         python3-setuptools
         shared-mime-info
         which
-        libmount-devel
         gdk-pixbuf2
-        gdk-pixbuf2-devel
-        glib2-devel
     #- pip3 install wheel
     #- pip3 install crossroad
     - git clone --depth=1 --branch wip/Jehan/msys2-support git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
