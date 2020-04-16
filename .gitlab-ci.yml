@@ -237,10 +237,7 @@ gimp-win64:
     - dnf_cache
   before_script:
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
-        automake
-        autoconf
         meson
-        cmake
         gettext
         gcc
         gcc-c++
@@ -257,9 +254,6 @@ gimp-win64:
         shared-mime-info
         which
         libmount-devel
-        gdk-pixbuf2
-        gdk-pixbuf2-devel
-        glib2-devel
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
