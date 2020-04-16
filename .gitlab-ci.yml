@@ -213,7 +213,7 @@ deps-win64:
         glib2-devel
     #- pip3 install wheel
     #- pip3 install crossroad
-    - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - git clone --depth=1 --branch wip/Jehan/msys2-support git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
@@ -270,7 +270,7 @@ gimp-win64:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
-              -Dwmf=disabled  -Dgtk-doc=false
+              -Dgtk-doc=false
               -Dpython=always -Dlua=always
               -Djavascript=always && ninja install &&
             cp ../build/windows/crossbuild-gitlab-ci/gimp-wrapper.cmd $CROSSROAD_PREFIX/bin/ &&
@@ -329,7 +329,7 @@ deps-win32:
         glib2-devel
     #- pip3 install wheel
     #- pip3 install crossroad
-    - git clone git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - git clone --depth=1 --branch wip/Jehan/msys2-support git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
