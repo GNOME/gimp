@@ -341,28 +341,21 @@ gimp-win32:
     - dnf_cache
   before_script:
     - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
-        automake
-        autoconf
         meson
-        cmake
         gettext
         gcc
         gcc-c++
-        gperf
+        git
         intltool
         libtool
         libxslt
         make
-        python2
-        python3
         mingw32-gcc
         mingw32-gcc-c++
         mingw32-binutils
         cpio rpm
         shared-mime-info
         which
-        libmount-devel
-        gdk-pixbuf2
         gdk-pixbuf2-devel
         glib2-devel
   script:
