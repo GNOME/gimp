@@ -19,6 +19,7 @@ cd ..
 
 # preparing GIMP
 
+crossroad update
 crossroad install gexiv2 appstream-glib json-c \
                   libmypaint mypaint-brushes   \
                   poppler-data poppler glib2   \
