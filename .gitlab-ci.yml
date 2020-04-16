@@ -306,6 +306,8 @@ deps-win32:
         cmake
         gettext
         git
+        gcc
+        gcc-c++
         intltool
         libtool
         libxslt
