@@ -192,25 +192,19 @@ deps-win64:
         git
         gcc
         gcc-c++
-        gperf
         intltool
         libtool
         libxslt
         make
-        python2
         mingw64-gcc
         mingw64-gcc-c++
         mingw64-binutils
         cpio rpm
         python3-docutils
-        python3-pip
         python3-setuptools
         shared-mime-info
         which
-        libmount-devel
         gdk-pixbuf2
-        gdk-pixbuf2-devel
-        glib2-devel
     #- pip3 install wheel
     #- pip3 install crossroad
     - git clone --depth=1 --branch wip/Jehan/msys2-support git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
@@ -308,25 +302,19 @@ deps-win32:
         git
         gcc
         gcc-c++
-        gperf
         intltool
         libtool
         libxslt
         make
-        python2
         mingw32-gcc
         mingw32-gcc-c++
         mingw32-binutils
         cpio rpm
         python3-docutils
-        python3-pip
         python3-setuptools
         shared-mime-info
         which
-        libmount-devel
         gdk-pixbuf2
-        gdk-pixbuf2-devel
-        glib2-devel
     #- pip3 install wheel
     #- pip3 install crossroad
     - git clone --depth=1 --branch wip/Jehan/msys2-support git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
