@@ -246,13 +246,13 @@ gimp-win64:
         libtool
         libxslt
         make
-        python3
         mingw64-gcc
         mingw64-gcc-c++
         mingw64-binutils
         cpio rpm
         shared-mime-info
         which
+        gdk-pixbuf2-devel
         glib2-devel
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
