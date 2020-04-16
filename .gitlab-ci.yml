@@ -306,12 +306,10 @@ deps-win32:
         cmake
         gettext
         git
-        gperf
         intltool
         libtool
         libxslt
         make
-        python2
         mingw32-gcc
         mingw32-gcc-c++
         mingw32-binutils
