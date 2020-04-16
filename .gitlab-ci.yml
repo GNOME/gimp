@@ -241,7 +241,6 @@ gimp-win64:
         gettext
         gcc
         gcc-c++
-        gperf
         intltool
         libtool
         libxslt
@@ -253,7 +252,6 @@ gimp-win64:
         cpio rpm
         shared-mime-info
         which
-        libmount-devel
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
