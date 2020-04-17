@@ -355,7 +355,7 @@ script_fu_server_listen (gint timeout)
       gchar                    clientname[NI_MAXHOST];
 
       /* Connection request on original socket. */
-      guint                    size = sizeof (client);
+      socklen_t                size = sizeof (client);
       gint                     new;
       guint                    portno;
 
