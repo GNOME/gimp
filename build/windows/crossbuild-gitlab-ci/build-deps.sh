@@ -19,7 +19,26 @@ cd ..
 
 # preparing GIMP
 
-crossroad install gexiv2 appstream-glib json-c \
-                  libmypaint mypaint-brushes   \
-                  poppler-data poppler glib2   \
-                  libwmf drmingw
+LIBMNG=
+if [ "x$CROSSROAD_PLATFORM" = "xw64" ]; then
+  # For some reason, file-mng plug-in fails to link in its i686 build.
+  # Just disable it for now on i686 only.
+  LIBMNG="libmng"
+fi
+
+crossroad install appstream-glib              \
+                  atk                         \
+                  drmingw                     \
+                  gexiv2                      \
+                  glib2                       \
+                  json-c                      \
+                  ghostscript                 \
+                  iso-codes                   \
+                  libheif                     \
+                  $LIBMNG                     \
+                  libmypaint mypaint-brushes  \
+                  libwebp                     \
+                  libwmf                      \
+                  openexr                     \
+                  poppler poppler-data        \
+                  xpm-nox
