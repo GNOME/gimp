@@ -225,6 +225,7 @@ gimp-win64:
         libgdk-pixbuf2.0-dev
         libglib2.0-bin
         meson
+        pkg-config
         python3
         rpm
         xsltproc
@@ -303,6 +304,7 @@ gimp-win32:
         libgdk-pixbuf2.0-dev
         libglib2.0-bin
         meson
+        pkg-config
         python3
         rpm
         xsltproc
