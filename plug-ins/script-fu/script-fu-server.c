@@ -35,11 +35,14 @@
 #include <glib.h>
 
 #ifdef G_OS_WIN32
+#ifdef _WIN32_WINNT
+#undef _WIN32_WINNT
+#endif
 #define _WIN32_WINNT 0x0502
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
-typedef short sa_family_t;	/* Not defined by winsock */
+typedef short sa_family_t; /* Not defined by winsock */
 
 #ifndef AI_ADDRCONFIG
 /* Missing from mingw headers, but value is publicly documented
@@ -591,7 +594,7 @@ execute_command (SFCommand *cmd)
 
   /*  Write the response to the client  */
   for (i = 0; i < RESPONSE_HEADER; i++)
-    if (cmd->filedes > 0 && send (cmd->filedes, buffer + i, 1, 0) < 0)
+    if (cmd->filedes > 0 && send (cmd->filedes, (const void *) (buffer + i), 1, 0) < 0)
       {
         /*  Write error  */
         print_socket_api_error ("send");
@@ -625,7 +628,7 @@ read_from_client (gint filedes)
 
   for (i = 0; i < COMMAND_HEADER;)
     {
-      nbytes = recv (filedes, buffer + i, COMMAND_HEADER - i, 0);
+      nbytes = recv (filedes, (void *) (buffer + i), COMMAND_HEADER - i, 0);
 
       if (nbytes < 0)
         {
@@ -729,14 +732,14 @@ make_socket (const struct addrinfo *ai)
       gimp_quit ();
     }
 
-  setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, &v, sizeof(v));
+  setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, (const void *) &v, sizeof(v));
 
 #ifdef IPV6_V6ONLY
   /* Only listen on IPv6 addresses, otherwise bind() will fail. */
   if (ai->ai_family == AF_INET6)
     {
       v = 1;
-      if (setsockopt (sock, IPPROTO_IPV6, IPV6_V6ONLY, &v, sizeof(v)) < 0)
+      if (setsockopt (sock, IPPROTO_IPV6, IPV6_V6ONLY, (const void *) &v, sizeof(v)) < 0)
         {
           print_socket_api_error ("setsockopt");
           gimp_quit();
