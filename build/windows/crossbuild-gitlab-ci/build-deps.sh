@@ -19,7 +19,18 @@ cd ..
 
 # preparing GIMP
 
-crossroad install gexiv2 appstream-glib json-c \
-                  libmypaint mypaint-brushes   \
-                  poppler-data poppler glib2   \
-                  libwmf drmingw
+crossroad install appstream-glib              \
+                  drmingw                     \
+                  gexiv2                      \
+                  glib2                       \
+                  json-c                      \
+                  ghostscript                 \
+                  iso-codes                   \
+                  libheif                     \
+                  libmng                      \
+                  libmypaint mypaint-brushes  \
+                  libwebp                     \
+                  libwmf                      \
+                  openexr                     \
+                  poppler poppler-data        \
+                  xpm-nox
