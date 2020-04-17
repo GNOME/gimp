@@ -173,7 +173,6 @@ gimp-debian/testing-clang:
 ## WINDOWS 64-bit CI ##
 
 deps-win64:
-  image: fedora:31
   stage: dependencies
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
@@ -183,33 +182,23 @@ deps-win64:
     - .cache/crossroad/
     - dnf_cache
   before_script:
-    - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
-        automake
-        autoconf
-        meson
-        cmake
-        gettext
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
+        cpio
+        gcc-mingw-w64-x86-64
+        g++-mingw-w64-x86-64
         git
-        gcc
-        gcc-c++
-        intltool
-        libtool
-        libxslt
-        make
-        mingw64-gcc
-        mingw64-gcc-c++
-        mingw64-binutils
-        cpio rpm
+        meson
+        python3-distutils
         python3-docutils
-        python3-setuptools
-        shared-mime-info
-        which
-        gdk-pixbuf2
+        rpm
+    - apt-get install -y --reinstall ca-certificates
     - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
-    - gdk-pixbuf-query-loaders-64 > /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders.cache
+    #- gdk-pixbuf-query-loaders-64 > /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders.cache
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
@@ -222,7 +211,6 @@ deps-win64:
       - _deps/
 
 gimp-win64:
-  image: fedora:31
   stage: gimp
   dependencies:
     - deps-win64
@@ -234,24 +222,18 @@ gimp-win64:
     - .cache/crossroad/
     - dnf_cache
   before_script:
-    - dnf install --assumeyes --setopt=cachedir=`pwd`/dnf_cache --verbose
-        meson
-        gettext
-        gcc
-        gcc-c++
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
+        cpio
+        gcc-mingw-w64-x86-64
+        g++-mingw-w64-x86-64
         git
-        intltool
-        libtool
-        libxslt
-        make
-        mingw64-gcc
-        mingw64-gcc-c++
-        mingw64-binutils
-        cpio rpm
-        shared-mime-info
-        which
-        gdk-pixbuf2-devel
-        glib2-devel
+        libgdk-pixbuf2.0-dev
+        libglib2.0-bin
+        meson
+        python3
+        rpm
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
