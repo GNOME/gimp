@@ -140,8 +140,9 @@ gimp-debian/testing-autotools:
         --with-python=force
         --with-javascript=force
         --with-lua=force
+        --enable-gtk-doc
     - make -j "$(nproc)"
-    - make check
+    - make distcheck
 
 gimp-debian/testing-meson:
   extends: .gimp-debian/testing-base
