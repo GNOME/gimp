@@ -177,6 +177,9 @@ deps-win64:
   cache:
     paths:
     - .cache/crossroad/
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
@@ -213,6 +216,9 @@ gimp-win64:
   cache:
     paths:
     - .cache/crossroad/
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
@@ -256,6 +262,9 @@ deps-win32:
   cache:
     paths:
     - .cache/crossroad/
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
@@ -292,6 +301,9 @@ gimp-win32:
   cache:
     paths:
     - .cache/crossroad/
+  variables:
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends
