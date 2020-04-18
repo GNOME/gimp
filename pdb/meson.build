@@ -75,9 +75,9 @@ perlsrcdir = meson.current_source_dir()
 perlbindir = meson.current_build_dir()
 
 perl_env = [
+  'env',
   'PDBGEN_BACKUP=' + (pdbgen_backup ? '1' : '0'),
   'PDBGEN_GROUPS=' + (pdbgen_groups ? '1' : '0'),
-  'rootme='   + perlbindir,
   'srcdir='   + perlsrcdir,
   'destdir='  + meson.source_root(),
   'builddir=' + meson.build_root(),
@@ -113,7 +113,8 @@ enums_pl = custom_target('enums.pl',
   ],
 )
 
-pdbgen = custom_target('generate_pdb',
+
+pdbgen = custom_target('regenerate_pdb_files',
   input : [
     files(
       'pdbgen.pl',
@@ -127,12 +128,13 @@ pdbgen = custom_target('generate_pdb',
     groups_pl,
     pdb_sources,
   ],
-  output: [ 'stamp-pdbgen', ],
+  output: [ 'regenerate_pdb_files', ],
   command: [
     perl_env, '@INPUT0@', 'app', 'lib',
-    '&&',
-    'touch', '@OUTPUT@'
   ],
+
+  build_by_default: true,
+  capture: true,
 )
 
 stamp_enumcode = custom_target('stamp-enum-code',
