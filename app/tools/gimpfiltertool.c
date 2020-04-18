@@ -914,24 +914,29 @@ gimp_filter_tool_real_config_notify (GimpFilterTool   *filter_tool,
 
   if (filter_tool->filter)
     {
-      if (! strcmp (pspec->name, "gimp-clip")          ||
-          ! strcmp (pspec->name, "gimp-mode")          ||
-          ! strcmp (pspec->name, "gimp-opacity")       ||
-          ! strcmp (pspec->name, "gimp-color-managed") ||
-          ! strcmp (pspec->name, "gimp-gamma-hack"))
+      /* note that we may be called with a NULL pspec.  see
+       * gimp_operation_tool_aux_input_notify().
+       */
+      if (pspec)
         {
-          gimp_filter_tool_update_filter (filter_tool);
-        }
-      else if (! strcmp (pspec->name, "gimp-region"))
-        {
-          gimp_filter_tool_update_filter (filter_tool);
+          if (! strcmp (pspec->name, "gimp-clip")          ||
+              ! strcmp (pspec->name, "gimp-mode")          ||
+              ! strcmp (pspec->name, "gimp-opacity")       ||
+              ! strcmp (pspec->name, "gimp-color-managed") ||
+              ! strcmp (pspec->name, "gimp-gamma-hack"))
+            {
+              gimp_filter_tool_update_filter (filter_tool);
+            }
+          else if (! strcmp (pspec->name, "gimp-region"))
+            {
+              gimp_filter_tool_update_filter (filter_tool);
 
-          gimp_filter_tool_region_changed (filter_tool);
+              gimp_filter_tool_region_changed (filter_tool);
+            }
         }
-      else if (options->preview)
-        {
-          gimp_drawable_filter_apply (filter_tool->filter, NULL);
-        }
+
+      if (options->preview)
+        gimp_drawable_filter_apply (filter_tool->filter, NULL);
     }
 }
 
