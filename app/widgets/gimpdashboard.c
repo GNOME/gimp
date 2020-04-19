@@ -3858,14 +3858,14 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 
               for (frame = n_head; frame < n_frames - n_tail; frame++)
                 {
-                  unsigned long long      address;
+                  guintptr address;
 
                   address = gimp_backtrace_get_frame_address (backtrace,
                                                               thread, frame);
 
                   gimp_dashboard_log_printf (dashboard,
                                              "<frame address=\"0x%llx\" />\n",
-                                             address);
+                                             (unsigned long long) address);
 
                   g_hash_table_add (priv->log_addresses, (gpointer) address);
                 }
