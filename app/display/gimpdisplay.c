@@ -46,6 +46,7 @@
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-scrollbars.h"
+#include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 
@@ -696,9 +697,14 @@ gimp_display_set_image (GimpDisplay *display,
   if (shell)
     {
       if (image)
-        gimp_display_shell_reconnect (shell);
+        {
+          gimp_display_shell_reconnect (shell);
+        }
       else
-        gimp_display_shell_icon_update (shell);
+        {
+          gimp_display_shell_title_update (shell);
+          gimp_display_shell_icon_update (shell);
+        }
     }
 
   if (old_image != image)
