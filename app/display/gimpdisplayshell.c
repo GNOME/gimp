@@ -1476,10 +1476,11 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
 
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
 
-  /* A size-allocate will always occur because the scrollbars will
-   * become visible forcing the canvas to become smaller
+  /* make sure a size-allocate always occurs, even when the rulers and
+   * scrollbars are hidden.  see issue #4968.
    */
   shell->size_allocate_center_image = TRUE;
+  gtk_widget_queue_resize (GTK_WIDGET (shell->canvas));
 
   if (shell->blink_timeout_id)
     {
