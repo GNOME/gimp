@@ -111,7 +111,7 @@ static const GimpActionEntry layers_actions[] =
 
   { "layers-new-last-values", GIMP_ICON_DOCUMENT_NEW,
     NC_("layers-action", "_New Layer"), NULL,
-    NC_("layers-action", "Create a new layer with last used values"),
+    NC_("layers-action", "Create new layers with last used values"),
     layers_new_last_vals_cmd_callback,
     GIMP_HELP_LAYER_NEW },
 

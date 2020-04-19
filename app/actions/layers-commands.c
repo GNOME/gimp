@@ -375,6 +375,9 @@ layers_new_last_vals_cmd_callback (GimpAction *action,
   GtkWidget        *widget;
   GimpLayer        *layer;
   GimpDialogConfig *config;
+  GList            *layers;
+  GList            *new_layers = NULL;
+  GList            *iter;
   GimpLayerMode     layer_mode;
 
   return_if_no_image (image, data);
@@ -399,25 +402,55 @@ layers_new_last_vals_cmd_callback (GimpAction *action,
       layer_mode = gimp_image_get_default_new_layer_mode (image);
     }
 
-  layer = gimp_layer_new (image,
-                          gimp_image_get_width  (image),
-                          gimp_image_get_height (image),
-                          gimp_image_get_layer_format (image, TRUE),
-                          config->layer_new_name,
-                          config->layer_new_opacity,
-                          layer_mode);
+  layers = gimp_image_get_selected_layers (image);
+  if (layers)
+    gimp_image_undo_group_start (image,
+                                 GIMP_UNDO_GROUP_LAYER_ADD,
+                                 _("New layers"));
+  layers = g_list_copy (layers);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayer *parent;
+      gint       position;
 
-  gimp_drawable_fill (GIMP_DRAWABLE (layer),
-                      action_data_get_context (data),
-                      config->layer_new_fill_type);
-  gimp_layer_set_blend_space (layer,
-                              config->layer_new_blend_space, FALSE);
-  gimp_layer_set_composite_space (layer,
-                                  config->layer_new_composite_space, FALSE);
-  gimp_layer_set_composite_mode (layer,
-                                 config->layer_new_composite_mode, FALSE);
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+        {
+          parent   = iter->data;
+          position = 0;
+        }
+      else
+        {
+          parent   = GIMP_LAYER (gimp_item_get_parent (iter->data));
+          position = gimp_item_get_index (iter->data);
+        }
+      layer = gimp_layer_new (image,
+                              gimp_image_get_width  (image),
+                              gimp_image_get_height (image),
+                              gimp_image_get_layer_format (image, TRUE),
+                              config->layer_new_name,
+                              config->layer_new_opacity,
+                              layer_mode);
 
-  gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      gimp_drawable_fill (GIMP_DRAWABLE (layer),
+                          action_data_get_context (data),
+                          config->layer_new_fill_type);
+      gimp_layer_set_blend_space (layer,
+                                  config->layer_new_blend_space, FALSE);
+      gimp_layer_set_composite_space (layer,
+                                      config->layer_new_composite_space, FALSE);
+      gimp_layer_set_composite_mode (layer,
+                                     config->layer_new_composite_mode, FALSE);
+
+      gimp_image_add_layer (image, layer, parent, position, TRUE);
+      new_layers = g_list_prepend (new_layers, layer);
+    }
+  if (layers)
+    {
+      gimp_image_undo_group_end (image);
+      gimp_image_set_selected_layers (image, new_layers);
+    }
+  g_list_free (layers);
+  g_list_free (new_layers);
   gimp_image_flush (image);
 }
 

@@ -145,6 +145,9 @@ gboolean           gimp_container_view_is_item_selected   (GimpContainerView  *v
 
 gpointer           gimp_container_view_lookup             (GimpContainerView  *view,
                                                            GimpViewable       *viewable);
+gboolean           gimp_container_view_contains           (GimpContainerView *view,
+                                                           GList             *viewables);
+
 
 gboolean           gimp_container_view_item_selected      (GimpContainerView  *view,
                                                            GimpViewable       *item);

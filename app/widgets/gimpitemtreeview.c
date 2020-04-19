@@ -1371,22 +1371,9 @@ gimp_item_tree_view_new_list_dropped (GtkWidget    *widget,
                                         item_view_class->action_group,
                                         item_view_class->new_default_action);
 
-  if (item_view_class->new_default_action && viewables && action)
-    {
-      GList *iter;
-
-      for (iter = viewables; iter; iter = iter->next)
-        {
-          GimpViewable *viewable = iter->data;
-
-          if (gimp_container_view_lookup (view, viewable))
-            {
-              g_object_set (action, "viewable", viewable, NULL);
-              gimp_action_activate (action);
-              g_object_set (action, "viewable", NULL, NULL);
-            }
-        }
-    }
+  if (item_view_class->new_default_action && viewables && action &&
+      gimp_container_view_contains (view, viewables))
+    gimp_action_activate (action);
 }
 
 /*  GimpImage callbacks  */

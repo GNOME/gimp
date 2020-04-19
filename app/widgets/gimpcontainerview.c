@@ -749,6 +749,27 @@ gimp_container_view_lookup (GimpContainerView *view,
 }
 
 gboolean
+gimp_container_view_contains (GimpContainerView *view,
+                              GList             *viewables)
+{
+  GimpContainerViewPrivate *private;
+  GList                    *iter;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
+  g_return_val_if_fail (viewables, FALSE);
+
+  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  for (iter = viewables; iter; iter = iter->next)
+    {
+      if (! g_hash_table_contains (private->item_hash, iter->data))
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_container_view_item_selected (GimpContainerView *view,
                                    GimpViewable      *viewable)
 {
