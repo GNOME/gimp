@@ -118,6 +118,7 @@ libgimp_private_sources = \
 	gimppixbuf.c			\
 	gimppixbuf.h			\
 	gimpplugin-private.h		\
+	gimpprocedure-private.h	        \
 	gimpprocedureconfig-private.h	\
 	\
 	gimpunit_pdb.c			\
