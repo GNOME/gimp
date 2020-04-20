@@ -73,6 +73,7 @@ struct _GimpItemTreeViewPrivate
   GtkSizeGroup    *options_group;
   GtkWidget       *lock_box;
 
+  GtkWidget       *multi_selection_label;
   GtkWidget       *lock_content_toggle;
   GtkWidget       *lock_position_toggle;
 
@@ -204,6 +205,10 @@ static gboolean gimp_item_tree_view_item_pre_clicked(GimpCellRendererViewable *c
                                                      GdkModifierType           state,
                                                      GimpItemTreeView         *item_view);
 
+static void   gimp_item_tree_view_selection_label_notify (GtkLabel         *label,
+                                                          GParamSpec       *pspec,
+                                                          GimpItemTreeView *view);
+
 /*  utility function to avoid code duplication  */
 static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *toggle,
                                                      gchar             *path_str,
@@ -215,7 +220,6 @@ static void   gimp_item_tree_view_row_expanded      (GtkTreeView       *tree_vie
                                                      GtkTreeIter       *iter,
                                                      GtkTreePath       *path,
                                                      GimpItemTreeView  *item_view);
-
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
                          GIMP_TYPE_CONTAINER_TREE_VIEW,
@@ -473,6 +477,18 @@ gimp_item_tree_view_constructed (GObject *object)
                                   item_view_class->item_type);
 
   hbox = gimp_item_tree_view_get_lock_box (item_view);
+
+  /* Multi-selection label */
+  item_view->priv->multi_selection_label = gtk_label_new (NULL);
+  gtk_widget_set_name (item_view->priv->multi_selection_label, "treeview");
+  gtk_label_set_selectable (GTK_LABEL (item_view->priv->multi_selection_label), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), item_view->priv->multi_selection_label,
+                      FALSE, FALSE, 0);
+  gtk_container_child_set (GTK_CONTAINER (hbox),
+                           item_view->priv->multi_selection_label,
+                           "expand", TRUE,
+                           "fill",   TRUE,
+                           NULL);
 
   /*  Lock content toggle  */
   item_view->priv->lock_content_toggle = gtk_toggle_button_new ();
@@ -1117,6 +1133,34 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
   if (tree_view->priv->options_box)
     gtk_widget_set_sensitive (tree_view->priv->options_box, options_sensitive);
 
+  g_signal_handlers_disconnect_by_func (tree_view->priv->multi_selection_label,
+                    G_CALLBACK (gimp_item_tree_view_selection_label_notify),
+                    tree_view);
+  g_signal_handlers_disconnect_by_func (tree_view->priv->multi_selection_label,
+                    G_CALLBACK (gimp_item_tree_view_selection_label_notify),
+                    tree_view);
+  if (g_list_length (selected_items) > 1)
+    {
+      gchar *str;
+
+      g_signal_connect (tree_view->priv->multi_selection_label, "notify::label",
+                        G_CALLBACK (gimp_item_tree_view_selection_label_notify),
+                        tree_view);
+      g_signal_connect (tree_view->priv->multi_selection_label, "notify::selection-bound",
+                        G_CALLBACK (gimp_item_tree_view_selection_label_notify),
+                        tree_view);
+      str = g_strdup_printf (ngettext ("%d item selected", "%d items selected",
+                                       g_list_length (selected_items)),
+                             g_list_length (selected_items));
+      gtk_label_set_text (GTK_LABEL (tree_view->priv->multi_selection_label), str);
+      g_free (str);
+      gtk_widget_show (tree_view->priv->multi_selection_label);
+    }
+  else
+    {
+      gtk_widget_hide (tree_view->priv->multi_selection_label);
+    }
+
   return success;
 }
 
@@ -1735,6 +1779,20 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
   gtk_tree_path_free (path);
 
   return handled;
+}
+
+static void
+gimp_item_tree_view_selection_label_notify (GtkLabel         *label,
+                                            GParamSpec       *pspec,
+                                            GimpItemTreeView *view)
+{
+  /* This is a weird trick to make the label follow the color scheme of
+   * selected items in whatever theme is selected. It seems we cannot
+   * link to the color of another widget whose theme we don't control.
+   * Faking selection is the only way I found, though it is quite ugly
+   * semantically.
+   */
+  gtk_label_select_region (label, 0, -1);
 }
 
 static void
