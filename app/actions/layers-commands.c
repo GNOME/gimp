@@ -591,20 +591,38 @@ layers_duplicate_cmd_callback (GimpAction *action,
                                gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  GimpLayer *new_layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *new_layers = NULL;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
-                                               G_TYPE_FROM_INSTANCE (layer)));
+  layers = g_list_copy (layers);
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_ADD,
+                               _("Duplicate layers"));
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayer *new_layer;
 
-  /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
-   *  the latter would add a duplicated group inside itself instead of
-   *  above it
-   */
-  gimp_image_add_layer (image, new_layer,
-                        gimp_layer_get_parent (layer), -1,
-                        TRUE);
+      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (iter->data),
+                                                   G_TYPE_FROM_INSTANCE (iter->data)));
+
+      /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+       *  the latter would add a duplicated group inside itself instead of
+       *  above it
+       */
+      gimp_image_add_layer (image, new_layer,
+                            gimp_layer_get_parent (iter->data),
+                            gimp_item_get_index (iter->data),
+                            TRUE);
+      new_layers = g_list_prepend (new_layers, new_layer);
+    }
+
+  gimp_image_set_selected_layers (image, new_layers);
+  g_list_free (layers);
+  g_list_free (new_layers);
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
 }
 

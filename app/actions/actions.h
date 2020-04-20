@@ -104,6 +104,12 @@ void               action_message          (GimpDisplay          *display,
   if (! layer) \
     return
 
+#define return_if_no_layers(image,layers,data) \
+  return_if_no_image (image,data); \
+  layers = gimp_image_get_selected_layers (image); \
+  if (! layers) \
+    return
+
 #define return_if_no_channel(image,channel,data) \
   return_if_no_image (image,data); \
   channel = gimp_image_get_active_channel (image); \

@@ -131,7 +131,7 @@ static const GimpActionEntry layers_actions[] =
   { "layers-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("layers-action", "D_uplicate Layer"), "<primary><shift>D",
     NC_("layers-action",
-        "Create a duplicate of the layer and add it to the image"),
+        "Create duplicates of selected layers and add them to the image"),
     layers_duplicate_cmd_callback,
     GIMP_HELP_LAYER_DUPLICATE },
 
@@ -939,7 +939,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new-last-values",  image);
   SET_SENSITIVE ("layers-new-from-visible", image);
   SET_SENSITIVE ("layers-new-group",        image && !indexed);
-  SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
+  SET_SENSITIVE ("layers-duplicate",        n_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           n_layers > 0 && !ac);
 
   SET_SENSITIVE ("layers-mode-first",       layer && !ac && prev_mode);
