@@ -95,7 +95,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
   value = exp (value);
 
   if (gtk_adjustment_get_lower (spin_adjustment) <= 0.0)
-    value += gtk_adjustment_get_lower (spin_adjustment) - 0.1;
+    value += exp (gtk_adjustment_get_lower (spin_adjustment)) - 0.1;
 
   g_value_set_double (to_value, value);
 
