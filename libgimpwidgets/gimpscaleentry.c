@@ -90,7 +90,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
   GtkAdjustment *spin_adjustment;
   gdouble        value = g_value_get_double (from_value);
 
-  spin_adjustment = GTK_ADJUSTMENT (g_binding_get_target (binding));
+  spin_adjustment = GTK_ADJUSTMENT (g_binding_get_source (binding));
 
   value = exp (value);
 
