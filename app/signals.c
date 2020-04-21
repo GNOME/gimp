@@ -30,6 +30,7 @@
 #include "errors.h"
 #include "signals.h"
 
+#ifdef G_OS_WIN32
 #ifdef HAVE_EXCHNDL
 #include <windows.h>
 #include <time.h>
@@ -38,6 +39,7 @@
 static LPTOP_LEVEL_EXCEPTION_FILTER g_prevExceptionFilter = NULL;
 
 static LONG WINAPI  gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
+#endif
 
 #else
 
