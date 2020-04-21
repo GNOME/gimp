@@ -259,9 +259,9 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_CROP },
 
   { "layers-mask-add", GIMP_ICON_LAYER_MASK,
-    NC_("layers-action", "Add La_yer Mask..."), NULL,
+    NC_("layers-action", "Add La_yer Masks..."), NULL,
     NC_("layers-action",
-        "Add a mask that allows non-destructive editing of transparency"),
+        "Add masks to selected layers that allows non-destructive editing of transparency"),
     layers_mask_add_cmd_callback,
     GIMP_HELP_LAYER_MASK_ADD },
 
@@ -269,16 +269,16 @@ static const GimpActionEntry layers_actions[] =
    * there is a mask on the layer
    */
   { "layers-mask-add-button", GIMP_ICON_LAYER_MASK,
-    NC_("layers-action", "Add La_yer Mask..."), NULL,
+    NC_("layers-action", "Add La_yer Masks..."), NULL,
     NC_("layers-action",
-        "Add a mask that allows non-destructive editing of transparency"),
+        "Add masks to selected layers that allows non-destructive editing of transparency"),
     layers_mask_add_cmd_callback,
     GIMP_HELP_LAYER_MASK_ADD },
 
   { "layers-mask-add-last-values", GIMP_ICON_LAYER_MASK,
-    NC_("layers-action", "Add La_yer Mask"), NULL,
+    NC_("layers-action", "Add La_yer Masks"), NULL,
     NC_("layers-action",
-        "Add a mask with last used values"),
+        "Add mask to selected layers with last used values"),
     layers_mask_add_last_vals_cmd_callback,
     GIMP_HELP_LAYER_MASK_ADD },
 
@@ -763,6 +763,7 @@ layers_actions_update (GimpActionGroup *group,
 {
   GimpImage     *image          = action_data_get_image (data);
   GList         *layers         = NULL;
+  GList         *iter           = NULL;
   GimpLayer     *layer          = NULL;
   GimpLayerMask *mask           = NULL;     /*  layer mask             */
   gboolean       fs             = FALSE;    /*  floating sel           */
@@ -785,6 +786,8 @@ layers_actions_update (GimpActionGroup *group,
   GList         *prev           = NULL;
   gboolean       next_mode      = FALSE;
   gboolean       prev_mode      = FALSE;
+  gboolean       have_masks     = FALSE; /* At least 1 selected layer has a mask. */
+  gboolean       have_no_masks  = FALSE; /* At least 1 selected layer has no mask. */
   gint           n_layers       = 0;
 
   if (image)
@@ -797,8 +800,24 @@ layers_actions_update (GimpActionGroup *group,
       layers = gimp_image_get_selected_layers (image);
       n_layers = g_list_length (layers);
 
+      for (iter = layers; iter; iter = iter->next)
+        {
+          if (gimp_layer_get_mask (iter->data))
+            have_masks = TRUE;
+          else
+            have_no_masks = TRUE;
+
+          /* have_masks and have_no_masks are not opposite. 3 cases are
+           * possible: all layers have masks, none have masks, or some
+           * have masks, and some none.
+           */
+          if (have_masks && have_no_masks)
+            break;
+        }
+
       if (n_layers == 1)
         {
+          /* Special unique layer case. */
           GimpLayerMode *modes;
           GimpLayerMode  mode;
           const gchar   *action = NULL;
@@ -998,16 +1017,16 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-composite-mode-clip-to-layer",    layer && cm_mutable);
   SET_SENSITIVE ("layers-composite-mode-intersection",     layer && cm_mutable);
 
-  SET_SENSITIVE ("layers-mask-add",             layer && !fs && !ac && !mask);
-  SET_SENSITIVE ("layers-mask-add-button",      layer && !fs && !ac);
-  SET_SENSITIVE ("layers-mask-add-last-values", layer && !fs && !ac && !mask);
+  SET_SENSITIVE ("layers-mask-add",             n_layers > 0 && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-add-button",      n_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-mask-add-last-values", n_layers > 0 && !fs && !ac && have_no_masks);
 
   SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask && !children);
   SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 
-  SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask);
-  SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac &&  mask);
-  SET_SENSITIVE ("layers-mask-disable", layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-disable", layer && !fs && !ac && mask);
 
   SET_ACTIVE ("layers-mask-edit",    mask && gimp_layer_get_edit_mask (layer));
   SET_ACTIVE ("layers-mask-show",    mask && gimp_layer_get_show_mask (layer));
