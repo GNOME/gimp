@@ -68,7 +68,7 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 
   time (&t);
   filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
-                              PACKAGE_NAME, t);
+                              PACKAGE_NAME, (guint64) t);
   *backtrace_file = g_build_filename (dir, filename, NULL);
   g_free (filename);
   g_free (dir);
