@@ -109,6 +109,8 @@ const gchar  * gimp_parasite_name          (const GimpParasite *parasite);
 gconstpointer  gimp_parasite_data          (const GimpParasite *parasite);
 glong          gimp_parasite_data_size     (const GimpParasite *parasite);
 
+gconstpointer  gimp_parasite_get_data      (const GimpParasite *parasite,
+                                            gint               *num_bytes);
 
 G_END_DECLS
 
