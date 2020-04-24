@@ -492,7 +492,7 @@ static const GimpEnumActionEntry layers_mask_apply_actions[] =
 
   { "layers-mask-delete", GIMP_ICON_EDIT_DELETE,
     NC_("layers-action", "Delete Layer Mas_k"), NULL,
-    NC_("layers-action", "Remove the layer mask and its effect"),
+    NC_("layers-action", "Remove layer masks and their effect"),
     GIMP_MASK_DISCARD, FALSE,
     GIMP_HELP_LAYER_MASK_DELETE }
 };
@@ -786,8 +786,12 @@ layers_actions_update (GimpActionGroup *group,
   GList         *prev           = NULL;
   gboolean       next_mode      = FALSE;
   gboolean       prev_mode      = FALSE;
-  gboolean       have_masks     = FALSE; /* At least 1 selected layer has a mask. */
-  gboolean       have_no_masks  = FALSE; /* At least 1 selected layer has no mask. */
+
+  gboolean       have_masks     = FALSE; /* At least 1 selected layer has a mask.            */
+  gboolean       have_no_masks  = FALSE; /* At least 1 selected layer has no mask.           */
+  gboolean       have_groups    = FALSE; /* At least 1 selected layer is a group.            */
+  gboolean       have_no_groups = FALSE; /* At least 1 selected layer is not a group.        */
+  gboolean       have_writable  = FALSE; /* At least 1 selected layer has no contents lock.  */
   gint           n_layers       = 0;
 
   if (image)
@@ -802,16 +806,26 @@ layers_actions_update (GimpActionGroup *group,
 
       for (iter = layers; iter; iter = iter->next)
         {
+          /* have_masks and have_no_masks are not opposite. 3 cases are
+           * possible: all layers have masks, none have masks, or some
+           * have masks, and some none.
+           */
           if (gimp_layer_get_mask (iter->data))
             have_masks = TRUE;
           else
             have_no_masks = TRUE;
 
-          /* have_masks and have_no_masks are not opposite. 3 cases are
-           * possible: all layers have masks, none have masks, or some
-           * have masks, and some none.
-           */
-          if (have_masks && have_no_masks)
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+            have_groups = TRUE;
+          else
+            have_no_groups = TRUE;
+
+          if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+            have_writable = TRUE;
+
+          if (have_masks && have_no_masks   &&
+              have_groups && have_no_groups &&
+              have_writable)
             break;
         }
 
@@ -1021,8 +1035,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-add-button",      n_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-mask-add-last-values", n_layers > 0 && !fs && !ac && have_no_masks);
 
-  SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask && !children);
-  SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-apply",  have_writable && !fs && !ac && have_masks && have_no_groups);
+  SET_SENSITIVE ("layers-mask-delete", n_layers > 0 && !fs && !ac && have_masks);
 
   SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac && mask);
   SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac && mask);

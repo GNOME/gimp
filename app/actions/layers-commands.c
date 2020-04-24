@@ -1128,17 +1128,67 @@ layers_mask_apply_cmd_callback (GimpAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GimpMaskApplyMode  mode;
+  GimpImage         *image;
+  GList             *layers;
+  GList             *iter;
+  gchar             *undo_text = NULL;
+  GimpUndoType       undo_type = GIMP_UNDO_GROUP_NONE;
 
-  if (gimp_layer_get_mask (layer))
+  return_if_no_layers (image, layers, data);
+
+  mode = (GimpMaskApplyMode) g_variant_get_int32 (value);
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpMaskApplyMode mode = (GimpMaskApplyMode) g_variant_get_int32 (value);
-
-      gimp_layer_apply_mask (layer, mode, TRUE);
-      gimp_image_flush (image);
+      if (gimp_layer_get_mask (iter->data) &&
+          (mode != GIMP_MASK_APPLY ||
+           (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)) &&
+            ! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))))
+        break;
     }
+  if (iter == NULL)
+    /* No layers or none have applyable masks. */
+    return;
+
+  switch (mode)
+    {
+    case GIMP_MASK_APPLY:
+      undo_type = GIMP_UNDO_GROUP_MASK;
+      undo_text = _("Apply Layer Masks");
+      break;
+    case GIMP_MASK_DISCARD:
+      undo_type = GIMP_UNDO_GROUP_MASK;
+      undo_text = _("Delete Layer Masks");
+      break;
+    default:
+      g_warning ("%s: unhandled GimpMaskApplyMode %d\n",
+                 G_STRFUNC, mode);
+      break;
+    }
+
+  if (undo_type != GIMP_UNDO_GROUP_NONE)
+    gimp_image_undo_group_start (image, undo_type, undo_text);
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (gimp_layer_get_mask (iter->data))
+        {
+          if (mode == GIMP_MASK_APPLY &&
+              (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)) ||
+               ! gimp_item_is_content_locked (GIMP_ITEM (iter->data))))
+            /* Layer groups cannot apply masks. Neither can
+             * content-locked layers.
+             */
+            continue;
+
+          gimp_layer_apply_mask (iter->data, mode, TRUE);
+        }
+    }
+
+  if (undo_type != GIMP_UNDO_GROUP_NONE)
+    gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
 }
 
 void
