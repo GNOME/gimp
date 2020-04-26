@@ -2552,7 +2552,8 @@ get_channel_format (PSDimage *img_a)
 
     case 8:
     case 1:
-      format = babl_format ("Y u8");
+      /* see gimp_image_get_channel_format() */
+      format = babl_format ("Y' u8");
       break;
 
     default:

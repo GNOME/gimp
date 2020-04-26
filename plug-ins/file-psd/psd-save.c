@@ -1766,6 +1766,7 @@ get_bpc (GimpImage *image)
 static const Babl *
 get_pixel_format (GimpDrawable *drawable)
 {
+  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
   const gchar *model;
   gint         bpc;
   gchar        format[32];
@@ -1796,7 +1797,7 @@ get_pixel_format (GimpDrawable *drawable)
       g_return_val_if_reached (NULL);
     }
 
-  bpc = get_bpc (gimp_item_get_image (GIMP_ITEM (drawable)));
+  bpc = get_bpc (image);
 
   sprintf (format, "%s u%d", model, 8 * bpc);
 
@@ -1806,10 +1807,15 @@ get_pixel_format (GimpDrawable *drawable)
 static const Babl *
 get_channel_format (GimpDrawable *drawable)
 {
-  gint  bpc;
-  gchar format[32];
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  gint       bpc;
+  gchar      format[32];
 
-  bpc = get_bpc (gimp_item_get_image (GIMP_ITEM (drawable)));
+  /* see gimp_image_get_channel_format() */
+  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_NON_LINEAR)
+    return babl_format ("Y' u8");
+
+  bpc = get_bpc (image);
 
   sprintf (format, "Y u%d", 8 * bpc);
 
@@ -1819,7 +1825,15 @@ get_channel_format (GimpDrawable *drawable)
 static const Babl *
 get_mask_format (GimpLayerMask *mask)
 {
-  return get_channel_format (GIMP_DRAWABLE (mask));
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (mask));
+  gint       bpc;
+  gchar      format[32];
+
+  bpc = get_bpc (image);
+
+  sprintf (format, "Y u%d", 8 * bpc);
+
+  return babl_format (format);
 }
 
 static GList *
