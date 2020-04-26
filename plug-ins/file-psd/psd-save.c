@@ -1736,6 +1736,7 @@ get_bpc (gint32 image_id)
 static const Babl *
 get_pixel_format (gint32 drawableID)
 {
+  gint32       image_id = gimp_item_get_image (drawableID);
   const gchar *model;
   gint         bpc;
   gchar        format[32];
@@ -1766,7 +1767,7 @@ get_pixel_format (gint32 drawableID)
       g_return_val_if_reached (NULL);
     }
 
-  bpc = get_bpc (gimp_item_get_image (drawableID));
+  bpc = get_bpc (gimp_item_get_image (image_id));
 
   sprintf (format, "%s u%d", model, 8 * bpc);
 
@@ -1776,10 +1777,15 @@ get_pixel_format (gint32 drawableID)
 static const Babl *
 get_channel_format (gint32 drawableID)
 {
-  gint  bpc;
-  gchar format[32];
+  gint32 image_id = gimp_item_get_image (drawableID);
+  gint   bpc;
+  gchar  format[32];
 
-  bpc = get_bpc (gimp_item_get_image (drawableID));
+  /* see gimp_image_get_channel_format() */
+  if (gimp_image_get_precision (image_id) == GIMP_PRECISION_U8_GAMMA)
+    return babl_format ("Y' u8");
+
+  bpc = get_bpc (image_id);
 
   sprintf (format, "Y u%d", 8 * bpc);
 
@@ -1789,7 +1795,15 @@ get_channel_format (gint32 drawableID)
 static const Babl *
 get_mask_format (gint32 drawableID)
 {
-  return get_channel_format (drawableID);
+  gint32 image_id = gimp_item_get_image (drawableID);
+  gint   bpc;
+  gchar  format[32];
+
+  bpc = get_bpc (image_id);
+
+  sprintf (format, "Y u%d", 8 * bpc);
+
+  return babl_format (format);
 }
 
 static void
