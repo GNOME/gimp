@@ -669,41 +669,41 @@ save_resources (FILE      *fd,
       /* write_pascalstring (fd, Name, "Id name"); */
       write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
 
-    /* Mark current position in the file */
+      /* Mark current position in the file */
 
-    name_sec = ftell (fd);
-    write_gint32 (fd, 0, "0x03EE resource size");
+      name_sec = ftell (fd);
+      write_gint32 (fd, 0, "0x03EE resource size");
 
-    /* Write all strings */
+      /* Write all strings */
 
-    /* if the merged_image contains transparency, write a name for it first */
-    if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
-      write_string (fd, "Transparency", "channel name");
+      /* if the merged_image contains transparency, write a name for it first */
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+        write_string (fd, "Transparency", "channel name");
 
-    for (iter = g_list_last (PSDImageData.lChannels); iter; iter = iter->prev)
-      {
-        char *chName = gimp_item_get_name (iter->data);
-        write_string (fd, chName, "channel name");
-        g_free (chName);
-      }
-    /* Calculate and write actual resource's length */
+      for (iter = g_list_last (PSDImageData.lChannels); iter; iter = iter->prev)
+        {
+          char *chName = gimp_item_get_name (iter->data);
+          write_string (fd, chName, "channel name");
+          g_free (chName);
+        }
+      /* Calculate and write actual resource's length */
 
-    eof_pos = ftell (fd);
+      eof_pos = ftell (fd);
 
-    fseek (fd, name_sec, SEEK_SET);
-    write_gint32 (fd, eof_pos - name_sec - sizeof (gint32), "0x03EE resource size");
-    IFDBG printf ("\tTotal length of 0x03EE resource: %d\n",
-                  (int) (eof_pos - name_sec - sizeof (gint32)));
+      fseek (fd, name_sec, SEEK_SET);
+      write_gint32 (fd, eof_pos - name_sec - sizeof (gint32), "0x03EE resource size");
+      IFDBG printf ("\tTotal length of 0x03EE resource: %d\n",
+                    (int) (eof_pos - name_sec - sizeof (gint32)));
 
-    /* Return to EOF to continue writing */
+      /* Return to EOF to continue writing */
 
-    fseek (fd, eof_pos, SEEK_SET);
+      fseek (fd, eof_pos, SEEK_SET);
 
-    /* Pad if length is odd */
+      /* Pad if length is odd */
 
-    if ((eof_pos - name_sec - sizeof (gint32)) & 1)
-      write_gchar (fd, 0, "pad byte");
-  }
+      if ((eof_pos - name_sec - sizeof (gint32)) & 1)
+        write_gchar (fd, 0, "pad byte");
+    }
 
   /* --------------- Write Guides --------------- */
   if (gimp_image_find_next_guide (image, 0))
