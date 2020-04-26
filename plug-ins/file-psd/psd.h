@@ -481,7 +481,6 @@ typedef struct {
   gint16        colorSpace;             /* Color space from PSDColorSpace */
   guint16       color[4];               /* 4 * 16 bit color components */
   gint16        opacity;                /* Opacity 0 to 100 */
-  gchar         kind;                   /* Selected = 0, Protected = 1 */
   gchar         mode;                   /* Alpha = 0, Inverted alpha = 1, Spot = 2 */
 } DisplayInfoNew;
 

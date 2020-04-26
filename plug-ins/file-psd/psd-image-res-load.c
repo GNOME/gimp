@@ -738,7 +738,7 @@ load_resource_1007 (const PSDimageres  *res_a,
                         dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
                         gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
 
-      img_a->alpha_display_info[cidx] = g_malloc (sizeof (PSDchanneldata));
+      img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
       img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_kind = dsp_info.kind;
@@ -1390,16 +1390,16 @@ load_resource_1077 (const PSDimageres  *res_a,
 
       gimp_rgb_set_alpha (&gimp_rgb, 1.0);
 
-      IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, kind: %d",
+      IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, mode: %d",
                         dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
                         ps_color.cmyk.yellow, ps_color.cmyk.black, dsp_info.opacity,
-                        dsp_info.kind);
+                        dsp_info.mode);
 
-      IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, kind: %d",
+      IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, mode: %d",
                         dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
-                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
+                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.mode);
 
-      img_a->alpha_display_info[cidx] = g_malloc (sizeof (PSDchanneldata));
+      img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
       img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_mode = dsp_info.mode;
