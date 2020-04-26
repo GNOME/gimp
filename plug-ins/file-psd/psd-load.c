@@ -2098,7 +2098,7 @@ add_merged_image (GimpImage *image,
           channel = gimp_channel_new (image, alpha_name,
                                       chn_a[cidx].columns, chn_a[cidx].rows,
                                       alpha_opacity, &alpha_rgb);
-          gimp_image_insert_channel (image, channel, NULL, 0);
+          gimp_image_insert_channel (image, channel, NULL, i);
           g_free (alpha_name);
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
           if (alpha_id)
