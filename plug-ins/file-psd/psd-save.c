@@ -705,6 +705,70 @@ save_resources (FILE      *fd,
         write_gchar (fd, 0, "pad byte");
     }
 
+  /* --------------- Write Channel properties --------------- */
+
+  if (PSDImageData.nChannels > 0 ||
+      gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+    {
+      xfwrite (fd, "8BIM", 4, "imageresources signature");
+      write_gint16 (fd, 0x0435, "0x0435 Id"); /* 1077 */
+      /* write_pascalstring (fd, Name, "Id name"); */
+      write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
+      write_gint32 (fd,
+                    4  +
+                    13 * (gimp_drawable_has_alpha (
+                            GIMP_DRAWABLE (PSDImageData.merged_layer)) +
+                          PSDImageData.nChannels),
+                    "0x0435 resource size");
+
+      /* The function of the first 4 bytes is unclear. As per
+       * load_resource_1077() in psd-image-res-load.c, it seems to be a version
+       * number that is always one.
+       */
+      write_gint32 (fd, 1, "0x0435 version");
+
+      /* Write all channel properties */
+
+      #define DOUBLE_TO_INT16(x) ROUND (SAFE_CLAMP (x, 0.0, 1.0) * 0xffff)
+
+      /* if the merged_image contains transparency, write its properties first */
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+        {
+          write_gint16 (fd, PSD_CS_RGB, "channel color space");
+          write_gint16 (fd, DOUBLE_TO_INT16 (1.0), "channel color r");
+          write_gint16 (fd, DOUBLE_TO_INT16 (0.0), "channel color g");
+          write_gint16 (fd, DOUBLE_TO_INT16 (0.0), "channel color b");
+          write_gint16 (fd, 0,                     "channel color padding");
+          write_gint16 (fd, 100,                   "channel opacity");
+          write_gchar  (fd, 1,                     "channel mode");
+        }
+
+      for (iter = g_list_last (PSDImageData.lChannels); iter; iter = iter->prev)
+        {
+          GimpChannel *channel = iter->data;
+          GimpRGB      color;
+          gdouble      opacity;
+
+          gimp_channel_get_color (channel, &color);
+          opacity = gimp_channel_get_opacity (channel);
+
+          write_gint16 (fd, PSD_CS_RGB,                "channel color space");
+          write_gint16 (fd, DOUBLE_TO_INT16 (color.r), "channel color r");
+          write_gint16 (fd, DOUBLE_TO_INT16 (color.g), "channel color g");
+          write_gint16 (fd, DOUBLE_TO_INT16 (color.b), "channel color b");
+          write_gint16 (fd, 0,                         "channel color padding");
+          write_gint16 (fd, ROUND (opacity),           "channel opacity");
+          write_gchar  (fd, 1,                         "channel mode");
+        }
+
+      #undef DOUBLE_TO_INT16
+
+      /* Pad if length is odd */
+
+      if (ftell (fd) & 1)
+        write_gchar (fd, 0, "pad byte");
+    }
+
   /* --------------- Write Guides --------------- */
   if (gimp_image_find_next_guide (image, 0))
     {
