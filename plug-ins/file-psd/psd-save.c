@@ -674,7 +674,7 @@ save_resources (FILE   *fd,
       if (gimp_drawable_has_alpha (PSDImageData.merged_layer))
         write_string (fd, "Transparency", "channel name");
 
-      for (i = PSDImageData.nChannels - 1; i >= 0; i--)
+      for (i = 0; i < PSDImageData.nChannels; i++)
         {
           char *chName = gimp_item_get_name (PSDImageData.lChannels[i]);
           write_string (fd, chName, "channel name");
@@ -736,7 +736,7 @@ save_resources (FILE   *fd,
           write_gchar  (fd, 1,                     "channel mode");
         }
 
-      for (i = PSDImageData.nChannels - 1; i >= 0; i--)
+      for (i = 0; i < PSDImageData.nChannels; i++)
         {
           GimpRGB color;
           gdouble opacity;
@@ -1565,7 +1565,7 @@ save_data (FILE   *fd,
   chan = nChansLayer (PSDImageData.baseType,
                       gimp_drawable_has_alpha(PSDImageData.merged_layer), 0);
 
-  for (i = PSDImageData.nChannels - 1; i >= 0; i--)
+  for (i = 0; i < PSDImageData.nChannels; i++)
     {
       IFDBG printf ("\t\tWriting compressed channel data for channel %d\n",
                     i);
