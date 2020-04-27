@@ -192,12 +192,14 @@ deps-win64:
         pkg-config
         python3-distutils
         python3-docutils
+        python3-pip
         rpm
     - apt-get install -y --reinstall ca-certificates
     - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
+    - pip3 install zstandard
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
@@ -276,12 +278,14 @@ deps-win32:
         pkg-config
         python3-distutils
         python3-docutils
+        python3-pip
         rpm
     - apt-get install -y --reinstall ca-certificates
     - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
     - cd ..
+    - pip3 install zstandard
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w32 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
