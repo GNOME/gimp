@@ -332,12 +332,13 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
                                      GimpDisplay  *display,
                                      GError      **error)
 {
-  GimpTransformTool     *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformGridTool *tg_tool  = GIMP_TRANSFORM_GRID_TOOL (tool);
-  GimpImage             *image    = gimp_display_get_image (display);
-  GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
-  GimpObject            *object;
-  UndoInfo              *undo_info;
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformGridTool    *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tool);
+  GimpImage                *image      = gimp_display_get_image (display);
+  GimpDrawable             *drawable   = gimp_image_get_active_drawable (image);
+  GimpObject               *object;
+  UndoInfo                 *undo_info;
 
   object = gimp_transform_tool_check_active_object (tr_tool, display, error);
 
@@ -383,6 +384,9 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   /*  Save the current transformation info  */
   memcpy (undo_info->trans_infos, tg_tool->trans_infos,
           sizeof (tg_tool->trans_infos));
+
+  if (tg_options->direction_chain_button)
+    gtk_widget_set_sensitive (tg_options->direction_chain_button, TRUE);
 
   g_signal_connect (
     image, "linked-items-changed",
@@ -1149,8 +1153,9 @@ gimp_transform_grid_tool_image_linked_items_changed (GimpImage             *imag
 static void
 gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTool                 *tool       = GIMP_TOOL (tg_tool);
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
 
   if (tool->display)
     {
@@ -1187,6 +1192,15 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
     }
 
   gimp_transform_grid_tool_show_active_object (tg_tool);
+
+  if (tg_options->direction_chain_button)
+    {
+      g_object_set (tg_options,
+                    "direction-linked", FALSE,
+                    NULL);
+
+      gtk_widget_set_sensitive (tg_options->direction_chain_button, FALSE);
+    }
 
   tool->display   = NULL;
   tool->drawable  = NULL;

@@ -101,11 +101,12 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
   g_object_class_override_property (object_class, PROP_DIRECTION,
                                     "direction");
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIRECTION_LINKED,
-                            "direction-linked",
-                            NULL, NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_DIRECTION_LINKED,
+                                   g_param_spec_boolean ("direction-linked",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PREVIEW,
                             "show-preview",
@@ -391,7 +392,8 @@ gimp_transform_grid_options_get_property (GObject    *object,
 GtkWidget *
 gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 {
-  GObject                    *config = G_OBJECT (tool_options);
+  GObject                    *config  = G_OBJECT (tool_options);
+  GimpTransformGridOptions   *options = GIMP_TRANSFORM_GRID_OPTIONS (tool_options);
   GimpTransformGridToolClass *tg_class;
   GtkWidget                  *vbox;
   GtkWidget                  *vbox2;
@@ -427,6 +429,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_set_sensitive (button, FALSE);
       gimp_chain_button_set_icon_size (GIMP_CHAIN_BUTTON (button),
                                        GTK_ICON_SIZE_MENU);
       gtk_widget_show (button);
@@ -435,6 +438,8 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
                               button, "active",
                               G_BINDING_BIDIRECTIONAL |
                               G_BINDING_SYNC_CREATE);
+
+      options->direction_chain_button = button;
     }
 
   g_type_class_unref (tg_class);
