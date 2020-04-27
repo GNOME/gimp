@@ -81,6 +81,8 @@ struct _GimpTransformGridToolClass
                                        GimpMatrix3            *transform);
   void             (* matrix_to_info) (GimpTransformGridTool  *tg_tool,
                                        const GimpMatrix3      *transform);
+  void             (* apply_info)     (GimpTransformGridTool  *tg_tool,
+                                       const TransInfo         info);
   gchar          * (* get_undo_desc)  (GimpTransformGridTool  *tg_tool);
   void             (* dialog)         (GimpTransformGridTool  *tg_tool);
   void             (* dialog_update)  (GimpTransformGridTool  *tg_tool);

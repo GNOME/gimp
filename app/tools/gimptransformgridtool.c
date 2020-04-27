@@ -170,6 +170,8 @@ static GeglBuffer * gimp_transform_grid_tool_transform       (GimpTransformTool 
                                                               gint                   *new_offset_x,
                                                               gint                   *new_offset_y);
 
+static void     gimp_transform_grid_tool_real_apply_info     (GimpTransformGridTool  *tg_tool,
+                                                              const TransInfo         info);
 static gchar  * gimp_transform_grid_tool_real_get_undo_desc  (GimpTransformGridTool  *tg_tool);
 static void     gimp_transform_grid_tool_real_update_widget  (GimpTransformGridTool  *tg_tool);
 static void     gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool  *tg_tool);
@@ -278,6 +280,7 @@ gimp_transform_grid_tool_class_init (GimpTransformGridToolClass *klass)
 
   klass->info_to_matrix      = NULL;
   klass->matrix_to_info      = NULL;
+  klass->apply_info          = gimp_transform_grid_tool_real_apply_info;
   klass->get_undo_desc       = gimp_transform_grid_tool_real_get_undo_desc;
   klass->dialog              = NULL;
   klass->dialog_update       = NULL;
@@ -1038,6 +1041,13 @@ gimp_transform_grid_tool_transform (GimpTransformTool  *tr_tool,
   return new_buffer;
 }
 
+static void
+gimp_transform_grid_tool_real_apply_info (GimpTransformGridTool *tg_tool,
+                                          const TransInfo        info)
+{
+  memcpy (tg_tool->trans_info, info, sizeof (TransInfo));
+}
+
 static gchar *
 gimp_transform_grid_tool_real_get_undo_desc (GimpTransformGridTool *tg_tool)
 {
@@ -1467,9 +1477,8 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
               if (tr_options->direction == GIMP_TRANSFORM_BACKWARD)
                 gimp_matrix3_invert (&transform);
 
-              memcpy (tg_tool->trans_info, tg_tool->init_trans_info,
-                      sizeof (TransInfo));
-
+              GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->apply_info (
+                tg_tool, tg_tool->init_trans_info);
               GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info (
                 tg_tool, &transform);
 
