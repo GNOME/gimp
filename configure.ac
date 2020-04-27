@@ -812,9 +812,9 @@ LIBS=$gimp_save_LIBS
 
 AC_PATH_XTRA
 
-PKG_CHECK_MODULES(GTK, gtk+-3.0 >= gtk_required_version,,
-                  [add_deps_error([gtk+-3.0 >= gtk_required_version],
-                                  [Test for GTK+ failed.])])
+# Do not delay GTK errors and exit immediately as it will provoke
+# harder to understand syntax errors of missing autoconf macros.
+PKG_CHECK_MODULES(GTK, gtk+-3.0 >= gtk_required_version);
 
 AC_PATH_PROGS(GTK_UPDATE_ICON_CACHE, gtk-update-icon-cache-3.0 gtk-update-icon-cache, no)
 if test "x$GTK_UPDATE_ICON_CACHE" = xno; then
