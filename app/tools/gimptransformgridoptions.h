@@ -55,6 +55,9 @@ struct _GimpTransformGridOptions
   gboolean              frompivot_perspective;
   gboolean              cornersnap;
   gboolean              fixedpivot;
+
+  /*  options gui  */
+  GtkWidget            *direction_chain_button;
 };
 
 struct _GimpTransformGridOptionsClass
