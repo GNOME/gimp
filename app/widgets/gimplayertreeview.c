@@ -148,7 +148,7 @@ static void       gimp_layer_tree_view_layer_signal_handler       (GimpLayer    
 static void       gimp_layer_tree_view_update_options             (GimpLayerTreeView          *view,
                                                                    GimpLayer                  *layer);
 static void       gimp_layer_tree_view_update_menu                (GimpLayerTreeView          *view,
-                                                                   GimpLayer                  *layer);
+                                                                   GList                      *layers);
 static void       gimp_layer_tree_view_update_highlight           (GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_mask_update                (GimpLayerTreeView          *view,
                                                                    GtkTreeIter                *iter,
@@ -594,10 +594,13 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
     {
       if (success)
         {
+          GList *layers = g_list_prepend (NULL, item);
+
           gimp_layer_tree_view_update_borders (layer_view,
                                                (GtkTreeIter *) insert_data);
           gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (item));
-          gimp_layer_tree_view_update_menu (layer_view, GIMP_LAYER (item));
+          gimp_layer_tree_view_update_menu (layer_view, layers);
+          g_list_free (layers);
         }
     }
 
@@ -638,8 +641,8 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
               gtk_tree_model_get_iter (tree_view->model, &iter, path->data);
               gimp_layer_tree_view_update_borders (layer_view, &iter);
               gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (layers->data));
-              gimp_layer_tree_view_update_menu (layer_view, GIMP_LAYER (layers->data));
             }
+          gimp_layer_tree_view_update_menu (layer_view, items);
         }
     }
 
@@ -1226,25 +1229,39 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
 
 static void
 gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
-                                  GimpLayer         *layer)
+                                  GList             *layers)
 {
   GimpUIManager   *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (layer_view));
   GimpActionGroup *group;
-  GimpLayerMask   *mask;
+  GList           *iter;
+  gboolean         have_masks         = FALSE;
+  gboolean         all_masks_shown    = TRUE;
+  gboolean         all_masks_disabled = TRUE;
 
   group = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
-  mask = gimp_layer_get_mask (layer);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (gimp_layer_get_mask (iter->data))
+        {
+          have_masks = TRUE;
+          if (! gimp_layer_get_show_mask (iter->data))
+            all_masks_shown = FALSE;
+          if (gimp_layer_get_apply_mask (iter->data))
+            all_masks_disabled = FALSE;
+        }
+    }
 
   gimp_action_group_set_action_active (group, "layers-mask-show",
-                                       mask &&
-                                       gimp_layer_get_show_mask (layer));
+                                       have_masks && all_masks_shown);
   gimp_action_group_set_action_active (group, "layers-mask-disable",
-                                       mask &&
-                                       ! gimp_layer_get_apply_mask (layer));
+                                       have_masks && all_masks_disabled);
+
+  /* Only one layer mask at a time can be edited. */
   gimp_action_group_set_action_active (group, "layers-mask-edit",
-                                       mask &&
-                                       gimp_layer_get_edit_mask (layer));
+                                       g_list_length (layers) == 1 &&
+                                       gimp_layer_get_mask (layers->data) &&
+                                       gimp_layer_get_edit_mask (layers->data));
 }
 
 static void

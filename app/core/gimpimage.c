@@ -4614,6 +4614,16 @@ gimp_image_set_selected_layers (GimpImage *image,
         gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (selected_layers->data));
 
       gimp_item_tree_set_selected_items (private->layers, layers2);
+
+      /* We cannot edit masks with multiple selected layers. */
+      if (g_list_length (layers2) > 1)
+        {
+          for (iter = layers2; iter; iter = iter->next)
+            {
+              if (gimp_layer_get_mask (iter->data))
+                gimp_layer_set_edit_mask (iter->data, FALSE);
+            }
+        }
     }
   else
     {

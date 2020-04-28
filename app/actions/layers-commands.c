@@ -1215,16 +1215,45 @@ layers_mask_show_cmd_callback (GimpAction *action,
                                gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  gboolean   active     = g_variant_get_boolean (value);
+  gboolean   have_masks = FALSE;
+  return_if_no_layers (image, layers, data);
 
-  if (gimp_layer_get_mask (layer))
+  for (iter = layers; iter; iter = iter->next)
     {
-      gboolean active = g_variant_get_boolean (value);
-
-      gimp_layer_set_show_mask (layer, active, TRUE);
-      gimp_image_flush (image);
+      if (gimp_layer_get_mask (iter->data))
+        {
+          have_masks = TRUE;
+          /* A bit of tricky to handle multiple and diverse layers with
+           * a toggle action (with only binary state).
+           * In non-active state, we will consider sets of both shown
+           * and hidden masks as ok and exits. This allows us to switch
+           * the action "active" state without actually changing
+           * individual masks state without explicit user request.
+           */
+          if (! active && ! gimp_layer_get_show_mask (iter->data))
+            return;
+        }
     }
+  if (! have_masks)
+    return;
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_ADD,
+                               _("Show Layer Masks"));
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (gimp_layer_get_mask (iter->data))
+        {
+          gimp_layer_set_show_mask (iter->data, active, TRUE);
+        }
+    }
+
+  gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
 }
 
 void
@@ -1233,16 +1262,45 @@ layers_mask_disable_cmd_callback (GimpAction *action,
                                   gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  gboolean   active = g_variant_get_boolean (value);
+  gboolean   have_masks = FALSE;
+  return_if_no_layers (image, layers, data);
 
-  if (gimp_layer_get_mask (layer))
+  for (iter = layers; iter; iter = iter->next)
     {
-      gboolean active = g_variant_get_boolean (value);
-
-      gimp_layer_set_apply_mask (layer, ! active, TRUE);
-      gimp_image_flush (image);
+      if (gimp_layer_get_mask (iter->data))
+        {
+          have_masks = TRUE;
+          /* A bit of tricky to handle multiple and diverse layers with
+           * a toggle action (with only binary state).
+           * In non-active state, we will consider sets of both enabled
+           * and disabled masks as ok and exits. This allows us to
+           * switch the action "active" state without actually changing
+           * individual masks state without explicit user request.
+           */
+          if (! active && gimp_layer_get_apply_mask (iter->data))
+            return;
+        }
     }
+  if (! have_masks)
+    return;
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_ADD,
+                               _("Disable Layer Masks"));
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (gimp_layer_get_mask (iter->data))
+        {
+          gimp_layer_set_apply_mask (iter->data, ! active, TRUE);
+        }
+    }
+
+  gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
 }
 
 void

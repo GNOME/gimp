@@ -305,13 +305,13 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     GIMP_HELP_LAYER_MASK_EDIT },
 
   { "layers-mask-show", GIMP_ICON_VISIBLE,
-    NC_("layers-action", "S_how Layer Mask"), NULL, NULL,
+    NC_("layers-action", "S_how Layer Masks"), NULL, NULL,
     layers_mask_show_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_MASK_SHOW },
 
   { "layers-mask-disable", NULL,
-    NC_("layers-action", "_Disable Layer Mask"), NULL,
+    NC_("layers-action", "_Disable Layer Masks"), NULL,
     NC_("layers-action", "Dismiss the effect of the layer mask"),
     layers_mask_disable_cmd_callback,
     FALSE,
@@ -792,6 +792,10 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       have_groups    = FALSE; /* At least 1 selected layer is a group.            */
   gboolean       have_no_groups = FALSE; /* At least 1 selected layer is not a group.        */
   gboolean       have_writable  = FALSE; /* At least 1 selected layer has no contents lock.  */
+
+  gboolean       all_masks_shown    = TRUE;
+  gboolean       all_masks_disabled = TRUE;
+
   gint           n_layers       = 0;
 
   if (image)
@@ -811,9 +815,17 @@ layers_actions_update (GimpActionGroup *group,
            * have masks, and some none.
            */
           if (gimp_layer_get_mask (iter->data))
-            have_masks = TRUE;
+            {
+              have_masks = TRUE;
+              if (! gimp_layer_get_show_mask (iter->data))
+                all_masks_shown = FALSE;
+              if (gimp_layer_get_apply_mask (iter->data))
+                all_masks_disabled = FALSE;
+            }
           else
-            have_no_masks = TRUE;
+            {
+              have_no_masks = TRUE;
+            }
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
             have_groups = TRUE;
@@ -823,9 +835,10 @@ layers_actions_update (GimpActionGroup *group,
           if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
             have_writable = TRUE;
 
-          if (have_masks && have_no_masks   &&
-              have_groups && have_no_groups &&
-              have_writable)
+          if (have_masks && have_no_masks       &&
+              have_groups && have_no_groups     &&
+              have_writable && ! all_masks_shown &&
+              ! all_masks_disabled)
             break;
         }
 
@@ -1039,12 +1052,12 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-delete", n_layers > 0 && !fs && !ac && have_masks);
 
   SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-disable", layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-show",    n_layers > 0 && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-disable", n_layers > 0 && !fs && !ac && have_masks);
 
   SET_ACTIVE ("layers-mask-edit",    mask && gimp_layer_get_edit_mask (layer));
-  SET_ACTIVE ("layers-mask-show",    mask && gimp_layer_get_show_mask (layer));
-  SET_ACTIVE ("layers-mask-disable", mask && !gimp_layer_get_apply_mask (layer));
+  SET_ACTIVE ("layers-mask-show",    all_masks_shown);
+  SET_ACTIVE ("layers-mask-disable", all_masks_disabled);
 
   SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && mask);
   SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && mask);
