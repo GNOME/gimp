@@ -4697,17 +4697,20 @@ HELP
           break;
 
         case 3:
-          gegl_mode = propagate_mode;
-          /* fall thru */
-
         case 4:
         case 5:
-          gegl_mode = 4;
+          if (propagate_mode == 3 || propagate_mode == 4)
+            {
+              gegl_mode = propagate_mode;
 
-          if (propagate_mode != 3)
-            gimp_context_get_foreground (context, &color);
+              gimp_context_get_foreground (context, &color);
+            }
           else
-            gimp_context_get_background (context, &color);
+            {
+              gegl_mode = 4;
+
+              gimp_context_get_background (context, &color);
+            }
 
           gegl_color = gimp_gegl_color_new (&color, NULL);
           break;
