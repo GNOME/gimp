@@ -1791,7 +1791,7 @@ add_layers (GimpImage *image,
   g_array_free (parent_group_stack, FALSE);
 
   /* Set the active layer */
-  if (active_layer >= 0)
+  if (active_layer != NULL)
     gimp_image_set_active_layer (image, active_layer);
 
   return 0;
