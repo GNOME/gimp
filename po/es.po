@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-04-08 13:03+0000\n"
-"PO-Revision-Date: 2020-04-08 15:57+0200\n"
+"POT-Creation-Date: 2020-04-27 13:58+0000\n"
+"PO-Revision-Date: 2020-04-27 18:31+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -3228,7 +3228,7 @@ msgstr "240 segundos"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:346
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1243
+#: ../app/tools/gimptransformgridtool.c:1267
 #: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:662
@@ -7990,7 +7990,7 @@ msgstr "Restablecer todos los filtros"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1240
+#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1264
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -13597,8 +13597,8 @@ msgstr "Tipografía"
 msgid "Tool Preset"
 msgstr "Ajuste prefijado de herramienta"
 
-#: ../app/core/gimpdatafactory.c:350 ../app/core/gimpdatafactory.c:384
-#: ../app/core/gimpdatafactory.c:718 ../app/core/gimpdatafactory.c:749
+#: ../app/core/gimpdatafactory.c:351 ../app/core/gimpdatafactory.c:385
+#: ../app/core/gimpdatafactory.c:719 ../app/core/gimpdatafactory.c:750
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -13609,22 +13609,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:423 ../app/core/gimpdatafactory.c:426
+#: ../app/core/gimpdatafactory.c:424 ../app/core/gimpdatafactory.c:427
 #: ../app/core/gimpitem.c:547 ../app/core/gimpitem.c:550
 msgid "copy"
 msgstr "copiar"
 
-#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:558
+#: ../app/core/gimpdatafactory.c:436 ../app/core/gimpitem.c:558
 #, c-format
 msgid "%s copy"
 msgstr "Copia de %s"
 
-#: ../app/core/gimpdatafactory.c:586 ../app/tools/gimptextoptions.c:532
+#: ../app/core/gimpdatafactory.c:587 ../app/tools/gimptextoptions.c:532
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Cargando tipografías (esto puede tardar un rato...)"
 
-#: ../app/core/gimpdatafactory.c:908
+#: ../app/core/gimpdatafactory.c:909
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -13635,7 +13635,7 @@ msgstr ""
 "esta carpeta no existe. Cree la carpeta o arregle su configuración en la "
 "sección «Carpetas» del diálogo Preferencias."
 
-#: ../app/core/gimpdatafactory.c:927
+#: ../app/core/gimpdatafactory.c:928
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -13646,7 +13646,7 @@ msgstr ""
 "forma parte de su ruta de búsqueda.  Probablemente ha editado manualmente el "
 "archivo gimprc, arréglelo en la sección «Carpetas» del diálogo Preferencias. "
 
-#: ../app/core/gimpdatafactory.c:937
+#: ../app/core/gimpdatafactory.c:938
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "No tiene configurada una carpeta escribible de datos."
@@ -15148,7 +15148,7 @@ msgstr "Precisión"
 #. gamma
 #: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:140
-#: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:509
+#: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:505
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -18261,23 +18261,23 @@ msgstr "Al"
 msgid "_Sample Merged"
 msgstr "_Muestra combinada"
 
-#: ../app/display/gimpdisplayshell.c:575
+#: ../app/display/gimpdisplayshell.c:576
 msgid "Access the image menu"
 msgstr "Ir al menú de imagen"
 
-#: ../app/display/gimpdisplayshell.c:693
+#: ../app/display/gimpdisplayshell.c:694
 msgid "Zoom image when window size changes"
 msgstr "Ampliar imagen cuando cambia el tamaño de ventana"
 
-#: ../app/display/gimpdisplayshell.c:722
+#: ../app/display/gimpdisplayshell.c:723
 msgid "Toggle Quick Mask"
 msgstr "Alternar la máscara rápida"
 
-#: ../app/display/gimpdisplayshell.c:745
+#: ../app/display/gimpdisplayshell.c:746
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:804 ../app/display/gimpdisplayshell.c:1465
+#: ../app/display/gimpdisplayshell.c:805 ../app/display/gimpdisplayshell.c:1466
 #: ../app/widgets/gimptoolbox.c:247
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
@@ -19717,15 +19717,15 @@ msgstr "Retener la salida"
 msgid "Clamp final output values."
 msgstr "Retener los valores de salida finales."
 
-#: ../app/operations/gimplevelsconfig.c:842
+#: ../app/operations/gimplevelsconfig.c:846
 msgid "not a GIMP Levels file"
 msgstr "no es un archivo de niveles GIMP"
 
-#: ../app/operations/gimplevelsconfig.c:917
+#: ../app/operations/gimplevelsconfig.c:921
 msgid "parse error"
 msgstr "Error de análisis"
 
-#: ../app/operations/gimplevelsconfig.c:952
+#: ../app/operations/gimplevelsconfig.c:956
 msgid "Writing levels file failed: "
 msgstr "Falló al escribir el archivo de niveles: "
 
@@ -19780,7 +19780,7 @@ msgstr "Convertir colores en tonos de gris"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/operations/gimpoperationsettings.c:95
-#: ../app/tools/gimpfiltertool.c:1122 ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/tools/gimpfiltertool.c:1127 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:116
 #: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
@@ -19820,7 +19820,7 @@ msgid "The color"
 msgstr "El color"
 
 #: ../app/operations/gimpoperationsettings.c:78
-#: ../app/tools/gimpfiltertool.c:1086 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimpfiltertool.c:1091 ../app/tools/gimpflipoptions.c:156
 #: ../app/tools/gimptransformoptions.c:108
 #: ../app/tools/gimptransformoptions.c:264
 msgid "Clipping"
@@ -20398,8 +20398,8 @@ msgstr "Invertir"
 #: ../app/pdb/drawable-transform-cmds.c:478
 #: ../app/pdb/item-transform-cmds.c:340 ../app/pdb/transform-tools-cmds.c:177
 #: ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformgridoptions.c:594
-#: ../app/tools/gimptransformgridoptions.c:603
+#: ../app/tools/gimptransformgridoptions.c:599
+#: ../app/tools/gimptransformgridoptions.c:608
 msgid "Perspective"
 msgstr "Perspectiva"
 
@@ -21417,7 +21417,7 @@ msgid "Select Range to Adjust"
 msgstr "Seleccione el rango para ajustar"
 
 #: ../app/propgui/gimppropgui-color-balance.c:103
-#: ../app/tools/gimplevelstool.c:256
+#: ../app/tools/gimplevelstool.c:252
 msgid "Adjust Color Levels"
 msgstr "Ajustar los niveles de color"
 
@@ -22448,70 +22448,70 @@ msgstr "Curvas"
 msgid "_Curves..."
 msgstr "_Curvas…"
 
-#: ../app/tools/gimpcurvestool.c:399
+#: ../app/tools/gimpcurvestool.c:395
 msgid "Click to add a control point"
 msgstr "Pulse para añadir un punto de control"
 
-#: ../app/tools/gimpcurvestool.c:404
+#: ../app/tools/gimpcurvestool.c:400
 msgid "Click to add control points to all channels"
 msgstr "Pulse para añadir puntos de control a todos los canales"
 
-#: ../app/tools/gimpcurvestool.c:409
+#: ../app/tools/gimpcurvestool.c:405
 msgid "Click to locate on curve"
 msgstr "Pulse para situar sobre la curva"
 
-#: ../app/tools/gimpcurvestool.c:411
+#: ../app/tools/gimpcurvestool.c:407
 #, c-format
 msgid "%s: add control point"
 msgstr "%s: añadir punto de control"
 
-#: ../app/tools/gimpcurvestool.c:412
+#: ../app/tools/gimpcurvestool.c:408
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: añadir puntos de control a todos los canales"
 
-#: ../app/tools/gimpcurvestool.c:429
+#: ../app/tools/gimpcurvestool.c:425
 msgid "Adjust Color Curves"
 msgstr "Ajustar las curvas de color"
 
-#: ../app/tools/gimpcurvestool.c:474 ../app/tools/gimplevelstool.c:354
+#: ../app/tools/gimpcurvestool.c:470 ../app/tools/gimplevelstool.c:350
 #: ../app/tools/gimpthresholdtool.c:230
 msgid "Cha_nnel:"
 msgstr "Ca_nal:"
 
-#: ../app/tools/gimpcurvestool.c:506 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:502 ../app/tools/gimplevelstool.c:380
 msgid "R_eset Channel"
 msgstr "R_einiciar el canal"
 
-#: ../app/tools/gimpcurvestool.c:526
+#: ../app/tools/gimpcurvestool.c:522
 msgid "Adjust curves in linear light"
 msgstr "Ajustar curvas en luz lineal"
 
-#: ../app/tools/gimpcurvestool.c:527
+#: ../app/tools/gimpcurvestool.c:523
 msgid "Adjust curves perceptually"
 msgstr "Ajustar curvas de forma perceptiva"
 
-#: ../app/tools/gimpcurvestool.c:622
+#: ../app/tools/gimpcurvestool.c:618
 msgid "_Input:"
 msgstr "_Entrada:"
 
-#: ../app/tools/gimpcurvestool.c:636
+#: ../app/tools/gimpcurvestool.c:632
 msgid "O_utput:"
 msgstr "_Salida:"
 
-#: ../app/tools/gimpcurvestool.c:650
+#: ../app/tools/gimpcurvestool.c:646
 msgid "T_ype:"
 msgstr "T_ipo:"
 
-#: ../app/tools/gimpcurvestool.c:669 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:665 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
-#: ../app/tools/gimpcurvestool.c:788 ../app/tools/gimplevelstool.c:754
+#: ../app/tools/gimpcurvestool.c:751 ../app/tools/gimplevelstool.c:746
 msgid "Could not read header: "
 msgstr "No se ha podido leer la cabecera:"
 
-#: ../app/tools/gimpcurvestool.c:862
+#: ../app/tools/gimpcurvestool.c:825
 msgid "Use _old curves file format"
 msgstr "Usar el formato antigu_o de archivo de curvas"
 
@@ -22681,33 +22681,32 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: cambiar horizontal y vertical"
 
 #. The blending-options expander
-#: ../app/tools/gimpfiltertool.c:1099
-#, fuzzy
+#: ../app/tools/gimpfiltertool.c:1104
 #| msgid "Insane Options"
 msgid "Blending Options"
-msgstr "Opciones dementes"
+msgstr "Opciones de mezcla"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:1138
+#: ../app/tools/gimpfiltertool.c:1143
 msgid "Advanced Color Options"
 msgstr "Opciones de color avanzadas"
 
-#: ../app/tools/gimpfiltertool.c:1162
+#: ../app/tools/gimpfiltertool.c:1167
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr "Convertir píxeles a sRGB incorporado para aplicar el filtro (lento)"
 
-#: ../app/tools/gimpfiltertool.c:1163
+#: ../app/tools/gimpfiltertool.c:1168
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Suponer que los píxeles son sRGB incorporado (ignorar el espacio de color "
 "real de la imagen)"
 
-#: ../app/tools/gimpfiltertool.c:1552 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1557 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importar los ajustes «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1554 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1559 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportar los ajustes «%s»"
@@ -23288,78 +23287,78 @@ msgstr "Modificar la curva de las tijeras"
 msgid "_Levels..."
 msgstr "_Niveles…"
 
-#: ../app/tools/gimplevelstool.c:280
+#: ../app/tools/gimplevelstool.c:276
 msgid "Pick black point for all channels"
 msgstr "Seleccionar punto negro para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:282
+#: ../app/tools/gimplevelstool.c:278
 msgid "Pick black point for the selected channel"
 msgstr "Seleccionar punto negro para el canal seleccionado"
 
-#: ../app/tools/gimplevelstool.c:289
+#: ../app/tools/gimplevelstool.c:285
 msgid "Pick gray point for all channels"
 msgstr "Seleccionar punto gris para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:291
+#: ../app/tools/gimplevelstool.c:287
 msgid "Pick gray point for the selected channel"
 msgstr "Seleccionar punto gris para el canal seleccionado"
 
-#: ../app/tools/gimplevelstool.c:298
+#: ../app/tools/gimplevelstool.c:294
 msgid "Pick white point for all channels"
 msgstr "Seleccionar punto blanco para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:300
+#: ../app/tools/gimplevelstool.c:296
 msgid "Pick white point for the selected channel"
 msgstr "Seleccionar punto blanco para el canal seleccionado"
 
-#: ../app/tools/gimplevelstool.c:404
+#: ../app/tools/gimplevelstool.c:400
 msgid "Adjust levels in linear light"
 msgstr "Ajustar niveles en luz lineal"
 
-#: ../app/tools/gimplevelstool.c:405
+#: ../app/tools/gimplevelstool.c:401
 msgid "Adjust levels perceptually"
 msgstr "Ajustar niveles de forma perceptiva"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:414
+#: ../app/tools/gimplevelstool.c:410
 msgid "Input Levels"
 msgstr "Niveles de entrada"
 
-#: ../app/tools/gimplevelstool.c:501
+#: ../app/tools/gimplevelstool.c:497
 msgid "Clamp _input"
 msgstr "Retener la _entrada"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:544
+#: ../app/tools/gimplevelstool.c:540
 msgid "Output Levels"
 msgstr "Niveles de salida"
 
-#: ../app/tools/gimplevelstool.c:592
+#: ../app/tools/gimplevelstool.c:588
 msgid "Clamp outpu_t"
 msgstr "Retener la _salida"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:607
+#: ../app/tools/gimplevelstool.c:603
 msgid "All Channels"
 msgstr "Todos los canales"
 
-#: ../app/tools/gimplevelstool.c:619
+#: ../app/tools/gimplevelstool.c:615
 msgid "_Auto Input Levels"
 msgstr "Niveles de _entrada automáticos"
 
-#: ../app/tools/gimplevelstool.c:622
+#: ../app/tools/gimplevelstool.c:618
 msgid "Adjust levels for all channels automatically"
 msgstr "Ajustar automáticamente los niveles para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:649
+#: ../app/tools/gimplevelstool.c:645
 msgid "Edit these Settings as Curves"
 msgstr "Editar estos ajustes como curvas"
 
-#: ../app/tools/gimplevelstool.c:870
+#: ../app/tools/gimplevelstool.c:862
 msgid "Use _old levels file format"
 msgstr "Usar el formato antigu_o de archivo de niveles"
 
-#: ../app/tools/gimplevelstool.c:1013 ../app/tools/gimpthresholdtool.c:412
+#: ../app/tools/gimplevelstool.c:1005 ../app/tools/gimpthresholdtool.c:412
 msgid "Calculating histogram..."
 msgstr "Calculando histograma..."
 
@@ -23562,8 +23561,8 @@ msgid "Show lattice"
 msgstr "Mostrar cuadrícula"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:588
-#: ../app/tools/gimptransformgridoptions.c:599
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:593
+#: ../app/tools/gimptransformgridoptions.c:604
 msgid "Scale"
 msgstr "Redimensionar"
 
@@ -23793,7 +23792,7 @@ msgstr ""
 "Utilizar todas las capas visibles cuando se está encogiendo la selección"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:147
+#: ../app/tools/gimptransformgridoptions.c:148
 msgid "Composition guides such as rule of thirds"
 msgstr "Guías de composición tales como la regla de los tercios"
 
@@ -23930,7 +23929,7 @@ msgid "Move the mouse to change threshold"
 msgstr "Mueva el ratón para cambiar el umbral"
 
 #: ../app/tools/gimprotatetool.c:102
-#: ../app/tools/gimptransformgridoptions.c:590
+#: ../app/tools/gimptransformgridoptions.c:595
 #: ../app/tools/gimptransform3dtool.c:422
 msgid "Rotate"
 msgstr "Rotar"
@@ -24085,8 +24084,8 @@ msgstr "No puede intersecarse con una selección vacía."
 
 # Viendo el programa, parece más bien "cizalla". FVD
 # Según la RAE cizallar es cortar usando la cizalla y aquí no se corta nada. RLM
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:592
-#: ../app/tools/gimptransformgridoptions.c:601
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:597
+#: ../app/tools/gimptransformgridoptions.c:606
 msgid "Shear"
 msgstr "Inclinar"
 
@@ -24332,198 +24331,198 @@ msgstr ""
 "Esta herramienta\n"
 "no tiene opciones."
 
-#: ../app/tools/gimptransformgridoptions.c:111
+#: ../app/tools/gimptransformgridoptions.c:112
 msgid "Show image preview"
 msgstr "Mostrar vista previa de la imagen"
 
-#: ../app/tools/gimptransformgridoptions.c:112
+#: ../app/tools/gimptransformgridoptions.c:113
 msgid "Show a preview of the transformed image"
 msgstr "Muestra una vista previa de la imagen transformada"
 
-#: ../app/tools/gimptransformgridoptions.c:118
+#: ../app/tools/gimptransformgridoptions.c:119
 msgid "Composited preview"
 msgstr "Vista previa compuesta"
 
-#: ../app/tools/gimptransformgridoptions.c:119
+#: ../app/tools/gimptransformgridoptions.c:120
 msgid "Show preview as part of the image composition"
 msgstr "Mostrar la vista previa como parte de la composición de la imagen"
 
-#: ../app/tools/gimptransformgridoptions.c:125
+#: ../app/tools/gimptransformgridoptions.c:126
 msgid "Preview linked items"
 msgstr "Vista previa de elementos enlazados"
 
-#: ../app/tools/gimptransformgridoptions.c:126
+#: ../app/tools/gimptransformgridoptions.c:127
 msgid "Include linked items in the preview"
 msgstr "Incluir elementos enlazados en la vista previa"
 
-#: ../app/tools/gimptransformgridoptions.c:132
+#: ../app/tools/gimptransformgridoptions.c:133
 msgid "Synchronous preview"
 msgstr "Vista previa sincronizada"
 
-#: ../app/tools/gimptransformgridoptions.c:133
+#: ../app/tools/gimptransformgridoptions.c:134
 msgid "Render the preview synchronously"
 msgstr "Trazar la vista previa sincronizadamente"
 
-#: ../app/tools/gimptransformgridoptions.c:139
+#: ../app/tools/gimptransformgridoptions.c:140
 msgid "Image opacity"
 msgstr "Opacidad de la imagen"
 
-#: ../app/tools/gimptransformgridoptions.c:140
+#: ../app/tools/gimptransformgridoptions.c:141
 msgid "Opacity of the preview image"
 msgstr "Opacidad de la imagen de vista previa"
 
-#: ../app/tools/gimptransformgridoptions.c:146
-#: ../app/tools/gimptransformgridoptions.c:482
+#: ../app/tools/gimptransformgridoptions.c:147
+#: ../app/tools/gimptransformgridoptions.c:487
 msgid "Guides"
 msgstr "Guías"
 
-#: ../app/tools/gimptransformgridoptions.c:155
+#: ../app/tools/gimptransformgridoptions.c:156
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Tamaño de una celda para un número variable de guías de composición"
 
-#: ../app/tools/gimptransformgridoptions.c:504
+#: ../app/tools/gimptransformgridoptions.c:509
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 grados (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:511
+#: ../app/tools/gimptransformgridoptions.c:516
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Limitar los pasos de rotación a 15 grados"
 
-#: ../app/tools/gimptransformgridoptions.c:520
+#: ../app/tools/gimptransformgridoptions.c:525
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Mantener proporción (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:527
+#: ../app/tools/gimptransformgridoptions.c:532
 msgid "Keep the original aspect ratio"
 msgstr "Mantener la relación de aspecto original"
 
-#: ../app/tools/gimptransformgridoptions.c:532
-#: ../app/tools/gimptransformgridoptions.c:561
+#: ../app/tools/gimptransformgridoptions.c:537
+#: ../app/tools/gimptransformgridoptions.c:566
 #, c-format
 msgid "Around center (%s)"
 msgstr "Alrededor del centro (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:539
+#: ../app/tools/gimptransformgridoptions.c:544
 msgid "Scale around the center point"
 msgstr "Escalar alrededor del punto central"
 
-#: ../app/tools/gimptransformgridoptions.c:548
+#: ../app/tools/gimptransformgridoptions.c:553
 #, c-format
 msgid "Constrain handles (%s)"
 msgstr "Restringir tiradores (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:556
+#: ../app/tools/gimptransformgridoptions.c:561
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr ""
 "Restringir los tiradores para que se muevan a lo largo los bordes y la "
 "diagonal (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:569
+#: ../app/tools/gimptransformgridoptions.c:574
 msgid "Transform around the center point"
 msgstr "Transformar alrededor del punto central"
 
-#: ../app/tools/gimptransformgridoptions.c:585
+#: ../app/tools/gimptransformgridoptions.c:590
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Restringir (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:586
+#: ../app/tools/gimptransformgridoptions.c:591
 #: ../app/tools/gimptransform3dtool.c:335
 msgid "Move"
 msgstr "Mover"
 
-#: ../app/tools/gimptransformgridoptions.c:587
+#: ../app/tools/gimptransformgridoptions.c:592
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Restringir el movimiento a ángulos de 45 grados desde el centro (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:589
+#: ../app/tools/gimptransformgridoptions.c:594
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Mantener la proporción de aspecto cuando se escala (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:591
+#: ../app/tools/gimptransformgridoptions.c:596
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Restringir la rotación a incrementos de 15 grados (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:593
+#: ../app/tools/gimptransformgridoptions.c:598
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Inclinar a lo largo de la dirección del borde solamente (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:595
+#: ../app/tools/gimptransformgridoptions.c:600
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Restringir la perspectiva de los tiradores para mover a lo largo los bordes "
 "y la diagonal (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:598
+#: ../app/tools/gimptransformgridoptions.c:603
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Desde el pivote (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:600
+#: ../app/tools/gimptransformgridoptions.c:605
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Escalar desde el punto de pivote (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:602
+#: ../app/tools/gimptransformgridoptions.c:607
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Inclinar el borde opuesto de la misma cantidad (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:604
+#: ../app/tools/gimptransformgridoptions.c:609
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Mantener la posición del pivote mientras se cambia la perspectiva (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:607
+#: ../app/tools/gimptransformgridoptions.c:612
 msgid "Pivot"
 msgstr "Pivote"
 
-#: ../app/tools/gimptransformgridoptions.c:608
+#: ../app/tools/gimptransformgridoptions.c:613
 #, c-format
 msgid "Snap (%s)"
 msgstr "Ajustar (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:609
+#: ../app/tools/gimptransformgridoptions.c:614
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Ajustar el pivote a las esquinas y el centro (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:610
+#: ../app/tools/gimptransformgridoptions.c:615
 msgid "Lock"
 msgstr "Bloquear"
 
-#: ../app/tools/gimptransformgridoptions.c:611
+#: ../app/tools/gimptransformgridoptions.c:616
 msgid "Lock pivot position to canvas"
 msgstr "Bloquear la posición del pivote al lienzo"
 
-#: ../app/tools/gimptransformgridtool.c:291
+#: ../app/tools/gimptransformgridtool.c:294
 #: ../app/tools/gimptransformtool.c:437
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: ../app/tools/gimptransformgridtool.c:572
-#: ../app/tools/gimptransformgridtool.c:584
+#: ../app/tools/gimptransformgridtool.c:579
+#: ../app/tools/gimptransformgridtool.c:591
 msgid "Transform Step"
 msgstr "Transformar paso"
 
-#: ../app/tools/gimptransformgridtool.c:979
+#: ../app/tools/gimptransformgridtool.c:986
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (Correctivo)"
 
-#: ../app/tools/gimptransformgridtool.c:1242
+#: ../app/tools/gimptransformgridtool.c:1266
 msgid "Re_adjust"
 msgstr "Re_ajustar"
 
-#: ../app/tools/gimptransformgridtool.c:1496
+#: ../app/tools/gimptransformgridtool.c:1519
 msgid "Cannot readjust the transformation"
 msgstr "No se puede reajustar la transformación"
 
@@ -24689,26 +24688,26 @@ msgstr "La ruta activa no tiene trazos."
 msgid "The current transform is invalid"
 msgstr "La transformación actual no es válida"
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
 msgstr "Transformación unificada"
 
-#: ../app/tools/gimpunifiedtransformtool.c:88
+#: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr ""
 "Herramienta de transformación unificada: transformar la capa, selección o "
 "ruta"
 
-#: ../app/tools/gimpunifiedtransformtool.c:90
+#: ../app/tools/gimpunifiedtransformtool.c:92
 msgid "_Unified Transform"
 msgstr "Transformación _unificada"
 
-#: ../app/tools/gimpunifiedtransformtool.c:112
+#: ../app/tools/gimpunifiedtransformtool.c:115
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Transformación unificada"
 
-#: ../app/tools/gimpunifiedtransformtool.c:113
+#: ../app/tools/gimpunifiedtransformtool.c:116
 msgid "Unified transform"
 msgstr "Transformación unificada"
 
@@ -27042,20 +27041,20 @@ msgstr "Detectado automáticamente"
 msgid "Detach dialog from canvas"
 msgstr "Desprender diálogo del lienzo"
 
-#: ../app/widgets/gimppaletteeditor.c:250
-#: ../app/widgets/gimppaletteeditor.c:781
+#: ../app/widgets/gimppaletteeditor.c:257
+#: ../app/widgets/gimppaletteeditor.c:797
 msgid "Undefined"
 msgstr "Indefinido"
 
-#: ../app/widgets/gimppaletteeditor.c:269
+#: ../app/widgets/gimppaletteeditor.c:276
 msgid "Set the number of columns"
 msgstr "Establecer el número de columnas"
 
-#: ../app/widgets/gimppaletteeditor.c:477
+#: ../app/widgets/gimppaletteeditor.c:484
 msgid "Edit Palette Color"
 msgstr "Editar el color de la paleta"
 
-#: ../app/widgets/gimppaletteeditor.c:479
+#: ../app/widgets/gimppaletteeditor.c:486
 msgid "Edit Color Palette Entry"
 msgstr "Editar la entrada de la paleta de colores"
 
