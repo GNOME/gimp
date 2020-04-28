@@ -3,6 +3,7 @@ image: debian:testing
 stages:
   - dependencies
   - gimp
+  - analysis
 
 variables:
   GIT_DEPTH: "1"
@@ -341,3 +342,19 @@ gimp-win32:
     paths:
       - _build/
       - gimp-prefix/
+
+cppcheck:
+  stage: analysis
+  before_script:
+    - apt-get update
+    - apt-get install -y cppcheck
+  script:
+    - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2 .
+    - mkdir report
+    - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
+  artifacts:
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    expire_in: 1 week
+    when: always
+    paths:
+      - report
