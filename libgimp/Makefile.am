@@ -112,6 +112,8 @@ libgimp_private_sources = \
 	gimp-shm.h			\
 	gimpgpparams.c			\
 	gimpgpparams.h			\
+	gimpparamspecs-desc.c		\
+	gimpparamspecs-desc.h		\
 	gimppdb-private.h		\
 	gimppdbprocedure.c		\
 	gimppdbprocedure.h		\

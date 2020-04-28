@@ -36,6 +36,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimp.h"
+#include "gimpparamspecs-desc.h"
 
 #include "gimpuitypes.h"
 #include "gimpprocview.h"
@@ -327,6 +328,20 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
     {
       GParamSpec *pspec = pspecs[i];
       GtkWidget  *label;
+      gchar      *desc;
+      gchar      *blurb;
+
+      desc = gimp_param_spec_get_desc (pspec);
+
+      if (desc)
+        {
+          blurb = g_strconcat (g_param_spec_get_blurb (pspec), " ", desc, NULL);
+          g_free (desc);
+        }
+      else
+        {
+          blurb = g_strdup (g_param_spec_get_blurb (pspec));
+        }
 
       /* name */
       label = gtk_label_new (g_param_spec_get_name (pspec));
@@ -349,7 +364,7 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
       gtk_widget_show (label);
 
       /* description */
-      label = gtk_label_new (g_param_spec_get_blurb (pspec));
+      label = gtk_label_new (blurb);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
@@ -357,6 +372,8 @@ gimp_proc_view_create_args (GimpProcedure *procedure,
       gtk_size_group_add_widget (desc_group, label);
       gtk_grid_attach (GTK_GRID (grid), label, 2, i, 1, 1);
       gtk_widget_show (label);
+
+      g_free (blurb);
     }
 
   return grid;

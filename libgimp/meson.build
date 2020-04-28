@@ -173,6 +173,7 @@ libgimp_sources = [
   'gimp-debug.c',
   'gimp-shm.c',
   'gimpgpparams.c',
+  'gimpparamspecs-desc.c',
   'gimppdb_pdb.c',
   'gimppdbprocedure.c',
   'gimppixbuf.c',
