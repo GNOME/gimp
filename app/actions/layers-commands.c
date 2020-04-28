@@ -1609,14 +1609,16 @@ layers_color_tag_cmd_callback (GimpAction *action,
                                gpointer    data)
 {
   GimpImage    *image;
-  GimpLayer    *layer;
+  GList        *layers;
+  GList        *iter;
   GimpColorTag  color_tag;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
 
   color_tag = (GimpColorTag) g_variant_get_int32 (value);
 
-  items_color_tag_cmd_callback (action, image, GIMP_ITEM (layer),
-                                color_tag);
+  for (iter = layers; iter; iter = iter->next)
+    items_color_tag_cmd_callback (action, image, GIMP_ITEM (iter->data),
+                                  color_tag);
 }
 
 
