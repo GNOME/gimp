@@ -635,6 +635,7 @@ EXPORTS
 	gimp_param_spec_channel
 	gimp_param_spec_display
 	gimp_param_spec_drawable
+	gimp_param_spec_get_desc
 	gimp_param_spec_image
 	gimp_param_spec_item
 	gimp_param_spec_layer
