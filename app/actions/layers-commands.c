@@ -1155,12 +1155,15 @@ layers_opacity_cmd_callback (GimpAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage      *image;
-  GimpLayer      *layer;
-  gdouble         opacity;
-  GimpUndo       *undo;
-  gboolean        push_undo = TRUE;
+  GimpImage            *image;
+  GimpLayer            *layer;
+  gdouble               opacity;
+  GimpUndo             *undo;
+  GimpActionSelectType  select_type;
+  gboolean              push_undo = TRUE;
   return_if_no_layer (image, layer, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                        GIMP_UNDO_LAYER_OPACITY);
@@ -1168,7 +1171,7 @@ layers_opacity_cmd_callback (GimpAction *action,
   if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
     push_undo = FALSE;
 
-  opacity = action_select_value ((GimpActionSelectType) value,
+  opacity = action_select_value (select_type,
                                  gimp_layer_get_opacity (layer),
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
@@ -1181,15 +1184,18 @@ layers_mode_cmd_callback (GimpAction *action,
                           GVariant   *value,
                           gpointer    data)
 {
-  GimpImage     *image;
-  GimpLayer     *layer;
-  GimpLayerMode *modes;
-  gint           n_modes;
-  GimpLayerMode  layer_mode;
-  gint           index;
-  GimpUndo      *undo;
-  gboolean       push_undo = TRUE;
+  GimpImage            *image;
+  GimpLayer            *layer;
+  GimpLayerMode        *modes;
+  gint                  n_modes;
+  GimpLayerMode         layer_mode;
+  gint                  index;
+  GimpUndo             *undo;
+  GimpActionSelectType  select_type;
+  gboolean              push_undo = TRUE;
   return_if_no_layer (image, layer, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                        GIMP_UNDO_LAYER_MODE);
@@ -1203,7 +1209,7 @@ layers_mode_cmd_callback (GimpAction *action,
                                              GIMP_LAYER_MODE_CONTEXT_LAYER,
                                              &n_modes);
   index = layers_mode_index (layer_mode, modes, n_modes);
-  index = action_select_value ((GimpActionSelectType) value,
+  index = action_select_value (select_type,
                                index, 0, n_modes - 1, 0,
                                0.0, 1.0, 1.0, 0.0, FALSE);
   layer_mode = modes[index];

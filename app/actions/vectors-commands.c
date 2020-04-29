@@ -860,11 +860,14 @@ vectors_select_cmd_callback (GimpAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage      *image;
-  GimpVectors    *vectors;
-  GimpContainer  *container;
-  GimpVectors    *new_vectors;
+  GimpImage            *image;
+  GimpVectors          *vectors;
+  GimpContainer        *container;
+  GimpVectors          *new_vectors;
+  GimpActionSelectType  select_type;
   return_if_no_image (image, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   vectors = gimp_image_get_active_vectors (image);
 
@@ -873,8 +876,8 @@ vectors_select_cmd_callback (GimpAction *action,
   else
     container = gimp_image_get_vectors (image);
 
-  new_vectors = (GimpVectors *) action_select_object ((GimpActionSelectType) value,
-                                                       container,
+  new_vectors = (GimpVectors *) action_select_object (select_type,
+                                                      container,
                                                       (GimpObject *) vectors);
 
   if (new_vectors && new_vectors != vectors)
