@@ -771,7 +771,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       sel            = FALSE;
   gboolean       alpha          = FALSE;    /*  alpha channel present  */
   gboolean       indexed        = FALSE;    /*  is indexed             */
-  gboolean       lock_alpha     = FALSE;
+  gboolean       lock_alpha     = TRUE;
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
   gboolean       visible        = FALSE;
@@ -784,8 +784,10 @@ layers_actions_update (GimpActionGroup *group,
   GList         *next           = NULL;
   GList         *next_visible   = NULL;
   GList         *prev           = NULL;
-  gboolean       next_mode      = FALSE;
-  gboolean       prev_mode      = FALSE;
+  gboolean       next_mode      = TRUE;
+  gboolean       prev_mode      = TRUE;
+  gboolean       last_mode      = FALSE;
+  gboolean       first_mode     = FALSE;
 
   gboolean       have_masks     = FALSE; /* At least 1 selected layer has a mask.            */
   gboolean       have_no_masks  = FALSE; /* At least 1 selected layer has no mask.           */
@@ -810,6 +812,11 @@ layers_actions_update (GimpActionGroup *group,
 
       for (iter = layers; iter; iter = iter->next)
         {
+          GimpLayerMode *modes;
+          GimpLayerMode  mode;
+          gint           n_modes;
+          gint           i = 0;
+
           /* have_masks and have_no_masks are not opposite. 3 cases are
            * possible: all layers have masks, none have masks, or some
            * have masks, and some none.
@@ -835,23 +842,45 @@ layers_actions_update (GimpActionGroup *group,
           if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
             have_writable = TRUE;
 
+          if (gimp_layer_can_lock_alpha (iter->data))
+            {
+              if (! gimp_layer_get_lock_alpha (iter->data))
+                lock_alpha = FALSE;
+              can_lock_alpha = TRUE;
+            }
+
+          mode = gimp_layer_get_mode (iter->data);
+          modes = gimp_layer_mode_get_context_array (mode,
+                                                     GIMP_LAYER_MODE_CONTEXT_LAYER,
+                                                     &n_modes);
+          while (i < (n_modes - 1) && modes[i] != mode)
+            i++;
+          g_free (modes);
+          if (i >= n_modes - 1)
+            next_mode = FALSE;
+          else
+            last_mode = TRUE;
+          if (i <= 0)
+            prev_mode = FALSE;
+          else
+            first_mode = TRUE;
+
           if (have_masks && have_no_masks       &&
               have_groups && have_no_groups     &&
               have_writable && ! all_masks_shown &&
-              ! all_masks_disabled)
+              ! all_masks_disabled &&
+              ! lock_alpha && can_lock_alpha &&
+              ! prev_mode && ! next_mode)
             break;
         }
 
       if (n_layers == 1)
         {
           /* Special unique layer case. */
-          GimpLayerMode *modes;
           GimpLayerMode  mode;
           const gchar   *action = NULL;
           GList         *layer_list;
           GList         *list;
-          gint           n_modes;
-          gint           i = 0;
 
           layer  = layers->data;
           mode   = gimp_layer_get_mode (layer);
@@ -906,8 +935,6 @@ layers_actions_update (GimpActionGroup *group,
           cm_mutable = gimp_layer_mode_is_composite_mode_mutable (mode);
 
           mask           = gimp_layer_get_mask (layer);
-          lock_alpha     = gimp_layer_get_lock_alpha (layer);
-          can_lock_alpha = gimp_layer_can_lock_alpha (layer);
           alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
           visible        = gimp_item_get_visible (GIMP_ITEM (layer));
           writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
@@ -942,15 +969,6 @@ layers_actions_update (GimpActionGroup *group,
                     }
                 }
             }
-
-          modes = gimp_layer_mode_get_context_array (mode,
-                                                     GIMP_LAYER_MODE_CONTEXT_LAYER,
-                                                     &n_modes);
-          while (i < (n_modes - 1) && modes[i] != mode)
-            i++;
-          g_free (modes);
-          next_mode = (i < n_modes - 1);
-          prev_mode = (i > 0);
 
           text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
         }
@@ -988,10 +1006,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-duplicate",        n_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           n_layers > 0 && !ac);
 
-  SET_SENSITIVE ("layers-mode-first",       layer && !ac && prev_mode);
-  SET_SENSITIVE ("layers-mode-last",        layer && !ac && next_mode);
-  SET_SENSITIVE ("layers-mode-previous",    layer && !ac && prev_mode);
-  SET_SENSITIVE ("layers-mode-next",        layer && !ac && next_mode);
+  SET_SENSITIVE ("layers-mode-first",       n_layers > 0 && !ac && first_mode);
+  SET_SENSITIVE ("layers-mode-last",        n_layers > 0 && !ac && last_mode);
+  SET_SENSITIVE ("layers-mode-previous",    n_layers > 0 && !ac && prev_mode);
+  SET_SENSITIVE ("layers-mode-next",        n_layers > 0 && !ac && next_mode);
 
   SET_SENSITIVE ("layers-select-top",       layer && !fs && !ac && prev);
   SET_SENSITIVE ("layers-select-bottom",    layer && !fs && !ac && next);

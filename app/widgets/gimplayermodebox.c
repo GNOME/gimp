@@ -265,9 +265,23 @@ gimp_layer_mode_box_set_mode (GimpLayerModeBox *box,
 
   if (mode != box->priv->layer_mode)
     {
-      box->priv->layer_mode = mode;
+      if (mode == -1)
+        {
+          GimpLayerModeComboBox *combo_box;
 
-      g_object_notify (G_OBJECT (box), "layer-mode");
+          combo_box = GIMP_LAYER_MODE_COMBO_BOX (box->priv->mode_combo);
+
+          /* Directly call gimp_layer_mode_combo_box_set_mode() instead of
+           * changing the property because -1 is not accepted as a valid
+           * value for the property.
+           */
+          gimp_layer_mode_combo_box_set_mode (combo_box, -1);
+        }
+      else
+        {
+          box->priv->layer_mode = mode;
+          g_object_notify (G_OBJECT (box), "layer-mode");
+        }
     }
 }
 

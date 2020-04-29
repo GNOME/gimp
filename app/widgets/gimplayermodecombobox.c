@@ -264,9 +264,14 @@ gimp_layer_mode_combo_box_set_mode (GimpLayerModeComboBox *combo,
                                     GimpLayerMode          mode)
 {
   g_return_if_fail (GIMP_IS_LAYER_MODE_COMBO_BOX (combo));
-  g_return_if_fail (gimp_layer_mode_get_context (mode) & combo->priv->context);
+  g_return_if_fail (mode == -1 || (gimp_layer_mode_get_context (mode) & combo->priv->context));
 
-  if (mode != combo->priv->layer_mode)
+  if (mode == -1)
+    {
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), -1);
+      combo->priv->layer_mode = mode;
+    }
+  else if (mode != combo->priv->layer_mode)
     {
       GtkTreeModel *model;
       GtkTreeIter   dummy;

@@ -1380,26 +1380,40 @@ layers_opacity_cmd_callback (GimpAction *action,
                              gpointer    data)
 {
   GimpImage            *image;
-  GimpLayer            *layer;
+  GList                *layers;
+  GList                *iter;
   gdouble               opacity;
   GimpUndo             *undo;
   GimpActionSelectType  select_type;
-  gboolean              push_undo = TRUE;
-  return_if_no_layer (image, layer, data);
+  gboolean        push_undo = TRUE;
+  return_if_no_layers (image, layers, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+  if (g_list_length (layers) == 1)
+    {
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_LAYER_OPACITY);
 
-  undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                       GIMP_UNDO_LAYER_OPACITY);
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layers->data))
+        push_undo = FALSE;
+    }
 
-  if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
-    push_undo = FALSE;
+  if (g_list_length (layers) > 1)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_OPACITY,
+                                 _("Set layers opacity"));
 
-  opacity = action_select_value (select_type,
-                                 gimp_layer_get_opacity (layer),
-                                 0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
-  gimp_layer_set_opacity (layer, opacity, push_undo);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      opacity = action_select_value (select_type,
+                                     gimp_layer_get_opacity (iter->data),
+                                     0.0, 1.0, 1.0,
+                                     1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+      gimp_layer_set_opacity (iter->data, opacity, push_undo);
+    }
+
+  if (g_list_length (layers) > 1)
+    gimp_image_undo_group_end (image);
+
   gimp_image_flush (image);
 }
 
@@ -1409,37 +1423,54 @@ layers_mode_cmd_callback (GimpAction *action,
                           gpointer    data)
 {
   GimpImage            *image;
-  GimpLayer            *layer;
-  GimpLayerMode        *modes;
-  gint                  n_modes;
-  GimpLayerMode         layer_mode;
-  gint                  index;
-  GimpUndo             *undo;
+  GList                *layers;
+  GList                *iter;
   GimpActionSelectType  select_type;
   gboolean              push_undo = TRUE;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                       GIMP_UNDO_LAYER_MODE);
+  if (g_list_length (layers) == 1)
+    {
+      GimpUndo *undo;
 
-  if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
-    push_undo = FALSE;
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_LAYER_MODE);
 
-  layer_mode = gimp_layer_get_mode (layer);
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layers->data))
+        push_undo = FALSE;
+    }
 
-  modes = gimp_layer_mode_get_context_array (layer_mode,
-                                             GIMP_LAYER_MODE_CONTEXT_LAYER,
-                                             &n_modes);
-  index = layers_mode_index (layer_mode, modes, n_modes);
-  index = action_select_value (select_type,
-                               index, 0, n_modes - 1, 0,
-                               0.0, 1.0, 1.0, 0.0, FALSE);
-  layer_mode = modes[index];
-  g_free (modes);
+  if (g_list_length (layers) > 1)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_OPACITY,
+                                 _("Set layers opacity"));
 
-  gimp_layer_set_mode (layer, layer_mode, push_undo);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayerMode *modes;
+      gint           n_modes;
+      GimpLayerMode  layer_mode;
+      gint           index;
+
+      layer_mode = gimp_layer_get_mode (iter->data);
+
+      modes = gimp_layer_mode_get_context_array (layer_mode,
+                                                 GIMP_LAYER_MODE_CONTEXT_LAYER,
+                                                 &n_modes);
+      index = layers_mode_index (layer_mode, modes, n_modes);
+      index = action_select_value (select_type,
+                                   index, 0, n_modes - 1, 0,
+                                   0.0, 1.0, 1.0, 0.0, FALSE);
+      layer_mode = modes[index];
+      g_free (modes);
+
+      gimp_layer_set_mode (iter->data, layer_mode, push_undo);
+    }
+
+  if (g_list_length (layers) > 1)
+    gimp_image_undo_group_end (image);
+
   gimp_image_flush (image);
 }
 
@@ -1581,26 +1612,46 @@ layers_lock_alpha_cmd_callback (GimpAction *action,
                                 gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *layers;
+  GList     *iter;
   gboolean   lock_alpha;
-  return_if_no_layer (image, layer, data);
+  gboolean   lock_change = FALSE;
+  return_if_no_layers (image, layers, data);
 
   lock_alpha = g_variant_get_boolean (value);
 
-  if (lock_alpha != gimp_layer_get_lock_alpha (layer))
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpUndo *undo;
-      gboolean  push_undo = TRUE;
-
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_LAYER_LOCK_ALPHA);
-
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
-        push_undo = FALSE;
-
-      gimp_layer_set_lock_alpha (layer, lock_alpha, push_undo);
-      gimp_image_flush (image);
+      if (gimp_layer_can_lock_alpha (iter->data))
+        {
+          /* Similar trick as in layers_mask_show_cmd_callback().
+           * When unlocking, we expect all selected layers to be locked,
+           * otherwise SET_ACTIVE() calles in layers-actions.c will
+           * trigger lock updates.
+           */
+          if (! lock_alpha && ! gimp_layer_get_lock_alpha (iter->data))
+            return;
+          if (lock_alpha != gimp_layer_get_lock_alpha (iter->data))
+            lock_change = TRUE;
+        }
     }
+  if (! lock_change)
+    /* No layer locks would be changed. */
+    return;
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,
+                               lock_alpha ? _("Lock alpha channels") : _("Unlock alpha channels"));
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (gimp_layer_can_lock_alpha (iter->data))
+        {
+          if (lock_alpha != gimp_layer_get_lock_alpha (iter->data))
+            gimp_layer_set_lock_alpha (iter->data, lock_alpha, TRUE);
+        }
+    }
+  gimp_image_undo_group_end (image);
+  gimp_image_flush (image);
 }
 
 void

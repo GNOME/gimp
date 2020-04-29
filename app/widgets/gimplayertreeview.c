@@ -146,7 +146,7 @@ static void       gimp_layer_tree_view_lock_alpha_button_toggled  (GtkWidget    
 static void       gimp_layer_tree_view_layer_signal_handler       (GimpLayer                  *layer,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_update_options             (GimpLayerTreeView          *view,
-                                                                   GimpLayer                  *layer);
+                                                                   GList                      *layers);
 static void       gimp_layer_tree_view_update_menu                (GimpLayerTreeView          *view,
                                                                    GList                      *layers);
 static void       gimp_layer_tree_view_update_highlight           (GimpLayerTreeView          *view);
@@ -598,7 +598,7 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 
           gimp_layer_tree_view_update_borders (layer_view,
                                                (GtkTreeIter *) insert_data);
-          gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (item));
+          gimp_layer_tree_view_update_options (layer_view, layers);
           gimp_layer_tree_view_update_menu (layer_view, layers);
           g_list_free (layers);
         }
@@ -640,8 +640,8 @@ gimp_layer_tree_view_select_items (GimpContainerView *view,
 
               gtk_tree_model_get_iter (tree_view->model, &iter, path->data);
               gimp_layer_tree_view_update_borders (layer_view, &iter);
-              gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (layers->data));
             }
+          gimp_layer_tree_view_update_options (layer_view, items);
           gimp_layer_tree_view_update_menu (layer_view, items);
         }
     }
@@ -1027,42 +1027,60 @@ gimp_layer_tree_view_layer_mode_box_callback (GtkWidget         *widget,
                                               const GParamSpec  *pspec,
                                               GimpLayerTreeView *view)
 {
-  GimpImage *image;
-  GimpLayer *layer = NULL;
+  GimpImage     *image;
+  GList         *layers    = NULL;
+  GList         *iter;
+  GimpUndo      *undo;
+  gboolean       push_undo = TRUE;
+  gint           n_layers  = 0;
+  GimpLayerMode  mode;
 
   image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  mode  = gimp_layer_mode_box_get_mode (GIMP_LAYER_MODE_BOX (widget));
+  undo  = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                        GIMP_UNDO_LAYER_MODE);
 
   if (image)
-    layer = (GimpLayer *)
-      GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+    layers = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
 
-  if (layer)
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayerMode mode =
-        gimp_layer_mode_box_get_mode (GIMP_LAYER_MODE_BOX (widget));
+      if (gimp_layer_get_mode (iter->data) != mode)
+        {
+          n_layers++;
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (iter->data))
+            push_undo = FALSE;
+        }
+    }
+
+  if (n_layers > 1)
+    {
+      /*  Don't compress mode undos with more than 1 layer changed. */
+      push_undo = TRUE;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_OPACITY,
+                                   _("Set layers mode"));
+    }
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayer *layer = iter->data;
 
       if (gimp_layer_get_mode (layer) != mode)
         {
-          GimpUndo *undo;
-          gboolean  push_undo = TRUE;
-
-          /*  compress layer mode undos  */
-          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                               GIMP_UNDO_LAYER_MODE);
-
-          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
-            push_undo = FALSE;
-
           BLOCK();
           gimp_layer_set_mode (layer, (GimpLayerMode) mode, push_undo);
           UNBLOCK();
-
-          gimp_image_flush (image);
-
-          if (! push_undo)
-            gimp_undo_refresh_preview (undo, gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)));
         }
     }
+  gimp_image_flush (image);
+
+  if (! push_undo)
+    gimp_undo_refresh_preview (undo, gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)));
+
+  if (n_layers > 1)
+    gimp_image_undo_group_end (image);
 }
 
 static void
@@ -1070,38 +1088,56 @@ gimp_layer_tree_view_lock_alpha_button_toggled (GtkWidget         *widget,
                                                 GimpLayerTreeView *view)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *layers;
+  GList     *iter;
+  GimpUndo  *undo;
+  gboolean   push_undo = TRUE;
+  gboolean   lock_alpha;
+  gint       n_layers  = 0;
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  lock_alpha = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  image      = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  layers     = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  undo       = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                             GIMP_UNDO_LAYER_LOCK_ALPHA);
 
-  layer = (GimpLayer *)
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
-
-  if (layer)
+  for (iter = layers; iter; iter = iter->next)
     {
-      gboolean lock_alpha;
-
-      lock_alpha = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-      if (gimp_layer_get_lock_alpha (layer) != lock_alpha)
+      if (gimp_layer_can_lock_alpha (iter->data) &&
+          gimp_layer_get_lock_alpha (iter->data) != lock_alpha)
         {
-          GimpUndo *undo;
-          gboolean  push_undo = TRUE;
+          n_layers++;
 
-          /*  compress lock alpha undos  */
-          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                               GIMP_UNDO_LAYER_LOCK_ALPHA);
-
-          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (iter->data))
             push_undo = FALSE;
+        }
+    }
 
+  if (n_layers > 1)
+    {
+      /*  Don't compress mode undos with more than 1 layer changed. */
+      push_undo = TRUE;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,
+                                   lock_alpha ? _("Lock alpha channels") : _("Unlock alpha channels"));
+    }
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayer *layer = iter->data;
+
+      if (gimp_layer_can_lock_alpha (layer) &&
+          gimp_layer_get_lock_alpha (layer) != lock_alpha)
+        {
           BLOCK();
           gimp_layer_set_lock_alpha (layer, lock_alpha, push_undo);
           UNBLOCK();
-
-          gimp_image_flush (image);
         }
     }
+  gimp_image_flush (image);
+
+  if (n_layers > 1)
+    gimp_image_undo_group_end (image);
 }
 
 static void
@@ -1109,39 +1145,56 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
                                             GimpLayerTreeView *view)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *layers;
+  GList     *iter;
+  GimpUndo  *undo;
+  gboolean   push_undo = TRUE;
+  gint       n_layers = 0;
+  gdouble    opacity;
 
-  image = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  image   = gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view));
+  layers  = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  undo    = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                          GIMP_UNDO_LAYER_OPACITY);
+  opacity = gtk_adjustment_get_value (adjustment) / 100.0;
 
-  layer = (GimpLayer *)
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
-
-  if (layer)
+  for (iter = layers; iter; iter = iter->next)
     {
-      gdouble opacity = gtk_adjustment_get_value (adjustment) / 100.0;
+      if (gimp_layer_get_opacity (iter->data) != opacity)
+        {
+          n_layers++;
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (iter->data))
+            push_undo = FALSE;
+        }
+    }
+  if (n_layers > 1)
+    {
+      /*  Don't compress opacity undos with more than 1 layer changed. */
+      push_undo = TRUE;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_OPACITY,
+                                   _("Set layers opacity"));
+    }
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayer *layer = iter->data;
 
       if (gimp_layer_get_opacity (layer) != opacity)
         {
-          GimpUndo *undo;
-          gboolean  push_undo = TRUE;
-
-          /*  compress opacity undos  */
-          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                               GIMP_UNDO_LAYER_OPACITY);
-
-          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
-            push_undo = FALSE;
-
           BLOCK();
           gimp_layer_set_opacity (layer, opacity, push_undo);
           UNBLOCK();
-
-          gimp_image_flush (image);
-
-          if (! push_undo)
-            gimp_undo_refresh_preview (undo, gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)));
         }
     }
+  gimp_image_flush (image);
+
+  if (! push_undo)
+    gimp_undo_refresh_preview (undo, gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view)));
+
+  if (n_layers > 1)
+    gimp_image_undo_group_end (image);
 }
 
 #undef BLOCK
@@ -1153,13 +1206,13 @@ gimp_layer_tree_view_layer_signal_handler (GimpLayer         *layer,
                                            GimpLayerTreeView *view)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpLayer        *active_layer;
+  GList            *selected_layers;
 
-  active_layer = (GimpLayer *)
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimp_item_tree_view_get_image (item_view));
+  selected_layers =
+    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (gimp_item_tree_view_get_image (item_view));
 
-  if (active_layer == layer)
-    gimp_layer_tree_view_update_options (view, layer);
+  if (g_list_find (selected_layers, layer))
+    gimp_layer_tree_view_update_options (view, selected_layers);
 }
 
 
@@ -1171,52 +1224,97 @@ gimp_layer_tree_view_layer_signal_handler (GimpLayer         *layer,
 
 static void
 gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
-                                     GimpLayer         *layer)
+                                     GList             *layers)
 {
+  GList                *iter;
+  GimpLayerMode         mode = GIMP_LAYER_MODE_SEPARATOR;
+  GimpLayerModeContext  context = 0;
+  gboolean              all_have_lock_alpha = TRUE;
+  gboolean              some_can_lock_alpha = FALSE;
+  gboolean              inconsistent_lock_alpha = FALSE;
+  /*gboolean              inconsistent_opacity    = FALSE;*/
+  gboolean              inconsistent_mode       = FALSE;
+  gdouble               opacity = -1.0;
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (! gimp_layer_get_lock_alpha (iter->data))
+        all_have_lock_alpha = FALSE;
+      else
+        inconsistent_lock_alpha = TRUE;
+
+      if (gimp_layer_can_lock_alpha (iter->data))
+        some_can_lock_alpha = TRUE;
+
+#if 0
+      if (opacity != -1.0 &&
+          opacity != gimp_layer_get_opacity (iter->data))
+        /* We don't really have a way to show an inconsistent
+         * GimpSpinScale. This is currently unused.
+         */
+        inconsistent_opacity = TRUE;
+#endif
+
+      opacity = gimp_layer_get_opacity (iter->data);
+
+      if (gimp_viewable_get_children (iter->data))
+        context |= GIMP_LAYER_MODE_CONTEXT_GROUP;
+      else
+        context |= GIMP_LAYER_MODE_CONTEXT_LAYER;
+
+      if (mode != GIMP_LAYER_MODE_SEPARATOR &&
+          mode != gimp_layer_get_mode (iter->data))
+        inconsistent_mode = TRUE;
+
+      mode = gimp_layer_get_mode (iter->data);
+    }
+  if (opacity == -1.0)
+    opacity = 1.0;
+
+  if (inconsistent_mode)
+    mode = GIMP_LAYER_MODE_SEPARATOR;
+
+  if (! context)
+    context = GIMP_LAYER_MODE_CONTEXT_LAYER;
+
+  inconsistent_lock_alpha = (! all_have_lock_alpha && inconsistent_lock_alpha);
+
   BLOCK (view->priv->layer_mode_box,
          gimp_layer_tree_view_layer_mode_box_callback);
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
-    {
-      gimp_layer_mode_box_set_context (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
-                                       GIMP_LAYER_MODE_CONTEXT_LAYER);
-    }
-  else
-    {
-      gimp_layer_mode_box_set_context (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
-                                       GIMP_LAYER_MODE_CONTEXT_GROUP);
-    }
-
+  gimp_layer_mode_box_set_context (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+                                   context);
   gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
-                                gimp_layer_get_mode (layer));
+                                mode);
 
   UNBLOCK (view->priv->layer_mode_box,
            gimp_layer_tree_view_layer_mode_box_callback);
 
-  if (gimp_layer_get_lock_alpha (layer) !=
+  if (all_have_lock_alpha !=
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_alpha_toggle)))
     {
       BLOCK (view->priv->lock_alpha_toggle,
              gimp_layer_tree_view_lock_alpha_button_toggled);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->lock_alpha_toggle),
-                                    gimp_layer_get_lock_alpha (layer));
+                                    all_have_lock_alpha);
 
       UNBLOCK (view->priv->lock_alpha_toggle,
                gimp_layer_tree_view_lock_alpha_button_toggled);
     }
+  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (view->priv->lock_alpha_toggle),
+                                      inconsistent_lock_alpha);
 
-  gtk_widget_set_sensitive (view->priv->lock_alpha_toggle,
-                            gimp_layer_can_lock_alpha (layer));
+  gtk_widget_set_sensitive (view->priv->lock_alpha_toggle, some_can_lock_alpha);
 
-  if (gimp_layer_get_opacity (layer) * 100.0 !=
+  if (opacity * 100.0 !=
       gtk_adjustment_get_value (view->priv->opacity_adjustment))
     {
       BLOCK (view->priv->opacity_adjustment,
              gimp_layer_tree_view_opacity_scale_changed);
 
       gtk_adjustment_set_value (view->priv->opacity_adjustment,
-                                gimp_layer_get_opacity (layer) * 100.0);
+                                opacity * 100.0);
 
       UNBLOCK (view->priv->opacity_adjustment,
                gimp_layer_tree_view_opacity_scale_changed);
@@ -1606,8 +1704,9 @@ gimp_layer_tree_view_alpha_changed (GimpLayer         *layer,
       gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
 
       /*  update button states  */
-      if (gimp_image_get_active_layer (gimp_item_tree_view_get_image (item_view)) == layer)
-        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
-                                         GIMP_VIEWABLE (layer));
+      if (g_list_find (gimp_image_get_selected_layers (gimp_item_tree_view_get_image (item_view)),
+                       layer))
+        gimp_container_view_select_items (GIMP_CONTAINER_VIEW (view),
+                                          gimp_image_get_selected_layers (gimp_item_tree_view_get_image (item_view)));
     }
 }
