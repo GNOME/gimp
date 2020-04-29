@@ -349,7 +349,8 @@ cppcheck:
     - apt-get update
     - apt-get install -y cppcheck
   script:
-    - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2 .
+    - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
+        -i _build -i _deps -i gimp-prefix -i .local -i .cache .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
