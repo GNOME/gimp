@@ -318,8 +318,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 #endif
 
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
-                       mypaint_brushes,
                        "~/.mypaint/brushes",
+                       mypaint_brushes,
                        NULL);
   g_free (mypaint_brushes);
 
