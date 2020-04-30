@@ -2450,7 +2450,7 @@ gimp_line_art_simple_fill (GeglBuffer *buffer,
 
   if (x < 0 || x >= gegl_buffer_get_width (buffer)  ||
       y < 0 || y >= gegl_buffer_get_height (buffer) ||
-      counter <= 0)
+      *counter <= 0)
     return;
 
   gegl_buffer_sample (buffer, x, y, NULL, &val,
