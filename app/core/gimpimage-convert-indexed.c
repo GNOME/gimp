@@ -2753,11 +2753,65 @@ median_cut_pass1_gray (QuantizeObj *quantobj)
   select_colors_gray (quantobj, quantobj->histogram);
 }
 
+static void
+snap_to_black_and_white (QuantizeObj *quantobj)
+{
+  /* find whitest and blackest colors in palette, if they are closer
+   * than 24 units of euclidian distance in sRGB snap them to pure
+   * black / white.
+   */
+#define POW2(a) ((a)*(a))
+  gint   desired  = quantobj->desired_number_of_colors;
+  gint   whitest  = 0;
+  gint   blackest = 0;
+
+  glong  white_dist = POW2(255) * 3;
+  glong  black_dist = POW2(255) * 3;
+  gint   i;
+
+  for (i = 0; i < desired; i ++)
+    {
+       int dist;
+
+       dist = POW2 (quantobj->cmap[i].red   - 255) +
+              POW2 (quantobj->cmap[i].green - 255) +
+              POW2( quantobj->cmap[i].blue  - 255);
+       if (dist < white_dist)
+         {
+           white_dist = dist;
+           whitest = i;
+         }
+
+       dist = POW2(quantobj->cmap[i].red   - 0) +
+              POW2(quantobj->cmap[i].green - 0) +
+              POW2(quantobj->cmap[i].blue  - 0);
+       if (dist < black_dist)
+         {
+           black_dist = dist;
+           blackest = i;
+         }
+    }
+
+  if (white_dist < POW2(24)) /* 24 units in sRGB ~= deltaE of 9.5 */
+  {
+     quantobj->cmap[whitest].red   =
+     quantobj->cmap[whitest].green =
+     quantobj->cmap[whitest].blue  = 255;
+  }
+  if (black_dist < POW2(24))
+  {
+     quantobj->cmap[blackest].red   =
+     quantobj->cmap[blackest].green =
+     quantobj->cmap[blackest].blue  = 0;
+  }
+#undef POW2
+}
 
 static void
 median_cut_pass1_rgb (QuantizeObj *quantobj)
 {
   select_colors_rgb (quantobj, quantobj->histogram);
+  snap_to_black_and_white (quantobj);
 }
 
 
