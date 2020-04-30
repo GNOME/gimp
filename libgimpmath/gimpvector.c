@@ -1168,7 +1168,7 @@ gimp_vector3_copy (gpointer boxed)
   new_v = g_slice_new (GimpVector3);
   new_v->x = vector->x;
   new_v->y = vector->y;
-  new_v->y = vector->z;
+  new_v->z = vector->z;
 
   return new_v;
 }
