@@ -312,7 +312,7 @@ gimp_procedure_config_get_values (GimpProcedureConfig  *config,
 /**
  * gimp_procedure_config_begin_run:
  * @config:   a #GimpProcedureConfig
- * @image:    a #GimpImage or %NULL
+ * @image: (nullable): a #GimpImage or %NULL
  * @run_mode: the #GimpRunMode passed to a #GimpProcedure's run()
  * @args:     the #GimpValueArray passed to a #GimpProcedure's run()
  *
@@ -451,7 +451,7 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * @original_image: the #GimpImage passed to run()
  * @run_mode:       the #GimpRunMode passed to a #GimpProcedure's run()
  * @args:           the #GimpValueArray passed to a #GimpProcedure's run()
- * @mime_type:      the exported file format's mime type, or %NULL.
+ * @mime_type: (nullable):  exported file format's mime type, or %NULL.
  *
  * This is a variant of gimp_procedure_config_begin_run() to be used
  * by file export procedures using #GimpSaveProcedure. It must be
@@ -506,7 +506,7 @@ gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * argument is initialized with the default comment returned by
  * gimp_get_default_comment().
  *
- * Returns: (transfer none): The #GimpMetadata to be used for this
+ * Returns: (transfer none) (nullable): The #GimpMetadata to be used for this
  *          export, or %NULL if @original_image doesn't have metadata.
  *
  * Since: 3.0

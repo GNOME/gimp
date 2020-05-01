@@ -84,7 +84,7 @@ static gboolean gimp_utils_gdb_available     (gint         major,
 
 /**
  * gimp_utf8_strtrim:
- * @str: an UTF-8 encoded string (or %NULL)
+ * @str: (nullable): an UTF-8 encoded string (or %NULL)
  * @max_chars: the maximum number of characters before the string get
  * trimmed
  *
@@ -522,7 +522,7 @@ gimp_file_show_in_file_manager (GFile   *file,
 
 /**
  * gimp_strip_uline:
- * @str: underline infested string (or %NULL)
+ * @str: (nullable): underline infested string (or %NULL)
  *
  * This function returns a copy of @str stripped of underline
  * characters. This comes in handy when needing to strip mnemonics
@@ -586,7 +586,7 @@ gimp_strip_uline (const gchar *str)
 
 /**
  * gimp_escape_uline:
- * @str: Underline infested string (or %NULL)
+ * @str: (nullable): Underline infested string (or %NULL)
  *
  * This function returns a copy of @str with all underline converted
  * to two adjacent underlines. This comes in handy when needing to display
@@ -718,7 +718,7 @@ gimp_canonicalize_identifier (const gchar *identifier)
  *
  * Retrieves #GimpEnumDesc associated with the given value, or %NULL.
  *
- * Returns: the value's #GimpEnumDesc.
+ * Returns: (nullable): the value's #GimpEnumDesc.
  *
  * Since: 2.2
  **/
@@ -751,10 +751,12 @@ gimp_enum_get_desc (GEnumClass *enum_class,
  * gimp_enum_get_value:
  * @enum_type:  the #GType of a registered enum
  * @value:      an integer value
- * @value_name: return location for the value's name (or %NULL)
- * @value_nick: return location for the value's nick (or %NULL)
- * @value_desc: return location for the value's translated description (or %NULL)
- * @value_help: return location for the value's translated help (or %NULL)
+ * @value_name: (optional): return location for the value's name (or %NULL)
+ * @value_nick: (optional): return location for the value's nick (or %NULL)
+ * @value_desc: (optional): return location for the value's translated
+ *                          description (or %NULL)
+ * @value_help: (optional): return location for the value's translated help
+ *                          (or %NULL)
  *
  * Checks if @value is valid for the enum registered as @enum_type.
  * If the value exists in that enum, its name, nick and its translated
@@ -942,7 +944,7 @@ gimp_enum_value_get_abbrev (GEnumClass       *enum_class,
  *
  * Retrieves the first #GimpFlagsDesc that matches the given value, or %NULL.
  *
- * Returns: the value's #GimpFlagsDesc.
+ * Returns: (nullable): the value's #GimpFlagsDesc.
  *
  * Since: 2.2
  **/
@@ -975,10 +977,12 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
  * gimp_flags_get_first_value:
  * @flags_type: the #GType of registered flags
  * @value:      an integer value
- * @value_name: return location for the value's name (or %NULL)
- * @value_nick: return location for the value's nick (or %NULL)
- * @value_desc: return location for the value's translated description (or %NULL)
- * @value_help: return location for the value's translated help (or %NULL)
+ * @value_name: (optional): return location for the value's name (or %NULL)
+ * @value_nick: (optional): return location for the value's nick (or %NULL)
+ * @value_desc: (optional): return location for the value's translated
+ *                          description (or %NULL)
+ * @value_help: (optional): return location for the value's translated help
+ *                          (or %NULL)
  *
  * Checks if @value is valid for the flags registered as @flags_type.
  * If the value exists in that flags, its name, nick and its
