@@ -940,8 +940,8 @@ gimp_tool_gui_update_viewable (GimpToolGui *gui)
       if (private->tool_info)
         context = GIMP_CONTEXT (private->tool_info->tool_options);
 
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (private->dialog),
-                                         private->viewable, context);
+      gimp_viewable_dialog_set_viewables (GIMP_VIEWABLE_DIALOG (private->dialog),
+                                          g_list_prepend (NULL, private->viewable), context);
     }
 }
 

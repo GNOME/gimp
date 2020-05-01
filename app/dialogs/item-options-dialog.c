@@ -137,7 +137,7 @@ item_options_dialog_new (GimpImage               *image,
   else
     viewable = GIMP_VIEWABLE (image);
 
-  dialog = gimp_viewable_dialog_new (viewable, context,
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, viewable), context,
                                      title, role, icon_name, desc,
                                      parent,
                                      gimp_standard_help_func, help_id,

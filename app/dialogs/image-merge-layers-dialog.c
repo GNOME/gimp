@@ -89,7 +89,7 @@ image_merge_layers_dialog_new (GimpImage               *image,
   private->callback           = callback;
   private->user_data          = user_data;
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                      _("Merge Layers"), "gimp-image-merge-layers",
                                      GIMP_ICON_LAYER_MERGE_DOWN,
                                      _("Layers Merge Options"),

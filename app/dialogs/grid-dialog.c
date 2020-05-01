@@ -91,7 +91,7 @@ grid_dialog_new (GimpImage   *image,
   private->grid        = gimp_image_get_grid (image);
   private->grid_backup = gimp_config_duplicate (GIMP_CONFIG (private->grid));
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                      _("Configure Grid"), "gimp-grid-configure",
                                      GIMP_ICON_GRID, _("Configure Image Grid"),
                                      parent,

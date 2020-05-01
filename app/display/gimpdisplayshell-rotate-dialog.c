@@ -109,7 +109,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   data->old_angle = shell->rotate_angle;
 
   shell->rotate_dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+    gimp_viewable_dialog_new (g_list_prepend (NULL, image),
                               gimp_get_user_context (shell->display->gimp),
                               _("Rotate View"), "display-rotate",
                               GIMP_ICON_OBJECT_ROTATE_180,

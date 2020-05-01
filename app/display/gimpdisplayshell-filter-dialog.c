@@ -74,7 +74,7 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
   cdd = g_slice_new0 (ColorDisplayDialog);
 
   cdd->shell  = shell;
-  cdd->dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+  cdd->dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image),
                                           gimp_get_user_context (shell->display->gimp),
                                           _("Color Display Filters"),
                                           "gimp-display-filters",

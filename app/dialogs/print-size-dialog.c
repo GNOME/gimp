@@ -114,7 +114,7 @@ print_size_dialog_new (GimpImage              *image,
 
   gimp_image_get_resolution (image, &private->xres, &private->yres);
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                      title, role,
                                      GIMP_ICON_DOCUMENT_PRINT_RESOLUTION, title,
                                      parent,

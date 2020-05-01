@@ -116,7 +116,7 @@ stroke_dialog_new (GimpItem           *item,
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (private->options), 0);
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, item), context,
                                      title, "gimp-stroke-options",
                                      icon_name,
                                      _("Choose Stroke Style"),

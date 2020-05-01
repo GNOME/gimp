@@ -110,7 +110,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               NULL);
 
   shell->scale_dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
+    gimp_viewable_dialog_new (g_list_prepend (NULL, image),
                               gimp_get_user_context (shell->display->gimp),
                               _("Zoom Ratio"), "display_scale",
                               "zoom-original",

@@ -176,7 +176,7 @@ resize_dialog_new (GimpViewable       *viewable,
   private->old_layer_set          = private->layer_set;
   private->old_resize_text_layers = private->resize_text_layers;
 
-  dialog = gimp_viewable_dialog_new (viewable, context,
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, viewable), context,
                                      title, role, GIMP_ICON_OBJECT_RESIZE, title,
                                      parent,
                                      help_func, help_id,

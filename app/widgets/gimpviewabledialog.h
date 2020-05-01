@@ -40,6 +40,8 @@ struct _GimpViewableDialog
 
   GimpContext *context;
 
+  GList       *viewables;
+
   GtkWidget   *icon;
   GtkWidget   *view;
   GtkWidget   *desc_label;
@@ -54,7 +56,7 @@ struct _GimpViewableDialogClass
 
 GType       gimp_viewable_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
+GtkWidget * gimp_viewable_dialog_new      (GList              *viewables,
                                            GimpContext        *context,
                                            const gchar        *title,
                                            const gchar        *role,
@@ -65,9 +67,9 @@ GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
                                            const gchar        *help_id,
                                            ...) G_GNUC_NULL_TERMINATED;
 
-void    gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
-                                           GimpViewable       *viewable,
-                                           GimpContext        *context);
+void    gimp_viewable_dialog_set_viewables (GimpViewableDialog *dialog,
+                                            GList              *viewables,
+                                            GimpContext        *context);
 
 
 G_END_DECLS

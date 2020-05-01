@@ -92,7 +92,7 @@ color_profile_import_dialog_run (GimpImage                 *image,
     }
 
   dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+    gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                               title,
                               "gimp-image-color-profile-import",
                               NULL,

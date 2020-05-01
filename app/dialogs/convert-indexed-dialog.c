@@ -130,7 +130,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
   private->user_data          = user_data;
 
   private->dialog = dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+    gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                               _("Indexed Color Conversion"),
                               "gimp-image-convert-indexed",
                               GIMP_ICON_CONVERT_INDEXED,

@@ -397,7 +397,7 @@ gradient_editor_replicate_cmd_callback (GimpAction *action,
       desc  = _("Replicate Gradient Selection");
     }
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gradient),
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, gradient),
                                      data_editor->context,
                                      title,
                                      "gimp-gradient-segment-replicate",
@@ -508,7 +508,7 @@ gradient_editor_split_uniformly_cmd_callback (GimpAction *action,
       desc  = _("Split Gradient Segments Uniformly");
     }
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gradient),
+  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, gradient),
                                      data_editor->context,
                                      title,
                                      "gimp-gradient-segment-split-uniformly",

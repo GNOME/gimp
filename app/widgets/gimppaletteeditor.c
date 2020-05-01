@@ -501,9 +501,9 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
     }
   else
     {
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
-                                         GIMP_VIEWABLE (palette),
-                                         data_editor->context);
+      gimp_viewable_dialog_set_viewables (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
+                                          g_list_prepend (NULL, palette),
+                                          data_editor->context);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &editor->color->color);
 

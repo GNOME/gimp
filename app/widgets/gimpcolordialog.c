@@ -470,8 +470,8 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   if (viewable)
     {
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (dialog),
-                                         viewable, context);
+      gimp_viewable_dialog_set_viewables (GIMP_VIEWABLE_DIALOG (dialog),
+                                          g_list_prepend (NULL, viewable), context);
     }
   else
     {

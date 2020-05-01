@@ -124,7 +124,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
     {
     case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
       dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Assign ICC Color Profile"),
                                   "gimp-image-color-profile-assign",
                                   NULL,
@@ -142,7 +142,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
       dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Convert to ICC Color Profile"),
                                   "gimp-image-color-profile-convert",
                                   NULL,
@@ -160,7 +160,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
       dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("RGB Conversion"),
                                   "gimp-image-convert-rgb",
                                   GIMP_ICON_CONVERT_RGB,
@@ -178,7 +178,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
       dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Grayscale Conversion"),
                                   "gimp-image-convert-gray",
                                   GIMP_ICON_CONVERT_GRAYSCALE,
@@ -196,7 +196,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE:
       dialog =
-        gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
+        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Soft-Proof Profile"),
                                   "gimp-select-softproof-profile",
                                   GIMP_ICON_DOCUMENT_PRINT,

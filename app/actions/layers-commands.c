@@ -135,7 +135,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                gboolean               rename_text_layer,
                                                gpointer               user_data);
 static void   layers_add_mask_callback        (GtkWidget             *dialog,
-                                               GimpLayer             *layer,
+                                               GList                 *layers,
                                                GimpAddMaskType        add_mask_type,
                                                GimpChannel           *channel,
                                                gboolean               invert,
@@ -1026,31 +1026,51 @@ layers_mask_add_cmd_callback (GimpAction *action,
                               gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *layers;
+  GList     *iter;
   GtkWidget *widget;
   GtkWidget *dialog;
-  return_if_no_layer (image, layer, data);
+  GList     *update_layers = NULL;
+  gint       n_channels = 0;
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
-  if (gimp_layer_get_mask (layer))
+  for (iter = layers; iter; iter = iter->next)
+    {
+      g_return_if_fail (GIMP_IS_LAYER (iter->data));
+
+      if (! gimp_layer_get_mask (iter->data))
+        {
+          update_layers = g_list_prepend (update_layers, iter->data);
+          n_channels++;
+        }
+    }
+  if (n_channels == 0)
+    /* No layers or they all have masks already. */
     return;
 
 #define ADD_MASK_DIALOG_KEY "gimp-add-mask-dialog"
 
-  dialog = dialogs_get_dialog (G_OBJECT (layer), ADD_MASK_DIALOG_KEY);
+  for (iter = update_layers; iter; iter = iter->next)
+    {
+      dialog = dialogs_get_dialog (G_OBJECT (iter->data), ADD_MASK_DIALOG_KEY);
+      if (dialog)
+        break;
+    }
 
   if (! dialog)
     {
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-      dialog = layer_add_mask_dialog_new (layer, action_data_get_context (data),
+      dialog = layer_add_mask_dialog_new (update_layers, action_data_get_context (data),
                                           widget,
                                           config->layer_add_mask_type,
                                           config->layer_add_mask_invert,
                                           layers_add_mask_callback,
                                           NULL);
 
-      dialogs_attach_dialog (G_OBJECT (layer), ADD_MASK_DIALOG_KEY, dialog);
+      for (iter = update_layers; iter; iter = iter->next)
+        dialogs_attach_dialog (G_OBJECT (iter->data), ADD_MASK_DIALOG_KEY, dialog);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
@@ -1865,15 +1885,16 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
 
 static void
 layers_add_mask_callback (GtkWidget       *dialog,
-                          GimpLayer       *layer,
+                          GList           *layers,
                           GimpAddMaskType  add_mask_type,
                           GimpChannel     *channel,
                           gboolean         invert,
                           gpointer         user_data)
 {
-  GimpImage        *image  = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpImage        *image  = gimp_item_get_image (GIMP_ITEM (layers->data));
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
   GimpLayerMask    *mask;
+  GList            *iter;
   GError           *error = NULL;
 
   g_object_set (config,
@@ -1881,25 +1902,31 @@ layers_add_mask_callback (GtkWidget       *dialog,
                 "layer-add-mask-invert", invert,
                 NULL);
 
-  mask = gimp_layer_create_mask (layer,
-                                 config->layer_add_mask_type,
-                                 channel);
-
-  if (config->layer_add_mask_invert)
-    gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
-
-  if (! gimp_layer_add_mask (layer, mask, TRUE, &error))
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_ADD,
+                               _("Add Layer Masks"));
+  for (iter = layers; iter; iter = iter->next)
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
-                            error->message);
-      g_object_unref (mask);
-      g_clear_error (&error);
-      return;
+      mask = gimp_layer_create_mask (iter->data,
+                                     config->layer_add_mask_type,
+                                     channel);
+
+      if (config->layer_add_mask_invert)
+        gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+
+      if (! gimp_layer_add_mask (iter->data, mask, TRUE, &error))
+        {
+          gimp_message_literal (image->gimp,
+                                G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                                error->message);
+          g_object_unref (mask);
+          g_clear_error (&error);
+          return;
+        }
     }
 
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
-
   gtk_widget_destroy (dialog);
 }
 
