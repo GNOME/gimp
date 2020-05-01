@@ -219,7 +219,7 @@ gimp_tagged_get_identifier (GimpTagged *tagged)
  * If the object does not want to support such remapping (objects not
  * stored in file for example) it can return %NULL.
  *
- * Returns: checksum string if object needs identifier remapping,
+ * Returns: (nullable): checksum string if object needs identifier remapping,
  * %NULL otherwise. Returned string must be freed with #g_free().
  **/
 gchar *

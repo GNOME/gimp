@@ -270,7 +270,7 @@ gimp_scan_convert_add_bezier (GimpScanConvert       *sc,
  *               extend to a distance of more than @miter times @width from
  *               the actual join point
  * @dash_offset: offset to apply on the dash pattern
- * @dash_info:   dash pattern or %NULL for a solid line
+ * @dash_info: (nullable): dash pattern or %NULL for a solid line
  *
  * Stroke the content of a GimpScanConvert. The next
  * gimp_scan_convert_render() will result in the outline of the

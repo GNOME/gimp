@@ -433,7 +433,7 @@ gimp_gradient_get_extension (GimpData *data)
  * gimp_gradient_get_color_at:
  * @gradient:          a gradient
  * @context:           a context
- * @seg:               a segment to seed the search with (or %NULL)
+ * @seg: (nullable):   a segment to seed the search with (or %NULL)
  * @pos:               position in the gradient (between 0.0 and 1.0)
  * @reverse:           when %TRUE, use the reversed gradient
  * @blend_color_space: color space to use for blending RGB segments

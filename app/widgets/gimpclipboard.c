@@ -570,7 +570,7 @@ gimp_clipboard_get_curve (Gimp *gimp)
 /**
  * gimp_clipboard_set_image:
  * @gimp:  pointer to #Gimp
- * @image: a #GimpImage, or %NULL.
+ * @image: (nullable): a #GimpImage, or %NULL.
  *
  * Offers the image in %GDK_SELECTION_CLIPBOARD.
  **/
@@ -620,7 +620,7 @@ gimp_clipboard_set_image (Gimp      *gimp,
 /**
  * gimp_clipboard_set_buffer:
  * @gimp:   pointer to #Gimp
- * @buffer: a #GimpBuffer, or %NULL.
+ * @buffer: (nullable): a #GimpBuffer, or %NULL.
  *
  * Offers the buffer in %GDK_SELECTION_CLIPBOARD.
  **/
@@ -668,7 +668,7 @@ gimp_clipboard_set_buffer (Gimp       *gimp,
 /**
  * gimp_clipboard_set_svg:
  * @gimp: pointer to #Gimp
- * @svg: a string containing the SVG data, or %NULL
+ * @svg: (nullable): a string containing the SVG data, or %NULL
  *
  * Offers SVG data in %GDK_SELECTION_CLIPBOARD.
  **/
@@ -743,7 +743,7 @@ gimp_clipboard_set_text (Gimp        *gimp,
 /**
  * gimp_clipboard_set_curve:
  * @gimp: pointer to #Gimp
- * @curve: a #GimpCurve, or %NULL
+ * @curve: (nullable): a #GimpCurve, or %NULL
  *
  * Offers curve data in %GDK_SELECTION_CLIPBOARD.
  **/

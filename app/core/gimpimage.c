@@ -2176,9 +2176,9 @@ gimp_image_get_file_or_untitled (GimpImage *image)
  * gimp_image_get_file:
  * @image: A #GimpImage.
  *
- * Get the file of the XCF image, or NULL if there is no file.
+ * Get the file of the XCF image, or %NULL if there is no file.
  *
- * Returns: The file, or NULL.
+ * Returns: (nullable): The file, or %NULL.
  **/
 GFile *
 gimp_image_get_file (GimpImage *image)
@@ -2192,8 +2192,8 @@ gimp_image_get_file (GimpImage *image)
  * gimp_image_get_imported_file:
  * @image: A #GimpImage.
  *
- * Returns: The file of the imported image, or NULL if the image has
- * been saved as XCF after it was imported.
+ * Returns: (nullable): The file of the imported image, or %NULL if the image
+ * has been saved as XCF after it was imported.
  **/
 GFile *
 gimp_image_get_imported_file (GimpImage *image)
@@ -2207,8 +2207,8 @@ gimp_image_get_imported_file (GimpImage *image)
  * gimp_image_get_exported_file:
  * @image: A #GimpImage.
  *
- * Returns: The file of the image last exported from this XCF file, or
- * NULL if the image has never been exported.
+ * Returns: (nullable): The file of the image last exported from this XCF file,
+ * or %NULL if the image has never been exported.
  **/
 GFile *
 gimp_image_get_exported_file (GimpImage *image)
