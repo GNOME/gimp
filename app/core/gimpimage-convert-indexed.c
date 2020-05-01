@@ -544,6 +544,8 @@ static void          compute_color_lin8      (QuantizeObj           *quantobj,
 static guchar    found_cols[MAXNUMCOLORS][3];
 static gint      num_found_cols;
 static gboolean  needs_quantize;
+static gboolean  had_white;
+static gboolean  had_black;
 
 
 /**********************************************************/
@@ -851,6 +853,8 @@ gimp_image_convert_indexed (GimpImage               *image,
        *  need to quantize or color-dither.
        */
       needs_quantize = FALSE;
+      had_black = FALSE;
+      had_white = FALSE;
       num_found_cols = 0;
 
       /*  Build the histogram  */
@@ -1162,6 +1166,18 @@ generate_histogram_gray (CFHistogram  histogram,
     }
 }
 
+static void
+check_white_or_black (const guchar *data)
+{
+  if (data[RED]   == 255 &&
+      data[GREEN] == 255 &&
+      data[BLUE]  == 255)
+    had_white = TRUE;
+  if (data[RED]  ==0 &&
+      data[GREEN]==0 &&
+      data[BLUE] ==0)
+    had_black = TRUE;
+}
 
 static void
 generate_histogram_rgb (CFHistogram   histogram,
@@ -1241,6 +1257,7 @@ generate_histogram_rgb (CFHistogram   histogram,
                                           data[RED],
                                           data[GREEN],
                                           data[BLUE]);
+                      check_white_or_black (data);
                       (*colfreq)++;
                     }
 
@@ -1265,6 +1282,7 @@ generate_histogram_rgb (CFHistogram   histogram,
                                           data[RED],
                                           data[GREEN],
                                           data[BLUE]);
+                      check_white_or_black (data);
                       (*colfreq)++;
                     }
 
@@ -1342,6 +1360,8 @@ generate_histogram_rgb (CFHistogram   histogram,
                           found_cols[num_found_cols-1][0] = data[RED];
                           found_cols[num_found_cols-1][1] = data[GREEN];
                           found_cols[num_found_cols-1][2] = data[BLUE];
+
+                          check_white_or_black (data);
                         }
                     }
                 }
@@ -2796,13 +2816,13 @@ snap_to_black_and_white (QuantizeObj *quantobj)
          }
     }
 
-  if (white_dist < POW2(24)) /* 24 units in sRGB ~= deltaE of 9.5 */
+  if (had_white && white_dist < POW2(32))
   {
      quantobj->cmap[whitest].red   =
      quantobj->cmap[whitest].green =
      quantobj->cmap[whitest].blue  = 255;
   }
-  if (black_dist < POW2(24))
+  if (had_black && black_dist < POW2(32))
   {
      quantobj->cmap[blackest].red   =
      quantobj->cmap[blackest].green =
