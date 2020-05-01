@@ -13,4 +13,3 @@ or other relevant resources.
 
 If not obvious, explain the use cases or problems to solve.
 
-/label ~"1. Enhancement"
