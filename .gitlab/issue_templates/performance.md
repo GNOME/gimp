@@ -31,4 +31,4 @@ If you recorded a screencast while recording the log, please attach it here.
 
 If there is any additional information, please provide it here.
 
-/label ~"1. Performance"
+/label ~Performance
