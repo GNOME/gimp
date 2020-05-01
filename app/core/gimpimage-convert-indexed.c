@@ -2812,13 +2812,17 @@ snap_to_black_and_white (QuantizeObj *quantobj)
          }
     }
 
-  if (had_white && white_dist < POW2(32))
+  if (desired > 2 &&
+      had_white   &&
+      white_dist < POW2(128))
   {
      quantobj->cmap[whitest].red   =
      quantobj->cmap[whitest].green =
      quantobj->cmap[whitest].blue  = 255;
   }
-  if (had_black && black_dist < POW2(32))
+  if (desired > 2 &&
+      had_black   &&
+      black_dist < POW2(128))
   {
      quantobj->cmap[blackest].red   =
      quantobj->cmap[blackest].green =
