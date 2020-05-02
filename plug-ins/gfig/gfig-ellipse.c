@@ -148,7 +148,7 @@ d_paint_ellipse (GfigObject *obj)
       gdouble       angle = 0;
       gint          i = 0;
 
-      while (i < 362)
+      while (i < 361)
         {
           static const gdouble step = 2 * G_PI / 180;
 
