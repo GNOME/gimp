@@ -205,7 +205,7 @@ right_intersect(GdkPoint *p1, GdkPoint *p2, gint x, gint y)
    gint dy = p2->y - p1->y;
 
    if ((dy > 0 && y > p1->y && y < p2->y) ||
-       (dy < y && y > p2->y && y < p1->y)) {
+       (dy < 0 && y > p2->y && y < p1->y)) {
       gint sx = p1->x + (y - p1->y) * dx / dy;
       return sx > x;
    }
