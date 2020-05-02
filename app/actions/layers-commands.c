@@ -328,7 +328,15 @@ layers_new_cmd_callback (GimpAction *action,
   if (! dialog)
     {
       GimpDialogConfig *config     = GIMP_DIALOG_CONFIG (image->gimp->config);
+      const gchar      *title;
+      gchar            *desc;
+      gint              n_layers;
       GimpLayerMode     layer_mode = config->layer_new_mode;
+
+      n_layers = g_list_length (gimp_image_get_selected_layers (image));
+      title = ngettext ("New Layer", "New Layers", n_layers > 0 ? n_layers : 1);
+      desc  = ngettext ("Create a New Layer", "Create %d New Layers", n_layers > 0 ? n_layers : 1);
+      desc  = g_strdup_printf (desc, n_layers > 0 ? n_layers : 1);
 
       if (layer_mode == GIMP_LAYER_MODE_NORMAL ||
           layer_mode == GIMP_LAYER_MODE_NORMAL_LEGACY)
@@ -339,10 +347,10 @@ layers_new_cmd_callback (GimpAction *action,
       dialog = layer_options_dialog_new (image, NULL,
                                          action_data_get_context (data),
                                          widget,
-                                         _("New Layer"),
+                                         title,
                                          "gimp-layer-new",
                                          GIMP_ICON_LAYER,
-                                         _("Create a New Layer"),
+                                         desc,
                                          GIMP_HELP_LAYER_NEW,
                                          config->layer_new_name,
                                          layer_mode,
@@ -359,6 +367,7 @@ layers_new_cmd_callback (GimpAction *action,
                                          FALSE,
                                          layers_new_callback,
                                          NULL);
+      g_free (desc);
 
       dialogs_attach_dialog (G_OBJECT (image), NEW_DIALOG_KEY, dialog);
     }
@@ -379,6 +388,8 @@ layers_new_last_vals_cmd_callback (GimpAction *action,
   GList            *new_layers = NULL;
   GList            *iter;
   GimpLayerMode     layer_mode;
+  gint              n_layers;
+  gboolean          run_once;
 
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
@@ -402,26 +413,39 @@ layers_new_last_vals_cmd_callback (GimpAction *action,
       layer_mode = gimp_image_get_default_new_layer_mode (image);
     }
 
-  layers = gimp_image_get_selected_layers (image);
-  if (layers)
-    gimp_image_undo_group_start (image,
-                                 GIMP_UNDO_GROUP_LAYER_ADD,
-                                 _("New layers"));
-  layers = g_list_copy (layers);
-  for (iter = layers; iter; iter = iter->next)
+  layers   = gimp_image_get_selected_layers (image);
+  layers   = g_list_copy (layers);
+  n_layers = g_list_length (layers);
+  run_once = (n_layers == 0);
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_ADD,
+                               ngettext ("New layer",
+                                         "New layers",
+                                         n_layers > 0 ? n_layers : 1));
+  for (iter = layers; iter || run_once ; iter = iter ? iter->next : NULL)
     {
       GimpLayer *parent;
       gint       position;
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+      run_once = FALSE;
+      if (iter)
         {
-          parent   = iter->data;
-          position = 0;
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+            {
+              parent   = iter->data;
+              position = 0;
+            }
+          else
+            {
+              parent   = GIMP_LAYER (gimp_item_get_parent (iter->data));
+              position = gimp_item_get_index (iter->data);
+            }
         }
-      else
+      else /* run_once */
         {
-          parent   = GIMP_LAYER (gimp_item_get_parent (iter->data));
-          position = gimp_item_get_index (iter->data);
+          parent   = NULL;
+          position = -1;
         }
       layer = gimp_layer_new (image,
                               gimp_image_get_width  (image),
@@ -444,11 +468,9 @@ layers_new_last_vals_cmd_callback (GimpAction *action,
       gimp_image_add_layer (image, layer, parent, position, TRUE);
       new_layers = g_list_prepend (new_layers, layer);
     }
-  if (layers)
-    {
-      gimp_image_undo_group_end (image);
-      gimp_image_set_selected_layers (image, new_layers);
-    }
+  gimp_image_set_selected_layers (image, new_layers);
+  gimp_image_undo_group_end (image);
+
   g_list_free (layers);
   g_list_free (new_layers);
   gimp_image_flush (image);
@@ -492,13 +514,61 @@ layers_new_group_cmd_callback (GimpAction *action,
                                gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *new_layers = NULL;
+  GList     *layers;
+  GList     *iter;
+  gint       n_layers;
+  gboolean   run_once;
+
   return_if_no_image (image, data);
 
-  layer = gimp_group_layer_new (image);
+  layers     = gimp_image_get_selected_layers (image);
+  layers     = g_list_copy (layers);
+  n_layers   = g_list_length (layers);
+  run_once   = (n_layers == 0);
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_ADD,
+                               ngettext ("New layer group",
+                                         "New layer groups",
+                                         n_layers > 0 ? n_layers : 1));
 
-  gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  for (iter = layers; iter || run_once ; iter = iter ? iter->next : NULL)
+    {
+      GimpLayer *layer;
+      GimpLayer *parent;
+      gint       position;
+
+      run_once = FALSE;
+      if (iter)
+        {
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+            {
+              parent   = iter->data;
+              position = 0;
+            }
+          else
+            {
+              parent   = GIMP_LAYER (gimp_item_get_parent (iter->data));
+              position = gimp_item_get_index (iter->data);
+            }
+        }
+      else /* run_once */
+        {
+          parent   = NULL;
+          position = -1;
+        }
+      layer = gimp_group_layer_new (image);
+
+      gimp_image_add_layer (image, layer, parent, position, TRUE);
+      new_layers = g_list_prepend (new_layers, layer);
+    }
+
+  gimp_image_set_selected_layers (image, new_layers);
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
+
+  g_list_free (layers);
+  g_list_free (new_layers);
 }
 
 void
@@ -1720,7 +1790,12 @@ layers_new_callback (GtkWidget              *dialog,
                      gboolean                rename_text_layer, /* unused */
                      gpointer                user_data)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpDialogConfig *config     = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GList            *layers     = gimp_image_get_selected_layers (image);
+  GList            *new_layers = NULL;
+  GList            *iter;
+  gint              n_layers   = g_list_length (layers);
+  gboolean          run_once   = (n_layers == 0);
 
   g_object_set (config,
                 "layer-new-name",            layer_name,
@@ -1732,38 +1807,76 @@ layers_new_callback (GtkWidget              *dialog,
                 "layer-new-fill-type",       layer_fill_type,
                 NULL);
 
-  layer = gimp_layer_new (image, layer_width, layer_height,
-                          gimp_image_get_layer_format (image, TRUE),
-                          config->layer_new_name,
-                          config->layer_new_opacity,
-                          config->layer_new_mode);
-
-  if (layer)
+  layers = g_list_copy (layers);
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_LAYER_ADD,
+                               ngettext ("New layer",
+                                         "New layers",
+                                         n_layers > 0 ? n_layers : 1));
+  for (iter = layers; iter || run_once; iter = iter ? iter->next : NULL)
     {
-      gimp_item_set_offset (GIMP_ITEM (layer), layer_offset_x, layer_offset_y);
-      gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
-                          config->layer_new_fill_type);
-      gimp_item_set_visible (GIMP_ITEM (layer), layer_visible, FALSE);
-      gimp_item_set_linked (GIMP_ITEM (layer), layer_linked, FALSE);
-      gimp_item_set_color_tag (GIMP_ITEM (layer), layer_color_tag, FALSE);
-      gimp_item_set_lock_content (GIMP_ITEM (layer), layer_lock_pixels,
-                                  FALSE);
-      gimp_item_set_lock_position (GIMP_ITEM (layer), layer_lock_position,
-                                   FALSE);
-      gimp_layer_set_lock_alpha (layer, layer_lock_alpha, FALSE);
-      gimp_layer_set_blend_space (layer, layer_blend_space, FALSE);
-      gimp_layer_set_composite_space (layer, layer_composite_space, FALSE);
-      gimp_layer_set_composite_mode (layer, layer_composite_mode, FALSE);
+      GimpLayer *parent;
+      gint       position;
 
-      gimp_image_add_layer (image, layer,
-                            GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-      gimp_image_flush (image);
-    }
-  else
-    {
-      g_warning ("%s: could not allocate new layer", G_STRFUNC);
+      run_once = FALSE;
+      if (iter)
+        {
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+            {
+              parent   = iter->data;
+              position = 0;
+            }
+          else
+            {
+              parent   = GIMP_LAYER (gimp_item_get_parent (iter->data));
+              position = gimp_item_get_index (iter->data);
+            }
+        }
+      else /* run_once */
+        {
+          parent = NULL;
+          position = 0;
+        }
+
+      layer = gimp_layer_new (image, layer_width, layer_height,
+                              gimp_image_get_layer_format (image, TRUE),
+                              config->layer_new_name,
+                              config->layer_new_opacity,
+                              config->layer_new_mode);
+
+      if (layer)
+        {
+          gimp_item_set_offset (GIMP_ITEM (layer), layer_offset_x, layer_offset_y);
+          gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
+                              config->layer_new_fill_type);
+          gimp_item_set_visible (GIMP_ITEM (layer), layer_visible, FALSE);
+          gimp_item_set_linked (GIMP_ITEM (layer), layer_linked, FALSE);
+          gimp_item_set_color_tag (GIMP_ITEM (layer), layer_color_tag, FALSE);
+          gimp_item_set_lock_content (GIMP_ITEM (layer), layer_lock_pixels,
+                                      FALSE);
+          gimp_item_set_lock_position (GIMP_ITEM (layer), layer_lock_position,
+                                       FALSE);
+          gimp_layer_set_lock_alpha (layer, layer_lock_alpha, FALSE);
+          gimp_layer_set_blend_space (layer, layer_blend_space, FALSE);
+          gimp_layer_set_composite_space (layer, layer_composite_space, FALSE);
+          gimp_layer_set_composite_mode (layer, layer_composite_mode, FALSE);
+
+          gimp_image_add_layer (image, layer, parent, position, TRUE);
+          gimp_image_flush (image);
+
+          new_layers = g_list_prepend (new_layers, layer);
+        }
+      else
+        {
+          g_warning ("%s: could not allocate new layer", G_STRFUNC);
+        }
     }
 
+  gimp_image_undo_group_end (image);
+  gimp_image_set_selected_layers (image, new_layers);
+
+  g_list_free (layers);
+  g_list_free (new_layers);
   gtk_widget_destroy (dialog);
 }
 
