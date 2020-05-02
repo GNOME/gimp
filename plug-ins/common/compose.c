@@ -213,14 +213,10 @@ GIMP_MAIN (COMPOSE_TYPE)
 #define CPN_HSL_S  { "saturation", N_("_Saturation:"), NULL, 0.0, 1.0, TRUE}
 #define CPN_HSL_L  { "lightness",  N_("_Lightness:"),  NULL, 0.0, 1.0, TRUE}
 
-#define CPN_CMYK_C { "cyan",    N_("_Cyan:"),    NULL, 0.0, 1.0, TRUE}
-#define CPN_CMYK_M { "magenta", N_("_Magenta:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_CMYK_Y { "yellow",  N_("_Yellow:"),  NULL, 0.0, 1.0, TRUE}
-#define CPN_CMYK_K { "key",     N_("_Black:"),   NULL, 0.0, 1.0, TRUE}
-
-#define CPN_CMY_C  { "cyan",    N_("_Cyan:"),    NULL, 0.0, 1.0, TRUE}
-#define CPN_CMY_M  { "magenta", N_("_Magenta:"), NULL, 0.0, 1.0, TRUE}
-#define CPN_CMY_Y  { "yellow",  N_("_Yellow:"),  NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_C { "Cyan",    N_("_Cyan:"),    NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_M { "Magenta", N_("_Magenta:"), NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_Y { "Yellow",  N_("_Yellow:"),  NULL, 0.0, 1.0, TRUE}
+#define CPN_CMYK_K { "Key",     N_("_Black:"),   NULL, 0.0, 1.0, TRUE}
 
 #define CPN_LAB_L  { "CIE L", N_("_L:"), NULL, 0.0, 100.0, TRUE}
 #define CPN_LAB_A  { "CIE a", N_("_A:"), NULL, -127.5, 127.5, TRUE}
@@ -269,13 +265,6 @@ static COMPOSE_DSC compose_dsc[] =
       CPN_HSL_S,
       CPN_HSL_L },
     "hsl-compose" },
-
-  { "CMY",
-    N_("CMY"), 3,
-    { CPN_CMY_C,
-      CPN_CMY_M,
-      CPN_CMY_Y },
-    "cmy-compose" },
 
   { "CMYK",
     N_("CMYK"), 4,
