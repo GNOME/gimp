@@ -160,5 +160,5 @@ colorsel_wheel_changed (GimpColorWheel    *hsv,
                               &selector->hsv.v);
   gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
 
-  gimp_color_selector_color_changed (selector);
+  gimp_color_selector_emit_color_changed (selector);
 }
