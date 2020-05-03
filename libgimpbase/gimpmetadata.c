@@ -979,7 +979,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 /**
  * gimp_metadata_set_from_exif:
  * @metadata:         A #GimpMetadata instance.
- * @exif_data:        The blob of Exif data to set
+ * @exif_data: (array length=exif_data_length): The blob of Exif data to set
  * @exif_data_length: Length of @exif_data, in bytes
  * @error:            Return location for error message
  *
@@ -1053,7 +1053,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
 /**
  * gimp_metadata_set_from_iptc:
  * @metadata:        A #GimpMetadata instance.
- * @iptc_data:       The blob of Ipc data to set
+ * @iptc_data: (array length=iptc_data_length): The blob of Iptc data to set
  * @iptc_data_length:Length of @iptc_data, in bytes
  * @error:           Return location for error message
  *
@@ -1101,8 +1101,8 @@ gimp_metadata_set_from_iptc (GimpMetadata  *metadata,
 /**
  * gimp_metadata_set_from_xmp:
  * @metadata:        A #GimpMetadata instance.
- * @xmp_data:        The blob of Exif data to set
- * @xmp_data_length: Length of @exif_data, in bytes
+ * @xmp_data: (array length=xmp_data_length): The blob of XMP data to set
+ * @xmp_data_length: Length of @xmp_data, in bytes
  * @error:           Return location for error message
  *
  * Sets the tags from a piece of XMP data on @metadata.

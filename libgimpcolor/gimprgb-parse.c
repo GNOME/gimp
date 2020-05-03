@@ -213,7 +213,7 @@ static const ColorEntry named_colors[] =
 /**
  * gimp_rgb_parse_name:
  * @rgb:  a #GimpRGB struct used to return the parsed color
- * @name: a color name (in UTF-8 encoding)
+ * @name: (array length=len): a color name (in UTF-8 encoding)
  * @len:  the length of @name, in bytes. or -1 if @name is nul-terminated
  *
  * Attempts to parse a color name. This function accepts <ulink
@@ -250,7 +250,7 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
 /**
  * gimp_rgb_parse_hex:
  * @rgb: a #GimpRGB struct used to return the parsed color
- * @hex: a string describing a color in hexadecimal notation
+ * @hex: (array length=len): a string describing a color in hexadecimal notation
  * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
  *
  * Attempts to parse a string describing an RGB color in hexadecimal
@@ -286,8 +286,8 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
 /**
  * gimp_rgb_parse_css:
  * @rgb: a #GimpRGB struct used to return the parsed color
- * @css: a string describing a color in CSS notation
- * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
+ * @css: (array length=len): a string describing a color in CSS notation
+ * @len: the length of @css, in bytes. or -1 if @css is nul-terminated
  *
  * Attempts to parse a string describing an RGB color in CSS
  * notation. This can be either a numerical representation
@@ -326,8 +326,8 @@ gimp_rgb_parse_css (GimpRGB     *rgb,
 /**
  * gimp_rgba_parse_css:
  * @rgba: a #GimpRGB struct used to return the parsed color
- * @css: a string describing a color in CSS notation
- * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
+ * @css: (array length=len): a string describing a color in CSS notation
+ * @len: the length of @css, in bytes. or -1 if @css is nul-terminated
  *
  * Similar to gimp_rgb_parse_css() but handles RGB colors with alpha
  * channel in the numerical CSS notation (<code>rgba(255,0,0,255)</code>

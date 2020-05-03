@@ -228,9 +228,9 @@ gimp_scanner_new_stream (GInputStream  *input,
 
 /**
  * gimp_scanner_new_string:
- * @text:
- * @text_len:
- * @error:
+ * @text: (array length=text_len):
+ * @text_len: The length of @text, or -1 if NULL-terminated
+ * @error: return location for #GError, or %NULL
  *
  * Returns: (transfer full): The new #GimpScanner.
  *
