@@ -400,7 +400,7 @@ gimp_color_notebook_color_changed (GimpColorSelector *page,
   selector->rgb = *rgb;
   selector->hsv = *hsv;
 
-  gimp_color_selector_color_changed (selector);
+  gimp_color_selector_emit_color_changed (selector);
 }
 
 static void

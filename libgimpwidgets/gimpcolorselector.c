@@ -371,7 +371,7 @@ gimp_color_selector_set_color (GimpColorSelector *selector,
   if (selector_class->set_color)
     selector_class->set_color (selector, rgb, hsv);
 
-  gimp_color_selector_color_changed (selector);
+  gimp_color_selector_emit_color_changed (selector);
 }
 
 /**
@@ -457,7 +457,7 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
       if (selector_class->set_channel)
         selector_class->set_channel (selector, channel);
 
-      gimp_color_selector_channel_changed (selector);
+      gimp_color_selector_emit_channel_changed (selector);
 
       if (model != -1)
         {
@@ -537,7 +537,7 @@ gimp_color_selector_set_model_visible (GimpColorSelector      *selector,
       if (selector_class->set_model_visible)
         selector_class->set_model_visible (selector, model, visible);
 
-      gimp_color_selector_model_visible_changed (selector, model);
+      gimp_color_selector_emit_model_visible_changed (selector, model);
     }
 }
 
@@ -564,13 +564,13 @@ gimp_color_selector_get_model_visible (GimpColorSelector      *selector,
 }
 
 /**
- * gimp_color_selector_color_changed:
+ * gimp_color_selector_emit_color_changed:
  * @selector: A #GimpColorSelector widget.
  *
  * Emits the "color-changed" signal.
- **/
+ */
 void
-gimp_color_selector_color_changed (GimpColorSelector *selector)
+gimp_color_selector_emit_color_changed (GimpColorSelector *selector)
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
@@ -579,13 +579,13 @@ gimp_color_selector_color_changed (GimpColorSelector *selector)
 }
 
 /**
- * gimp_color_selector_channel_changed:
+ * gimp_color_selector_emit_channel_changed:
  * @selector: A #GimpColorSelector widget.
  *
  * Emits the "channel-changed" signal.
- **/
+ */
 void
-gimp_color_selector_channel_changed (GimpColorSelector *selector)
+gimp_color_selector_emit_channel_changed (GimpColorSelector *selector)
 {
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
@@ -594,17 +594,17 @@ gimp_color_selector_channel_changed (GimpColorSelector *selector)
 }
 
 /**
- * gimp_color_selector_model_visible_changed:
+ * gimp_color_selector_emit_model_visible_changed:
  * @selector: A #GimpColorSelector widget.
  * @model:    The #GimpColorSelectorModel where visibility changed.
  *
  * Emits the "model-visible-changed" signal.
  *
  * Since: 2.10
- **/
+ */
 void
-gimp_color_selector_model_visible_changed (GimpColorSelector      *selector,
-                                           GimpColorSelectorModel  model)
+gimp_color_selector_emit_model_visible_changed (GimpColorSelector      *selector,
+                                                GimpColorSelectorModel  model)
 {
   GimpColorSelectorPrivate *priv;
 

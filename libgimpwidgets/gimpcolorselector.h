@@ -163,10 +163,10 @@ void     gimp_color_selector_set_model_visible     (GimpColorSelector *selector,
 gboolean gimp_color_selector_get_model_visible     (GimpColorSelector *selector,
                                                     GimpColorSelectorModel model);
 
-void     gimp_color_selector_color_changed         (GimpColorSelector *selector);
-void     gimp_color_selector_channel_changed       (GimpColorSelector *selector);
-void     gimp_color_selector_model_visible_changed (GimpColorSelector *selector,
-                                                    GimpColorSelectorModel model);
+void     gimp_color_selector_emit_color_changed         (GimpColorSelector *selector);
+void     gimp_color_selector_emit_channel_changed       (GimpColorSelector *selector);
+void     gimp_color_selector_emit_model_visible_changed (GimpColorSelector *selector,
+                                                         GimpColorSelectorModel model);
 
 void     gimp_color_selector_set_config            (GimpColorSelector *selector,
                                                     GimpColorConfig   *config);

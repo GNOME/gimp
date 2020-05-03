@@ -692,7 +692,7 @@ gimp_color_select_update (GimpColorSelect       *select,
     }
 
   if (update & UPDATE_CALLER)
-    gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (select));
+    gimp_color_selector_emit_color_changed (GIMP_COLOR_SELECTOR (select));
 }
 
 static void

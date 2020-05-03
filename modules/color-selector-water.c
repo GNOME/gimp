@@ -406,7 +406,7 @@ add_pigment (ColorselWater *water,
 
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
-  gimp_color_selector_color_changed (selector);
+  gimp_color_selector_emit_color_changed (selector);
 }
 
 static void
