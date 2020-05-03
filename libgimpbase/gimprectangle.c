@@ -44,10 +44,14 @@
  * @y2:          origin of second rectangle
  * @width2:      width of second rectangle
  * @height2:     height of second rectangle
- * @dest_x:      return location for origin of intersection (may be %NULL)
- * @dest_y:      return location for origin of intersection (may be %NULL)
- * @dest_width:  return location for width of intersection (may be %NULL)
- * @dest_height: return location for height of intersection (may be %NULL)
+ * @dest_x: (out) (optional): return location for origin of intersection,
+ *                            or %NULL
+ * @dest_y: (out) (optional): return location for origin of intersection,
+ *                            or %NULL
+ * @dest_width: (out) (optional): return location for width of intersection,
+ *                                or %NULL
+ * @dest_height: (out) (optional): return location for height of intersection,
+ *                                 or %NULL
  *
  * Calculates the intersection of two rectangles.
  *
@@ -95,10 +99,10 @@ gimp_rectangle_intersect (gint  x1,
  * @y2:          origin of second rectangle
  * @width2:      width of second rectangle
  * @height2:     height of second rectangle
- * @dest_x:      return location for origin of union (may be %NULL)
- * @dest_y:      return location for origin of union (may be %NULL)
- * @dest_width:  return location for width of union (may be %NULL)
- * @dest_height: return location for height of union (may be %NULL)
+ * @dest_x: (out) (optional): return location for origin of union, or %NULL
+ * @dest_y: (out) (optional): return location for origin of union, or %NULL
+ * @dest_width: (out) (optional): return location for width of union, or %NULL
+ * @dest_height: (out) (optional): return location for height of union, or %NULL
  *
  * Calculates the union of two rectangles.
  *

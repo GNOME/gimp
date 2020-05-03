@@ -1134,8 +1134,8 @@ gimp_item_set_size (GimpItem *item,
 /**
  * gimp_item_get_offset:
  * @item:     The #GimpItem to check.
- * @offset_x: Return location for the item's X offset.
- * @offset_y: Return location for the item's Y offset.
+ * @offset_x: (out) (optional): Return location for the item's X offset.
+ * @offset_y: (out) (optional): Return location for the item's Y offset.
  *
  * Reveals the X and Y offsets of the item.
  */
@@ -2584,15 +2584,15 @@ gimp_item_mask_bounds (GimpItem *item,
 /**
  * gimp_item_mask_intersect:
  * @item:   a #GimpItem
- * @x:      return location for x
- * @y:      return location for y
- * @width:  return location for the width
- * @height: return location for the height
+ * @x: (out) (optional): return location for x
+ * @y: (out) (optional): return location for y
+ * @width: (out) (optional): return location for the width
+ * @height: (out) (optional): return location for the height
  *
  * Intersect the area of the @item and its image's selection mask.
  * The computed area is the bounding box of he selection within the
  * item.
- **/
+ */
 gboolean
 gimp_item_mask_intersect (GimpItem *item,
                           gint     *x,

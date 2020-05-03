@@ -725,8 +725,8 @@ gimp_viewable_get_size (GimpViewable  *viewable,
  * @size:        requested size for preview.
  * @popup:       %TRUE if the preview is intended for a popup window.
  * @dot_for_dot: If %TRUE, ignore any differences in X and Y resolution.
- * @width:       return location for the the calculated width.
- * @height:      return location for the calculated height.
+ * @width: (out) (optional):  return location for the the calculated width.
+ * @height: (out) (optional): return location for the calculated height.
  *
  * Retrieve the size of a viewable's preview.  By default, this
  * simply returns the value of the @size argument for both the @width
@@ -765,8 +765,10 @@ gimp_viewable_get_preview_size (GimpViewable *viewable,
  * @width:        the width of the preview from which the popup will be shown.
  * @height:       the height of the preview from which the popup will be shown.
  * @dot_for_dot:  If %TRUE, ignore any differences in X and Y resolution.
- * @popup_width:  return location for the calculated popup width.
- * @popup_height: return location for the calculated popup height.
+ * @popup_width: (out) (optional): return location for the calculated popup
+ *                                  width.
+ * @popup_height: (out) (optional): return location for the calculated popup
+ *                                  height.
  *
  * Calculate the size of a viewable's preview, for use in making a
  * popup. The arguments @width and @height specify the size of the
@@ -1178,7 +1180,8 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
 /**
  * gimp_viewable_get_description:
  * @viewable: viewable object for which to retrieve a description.
- * @tooltip:  return location for an optional tooltip string.
+ * @tooltip: (out) (optional) (nullable): return location for an optional
+ *                                        tooltip string.
  *
  * Retrieves a string containing a description of the viewable object,
  * By default, it simply returns the name of the object, but this can
