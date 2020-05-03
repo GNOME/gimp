@@ -32,5 +32,3 @@ Actual result:
 # Additional information
 
 If you have a backtrace for a crash or a warning, paste it here.
-
-/label ~"1. Bug"
