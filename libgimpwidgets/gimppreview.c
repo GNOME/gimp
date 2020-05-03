@@ -656,8 +656,8 @@ gimp_preview_set_size (GimpPreview *preview,
 /**
  * gimp_preview_get_size:
  * @preview: a #GimpPreview widget
- * @width:   return location for the preview area width
- * @height:  return location for the preview area height
+ * @width: (out) (optional): return location for the preview area width
+ * @height: (out) (optional): return location for the preview area height
  *
  * Since: 2.2
  **/
@@ -709,8 +709,8 @@ gimp_preview_get_offsets (GimpPreview *preview,
 /**
  * gimp_preview_get_position:
  * @preview: a #GimpPreview widget
- * @x:       return location for the horizontal offset
- * @y:       return location for the vertical offset
+ * @x: (out) (optional): return location for the horizontal offset
+ * @y: (out) (optional): return location for the vertical offset
  *
  * Since: 2.2
  **/

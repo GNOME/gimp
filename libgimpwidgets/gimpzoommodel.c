@@ -404,8 +404,8 @@ gimp_zoom_model_get_factor (GimpZoomModel *model)
 /**
  * gimp_zoom_model_get_fraction
  * @model:       a #GimpZoomModel
- * @numerator:   return location for numerator
- * @denominator: return location for denominator
+ * @numerator: (out): return location for numerator
+ * @denominator: (out): return location for denominator
  *
  * Retrieves the current zoom factor of @model as a fraction.
  *

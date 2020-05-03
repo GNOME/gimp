@@ -1200,9 +1200,9 @@ gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
 /**
  * gimp_metadata_get_resolution:
  * @metadata: A #GimpMetadata instance.
- * @xres:     Return location for the X Resolution, in ppi
- * @yres:     Return location for the Y Resolution, in ppi
- * @unit:     Return location for the unit unit
+ * @xres: (out) (optional): Return location for the X Resolution, in ppi
+ * @yres: (out) (optional): Return location for the Y Resolution, in ppi
+ * @unit: (out) (optional): Return location for the unit unit
  *
  * Returns values based on Exif.Image.XResolution,
  * Exif.Image.YResolution and Exif.Image.ResolutionUnit of @metadata.

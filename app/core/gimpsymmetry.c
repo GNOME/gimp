@@ -401,9 +401,9 @@ gimp_symmetry_get_coords (GimpSymmetry *sym,
  * gimp_symmetry_get_transform:
  * @sym:     the #GimpSymmetry
  * @stroke:  the stroke number
- * @angle:   output pointer to the transformation rotation angle,
+ * @angle: (out): output pointer to the transformation rotation angle,
  *           in degrees (ccw)
- * @reflect: output pointer to the transformation reflection flag
+ * @reflect: (out): output pointer to the transformation reflection flag
  *
  * Returns: the transformation to apply to the paint content for stroke
  * number @stroke.  The transformation is comprised of rotation, possibly

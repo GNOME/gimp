@@ -874,11 +874,11 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
 /**
  * gimp_zoom_preview_get_source:
  * @preview: a #GimpZoomPreview widget
- * @width: a pointer to an int where the current width of the zoom widget
+ * @width: (out): a pointer to an int where the current width of the zoom widget
  *         will be put.
- * @height: a pointer to an int where the current width of the zoom widget
+ * @height: (out): a pointer to an int where the current width of the zoom widget
  *          will be put.
- * @bpp: return location for the number of bytes per pixel
+ * @bpp: (out): return location for the number of bytes per pixel
  *
  * Returns the scaled image data of the part of the drawable the
  * #GimpZoomPreview is currently showing, as a newly allocated array of guchar.

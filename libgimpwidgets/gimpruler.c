@@ -756,10 +756,13 @@ gimp_ruler_set_range (GimpRuler *ruler,
 /**
  * gimp_ruler_get_range:
  * @ruler: a #GimpRuler
- * @lower: location to store lower limit of the ruler, or %NULL
- * @upper: location to store upper limit of the ruler, or %NULL
- * @max_size: location to store the maximum size of the ruler used when
- *            calculating the space to leave for the text, or %NULL.
+ * @lower: (out) (optional): location to store lower limit of the ruler,
+ *                           or %NULL
+ * @upper: (out) (optional): location to store upper limit of the ruler,
+ *                           or %NULL
+ * @max_size: (out) (optional): location to store the maximum size of the ruler
+ *                              used when calculating the space to leave for
+ *                              the text, or %NULL.
  *
  * Retrieves values indicating the range and current position of a #GimpRuler.
  * See gimp_ruler_set_range().
