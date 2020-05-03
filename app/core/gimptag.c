@@ -56,7 +56,7 @@ gimp_tag_init (GimpTag *tag)
  * If given tag name is not valid, an attempt will be made to fix it.
  *
  * Returns: (nullable) (transfer full): a new #GimpTag object,
- *          or NULL if tag string is invalid and cannot be fixed.
+ *          or %NULL if tag string is invalid and cannot be fixed.
  **/
 GimpTag *
 gimp_tag_new (const char *tag_string)
@@ -90,13 +90,13 @@ gimp_tag_new (const char *tag_string)
  * gimp_tag_try_new:
  * @tag_string: a tag name.
  *
- * Similar to gimp_tag_new(), but returns NULL if tag is surely not equal
+ * Similar to gimp_tag_new(), but returns %NULL if tag is surely not equal
  * to any of currently created tags. It is useful for tag querying to avoid
  * unneeded comparisons. If tag is created, however, it does not mean that
  * it would necessarily match with some other tag.
  *
  * Returns: (nullable) (transfer full): new #GimpTag object,
- *          or NULL if tag will not match with any other #GimpTag.
+ *          or %NULL if tag will not match with any other #GimpTag.
  **/
 GimpTag *
 gimp_tag_try_new (const char *tag_string)
@@ -318,9 +318,9 @@ gimp_tag_has_prefix (GimpTag     *tag,
  *
  * Tries to create a valid tag string from given @tag_string.
  *
- * Returns: a newly allocated tag string in case given @tag_string was
- * valid or could be fixed, otherwise NULL. Allocated value should be freed
- * using g_free().
+ * Returns: (transfer full) (nullable): a newly allocated tag string in case
+ * given @tag_string was valid or could be fixed, otherwise %NULL. Allocated
+ * value should be freed using g_free().
  **/
 gchar *
 gimp_tag_string_make_valid (const gchar *tag_string)
