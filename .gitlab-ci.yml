@@ -18,7 +18,7 @@ deps-linux:
     paths:
     - _pacman_cache
   artifacts:
-    expire_in: 1 week
+    expire_in: 2 hours 
     when: always
     paths:
     - "${INSTALL_DIR}"
@@ -194,7 +194,7 @@ deps-win64:
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
-    expire_in: 1 week
+    expire_in: 1 day
     paths:
       - .local/
       - _deps/
@@ -251,7 +251,7 @@ gimp-win64:
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
-    expire_in: 1 week
+    expire_in: 1 day
     paths:
       - _build/
       - gimp-prefix/
@@ -310,7 +310,7 @@ deps-win32:
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
-    expire_in: 1 week
+    expire_in: 1 day
     paths:
       - .local/
       - _deps/
@@ -368,7 +368,7 @@ gimp-win32:
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     when: always
-    expire_in: 1 week
+    expire_in: 1 day
     paths:
       - _build/
       - gimp-prefix/
