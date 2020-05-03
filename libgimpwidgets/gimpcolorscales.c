@@ -855,7 +855,7 @@ gimp_color_scales_scale_changed (GtkAdjustment   *adjustment,
 
   gimp_color_scales_update_scales (scales, i);
 
-  gimp_color_selector_color_changed (selector);
+  gimp_color_selector_emit_color_changed (selector);
 }
 
 static void

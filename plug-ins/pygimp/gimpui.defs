@@ -1319,13 +1319,13 @@
 
 (define-method color_changed
   (of-object "GimpColorSelector")
-  (c-name "gimp_color_selector_color_changed")
+  (c-name "gimp_color_selector_emit_color_changed")
   (return-type "none")
 )
 
 (define-method channel_changed
   (of-object "GimpColorSelector")
-  (c-name "gimp_color_selector_channel_changed")
+  (c-name "gimp_color_selector_emit_channel_changed")
   (return-type "none")
 )
 
