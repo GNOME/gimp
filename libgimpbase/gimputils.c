@@ -751,20 +751,19 @@ gimp_enum_get_desc (GEnumClass *enum_class,
  * gimp_enum_get_value:
  * @enum_type:  the #GType of a registered enum
  * @value:      an integer value
- * @value_name: (optional): return location for the value's name (or %NULL)
- * @value_nick: (optional): return location for the value's nick (or %NULL)
- * @value_desc: (optional): return location for the value's translated
- *                          description (or %NULL)
- * @value_help: (optional): return location for the value's translated help
- *                          (or %NULL)
+ * @value_name: (out) (optional): return location for the value's name, or %NULL
+ * @value_nick: (out) (optional): return location for the value's nick, or %NULL
+ * @value_desc: (out) (optional): return location for the value's translated
+ *                                description, or %NULL
+ * @value_help: (out) (optional): return location for the value's translated
+ *                                help, or %NULL
  *
  * Checks if @value is valid for the enum registered as @enum_type.
  * If the value exists in that enum, its name, nick and its translated
  * description and help are returned (if @value_name, @value_nick,
  * @value_desc and @value_help are not %NULL).
  *
- * Returns: %TRUE if @value is valid for the @enum_type,
- *               %FALSE otherwise
+ * Returns: %TRUE if @value is valid for the @enum_type, %FALSE otherwise
  *
  * Since: 2.2
  **/
@@ -977,20 +976,19 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
  * gimp_flags_get_first_value:
  * @flags_type: the #GType of registered flags
  * @value:      an integer value
- * @value_name: (optional): return location for the value's name (or %NULL)
- * @value_nick: (optional): return location for the value's nick (or %NULL)
- * @value_desc: (optional): return location for the value's translated
- *                          description (or %NULL)
- * @value_help: (optional): return location for the value's translated help
- *                          (or %NULL)
+ * @value_name: (out) (optional): return location for the value's name, or %NULL
+ * @value_nick: (out) (optional): return location for the value's nick, or %NULL
+ * @value_desc: (out) (optional): return location for the value's translated
+ *                                description, or %NULL
+ * @value_help: (out) (optional): return location for the value's translated
+ *                                help, or %NULL
  *
  * Checks if @value is valid for the flags registered as @flags_type.
  * If the value exists in that flags, its name, nick and its
  * translated description and help are returned (if @value_name,
  * @value_nick, @value_desc and @value_help are not %NULL).
  *
- * Returns: %TRUE if @value is valid for the @flags_type,
- *               %FALSE otherwise
+ * Returns: %TRUE if @value is valid for the @flags_type, %FALSE otherwise
  *
  * Since: 2.2
  **/
