@@ -374,7 +374,7 @@ gimp_scanner_parse_token (GimpScanner *scanner,
  * gimp_scanner_parse_identifier:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @identifier: the expected identifier.
+ * @identifier: (out): the expected identifier.
  *
  * Returns: %TRUE if the next token is an identifier and if its
  * value matches @identifier.
@@ -400,7 +400,7 @@ gimp_scanner_parse_identifier (GimpScanner *scanner,
  * gimp_scanner_parse_string:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Return location for the parsed string
+ * @dest: (out): Return location for the parsed string
  *
  * Returns: %TRUE on success
  *
@@ -437,7 +437,7 @@ gimp_scanner_parse_string (GimpScanner  *scanner,
  * gimp_scanner_parse_string_no_validate:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Return location for the parsed string
+ * @dest: (out): Return location for the parsed string
  *
  * Returns: %TRUE on success
  *
@@ -465,7 +465,7 @@ gimp_scanner_parse_string_no_validate (GimpScanner  *scanner,
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
  * @length: Length of the data to parse
- * @dest: Return location for the parsed data
+ * @dest: (out): Return location for the parsed data
  *
  * Returns: %TRUE on success
  *
@@ -493,7 +493,7 @@ gimp_scanner_parse_data (GimpScanner  *scanner,
  * gimp_scanner_parse_int:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Return location for the parsed integer
+ * @dest: (out): Return location for the parsed integer
  *
  * Returns: %TRUE on success
  *
@@ -528,7 +528,7 @@ gimp_scanner_parse_int (GimpScanner *scanner,
  * gimp_scanner_parse_int64:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Return location for the parsed integer
+ * @dest: (out): Return location for the parsed integer
  *
  * Returns: %TRUE on success
  *
@@ -563,7 +563,7 @@ gimp_scanner_parse_int64 (GimpScanner *scanner,
  * gimp_scanner_parse_float:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Return location for the parsed float
+ * @dest: (out): Return location for the parsed float
  *
  * Returns: %TRUE on success
  *
@@ -621,7 +621,7 @@ gimp_scanner_parse_float (GimpScanner *scanner,
  * gimp_scanner_parse_boolean:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Return location for the parsed boolean
+ * @dest: (out): Return location for the parsed boolean
  *
  * Returns: %TRUE on success
  *
