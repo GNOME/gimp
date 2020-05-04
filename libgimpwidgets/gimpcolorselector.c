@@ -90,10 +90,10 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorSelectorClass, color_changed),
                   NULL, NULL,
-                  _gimp_widgets_marshal_VOID__POINTER_POINTER,
+                  _gimp_widgets_marshal_VOID__BOXED_BOXED,
                   G_TYPE_NONE, 2,
-                  G_TYPE_POINTER,
-                  G_TYPE_POINTER);
+                  GIMP_TYPE_RGB,
+                  GIMP_TYPE_RGB);
 
   selector_signals[CHANNEL_CHANGED] =
     g_signal_new ("channel-changed",
