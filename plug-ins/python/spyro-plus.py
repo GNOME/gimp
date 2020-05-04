@@ -32,17 +32,46 @@ import gettext
 _ = gettext.gettext
 def N_(message): return message
 
-from math import pi, sin, cos, atan, atan2, fmod, radians
+from math import pi, sin, cos, atan, atan2, fmod, radians, sqrt
 import gettext
 import math
 import time
 
 
+def pdb_call(proc_name, *args):
+    if len(args) % 2 == 1:
+        raise ValueError("The number of arguments after proc_name needs to be even. ")
+
+    num_args = len(args) // 2
+    proc_args = Gimp.ValueArray.new(num_args)
+    for i in range(num_args):
+        proc_args.append(GObject.Value(args[2 * i], args[2 * i + 1]))
+
+    return Gimp.get_pdb().run_procedure(proc_name, proc_args)
+
+
+def result_success():
+    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+
+
+PROC_NAME = "plug-in-spyrogimp"
+
 two_pi, half_pi = 2 * pi, pi / 2
 layer_name = _("Spyro Layer")
+path_name = _("Spyro Path")
 
 # "Enums"
-GEAR_NOTATION, TOY_KIT_NOTATION = range(2)       # Pattern notations
+GEAR_NOTATION, TOY_KIT_NOTATION, VISUAL_NOTATION = range(3)       # Pattern notations
+
+RESPONSE_REDRAW, RESPONSE_RESET_PARAMS = range(2)   # Button responses in dialog.
+
+# Save options of the dialog
+SAVE_AS_NEW_LAYER, SAVE_BY_REDRAW, SAVE_AS_PATH = range(3)
+save_options = [
+    _("As New Layer"),
+    _("Redraw on last active layer"),
+    _("As Path")
+]
 
 # Mapping of pattern notation to the corresponding tab in the pattern notation notebook.
 pattern_notation_page = {}
@@ -60,6 +89,10 @@ wheel = [
 wheel_teeth = [wh[0] for wh in wheel]
 
 
+def lcm(a, b):
+    """ Least common multiplier """
+    return a * b // math.gcd(a, b)
+
 ### Shapes
 
 
@@ -68,7 +101,7 @@ class CanRotateShape:
 
 
 class Shape:
-    def configure(self, img, pp, cp, drawing_no):
+    def configure(self, img, pp, cp):
         self.image, self.pp, self.cp = img, pp, cp
 
     def can_equal_w_h(self):
@@ -102,8 +135,8 @@ class CircleShape(Shape):
 
 class SidedShape(CanRotateShape, Shape):
 
-    def configure(self, img, pp, cp, drawing_no):
-        Shape.configure(self, img, pp, cp, drawing_no)
+    def configure(self, img, pp, cp):
+        Shape.configure(self, img, pp, cp)
         self.angle_of_each_side = two_pi / pp.sides
         self.half_angle = self.angle_of_each_side / 2.0
         self.cos_half_angle = cos(self.half_angle)
@@ -254,8 +287,8 @@ class AbstractShapeFromParts(Shape):
 class RackShape(CanRotateShape, AbstractShapeFromParts):
     name = _("Rack")
 
-    def configure(self, img, pp, cp, drawing_no):
-        Shape.configure(self, img, pp, cp, drawing_no)
+    def configure(self, img, pp, cp):
+        Shape.configure(self, img, pp, cp)
 
         round_teeth = 12
         side_teeth = (cp.fixed_gear_teeth - 2 * round_teeth) / 2
@@ -298,8 +331,8 @@ class RackShape(CanRotateShape, AbstractShapeFromParts):
 class FrameShape(AbstractShapeFromParts):
     name = _("Frame")
 
-    def configure(self, img, pp, cp, drawing_no):
-        Shape.configure(self, img, pp, cp, drawing_no)
+    def configure(self, img, pp, cp):
+        Shape.configure(self, img, pp, cp)
 
         x1, x2 = cp.x1 + cp.moving_gear_radius, cp.x2 - cp.moving_gear_radius
         y1, y2 = cp.y1 + cp.moving_gear_radius, cp.y2 - cp.moving_gear_radius
@@ -312,6 +345,26 @@ class FrameShape(AbstractShapeFromParts):
         self.parts.append(StraightPart(x_diff, 1, x1, cp.y1, x2, cp.y1))
         self.parts.append(StraightPart(y_diff, 1, cp.x2, y1, cp.x2, y2))
         self.parts.finish()
+
+
+# Naive hash that gets only a limited amount of points from the selection.
+# We use this hash to detect whether the selection has changed or not.
+def naive_hash(img):
+    selection = img.get_selection()
+
+    # Get bounds of selection.
+    flag, non_empty, x1, y1, x2, y2 = selection.bounds(img)
+
+    # We want to compute a hash of the selection, but getting all the points in the selection
+    # will take too long. We will get at most 25 points in each axis, so at most 25**2 points.
+    step_x = 1 if (x2 - x1) <= 25 else (x2 - x1) // 25 + 1
+    step_y = 1 if (y2 - y1) <= 25 else (y2 - y1) // 25 + 1
+    hash = x1 * y1 + x2 * y2
+
+    for x in range(x1, x2, step_x):
+        for y in range(y1, y2, step_y):
+            hash += selection.get_pixel(x, y)[0] * x * y
+    return hash
 
 
 class SelectionToPath:
@@ -333,25 +386,27 @@ class SelectionToPath:
         else:
             selection_was_empty = False
 
-        pdb.plug_in_sel2path(self.image, self.image.active_layer)
+        result = pdb_call('plug-in-sel2path',
+                          Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE,
+                          Gimp.Image, self.image,
+                          Gimp.Drawable, self.image.get_active_layer()
+        )
 
-        self.path = self.image.vectors[0]
-
-        self.num_strokes, self.stroke_ids = self.path.get_strokes(self.path)
-        self.stroke_ids = list(self.stroke_ids)
+        self.path = self.image.get_vectors()[0]
+        self.stroke_ids = self.path.get_strokes()
 
         # A path may contain several strokes. If so lets throw away a stroke that
         # simply describes the borders of the image, if one exists.
-        if self.num_strokes > 1:
+        if len(self.stroke_ids) > 1:
             # Lets compute what a stroke of the image borders should look like.
             w, h = float(self.image.width()), float(self.image.height())
             frame_strokes = [0.0] * 6 + [0.0, h] * 3 + [w, h] * 3 + [w, 0.0] * 3
 
-            for stroke in range(self.num_strokes):
-                strokes = self.path.strokes[stroke].points[0]
-                if strokes == frame_strokes:
+            for stroke in range(len(self.stroke_ids)):
+                stroke_id = self.stroke_ids[stroke]
+                vectors_stroke_type, control_points, closed = self.path.stroke_get_points(stroke_id)
+                if control_points == frame_strokes:
                     del self.stroke_ids[stroke]
-                    self.num_strokes -= 1
                     break
 
         self.set_current_stroke(0)
@@ -361,8 +416,10 @@ class SelectionToPath:
             Gimp.Selection.none(self.image)
 
     def compute_selection_hash(self):
-        px = self.image.selection.get_pixel_rgn(0, 0, self.image.width(), self.image.height())
-        return px[0:self.image.width(), 0:self.image.height()].__hash__()
+        return naive_hash(self.image)
+        # In gimp 2 we used this:
+        #px = self.image.get_selection().  get_pixel_rgn(0, 0, self.image.width(), self.image.height())
+        #return px[0:self.image.width(), 0:self.image.height()].__hash__()
 
     def regenerate_path_if_selection_changed(self):
         current_selection_hash = self.compute_selection_hash()
@@ -371,7 +428,7 @@ class SelectionToPath:
             self.convert_selection_to_path()
 
     def get_num_strokes(self):
-        return self.num_strokes
+        return len(self.stroke_ids)
 
     def set_current_stroke(self, stroke_id=0):
         # Compute path length.
@@ -396,11 +453,11 @@ class SelectionShape(Shape):
         else:
             self.path.regenerate_path_if_selection_changed()
 
-    def configure(self, img, pp, cp, drawing_no):
+    def configure(self, img, pp, cp):
         """ Set bounds of pattern """
-        Shape.configure(self, img, pp, cp, drawing_no)
-        self.drawing_no = drawing_no
-        self.path.set_current_stroke(drawing_no)
+        Shape.configure(self, img, pp, cp)
+        self.drawing_no = cp.current_drawing
+        self.path.set_current_stroke(self.drawing_no)
 
     def get_num_drawings(self):
         return self.path.get_num_strokes()
@@ -417,7 +474,7 @@ class SelectionShape(Shape):
         cp = self.cp
         if dist is None:
             dist = cp.moving_gear_radius
-        x, y, slope, valid = self.path.point_at_angle(oangle)
+        another_bool, x, y, slope, valid = self.path.point_at_angle(oangle)
         slope_angle = atan(slope)
         # We want to find an angle perpendicular to the slope, but in which direction?
         # Lets try both sides and see which of them is inside the selection.
@@ -579,6 +636,25 @@ class StrokePaintTool(AbstractStrokeTool):
         Gimp.context_set_paint_method(self.paint_method)
 
 
+class SaveToPathTool():
+    """ This tool cannot be chosen by the user from the tools menu.
+        We dont add this to the list of tools. """
+
+    def __init__(self, img):
+        self.path = Gimp.Vectors.new(img, path_name)
+        img.insert_vectors(self.path, None, 0)
+
+    def draw(self, layer, strokes, color=None):
+        # We need to multiply every point by 3, because we are creating a path,
+        #  where each point has two additional control points.
+        control_points = []
+        for i, k in zip(strokes[0::2], strokes[1::2]):
+            control_points += [i, k] * 3
+
+        self.path.stroke_new_from_points(Gimp.VectorsStrokeType.BEZIER,
+                                         control_points, False)
+
+
 tools = [
     PreviewTool(),
     StrokePaintTool(_("PaintBrush"), "gimp-paintbrush"),
@@ -615,6 +691,7 @@ class PatternParameters:
         # A value of 100 means the edge of the wheel.
         if not hasattr(self, 'hole_percent'):
             self.hole_percent = 100.0
+
         # Toy Kit parameters
         # Hole number in Toy Kit notation. Hole #1 is at the edge of the wheel, and the last hole is
         # near the center of the wheel, but not exactly at the center.
@@ -624,6 +701,16 @@ class PatternParameters:
             self.kit_fixed_gear_index = 1
         if not hasattr(self, 'kit_moving_gear_index'):
             self.kit_moving_gear_index = 1
+
+        # Visual notation parameters
+        if not hasattr(self, 'petals'):
+            self.petals = 5
+        if not hasattr(self, 'petal_skip'):
+            self.petal_skip = 2
+        if not hasattr(self, 'doughnut_hole'):
+            self.doughnut_hole = 50.0
+        if not hasattr(self, 'doughnut_width'):
+            self.doughnut_width = 50.0
 
         # Shape
         if not hasattr(self, 'shape_index'):
@@ -646,8 +733,8 @@ class PatternParameters:
         if not hasattr(self, 'long_gradient'):
             self.long_gradient = False
 
-        if not hasattr(self, 'keep_separate_layer'):
-            self.keep_separate_layer = True
+        if not hasattr(self, 'save_option'):
+            self.save_option = SAVE_AS_NEW_LAYER
 
     def kit_max_hole_number(self):
         return wheel[self.kit_moving_gear_index][1]
@@ -678,12 +765,11 @@ class ComputedParameters:
     The results of these computations are used to perform the drawing.
     Having all these computations in one place makes it convenient to pass
     around as a parameter.
-    """
-    def __init__(self, pp, x1, y1, x2, y2):
 
-        def lcm(a, b):
-            """ Least common multiplier """
-            return a * b // math.gcd(a, b)
+    If the pattern parameters should result in multiple patterns to be drawn, the
+    compute parameters also stores which one is currently being drawn.
+    """
+    def __init__(self, pp, img):
 
         def compute_gradients():
             self.use_gradient = self.pp.long_gradient and tools[self.pp.tool_index].can_color
@@ -732,30 +818,79 @@ class ComputedParameters:
             # Find the distance between the hole and the center of the inner circle.
             # To do this, we compute the size of the gears, by the number of teeth.
             # The circumference of the outer ring is 2 * pi * outer_R = #fixed_gear_teeth * tooth size.
-            self.outer_R = min(self.x_half_size, self.y_half_size)
-            size_of_tooth_in_pixels = two_pi * self.outer_R / self.fixed_gear_teeth
-            self.moving_gear_radius = size_of_tooth_in_pixels * self.moving_gear_teeth / two_pi
+            outer_R = min(self.x_half_size, self.y_half_size)
+            if self.pp.pattern_notation == VISUAL_NOTATION:
+                doughnut_width = self.pp.doughnut_width
+                if doughnut_width + self.pp.doughnut_hole > 100:
+                    doughnut_width = 100.0 - self.pp.doughnut_hole
+
+                # Let R, r be the radius of fixed and moving gear, and let hp be the hole percent.
+                # Let dwp, dhp be the doughnut width and hole in percents of R.
+                # The two sides of the following equation calculate how to reach the center of the moving
+                # gear from the center of the fixed gear:
+                # I)     R * (dhp/100 + dwp/100/2) = R - r
+                # The following equation expresses which r and hp would generate a doughnut of width dw.
+                # II)    R * dw/100 = 2 * r * hp/100
+                # We solve the two above equations to calculate hp and r:
+                self.hole_percent = doughnut_width / (2.0 * (1 - (self.pp.doughnut_hole + doughnut_width / 2.0) / 100.0))
+                self.moving_gear_radius = outer_R * doughnut_width / (2 * self.hole_percent)
+            else:
+                size_of_tooth_in_pixels = two_pi * outer_R / self.fixed_gear_teeth
+                self.moving_gear_radius = size_of_tooth_in_pixels * self.moving_gear_teeth / two_pi
+
             self.hole_dist_from_center = self.hole_percent / 100.0 * self.moving_gear_radius
 
         self.pp = pp
 
+        # Check if the shape is made of multiple shapes, as in using Selection as fixed gear.
+        if (
+            isinstance(shapes[self.pp.shape_index], SelectionShape) and
+            curve_types[self.pp.curve_type].supports_shapes()
+        ):
+            shapes[self.pp.shape_index].process_selection(img)
+            Gimp.displays_flush()
+            self.num_drawings = shapes[self.pp.shape_index].get_num_drawings()
+        else:
+            self.num_drawings = 1
+        self.current_drawing = 0
+
+        # Get bounds. We don't care weather a selection exists or not.
+        success, exists, x1, y1, x2, y2 = Gimp.Selection.bounds(img)
+
         # Combine different ways to specify patterns, into a unified set of computed parameters.
+        self.num_notation_drawings = 1
+        self.current_notation_drawing = 0
         if self.pp.pattern_notation == GEAR_NOTATION:
             self.fixed_gear_teeth = int(round(pp.outer_teeth))
             self.moving_gear_teeth = int(round(pp.inner_teeth))
+            self.petals = self.num_petals()
             self.hole_percent = pp.hole_percent
         elif self.pp.pattern_notation == TOY_KIT_NOTATION:
             self.fixed_gear_teeth = ring_teeth[pp.kit_fixed_gear_index]
             self.moving_gear_teeth = wheel[pp.kit_moving_gear_index][0]
+            self.petals = self.num_petals()
             # We want to map hole #1 to 100% and hole of max_hole_number to 2.5%
             # We don't want 0% because that would be the exact center of the moving gear,
             # and that would create a boring pattern.
             max_hole_number = wheel[pp.kit_moving_gear_index][1]
             self.hole_percent = (max_hole_number - pp.hole_number) / float(max_hole_number - 1) * 97.5 + 2.5
+        elif self.pp.pattern_notation == VISUAL_NOTATION:
+            self.petals = pp.petals
+            self.fixed_gear_teeth = pp.petals
+            self.moving_gear_teeth = pp.petals - pp.petal_skip
+            if self.moving_gear_teeth < 20:
+                self.fixed_gear_teeth *= 10
+                self.moving_gear_teeth *= 10
+            self.hole_percent = 100.0
+            self.num_notation_drawings = math.gcd(pp.petals, pp.petal_skip)
+            self.notation_drawings_rotation = two_pi / pp.petals
 
         # Rotations
         self.shape_rotation_radians = self.radians_from_degrees(pp.shape_rotation)
-        self.pattern_rotation_radians = self.radians_from_degrees(pp.pattern_rotation)
+        self.pattern_rotation_start_radians = self.radians_from_degrees(pp.pattern_rotation)
+        self.pattern_rotation_radians = self.pattern_rotation_start_radians
+        # Additional fixed pattern rotation for lissajous.
+        self.lissajous_rotation = two_pi / self.petals / 4.0
 
         # Compute the total number of teeth we have to go over.
         # Another way to view it is the total of lines we are going to draw.
@@ -785,6 +920,10 @@ class ComputedParameters:
 
         compute_sizes()
 
+    def num_petals(self):
+        """ The number of 'petals' (or points) that will be produced by a spirograph drawing. """
+        return lcm(self.fixed_gear_teeth, self.moving_gear_teeth) / self.moving_gear_teeth
+
     def radians_from_degrees(self, degrees):
         positive_degrees = degrees if degrees >= 0 else degrees + 360
         return radians(positive_degrees)
@@ -798,6 +937,22 @@ class ComputedParameters:
         color.a = colors[3]
         return color
 
+    def next_drawing(self):
+        """ Multiple drawings can be drawn either when the selection is used as a fixed
+            gear, and/or the visual tab is used, which causes multiple drawings
+            to be drawn at different rotations. """
+        if self.current_notation_drawing < self.num_notation_drawings - 1:
+            self.current_notation_drawing += 1
+            self.pattern_rotation_radians = self.pattern_rotation_start_radians + (
+                    self.current_notation_drawing * self.notation_drawings_rotation)
+        else:
+            self.current_drawing += 1
+            self.current_notation_drawing = 0
+            self.pattern_rotation_radians = self.pattern_rotation_start_radians
+
+    def has_more_drawings(self):
+        return (self.current_notation_drawing < self.num_notation_drawings - 1 or
+                self.current_drawing < self.num_drawings - 1)
 
 ### Curve types
 
@@ -807,12 +962,13 @@ class CurveType:
     def supports_shapes(self):
         return True
 
+
 class RouletteCurveType(CurveType):
 
     def get_strokes(self, p, cp):
         strokes = []
         for curr_tooth in range(cp.num_points):
-            iangle = curr_tooth * cp.iangle_factor
+            iangle = fmod(curr_tooth * cp.iangle_factor + cp.pattern_rotation_radians, two_pi)
             oangle = fmod(curr_tooth * cp.oangle_factor + cp.pattern_rotation_radians, two_pi)
 
             x, y = shapes[p.shape_index].get_center_of_moving_gear(oangle)
@@ -866,7 +1022,10 @@ class LissaCurveType:
         strokes = []
         for curr_tooth in range(cp.num_points):
             iangle = curr_tooth * cp.iangle_factor
-            oangle = fmod(curr_tooth * cp.oangle_factor + cp.pattern_rotation_radians, two_pi)
+            # Adding the cp.lissajous_rotation rotation makes the pattern have the same number of curves
+            # as the other curve types. Without it, many lissajous patterns would redraw the same lines twice,
+            # and thus look less dense than the other curves.
+            oangle = fmod(curr_tooth * cp.oangle_factor + cp.pattern_rotation_radians + cp.lissajous_rotation, two_pi)
 
             strokes.append(cp.x_center + cp.x_half_size * cos(oangle))
             strokes.append(cp.y_center + cp.y_half_size * cos(iangle))
@@ -887,12 +1046,10 @@ class DrawingEngine:
     def __init__(self, img, p):
         self.img, self.p = img, p
         self.cp = None
-        self.num_drawings = 0
 
         # For incremental drawing
         self.strokes = []
         self.start = 0
-        self.current_drawing = 0
         self.chunk_size_lines = 600
         self.chunk_no = 0
         # We are aiming for the drawing time of a chunk to be no longer than max_time.
@@ -902,20 +1059,7 @@ class DrawingEngine:
 
     def pre_draw(self):
         """ Needs to be called before starting to draw a pattern. """
-
-        self.current_drawing = 0
-
-        if isinstance(shapes[self.p.shape_index], SelectionShape) and curve_types[self.p.curve_type].supports_shapes():
-            shapes[self.p.shape_index].process_selection(self.img)
-            Gimp.displays_flush()
-            self.num_drawings = shapes[self.p.shape_index].get_num_drawings()
-        else:
-            self.num_drawings = 1
-
-        # Get bounds. We don't care weather a selection exists or not.
-        success, exists, x1, y1, x2, y2 = Gimp.Selection.bounds(self.img)
-
-        self.cp = ComputedParameters(self.p, x1, y1, x2, y2)
+        self.cp = ComputedParameters(self.p, self.img)
 
     def draw_full(self, layer):
         """ Non incremental drawing. """
@@ -923,8 +1067,7 @@ class DrawingEngine:
         self.pre_draw()
         self.img.undo_group_start()
 
-        for drawing_no in range(self.num_drawings):
-            self.current_drawing = drawing_no
+        while True:
             self.set_strokes()
 
             if self.cp.use_gradient:
@@ -933,21 +1076,28 @@ class DrawingEngine:
             else:
                 tools[self.p.tool_index].draw(layer, self.strokes)
 
+            if self.cp.has_more_drawings():
+                self.cp.next_drawing()
+            else:
+                break
+
         self.img.undo_group_end()
 
         Gimp.displays_flush()
 
     # Methods for incremental drawing.
 
-    def draw_next_chunk(self, layer, fetch_next_drawing=True):
+    def draw_next_chunk(self, layer, fetch_next_drawing=True, tool=None):
         stroke_chunk, color = self.next_chunk(fetch_next_drawing)
-        tools[self.p.tool_index].draw(layer, stroke_chunk, color)
+        if not tool:
+            tool = tools[self.p.tool_index]
+        tool.draw(layer, stroke_chunk, color)
         return len(stroke_chunk)
 
     def set_strokes(self):
         """ Compute the strokes of the current pattern. The heart of the plugin. """
 
-        shapes[self.p.shape_index].configure(self.img, self.p, self.cp, drawing_no=self.current_drawing)
+        shapes[self.p.shape_index].configure(self.img, self.p, self.cp)
 
         self.strokes = curve_types[self.p.curve_type].get_strokes(self.p, self.cp)
 
@@ -980,8 +1130,8 @@ class DrawingEngine:
 
         # If self.strokes has ended, lets fetch strokes for the next drawing.
         if fetch_next_drawing and not self.has_more_strokes():
-            self.current_drawing += 1
-            if self.current_drawing < self.num_drawings:
+            if self.cp.has_more_drawings():
+                self.cp.next_drawing()
                 self.set_strokes()
 
         return result, color
@@ -1006,12 +1156,187 @@ class DrawingEngine:
             self.chunk_size_lines = min(1000, self.chunk_size_lines)
 
 
-class SpyroWindow(Gtk.Window):
+# Constants for DoughnutWidget
 
-    def do_key_press_event(self, event):
-        # Quit the window on Escape key.
-        if event.keyval == Gdk.KEY_Escape:
-            self.cancel_window(self)
+# Enum - When the mouse is pressed, which target value is being changed.
+TARGET_NONE, TARGET_HOLE, TARGET_WIDTH = range(3)
+
+CIRCLE_CENTER_X = 4
+RIGHT_MARGIN = 2
+TOTAL_MARGIN = CIRCLE_CENTER_X + RIGHT_MARGIN
+
+# A widget for displaying and setting the pattern of a spirograph, using a "doughnut" as
+# a visual metaphore.  This widget replaces two scale widgets.
+class DoughnutWidget(Gtk.DrawingArea):
+    __gtype_name__ = 'DoughnutWidget'
+
+    def __init__(self, *args, **kwds):
+        super().__init__(*args, **kwds)
+        self.set_size_request(80, 40)
+        self.set_margin_start(2)
+        self.set_margin_end(2)
+        self.set_margin_top(2)
+        self.set_margin_bottom(2)
+
+        self.add_events(
+            Gdk.EventMask.BUTTON1_MOTION_MASK |
+            Gdk.EventMask.BUTTON_PRESS_MASK |
+            Gdk.EventMask.BUTTON_RELEASE_MASK |
+            Gdk.EventMask.POINTER_MOTION_MASK
+        )
+
+        self.resize_cursor = Gdk.Cursor.new_for_display(self.get_display(),
+                                 Gdk.CursorType.SB_H_DOUBLE_ARROW)
+
+        self.button_pressed = False
+        self.target = TARGET_NONE
+
+        self.hole_radius = 30
+        self.doughnut_width = 30
+
+    def set_hole_radius(self, hole_radius):
+        self.hole_radius = hole_radius
+        self.queue_draw()
+
+    def get_hole_radius(self):
+        return self.hole_radius
+
+    def set_width(self, width):
+        self.doughnut_width = width
+        self.queue_draw()
+
+    def get_width(self):
+        return self.doughnut_width
+
+    def compute_doughnut(self):
+        """ Compute the location of the doughnut circles.
+            Returns (circle center x, circle center y, radius of inner circle, radius of outer circle) """
+        allocation = self.get_allocation()
+        alloc_width = allocation.width - TOTAL_MARGIN
+        return (
+            CIRCLE_CENTER_X, allocation.height/2,
+            alloc_width * self.hole_radius/ 100.0,
+            alloc_width * min(self.hole_radius + self.doughnut_width, 100.0)/ 100.0
+        )
+
+    def set_cursor_h_resize(self, flag):
+        """ Set the mouse to be a double arrow, if flag is true.
+            Otherwise, use the cursor of the parent window. """
+        gdk_window = self.get_window()
+        gdk_window.set_cursor(self.resize_cursor if flag else None)
+
+    def get_target(self, x, y):
+        # Find out if x, y is over one of the circle edges.
+
+        center_x, center_y, hole_radius, outer_radius = self.compute_doughnut()
+
+        # Compute distance from circle center to point
+        dist = math.sqrt((center_x - x) ** 2 + (center_y - y) ** 2)
+
+        if abs(dist - hole_radius) <= 3:
+            return TARGET_HOLE
+        if abs(dist - outer_radius) <= 3:
+            return TARGET_WIDTH
+
+        return TARGET_NONE
+
+    def do_draw(self, cr):
+
+        allocation = self.get_allocation()
+        center_x, center_y, hole_radius, outer_radius = self.compute_doughnut()
+
+        # Paint background
+        Gtk.render_background(self.get_style_context(), cr,
+                0, 0, allocation.width, allocation.height)
+
+        fg_color = self.get_style_context().get_color(Gtk.StateFlags.NORMAL)
+
+        # Draw doughnut interior
+        arc = math.pi*3/2.0
+        cr.set_source_rgba(fg_color.red, fg_color.green, fg_color.blue, fg_color.alpha/2);
+        cr.arc(center_x, center_y, hole_radius, -arc, arc)
+        cr.arc_negative(center_x, center_y, outer_radius, arc, -arc)
+        cr.close_path()
+        cr.fill()
+
+        # Draw doughnut border.
+        cr.set_source_rgba(*list(fg_color));
+        cr.set_line_width(3)
+        cr.arc_negative(center_x, center_y, outer_radius, arc, -arc)
+        cr.stroke()
+        if hole_radius < 1.0:
+            # If the radius is too small, nothing will be drawn.
+            # So draw a small cross marker instead.
+            cr.set_line_width(2)
+            cr.move_to(center_x-4, center_y)
+            cr.line_to(center_x+4, center_y)
+            cr.move_to(center_x, center_y-4)
+            cr.line_to(center_x, center_y+4)
+        else:
+            cr.arc(center_x, center_y, hole_radius, -arc, arc)
+        cr.stroke()
+
+    def compute_new_radius(self, x):
+        """ This method is called during mouse dragging of the widget.
+            Compute the new radius based on
+            the current x location of the mouse pointer. """
+        allocation = self.get_allocation()
+
+        # How much does a single pixel difference in x, change the radius?
+        # Note that: allocation.width - TOTAL_MARGIN = 100 radius units,
+        radius_per_pixel = 100.0 / (allocation.width - TOTAL_MARGIN)
+        new_radius = self.start_radius + (x - self.start_x) * radius_per_pixel
+
+        if self.target == TARGET_HOLE:
+            self.hole_radius = max(min(new_radius, 99.0), 0.0)
+        else:
+            self.doughnut_width = max(min(new_radius, 100.0), 1.0)
+
+        self.queue_draw()
+
+    def do_button_press_event(self, event):
+        self.button_pressed = True
+
+        # If we clicked on one of the doughnut borders, remember which
+        # border we clicked on, and setup variable to start dragging it.
+        target = self.get_target(event.x, event.y)
+        if target == TARGET_HOLE or target == TARGET_WIDTH:
+            self.target = target
+            self.start_x = event.x
+            self.start_radius = (
+                self.hole_radius if target == TARGET_HOLE else
+                self.doughnut_width
+            )
+
+    def do_button_release_event(self, event):
+        # If one the doughnut borders was being dragged, recompute doughnut size.
+        if self.target != TARGET_NONE:
+            self.compute_new_radius(event.x)
+            # Clip the width, if it is too large to fit.
+            if self.hole_radius + self.doughnut_width > 100:
+                self.doughnut_width = 100 - self.hole_radius
+            self.emit("values_changed", self.hole_radius, self.doughnut_width)
+
+        self.button_pressed = False
+        self.target = TARGET_NONE
+
+    def do_motion_notify_event(self, event):
+        if self.button_pressed:
+            # We are dragging one of the doughnut borders; recompute its size.
+            if self.target != TARGET_NONE:
+                self.compute_new_radius(event.x)
+        else:
+            # Set cursor according to whether we are over one of the doughnut borders.
+            target = self.get_target(event.x, event.y)
+            self.set_cursor_h_resize(target != TARGET_NONE)
+
+# Create signal that returns change parameters.
+GObject.type_register(DoughnutWidget)
+GObject.signal_new("values_changed", DoughnutWidget, GObject.SignalFlags.RUN_LAST,
+                   GObject.TYPE_NONE, (GObject.TYPE_INT, GObject.TYPE_INT))
+
+
+class SpyroWindow():
 
     class MyScale():
         """ Combintation of scale and spin that control the same adjuster. """
@@ -1047,17 +1372,28 @@ class SpyroWindow(Gtk.Window):
             table.set_row_spacing(10)
             return table
 
-        def label_in_table(label_text, table, row, tooltip_text=None):
+        def label_in_table(label_text, table, row, tooltip_text=None, col=0):
             """ Create a label and set it in first col of table. """
             label = Gtk.Label(label=label_text)
             label.set_xalign(0.0)
             label.set_yalign(0.5)
             if tooltip_text:
                 label.set_tooltip_text(tooltip_text)
-            table.attach(label, 0, row, 1, 1)
+            table.attach(label, col, row, 1, 1)
             label.show()
 
-        def hscale_in_table(adj, table, row, callback, digits=0):
+        def spin_in_table(adj, table, row, callback, digits=0, col=0):
+            spin = Gtk.SpinButton.new(adj, climb_rate=0.5, digits=digits)
+            spin.set_numeric(True)
+            spin.set_snap_to_ticks(True)
+            spin.set_max_length(5)
+            spin.set_width_chars(5)
+            table.attach(spin, col, row, 1, 1)
+            spin.show()
+            adj.connect("value_changed", callback)
+            return spin
+
+        def hscale_in_table(adj, table, row, callback, digits=0, col=1, cols=1):
             """ Create an hscale and a spinner using the same Adjustment, and set it in table. """
             scale = Gtk.Scale.new(Gtk.Orientation.HORIZONTAL, adj)
             scale.set_size_request(150, -1)
@@ -1068,21 +1404,15 @@ class SpyroWindow(Gtk.Window):
             #scale.set_update_policy(Gtk.UPDATE_DISCONTINUOUS)
             scale.set_hexpand(True)
             scale.set_halign(Gtk.Align.FILL)
-            table.attach(scale, 1, row, 1, 1)
+            table.attach(scale, col, row, cols, 1)
             scale.show()
 
             spin = Gtk.SpinButton.new(adj, climb_rate=0.5, digits=digits)
             spin.set_numeric(True)
-            # TODO:
-            # For some reason, spinbutton does not allow editing the text directly.
-            # None of the following solve this issue:
-            # spin.set_editable(True)
-            # spin.set_overwrite_mode(True)
-            # spin.set_update_policy(Gtk.SpinButtonUpdatePolicy.ALWAYS)
             spin.set_snap_to_ticks(True)
             spin.set_max_length(5)
             spin.set_width_chars(5)
-            table.attach(spin, 2, row, 1, 1)
+            table.attach(spin, col + cols, row, 1, 1)
             spin.show()
 
             adj.connect("value_changed", callback)
@@ -1163,7 +1493,7 @@ class SpyroWindow(Gtk.Window):
             alignment.show()
 
             self.pattern_notebook = Gtk.Notebook()
-            self.pattern_notebook.set_border_width(0)
+            self.pattern_notebook.set_border_width(10)
             self.pattern_notebook.connect('switch-page', self.pattern_notation_tab_changed)
 
             # "Gear" pattern notation.
@@ -1222,7 +1552,61 @@ class SpyroWindow(Gtk.Window):
             self.kit_hole_adj = Gtk.Adjustment.new(self.p.hole_number, 1, self.p.kit_max_hole_number(), 1, 10, 0)
             self.kit_hole_myscale = hscale_in_table(self.kit_hole_adj, kit_table, row, self.kit_hole_changed)
 
-            # Add tables as childs of the pattern notebook
+            # "Visual" pattern notation.
+
+            visual_table = create_table(5)
+
+            row = 0
+            label_in_table(_("Flower Petals"), visual_table, row,
+                           _("The number of petals in the pattern."))
+            self.petals_adj = Gtk.Adjustment.new(self.p.petals, 2, 100, 1, 5, 0)
+            hscale_in_table(self.petals_adj, visual_table, row, self.petals_changed, cols=3)
+
+            row += 1
+            label_in_table(_("Petal Skip"), visual_table, row,
+                           _( "The number of petals to advance for drawing the next petal."))
+            self.petal_skip_adj = Gtk.Adjustment.new(self.p.petal_skip, 1, 50, 1, 5, 0)
+            hscale_in_table(self.petal_skip_adj, visual_table, row, self.petal_skip_changed, cols=3)
+
+            row += 1
+            label_in_table(_("Hole Radius(%)"), visual_table, row,
+                            _("The radius of the hole in the center of the pattern "
+                              "where nothing will be drawn. Given as a percentage of the "
+                              "size of the pattern. A value of 0 will produce no hole. "
+                              "A Value of 99 will produce a thin line on the edge."))
+            self.doughnut_hole_adj = Gtk.Adjustment.new(self.p.doughnut_hole, 0.0, 99.0, 0.1, 5.0, 0.0)
+            self.doughnut_hole_myscale = spin_in_table(self.doughnut_hole_adj, visual_table,
+                                                       row, self.doughnut_hole_changed, 1, 1)
+
+            self.doughnut = DoughnutWidget()
+            frame = Gtk.Frame()
+            frame.add(self.doughnut)
+            visual_table.attach(frame, 2, row, 1, 1)
+            self.doughnut.set_hexpand(True)
+            self.doughnut.set_halign(Gtk.Align.FILL)
+            frame.set_hexpand(True)
+            frame.set_halign(Gtk.Align.FILL)
+
+            self.doughnut.connect('values_changed', self.doughnut_changed)
+            frame.show()
+            self.doughnut.show()
+
+            label_in_table(_("Width(%)"), visual_table, row,
+                           _("The width of the pattern as a percentage of the "
+                             "size of the pattern. A Value of 1 will just draw a thin pattern. "
+                              "A Value of 100 will fill the entire fixed gear."),
+                            3)
+            self.doughnut_width_adj = Gtk.Adjustment.new(self.p.doughnut_width, 1.0, 100.0, 0.1, 5.0, 0.0)
+            self.doughnut_width_myscale = spin_in_table(self.doughnut_width_adj, visual_table,
+                                                        row, self.doughnut_width_changed, 1, 4)
+
+            # Add tables to the pattern notebook
+
+            pattern_notation_page[VISUAL_NOTATION] = self.pattern_notebook.append_page(visual_table)
+            self.pattern_notebook.set_tab_label_text(visual_table, _("Visual"))
+            self.pattern_notebook.child_set_property(visual_table, 'tab-expand', False)
+            self.pattern_notebook.child_set_property(visual_table, 'tab-fill', False)
+            visual_table.show()
 
             pattern_notation_page[TOY_KIT_NOTATION] = self.pattern_notebook.append_page(kit_table)
             self.pattern_notebook.set_tab_label_text(kit_table, _("Toy Kit"))
@@ -1318,53 +1702,49 @@ class SpyroWindow(Gtk.Window):
             self.equal_w_h_checkbox.show()
             self.equal_w_h_checkbox.connect("toggled", self.equal_w_h_checkbox_changed)
 
-
             add_to_box(vbox, table)
             return vbox
 
-        def add_button_to_box(box, text, callback, tooltip_text=None):
-            btn = Gtk.Button(label=text)
-            if tooltip_text:
-                btn.set_tooltip_text(tooltip_text)
-            box.add(btn)
-            btn.show()
-            btn.connect("clicked", callback)
-            return btn
-
         def dialog_button_box():
-            hbox = Gtk.HBox(homogeneous=True, spacing=20)
 
-            add_button_to_box(hbox, _("Re_draw"), self.redraw,
-                              _("If you change the settings of a tool, change color, or change the selection, "
-                                "press this to preview how the pattern looks."))
-            add_button_to_box(hbox, _("_Reset"), self.reset_params)
-            add_button_to_box(hbox, _("_Cancel"), self.cancel_window)
-            self.ok_btn = add_button_to_box(hbox, _("_OK"), self.ok_window)
-
-            self.keep_separate_layer_checkbox = Gtk.CheckButton(label=_("Keep\nLayer"))
-            self.keep_separate_layer_checkbox.set_tooltip_text(
-                _("If checked, then once OK is pressed, the spyro layer is kept, and the plugin exits quickly. "
-                  "If unchecked, the spyro layer is deleted, and the pattern is redrawn on the layer that was "
-                  "active when the plugin was launched.")
+            self.dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
+            self.ok_btn = self.dialog.add_button("_OK", Gtk.ResponseType.OK)
+            btn = self.dialog.add_button(_("Re_draw"), RESPONSE_REDRAW)
+            btn.set_tooltip_text(
+                _("If you change the settings of a tool, change color, or change the selection, "
+                "press this to preview how the pattern looks.")
             )
-            hbox.add(self.keep_separate_layer_checkbox)
-            self.keep_separate_layer_checkbox.show()
-            self.keep_separate_layer_checkbox.connect("toggled", self.keep_separate_layer_checkbox_changed)
+            self.dialog.add_button(_("_Reset"), RESPONSE_RESET_PARAMS)
+
+            hbox = Gtk.HBox(homogeneous=True, spacing=20)
+            hbox.set_border_width(10)
+
+            table = create_table(5)
+
+            row = 0
+            label_in_table(_("Save"), table, row,
+                           _("Choose whether to save as new layer, redraw on last active layer, or save to path"))
+            self.save_option_combo = set_combo_in_table(save_options, table, row,
+                                                        self.save_option_changed)
+            self.save_option_combo.show()
+
+            hbox.add(table)
+            table.show()
 
             return hbox
 
         def create_ui():
 
-            # Create the dialog
-            Gtk.Window.__init__(self)
-            self.set_title(_("Spyrogimp"))
-            self.set_default_size(350, -1)
-            self.set_border_width(10)
-            # self.set_keep_above(True) # keep the window on top
+            use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
+            self.dialog = Gimp.Dialog(use_header_bar=use_header_bar,
+                                      title=_("Spyrogimp"))
+            #self.set_default_size(350, -1)
+            #self.set_border_width(10)
 
-            # Vertical box in which we will add all the UI elements.
-            vbox = Gtk.VBox(spacing=10, homogeneous=False)
-            self.add(vbox)
+            vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                           homogeneous=False, spacing=10)
+            self.dialog.get_content_area().add(vbox)
+            vbox.show()
 
             box = Gimp.HintBox.new(_("Draw spyrographs using current tool settings and selection."))
             vbox.pack_start(box, False, False, 0)
@@ -1391,17 +1771,16 @@ class SpyroWindow(Gtk.Window):
             vbox.add(self.main_notebook)
             self.main_notebook.show()
 
-            add_horizontal_separator(vbox)
-
-            self.progress_bar = Gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress error message.
-            self.progress_bar.set_size_request(-1, 30)
-            vbox.add(self.progress_bar)
-            self.progress_bar.show()
+            # add_horizontal_separator(vbox)
 
             add_to_box(vbox, dialog_button_box())
 
-            vbox.show()
-            self.show()
+            self.progress_bar = Gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress error message.
+            self.progress_bar.set_show_text(True)
+            vbox.add(self.progress_bar)
+            self.progress_bar.show()
+
+            self.dialog.show()
 
         self.enable_incremental_drawing = False
 
@@ -1414,17 +1793,18 @@ class SpyroWindow(Gtk.Window):
         self.engine = DrawingEngine(img, self.p)
 
         # Make a new GIMP layer to draw on
-        self.spyro_layer = Gimp.Layer.new(img, layer_name, img.width(), img.height(), Gimp.ImageType.RGBA_IMAGE, 100, Gimp.LayerMode.NORMAL)
+        self.spyro_layer = Gimp.Layer.new(img, layer_name, img.width(), img.height(),
+                                          layer.type(), 100, Gimp.LayerMode.NORMAL)
         img.insert_layer(self.spyro_layer, None, 0)
-
         self.drawing_layer = self.spyro_layer
 
+        # Create the UI.
         Gimp.ui_init(sys.argv[0])
         create_ui()
-        self.update_view()
+        self.update_view()   # Update UI to reflect the parameter values.
 
-        # Obey the window manager quit signal
-        self.connect("destroy", self.cancel_window)
+        # Map button responses to callback this method
+        self.dialog.connect('response', self.handle_response)
 
         # Setup for Handling incremental/interactive drawing of pattern
         self.idle_task = None
@@ -1432,6 +1812,20 @@ class SpyroWindow(Gtk.Window):
 
         # Draw pattern of the current settings.
         self.start_new_incremental_drawing()
+
+    def handle_response(self, dialog, response_id):
+        if response_id in [Gtk.ResponseType.CANCEL, Gtk.ResponseType.CLOSE, Gtk.ResponseType.DELETE_EVENT]:
+            self.cancel_window(self.dialog)
+        elif response_id == Gtk.ResponseType.OK:
+            self.ok_window(self.dialog)
+        elif response_id == RESPONSE_REDRAW:
+            self.redraw()
+        elif response_id == RESPONSE_RESET_PARAMS:
+            self.reset_params()
+        else:
+            print("Unhandled response: " + str(response_id))
+        #GTK_RESPONSE_APPLY
+        #GTK_RESPONSE_HELP
 
     # Callbacks for closing the plugin
 
@@ -1442,7 +1836,7 @@ class SpyroWindow(Gtk.Window):
 
         shelf_parameters(self.p)
 
-        if self.p.keep_separate_layer:
+        if self.p.save_option == SAVE_AS_NEW_LAYER:
             if self.spyro_layer in self.img.list_layers():
                 self.img.active_layer = self.spyro_layer
 
@@ -1457,7 +1851,7 @@ class SpyroWindow(Gtk.Window):
                     yield False
 
                 task = quit_dialog_on_completion()
-                GObject.idle_add(task.__next__)
+                GLib.idle_add(task.__next__)
             else:
                 Gtk.main_quit()
         else:
@@ -1471,7 +1865,7 @@ class SpyroWindow(Gtk.Window):
 
             self.drawing_layer = self.active_layer
 
-            def draw_full():
+            def draw_full(tool):
                 self.progress_start()
                 yield True
 
@@ -1481,7 +1875,7 @@ class SpyroWindow(Gtk.Window):
 
                 while self.engine.has_more_strokes():
                     yield True
-                    self.draw_next_chunk(undo_group=False)
+                    self.draw_next_chunk(undo_group=False, tool=tool)
 
                 self.img.undo_group_end()
 
@@ -1490,8 +1884,10 @@ class SpyroWindow(Gtk.Window):
                 Gtk.main_quit()
                 yield False
 
-            task = draw_full()
-            GObject.idle_add(task.__next__)
+            tool = SaveToPathTool(self.img) if self.p.save_option == SAVE_AS_PATH else None
+
+            task = draw_full(tool)
+            GLib.idle_add(task.__next__)
 
     def cancel_window(self, widget, what=None):
 
@@ -1521,6 +1917,14 @@ class SpyroWindow(Gtk.Window):
         self.kit_hole_adj.set_value(self.p.hole_number)
         self.kit_inner_teeth_combo_side_effects()
 
+        self.petals_adj.set_value(self.p.petals)
+        self.petal_skip_adj.set_value(self.p.petal_skip)
+        self.doughnut_hole_adj.set_value(self.p.doughnut_hole)
+        self.doughnut.set_hole_radius(self.p.doughnut_hole)
+        self.doughnut_width_adj.set_value(self.p.doughnut_width)
+        self.doughnut.set_width(self.p.doughnut_width)
+        self.petals_changed_side_effects()
+
         self.shape_combo.set_active(self.p.shape_index)
         self.shape_combo_side_effects()
         self.sides_adj.set_value(self.p.sides)
@@ -1531,9 +1935,9 @@ class SpyroWindow(Gtk.Window):
         self.margin_adj.set_value(self.p.margin_pixels)
         self.tool_combo.set_active(self.p.tool_index)
         self.long_gradient_checkbox.set_active(self.p.long_gradient)
-        self.keep_separate_layer_checkbox.set_active(self.p.keep_separate_layer)
+        self.save_option_combo.set_active(self.p.save_option)
 
-    def reset_params(self, widget):
+    def reset_params(self, widget=None):
         self.engine.p = self.p = PatternParameters()
         self.update_view()
 
@@ -1549,6 +1953,9 @@ class SpyroWindow(Gtk.Window):
 
             self.hole_percent_myscale.set_sensitive(True)
             self.kit_hole_myscale.set_sensitive(True)
+
+            self.doughnut_hole_myscale.set_sensitive(True)
+            self.doughnut_width_myscale.set_sensitive(True)
         else:
             # Lissajous curves do not have shapes, or holes for moving gear
             self.shape_combo.set_sensitive(False)
@@ -1559,6 +1966,9 @@ class SpyroWindow(Gtk.Window):
 
             self.hole_percent_myscale.set_sensitive(False)
             self.kit_hole_myscale.set_sensitive(False)
+
+            self.doughnut_hole_myscale.set_sensitive(False)
+            self.doughnut_width_myscale.set_sensitive(False)
 
     def curve_type_changed(self, val):
         self.p.curve_type = val.get_active()
@@ -1615,6 +2025,41 @@ class SpyroWindow(Gtk.Window):
         self.p.pattern_rotation = val.get_value()
         self.redraw()
 
+    # Callbacks: pattern changes using the Visual notation.
+
+    def petals_changed_side_effects(self):
+        max_petal_skip = int(self.p.petals / 2)
+        if self.p.petal_skip > max_petal_skip:
+            self.p.petal_skip = max_petal_skip
+            self.petal_skip_adj.set_value(max_petal_skip)
+        self.petal_skip_adj.set_upper(max_petal_skip)
+
+    def petals_changed(self, val):
+        self.p.petals = int(val.get_value())
+        self.petals_changed_side_effects()
+        self.redraw()
+
+    def petal_skip_changed(self, val):
+        self.p.petal_skip = int(val.get_value())
+        self.redraw()
+
+    def doughnut_hole_changed(self, val):
+        self.p.doughnut_hole = val.get_value()
+
+        self.doughnut.set_hole_radius(val.get_value())
+        self.redraw()
+
+    def doughnut_width_changed(self, val):
+        self.p.doughnut_width = val.get_value()
+        self.doughnut.set_width(val.get_value())
+        self.redraw()
+
+    def doughnut_changed(self, widget, hole, width):
+        self.doughnut_hole_adj.set_value(hole)
+        self.doughnut_width_adj.set_value(width)
+        # We don't need to redraw, because the callbacks of the doughnut hole and
+        # width spinners will be triggered by the above lines.
+
     # Callbacks: Fixed gear
 
     def shape_combo_side_effects(self):
@@ -1662,8 +2107,8 @@ class SpyroWindow(Gtk.Window):
         self.p.long_gradient = val.get_active()
         self.redraw()
 
-    def keep_separate_layer_checkbox_changed(self, val):
-        self.p.keep_separate_layer = self.keep_separate_layer_checkbox.get_active()
+    def save_option_changed(self, val):
+        self.p.save_option = self.save_option_combo.get_active()
 
     # Progress bar of plugin window.
 
@@ -1686,14 +2131,14 @@ class SpyroWindow(Gtk.Window):
 
     # Incremental drawing.
 
-    def draw_next_chunk(self, undo_group=True):
+    def draw_next_chunk(self, undo_group=True, tool=None):
         """ Incremental drawing """
 
         t = time.time()
 
         if undo_group:
             self.img.undo_group_start()
-        chunk_size = self.engine.draw_next_chunk(self.drawing_layer)
+        chunk_size = self.engine.draw_next_chunk(self.drawing_layer, tool=tool)
         if undo_group:
             self.img.undo_group_end()
 
@@ -1746,7 +2191,6 @@ class SpyroWindow(Gtk.Window):
 
 
 class SpyrogimpPlusPlugin(Gimp.PlugIn):
-    plugin_name = "plug-in-spyrogimp"
 
     ## Parameters ##
     __gproperties__ = {
@@ -1827,14 +2271,14 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
         self.set_translation_domain("gimp30-python",
                                     Gio.file_new_for_path(Gimp.locale_directory()))
 
-        return [ self.plugin_name ]
+        return [PROC_NAME]
 
     def do_create_procedure(self, name):
-        if name == self.plugin_name:
+        if name == PROC_NAME:
             procedure = Gimp.ImageProcedure.new(self, name,
                                                 Gimp.PDBProcType.PLUGIN,
                                                 self.plug_in_spyrogimp, None)
-            procedure.set_image_types("*");
+            procedure.set_image_types("*")
             procedure.set_documentation (N_("Draw spyrographs using current tool settings and selection."),
                                          "Uses current tool settings to draw Spyrograph patterns. "
                                          "The size and location of the pattern is based on the current selection.",
