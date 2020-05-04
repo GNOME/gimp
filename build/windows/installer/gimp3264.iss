@@ -1524,7 +1524,8 @@ DebugMsg('RemoveDebugFilesFromDir', pDir);
 	end;
 end;
 
-//remove .debug files from previous installs - there's no built-in way in Inno to recursivly delete files with wildcard+extension
+//remove .debug files from previous installs
+//there's no built-in way in Inno to recursively delete files with wildcard+extension
 procedure RemoveDebugFiles();
 var Directories: TArrayOfString;
 	Index: Integer;

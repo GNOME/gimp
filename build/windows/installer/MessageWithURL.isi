@@ -378,7 +378,8 @@ begin
 end;
 
 
-//find out if URL label has focus, draw focus rectange around it if it is, and return index of focused label
+//find out if URL label has focus 
+//draw focus rectangle around it if so and return index of focused label
 function Message_FocusLabel(): Integer;
 var	i: Integer;
 	FocusRect: TRect;

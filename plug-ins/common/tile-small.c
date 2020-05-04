@@ -29,7 +29,7 @@
  */
 
 /* Change log:-
- * 0.2  Added new functions to allow "editing" of the tile patten.
+ * 0.2  Added new functions to allow "editing" of the tile pattern.
  *
  * 0.1 First version released.
  */
