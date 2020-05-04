@@ -35,7 +35,7 @@ G_BEGIN_DECLS
  * GimpQueryStringCallback:
  * @query_box: The query box.
  * @string:    The entered string.
- * @data:      The user data.
+ * @data: (closure): user data.
  *
  * Note that you must not g_free() the passed string.
  **/
@@ -47,7 +47,7 @@ typedef void (* GimpQueryStringCallback)  (GtkWidget   *query_box,
  * GimpQueryIntCallback:
  * @query_box: The query box.
  * @value:     The entered integer value.
- * @data:      The user data.
+ * @data: (closure): user data.
  *
  * The callback for an int query box.
  **/
@@ -59,7 +59,7 @@ typedef void (* GimpQueryIntCallback)     (GtkWidget   *query_box,
  * GimpQueryDoubleCallback:
  * @query_box: The query box.
  * @value:     The entered double value.
- * @data:      The user data.
+ * @data: (closure): user data.
  *
  * The callback for a double query box.
  **/
@@ -72,7 +72,7 @@ typedef void (* GimpQueryDoubleCallback)  (GtkWidget   *query_box,
  * @query_box: The query box.
  * @size:      The entered size in pixels.
  * @unit:      The selected unit from the #GimpUnitMenu.
- * @data:      The user data.
+ * @data: (closure): user data.
  *
  * The callback for a size query box.
  **/
@@ -85,7 +85,7 @@ typedef void (* GimpQuerySizeCallback)    (GtkWidget   *query_box,
  * GimpQueryBooleanCallback:
  * @query_box: The query box.
  * @value:     The entered boolean value.
- * @data:      The user data.
+ * @data: (closure): user data.
  *
  * The callback for a boolean query box.
  **/

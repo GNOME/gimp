@@ -30,7 +30,11 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-
+/**
+ * GimpImageConstraintFunc:
+ * @image:
+ * @data: (closure):
+ */
 typedef gboolean (* GimpImageConstraintFunc) (GimpImage *image,
                                               gpointer   data);
 

@@ -54,7 +54,12 @@ GType       gimp_channel_combo_box_get_type  (void) G_GNUC_CONST;
 GType       gimp_layer_combo_box_get_type    (void) G_GNUC_CONST;
 GType       gimp_vectors_combo_box_get_type  (void) G_GNUC_CONST;
 
-
+/**
+ * GimpItemConstraintFunc:
+ * @image:
+ * @item:
+ * @data: (closure):
+ */
 typedef gboolean (* GimpItemConstraintFunc) (GimpImage *image,
                                              GimpItem  *item,
                                              gpointer   data);

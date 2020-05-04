@@ -35,7 +35,7 @@ G_BEGIN_DECLS
  * GimpRunFunc:
  * @procedure: the #GimpProcedure that runs.
  * @args:      the @procedure's arguments.
- * @run_data:  the run_data given in gimp_procedure_new().
+ * @run_data: (closure): the run_data given in gimp_procedure_new().
  *
  * The run function is run during the lifetime of the GIMP session,
  * each time a plug-in procedure is called.

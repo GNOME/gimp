@@ -28,14 +28,35 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * GimpRenderFunc:
+ * @x:
+ * @y:
+ * @color:
+ * @data: (closure):
+ */
 typedef void (* GimpRenderFunc)   (gdouble   x,
                                    gdouble   y,
                                    GimpRGB  *color,
                                    gpointer  data);
+/**
+ * GimpPutPixelFunc:
+ * @x:
+ * @y:
+ * @color:
+ * @data: (closure):
+ */
 typedef void (* GimpPutPixelFunc) (gint      x,
                                    gint      y,
                                    GimpRGB  *color,
                                    gpointer  data);
+/**
+ * GimpProgressFunc:
+ * @min:
+ * @max:
+ * @current:
+ * @data: (closure):
+ */
 typedef void (* GimpProgressFunc) (gint      min,
                                    gint      max,
                                    gint      current,

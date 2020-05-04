@@ -35,7 +35,7 @@ G_BEGIN_DECLS
  * @file:        the #GFile to load the thumbnail from.
  * @size:        the requested thumbnail size.
  * @args:        the @procedure's remaining arguments.
- * @run_data:    the run_data given in gimp_thumbnail_procedure_new().
+ * @run_data: (closure): the run_data given in gimp_thumbnail_procedure_new().
  *
  * The thumbnail function is run during the lifetime of the GIMP session,
  * each time a plug-in thumbnail procedure is called.

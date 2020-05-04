@@ -63,6 +63,11 @@ struct _GimpIntComboBoxClass
 };
 
 
+/**
+ * GimpIntSensitivityFunc:
+ * @value:
+ * @data: (closure):
+ */
 typedef  gboolean (* GimpIntSensitivityFunc) (gint      value,
                                               gpointer  data);
 

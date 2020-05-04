@@ -82,7 +82,7 @@ static gboolean   gimp_context_help_idle_show_help  (gpointer        data);
 /**
  * gimp_standard_help_func:
  * @help_id:   A unique help identifier.
- * @help_data: The @help_data passed to gimp_help_connect().
+ * @help_data: (closure): The @help_data passed to gimp_help_connect().
  *
  * This is the standard GIMP help function which does nothing but calling
  * gimp_help(). It is the right function to use in almost all cases.

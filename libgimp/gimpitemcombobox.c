@@ -167,8 +167,8 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
 
 /**
  * gimp_drawable_combo_box_new:
- * @constraint:   a #GimpItemConstraintFunc or %NULL
- * @data  :       a pointer that is passed to @constraint
+ * @constraint: (nullable):   a #GimpItemConstraintFunc or %NULL
+ * @data: (closure):  a pointer that is passed to @constraint
  * @data_destroy: Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened

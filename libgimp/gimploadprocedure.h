@@ -35,7 +35,7 @@ G_BEGIN_DECLS
  * @run_mode:    the #GimpRunMode.
  * @file:        the #GFile to load from.
  * @args:        the @procedure's remaining arguments.
- * @run_data:    the run_data given in gimp_load_procedure_new().
+ * @run_data: (closure): the run_data given in gimp_load_procedure_new().
  *
  * The load function is run during the lifetime of the GIMP session,
  * each time a plug-in load procedure is called.

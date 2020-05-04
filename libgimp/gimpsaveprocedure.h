@@ -37,7 +37,7 @@ G_BEGIN_DECLS
  * @drawable:    the drawable to save.
  * @file:        the #GFile to save to.
  * @args:        the @procedure's remaining arguments.
- * @run_data:    the run_data given in gimp_save_procedure_new().
+ * @run_data: (closure): the run_data given in gimp_save_procedure_new().
  *
  * The save function is run during the lifetime of the GIMP session,
  * each time a plug-in save procedure is called.

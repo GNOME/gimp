@@ -36,7 +36,7 @@ G_BEGIN_DECLS
  * @image:     the #GimpImage.
  * @drawable:  the #GimpDrawable.
  * @args:      the @procedure's remaining arguments.
- * @run_data:  the run_data given in gimp_image_procedure_new().
+ * @run_data: (closure): the run_data given in gimp_image_procedure_new().
  *
  * The image function is run during the lifetime of the GIMP session,
  * each time a plug-in image procedure is called.
