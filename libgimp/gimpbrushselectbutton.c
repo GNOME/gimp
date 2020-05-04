@@ -243,7 +243,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    * @paint_mode: paint mode of the brush
    * @width: width of the brush
    * @height: height of the brush
-   * @mask_data: brush mask data
+   * @mask_data: (array) (element-type guchar): brush mask data
    * @dialog_closing: whether the dialog was closed or not.
    *
    * The ::brush-set signal is emitted when the user selects a brush.

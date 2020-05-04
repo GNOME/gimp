@@ -1198,7 +1198,8 @@ gimp_stack_trace_available (gboolean optimal)
  * gimp_stack_trace_print:
  * @prog_name: the program to attach to.
  * @stream: a FILE* stream.
- * @trace: location to store a newly allocated string of the trace.
+ * @trace: (out) (optional): location to store a newly allocated string of
+ *                           the trace.
  *
  * Attempts to generate a stack trace at current code position in
  * @prog_name. @prog_name is mostly a helper and can be set to NULL.

@@ -474,7 +474,7 @@ gimp_rgba_set (GimpRGB *rgba,
  * @blue:  the blue component
  * @alpha: the alpha component
  *
- * Sets the red, green, blue and alpha components of @rgb from 8bit
+ * Sets the red, green, blue and alpha components of @rgba from 8bit
  * values (0 to 255).
  **/
 void
@@ -492,6 +492,16 @@ gimp_rgba_set_uchar (GimpRGB *rgba,
   rgba->a = (gdouble) a / 255.0;
 }
 
+/**
+ * gimp_rgba_get_uchar:
+ * @rgba:  a #GimpRGB struct
+ * @red: (out) (optional): Location for the red component
+ * @green: (out) (optional): Location for the green component
+ * @blue: (out) (optional): Location for the blue component
+ * @alpha: (out) (optional): Location for the alpha component
+ *
+ * Gets the 8bit red, green, blue and alpha components of @rgba.
+ **/
 void
 gimp_rgba_get_uchar (const GimpRGB *rgba,
                      guchar        *r,

@@ -439,7 +439,7 @@ gimp_preview_area_new (void)
  * @width:     buffer width
  * @height:    buffer height
  * @type:      the #GimpImageType of @buf
- * @buf:       a #guchar buffer that contains the preview pixel data.
+ * @buf: (array): a #guchar buffer that contains the preview pixel data.
  * @rowstride: rowstride of @buf
  *
  * Draws @buf on @area and queues a redraw on the given rectangle.
@@ -693,11 +693,11 @@ gimp_preview_area_draw (GimpPreviewArea *area,
  * @width:      buffer width
  * @height:     buffer height
  * @type:       the #GimpImageType of @buf1 and @buf2
- * @buf1:       a #guchar buffer that contains the pixel data for
- *              the lower layer
+ * @buf1: (array): a #guchar buffer that contains the pixel data for
+ *                 the lower layer
  * @rowstride1: rowstride of @buf1
- * @buf2:       a #guchar buffer that contains the pixel data for
- *              the upper layer
+ * @buf2: (array): a #guchar buffer that contains the pixel data for
+ *                 the upper layer
  * @rowstride2: rowstride of @buf2
  * @opacity:    The opacity of the first layer.
  *
@@ -1077,13 +1077,13 @@ gimp_preview_area_blend (GimpPreviewArea *area,
  * @width:          buffer width
  * @height:         buffer height
  * @type:           the #GimpImageType of @buf1 and @buf2
- * @buf1:           a #guchar buffer that contains the pixel data for
+ * @buf1: (array):  a #guchar buffer that contains the pixel data for
  *                  the lower layer
  * @rowstride1:     rowstride of @buf1
- * @buf2:           a #guchar buffer that contains the pixel data for
+ * @buf2: (array):  a #guchar buffer that contains the pixel data for
  *                  the upper layer
  * @rowstride2:     rowstride of @buf2
- * @mask:           a #guchar buffer representing the mask of the second
+ * @mask: (array):  a #guchar buffer representing the mask of the second
  *                  layer.
  * @rowstride_mask: rowstride for the mask.
  *
@@ -1832,6 +1832,14 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
     }
 }
 
+/**
+ * gimp_preview_area_get_size:
+ * @area:   a #GimpPreviewArea widget.
+ * @width: (out): The preview areay width
+ * @height: (out): The preview areay height
+ *
+ * Gets the preview area size
+ */
 void
 gimp_preview_area_get_size (GimpPreviewArea *area,
                             gint            *width,
@@ -1964,7 +1972,7 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
 /**
  * gimp_preview_area_menu_popup:
  * @area:  a #GimpPreviewArea
- * @event: the button event that causes the menu to popup or %NULL
+ * @event: (nullable): the button event that causes the menu to popup or %NULL
  *
  * Creates a popup menu that allows one to configure the size and type of
  * the checkerboard pattern that the @area uses to visualize transparency.

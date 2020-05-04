@@ -558,7 +558,7 @@ gimp_config_deserialize_stream (GimpConfig    *config,
 /**
  * gimp_config_deserialize_string:
  * @config:   a #GObject that implements the #GimpConfigInterface.
- * @text:     string to deserialize (in UTF-8 encoding)
+ * @text: (array length=text_len): string to deserialize (in UTF-8 encoding)
  * @text_len: length of @text in bytes or -1
  * @data:     client data
  * @error:    return location for a possible error

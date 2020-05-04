@@ -529,7 +529,7 @@ gimp_int_combo_box_set_active_by_user_data (GimpIntComboBox *combo_box,
 /**
  * gimp_int_combo_box_get_active_user_data:
  * @combo_box: a #GimpIntComboBox
- * @user_data: return location for the gpointer value
+ * @user_data: (out): return location for the gpointer value
  *
  * Retrieves the user-data of the selected (active) item in the @combo_box.
  *

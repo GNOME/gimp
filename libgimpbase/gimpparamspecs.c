@@ -29,6 +29,12 @@
  * GIMP_TYPE_ARRAY
  */
 
+/**
+ * gimp_array_new:
+ * @data: (array length=length):
+ * @length:
+ * @static_data:
+ */
 GimpArray *
 gimp_array_new (const guint8 *data,
                 gsize         length,
