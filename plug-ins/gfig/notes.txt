@@ -36,7 +36,7 @@ the only style attributes that work are foreground color and brush
 shape; others will be added shortly.
 
 When you start Gfig, and the dialog comes up, the background of the
-preview shows a represntation of the image you are working on.  Each
+preview shows a representation of the image you are working on.  Each
 time you do something in GFig, the result is reflected by a change in
 both the Gimp image and the GFig preview, so you can see in real time
 the results of everything that you do.  (The rendering could stand to

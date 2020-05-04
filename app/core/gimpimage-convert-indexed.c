@@ -2781,7 +2781,7 @@ static void
 snap_to_black_and_white (QuantizeObj *quantobj)
 {
   /* find whitest and blackest colors in palette, if they are closer
-   * than 24 units of euclidian distance in sRGB snap them to pure
+   * than 24 units of euclidean distance in sRGB snap them to pure
    * black / white.
    */
 #define POW2(a) ((a)*(a))
