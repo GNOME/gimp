@@ -8,12 +8,12 @@ plugins = [
   { 'name': 'foggify' },
   { 'name': 'gradients-save-as-css' },
   { 'name': 'palette-offset' },
+  { 'name': 'palette-sort' },
   { 'name': 'palette-to-gradient' },
   { 'name': 'py-slice' },
   { 'name': 'spyro-plus' },
 
   # { 'name': 'histogram-export' },
-  # { 'name': 'palette-sort' },
   # { 'name': 'python-eval' },
 ]
 
