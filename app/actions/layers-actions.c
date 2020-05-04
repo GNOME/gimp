@@ -789,11 +789,13 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       last_mode      = FALSE;
   gboolean       first_mode     = FALSE;
 
-  gboolean       have_masks     = FALSE; /* At least 1 selected layer has a mask.            */
-  gboolean       have_no_masks  = FALSE; /* At least 1 selected layer has no mask.           */
-  gboolean       have_groups    = FALSE; /* At least 1 selected layer is a group.            */
-  gboolean       have_no_groups = FALSE; /* At least 1 selected layer is not a group.        */
-  gboolean       have_writable  = FALSE; /* At least 1 selected layer has no contents lock.  */
+  gboolean       have_masks     = FALSE; /* At least 1 selected layer has a mask.             */
+  gboolean       have_no_masks  = FALSE; /* At least 1 selected layer has no mask.            */
+  gboolean       have_groups    = FALSE; /* At least 1 selected layer is a group.             */
+  gboolean       have_no_groups = FALSE; /* At least 1 selected layer is not a group.         */
+  gboolean       have_writable  = FALSE; /* At least 1 selected layer has no contents lock.   */
+  gboolean       have_prev      = FALSE; /* At least 1 selected layer has a previous sibling. */
+  gboolean       have_next      = FALSE; /* At least 1 selected layer has a next sibling.     */
 
   gboolean       all_masks_shown    = TRUE;
   gboolean       all_masks_disabled = TRUE;
@@ -814,6 +816,8 @@ layers_actions_update (GimpActionGroup *group,
         {
           GimpLayerMode *modes;
           GimpLayerMode  mode;
+          GList         *layer_list;
+          GList         *iter2;
           gint           n_modes;
           gint           i = 0;
 
@@ -865,12 +869,25 @@ layers_actions_update (GimpActionGroup *group,
           else
             first_mode = TRUE;
 
-          if (have_masks && have_no_masks       &&
-              have_groups && have_no_groups     &&
+          layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+          iter2 = g_list_find (layer_list, iter->data);
+
+          if (iter2)
+            {
+              if (g_list_previous (iter2))
+                have_prev = TRUE;
+
+              if (g_list_next (iter2))
+                have_next = TRUE;
+            }
+
+          if (have_masks && have_no_masks        &&
+              have_groups && have_no_groups      &&
               have_writable && ! all_masks_shown &&
-              ! all_masks_disabled &&
-              ! lock_alpha && can_lock_alpha &&
-              ! prev_mode && ! next_mode)
+              ! all_masks_disabled               &&
+              ! lock_alpha && can_lock_alpha     &&
+              ! prev_mode && ! next_mode         &&
+              have_prev && have_next)
             break;
         }
 
@@ -1016,10 +1033,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-select-previous",  layer && !fs && !ac && prev);
   SET_SENSITIVE ("layers-select-next",      layer && !fs && !ac && next);
 
-  SET_SENSITIVE ("layers-raise",            layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-raise-to-top",     layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-lower",            layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-raise",            n_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-raise-to-top",     n_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-lower",            n_layers > 0 && !fs && !ac && have_next);
+  SET_SENSITIVE ("layers-lower-to-bottom",  n_layers > 0 && !fs && !ac && have_next);
 
   SET_VISIBLE   ("layers-anchor",            layer &&  fs && !ac);
   SET_VISIBLE   ("layers-merge-down",        !fs);

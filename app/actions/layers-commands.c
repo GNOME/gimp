@@ -609,11 +609,32 @@ layers_raise_cmd_callback (GimpAction *action,
                            gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  GList     *raised_layers = NULL;
+  return_if_no_layers (image, layers, data);
 
-  gimp_image_raise_item (image, GIMP_ITEM (layer), NULL);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      gint index;
+
+      index = gimp_item_get_index (iter->data);
+      if (index > 0)
+        raised_layers = g_list_prepend (raised_layers, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Raise Layer",
+                                         "Raise Layers",
+                                         g_list_length (raised_layers)));
+  for (iter = raised_layers; iter; iter = iter->next)
+    gimp_image_raise_item (image, iter->data, NULL);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (raised_layers);
 }
 
 void
@@ -622,11 +643,33 @@ layers_raise_to_top_cmd_callback (GimpAction *action,
                                   gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  GList     *raised_layers = NULL;
+  return_if_no_layers (image, layers, data);
 
-  gimp_image_raise_item_to_top (image, GIMP_ITEM (layer));
+  for (iter = layers; iter; iter = iter->next)
+    {
+      gint index;
+
+      index = gimp_item_get_index (iter->data);
+      if (index > 0)
+        raised_layers = g_list_prepend (raised_layers, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Raise Layer to Top",
+                                         "Raise Layers to Top",
+                                         g_list_length (raised_layers)));
+
+  for (iter = raised_layers; iter; iter = iter->next)
+    gimp_image_raise_item_to_top (image, iter->data);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (raised_layers);
 }
 
 void
@@ -635,11 +678,35 @@ layers_lower_cmd_callback (GimpAction *action,
                            gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  GList     *lowered_layers = NULL;
+  return_if_no_layers (image, layers, data);
 
-  gimp_image_lower_item (image, GIMP_ITEM (layer), NULL);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GList *layer_list;
+      gint   index;
+
+      layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      index = gimp_item_get_index (iter->data);
+      if (index < g_list_length (layer_list) - 1)
+        lowered_layers = g_list_prepend (lowered_layers, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Lower Layer",
+                                         "Lower Layers",
+                                         g_list_length (lowered_layers)));
+
+  for (iter = lowered_layers; iter; iter = iter->next)
+    gimp_image_lower_item (image, iter->data, NULL);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (lowered_layers);
 }
 
 void
@@ -648,11 +715,35 @@ layers_lower_to_bottom_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  GList     *lowered_layers = NULL;
+  return_if_no_layers (image, layers, data);
 
-  gimp_image_lower_item_to_bottom (image, GIMP_ITEM (layer));
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GList *layer_list;
+      gint   index;
+
+      layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      index = gimp_item_get_index (iter->data);
+      if (index < g_list_length (layer_list) - 1)
+        lowered_layers = g_list_prepend (lowered_layers, iter->data);
+    }
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               ngettext ("Lower Layer to Bottom",
+                                         "Lower Layers to Bottom",
+                                         g_list_length (lowered_layers)));
+
+  for (iter = lowered_layers; iter; iter = iter->next)
+    gimp_image_lower_item_to_bottom (image, iter->data);
+
   gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (lowered_layers);
 }
 
 void
