@@ -198,7 +198,7 @@ static void   gimp_item_tree_view_lock_position_toggled
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_update_options    (GimpItemTreeView  *view,
-                                                     GimpItem          *item);
+                                                     GList             *items);
 
 static gboolean gimp_item_tree_view_item_pre_clicked(GimpCellRendererViewable *cell,
                                                      const gchar              *path_str,
@@ -1070,23 +1070,25 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
   if (item)
     {
       GimpItemTreeViewClass *item_view_class;
-      GimpItem              *active_item;
+      GList                 *items;
 
       item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
 
-      active_item = item_view_class->get_active_item (tree_view->priv->image);
+      items = item_view_class->get_selected_items (tree_view->priv->image);
 
-      if (active_item != (GimpItem *) item)
+      if (g_list_length (items) != 1 ||
+          items->data != (GimpItem *) item)
         {
           item_view_class->set_active_item (tree_view->priv->image,
                                             GIMP_ITEM (item));
 
           gimp_image_flush (tree_view->priv->image);
+          items = item_view_class->get_selected_items (tree_view->priv->image);
         }
 
       options_sensitive = TRUE;
 
-      gimp_item_tree_view_update_options (tree_view, GIMP_ITEM (item));
+      gimp_item_tree_view_update_options (tree_view, items);
     }
 
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view)), tree_view);
@@ -1099,11 +1101,10 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
 
 static gboolean
 gimp_item_tree_view_select_items (GimpContainerView *view,
-                                  GList             *selected_items,
+                                  GList             *items,
                                   GList             *paths)
 {
   GimpItemTreeView *tree_view         = GIMP_ITEM_TREE_VIEW (view);
-  GList            *items             = selected_items;
   gboolean          options_sensitive = FALSE;
   gboolean          success;
 
@@ -1112,20 +1113,19 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
   if (items)
     {
       GimpItemTreeViewClass *item_view_class;
-      GList                 *iter;
 
       item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
       if (TRUE) /* XXX: test if new selection same as old. */
         {
-          item_view_class->set_selected_items (tree_view->priv->image,
-                                               selected_items);
+          item_view_class->set_selected_items (tree_view->priv->image, items);
           gimp_image_flush (tree_view->priv->image);
+
+          items = item_view_class->get_selected_items (tree_view->priv->image);
         }
 
       options_sensitive = TRUE;
 
-      for (iter = items; iter; iter = iter->next)
-        gimp_item_tree_view_update_options (tree_view, iter->data);
+      gimp_item_tree_view_update_options (tree_view, items);
     }
 
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view)), tree_view);
@@ -1139,7 +1139,7 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
   g_signal_handlers_disconnect_by_func (tree_view->priv->multi_selection_label,
                     G_CALLBACK (gimp_item_tree_view_selection_label_notify),
                     tree_view);
-  if (g_list_length (selected_items) > 1)
+  if (g_list_length (items) > 1)
     {
       gchar *str;
 
@@ -1150,8 +1150,8 @@ gimp_item_tree_view_select_items (GimpContainerView *view,
                         G_CALLBACK (gimp_item_tree_view_selection_label_notify),
                         tree_view);
       str = g_strdup_printf (ngettext ("%d item selected", "%d items selected",
-                                       g_list_length (selected_items)),
-                             g_list_length (selected_items));
+                                       g_list_length (items)),
+                             g_list_length (items));
       gtk_label_set_text (GTK_LABEL (tree_view->priv->multi_selection_label), str);
       g_free (str);
       gtk_widget_show (tree_view->priv->multi_selection_label);
@@ -1628,58 +1628,83 @@ gimp_item_tree_view_lock_content_changed (GimpItem         *item,
                                           GimpItemTreeView *view)
 {
   GimpImage *image = view->priv->image;
-  GimpItem  *active_item;
+  GList     *items;
 
-  active_item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
 
-  if (active_item == item)
-    gimp_item_tree_view_update_options (view, item);
+  gimp_item_tree_view_update_options (view, items);
 }
 
 static void
 gimp_item_tree_view_lock_content_toggled (GtkWidget         *widget,
                                           GimpItemTreeView  *view)
 {
-  GimpImage *image = view->priv->image;
-  GimpItem  *item;
-
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
-
-  if (item)
-    {
-      gboolean lock_content;
-
-      lock_content = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-      if (gimp_item_get_lock_content (item) != lock_content)
-        {
+  GimpImage *image        = view->priv->image;
+  GList     *locked_items = NULL;
+  GList     *items;
+  GList     *iter;
 #if 0
-          GimpUndo *undo;
+  GimpUndo  *undo;
 #endif
-          gboolean  push_undo = TRUE;
+  gchar     *undo_label;
+  gboolean   lock_content;
+  gboolean   push_undo = TRUE;
+
+  lock_content = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  items        = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+
+  for (iter = items; iter; iter = iter->next)
+    if (gimp_item_can_lock_content (iter->data))
+      {
+        if (! lock_content && ! gimp_item_get_lock_content (iter->data))
+          {
+           /* When unlocking, we expect all selected items to be locked. */
+            g_list_free (locked_items);
+            return;
+          }
+        else if (lock_content != gimp_item_get_lock_content (iter->data))
+          {
+            locked_items = g_list_prepend (locked_items, iter->data);
+          }
+      }
+
+  if (! locked_items)
+    return;
 
 #if 0
-          /*  compress lock content undos  */
-          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+  undo         = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                                GIMP_UNDO_ITEM_LOCK_CONTENT);
 
-          if (undo && GIMP_ITEM_UNDO (undo)->item == item)
-            push_undo = FALSE;
+  if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+    push_undo = FALSE;
 #endif
 
-          g_signal_handlers_block_by_func (item,
-                                           gimp_item_tree_view_lock_content_changed,
-                                           view);
+  if (lock_content)
+    undo_label = _("Lock content");
+  else
+    undo_label = _("Unlock content");
 
-          gimp_item_set_lock_content (item, lock_content, push_undo);
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_LOCK_CONTENTS,
+                               undo_label);
 
-          g_signal_handlers_unblock_by_func (item,
-                                             gimp_item_tree_view_lock_content_changed,
-                                             view);
+  for (iter = locked_items; iter; iter = iter->next)
+    {
+      g_signal_handlers_block_by_func (iter->data,
+                                       gimp_item_tree_view_lock_content_changed,
+                                       view);
 
-          gimp_image_flush (image);
-        }
+      gimp_item_set_lock_content (iter->data, lock_content, push_undo);
+
+      g_signal_handlers_unblock_by_func (iter->data,
+                                         gimp_item_tree_view_lock_content_changed,
+                                         view);
     }
+
+  gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (locked_items);
 }
 
 static void
@@ -1687,12 +1712,11 @@ gimp_item_tree_view_lock_position_changed (GimpItem         *item,
                                            GimpItemTreeView *view)
 {
   GimpImage *image = view->priv->image;
-  GimpItem  *active_item;
+  GList     *items;
 
-  active_item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
 
-  if (active_item == item)
-    gimp_item_tree_view_update_options (view, item);
+  gimp_item_tree_view_update_options (view, items);
 }
 
 static void
@@ -1700,41 +1724,54 @@ gimp_item_tree_view_lock_position_toggled (GtkWidget         *widget,
                                            GimpItemTreeView  *view)
 {
   GimpImage *image = view->priv->image;
-  GimpItem  *item;
+  GList     *items;
+  GList     *iter;
+#if 0
+  GimpUndo  *undo;
+#endif
+  gchar     *undo_label;
+  gboolean   lock_position;
+  gboolean   push_undo = TRUE;
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+  lock_position = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+  items         = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
 
-  if (item)
+#if 0
+  /*  compress lock position undos  */
+  undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                       GIMP_UNDO_ITEM_LOCK_POSITION);
+
+  if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+    push_undo = FALSE;
+#endif
+
+  if (lock_position)
+    undo_label = _("Lock position");
+  else
+    undo_label = _("Unlock position");
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_LOCK_POSITION,
+                               undo_label);
+
+  for (iter = items; iter; iter = iter->next)
     {
-      gboolean lock_position;
-
-      lock_position = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-      if (gimp_item_get_lock_position (item) != lock_position)
+      if (gimp_item_get_lock_position (iter->data) != lock_position)
         {
-          GimpUndo *undo;
-          gboolean  push_undo = TRUE;
-
-          /*  compress lock position undos  */
-          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                               GIMP_UNDO_ITEM_LOCK_POSITION);
-
-          if (undo && GIMP_ITEM_UNDO (undo)->item == item)
-            push_undo = FALSE;
-
-          g_signal_handlers_block_by_func (item,
+          g_signal_handlers_block_by_func (iter->data,
                                            gimp_item_tree_view_lock_position_changed,
                                            view);
 
-          gimp_item_set_lock_position (item, lock_position, push_undo);
+          gimp_item_set_lock_position (iter->data, lock_position, push_undo);
 
-          g_signal_handlers_unblock_by_func (item,
+          g_signal_handlers_unblock_by_func (iter->data,
                                              gimp_item_tree_view_lock_position_changed,
                                              view);
-
-          gimp_image_flush (image);
         }
     }
+
+  gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
 }
 
 static gboolean
@@ -1797,9 +1834,38 @@ gimp_item_tree_view_selection_label_notify (GtkLabel         *label,
 
 static void
 gimp_item_tree_view_update_options (GimpItemTreeView *view,
-                                    GimpItem         *item)
+                                    GList            *items)
 {
-  if (gimp_item_get_lock_content (item) !=
+  GList    *iter;
+  gboolean  all_have_lock_content      = TRUE;
+  gboolean  some_can_lock_content      = FALSE;
+  gboolean  all_have_lock_position     = TRUE;
+  gboolean  some_can_lock_position     = FALSE;
+  gboolean  inconsistent_lock_content  = FALSE;
+  gboolean  inconsistent_lock_position = FALSE;
+
+  for (iter = items; iter; iter = iter->next)
+    {
+      if (! gimp_item_get_lock_content (iter->data))
+        all_have_lock_content = FALSE;
+      else
+        inconsistent_lock_content = TRUE;
+
+      if (gimp_item_can_lock_content (iter->data))
+        some_can_lock_content = TRUE;
+
+      if (! gimp_item_get_lock_position (iter->data))
+        all_have_lock_position = FALSE;
+      else
+        inconsistent_lock_position = TRUE;
+
+      if (gimp_item_can_lock_position (iter->data))
+        some_can_lock_position = TRUE;
+    }
+  inconsistent_lock_content  = (! all_have_lock_content && inconsistent_lock_content);
+  inconsistent_lock_position = (! all_have_lock_position && inconsistent_lock_position);
+
+  if (all_have_lock_content !=
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_content_toggle)))
     {
       g_signal_handlers_block_by_func (view->priv->lock_content_toggle,
@@ -1807,14 +1873,16 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
                                        view);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->lock_content_toggle),
-                                    gimp_item_get_lock_content (item));
+                                    all_have_lock_content);
 
       g_signal_handlers_unblock_by_func (view->priv->lock_content_toggle,
                                          gimp_item_tree_view_lock_content_toggled,
                                          view);
     }
+  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (view->priv->lock_content_toggle),
+                                      inconsistent_lock_content);
 
-  if (gimp_item_get_lock_position (item) !=
+  if (all_have_lock_position !=
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_position_toggle)))
     {
       g_signal_handlers_block_by_func (view->priv->lock_position_toggle,
@@ -1822,18 +1890,17 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
                                        view);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->lock_position_toggle),
-                                    gimp_item_get_lock_position (item));
+                                    all_have_lock_position);
 
       g_signal_handlers_unblock_by_func (view->priv->lock_position_toggle,
                                          gimp_item_tree_view_lock_position_toggled,
                                          view);
     }
+  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (view->priv->lock_position_toggle),
+                                      inconsistent_lock_position);
 
-  gtk_widget_set_sensitive (view->priv->lock_content_toggle,
-                            gimp_item_can_lock_content (item));
-
-  gtk_widget_set_sensitive (view->priv->lock_position_toggle,
-                            gimp_item_can_lock_position (item));
+  gtk_widget_set_sensitive (view->priv->lock_content_toggle, some_can_lock_content);
+  gtk_widget_set_sensitive (view->priv->lock_position_toggle, some_can_lock_position);
 }
 
 
