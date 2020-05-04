@@ -54,7 +54,7 @@ static void     gimp_config_value_free   (GValue        *value);
  * gimp_config_type_register:
  * @parent_type: type from which this type will be derived
  * @type_name:   string used as the name of the new type
- * @pspecs:      array of #GParamSpec to install as properties on the new type
+ * @pspecs: (array length=n_pspecs): array of #GParamSpec to install as properties on the new type
  * @n_pspecs:    the number of param specs in @pspecs
  *
  * This function is a fancy wrapper around g_type_register_static().

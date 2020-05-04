@@ -326,7 +326,7 @@ gimp_image_list_vectors (GimpImage *image)
 /**
  * gimp_image_get_colormap:
  * @image:      The image.
- * @num_colors: Returns the number of colors in the colormap array.
+ * @num_colors: (out): Returns the number of colors in the colormap array.
  *
  * Returns the image's colormap
  *
@@ -334,7 +334,7 @@ gimp_image_list_vectors (GimpImage *image)
  * well as the number of colors contained in the colormap. If the image
  * is not of base type INDEXED, this pointer will be NULL.
  *
- * Returns: The image's colormap.
+ * Returns: (array): The image's colormap.
  */
 guchar *
 gimp_image_get_colormap (GimpImage *image,
@@ -354,7 +354,7 @@ gimp_image_get_colormap (GimpImage *image,
 /**
  * gimp_image_set_colormap:
  * @image:      The image.
- * @colormap:   The new colormap values.
+ * @colormap: (array): The new colormap values.
  * @num_colors: Number of colors in the colormap array.
  *
  * Sets the entries in the image's colormap.

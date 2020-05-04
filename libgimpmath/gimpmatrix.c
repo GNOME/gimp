@@ -292,8 +292,8 @@ gimp_matrix2_invert (GimpMatrix2 *matrix)
  * @matrix: The transformation matrix.
  * @x: The source X coordinate.
  * @y: The source Y coordinate.
- * @newx: The transformed X coordinate.
- * @newy: The transformed Y coordinate.
+ * @newx: (out): The transformed X coordinate.
+ * @newy: (out): The transformed Y coordinate.
  *
  * Transforms a point in 2D as specified by the transformation matrix.
  *
@@ -971,10 +971,9 @@ gimp_matrix4_mult (const GimpMatrix4 *matrix1,
 /**
  * gimp_matrix4_to_deg:
  * @matrix:
- * @a:
- * @b:
- * @c:
- *
+ * @a: (out):
+ * @b: (out):
+ * @c: (out):
  *
  **/
 void
@@ -994,9 +993,9 @@ gimp_matrix4_to_deg (const GimpMatrix4 *matrix,
  * @x: The source X coordinate.
  * @y: The source Y coordinate.
  * @z: The source Z coordinate.
- * @newx: The transformed X coordinate.
- * @newy: The transformed Y coordinate.
- * @newz: The transformed Z coordinate.
+ * @newx: (out): The transformed X coordinate.
+ * @newy: (out): The transformed Y coordinate.
+ * @newz: (out): The transformed Z coordinate.
  *
  * Transforms a point in 3D as specified by the transformation matrix.
  *

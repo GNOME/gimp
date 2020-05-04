@@ -265,7 +265,7 @@ gimp_color_profile_new_from_file (GFile   *file,
 
 /**
  * gimp_color_profile_new_from_icc_profile:
- * @data:   pointer to memory containing an ICC profile
+ * @data: (array length=length): The memory containing an ICC profile
  * @length: length of the profile in memory, in bytes
  * @error:  return location for #GError
  *
@@ -397,12 +397,12 @@ gimp_color_profile_save_to_file (GimpColorProfile  *profile,
 /**
  * gimp_color_profile_get_icc_profile:
  * @profile: a #GimpColorProfile
- * @length:  return location for the number of bytes
+ * @length: (out): return location for the number of bytes
  *
  * This function returns @profile as ICC profile data. The returned
  * memory belongs to @profile and must not be modified or freed.
  *
- * Returns: a pointer to the IIC profile data.
+ * Returns: (array length=length): a pointer to the IIC profile data.
  *
  * Since: 2.10
  **/

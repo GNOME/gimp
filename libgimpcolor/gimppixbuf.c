@@ -118,12 +118,12 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
 /**
  * gimp_pixbuf_get_icc_profile:
  * @pixbuf: a #GdkPixbuf
- * @length: return location for the ICC profile's length
+ * @length: (out): return location for the ICC profile's length
  *
  * Returns the ICC profile attached to the @pixbuf, or %NULL if there
  * is none.
  *
- * Returns: (nullable): The ICC profile data, or %NULL.
+ * Returns: (array length=length) (nullable): The ICC profile data, or %NULL.
  *          The value should be freed with g_free().
  *
  * Since: 2.10

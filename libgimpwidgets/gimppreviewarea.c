@@ -1752,7 +1752,7 @@ gimp_preview_area_set_offsets (GimpPreviewArea *area,
 /**
  * gimp_preview_area_set_colormap:
  * @area:       a #GimpPreviewArea
- * @colormap:   a #guchar buffer that contains the colormap
+ * @colormap: (array): a #guchar buffer that contains the colormap
  * @num_colors: the number of colors in the colormap
  *
  * Sets the colormap for the #GimpPreviewArea widget. You need to

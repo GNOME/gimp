@@ -109,10 +109,10 @@ gimp_cmyk_set_uchar (GimpCMYK *cmyk,
 /**
  * gimp_cmyk_get_uchar:
  * @cmyk:    A #GimpCMYK structure which will hold the specified CMYK value.
- * @cyan:    The Cyan channel of the CMYK value
- * @magenta: The Magenta channel
- * @yellow:  The Yellow channel
- * @black:   The blacK channel
+ * @cyan:    (out) (optional): The Cyan channel of the CMYK value
+ * @magenta: (out) (optional): The Magenta channel
+ * @yellow:  (out) (optional): The Yellow channel
+ * @black:   (out) (optional): The blacK channel
  *
  * Retrieve individual channel values from a #GimpCMYK structure. Channel
  * values are pointers to unsigned chars in the range 0 to 255.
@@ -192,14 +192,15 @@ gimp_cmyka_set_uchar (GimpCMYK *cmyka,
   cmyka->k = (gdouble) black   / 255.0;
   cmyka->a = (gdouble) alpha   / 255.0;
 }
+
 /**
  * gimp_cmyka_get_uchar:
  * @cmyka:   A #GimpCMYK structure which will hold the specified CMYKA value.
- * @cyan:    The Cyan channel of the CMYK value
- * @magenta: The Magenta channel
- * @yellow:  The Yellow channel
- * @black:   The blacK channel
- * @alpha:   The Alpha channel
+ * @cyan:    (out) (optional): The Cyan channel of the CMYK value
+ * @magenta: (out) (optional): The Magenta channel
+ * @yellow:  (out) (optional): The Yellow channel
+ * @black:   (out) (optional): The blacK channel
+ * @alpha:   (out) (optional): The Alpha channel
  *
  * Retrieve individual channel values from a #GimpCMYK structure.
  * Channel values are pointers to unsigned chars in the range 0 to 255.
