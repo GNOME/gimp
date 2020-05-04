@@ -1322,16 +1322,83 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                           column, &column_area,
                                                           bevent->x, bevent->y))
             {
-              /*  we didn't click on any cell, but we clicked on empty
-               *  space in the expander column of a row that has
-               *  children; let GtkTreeView process the button press
-               *  to maybe handle a click on an expander.
-               */
+              if (bevent->state & gimp_get_extend_selection_mask ()                       &&
+                  bevent->type == GDK_BUTTON_PRESS                                        &&
+                  bevent->window == gtk_tree_view_get_bin_window (GTK_TREE_VIEW (widget)) &&
+                  ! gtk_tree_view_is_blank_at_pos (GTK_TREE_VIEW (widget),
+                                                   bevent->x, bevent->y, NULL, NULL,
+                                                   NULL, NULL))
+                {
+                  /* When shift-clicking an expander, let's have a
+                   * behavior similar to shift-clicking the visibility
+                   * or link toggles, i.e. expanding the group alone or
+                   * together will all groups of same depth.
+                   */
+                  GtkTreePath *first_path;
+                  GtkTreeIter  parent;
+                  gboolean     expand_all = TRUE;
+
+                  /* Get the first item at same depth. */
+                  if (gtk_tree_model_iter_parent (tree_view->model, &parent, &iter))
+                    gtk_tree_model_iter_nth_child (tree_view->model, &iter, &parent, 0);
+                  else
+                    gtk_tree_model_get_iter_first (tree_view->model, &iter);
+                  first_path = gtk_tree_model_get_path (tree_view->model, &iter);
+
+                  /* Check expansion state of other items at same depth. */
+                  do
+                    {
+                      GtkTreePath *path2 = gtk_tree_model_get_path (tree_view->model, &iter);
+
+                      if (gtk_tree_path_compare (path, path2) != 0 &&
+                          gtk_tree_view_row_expanded (GTK_TREE_VIEW (widget), path2))
+                        expand_all = FALSE;
+
+                      gtk_tree_path_free (path2);
+
+                      if (! expand_all)
+                        break;
+                    }
+                  while (gtk_tree_model_iter_next (tree_view->model, &iter));
+
+                  /* Revert back to first item at same depth. */
+                  gtk_tree_model_get_iter (tree_view->model, &iter, first_path);
+                  gtk_tree_path_free (first_path);
+
+                  /* Expand or collapse rows at this depth. */
+                  do
+                    {
+                      GtkTreePath *path2 = gtk_tree_model_get_path (tree_view->model, &iter);
+
+                      if (gtk_tree_path_compare (path, path2) == 0 || expand_all)
+                        gtk_tree_view_expand_to_path (GTK_TREE_VIEW (widget), path2);
+                      else
+                        gtk_tree_view_collapse_row (GTK_TREE_VIEW (widget), path2);
+
+                      gtk_tree_path_free (path2);
+                    }
+                  while (gtk_tree_model_iter_next (tree_view->model, &iter));
+
+                  gtk_tree_view_scroll_to_cell (tree_view->view, path,
+                                                NULL, FALSE, 0.0, 0.0);
+
+                  handled = TRUE;
+                }
+              else
+                {
+                  /*  we didn't click on any cell, but we clicked on empty
+                   *  space in the expander column of a row that has
+                   *  children; let GtkTreeView process the button press
+                   *  to maybe handle a click on an expander.
+                   */
+                  handled = FALSE;
+                }
+
               g_list_free (cells);
               gtk_tree_path_free (path);
               g_object_unref (renderer);
 
-              return FALSE;
+              return handled;
             }
 
           g_list_free (cells);
