@@ -362,7 +362,7 @@ check_cubemap (GimpImage *image)
         }
     }
 
-  return FALSE;
+  return cubemap;
 }
 
 static gboolean
