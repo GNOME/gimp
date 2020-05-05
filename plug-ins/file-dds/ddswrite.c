@@ -433,7 +433,7 @@ check_cubemap (gint32 image_id)
         }
     }
 
-  return FALSE;
+  return cubemap;
 }
 
 static gboolean
