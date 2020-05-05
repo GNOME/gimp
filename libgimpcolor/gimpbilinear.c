@@ -36,6 +36,12 @@
  **/
 
 
+/**
+ * gimp_bilinear:
+ * @x:
+ * @y:
+ * @values: (array fixed-size=4):
+ */
 gdouble
 gimp_bilinear (gdouble  x,
                gdouble  y,
@@ -59,6 +65,12 @@ gimp_bilinear (gdouble  x,
   return (1.0 - y) * m0 + y * m1;
 }
 
+/**
+ * gimp_bilinear_8:
+ * @x:
+ * @y:
+ * @values: (array fixed-size=4):
+ */
 guchar
 gimp_bilinear_8 (gdouble x,
                  gdouble y,
@@ -82,6 +94,12 @@ gimp_bilinear_8 (gdouble x,
   return (guchar) ((1.0 - y) * m0 + y * m1);
 }
 
+/**
+ * gimp_bilinear_16:
+ * @x:
+ * @y:
+ * @values: (array fixed-size=4):
+ */
 guint16
 gimp_bilinear_16 (gdouble  x,
                   gdouble  y,
@@ -105,6 +123,12 @@ gimp_bilinear_16 (gdouble  x,
   return (guint16) ((1.0 - y) * m0 + y * m1);
 }
 
+/**
+ * gimp_bilinear_32:
+ * @x:
+ * @y:
+ * @values: (array fixed-size=4):
+ */
 guint32
 gimp_bilinear_32 (gdouble  x,
                   gdouble  y,
@@ -128,6 +152,12 @@ gimp_bilinear_32 (gdouble  x,
   return (guint32) ((1.0 - y) * m0 + y * m1);
 }
 
+/**
+ * gimp_bilinear_rgb:
+ * @x:
+ * @y:
+ * @values: (array fixed-size=4):
+ */
 GimpRGB
 gimp_bilinear_rgb (gdouble  x,
                    gdouble  y,
@@ -174,6 +204,12 @@ gimp_bilinear_rgb (gdouble  x,
   return v;
 }
 
+/**
+ * gimp_bilinear_rgba:
+ * @x:
+ * @y:
+ * @values: (array fixed-size=4):
+ */
 GimpRGB
 gimp_bilinear_rgba (gdouble  x,
                     gdouble  y,
