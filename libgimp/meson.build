@@ -376,6 +376,7 @@ else
     namespace: 'Gimp',
     identifier_prefix: 'Gimp',
     # symbol_prefix: 'gimp',
+    header: 'gimp-3.0/libgimp/gimp.h',
 
     extra_args: [
       '-DGIMP_COMPILATION',
