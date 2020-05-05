@@ -558,26 +558,26 @@ static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
 static const GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
-    NC_("layers-action", "Select _Top Layer"), "Home",
-    NC_("layers-action", "Select the topmost layer"),
+    NC_("layers-action", "Select _Top Layers"), "Home",
+    NC_("layers-action", "Select the topmost layers"),
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_TOP },
 
   { "layers-select-bottom", NULL,
-    NC_("layers-action", "Select _Bottom Layer"), "End",
-    NC_("layers-action", "Select the bottommost layer"),
+    NC_("layers-action", "Select _Bottom Layers"), "End",
+    NC_("layers-action", "Select the bottommost layers"),
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_BOTTOM },
 
   { "layers-select-previous", NULL,
-    NC_("layers-action", "Select _Previous Layer"), "Prior",
-    NC_("layers-action", "Select the layer above the current layer"),
+    NC_("layers-action", "Select _Previous Layers"), "Prior",
+    NC_("layers-action", "Select the layers above the current layers"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_PREVIOUS },
 
   { "layers-select-next", NULL,
-    NC_("layers-action", "Select _Next Layer"), "Next",
-    NC_("layers-action", "Select the layer below the current layer"),
+    NC_("layers-action", "Select _Next Layers"), "Next",
+    NC_("layers-action", "Select the layers below the current layers"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_NEXT }
 };
@@ -781,9 +781,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       bs_mutable     = FALSE;
   gboolean       cs_mutable     = FALSE;
   gboolean       cm_mutable     = FALSE;
-  GList         *next           = NULL;
   GList         *next_visible   = NULL;
-  GList         *prev           = NULL;
   gboolean       next_mode      = TRUE;
   gboolean       prev_mode      = TRUE;
   gboolean       last_mode      = FALSE;
@@ -966,10 +964,7 @@ layers_actions_update (GimpActionGroup *group,
 
           if (list)
             {
-              prev = g_list_previous (list);
-              next = g_list_next (list);
-
-              for (next_visible = next;
+              for (next_visible = g_list_next (list);
                    next_visible;
                    next_visible = g_list_next (next_visible))
                 {
@@ -1028,10 +1023,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mode-previous",    n_layers > 0 && !ac && prev_mode);
   SET_SENSITIVE ("layers-mode-next",        n_layers > 0 && !ac && next_mode);
 
-  SET_SENSITIVE ("layers-select-top",       layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-select-bottom",    layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-select-previous",  layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-select-next",      layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-select-top",       n_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-select-bottom",    n_layers > 0 && !fs && !ac && have_next);
+  SET_SENSITIVE ("layers-select-previous",  n_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-select-next",      n_layers > 0 && !fs && !ac && have_next);
 
   SET_SENSITIVE ("layers-raise",            n_layers > 0 && !fs && !ac && have_prev);
   SET_SENSITIVE ("layers-raise-to-top",     n_layers > 0 && !fs && !ac && have_prev);

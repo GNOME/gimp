@@ -577,30 +577,41 @@ layers_select_cmd_callback (GimpAction *action,
                             gpointer    data)
 {
   GimpImage            *image;
-  GimpLayer            *layer;
+  GList                *new_layers = NULL;
+  GList                *layers;
+  GList                *iter;
   GimpContainer        *container;
   GimpLayer            *new_layer;
   GimpActionSelectType  select_type;
+  gboolean              run_once;
   return_if_no_image (image, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  layer = gimp_image_get_active_layer (image);
+  layers   = gimp_image_get_selected_layers (image);
+  run_once = (g_list_length (layers) == 0);
 
-  if (layer)
-    container = gimp_item_get_container (GIMP_ITEM (layer));
-  else
-    container = gimp_image_get_layers (image);
-
-  new_layer = (GimpLayer *) action_select_object (select_type,
-                                                  container,
-                                                  (GimpObject *) layer);
-
-  if (new_layer && new_layer != layer)
+  for (iter = layers; iter || run_once; iter = iter ? iter->next : NULL)
     {
-      gimp_image_set_active_layer (image, new_layer);
+      if (iter)
+        container = gimp_item_get_container (GIMP_ITEM (iter->data));
+      else /* run_once */
+        container = gimp_image_get_layers (image);
+
+      new_layer = (GimpLayer *) action_select_object (select_type,
+                                                      container,
+                                                      (GimpObject *) iter->data);
+      if (new_layer)
+        new_layers = g_list_prepend (new_layers, new_layer);
+    }
+
+  if (new_layers)
+    {
+      gimp_image_set_selected_layers (image, new_layers);
       gimp_image_flush (image);
     }
+
+  g_list_free (new_layers);
 }
 
 void
