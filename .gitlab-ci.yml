@@ -46,6 +46,7 @@ deps-debian/testing:
         luajit
         meson
         python3
+        valac
     - apt-get install -y --reinstall ca-certificates
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
@@ -359,3 +360,4 @@ cppcheck:
     when: always
     paths:
       - report
+  needs: []
