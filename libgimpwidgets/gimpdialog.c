@@ -351,7 +351,7 @@ gimp_dialog_response (GtkDialog *dialog,
  *                gtk_window_set_title().
  * @role:         The dialog's @role which will be set with
  *                gtk_window_set_role().
- * @parent:       The @parent widget of this dialog.
+ * @parent: (nullable): The @parent widget of this dialog.
  * @flags:        The @flags (see the #GtkDialog documentation).
  * @help_func:    The function which will be called if the user presses "F1".
  * @help_id:      The help_id which will be passed to @help_func.
