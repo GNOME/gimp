@@ -27,6 +27,62 @@
 
 G_BEGIN_DECLS
 
+/**
+ * GimpProgressVtableStartFunc:
+ * @message:
+ * @cancelable:
+ * @user_data: (closure):
+ *
+ * Starts the progress
+ */
+typedef void (* GimpProgressVtableStartFunc) (const gchar *message,
+                                              gboolean     cancelable,
+                                              gpointer     user_data);
+
+/**
+ * GimpProgressVtableEndFunc:
+ * @user_data: (closure):
+ *
+ * Ends the progress
+ */
+typedef void (* GimpProgressVtableEndFunc) (gpointer user_data);
+
+/**
+ * GimpProgressVtableSetTextFunc:
+ * @message:
+ * @user_data: (closure):
+ *
+ * Sets a new text on the progress.
+ */
+typedef void (* GimpProgressVtableSetTextFunc) (const gchar *message,
+                                                gpointer     user_data);
+
+/**
+ * GimpProgressVtableSetValueFunc:
+ * @percentage:
+ * @user_data: (closure):
+ *
+ * Sets a new percentage on the progress.
+ */
+typedef void (* GimpProgressVtableSetValueFunc) (gdouble  percentage,
+                                                 gpointer user_data);
+
+/**
+ * GimpProgressVtablePulseFunc:
+ * @user_data: (closure):
+ *
+ * Makes the progress pulse
+ */
+typedef void (* GimpProgressVtablePulseFunc) (gpointer user_data);
+
+/**
+ * GimpProgressVtableGetWindowFunc:
+ * @user_data: (closure):
+ *
+ * Returns: the ID of the window where the progress is displayed.
+ */
+typedef guint32 (* GimpProgressVtableGetWindowFunc) (gpointer user_data);
+
 
 typedef struct _GimpProgressVtable GimpProgressVtable;
 
@@ -49,17 +105,12 @@ typedef struct _GimpProgressVtable GimpProgressVtable;
  **/
 struct _GimpProgressVtable
 {
-  void    (* start)        (const gchar *message,
-                            gboolean     cancelable,
-                            gpointer     user_data);
-  void    (* end)          (gpointer     user_data);
-  void    (* set_text)     (const gchar *message,
-                            gpointer     user_data);
-  void    (* set_value)    (gdouble      percentage,
-                            gpointer     user_data);
-  void    (* pulse)        (gpointer     user_data);
-
-  guint32 (* get_window)   (gpointer     user_data);
+  GimpProgressVtableStartFunc     start;
+  GimpProgressVtableEndFunc       end;
+  GimpProgressVtableSetTextFunc   set_text;
+  GimpProgressVtableSetValueFunc  set_value;
+  GimpProgressVtablePulseFunc     pulse;
+  GimpProgressVtableGetWindowFunc get_window;
 
   /* Padding for future expansion. Must be initialized with NULL! */
   void (* _gimp_reserved1) (void);
