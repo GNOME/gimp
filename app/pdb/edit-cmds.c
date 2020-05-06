@@ -105,19 +105,43 @@ edit_copy_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  gint num_drawables;
+  const GimpItem **drawables;
   gboolean non_empty = FALSE;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
+  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
-        {
-          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-          GError    *my_error = NULL;
+      GimpImage *image          = NULL;
+      GList     *drawables_list = NULL;
+      gint       i;
 
-          non_empty = gimp_edit_copy (image, drawable, context, &my_error) != NULL;
+      for (i = 0; i < num_drawables; i++)
+        {
+          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL, 0, error))
+            {
+              success = FALSE;
+              break;
+            }
+          if (image == NULL)
+            {
+              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+            }
+          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+            {
+              success = FALSE;
+              break;
+            }
+          drawables_list = g_list_prepend (drawables_list, (gpointer) drawables[i]);
+        }
+
+      if (success && num_drawables > 0)
+        {
+          GError *my_error = NULL;
+
+          non_empty = gimp_edit_copy (image, drawables_list, context, &my_error) != NULL;
 
           if (! non_empty)
             {
@@ -129,6 +153,8 @@ edit_copy_invoker (GimpProcedure         *procedure,
         }
       else
         success = FALSE;
+
+      g_list_free (drawables_list);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -541,19 +567,25 @@ register_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-copy");
   gimp_procedure_set_static_help (procedure,
-                                  "Copy from the specified drawable.",
-                                  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
+                                  "Copy from the specified drawables.",
+                                  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawables' contents will be stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to copy from. All the drawables must belong to the same image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable to copy from",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables to save",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "Drawables to copy from",
+                                                             GIMP_TYPE_ITEM,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",

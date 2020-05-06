@@ -29,6 +29,9 @@ GimpImage    * gimp_image_new_from_template     (Gimp            *gimp,
                                                  GimpContext     *context);
 GimpImage    * gimp_image_new_from_drawable     (Gimp            *gimp,
                                                  GimpDrawable    *drawable);
+GimpImage    * gimp_image_new_from_drawables    (Gimp            *gimp,
+                                                 GList           *drawables,
+                                                 gboolean         copy_selection);
 GimpImage    * gimp_image_new_from_component    (Gimp            *gimp,
                                                  GimpImage       *image,
                                                  GimpChannelType  component);

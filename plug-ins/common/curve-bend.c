@@ -620,7 +620,7 @@ p_if_selection_float_it (GimpImage *image,
         {
           /* selection is TRUE, make a layer (floating selection) from
              the selection  */
-          if (gimp_edit_copy (GIMP_DRAWABLE (layer)))
+          if (gimp_edit_copy (1, (const GimpItem **) &layer))
             {
               layer = gimp_edit_paste (GIMP_DRAWABLE (layer), FALSE);
             }

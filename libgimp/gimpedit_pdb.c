@@ -77,31 +77,36 @@ gimp_edit_cut (GimpDrawable *drawable)
 
 /**
  * gimp_edit_copy:
- * @drawable: The drawable to copy from.
+ * @num_drawables: The number of drawables to save.
+ * @drawables: (array length=num_drawables) (element-type GimpItem): Drawables to copy from.
  *
- * Copy from the specified drawable.
+ * Copy from the specified drawables.
  *
  * If there is a selection in the image, then the area specified by the
- * selection is copied from the specified drawable and placed in an
+ * selection is copied from the specified drawables and placed in an
  * internal GIMP edit buffer. It can subsequently be retrieved using
  * the gimp_edit_paste() command. If there is no selection, then the
- * specified drawable's contents will be stored in the internal GIMP
+ * specified drawables' contents will be stored in the internal GIMP
  * edit buffer. This procedure will fail if the selected area lies
- * completely outside the bounds of the current drawable and there is
- * nothing to copy from.
+ * completely outside the bounds of the current drawables and there is
+ * nothing to copy from. All the drawables must belong to the same
+ * image.
  *
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
-gimp_edit_copy (GimpDrawable *drawable)
+gimp_edit_copy (gint             num_drawables,
+                const GimpItem **drawables)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_INT, num_drawables,
+                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_NONE);
+  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-edit-copy",

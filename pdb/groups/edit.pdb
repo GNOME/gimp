@@ -71,24 +71,29 @@ CODE
 }
 
 sub edit_copy {
-    $blurb = 'Copy from the specified drawable.';
+    $blurb = 'Copy from the specified drawables.';
 
     $help = <<'HELP';
 If there is a selection in the image, then the area specified by the
-selection is copied from the specified drawable and placed in an
+selection is copied from the specified drawables and placed in an
 internal GIMP edit buffer. It can subsequently be retrieved using the
 gimp_edit_paste() command.  If there is no selection, then the
-specified drawable's contents will be stored in the internal GIMP edit
+specified drawables' contents will be stored in the internal GIMP edit
 buffer. This procedure will fail if the selected area lies completely
-outside the bounds of the current drawable and there is nothing to
+outside the bounds of the current drawables and there is nothing to
 copy from.
+All the drawables must belong to the same image.
 HELP
 
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable to copy from' }
+	{ name => 'drawables', type => 'itemarray',
+          desc => 'Drawables to copy from',
+          no_validate => 1,
+	  array => { name => 'num_drawables',
+                     type => '1 <= int32',
+		     desc => "The number of drawables to save" } },
     );
 
     @outargs = (
@@ -100,12 +105,34 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
-    {
-      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-      GError    *my_error = NULL;
+  GimpImage *image          = NULL;
+  GList     *drawables_list = NULL;
+  gint       i;
 
-      non_empty = gimp_edit_copy (image, drawable, context, &my_error) != NULL;
+  for (i = 0; i < num_drawables; i++)
+    {
+      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL, 0, error))
+        {
+          success = FALSE;
+          break;
+        }
+      if (image == NULL)
+        {
+          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+        }
+      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+        {
+          success = FALSE;
+          break;
+        }
+      drawables_list = g_list_prepend (drawables_list, (gpointer) drawables[i]);
+    }
+
+  if (success && num_drawables > 0)
+    {
+      GError *my_error = NULL;
+
+      non_empty = gimp_edit_copy (image, drawables_list, context, &my_error) != NULL;
 
       if (! non_empty)
         {
@@ -117,6 +144,8 @@ HELP
     }
   else
     success = FALSE;
+
+  g_list_free (drawables_list);
 }
 CODE
     );

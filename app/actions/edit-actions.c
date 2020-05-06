@@ -288,6 +288,7 @@ edit_actions_update (GimpActionGroup *group,
   GimpImage    *image        = action_data_get_image (data);
   GimpDisplay  *display      = action_data_get_display (data);
   GimpDrawable *drawable     = NULL;
+  GList        *drawables    = NULL;
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
   gboolean      writable     = FALSE;
@@ -296,6 +297,7 @@ edit_actions_update (GimpActionGroup *group,
 
   if (image)
     {
+      drawables = gimp_image_get_selected_drawables (image);
       drawable = gimp_image_get_active_drawable (image);
 
       if (drawable)
@@ -356,7 +358,7 @@ edit_actions_update (GimpActionGroup *group,
   g_free (redo_name);
 
   SET_SENSITIVE ("edit-cut",                         writable && !children);
-  SET_SENSITIVE ("edit-copy",                        drawable);
+  SET_SENSITIVE ("edit-copy",                        drawables);
   SET_SENSITIVE ("edit-copy-visible",                image);
   /*             "edit-paste" is always active */
   SET_SENSITIVE ("edit-paste-in-place",              image);
@@ -377,6 +379,8 @@ edit_actions_update (GimpActionGroup *group,
 
 #undef SET_LABEL
 #undef SET_SENSITIVE
+
+  g_list_free (drawables);
 }
 
 

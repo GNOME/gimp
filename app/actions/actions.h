@@ -98,6 +98,12 @@ void               action_message          (GimpDisplay          *display,
   if (! drawable) \
     return
 
+#define return_if_no_drawables(image,drawables,data) \
+  return_if_no_image (image,data); \
+  drawables = gimp_image_get_selected_drawables (image); \
+  if (! drawables) \
+    return
+
 #define return_if_no_layer(image,layer,data) \
   return_if_no_image (image,data); \
   layer = gimp_image_get_active_layer (image); \

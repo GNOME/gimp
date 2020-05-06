@@ -30,6 +30,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpbuffer.h"
@@ -43,6 +44,7 @@
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-new.h"
+#include "gimplist.h"
 #include "gimptemplate.h"
 
 #include "gimp-intl.h"
@@ -227,6 +229,198 @@ gimp_image_new_from_drawable (Gimp         *gimp,
 
   gimp_image_add_layer (new_image, new_layer, NULL, 0, TRUE);
 
+  gimp_image_undo_enable (new_image);
+
+  return new_image;
+}
+
+/**
+ * gimp_image_new_copy_drawables:
+ * @image:
+ * @drawables: the drawables to insert into @image.
+ * @parent:
+ * @new_parent:
+ *
+ * This recursive function will create copies of all @drawables
+ * belonging to the same @image, and will insert them into @new_image
+ * with the same layer order and hierarchy (adding layer groups when
+ * needed).
+ * If a single drawable is selected, it will be copied visible, with
+ * full opacity and default layer mode. Otherwise, visibility, opacity
+ * and layer mode will be copied as-is, allowing proper compositing.
+ *
+ * The @parent and @new_parent arguments are only used internally for
+ * recursive calls and must be set to NULL for the initial call.
+ */
+static void
+gimp_image_new_copy_drawables (GimpImage *image,
+                               GList     *drawables,
+                               GimpImage *new_image,
+                               GimpLayer *parent,
+                               GimpLayer *new_parent)
+{
+  GList *layers;
+  GList *iter;
+  gint   n_drawables;
+  gint   index;
+
+  n_drawables = g_list_length (drawables);
+  if (parent == NULL)
+    {
+      if (n_drawables == 1)
+        {
+          layers = drawables;
+        }
+      else
+        {
+          /* Root layers. */
+          layers = gimp_image_get_layer_iter (image);
+
+          /* Add any item parent. */
+          drawables = g_list_copy (drawables);
+          for (iter = drawables; iter; iter = iter->next)
+            {
+              GimpItem *item = iter->data;
+              while ((item = gimp_item_get_parent (item)))
+                {
+                  if (! g_list_find (drawables, item))
+                    drawables = g_list_prepend (drawables, item);
+                }
+            }
+        }
+    }
+  else
+    {
+      GimpContainer *container;
+
+      container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+      layers = GIMP_LIST (container)->queue->head;
+    }
+
+  index = 0;
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (g_list_find (drawables, iter->data))
+        {
+          GimpLayer *new_layer;
+          GType      new_type;
+
+          if (GIMP_IS_LAYER (iter->data))
+            new_type = G_TYPE_FROM_INSTANCE (iter->data);
+          else
+            new_type = GIMP_TYPE_LAYER;
+
+          new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
+                                                     new_image, new_type));
+
+          gimp_object_set_name (GIMP_OBJECT (new_layer),
+                                gimp_object_get_name (iter->data));
+
+          gimp_item_set_linked (GIMP_ITEM (new_layer),
+                                gimp_item_get_linked (iter->data), FALSE);
+
+          /* Visibility, mode and opacity mimick the source image if
+           * multiple items are copied. Otherwise we just set them to
+           * defaults.
+           */
+          gimp_item_set_visible (GIMP_ITEM (new_layer),
+                                 n_drawables > 1 ?
+                                 gimp_item_get_visible (iter->data) : TRUE,
+                                 FALSE);
+          gimp_layer_set_mode (new_layer,
+                               n_drawables > 1 && GIMP_IS_LAYER (iter->data) ?
+                               gimp_layer_get_mode (iter->data) :
+                               gimp_image_get_default_new_layer_mode (new_image),
+                               FALSE);
+          gimp_layer_set_opacity (new_layer,
+                                  n_drawables > 1 && GIMP_IS_LAYER (iter->data) ?
+                                  gimp_layer_get_opacity (iter->data) : GIMP_OPACITY_OPAQUE, FALSE);
+
+          if (gimp_layer_can_lock_alpha (new_layer))
+            gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
+
+          gimp_image_add_layer (new_image, new_layer, new_parent, index++, TRUE);
+
+          /* If a group, loop through children. */
+          if (n_drawables > 1 && gimp_viewable_get_children (iter->data))
+            gimp_image_new_copy_drawables (image, drawables, new_image, iter->data, new_layer);
+        }
+    }
+
+  if (parent == NULL && n_drawables != 1)
+    g_list_free (drawables);
+}
+
+GimpImage *
+gimp_image_new_from_drawables (Gimp     *gimp,
+                               GList    *drawables,
+                               gboolean  copy_selection)
+{
+  GimpImage         *image = NULL;
+  GimpImage         *new_image;
+  GList             *iter;
+  GimpImageBaseType  type;
+  GimpPrecision      precision;
+  gdouble            xres;
+  gdouble            yres;
+  GimpColorProfile  *profile = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (drawables != NULL, NULL);
+
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
+
+      if (iter == drawables)
+        image = gimp_item_get_image (iter->data);
+      else
+        /* We only accept list of drawables for a same origin image. */
+        g_return_val_if_fail (gimp_item_get_image (iter->data) == image, NULL);
+    }
+
+  type      = gimp_drawable_get_base_type (drawables->data);
+  precision = gimp_drawable_get_precision (drawables->data);
+  profile   = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawables->data));
+
+  new_image = gimp_create_image (gimp,
+                                 gimp_image_get_width  (image),
+                                 gimp_image_get_height (image),
+                                 type, precision,
+                                 TRUE);
+  gimp_image_undo_disable (new_image);
+
+  if (type == GIMP_INDEXED)
+    gimp_image_set_colormap (new_image,
+                             gimp_image_get_colormap (image),
+                             gimp_image_get_colormap_size (image),
+                             FALSE);
+
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_set_resolution (new_image, xres, yres);
+  gimp_image_set_unit (new_image, gimp_image_get_unit (image));
+  if (profile)
+    gimp_image_set_color_profile (new_image, profile, NULL);
+
+  if (copy_selection)
+    {
+      GimpChannel *selection;
+
+      selection = gimp_image_get_mask (image);
+      if (! gimp_channel_is_empty (selection))
+        {
+          GimpChannel *new_selection;
+          GeglBuffer  *buffer;
+
+          new_selection = gimp_image_get_mask (new_image);
+          buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+          gimp_drawable_set_buffer (GIMP_DRAWABLE (new_selection),
+                                    FALSE, NULL, buffer);
+          g_object_unref (buffer);
+        }
+    }
+
+  gimp_image_new_copy_drawables (image, drawables, new_image, NULL, NULL);
   gimp_image_undo_enable (new_image);
 
   return new_image;

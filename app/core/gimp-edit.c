@@ -115,25 +115,44 @@ gimp_edit_cut (GimpImage     *image,
 
 GimpObject *
 gimp_edit_copy (GimpImage     *image,
-                GimpDrawable  *drawable,
+                GList         *drawables,
                 GimpContext   *context,
                 GError       **error)
 {
+  GList    *iter;
+  gboolean  drawables_are_layers = TRUE;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (drawables != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (GIMP_IS_LAYER (drawable) &&
-      gimp_channel_is_empty (gimp_image_get_mask (image)))
+  for (iter = drawables; iter; iter = iter->next)
     {
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
+      g_return_val_if_fail (gimp_item_is_attached (iter->data), NULL);
+
+      if (! GIMP_IS_LAYER (iter->data))
+        drawables_are_layers = FALSE;
+    }
+
+  /* Only accept multiple drawables for layers. */
+  g_return_val_if_fail (g_list_length (drawables) == 1 || drawables_are_layers, NULL);
+
+  if (drawables_are_layers &&
+      gimp_channel_is_empty (gimp_image_get_mask (image)) &&
+      g_list_length (drawables) == 1)
+    {
+      /* Special-casing the 1 layer with no selection case.
+       * It allows us to save the whole layer with all pixels as stored,
+       * not the rendered version of it.
+       */
       GimpImage *clip_image;
       gint       off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawables->data), &off_x, &off_y);
 
-      clip_image = gimp_image_new_from_drawable (image->gimp, drawable);
+      clip_image = gimp_image_new_from_drawable (image->gimp, drawables->data);
       g_object_set_data (G_OBJECT (clip_image), "offset-x",
                          GINT_TO_POINTER (off_x));
       g_object_set_data (G_OBJECT (clip_image), "offset-y",
@@ -144,11 +163,27 @@ gimp_edit_copy (GimpImage     *image,
 
       return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
     }
+  else if (drawables_are_layers)
+    {
+      /* Copying multiple layers or specific selection, we copy the
+       * composited pixels as rendered.
+       */
+      GimpImage  *clip_image;
+      GimpBuffer *buffer;
+
+      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE);
+      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
+      buffer = gimp_edit_copy_visible (clip_image, context, error);
+
+      g_object_unref (clip_image);
+
+      return buffer ? GIMP_OBJECT (buffer) : NULL;
+    }
   else
     {
       GimpBuffer *buffer;
 
-      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawables->data),
                                   context, FALSE, error);
 
       if (buffer)

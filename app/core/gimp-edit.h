@@ -24,7 +24,7 @@ GimpObject  * gimp_edit_cut                (GimpImage       *image,
                                             GimpContext     *context,
                                             GError         **error);
 GimpObject  * gimp_edit_copy               (GimpImage       *image,
-                                            GimpDrawable    *drawable,
+                                            GList           *drawables,
                                             GimpContext     *context,
                                             GError         **error);
 GimpBuffer  * gimp_edit_copy_visible       (GimpImage       *image,

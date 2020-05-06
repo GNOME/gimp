@@ -256,12 +256,12 @@ edit_copy_cmd_callback (GimpAction *action,
                         gpointer    data)
 {
   GimpImage    *image;
-  GimpDrawable *drawable;
+  GList        *drawables;
   GimpObject   *copy;
   GError       *error = NULL;
-  return_if_no_drawable (image, drawable, data);
+  return_if_no_drawables (image, drawables, data);
 
-  copy = gimp_edit_copy (image, drawable, action_data_get_context (data),
+  copy = gimp_edit_copy (image, drawables, action_data_get_context (data),
                          &error);
 
   if (copy)
@@ -285,6 +285,8 @@ edit_copy_cmd_callback (GimpAction *action,
                             error->message);
       g_clear_error (&error);
     }
+
+  g_list_free (drawables);
 }
 
 void
