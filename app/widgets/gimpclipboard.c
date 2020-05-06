@@ -134,6 +134,12 @@ gimp_clipboard_exit (Gimp *gimp)
       gtk_clipboard_store (clipboard);
     }
 
+  if (clipboard)
+    /* If we don't clear the clipboard, it keeps a reference on the object
+     * owner (i.e. Gimp object probably) which fails to finalize.
+     */
+    gtk_clipboard_clear (clipboard);
+
   g_object_set_data (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY, NULL);
 }
 
