@@ -177,19 +177,19 @@ select_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("select-all",    drawable);
-  SET_SENSITIVE ("select-none",   drawable && sel);
-  SET_SENSITIVE ("select-invert", drawable);
+  SET_SENSITIVE ("select-all",    image);
+  SET_SENSITIVE ("select-none",   image && sel);
+  SET_SENSITIVE ("select-invert", image);
   SET_SENSITIVE ("select-float",  writable && !children && sel);
 
-  SET_SENSITIVE ("select-feather", drawable && sel);
-  SET_SENSITIVE ("select-sharpen", drawable && sel);
-  SET_SENSITIVE ("select-shrink",  drawable && sel);
-  SET_SENSITIVE ("select-grow",    drawable && sel);
-  SET_SENSITIVE ("select-border",  drawable && sel);
-  SET_SENSITIVE ("select-flood",   drawable && sel);
+  SET_SENSITIVE ("select-feather", image && sel);
+  SET_SENSITIVE ("select-sharpen", image && sel);
+  SET_SENSITIVE ("select-shrink",  image && sel);
+  SET_SENSITIVE ("select-grow",    image && sel);
+  SET_SENSITIVE ("select-border",  image && sel);
+  SET_SENSITIVE ("select-flood",   image && sel);
 
-  SET_SENSITIVE ("select-save",               drawable && !fs);
+  SET_SENSITIVE ("select-save",               image && !fs);
   SET_SENSITIVE ("select-fill",               writable && !children && sel);
   SET_SENSITIVE ("select-fill-last-values",   writable && !children && sel);
   SET_SENSITIVE ("select-stroke",             writable && !children && sel);
