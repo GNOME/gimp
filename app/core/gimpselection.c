@@ -383,7 +383,7 @@ static void
 gimp_selection_invalidate_boundary (GimpDrawable *drawable)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpLayer *layer;
+  GList     *layers;
 
   /*  Turn the current selection off  */
   gimp_image_selection_invalidate (image);
@@ -394,11 +394,11 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
    *  we need to do this since this selection mask can act as an additional
    *  mask in the composition of the floating selection
    */
-  layer = gimp_image_get_active_layer (image);
+  layers = gimp_image_get_selected_layers (image);
 
-  if (layer && gimp_layer_is_floating_sel (layer))
+  if (g_list_length (layers) == 1 && gimp_layer_is_floating_sel (layers->data))
     {
-      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+      gimp_drawable_update (GIMP_DRAWABLE (layers->data), 0, 0, -1, -1);
     }
 
 #if 0
@@ -419,10 +419,16 @@ gimp_selection_boundary (GimpChannel         *channel,
                          gint                 unused4)
 {
   GimpImage    *image = gimp_item_get_image (GIMP_ITEM (channel));
-  GimpDrawable *drawable;
-  GimpLayer    *layer;
+  GimpLayer    *floating_selection;
+  GList        *drawables;
+  GList        *layers;
+  gboolean      channel_selected;
 
-  if ((layer = gimp_image_get_floating_selection (image)))
+  drawables = gimp_image_get_selected_drawables (image);
+  channel_selected = (drawables && GIMP_IS_CHANNEL (drawables->data));
+  g_list_free (drawables);
+
+  if ((floating_selection = gimp_image_get_floating_selection (image)))
     {
       /*  If there is a floating selection, then
        *  we need to do some slightly different boundaries.
@@ -440,14 +446,13 @@ gimp_selection_boundary (GimpChannel         *channel,
                                                    0, 0, 0, 0);
 
       /*  Find the floating selection boundary  */
-      *segs_in = floating_sel_boundary (layer, num_segs_in);
+      *segs_in = floating_sel_boundary (floating_selection, num_segs_in);
 
       return TRUE;
     }
-  else if ((drawable = gimp_image_get_active_drawable (image)) &&
-           GIMP_IS_CHANNEL (drawable))
+  else if (channel_selected)
     {
-      /*  Otherwise, return the boundary...if a channel is active  */
+      /*  Otherwise, return the boundary...if a channels are selected  */
 
       return GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
                                                           segs_in, segs_out,
@@ -457,25 +462,37 @@ gimp_selection_boundary (GimpChannel         *channel,
                                                           gimp_image_get_width  (image),
                                                           gimp_image_get_height (image));
     }
-  else if ((layer = gimp_image_get_active_layer (image)))
+  else if ((layers = gimp_image_get_selected_layers (image)))
     {
-      /*  If a layer is active, we return multiple boundaries based
+      /*  If layers are selected, we return multiple boundaries based
        *  on the extents
        */
+      GList *iter;
+      gint    x1, y1;
+      gint    x2       = G_MININT;
+      gint    y2       = G_MININT;
+      gint    offset_x = G_MAXINT;
+      gint    offset_y = G_MAXINT;
 
-      gint x1, y1;
-      gint x2, y2;
-      gint offset_x;
-      gint offset_y;
+      for (iter = layers; iter; iter = iter->next)
+        {
+          gint item_off_x, item_off_y;
+          gint item_x2, item_y2;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+          gimp_item_get_offset (iter->data, &item_off_x, &item_off_y);
+          offset_x = MIN (offset_x, item_off_x);
+          offset_y = MIN (offset_y, item_off_y);
+
+          item_x2 = item_off_x + gimp_item_get_width (GIMP_ITEM (iter->data));
+          item_y2 = item_off_y + gimp_item_get_height (GIMP_ITEM (iter->data));
+          x2 = MAX (x2, item_x2);
+          y2 = MAX (y2, item_y2);
+        }
 
       x1 = CLAMP (offset_x, 0, gimp_image_get_width  (image));
       y1 = CLAMP (offset_y, 0, gimp_image_get_height (image));
-      x2 = CLAMP (offset_x + gimp_item_get_width (GIMP_ITEM (layer)),
-                  0, gimp_image_get_width (image));
-      y2 = CLAMP (offset_y + gimp_item_get_height (GIMP_ITEM (layer)),
-                  0, gimp_image_get_height (image));
+      x2 = CLAMP (x2, 0, gimp_image_get_width (image));
+      y2 = CLAMP (y2, 0, gimp_image_get_height (image));
 
       return GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
                                                           segs_in, segs_out,
