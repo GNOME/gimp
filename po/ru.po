@@ -9293,7 +9293,7 @@ msgstr "Обрисовать контур заданным образом"
 #: ../app/actions/vectors-actions.c:125
 msgctxt "vectors-action"
 msgid "Fill Path"
-msgstr "Отразить контур"
+msgstr "Залить контур"
 
 #: ../app/actions/vectors-actions.c:126
 msgctxt "vectors-action"
