@@ -282,7 +282,8 @@ alt_click_is_layer_to_selection (gconstpointer data)
   Gimp        *gimp      = GIMP (data);
   GimpImage   *image     = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
   GimpChannel *selection = gimp_image_get_mask (image);
-  GimpLayer   *active_layer;
+  GList       *selected_layers;
+  GList       *iter;
   GtkWidget   *dockable;
   GtkWidget   *gtk_tree_view;
   gint         assumed_layer_x;
@@ -301,7 +302,8 @@ alt_click_is_layer_to_selection (gconstpointer data)
   /* Store the active layer, it shall not change during the execution
    * of this test
    */
-  active_layer = gimp_image_get_active_layer (image);
+  selected_layers = gimp_image_get_selected_layers (image);
+  selected_layers = g_list_copy (selected_layers);
 
   /* Find the layer tree view to click in. Note that there is a
    * potential problem with gtk_test_find_widget and GtkNotebook: it
@@ -329,7 +331,10 @@ alt_click_is_layer_to_selection (gconstpointer data)
    * change
    */
   g_assert (! gimp_channel_is_empty (selection));
-  g_assert (gimp_image_get_active_layer (image) == active_layer);
+  g_assert (g_list_length (gimp_image_get_selected_layers (image)) ==
+            g_list_length (selected_layers));
+  for (iter = selected_layers; iter; iter = iter->next)
+    g_assert (g_list_find (gimp_image_get_selected_layers (image), iter->data));
 
   /* Now simulate alt-click on the empty layer */
   g_assert (gimp_ui_synthesize_click (gtk_tree_view,
@@ -343,7 +348,12 @@ alt_click_is_layer_to_selection (gconstpointer data)
    * still didn't change
    */
   g_assert (gimp_channel_is_empty (selection));
-  g_assert (gimp_image_get_active_layer (image) == active_layer);
+  g_assert (g_list_length (gimp_image_get_selected_layers (image)) ==
+            g_list_length (selected_layers));
+  for (iter = selected_layers; iter; iter = iter->next)
+    g_assert (g_list_find (gimp_image_get_selected_layers (image), iter->data));
+
+  g_list_free (selected_layers);
 #endif
 }
 
