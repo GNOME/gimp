@@ -371,8 +371,8 @@ gimp_rotate_tool_prepare (GimpTransformGridTool *tg_tool)
   gdouble            yres;
 
   tg_tool->trans_info[ANGLE]   = 0.0;
-  tg_tool->trans_info[PIVOT_X] = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
-  tg_tool->trans_info[PIVOT_Y] = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
+  tg_tool->trans_info[PIVOT_X] = (gdouble) floor((tr_tool->x1 + tr_tool->x2) / 2.0);
+  tg_tool->trans_info[PIVOT_Y] = (gdouble) floor((tr_tool->y1 + tr_tool->y2) / 2.0);
 
   gimp_image_get_resolution (image, &xres, &yres);
 
