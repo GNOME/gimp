@@ -815,16 +815,17 @@ palette_import_make_palette (ImportDialog *private)
           }
         else
           {
-            GimpDrawable *drawable;
+            GList *drawables;
 
-            drawable = GIMP_DRAWABLE (gimp_image_get_active_layer (image));
+            drawables = gimp_image_get_selected_layers (image);
 
-            palette = gimp_palette_import_from_drawable (drawable,
-                                                         private->context,
-                                                         palette_name,
-                                                         n_colors,
-                                                         threshold,
-                                                         selection_only);
+            if (drawables)
+              palette = gimp_palette_import_from_drawables (drawables,
+                                                            private->context,
+                                                            palette_name,
+                                                            n_colors,
+                                                            threshold,
+                                                            selection_only);
           }
       }
       break;

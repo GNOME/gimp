@@ -267,6 +267,7 @@ gimp_palette_import_make_palette (GHashTable  *table,
 
 static GHashTable *
 gimp_palette_import_extract (GimpImage     *image,
+                             GHashTable    *colors,
                              GimpPickable  *pickable,
                              gint           pickable_off_x,
                              gint           pickable_off_y,
@@ -282,7 +283,6 @@ gimp_palette_import_extract (GimpImage     *image,
   GeglBufferIterator *iter;
   GeglRectangle      *mask_roi = NULL;
   GeglRectangle       rect     = { x, y, width, height };
-  GHashTable         *colors   = NULL;
   const Babl         *format;
   gint                bpp;
   gint                mask_bpp = 0;
@@ -384,6 +384,7 @@ gimp_palette_import_from_image (GimpImage   *image,
     }
 
   colors = gimp_palette_import_extract (image,
+                                        NULL,
                                         GIMP_PICKABLE (image),
                                         0, 0,
                                         selection_only,
@@ -440,48 +441,56 @@ gimp_palette_import_from_indexed_image (GimpImage   *image,
 /*  create a palette from a drawable  ****************************************/
 
 GimpPalette *
-gimp_palette_import_from_drawable (GimpDrawable *drawable,
-                                   GimpContext  *context,
-                                   const gchar  *palette_name,
-                                   gint          n_colors,
-                                   gint          threshold,
-                                   gboolean      selection_only)
+gimp_palette_import_from_drawables (GList       *drawables,
+                                    GimpContext *context,
+                                    const gchar *palette_name,
+                                    gint         n_colors,
+                                    gint         threshold,
+                                    gboolean     selection_only)
 {
   GHashTable *colors = NULL;
+  GList      *iter;
   gint        x, y;
   gint        width, height;
   gint        off_x, off_y;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
-  if (selection_only)
+  for (iter = drawables; iter; iter = iter->next)
     {
-      if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                      &x, &y, &width, &height))
-        return NULL;
-    }
-  else
-    {
-      x      = 0;
-      y      = 0;
-      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      height = gimp_item_get_height (GIMP_ITEM (drawable));
-    }
+      GimpDrawable *drawable = iter->data;
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
 
-  colors =
-    gimp_palette_import_extract (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                 GIMP_PICKABLE (drawable),
-                                 off_x, off_y,
-                                 selection_only,
-                                 x, y, width, height,
-                                 n_colors, threshold);
+      if (selection_only)
+        {
+          if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                          &x, &y, &width, &height))
+            return NULL;
+        }
+      else
+        {
+          x      = 0;
+          y      = 0;
+          width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          height = gimp_item_get_height (GIMP_ITEM (drawable));
+        }
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      colors =
+        gimp_palette_import_extract (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                     colors,
+                                     GIMP_PICKABLE (drawable),
+                                     off_x, off_y,
+                                     selection_only,
+                                     x, y, width, height,
+                                     n_colors, threshold);
+    }
 
   return gimp_palette_import_make_palette (colors, palette_name, context,
                                            n_colors);
