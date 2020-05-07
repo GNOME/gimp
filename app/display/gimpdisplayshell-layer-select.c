@@ -49,7 +49,7 @@ typedef struct
   GtkWidget *label;
 
   GimpImage *image;
-  GimpLayer *orig_layer;
+  GList     *orig_layers;
 } LayerSelect;
 
 
@@ -57,7 +57,7 @@ typedef struct
 
 static LayerSelect * layer_select_new       (GimpDisplayShell *shell,
                                              GimpImage        *image,
-                                             GimpLayer        *layer,
+                                             GList            *layers,
                                              gint              view_size);
 static void          layer_select_destroy   (LayerSelect      *layer_select,
                                              GdkEvent         *event);
@@ -77,7 +77,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 {
   LayerSelect   *layer_select;
   GimpImage     *image;
-  GimpLayer     *layer;
+  GList         *layers;
   GdkGrabStatus  status;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -85,12 +85,12 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 
   image = gimp_display_get_image (shell->display);
 
-  layer = gimp_image_get_active_layer (image);
+  layers = gimp_image_get_selected_layers (image);
 
-  if (! layer)
+  if (! layers)
     return;
 
-  layer_select = layer_select_new (shell, image, layer,
+  layer_select = layer_select_new (shell, image, layers,
                                    image->gimp->config->layer_preview_size);
   layer_select_advance (layer_select, move);
 
@@ -117,7 +117,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 static LayerSelect *
 layer_select_new (GimpDisplayShell *shell,
                   GimpImage        *image,
-                  GimpLayer        *layer,
+                  GList            *layers,
                   gint              view_size)
 {
   LayerSelect *layer_select;
@@ -127,8 +127,8 @@ layer_select_new (GimpDisplayShell *shell,
 
   layer_select = g_slice_new0 (LayerSelect);
 
-  layer_select->image      = image;
-  layer_select->orig_layer = layer;
+  layer_select->image       = image;
+  layer_select->orig_layers = g_list_copy (layers);
 
   layer_select->window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_role (GTK_WINDOW (layer_select->window), "gimp-layer-select");
@@ -167,12 +167,12 @@ layer_select_new (GimpDisplayShell *shell,
   gimp_view_renderer_set_color_config (GIMP_VIEW (layer_select->view)->renderer,
                                        gimp_display_shell_get_color_config (shell));
   gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
-                          GIMP_VIEWABLE (layer));
+                          g_list_length (layers) == 1 ? GIMP_VIEWABLE (layers->data) : NULL);
   gtk_box_pack_start (GTK_BOX (hbox), layer_select->view, FALSE, FALSE, 0);
   gtk_widget_show (layer_select->view);
 
   /*  the layer name label */
-  layer_select->label = gtk_label_new (gimp_object_get_name (layer));
+  layer_select->label = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (hbox), layer_select->label, FALSE, FALSE, 0);
   gtk_widget_show (layer_select->label);
 
@@ -187,11 +187,27 @@ layer_select_destroy (LayerSelect *layer_select,
 
   gtk_widget_destroy (layer_select->window);
 
-  if (layer_select->orig_layer !=
-      gimp_image_get_active_layer (layer_select->image))
+  /* Flush only if selection actually changed. */
+  if (g_list_length (layer_select->orig_layers) !=
+      g_list_length (gimp_image_get_selected_layers (layer_select->image)))
     {
       gimp_image_flush (layer_select->image);
     }
+  else
+    {
+      GList *layers;
+      GList *iter;
+
+      layers = gimp_image_get_selected_layers (layer_select->image);
+
+      for (iter = layers; iter; iter = iter->next)
+        if (! g_list_find (layer_select->orig_layers, iter->data))
+          {
+            gimp_image_flush (layer_select->image);
+            break;
+          }
+    }
+  g_list_free (layer_select->orig_layers);
 
   g_slice_free (LayerSelect, layer_select);
 }
@@ -200,8 +216,9 @@ static void
 layer_select_advance (LayerSelect *layer_select,
                       gint         move)
 {
-  GimpLayer *active_layer;
-  GimpLayer *next_layer;
+  GList     *next_layers = NULL;
+  GList     *selected_layers;
+  GList     *iter;
   GList     *layers;
   gint       n_layers;
   gint       index;
@@ -213,34 +230,51 @@ layer_select_advance (LayerSelect *layer_select,
   if (gimp_image_get_floating_selection (layer_select->image))
     return;
 
-  active_layer = gimp_image_get_active_layer (layer_select->image);
+  selected_layers = gimp_image_get_selected_layers (layer_select->image);
+
+  if (! selected_layers)
+    return;
 
   layers   = gimp_image_get_layer_list (layer_select->image);
   n_layers = g_list_length (layers);
 
-  index = g_list_index (layers, active_layer);
-  index += move;
+  for (iter = selected_layers; iter; iter = iter->next)
+    {
+      GimpLayer *next_layer;
 
-  if (index < 0)
-    index = n_layers - 1;
-  else if (index >= n_layers)
-    index = 0;
+      index = g_list_index (layers, iter->data);
+      index += move;
 
-  next_layer = g_list_nth_data (layers, index);
+      if (index < 0)
+        index = n_layers - 1;
+      else if (index >= n_layers)
+        index = 0;
 
+      next_layer = g_list_nth_data (layers, index);
+
+      if (next_layer && ! g_list_find (next_layers, next_layer))
+        next_layers = g_list_prepend (next_layers, next_layer);
+    }
   g_list_free (layers);
 
-  if (next_layer && next_layer != active_layer)
-    {
-      active_layer = gimp_image_set_active_layer (layer_select->image,
-                                                  next_layer);
+  gimp_image_set_selected_layers (layer_select->image, next_layers);
+  selected_layers = gimp_image_get_selected_layers (layer_select->image);
 
-      if (active_layer)
+  if (selected_layers)
+    {
+      if (g_list_length (selected_layers) == 1)
         {
           gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
-                                  GIMP_VIEWABLE (active_layer));
+                                  GIMP_VIEWABLE (selected_layers->data));
           gtk_label_set_text (GTK_LABEL (layer_select->label),
-                              gimp_object_get_name (active_layer));
+                              gimp_object_get_name (selected_layers->data));
+        }
+      else
+        {
+          gimp_view_set_viewable (GIMP_VIEW (layer_select->view), NULL);
+          gtk_label_set_text (GTK_LABEL (layer_select->label),
+                              move > 0 ? _("Layer Selection Moved Down") :
+                                         _("Layer Selection Moved Up"));
         }
     }
 }
