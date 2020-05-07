@@ -403,8 +403,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                                                   NULL, /* sync all */
                                                   shell);
 
-  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
-                                        gimp_image_get_active_layer (image));
+  gimp_canvas_layer_boundary_set_layers (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                         gimp_image_get_selected_layers (image));
 
   gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
                                          image);
@@ -443,8 +443,8 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimp_display_shell_icon_update_stop (shell);
 
-  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
-                                        NULL);
+  gimp_canvas_layer_boundary_set_layers (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                         NULL);
 
   gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
                                          NULL);

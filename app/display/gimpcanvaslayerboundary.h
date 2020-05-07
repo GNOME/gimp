@@ -47,12 +47,12 @@ struct _GimpCanvasLayerBoundaryClass
 };
 
 
-GType            gimp_canvas_layer_boundary_get_type  (void) G_GNUC_CONST;
+GType            gimp_canvas_layer_boundary_get_type   (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_layer_boundary_new       (GimpDisplayShell        *shell);
+GimpCanvasItem * gimp_canvas_layer_boundary_new        (GimpDisplayShell        *shell);
 
-void             gimp_canvas_layer_boundary_set_layer (GimpCanvasLayerBoundary *boundary,
-                                                       GimpLayer               *layer);
+void             gimp_canvas_layer_boundary_set_layers (GimpCanvasLayerBoundary *boundary,
+                                                        GList                   *layers);
 
 
 #endif /* __GIMP_CANVAS_LAYER_BOUNDARY_H__ */

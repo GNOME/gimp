@@ -40,7 +40,7 @@
 enum
 {
   PROP_0,
-  PROP_LAYER,
+  PROP_LAYERS,
   PROP_EDIT_MASK
 };
 
@@ -49,8 +49,8 @@ typedef struct _GimpCanvasLayerBoundaryPrivate GimpCanvasLayerBoundaryPrivate;
 
 struct _GimpCanvasLayerBoundaryPrivate
 {
-  GimpLayer *layer;
-  gboolean   edit_mask;
+  GList    *layers;
+  gboolean  edit_mask;
 };
 
 #define GET_PRIVATE(layer_boundary) \
@@ -95,10 +95,9 @@ gimp_canvas_layer_boundary_class_init (GimpCanvasLayerBoundaryClass *klass)
   item_class->get_extents    = gimp_canvas_layer_boundary_get_extents;
   item_class->stroke         = gimp_canvas_layer_boundary_stroke;
 
-  g_object_class_install_property (object_class, PROP_LAYER,
-                                   g_param_spec_object ("layer", NULL, NULL,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_LAYERS,
+                                   g_param_spec_pointer ("layers", NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_EDIT_MASK,
                                    g_param_spec_boolean ("edit-mask", NULL, NULL,
@@ -116,9 +115,17 @@ gimp_canvas_layer_boundary_finalize (GObject *object)
 {
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (object);
 
-  if (private->layer)
-    g_object_remove_weak_pointer (G_OBJECT (private->layer),
-                                  (gpointer) &private->layer);
+  if (private->layers)
+    {
+      GList *iter;
+
+      for (iter = private->layers; iter; iter = iter->next)
+        if (iter->data)
+          g_object_remove_weak_pointer (G_OBJECT (iter->data),
+                                        (gpointer) &iter->data);
+
+      g_list_free (private->layers);
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -133,14 +140,26 @@ gimp_canvas_layer_boundary_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_LAYER:
-      if (private->layer)
-        g_object_remove_weak_pointer (G_OBJECT (private->layer),
-                                      (gpointer) &private->layer);
-      private->layer = g_value_get_object (value); /* don't ref */
-      if (private->layer)
-        g_object_add_weak_pointer (G_OBJECT (private->layer),
-                                   (gpointer) &private->layer);
+    case PROP_LAYERS:
+      if (private->layers)
+        {
+          GList *iter;
+          for (iter = private->layers; iter; iter = iter->next)
+            {
+              if (iter->data)
+                g_object_remove_weak_pointer (G_OBJECT (iter->data),
+                                              (gpointer) &iter->data);
+            }
+          g_list_free (private->layers);
+        }
+      private->layers = g_list_copy (g_value_get_pointer (value));
+      if (private->layers)
+        {
+          GList *iter;
+          for (iter = private->layers; iter; iter = iter->next)
+            g_object_add_weak_pointer (G_OBJECT (iter->data),
+                                       (gpointer) &iter->data);
+        }
       break;
     case PROP_EDIT_MASK:
       private->edit_mask = g_value_get_boolean (value);
@@ -162,8 +181,8 @@ gimp_canvas_layer_boundary_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_LAYER:
-      g_value_set_object (value, private->layer);
+    case PROP_LAYERS:
+      g_value_set_pointer (value, private->layers);
       break;
     case PROP_EDIT_MASK:
       g_value_set_boolean (value, private->edit_mask);
@@ -181,7 +200,7 @@ gimp_canvas_layer_boundary_draw (GimpCanvasItem *item,
 {
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (item);
 
-  if (private->layer)
+  if (private->layers)
     GIMP_CANVAS_ITEM_CLASS (parent_class)->draw (item, cr);
 }
 
@@ -190,7 +209,7 @@ gimp_canvas_layer_boundary_get_extents (GimpCanvasItem *item)
 {
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (item);
 
-  if (private->layer)
+  if (private->layers)
     return GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item);
 
   return NULL;
@@ -202,11 +221,14 @@ gimp_canvas_layer_boundary_stroke (GimpCanvasItem *item,
 {
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (item);
   GimpDisplayShell               *shell   = gimp_canvas_item_get_shell (item);
+  GList                          *iter;
 
-  gimp_canvas_set_layer_style (gimp_canvas_item_get_canvas (item), cr,
-                               private->layer,
-                               shell->offset_x, shell->offset_y);
-  cairo_stroke (cr);
+  for (iter = private->layers; iter; iter = iter->next)
+    {
+      gimp_canvas_set_layer_style (gimp_canvas_item_get_canvas (item), cr,
+                                   iter->data, shell->offset_x, shell->offset_y);
+      cairo_stroke (cr);
+    }
 }
 
 GimpCanvasItem *
@@ -220,78 +242,110 @@ gimp_canvas_layer_boundary_new (GimpDisplayShell *shell)
 }
 
 void
-gimp_canvas_layer_boundary_set_layer (GimpCanvasLayerBoundary *boundary,
-                                      GimpLayer               *layer)
+gimp_canvas_layer_boundary_set_layers (GimpCanvasLayerBoundary *boundary,
+                                       GList                   *layers)
 {
   GimpCanvasLayerBoundaryPrivate *private;
+  GList                          *shown_layers;
+  GList                          *iter;
+  gboolean                        changed;
 
   g_return_if_fail (GIMP_IS_CANVAS_LAYER_BOUNDARY (boundary));
-  g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
 
   private = GET_PRIVATE (boundary);
 
-  if (layer && gimp_layer_is_floating_sel (layer))
+  if (g_list_length (layers) == 1 && gimp_layer_is_floating_sel (layers->data))
     {
       GimpDrawable *drawable;
 
-      drawable = gimp_layer_get_floating_sel_drawable (layer);
+      drawable = gimp_layer_get_floating_sel_drawable (layers->data);
 
       if (GIMP_IS_CHANNEL (drawable))
         {
           /*  if the owner drawable is a channel, show no outline  */
 
-          layer = NULL;
+          shown_layers = NULL;
         }
       else
         {
           /*  otherwise, set the layer to the owner drawable  */
 
-          layer = GIMP_LAYER (drawable);
+          shown_layers = g_list_prepend (NULL, GIMP_LAYER (drawable));
+        }
+    }
+  else
+    {
+      shown_layers = g_list_copy (layers);
+    }
+
+  changed = (g_list_length (shown_layers) != g_list_length (private->layers));
+  if (! changed)
+    {
+      for (iter = shown_layers; iter; iter = iter->next)
+        {
+          if (! g_list_find (private->layers, iter->data))
+            {
+              changed = TRUE;
+              break;
+            }
         }
     }
 
-  if (layer != private->layer)
+  if (changed)
     {
       gboolean edit_mask = FALSE;
+      gint     x1        = G_MAXINT;
+      gint     x2        = G_MININT;
+      gint     y1        = G_MAXINT;
+      gint     y2        = G_MININT;
+
+      for (iter = layers; iter; iter = iter->next)
+        {
+          if (iter->data)
+            {
+              GimpItem *item = GIMP_ITEM (iter->data);
+
+              x1 = MIN (x1, gimp_item_get_offset_x (item));
+              y1 = MIN (y1, gimp_item_get_offset_y (item));
+
+              x2 = MAX (x2,
+                        gimp_item_get_offset_x (item) +
+                        gimp_item_get_width    (item));
+              y2 = MAX (y2,
+                        gimp_item_get_offset_y (item) +
+                        gimp_item_get_height   (item));
+
+              /* We can only edit one layer mask at a time. */
+              if (gimp_layer_get_mask (iter->data) &&
+                  gimp_layer_get_edit_mask (iter->data))
+                edit_mask = TRUE;
+            }
+        }
 
       gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (boundary));
 
-      if (layer)
-        {
-          GimpItem *item = GIMP_ITEM (layer);
-
-          edit_mask = (gimp_layer_get_mask (layer) &&
-                       gimp_layer_get_edit_mask (layer));
-
-          g_object_set (boundary,
-                        "x",      (gdouble) gimp_item_get_offset_x (item),
-                        "y",      (gdouble) gimp_item_get_offset_y (item),
-                        "width",  (gdouble) gimp_item_get_width  (item),
-                        "height", (gdouble) gimp_item_get_height (item),
-                        NULL);
-        }
-
+      if (layers)
+        g_object_set (boundary,
+                      "x",      (gdouble) x1,
+                      "y",      (gdouble) y1,
+                      "width",  (gdouble) (x2 - x1),
+                      "height", (gdouble) (y2 - y1),
+                      NULL);
       g_object_set (boundary,
-                    "layer",     layer,
+                    "layers",    layers,
                     "edit-mask", edit_mask,
                     NULL);
 
       gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (boundary));
     }
-  else if (layer && layer == private->layer)
+  else if (layers)
     {
-      GimpItem *item = GIMP_ITEM (layer);
-      gint      lx, ly, lw, lh;
-      gdouble   x, y, w ,h;
-      gboolean  edit_mask;
-
-      lx = gimp_item_get_offset_x (item);
-      ly = gimp_item_get_offset_y (item);
-      lw = gimp_item_get_width  (item);
-      lh = gimp_item_get_height (item);
-
-      edit_mask = (gimp_layer_get_mask (layer) &&
-                   gimp_layer_get_edit_mask (layer));
+      gboolean edit_mask = FALSE;
+      gint     x1        = G_MAXINT;
+      gint     x2        = G_MININT;
+      gint     y1        = G_MAXINT;
+      gint     y2        = G_MININT;
+      gdouble  x, y, w, h;
 
       g_object_get (boundary,
                     "x",      &x,
@@ -300,23 +354,46 @@ gimp_canvas_layer_boundary_set_layer (GimpCanvasLayerBoundary *boundary,
                     "height", &h,
                     NULL);
 
-      if (lx        != (gint) x ||
-          ly        != (gint) y ||
-          lw        != (gint) w ||
-          lh        != (gint) h ||
+      for (iter = layers; iter; iter = iter->next)
+        {
+          if (iter->data)
+            {
+              GimpItem *item = GIMP_ITEM (iter->data);
+
+              x1 = MIN (x1, gimp_item_get_offset_x (item));
+              y1 = MIN (y1, gimp_item_get_offset_y (item));
+
+              x2 = MAX (x2,
+                        gimp_item_get_offset_x (item) +
+                        gimp_item_get_width    (item));
+              y2 = MAX (y2,
+                        gimp_item_get_offset_y (item) +
+                        gimp_item_get_height   (item));
+
+              if (gimp_layer_get_mask (iter->data) &&
+                  gimp_layer_get_edit_mask (iter->data))
+                edit_mask = TRUE;
+            }
+        }
+
+      if (x1        != (gint) x ||
+          x1        != (gint) y ||
+          (x2 - x1) != (gint) w ||
+          (y2 - y1) != (gint) h ||
           edit_mask != private->edit_mask)
         {
           gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (boundary));
 
           g_object_set (boundary,
-                        "x",         (gdouble) lx,
-                        "y",         (gdouble) ly,
-                        "width",     (gdouble) lw,
-                        "height",    (gdouble) lh,
+                        "x",      (gdouble) x1,
+                        "y",      (gdouble) y1,
+                        "width",  (gdouble) (x2 - x1),
+                        "height", (gdouble) (y2 - y1),
                         "edit-mask", edit_mask,
                         NULL);
 
           gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (boundary));
         }
     }
+  g_list_free (shown_layers);
 }

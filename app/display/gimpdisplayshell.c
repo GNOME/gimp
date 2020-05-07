@@ -1916,8 +1916,8 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 
   gimp_display_shell_title_update (shell);
 
-  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
-                                        gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
+  gimp_canvas_layer_boundary_set_layers (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                         gimp_image_get_selected_layers (gimp_display_get_image (shell->display)));
 
   gimp_canvas_canvas_boundary_set_image (GIMP_CANVAS_CANVAS_BOUNDARY (shell->canvas_boundary),
                                          gimp_display_get_image (shell->display));
