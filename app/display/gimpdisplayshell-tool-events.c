@@ -1554,7 +1554,9 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
 
       if (layer && ! gimp_image_get_floating_selection (image))
         {
-          if (layer != gimp_image_get_active_layer (image))
+          GList *layers = gimp_image_get_selected_layers (image);
+
+          if (g_list_length (layers) != 1 || layer != layers->data)
             {
               GimpStatusbar *statusbar;
 
