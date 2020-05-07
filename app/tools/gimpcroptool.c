@@ -27,6 +27,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpitem.h"
 #include "core/gimptoolinfo.h"
 
@@ -94,7 +95,7 @@ static void      gimp_crop_tool_image_changed              (GimpCropTool        
                                                             GimpImage            *image,
                                                             GimpContext          *context);
 static void      gimp_crop_tool_image_size_changed         (GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_image_active_layer_changed (GimpCropTool         *crop_tool);
+static void   gimp_crop_tool_image_selected_layers_changed (GimpCropTool         *crop_tool);
 static void      gimp_crop_tool_layer_size_changed         (GimpCropTool         *crop_tool);
 
 static void      gimp_crop_tool_auto_shrink                (GimpCropTool         *crop_tool);
@@ -190,7 +191,7 @@ gimp_crop_tool_dispose (GObject *object)
 {
   GimpCropTool *crop_tool = GIMP_CROP_TOOL (object);
 
-  /* Clean up current_image and current_layer. */
+  /* Clean up current_image and current_layers. */
   gimp_crop_tool_image_changed (crop_tool, NULL, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -445,33 +446,49 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
         {
           if (options->layer_only)
             {
-              GimpLayer *layer = gimp_image_get_active_layer (image);
-              gint       off_x, off_y;
+              GList *layers = gimp_image_get_selected_layers (image);
+              GList *iter;
+              gint   off_x, off_y;
+              gchar *undo_text;
 
-              if (! layer)
+              if (! layers)
                 {
                   gimp_tool_message_literal (tool, tool->display,
-                                             _("There is no active layer to crop."));
+                                             _("There are no selected layers to crop."));
                   return;
                 }
 
-              if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
+              for (iter = layers; iter; iter = iter->next)
+                if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+                  break;
+
+              if (iter == NULL)
                 {
                   gimp_tool_message_literal (tool, tool->display,
-                                             _("The active layer's pixels are locked."));
-                  gimp_tools_blink_lock_box (tool->display->gimp,
-                                             GIMP_ITEM (layer));
+                                             _("All selected layers' pixels are locked."));
+                  gimp_tools_blink_lock_box (tool->display->gimp, GIMP_ITEM (layers->data));
                   return;
                 }
 
-              gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+              undo_text = ngettext ("Resize Layer", "Resize %d layers",
+                                    g_list_length (layers));
+              undo_text = g_strdup_printf (undo_text, g_list_length (layers));
+              gimp_image_undo_group_start (image,
+                                           GIMP_UNDO_GROUP_IMAGE_CROP,
+                                           undo_text);
+              g_free (undo_text);
+              for (iter = layers; iter; iter = iter->next)
+                {
+                  gimp_item_get_offset (GIMP_ITEM (iter->data), &off_x, &off_y);
 
-              off_x -= x;
-              off_y -= y;
+                  off_x -= x;
+                  off_y -= y;
 
-              gimp_item_resize (GIMP_ITEM (layer),
-                                GIMP_CONTEXT (options), options->fill_type,
-                                w, h, off_x, off_y);
+                  gimp_item_resize (GIMP_ITEM (iter->data),
+                                    GIMP_CONTEXT (options), options->fill_type,
+                                    w, h, off_x, off_y);
+                }
+              gimp_image_undo_group_end (image);
             }
           else
             {
@@ -626,7 +643,7 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
                                             gimp_crop_tool_image_size_changed,
                                             NULL);
       g_signal_handlers_disconnect_by_func (crop_tool->current_image,
-                                            gimp_crop_tool_image_active_layer_changed,
+                                            gimp_crop_tool_image_selected_layers_changed,
                                             NULL);
 
       g_object_remove_weak_pointer (G_OBJECT (crop_tool->current_image),
@@ -645,7 +662,7 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
                                crop_tool,
                                G_CONNECT_SWAPPED);
       g_signal_connect_object (crop_tool->current_image, "selected-layers-changed",
-                               G_CALLBACK (gimp_crop_tool_image_active_layer_changed),
+                               G_CALLBACK (gimp_crop_tool_image_selected_layers_changed),
                                crop_tool,
                                G_CONNECT_SWAPPED);
     }
@@ -653,7 +670,7 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
   /* Make sure we are connected to "size-changed" for the initial
    * layer.
    */
-  gimp_crop_tool_image_active_layer_changed (crop_tool);
+  gimp_crop_tool_image_selected_layers_changed (crop_tool);
 
   gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (crop_tool), FALSE);
 }
@@ -665,37 +682,50 @@ gimp_crop_tool_image_size_changed (GimpCropTool *crop_tool)
 }
 
 static void
-gimp_crop_tool_image_active_layer_changed (GimpCropTool *crop_tool)
+gimp_crop_tool_image_selected_layers_changed (GimpCropTool *crop_tool)
 {
-  if (crop_tool->current_layer)
-    {
-      g_signal_handlers_disconnect_by_func (crop_tool->current_layer,
-                                            gimp_crop_tool_layer_size_changed,
-                                            NULL);
+  GList *iter;
 
-      g_object_remove_weak_pointer (G_OBJECT (crop_tool->current_layer),
-                                    (gpointer) &crop_tool->current_layer);
+  if (crop_tool->current_layers)
+    {
+      for (iter = crop_tool->current_layers; iter; iter = iter->next)
+        {
+          if (iter->data)
+            {
+              g_signal_handlers_disconnect_by_func (iter->data,
+                                                    gimp_crop_tool_layer_size_changed,
+                                                    NULL);
+
+              g_object_remove_weak_pointer (G_OBJECT (iter->data),
+                                            (gpointer) &iter->data);
+            }
+        }
+      g_list_free (crop_tool->current_layers);
+      crop_tool->current_layers = NULL;
     }
 
   if (crop_tool->current_image)
     {
-      crop_tool->current_layer =
-        gimp_image_get_active_layer (crop_tool->current_image);
+      crop_tool->current_layers = gimp_image_get_selected_layers (crop_tool->current_image);
+      crop_tool->current_layers = g_list_copy (crop_tool->current_layers);
     }
   else
     {
-      crop_tool->current_layer = NULL;
+      crop_tool->current_layers = NULL;
     }
 
-  if (crop_tool->current_layer)
+  if (crop_tool->current_layers)
     {
-      g_object_add_weak_pointer (G_OBJECT (crop_tool->current_layer),
-                                 (gpointer) &crop_tool->current_layer);
+      for (iter = crop_tool->current_layers; iter; iter = iter->next)
+        {
+          g_object_add_weak_pointer (G_OBJECT (iter->data),
+                                     (gpointer) &iter->data);
 
-      g_signal_connect_object (crop_tool->current_layer, "size-changed",
-                               G_CALLBACK (gimp_crop_tool_layer_size_changed),
-                               crop_tool,
-                               G_CONNECT_SWAPPED);
+          g_signal_connect_object (iter->data, "size-changed",
+                                   G_CALLBACK (gimp_crop_tool_layer_size_changed),
+                                   crop_tool,
+                                   G_CONNECT_SWAPPED);
+        }
     }
 
   gimp_crop_tool_update_option_defaults (crop_tool, FALSE);

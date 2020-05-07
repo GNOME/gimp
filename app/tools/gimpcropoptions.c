@@ -92,8 +92,8 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
                             "layer-only",
-                            _("Current layer only"),
-                            _("Crop only currently selected layer"),
+                            _("Current layers only"),
+                            _("Crop only currently selected layers"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
