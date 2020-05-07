@@ -135,7 +135,7 @@ image_merge_layers_dialog_new (GimpImage               *image,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gtk_check_button_new_with_mnemonic (_("Merge within active _group only"));
+  button = gtk_check_button_new_with_mnemonic (_("Merge within active _groups only"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->merge_active_group);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

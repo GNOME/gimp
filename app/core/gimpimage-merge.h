@@ -19,7 +19,7 @@
 #define __GIMP_IMAGE_MERGE_H__
 
 
-GimpLayer   * gimp_image_merge_visible_layers  (GimpImage      *image,
+GList       * gimp_image_merge_visible_layers  (GimpImage      *image,
                                                 GimpContext    *context,
                                                 GimpMergeType   merge_type,
                                                 gboolean        merge_active_group,

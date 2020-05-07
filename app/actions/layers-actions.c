@@ -1040,7 +1040,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-merge-down-button", layer && !fs && !ac);
   SET_VISIBLE   ("layers-merge-group",       children);
   SET_SENSITIVE ("layers-merge-group",       layer && !fs && !ac && children);
-  SET_SENSITIVE ("layers-merge-layers",      layer && !fs && !ac);
+  SET_SENSITIVE ("layers-merge-layers",      n_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",     layer && !fs && !ac);
 
   SET_VISIBLE   ("layers-text-discard",       text_layer && !ac);

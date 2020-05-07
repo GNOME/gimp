@@ -66,7 +66,7 @@ static GimpLayer * gimp_image_merge_layers (GimpImage     *image,
 
 /*  public functions  */
 
-GimpLayer *
+GList *
 gimp_image_merge_visible_layers (GimpImage     *image,
                                  GimpContext   *context,
                                  GimpMergeType  merge_type,
@@ -74,10 +74,11 @@ gimp_image_merge_visible_layers (GimpImage     *image,
                                  gboolean       discard_invisible,
                                  GimpProgress  *progress)
 {
-  GimpContainer *container;
-  GList         *list;
-  GSList        *merge_list     = NULL;
-  GSList        *invisible_list = NULL;
+  const gchar *undo_desc  = C_("undo-type", "Merge Visible Layers");
+  GList       *containers = NULL;
+  GList       *new_layers = NULL;
+  GList       *iter;
+  GList       *iter2;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -85,89 +86,119 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 
   if (merge_active_group)
     {
-      GimpLayer *active_layer = gimp_image_get_active_layer (image);
+      GList *selected_layers = gimp_image_get_selected_layers (image);
 
       /*  if the active layer is the floating selection, get the
        *  underlying drawable, but only if it is a layer
        */
-      if (active_layer && gimp_layer_is_floating_sel (active_layer))
+      if (g_list_length (selected_layers) == 1 && gimp_layer_is_floating_sel (selected_layers->data))
         {
           GimpDrawable *fs_drawable;
 
-          fs_drawable = gimp_layer_get_floating_sel_drawable (active_layer);
+          fs_drawable = gimp_layer_get_floating_sel_drawable (selected_layers->data);
 
           if (GIMP_IS_LAYER (fs_drawable))
-            active_layer = GIMP_LAYER (fs_drawable);
+            containers = g_list_prepend (containers,
+                                         gimp_item_get_container (GIMP_ITEM (fs_drawable)));
         }
-
-      if (active_layer)
-        container = gimp_item_get_container (GIMP_ITEM (active_layer));
       else
-        container = gimp_image_get_layers (image);
-    }
-  else
-    {
-      container = gimp_image_get_layers (image);
-    }
-
-  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (container));
-       list;
-       list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-
-      if (gimp_layer_is_floating_sel (layer))
-        continue;
-
-      if (gimp_item_get_visible (GIMP_ITEM (layer)))
         {
-          merge_list = g_slist_append (merge_list, layer);
-        }
-      else if (discard_invisible)
-        {
-          invisible_list = g_slist_append (invisible_list, layer);
+          for (iter = selected_layers; iter; iter = iter->next)
+            if (! gimp_item_get_parent (iter->data))
+              break;
+
+          /* No need to list selected groups if any selected layer is
+           * to-level.
+           */
+          if (iter == NULL)
+            {
+              for (iter = selected_layers; iter; iter = iter->next)
+                {
+                  for (iter2 = selected_layers; iter2; iter2 = iter2->next)
+                    {
+                      /* Only retain a selected layer's container if no
+                       * other selected layers are its parents.
+                       */
+                      if (iter->data != iter2->data &&
+                          gimp_item_is_ancestor (iter->data, iter2->data))
+                        break;
+                    }
+                  if (iter2 == NULL &&
+                      ! g_list_find (containers, gimp_item_get_container (GIMP_ITEM (iter->data))))
+                    containers = g_list_prepend (containers,
+                                                 gimp_item_get_container (GIMP_ITEM (iter->data)));
+                }
+            }
         }
     }
+  if (! containers)
+    containers = g_list_prepend (NULL, gimp_image_get_layers (image));
 
-  if (merge_list)
+  gimp_set_busy (image->gimp);
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+                               undo_desc);
+
+  for (iter = containers; iter; iter = iter->next)
     {
-      GimpLayer   *layer;
-      const gchar *undo_desc = C_("undo-type", "Merge Visible Layers");
+      GimpContainer *container      = iter->data;
+      GSList        *merge_list     = NULL;
+      GSList        *invisible_list = NULL;
 
-      gimp_set_busy (image->gimp);
-
-      gimp_image_undo_group_start (image,
-                                   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
-                                   undo_desc);
-
-      /* if there's a floating selection, anchor it */
-      if (gimp_image_get_floating_selection (image))
-        floating_sel_anchor (gimp_image_get_floating_selection (image));
-
-      layer = gimp_image_merge_layers (image,
-                                       container,
-                                       merge_list, context, merge_type,
-                                       undo_desc, progress);
-      g_slist_free (merge_list);
-
-      if (invisible_list)
+      for (iter2 = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (container));
+           iter2;
+           iter2 = g_list_next (iter2))
         {
-          GSList *list;
+          GimpLayer *layer = iter2->data;
 
-          for (list = invisible_list; list; list = g_slist_next (list))
-            gimp_image_remove_layer (image, list->data, TRUE, NULL);
+          if (gimp_layer_is_floating_sel (layer))
+            continue;
 
-          g_slist_free (invisible_list);
+          if (gimp_item_get_visible (GIMP_ITEM (layer)))
+            {
+              merge_list = g_slist_append (merge_list, layer);
+            }
+          else if (discard_invisible)
+            {
+              invisible_list = g_slist_append (invisible_list, layer);
+            }
         }
 
-      gimp_image_undo_group_end (image);
+      if (merge_list)
+        {
+          GimpLayer   *layer;
+          /* if there's a floating selection, anchor it */
+          if (gimp_image_get_floating_selection (image))
+            floating_sel_anchor (gimp_image_get_floating_selection (image));
 
-      gimp_unset_busy (image->gimp);
+          layer = gimp_image_merge_layers (image,
+                                           container,
+                                           merge_list, context, merge_type,
+                                           undo_desc, progress);
+          g_slist_free (merge_list);
 
-      return layer;
+          if (invisible_list)
+            {
+              GSList *list;
+
+              for (list = invisible_list; list; list = g_slist_next (list))
+                gimp_image_remove_layer (image, list->data, TRUE, NULL);
+
+              g_slist_free (invisible_list);
+            }
+
+          new_layers = g_list_prepend (new_layers, layer);
+        }
     }
 
-  return gimp_image_get_active_layer (image);
+  gimp_image_set_selected_layers (image, new_layers);
+  gimp_image_undo_group_end (image);
+  gimp_unset_busy (image->gimp);
+
+  g_list_free (new_layers);
+  g_list_free (containers);
+
+  return gimp_image_get_selected_layers (image);
 }
 
 GimpLayer *

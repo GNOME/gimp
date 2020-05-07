@@ -2353,7 +2353,7 @@ prefs_dialog_new (Gimp       *gimp,
                             GTK_GRID (grid), 0, size_group);
 
   prefs_check_button_add (object, "layer-merge-active-group-only",
-                          _("Merge within active group only"),
+                          _("Merge within active groups only"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "layer-merge-discard-invisible",
                           _("Discard invisible layers"),

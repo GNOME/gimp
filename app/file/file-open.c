@@ -618,16 +618,13 @@ file_open_layers (Gimp                *gimp,
 
       if (merge_visible && n_visible > 1)
         {
-          GimpLayer *layer;
-
           g_list_free (layers);
 
-          layer = gimp_image_merge_visible_layers (new_image, context,
-                                                   GIMP_CLIP_TO_IMAGE,
-                                                   FALSE, FALSE,
-                                                   NULL);
-
-          layers = g_list_prepend (NULL, layer);
+          layers = gimp_image_merge_visible_layers (new_image, context,
+                                                    GIMP_CLIP_TO_IMAGE,
+                                                    FALSE, FALSE,
+                                                    NULL);
+          layers = g_list_copy (layers);
         }
 
       if (layers)

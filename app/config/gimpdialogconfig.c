@@ -388,7 +388,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
                             "layer-merge-active-group-only",
-                            "Default layer merge active group only",
+                            "Default layer merge active groups only",
                             LAYER_MERGE_ACTIVE_GROUP_ONLY_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);

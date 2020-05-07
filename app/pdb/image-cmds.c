@@ -1393,9 +1393,16 @@ image_merge_visible_layers_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      layer = gimp_image_merge_visible_layers (image, context, merge_type,
-                                               FALSE, FALSE,
-                                               progress);
+      GList *layers;
+
+      layers = gimp_image_merge_visible_layers (image, context, merge_type,
+                                                FALSE, FALSE, progress);
+
+      if (layers)
+        /* With merge_selected_groups set to FALSE, we always get only a
+         * single selected layer.
+         */
+        layer = layers->data;
 
       if (! layer)
         success = FALSE;
