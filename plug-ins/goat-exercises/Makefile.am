@@ -82,6 +82,41 @@ goat_exercise_py3dir = $(gimpplugindir)/plug-ins/goat-exercise-py3
 goat_exercise_py3_SCRIPTS = goat-exercise-py3.py
 endif
 
+# Vala (compiled to C) version
+
+if ENABLE_VAPIGEN
+
+goat_exercise_vala_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise-vala
+goat_exercise_vala_datadir    = $(goat_exercise_vala_libexecdir)
+
+goat_exercise_vala_libexec_PROGRAMS = goat-exercise-vala
+goat_exercise_vala_libexec_DATA = goat-exercise-vala.vala
+
+goat_exercise_vala_SOURCES = goat-exercise-vala.vala
+
+goat_exercise_vala_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(CAIRO_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
+	$(GEGL_LIBS)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(goat_exercise_RC)
+
+goat_exercise_vala_VALAFLAGS = \
+	--vapidir=$(abs_top_builddir)/libgimp		\
+	--pkg gimp-@GIMP_API_MAJOR_VERSION@		\
+	--pkg gimp-ui-@GIMP_API_MAJOR_VERSION@
+
+endif
+
 EXTRA_DIST = \
 	goat-exercise-gjs.js	\
 	goat-exercise-lua.lua	\

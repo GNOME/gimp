@@ -49,6 +49,10 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 m4_define([alsa_required_version], [1.0.0])
 m4_define([appstream_glib_required_version], [0.7.7])
 m4_define([atk_required_version], [2.4.0])
+m4_define([babl_major_minor_version], [0.1])
+m4_define([babl_micro_version], [74])
+m4_define([babl_required_version],
+          [babl_major_minor_version.babl_micro_version])
 m4_define([babl_required_version], [0.1.74])
 m4_define([cairo_required_version], [1.14.0])
 m4_define([cairo_pdf_required_version], [1.12.2])
@@ -83,6 +87,7 @@ m4_define([poppler_required_version], [0.69.0])
 m4_define([poppler_data_required_version], [0.4.9])
 m4_define([python3_required_version], [3.6.0])
 m4_define([rsvg_required_version], [2.40.6])
+m4_define([vala_required_version], [0.40.0])
 m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([webp_required_version], [0.6.0])
 m4_define([wmf_required_version], [0.2.8])
@@ -155,6 +160,7 @@ AC_DEFINE(GIMP_TOOL_VERSION, "gimp_tool_version",
 # These are used for substitution (.pc, INSTALL, etc.).
 APPSTREAM_GLIB_REQUIRED_VERSION=appstream_glib_required_version
 ATK_REQUIRED_VERSION=atk_required_version
+BABL_MAJOR_MINOR_VERSION=babl_major_minor_version
 BABL_REQUIRED_VERSION=babl_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 CAIRO_PDF_REQUIRED_VERSION=cairo_pdf_required_version
@@ -181,6 +187,7 @@ POPPLER_REQUIRED_VERSION=poppler_required_version
 POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
 PYTHON3_REQUIRED_VERSION=python3_required_version
 RSVG_REQUIRED_VERSION=rsvg_required_version
+VALA_REQUIRED_VERSION=vala_required_version
 WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
 WMF_REQUIRED_VERSION=wmf_required_version
@@ -188,6 +195,7 @@ LIBUNWIND_REQUIRED_VERSION=libunwind_required_version
 XGETTEXT_REQUIRED_VERSION=xgettext_required_version
 AC_SUBST(APPSTREAM_GLIB_REQUIRED_VERSION)
 AC_SUBST(ATK_REQUIRED_VERSION)
+AC_SUBST(BABL_MAJOR_MINOR_VERSION)
 AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
 AC_SUBST(CAIRO_PDF_REQUIRED_VERSION)
@@ -214,6 +222,7 @@ AC_SUBST(POPPLER_REQUIRED_VERSION)
 AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
 AC_SUBST(PYTHON3_REQUIRED_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
+AC_SUBST(VALA_REQUIRED_VERSION)
 AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
 AC_SUBST(WMF_REQUIRED_VERSION)
@@ -2419,6 +2428,30 @@ fi
 AM_CONDITIONAL(HAS_LUA_INTERP, test "x$LUA" != "xno")
 AM_CONDITIONAL(BUILD_LUA, test "x$with_lua" != xno)
 
+#######################################
+# Check for Vala buildtime dependencies
+#######################################
+
+AC_ARG_WITH(vala,
+            [  --with-vala=no|yes install Vala plug-ins (default=yes)], ,
+            [with_vala=yes])
+
+if test "x$with_vala" = xno; then
+  warning_vala="
+WARNING: you disabled the installation of core Vala plug-ins. This
+         is discouraged as it won't provide the full GIMP experience."
+else
+  VAPIGEN_CHECK($VALA_REQUIRED_VERSION)
+  with_vala="yes"
+  warning_vala=
+  AC_PATH_PROG(VALAC, valac, no)
+  if test "x$VALAC" = xno; then
+    AC_MSG_ERROR([Vala-plugins are enabled, but could not find vala compiler])
+  fi
+fi
+
+AM_CONDITIONAL(BUILD_VALA, test "x$with_vala" != xno)
+
 ###########################################################
 # Some plug-ins don't build on Win32, others are Win32-only
 ###########################################################
@@ -3186,6 +3219,7 @@ Optional Plug-Ins:
   Python 3 plug-ins:         $with_python
   JavaScript plug-ins:       $with_javascript
   Lua plug-ins:              $with_lua
+  Vala plug-ins:             $with_vala
   TWAIN (Win32):             $os_win32
   Webpage:                   $have_webkit
   WMF:                       $have_libwmf
