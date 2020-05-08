@@ -29,9 +29,9 @@ G_BEGIN_DECLS
 
 /**
  * GimpProgressVtableStartFunc:
- * @message:
- * @cancelable:
- * @user_data: (closure):
+ * @message: The message to show
+ * @cancelable: Whether the procedure is cancelable
+ * @user_data: (closure): User data
  *
  * Starts the progress
  */
@@ -41,7 +41,7 @@ typedef void (* GimpProgressVtableStartFunc) (const gchar *message,
 
 /**
  * GimpProgressVtableEndFunc:
- * @user_data: (closure):
+ * @user_data: (closure): User data
  *
  * Ends the progress
  */
@@ -49,8 +49,8 @@ typedef void (* GimpProgressVtableEndFunc) (gpointer user_data);
 
 /**
  * GimpProgressVtableSetTextFunc:
- * @message:
- * @user_data: (closure):
+ * @message: The new text
+ * @user_data: (closure): User data
  *
  * Sets a new text on the progress.
  */
@@ -59,8 +59,8 @@ typedef void (* GimpProgressVtableSetTextFunc) (const gchar *message,
 
 /**
  * GimpProgressVtableSetValueFunc:
- * @percentage:
- * @user_data: (closure):
+ * @percentage: The progress in percent
+ * @user_data: (closure): User data
  *
  * Sets a new percentage on the progress.
  */
@@ -69,7 +69,7 @@ typedef void (* GimpProgressVtableSetValueFunc) (gdouble  percentage,
 
 /**
  * GimpProgressVtablePulseFunc:
- * @user_data: (closure):
+ * @user_data: (closure): User data
  *
  * Makes the progress pulse
  */
@@ -77,7 +77,7 @@ typedef void (* GimpProgressVtablePulseFunc) (gpointer user_data);
 
 /**
  * GimpProgressVtableGetWindowFunc:
- * @user_data: (closure):
+ * @user_data: (closure): User data
  *
  * Returns: the ID of the window where the progress is displayed.
  */
