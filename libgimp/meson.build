@@ -423,4 +423,42 @@ else
     include_directories: rootInclude,
     install: true,
   )
+
+  if have_vala
+    libgimp_vapi = gnome.generate_vapi('gimp-' + gimp_api_version,
+      sources: libgimp_gir[0],
+
+      packages: [
+        'babl-0.1',
+        'cairo-1.0',
+        'gdk-pixbuf-2.0',
+        'gegl-0.4',
+        'gio-2.0',
+        'glib-2.0',
+        'gobject-2.0',
+        'gtk+-3.0',
+      ],
+
+      install: true,
+    )
+
+    libgimpui_vapi = gnome.generate_vapi('gimp-ui-' + gimp_api_version,
+      sources: libgimpui_gir[0],
+
+      packages: [
+        'babl-0.1',
+        'cairo-1.0',
+        'gdk-pixbuf-2.0',
+        'gegl-0.4',
+        'gio-2.0',
+        'glib-2.0',
+        'gobject-2.0',
+        'gtk+-3.0',
+        'gimp-' + gimp_api_version,
+      ],
+
+      vapi_dirs: [ meson.current_build_dir() ],
+      install: true,
+    )
+  endif
 endif
