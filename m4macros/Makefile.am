@@ -11,7 +11,8 @@ uninstalled_m4 = \
 	ax_prog_perl_version.m4		\
 	detectcflags.m4			\
 	introspection.m4		\
-	python3dev.m4
+	python3dev.m4		\
+	vapigen.m4
 
 EXTRA_DIST = $(installed_m4) $(uninstalled_m4)
 
