@@ -388,7 +388,7 @@ gimp_image_set_colormap (GimpImage    *image,
  * are returned in RGB[A] or GRAY[A] format. The bpp return value
  * gives the number of bytes per pixel in the image.
  *
- * Returns: (transfer full): the thumbnail data.
+ * Returns: (array) (transfer full): the thumbnail data.
  **/
 guchar *
 gimp_image_get_thumbnail_data (GimpImage *image,

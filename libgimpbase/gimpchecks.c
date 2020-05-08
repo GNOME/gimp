@@ -41,8 +41,8 @@
 /**
  * gimp_checks_get_shades:
  * @type:  the checkerboard type
- * @light: return location for the light shade
- * @dark:  return location for the dark shade
+ * @light: (out) (optional): return location for the light shade
+ * @dark:  (out) (optional): return location for the dark shade
  *
  * Retrieves the actual shades of gray to use when drawing a
  * checkerboard for a certain #GimpCheckType.

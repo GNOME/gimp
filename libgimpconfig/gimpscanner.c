@@ -465,7 +465,7 @@ gimp_scanner_parse_string_no_validate (GimpScanner  *scanner,
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
  * @length: Length of the data to parse
- * @dest: (out): Return location for the parsed data
+ * @dest: (out) (array): Return location for the parsed data
  *
  * Returns: %TRUE on success
  *

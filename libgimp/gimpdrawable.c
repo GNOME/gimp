@@ -87,7 +87,7 @@ gimp_drawable_get_by_id (gint32 drawable_id)
  * Retrieves thumbnail data for the drawable identified by @drawable.
  * The thumbnail will be not larger than the requested size.
  *
- * Returns: (transfer full) (nullable): thumbnail data or %NULL if
+ * Returns: (transfer full) (array) (nullable): thumbnail data or %NULL if
  *          @drawable is invalid.
  **/
 guchar *
@@ -172,7 +172,7 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
  * Retrieves thumbnail data for the drawable identified by @drawable.
  * The thumbnail will be not larger than the requested size.
  *
- * Returns: (transfer full) (nullable): thumbnail data or %NULL if
+ * Returns: (transfer full) (array) (nullable): thumbnail data or %NULL if
  *          @drawable is invalid.
  **/
 guchar *

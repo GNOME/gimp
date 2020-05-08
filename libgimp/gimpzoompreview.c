@@ -884,8 +884,8 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
  * This function also allow to get the current width, height and bpp of the
  * #GimpZoomPreview.
  *
- * Returns: (array): newly allocated data that should be released using g_free()
- *                   when it is not any longer needed
+ * Returns: (transfer full) (array): newly allocated data that should be
+ *          released using g_free() when it is not any longer needed
  *
  * Since: 2.4
  */

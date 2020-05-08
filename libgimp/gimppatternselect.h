@@ -27,7 +27,15 @@
 
 G_BEGIN_DECLS
 
-
+/**
+ * GimpRunPatternCallback:
+ * @width: width
+ * @height: height
+ * @bpp: bytes per pixel
+ * @mask_data: (array): Mask data
+ * @dialog_closing: Dialog closing?
+ * @user_data: (closure): user data
+ */
 typedef void (* GimpRunPatternCallback)   (const gchar  *pattern_name,
                                            gint          width,
                                            gint          height,

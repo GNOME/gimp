@@ -27,7 +27,18 @@
 
 G_BEGIN_DECLS
 
-
+/**
+ * GimpRunBrushCallback:
+ * @brush_name: Name of the brush
+ * @opacity: Opacity
+ * @spacing: Spacing
+ * @paint_mode: Paint mode
+ * @width: width
+ * @height: height
+ * @mask_data: (array): Mask data
+ * @dialog_closing: Dialog closing?
+ * @user_data: (closure): user data
+ */
 typedef void (* GimpRunBrushCallback)   (const gchar          *brush_name,
                                          gdouble               opacity,
                                          gint                  spacing,
