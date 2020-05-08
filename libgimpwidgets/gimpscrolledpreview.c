@@ -930,6 +930,14 @@ gimp_scrolled_preview_thaw (GimpScrolledPreview *preview)
     }
 }
 
+/**
+ * gimp_scroll_adjustment_values:
+ * @sevent: A #GdkEventScroll
+ * @hadj: (nullable): Horizontal adjustment
+ * @vadj: (nullable): Vertical adjustment
+ * @hvalue: (out) (optional): Return location for horizontal value, or %NULL
+ * @vvalue: (out) (optional): Return location for vertical value, or %NULL
+ */
 void
 gimp_scroll_adjustment_values (GdkEventScroll *sevent,
                                GtkAdjustment  *hadj,
