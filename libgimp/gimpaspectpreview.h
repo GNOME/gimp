@@ -25,6 +25,9 @@
 #ifndef __GIMP_ASPECT_PREVIEW_H__
 #define __GIMP_ASPECT_PREVIEW_H__
 
+#include <glib-object.h>
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
 
 
