@@ -253,7 +253,8 @@ include ../libgimpmodule/Makefile.gi
 include ../libgimpthumb/Makefile.gi
 include ../libgimpwidgets/Makefile.gi
 
-INTROSPECTION_GIRS =
+INTROSPECTION_GIRS = Gimp-@GIMP_API_VERSION@.gir GimpUi-@GIMP_API_VERSION@.gir
+
 INTROSPECTION_SCANNER_ARGS = \
 	--warn-all			\
 	--add-include-path="$(srcdir)"	\
@@ -265,6 +266,7 @@ INTROSPECTION_COMPILER_ARGS = \
 
 INTROSPECTION_SCANNER_ENV = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)"
 
+### First GIR: Gimp
 Gimp-@GIMP_API_VERSION@.gir: \
 	libgimp-@GIMP_API_VERSION@.la				\
 	libgimpui-@GIMP_API_VERSION@.la				\
@@ -276,6 +278,8 @@ Gimp-@GIMP_API_VERSION@.gir: \
 	../libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la	\
 	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la	\
 	Makefile
+
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_EXPORT_PACKAGES = gimp-@GIMP_API_VERSION@
 
 # The various other GObject-Introspected libraries our API references
 # (i.e. types used in parameters or returned values).
@@ -310,31 +314,80 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
 	../libgimp/libgimp-@GIMP_API_VERSION@.la	      	\
-	../libgimp/libgimpui-@GIMP_API_VERSION@.la	       	\
 	../libgimpbase/libgimpbase-@GIMP_API_VERSION@.la  	\
 	../libgimpcolor/libgimpcolor-@GIMP_API_VERSION@.la	\
 	../libgimpconfig/libgimpconfig-@GIMP_API_VERSION@.la	\
 	../libgimpmath/libgimpmath-@GIMP_API_VERSION@.la	\
-	../libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la	\
-	../libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la	\
-	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la
+	../libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 	$(libgimp_introspectable)					\
 	../libgimp/gimpparamspecs-body.c				\
-	$(libgimpui_introspectable)					\
 	$(libgimpbase_introspectable)					\
 	$(libgimpcolor_introspectable)					\
 	$(libgimpconfig_introspectable)					\
 	$(libgimpmath_introspectable)					\
-	$(libgimpmodule_introspectable)					\
-	$(libgimpthumb_introspectable)					\
-	$(libgimpwidgets_introspectable)
+	$(libgimpmodule_introspectable)
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
+	--identifier-prefix Gimp	\
+	--symbol-prefix gimp	\
 	--c-include="libgimp/gimp.h"
 
-INTROSPECTION_GIRS += Gimp-@GIMP_API_VERSION@.gir
+### Second GIR: GimpUi
+GimpUi-@GIMP_API_VERSION@.gir: \
+	Gimp-@GIMP_API_VERSION@.gir	\
+	libgimpui-@GIMP_API_VERSION@.la				\
+	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la	\
+	Makefile
+
+GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_EXPORT_PACKAGES = gimp-ui-@GIMP_API_VERSION@
+
+# The various other GObject-Introspected libraries our API references
+# (i.e. types used in parameters or returned values).
+GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = \
+	Babl-0.1	\
+	cairo-1.0	\
+	GdkPixbuf-2.0	\
+	Gegl-0.4	\
+	Gio-2.0		\
+	GLib-2.0	\
+	GObject-2.0	\
+	Gtk-3.0
+
+GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
+	-DGIMP_COMPILATION		\
+	-DGIMP_BASE_COMPILATION		\
+	-DGIMP_COLOR_COMPILATION	\
+	-DGIMP_CONFIG_COMPILATION	\
+	-DGIMP_MATH_COMPILATION		\
+	-DGIMP_MODULE_COMPILATION	\
+	-DGIMP_THUMB_COMPILATION	\
+	-DGIMP_WIDGETS_COMPILATION	\
+	$(AM_CFLAGS)			\
+	$(AM_CPPFLAGS)			\
+	-I$(top_builddir)		\
+	-I$(top_srcdir)			\
+	$(CAIRO_CFLAGS)			\
+	$(GDK_PIXBUF_CFLAGS)		\
+	$(BABL_CFLAGS)			\
+	$(GEGL_CFLAGS)			\
+	$(GTK_CFLAGS)
+
+GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
+	../libgimp/libgimpui-@GIMP_API_VERSION@.la	       	\
+	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la
+
+GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
+	$(libgimpui_introspectable)					\
+	$(libgimpwidgets_introspectable)
+
+GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
+	--identifier-prefix Gimp	\
+	--symbol-prefix gimp	\
+	--include-uninstalled=Gimp-@GIMP_API_VERSION@.gir	\
+	--c-include="libgimp/gimpui.h"
+
 
 girdir = $(datadir)/gir-1.0
 gir_DATA = $(INTROSPECTION_GIRS)
