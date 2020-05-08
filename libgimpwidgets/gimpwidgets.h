@@ -112,7 +112,7 @@ void        gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
 
 /**
  * GIMP_RANDOM_SEED_SPINBUTTON:
- * @hbox: The #GtkHBox returned by gimp_random_seed_new().
+ * @hbox: The #GtkBox returned by gimp_random_seed_new().
  *
  * Returns: the random_seed's #GtkSpinButton.
  **/
@@ -121,7 +121,7 @@ void        gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
 
 /**
  * GIMP_RANDOM_SEED_SPINBUTTON_ADJ:
- * @hbox: The #GtkHBox returned by gimp_random_seed_new().
+ * @hbox: The #GtkBox returned by gimp_random_seed_new().
  *
  * Returns: the #GtkAdjustment of the random_seed's #GtkSpinButton.
  **/
@@ -131,7 +131,7 @@ void        gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
 
 /**
  * GIMP_RANDOM_SEED_TOGGLE:
- * @hbox: The #GtkHBox returned by gimp_random_seed_new().
+ * @hbox: The #GtkBox returned by gimp_random_seed_new().
  *
  * Returns: the random_seed's #GtkToggleButton.
  **/

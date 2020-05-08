@@ -222,7 +222,7 @@ gimp_random_seed_update (GtkWidget *widget,
  * Creates a widget that allows the user to control how the random number
  * generator is initialized.
  *
- * Returns: (transfer full): A #GtkHBox containing a #GtkSpinButton for
+ * Returns: (transfer full): A #GtkBox containing a #GtkSpinButton for
  *          the seed and a #GtkButton for setting a random seed.
  **/
 GtkWidget *
