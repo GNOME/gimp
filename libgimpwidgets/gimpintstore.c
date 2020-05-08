@@ -336,7 +336,7 @@ gimp_int_store_new_valist (const gchar *first_label,
  * gimp_int_store_lookup_by_value:
  * @model: a #GimpIntStore
  * @value: an integer value to lookup in the @model
- * @iter:  return location for the iter of the given @value
+ * @iter: (out):  return location for the iter of the given @value
  *
  * Iterate over the @model looking for @value.
  *
@@ -375,7 +375,7 @@ gimp_int_store_lookup_by_value (GtkTreeModel *model,
  * gimp_int_store_lookup_by_user_data:
  * @model: a #GimpIntStore
  * @user_data: a gpointer "user-data" to lookup in the @model
- * @iter:  return location for the iter of the given @user_data
+ * @iter: (out): return location for the iter of the given @user_data
  *
  * Iterate over the @model looking for @user_data.
  *
