@@ -1052,7 +1052,7 @@ gimp_export_image (GimpImage             **image,
  *
  * Creates a new export dialog. All file plug-ins should use this
  * dialog to get a consistent look on the export dialogs. Use
- * gimp_export_dialog_get_content_area() to get a #GtkVBox to be
+ * gimp_export_dialog_get_content_area() to get a vertical #GtkBox to be
  * filled with export options. The export dialog is a wrapped
  * #GimpDialog.
  *
@@ -1098,10 +1098,10 @@ gimp_export_dialog_new (const gchar *format_name,
  * gimp_export_dialog_get_content_area:
  * @dialog: A dialog created with gimp_export_dialog_new()
  *
- * Returns the #GtkVBox of the passed export dialog to be filled with
+ * Returns the vertical #GtkBox of the passed export dialog to be filled with
  * export options.
  *
- * Returns: (transfer none): The #GtkVBox to fill with export options.
+ * Returns: (transfer none): The #GtkBox to fill with export options.
  *
  * Since: 2.8
  **/

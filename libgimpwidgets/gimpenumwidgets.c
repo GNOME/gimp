@@ -45,18 +45,18 @@
 /**
  * gimp_enum_radio_box_new:
  * @enum_type:     the #GType of an enum.
- * @callback:      a callback to connect to the "toggled" signal of each
- *                 #GtkRadioButton that is created.
+ * @callback: (nullable): a callback to connect to the "toggled" signal of each
+ *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button:  returns the first button in the created group.
+ * @first_button: (out) (optional): returns the first button in the created group.
  *
  * Creates a new group of #GtkRadioButtons representing the enum
  * values.  A group of radiobuttons is a good way to represent enums
  * with up to three or four values. Often it is better to use a
  * #GimpEnumComboBox instead.
  *
- * Returns: (transfer full): a new #GtkVBox holding a group of #GtkRadioButtons.
+ * Returns: (transfer full): a new #GtkBox holding a group of #GtkRadioButtons.
  *
  * Since: 2.4
  **/
@@ -91,17 +91,18 @@ gimp_enum_radio_box_new (GType            enum_type,
  * @minimum:       the minimum enum value
  * @maximum:       the maximum enum value
  * @enum_type:     the #GType of an enum.
- * @callback:      a callback to connect to the "toggled" signal of each
+ * @callback: (nullable): a callback to connect to the "toggled" signal of each
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button:  returns the first button in the created group.
+ * @first_button: (out) (optional): returns the first button in the created group.
  *
  * Just like gimp_enum_radio_box_new(), this function creates a group
  * of radio buttons, but additionally it supports limiting the range
  * of available enum values.
  *
- * Returns: (transfer full): a new #GtkVBox holding a group of #GtkRadioButtons.
+ * Returns: (transfer full): a new vertical #GtkBox holding a group of
+ *                           #GtkRadioButtons
  *
  * Since: 2.4
  **/
@@ -168,13 +169,13 @@ gimp_enum_radio_box_new_with_range (GType            enum_type,
 /**
  * gimp_enum_radio_frame_new:
  * @enum_type:     the #GType of an enum.
- * @label_widget:  a widget to use as label for the frame that will
- *                 hold the radio box.
- * @callback:      a callback to connect to the "toggled" signal of each
- *                 #GtkRadioButton that is created.
+ * @label_widget: (nullable): a #GtkWidget to use as label for the frame
+ *                            that will hold the radio box.
+ * @callback: (nullable): a callback to connect to the "toggled" signal of each
+ *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button:  returns the first button in the created group.
+ * @first_button: (out) (optional): returns the first button in the created group.
  *
  * Calls gimp_enum_radio_box_new() and puts the resulting vbox into a
  * #GtkFrame.
@@ -221,15 +222,15 @@ gimp_enum_radio_frame_new (GType            enum_type,
  * @enum_type:     the #GType of an enum.
  * @minimum:       the minimum enum value
  * @maximum:       the maximum enum value
- * @label_widget:  a widget to put into the frame that will hold the radio box.
- * @callback:      a callback to connect to the "toggled" signal of each
- *                 #GtkRadioButton that is created.
+ * @label_widget: (nulllable): a widget to put into the frame that will hold the radio box.
+ * @callback: (nullable): a callback to connect to the "toggled" signal of each
+ *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button:  returns the first button in the created group.
+ * @first_button: (out) (optional): returns the first button in the created group.
  *
  * Calls gimp_enum_radio_box_new_with_range() and puts the resulting
- * vbox into a #GtkFrame.
+ * vertical box into a #GtkFrame.
  *
  * Returns: (transfer full): a new #GtkFrame holding a group of #GtkRadioButtons.
  *
@@ -277,11 +278,11 @@ gimp_enum_radio_frame_new_with_range (GType            enum_type,
  * @enum_type:     the #GType of an enum.
  * @icon_prefix:   the prefix of the group of icon names to use.
  * @icon_size:     the icon size for the icons
- * @callback:      a callback to connect to the "toggled" signal of each
- *                 #GtkRadioButton that is created.
+ * @callback: (nullable): a callback to connect to the "toggled" signal of each
+ *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button:  returns the first button in the created group.
+ * @first_button: (out) (optional): returns the first button in the created group.
  *
  * Creates a horizontal box of radio buttons with named icons. The
  * icon name for each icon is created by appending the enum_value's
@@ -327,11 +328,11 @@ gimp_enum_icon_box_new (GType            enum_type,
  * @maximum:       the maximum enum value
  * @icon_prefix:   the prefix of the group of icon names to use.
  * @icon_size:     the icon size for the icons
- * @callback:      a callback to connect to the "toggled" signal of each
- *                 #GtkRadioButton that is created.
+ * @callback: (nullable): a callback to connect to the "toggled" signal of each
+ *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button:  returns the first button in the created group.
+ * @first_button: (out) (optional): returns the first button in the created group.
  *
  * Just like gimp_enum_icon_box_new(), this function creates a group
  * of radio buttons, but additionally it supports limiting the range

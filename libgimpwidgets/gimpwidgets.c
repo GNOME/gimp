@@ -48,8 +48,9 @@
  * gimp_int_radio_group_new:
  * @in_frame:              %TRUE if you want a #GtkFrame around the
  *                         radio button group.
- * @frame_title:           The title of the Frame or %NULL if you don't want
- *                         a title.
+ * @frame_title: (nullable):
+ *                         The title of the Frame or %NULL if you don't want a
+ *                         title.
  * @radio_button_callback: (scope notified): The callback each button's
  *                         "toggled" signal will be connected with.
  * @radio_button_callback_data: (closure radio_button_callback):
@@ -60,12 +61,12 @@
  *                         the radio buttons.
  *
  * Convenience function to create a group of radio buttons embedded into
- * a #GtkFrame or #GtkVBox. This function does the same thing as
+ * a #GtkFrame or #GtkBox. This function does the same thing as
  * gimp_radio_group_new2(), but it takes integers as @item_data instead of
  * pointers, since that is a very common case (mapping an enum to a radio
  * group).
  *
- * Returns: (transfer full): A #GtkFrame or #GtkVBox (depending on @in_frame).
+ * Returns: (transfer full): A #GtkFrame or #GtkBox (depending on @in_frame).
  **/
 GtkWidget *
 gimp_int_radio_group_new (gboolean         in_frame,
