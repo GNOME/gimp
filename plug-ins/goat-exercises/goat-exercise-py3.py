@@ -16,6 +16,8 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 gi.require_version('Gegl', '0.4')
 from gi.repository import Gegl
 from gi.repository import GObject
@@ -44,7 +46,7 @@ class Goat (Gimp.PlugIn):
         procedure.set_image_types("*");
 
         procedure.set_menu_label("Exercise a goat and a python");
-        procedure.set_icon_name(Gimp.ICON_GEGL);
+        procedure.set_icon_name(GimpUi.ICON_GEGL);
         procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/');
 
         procedure.set_documentation("Exercise a goat in the Python 3 language",
@@ -61,11 +63,11 @@ class Goat (Gimp.PlugIn):
             gi.require_version('Gdk', '3.0')
             from gi.repository import Gdk
 
-            Gimp.ui_init("palette-offset.py")
+            GimpUi.ui_init("palette-offset.py")
 
-            dialog = Gimp.Dialog(use_header_bar=True,
-                                 title=_("Exercise a goat (Python 3)"),
-                                 role="goat-exercise-Python3")
+            dialog = GimpUi.Dialog(use_header_bar=True,
+                                   title=_("Exercise a goat (Python 3)"),
+                                   role="goat-exercise-Python3")
 
             dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
             dialog.add_button("_Source", Gtk.ResponseType.APPLY)
