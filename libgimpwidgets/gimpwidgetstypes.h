@@ -82,7 +82,7 @@ typedef struct _GimpZoomModel                 GimpZoomModel;
 /**
  * GimpHelpFunc:
  * @help_id:   the help ID
- * @help_data: (closure): the help user data
+ * @help_data: the help user data
  *
  * This is the prototype for all functions you pass as @help_func to
  * the various GIMP dialog constructors like gimp_dialog_new(),
