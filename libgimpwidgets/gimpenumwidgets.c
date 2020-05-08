@@ -222,7 +222,7 @@ gimp_enum_radio_frame_new (GType            enum_type,
  * @enum_type:     the #GType of an enum.
  * @minimum:       the minimum enum value
  * @maximum:       the maximum enum value
- * @label_widget: (nulllable): a widget to put into the frame that will hold the radio box.
+ * @label_widget: (nullable): a widget to put into the frame that will hold the radio box.
  * @callback: (nullable): a callback to connect to the "toggled" signal of each
  *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
