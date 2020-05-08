@@ -757,6 +757,16 @@ if libheif.version().version_compare('==1.5.0') or libheif.version().version_com
     warnings += libheif_warning
 endif
 
+have_vala = add_languages('vala', required: get_option('vala-plugins'))
+if have_vala
+  babl = declare_dependency(
+    dependencies: [
+      babl,
+      meson.get_compiler('vala').find_library('babl-0.1'),
+    ]
+  )
+endif
+
 webkit_minver = '2.20.3'
 webkit = dependency('webkit2gtk-4.0', version: '>=' + webkit_minver,
   required: get_option('webkit')
