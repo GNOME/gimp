@@ -1,0 +1,25 @@
+// Extra metadata for Vala, to deal with
+// annotations that GIR can't handle.
+//
+// For example, GIR function doesn't handle
+// varargs, but Vala *can* do this, so we can
+// remove the (skip) annotation.
+Dialog
+  .new skip=false
+  .add_buttons skip=false
+IntComboBox
+  .new skip=false
+IntStore
+  .new skip=false
+MessageDialog
+  .new skip=false
+ProcBrowserDialog
+  .new skip=false
+ToolDialog
+  .new skip=false
+OverlayDialog
+  .new skip=false
+ViewableDialog
+  .new skip=false
+
+text_layer_set
