@@ -617,6 +617,14 @@ gimp_preview_set_bounds (GimpPreview *preview,
                                   ymax - ymin);
 }
 
+/**
+ * gimp_preview_get_bounds:
+ * @preview: A #GimpPreview:
+ * @xmin: (out) (optional): Lower bound for x
+ * @ymin: (out) (optional): Lower bound for y
+ * @xmax: (out) (optional): Higher bound for x
+ * @ymax: (out) (optional): Higher bound for y
+ */
 void
 gimp_preview_get_bounds (GimpPreview *preview,
                          gint        *xmin,
@@ -691,6 +699,12 @@ gimp_preview_set_offsets (GimpPreview *preview,
   priv->yoff = yoff;
 }
 
+/**
+ * gimp_preview_get_offsets:
+ * @preview: A #GimpPreview:
+ * @xoff: (out) (optional): X offset
+ * @yoff: (out) (optional): Y offset
+ */
 void
 gimp_preview_get_offsets (GimpPreview *preview,
                           gint        *xoff,
@@ -734,8 +748,8 @@ gimp_preview_get_position (GimpPreview *preview,
  * @preview: a #GimpPreview widget
  * @src_x:   horizontal position on the previewed image
  * @src_y:   vertical position on the previewed image
- * @dest_x:  returns the transformed horizontal position
- * @dest_y:  returns the transformed vertical position
+ * @dest_x: (out): returns the transformed horizontal position
+ * @dest_y: (out): returns the transformed vertical position
  *
  * Transforms from image to widget coordinates.
  *
@@ -760,8 +774,8 @@ gimp_preview_transform (GimpPreview *preview,
  * @preview: a #GimpPreview widget
  * @src_x:   horizontal position relative to the preview area's origin
  * @src_y:   vertical position relative to  preview area's origin
- * @dest_x:  returns the untransformed horizontal position
- * @dest_y:  returns the untransformed vertical position
+ * @dest_x: (out): returns the untransformed horizontal position
+ * @dest_y: (out): returns the untransformed vertical position
  *
  * Transforms from widget to image coordinates.
  *
@@ -859,7 +873,7 @@ gimp_preview_draw (GimpPreview *preview)
 /**
  * gimp_preview_draw_buffer:
  * @preview:   a #GimpPreview widget
- * @buffer:    a pixel buffer the size of the preview
+ * @buffer: (array): a pixel buffer the size of the preview
  * @rowstride: the @buffer's rowstride
  *
  * Calls the GimpPreview::draw_buffer method. GimpPreview itself

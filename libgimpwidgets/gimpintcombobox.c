@@ -463,7 +463,7 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
 /**
  * gimp_int_combo_box_get_active:
  * @combo_box: a #GimpIntComboBox
- * @value:     return location for the integer value
+ * @value: (out): return location for the integer value
  *
  * Retrieves the value of the selected (active) item in the @combo_box.
  *

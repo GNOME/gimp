@@ -856,10 +856,10 @@ gimp_page_selector_page_is_selected (GimpPageSelector *selector,
 /**
  * gimp_page_selector_get_selected_pages:
  * @selector: Pointer to a #GimpPageSelector.
- * @n_selected_pages: Returns the number of selected pages.
+ * @n_selected_pages: (out): Returns the number of selected pages.
  *
- * Returns: A sorted array of page numbers of selected pages. Use g_free() if
- *          you don't need the array any longer.
+ * Returns: (array length=n_selected_pages): A sorted array of page numbers of
+ *          selected pages. Use g_free() if you don't need the array any longer
  *
  * Since: 2.4
  **/
