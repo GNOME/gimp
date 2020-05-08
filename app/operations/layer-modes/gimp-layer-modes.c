@@ -838,7 +838,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_ALPHA_ONLY,
-    .context              = GIMP_LAYER_MODE_CONTEXT_FILTER,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION
   }
