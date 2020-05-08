@@ -45,6 +45,7 @@ option('png',               type: 'feature', value: 'auto', description: 'PNG su
 option('print',             type: 'feature', value: 'auto', description: 'Print support')
 option('screenshot',        type: 'feature', value: 'auto', description: 'Screensh')
 option('tiff',              type: 'feature', value: 'auto', description: 'TIFF support')
+option('vala-plugins',      type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
 option('webkit',            type: 'feature', value: 'auto', description: 'Help browser and webpage plugins')
 option('webp',              type: 'feature', value: 'auto', description: 'Webp support')
 option('wmf',               type: 'feature', value: 'auto', description: 'Wmf support')
