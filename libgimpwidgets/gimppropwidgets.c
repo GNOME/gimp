@@ -198,7 +198,7 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
  * gimp_prop_enum_check_button_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by checkbutton.
- * @label:         Label to give checkbutton (including mnemonic).
+ * @label: (nullable): Label to give checkbutton (including mnemonic).
  * @false_value:   Enum value corresponding to unchecked state.
  * @true_value:    Enum value corresponding to checked state.
  *
@@ -789,7 +789,7 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
  * gimp_prop_enum_radio_frame_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by the radio buttons.
- * @title:         Label for the frame holding the buttons
+ * @title: (nullable): Label for the frame holding the buttons
  * @minimum:       Smallest value of enum to be included.
  * @maximum:       Largest value of enum to be included.
  *
@@ -940,7 +940,7 @@ gimp_prop_enum_radio_box_new (GObject     *config,
  * gimp_prop_int_radio_frame_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of enum property controlled by the radio buttons.
- * @title:         Label for the frame holding the buttons
+ * @title: (nullable): Label for the frame holding the buttons
  * @store:         #GimpIntStore holding list of labels, values, etc.
  *
  * Creates a group of radio buttons which function to set and display
@@ -1143,7 +1143,7 @@ gimp_prop_enum_label_notify (GObject    *config,
  * gimp_prop_boolean_radio_frame_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property controlled by the radio buttons.
- * @title:         Label for the frame.
+ * @title: (nullable): Label for the frame.
  * @true_text:     Label for the button corresponding to %TRUE.
  * @false_text:    Label for the button corresponding to %FALSE.
  *
@@ -1462,8 +1462,8 @@ gimp_prop_hscale_new (GObject     *config,
  * @grid:           The #GtkGrid the widgets will be attached to.
  * @column:         The column to start with.
  * @row:            The row to attach the widgets.
- * @label:          The text for the #GtkLabel which will appear left of
- *                  the #GtkHScale.
+ * @label: (nullable): The text for the #GtkLabel which will appear left of
+ *                     the #GtkHScale.
  * @step_increment: Step size.
  * @page_increment: Page size.
  * @digits:         Number of digits after decimal point to display.
@@ -4055,7 +4055,7 @@ static void   gimp_prop_expander_notify (GObject     *config,
  * gimp_prop_expander_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of boolean property.
- * @label:         Label for expander.
+ * @label: (nullable): Label for expander.
  *
  * Creates a #GtkExpander controlled by the specified boolean property.
  * A value of %TRUE for the property corresponds to the expanded state
