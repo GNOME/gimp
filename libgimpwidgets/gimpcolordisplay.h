@@ -26,6 +26,9 @@
 #ifndef __GIMP_COLOR_DISPLAY_H__
 #define __GIMP_COLOR_DISPLAY_H__
 
+#include <glib-object.h>
+#include <gegl.h>
+
 G_BEGIN_DECLS
 
 /* For information look at the html documentation */
