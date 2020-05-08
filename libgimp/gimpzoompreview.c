@@ -780,11 +780,11 @@ gimp_zoom_preview_new_from_drawable (GimpDrawable *drawable)
 }
 
 /**
- * gimp_zoom_preview_new_with_model_from_drawable_id:
- * @drawable: (transfer none): a drawable
- * @model:    (transfer full): a #GimpZoomModel
+ * gimp_zoom_preview_new_with_model_from_drawable:
+ * @drawable: a #GimpDrawable
+ * @model:    a #GimpZoomModel
  *
- * Creates a new #GimpZoomPreview widget for @drawableusing the
+ * Creates a new #GimpZoomPreview widget for @drawable using the
  * given @model.
  *
  * This variant of gimp_zoom_preview_new_from_drawable() allows you
@@ -799,7 +799,6 @@ gimp_zoom_preview_new_from_drawable (GimpDrawable *drawable)
 GtkWidget *
 gimp_zoom_preview_new_with_model_from_drawable (GimpDrawable  *drawable,
                                                 GimpZoomModel *model)
-
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_valid (GIMP_ITEM (drawable)), NULL);
