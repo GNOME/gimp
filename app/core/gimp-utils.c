@@ -47,6 +47,7 @@
 
 #include <cairo.h>
 #include <gegl.h>
+#include <glib/gstdio.h>
 #include <gobject/gvaluecollector.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
