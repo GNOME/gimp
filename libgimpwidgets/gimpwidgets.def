@@ -413,8 +413,8 @@ EXPORTS
 	gimp_unit_combo_box_set_active
 	gimp_unit_store_get_has_percent
 	gimp_unit_store_get_has_pixels
+	gimp_unit_store_get_nth_value
 	gimp_unit_store_get_type
-	gimp_unit_store_get_value
 	gimp_unit_store_get_values
 	gimp_unit_store_new
 	gimp_unit_store_set_has_percent
