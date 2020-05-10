@@ -1491,9 +1491,7 @@ gimp_dialog_factory_save (GimpDialogFactory *factory,
       gimp_config_writer_string (writer,
                                  gimp_object_get_name (factory));
 
-      GIMP_CONFIG_GET_INTERFACE (info)->serialize (GIMP_CONFIG (info),
-                                                   writer,
-                                                   NULL);
+      GIMP_CONFIG_GET_IFACE (info)->serialize (GIMP_CONFIG (info), writer, NULL);
 
       gimp_config_writer_close (writer);
 
