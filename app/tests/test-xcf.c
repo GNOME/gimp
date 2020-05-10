@@ -313,7 +313,7 @@ gimp_write_and_read_file (Gimp     *gimp,
   /* Write to file */
   file_handle = g_file_open_tmp ("gimp-test-XXXXXX.xcf", &filename, NULL);
   g_assert (file_handle != -1);
-  close (file_handle);
+  g_assert (g_close (file_handle, NULL));
   file = g_file_new_for_path (filename);
   g_free (filename);
 
