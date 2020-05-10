@@ -3,7 +3,14 @@ apptests_includes = [
   rootInclude, rootAppInclude
 ]
 apptests_deps = [
-  pangocairo, pangoft2, gtk3, gegl, appstream_glib,
+  appstream_glib,
+  dbghelp,
+  drmingw,
+  gegl,
+  gtk3,
+  libbacktrace,
+  pangocairo,
+  pangoft2,
 ]
 apptests_links = [
   libapp,
@@ -14,6 +21,7 @@ apptests_links = [
   libappdialogs,
   libappdisplay,
   libappfile,
+  libappfiledata,
   libappgegl,
   libappgui,
   libappinternalprocs,
