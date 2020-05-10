@@ -4,6 +4,7 @@ apptests_includes = [
 ]
 apptests_deps = [
   pangocairo, pangoft2, gtk3, gegl, appstream_glib,
+  libbacktrace,
 ]
 apptests_links = [
   libapp,
@@ -14,6 +15,7 @@ apptests_links = [
   libappdialogs,
   libappdisplay,
   libappfile,
+  libappfiledata,
   libappgegl,
   libappgui,
   libappinternalprocs,
