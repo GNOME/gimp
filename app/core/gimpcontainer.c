@@ -352,7 +352,7 @@ gimp_container_serialize_foreach (GObject       *object,
   GimpConfigInterface *config_iface;
   const gchar         *name;
 
-  config_iface = GIMP_CONFIG_GET_INTERFACE (object);
+  config_iface = GIMP_CONFIG_GET_IFACE (object);
 
   if (! config_iface)
     serialize_data->success = FALSE;
@@ -478,10 +478,10 @@ gimp_container_deserialize (GimpConfig *config,
              */
             gimp_object_take_name (child, name);
 
-            if (! GIMP_CONFIG_GET_INTERFACE (child)->deserialize (GIMP_CONFIG (child),
-                                                                  scanner,
-                                                                  nest_level + 1,
-                                                                  NULL))
+            if (! GIMP_CONFIG_GET_IFACE (child)->deserialize (GIMP_CONFIG (child),
+                                                              scanner,
+                                                              nest_level + 1,
+                                                              NULL))
               {
                 if (add_child)
                   g_object_unref (child);

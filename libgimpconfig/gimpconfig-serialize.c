@@ -246,7 +246,7 @@ gimp_config_serialize_property (GimpConfig       *config,
           prop_object = g_value_get_object (&value);
 
           if (prop_object)
-            config_iface = GIMP_CONFIG_GET_INTERFACE (prop_object);
+            config_iface = GIMP_CONFIG_GET_IFACE (prop_object);
           else
             success = TRUE;
 

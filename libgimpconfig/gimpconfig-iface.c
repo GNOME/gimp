@@ -313,7 +313,7 @@ gimp_config_serialize_to_file (GimpConfig   *config,
   if (!writer)
     return FALSE;
 
-  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
+  GIMP_CONFIG_GET_IFACE (config)->serialize (config, writer, data);
 
   return gimp_config_writer_finish (writer, footer, error);
 }
@@ -352,7 +352,7 @@ gimp_config_serialize_to_stream (GimpConfig     *config,
   if (!writer)
     return FALSE;
 
-  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
+  GIMP_CONFIG_GET_IFACE (config)->serialize (config, writer, data);
 
   return gimp_config_writer_finish (writer, footer, error);
 }
@@ -384,7 +384,7 @@ gimp_config_serialize_to_fd (GimpConfig *config,
   if (!writer)
     return FALSE;
 
-  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
+  GIMP_CONFIG_GET_IFACE (config)->serialize (config, writer, data);
 
   return gimp_config_writer_finish (writer, NULL, NULL);
 }
@@ -412,7 +412,7 @@ gimp_config_serialize_to_string (GimpConfig *config,
   str = g_string_new (NULL);
   writer = gimp_config_writer_new_from_string (str);
 
-  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
+  GIMP_CONFIG_GET_IFACE (config)->serialize (config, writer, data);
 
   gimp_config_writer_finish (writer, NULL, NULL);
 
@@ -494,8 +494,8 @@ gimp_config_deserialize_file (GimpConfig  *config,
 
   g_object_freeze_notify (G_OBJECT (config));
 
-  success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
-                                                             scanner, 0, data);
+  success = GIMP_CONFIG_GET_IFACE (config)->deserialize (config,
+                                                         scanner, 0, data);
 
   g_object_thaw_notify (G_OBJECT (config));
 
@@ -542,8 +542,8 @@ gimp_config_deserialize_stream (GimpConfig    *config,
 
   g_object_freeze_notify (G_OBJECT (config));
 
-  success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
-                                                             scanner, 0, data);
+  success = GIMP_CONFIG_GET_IFACE (config)->deserialize (config,
+                                                         scanner, 0, data);
 
   g_object_thaw_notify (G_OBJECT (config));
 
@@ -589,8 +589,8 @@ gimp_config_deserialize_string (GimpConfig   *config,
 
   g_object_freeze_notify (G_OBJECT (config));
 
-  success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
-                                                             scanner, 0, data);
+  success = GIMP_CONFIG_GET_IFACE (config)->deserialize (config,
+                                                         scanner, 0, data);
 
   g_object_thaw_notify (G_OBJECT (config));
 
@@ -703,9 +703,7 @@ gimp_config_serialize (GimpConfig       *config,
 {
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
 
-  return GIMP_CONFIG_GET_INTERFACE (config)->serialize (config,
-                                                        writer,
-                                                        data);
+  return GIMP_CONFIG_GET_IFACE (config)->serialize (config, writer, data);
 }
 
 /**
@@ -729,10 +727,10 @@ gimp_config_deserialize (GimpConfig *config,
 {
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
 
-  return GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
-                                                          scanner,
-                                                          nest_level,
-                                                          data);
+  return GIMP_CONFIG_GET_IFACE (config)->deserialize (config,
+                                                      scanner,
+                                                      nest_level,
+                                                      data);
 }
 
 /**
@@ -753,7 +751,7 @@ gimp_config_duplicate (GimpConfig *config)
 {
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
 
-  return GIMP_CONFIG_GET_INTERFACE (config)->duplicate (config);
+  return GIMP_CONFIG_GET_IFACE (config)->duplicate (config);
 }
 
 /**
@@ -779,7 +777,7 @@ gimp_config_is_equal_to (GimpConfig *a,
   g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
                         FALSE);
 
-  return GIMP_CONFIG_GET_INTERFACE (a)->equal (a, b);
+  return GIMP_CONFIG_GET_IFACE (a)->equal (a, b);
 }
 
 /**
@@ -799,7 +797,7 @@ gimp_config_reset (GimpConfig *config)
 
   g_object_freeze_notify (G_OBJECT (config));
 
-  GIMP_CONFIG_GET_INTERFACE (config)->reset (config);
+  GIMP_CONFIG_GET_IFACE (config)->reset (config);
 
   g_object_thaw_notify (G_OBJECT (config));
 }
@@ -834,7 +832,7 @@ gimp_config_copy (GimpConfig  *src,
 
   g_object_freeze_notify (G_OBJECT (dest));
 
-  changed = GIMP_CONFIG_GET_INTERFACE (src)->copy (src, dest, flags);
+  changed = GIMP_CONFIG_GET_IFACE (src)->copy (src, dest, flags);
 
   g_object_thaw_notify (G_OBJECT (dest));
 
