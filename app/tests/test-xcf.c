@@ -19,6 +19,17 @@
 
 #include <string.h>
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#ifdef G_OS_WIN32
+#define STRICT
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <io.h>
+#endif
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
