@@ -14,6 +14,7 @@ apptests_links = [
   libappdialogs,
   libappdisplay,
   libappfile,
+  libappfiledata,
   libappgegl,
   libappgui,
   libappinternalprocs,
