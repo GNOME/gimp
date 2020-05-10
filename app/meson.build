@@ -75,7 +75,7 @@ libapp = static_library('app',
 
 # Those subdirs need to link against the first ones
 subdir('config')
-# subdir('tests')
+subdir('tests')
 
 
 
