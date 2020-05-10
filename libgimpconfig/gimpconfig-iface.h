@@ -30,14 +30,8 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-
-#define GIMP_TYPE_CONFIG               (gimp_config_get_type ())
-#define GIMP_IS_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONFIG))
-#define GIMP_CONFIG(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONFIG, GimpConfig))
-#define GIMP_CONFIG_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG, GimpConfigInterface))
-
-
-typedef struct _GimpConfigInterface GimpConfigInterface;
+#define GIMP_TYPE_CONFIG (gimp_config_get_type ())
+G_DECLARE_INTERFACE (GimpConfig, gimp_config, GIMP, CONFIG, GObject)
 
 struct _GimpConfigInterface
 {
@@ -70,8 +64,6 @@ struct _GimpConfigInterface
                                          GParamFlags       flags);
 };
 
-
-GType      gimp_config_get_type              (void) G_GNUC_CONST;
 
 gboolean   gimp_config_serialize_to_file     (GimpConfig          *config,
                                               GFile               *file,

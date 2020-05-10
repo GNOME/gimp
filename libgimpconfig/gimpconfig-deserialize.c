@@ -764,7 +764,7 @@ gimp_config_deserialize_object (GValue     *value,
         }
     }
 
-  config_iface = GIMP_CONFIG_GET_INTERFACE (prop_object);
+  config_iface = GIMP_CONFIG_GET_IFACE (prop_object);
 
   if (! config_iface)
     return gimp_config_deserialize_any (value, prop_spec, scanner);
