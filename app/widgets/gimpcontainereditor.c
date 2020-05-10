@@ -253,7 +253,7 @@ gimp_container_editor_constructed (GObject *object)
 
   if (GIMP_IS_LIST (editor->priv->container))
     gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
-                                         ! GIMP_LIST (editor->priv->container)->sort_func);
+                                         ! gimp_list_get_sort_func (editor->priv->container));
 
   if (editor->priv->menu_factory    &&
       editor->priv->menu_identifier &&
