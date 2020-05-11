@@ -36,9 +36,10 @@ endif
 
 executable(plugin_name,
   plugin_sources,
-  include_directories: [ rootInclude, ],
   dependencies: [
-    gegl, gtk3, math, winsock,
+    libgimpui_dep,
+    math,
+    winsock,
   ],
   c_args: [
     '-DSTANDALONE=0',
@@ -48,15 +49,6 @@ executable(plugin_name,
   link_whole: [
     scriptfu_tinyscheme,
     scriptfu_ftx,
-  ],
-  link_with: [
-    libgimp,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpui,
-    libgimpwidgets,
   ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,

@@ -23,14 +23,10 @@ plugin_sources += windows.compile_resources(
 
 twain = executable(plugin_name,
   plugin_sources,
-  include_directories: [ rootInclude, ],
   dependencies: [
-    glib, gtk3, gegl,
-  ],
-  link_with: [
-    libgimp,
-    libgimpcolor,
-    libgimpbase,
+    libgimp_dep,
+    glib,
+    gtk3,
   ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,

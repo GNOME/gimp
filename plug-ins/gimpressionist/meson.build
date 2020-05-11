@@ -41,18 +41,9 @@ endif
 
 executable(plugin_name,
   plugin_sources,
-  include_directories: [ rootInclude, ],
   dependencies: [
-    gtk3, gegl, math,
-  ],
-  link_with: [
-    libgimp,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpui,
-    libgimpwidgets,
+    libgimpui_dep,
+    math,
   ],
   c_args: [
     '-DDEFAULTPATH="@0@:@1@"'.format(

@@ -26,23 +26,13 @@ if platform_windows
   )
 endif
 
-plugin_selection_to_path_link = [
-  libgimp,
-  libgimpbase,
-  libgimpcolor,
-  libgimpconfig,
-  libgimpmath,
-  libgimpui,
-  libgimpwidgets,
-]
 plugin_selection_to_path_deps = [
-  gegl, gtk3, math,
+  libgimpui_dep,
+  math,
 ]
 
 selection_to_path = executable(plugin_name,
   plugin_sources,
-  include_directories: [ rootInclude, ],
-  link_with:    plugin_selection_to_path_link,
   dependencies: plugin_selection_to_path_deps,
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
