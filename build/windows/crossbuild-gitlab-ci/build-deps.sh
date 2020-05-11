@@ -1,4 +1,14 @@
 crossroad source msys2
+
+git clone https://github.com/mesonbuild/meson.git
+cd meson
+export PYTHONPATH=$CROSSROAD_PREFIX/lib/python3.8/site-packages/:$PYTHONPATH
+python3 ./setup.py build
+python3 ./setup.py install --prefix=$CROSSROAD_PREFIX
+cd ..
+
+echo "XXX MESON: `which meson` XXX"
+
 mkdir _deps && cd _deps
 
 # babl
