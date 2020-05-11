@@ -291,7 +291,10 @@ libgimp = library('gimp-'+ gimp_api_version,
   libgimp_sources,
   include_directories: rootInclude,
   dependencies: [
-    gegl, gexiv2, gtk3, drmingw,
+    gegl,
+    gexiv2,
+    drmingw,
+    gtk3,
   ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimp"', '-DGIMP_COMPILATION', ],
   link_with: [
@@ -304,25 +307,53 @@ libgimp = library('gimp-'+ gimp_api_version,
   version: so_version,
 )
 
-
-libgimpui = library('gimpui-'+ gimp_api_version,
-  libgimpui_sources,
-  include_directories: rootInclude,
+# Define an internal dependency for ease of reuse
+libgimp_dep = declare_dependency(
   dependencies: [
-    gegl, gexiv2, gtk3,
+    cairo,
+    gdk_pixbuf,
+    gegl,
   ],
-  c_args: [ '-DG_LOG_DOMAIN="LibGimpUI"', '-DGIMP_COMPILATION', ],
   link_with: [
     libgimp,
     libgimpbase,
     libgimpcolor,
     libgimpconfig,
+    libgimpmath,
+  ],
+  include_directories: rootInclude,
+)
+
+
+libgimpui = library('gimpui-'+ gimp_api_version,
+  libgimpui_sources,
+  dependencies: [
+    libgimp_dep,
+    gexiv2,
+    gtk3,
+  ],
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpUI"', '-DGIMP_COMPILATION', ],
+  link_with: [
     libgimpmodule,
     libgimpwidgets,
   ],
   vs_module_defs: 'gimpui.def',
   install: true,
   version: so_version,
+)
+
+# Define an internal dependency for ease of reuse
+libgimpui_dep = declare_dependency(
+  dependencies: [
+    libgimp_dep,
+    gtk3,
+  ],
+  link_with: [
+    libgimpmodule,
+    libgimpui,
+    libgimpwidgets,
+  ],
+  include_directories: rootInclude,
 )
 
 
