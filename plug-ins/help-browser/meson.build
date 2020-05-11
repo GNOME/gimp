@@ -26,19 +26,13 @@ endif
 
 executable(plugin_name,
   plugin_sources,
-  include_directories: [ rootInclude, ],
   dependencies: [
-    gtk3, gegl, gio, webkit,
+    libgimpui_dep,
+    gio,
+    webkit,
   ],
   link_with: [
     help_plugin_lib,
-    libgimp,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpui,
-    libgimpwidgets,
   ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,

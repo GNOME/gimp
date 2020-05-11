@@ -17,19 +17,9 @@ endif
 
 screenshot = executable('screenshot',
   plugin_sources,
-  include_directories: [ rootInclude, ],
   dependencies: [
-    gtk3, gegl,
+    libgimpui_dep,
     x11, xmu, xext, xfixes,
-  ],
-  link_with: [
-    libgimp,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpui,
-    libgimpwidgets,
   ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,

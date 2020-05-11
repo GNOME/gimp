@@ -23,18 +23,10 @@ endif
 
 executable(plugin_name,
   plugin_sources,
-  include_directories: [ rootInclude, ],
   dependencies: [
-    gtk3, gegl, openexr, lcms,
-  ],
-  link_with: [
-    libgimp,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpui,
-    libgimpwidgets,
+    libgimpui_dep,
+    openexr,
+    lcms,
   ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
