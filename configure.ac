@@ -167,7 +167,6 @@ GEXIV2_REQUIRED_VERSION=gexiv2_required_version
 GLIB_REQUIRED_VERSION=glib_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
-INTLTOOL_REQUIRED_VERSION=intltool_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
 LIBHEIF_REQUIRED_VERSION=libheif_required_version
 LIBLZMA_REQUIRED_VERSION=liblzma_required_version
@@ -200,7 +199,6 @@ AC_SUBST(GEXIV2_REQUIRED_VERSION)
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
-AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(LCMS_REQUIRED_VERSION)
 AC_SUBST(LIBHEIF_REQUIRED_VERSION)
 AC_SUBST(LIBLZMA_REQUIRED_VERSION)
@@ -245,11 +243,6 @@ GETTEXT_PACKAGE=gimp30
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
-
-# work around intltool-update issues during 'make distcheck'
-AS_IF([test "x$0" != "x./configure"], [
-        AC_SUBST([INTLTOOL_UPDATE], [/bin/true])
-])
 
 # Determine a C compiler to use
 AC_PROG_CC
@@ -654,8 +647,9 @@ m4_define([add_deps_error], [
 # Internationalisation
 ######################
 
-IT_PROG_INTLTOOL(intltool_required_version)
-AM_GLIB_GNU_GETTEXT
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
+
 
 # Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
 AC_MSG_CHECKING([for xgettext version (>= xgettext_required_version)])
@@ -3132,9 +3126,6 @@ m4_define([generate_po_makefile], [
 
   AC_CONFIG_COMMANDS([$1/stamp-it],
   [[
-    if  ! grep "^# INTLTOOL_MAKEFILE$" "$1/Makefile.in" > /dev/null ; then
-       as_fn_error $? "$1/Makefile.in.in was not created by intltoolize." "$LINENO" 5
-    fi
     rm -f "$1/stamp-it" "$1/POTFILES"
     sed -e '/^#/d' -e 's/^[[].*] *//' \
         -e '/^[ 	]*$/d'        \

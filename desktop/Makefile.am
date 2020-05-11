@@ -1,15 +1,19 @@
 ## Makefile.am for gimp/desktop
 
 desktop_in_files = \
-	gimp.desktop.in.in
+	org.gimp.GIMP.desktop.in.in
 
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
+$(desktop_files): $(desktop_in_files)
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 appstream_in_files = \
 	org.gimp.GIMP.appdata.xml.in	\
 	gimp-data-extras.metainfo.xml.in
 
-appstream_files = $(appstream_in_files:.xml.in=.xml)
+appstream_XML = $(appstream_in_files:.xml.in=.xml)
+$(appstream_XML): $(appstream_in_files)
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 if DESKTOP_DATADIR
 
@@ -17,7 +21,7 @@ applicationsdir = $(DESKTOP_DATADIR)/applications
 applications_DATA = $(desktop_files)
 
 appdatadir = $(DESKTOP_DATADIR)/metainfo
-appdata_DATA = $(appstream_files)
+appdata_DATA = $(appstream_XML)
 
 icons16dir = $(DESKTOP_DATADIR)/icons/hicolor/16x16/apps
 icons16_DATA = 16x16/gimp.png
@@ -58,14 +62,9 @@ EXTRA_DIST = \
 	256x256/gimp.png
 
 
-DISTCLEANFILES = $(desktop_files) $(appstream_files)
+DISTCLEANFILES = $(desktop_files) $(appstream_XML)
 
-@INTLTOOL_XML_RULE@
-
-gimp.desktop: gimp.desktop.in $(wildcard $(top_srcdir)/po/*.po)
-	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $(@) -d -u -c $(top_builddir)/po/.intltool-merge-cache
-
-validate: gimp.desktop
+validate: $(desktop_files)
 	( dfvalidate=`which desktop-file-validate`; \
 	  if test x$$dfvalidate != x && test -x $$dfvalidate; then \
             $$dfvalidate $< || ( echo "* $< INVALID *"; exit 1 ) \

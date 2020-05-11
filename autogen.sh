@@ -13,7 +13,6 @@ AUTOMAKE_RECOMMENDED_VERSION=1.16
 
 AUTOCONF_REQUIRED_VERSION=2.54
 AUTOMAKE_REQUIRED_VERSION=1.13.0
-INTLTOOL_REQUIRED_VERSION=0.40.1
 LIBTOOL_REQUIRED_VERSION=1.5
 LIBTOOL_WIN32_REQUIRED_VERSION=2.2
 
@@ -186,21 +185,6 @@ if test x$AUTOMAKE != x; then
     VER=`$AUTOMAKE --version \
          | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
     check_version $VER $AUTOMAKE_REQUIRED_VERSION
-fi
-
-
-printf "checking for intltool >= $INTLTOOL_REQUIRED_VERSION ... "
-if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
-    VER=`intltoolize --version \
-         | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
-    check_version $VER $INTLTOOL_REQUIRED_VERSION
-else
-    echo
-    echo "  You must have intltool installed to compile $PROJECT."
-    echo "  Get the latest version from"
-    echo "  ftp://ftp.gnome.org/pub/GNOME/sources/intltool/"
-    echo
-    DIE=1
 fi
 
 

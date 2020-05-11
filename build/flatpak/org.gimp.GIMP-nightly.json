@@ -6,7 +6,6 @@
     "sdk": "org.gnome.Sdk",
     "command": "gimp-2.99",
     "separate-locales": false,
-    "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--share=network",
                     "--socket=x11", "--socket=wayland",

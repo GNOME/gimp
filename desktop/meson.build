@@ -15,79 +15,50 @@ foreach size : sizes
   )
 endforeach
 
-desktopfilename = 'gimp.desktop'
+desktop_conf = {
+  'GIMP_COMMAND':     gimp_command,
+  'GIMP_VERSION':     gimp_version,
+  'GIMP_APP_VERSION': gimp_app_version,
+  'MIME_TYPES':       ';'.join(MIMEtypes),
+  'BUG_REPORT_URL':   bug_report_url,
+}
 
-desktop_conf = configuration_data()
-desktop_conf.set('GIMP_COMMAND',      gimp_command)
-desktop_conf.set('GIMP_VERSION',      gimp_version)
-desktop_conf.set('GIMP_APP_VERSION',  gimp_app_version)
-desktop_conf.set('MIME_TYPES',        ';'.join(MIMEtypes))
-desktop_conf.set('BUG_REPORT_URL',    bug_report_url)
-
-desktopfilein = configure_file(
-  input : desktopfilename+'.in.in',
-  output: desktopfilename+'.in',
-  configuration: desktop_conf,
-)
-
-desktopfile = custom_target(desktopfilename,
-  input : [ desktopfilein, ],
-  output: [ desktopfilename, ],
-  command: [
-    intltool_merge,
-    po_dir,
-    '@INPUT@',
-    '@OUTPUT@',
-    '--desktop-style',
-    '--utf8',
-    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
-  ],
+desktopfile = i18n.merge_file(
+  input: configure_file(
+    input: 'org.gimp.GIMP.desktop.in.in',
+    output: '@BASENAME@',
+    configuration: desktop_conf,
+  ),
+  output: '@BASENAME@',
+  type: 'desktop',
+  po_dir: po_dir,
   install: true,
   install_dir: get_option('datadir') / 'applications',
 )
 
-appdatafilename = 'org.gimp.GIMP.appdata.xml'
-appdatafilein = configure_file(
-  input : appdatafilename+'.in.in',
-  output: appdatafilename+'.in',
-  configuration: desktop_conf,
-)
-appdatafile = custom_target(appdatafilename,
-  input : [ appdatafilein, ],
-  output: [ appdatafilename, ],
-  command: [
-    intltool_merge,
-    po_dir,
-    '@INPUT@',
-    '@OUTPUT@',
-    '--xml-style',
-    '--utf8',
-    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
-  ],
+appdatafile = i18n.merge_file(
+  input: configure_file(
+    input: 'org.gimp.GIMP.appdata.xml.in.in',
+    output: '@BASENAME@',
+    configuration: desktop_conf,
+  ),
+  output: '@BASENAME@',
+  type: 'xml',
+  po_dir: po_dir,
   install: true,
   install_dir: get_option('datadir') / 'metainfo',
 )
 
-metainfofilename = 'gimp-data-extras.metainfo.xml'
-metainfofilein = configure_file(
-  input : metainfofilename+'.in.in',
-  output: metainfofilename+'.in',
-  configuration: desktop_conf,
-)
-metainfofile = custom_target(metainfofilename,
-  input : [ metainfofilein, ],
-  output: [ metainfofilename, ],
-  command: [
-    intltool_merge,
-    po_dir,
-    '@INPUT@',
-    '@OUTPUT@',
-    '--xml-style',
-    '--utf8',
-    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
-  ],
+metainfofile = i18n.merge_file(
+  input: configure_file(
+    input: 'gimp-data-extras.metainfo.xml.in.in',
+    output: '@BASENAME@',
+    configuration: desktop_conf,
+  ),
+  output: '@BASENAME@',
+  po_dir: po_dir,
   install: true,
-  install_dir: get_option('datadir') / 'appdata',
+  install_dir: get_option('datadir') / 'metainfo',
 )
 
 if desktop_validate.found()
