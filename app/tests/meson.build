@@ -1,35 +1,13 @@
-
-apptests_includes = [
-  rootInclude, rootAppInclude
-]
-apptests_deps = [
-  pangocairo, pangoft2, gtk3, gegl, appstream_glib,
-]
 apptests_links = [
-  libapp,
-  libappactions,
   libappconfig,
-  libappcore,
-  libappdialogs,
+  libappactions,
   libappdialogs,
   libappdisplay,
-  libappfile,
-  libappgegl,
   libappgui,
-  libappinternalprocs,
-  libapplayermodes,
-  libapplayermodeslegacy,
   libappmenus,
-  libappoperations,
-  libapppaint,
-  libapppdb,
-  libappplugin,
   libapppropgui,
-  libapptext,
   libapptools,
-  libappvectors,
   libappwidgets,
-  libappxcf,
   libgimpbase,
   libgimpcolor,
   libgimpconfig,
@@ -47,8 +25,7 @@ libapptestutils_sources = [
 
 libapptestutils = static_library('apptestutils',
   libapptestutils_sources,
-  include_directories: apptests_includes,
-  dependencies: apptests_deps,
+  dependencies: libapp_dep,
   link_with: apptests_links,
 )
 
@@ -70,15 +47,14 @@ app_tests = [
 foreach test_name : app_tests
   test_exe = executable(test_name,
     'test-@0@.c'.format(test_name),
-    include_directories: apptests_includes,
-    dependencies: apptests_deps,
+    dependencies: [ libapp_dep, appstream_glib ],
     link_with: apptests_links,
   )
 
   test(test_name,
     test_exe,
     env: [
-      'GIMP_TESTING_ABS_TOP_SRCDIR='  + meson.build_root(),
+      'GIMP_TESTING_ABS_TOP_SRCDIR='  + meson.source_root(),
       'GIMP_TESTING_ABS_TOP_BUILDDIR='+ meson.build_root(),
       'GIMP_TESTING_PLUGINDIRS=' +      meson.build_root()/'plug-ins'/'common',
       'GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl',
