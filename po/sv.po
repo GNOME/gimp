@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-04-14 15:06+0000\n"
-"PO-Revision-Date: 2020-04-15 02:58+0200\n"
+"POT-Creation-Date: 2020-05-11 07:07+0000\n"
+"PO-Revision-Date: 2020-05-12 00:45+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -3129,7 +3129,7 @@ msgstr "240 sekunder"
 #: ../app/dialogs/color-profile-dialog.c:190
 #: ../app/dialogs/color-profile-dialog.c:208
 #: ../app/dialogs/convert-indexed-dialog.c:142
-#: ../app/dialogs/convert-precision-dialog.c:165
+#: ../app/dialogs/convert-precision-dialog.c:168
 #: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
 #: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
@@ -3156,7 +3156,7 @@ msgstr "240 sekunder"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:346
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1243
+#: ../app/tools/gimptransformgridtool.c:1267
 #: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:662
@@ -6124,185 +6124,190 @@ msgstr "Pr_ecision"
 
 #: ../app/actions/image-actions.c:62
 msgctxt "image-action"
+msgid "_Encoding"
+msgstr "_Kodning"
+
+#: ../app/actions/image-actions.c:65
+msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Färgha_ntering"
 
-#: ../app/actions/image-actions.c:63
+#: ../app/actions/image-actions.c:66
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Transform"
 
-#: ../app/actions/image-actions.c:64
+#: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Hjälplinjer"
 
-#: ../app/actions/image-actions.c:65
+#: ../app/actions/image-actions.c:68
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Meta_data"
 
-#: ../app/actions/image-actions.c:67
+#: ../app/actions/image-actions.c:70
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Färger"
 
-#: ../app/actions/image-actions.c:68
+#: ../app/actions/image-actions.c:71
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "I_nfo"
 
-#: ../app/actions/image-actions.c:69
+#: ../app/actions/image-actions.c:72
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Auto"
 
-#: ../app/actions/image-actions.c:70
+#: ../app/actions/image-actions.c:73
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Mappa"
 
-#: ../app/actions/image-actions.c:71
+#: ../app/actions/image-actions.c:74
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Tonmappning"
 
-#: ../app/actions/image-actions.c:72
+#: ../app/actions/image-actions.c:75
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "K_omponenter"
 
-#: ../app/actions/image-actions.c:73
+#: ../app/actions/image-actions.c:76
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "_Avmätta"
 
-#: ../app/actions/image-actions.c:76
+#: ../app/actions/image-actions.c:79
 msgctxt "image-action"
 msgid "_New..."
 msgstr "_Ny…"
 
-#: ../app/actions/image-actions.c:77
+#: ../app/actions/image-actions.c:80
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Skapa en ny bild"
 
-#: ../app/actions/image-actions.c:82
+#: ../app/actions/image-actions.c:85
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "_Duplicera"
 
-#: ../app/actions/image-actions.c:83
+#: ../app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Skapa en dubblett av denna bild"
 
-#: ../app/actions/image-actions.c:88
+#: ../app/actions/image-actions.c:91
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Tilldela färgprofil…"
 
-#: ../app/actions/image-actions.c:89
+#: ../app/actions/image-actions.c:92
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Ställ in en färgprofil för bilden"
 
-#: ../app/actions/image-actions.c:94
+#: ../app/actions/image-actions.c:97
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "_Konvertera till färgprofil…"
 
-#: ../app/actions/image-actions.c:95
+#: ../app/actions/image-actions.c:98
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Tillämpa en färgprofil för bilden"
 
-#: ../app/actions/image-actions.c:100
+#: ../app/actions/image-actions.c:103
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "_Förkasta färgprofil"
 
-#: ../app/actions/image-actions.c:101
+#: ../app/actions/image-actions.c:104
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Ta bort bildens färgprofil"
 
-#: ../app/actions/image-actions.c:106
+#: ../app/actions/image-actions.c:109
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
 msgstr "_Spara färgprofil till fil…"
 
-#: ../app/actions/image-actions.c:107
+#: ../app/actions/image-actions.c:110
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
 msgstr "Visa bildens färgprofil till en ICC-fil"
 
-#: ../app/actions/image-actions.c:112
+#: ../app/actions/image-actions.c:115
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "Storlek på r_ityta…"
 
-#: ../app/actions/image-actions.c:113
+#: ../app/actions/image-actions.c:116
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Justera bildens dimensioner"
 
-#: ../app/actions/image-actions.c:118
+#: ../app/actions/image-actions.c:121
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "An_passa rityta till lager"
 
-#: ../app/actions/image-actions.c:119
+#: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "Ändra storlek på bilden för att inkludera alla lager"
 
-#: ../app/actions/image-actions.c:124
+#: ../app/actions/image-actions.c:127
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "Anpassa r_ityta till markering"
 
-#: ../app/actions/image-actions.c:125
+#: ../app/actions/image-actions.c:128
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "Ändra bildens storlek till markeringens storlek"
 
-#: ../app/actions/image-actions.c:130
+#: ../app/actions/image-actions.c:133
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "_Utskriftsstorlek…"
 
-#: ../app/actions/image-actions.c:131
+#: ../app/actions/image-actions.c:134
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Justera utskriftsupplösningen"
 
-#: ../app/actions/image-actions.c:136
+#: ../app/actions/image-actions.c:139
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "_Skala bild…"
 
-#: ../app/actions/image-actions.c:137
+#: ../app/actions/image-actions.c:140
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Ändra storleken för bildinnehållet"
 
-#: ../app/actions/image-actions.c:142
+#: ../app/actions/image-actions.c:145
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr "Besk_är till markering"
 
-#: ../app/actions/image-actions.c:143
+#: ../app/actions/image-actions.c:146
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "Beskär bilden till markeringens storlek"
 
-#: ../app/actions/image-actions.c:148
+#: ../app/actions/image-actions.c:151
 msgctxt "image-action"
 msgid "Crop to C_ontent"
 msgstr "Beskär till _innehåll"
 
-#: ../app/actions/image-actions.c:149
+#: ../app/actions/image-actions.c:152
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
@@ -6310,52 +6315,52 @@ msgid ""
 msgstr ""
 "Beskär bilden till innehållets storlek (ta bort tomma kanter från bilden)"
 
-#: ../app/actions/image-actions.c:154
+#: ../app/actions/image-actions.c:157
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Sammanfoga _synliga lager…"
 
-#: ../app/actions/image-actions.c:155
+#: ../app/actions/image-actions.c:158
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Sammanfoga alla synliga lager till ett lager"
 
-#: ../app/actions/image-actions.c:160
+#: ../app/actions/image-actions.c:163
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "_Platta ut bilden"
 
-#: ../app/actions/image-actions.c:161
+#: ../app/actions/image-actions.c:164
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Sammanfoga alla lager till ett och ta bort transparens"
 
-#: ../app/actions/image-actions.c:166
+#: ../app/actions/image-actions.c:169
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Konfigurera _rutnät…"
 
-#: ../app/actions/image-actions.c:167
+#: ../app/actions/image-actions.c:170
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Konfigurera rutnätet för denna bild"
 
-#: ../app/actions/image-actions.c:172
+#: ../app/actions/image-actions.c:175
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Bilde_genskaper"
 
-#: ../app/actions/image-actions.c:173
+#: ../app/actions/image-actions.c:176
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Visa information om den här bilden"
 
-#: ../app/actions/image-actions.c:181
+#: ../app/actions/image-actions.c:184
 msgctxt "image-action"
 msgid "_Enable Color Management"
 msgstr "_Aktivera färghantering"
 
-#: ../app/actions/image-actions.c:182
+#: ../app/actions/image-actions.c:185
 msgctxt "image-action"
 msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
@@ -6366,172 +6371,172 @@ msgstr ""
 "som att tilldela den inbyggda färgprofilen sRGB. Det är bäst att lämna "
 "färghantering aktiverat."
 
-#: ../app/actions/image-actions.c:193 ../app/actions/image-actions.c:444
+#: ../app/actions/image-actions.c:196 ../app/actions/image-actions.c:447
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../app/actions/image-actions.c:194
+#: ../app/actions/image-actions.c:197
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Konvertera bilden till RGB-färgrymden"
 
-#: ../app/actions/image-actions.c:198 ../app/actions/image-actions.c:446
+#: ../app/actions/image-actions.c:201 ../app/actions/image-actions.c:449
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "_Gråskala"
 
-#: ../app/actions/image-actions.c:199
+#: ../app/actions/image-actions.c:202
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Konvertera bilden till gråskala"
 
-#: ../app/actions/image-actions.c:203
+#: ../app/actions/image-actions.c:206
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "_Indexerad…"
 
-#: ../app/actions/image-actions.c:204
+#: ../app/actions/image-actions.c:207
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Konvertera bilden till indexerade färger"
 
-#: ../app/actions/image-actions.c:211
+#: ../app/actions/image-actions.c:214
 msgctxt "image-convert-action"
 msgid "8 bit integer"
 msgstr "8 bitars heltal"
 
-#: ../app/actions/image-actions.c:213
+#: ../app/actions/image-actions.c:216
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Konvertera bilden till 8-bit heltal"
 
-#: ../app/actions/image-actions.c:217
+#: ../app/actions/image-actions.c:220
 msgctxt "image-convert-action"
 msgid "16 bit integer"
 msgstr "16 bitars heltal"
 
-#: ../app/actions/image-actions.c:219
+#: ../app/actions/image-actions.c:222
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Konvertera bilden till 16-bit heltal"
 
-#: ../app/actions/image-actions.c:223
+#: ../app/actions/image-actions.c:226
 msgctxt "image-convert-action"
 msgid "32 bit integer"
 msgstr "32 bitars heltal"
 
-#: ../app/actions/image-actions.c:225
+#: ../app/actions/image-actions.c:228
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Konvertera bilden till 32-bit heltal"
 
-#: ../app/actions/image-actions.c:229
+#: ../app/actions/image-actions.c:232
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "16-bit flyttal"
 
-#: ../app/actions/image-actions.c:231
+#: ../app/actions/image-actions.c:234
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Konvertera bilden till 16-bit flyttal"
 
-#: ../app/actions/image-actions.c:235
+#: ../app/actions/image-actions.c:238
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "32-bit flyttal"
 
-#: ../app/actions/image-actions.c:237
+#: ../app/actions/image-actions.c:240
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Konvertera bilden till 32-bit flyttal"
 
-#: ../app/actions/image-actions.c:241
+#: ../app/actions/image-actions.c:244
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
 msgstr "64-bit flyttal"
 
-#: ../app/actions/image-actions.c:243
+#: ../app/actions/image-actions.c:246
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Konvertera bilden till 64-bit flyttal"
 
-#: ../app/actions/image-actions.c:250
+#: ../app/actions/image-actions.c:253
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
 msgstr "Perceptuell gamma (sRGB)"
 
-#: ../app/actions/image-actions.c:252
+#: ../app/actions/image-actions.c:255
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "Konvertera bilden till perceptuell (sRGB) gamma"
 
-#: ../app/actions/image-actions.c:256
+#: ../app/actions/image-actions.c:259
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "Linjärt ljus"
 
-#: ../app/actions/image-actions.c:258
+#: ../app/actions/image-actions.c:261
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "Konvertera bilden till linjärt ljus"
 
-#: ../app/actions/image-actions.c:265
+#: ../app/actions/image-actions.c:268
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Vänd _horisontellt"
 
-#: ../app/actions/image-actions.c:266
+#: ../app/actions/image-actions.c:269
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Vänd bilden horisontellt"
 
-#: ../app/actions/image-actions.c:271
+#: ../app/actions/image-actions.c:274
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "_Vänd vertikalt"
 
-#: ../app/actions/image-actions.c:272
+#: ../app/actions/image-actions.c:275
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Vänd bilden vertikalt"
 
-#: ../app/actions/image-actions.c:280
+#: ../app/actions/image-actions.c:283
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Rotera 90° m_edurs"
 
-#: ../app/actions/image-actions.c:281
+#: ../app/actions/image-actions.c:284
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Rotera bilden 90 grader åt höger"
 
-#: ../app/actions/image-actions.c:286
+#: ../app/actions/image-actions.c:289
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "Rotera _180°"
 
-#: ../app/actions/image-actions.c:287
+#: ../app/actions/image-actions.c:290
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Vänd bilden upp och ned"
 
-#: ../app/actions/image-actions.c:292
+#: ../app/actions/image-actions.c:295
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Rotera 90° m_oturs"
 
-#: ../app/actions/image-actions.c:293
+#: ../app/actions/image-actions.c:296
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Rotera bilden 90 grader åt vänster"
 
-#: ../app/actions/image-actions.c:437
+#: ../app/actions/image-actions.c:440
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB…"
 
-#: ../app/actions/image-actions.c:439
+#: ../app/actions/image-actions.c:442
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Gråskala…"
@@ -6620,7 +6625,7 @@ msgid "Scale Image"
 msgstr "Skala bild"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1505 ../app/actions/layers-commands.c:1662
+#: ../app/actions/image-commands.c:1505 ../app/actions/layers-commands.c:1668
 #: ../app/dialogs/preferences-dialog.c:1698
 #: ../app/pdb/drawable-transform-cmds.c:843
 #: ../app/pdb/drawable-transform-cmds.c:939
@@ -7494,7 +7499,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Till _nytt lager"
 
-#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1511
+#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1517
 msgid "Layer Attributes"
 msgstr "Lagerattribut"
 
@@ -7893,7 +7898,7 @@ msgstr "Återställ alla filter"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1240
+#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1264
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -13923,20 +13928,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Lägg till färg till färgkarta"
 
-#: ../app/core/gimpimage-convert-indexed.c:790
+#: ../app/core/gimpimage-convert-indexed.c:792
 msgid "Cannot convert image: palette is empty."
 msgstr "Kan inte konvertera bild: paletten är tom."
 
-#: ../app/core/gimpimage-convert-indexed.c:802
+#: ../app/core/gimpimage-convert-indexed.c:804
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Konvertera bild till indexerade färger"
 
-#: ../app/core/gimpimage-convert-indexed.c:894
+#: ../app/core/gimpimage-convert-indexed.c:898
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Konverterar till indexerade färger (fas 2)"
 
-#: ../app/core/gimpimage-convert-indexed.c:943
+#: ../app/core/gimpimage-convert-indexed.c:947
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Konverterar till indexerade färger (fas 3)"
 
@@ -14004,7 +14009,7 @@ msgstr "Konvertera bild till 64-bit gamma-flyttal"
 #: ../app/core/gimpimage-convert-precision.c:268
 #: ../app/core/gimpimage-convert-precision.c:289
 #: ../app/dialogs/convert-indexed-dialog.c:241
-#: ../app/dialogs/convert-precision-dialog.c:221
+#: ../app/dialogs/convert-precision-dialog.c:224
 #: ../app/tools/gimpgradientoptions.c:128
 msgid "Dithering"
 msgstr "Färgutjämning"
@@ -14908,7 +14913,7 @@ msgid "Precision"
 msgstr "Precision"
 
 #. gamma
-#: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:195
+#: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:198
 #: ../app/operations/gimplevelsconfig.c:140
 #: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:505
 msgid "Gamma"
@@ -15178,7 +15183,7 @@ msgstr "Konvertera bilden till en färgprofil"
 #: ../app/dialogs/color-profile-dialog.c:191
 #: ../app/dialogs/color-profile-import-dialog.c:105
 #: ../app/dialogs/convert-indexed-dialog.c:143
-#: ../app/dialogs/convert-precision-dialog.c:166
+#: ../app/dialogs/convert-precision-dialog.c:169
 msgid "C_onvert"
 msgstr "K_onvertera"
 
@@ -15312,7 +15317,7 @@ msgid "Enable dithering of text _layers"
 msgstr "Aktivera färgutjämning för text_lager"
 
 #: ../app/dialogs/convert-indexed-dialog.c:291
-#: ../app/dialogs/convert-precision-dialog.c:276
+#: ../app/dialogs/convert-precision-dialog.c:279
 msgid "Dithering text layers will make them uneditable"
 msgstr "Att färgutjämna textlager kommer att göra dem oredigerbara"
 
@@ -15326,29 +15331,33 @@ msgstr "Kan inte konvertera till palett med mer än 256 färger."
 msgid "Convert Image to %s"
 msgstr "Konvertera bild till %s"
 
-#: ../app/dialogs/convert-precision-dialog.c:157
+#: ../app/dialogs/convert-precision-dialog.c:158
+msgid "Encoding Conversion"
+msgstr "Kodningskonvertering"
+
+#: ../app/dialogs/convert-precision-dialog.c:160
 msgid "Precision Conversion"
 msgstr "Precisionskonvertering"
 
-#: ../app/dialogs/convert-precision-dialog.c:204
+#: ../app/dialogs/convert-precision-dialog.c:207
 #: ../app/widgets/gimptemplateeditor.c:439
 msgid "Perceptual gamma (sRGB)"
 msgstr "Perceptuell gamma (sRGB)"
 
-#: ../app/dialogs/convert-precision-dialog.c:205
+#: ../app/dialogs/convert-precision-dialog.c:208
 #: ../app/widgets/gimptemplateeditor.c:438
 msgid "Linear light"
 msgstr "Linjärt ljus"
 
-#: ../app/dialogs/convert-precision-dialog.c:237
+#: ../app/dialogs/convert-precision-dialog.c:240
 msgid "_Layers:"
 msgstr "_Lager:"
 
-#: ../app/dialogs/convert-precision-dialog.c:259
+#: ../app/dialogs/convert-precision-dialog.c:262
 msgid "_Text Layers:"
 msgstr "_Textlager:"
 
-#: ../app/dialogs/convert-precision-dialog.c:286
+#: ../app/dialogs/convert-precision-dialog.c:289
 msgid "_Channels and Masks:"
 msgstr "_Kanaler och masker:"
 
@@ -18119,7 +18128,7 @@ msgstr "Släpp ny bana"
 #: ../app/display/gimpdisplayshell-dnd.c:364
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:254
-#: ../app/tools/gimpselectiontool.c:547
+#: ../app/tools/gimpselectiontool.c:554
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Kan inte ändra bildpunkterna i lagergrupper."
@@ -18129,7 +18138,7 @@ msgstr "Kan inte ändra bildpunkterna i lagergrupper."
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
 #: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
-#: ../app/tools/gimpselectiontool.c:554 ../app/tools/gimptransformtool.c:688
+#: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:688
 #: ../app/tools/gimpwarptool.c:780
 #, c-format
 msgid "The active layer's pixels are locked."
@@ -19513,7 +19522,7 @@ msgstr "Gör om färger till gråskalor"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/operations/gimpoperationsettings.c:95
-#: ../app/tools/gimpfiltertool.c:1122 ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/tools/gimpfiltertool.c:1127 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:116
 #: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
@@ -19553,7 +19562,7 @@ msgid "The color"
 msgstr "Färgen"
 
 #: ../app/operations/gimpoperationsettings.c:78
-#: ../app/tools/gimpfiltertool.c:1086 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimpfiltertool.c:1091 ../app/tools/gimpflipoptions.c:156
 #: ../app/tools/gimptransformoptions.c:108
 #: ../app/tools/gimptransformoptions.c:264
 msgid "Clipping"
@@ -20131,8 +20140,8 @@ msgstr "Invertera"
 #: ../app/pdb/drawable-transform-cmds.c:478
 #: ../app/pdb/item-transform-cmds.c:340 ../app/pdb/transform-tools-cmds.c:177
 #: ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformgridoptions.c:594
-#: ../app/tools/gimptransformgridoptions.c:603
+#: ../app/tools/gimptransformgridoptions.c:599
+#: ../app/tools/gimptransformgridoptions.c:608
 msgid "Perspective"
 msgstr "Perspektiv"
 
@@ -20880,32 +20889,32 @@ msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Invertera intensitet"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4557
+#: ../app/pdb/plug-in-compat-cmds.c:4560
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Värdepropagering"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4604
+#: ../app/pdb/plug-in-compat-cmds.c:4607
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Utvidga"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4651
+#: ../app/pdb/plug-in-compat-cmds.c:4654
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erodera"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4714
+#: ../app/pdb/plug-in-compat-cmds.c:4717
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Vågor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4762
+#: ../app/pdb/plug-in-compat-cmds.c:4765
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Virvel och knipning"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4814
+#: ../app/pdb/plug-in-compat-cmds.c:4817
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Vind"
@@ -22387,32 +22396,32 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: växla horisontell och vertikal"
 
 #. The blending-options expander
-#: ../app/tools/gimpfiltertool.c:1099
+#: ../app/tools/gimpfiltertool.c:1104
 msgid "Blending Options"
 msgstr "Toningsalternativ"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:1138
+#: ../app/tools/gimpfiltertool.c:1143
 msgid "Advanced Color Options"
 msgstr "Avancerade färgalternativ"
 
-#: ../app/tools/gimpfiltertool.c:1162
+#: ../app/tools/gimpfiltertool.c:1167
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 "Konvertera bildpunkter till inbyggd sRGB för att tillämpa filter (långsamt)"
 
-#: ../app/tools/gimpfiltertool.c:1163
+#: ../app/tools/gimpfiltertool.c:1168
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Antag att bildpunkter följer inbyggd sRGB (ignorera faktisk färgrymd för "
 "bilden)"
 
-#: ../app/tools/gimpfiltertool.c:1552 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1557 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importera ”%s”-inställningar"
 
-#: ../app/tools/gimpfiltertool.c:1554 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1559 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportera ”%s”-inställningar"
@@ -23260,8 +23269,8 @@ msgid "Show lattice"
 msgstr "Visa gitter"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:588
-#: ../app/tools/gimptransformgridoptions.c:599
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:593
+#: ../app/tools/gimptransformgridoptions.c:604
 msgid "Scale"
 msgstr "Skala"
 
@@ -23487,7 +23496,7 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr "Använd alla synliga lager vid krympning av markeringen"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:147
+#: ../app/tools/gimptransformgridoptions.c:148
 msgid "Composition guides such as rule of thirds"
 msgstr "Kompositionsguider som regeln om tredjedelar"
 
@@ -23623,7 +23632,7 @@ msgid "Move the mouse to change threshold"
 msgstr "Flytta musen för att ändra tröskelvärde"
 
 #: ../app/tools/gimprotatetool.c:102
-#: ../app/tools/gimptransformgridoptions.c:590
+#: ../app/tools/gimptransformgridoptions.c:595
 #: ../app/tools/gimptransform3dtool.c:422
 msgid "Rotate"
 msgstr "Rotera"
@@ -23727,54 +23736,54 @@ msgstr "Aktivera ludd längs markeringens kanter"
 msgid "Mode:"
 msgstr "Läge:"
 
-#: ../app/tools/gimpselectiontool.c:312
+#: ../app/tools/gimpselectiontool.c:319
 msgid "Click-Drag to replace the current selection"
 msgstr "Klicka och dra för att ersätta den aktuella markeringen"
 
-#: ../app/tools/gimpselectiontool.c:320
+#: ../app/tools/gimpselectiontool.c:327
 msgid "Click-Drag to create a new selection"
 msgstr "Klicka och dra för att skapa en ny markering"
 
-#: ../app/tools/gimpselectiontool.c:325
+#: ../app/tools/gimpselectiontool.c:332
 msgid "Click-Drag to add to the current selection"
 msgstr "Klicka och dra för att lägga till i aktuell markering"
 
-#: ../app/tools/gimpselectiontool.c:334
+#: ../app/tools/gimpselectiontool.c:341
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Klicka och dra för att ta bort från aktuell markering"
 
-#: ../app/tools/gimpselectiontool.c:343
+#: ../app/tools/gimpselectiontool.c:350
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Klicka och dra för att skära ut med aktuell markering"
 
-#: ../app/tools/gimpselectiontool.c:353
+#: ../app/tools/gimpselectiontool.c:360
 msgid "Click-Drag to move the selection mask"
 msgstr "Klicka och dra för att flytta markeringsmasken"
 
-#: ../app/tools/gimpselectiontool.c:361
+#: ../app/tools/gimpselectiontool.c:368
 msgid "Click-Drag to move the selected pixels"
 msgstr "Klicka och dra för att flytta markerade bildpunkter"
 
-#: ../app/tools/gimpselectiontool.c:365
+#: ../app/tools/gimpselectiontool.c:372
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Klicka och dra för att flytta en kopia av de markerade bildpunkterna"
 
-#: ../app/tools/gimpselectiontool.c:369
+#: ../app/tools/gimpselectiontool.c:376
 msgid "Click to anchor the floating selection"
 msgstr "Klicka för att förankra den flytande markeringen"
 
-#: ../app/tools/gimpselectiontool.c:523
+#: ../app/tools/gimpselectiontool.c:530
 #, c-format
 msgid "Cannot subtract from an empty selection."
 msgstr "Kan inte subtrahera från en tom markering."
 
-#: ../app/tools/gimpselectiontool.c:534
+#: ../app/tools/gimpselectiontool.c:541
 #, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "Kan inte ta snittet med en tom markering."
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:592
-#: ../app/tools/gimptransformgridoptions.c:601
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:597
+#: ../app/tools/gimptransformgridoptions.c:606
 msgid "Shear"
 msgstr "Skeva"
 
@@ -24015,196 +24024,196 @@ msgstr ""
 "Det här verktyget\n"
 "har inga alternativ."
 
-#: ../app/tools/gimptransformgridoptions.c:111
+#: ../app/tools/gimptransformgridoptions.c:112
 msgid "Show image preview"
 msgstr "Visa förhandsvisning"
 
-#: ../app/tools/gimptransformgridoptions.c:112
+#: ../app/tools/gimptransformgridoptions.c:113
 msgid "Show a preview of the transformed image"
 msgstr "Visa en förhandsvisning av den transformerade bilden"
 
-#: ../app/tools/gimptransformgridoptions.c:118
+#: ../app/tools/gimptransformgridoptions.c:119
 msgid "Composited preview"
 msgstr "Sammansatt förhandsvisning"
 
-#: ../app/tools/gimptransformgridoptions.c:119
+#: ../app/tools/gimptransformgridoptions.c:120
 msgid "Show preview as part of the image composition"
 msgstr "Visa förhandsvisning som en del av bildkompositionen"
 
-#: ../app/tools/gimptransformgridoptions.c:125
+#: ../app/tools/gimptransformgridoptions.c:126
 msgid "Preview linked items"
 msgstr "Förhandsvisa länkade objekt"
 
-#: ../app/tools/gimptransformgridoptions.c:126
+#: ../app/tools/gimptransformgridoptions.c:127
 msgid "Include linked items in the preview"
 msgstr "Inkludera länkade objekt i förhandsvisningen"
 
-#: ../app/tools/gimptransformgridoptions.c:132
+#: ../app/tools/gimptransformgridoptions.c:133
 msgid "Synchronous preview"
 msgstr "Synkron förhandsvisning"
 
-#: ../app/tools/gimptransformgridoptions.c:133
+#: ../app/tools/gimptransformgridoptions.c:134
 msgid "Render the preview synchronously"
 msgstr "Rendera förhandsvisningen synkront"
 
-#: ../app/tools/gimptransformgridoptions.c:139
+#: ../app/tools/gimptransformgridoptions.c:140
 msgid "Image opacity"
 msgstr "Bildopacitet"
 
-#: ../app/tools/gimptransformgridoptions.c:140
+#: ../app/tools/gimptransformgridoptions.c:141
 msgid "Opacity of the preview image"
 msgstr "Opacitet på förhandsvisningsbilden"
 
-#: ../app/tools/gimptransformgridoptions.c:146
-#: ../app/tools/gimptransformgridoptions.c:482
+#: ../app/tools/gimptransformgridoptions.c:147
+#: ../app/tools/gimptransformgridoptions.c:487
 msgid "Guides"
 msgstr "Hjälplinjer"
 
-#: ../app/tools/gimptransformgridoptions.c:155
+#: ../app/tools/gimptransformgridoptions.c:156
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Storlek på en rutnätscell för varierande antal sammansättningslinjer"
 
-#: ../app/tools/gimptransformgridoptions.c:504
+#: ../app/tools/gimptransformgridoptions.c:509
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15° (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:511
+#: ../app/tools/gimptransformgridoptions.c:516
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Begränsa rotationssteg till 15 grader"
 
-#: ../app/tools/gimptransformgridoptions.c:520
+#: ../app/tools/gimptransformgridoptions.c:525
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Behåll bildförhållande (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:527
+#: ../app/tools/gimptransformgridoptions.c:532
 msgid "Keep the original aspect ratio"
 msgstr "Behåll ursprungligt bildförhållande"
 
-#: ../app/tools/gimptransformgridoptions.c:532
-#: ../app/tools/gimptransformgridoptions.c:561
+#: ../app/tools/gimptransformgridoptions.c:537
+#: ../app/tools/gimptransformgridoptions.c:566
 #, c-format
 msgid "Around center (%s)"
 msgstr "Runt centrum (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:539
+#: ../app/tools/gimptransformgridoptions.c:544
 msgid "Scale around the center point"
 msgstr "Skala runt centrumpunkten"
 
-#: ../app/tools/gimptransformgridoptions.c:548
+#: ../app/tools/gimptransformgridoptions.c:553
 #, c-format
 msgid "Constrain handles (%s)"
 msgstr "Begränsa handtag (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:556
+#: ../app/tools/gimptransformgridoptions.c:561
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr "Begränsa handtag till att flytta längs sidor och diagonal (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:569
+#: ../app/tools/gimptransformgridoptions.c:574
 msgid "Transform around the center point"
 msgstr "Transformera runt centrumpunkten"
 
-#: ../app/tools/gimptransformgridoptions.c:585
+#: ../app/tools/gimptransformgridoptions.c:590
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Begränsa (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:586
+#: ../app/tools/gimptransformgridoptions.c:591
 #: ../app/tools/gimptransform3dtool.c:335
 msgid "Move"
 msgstr "Flytta"
 
-#: ../app/tools/gimptransformgridoptions.c:587
+#: ../app/tools/gimptransformgridoptions.c:592
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Begränsa förflyttning till 45-graders vinklar från centrum (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:589
+#: ../app/tools/gimptransformgridoptions.c:594
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Bibehåll bildförhållande vid skalning (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:591
+#: ../app/tools/gimptransformgridoptions.c:596
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Begränsa rotation till 15-graders inkrement (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:593
+#: ../app/tools/gimptransformgridoptions.c:598
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Skeva endast längs sidriktning (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:595
+#: ../app/tools/gimptransformgridoptions.c:600
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Begränsa perspektivhandtag till att flytta längs sidor och diagonal (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:598
+#: ../app/tools/gimptransformgridoptions.c:603
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Från pivot  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:600
+#: ../app/tools/gimptransformgridoptions.c:605
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Skala från pivotpunkt (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:602
+#: ../app/tools/gimptransformgridoptions.c:607
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Skeva motstående sida lika mycket (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:604
+#: ../app/tools/gimptransformgridoptions.c:609
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Behåll position för pivot medan perspektiv ändras (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:607
+#: ../app/tools/gimptransformgridoptions.c:612
 msgid "Pivot"
 msgstr "Pivot"
 
-#: ../app/tools/gimptransformgridoptions.c:608
+#: ../app/tools/gimptransformgridoptions.c:613
 #, c-format
 msgid "Snap (%s)"
 msgstr "Fäst (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:609
+#: ../app/tools/gimptransformgridoptions.c:614
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Fäst pivot mot hörn och centrum (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:610
+#: ../app/tools/gimptransformgridoptions.c:615
 msgid "Lock"
 msgstr "Lås"
 
-#: ../app/tools/gimptransformgridoptions.c:611
+#: ../app/tools/gimptransformgridoptions.c:616
 msgid "Lock pivot position to canvas"
 msgstr "Lås pivotposition till rityta"
 
-#: ../app/tools/gimptransformgridtool.c:291
+#: ../app/tools/gimptransformgridtool.c:294
 #: ../app/tools/gimptransformtool.c:437
 msgid "_Transform"
 msgstr "_Transformera"
 
-#: ../app/tools/gimptransformgridtool.c:572
-#: ../app/tools/gimptransformgridtool.c:584
+#: ../app/tools/gimptransformgridtool.c:579
+#: ../app/tools/gimptransformgridtool.c:591
 msgid "Transform Step"
 msgstr "Transformera steg"
 
 # forward (normal) and backward (corrective) transforms
-#: ../app/tools/gimptransformgridtool.c:979
+#: ../app/tools/gimptransformgridtool.c:986
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (Korrektiv)"
 
-#: ../app/tools/gimptransformgridtool.c:1242
+#: ../app/tools/gimptransformgridtool.c:1266
 msgid "Re_adjust"
 msgstr "Juster_a om"
 
-#: ../app/tools/gimptransformgridtool.c:1496
+#: ../app/tools/gimptransformgridtool.c:1519
 msgid "Cannot readjust the transformation"
 msgstr "Det går inte att justera om transformeringen"
 
@@ -24371,26 +24380,26 @@ msgstr "Den aktiva banan har inga streck."
 msgid "The current transform is invalid"
 msgstr "Den aktuella transformen är ogiltig"
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
 msgstr "Enhetlig transform"
 
-#: ../app/tools/gimpunifiedtransformtool.c:88
+#: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr ""
 "Enhetligt transformeringsverktyg: Transformera lagret, markeringen eller "
 "banan"
 
-#: ../app/tools/gimpunifiedtransformtool.c:90
+#: ../app/tools/gimpunifiedtransformtool.c:92
 msgid "_Unified Transform"
 msgstr "_Enhetlig transform"
 
-#: ../app/tools/gimpunifiedtransformtool.c:112
+#: ../app/tools/gimpunifiedtransformtool.c:115
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Enhetlig transform"
 
-#: ../app/tools/gimpunifiedtransformtool.c:113
+#: ../app/tools/gimpunifiedtransformtool.c:116
 msgid "Unified transform"
 msgstr "Enhetlig transform"
 
@@ -24940,7 +24949,7 @@ msgstr "Procent av penselns bredd"
 msgid "(None)"
 msgstr "(Ingen)"
 
-#: ../app/widgets/gimpclipboard.c:421
+#: ../app/widgets/gimpclipboard.c:427
 msgid "Clipboard"
 msgstr "Urklippshanterare"
 
