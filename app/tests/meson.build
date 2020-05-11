@@ -1,43 +1,13 @@
-
-apptests_includes = [
-  rootInclude, rootAppInclude
-]
-apptests_deps = [
-  appstream_glib,
-  dbghelp,
-  drmingw,
-  gegl,
-  gtk3,
-  libbacktrace,
-  pangocairo,
-  pangoft2,
-]
 apptests_links = [
-  libapp,
-  libappactions,
   libappconfig,
-  libappcore,
-  libappdialogs,
+  libappactions,
   libappdialogs,
   libappdisplay,
-  libappfile,
-  libappfiledata,
-  libappgegl,
   libappgui,
-  libappinternalprocs,
-  libapplayermodes,
-  libapplayermodeslegacy,
   libappmenus,
-  libappoperations,
-  libapppaint,
-  libapppdb,
-  libappplugin,
   libapppropgui,
-  libapptext,
   libapptools,
-  libappvectors,
   libappwidgets,
-  libappxcf,
   libgimpbase,
   libgimpcolor,
   libgimpconfig,
@@ -55,8 +25,7 @@ libapptestutils_sources = [
 
 libapptestutils = static_library('apptestutils',
   libapptestutils_sources,
-  include_directories: apptests_includes,
-  dependencies: apptests_deps,
+  dependencies: libapp_dep,
   link_with: apptests_links,
 )
 
@@ -78,8 +47,7 @@ app_tests = [
 foreach test_name : app_tests
   test_exe = executable(test_name,
     'test-@0@.c'.format(test_name),
-    include_directories: apptests_includes,
-    dependencies: apptests_deps,
+    dependencies: [ libapp_dep, appstream_glib ],
     link_with: apptests_links,
   )
 
