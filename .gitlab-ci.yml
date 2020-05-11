@@ -190,7 +190,7 @@ deps-win64:
         gcc-mingw-w64-x86-64
         g++-mingw-w64-x86-64
         git
-        meson
+        ninja-build
         pkg-config
         python3-distutils
         python3-docutils
