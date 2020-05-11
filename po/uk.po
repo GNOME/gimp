@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-04-13 18:42+0000\n"
-"PO-Revision-Date: 2020-04-14 15:30+0300\n"
+"POT-Creation-Date: 2020-05-11 06:13+0000\n"
+"PO-Revision-Date: 2020-05-11 10:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3200,7 +3200,7 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:345
 #: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1242
+#: ../app/tools/gimptransformgridtool.c:1266
 #: ../app/tools/gimptransformtool.c:439 ../app/widgets/gimpactionview.c:601
 #: ../app/widgets/gimpcolordialog.c:460
 #: ../app/widgets/gimpcontrollereditor.c:661
@@ -6166,8 +6166,8 @@ msgstr "Ре_жим"
 
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
-msgid "Pr_ecision"
-msgstr "_Точність"
+msgid "_Encoding"
+msgstr "_Кодування"
 
 #: ../app/actions/image-actions.c:62
 msgctxt "image-action"
@@ -6671,7 +6671,7 @@ msgid "Scale Image"
 msgstr "Зміна розміру зображення"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:1662
+#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:1668
 #: ../app/dialogs/preferences-dialog.c:1688
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
@@ -7539,7 +7539,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _новий шар"
 
-#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1511
+#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1517
 msgid "Layer Attributes"
 msgstr "Ознаки шару"
 
@@ -7936,7 +7936,7 @@ msgstr "Перезавантажити усі фільтри"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:344 ../app/tools/gimptransformgridtool.c:1239
+#: ../app/tools/gimpfiltertool.c:344 ../app/tools/gimptransformgridtool.c:1263
 #: ../app/widgets/gimpcolordialog.c:459
 #: ../app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
@@ -14082,20 +14082,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Додати колір до карти кольорів"
 
-#: ../app/core/gimpimage-convert-indexed.c:791
+#: ../app/core/gimpimage-convert-indexed.c:793
 msgid "Cannot convert image: palette is empty."
 msgstr "Не можна перетворити зображення: палітра порожня."
 
-#: ../app/core/gimpimage-convert-indexed.c:803
+#: ../app/core/gimpimage-convert-indexed.c:805
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Перетворити зображення у індексоване"
 
-#: ../app/core/gimpimage-convert-indexed.c:886
+#: ../app/core/gimpimage-convert-indexed.c:890
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Перетворення в індексовані кольори (2 етап)"
 
-#: ../app/core/gimpimage-convert-indexed.c:935
+#: ../app/core/gimpimage-convert-indexed.c:939
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Триває перетворення в індексовані кольори (3 етап)"
 
@@ -15407,8 +15407,9 @@ msgid "Convert Image to %s"
 msgstr "Перетворити зображення у %s"
 
 #: ../app/dialogs/convert-precision-dialog.c:138
-msgid "Precision Conversion"
-msgstr "Перетворення точності"
+#| msgid "Precision Conversion"
+msgid "Encoding Conversion"
+msgstr "Перетворення кодувань"
 
 #. gamma
 #: ../app/dialogs/convert-precision-dialog.c:176
@@ -18253,7 +18254,7 @@ msgstr "Опускання нового контуру"
 #: ../app/display/gimpdisplayshell-dnd.c:363
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:254
-#: ../app/tools/gimpselectiontool.c:547
+#: ../app/tools/gimpselectiontool.c:554
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Неможливо змінити точки растру групи шарів"
@@ -18263,7 +18264,7 @@ msgstr "Неможливо змінити точки растру групи ш�
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1148
 #: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
-#: ../app/tools/gimpselectiontool.c:554 ../app/tools/gimptransformtool.c:691
+#: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:691
 #: ../app/tools/gimpwarptool.c:780
 #, c-format
 msgid "The active layer's pixels are locked."
@@ -19653,15 +19654,15 @@ msgstr "Затиснути виведення"
 msgid "Clamp final output values."
 msgstr "Затиснути остаточні виведені значення."
 
-#: ../app/operations/gimplevelsconfig.c:861
+#: ../app/operations/gimplevelsconfig.c:865
 msgid "not a GIMP Levels file"
 msgstr "не є файлом рівнів GIMP"
 
-#: ../app/operations/gimplevelsconfig.c:936
+#: ../app/operations/gimplevelsconfig.c:940
 msgid "parse error"
 msgstr "помилка при синтаксичному розборі"
 
-#: ../app/operations/gimplevelsconfig.c:971
+#: ../app/operations/gimplevelsconfig.c:975
 msgid "Writing levels file failed: "
 msgstr "Запис у файл рівнів не вдався:"
 
@@ -19714,7 +19715,7 @@ msgstr "Перетворити кольори на градації сірого
 
 #: ../app/operations/gimpoperationdesaturate.c:91
 #: ../app/operations/gimpoperationsettings.c:92
-#: ../app/tools/gimpfiltertool.c:1117 ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/tools/gimpfiltertool.c:1122 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:124
 #: ../app/widgets/gimplayertreeview.c:271
 msgid "Mode"
@@ -19754,7 +19755,7 @@ msgid "The color"
 msgstr "Колір"
 
 #: ../app/operations/gimpoperationsettings.c:77
-#: ../app/tools/gimpfiltertool.c:1081 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimpfiltertool.c:1086 ../app/tools/gimpflipoptions.c:156
 #: ../app/tools/gimptransformoptions.c:109
 #: ../app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -20750,8 +20751,8 @@ msgid "Free Select"
 msgstr "Вільне вибирання"
 
 #: ../app/pdb/item-transform-cmds.c:340 ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformgridoptions.c:588
-#: ../app/tools/gimptransformgridoptions.c:597
+#: ../app/tools/gimptransformgridoptions.c:593
+#: ../app/tools/gimptransformgridoptions.c:602
 msgid "Perspective"
 msgstr "Перспектива"
 
@@ -21090,32 +21091,32 @@ msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Інверсія яскравості"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4546
+#: ../app/pdb/plug-in-compat-cmds.c:4549
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Поширення значень"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4593
+#: ../app/pdb/plug-in-compat-cmds.c:4596
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Дилатація"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4640
+#: ../app/pdb/plug-in-compat-cmds.c:4643
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Ерозія"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4703
+#: ../app/pdb/plug-in-compat-cmds.c:4706
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Хвилі"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4751
+#: ../app/pdb/plug-in-compat-cmds.c:4754
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Вихор та щипок..."
 
-#: ../app/pdb/plug-in-compat-cmds.c:4803
+#: ../app/pdb/plug-in-compat-cmds.c:4806
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Вітер"
@@ -22442,11 +22443,11 @@ msgstr "_Тип:"
 msgid "Curve _type:"
 msgstr "_Тип кривої:"
 
-#: ../app/tools/gimpcurvestool.c:774 ../app/tools/gimplevelstool.c:733
+#: ../app/tools/gimpcurvestool.c:745 ../app/tools/gimplevelstool.c:733
 msgid "Could not read header: "
 msgstr "Не вдалось прочитати заголовок: "
 
-#: ../app/tools/gimpcurvestool.c:848
+#: ../app/tools/gimpcurvestool.c:819
 msgid "Use _old curves file format"
 msgstr "_Використовувати старий формат кривих"
 
@@ -22610,22 +22611,21 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
 #. The blending-options expander
-#: ../app/tools/gimpfiltertool.c:1094
-#| msgid "Insane Options"
+#: ../app/tools/gimpfiltertool.c:1099
 msgid "Blending Options"
 msgstr "Параметри змішування"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:1133
+#: ../app/tools/gimpfiltertool.c:1138
 msgid "Advanced Color Options"
 msgstr "Додаткові параметри кольорів"
 
-#: ../app/tools/gimpfiltertool.c:1537 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1542 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Імпортувати параметри «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1539 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1544 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Експортувати параметри «%s»"
@@ -23463,8 +23463,8 @@ msgid "Show lattice"
 msgstr "Показувати сітку"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:228
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:582
-#: ../app/tools/gimptransformgridoptions.c:593
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:587
+#: ../app/tools/gimptransformgridoptions.c:598
 msgid "Scale"
 msgstr "Масштаб"
 
@@ -23689,7 +23689,7 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr "Використовувати усі видимі шари при скороченні позначеного"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:148
+#: ../app/tools/gimptransformgridoptions.c:149
 msgid "Composition guides such as rule of thirds"
 msgstr "Напрямна композиція, наприклад, правило третин"
 
@@ -23825,7 +23825,7 @@ msgid "Move the mouse to change threshold"
 msgstr "Пересуньте мишу для зміни порога"
 
 #: ../app/tools/gimprotatetool.c:102
-#: ../app/tools/gimptransformgridoptions.c:584
+#: ../app/tools/gimptransformgridoptions.c:589
 #: ../app/tools/gimptransform3dtool.c:419
 msgid "Rotate"
 msgstr "Обертання"
@@ -23930,54 +23930,54 @@ msgstr "Увімкнути розмазування країв позначен�
 msgid "Mode:"
 msgstr "Режим:"
 
-#: ../app/tools/gimpselectiontool.c:312
+#: ../app/tools/gimpselectiontool.c:319
 msgid "Click-Drag to replace the current selection"
 msgstr "Натисніть та перетягніть для заміни поточне позначене"
 
-#: ../app/tools/gimpselectiontool.c:320
+#: ../app/tools/gimpselectiontool.c:327
 msgid "Click-Drag to create a new selection"
 msgstr "Натисніть та перетягніть для створення нового позначеного"
 
-#: ../app/tools/gimpselectiontool.c:325
+#: ../app/tools/gimpselectiontool.c:332
 msgid "Click-Drag to add to the current selection"
 msgstr "Натисніть та перетягніть для додавання до поточного позначеного"
 
-#: ../app/tools/gimpselectiontool.c:334
+#: ../app/tools/gimpselectiontool.c:341
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Натисніть та перетягніть для віднімання від поточного позначеного"
 
-#: ../app/tools/gimpselectiontool.c:343
+#: ../app/tools/gimpselectiontool.c:350
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Натисніть та перетягніть для перетинання з поточним позначеним"
 
-#: ../app/tools/gimpselectiontool.c:353
+#: ../app/tools/gimpselectiontool.c:360
 msgid "Click-Drag to move the selection mask"
 msgstr "Натисніть та перетягніть для зсуву маски позначеного"
 
-#: ../app/tools/gimpselectiontool.c:361
+#: ../app/tools/gimpselectiontool.c:368
 msgid "Click-Drag to move the selected pixels"
 msgstr "Натисніть та перетягніть для зсуву позначених точок"
 
-#: ../app/tools/gimpselectiontool.c:365
+#: ../app/tools/gimpselectiontool.c:372
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Натисніть та перетягніть для зсуву копії позначених точок"
 
-#: ../app/tools/gimpselectiontool.c:369
+#: ../app/tools/gimpselectiontool.c:376
 msgid "Click to anchor the floating selection"
 msgstr "Натисніть, щоб причепити рухоме вибирання"
 
-#: ../app/tools/gimpselectiontool.c:523
+#: ../app/tools/gimpselectiontool.c:530
 #, c-format
 msgid "Cannot subtract from an empty selection."
 msgstr "Неможливо відняти щось від порожнього позначення."
 
-#: ../app/tools/gimpselectiontool.c:534
+#: ../app/tools/gimpselectiontool.c:541
 #, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "Перетин із порожнім позначенням неможливий."
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:586
-#: ../app/tools/gimptransformgridoptions.c:595
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:591
+#: ../app/tools/gimptransformgridoptions.c:600
 msgid "Shear"
 msgstr "Викривлення"
 
@@ -24219,195 +24219,195 @@ msgstr ""
 "У цього інструменту\n"
 "немає параметрів."
 
-#: ../app/tools/gimptransformgridoptions.c:112
+#: ../app/tools/gimptransformgridoptions.c:113
 msgid "Show image preview"
 msgstr "Показувати попередній перегляд зображення"
 
-#: ../app/tools/gimptransformgridoptions.c:113
+#: ../app/tools/gimptransformgridoptions.c:114
 msgid "Show a preview of the transformed image"
 msgstr "Увісукнути перегляд перетвореного зображення"
 
-#: ../app/tools/gimptransformgridoptions.c:119
+#: ../app/tools/gimptransformgridoptions.c:120
 msgid "Composited preview"
 msgstr "Композитний перегляд"
 
-#: ../app/tools/gimptransformgridoptions.c:120
+#: ../app/tools/gimptransformgridoptions.c:121
 msgid "Show preview as part of the image composition"
 msgstr "Показувати попередній перегляд як частину композиції зображення"
 
-#: ../app/tools/gimptransformgridoptions.c:126
+#: ../app/tools/gimptransformgridoptions.c:127
 msgid "Preview linked items"
 msgstr "Перегляд пов'язаних елементів"
 
-#: ../app/tools/gimptransformgridoptions.c:127
+#: ../app/tools/gimptransformgridoptions.c:128
 msgid "Include linked items in the preview"
 msgstr "Включити пов'язані елемент до попереднього перегляду"
 
-#: ../app/tools/gimptransformgridoptions.c:133
+#: ../app/tools/gimptransformgridoptions.c:134
 msgid "Synchronous preview"
 msgstr "Синхронний попередній перегляд"
 
-#: ../app/tools/gimptransformgridoptions.c:134
+#: ../app/tools/gimptransformgridoptions.c:135
 msgid "Render the preview synchronously"
 msgstr "Обробляти попередній перегляд синхронно"
 
-#: ../app/tools/gimptransformgridoptions.c:140
+#: ../app/tools/gimptransformgridoptions.c:141
 msgid "Image opacity"
 msgstr "Непрозорість зображення"
 
-#: ../app/tools/gimptransformgridoptions.c:141
+#: ../app/tools/gimptransformgridoptions.c:142
 msgid "Opacity of the preview image"
 msgstr "Непрозорість перегляду зображення"
 
-#: ../app/tools/gimptransformgridoptions.c:147
-#: ../app/tools/gimptransformgridoptions.c:482
+#: ../app/tools/gimptransformgridoptions.c:148
+#: ../app/tools/gimptransformgridoptions.c:487
 msgid "Guides"
 msgstr "Напрямні"
 
-#: ../app/tools/gimptransformgridoptions.c:156
+#: ../app/tools/gimptransformgridoptions.c:157
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Розмір клітинної сітки для різної кількості напрямних композицій"
 
-#: ../app/tools/gimptransformgridoptions.c:503
+#: ../app/tools/gimptransformgridoptions.c:508
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 градусів (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:509
+#: ../app/tools/gimptransformgridoptions.c:514
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Обмежити крок обертання до 15 градусів"
 
-#: ../app/tools/gimptransformgridoptions.c:518
+#: ../app/tools/gimptransformgridoptions.c:523
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Зберегти пропорції (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:524
+#: ../app/tools/gimptransformgridoptions.c:529
 msgid "Keep the original aspect ratio"
 msgstr "Зберегти початкове відношення сторін"
 
-#: ../app/tools/gimptransformgridoptions.c:529
-#: ../app/tools/gimptransformgridoptions.c:556
+#: ../app/tools/gimptransformgridoptions.c:534
+#: ../app/tools/gimptransformgridoptions.c:561
 #, c-format
 msgid "Around center (%s)"
 msgstr "Навколо центру (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:535
+#: ../app/tools/gimptransformgridoptions.c:540
 msgid "Scale around the center point"
 msgstr "Масштабувати відносно центральної точки"
 
-#: ../app/tools/gimptransformgridoptions.c:544
+#: ../app/tools/gimptransformgridoptions.c:549
 #, c-format
 msgid "Constrain handles (%s)"
 msgstr "Обмежити опорні точки (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:551
+#: ../app/tools/gimptransformgridoptions.c:556
 #, c-format
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr "Обмежити пересування опорних точок краями і діагоналлю (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:563
+#: ../app/tools/gimptransformgridoptions.c:568
 msgid "Transform around the center point"
 msgstr "Перетворити відносно центральної точки"
 
-#: ../app/tools/gimptransformgridoptions.c:579
+#: ../app/tools/gimptransformgridoptions.c:584
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Обмеження (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:580
+#: ../app/tools/gimptransformgridoptions.c:585
 #: ../app/tools/gimptransform3dtool.c:335
 msgid "Move"
 msgstr "Переміщення"
 
-#: ../app/tools/gimptransformgridoptions.c:581
+#: ../app/tools/gimptransformgridoptions.c:586
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Обмежити пересування кутами у 45 від центру (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:583
+#: ../app/tools/gimptransformgridoptions.c:588
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Зберігати пропорції під час масштабування (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:585
+#: ../app/tools/gimptransformgridoptions.c:590
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Обмежити обертання порціями у 15 градусів (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:587
+#: ../app/tools/gimptransformgridoptions.c:592
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Зсувати лише уздовж напрямку країв (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:589
+#: ../app/tools/gimptransformgridoptions.c:594
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Обмежити пересування опорних точок перспективи краями і діагоналлю (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:592
+#: ../app/tools/gimptransformgridoptions.c:597
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Від опорної точки (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:594
+#: ../app/tools/gimptransformgridoptions.c:599
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Масштабувати від опорної точки (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:596
+#: ../app/tools/gimptransformgridoptions.c:601
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Зсунути протилежний край на таку саму величину (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:598
+#: ../app/tools/gimptransformgridoptions.c:603
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Зберігати позицію контрольної точки під час зміни перспективи (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:601
+#: ../app/tools/gimptransformgridoptions.c:606
 msgid "Pivot"
 msgstr "Опорна точка"
 
-#: ../app/tools/gimptransformgridoptions.c:602
+#: ../app/tools/gimptransformgridoptions.c:607
 #, c-format
 msgid "Snap (%s)"
 msgstr "Прилипання (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:603
+#: ../app/tools/gimptransformgridoptions.c:608
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Прилипання опорної точки до кутів і центру (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:604
+#: ../app/tools/gimptransformgridoptions.c:609
 msgid "Lock"
 msgstr "Заблокувати"
 
-#: ../app/tools/gimptransformgridoptions.c:605
+#: ../app/tools/gimptransformgridoptions.c:610
 msgid "Lock pivot position to canvas"
 msgstr "Заблокувати позицію опорної точки на полотні"
 
-#: ../app/tools/gimptransformgridtool.c:291
+#: ../app/tools/gimptransformgridtool.c:294
 #: ../app/tools/gimptransformtool.c:440
 msgid "_Transform"
 msgstr "Пере_творення"
 
-#: ../app/tools/gimptransformgridtool.c:572
-#: ../app/tools/gimptransformgridtool.c:584
+#: ../app/tools/gimptransformgridtool.c:579
+#: ../app/tools/gimptransformgridtool.c:591
 msgid "Transform Step"
 msgstr "Крок перетворення"
 
-#: ../app/tools/gimptransformgridtool.c:979
+#: ../app/tools/gimptransformgridtool.c:986
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (виправлення)"
 
-#: ../app/tools/gimptransformgridtool.c:1241
+#: ../app/tools/gimptransformgridtool.c:1265
 msgid "Re_adjust"
 msgstr "Повторно с_коригувати"
 
-#: ../app/tools/gimptransformgridtool.c:1495
+#: ../app/tools/gimptransformgridtool.c:1518
 msgid "Cannot readjust the transformation"
 msgstr "Не вдалося повторно скоригувати перетворення"
 
@@ -24574,24 +24574,24 @@ msgstr "Активний контур не має штрихів."
 msgid "The current transform is invalid"
 msgstr "Поточне перетворення є некоректним"
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
 msgstr "Об'єднане перетворення"
 
-#: ../app/tools/gimpunifiedtransformtool.c:88
+#: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr "Об'єднане перетворення: перетворює шар, позначене або контур"
 
-#: ../app/tools/gimpunifiedtransformtool.c:90
+#: ../app/tools/gimpunifiedtransformtool.c:92
 msgid "_Unified Transform"
 msgstr "_Об'єднане перетворення"
 
-#: ../app/tools/gimpunifiedtransformtool.c:112
+#: ../app/tools/gimpunifiedtransformtool.c:115
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Об'єднане перетворення"
 
-#: ../app/tools/gimpunifiedtransformtool.c:113
+#: ../app/tools/gimpunifiedtransformtool.c:116
 msgid "Unified transform"
 msgstr "Об'єднане перетворення"
 
@@ -25144,7 +25144,7 @@ msgstr "Відсоток ширини пензлів"
 msgid "(None)"
 msgstr "(Немає)"
 
-#: ../app/widgets/gimpclipboard.c:421
+#: ../app/widgets/gimpclipboard.c:427
 msgid "Clipboard"
 msgstr "Буфер обміну"
 
@@ -27703,3 +27703,7 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgctxt "image-action"
+#~ msgid "Pr_ecision"
+#~ msgstr "_Точність"
