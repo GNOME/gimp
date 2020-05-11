@@ -135,7 +135,7 @@ convert_precision_dialog_new (GimpImage                    *image,
   blurb = g_strdup_printf (_("Convert Image to %s"), enum_desc);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
-                                     _("Precision Conversion"),
+                                     _("Encoding Conversion"),
                                      "gimp-image-convert-precision",
                                      GIMP_ICON_CONVERT_PRECISION,
                                      blurb,
