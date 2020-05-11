@@ -73,6 +73,61 @@ libapp = static_library('app',
 )
 
 
+if platform_windows
+  # for GimpDashboard and GimpBacktrace
+  psapi_cflags = [ '-DPSAPI_VERSION=1' ]
+  link_args = [ '-lpsapi' ]
+
+else
+  psapi_cflags = [ ]
+  link_args = []
+endif
+
+if platform_osx
+  link_args += osx_ldflags
+endif
+
+libapp_dep = declare_dependency(
+  dependencies: [
+    dbghelp,
+    drmingw,
+    gegl,
+    gexiv2,
+    gio,
+    gio_specific,
+    gtk3,
+    lcms,
+    libbacktrace,
+    pangocairo,
+    pangoft2,
+    rpc,
+  ],
+  link_with: [
+    libapp,
+    libappcore,
+    libappfile,
+    libappfiledata,
+    libappgegl,
+    libappinternalprocs,
+    libapplayermodes,
+    libapplayermodeslegacy,
+    libappoperations,
+    libapppaint,
+    libapppdb,
+    libappplugin,
+    libapptext,
+    libappvectors,
+    libappxcf,
+  ],
+  include_directories: [
+    rootInclude,
+    rootAppInclude,
+  ],
+  compile_args: psapi_cflags,
+  link_args: link_args,
+)
+
+
 # Those subdirs need to link against the first ones
 subdir('config')
 subdir('tests')
@@ -81,20 +136,6 @@ subdir('tests')
 
 app_links = [
   libappconfig,
-  libappcore,
-  libappfile,
-  libappfiledata,
-  libappgegl,
-  libappinternalprocs,
-  libapplayermodes,
-  libapplayermodeslegacy,
-  libappoperations,
-  libapppaint,
-  libapppdb,
-  libappplugin,
-  libapptext,
-  libappvectors,
-  libappxcf,
   libgimpbase,
   libgimpcolor,
   libgimpconfig,
@@ -113,20 +154,6 @@ app_gui_links = [
   libapptools,
   libappwidgets,
   libgimpwidgets,
-]
-
-app_deps = [
-  dbghelp,
-  drmingw,
-  gegl,
-  gexiv2,
-  gio,
-  gtk3,
-  lcms,
-  libbacktrace,
-  pangocairo,
-  pangoft2,
-  rpc,
 ]
 
 # Executables
@@ -167,21 +194,9 @@ if platform_windows
       rootInclude, appInclude,
     ],
   )
-
-  # for GimpDashboard and GimpBacktrace
-  psapi_cflags = [ '-DPSAPI_VERSION=1' ]
-  link_args = [ '-lpsapi' ]
-
 else
   console_rc_file = []
   gui_rc_file = []
-
-  psapi_cflags = [ ]
-  link_args = []
-endif
-
-if platform_osx
-  link_args += osx_ldflags
 endif
 
 gimpconsole_exe = executable('gimp-console-'+gimp_app_version,
@@ -194,12 +209,10 @@ gimpconsole_exe = executable('gimp-console-'+gimp_app_version,
     '-DGIMP_CONSOLE_COMPILATION',
     psapi_cflags,
   ],
-  include_directories: rootInclude,
-  dependencies: app_deps,
+  dependencies: libapp_dep,
   link_with: [
     app_links,
   ],
-  link_args: link_args,
   install: true,
 )
 
@@ -212,12 +225,10 @@ gimpmain_exe = executable('gimp-'+gimp_app_version,
     '-DGIMP_APP_GLUE_COMPILATION',
     psapi_cflags,
   ],
-  include_directories: rootInclude,
-  dependencies: app_deps,
+  dependencies: libapp_dep,
   link_with: [
     app_links,
     app_gui_links,
   ],
-  link_args: link_args,
   install: true,
 )
