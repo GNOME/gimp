@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-11 06:13+0000\n"
-"PO-Revision-Date: 2020-05-11 10:07+0300\n"
+"POT-Creation-Date: 2020-05-12 19:37+0000\n"
+"PO-Revision-Date: 2020-05-12 23:12+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1122,7 +1122,7 @@ msgid "Tool Presets"
 msgstr "Шаблони інструментів"
 
 #: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:439
-#: ../app/widgets/gimptoolpreseteditor.c:95
+#: ../app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
 msgstr "Текстовий редактор інструментів"
 
@@ -15036,35 +15036,40 @@ msgctxt "tool-item"
 msgid "Group"
 msgstr "Група"
 
-#: ../app/core/gimptoolpreset.c:148
+#: ../app/core/gimptoolpreset.c:150
 msgid "Apply stored FG/BG"
 msgstr "Застосувати збережений FG/BG"
 
-#: ../app/core/gimptoolpreset.c:155
+#: ../app/core/gimptoolpreset.c:157
+#| msgid "Apply stored pattern"
+msgid "Apply stored opacity/paint mode"
+msgstr "Застосувати збережену непрозорість або режим малювання"
+
+#: ../app/core/gimptoolpreset.c:164
 msgid "Apply stored brush"
 msgstr "Застосувати збережений пензель"
 
-#: ../app/core/gimptoolpreset.c:162
+#: ../app/core/gimptoolpreset.c:171
 msgid "Apply stored dynamics"
 msgstr "Застосувати збережену динаміку"
 
-#: ../app/core/gimptoolpreset.c:169
+#: ../app/core/gimptoolpreset.c:178
 msgid "Apply stored MyPaint brush"
 msgstr "Застосувати збережений пензель MyPaint"
 
-#: ../app/core/gimptoolpreset.c:176
+#: ../app/core/gimptoolpreset.c:185
 msgid "Apply stored pattern"
 msgstr "Застосувати збережену текстуру"
 
-#: ../app/core/gimptoolpreset.c:183
+#: ../app/core/gimptoolpreset.c:192
 msgid "Apply stored palette"
 msgstr "Застосувати збережену палітру"
 
-#: ../app/core/gimptoolpreset.c:190
+#: ../app/core/gimptoolpreset.c:199
 msgid "Apply stored gradient"
 msgstr "Застосувати збережений градієнт"
 
-#: ../app/core/gimptoolpreset.c:197
+#: ../app/core/gimptoolpreset.c:206
 msgid "Apply stored font"
 msgstr "Застосувати збережений шрифт"
 
@@ -15407,7 +15412,6 @@ msgid "Convert Image to %s"
 msgstr "Перетворити зображення у %s"
 
 #: ../app/dialogs/convert-precision-dialog.c:138
-#| msgid "Precision Conversion"
 msgid "Encoding Conversion"
 msgstr "Перетворення кодувань"
 
@@ -26498,7 +26502,7 @@ msgid "Mapping matrix"
 msgstr "Матриця прилипання"
 
 #: ../app/widgets/gimpdynamicseditor.c:313
-#: ../app/widgets/gimptoolpreseteditor.c:146
+#: ../app/widgets/gimptoolpreseteditor.c:147
 msgid "Icon:"
 msgstr "Піктограма:"
 
@@ -27387,7 +27391,7 @@ msgstr "Відновити шаблон інструментів…"
 msgid "Delete Tool Preset..."
 msgstr "Вилучити шаблон інструментів…"
 
-#: ../app/widgets/gimptoolpreseteditor.c:286
+#: ../app/widgets/gimptoolpreseteditor.c:291
 #, c-format
 msgid "%s Preset"
 msgstr "Шаблон %s"
