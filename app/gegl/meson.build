@@ -16,11 +16,21 @@ appgeglenums = custom_target('gimp-gegl-enums.c',
   capture: true,
 )
 
+libappgegl_loops = simd.check('gimp-gegl-loops-simd',
+  sse2: 'gimp-gegl-loops-sse2.c',
+  compiler: cc,
+  include_directories: [ rootInclude, rootAppInclude, ],
+  dependencies: [
+    cairo,
+    gegl,
+    gdk_pixbuf,
+  ],
+)
+
 libappgegl_sources = [
   'gimp-babl-compat.c',
   'gimp-babl.c',
   'gimp-gegl-apply-operation.c',
-  'gimp-gegl-loops-sse2.c',
   'gimp-gegl-loops.cc',
   'gimp-gegl-mask-combine.cc',
   'gimp-gegl-mask.c',
@@ -35,9 +45,12 @@ libappgegl_sources = [
 
 libappgegl = static_library('appgegl',
   libappgegl_sources,
+  link_with: libappgegl_loops[0],
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-GEGL"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf,
+    cairo,
+    gegl,
+    gdk_pixbuf,
   ],
 )

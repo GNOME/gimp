@@ -91,6 +91,7 @@ pkgconfig = import('pkgconfig')
 i18n      = import('i18n')
 gnome     = import('gnome')
 pythonmod = import('python')
+simd      = import('unstable-simd')
 
 cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
@@ -178,54 +179,33 @@ endif
 
 ################################################################################
 # Compiler CPU extensions for optimizations
+# -- Don't enable these project-wide, since some tools like g-ir-scanner,
+#    will crash on them.
 
-if (get_option('buildtype') == 'release' or
-    get_option('buildtype') == 'debugoptimized')
+# Note that Meson has a SIMD module which can also do this for us, but it uses
+# its own #defines and we want to stay compatible with the autotools build
+conf.set('USE_MMX', cc.has_argument('-mmx'))
+conf.set('USE_SSE', cc.has_argument('-sse'))
+conf.set10('COMPILE_SSE2_INTRINISICS', cc.has_argument('-msse2'))
+conf.set10('COMPILE_SSE4_1_INTRINISICS', cc.has_argument('-msse4.1'))
 
-  # Check for compiler CPU extensions
-  existing_cpu_exts = [
-    '-mfpmath=sse',
-    '-mmmx',
-    '-msse',
-    '-msse2',
-    '-msse4.1',
-  ]
-  supported_cpu_exts = cc.get_supported_arguments(existing_cpu_exts)
+if host_cpu_family == 'ppc'
+  altivec_args = cc.get_supported_arguments([
+    '-faltivec',
+    '-maltivec',
+    '-mabi=altivec',
+  ])
 
-  compiler_args += supported_cpu_exts
-
-  conf.set  ('USE_MMX',                   '-mmmx'    in supported_cpu_exts)
-  conf.set  ('USE_SSE',                   '-msse'    in supported_cpu_exts)
-  conf.set10('COMPILE_SSE2_INTRINISICS',  '-msse2'   in supported_cpu_exts)
-  conf.set10('COMPILE_SSE4_1_INTRINISICS','-msse4.1' in supported_cpu_exts)
-
-
-  have_altivec        = false
-  have_altivec_sysctl = false
-  if host_cpu_family == 'ppc'
-    altivec_args = cc.get_supported_arguments([
-      '-faltivec',
-      '-maltivec',
-      '-mabi=altivec',
-    ])
-
-    if altivec_args != []
-      compiler_args += altivec_args
-      linker_args   += altivec_args
-
-      if host_os.contains('darwin')
-        have_altivec = true
-        have_altivec_sysctl = true
-      elif cc.compiles('''
-        int main() { asm ("vand %v0, %v0, %v0"); return 0; }
-        ''')
-        have_altivec = true
-      endif
+  if altivec_args != []
+    if host_os.contains('darwin')
+      conf.set('USE_ALTIVEC', true)
+      conf.set('HAVE_ALTIVEC_SYSCTL', true)
+    elif cc.compiles('''
+      int main() { asm ("vand %v0, %v0, %v0"); return 0; }
+      ''')
+      conf.set('USE_ALTIVEC', true)
     endif
   endif
-  conf.set('HAVE_ALTIVEC_SYSCTL', have_altivec_sysctl)
-  conf.set('USE_ALTIVEC',         have_altivec)
-
 endif
 
 
