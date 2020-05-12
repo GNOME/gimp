@@ -48,8 +48,10 @@ enum
   PROP_POINTS,
   PROP_POINT_TYPES,
   PROP_N_SAMPLES,
-  PROP_SAMPLES
+  PROP_SAMPLES,
+  N_PROPS
 };
+static GParamSpec *obj_props[N_PROPS] = { NULL, };
 
 
 /*  local function prototypes  */
@@ -148,55 +150,56 @@ gimp_curve_class_init (GimpCurveClass *klass)
   data_class->get_extension         = gimp_curve_get_extension;
   data_class->copy                  = gimp_curve_data_copy;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURVE_TYPE,
-                         "curve-type",
+  obj_props[PROP_CURVE_TYPE] =
+      g_param_spec_enum ("curve-type",
                          "Curve Type",
                          "The curve type",
                          GIMP_TYPE_CURVE_TYPE,
-                         GIMP_CURVE_SMOOTH, 0);
+                         GIMP_CURVE_SMOOTH,
+                         GIMP_CONFIG_PARAM_FLAGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_N_POINTS,
-                        "n-points",
+  obj_props[PROP_N_POINTS] =
+      g_param_spec_int ("n-points",
                         "Number of Points",
                         "The number of points",
                         0, G_MAXINT, 0,
                         /* for backward compatibility */
-                        GIMP_CONFIG_PARAM_IGNORE);
+                        GIMP_CONFIG_PARAM_IGNORE | GIMP_CONFIG_PARAM_FLAGS);
 
   array_spec = g_param_spec_double ("point", NULL, NULL,
                                     -1.0, 1.0, 0.0, GIMP_PARAM_READWRITE);
-  g_object_class_install_property (object_class, PROP_POINTS,
-                                   gimp_param_spec_value_array ("points",
-                                                                NULL, NULL,
-                                                                array_spec,
-                                                                GIMP_PARAM_STATIC_STRINGS |
-                                                                GIMP_CONFIG_PARAM_FLAGS));
+  obj_props[PROP_POINTS] =
+      gimp_param_spec_value_array ("points",
+                                   NULL, NULL,
+                                   array_spec,
+                                   GIMP_CONFIG_PARAM_FLAGS);
 
   array_spec = g_param_spec_enum ("point-type", NULL, NULL,
                                   GIMP_TYPE_CURVE_POINT_TYPE,
                                   GIMP_CURVE_POINT_SMOOTH,
                                   GIMP_PARAM_READWRITE);
-  g_object_class_install_property (object_class, PROP_POINT_TYPES,
-                                   gimp_param_spec_value_array ("point-types",
-                                                                NULL, NULL,
-                                                                array_spec,
-                                                                GIMP_PARAM_STATIC_STRINGS |
-                                                                GIMP_CONFIG_PARAM_FLAGS));
+  obj_props[PROP_POINT_TYPES] =
+      gimp_param_spec_value_array ("point-types",
+                                   NULL, NULL,
+                                   array_spec,
+                                   GIMP_CONFIG_PARAM_FLAGS);
 
-  GIMP_CONFIG_PROP_INT  (object_class, PROP_N_SAMPLES,
-                         "n-samples",
-                         "Number of Samples",
-                         "The number of samples",
-                         256, 256, 256, 0);
+  obj_props[PROP_N_SAMPLES] =
+      g_param_spec_int ("n-samples",
+                        "Number of Samples",
+                        "The number of samples",
+                        256, 256, 256,
+                        GIMP_CONFIG_PARAM_FLAGS);
 
   array_spec = g_param_spec_double ("sample", NULL, NULL,
                                     0.0, 1.0, 0.0, GIMP_PARAM_READWRITE);
-  g_object_class_install_property (object_class, PROP_SAMPLES,
-                                   gimp_param_spec_value_array ("samples",
-                                                                NULL, NULL,
-                                                                array_spec,
-                                                                GIMP_PARAM_STATIC_STRINGS |
-                                                                GIMP_CONFIG_PARAM_FLAGS));
+  obj_props[PROP_SAMPLES] =
+      gimp_param_spec_value_array ("samples",
+                                   NULL, NULL,
+                                   array_spec,
+                                   GIMP_CONFIG_PARAM_FLAGS);
+
+  g_object_class_install_properties (object_class, N_PROPS, obj_props);
 }
 
 static void
@@ -302,8 +305,8 @@ gimp_curve_set_property (GObject      *object,
         curve->n_points = n_points;
         curve->points   = points;
 
-        g_object_notify (object, "n-points");
-        g_object_notify (object, "point-types");
+        g_object_notify_by_pspec (object, obj_props[PROP_N_POINTS]);
+        g_object_notify_by_pspec (object, obj_props[PROP_POINT_TYPES]);
       }
       break;
 
@@ -348,8 +351,8 @@ gimp_curve_set_property (GObject      *object,
         curve->n_points = length;
         curve->points   = points;
 
-        g_object_notify (object, "n-points");
-        g_object_notify (object, "points");
+        g_object_notify_by_pspec (object, obj_props[PROP_N_POINTS]);
+        g_object_notify_by_pspec (object, obj_props[PROP_POINTS]);
       }
       break;
 
@@ -686,7 +689,7 @@ gimp_curve_reset (GimpCurve *curve,
   for (i = 0; i < curve->n_samples; i++)
     curve->samples[i] = (gdouble) i / (gdouble) (curve->n_samples - 1);
 
-  g_object_notify (G_OBJECT (curve), "samples");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_SAMPLES]);
 
   g_free (curve->points);
 
@@ -701,14 +704,14 @@ gimp_curve_reset (GimpCurve *curve,
   curve->points[1].y    = 1.0;
   curve->points[1].type = GIMP_CURVE_POINT_SMOOTH;
 
-  g_object_notify (G_OBJECT (curve), "n-points");
-  g_object_notify (G_OBJECT (curve), "points");
-  g_object_notify (G_OBJECT (curve), "point-types");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_POINTS]);
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
   if (reset_type)
     {
       curve->curve_type = GIMP_CURVE_SMOOTH;
-      g_object_notify (G_OBJECT (curve), "curve-type");
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_CURVE_TYPE]);
     }
 
   curve->identity = TRUE;
@@ -754,16 +757,16 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
               curve->points[i].type = GIMP_CURVE_POINT_SMOOTH;
             }
 
-          g_object_notify (G_OBJECT (curve), "n-points");
-          g_object_notify (G_OBJECT (curve), "points");
-          g_object_notify (G_OBJECT (curve), "point-types");
+          g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_POINTS]);
+          g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
+          g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
         }
       else
         {
           gimp_curve_clear_points (curve);
         }
 
-      g_object_notify (G_OBJECT (curve), "curve-type");
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_CURVE_TYPE]);
 
       g_object_thaw_notify (G_OBJECT (curve));
 
@@ -802,14 +805,14 @@ gimp_curve_set_n_samples (GimpCurve *curve,
       g_object_freeze_notify (G_OBJECT (curve));
 
       curve->n_samples = n_samples;
-      g_object_notify (G_OBJECT (curve), "n-samples");
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_SAMPLES]);
 
       curve->samples = g_renew (gdouble, curve->samples, curve->n_samples);
 
       for (i = 0; i < curve->n_samples; i++)
         curve->samples[i] = (gdouble) i / (gdouble) (curve->n_samples - 1);
 
-      g_object_notify (G_OBJECT (curve), "samples");
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_SAMPLES]);
 
       if (curve->curve_type == GIMP_CURVE_FREE)
         curve->identity = TRUE;
@@ -922,9 +925,9 @@ gimp_curve_add_point (GimpCurve *curve,
   curve->n_points++;
   curve->points = points;
 
-  g_object_notify (G_OBJECT (curve), "n-points");
-  g_object_notify (G_OBJECT (curve), "points");
-  g_object_notify (G_OBJECT (curve), "point-types");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_POINTS]);
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
   gimp_data_dirty (GIMP_DATA (curve));
 
@@ -952,9 +955,9 @@ gimp_curve_delete_point (GimpCurve *curve,
   curve->n_points--;
   curve->points = points;
 
-  g_object_notify (G_OBJECT (curve), "n-points");
-  g_object_notify (G_OBJECT (curve), "points");
-  g_object_notify (G_OBJECT (curve), "point-types");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_POINTS]);
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -977,7 +980,7 @@ gimp_curve_set_point (GimpCurve *curve,
   if (point < curve->n_points - 1)
     curve->points[point].x = MIN (x, curve->points[point + 1].x);
 
-  g_object_notify (G_OBJECT (curve), "points");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -992,7 +995,7 @@ gimp_curve_move_point (GimpCurve *curve,
 
   curve->points[point].y = CLAMP (y, 0.0, 1.0);
 
-  g_object_notify (G_OBJECT (curve), "points");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -1020,7 +1023,7 @@ gimp_curve_set_point_type (GimpCurve          *curve,
 
   curve->points[point].type = type;
 
-  g_object_notify (G_OBJECT (curve), "point-types");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -1045,9 +1048,9 @@ gimp_curve_clear_points (GimpCurve *curve)
       g_clear_pointer (&curve->points, g_free);
       curve->n_points = 0;
 
-      g_object_notify (G_OBJECT (curve), "n-points");
-      g_object_notify (G_OBJECT (curve), "points");
-      g_object_notify (G_OBJECT (curve), "point-types");
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_POINTS]);
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
       gimp_data_dirty (GIMP_DATA (curve));
     }
@@ -1067,7 +1070,7 @@ gimp_curve_set_curve (GimpCurve *curve,
 
   curve->samples[ROUND (x * (gdouble) (curve->n_samples - 1))] = y;
 
-  g_object_notify (G_OBJECT (curve), "samples");
+  g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_SAMPLES]);
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -1164,7 +1167,7 @@ gimp_curve_calculate (GimpCurve *curve)
           curve->samples[ROUND (x * (gdouble) (curve->n_samples - 1))] = y;
         }
 
-      g_object_notify (G_OBJECT (curve), "samples");
+      g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_SAMPLES]);
       break;
 
     case GIMP_CURVE_FREE:
