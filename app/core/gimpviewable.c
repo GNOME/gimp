@@ -564,11 +564,10 @@ gimp_viewable_deserialize_property (GimpConfig *config,
 void
 gimp_viewable_invalidate_preview (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  private = GET_PRIVATE (viewable);
 
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
@@ -587,11 +586,9 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
 void
 gimp_viewable_size_changed (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
 
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[SIZE_CHANGED], 0);
@@ -851,7 +848,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
                            gint          width,
                            gint          height)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
   GimpTempBuf         *temp_buf = NULL;
 
@@ -859,8 +856,6 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-
-  private = GET_PRIVATE (viewable);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -1008,7 +1003,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
                           gint          width,
                           gint          height)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
   GdkPixbuf           *pixbuf = NULL;
 
@@ -1016,8 +1011,6 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-
-  private = GET_PRIVATE (viewable);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -1217,11 +1210,9 @@ gimp_viewable_is_name_editable (GimpViewable *viewable)
 const gchar *
 gimp_viewable_get_icon_name (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-
-  private = GET_PRIVATE (viewable);
 
   if (private->icon_name)
     return (const gchar *) private->icon_name;
@@ -1242,12 +1233,10 @@ void
 gimp_viewable_set_icon_name (GimpViewable *viewable,
                              const gchar  *icon_name)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
 
   g_clear_pointer (&private->icon_name, g_free);
 
@@ -1268,11 +1257,9 @@ gimp_viewable_set_icon_name (GimpViewable *viewable,
 void
 gimp_viewable_preview_freeze (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
 
   private->freeze_count++;
 
@@ -1288,12 +1275,9 @@ gimp_viewable_preview_freeze (GimpViewable *viewable)
 void
 gimp_viewable_preview_thaw (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
-
   g_return_if_fail (private->freeze_count > 0);
 
   private->freeze_count--;
@@ -1341,12 +1325,10 @@ void
 gimp_viewable_set_parent (GimpViewable *viewable,
                           GimpViewable *parent)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
   g_return_if_fail (parent == NULL || GIMP_IS_VIEWABLE (parent));
-
-  private = GET_PRIVATE (viewable);
 
   if (parent != private->parent)
     {
