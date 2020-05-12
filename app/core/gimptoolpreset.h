@@ -40,6 +40,7 @@ struct _GimpToolPreset
   GimpToolOptions *tool_options;
 
   gboolean         use_fg_bg;
+  gboolean         use_opacity_paint_mode;
   gboolean         use_brush;
   gboolean         use_dynamics;
   gboolean         use_mybrush;

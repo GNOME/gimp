@@ -46,6 +46,7 @@ struct _GimpToolPresetEditorPrivate
   GtkWidget      *tool_label;
 
   GtkWidget      *fg_bg_toggle;
+  GtkWidget      *opacity_paint_mode_toggle;
   GtkWidget      *brush_toggle;
   GtkWidget      *dynamics_toggle;
   GtkWidget      *mybrush_toggle;
@@ -156,6 +157,10 @@ gimp_tool_preset_editor_constructed (GObject *object)
     gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg", NULL);
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  button = editor->priv->opacity_paint_mode_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-opacity-paint-mode", NULL);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
 
   button = editor->priv->brush_toggle =
     gimp_prop_check_button_new (G_OBJECT (preset), "use-brush", NULL);
@@ -309,6 +314,10 @@ gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
                             (serialize_props &
                              (GIMP_CONTEXT_PROP_MASK_FOREGROUND |
                               GIMP_CONTEXT_PROP_MASK_BACKGROUND)) != 0);
+  gtk_widget_set_sensitive (priv->opacity_paint_mode_toggle,
+                            (serialize_props &
+                             (GIMP_CONTEXT_PROP_MASK_OPACITY |
+                              GIMP_CONTEXT_PROP_MASK_PAINT_MODE)) != 0);
   gtk_widget_set_sensitive (priv->brush_toggle,
                             (serialize_props &
                              GIMP_CONTEXT_PROP_MASK_BRUSH) != 0);
