@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 
 /**
  * GimpRunPatternCallback:
+ * @pattern_name: Name of the pattern
  * @width: width
  * @height: height
  * @bpp: bytes per pixel
