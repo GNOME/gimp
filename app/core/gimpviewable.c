@@ -44,7 +44,6 @@
 enum
 {
   PROP_0,
-  PROP_STOCK_ID, /* compat */
   PROP_ICON_NAME,
   PROP_ICON_PIXBUF,
   PROP_FROZEN
@@ -209,12 +208,6 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->set_expanded            = NULL;
   klass->get_expanded            = NULL;
 
-  /* compat property */
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
-                           NULL, NULL,
-                           NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_STRING (object_class, PROP_ICON_NAME, "icon-name",
                            NULL, NULL,
                            NULL,
@@ -270,9 +263,6 @@ gimp_viewable_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
-      if (! g_value_get_string (value))
-        break;
     case PROP_ICON_NAME:
       gimp_viewable_set_icon_name (viewable, g_value_get_string (value));
       break;
@@ -302,7 +292,6 @@ gimp_viewable_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
     case PROP_ICON_NAME:
       g_value_set_string (value, gimp_viewable_get_icon_name (viewable));
       break;
@@ -466,9 +455,6 @@ gimp_viewable_serialize_property (GimpConfig       *config,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
-      return TRUE;
-
     case PROP_ICON_NAME:
       if (private->icon_name)
         {
