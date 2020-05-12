@@ -105,7 +105,10 @@ libgimpbase = library('gimpbase-' + gimp_api_version,
   libgimpbase_sources,
   include_directories: rootInclude,
   dependencies: [
-    gexiv2, gio, math,
+    gexiv2,
+    gio,
+    math,
+    cpu_exts_dep,
   ],
   c_args: [
     '-DG_LOG_DOMAIN="LibGimpBase"',
@@ -127,6 +130,7 @@ executable('test-cpu-accel',
   include_directories: rootInclude,
   dependencies: [
     glib,
+    cpu_exts_dep,
   ],
   c_args: [
     '-DG_LOG_DOMAIN="LibGimpBase"',

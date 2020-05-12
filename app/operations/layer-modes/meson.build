@@ -22,6 +22,9 @@ libapplayermodes = static_library('applayermodes',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Layer-Modes"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf,
+    cairo,
+    gegl,
+    gdk_pixbuf,
+    cpu_exts_dep,
   ],
 )
