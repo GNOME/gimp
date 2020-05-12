@@ -46,8 +46,10 @@ enum
   PROP_0,
   PROP_ICON_NAME,
   PROP_ICON_PIXBUF,
-  PROP_FROZEN
+  PROP_FROZEN,
+  N_PROPS
 };
+static GParamSpec *obj_props[N_PROPS] = { NULL, };
 
 enum
 {
@@ -208,23 +210,22 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->set_expanded            = NULL;
   klass->get_expanded            = NULL;
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_ICON_NAME, "icon-name",
-                           NULL, NULL,
+  obj_props[PROP_ICON_NAME] =
+      g_param_spec_string ("icon-name", NULL, NULL,
                            NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           GIMP_CONFIG_PARAM_FLAGS);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_ICON_PIXBUF,
-                           "icon-pixbuf",
-                           NULL, NULL,
+  obj_props[PROP_ICON_PIXBUF] =
+      g_param_spec_object ("icon-pixbuf", NULL, NULL,
                            GDK_TYPE_PIXBUF,
-                           G_PARAM_CONSTRUCT |
-                           GIMP_PARAM_STATIC_STRINGS);
+                           GIMP_CONFIG_PARAM_FLAGS);
 
-  g_object_class_install_property (object_class, PROP_FROZEN,
-                                   g_param_spec_boolean ("frozen",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READABLE));
+  obj_props[PROP_FROZEN] =
+      g_param_spec_boolean ("frozen", NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_READABLE);
+
+  g_object_class_install_properties (object_class, N_PROPS, obj_props);
 }
 
 static void
@@ -1261,7 +1262,7 @@ gimp_viewable_set_icon_name (GimpViewable *viewable,
 
   gimp_viewable_invalidate_preview (viewable);
 
-  g_object_notify (G_OBJECT (viewable), "icon-name");
+  g_object_notify_by_pspec (G_OBJECT (viewable), obj_props[PROP_ICON_NAME]);
 }
 
 void
@@ -1280,7 +1281,7 @@ gimp_viewable_preview_freeze (GimpViewable *viewable)
       if (GIMP_VIEWABLE_GET_CLASS (viewable)->preview_freeze)
         GIMP_VIEWABLE_GET_CLASS (viewable)->preview_freeze (viewable);
 
-      g_object_notify (G_OBJECT (viewable), "frozen");
+      g_object_notify_by_pspec (G_OBJECT (viewable), obj_props[PROP_FROZEN]);
     }
 }
 
@@ -1313,7 +1314,7 @@ gimp_viewable_preview_thaw (GimpViewable *viewable)
           gimp_viewable_invalidate_preview (viewable);
         }
 
-      g_object_notify (G_OBJECT (viewable), "frozen");
+      g_object_notify_by_pspec (G_OBJECT (viewable), obj_props[PROP_FROZEN]);
 
       if (GIMP_VIEWABLE_GET_CLASS (viewable)->preview_thaw)
         GIMP_VIEWABLE_GET_CLASS (viewable)->preview_thaw (viewable);
