@@ -44,11 +44,12 @@
 enum
 {
   PROP_0,
-  PROP_STOCK_ID, /* compat */
   PROP_ICON_NAME,
   PROP_ICON_PIXBUF,
-  PROP_FROZEN
+  PROP_FROZEN,
+  N_PROPS
 };
+static GParamSpec *obj_props[N_PROPS] = { NULL, };
 
 enum
 {
@@ -209,29 +210,22 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->set_expanded            = NULL;
   klass->get_expanded            = NULL;
 
-  /* compat property */
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
-                           NULL, NULL,
+  obj_props[PROP_ICON_NAME] =
+      g_param_spec_string ("icon-name", NULL, NULL,
                            NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           GIMP_CONFIG_PARAM_FLAGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_ICON_NAME, "icon-name",
-                           NULL, NULL,
-                           NULL,
-                           GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_ICON_PIXBUF,
-                           "icon-pixbuf",
-                           NULL, NULL,
+  obj_props[PROP_ICON_PIXBUF] =
+      g_param_spec_object ("icon-pixbuf", NULL, NULL,
                            GDK_TYPE_PIXBUF,
-                           G_PARAM_CONSTRUCT |
-                           GIMP_PARAM_STATIC_STRINGS);
+                           GIMP_CONFIG_PARAM_FLAGS);
 
-  g_object_class_install_property (object_class, PROP_FROZEN,
-                                   g_param_spec_boolean ("frozen",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READABLE));
+  obj_props[PROP_FROZEN] =
+      g_param_spec_boolean ("frozen", NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_READABLE);
+
+  g_object_class_install_properties (object_class, N_PROPS, obj_props);
 }
 
 static void
@@ -270,9 +264,6 @@ gimp_viewable_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
-      if (! g_value_get_string (value))
-        break;
     case PROP_ICON_NAME:
       gimp_viewable_set_icon_name (viewable, g_value_get_string (value));
       break;
@@ -302,7 +293,6 @@ gimp_viewable_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
     case PROP_ICON_NAME:
       g_value_set_string (value, gimp_viewable_get_icon_name (viewable));
       break;
@@ -466,9 +456,6 @@ gimp_viewable_serialize_property (GimpConfig       *config,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
-      return TRUE;
-
     case PROP_ICON_NAME:
       if (private->icon_name)
         {
@@ -577,11 +564,10 @@ gimp_viewable_deserialize_property (GimpConfig *config,
 void
 gimp_viewable_invalidate_preview (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  private = GET_PRIVATE (viewable);
 
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
@@ -600,11 +586,9 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
 void
 gimp_viewable_size_changed (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
 
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[SIZE_CHANGED], 0);
@@ -864,7 +848,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
                            gint          width,
                            gint          height)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
   GimpTempBuf         *temp_buf = NULL;
 
@@ -872,8 +856,6 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-
-  private = GET_PRIVATE (viewable);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -1021,7 +1003,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
                           gint          width,
                           gint          height)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
   GdkPixbuf           *pixbuf = NULL;
 
@@ -1029,8 +1011,6 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-
-  private = GET_PRIVATE (viewable);
 
   if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
@@ -1230,11 +1210,9 @@ gimp_viewable_is_name_editable (GimpViewable *viewable)
 const gchar *
 gimp_viewable_get_icon_name (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-
-  private = GET_PRIVATE (viewable);
 
   if (private->icon_name)
     return (const gchar *) private->icon_name;
@@ -1255,12 +1233,10 @@ void
 gimp_viewable_set_icon_name (GimpViewable *viewable,
                              const gchar  *icon_name)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
   GimpViewableClass   *viewable_class;
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
 
   g_clear_pointer (&private->icon_name, g_free);
 
@@ -1275,17 +1251,15 @@ gimp_viewable_set_icon_name (GimpViewable *viewable,
 
   gimp_viewable_invalidate_preview (viewable);
 
-  g_object_notify (G_OBJECT (viewable), "icon-name");
+  g_object_notify_by_pspec (G_OBJECT (viewable), obj_props[PROP_ICON_NAME]);
 }
 
 void
 gimp_viewable_preview_freeze (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
 
   private->freeze_count++;
 
@@ -1294,19 +1268,16 @@ gimp_viewable_preview_freeze (GimpViewable *viewable)
       if (GIMP_VIEWABLE_GET_CLASS (viewable)->preview_freeze)
         GIMP_VIEWABLE_GET_CLASS (viewable)->preview_freeze (viewable);
 
-      g_object_notify (G_OBJECT (viewable), "frozen");
+      g_object_notify_by_pspec (G_OBJECT (viewable), obj_props[PROP_FROZEN]);
     }
 }
 
 void
 gimp_viewable_preview_thaw (GimpViewable *viewable)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-
-  private = GET_PRIVATE (viewable);
-
   g_return_if_fail (private->freeze_count > 0);
 
   private->freeze_count--;
@@ -1327,7 +1298,7 @@ gimp_viewable_preview_thaw (GimpViewable *viewable)
           gimp_viewable_invalidate_preview (viewable);
         }
 
-      g_object_notify (G_OBJECT (viewable), "frozen");
+      g_object_notify_by_pspec (G_OBJECT (viewable), obj_props[PROP_FROZEN]);
 
       if (GIMP_VIEWABLE_GET_CLASS (viewable)->preview_thaw)
         GIMP_VIEWABLE_GET_CLASS (viewable)->preview_thaw (viewable);
@@ -1354,12 +1325,10 @@ void
 gimp_viewable_set_parent (GimpViewable *viewable,
                           GimpViewable *parent)
 {
-  GimpViewablePrivate *private;
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
   g_return_if_fail (parent == NULL || GIMP_IS_VIEWABLE (parent));
-
-  private = GET_PRIVATE (viewable);
 
   if (parent != private->parent)
     {
