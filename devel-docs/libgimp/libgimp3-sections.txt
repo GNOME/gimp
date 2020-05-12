@@ -1391,6 +1391,12 @@ gimp_param_vectors_get_type
 <SECTION>
 <FILE>gimpprogress</FILE>
 GimpProgressVtable
+GimpProgressVtableEndFunc
+GimpProgressVtableGetWindowFunc
+GimpProgressVtablePulseFunc
+GimpProgressVtableSetTextFunc
+GimpProgressVtableSetValueFunc
+GimpProgressVtableStartFunc
 gimp_progress_init
 gimp_progress_init_printf
 gimp_progress_update
