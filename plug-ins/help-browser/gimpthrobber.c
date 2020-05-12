@@ -37,11 +37,8 @@ enum
   PROP_ICON_NAME,
   PROP_IMAGE
 };
+static guint         toolbutton_signals[LAST_SIGNAL] = { 0 };
 
-
-static void      gimp_throbber_class_init      (GimpThrobberClass *klass);
-
-static void      gimp_throbber_init                 (GimpThrobber *button);
 
 static void      gimp_throbber_set_property         (GObject      *object,
                                                      guint         prop_id,
@@ -61,12 +58,6 @@ static void      gimp_throbber_button_clicked       (GtkWidget    *widget,
 static void      gimp_throbber_construct_contents   (GtkToolItem  *tool_item);
 
 
-static GObjectClass *parent_class                    = NULL;
-static guint         toolbutton_signals[LAST_SIGNAL] = { 0 };
-
-
-#define GIMP_THROBBER_GET_PRIVATE(obj)(G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_THROBBER, GimpThrobberPrivate))
-
 
 struct _GimpThrobberPrivate
 {
@@ -75,42 +66,13 @@ struct _GimpThrobberPrivate
   gchar     *icon_name;
 };
 
-
-GType
-gimp_throbber_get_type (void)
-{
-  static GType type = 0;
-
-  if (!type)
-    {
-      static const GTypeInfo type_info =
-        {
-          sizeof (GimpThrobberClass),
-          (GBaseInitFunc) NULL,
-          (GBaseFinalizeFunc) NULL,
-          (GClassInitFunc) gimp_throbber_class_init,
-          (GClassFinalizeFunc) NULL,
-          NULL,
-          sizeof (GimpThrobber),
-          0, /* n_preallocs */
-          (GInstanceInitFunc) gimp_throbber_init,
-        };
-
-      type = g_type_register_static (GTK_TYPE_TOOL_ITEM,
-                                     "GimpThrobber",
-                                     &type_info, 0);
-    }
-
-  return type;
-}
+G_DEFINE_TYPE_WITH_PRIVATE (GimpThrobber, gimp_throbber, GTK_TYPE_TOOL_ITEM)
 
 static void
 gimp_throbber_class_init (GimpThrobberClass *klass)
 {
   GObjectClass     *object_class    = G_OBJECT_CLASS (klass);
   GtkToolItemClass *tool_item_class = GTK_TOOL_ITEM_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_throbber_set_property;
   object_class->get_property = gimp_throbber_get_property;
@@ -139,72 +101,70 @@ gimp_throbber_class_init (GimpThrobberClass *klass)
                   G_STRUCT_OFFSET (GimpThrobberClass, clicked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
-
-  g_type_class_add_private (object_class, sizeof (GimpThrobberPrivate));
 }
 
 static void
 gimp_throbber_init (GimpThrobber *button)
 {
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
   GtkToolItem *toolitem = GTK_TOOL_ITEM (button);
-
-  button->priv = GIMP_THROBBER_GET_PRIVATE (button);
 
   gtk_tool_item_set_homogeneous (toolitem, TRUE);
 
-  button->priv->button = g_object_new (GTK_TYPE_BUTTON,
-                                       "yalign",         0.0,
-                                       "focus-on-click", FALSE,
-                                       NULL);
+  priv->button = g_object_new (GTK_TYPE_BUTTON,
+                               "yalign",         0.0,
+                               "focus-on-click", FALSE,
+                               NULL);
 
-  g_signal_connect_object (button->priv->button, "clicked",
+  g_signal_connect_object (priv->button, "clicked",
                            G_CALLBACK (gimp_throbber_button_clicked),
                            button, 0);
 
-  gtk_container_add (GTK_CONTAINER (button), button->priv->button);
-  gtk_widget_show (button->priv->button);
+  gtk_container_add (GTK_CONTAINER (button), priv->button);
+  gtk_widget_show (priv->button);
 }
 
 static void
 gimp_throbber_construct_contents (GtkToolItem *tool_item)
 {
-  GimpThrobber    *button = GIMP_THROBBER (tool_item);
-  GtkWidget       *image;
-  GtkToolbarStyle  style;
+  GimpThrobber        *button = GIMP_THROBBER (tool_item);
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
+  GtkWidget           *image;
+  GtkToolbarStyle      style;
 
-  if (button->priv->image && gtk_widget_get_parent (button->priv->image))
-    gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (button->priv->image)),
-                          button->priv->image);
+  if (priv->image && gtk_widget_get_parent (priv->image))
+    gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (priv->image)),
+                          priv->image);
 
-  if (gtk_bin_get_child (GTK_BIN (button->priv->button)))
-    gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button->priv->button)));
+  if (gtk_bin_get_child (GTK_BIN (priv->button)))
+    gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (priv->button)));
 
   style = gtk_tool_item_get_toolbar_style (tool_item);
 
   if (style == GTK_TOOLBAR_TEXT)
     {
-      image = gtk_image_new_from_icon_name (button->priv->icon_name,
+      image = gtk_image_new_from_icon_name (priv->icon_name,
                                             GTK_ICON_SIZE_MENU);
     }
   else if (style == GTK_TOOLBAR_ICONS)
     {
-      image = gtk_image_new_from_icon_name (button->priv->icon_name,
+      image = gtk_image_new_from_icon_name (priv->icon_name,
                                             GTK_ICON_SIZE_LARGE_TOOLBAR);
     }
-  else if (button->priv->image)
+  else if (priv->image)
     {
-      image = button->priv->image;
+      image = priv->image;
     }
   else
     {
-      image = gtk_image_new_from_icon_name (button->priv->icon_name,
+      image = gtk_image_new_from_icon_name (priv->icon_name,
                                             GTK_ICON_SIZE_DND);
     }
 
-  gtk_container_add (GTK_CONTAINER (button->priv->button), image);
+  gtk_container_add (GTK_CONTAINER (priv->button), image);
   gtk_widget_show (image);
 
-  gtk_button_set_relief (GTK_BUTTON (button->priv->button),
+  gtk_button_set_relief (GTK_BUTTON (priv->button),
                          gtk_tool_item_get_relief_style (tool_item));
 
   gtk_widget_queue_resize (GTK_WIDGET (button));
@@ -241,15 +201,16 @@ gimp_throbber_get_property (GObject         *object,
                               GParamSpec      *pspec)
 {
   GimpThrobber *button = GIMP_THROBBER (object);
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
 
   switch (prop_id)
     {
     case PROP_ICON_NAME:
-      g_value_set_string (value, button->priv->icon_name);
+      g_value_set_string (value, priv->icon_name);
       break;
 
     case PROP_IMAGE:
-      g_value_set_object (value, button->priv->image);
+      g_value_set_object (value, priv->image);
       break;
 
     default:
@@ -262,14 +223,12 @@ static void
 gimp_throbber_finalize (GObject *object)
 {
   GimpThrobber *button = GIMP_THROBBER (object);
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
 
-  if (button->priv->icon_name)
-    g_free (button->priv->icon_name);
+  g_free (priv->icon_name);
+  g_clear_object (&priv->image);
 
-  if (button->priv->image)
-    g_object_unref (button->priv->image);
-
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (gimp_throbber_parent_class)->finalize (object);
 }
 
 static void
@@ -305,13 +264,14 @@ void
 gimp_throbber_set_icon_name (GimpThrobber *button,
                              const gchar  *icon_name)
 {
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
   gchar *old_icon_name;
 
   g_return_if_fail (GIMP_IS_THROBBER (button));
 
-  old_icon_name = button->priv->icon_name;
+  old_icon_name = priv->icon_name;
 
-  button->priv->icon_name = g_strdup (icon_name);
+  priv->icon_name = g_strdup (icon_name);
   gimp_throbber_construct_contents (GTK_TOOL_ITEM (button));
 
   g_object_notify (G_OBJECT (button), "icon-name");
@@ -322,33 +282,37 @@ gimp_throbber_set_icon_name (GimpThrobber *button,
 const gchar *
 gimp_throbber_get_icon_name (GimpThrobber *button)
 {
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
+
   g_return_val_if_fail (GIMP_IS_THROBBER (button), NULL);
 
-  return button->priv->icon_name;
+  return priv->icon_name;
 }
 
 void
 gimp_throbber_set_image (GimpThrobber *button,
                          GtkWidget    *image)
 {
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
+
   g_return_if_fail (GIMP_IS_THROBBER (button));
   g_return_if_fail (image == NULL || GTK_IS_IMAGE (image));
 
-  if (image != button->priv->image)
+  if (image != priv->image)
     {
-      if (button->priv->image)
-	{
-	  if (gtk_widget_get_parent (button->priv->image))
-            gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (button->priv->image)),
-                                  button->priv->image);
+      if (priv->image)
+        {
+          if (gtk_widget_get_parent (priv->image))
+                gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (priv->image)),
+                                      priv->image);
 
-	  g_object_unref (button->priv->image);
-	}
+          g_object_unref (priv->image);
+        }
 
       if (image)
         g_object_ref_sink (image);
 
-      button->priv->image = image;
+      priv->image = image;
 
       gimp_throbber_construct_contents (GTK_TOOL_ITEM (button));
 
@@ -359,7 +323,9 @@ gimp_throbber_set_image (GimpThrobber *button,
 GtkWidget *
 gimp_throbber_get_image (GimpThrobber *button)
 {
+  GimpThrobberPrivate *priv = gimp_throbber_get_instance_private (button);
+
   g_return_val_if_fail (GIMP_IS_THROBBER (button), NULL);
 
-  return button->priv->image;
+  return priv->image;
 }
