@@ -944,7 +944,8 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GList                 *item;
   GList                 *path;
-  gboolean               free_paths = FALSE;
+  gboolean               free_paths      = FALSE;
+  gboolean               scroll_to_first = TRUE;
 
   /* If @paths is not set, compute it ourselves. */
   if (g_list_length (items) != g_list_length (paths))
@@ -981,14 +982,35 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
       g_signal_handlers_unblock_by_func (tree_view->priv->selection,
                                          gimp_container_tree_view_selection_changed,
                                          tree_view);
+    }
 
+  if (paths)
+    {
+      GtkTreePath *first;
+      GtkTreePath *last;
 
-      /* Scroll to the top item. */
-      if (item == items)
-        gtk_tree_view_scroll_to_cell (tree_view->view, path->data,
+      /* Scroll to the top item if and only if none of the selected
+       * items are already visible. Do nothing otherwise.
+       */
+      if (gtk_tree_view_get_visible_range (tree_view->view, &first, &last))
+        {
+          for (item = items, path = paths; item && path; item = item->next, path = path->next)
+            {
+              if (gtk_tree_path_compare (first, path->data) <= 0 &&
+                  gtk_tree_path_compare (path->data, last) <= 0)
+                {
+                  scroll_to_first = FALSE;
+                  break;
+                }
+            }
+
+          gtk_tree_path_free (first);
+          gtk_tree_path_free (last);
+        }
+
+      if (scroll_to_first)
+        gtk_tree_view_scroll_to_cell (tree_view->view, paths->data,
                                       NULL, FALSE, 0.0, 0.0);
-      /* TODO: better implementation: only scroll if none of the items
-       * are visible. */
     }
 
   if (free_paths)
