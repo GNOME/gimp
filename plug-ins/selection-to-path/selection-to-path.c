@@ -542,27 +542,31 @@ do_points (spline_list_array_type  in_splines,
       if (SPLINE_LIST_LENGTH (spline_list) < 2)
         continue;
 
-      seg = SPLINE_LIST_ELT (spline_list, 0);
+      /*
+       * we're constructing the path backwards
+       * to have the result of least surprise for "Text along Path".
+       */
+      seg = SPLINE_LIST_ELT (spline_list, SPLINE_LIST_LENGTH (spline_list) - 1);
       stroke = gimp_vectors_bezier_stroke_new_moveto (vectors,
-                                                      START_POINT (seg).x,
-                                                      START_POINT (seg).y);
+                                                      END_POINT (seg).x,
+                                                      END_POINT (seg).y);
 
-      for (i = 0; i < SPLINE_LIST_LENGTH (spline_list); i++)
+      for (i = SPLINE_LIST_LENGTH (spline_list); i > 0; i--)
         {
-          seg = SPLINE_LIST_ELT (spline_list, i);
+          seg = SPLINE_LIST_ELT (spline_list, i-1);
 
           if (SPLINE_DEGREE (seg) == LINEAR)
             gimp_vectors_bezier_stroke_lineto (vectors, stroke,
-                                               END_POINT (seg).x,
-                                               END_POINT (seg).y);
+                                               START_POINT (seg).x,
+                                               START_POINT (seg).y);
           else if (SPLINE_DEGREE (seg) == CUBIC)
             gimp_vectors_bezier_stroke_cubicto (vectors, stroke,
-                                                CONTROL1 (seg).x,
-                                                CONTROL1 (seg).y,
                                                 CONTROL2 (seg).x,
                                                 CONTROL2 (seg).y,
-                                                END_POINT (seg).x,
-                                                END_POINT (seg).y);
+                                                CONTROL1 (seg).x,
+                                                CONTROL1 (seg).y,
+                                                START_POINT (seg).x,
+                                                START_POINT (seg).y);
           else
             g_warning ("print_spline: strange degree (%d)",
                        SPLINE_DEGREE (seg));
