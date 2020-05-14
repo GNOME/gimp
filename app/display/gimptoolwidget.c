@@ -34,6 +34,7 @@
 #include "gimpcanvascorner.h"
 #include "gimpcanvasgroup.h"
 #include "gimpcanvashandle.h"
+#include "gimpcanvaslimit.h"
 #include "gimpcanvasline.h"
 #include "gimpcanvaspath.h"
 #include "gimpcanvaspolygon.h"
@@ -677,6 +678,34 @@ gimp_tool_widget_add_arc (GimpToolWidget *widget,
                               radius_x, radius_y,
                               start_angle, slice_angle,
                               filled);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_limit (GimpToolWidget *widget,
+                            GimpLimitType   type,
+                            gdouble         x,
+                            gdouble         y,
+                            gdouble         radius,
+                            gdouble         aspect_ratio,
+                            gdouble         angle,
+                            gdouble         dashed)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_limit_new (widget->private->shell,
+                                type,
+                                x, y,
+                                radius,
+                                aspect_ratio,
+                                angle,
+                                dashed);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);

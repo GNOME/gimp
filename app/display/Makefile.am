@@ -60,6 +60,8 @@ libappdisplay_a_sources = \
 	gimpcanvasitem-utils.h			\
 	gimpcanvaslayerboundary.c		\
 	gimpcanvaslayerboundary.h		\
+	gimpcanvaslimit.c			\
+	gimpcanvaslimit.h			\
 	gimpcanvasline.c			\
 	gimpcanvasline.h			\
 	gimpcanvaspassepartout.c		\
