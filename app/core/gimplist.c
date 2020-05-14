@@ -522,7 +522,7 @@ gimp_list_set_sort_func (GimpList     *list,
  * Returns: The @list's sort function.
  **/
 GCompareFunc
-gimp_list_get_sort_func (GimpList*list)
+gimp_list_get_sort_func (GimpList *list)
 {
   g_return_val_if_fail (GIMP_IS_LIST (list), NULL);
 
