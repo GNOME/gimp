@@ -180,6 +180,8 @@ libappdisplay_a_sources = \
 	gimptoolgui.h				\
 	gimptoolcompass.c			\
 	gimptoolcompass.h			\
+	gimptoolfocus.h				\
+	gimptoolfocus.c				\
 	gimptoolgyroscope.c			\
 	gimptoolgyroscope.h			\
 	gimptoolhandlegrid.c			\

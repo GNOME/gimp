@@ -90,6 +90,7 @@ libappdisplay_sources = [
   'gimpstatusbar.c',
   'gimptoolcompass.c',
   'gimptooldialog.c',
+  'gimptoolfocus.c',
   'gimptoolgui.c',
   'gimptoolgyroscope.c',
   'gimptoolhandlegrid.c',
