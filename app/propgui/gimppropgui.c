@@ -64,6 +64,7 @@
 #include "gimppropgui-spiral.h"
 #include "gimppropgui-supernova.h"
 #include "gimppropgui-utils.h"
+#include "gimppropgui-vignette.h"
 
 #include "gimp-intl.h"
 
@@ -485,6 +486,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_spiral },
   { "GimpGegl-gegl-supernova-config",
     _gimp_prop_gui_new_supernova },
+  { "GimpGegl-gegl-vignette-config",
+    _gimp_prop_gui_new_vignette },
   { NULL,
     _gimp_prop_gui_new_generic }
 };

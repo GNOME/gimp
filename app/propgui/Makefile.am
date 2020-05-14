@@ -56,4 +56,6 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-supernova.c			\
 	gimppropgui-supernova.h			\
 	gimppropgui-utils.c			\
-	gimppropgui-utils.h
+	gimppropgui-utils.h			\
+	gimppropgui-vignette.c			\
+	gimppropgui-vignette.h
