@@ -699,7 +699,7 @@ gimp_tool_widget_add_limit (GimpToolWidget *widget,
                             gdouble         radius,
                             gdouble         aspect_ratio,
                             gdouble         angle,
-                            gdouble         dashed)
+                            gboolean        dashed)
 {
   GimpCanvasItem *item;
 
