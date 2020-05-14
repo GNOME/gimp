@@ -211,7 +211,7 @@ GimpCanvasItem * gimp_tool_widget_add_limit     (GimpToolWidget       *widget,
                                                  gdouble               radius,
                                                  gdouble               aspect_ratio,
                                                  gdouble               angle,
-                                                 gdouble               dashed);
+                                                 gboolean              dashed);
 GimpCanvasItem * gimp_tool_widget_add_polygon   (GimpToolWidget       *widget,
                                                  GimpMatrix3          *transform,
                                                  const GimpVector2    *points,

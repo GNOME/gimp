@@ -56,7 +56,7 @@ GimpCanvasItem * gimp_canvas_limit_new             (GimpDisplayShell *shell,
                                                     gdouble           radius,
                                                     gdouble           aspect_ratio,
                                                     gdouble           angle,
-                                                    gdouble           dashed);
+                                                    gboolean          dashed);
 
 void             gimp_canvas_limit_get_radii       (GimpCanvasLimit  *limit,
                                                     gdouble          *rx,

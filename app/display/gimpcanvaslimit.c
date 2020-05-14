@@ -443,7 +443,7 @@ gimp_canvas_limit_new (GimpDisplayShell *shell,
                        gdouble           radius,
                        gdouble           aspect_ratio,
                        gdouble           angle,
-                       gdouble           dashed)
+                       gboolean          dashed)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
