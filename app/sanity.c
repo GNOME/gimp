@@ -640,6 +640,7 @@ sanity_check_gegl_ops (void)
     "gegl:engrave",
     "gegl:exposure",
     "gegl:fattal02",
+    "gegl:focus-blur",
     "gegl:fractal-trace",
     "gegl:gaussian-blur",
     "gegl:gaussian-blur-selective",

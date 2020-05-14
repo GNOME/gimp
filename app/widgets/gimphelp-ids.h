@@ -379,6 +379,7 @@
 #define GIMP_HELP_FILTER_ERODE                    "gimp-filter-erode"
 #define GIMP_HELP_FILTER_EXPOSURE                 "gimp-filter-exposure"
 #define GIMP_HELP_FILTER_FATTAL_2002              "gimp-filter-fattal-2002"
+#define GIMP_HELP_FILTER_FOCUS_BLUR               "gimp-filter-focus-blur"
 #define GIMP_HELP_FILTER_FRACTAL_TRACE            "gimp-filter-fractal-trace"
 #define GIMP_HELP_FILTER_GAUSSIAN_BLUR            "gimp-filter-gaussian-blur"
 #define GIMP_HELP_FILTER_GAUSSIAN_BLUR_SELECTIVE  "gimp-filter-gaussian-blur-selective"
