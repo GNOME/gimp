@@ -517,11 +517,11 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
 static void
 gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
 {
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (op_tool);
-  GtkWidget      *options_gui;
-  gint            off_x, off_y;
-  GeglRectangle   area;
-  gint            aux;
+  GimpFilterTool  *filter_tool = GIMP_FILTER_TOOL (op_tool);
+  GtkWidget       *options_gui;
+  gint             off_x, off_y;
+  GeglRectangle    area;
+  gchar          **input_pads;
 
   gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
@@ -535,38 +535,43 @@ gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
                        filter_tool);
   g_weak_ref_set (&op_tool->options_gui_ref, options_gui);
 
-  for (aux = 1; ; aux++)
+  input_pads = gegl_node_list_input_pads (filter_tool->operation);
+
+  if (input_pads)
     {
-      gchar pad[32];
-      gchar label[32];
+      gint i;
 
-      if (aux == 1)
-        {
-          g_snprintf (pad,   sizeof (pad),   "aux");
-          /* don't translate "Aux" */
-          g_snprintf (label, sizeof (label), _("Aux Input"));
-        }
-      else
-        {
-          g_snprintf (pad,   sizeof (pad),   "aux%d", aux);
-          /* don't translate "Aux" */
-          g_snprintf (label, sizeof (label), _("Aux%d Input"), aux);
-        }
-
-      if (gegl_node_has_pad (filter_tool->operation, pad))
+      for (i = 0; input_pads[i]; i++)
         {
           AuxInput *input;
+          GRegex   *regex;
+          gchar    *label;
+
+          if (! strcmp (input_pads[i], "input"))
+            continue;
+
+          regex = g_regex_new ("^aux(\\d*)$", 0, 0, NULL);
+
+          g_return_if_fail (regex != NULL);
+
+          /* Translators: don't translate "Aux" */
+          label = g_regex_replace (regex,
+                                   input_pads[i], -1, 0,
+                                   _("Aux\\1 Input"),
+                                   0, NULL);
 
           input = gimp_operation_tool_aux_input_new (op_tool,
-                                                     filter_tool->operation, pad,
-                                                     label);
+                                                     filter_tool->operation,
+                                                     input_pads[i], label);
 
-          op_tool->aux_inputs = g_list_append (op_tool->aux_inputs, input);
+          op_tool->aux_inputs = g_list_prepend (op_tool->aux_inputs, input);
+
+          g_free (label);
+
+          g_regex_unref (regex);
         }
-      else
-        {
-          break;
-        }
+
+      g_strfreev (input_pads);
     }
 }
 
