@@ -1086,8 +1086,19 @@ if have_vector_icons
   endif
 endif
 
-xvfb_run = find_program('xvfb-run', required: get_option('xvfb-run'))
-conf.set('HAVE_XVFB_RUN', xvfb_run.found())
+# Running tests headless
+xvfb_run = find_program('xvfb-run', required: get_option('headless-tests'))
+dbus_run_session = find_program('dbus-run-session', required: get_option('headless-tests'))
+if xvfb_run.found() and dbus_run_session.found()
+  add_test_setup('default',
+    exe_wrapper: find_program('build' / 'meson' / 'run_test_env.sh'),
+    is_default: true,
+  )
+else
+  add_test_setup('default',
+    is_default: true,
+  )
+endif
 
 # Set bug report URL
 
