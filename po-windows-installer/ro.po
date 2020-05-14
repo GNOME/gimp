@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-12 20:55+0000\n"
-"PO-Revision-Date: 2020-05-13 00:08+0300\n"
+"PO-Revision-Date: 2020-05-13 11:38+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -378,8 +378,7 @@ msgstr "Se configurează mediul GIMP..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr ""
-"Se configurează GIMP pentru suportul pentru plugin-urilor pe 32 de biți..."
+msgstr "Se configurează GIMP pentru suportul plugin-urilor pe 32 de biți..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Launch GIMP"
