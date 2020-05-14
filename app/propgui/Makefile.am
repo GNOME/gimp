@@ -33,6 +33,8 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-diffraction-patterns.h	\
 	gimppropgui-eval.c			\
 	gimppropgui-eval.h			\
+	gimppropgui-focus-blur.c		\
+	gimppropgui-focus-blur.h		\
 	gimppropgui-generic.c			\
 	gimppropgui-generic.h			\
 	gimppropgui-hue-saturation.c		\

@@ -6,6 +6,7 @@ libapppropgui_sources = [
   'gimppropgui-convolution-matrix.c',
   'gimppropgui-diffraction-patterns.c',
   'gimppropgui-eval.c',
+  'gimppropgui-focus-blur.c',
   'gimppropgui-generic.c',
   'gimppropgui-hue-saturation.c',
   'gimppropgui-motion-blur-circular.c',

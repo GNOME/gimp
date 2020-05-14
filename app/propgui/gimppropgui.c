@@ -52,6 +52,7 @@
 #include "gimppropgui-convolution-matrix.h"
 #include "gimppropgui-diffraction-patterns.h"
 #include "gimppropgui-eval.h"
+#include "gimppropgui-focus-blur.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
 #include "gimppropgui-motion-blur-circular.h"
@@ -470,6 +471,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_channel_mixer },
   { "GimpGegl-gegl-diffraction-patterns-config",
     _gimp_prop_gui_new_diffraction_patterns },
+  { "GimpGegl-gegl-focus-blur-config",
+    _gimp_prop_gui_new_focus_blur },
   { "GimpGegl-gegl-motion-blur-circular-config",
     _gimp_prop_gui_new_motion_blur_circular },
   { "GimpGegl-gegl-motion-blur-linear-config",

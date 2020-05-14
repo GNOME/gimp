@@ -354,6 +354,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:fattal02",
     GIMP_HELP_FILTER_FATTAL_2002 },
 
+  { "filters-focus-blur", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Focus Blur..."), NULL, NULL,
+    "gegl:focus-blur",
+    GIMP_HELP_FILTER_FOCUS_BLUR },
+
   { "filters-fractal-trace", GIMP_ICON_GEGL,
     NC_("filters-action", "_Fractal Trace..."), NULL, NULL,
     "gegl:fractal-trace",
@@ -928,6 +933,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-erode",                   writable);
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-fattal-2002",             writable);
+  SET_SENSITIVE ("filters-focus-blur",              writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-gaussian-blur-selective", writable);

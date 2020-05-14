@@ -394,6 +394,7 @@ app/propgui/gimppropgui-color-rotate.c
 app/propgui/gimppropgui-color-to-alpha.c
 app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
+app/propgui/gimppropgui-focus-blur.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
 app/propgui/gimppropgui-motion-blur-circular.c

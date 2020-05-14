@@ -700,6 +700,7 @@
       <menuitem action="plug-in-reset-all" />
       <separator />
       <menu action="filters-blur-menu" name="Blur">
+	<menuitem action="filters-focus-blur" />
 	<menuitem action="filters-gaussian-blur" />
 	<menuitem action="filters-mean-curvature-blur" />
 	<menuitem action="filters-median-blur" />
