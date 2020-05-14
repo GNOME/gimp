@@ -89,6 +89,26 @@ gimp_display_shell_constrain_line (GimpDisplayShell *shell,
                        xres, yres);
 }
 
+gdouble
+gimp_display_shell_constrain_angle (GimpDisplayShell *shell,
+                                    gdouble           angle,
+                                    gint              n_snap_lines)
+{
+  gdouble x, y;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0.0);
+
+  x = cos (angle);
+  y = sin (angle);
+
+  gimp_display_shell_constrain_line (shell,
+                                     0.0, 0.0,
+                                     &x,  &y,
+                                     n_snap_lines);
+
+  return atan2 (y, x);
+}
+
 /**
  * gimp_display_shell_get_line_status:
  * @status:    initial status text.
