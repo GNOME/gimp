@@ -31,6 +31,7 @@ libappdisplay_sources = [
   'gimpcanvasitem-utils.c',
   'gimpcanvasitem.c',
   'gimpcanvaslayerboundary.c',
+  'gimpcanvaslimit.c',
   'gimpcanvasline.c',
   'gimpcanvaspassepartout.c',
   'gimpcanvaspath.c',

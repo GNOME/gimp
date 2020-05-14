@@ -266,6 +266,41 @@ gimp_handle_anchor_get_type (void)
 }
 
 GType
+gimp_limit_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_LIMIT_CIRCLE, "GIMP_LIMIT_CIRCLE", "circle" },
+    { GIMP_LIMIT_SQUARE, "GIMP_LIMIT_SQUARE", "square" },
+    { GIMP_LIMIT_DIAMOND, "GIMP_LIMIT_DIAMOND", "diamond" },
+    { GIMP_LIMIT_HORIZONTAL, "GIMP_LIMIT_HORIZONTAL", "horizontal" },
+    { GIMP_LIMIT_VERTICAL, "GIMP_LIMIT_VERTICAL", "vertical" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_LIMIT_CIRCLE, "GIMP_LIMIT_CIRCLE", NULL },
+    { GIMP_LIMIT_SQUARE, "GIMP_LIMIT_SQUARE", NULL },
+    { GIMP_LIMIT_DIAMOND, "GIMP_LIMIT_DIAMOND", NULL },
+    { GIMP_LIMIT_HORIZONTAL, "GIMP_LIMIT_HORIZONTAL", NULL },
+    { GIMP_LIMIT_VERTICAL, "GIMP_LIMIT_VERTICAL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpLimitType", values);
+      gimp_type_set_translation_context (type, "limit-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_path_style_get_type (void)
 {
   static const GEnumValue values[] =
