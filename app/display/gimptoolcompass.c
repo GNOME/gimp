@@ -297,19 +297,11 @@ gimp_tool_compass_constructed (GObject *object)
 {
   GimpToolCompass        *compass = GIMP_TOOL_COMPASS (object);
   GimpToolWidget         *widget  = GIMP_TOOL_WIDGET (object);
-  GimpDisplayShell       *shell   = gimp_tool_widget_get_shell (widget);
   GimpToolCompassPrivate *private = compass->private;
   GimpCanvasGroup        *stroke_group;
   gint                    i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  g_signal_connect_object (shell, "scaled",
-                           G_CALLBACK (gimp_tool_compass_changed),
-                           compass, G_CONNECT_SWAPPED);
-  g_signal_connect_object (shell, "rotated",
-                           G_CALLBACK (gimp_tool_compass_changed),
-                           compass, G_CONNECT_SWAPPED);
 
   stroke_group = gimp_tool_widget_add_stroke_group (widget);
 
