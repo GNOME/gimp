@@ -262,6 +262,7 @@ app/display/gimpdisplayshell-utils.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 app/display/gimptoolcompass.c
+app/display/gimptoolfocus.c
 app/display/gimptoolgyroscope.c
 app/display/gimptoolhandlegrid.c
 app/display/gimptoolline.c
