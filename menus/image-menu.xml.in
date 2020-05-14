@@ -705,6 +705,7 @@
 	<menuitem action="filters-median-blur" />
 	<menuitem action="filters-pixelize" />
 	<menuitem action="filters-gaussian-blur-selective" />
+        <menuitem action="filters-variable-blur" />
 	<placeholder name="Motion">
 	  <menuitem action="filters-motion-blur-circular" />
 	  <menuitem action="filters-motion-blur-linear" />

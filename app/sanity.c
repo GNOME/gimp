@@ -722,6 +722,7 @@ sanity_check_gegl_ops (void)
     "gegl:unsharp-mask",
     "gegl:value-invert",
     "gegl:value-propagate",
+    "gegl:variable-blur",
     "gegl:video-degradation",
     "gegl:vignette",
     "gegl:warp",

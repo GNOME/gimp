@@ -453,6 +453,7 @@
 #define GIMP_HELP_FILTER_TILE_SEAMLESS            "gimp-filter-tile-seamless"
 #define GIMP_HELP_FILTER_UNSHARP_MASK             "gimp-filter-unsharp-mask"
 #define GIMP_HELP_FILTER_VALUE_PROPAGATE          "gimp-filter-value-propagate"
+#define GIMP_HELP_FILTER_VARIABLE_BLUR            "gimp-filter-variable-blur"
 #define GIMP_HELP_FILTER_VIDEO_DEGRADATION        "gimp-filter-video-degradation"
 #define GIMP_HELP_FILTER_VIGNETTE                 "gimp-filter-vignette"
 #define GIMP_HELP_FILTER_WATERPIXELS              "gimp-filter-waterpixels"
