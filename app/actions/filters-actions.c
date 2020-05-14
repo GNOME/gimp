@@ -724,6 +724,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:value-propagate",
     GIMP_HELP_FILTER_VALUE_PROPAGATE },
 
+  { "filters-variable-blur", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Variable Blur..."), NULL, NULL,
+    "gegl:variable-blur",
+    GIMP_HELP_FILTER_VARIABLE_BLUR },
+
   { "filters-video-degradation", GIMP_ICON_GEGL,
     NC_("filters-action", "Vi_deo Degradation..."), NULL, NULL,
     "gegl:video-degradation",
@@ -1001,6 +1006,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-value-propagate",         writable);
+  SET_SENSITIVE ("filters-variable-blur",           writable);
   SET_SENSITIVE ("filters-video-degradation",       writable);
   SET_SENSITIVE ("filters-vignette",                writable);
   SET_SENSITIVE ("filters-waterpixels",             writable);
