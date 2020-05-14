@@ -129,8 +129,6 @@ gimp_transform_tool_control (GimpTool       *tool,
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
     case GIMP_TOOL_ACTION_RESUME:
       break;
 

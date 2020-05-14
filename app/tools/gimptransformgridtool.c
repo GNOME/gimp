@@ -404,16 +404,12 @@ gimp_transform_grid_tool_control (GimpTool       *tool,
                                   GimpToolAction  action,
                                   GimpDisplay    *display)
 {
-  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
 
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
     case GIMP_TOOL_ACTION_RESUME:
-      gimp_transform_tool_recalc_matrix (tr_tool, display);
       break;
 
     case GIMP_TOOL_ACTION_HALT:

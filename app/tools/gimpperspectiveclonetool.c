@@ -315,12 +315,7 @@ gimp_perspective_clone_tool_control (GimpTool       *tool,
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
     case GIMP_TOOL_ACTION_RESUME:
-      /* only in the case that "Modify Polygon" mode is set " */
-      gimp_perspective_clone_tool_bounds (clone_tool, display);
-      gimp_perspective_clone_tool_recalc_matrix (clone_tool, clone_tool->widget);
       break;
 
     case GIMP_TOOL_ACTION_HALT:

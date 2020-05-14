@@ -805,10 +805,6 @@ gimp_tool_rectangle_constructed (GObject *object)
       gimp_canvas_item_set_highlight (private->highlight_handles[i], TRUE);
     }
 
-  g_signal_connect_object (gimp_tool_widget_get_shell (widget), "scaled",
-                           G_CALLBACK (gimp_tool_rectangle_changed),
-                           widget, G_CONNECT_SWAPPED);
-
   gimp_tool_rectangle_changed (widget);
 }
 
