@@ -32,6 +32,7 @@
 #include "core/gimpitem.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimptoolfocus.h"
 #include "display/gimptoolgyroscope.h"
 #include "display/gimptoolline.h"
 #include "display/gimptooltransformgrid.h"
@@ -100,6 +101,19 @@ static void         gimp_filter_tool_set_gyroscope           (Controller        
                                                               gdouble                     zoom,
                                                               gboolean                    invert);
 static void         gimp_filter_tool_gyroscope_changed       (GimpToolWidget             *widget,
+                                                              Controller                 *controller);
+
+static void         gimp_filter_tool_set_focus               (Controller                 *controller,
+                                                              GeglRectangle              *area,
+                                                              GimpLimitType               type,
+                                                              gdouble                     x,
+                                                              gdouble                     y,
+                                                              gdouble                     radius,
+                                                              gdouble                     aspect_ratio,
+                                                              gdouble                     angle,
+                                                              gdouble                     inner_limit,
+                                                              gdouble                     midpoint);
+static void         gimp_filter_tool_focus_changed           (GimpToolWidget             *widget,
                                                               Controller                 *controller);
 
 
@@ -245,6 +259,17 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
         *set_func      = (GCallback) gimp_filter_tool_set_gyroscope;
         *set_func_data = controller;
       }
+      break;
+
+    case GIMP_CONTROLLER_TYPE_FOCUS:
+      controller->widget = gimp_tool_focus_new (shell);
+
+      g_signal_connect (controller->widget, "changed",
+                        G_CALLBACK (gimp_filter_tool_focus_changed),
+                        controller);
+
+      *set_func      = (GCallback) gimp_filter_tool_set_focus;
+      *set_func_data = controller;
       break;
     }
 
@@ -839,4 +864,101 @@ gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
 
   gyroscope_callback (controller->creator_data,
                       &area, yaw, pitch, roll, zoom, invert);
+}
+
+static void
+gimp_filter_tool_set_focus (Controller    *controller,
+                            GeglRectangle *area,
+                            GimpLimitType  type,
+                            gdouble        x,
+                            gdouble        y,
+                            gdouble        radius,
+                            gdouble        aspect_ratio,
+                            gdouble        angle,
+                            gdouble        inner_limit,
+                            gdouble        midpoint)
+{
+  GimpTool     *tool;
+  GimpDrawable *drawable;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  drawable = tool->drawable;
+
+  if (drawable)
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      x += off_x + area->x;
+      y += off_y + area->y;
+    }
+
+  g_signal_handlers_block_by_func (controller->widget,
+                                   gimp_filter_tool_focus_changed,
+                                   controller);
+
+  g_object_set (controller->widget,
+                "type",         type,
+                "x",            x,
+                "y",            y,
+                "radius",       radius,
+                "aspect-ratio", aspect_ratio,
+                "angle",        angle,
+                "inner-limit",  inner_limit,
+                "midpoint",     midpoint,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (controller->widget,
+                                     gimp_filter_tool_focus_changed,
+                                     controller);
+}
+
+static void
+gimp_filter_tool_focus_changed (GimpToolWidget *widget,
+                                Controller     *controller)
+{
+  GimpFilterTool              *filter_tool = controller->filter_tool;
+  GimpControllerFocusCallback  focus_callback;
+  GimpLimitType                type;
+  gdouble                      x,  y;
+  gdouble                      radius;
+  gdouble                      aspect_ratio;
+  gdouble                      angle;
+  gdouble                      inner_limit;
+  gdouble                      midpoint;
+  gint                         off_x, off_y;
+  GeglRectangle                area;
+
+  focus_callback = (GimpControllerFocusCallback) controller->creator_callback;
+
+  g_object_get (widget,
+                "type",         &type,
+                "x",            &x,
+                "y",            &y,
+                "radius",       &radius,
+                "aspect-ratio", &aspect_ratio,
+                "angle",        &angle,
+                "inner-limit",  &inner_limit,
+                "midpoint",     &midpoint,
+                NULL);
+
+  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+
+  x -= off_x + area.x;
+  y -= off_y + area.y;
+
+  focus_callback (controller->creator_data,
+                  &area,
+                  type,
+                  x,
+                  y,
+                  radius,
+                  aspect_ratio,
+                  angle,
+                  inner_limit,
+                  midpoint);
 }
