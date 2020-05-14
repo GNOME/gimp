@@ -68,6 +68,9 @@ gimp_display_shell_flip (GimpDisplayShell *shell,
       /* Maintain the current center of the viewport. */
       gimp_display_shell_save_viewport_center (shell, &cx, &cy);
 
+      /* freeze the active tool */
+      gimp_display_shell_pause (shell);
+
       /* Adjust the rotation angle so that the image gets reflected across the
        * horizontal, and/or vertical, axes in screen space, regardless of the
        * current rotation.
@@ -87,6 +90,9 @@ gimp_display_shell_flip (GimpDisplayShell *shell,
       gimp_display_shell_restore_viewport_center (shell, cx, cy);
 
       gimp_display_shell_expose_full (shell);
+
+      /* re-enable the active tool */
+      gimp_display_shell_resume (shell);
     }
 }
 
@@ -117,6 +123,9 @@ gimp_display_shell_rotate_to (GimpDisplayShell *shell,
 
   shell->rotate_angle = value;
 
+  /* freeze the active tool */
+  gimp_display_shell_pause (shell);
+
   gimp_display_shell_scroll_clamp_and_update (shell);
 
   gimp_display_shell_rotated (shell);
@@ -124,6 +133,9 @@ gimp_display_shell_rotate_to (GimpDisplayShell *shell,
   gimp_display_shell_restore_viewport_center (shell, cx, cy);
 
   gimp_display_shell_expose_full (shell);
+
+  /* re-enable the active tool */
+  gimp_display_shell_resume (shell);
 }
 
 void
