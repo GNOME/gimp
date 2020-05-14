@@ -50,7 +50,7 @@ option('webp',              type: 'feature', value: 'auto', description: 'Webp s
 option('wmf',               type: 'feature', value: 'auto', description: 'Wmf support')
 option('xcursor',           type: 'feature', value: 'auto', description: 'Xcursor support')
 option('xpm',               type: 'feature', value: 'auto', description: 'XPM support')
-option('xvfb-run',          type: 'feature', value: 'auto', description: 'Use xvfb-run for UI-dependent automatic tests')
+option('headless-tests',    type: 'feature', value: 'auto', description: 'Use xvfb-run/dbus-run-session for UI-dependent automatic tests')
 
 option('gtk-doc',           type: 'boolean', value: true,   description: 'Build developer documentation')
 option('gtk-doc-app',       type: 'boolean', value: false,  description: 'Build developer documentation for app')

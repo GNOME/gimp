@@ -58,6 +58,7 @@ foreach test_name : app_tests
       'GIMP_TESTING_ABS_TOP_BUILDDIR='+ meson.build_root(),
       'GIMP_TESTING_PLUGINDIRS=' +      meson.build_root()/'plug-ins'/'common',
       'GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl',
+      'UI_TEST=yes',
     ],
     suite: 'app',
   )
