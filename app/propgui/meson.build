@@ -18,6 +18,7 @@ libapppropgui_sources = [
   'gimppropgui-spiral.c',
   'gimppropgui-supernova.c',
   'gimppropgui-utils.c',
+  'gimppropgui-vignette.c',
   'gimppropgui.c',
 ]
 
