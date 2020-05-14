@@ -32,7 +32,8 @@ typedef enum
   GIMP_CONTROLLER_TYPE_SLIDER_LINE,
   GIMP_CONTROLLER_TYPE_TRANSFORM_GRID,
   GIMP_CONTROLLER_TYPE_TRANSFORM_GRIDS,
-  GIMP_CONTROLLER_TYPE_GYROSCOPE
+  GIMP_CONTROLLER_TYPE_GYROSCOPE,
+  GIMP_CONTROLLER_TYPE_FOCUS
 } GimpControllerType;
 
 
@@ -113,6 +114,16 @@ typedef void (* GimpControllerGyroscopeCallback)      (gpointer                 
                                                        gdouble                     roll,
                                                        gdouble                     zoom,
                                                        gboolean                    invert);
+typedef void (* GimpControllerFocusCallback)          (gpointer                    data,
+                                                       GeglRectangle              *area,
+                                                       GimpLimitType               type,
+                                                       gdouble                     x,
+                                                       gdouble                     y,
+                                                       gdouble                     radius,
+                                                       gdouble                     aspect_ratio,
+                                                       gdouble                     angle,
+                                                       gdouble                     inner_limit,
+                                                       gdouble                     midpoint);
 
 
 typedef GtkWidget * (* GimpCreatePickerFunc)          (gpointer                    creator,
