@@ -175,6 +175,7 @@ void               gimp_tool_widget_add_item         (GimpToolWidget  *widget,
 void               gimp_tool_widget_remove_item      (GimpToolWidget  *widget,
                                                       GimpCanvasItem  *item);
 
+GimpCanvasGroup  * gimp_tool_widget_add_group        (GimpToolWidget  *widget);
 GimpCanvasGroup  * gimp_tool_widget_add_stroke_group (GimpToolWidget  *widget);
 GimpCanvasGroup  * gimp_tool_widget_add_fill_group   (GimpToolWidget  *widget);
 

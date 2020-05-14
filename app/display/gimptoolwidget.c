@@ -553,17 +553,29 @@ gimp_tool_widget_remove_item (GimpToolWidget *widget,
 }
 
 GimpCanvasGroup *
-gimp_tool_widget_add_stroke_group (GimpToolWidget *widget)
+gimp_tool_widget_add_group (GimpToolWidget *widget)
 {
   GimpCanvasItem *item;
 
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   item = gimp_canvas_group_new (widget->private->shell);
-  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (item), TRUE);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);
+
+  return GIMP_CANVAS_GROUP (item);
+}
+
+GimpCanvasGroup *
+gimp_tool_widget_add_stroke_group (GimpToolWidget *widget)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_tool_widget_add_group (widget);
+  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (item), TRUE);
 
   return GIMP_CANVAS_GROUP (item);
 }
@@ -575,11 +587,8 @@ gimp_tool_widget_add_fill_group (GimpToolWidget *widget)
 
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_group_new (widget->private->shell);
+  item = gimp_tool_widget_add_group (widget);
   gimp_canvas_group_set_group_filling (GIMP_CANVAS_GROUP (item), TRUE);
-
-  gimp_tool_widget_add_item (widget, item);
-  g_object_unref (item);
 
   return GIMP_CANVAS_GROUP (item);
 }
