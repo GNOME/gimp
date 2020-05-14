@@ -23,7 +23,7 @@
 
 
 const gchar  * gimp_text_parasite_name          (void) G_GNUC_CONST;
-GimpParasite * gimp_text_to_parasite            (const GimpText      *text);
+GimpParasite * gimp_text_to_parasite            (GimpText      *text);
 GimpText     * gimp_text_from_parasite          (const GimpParasite  *parasite,
                                                  GError             **error);
 

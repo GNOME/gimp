@@ -53,7 +53,7 @@ gimp_text_parasite_name (void)
 }
 
 GimpParasite *
-gimp_text_to_parasite (const GimpText *text)
+gimp_text_to_parasite (GimpText *text)
 {
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
