@@ -279,6 +279,8 @@ gimp_canvas_handle_transform (GimpCanvasItem *item,
     case GIMP_HANDLE_DIAMOND:
     case GIMP_HANDLE_DASHED_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
+    case GIMP_HANDLE_DROP:
+    case GIMP_HANDLE_FILLED_DROP:
       gimp_canvas_item_shift_to_center (private->anchor,
                                         *x, *y,
                                         private->width,
@@ -319,6 +321,8 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
     case GIMP_HANDLE_DASHED_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
     case GIMP_HANDLE_CROSS:
+    case GIMP_HANDLE_DROP:
+    case GIMP_HANDLE_FILLED_DROP:
       cairo_save (cr);
       cairo_translate (cr, tx, ty);
       cairo_rotate (cr, private->start_angle);
@@ -395,6 +399,18 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           cairo_move_to (cr, x, y - private->height / 2.0);
           cairo_line_to (cr, x, y + private->height / 2.0 - 0.5);
           _gimp_canvas_item_stroke (item, cr);
+          break;
+
+        case GIMP_HANDLE_DROP:
+        case GIMP_HANDLE_FILLED_DROP:
+          cairo_move_to (cr, x + private->width, y);
+          gimp_cairo_arc (cr, x, y, (gdouble) private->width / 2.0,
+                          G_PI / 3, G_PI * 4 / 3.);
+          cairo_close_path (cr);
+          if (private->type == GIMP_HANDLE_DROP)
+            _gimp_canvas_item_stroke (item, cr);
+          else
+            _gimp_canvas_item_fill (item, cr);
           break;
 
         default:
@@ -499,6 +515,14 @@ gimp_canvas_handle_get_extents (GimpCanvasItem *item)
       rectangle.height = private->height + 4.0;
       break;
 
+    case GIMP_HANDLE_DROP:
+    case GIMP_HANDLE_FILLED_DROP:
+      rectangle.x      = x - private->width  / 2.0 - 2.0;
+      rectangle.y      = y - private->height / 2.0 - 2.0;
+      rectangle.width  = private->width * 1.21 + 4.0;
+      rectangle.height = private->height + 4.0;
+      break;
+
     default:
       break;
     }
@@ -549,6 +573,8 @@ gimp_canvas_handle_hit (GimpCanvasItem *item,
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
     case GIMP_HANDLE_CROSSHAIR:
+    case GIMP_HANDLE_DROP:
+    case GIMP_HANDLE_FILLED_DROP:
       {
         gint width = private->width;
 
