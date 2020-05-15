@@ -79,12 +79,6 @@ static void         connect_notify     (GObject     *config,
 /*  check button  */
 /******************/
 
-static void   gimp_prop_check_button_callback (GtkWidget  *widget,
-                                               GObject    *config);
-static void   gimp_prop_check_button_notify   (GObject    *config,
-                                               GParamSpec *param_spec,
-                                               GtkWidget  *button);
-
 /**
  * gimp_prop_check_button_new:
  * @config:        Object to which property is attached.
@@ -107,7 +101,7 @@ gimp_prop_check_button_new (GObject     *config,
 {
   GParamSpec  *param_spec;
   GtkWidget   *button;
-  gboolean     value;
+  const gchar *blurb;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -120,71 +114,18 @@ gimp_prop_check_button_new (GObject     *config,
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
   button = gtk_check_button_new_with_mnemonic (label);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
-
-  set_param_spec (G_OBJECT (button), button, param_spec);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_prop_check_button_callback),
-                    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_check_button_notify),
-                  button);
-
   gtk_widget_show (button);
 
+  blurb = g_param_spec_get_blurb (param_spec);
+  if (blurb)
+	gimp_help_set_help_data (button, blurb, NULL);
+
+  g_object_bind_property (config, property_name,
+                          button, "active",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
   return button;
-}
-
-static void
-gimp_prop_check_button_callback (GtkWidget *widget,
-                                 GObject   *config)
-{
-  GParamSpec *param_spec;
-  gboolean    value;
-  gboolean    v;
-
-  param_spec = get_param_spec (G_OBJECT (widget));
-  if (! param_spec)
-    return;
-
-  value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
-
-  g_object_get (config, param_spec->name, &v, NULL);
-
-  if (v != value)
-    g_object_set (config, param_spec->name, value, NULL);
-}
-
-static void
-gimp_prop_check_button_notify (GObject    *config,
-                               GParamSpec *param_spec,
-                               GtkWidget  *button)
-{
-  gboolean value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) != value)
-    {
-      g_signal_handlers_block_by_func (button,
-                                       gimp_prop_check_button_callback,
-                                       config);
-
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
-
-      g_signal_handlers_unblock_by_func (button,
-                                         gimp_prop_check_button_callback,
-                                         config);
-    }
 }
 
 
@@ -378,7 +319,7 @@ gimp_prop_int_combo_box_new (GObject      *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *combo_box;
-  gint        value;
+  const gchar *blurb;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -388,27 +329,18 @@ gimp_prop_int_combo_box_new (GObject      *config,
   if (! param_spec)
     return NULL;
 
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
                             "model", store,
+                            "visible", TRUE,
                             NULL);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
+  blurb = g_param_spec_get_blurb (param_spec);
+  if (blurb)
+	gimp_help_set_help_data (combo_box, blurb, NULL);
 
-  g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_prop_int_combo_box_callback),
-                    config);
-
-  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_int_combo_box_notify),
-                  combo_box);
-
-  gtk_widget_show (combo_box);
+  g_object_bind_property (config, property_name,
+                          combo_box, "active",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
   return combo_box;
 }
@@ -1960,10 +1892,6 @@ gimp_prop_memsize_notify (GObject          *config,
 /*  label  */
 /***********/
 
-static void   gimp_prop_label_notify (GObject    *config,
-                                      GParamSpec *param_spec,
-                                      GtkWidget  *label);
-
 /**
  * gimp_prop_label_new:
  * @config:        Object to which property is attached.
@@ -1984,73 +1912,28 @@ gimp_prop_label_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *label;
+  const gchar *blurb;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
-
   if (! param_spec)
     return NULL;
 
-  if (! g_value_type_transformable (param_spec->value_type, G_TYPE_STRING))
-    {
-      g_warning ("%s: property '%s' of %s is not transformable to string",
-                 G_STRLOC,
-                 param_spec->name,
-                 g_type_name (param_spec->owner_type));
-      return NULL;
-    }
-
   label = gtk_label_new (NULL);
   gtk_widget_set_halign (label, GTK_ALIGN_START);
-
-  set_param_spec (G_OBJECT (label), label, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_label_notify),
-                  label);
-
-  gimp_prop_label_notify (config, param_spec, label);
-
   gtk_widget_show (label);
 
+  blurb = g_param_spec_get_blurb (param_spec);
+  if (blurb)
+	gimp_help_set_help_data (label, blurb, NULL);
+
+  g_object_bind_property (config, property_name,
+                          label, "label",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
   return label;
-}
-
-static void
-gimp_prop_label_notify (GObject    *config,
-                        GParamSpec *param_spec,
-                        GtkWidget  *label)
-{
-  GValue  value = G_VALUE_INIT;
-
-  g_value_init (&value, param_spec->value_type);
-
-  g_object_get_property (config, param_spec->name, &value);
-
-  if (G_VALUE_HOLDS_STRING (&value))
-    {
-      const gchar *str = g_value_get_string (&value);
-
-      gtk_label_set_text (GTK_LABEL (label), str ? str : "");
-    }
-  else
-    {
-      GValue       str_value = G_VALUE_INIT;
-      const gchar *str;
-
-      g_value_init (&str_value, G_TYPE_STRING);
-      g_value_transform (&value, &str_value);
-
-      str = g_value_get_string (&str_value);
-
-      gtk_label_set_text (GTK_LABEL (label), str ? str : "");
-
-      g_value_unset (&str_value);
-    }
-
-  g_value_unset (&value);
 }
 
 
@@ -3967,10 +3850,6 @@ gimp_prop_unit_combo_box_notify (GObject    *config,
 /*  icon name  */
 /***************/
 
-static void   gimp_prop_icon_image_notify (GObject    *config,
-                                           GParamSpec *param_spec,
-                                           GtkWidget  *image);
-
 /**
  * gimp_prop_icon_image_new:
  * @config:        Object to which property is attached.
@@ -3990,9 +3869,10 @@ gimp_prop_icon_image_new (GObject     *config,
                           const gchar *property_name,
                           GtkIconSize  icon_size)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *image;
-  gchar      *icon_name;
+  GParamSpec  *param_spec;
+  GtkWidget   *image;
+  gchar       *icon_name;
+  const gchar *blurb;
 
   param_spec = check_param_spec (config, property_name,
                                  G_TYPE_PARAM_STRING, G_STRFUNC);
@@ -4004,38 +3884,19 @@ gimp_prop_icon_image_new (GObject     *config,
                 NULL);
 
   image = gtk_image_new_from_icon_name (icon_name, icon_size);
-
-  if (icon_name)
-    g_free (icon_name);
-
-  set_param_spec (G_OBJECT (image), image, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_icon_image_notify),
-                  image);
-
   gtk_widget_show (image);
 
+  blurb = g_param_spec_get_blurb (param_spec);
+  if (blurb)
+	gimp_help_set_help_data (image, blurb, NULL);
+
+  g_object_bind_property (config, property_name,
+                          image, "icon-name",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_free (icon_name);
+
   return image;
-}
-
-static void
-gimp_prop_icon_image_notify (GObject    *config,
-                             GParamSpec *param_spec,
-                             GtkWidget  *image)
-{
-  gchar       *icon_name;
-  GtkIconSize  icon_size;
-
-  g_object_get (config,
-                param_spec->name, &icon_name,
-                NULL);
-
-  gtk_image_get_icon_name (GTK_IMAGE (image), NULL, &icon_size);
-  gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, icon_size);
-
-  if (icon_name)
-    g_free (icon_name);
 }
 
 
