@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-12 19:56+0000\n"
-"PO-Revision-Date: 2020-05-12 23:08+0300\n"
+"POT-Creation-Date: 2020-05-15 09:00+0000\n"
+"PO-Revision-Date: 2020-05-15 12:17+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -3200,8 +3200,8 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:346
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1267
-#: ../app/tools/gimptransformtool.c:436 ../app/widgets/gimpactionview.c:668
+#: ../app/tools/gimptransformgridtool.c:1263
+#: ../app/tools/gimptransformtool.c:434 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:662
 #: ../app/widgets/gimpcontrollerlist.c:564
@@ -5227,441 +5227,455 @@ msgid "_Fattal et al. 2002..."
 msgstr "_Фаттал та ін. 2002…"
 
 #: ../app/actions/filters-actions.c:358
+#| msgctxt "filters-action"
+#| msgid "_Gaussian Blur..."
+msgctxt "filters-action"
+msgid "_Focus Blur..."
+msgstr "_Фокусне розмиття…"
+
+#: ../app/actions/filters-actions.c:363
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "_Фрактальний слід…"
 
-#: ../app/actions/filters-actions.c:363
+#: ../app/actions/filters-actions.c:368
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Розмиття за Гаусом…"
 
-#: ../app/actions/filters-actions.c:368
+#: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Вибіркове розмиття за Гаусом…"
 
-#: ../app/actions/filters-actions.c:373
+#: ../app/actions/filters-actions.c:378
 msgctxt "filters-action"
 msgid "_GEGL graph..."
 msgstr "_Граф GEGL…"
 
-#: ../app/actions/filters-actions.c:378
+#: ../app/actions/filters-actions.c:383
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Сітка…"
 
-#: ../app/actions/filters-actions.c:383
+#: ../app/actions/filters-actions.c:388
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "В_исокі частоти…"
 
-#: ../app/actions/filters-actions.c:388
+#: ../app/actions/filters-actions.c:393
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Відтінок та _колірність…"
 
-#: ../app/actions/filters-actions.c:393
+#: ../app/actions/filters-actions.c:398
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Відтінок та _насиченість…"
 
-#: ../app/actions/filters-actions.c:398
+#: ../app/actions/filters-actions.c:403
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Ілюзія"
 
-#: ../app/actions/filters-actions.c:403
+#: ../app/actions/filters-actions.c:408
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "Г_радієнт зображення…"
 
-#: ../app/actions/filters-actions.c:408
+#: ../app/actions/filters-actions.c:413
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Калейдоскоп…"
 
-#: ../app/actions/filters-actions.c:413
+#: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Ви_кривлення об'єктивом…"
 
-#: ../app/actions/filters-actions.c:418
+#: ../app/actions/filters-actions.c:423
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "Від_блиск об'єктива…"
 
-#: ../app/actions/filters-actions.c:423
+#: ../app/actions/filters-actions.c:428
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Рівні…"
 
-#: ../app/actions/filters-actions.c:428
+#: ../app/actions/filters-actions.c:433
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Лінійний синусоїдальний…"
 
-#: ../app/actions/filters-actions.c:433
+#: ../app/actions/filters-actions.c:438
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "_Мала планета..."
 
-#: ../app/actions/filters-actions.c:438
+#: ../app/actions/filters-actions.c:443
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Довга тінь…"
 
-#: ../app/actions/filters-actions.c:443
+#: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Мантюк 2006…"
 
-#: ../app/actions/filters-actions.c:448
+#: ../app/actions/filters-actions.c:453
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Лабіринт…"
 
-#: ../app/actions/filters-actions.c:453
+#: ../app/actions/filters-actions.c:458
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "Розмиття за медіанною _кривиною…"
 
-#: ../app/actions/filters-actions.c:458
+#: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "М_едіанне розмиття…"
 
-#: ../app/actions/filters-actions.c:463
+#: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "Мо_номікшер…"
 
-#: ../app/actions/filters-actions.c:468
+#: ../app/actions/filters-actions.c:473
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Мозаїка"
 
-#: ../app/actions/filters-actions.c:473
+#: ../app/actions/filters-actions.c:478
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Кругове розмиття рухом…"
 
-#: ../app/actions/filters-actions.c:478
+#: ../app/actions/filters-actions.c:483
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Лінійне розмиття рухом…"
 
-#: ../app/actions/filters-actions.c:483
+#: ../app/actions/filters-actions.c:488
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Масштабоване розмиття рухом"
 
-#: ../app/actions/filters-actions.c:488
+#: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Клітинковий шум…"
 
-#: ../app/actions/filters-actions.c:493
+#: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "_Газетний папір…"
 
-#: ../app/actions/filters-actions.c:498
+#: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "Ш_ум CIE lch…"
 
-#: ../app/actions/filters-actions.c:503
+#: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "_Шум HSV…"
 
-#: ../app/actions/filters-actions.c:508
+#: ../app/actions/filters-actions.c:513
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Жбурляння…"
 
-#: ../app/actions/filters-actions.c:513
+#: ../app/actions/filters-actions.c:518
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "Шу_м Перліна…"
 
-#: ../app/actions/filters-actions.c:518
+#: ../app/actions/filters-actions.c:523
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Відібрати…"
 
-#: ../app/actions/filters-actions.c:523
+#: ../app/actions/filters-actions.c:528
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB Шум…"
 
-#: ../app/actions/filters-actions.c:528
+#: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Зменшення _шуму…"
 
-#: ../app/actions/filters-actions.c:533
+#: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Симплексний шум…"
 
-#: ../app/actions/filters-actions.c:538
+#: ../app/actions/filters-actions.c:543
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Пляма…"
 
-#: ../app/actions/filters-actions.c:543
+#: ../app/actions/filters-actions.c:548
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Суцільний шум…"
 
-#: ../app/actions/filters-actions.c:548
+#: ../app/actions/filters-actions.c:553
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Роз_сіювання…"
 
-#: ../app/actions/filters-actions.c:553
+#: ../app/actions/filters-actions.c:558
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Мапа нормалей…"
 
-#: ../app/actions/filters-actions.c:558
+#: ../app/actions/filters-actions.c:563
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "З_сув…"
 
-#: ../app/actions/filters-actions.c:563
+#: ../app/actions/filters-actions.c:568
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "_Олійна фарба…"
 
-#: ../app/actions/filters-actions.c:568
+#: ../app/actions/filters-actions.c:573
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Панорамна проєкція…"
 
-#: ../app/actions/filters-actions.c:573
+#: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Фотокопія…"
 
-#: ../app/actions/filters-actions.c:578
+#: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Пікселізація…"
 
-#: ../app/actions/filters-actions.c:583
+#: ../app/actions/filters-actions.c:588
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Плазма…"
 
-#: ../app/actions/filters-actions.c:588
+#: ../app/actions/filters-actions.c:593
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "П_олярні координати…"
 
-#: ../app/actions/filters-actions.c:593
+#: ../app/actions/filters-actions.c:598
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "По_стеризація…"
 
-#: ../app/actions/filters-actions.c:598
+#: ../app/actions/filters-actions.c:603
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Рекурсивне перетворення…"
 
-#: ../app/actions/filters-actions.c:603
+#: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Усунення червоних очей…"
 
-#: ../app/actions/filters-actions.c:608
+#: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Райнгард 2005…"
 
-#: ../app/actions/filters-actions.c:613
+#: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_Обрізання RGB…"
 
-#: ../app/actions/filters-actions.c:618
+#: ../app/actions/filters-actions.c:623
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Брижі…"
 
-#: ../app/actions/filters-actions.c:623
+#: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Насиченість…"
 
-#: ../app/actions/filters-actions.c:628
+#: ../app/actions/filters-actions.c:633
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Напівсплющення…"
 
-#: ../app/actions/filters-actions.c:633
+#: ../app/actions/filters-actions.c:638
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Сепія..."
 
-#: ../app/actions/filters-actions.c:638
+#: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Тіні-виблиски…"
 
-#: ../app/actions/filters-actions.c:643
+#: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Зсув..."
 
-#: ../app/actions/filters-actions.c:648
+#: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Синус…"
 
-#: ../app/actions/filters-actions.c:653
+#: ../app/actions/filters-actions.c:658
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Проста лінійна ітеративна кластеризація…"
 
-#: ../app/actions/filters-actions.c:658
+#: ../app/actions/filters-actions.c:663
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Найближча сусідня симетрія…"
 
-#: ../app/actions/filters-actions.c:663
+#: ../app/actions/filters-actions.c:668
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_М'яке світло…"
 
-#: ../app/actions/filters-actions.c:668
+#: ../app/actions/filters-actions.c:673
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "С_феричність…"
 
-#: ../app/actions/filters-actions.c:673
+#: ../app/actions/filters-actions.c:678
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "С_піраль…"
 
-#: ../app/actions/filters-actions.c:678
+#: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Розтягнути контрастність…"
 
-#: ../app/actions/filters-actions.c:683
+#: ../app/actions/filters-actions.c:688
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Напруження…"
 
-#: ../app/actions/filters-actions.c:688
+#: ../app/actions/filters-actions.c:693
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Наднова..."
 
-#: ../app/actions/filters-actions.c:693
+#: ../app/actions/filters-actions.c:698
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Поріг…"
 
-#: ../app/actions/filters-actions.c:698
+#: ../app/actions/filters-actions.c:703
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Порогова альфа…"
 
-#: ../app/actions/filters-actions.c:703
+#: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Скляна плитка…"
 
-#: ../app/actions/filters-actions.c:708
+#: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Паперова плитка…"
 
-#: ../app/actions/filters-actions.c:713
+#: ../app/actions/filters-actions.c:718
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Плитка без швів…"
 
-#: ../app/actions/filters-actions.c:718
+#: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Чіткість (_нечітка маска)..."
 
-#: ../app/actions/filters-actions.c:723
+#: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "По_ширення значення…"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:733
+#| msgctxt "filters-action"
+#| msgid "_Gaussian Blur..."
+msgctxt "filters-action"
+msgid "_Variable Blur..."
+msgstr "З_мінне розмиття…"
+
+#: ../app/actions/filters-actions.c:738
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Деградація відео…"
 
-#: ../app/actions/filters-actions.c:733
+#: ../app/actions/filters-actions.c:743
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Віньєтка…"
 
-#: ../app/actions/filters-actions.c:738
+#: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "Во_дяні пікселі…"
 
-#: ../app/actions/filters-actions.c:743
+#: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Хвилі…"
 
-#: ../app/actions/filters-actions.c:748
+#: ../app/actions/filters-actions.c:758
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Вихор та щипок..."
 
-#: ../app/actions/filters-actions.c:753
+#: ../app/actions/filters-actions.c:763
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Вітер…"
 
-#: ../app/actions/filters-actions.c:761
+#: ../app/actions/filters-actions.c:771
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Повторити останній"
 
-#: ../app/actions/filters-actions.c:763
+#: ../app/actions/filters-actions.c:773
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Повторно застосувати останній використаний фільтр із тими самими параметрами"
 
-#: ../app/actions/filters-actions.c:768
+#: ../app/actions/filters-actions.c:778
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "П_овторити зі змінами"
 
-#: ../app/actions/filters-actions.c:769
+#: ../app/actions/filters-actions.c:779
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Знову відкрити діалог останнього використаного фільтру"
 
-#: ../app/actions/filters-actions.c:1108
+#: ../app/actions/filters-actions.c:1120
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Пов_торити \"%s\""
 
-#: ../app/actions/filters-actions.c:1109
+#: ../app/actions/filters-actions.c:1121
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторити з налаштуванням «%s»"
 
-#: ../app/actions/filters-actions.c:1147
+#: ../app/actions/filters-actions.c:1159
 msgid "Repeat Last"
 msgstr "Повторити останній"
 
-#: ../app/actions/filters-actions.c:1149
+#: ../app/actions/filters-actions.c:1161
 msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
 
@@ -7937,7 +7951,7 @@ msgstr "Перезавантажити усі фільтри"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1264
+#: ../app/tools/gimpfiltertool.c:345 ../app/tools/gimptransformgridtool.c:1260
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -15004,7 +15018,6 @@ msgid "Apply stored FG/BG"
 msgstr "Застосувати збережений FG/BG"
 
 #: ../app/core/gimptoolpreset.c:156
-#| msgid "Apply stored pattern"
 msgid "Apply stored opacity/paint mode"
 msgstr "Застосувати збережену непрозорість або режим малювання"
 
@@ -17962,52 +17975,52 @@ msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Міжрядковий інтервал"
 
-#: ../app/display/display-enums.c:344
+#: ../app/display/display-enums.c:379
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Співвідношення сторін"
 
-#: ../app/display/display-enums.c:345
+#: ../app/display/display-enums.c:380
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Ширина"
 
-#: ../app/display/display-enums.c:346
+#: ../app/display/display-enums.c:381
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Висота"
 
-#: ../app/display/display-enums.c:347
+#: ../app/display/display-enums.c:382
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "Розмір"
 
-#: ../app/display/display-enums.c:473
+#: ../app/display/display-enums.c:508
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
 msgstr "Додавання / Перетворення"
 
-#: ../app/display/display-enums.c:474
+#: ../app/display/display-enums.c:509
 msgctxt "transform-handle-mode"
 msgid "Move"
 msgstr "Переміщення"
 
-#: ../app/display/display-enums.c:475
+#: ../app/display/display-enums.c:510
 msgctxt "transform-handle-mode"
 msgid "Remove"
 msgstr "Вилучити"
 
-#: ../app/display/display-enums.c:504
+#: ../app/display/display-enums.c:539
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Створити"
 
-#: ../app/display/display-enums.c:505
+#: ../app/display/display-enums.c:540
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Редагувати"
 
-#: ../app/display/display-enums.c:506
+#: ../app/display/display-enums.c:541
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Перенести"
@@ -18186,7 +18199,7 @@ msgstr "Неможливо змінити точки растру групи ш�
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1147
 #: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
-#: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:688
+#: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:686
 #: ../app/tools/gimpwarptool.c:780
 #, c-format
 msgid "The active layer's pixels are locked."
@@ -18297,7 +18310,7 @@ msgstr "без керування кольорами"
 msgid "Layer picked: '%s'"
 msgstr "Вибрано шар: '%s'"
 
-#: ../app/display/gimpdisplayshell-utils.c:174
+#: ../app/display/gimpdisplayshell-utils.c:194
 #: ../app/tools/gimpmeasuretool.c:625 ../app/tools/gimpmeasuretool.c:778
 #: ../app/tools/gimpmeasuretool.c:834 ../app/tools/gimpmeasuretool.c:862
 msgid "pixels"
@@ -18308,29 +18321,70 @@ msgstr "точок"
 msgid "Cancel <i>%s</i>"
 msgstr "Скасувати <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:853
+#: ../app/display/gimptoolcompass.c:845
 msgid "Click to place vertical and horizontal guides"
 msgstr "Натисніть для розміщення вертикальної чи горизонтальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:861
+#: ../app/display/gimptoolcompass.c:853
 msgid "Click to place a horizontal guide"
 msgstr "Натисніть для розміщення горизонтальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:869
+#: ../app/display/gimptoolcompass.c:861
 msgid "Click to place a vertical guide"
 msgstr "Натисніть для розміщення вертикальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:877
+#: ../app/display/gimptoolcompass.c:869
 msgid "Click-Drag to add a new point"
 msgstr "Натисніть, щоб створити новий контур."
 
-#: ../app/display/gimptoolcompass.c:888 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:880 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Натисніть та перетягніть, щоб перемістити точку"
 
-#: ../app/display/gimptoolcompass.c:905
+#: ../app/display/gimptoolcompass.c:897
 msgid "Click-Drag to move all points"
 msgstr "Натисніть та перетягніть, щоб перемістити всі точки"
+
+#: ../app/display/gimptoolfocus.c:1049
+#| msgid "Click-Drag to move the endpoint"
+msgid "Click-Drag to change the midpoint"
+msgstr "Натисніть і перетягніть, щоб змінити середню точку"
+
+#: ../app/display/gimptoolfocus.c:1051
+#| msgid "Click-Drag to remove the slider"
+msgid "Click-Drag to resize the limit"
+msgstr "Натисніть і перетягніть, щоб змінити розміри обмеження"
+
+#: ../app/display/gimptoolfocus.c:1053 ../app/display/gimptoolfocus.c:1066
+#, c-format
+msgid "%s to resize the focus"
+msgstr "%s, щоб змінити розміри фокуса"
+
+#: ../app/display/gimptoolfocus.c:1058 ../app/display/gimptoolfocus.c:1071
+#| msgid "Click-Drag to remove the slider"
+msgid "Click-Drag to resize the focus"
+msgstr "Натисніть і перетягніть, щоб змінити розміри фокуса"
+
+#: ../app/display/gimptoolfocus.c:1065
+#| msgid "Click-Drag to change perspective"
+msgid "Click-Drag to change the aspect ratio"
+msgstr "Натисніть і перетягніть, щоб змінити співвідношення розмірів"
+
+#: ../app/display/gimptoolfocus.c:1076
+#| msgid "Click-Drag to move the slider"
+msgid "Click-Drag to move the focus"
+msgstr "Натисніть і перетягніть, щоб пересунути фокус"
+
+#: ../app/display/gimptoolfocus.c:1080
+#| msgid "Click-Drag to rotate"
+msgid "Click-Drag to rotate the focus"
+msgstr "Натисніть і перетягніть для обертання фокуса"
+
+#: ../app/display/gimptoolfocus.c:1081 ../app/display/gimptoolgyroscope.c:728
+#: ../app/display/gimptoolline.c:1559 ../app/tools/gimppainttool.c:627
+#, c-format
+msgid "%s for constrained angles"
+msgstr "%s для обмеження кроку кута"
 
 #: ../app/display/gimptoolgyroscope.c:713
 msgid "Click-Drag to zoom"
@@ -18345,12 +18399,6 @@ msgstr "%s для обмеження кроку"
 #: ../app/display/gimptooltransformgrid.c:1840
 msgid "Click-Drag to rotate"
 msgstr "Натисніть і перетягніть для обертання"
-
-#: ../app/display/gimptoolgyroscope.c:728 ../app/display/gimptoolline.c:1559
-#: ../app/tools/gimppainttool.c:627
-#, c-format
-msgid "%s for constrained angles"
-msgstr "%s для обмеження кроку кута"
 
 #: ../app/display/gimptoolgyroscope.c:733
 msgid "Click-Drag to pan"
@@ -18622,12 +18670,12 @@ msgstr ""
 "Клацання+перетягування малює довільну лінію, клацання додає прямий відрізок"
 
 #: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:878
+#: ../app/display/gimptoolrectangle.c:874
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: ../app/display/gimptoolrectangle.c:2142
+#: ../app/display/gimptoolrectangle.c:2138
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -21310,6 +21358,10 @@ msgstr "Чіткі краї"
 msgid "Other Options"
 msgstr "Інші параметри"
 
+#: ../app/propgui/gimppropgui-focus-blur.c:143
+msgid "Focus Blur: "
+msgstr "Фокусне розмивання: "
+
 #: ../app/propgui/gimppropgui-generic.c:185
 msgid "Pick coordinates from the image"
 msgstr "Вибрати координати із зображення"
@@ -21535,11 +21587,17 @@ msgstr "Виберіть пункт зі списку типових темпе�
 msgid "New Seed"
 msgstr "Нова база"
 
-#: ../app/propgui/gimppropgui.c:391
+#: ../app/propgui/gimppropgui-vignette.c:183
+#| msgctxt "filters-action"
+#| msgid "_Vignette..."
+msgid "Vignette: "
+msgstr "Віньєтування: "
+
+#: ../app/propgui/gimppropgui.c:393
 msgid "Pick color from the image"
 msgstr "Вибрати колір із зображення"
 
-#: ../app/propgui/gimppropgui.c:543
+#: ../app/propgui/gimppropgui.c:549
 msgid "This operation has no editable properties"
 msgstr "Ця операція не має редагованих властивостей"
 
@@ -21918,7 +21976,7 @@ msgstr "Заповнення"
 #: ../app/tools/gimpfiltertool.c:312
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:328
-#: ../app/tools/gimptransformtool.c:697 ../app/tools/gimpwarptool.c:794
+#: ../app/tools/gimptransformtool.c:695 ../app/tools/gimpwarptool.c:794
 msgid "The active layer is not visible."
 msgstr "Активний шар - невидимий."
 
@@ -22348,7 +22406,7 @@ msgid "There is no path to move."
 msgstr "Немає контуру для переміщення."
 
 #: ../app/tools/gimpeditselectiontool.c:1124 ../app/tools/gimpmovetool.c:285
-#: ../app/tools/gimptransformtool.c:735
+#: ../app/tools/gimptransformtool.c:733
 msgid "The active path's position is locked."
 msgstr "Позиція активного контура заблокована від змін"
 
@@ -22683,8 +22741,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Вибір зв'язаної ділянки"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:549
-#: ../app/tools/gimpgegltool.c:550 ../app/tools/gimpoperationtool.c:136
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:551
+#: ../app/tools/gimpgegltool.c:552 ../app/tools/gimpoperationtool.c:136
 msgid "GEGL Operation"
 msgstr "Операція GEGL"
 
@@ -22697,7 +22755,7 @@ msgid "_GEGL Operation..."
 msgstr "Опера_ція GEGL…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:494
+#: ../app/tools/gimpgegltool.c:496
 msgid "Select an operation from the list above"
 msgstr "Виберіть операцію зі списку згори"
 
@@ -23402,17 +23460,10 @@ msgstr "Зробити _прозорим"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Інструмент Операція: виконання довільної операції GEGL"
 
-#. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:608
-#, c-format
-msgid "Aux Input"
-msgstr "Дод. введення"
-
-#. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:614
-#, c-format
-msgid "Aux%d Input"
-msgstr "Дод. введення%d"
+#: ../app/tools/gimpoperationtool.c:621
+#| msgid "Aux Input"
+msgid "Aux\\1 Input"
+msgstr "Вхідний дод.\\1"
 
 #: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -23512,7 +23563,7 @@ msgstr ""
 msgid "_Perspective Clone"
 msgstr "Штамп з п_ерспективою"
 
-#: ../app/tools/gimpperspectiveclonetool.c:616
+#: ../app/tools/gimpperspectiveclonetool.c:611
 msgid "Ctrl-Click to set a clone source"
 msgstr "Натисніть Ctrl для отримання джерела штампу"
 
@@ -24246,25 +24297,25 @@ msgid "Lock pivot position to canvas"
 msgstr "Заблокувати позицію опорної точки на полотні"
 
 #: ../app/tools/gimptransformgridtool.c:294
-#: ../app/tools/gimptransformtool.c:437
+#: ../app/tools/gimptransformtool.c:435
 msgid "_Transform"
 msgstr "Пере_творення"
 
-#: ../app/tools/gimptransformgridtool.c:579
-#: ../app/tools/gimptransformgridtool.c:591
+#: ../app/tools/gimptransformgridtool.c:575
+#: ../app/tools/gimptransformgridtool.c:587
 msgid "Transform Step"
 msgstr "Крок перетворення"
 
-#: ../app/tools/gimptransformgridtool.c:986
+#: ../app/tools/gimptransformgridtool.c:982
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (виправлення)"
 
-#: ../app/tools/gimptransformgridtool.c:1266
+#: ../app/tools/gimptransformgridtool.c:1262
 msgid "Re_adjust"
 msgstr "Повторно с_коригувати"
 
-#: ../app/tools/gimptransformgridtool.c:1519
+#: ../app/tools/gimptransformgridtool.c:1515
 msgid "Cannot readjust the transformation"
 msgstr "Не вдалося повторно скоригувати перетворення"
 
@@ -24372,15 +24423,15 @@ msgstr "Перетворити"
 msgid "Transforming"
 msgstr "Перетворення"
 
-#: ../app/tools/gimptransformtool.c:429
+#: ../app/tools/gimptransformtool.c:427
 msgid "Confirm Transformation"
 msgstr "Підтвердження перетворення"
 
-#: ../app/tools/gimptransformtool.c:449
+#: ../app/tools/gimptransformtool.c:447
 msgid "Transformation creates a very large item."
 msgstr "У результаті перетворення створюється дуже великий запис."
 
-#: ../app/tools/gimptransformtool.c:454
+#: ../app/tools/gimptransformtool.c:452
 #, c-format
 msgid ""
 "Applying the transformation will result in an item that is over %g times "
@@ -24389,45 +24440,45 @@ msgstr ""
 "Застосування перетворення призведе до створення запису, який буде більшим за "
 "запис зображення у понад %g разів."
 
-#: ../app/tools/gimptransformtool.c:462
+#: ../app/tools/gimptransformtool.c:460
 msgid "Transformation creates a very large image."
 msgstr "У результаті перетворення буде створено дуже велике зображення."
 
-#: ../app/tools/gimptransformtool.c:467
+#: ../app/tools/gimptransformtool.c:465
 #, c-format
 msgid "Applying the transformation will enlarge the image by a factor of %g."
 msgstr ""
 "Застосування перетворення призведе до збільшення зображення у %g разів."
 
-#: ../app/tools/gimptransformtool.c:681
+#: ../app/tools/gimptransformtool.c:679
 msgid "There is no layer to transform."
 msgstr "Немає шару для перетворення."
 
-#: ../app/tools/gimptransformtool.c:690
+#: ../app/tools/gimptransformtool.c:688
 msgid "The active layer's position and size are locked."
 msgstr "Позиція і розмір активного шару заблоковані від змін"
 
-#: ../app/tools/gimptransformtool.c:704
+#: ../app/tools/gimptransformtool.c:702
 msgid "The selection does not intersect with the layer."
 msgstr "Позначене не перетинається з шаром."
 
-#: ../app/tools/gimptransformtool.c:711
+#: ../app/tools/gimptransformtool.c:709
 msgid "There is no selection to transform."
 msgstr "Немає позначеної ділянки для перетворення."
 
-#: ../app/tools/gimptransformtool.c:726
+#: ../app/tools/gimptransformtool.c:724
 msgid "There is no path to transform."
 msgstr "Немає контуру для перетворення."
 
-#: ../app/tools/gimptransformtool.c:733
+#: ../app/tools/gimptransformtool.c:731
 msgid "The active path's strokes are locked."
 msgstr "Елементи активного контуру заблоковані від змін"
 
-#: ../app/tools/gimptransformtool.c:737
+#: ../app/tools/gimptransformtool.c:735
 msgid "The active path has no strokes."
 msgstr "Активний контур не має штрихів."
 
-#: ../app/tools/gimptransformtool.c:811
+#: ../app/tools/gimptransformtool.c:809
 msgid "The current transform is invalid"
 msgstr "Поточне перетворення є некоректним"
 
@@ -27562,3 +27613,6 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "Aux%d Input"
+#~ msgstr "Дод. введення%d"
