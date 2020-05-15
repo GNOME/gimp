@@ -519,7 +519,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem *item)
     case GIMP_HANDLE_FILLED_DROP:
       rectangle.x      = x - private->width  / 2.0 - 2.0;
       rectangle.y      = y - private->height / 2.0 - 2.0;
-      rectangle.width  = private->width * 1.21 + 4.0;
+      rectangle.width  = private->width * 1.5 + 4.0;
       rectangle.height = private->height + 4.0;
       break;
 
