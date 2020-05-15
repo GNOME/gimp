@@ -44,6 +44,8 @@
 #define HANDLE_SIZE   12.0
 #define SNAP_DISTANCE 12.0
 
+#define EPSILON       1e-6
+
 
 enum
 {
@@ -610,6 +612,20 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
             y = cy;
           }
 
+        if (fabs (fabs (priv->aspect_ratio) - 1.0) <= EPSILON)
+          {
+            if (priv->radius <= EPSILON)
+              {
+                g_object_set (focus,
+                              "aspect-ratio", 0.0,
+                              NULL);
+              }
+            else
+              {
+                break;
+              }
+          }
+
         radius = gimp_canvas_limit_boundary_radius (GIMP_CANVAS_LIMIT (limit),
                                                     x, y);
 
@@ -634,9 +650,16 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
               inner_radius = radius;
 
               if (extend)
-                outer_radius = inner_radius / priv->inner_limit;
+                {
+                  if (priv->inner_limit > EPSILON)
+                    outer_radius = inner_radius / priv->inner_limit;
+                  else
+                    inner_radius = 0.0;
+                }
               else
-                inner_radius = MIN (inner_radius, outer_radius);
+                {
+                  inner_radius = MIN (inner_radius, outer_radius);
+                }
             }
             break;
 
@@ -644,28 +667,45 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
             {
               if (extend)
                 {
-                  outer_radius = radius / (priv->inner_limit         +
-                                           (1.0 - priv->inner_limit) *
-                                           priv->midpoint);
-                  inner_radius = priv->inner_limit * outer_radius;
+                  if (priv->inner_limit > EPSILON || priv->midpoint > EPSILON)
+                    {
+                      outer_radius = radius / (priv->inner_limit         +
+                                               (1.0 - priv->inner_limit) *
+                                               priv->midpoint);
+                      inner_radius = priv->inner_limit * outer_radius;
+                    }
+                  else
+                    {
+                      radius = 0.0;
+                    }
                 }
               else
                 {
                   radius = CLAMP (radius, inner_radius, outer_radius);
                 }
 
-              g_object_set (focus,
-                            "midpoint",    (radius       - inner_radius) /
-                                           (outer_radius - inner_radius),
-                            NULL);
+              if (outer_radius > inner_radius)
+                {
+                  g_object_set (focus,
+                                "midpoint", MAX ((radius       - inner_radius) /
+                                                 (outer_radius - inner_radius),
+                                                 0.0),
+                                NULL);
+                }
             }
             break;
           }
 
         g_object_set (focus,
-                      "radius",      outer_radius,
-                      "inner-limit", inner_radius / outer_radius,
+                      "radius", outer_radius,
                       NULL);
+
+        if (outer_radius > EPSILON)
+          {
+            g_object_set (focus,
+                          "inner-limit", inner_radius / outer_radius,
+                          NULL);
+          }
       }
       break;
 
@@ -705,23 +745,35 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
 
         gimp_vector2_mul (&p, r);
 
-        if (gimp_canvas_item_transform_distance (
-              priv->limits[priv->hover_limit].item,
-              s.x, s.y,
-              p.x, p.y) <= SNAP_DISTANCE * 0.75)
-          {
-            if (handle->orientation == GTK_ORIENTATION_HORIZONTAL)
-              r = ry;
-            else
-              r = rx;
-          }
-
         if (extend)
           {
             if (handle->orientation == GTK_ORIENTATION_HORIZONTAL)
-              ry *= r / rx;
+              {
+                if (rx <= EPSILON && ry > EPSILON)
+                  break;
+
+                ry = r * (1.0 - priv->aspect_ratio);
+              }
             else
-              rx *= r / ry;
+              {
+                if (ry <= EPSILON && rx > EPSILON)
+                  break;
+
+                rx = r * (1.0 + priv->aspect_ratio);
+              }
+          }
+        else
+          {
+            if (gimp_canvas_item_transform_distance (
+                  priv->limits[priv->hover_limit].item,
+                  s.x, s.y,
+                  p.x, p.y) <= SNAP_DISTANCE * 0.75)
+              {
+                if (handle->orientation == GTK_ORIENTATION_HORIZONTAL)
+                  r = ry;
+                else
+                  r = rx;
+              }
           }
 
         if (handle->orientation == GTK_ORIENTATION_HORIZONTAL)
@@ -735,9 +787,24 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
           r /= priv->inner_limit;
 
         g_object_set (focus,
-                      "radius",       r,
-                      "aspect-ratio", rx >= ry ? 1.0 - ry / rx : rx / ry - 1.0,
+                      "radius", r,
                       NULL);
+
+        if (! extend)
+          {
+            gdouble aspect_ratio;
+
+            if (fabs (rx - ry) <= EPSILON)
+              aspect_ratio = 0.0;
+            else if (rx > ry)
+              aspect_ratio = 1.0 - ry / rx;
+            else
+              aspect_ratio = rx / ry - 1.0;
+
+            g_object_set (focus,
+                          "aspect-ratio", aspect_ratio,
+                          NULL);
+          }
       }
       break;
 
