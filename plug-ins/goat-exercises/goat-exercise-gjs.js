@@ -24,6 +24,8 @@ const System = imports.system
 
 imports.gi.versions.Gimp = '3.0';
 const Gimp = imports.gi.Gimp;
+imports.gi.versions.GimpUi = '3.0';
+const GimpUi = imports.gi.GimpUi;
 imports.gi.versions.Gegl = '0.4';
 const Gegl = imports.gi.Gegl;
 imports.gi.versions.Gtk = '3.0';
@@ -56,7 +58,7 @@ var Goat = GObject.registerClass({
         procedure.set_image_types("*");
 
         procedure.set_menu_label("Exercise a JavaScript goat");
-        procedure.set_icon_name(Gimp.ICON_GEGL);
+        procedure.set_icon_name(GimpUi.ICON_GEGL);
         procedure.add_menu_path ('<Image>/Filters/Development/Goat exercises/');
 
         procedure.set_documentation("Exercise a goat in the JavaScript language (GJS)",
@@ -71,9 +73,9 @@ var Goat = GObject.registerClass({
         /* TODO: localization. */
 
         if (run_mode == Gimp.RunMode.INTERACTIVE) {
-            Gimp.ui_init("goat-exercise-gjs");
+            GimpUi.ui_init("goat-exercise-gjs");
             /* TODO: help function and ID. */
-            let dialog = new Gimp.Dialog({
+            let dialog = new GimpUi.Dialog({
               title: "Exercise a goat (JavaScript)",
               role: "goat-exercise-JavaScript",
               use_header_bar: true,
