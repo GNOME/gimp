@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-19 17:27+0000\n"
-"PO-Revision-Date: 2019-03-25 19:01+0200\n"
+"POT-Creation-Date: 2020-05-15 09:01+0000\n"
+"PO-Revision-Date: 2020-05-15 12:09+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: www.gnome.gr\n"
 "Language: el\n"
@@ -450,86 +450,114 @@ msgstr "Μετατόπιση _Χ πίπτουσας σκιάς"
 msgid "Drop shadow _Y displacement"
 msgstr "Μετατόπιση _Y πίπτουσας σκιάς"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
 msgid "Spyro Layer"
 msgstr "Στρώση σπειρογραφήματος (Spyro)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+msgid "Spyro Path"
+msgstr "Μονοπάτι σπειρογραφήματος"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+msgid ""
+"Save\n"
+"as New Layer"
+msgstr ""
+"Αποθήκευση\n"
+"ως νέα στρώση"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+msgid ""
+"Redraw on\n"
+"Active layer"
+msgstr ""
+"Επανασχεδίαση σε\n"
+"ενεργή στρώση"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+msgid ""
+"Save\n"
+"as Path"
+msgstr ""
+"Αποθήκευση\n"
+"ως μονοπάτι"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
 msgid "Circle"
 msgstr "Κύκλος"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
 msgid "Polygon-Star"
 msgstr "Πολύγωνο-Αστέρι"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
 msgid "Sine"
 msgstr "Ημίτονο"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
 msgid "Bumps"
 msgstr "Ημικύκλια"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
 msgid "Rack"
 msgstr "Rack"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
 msgid "Frame"
 msgstr "Πλαίσιο"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
 msgid "Selection"
 msgstr "Επιλογή"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
 msgid "Pencil"
 msgstr "Μολύβι"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
 msgid "AirBrush"
 msgstr "Αερογράφος"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
 msgid "Stroke"
 msgstr "Πινελιά"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
 msgid "PaintBrush"
 msgstr "PaintBrush (Πινέλο βαφής)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
 msgid "Ink"
 msgstr "Μελάνη"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
 msgid "MyPaintBrush"
 msgstr "MyPaintBrush (Το πινέλομου  βαφής)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
 msgid "Spyrograph"
 msgstr "Σπειρογράφημα"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
 msgid "Epitrochoid"
 msgstr "Επιτροχοειδές"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
 msgid "Curve Type"
 msgstr "Τύπος καμπύλης"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -537,22 +565,22 @@ msgstr ""
 "Επιτροχοειδές μοτίβο είναι όταν το κινούμενο γρανάζι είναι εξωτερικά του "
 "σταθερού γραναζιού."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
 msgid "Tool"
 msgstr "Εργαλείο"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
 msgid ""
 "The tool with which to draw the pattern.The Preview tool just draws quickly."
 msgstr ""
 "Το εργαλείο με το οποίο σχεδιάζεται το μοτίβο. Το εργαλείο προεπισκόπησης "
 "σχεδιάζει απλώς γρήγορα."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
 msgid "Long Gradient"
 msgstr "Επιμήκης διαβάθμιση"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -563,11 +591,11 @@ msgstr ""
 "ταιριάζει με το μήκος του μοτίβου, με βάση την τρέχουσα διαβάθμιση και την "
 "κατάσταση επανάληψης από τις ρυθμίσεις του εργαλείου διαβάθμισης."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Καθορίστε το μοτίβο χρησιμοποιώντας μία από τις ακόλουθες καρτέλες:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -580,7 +608,7 @@ msgstr ""
 "ακολουθήσετε τις οδηγίες από τα εγχειρίδια του toy kit (πακέτου παιχνιδιών), "
 "τα αποτελέσματα θα είναι παρόμοια."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -588,12 +616,12 @@ msgstr ""
 "Αριθμός δοντιών του σταθερού γραναζιού. Το μέγεθος του σταθερού γραναζιού "
 "είναι ανάλογο με τον αριθμό των γραναζιών."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
 msgid "Fixed Gear Teeth"
 msgstr "Δόντια σταθερού γραναζιού"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -601,16 +629,16 @@ msgstr ""
 "Αριθμός δοντιών κινούμενου γραναζιού. Το μέγεθος του κινούμενου γραναζιού "
 "είναι ανάλογο με τον αριθμό των γραναζιών."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
 msgid "Moving Gear Teeth"
 msgstr "Δόντια κινούμενου γραναζιού"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
 msgid "Hole percent"
 msgstr "Ποσοστό οπής"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -618,11 +646,11 @@ msgstr ""
 "Πόσα μακριά είναι η οπή από το κέντρο του κινούμενου γραναζιού. 100% "
 "σημαίνει ότι η οπή είναι στο άκρο του γραναζιού."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
 msgid "Hole Number"
 msgstr "Αριθμός οπής"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -630,20 +658,67 @@ msgstr ""
 "Η οπή #1 είναι στο άκρο του γραναζιού. Ο μέγιστος αριθμός οπών είναι κοντά "
 "στο κέντρο. Ο μέγιστος αριθμός οπών διαφέρει για κάθε γρανάζι."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+msgid "Flower Petals"
+msgstr "Πέταλα άνθους"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+msgid "The number of petals in the pattern."
+msgstr "Ο αριθμός πετάλων στο μοτίβο."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+msgid "Petal Skip"
+msgstr "Παράλειψη πετάλου"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "Ο αριθμός προώθησης των πετάλων για σχεδίαση του επόμενου πετάλου."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+msgid "Hole Radius(%)"
+msgstr "Ακτίνα οπής (%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"Η ακτίνα της οπής στο κέντρο του μοτίβου όπου δεν θα σχεδιαστεί τίποτα. "
+"Δίνεται ως ποσοστό μεγέθους του μοτίβου. Η τιμή 0 δεν θα παράξει καμία οπή. "
+"Η τιμή 99 θα παράξει μια λεπτή γραμμή στην άκρη."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+msgid "Width(%)"
+msgstr "Πλάτος (%)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"Το πλάτος του μοτίβου ως ποσοστό μεγέθους του μοτίβου. Η τιμή 1 θα σχεδιάσει "
+"απλώς λεπτό μοτίβο. Η τιμή 100 θα; γεμίσει όλο το σταθερό γρανάζι."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+msgid "Visual"
+msgstr "Οπτικό"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
 msgid "Toy Kit"
 msgstr "Toy Kit (πακέτο παιχνιδιού)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
 msgid "Gears"
 msgstr "Γρανάζια"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
 msgid "Rotation"
 msgstr "Περιστροφή"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -651,11 +726,11 @@ msgstr ""
 "Περιστροφή του μοτίβου, σε μοίρες. Η αρχική θέση του κινούμενου γραναζιού "
 "στο σταθερό γρανάζι."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
 msgid "Shape"
 msgstr "Σχήμα"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -670,39 +745,39 @@ msgstr ""
 "ακουμπήσετε το όριο. Η επιλογή θα κολλήσει στα όρια της τρέχουσας επιλογής - "
 "δοκιμάστε κάτι μη ορθογώνιο."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
 msgid "Sides"
 msgstr "Πλευρές"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
 msgid "Number of sides of the shape."
 msgstr "Αριθμός πλευρών του σχήματος."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
 msgid "Morph"
 msgstr "Μορφισμός"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Σχήμα σταθερού γραναζιού μορφισμός. Επηρεάζει μόνο κάποια σχήματα."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Περιστροφή σταθερού γραναζιού, σε μοίρες"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
 msgid "Margin (px)"
 msgstr "Περιθώριο (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
 msgid "Margin from edge of selection."
 msgstr "Περιθώριο από το άκρο της επιλογής."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
 msgid "Make width and height equal"
 msgstr "Δημιουργία ίσου πλάτους και ύψους"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -711,11 +786,11 @@ msgstr ""
 "επιλογή. Όταν είναι σημειωμένο, το μοτίβο θα έχει το ίδιο πλάτος και ύψος "
 "και θα κεντράρεται."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
-msgid "Redraw"
-msgstr "Επανασχεδίαση"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
+msgid "Re_draw"
+msgstr "Επα_νασχεδίαση"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -723,71 +798,78 @@ msgstr ""
 "Εάν αλλάξετε τις ρυθμίσεις ενός εργαλείου, αλλάξετε χρώμα, ή αλλάξετε την "
 "επιλογή, πατήστε αυτό για να προεπισκοπήσετε πώς φαίνεται το μοτίβο."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
-msgid "Reset"
-msgstr "Επαναφορά"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+msgid "_Reset"
+msgstr "Επανα_φορά"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
-msgid "Cancel"
-msgstr "Ακύρωση"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
+msgid "_Cancel"
+msgstr "Α_κύρωση"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
-msgid "OK"
-msgstr "Eντάξει"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+msgid "_OK"
+msgstr "Ε_ντάξει"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
 msgid ""
-"Keep\n"
-"Layer"
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
 msgstr ""
-"Διατήρηση\n"
-"Στρώσης"
+"Επιλέξτε εάν θα αποθηκευτεί ως νέα στρώση, επανασχεδίαση στην τελευταία "
+"ενεργή στρώση, ή αποθήκευση σε μονοπάτι"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
-msgid ""
-"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
-"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
-"redrawn on the layer that was active when the plugin was launched."
-msgstr ""
-"Εάν είναι σημειωμένο, τότε όταν πατηθεί το Εντάξει, διατηρείται η "
-"σπειρογραφική στρώση και το πρόσθετο εξέρχεται γρήγορα. Εάν δεν είναι "
-"σημειωμένο, η σπειρογραφική στρώση διαγράφεται και το μοτίβο "
-"επανασχεδιάζεται στη στρώση που ήταν ενεργό όταν ξεκίνησε το πρόσθετο."
-
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
 msgid "Spyrogimp"
 msgstr "Σπειρογράφημα gimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Σχεδίαση σπειρογραφημάτων χρησιμοποιώντας τις ρυθμίσεις τρέχοντος εργαλείου "
 "και επιλογής."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
 msgid "Curve Pattern"
 msgstr "Μοτίβο καμπύλης"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
 msgid "Fixed Gear"
 msgstr "Σταθερό γρανάζι"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
 msgid "Size"
 msgstr "Μέγεθος και όρια"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
 msgid "Rendering Pattern"
 msgstr "Απόδοση μοτίβου"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
 msgid "Please wait : Rendering Pattern"
 msgstr "Παρακαλούμε περιμένετε: Αποδίδεται το μοτίβο"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
 msgid "Spyrogimp..."
 msgstr "Σπειρογράφημα gimp..."
+
+#~ msgid ""
+#~ "Keep\n"
+#~ "Layer"
+#~ msgstr ""
+#~ "Διατήρηση\n"
+#~ "Στρώσης"
+
+#~ msgid ""
+#~ "If checked, then once OK is pressed, the spyro layer is kept, and the "
+#~ "plugin exits quickly. If unchecked, the spyro layer is deleted, and the "
+#~ "pattern is redrawn on the layer that was active when the plugin was "
+#~ "launched."
+#~ msgstr ""
+#~ "Εάν είναι σημειωμένο, τότε όταν πατηθεί το Εντάξει, διατηρείται η "
+#~ "σπειρογραφική στρώση και το πρόσθετο εξέρχεται γρήγορα. Εάν δεν είναι "
+#~ "σημειωμένο, η σπειρογραφική στρώση διαγράφεται και το μοτίβο "
+#~ "επανασχεδιάζεται στη στρώση που ήταν ενεργό όταν ξεκίνησε το πρόσθετο."
 
 #~ msgid "Color _model"
 #~ msgstr "_Πρότυπο χρώματος"
