@@ -684,7 +684,7 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
                   radius = CLAMP (radius, inner_radius, outer_radius);
                 }
 
-              if (outer_radius > inner_radius)
+              if (fabs (outer_radius - inner_radius) > EPSILON)
                 {
                   g_object_set (focus,
                                 "midpoint", MAX ((radius       - inner_radius) /
