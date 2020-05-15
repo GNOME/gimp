@@ -132,6 +132,10 @@ struct _GimpStrokeClass
                                           GimpAnchor            *neighbor);
 
   gboolean      (* is_empty)             (GimpStroke            *stroke);
+  gboolean      (* reverse)              (GimpStroke            *stroke);
+  gboolean      (* shift_start)          (GimpStroke            *stroke,
+                                          GimpAnchor            *new_start);
+
   gdouble       (* get_length)           (GimpStroke            *stroke,
                                           gdouble                precision);
   gdouble       (* get_distance)         (GimpStroke            *stroke,
@@ -288,6 +292,10 @@ gboolean     gimp_stroke_connect_stroke       (GimpStroke            *stroke,
                                                GimpAnchor            *neighbor);
 
 gboolean     gimp_stroke_is_empty             (GimpStroke            *stroke);
+
+gboolean     gimp_stroke_reverse              (GimpStroke            *stroke);
+gboolean     gimp_stroke_shift_start          (GimpStroke            *stroke,
+                                               GimpAnchor            *new_start);
 
 /* accessing the shape of the curve */
 
