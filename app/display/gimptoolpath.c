@@ -28,6 +28,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "display-types.h"
 
@@ -174,7 +175,7 @@ static GimpVectorFunction
                    gimp_tool_path_get_function (GimpToolPath          *path,
                                                 const GimpCoords      *coords,
                                                 GdkModifierType        state);
-                                                
+
 static void     gimp_tool_path_update_status   (GimpToolPath          *path,
                                                 GdkModifierType        state,
                                                 gboolean               proximity);
@@ -401,6 +402,7 @@ gimp_tool_path_changed (GimpToolWidget *widget)
           GArray         *coords;
           GList          *draw_anchors;
           GList          *list;
+          gboolean        first = TRUE;
 
           /* anchor handles */
           draw_anchors = gimp_stroke_get_draw_anchors (cur_stroke);
@@ -422,7 +424,39 @@ gimp_tool_path_changed (GimpToolWidget *widget)
                                                  GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
                                                  GIMP_HANDLE_ANCHOR_CENTER);
 
+                  if (first)
+                    {
+                      gdouble angle = 0.0;
+                      GimpAnchor *next;
+
+                      for (next = gimp_stroke_anchor_get_next (cur_stroke,
+                                                               cur_anchor);
+                           next;
+                           next = gimp_stroke_anchor_get_next (cur_stroke, next))
+                        {
+                          if (((next->position.x - cur_anchor->position.x) *
+                               (next->position.x - cur_anchor->position.x) +
+                               (next->position.y - cur_anchor->position.y) *
+                               (next->position.y - cur_anchor->position.y)) >= 0.1)
+                            break;
+                        }
+
+                      if (next)
+                        {
+                          angle = atan2 (next->position.y - cur_anchor->position.y,
+                                         next->position.x - cur_anchor->position.x);
+                          g_object_set (item,
+                                        "type", (cur_anchor->selected ?
+                                                 GIMP_HANDLE_DROP :
+                                                 GIMP_HANDLE_FILLED_DROP),
+                                        "start-angle", angle,
+                                        NULL);
+                        }
+                    }
+
                   private->items = g_list_prepend (private->items, item);
+
+                  first = FALSE;
                 }
             }
 
@@ -1048,7 +1082,7 @@ gimp_tool_path_hit (GimpToolWidget   *widget,
     case VECTORS_ADD_ANCHOR:
     case VECTORS_MOVE_VECTORS:
       return GIMP_HIT_INDIRECT;
-    
+
     case VECTORS_FINISHED:
       return GIMP_HIT_NONE;
     }
