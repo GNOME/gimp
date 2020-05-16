@@ -1,0 +1,76 @@
+
+__gimp()
+{
+    COMPREPLY=()
+    local current="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    # GIMP options, sorted alphabetically
+    #
+    # Note that we don't specify short options here, since they're quite unintuitive
+    options=(
+        "--as-new"
+        "--batch"
+        "--batch-interpreter"
+        "--console-messages"
+        "--debug-handlers"
+        "--dump-gimprc"
+        "--dump-gimprc-manpage"
+        "--dump-gimprc-system"
+        "--dump-pdb-procedures-deprecated"
+        "--g-fatal-warnings"
+        "--gimprc"
+        "--help"
+        "--help-all"
+        "--help-gegl"
+        "--help-gtk"
+        "--license"
+        "--new-instance"
+        "--no-cpu-accel"
+        "--no-data"
+        "--no-fonts"
+        "--no-interface"
+        "--no-shm"
+        "--no-splash"
+        "--pdb-compat-mode"
+        "--session"
+        "--show-playground"
+        "--stack-trace-mode"
+        "--system-gimprc"
+        "--verbose"
+        "--version"
+    )
+
+    #
+    # Different completions for specific options
+    #
+    case "${prev}" in
+        # Options that shouldn't be used in combination with something else
+        help | license | version)
+            return 0
+            ;;
+        # Expect a filename
+        gimprc | session | system-gimprc)
+            COMPREPLY=( $(compgen -f -- ${current}) )
+            return 0
+            ;;
+        # Expect *some* argument, so don't complete
+        b | batch | display)
+            return 0
+            ;;
+        batch-interpreter)
+            # FIXME: we should try to get the list of interpreters somehow
+            local interpreters=$(gimp --LIST_INTERPRETERS)
+            COMPREPLY=("python-fu-eval" "plug-in-script-fu-eval")
+            return 0
+            ;;
+        *)
+        ;;
+    esac
+
+   # Default: complete with either an option "-W" or a filename "-f"
+   COMPREPLY=($(compgen -W "${options[*]}" -f -- ${current}))
+   return 0
+}
+
+complete -F __gimp gimp
