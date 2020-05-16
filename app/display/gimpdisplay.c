@@ -756,9 +756,16 @@ gimp_display_flush (GimpDisplay *display)
 {
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  gimp_display_flush_update_region (display);
+  /* FIXME: we can end up being called during shell construction if "show all"
+   * is enabled by default, in which case the shell's display pointer is still
+   * NULL
+   */
+  if (gimp_display_get_shell (display))
+    {
+      gimp_display_flush_update_region (display);
 
-  gimp_display_shell_flush (gimp_display_get_shell (display));
+      gimp_display_shell_flush (gimp_display_get_shell (display));
+    }
 }
 
 void
