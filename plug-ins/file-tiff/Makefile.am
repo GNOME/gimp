@@ -34,6 +34,7 @@ libexec_PROGRAMS = file-tiff
 
 file_tiff_SOURCES = \
 	file-tiff.c		\
+	file-tiff.h		\
 	file-tiff-io.c		\
 	file-tiff-io.h		\
 	file-tiff-load.c	\

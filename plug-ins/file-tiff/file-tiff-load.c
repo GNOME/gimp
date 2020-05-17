@@ -52,6 +52,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "file-tiff.h"
 #include "file-tiff-io.h"
 #include "file-tiff-load.h"
 
@@ -60,13 +61,6 @@
 
 #define PLUG_IN_ROLE "gimp-file-tiff-load"
 
-
-typedef struct
-{
-  gint      compression;
-  gint      fillorder;
-  gboolean  save_transp_pixels;
-} TiffSaveVals;
 
 typedef struct
 {
@@ -124,13 +118,6 @@ static gboolean           load_dialog      (TIFF              *tif,
                                             DefaultExtra      *default_extra);
 
 
-static TiffSaveVals tsvals =
-{
-  COMPRESSION_NONE,    /*  compression    */
-  TRUE,                /*  alpha handling */
-};
-
-
 /* returns a pointer into the TIFF */
 static const gchar *
 tiff_get_page_name (TIFF *tif)
@@ -157,13 +144,14 @@ load_image (GFile        *file,
   TIFF              *tif;
   TiffSelectedPages  pages;
 
-  GList             *images_list      = NULL;
-  DefaultExtra       default_extra    = GIMP_TIFF_LOAD_UNASSALPHA;
-  gint               first_image_type = GIMP_RGB;
-  gint               min_row          = G_MAXINT;
-  gint               min_col          = G_MAXINT;
-  gint               max_row          = 0;
-  gint               max_col          = 0;
+  GList             *images_list        = NULL;
+  DefaultExtra       default_extra      = GIMP_TIFF_LOAD_UNASSALPHA;
+  gint               first_image_type   = GIMP_RGB;
+  gint               min_row            = G_MAXINT;
+  gint               min_col            = G_MAXINT;
+  gint               max_row            = 0;
+  gint               max_col            = 0;
+  gboolean           save_transp_pixels = FALSE;
   gint               li;
 
   *image = NULL;
@@ -328,7 +316,7 @@ load_image (GFile        *file,
       gboolean          is_bw;
       gint              i;
       gboolean          worst_case = FALSE;
-      TiffSaveVals      save_vals;
+      gint              gimp_compression = GIMP_COMPRESSION_NONE;
       const gchar      *name;
 
       TIFFSetDirectory (tif, pages.pages[li]);
@@ -481,13 +469,13 @@ load_image (GFile        *file,
       if (extra > 0 && (extra_types[0] == EXTRASAMPLE_ASSOCALPHA))
         {
           alpha = TRUE;
-          tsvals.save_transp_pixels = FALSE;
+          save_transp_pixels = FALSE;
           extra--;
         }
       else if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNASSALPHA))
         {
           alpha = TRUE;
-          tsvals.save_transp_pixels = TRUE;
+          save_transp_pixels = TRUE;
           extra--;
         }
       else if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNSPECIFIED))
@@ -504,11 +492,11 @@ load_image (GFile        *file,
             {
             case GIMP_TIFF_LOAD_ASSOCALPHA:
               alpha = TRUE;
-              tsvals.save_transp_pixels = FALSE;
+              save_transp_pixels = FALSE;
               break;
             case GIMP_TIFF_LOAD_UNASSALPHA:
               alpha = TRUE;
-              tsvals.save_transp_pixels = TRUE;
+              save_transp_pixels = TRUE;
               break;
             default: /* GIMP_TIFF_LOAD_CHANNEL */
               alpha = FALSE;
@@ -531,11 +519,11 @@ load_image (GFile        *file,
                 {
                 case GIMP_TIFF_LOAD_ASSOCALPHA:
                   alpha = TRUE;
-                  tsvals.save_transp_pixels = FALSE;
+                  save_transp_pixels = FALSE;
                   break;
                 case GIMP_TIFF_LOAD_UNASSALPHA:
                   alpha = TRUE;
-                  tsvals.save_transp_pixels = TRUE;
+                  save_transp_pixels = TRUE;
                   break;
                 default: /* GIMP_TIFF_LOAD_CHANNEL */
                   alpha = FALSE;
@@ -574,7 +562,7 @@ load_image (GFile        *file,
 
               if (alpha)
                 {
-                  if (tsvals.save_transp_pixels)
+                  if (save_transp_pixels)
                     {
                       if (profile_linear)
                         {
@@ -639,7 +627,7 @@ load_image (GFile        *file,
 
           if (alpha)
             {
-              if (tsvals.save_transp_pixels)
+              if (save_transp_pixels)
                 {
                   if (profile_linear)
                     {
@@ -749,7 +737,7 @@ load_image (GFile        *file,
               }
           }
 
-        save_vals.compression = compression;
+        gimp_compression = tiff_compression_to_gimp_compression (compression);
       }
 
       if (worst_case)
@@ -841,13 +829,32 @@ load_image (GFile        *file,
 
       /* attach parasites */
       {
-        GimpParasite *parasite;
-        const gchar  *img_desc;
+        GString          *string;
+        GimpConfigWriter *writer;
+        GimpParasite     *parasite;
+        const gchar      *img_desc;
 
-        parasite = gimp_parasite_new ("tiff-save-options", 0,
-                                      sizeof (save_vals), &save_vals);
+        /* construct the save parasite manually instead of simply
+         * creating and saving a save config object, because we want
+         * it to contain only some properties
+         */
+
+        string = g_string_new (NULL);
+        writer = gimp_config_writer_new_from_string (string);
+
+        gimp_config_writer_open (writer, "compression");
+        gimp_config_writer_printf (writer, "%d", gimp_compression);
+        gimp_config_writer_close (writer);
+
+        gimp_config_writer_finish (writer, NULL, NULL);
+
+        parasite = gimp_parasite_new ("GimpProcedureConfig-file-tiff-save-last",
+                                      GIMP_PARASITE_PERSISTENT,
+                                      string->len + 1, string->str);
         gimp_image_attach_parasite (*image, parasite);
         gimp_parasite_free (parasite);
+
+        g_string_free (string, TRUE);
 
         /* Attach a parasite containing the image description.
          * Pretend to be a gimp comment so other plugins will use this

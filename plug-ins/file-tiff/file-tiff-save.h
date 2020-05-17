@@ -23,37 +23,20 @@
 #define __FILE_TIFF_SAVE_H__
 
 
-typedef struct
-{
-  gint      compression;
-  gint      fillorder;
-  gboolean  save_transp_pixels;
-  gboolean  save_exif;
-  gboolean  save_xmp;
-  gboolean  save_iptc;
-  gboolean  save_thumbnail;
-  gboolean  save_profile;
-  gboolean  save_layers;
-} TiffSaveVals;
+gboolean  save_image  (GFile         *file,
+                       GimpImage     *image,
+                       GimpImage     *orig_image,
+                       GObject       *config,
+                       GimpMetadata  *metadata,
+                       GError       **error);
 
-
-gboolean  save_image  (GFile                  *file,
-                       TiffSaveVals           *tsvals,
-                       GimpImage              *image,
-                       GimpImage              *orig_image,
-                       const gchar            *image_comment,
-                       gint                   *saved_bpp,
-                       GimpMetadata           *metadata,
-                       GimpMetadataSaveFlags   metadata_flags,
-                       GError                **error);
-
-gboolean  save_dialog (TiffSaveVals *tsvals,
-                       const gchar  *help_id,
-                       gboolean      has_alpha,
-                       gboolean      is_monochrome,
-                       gboolean      is_indexed,
-                       gboolean      is_multi_layer,
-                       gchar       **image_comment);
+gboolean  save_dialog (GimpImage     *image,
+                       GimpProcedure *procedure,
+                       GObject       *config,
+                       gboolean       has_alpha,
+                       gboolean       is_monochrome,
+                       gboolean       is_indexed,
+                       gboolean       is_multi_layer);
 
 
 #endif /* __FILE_TIFF_SAVE_H__ */

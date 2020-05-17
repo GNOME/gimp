@@ -144,7 +144,6 @@ plug-ins/gimpressionist/utils.c
 plug-ins/goat-exercises/goat-exercise-c.c
 plug-ins/goat-exercises/goat-exercise-py3.py
 plug-ins/goat-exercises/goat-exercise-vala.vala
-[type: gettext/glade]plug-ins/ui/plug-in-file-tiff.ui
 [type: gettext/glade]plug-ins/ui/plug-in-metadata-editor.ui
 [type: gettext/glade]plug-ins/ui/plug-in-metadata-viewer.ui
 plug-ins/gradient-flare/gradient-flare.c
