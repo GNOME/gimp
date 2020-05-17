@@ -404,6 +404,7 @@ EXPORTS
 	gimp_image_get_precision
 	gimp_image_get_resolution
 	gimp_image_get_sample_point_position
+	gimp_image_get_selected_layers
 	gimp_image_get_selection
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail
@@ -433,6 +434,7 @@ EXPORTS
 	gimp_image_is_valid
 	gimp_image_list_channels
 	gimp_image_list_layers
+	gimp_image_list_selected_layers
 	gimp_image_list_vectors
 	gimp_image_lower_item
 	gimp_image_lower_item_to_bottom
