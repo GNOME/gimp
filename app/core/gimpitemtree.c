@@ -459,7 +459,7 @@ gimp_item_tree_get_insert_pos (GimpItemTree  *tree,
            * If hierarchy is different, use the toplevel container
            * (same if there are no selected items).
            */
-          if (*parent != NULL && *parent != selected_parent)
+          if (iter != private->selected_items && *parent != selected_parent)
             {
               *parent = NULL;
               break;
