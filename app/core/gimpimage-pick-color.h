@@ -20,7 +20,7 @@
 
 
 gboolean   gimp_image_pick_color (GimpImage     *image,
-                                  GimpDrawable  *drawable,
+                                  GList         *drawables,
                                   gint           x,
                                   gint           y,
                                   gboolean       show_all,

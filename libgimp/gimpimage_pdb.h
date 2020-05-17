@@ -59,7 +59,8 @@ gboolean                 gimp_image_unset_active_channel       (GimpImage       
 GimpLayer*               gimp_image_get_floating_sel           (GimpImage           *image);
 GimpDrawable*            gimp_image_floating_sel_attached_to   (GimpImage           *image);
 gboolean                 gimp_image_pick_color                 (GimpImage           *image,
-                                                                GimpDrawable        *drawable,
+                                                                gint                 num_drawables,
+                                                                const GimpItem     **drawables,
                                                                 gdouble              x,
                                                                 gdouble              y,
                                                                 gboolean             sample_merged,

@@ -460,13 +460,13 @@ gimp_color_tool_real_pick (GimpColorTool     *color_tool,
                            gpointer           pixel,
                            GimpRGB           *color)
 {
-  GimpDisplayShell *shell    = gimp_display_get_shell (display);
-  GimpImage        *image    = gimp_display_get_image (display);
-  GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+  GimpDisplayShell *shell     = gimp_display_get_shell (display);
+  GimpImage        *image     = gimp_display_get_image (display);
+  GList            *drawables = gimp_image_get_selected_drawables (image);
 
-  g_return_val_if_fail (drawable != NULL, FALSE);
+  g_return_val_if_fail (drawables != NULL, FALSE);
 
-  return gimp_image_pick_color (image, drawable,
+  return gimp_image_pick_color (image, drawables,
                                 coords->x, coords->y,
                                 shell->show_all,
                                 color_tool->options->sample_merged,

@@ -72,6 +72,8 @@ void          gimp_tool_gui_set_help_id            (GimpToolGui      *gui,
 
 void          gimp_tool_gui_set_shell              (GimpToolGui      *gui,
                                                     GimpDisplayShell *shell);
+void          gimp_tool_gui_set_viewables          (GimpToolGui      *gui,
+                                                    GList            *viewables);
 void          gimp_tool_gui_set_viewable           (GimpToolGui      *gui,
                                                     GimpViewable     *viewable);
 

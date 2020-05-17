@@ -747,39 +747,45 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
 /**
  * gimp_image_pick_color:
  * @image: The image.
- * @drawable: (nullable): The drawable to pick from.
+ * @num_drawables: The number of drawables.
+ * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to pick from.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
- * @sample_merged: Use the composite image, not the drawable.
+ * @sample_merged: Use the composite image, not the drawables.
  * @sample_average: Average the color of all the pixels in a specified radius.
  * @average_radius: The radius of pixels to average.
  * @color: (out caller-allocates): The return color.
  *
- * Determine the color at the given drawable coordinates
+ * Determine the color at the given coordinates
  *
  * This tool determines the color at the specified coordinates. The
  * returned color is an RGB triplet even for grayscale and indexed
  * drawables. If the coordinates lie outside of the extents of the
- * specified drawable, then an error is returned. If the drawable has
- * an alpha channel, the algorithm examines the alpha value of the
- * drawable at the coordinates. If the alpha value is completely
- * transparent (0), then an error is returned. If the sample_merged
- * parameter is TRUE, the data of the composite image will be used
- * instead of that for the specified drawable. This is equivalent to
- * sampling for colors after merging all visible layers. In the case of
- * a merged sampling, the supplied drawable is ignored.
+ * specified drawables, then an error is returned. All drawables must
+ * belong to the image and be of the same type.
+ * If only one drawable is given and it has an alpha channel, the
+ * algorithm examines the alpha value of the drawable at the
+ * coordinates. If the alpha value is completely transparent (0), then
+ * an error is returned. With several drawables specified, the
+ * composite image with only these drawables is used.
+ * If the sample_merged parameter is TRUE, the data of the composite
+ * image will be used instead of that for the specified drawables. This
+ * is equivalent to sampling for colors after merging all visible
+ * layers. In the case of a merged sampling, the supplied drawables are
+ * ignored.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_pick_color (GimpImage    *image,
-                       GimpDrawable *drawable,
-                       gdouble       x,
-                       gdouble       y,
-                       gboolean      sample_merged,
-                       gboolean      sample_average,
-                       gdouble       average_radius,
-                       GimpRGB      *color)
+gimp_image_pick_color (GimpImage       *image,
+                       gint             num_drawables,
+                       const GimpItem **drawables,
+                       gdouble          x,
+                       gdouble          y,
+                       gboolean         sample_merged,
+                       gboolean         sample_average,
+                       gdouble          average_radius,
+                       GimpRGB         *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -787,13 +793,15 @@ gimp_image_pick_color (GimpImage    *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_INT, num_drawables,
+                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_BOOLEAN, sample_merged,
                                           G_TYPE_BOOLEAN, sample_average,
                                           G_TYPE_DOUBLE, average_radius,
                                           G_TYPE_NONE);
+  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-image-pick-color",

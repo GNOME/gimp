@@ -26,41 +26,49 @@
 
 #include "gegl/gimp-gegl-loops.h"
 
+#include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "gimpimage-new.h"
 #include "gimpimage-pick-color.h"
 #include "gimplayer.h"
 #include "gimppickable.h"
 
 
 gboolean
-gimp_image_pick_color (GimpImage     *image,
-                       GimpDrawable  *drawable,
-                       gint           x,
-                       gint           y,
-                       gboolean       show_all,
-                       gboolean       sample_merged,
-                       gboolean       sample_average,
-                       gdouble        average_radius,
-                       const Babl   **sample_format,
-                       gpointer       pixel,
-                       GimpRGB       *color)
+gimp_image_pick_color (GimpImage   *image,
+                       GList       *drawables,
+                       gint         x,
+                       gint         y,
+                       gboolean     show_all,
+                       gboolean     sample_merged,
+                       gboolean     sample_average,
+                       gdouble      average_radius,
+                       const Babl **sample_format,
+                       gpointer     pixel,
+                       GimpRGB     *color)
 {
+  GimpImage    *pick_image = NULL;
   GimpPickable *pickable;
+  GList        *iter;
   gboolean      result;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (drawable == NULL ||
-                        gimp_item_get_image (GIMP_ITEM (drawable)) == image,
-                        FALSE);
 
-  if (sample_merged && drawable)
+  for (iter = drawables; iter; iter = iter->next)
     {
-      if ((GIMP_IS_LAYER (drawable) &&
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), FALSE);
+      g_return_val_if_fail (gimp_item_get_image (iter->data) == image,
+                            FALSE);
+    }
+
+  if (sample_merged && g_list_length (drawables) == 1)
+    {
+      if ((GIMP_IS_LAYER (drawables->data) &&
            gimp_image_get_n_layers (image) == 1) ||
-          (GIMP_IS_CHANNEL (drawable) &&
+          (GIMP_IS_CHANNEL (drawables->data) &&
            gimp_image_get_n_channels (image) == 1))
         {
           /* Let's add a special exception when an image has only one
@@ -75,15 +83,6 @@ gimp_image_pick_color (GimpImage     *image,
         }
     }
 
-  if (! sample_merged)
-    {
-      if (! drawable)
-        drawable = gimp_image_get_active_drawable (image);
-
-      if (! drawable)
-        return FALSE;
-    }
-
   if (sample_merged)
     {
       if (! show_all)
@@ -93,13 +92,41 @@ gimp_image_pick_color (GimpImage     *image,
     }
   else
     {
-      gint off_x, off_y;
+      gboolean free_drawables = FALSE;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-      x -= off_x;
-      y -= off_y;
+      if (! drawables)
+        {
+          drawables = gimp_image_get_selected_drawables (image);
+          free_drawables = TRUE;
+        }
 
-      pickable = GIMP_PICKABLE (drawable);
+      if (! drawables)
+        return FALSE;
+
+      if (g_list_length (drawables) == 1)
+        {
+          gint off_x, off_y;
+
+          gimp_item_get_offset (GIMP_ITEM (drawables->data), &off_x, &off_y);
+          x -= off_x;
+          y -= off_y;
+
+          pickable = GIMP_PICKABLE (drawables->data);
+        }
+      else /* length > 1 */
+        {
+          pick_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE);
+          gimp_container_remove (image->gimp->images, GIMP_OBJECT (pick_image));
+
+          if (! show_all)
+            pickable = GIMP_PICKABLE (pick_image);
+          else
+            pickable = GIMP_PICKABLE (gimp_image_get_projection (pick_image));
+          gimp_pickable_flush (pickable);
+        }
+
+      if (free_drawables)
+        g_list_free (drawables);
     }
 
   /* Do *not* call gimp_pickable_flush() here because it's too expensive
@@ -142,6 +169,9 @@ gimp_image_pick_color (GimpImage     *image,
 
       result = TRUE;
     }
+
+  if (pick_image)
+    g_object_unref (pick_image);
 
   return result;
 }

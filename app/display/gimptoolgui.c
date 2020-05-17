@@ -75,7 +75,7 @@ struct _GimpToolGuiPrivate
   gboolean          auto_overlay;
 
   GimpDisplayShell *shell;
-  GimpViewable     *viewable;
+  GList            *viewables;
 
   GtkWidget        *dialog;
   GtkWidget        *vbox;
@@ -156,8 +156,8 @@ gimp_tool_gui_dispose (GObject *object)
   if (private->shell)
     gimp_tool_gui_set_shell (GIMP_TOOL_GUI (object), NULL);
 
-  if (private->viewable)
-    gimp_tool_gui_set_viewable (GIMP_TOOL_GUI (object), NULL);
+  if (private->viewables)
+    gimp_tool_gui_set_viewables (GIMP_TOOL_GUI (object), NULL);
 
   g_clear_object (&private->vbox);
 
@@ -401,30 +401,63 @@ gimp_tool_gui_set_shell (GimpToolGui      *gui,
 }
 
 void
-gimp_tool_gui_set_viewable (GimpToolGui  *gui,
-                            GimpViewable *viewable)
+gimp_tool_gui_set_viewables (GimpToolGui *gui,
+                             GList       *viewables)
 {
   GimpToolGuiPrivate *private;
+  GList              *iter;
 
   g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
-  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
   private = GET_PRIVATE (gui);
 
-  if (private->viewable == viewable)
-    return;
+  if (g_list_length (viewables) == g_list_length (private->viewables))
+    {
+      for (iter = private->viewables; iter; iter = iter->next)
+        {
+          g_return_if_fail (iter->data == NULL || GIMP_IS_VIEWABLE (iter->data));
 
-  if (private->viewable)
-    g_object_remove_weak_pointer (G_OBJECT (private->viewable),
-                                  (gpointer) &private->viewable);
+          if (! g_list_find (private->viewables, iter->data))
+            break;
+        }
 
-  private->viewable = viewable;
+      if (iter == NULL)
+        /* Identical viewable list. */
+        return;
+    }
 
-  if (private->viewable)
-    g_object_add_weak_pointer (G_OBJECT (private->viewable),
-                               (gpointer) &private->viewable);
+  if (private->viewables)
+    {
+      for (iter = private->viewables; iter; iter = iter->next)
+        {
+          if (iter->data)
+            g_object_remove_weak_pointer (G_OBJECT (iter->data),
+                                          (gpointer) &iter->data);
+        }
+
+      g_list_free (private->viewables);
+    }
+
+  private->viewables = g_list_copy (viewables);
+
+  if (private->viewables)
+    {
+      for (iter = private->viewables; iter; iter = iter->next)
+        g_object_add_weak_pointer (G_OBJECT (iter->data),
+                                   (gpointer) &iter->data);
+    }
 
   gimp_tool_gui_update_viewable (gui);
+}
+
+void
+gimp_tool_gui_set_viewable (GimpToolGui  *gui,
+                            GimpViewable *viewable)
+{
+  GList *viewables = g_list_prepend (NULL, viewable);
+
+  gimp_tool_gui_set_viewables (gui, viewables);
+  g_list_free (viewables);
 }
 
 GtkWidget *
@@ -822,7 +855,7 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui,
   if (private->shell)
     gimp_tool_gui_update_shell (gui);
 
-  if (private->viewable)
+  if (private->viewables)
     gimp_tool_gui_update_viewable (gui);
 
   g_signal_connect_object (private->dialog, "response",
@@ -941,7 +974,7 @@ gimp_tool_gui_update_viewable (GimpToolGui *gui)
         context = GIMP_CONTEXT (private->tool_info->tool_options);
 
       gimp_viewable_dialog_set_viewables (GIMP_VIEWABLE_DIALOG (private->dialog),
-                                          g_list_prepend (NULL, private->viewable), context);
+                                          g_list_copy (private->viewables), context);
     }
 }
 

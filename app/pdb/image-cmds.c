@@ -674,7 +674,8 @@ image_pick_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpDrawable *drawable;
+  gint num_drawables;
+  const GimpItem **drawables;
   gdouble x;
   gdouble y;
   gboolean sample_merged;
@@ -683,18 +684,34 @@ image_pick_color_invoker (GimpProcedure         *procedure,
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  drawable = g_value_get_object (gimp_value_array_index (args, 1));
-  x = g_value_get_double (gimp_value_array_index (args, 2));
-  y = g_value_get_double (gimp_value_array_index (args, 3));
-  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 4));
-  sample_average = g_value_get_boolean (gimp_value_array_index (args, 5));
-  average_radius = g_value_get_double (gimp_value_array_index (args, 6));
+  num_drawables = g_value_get_int (gimp_value_array_index (args, 1));
+  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+  x = g_value_get_double (gimp_value_array_index (args, 3));
+  y = g_value_get_double (gimp_value_array_index (args, 4));
+  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 5));
+  sample_average = g_value_get_boolean (gimp_value_array_index (args, 6));
+  average_radius = g_value_get_double (gimp_value_array_index (args, 7));
 
   if (success)
     {
-      if (!sample_merged)
-        if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != image))
-          success = FALSE;
+      gint i;
+
+      if (! sample_merged)
+        {
+          if (num_drawables == 0)
+            {
+              success = FALSE;
+            }
+          else
+            {
+              for (i = 0; i < num_drawables; i++)
+                if (gimp_item_get_image (GIMP_ITEM (drawables[i])) != image)
+                  {
+                    success = FALSE;
+                    break;
+                  }
+            }
+        }
 
       if (success && sample_average)
         {
@@ -704,13 +721,20 @@ image_pick_color_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
+          GList *drawable_list = NULL;
+
+          for (i = 0; i < num_drawables; i++)
+            {
+              drawable_list = g_list_prepend (drawable_list, drawables[i]);
+              if (! sample_merged)
+                  gimp_pickable_flush (GIMP_PICKABLE (drawables[i]));
+            }
+
           if (sample_merged)
             gimp_pickable_flush (GIMP_PICKABLE (image));
-          else
-            gimp_pickable_flush (GIMP_PICKABLE (drawable));
 
           success = gimp_image_pick_color (image,
-                                           drawable,
+                                           drawable_list,
                                            (gint) x, (gint) y,
                                            FALSE,
                                            sample_merged,
@@ -719,6 +743,8 @@ image_pick_color_invoker (GimpProcedure         *procedure,
                                            NULL,
                                            NULL,
                                            &color);
+
+          g_list_free (drawable_list);
         }
     }
 
@@ -3361,8 +3387,10 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-pick-color");
   gimp_procedure_set_static_help (procedure,
-                                  "Determine the color at the given drawable coordinates",
-                                  "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
+                                  "Determine the color at the given coordinates",
+                                  "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawables, then an error is returned. All drawables must belong to the image and be of the same type.\n"
+                                     "If only one drawable is given and it has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. With several drawables specified, the composite image with only these drawables is used.\n"
+                                     "If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawables. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawables are ignored.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -3375,11 +3403,17 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable to pick from",
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "The drawables to pick from",
+                                                             GIMP_TYPE_ITEM,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -3395,7 +3429,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-merged",
                                                      "sample merged",
-                                                     "Use the composite image, not the drawable",
+                                                     "Use the composite image, not the drawables",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

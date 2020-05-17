@@ -1696,8 +1696,8 @@ drawText (GimpLayer *layer,
   if (type == GIMP_RGBA_IMAGE)
     gimp_text_layer_get_color (layer, &color);
   else
-    gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)),
-                           GIMP_DRAWABLE (layer), x, y, FALSE, FALSE, 0,
+    gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
+                           (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
                            &color);
 
   cairo_set_source_rgba (cr, color.r, color.g, color.b, opacity);

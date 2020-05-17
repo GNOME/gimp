@@ -247,6 +247,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   GimpRegionSelectOptions *options;
   GimpDrawable            *drawable;
   GimpChannelOps           operation;
+  GList                   *drawables;
   gint                     x, y;
   GimpRGB                  color;
 
@@ -269,12 +270,13 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   if (! drawable)
     return TRUE;
 
+  drawables = g_list_prepend (NULL, drawable);
   operation = gimp_modifiers_to_channel_op (bevent->state);
 
   x = gimp_image_get_width  (image_editor->image) * bevent->x / renderer->width;
   y = gimp_image_get_height (image_editor->image) * bevent->y / renderer->height;
 
-  if (gimp_image_pick_color (image_editor->image, drawable, x, y,
+  if (gimp_image_pick_color (image_editor->image, drawables, x, y,
                              FALSE, options->sample_merged,
                              FALSE, 0.0,
                              NULL,
@@ -294,6 +296,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
                                     sel_options->feather_radius);
       gimp_image_flush (image_editor->image);
     }
+  g_list_free (drawables);
 
   return TRUE;
 }

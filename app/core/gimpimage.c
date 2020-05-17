@@ -5366,11 +5366,12 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
     }
   else
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GList *drawables = gimp_image_get_selected_drawables (image);
+      GList *iter;
 
-      if (drawable)
+      for (iter = drawables; iter; iter = iter->next)
         {
-          GimpItem *item = GIMP_ITEM (drawable);
+          GimpItem *item = iter->data;
           gint      off_x, off_y;
           gint      d_x, d_y;
 
@@ -5381,8 +5382,12 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
 
           if (d_x >= 0 && d_x < gimp_item_get_width  (item) &&
               d_y >= 0 && d_y < gimp_item_get_height (item))
-            in_pickable = TRUE;
+            {
+              in_pickable = TRUE;
+              break;
+            }
         }
+      g_list_free (drawables);
     }
 
   if (in_pickable && selected_only)
