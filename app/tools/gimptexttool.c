@@ -507,13 +507,25 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
   if (gimp_image_coords_in_active_pickable (image, coords, FALSE, FALSE, FALSE))
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-      GimpItem     *item     = GIMP_ITEM (drawable);
-      gdouble       x        = coords->x - gimp_item_get_offset_x (item);
-      gdouble       y        = coords->y - gimp_item_get_offset_y (item);
+      GList        *drawables = gimp_image_get_selected_drawables (image);
+      GimpDrawable *drawable  = NULL;
+      gdouble       x         = coords->x;
+      gdouble       y         = coords->y;
+
+      if (g_list_length (drawables) == 1)
+        {
+          GimpItem *item = GIMP_ITEM (drawables->data);
+
+          x = coords->x - gimp_item_get_offset_x (item);
+          y = coords->y - gimp_item_get_offset_y (item);
+
+          drawable = drawables->data;
+        }
+      g_list_free (drawables);
 
       /*  did the user click on a text layer?  */
-      if (gimp_text_tool_set_drawable (text_tool, drawable, TRUE))
+      if (drawable &&
+          gimp_text_tool_set_drawable (text_tool, drawable, TRUE))
         {
           if (press_type == GIMP_BUTTON_PRESS_NORMAL)
             {
