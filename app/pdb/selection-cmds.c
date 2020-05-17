@@ -30,7 +30,6 @@
 #include "pdb-types.h"
 
 #include "core/gimpchannel.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
@@ -196,31 +195,59 @@ selection_float_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  gint num_drawables;
+  const GimpItem **drawables;
   gint offx;
   gint offy;
   GimpLayer *layer = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  offx = g_value_get_int (gimp_value_array_index (args, 1));
-  offy = g_value_get_int (gimp_value_array_index (args, 2));
+  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
+  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
+  offx = g_value_get_int (gimp_value_array_index (args, 2));
+  offy = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      GimpImage *image = NULL;
+      gint       i;
+
+      if (num_drawables < 1)
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          success = FALSE;
+        }
+      else
+        {
+          for (i = 0; i < num_drawables; i++)
+            {
+              if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+                                               GIMP_PDB_ITEM_CONTENT, error) ||
+                  gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error)   ||
+                  (image && image != gimp_item_get_image (GIMP_ITEM (drawables[i]))))
+                {
+                  success = FALSE;
+                  break;
+                }
+              else
+                {
+                  image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+                }
+            }
+        }
+
+      if (success)
+        {
+          GList *drawable_list = NULL;
+
+          for (i = 0; i < num_drawables; i++)
+            drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
 
           layer = gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                        drawable, context, TRUE, offx, offy,
+                                        drawable_list, context, TRUE, offx, offy,
                                         error);
+          g_list_free (drawable_list);
           if (! layer)
             success = FALSE;
         }
-      else
-        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -665,11 +692,17 @@ register_selection_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable from which to float selection",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "The drawables from which to float selection",
+                                                             GIMP_TYPE_ITEM,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",

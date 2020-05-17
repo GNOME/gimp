@@ -69,7 +69,8 @@ GType           gimp_selection_get_type (void) G_GNUC_CONST;
 GimpSelection * gimp_selection_get_by_id (gint32        selection_id);
 
 GimpLayer     * gimp_selection_float     (GimpImage    *image,
-                                          GimpDrawable *drawable,
+                                          gint           n_drawables,
+                                          GimpDrawable **drawables,
                                           gint          offx,
                                           gint          offy);
 
