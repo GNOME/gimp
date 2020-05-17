@@ -31,7 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PATH_EDITOR            (gimp_path_editor_get_type ())
+#define GIMP_TYPE_PATH_EDITOR (gimp_path_editor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPathEditor, gimp_path_editor, GIMP, PATH_EDITOR, GtkBox)
 #define GIMP_PATH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditor))
 #define GIMP_PATH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
 #define GIMP_IS_PATH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PATH_EDITOR))
