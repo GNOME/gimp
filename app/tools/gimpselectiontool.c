@@ -225,7 +225,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options        = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image;
-  GimpDrawable         *drawable;
+  GList                *drawables;
   GimpLayer            *layer;
   GimpLayer            *floating_sel;
   GdkModifierType       extend_mask;
@@ -235,7 +235,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
   gboolean              move_floating_sel = FALSE;
 
   image        = gimp_display_get_image (display);
-  drawable     = gimp_image_get_active_drawable (image);
+  drawables    = gimp_image_get_selected_drawables (image);
   layer        = gimp_image_pick_layer (image, coords->x, coords->y, NULL);
   floating_sel = gimp_image_get_floating_selection (image);
 
@@ -244,19 +244,29 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
 
   have_selection = gimp_selection_tool_have_selection (selection_tool, display);
 
-  if (drawable)
+  if (drawables)
     {
       if (floating_sel)
         {
           if (layer == floating_sel)
             move_floating_sel = TRUE;
         }
-      else if (have_selection &&
-               gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                         NULL, NULL, NULL, NULL))
+      else if (have_selection)
         {
-          move_layer = TRUE;
+          GList *iter;
+
+          for (iter = drawables; iter; iter = iter->next)
+            {
+              if (gimp_item_mask_intersect (GIMP_ITEM (iter->data),
+                                            NULL, NULL, NULL, NULL))
+                {
+                  move_layer = TRUE;
+                  break;
+                }
+            }
         }
+
+      g_list_free (drawables);
     }
 
   selection_tool->function = SELECTION_SELECT;
@@ -509,9 +519,8 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
                            GimpDisplay        *display,
                            GError            **error)
 {
-  GimpSelectionOptions *options  = GIMP_SELECTION_TOOL_GET_OPTIONS (sel_tool);
-  GimpImage            *image    = gimp_display_get_image (display);
-  GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
+  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (sel_tool);
+  GimpImage            *image     = gimp_display_get_image (display);
 
   switch (sel_tool->function)
     {
@@ -548,22 +557,34 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
 
     case SELECTION_MOVE:
     case SELECTION_MOVE_COPY:
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         {
-          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                       _("Cannot modify the pixels of layer groups."));
+          GList *drawables = gimp_image_get_selected_drawables (image);
+          GList *iter;
 
-          return FALSE;
-        }
-      else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-        {
-          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                       _("The active layer's pixels are locked."));
+          for (iter = drawables; iter; iter = iter->next)
+            {
+              if (gimp_viewable_get_children (iter->data))
+                {
+                  g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                               _("Cannot modify the pixels of layer groups."));
 
-          if (error)
-            gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+                  g_list_free (drawables);
+                  return FALSE;
+                }
+              else if (gimp_item_is_content_locked (iter->data))
+                {
+                  g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                               _("The active layer's pixels are locked."));
 
-          return FALSE;
+                  if (error)
+                    gimp_tools_blink_lock_box (display->gimp, iter->data);
+
+                  g_list_free (drawables);
+                  return FALSE;
+                }
+            }
+
+          g_list_free (drawables);
         }
       break;
 

@@ -35,6 +35,7 @@
 #include "gimpdrawable-private.h"
 #include "gimperror.h"
 #include "gimpimage.h"
+#include "gimpimage-new.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
@@ -808,7 +809,7 @@ gimp_selection_extract (GimpSelection *selection,
 
 GimpLayer *
 gimp_selection_float (GimpSelection *selection,
-                      GimpDrawable  *drawable,
+                      GList         *drawables,
                       GimpContext   *context,
                       gboolean       cut_image,
                       gint           off_x,
@@ -817,22 +818,41 @@ gimp_selection_float (GimpSelection *selection,
 {
   GimpImage        *image;
   GimpLayer        *layer;
+  GimpPickable     *pickable;
   GeglBuffer       *buffer;
   GimpColorProfile *profile;
+  GimpImage        *temp_image = NULL;
+  const Babl       *format     = NULL;
+  GList            *iter;
   gint              x1, y1;
   gint              x2, y2;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
+      g_return_val_if_fail (gimp_item_is_attached (iter->data), NULL);
+
+      if (! format)
+        format = gimp_drawable_get_format_with_alpha (iter->data);
+      else
+        g_return_val_if_fail (format == gimp_drawable_get_format_with_alpha (iter->data),
+                              NULL);
+    }
 
   image = gimp_item_get_image (GIMP_ITEM (selection));
 
   /*  Make sure there is a region to float...  */
-  if (! gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2) ||
-      (x1 == x2 || y1 == y2))
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      if (gimp_item_mask_bounds (iter->data, &x1, &y1, &x2, &y2) &&
+          x1 != x2 && y1 != y2)
+        break;
+    }
+  if (iter == NULL)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("Cannot float selection because the selected "
@@ -844,22 +864,31 @@ gimp_selection_float (GimpSelection *selection,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_FLOAT,
                                C_("undo-type", "Float Selection"));
 
+  if (g_list_length (drawables) > 1)
+    {
+      temp_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE);
+      pickable = GIMP_PICKABLE (temp_image);
+    }
+  else
+    {
+      pickable = GIMP_PICKABLE (drawables->data);
+    }
+
   /*  Cut or copy the selected region  */
-  buffer = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
+  buffer = gimp_selection_extract (selection, pickable, context,
                                    cut_image, FALSE, TRUE,
                                    &x1, &y1, NULL);
 
-  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (pickable));
 
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
 
-  /* Create a new layer from the buffer, using the drawable's type
+  /* Create a new layer from the buffer, using the drawables' type
    *  because it may be different from the image's type if we cut from
    *  a channel or layer mask
    */
-  layer = gimp_layer_new_from_gegl_buffer (buffer, image,
-                                           gimp_drawable_get_format_with_alpha (drawable),
+  layer = gimp_layer_new_from_gegl_buffer (buffer, image, format,
                                            _("Floated Layer"),
                                            GIMP_OPACITY_OPAQUE,
                                            gimp_image_get_default_new_layer_mode (image),
@@ -872,13 +901,16 @@ gimp_selection_float (GimpSelection *selection,
   g_object_unref (buffer);
 
   /*  Add the floating layer to the image  */
-  floating_sel_attach (layer, drawable);
+  floating_sel_attach (layer, drawables->data);
 
   /*  End an undo group  */
   gimp_image_undo_group_end (image);
 
   /*  invalidate the image's boundary variables  */
   GIMP_CHANNEL (selection)->boundary_known = FALSE;
+
+  if (temp_image)
+    g_object_unref (temp_image);
 
   return layer;
 }

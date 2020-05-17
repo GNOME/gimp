@@ -65,7 +65,7 @@ GeglBuffer  * gimp_selection_extract  (GimpSelection *selection,
                                        GError       **error);
 
 GimpLayer   * gimp_selection_float    (GimpSelection *selection,
-                                       GimpDrawable  *drawable,
+                                       GList         *drawables,
                                        GimpContext   *context,
                                        gboolean       cut_image,
                                        gint           off_x,
