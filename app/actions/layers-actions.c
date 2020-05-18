@@ -1094,10 +1094,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-selection-subtract",  layer && !fs && !ac && mask);
   SET_SENSITIVE ("layers-mask-selection-intersect", layer && !fs && !ac && mask);
 
-  SET_SENSITIVE ("layers-alpha-selection-replace",   layer && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-add",       layer && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-subtract",  layer && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-intersect", layer && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-replace",   n_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-add",       n_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-subtract",  n_layers > 0 && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-intersect", n_layers > 0 && !fs && !ac);
 
 #undef SET_VISIBLE
 #undef SET_SENSITIVE

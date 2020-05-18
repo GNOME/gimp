@@ -1555,14 +1555,23 @@ layers_alpha_to_selection_cmd_callback (GimpAction *action,
                                         gpointer    data)
 {
   GimpImage      *image;
-  GimpLayer      *layer;
+  GList          *layers;
+  GList          *iter;
   GimpChannelOps  operation;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
 
   operation = (GimpChannelOps) g_variant_get_int32 (value);
 
-  gimp_item_to_selection (GIMP_ITEM (layer), operation,
-                          TRUE, FALSE, 0.0, 0.0);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (operation != GIMP_CHANNEL_OP_REPLACE || iter == layers)
+        gimp_item_to_selection (GIMP_ITEM (iter->data), operation,
+                                TRUE, FALSE, 0.0, 0.0);
+      else
+         gimp_item_to_selection (GIMP_ITEM (iter->data),
+                                 GIMP_CHANNEL_OP_ADD,
+                                 TRUE, FALSE, 0.0, 0.0);
+    }
   gimp_image_flush (image);
 }
 
