@@ -238,15 +238,33 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
                                GimpDisplay  *display,
                                GError      **error)
 {
-  GimpImage           *image    = gimp_display_get_image (display);
-  GimpDrawable        *drawable = gimp_image_get_active_drawable (image);
-  GimpGradientOptions *options  = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
-  GimpGuiConfig       *config   = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage           *image     = gimp_display_get_image (display);
+  GList               *drawables = gimp_image_get_selected_drawables (image);
+  GimpGradientOptions *options   = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig       *config    = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpDrawable        *drawable;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
     }
+
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot paint on multiple drawables. Select only one."));
+      else
+        gimp_tool_message_literal (tool, display, _("No active drawables."));
+
+      g_list_free (drawables);
+
+      return FALSE;
+    }
+
+  /* Only a single drawable at this point. */
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
@@ -450,13 +468,14 @@ gimp_gradient_tool_cursor_update (GimpTool         *tool,
                                   GdkModifierType   state,
                                   GimpDisplay      *display)
 {
-  GimpGuiConfig *config   = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpImage     *image    = gimp_display_get_image (display);
-  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
+  GimpGuiConfig *config    = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage     *image     = gimp_display_get_image (display);
+  GList         *drawables = gimp_image_get_selected_drawables (image);
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-      gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
-      ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+  if (g_list_length (drawables) != 1                ||
+      gimp_viewable_get_children (drawables->data)  ||
+      gimp_item_is_content_locked (drawables->data) ||
+      ! (gimp_item_is_visible (drawables->data) ||
          config->edit_non_visible))
     {
       gimp_tool_set_cursor (tool, display,
@@ -603,18 +622,21 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
                           const GimpCoords *coords,
                           GimpDisplay      *display)
 {
-  GimpTool            *tool     = GIMP_TOOL (gradient_tool);
-  GimpDisplayShell    *shell    = gimp_display_get_shell (display);
-  GimpImage           *image    = gimp_display_get_image (display);
-  GimpDrawable        *drawable = gimp_image_get_active_drawable (image);
-  GimpGradientOptions *options  = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
-  GimpContext         *context  = GIMP_CONTEXT (options);
+  GimpTool            *tool      = GIMP_TOOL (gradient_tool);
+  GimpDisplayShell    *shell     = gimp_display_get_shell (display);
+  GimpImage           *image     = gimp_display_get_image (display);
+  GList               *drawables = gimp_image_get_selected_drawables (image);
+  GimpGradientOptions *options   = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
+  GimpContext         *context   = GIMP_CONTEXT (options);
+
+  g_return_if_fail (g_list_length (drawables) == 1);
 
   if (options->instant_toggle)
     gtk_widget_set_sensitive (options->instant_toggle, FALSE);
 
   tool->display  = display;
-  tool->drawable = drawable;
+  tool->drawable = drawables->data;
+  g_list_free (drawables);
 
   gradient_tool->start_x = coords->x;
   gradient_tool->start_y = coords->y;
@@ -647,7 +669,7 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
                             G_CALLBACK (gimp_gradient_tool_fg_bg_changed),
                             gradient_tool);
 
-  gimp_gradient_tool_create_filter (gradient_tool, drawable);
+  gimp_gradient_tool_create_filter (gradient_tool, tool->drawable);
 
   /* Initially sync all of the properties */
   gimp_operation_config_sync_node (G_OBJECT (options),
