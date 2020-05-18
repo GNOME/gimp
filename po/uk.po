@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-15 08:15+0000\n"
-"PO-Revision-Date: 2020-05-15 12:20+0300\n"
+"POT-Creation-Date: 2020-05-18 10:23+0000\n"
+"PO-Revision-Date: 2020-05-18 15:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.07.70\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -1667,7 +1667,7 @@ msgstr "Перетнути цей канал з поточним позначе�
 #: ../app/actions/channels-actions.c:224
 msgctxt "channels-action"
 msgid "Select _Top Channel"
-msgstr "Перейти до _верхнього каналу"
+msgstr "Позначити _верхній канал"
 
 #: ../app/actions/channels-actions.c:225
 msgctxt "channels-action"
@@ -1677,7 +1677,7 @@ msgstr "Перейти до найвищого каналу"
 #: ../app/actions/channels-actions.c:230
 msgctxt "channels-action"
 msgid "Select _Bottom Channel"
-msgstr "Перейти до _нижнього каналу"
+msgstr "Позначити _нижній канал"
 
 #: ../app/actions/channels-actions.c:231
 msgctxt "channels-action"
@@ -1687,7 +1687,7 @@ msgstr "Перейти до найнижчого каналу"
 #: ../app/actions/channels-actions.c:236
 msgctxt "channels-action"
 msgid "Select _Previous Channel"
-msgstr "Перейти до _попереднього каналу"
+msgstr "Позначити _попередній канал"
 
 #: ../app/actions/channels-actions.c:237
 msgctxt "channels-action"
@@ -1697,7 +1697,7 @@ msgstr "Перейти до каналу над поточним каналом"
 #: ../app/actions/channels-actions.c:242
 msgctxt "channels-action"
 msgid "Select _Next Channel"
-msgstr "Перейти до _наступного каналу"
+msgstr "Позначити _наступний канал"
 
 #: ../app/actions/channels-actions.c:243
 msgctxt "channels-action"
@@ -1723,7 +1723,7 @@ msgid "_Fill opacity:"
 msgstr "_Непрозорість заповнення:"
 
 #: ../app/actions/channels-commands.c:161
-#: ../app/widgets/gimpchanneltreeview.c:324
+#: ../app/widgets/gimpchanneltreeview.c:332
 msgid "New Channel"
 msgstr "Створення каналу"
 
@@ -1735,10 +1735,10 @@ msgstr "Створити новий канал"
 msgid "New Channel Color"
 msgstr "Колір нового каналу"
 
-#: ../app/actions/channels-commands.c:285 ../app/core/gimpimage-new.c:272
+#: ../app/actions/channels-commands.c:285 ../app/core/gimpimage-new.c:466
 #: ../app/display/gimpdisplayshell-dnd.c:691
-#: ../app/widgets/gimpchanneltreeview.c:255
-#: ../app/widgets/gimplayertreeview.c:816
+#: ../app/widgets/gimpchanneltreeview.c:263
+#: ../app/widgets/gimplayertreeview.c:867
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s копія каналу"
@@ -3158,7 +3158,7 @@ msgstr "240 секунд"
 #: ../app/actions/dashboard-commands.c:103
 #: ../app/actions/documents-commands.c:237 ../app/actions/edit-commands.c:167
 #: ../app/actions/error-console-commands.c:100
-#: ../app/actions/file-commands.c:424
+#: ../app/actions/file-commands.c:430
 #: ../app/actions/gradient-editor-commands.c:409
 #: ../app/actions/gradient-editor-commands.c:520
 #: ../app/actions/gradients-commands.c:79 ../app/actions/plug-in-commands.c:185
@@ -3182,7 +3182,7 @@ msgstr "240 секунд"
 #: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
 #: ../app/dialogs/image-scale-dialog.c:210
 #: ../app/dialogs/item-options-dialog.c:145
-#: ../app/dialogs/layer-add-mask-dialog.c:110
+#: ../app/dialogs/layer-add-mask-dialog.c:119
 #: ../app/dialogs/palette-import-dialog.c:161
 #: ../app/dialogs/preferences-dialog.c:291
 #: ../app/dialogs/preferences-dialog.c:664
@@ -3199,7 +3199,7 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:345
-#: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1762
+#: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1777
 #: ../app/tools/gimptransformgridtool.c:1262
 #: ../app/tools/gimptransformtool.c:437 ../app/widgets/gimpactionview.c:601
 #: ../app/widgets/gimpcolordialog.c:460
@@ -3238,7 +3238,7 @@ msgstr "Введіть опис позначки"
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
 #: ../app/display/gimpdisplayshell-dnd.c:634
-#: ../app/widgets/gimplayertreeview.c:774 ../app/widgets/gimptoolbox.c:673
+#: ../app/widgets/gimplayertreeview.c:825 ../app/widgets/gimptoolbox.c:673
 #: ../app/widgets/gimptoolbox-dnd.c:169
 #, c-format
 msgid ""
@@ -3251,7 +3251,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:115 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2147
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2256
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:764 ../app/widgets/gimpdnd-xds.c:87
@@ -3259,7 +3259,7 @@ msgid "Untitled"
 msgstr "Без назви"
 
 #: ../app/actions/data-commands.c:216 ../app/actions/documents-commands.c:194
-#: ../app/actions/file-commands.c:530
+#: ../app/actions/file-commands.c:536
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Неможливо показати файл у програмі для керування файлами: %s"
@@ -4427,21 +4427,21 @@ msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Заповнити позначену ділянку активною текстурою"
 
-#: ../app/actions/edit-actions.c:327 ../app/actions/edit-actions.c:329
+#: ../app/actions/edit-actions.c:329 ../app/actions/edit-actions.c:331
 #, c-format
 msgid "_Undo %s"
 msgstr "_Скасувати «%s»"
 
-#: ../app/actions/edit-actions.c:333 ../app/actions/edit-actions.c:335
+#: ../app/actions/edit-actions.c:335 ../app/actions/edit-actions.c:337
 #, c-format
 msgid "_Redo %s"
 msgstr "Пове_рнути «%s»"
 
-#: ../app/actions/edit-actions.c:346
+#: ../app/actions/edit-actions.c:348
 msgid "_Undo"
 msgstr "_Скасувати"
 
-#: ../app/actions/edit-actions.c:347
+#: ../app/actions/edit-actions.c:349
 msgid "_Redo"
 msgstr "Пове_рнути"
 
@@ -4470,54 +4470,54 @@ msgstr "Вирізати пікселі в буфер обміну."
 msgid "Copied layer to the clipboard."
 msgstr "Шар скопійовано в буфер обміну."
 
-#: ../app/actions/edit-commands.c:276 ../app/actions/edit-commands.c:306
+#: ../app/actions/edit-commands.c:276 ../app/actions/edit-commands.c:308
 msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
-#: ../app/actions/edit-commands.c:385 ../app/actions/edit-commands.c:630
+#: ../app/actions/edit-commands.c:387 ../app/actions/edit-commands.c:632
 #: ../app/tools/gimpseamlessclonetool.c:297
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
 
-#: ../app/actions/edit-commands.c:401
+#: ../app/actions/edit-commands.c:403
 msgid "Cut Named"
 msgstr "Вирізання в буфер з назвою"
 
-#: ../app/actions/edit-commands.c:404 ../app/actions/edit-commands.c:426
-#: ../app/actions/edit-commands.c:448
+#: ../app/actions/edit-commands.c:406 ../app/actions/edit-commands.c:428
+#: ../app/actions/edit-commands.c:450
 msgid "Enter a name for this buffer"
 msgstr "Введіть назву цього буфера"
 
-#: ../app/actions/edit-commands.c:423
+#: ../app/actions/edit-commands.c:425
 msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
-#: ../app/actions/edit-commands.c:445
+#: ../app/actions/edit-commands.c:447
 msgid "Copy Visible Named "
 msgstr "Копіювати видиме з назвою"
 
-#: ../app/actions/edit-commands.c:540 ../app/tools/gimppainttool.c:887
+#: ../app/actions/edit-commands.c:542 ../app/tools/gimppainttool.c:900
 msgid "The active layer's alpha channel is locked."
 msgstr "Канал прозорості активного шару заблоковано."
 
-#: ../app/actions/edit-commands.c:599 ../app/display/gimpdisplayshell-dnd.c:481
+#: ../app/actions/edit-commands.c:601 ../app/display/gimpdisplayshell-dnd.c:481
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: ../app/actions/edit-commands.c:606 ../app/display/gimpdisplayshell-dnd.c:490
+#: ../app/actions/edit-commands.c:608 ../app/display/gimpdisplayshell-dnd.c:490
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
-#: ../app/actions/edit-commands.c:647
+#: ../app/actions/edit-commands.c:649
 msgid "There is no active layer or channel to cut from."
 msgstr "Немає активного шару чи каналу для вирізання."
 
-#: ../app/actions/edit-commands.c:652 ../app/actions/edit-commands.c:684
-#: ../app/actions/edit-commands.c:708
+#: ../app/actions/edit-commands.c:654 ../app/actions/edit-commands.c:686
+#: ../app/actions/edit-commands.c:710
 msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
-#: ../app/actions/edit-commands.c:679
+#: ../app/actions/edit-commands.c:681
 msgid "There is no active layer or channel to copy from."
 msgstr "Немає активного шару чи каналу для копіювання."
 
@@ -4822,7 +4822,7 @@ msgstr "Експортувати в %s"
 msgid "Over_write %s"
 msgstr "_Перезаписати %s"
 
-#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:554
+#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:560
 #: ../app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Відкривання зображення"
@@ -4831,45 +4831,45 @@ msgstr "Відкривання зображення"
 msgid "Open Image as Layers"
 msgstr "Відкрити зображення як шари"
 
-#: ../app/actions/file-commands.c:282
+#: ../app/actions/file-commands.c:288
 msgid "No changes need to be saved"
 msgstr "Немає змін, які слід зберегти"
 
-#: ../app/actions/file-commands.c:289 ../app/actions/file-commands.c:763
+#: ../app/actions/file-commands.c:295 ../app/actions/file-commands.c:769
 #: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Збереження зображення"
 
-#: ../app/actions/file-commands.c:295
+#: ../app/actions/file-commands.c:301
 msgid "Save a Copy of the Image"
 msgstr "Збереження копії зображення"
 
-#: ../app/actions/file-commands.c:373
+#: ../app/actions/file-commands.c:379
 msgid "Create New Template"
 msgstr "Створення нового шаблону"
 
-#: ../app/actions/file-commands.c:377
+#: ../app/actions/file-commands.c:383
 msgid "Enter a name for this template"
 msgstr "Введіть назву цього шаблону"
 
-#: ../app/actions/file-commands.c:407
+#: ../app/actions/file-commands.c:413
 msgid "Revert failed. No file name associated with this image."
 msgstr "Не вдалось відновити. Немає пов'язаної з цим зображенням назви файла."
 
-#: ../app/actions/file-commands.c:419
+#: ../app/actions/file-commands.c:425
 msgid "Revert Image"
 msgstr "Відновити зображення"
 
-#: ../app/actions/file-commands.c:425
+#: ../app/actions/file-commands.c:431
 msgid "_Revert"
 msgstr "Від_новити"
 
-#: ../app/actions/file-commands.c:443
+#: ../app/actions/file-commands.c:449
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Відновити «%s» до «%s»?"
 
-#: ../app/actions/file-commands.c:448
+#: ../app/actions/file-commands.c:454
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -4877,11 +4877,11 @@ msgstr ""
 "Відновлюючи зображення до його стану на диску, ви втратити усі зміни, "
 "включаючи всю інформацію про скасування дій."
 
-#: ../app/actions/file-commands.c:785
+#: ../app/actions/file-commands.c:791
 msgid "(Unnamed Template)"
 msgstr "(Шаблон без назви)"
 
-#: ../app/actions/file-commands.c:832
+#: ../app/actions/file-commands.c:838
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5232,8 +5232,6 @@ msgid "_Fattal et al. 2002..."
 msgstr "_Фаттал та ін. 2002…"
 
 #: ../app/actions/filters-actions.c:358
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Фокусне розмиття…"
@@ -5609,8 +5607,6 @@ msgid "_Value Propagate..."
 msgstr "По_ширення значення…"
 
 #: ../app/actions/filters-actions.c:733
-#| msgctxt "filters-action"
-#| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "З_мінне розмиття…"
@@ -6640,7 +6636,7 @@ msgstr "Віддзеркалення"
 msgid "Rotating"
 msgstr "Обертання"
 
-#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:859
+#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1128
 msgid "Cannot crop because the current selection is empty."
 msgstr "Не вдалось кадрувати, бо позначена ділянка порожня."
 
@@ -6685,7 +6681,7 @@ msgid "Scale Image"
 msgstr "Зміна розміру зображення"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:1668
+#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2270
 #: ../app/dialogs/preferences-dialog.c:1688
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
@@ -6830,7 +6826,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Змінити назву шару"
 
-#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:929
+#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1010
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Створити шар…"
@@ -6840,15 +6836,17 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Створити новий шар та додати його до зображення"
 
-#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:930
+#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:1011
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Створити шар"
 
 #: ../app/actions/layers-actions.c:114
+#| msgctxt "layers-action"
+#| msgid "Create a new layer with last used values"
 msgctxt "layers-action"
-msgid "Create a new layer with last used values"
-msgstr "Створити новий шар з останніми параметрами"
+msgid "Create new layers with last used values"
+msgstr "Створити шари з останніми використаними параметрами"
 
 #: ../app/actions/layers-actions.c:119
 msgctxt "layers-action"
@@ -6876,19 +6874,24 @@ msgid "D_uplicate Layer"
 msgstr "Д_ублювати шар"
 
 #: ../app/actions/layers-actions.c:134
+#| msgctxt "layers-action"
+#| msgid "Create a duplicate of the layer and add it to the image"
 msgctxt "layers-action"
-msgid "Create a duplicate of the layer and add it to the image"
-msgstr "Створити копію шару та додати її до зображення"
+msgid "Create duplicates of selected layers and add them to the image"
+msgstr "Створити дублікати вибраних шарів і додати їх до зображення"
 
 #: ../app/actions/layers-actions.c:139
+#| msgctxt "layers-action"
+#| msgid "_Delete Layer"
 msgctxt "layers-action"
-msgid "_Delete Layer"
-msgstr "В_илучити шар"
+msgid "_Delete Layers"
+msgstr "В_илучити шари"
 
 #: ../app/actions/layers-actions.c:140
+#| msgid "Delete the selected preset"
 msgctxt "layers-action"
-msgid "Delete this layer"
-msgstr "Вилучити цей шар"
+msgid "Delete selected layers"
+msgstr "Вилучити позначені шари"
 
 #: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
@@ -7073,24 +7076,37 @@ msgid ""
 msgstr "Обрізати шар до меж його вмісту (вилучає порожні краї із шару)"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
+#| msgctxt "layers-action"
+#| msgid "Add La_yer Mask..."
 msgctxt "layers-action"
-msgid "Add La_yer Mask..."
-msgstr "Додати маску ша_ру…"
+msgid "Add La_yer Masks..."
+msgstr "Додати маски ша_рів…"
 
 #: ../app/actions/layers-actions.c:264 ../app/actions/layers-actions.c:274
+#| msgctxt "layers-action"
+#| msgid "Add a mask that allows non-destructive editing of transparency"
 msgctxt "layers-action"
-msgid "Add a mask that allows non-destructive editing of transparency"
-msgstr "Додати маску, користуючись якою можна безпечно редагувати прозорість"
+msgid ""
+"Add masks to selected layers that allows non-destructive editing of "
+"transparency"
+msgstr ""
+"Додати маски до позначених шарів, користуючись якими можна виконувати"
+" неруйнівне редагування прозорості"
 
 #: ../app/actions/layers-actions.c:279
+#| msgctxt "layers-action"
+#| msgid "Add La_yer Mask"
 msgctxt "layers-action"
-msgid "Add La_yer Mask"
-msgstr "Додати м_аску шару"
+msgid "Add La_yer Masks"
+msgstr "Додати м_аски шарів"
 
 #: ../app/actions/layers-actions.c:281
+#| msgctxt "layers-action"
+#| msgid "Add a mask with last used values"
 msgctxt "layers-action"
-msgid "Add a mask with last used values"
-msgstr "Додати маску із останніми використаними параметрами"
+msgid "Add mask to selected layers with last used values"
+msgstr ""
+"Додати маску до позначених шарів із останніми використаними параметрами"
 
 #: ../app/actions/layers-actions.c:286
 msgctxt "layers-action"
@@ -7123,14 +7139,18 @@ msgid "Work on the layer mask"
 msgstr "Робота з маскою шару"
 
 #: ../app/actions/layers-actions.c:308
+#| msgctxt "layers-action"
+#| msgid "S_how Layer Mask"
 msgctxt "layers-action"
-msgid "S_how Layer Mask"
-msgstr "_Показати маску шару"
+msgid "S_how Layer Masks"
+msgstr "_Показати маски шарів"
 
 #: ../app/actions/layers-actions.c:314
+#| msgctxt "layers-action"
+#| msgid "_Disable Layer Mask"
 msgctxt "layers-action"
-msgid "_Disable Layer Mask"
-msgstr "_Вимкнути маску шару"
+msgid "_Disable Layer Masks"
+msgstr "_Вимкнути маски шарів"
 
 #: ../app/actions/layers-actions.c:315
 msgctxt "layers-action"
@@ -7365,9 +7385,11 @@ msgid "Delete Layer Mas_k"
 msgstr "Вилучити ма_ску шару"
 
 #: ../app/actions/layers-actions.c:495
+#| msgctxt "layers-action"
+#| msgid "Remove the layer mask and its effect"
 msgctxt "layers-action"
-msgid "Remove the layer mask and its effect"
-msgstr "Вилучити маску шару та її ефект"
+msgid "Remove layer masks and their effect"
+msgstr "Вилучити маски шарів та їхні ефекти"
 
 #: ../app/actions/layers-actions.c:503
 msgctxt "layers-action"
@@ -7440,44 +7462,60 @@ msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Перетнути альфа-канал з позначеним"
 
 #: ../app/actions/layers-actions.c:561
+#| msgctxt "layers-action"
+#| msgid "Select _Top Layer"
 msgctxt "layers-action"
-msgid "Select _Top Layer"
-msgstr "Перейти до _верхнього шару"
+msgid "Select _Top Layers"
+msgstr "Позначити _верхні шари"
 
 #: ../app/actions/layers-actions.c:562
+#| msgctxt "layers-action"
+#| msgid "Select the topmost layer"
 msgctxt "layers-action"
-msgid "Select the topmost layer"
-msgstr "Перейти до найвищого шару"
+msgid "Select the topmost layers"
+msgstr "Позначити найвищі шари"
 
 #: ../app/actions/layers-actions.c:567
+#| msgctxt "layers-action"
+#| msgid "Select _Bottom Layer"
 msgctxt "layers-action"
-msgid "Select _Bottom Layer"
-msgstr "Перейти до _нижнього шару"
+msgid "Select _Bottom Layers"
+msgstr "Позначити _нижні шари"
 
 #: ../app/actions/layers-actions.c:568
+#| msgctxt "layers-action"
+#| msgid "Select the bottommost layer"
 msgctxt "layers-action"
-msgid "Select the bottommost layer"
-msgstr "Перейти до найнижчого шару"
+msgid "Select the bottommost layers"
+msgstr "Позначити найнижчі шари"
 
 #: ../app/actions/layers-actions.c:573
+#| msgctxt "layers-action"
+#| msgid "Select _Previous Layer"
 msgctxt "layers-action"
-msgid "Select _Previous Layer"
-msgstr "Перейти до п_опереднього шару"
+msgid "Select _Previous Layers"
+msgstr "Позначити п_опередні шари"
 
 #: ../app/actions/layers-actions.c:574
+#| msgctxt "layers-action"
+#| msgid "Select the layer above the current layer"
 msgctxt "layers-action"
-msgid "Select the layer above the current layer"
-msgstr "Перейти до шару над поточним"
+msgid "Select the layers above the current layers"
+msgstr "Позначити шари над поточними шарами"
 
 #: ../app/actions/layers-actions.c:579
+#| msgctxt "layers-action"
+#| msgid "Select _Next Layer"
 msgctxt "layers-action"
-msgid "Select _Next Layer"
-msgstr "Перейти до н_аступного шару"
+msgid "Select _Next Layers"
+msgstr "Позначити н_аступні шари"
 
 #: ../app/actions/layers-actions.c:580
+#| msgctxt "layers-action"
+#| msgid "Select the layer below the current layer"
 msgctxt "layers-action"
-msgid "Select the layer below the current layer"
-msgstr "Перейти до шару нижче поточного"
+msgid "Select the layers below the current layers"
+msgstr "Позначити шари під поточними шарами"
 
 #: ../app/actions/layers-actions.c:588
 msgctxt "layers-action"
@@ -7548,12 +7586,12 @@ msgstr "Скорочення: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Натисніть на мініатюру у пришвартованих шарах"
 
-#: ../app/actions/layers-actions.c:924 ../app/actions/layers-actions.c:925
+#: ../app/actions/layers-actions.c:1005 ../app/actions/layers-actions.c:1006
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _новий шар"
 
-#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:1517
+#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:2112
 msgid "Layer Attributes"
 msgstr "Ознаки шару"
 
@@ -7561,43 +7599,199 @@ msgstr "Ознаки шару"
 msgid "Edit Layer Attributes"
 msgstr "Зміна ознак шару"
 
-#: ../app/actions/layers-commands.c:342
-#: ../app/widgets/gimpdrawabletreeview.c:343
-#: ../app/widgets/gimplayertreeview.c:893
+#: ../app/actions/layers-commands.c:337
+#: ../app/widgets/gimpdrawabletreeview.c:350
+#: ../app/widgets/gimplayertreeview.c:944
+#| msgid "New Layer"
 msgid "New Layer"
-msgstr "Створення шару"
+msgid_plural "New Layers"
+msgstr[0] "Нові шари"
+msgstr[1] "Нові шари"
+msgstr[2] "Нові шари"
+msgstr[3] "Новий шар"
 
-#: ../app/actions/layers-commands.c:345
+#: ../app/actions/layers-commands.c:338
+#, c-format
+#| msgid "Create a New Layer"
 msgid "Create a New Layer"
-msgstr "Створення нового шару"
+msgid_plural "Create %d New Layers"
+msgstr[0] "Створення %d нового шару"
+msgstr[1] "Створення %d нових шарів"
+msgstr[2] "Створення %d нових шарів"
+msgstr[3] "Створення нового шару"
 
-#: ../app/actions/layers-commands.c:447
+#: ../app/actions/layers-commands.c:423 ../app/actions/layers-commands.c:1998
+#| msgctxt "undo-type"
+#| msgid "New layer"
+msgid "New layer"
+msgid_plural "New layers"
+msgstr[0] "Нові шари"
+msgstr[1] "Нові шари"
+msgstr[2] "Нові шари"
+msgstr[3] "Новий шар"
+
+#: ../app/actions/layers-commands.c:502
 msgid "Visible"
 msgstr "Видиме"
 
-#: ../app/actions/layers-commands.c:762
+#: ../app/actions/layers-commands.c:531
+#| msgctxt "layers-action"
+#| msgid "New Layer _Group"
+msgid "New layer group"
+msgid_plural "New layer groups"
+msgstr[0] "Нові групи шарів"
+msgstr[1] "Нові групи шарів"
+msgstr[2] "Нові групи шарів"
+msgstr[3] "Нова група шарів"
+
+#: ../app/actions/layers-commands.c:639
+#| msgctxt "undo-type"
+#| msgid "Raise Layer"
+msgid "Raise Layer"
+msgid_plural "Raise Layers"
+msgstr[0] "Підняти шари"
+msgstr[1] "Підняти шари"
+msgstr[2] "Підняти шари"
+msgstr[3] "Підняти шар"
+
+#: ../app/actions/layers-commands.c:673
+#| msgctxt "undo-type"
+#| msgid "Raise Layer to Top"
+msgid "Raise Layer to Top"
+msgid_plural "Raise Layers to Top"
+msgstr[0] "Підняти шари на вершину"
+msgstr[1] "Підняти шари на вершину"
+msgstr[2] "Підняти шари на вершину"
+msgstr[3] "Підняти шар на вершину"
+
+#: ../app/actions/layers-commands.c:710
+#| msgctxt "undo-type"
+#| msgid "Lower Layer"
+msgid "Lower Layer"
+msgid_plural "Lower Layers"
+msgstr[0] "Опустити шари"
+msgstr[1] "Опустити шари"
+msgstr[2] "Опустити шари"
+msgstr[3] "Опустити шар"
+
+#: ../app/actions/layers-commands.c:747
+#| msgctxt "undo-type"
+#| msgid "Lower Layer to Bottom"
+msgid "Lower Layer to Bottom"
+msgid_plural "Lower Layers to Bottom"
+msgstr[0] "Опустити шари на дно"
+msgstr[1] "Опустити шари на дно"
+msgstr[2] "Опустити шари на дно"
+msgstr[3] "Опустити шар на дно"
+
+#: ../app/actions/layers-commands.c:774
+#| msgctxt "layers-action"
+#| msgid "D_uplicate Layer"
+msgid "Duplicate layers"
+msgstr "Дублювати шари"
+
+#: ../app/actions/layers-commands.c:890
+#, c-format
+#| msgctxt "undo-type"
+#| msgid "Remove Layer"
+msgctxt "undo-type"
+msgid "Remove %d Layers"
+msgstr "Вилучення %d шарів"
+
+#: ../app/actions/layers-commands.c:1031
 msgid "Set Layer Boundary Size"
 msgstr "Встановлення меж шару"
 
-#: ../app/actions/layers-commands.c:826
+#: ../app/actions/layers-commands.c:1095
 msgid "Scale Layer"
 msgstr "Масштабування шару"
 
-#: ../app/actions/layers-commands.c:869
+#: ../app/actions/layers-commands.c:1138
 msgid "Crop Layer to Selection"
 msgstr "_Обрізати шар до позначеного"
 
-#: ../app/actions/layers-commands.c:900
+#: ../app/actions/layers-commands.c:1169
 msgid "Crop Layer to Content"
 msgstr "Обрізати шар до вмісту"
 
-#: ../app/actions/layers-commands.c:913
+#: ../app/actions/layers-commands.c:1182
 msgid "Cannot crop because the active layer has no content."
 msgstr "Не вдалось обрізати, бо активний шар не має вмісту."
 
-#: ../app/actions/layers-commands.c:920
+#: ../app/actions/layers-commands.c:1189
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr "Не вдалось кадрувати, бо активний шар вже обрізаний до свого вмісту."
+
+#: ../app/actions/layers-commands.c:1297 ../app/actions/layers-commands.c:2205
+#| msgid "Add Layer Mask"
+msgid "Add Layer Masks"
+msgstr "Додавання масок шарів"
+
+#: ../app/actions/layers-commands.c:1349
+#| msgctxt "undo-type"
+#| msgid "Apply Layer Mask"
+msgid "Apply Layer Masks"
+msgstr "Застосувати маски шару"
+
+#: ../app/actions/layers-commands.c:1353
+#| msgctxt "undo-type"
+#| msgid "Delete Layer Mask"
+msgid "Delete Layer Masks"
+msgstr "Вилучити маски шарів"
+
+#: ../app/actions/layers-commands.c:1437
+#| msgctxt "undo-type"
+#| msgid "Show Layer Mask"
+msgid "Show Layer Masks"
+msgstr "Показати маски шарів"
+
+#: ../app/actions/layers-commands.c:1484
+#| msgctxt "undo-type"
+#| msgid "Disable Layer Mask"
+msgid "Disable Layer Masks"
+msgstr "Вимкнути маски шарів"
+
+#: ../app/actions/layers-commands.c:1604 ../app/actions/layers-commands.c:1648
+#: ../app/widgets/gimplayertreeview.c:1177
+#| msgctxt "undo-type"
+#| msgid "Set layer opacity"
+msgid "Set layers opacity"
+msgstr "Зміна непрозорості шарів"
+
+#: ../app/actions/layers-commands.c:1818 ../app/widgets/gimpitemtreeview.c:1683
+#| msgctxt "undo-type"
+#| msgid "Lock/Unlock content"
+msgid "Lock content"
+msgstr "Заблокувати вміст"
+
+#: ../app/actions/layers-commands.c:1820 ../app/widgets/gimpitemtreeview.c:1685
+#| msgctxt "undo-type"
+#| msgid "Lock/Unlock content"
+msgid "Unlock content"
+msgstr "Розблокувати вміст"
+
+#: ../app/actions/layers-commands.c:1867 ../app/widgets/gimpitemtreeview.c:1749
+#| msgid "Lock path position"
+msgid "Lock position"
+msgstr "Заблокувати позицію"
+
+#: ../app/actions/layers-commands.c:1869 ../app/widgets/gimpitemtreeview.c:1751
+#| msgctxt "undo-type"
+#| msgid "Lock/Unlock position"
+msgid "Unlock position"
+msgstr "Розблокувати позицію"
+
+#: ../app/actions/layers-commands.c:1919
+#: ../app/widgets/gimplayertreeview.c:1122
+#| msgid "Lock alpha channel"
+msgid "Lock alpha channels"
+msgstr "Заблокувати альфа-канали"
+
+#: ../app/actions/layers-commands.c:1919
+#: ../app/widgets/gimplayertreeview.c:1122
+#| msgid "Lock alpha channel"
+msgid "Unlock alpha channels"
+msgstr "Розблокувати альфа-канали"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8183,70 +8377,70 @@ msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Обвести позначене з останніми значеннями"
 
-#: ../app/actions/select-commands.c:162
+#: ../app/actions/select-commands.c:165
 msgid "Feather Selection"
 msgstr "Розмивання позначеної ділянки"
 
-#: ../app/actions/select-commands.c:166
+#: ../app/actions/select-commands.c:169
 msgid "Feather selection by"
 msgstr "Розмити межу позначеного на"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:176 ../app/actions/select-commands.c:253
-#: ../app/actions/select-commands.c:383
+#: ../app/actions/select-commands.c:179 ../app/actions/select-commands.c:256
+#: ../app/actions/select-commands.c:386
 msgid "_Selected areas continue outside the image"
 msgstr "_Позначені ділянки продовжити за межі зображення"
 
-#: ../app/actions/select-commands.c:179
+#: ../app/actions/select-commands.c:182
 msgid "When feathering, act as if selected areas continued outside the image."
 msgstr ""
 "Під час розмивання діє, мовби позначені ділянки продовжені за межі "
 "зображення."
 
-#: ../app/actions/select-commands.c:238
+#: ../app/actions/select-commands.c:241
 msgid "Shrink Selection"
 msgstr "Скорочення позначеного"
 
-#: ../app/actions/select-commands.c:242
+#: ../app/actions/select-commands.c:245
 msgid "Shrink selection by"
 msgstr "Скоротити позначене на"
 
-#: ../app/actions/select-commands.c:256
+#: ../app/actions/select-commands.c:259
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
 "Під час обтинання діє, мовби позначені ділянки продовжені за межі зображення."
 
-#: ../app/actions/select-commands.c:302
+#: ../app/actions/select-commands.c:305
 msgid "Grow Selection"
 msgstr "Збільшення позначеного"
 
-#: ../app/actions/select-commands.c:306
+#: ../app/actions/select-commands.c:309
 msgid "Grow selection by"
 msgstr "Збільшити позначене на"
 
-#: ../app/actions/select-commands.c:355
+#: ../app/actions/select-commands.c:358
 msgid "Border Selection"
 msgstr "Межа позначеного"
 
-#: ../app/actions/select-commands.c:359
+#: ../app/actions/select-commands.c:362
 msgid "Border selection by"
 msgstr "Розмір межі:"
 
-#: ../app/actions/select-commands.c:372
+#: ../app/actions/select-commands.c:375
 msgid "Border style"
 msgstr "Стиль рамки"
 
-#: ../app/actions/select-commands.c:386
+#: ../app/actions/select-commands.c:389
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 "Під час облямування діє, мовби позначені ділянки продовжені за межі "
 "зображення."
 
-#: ../app/actions/select-commands.c:452
+#: ../app/actions/select-commands.c:455
 msgid "Fill Selection Outline"
 msgstr "Заповнити контур позначеного"
 
-#: ../app/actions/select-commands.c:483
+#: ../app/actions/select-commands.c:486
 msgid "Stroke Selection"
 msgstr "Обведення позначеної ділянки"
 
@@ -8429,7 +8623,7 @@ msgstr "Від_крити"
 
 #: ../app/actions/text-editor-commands.c:141
 #: ../app/actions/text-tool-commands.c:217 ../app/config/gimpconfig-file.c:71
-#: ../app/core/gimppalette-import.c:512 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/core/gimppalette-import.c:521 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:234
 #: ../app/tools/gimpfiltertool-settings.c:170
 #: ../app/widgets/gimptextbuffer.c:1663
@@ -10852,12 +11046,12 @@ msgstr "Шар"
 #: ../app/operations/gimpcurvesconfig.c:119
 #: ../app/operations/gimplevelsconfig.c:124
 #: ../app/operations/gimpoperationthreshold.c:90
-#: ../app/widgets/gimpchanneltreeview.c:329
+#: ../app/widgets/gimpchanneltreeview.c:337
 msgid "Channel"
 msgstr "Канал"
 
 #: ../app/config/gimpdialogconfig.c:422 ../app/vectors/gimpvectors.c:225
-#: ../app/widgets/gimpvectorstreeview.c:250
+#: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "Контур"
 
@@ -12339,453 +12533,474 @@ msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Придатне до сприйняття"
 
-#: ../app/core/core-enums.c:1196
+#: ../app/core/core-enums.c:1200
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<неправильно>>"
 
-#: ../app/core/core-enums.c:1197
+#: ../app/core/core-enums.c:1201
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Зміна розміру зображення"
 
-#: ../app/core/core-enums.c:1198
+#: ../app/core/core-enums.c:1202
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Зміна розміру зображення"
 
-#: ../app/core/core-enums.c:1199
+#: ../app/core/core-enums.c:1203
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Віддзеркалення зображення"
 
-#: ../app/core/core-enums.c:1200
+#: ../app/core/core-enums.c:1204
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Обертання зображення"
 
-#: ../app/core/core-enums.c:1201
+#: ../app/core/core-enums.c:1205
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Перетворення зображення"
 
-#: ../app/core/core-enums.c:1202
+#: ../app/core/core-enums.c:1206
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Кадрування зображення"
 
-#: ../app/core/core-enums.c:1203
+#: ../app/core/core-enums.c:1207
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Перетворення зображення"
 
-#: ../app/core/core-enums.c:1204
+#: ../app/core/core-enums.c:1208
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Вилучити об'єкт"
 
-#: ../app/core/core-enums.c:1205 ../app/core/core-enums.c:1250
+#: ../app/core/core-enums.c:1209 ../app/core/core-enums.c:1258
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Перевпорядкувати об'єкт"
 
-#: ../app/core/core-enums.c:1206
+#: ../app/core/core-enums.c:1210
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Об'єднання шарів"
 
-#: ../app/core/core-enums.c:1207
+#: ../app/core/core-enums.c:1211
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Об'єднання контурів"
 
-#: ../app/core/core-enums.c:1208
+#: ../app/core/core-enums.c:1212
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Швидка маска"
 
-#: ../app/core/core-enums.c:1209 ../app/core/core-enums.c:1240
+#: ../app/core/core-enums.c:1213 ../app/core/core-enums.c:1248
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Сітка"
 
-#: ../app/core/core-enums.c:1210 ../app/core/core-enums.c:1244
+#: ../app/core/core-enums.c:1214 ../app/core/core-enums.c:1252
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Напрямна"
 
-#: ../app/core/core-enums.c:1211 ../app/core/core-enums.c:1245
+#: ../app/core/core-enums.c:1215 ../app/core/core-enums.c:1253
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Зразкова точка"
 
-#: ../app/core/core-enums.c:1212 ../app/core/core-enums.c:1246
+#: ../app/core/core-enums.c:1216 ../app/core/core-enums.c:1254
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Шар/Канал"
 
-#: ../app/core/core-enums.c:1213 ../app/core/core-enums.c:1247
+#: ../app/core/core-enums.c:1217 ../app/core/core-enums.c:1255
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Зміна шару/каналу"
 
-#: ../app/core/core-enums.c:1214 ../app/core/core-enums.c:1249
+#: ../app/core/core-enums.c:1218 ../app/core/core-enums.c:1257
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Маска позначеної ділянки"
 
-#: ../app/core/core-enums.c:1215 ../app/core/core-enums.c:1253
+#: ../app/core/core-enums.c:1219 ../app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Видимість елемента"
 
-#: ../app/core/core-enums.c:1216 ../app/core/core-enums.c:1254
+#: ../app/core/core-enums.c:1220 ../app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Приєднати/від'єднати елемент"
 
-#: ../app/core/core-enums.c:1217
-msgctxt "undo-type"
-msgid "Item properties"
-msgstr "Властивості елемента"
-
-#: ../app/core/core-enums.c:1218 ../app/core/core-enums.c:1252
-msgctxt "undo-type"
-msgid "Move item"
-msgstr "Переміщення елемента"
-
-#: ../app/core/core-enums.c:1219
-msgctxt "undo-type"
-msgid "Scale item"
-msgstr "Зміна масштабу елемента"
-
-#: ../app/core/core-enums.c:1220
-msgctxt "undo-type"
-msgid "Resize item"
-msgstr "Зміна розміру елемента"
-
 #: ../app/core/core-enums.c:1221
+#| msgctxt "undo-type"
+#| msgid "Lock/Unlock content"
 msgctxt "undo-type"
-msgid "Add layer"
-msgstr "Додавання шару"
-
-#: ../app/core/core-enums.c:1222 ../app/core/core-enums.c:1273
-msgctxt "undo-type"
-msgid "Add layer mask"
-msgstr "Додавання маски шару"
-
-#: ../app/core/core-enums.c:1223 ../app/core/core-enums.c:1275
-msgctxt "undo-type"
-msgid "Apply layer mask"
-msgstr "Застосування маски шару"
-
-#: ../app/core/core-enums.c:1224 ../app/core/core-enums.c:1283
-msgctxt "undo-type"
-msgid "Floating selection to layer"
-msgstr "Рухомий вибір у шарі"
-
-#: ../app/core/core-enums.c:1225
-msgctxt "undo-type"
-msgid "Float selection"
-msgstr "Рухомий вибір"
-
-#: ../app/core/core-enums.c:1226
-msgctxt "undo-type"
-msgid "Anchor floating selection"
-msgstr "Прикріплення рухомого вибору"
-
-#: ../app/core/core-enums.c:1227 ../app/core/gimp-edit.c:515
-msgctxt "undo-type"
-msgid "Paste"
-msgstr "Вставити"
-
-#: ../app/core/core-enums.c:1228 ../app/core/gimp-edit.c:733
-msgctxt "undo-type"
-msgid "Cut"
-msgstr "Вирізати"
-
-#: ../app/core/core-enums.c:1229
-msgctxt "undo-type"
-msgid "Text"
-msgstr "Текст"
-
-#: ../app/core/core-enums.c:1230 ../app/core/gimpdrawable-transform.c:720
-msgctxt "undo-type"
-msgid "Transform"
-msgstr "Перетворення"
-
-#: ../app/core/core-enums.c:1231 ../app/core/core-enums.c:1285
-msgctxt "undo-type"
-msgid "Paint"
-msgstr "Малювання"
-
-#: ../app/core/core-enums.c:1232 ../app/core/core-enums.c:1288
-msgctxt "undo-type"
-msgid "Attach parasite"
-msgstr "Додавання паразита"
-
-#: ../app/core/core-enums.c:1233 ../app/core/core-enums.c:1289
-msgctxt "undo-type"
-msgid "Remove parasite"
-msgstr "Вилучити шум"
-
-#: ../app/core/core-enums.c:1234
-msgctxt "undo-type"
-msgid "Import paths"
-msgstr "Імпортувати контур"
-
-#: ../app/core/core-enums.c:1235
-msgctxt "undo-type"
-msgid "Plug-In"
-msgstr "Додаток"
-
-#: ../app/core/core-enums.c:1236
-msgctxt "undo-type"
-msgid "Image type"
-msgstr "Тип зображення"
-
-#: ../app/core/core-enums.c:1237
-msgctxt "undo-type"
-msgid "Image precision"
-msgstr "Точність зображення"
-
-#: ../app/core/core-enums.c:1238
-msgctxt "undo-type"
-msgid "Image size"
-msgstr "Розмір зображення"
-
-#: ../app/core/core-enums.c:1239
-msgctxt "undo-type"
-msgid "Image resolution change"
-msgstr "Зміна роздільності зображення"
-
-#: ../app/core/core-enums.c:1241
-msgctxt "undo-type"
-msgid "Change metadata"
-msgstr "Змінити метадані"
-
-#: ../app/core/core-enums.c:1242
-msgctxt "undo-type"
-msgid "Change indexed palette"
-msgstr "Зміна індексованої палітри"
-
-#: ../app/core/core-enums.c:1243
-msgctxt "undo-type"
-msgid "Hide/Unhide color profile"
-msgstr "Приховати або показати колірний профіль"
-
-#: ../app/core/core-enums.c:1248
-msgctxt "undo-type"
-msgid "Layer/Channel format"
-msgstr "Формат шарів/каналів"
-
-#: ../app/core/core-enums.c:1251
-msgctxt "undo-type"
-msgid "Rename item"
-msgstr "Перейменування елементу"
-
-#: ../app/core/core-enums.c:1255
-msgctxt "undo-type"
-msgid "Item color tag"
-msgstr "Тег кольору елемента"
-
-#: ../app/core/core-enums.c:1256
-msgctxt "undo-type"
-msgid "Lock/Unlock content"
+msgid "Lock/Unlock contents"
 msgstr "Заблокувати/розблокувати вміст"
 
-#: ../app/core/core-enums.c:1257
+#: ../app/core/core-enums.c:1222 ../app/core/core-enums.c:1265
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Заблокувати/розблокувати позицію"
 
-#: ../app/core/core-enums.c:1258
+#: ../app/core/core-enums.c:1223
+msgctxt "undo-type"
+msgid "Item properties"
+msgstr "Властивості елемента"
+
+#: ../app/core/core-enums.c:1224 ../app/core/core-enums.c:1260
+msgctxt "undo-type"
+msgid "Move item"
+msgstr "Переміщення елемента"
+
+#: ../app/core/core-enums.c:1225
+msgctxt "undo-type"
+msgid "Scale item"
+msgstr "Зміна масштабу елемента"
+
+#: ../app/core/core-enums.c:1226
+msgctxt "undo-type"
+msgid "Resize item"
+msgstr "Зміна розміру елемента"
+
+#: ../app/core/core-enums.c:1227
+msgctxt "undo-type"
+msgid "Add layer"
+msgstr "Додавання шару"
+
+#: ../app/core/core-enums.c:1228 ../app/core/core-enums.c:1281
+msgctxt "undo-type"
+msgid "Add layer mask"
+msgstr "Додавання маски шару"
+
+#: ../app/core/core-enums.c:1229 ../app/core/core-enums.c:1283
+msgctxt "undo-type"
+msgid "Apply layer mask"
+msgstr "Застосування маски шару"
+
+#: ../app/core/core-enums.c:1230
+#| msgctxt "undo-type"
+#| msgid "Lock/Unlock alpha channel"
+msgctxt "undo-type"
+msgid "Lock/Unlock alpha channels"
+msgstr "Заблокувати/розблокувати альфа-канали"
+
+#: ../app/core/core-enums.c:1231
+#| msgctxt "undo-type"
+#| msgid "Set layer opacity"
+msgctxt "undo-type"
+msgid "Set layers opacity"
+msgstr "Зміна непрозорості шарів"
+
+#: ../app/core/core-enums.c:1232 ../app/core/core-enums.c:1291
+msgctxt "undo-type"
+msgid "Floating selection to layer"
+msgstr "Рухомий вибір у шарі"
+
+#: ../app/core/core-enums.c:1233
+msgctxt "undo-type"
+msgid "Float selection"
+msgstr "Рухомий вибір"
+
+#: ../app/core/core-enums.c:1234
+msgctxt "undo-type"
+msgid "Anchor floating selection"
+msgstr "Прикріплення рухомого вибору"
+
+#: ../app/core/core-enums.c:1235 ../app/core/gimp-edit.c:550
+msgctxt "undo-type"
+msgid "Paste"
+msgstr "Вставити"
+
+#: ../app/core/core-enums.c:1236 ../app/core/gimp-edit.c:768
+msgctxt "undo-type"
+msgid "Cut"
+msgstr "Вирізати"
+
+#: ../app/core/core-enums.c:1237
+msgctxt "undo-type"
+msgid "Text"
+msgstr "Текст"
+
+#: ../app/core/core-enums.c:1238 ../app/core/gimpdrawable-transform.c:720
+msgctxt "undo-type"
+msgid "Transform"
+msgstr "Перетворення"
+
+#: ../app/core/core-enums.c:1239 ../app/core/core-enums.c:1293
+msgctxt "undo-type"
+msgid "Paint"
+msgstr "Малювання"
+
+#: ../app/core/core-enums.c:1240 ../app/core/core-enums.c:1296
+msgctxt "undo-type"
+msgid "Attach parasite"
+msgstr "Додавання паразита"
+
+#: ../app/core/core-enums.c:1241 ../app/core/core-enums.c:1297
+msgctxt "undo-type"
+msgid "Remove parasite"
+msgstr "Вилучити шум"
+
+#: ../app/core/core-enums.c:1242
+msgctxt "undo-type"
+msgid "Import paths"
+msgstr "Імпортувати контур"
+
+#: ../app/core/core-enums.c:1243
+msgctxt "undo-type"
+msgid "Plug-In"
+msgstr "Додаток"
+
+#: ../app/core/core-enums.c:1244
+msgctxt "undo-type"
+msgid "Image type"
+msgstr "Тип зображення"
+
+#: ../app/core/core-enums.c:1245
+msgctxt "undo-type"
+msgid "Image precision"
+msgstr "Точність зображення"
+
+#: ../app/core/core-enums.c:1246
+msgctxt "undo-type"
+msgid "Image size"
+msgstr "Розмір зображення"
+
+#: ../app/core/core-enums.c:1247
+msgctxt "undo-type"
+msgid "Image resolution change"
+msgstr "Зміна роздільності зображення"
+
+#: ../app/core/core-enums.c:1249
+msgctxt "undo-type"
+msgid "Change metadata"
+msgstr "Змінити метадані"
+
+#: ../app/core/core-enums.c:1250
+msgctxt "undo-type"
+msgid "Change indexed palette"
+msgstr "Зміна індексованої палітри"
+
+#: ../app/core/core-enums.c:1251
+msgctxt "undo-type"
+msgid "Hide/Unhide color profile"
+msgstr "Приховати або показати колірний профіль"
+
+#: ../app/core/core-enums.c:1256
+msgctxt "undo-type"
+msgid "Layer/Channel format"
+msgstr "Формат шарів/каналів"
+
+#: ../app/core/core-enums.c:1259
+msgctxt "undo-type"
+msgid "Rename item"
+msgstr "Перейменування елементу"
+
+#: ../app/core/core-enums.c:1263
+msgctxt "undo-type"
+msgid "Item color tag"
+msgstr "Тег кольору елемента"
+
+#: ../app/core/core-enums.c:1264
+msgctxt "undo-type"
+msgid "Lock/Unlock content"
+msgstr "Заблокувати/розблокувати вміст"
+
+#: ../app/core/core-enums.c:1266
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Створити шар"
 
-#: ../app/core/core-enums.c:1259
+#: ../app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Вилучити шар"
 
-#: ../app/core/core-enums.c:1260
+#: ../app/core/core-enums.c:1268
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Зміна режиму шару"
 
-#: ../app/core/core-enums.c:1261
+#: ../app/core/core-enums.c:1269
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Зміна непрозорості шару"
 
-#: ../app/core/core-enums.c:1262
+#: ../app/core/core-enums.c:1270
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Заблокувати/розблокувати альфа-канал"
 
-#: ../app/core/core-enums.c:1263
+#: ../app/core/core-enums.c:1271
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Зупинити зміну розміру групового шару"
 
-#: ../app/core/core-enums.c:1264
+#: ../app/core/core-enums.c:1272
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Відновити зміну розміру групи шарів"
 
-#: ../app/core/core-enums.c:1265
+#: ../app/core/core-enums.c:1273
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Призупинити маскування групового шару"
 
-#: ../app/core/core-enums.c:1266
+#: ../app/core/core-enums.c:1274
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Відновити маскування групового шару"
 
-#: ../app/core/core-enums.c:1267
+#: ../app/core/core-enums.c:1275
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Початок перетворення групи шарів"
 
-#: ../app/core/core-enums.c:1268
+#: ../app/core/core-enums.c:1276
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Кінець перетворення групи шарів"
 
-#: ../app/core/core-enums.c:1269
+#: ../app/core/core-enums.c:1277
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Перетворення групи шарів"
 
-#: ../app/core/core-enums.c:1270
+#: ../app/core/core-enums.c:1278
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Текстовий шар"
 
-#: ../app/core/core-enums.c:1271
+#: ../app/core/core-enums.c:1279
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Зміна текстового шару"
 
-#: ../app/core/core-enums.c:1272
+#: ../app/core/core-enums.c:1280
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Перетворити текстовий шар"
 
-#: ../app/core/core-enums.c:1274
+#: ../app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Вилучити маску шару"
 
-#: ../app/core/core-enums.c:1276
+#: ../app/core/core-enums.c:1284
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Показати маску шару"
 
-#: ../app/core/core-enums.c:1277
+#: ../app/core/core-enums.c:1285
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Створити канал"
 
-#: ../app/core/core-enums.c:1278
+#: ../app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Вилучити канал"
 
-#: ../app/core/core-enums.c:1279
+#: ../app/core/core-enums.c:1287
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Колір каналу"
 
-#: ../app/core/core-enums.c:1280
+#: ../app/core/core-enums.c:1288
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Новий контур"
 
-#: ../app/core/core-enums.c:1281
+#: ../app/core/core-enums.c:1289
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Вилучити контур"
 
-#: ../app/core/core-enums.c:1282
+#: ../app/core/core-enums.c:1290
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Зміна контуру"
 
-#: ../app/core/core-enums.c:1284
+#: ../app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Перетворення ґратки"
 
-#: ../app/core/core-enums.c:1286
+#: ../app/core/core-enums.c:1294
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Перо"
 
-#: ../app/core/core-enums.c:1287
+#: ../app/core/core-enums.c:1295
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Обрати колір переднього плану"
 
-#: ../app/core/core-enums.c:1290
+#: ../app/core/core-enums.c:1298
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Дію неможливо скасувати"
 
-#: ../app/core/core-enums.c:1325
+#: ../app/core/core-enums.c:1333
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Крихітний"
 
-#: ../app/core/core-enums.c:1326
+#: ../app/core/core-enums.c:1334
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Дуже малий"
 
-#: ../app/core/core-enums.c:1327
+#: ../app/core/core-enums.c:1335
 msgctxt "view-size"
 msgid "Small"
 msgstr "Малий"
 
-#: ../app/core/core-enums.c:1328
+#: ../app/core/core-enums.c:1336
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Середній"
 
-#: ../app/core/core-enums.c:1329
+#: ../app/core/core-enums.c:1337
 msgctxt "view-size"
 msgid "Large"
 msgstr "Великий"
 
-#: ../app/core/core-enums.c:1330
+#: ../app/core/core-enums.c:1338
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Дуже великий"
 
-#: ../app/core/core-enums.c:1331
+#: ../app/core/core-enums.c:1339
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Величезний"
 
-#: ../app/core/core-enums.c:1332
+#: ../app/core/core-enums.c:1340
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Гігантський"
 
-#: ../app/core/core-enums.c:1333
+#: ../app/core/core-enums.c:1341
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Колосальний"
 
-#: ../app/core/core-enums.c:1361
+#: ../app/core/core-enums.c:1369
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Перегляд списком"
 
-#: ../app/core/core-enums.c:1362
+#: ../app/core/core-enums.c:1370
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Перегляд таблицею"
@@ -12856,11 +13071,11 @@ msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Вирізати шар"
 
-#: ../app/core/gimp-edit.c:327 ../app/core/gimpimage-new.c:319
+#: ../app/core/gimp-edit.c:362 ../app/core/gimpimage-new.c:513
 msgid "Pasted Layer"
 msgstr "Вставлений шар"
 
-#: ../app/core/gimp-edit.c:750
+#: ../app/core/gimp-edit.c:785
 msgid "Global Buffer"
 msgstr "Глобальний буфер"
 
@@ -13449,7 +13664,7 @@ msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Встановити непрозорість каналу"
 
-#: ../app/core/gimpchannel.c:1788 ../app/core/gimpselection.c:171
+#: ../app/core/gimpchannel.c:1788 ../app/core/gimpselection.c:172
 msgid "Selection Mask"
 msgstr "Маска позначеної ділянки"
 
@@ -13461,7 +13676,7 @@ msgstr "Передній план"
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
-#: ../app/core/gimpcontext.c:672 ../app/core/gimpimage-new.c:147
+#: ../app/core/gimpcontext.c:672 ../app/core/gimpimage-new.c:149
 msgid "Background"
 msgstr "Тло"
 
@@ -13471,7 +13686,7 @@ msgstr "Колір тла"
 
 #: ../app/core/gimpcontext.c:679 ../app/core/gimpcontext.c:680
 #: ../app/operations/gimpoperationsettings.c:100
-#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:286
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:292
 msgid "Opacity"
 msgstr "Непрозорість"
 
@@ -13585,7 +13800,7 @@ msgstr "Помилка завантаження «%s»: "
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:341 ../app/file-data/file-data-gex.c:479
 #: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:96
-#: ../app/xcf/xcf.c:431
+#: ../app/xcf/xcf.c:439
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не вдалось відкрити «%s» для зчитування: "
@@ -13639,7 +13854,7 @@ msgid "Render Stroke"
 msgstr "Відтворення мазків"
 
 #: ../app/core/gimpdrawable-gradient.c:125
-#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1055
+#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1077
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Градієнтна"
@@ -13887,71 +14102,77 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Перетворити групу шарів"
 
-#: ../app/core/gimpimage.c:662 ../app/widgets/gimpsymmetryeditor.c:176
+#: ../app/core/gimpimage.c:669 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Симетрія"
 
-#: ../app/core/gimpimage.c:2392
+#: ../app/core/gimpimage.c:2501
 msgid " (exported)"
 msgstr " (експортовано)"
 
-#: ../app/core/gimpimage.c:2396
+#: ../app/core/gimpimage.c:2505
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: ../app/core/gimpimage.c:2405
+#: ../app/core/gimpimage.c:2514
 msgid " (imported)"
 msgstr " (імпортовано)"
 
-#: ../app/core/gimpimage.c:2579 ../app/core/gimpimage.c:2593
-#: ../app/core/gimpimage.c:2636
+#: ../app/core/gimpimage.c:2688 ../app/core/gimpimage.c:2702
+#: ../app/core/gimpimage.c:2745
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режим шару «%s» було додано у %s"
 
-#: ../app/core/gimpimage.c:2651
+#: ../app/core/gimpimage.c:2760
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Групи шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2658
+#: ../app/core/gimpimage.c:2767
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маски для груп шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2674
+#: ../app/core/gimpimage.c:2783
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: ../app/core/gimpimage.c:2682
+#: ../app/core/gimpimage.c:2791
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: ../app/core/gimpimage.c:2690
+#: ../app/core/gimpimage.c:2799
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: ../app/core/gimpimage.c:2707
+#: ../app/core/gimpimage.c:2816
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: ../app/core/gimpimage.c:2803
+#: ../app/core/gimpimage.c:2823
+#, c-format
+#| msgid "Layer mode '%s' was added in %s"
+msgid "Multiple layer selection was added in %s"
+msgstr "Було додано позначення декількох шарів у %s"
+
+#: ../app/core/gimpimage.c:2919
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: ../app/core/gimpimage.c:2855
+#: ../app/core/gimpimage.c:2971
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: ../app/core/gimpimage.c:3806
+#: ../app/core/gimpimage.c:3922
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13959,47 +14180,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: ../app/core/gimpimage.c:3865
+#: ../app/core/gimpimage.c:3981
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: ../app/core/gimpimage.c:3907
+#: ../app/core/gimpimage.c:4023
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: ../app/core/gimpimage.c:4638
+#: ../app/core/gimpimage.c:4945
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: ../app/core/gimpimage.c:4680 ../app/core/gimpimage.c:4711
+#: ../app/core/gimpimage.c:4989 ../app/core/gimpimage.c:5020
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: ../app/core/gimpimage.c:4705
+#: ../app/core/gimpimage.c:5014
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: ../app/core/gimpimage.c:4872
+#: ../app/core/gimpimage.c:5167
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: ../app/core/gimpimage.c:4900 ../app/core/gimpimage.c:4924
+#: ../app/core/gimpimage.c:5197 ../app/core/gimpimage.c:5221
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: ../app/core/gimpimage.c:4980
+#: ../app/core/gimpimage.c:5278
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: ../app/core/gimpimage.c:5010 ../app/core/gimpimage.c:5017
+#: ../app/core/gimpimage.c:5308 ../app/core/gimpimage.c:5315
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -14188,56 +14409,56 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Перетворити об'єкти"
 
-#: ../app/core/gimpimage-merge.c:135
+#: ../app/core/gimpimage-merge.c:77
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Об'єднати видимі шари"
 
-#: ../app/core/gimpimage-merge.c:203
+#: ../app/core/gimpimage-merge.c:234
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Звести зображення"
 
-#: ../app/core/gimpimage-merge.c:232
+#: ../app/core/gimpimage-merge.c:263
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Не можна сплюснути зображення без жодного видимого шару."
 
-#: ../app/core/gimpimage-merge.c:260
+#: ../app/core/gimpimage-merge.c:291
 msgid "Cannot merge down a floating selection."
 msgstr "Неможливо об'єднати рухому позначену ділянку."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:298
 msgid "Cannot merge down an invisible layer."
 msgstr "Неможливо об'єднати невидимий шар."
 
-#: ../app/core/gimpimage-merge.c:292
+#: ../app/core/gimpimage-merge.c:323
 msgid "Cannot merge down to a layer group."
 msgstr "Не вдалось виконати зведення у групу шарів."
 
-#: ../app/core/gimpimage-merge.c:299
+#: ../app/core/gimpimage-merge.c:330
 msgid "The layer to merge down to is locked."
 msgstr "Шар, я який має бути виконане зведення, замкнений"
 
-#: ../app/core/gimpimage-merge.c:311
+#: ../app/core/gimpimage-merge.c:342
 msgid "There is no visible layer to merge down to."
 msgstr "Немає видимого шару, у якому можна виконати зведення."
 
-#: ../app/core/gimpimage-merge.c:317
+#: ../app/core/gimpimage-merge.c:348
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Об'єднати з нижнім"
 
-#: ../app/core/gimpimage-merge.c:352
+#: ../app/core/gimpimage-merge.c:383
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Об'єднати групу шарів"
 
-#: ../app/core/gimpimage-merge.c:428
+#: ../app/core/gimpimage-merge.c:459
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Об'єднати видимі контури"
 
-#: ../app/core/gimpimage-merge.c:464
+#: ../app/core/gimpimage-merge.c:495
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Недостатньо видимих контурів для об'єднання. Необхідно принаймні два контури."
@@ -14277,7 +14498,7 @@ msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Масштабувати зображення"
 
-#: ../app/core/gimpimage-undo-push.c:1045
+#: ../app/core/gimpimage-undo-push.c:1063
 #, c-format
 msgid "Can't undo %s"
 msgstr "Не вдалось скасувати %s"
@@ -14324,6 +14545,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d точка"
 msgstr[1] "%d x %d точки"
 msgstr[2] "%d x %d точок"
+msgstr[3] "%d x %d точка"
 
 #: ../app/core/gimpimagefile.c:844 ../app/display/gimpdisplayshell-title.c:349
 #, c-format
@@ -14332,23 +14554,24 @@ msgid_plural "%d layers"
 msgstr[0] "%d шар"
 msgstr[1] "%d шари"
 msgstr[2] "%d шарів"
+msgstr[3] "%d шар"
 
 #: ../app/core/gimpimagefile.c:892
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри «%s»: %s"
 
-#: ../app/core/gimpitem.c:2142
+#: ../app/core/gimpitem.c:2161
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Додати шум"
 
-#: ../app/core/gimpitem.c:2152
+#: ../app/core/gimpitem.c:2171
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Додати шум до об'єкта"
 
-#: ../app/core/gimpitem.c:2203 ../app/core/gimpitem.c:2210
+#: ../app/core/gimpitem.c:2222 ../app/core/gimpitem.c:2229
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Вилучити шум з об'єкта"
@@ -14585,12 +14808,12 @@ msgstr "Не вдалося перетворити пензель MyPaint з п�
 msgid "%s (occurs %u)"
 msgstr "%s (трапився %u разів)"
 
-#: ../app/core/gimppalette-import.c:425
+#: ../app/core/gimppalette-import.c:426
 #, c-format
 msgid "Index %d"
 msgstr "Індексований %d"
 
-#: ../app/core/gimppalette-import.c:547
+#: ../app/core/gimppalette-import.c:556
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Невідомий тип файла палітри: %s"
@@ -14713,88 +14936,88 @@ msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
 "Не вдалось викликати %s. Можливо, відповідне доповнення завершилось аварійно."
 
-#: ../app/core/gimpselection.c:172
+#: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Перенести позначене"
 
-#: ../app/core/gimpselection.c:173
+#: ../app/core/gimpselection.c:174
 msgctxt "undo-type"
 msgid "Fill Selection"
 msgstr "Заповнити позначене"
 
-#: ../app/core/gimpselection.c:174
+#: ../app/core/gimpselection.c:175
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Обвести позначене"
 
-#: ../app/core/gimpselection.c:191
+#: ../app/core/gimpselection.c:192
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Розмити позначене"
 
-#: ../app/core/gimpselection.c:192
+#: ../app/core/gimpselection.c:193
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Загострити позначене"
 
-#: ../app/core/gimpselection.c:193
+#: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Нічого не вибирати"
 
-#: ../app/core/gimpselection.c:194
+#: ../app/core/gimpselection.c:195
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Вибрати все"
 
-#: ../app/core/gimpselection.c:195
+#: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Розвернути позначене"
 
-#: ../app/core/gimpselection.c:196
+#: ../app/core/gimpselection.c:197
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Межа позначеного"
 
-#: ../app/core/gimpselection.c:197
+#: ../app/core/gimpselection.c:198
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Збільшити позначене"
 
-#: ../app/core/gimpselection.c:198
+#: ../app/core/gimpselection.c:199
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Скоротити позначене"
 
-#: ../app/core/gimpselection.c:199
+#: ../app/core/gimpselection.c:200
 msgctxt "undo-type"
 msgid "Remove Holes"
 msgstr "Вилучити дірки"
 
-#: ../app/core/gimpselection.c:307
+#: ../app/core/gimpselection.c:308
 msgid "There is no selection to fill."
 msgstr "Немає позначеної ділянки для заповнення."
 
-#: ../app/core/gimpselection.c:343
+#: ../app/core/gimpselection.c:344
 msgid "There is no selection to stroke."
 msgstr "Немає позначеної ділянки для обведення."
 
-#: ../app/core/gimpselection.c:702
+#: ../app/core/gimpselection.c:720
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Не вдалось вирізати/скопіювати, бо позначена ділянка порожня."
 
-#: ../app/core/gimpselection.c:821
+#: ../app/core/gimpselection.c:858
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Не вдалось вирізати/скопіювати, бо позначена ділянка порожня."
 
-#: ../app/core/gimpselection.c:828
+#: ../app/core/gimpselection.c:865
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Рухомий вибір"
 
-#: ../app/core/gimpselection.c:846
+#: ../app/core/gimpselection.c:892
 msgid "Floated Layer"
 msgstr "Рухомий шар"
 
@@ -15712,7 +15935,8 @@ msgid "Final, Merged Layer should be:"
 msgstr "Об'єднаний шар має бути:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
-msgid "Merge within active _group only"
+#| msgid "Merge within active _group only"
+msgid "Merge within active _groups only"
 msgstr "Об'єднати лише в межах чинних _груп"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
@@ -15847,27 +16071,38 @@ msgstr ""
 msgid "S_ave keyboard shortcuts on exit"
 msgstr "З_берігати комбінації клавіш при виході"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:103
-msgid "Add Layer Mask"
-msgstr "Додавання маски шару"
-
 #: ../app/dialogs/layer-add-mask-dialog.c:105
-msgid "Add a Mask to the Layer"
-msgstr "Додавання маски до шару"
+#| msgid "Add Layer Mask"
+msgid "Add Layer Mask"
+msgid_plural "Add Layer Masks"
+msgstr[0] "Додавання масок шарів"
+msgstr[1] "Додавання масок шарів"
+msgstr[2] "Додавання масок шарів"
+msgstr[3] "Додавання маски шару"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:111
+#: ../app/dialogs/layer-add-mask-dialog.c:107
+#, c-format
+#| msgid "Add a Mask to the Layer"
+msgid "Add a Mask to the Layer"
+msgid_plural "Add Masks to %d Layers"
+msgstr[0] "Додавання масок до %d шару"
+msgstr[1] "Додавання масок до %d шарів"
+msgstr[2] "Додавання масок до %d шарів"
+msgstr[3] "Додавання маски до шару"
+
+#: ../app/dialogs/layer-add-mask-dialog.c:120
 msgid "_Add"
 msgstr "_Додати"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:137
+#: ../app/dialogs/layer-add-mask-dialog.c:149
 msgid "Initialize Layer Mask to:"
 msgstr "Ініціалізувати маску шару з:"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:168
+#: ../app/dialogs/layer-add-mask-dialog.c:180
 msgid "In_vert mask"
 msgstr "_Інвертувати маску"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:203
+#: ../app/dialogs/layer-add-mask-dialog.c:215
 msgid "Please select a channel first"
 msgstr "Спочатку виберіть канал"
 
@@ -16983,8 +17218,9 @@ msgid "Merged layer size:"
 msgstr "Розмір об'єднаного шару:"
 
 #: ../app/dialogs/preferences-dialog.c:2356
-msgid "Merge within active group only"
-msgstr "Об'єднувати лише у межах активної групи"
+#| msgid "Merge within active group only"
+msgid "Merge within active groups only"
+msgstr "Об'єднувати лише у межах активних груп"
 
 #: ../app/dialogs/preferences-dialog.c:2359
 msgid "Discard invisible layers"
@@ -17745,6 +17981,7 @@ msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Є %d незбережене зображення:"
 msgstr[1] "Є %d незбережених зображення:"
 msgstr[2] "Є %d незбережених зображень:"
+msgstr[3] "Є %d незбережене зображення:"
 
 #: ../app/dialogs/quit-dialog.c:357
 #, c-format
@@ -18057,52 +18294,52 @@ msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Міжрядковий інтервал"
 
-#: ../app/display/display-enums.c:379
+#: ../app/display/display-enums.c:383
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Співвідношення сторін"
 
-#: ../app/display/display-enums.c:380
+#: ../app/display/display-enums.c:384
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Ширина"
 
-#: ../app/display/display-enums.c:381
+#: ../app/display/display-enums.c:385
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Висота"
 
-#: ../app/display/display-enums.c:382
+#: ../app/display/display-enums.c:386
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "Розмір"
 
-#: ../app/display/display-enums.c:508
+#: ../app/display/display-enums.c:512
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
 msgstr "Додавання / Перетворення"
 
-#: ../app/display/display-enums.c:509
+#: ../app/display/display-enums.c:513
 msgctxt "transform-handle-mode"
 msgid "Move"
 msgstr "Переміщення"
 
-#: ../app/display/display-enums.c:510
+#: ../app/display/display-enums.c:514
 msgctxt "transform-handle-mode"
 msgid "Remove"
 msgstr "Вилучити"
 
-#: ../app/display/display-enums.c:539
+#: ../app/display/display-enums.c:543
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Створити"
 
-#: ../app/display/display-enums.c:540
+#: ../app/display/display-enums.c:544
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Редагувати"
 
-#: ../app/display/display-enums.c:541
+#: ../app/display/display-enums.c:545
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Перенести"
@@ -18222,6 +18459,8 @@ msgstr[1] ""
 "Якщо ви не збережете зображення, зміни за останні %d години будуть втрачені."
 msgstr[2] ""
 "Якщо ви не збережете зображення, зміни за останні %d годин будуть втрачені."
+msgstr[3] ""
+"Якщо ви не збережете зображення, зміни за останню %d годину будуть втрачені."
 
 #: ../app/display/gimpdisplayshell-close.c:318
 #, c-format
@@ -18240,6 +18479,9 @@ msgstr[1] ""
 msgstr[2] ""
 "Якщо ви не збережете зображення, зміни за останню годину та %d хвилин будуть "
 "втрачені."
+msgstr[3] ""
+"Якщо ви не збережете зображення, зміни за останню годину та %d хвилину "
+"будуть втрачені."
 
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
@@ -18252,6 +18494,8 @@ msgstr[1] ""
 "Якщо ви не збережете зображення, зміни за останні %d хвилини будуть втрачені."
 msgstr[2] ""
 "Якщо ви не збережете зображення, зміни за останні %d хвилин будуть втрачені."
+msgstr[3] ""
+"Якщо ви не збережете зображення, зміни за останню %d хвилину будуть втрачені."
 
 #: ../app/display/gimpdisplayshell-close.c:348
 #, c-format
@@ -18270,45 +18514,45 @@ msgstr "Опускання нового контуру"
 
 #: ../app/display/gimpdisplayshell-dnd.c:363
 #: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:254
-#: ../app/tools/gimpselectiontool.c:554
+#: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:272
+#: ../app/tools/gimpselectiontool.c:569
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Неможливо змінити точки растру групи шарів"
 
 #: ../app/display/gimpdisplayshell-dnd.c:371
 #: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
-#: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1148
-#: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpgradienttool.c:261
-#: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:300
-#: ../app/tools/gimpselectiontool.c:561 ../app/tools/gimptransformtool.c:689
-#: ../app/tools/gimpwarptool.c:780
+#: ../app/tools/gimpeditselectiontool.c:1208 ../app/tools/gimpfiltertool.c:302
+#: ../app/tools/gimpgradienttool.c:279 ../app/tools/gimppainttool.c:310
+#: ../app/tools/gimpselectiontool.c:577 ../app/tools/gimptransformtool.c:689
+#: ../app/tools/gimpwarptool.c:794
 #, c-format
 msgid "The active layer's pixels are locked."
 msgstr "Точки растру активного шару заблоковані від змін"
 
 #: ../app/display/gimpdisplayshell-dnd.c:414
-#: ../app/widgets/gimpdrawabletreeview.c:259
-#: ../app/widgets/gimpdrawabletreeview.c:370
+#: ../app/widgets/gimpdrawabletreeview.c:265
+#: ../app/widgets/gimpdrawabletreeview.c:377
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Опустити текстуру на шар"
 
 #: ../app/display/gimpdisplayshell-dnd.c:436
-#: ../app/widgets/gimpdrawabletreeview.c:289
-#: ../app/widgets/gimpdrawabletreeview.c:390
+#: ../app/widgets/gimpdrawabletreeview.c:296
+#: ../app/widgets/gimpdrawabletreeview.c:397
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
 
 #: ../app/display/gimpdisplayshell-dnd.c:584
-#: ../app/widgets/gimplayertreeview.c:765
+#: ../app/widgets/gimpitemtreeview.c:1309
+#: ../app/widgets/gimplayertreeview.c:816
 msgid "Drop layers"
 msgstr "Перемістити шари"
 
 #: ../app/display/gimpdisplayshell-dnd.c:727
 #: ../app/display/gimpdisplayshell-dnd.c:744
-#: ../app/widgets/gimplayertreeview.c:842 ../app/widgets/gimptoolbox-dnd.c:268
+#: ../app/widgets/gimplayertreeview.c:893 ../app/widgets/gimptoolbox-dnd.c:268
 msgid "Dropped Buffer"
 msgstr "Переміщений буфер"
 
@@ -18333,6 +18577,17 @@ msgstr "Зображення експортовано у «%s»"
 #: ../app/display/gimpdisplayshell-layer-select.c:135
 msgid "Layer Select"
 msgstr "Вибір шару"
+
+#: ../app/display/gimpdisplayshell-layer-select.c:276
+#| msgctxt "line-art-source"
+#| msgid "Layer below the active one"
+msgid "Layer Selection Moved Down"
+msgstr "позначені шари пересунуто нижче"
+
+#: ../app/display/gimpdisplayshell-layer-select.c:277
+#| msgid "Layer Select"
+msgid "Layer Selection Moved Up"
+msgstr "позначені шари пересунуто вище"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
 msgid "Rotate View"
@@ -18384,7 +18639,7 @@ msgstr "(не змінено)"
 msgid "(none)"
 msgstr "(немає)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1566
+#: ../app/display/gimpdisplayshell-tool-events.c:1568
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Вибрано шар: '%s'"
@@ -18424,43 +18679,37 @@ msgstr "Натисніть та перетягніть, щоб переміст�
 msgid "Click-Drag to move all points"
 msgstr "Натисніть та перетягніть, щоб перемістити всі точки"
 
-#: ../app/display/gimptoolfocus.c:1049
-#| msgid "Click-Drag to move the endpoint"
+#: ../app/display/gimptoolfocus.c:1116
 msgid "Click-Drag to change the midpoint"
 msgstr "Натисніть і перетягніть, щоб змінити середню точку"
 
-#: ../app/display/gimptoolfocus.c:1051
-#| msgid "Click-Drag to remove the slider"
+#: ../app/display/gimptoolfocus.c:1118
 msgid "Click-Drag to resize the limit"
 msgstr "Натисніть і перетягніть, щоб змінити розміри обмеження"
 
-#: ../app/display/gimptoolfocus.c:1053 ../app/display/gimptoolfocus.c:1066
+#: ../app/display/gimptoolfocus.c:1120 ../app/display/gimptoolfocus.c:1133
 #, c-format
 msgid "%s to resize the focus"
 msgstr "%s, щоб змінити розміри фокуса"
 
-#: ../app/display/gimptoolfocus.c:1058 ../app/display/gimptoolfocus.c:1071
-#| msgid "Click-Drag to remove the slider"
+#: ../app/display/gimptoolfocus.c:1125 ../app/display/gimptoolfocus.c:1138
 msgid "Click-Drag to resize the focus"
 msgstr "Натисніть і перетягніть, щоб змінити розміри фокуса"
 
-#: ../app/display/gimptoolfocus.c:1065
-#| msgid "Click-Drag to change perspective"
+#: ../app/display/gimptoolfocus.c:1132
 msgid "Click-Drag to change the aspect ratio"
 msgstr "Натисніть і перетягніть, щоб змінити співвідношення розмірів"
 
-#: ../app/display/gimptoolfocus.c:1076
-#| msgid "Click-Drag to move the slider"
+#: ../app/display/gimptoolfocus.c:1143
 msgid "Click-Drag to move the focus"
 msgstr "Натисніть і перетягніть, щоб пересунути фокус"
 
-#: ../app/display/gimptoolfocus.c:1080
-#| msgid "Click-Drag to rotate"
+#: ../app/display/gimptoolfocus.c:1147
 msgid "Click-Drag to rotate the focus"
 msgstr "Натисніть і перетягніть для обертання фокуса"
 
-#: ../app/display/gimptoolfocus.c:1081 ../app/display/gimptoolgyroscope.c:729
-#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:627
+#: ../app/display/gimptoolfocus.c:1148 ../app/display/gimptoolgyroscope.c:729
+#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:640
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для обмеження кроку кута"
@@ -18775,11 +19024,11 @@ msgstr "Натисніть і перетягніть, щоб пересунут�
 msgid "Click-Drag to shear"
 msgstr "Натисніть і перетягніть для перекошування"
 
-#: ../app/file/file-open.c:116 ../app/file/file-save.c:126
+#: ../app/file/file-open.c:116 ../app/file/file-save.c:140
 msgid "Not a regular file"
 msgstr "Не є звичайним файлом"
 
-#: ../app/file/file-open.c:125 ../app/file/file-save.c:135
+#: ../app/file/file-open.c:125 ../app/file/file-save.c:149
 msgid "Permission denied"
 msgstr "Доступ заборонений"
 
@@ -18793,11 +19042,11 @@ msgstr "Доповнення %s успішно завершило роботу, 
 msgid "%s plug-in could not open image"
 msgstr "Доповненню %s не вдалось відкрити зображення"
 
-#: ../app/file/file-open.c:647
+#: ../app/file/file-open.c:644
 msgid "Image doesn't contain any layers"
 msgstr "Зображення не містить шарів"
 
-#: ../app/file/file-open.c:705
+#: ../app/file/file-open.c:702
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Не вдалось відкрити «%s»: %s"
@@ -18830,15 +19079,15 @@ msgstr "Завантажено %s даних зображення"
 msgid "Uploaded %s of image data"
 msgstr "Вивантажено %s даних зображення"
 
-#: ../app/file/file-save.c:99
+#: ../app/file/file-save.c:113
 msgid "There is no active layer to save"
 msgstr "Немає активного шару для збереження"
 
-#: ../app/file/file-save.c:119
+#: ../app/file/file-save.c:133
 msgid "Failed to get file information"
 msgstr "Не вдалось отримати інформацію про файл"
 
-#: ../app/file/file-save.c:292
+#: ../app/file/file-save.c:307
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Доповненню %s не вдалось зберегти зображення"
@@ -18893,19 +19142,19 @@ msgstr "Для розширення GIMP «%s» потрібен файл AppStr
 msgid "Invalid GIMP extension '%s': %s"
 msgstr "Некоректне розширення GIMP «%s»: %s"
 
-#: ../app/file-data/file-data.c:60 ../app/file-data/file-data.c:117
+#: ../app/file-data/file-data.c:61 ../app/file-data/file-data.c:118
 msgid "GIMP brush"
 msgstr "Пензель GIMP"
 
-#: ../app/file-data/file-data.c:195 ../app/file-data/file-data.c:249
+#: ../app/file-data/file-data.c:196 ../app/file-data/file-data.c:250
 msgid "GIMP brush (animated)"
 msgstr "Пензель GIMP (анімований)"
 
-#: ../app/file-data/file-data.c:334 ../app/file-data/file-data.c:387
+#: ../app/file-data/file-data.c:340 ../app/file-data/file-data.c:393
 msgid "GIMP pattern"
 msgstr "Текстура GIMP"
 
-#: ../app/file-data/file-data.c:459
+#: ../app/file-data/file-data.c:465
 msgid "GIMP extension"
 msgstr "Розширення GIMP"
 
@@ -19769,7 +20018,7 @@ msgstr "Перетворити кольори на градації сірого
 #: ../app/operations/gimpoperationsettings.c:92
 #: ../app/tools/gimpfiltertool.c:1122 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:124
-#: ../app/widgets/gimplayertreeview.c:271
+#: ../app/widgets/gimplayertreeview.c:277
 msgid "Mode"
 msgstr "Режим"
 
@@ -19881,6 +20130,8 @@ msgstr[1] ""
 "%d зображення було врятовано після аварії. Хочете спробувати відновити дані?"
 msgstr[2] ""
 "%d зображень було врятовано після аварії. Хочете спробувати відновити дані?"
+msgstr[3] ""
+"%d зображення було врятовано після аварії. Хочете спробувати відновити дані?"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
@@ -20636,12 +20887,12 @@ msgstr "Векторний об'єкт %d не містить обведення
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "Назва процедури «%s» не є канонічним ідентифікатором"
 
-#: ../app/pdb/gimppdb.c:304 ../app/pdb/gimppdb.c:375 ../app/pdb/pdb-cmds.c:69
+#: ../app/pdb/gimppdb.c:305 ../app/pdb/gimppdb.c:378 ../app/pdb/pdb-cmds.c:69
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Процедуру «%s» не знайдено"
 
-#: ../app/pdb/gimppdb.c:431
+#: ../app/pdb/gimppdb.c:434
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
@@ -20791,7 +21042,7 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: ../app/pdb/image-cmds.c:2310
+#: ../app/pdb/image-cmds.c:2388
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -21762,8 +22013,6 @@ msgid "New Seed"
 msgstr "Нова база"
 
 #: ../app/propgui/gimppropgui-vignette.c:183
-#| msgctxt "filters-action"
-#| msgid "_Vignette..."
 msgid "Vignette: "
 msgstr "Віньєтування: "
 
@@ -21794,7 +22043,7 @@ msgstr ""
 "Не вдалося завантажити деякі шрифти:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1649
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
@@ -22149,8 +22398,8 @@ msgstr "Заповнення"
 #: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
 #: ../app/tools/gimpfiltertool.c:312
 #: ../app/tools/gimpforegroundselecttool.c:295
-#: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:328
-#: ../app/tools/gimptransformtool.c:698 ../app/tools/gimpwarptool.c:794
+#: ../app/tools/gimpgradienttool.c:289 ../app/tools/gimppainttool.c:338
+#: ../app/tools/gimptransformtool.c:698 ../app/tools/gimpwarptool.c:808
 msgid "The active layer is not visible."
 msgstr "Активний шар - невидимий."
 
@@ -22159,12 +22408,12 @@ msgid "No valid line art source selected."
 msgstr "Не вибрано придатного джерела контурів."
 
 #: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
-#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:468
+#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:478
 msgid "Click in any image to pick the background color"
 msgstr "Натисніть на будь-якому зображенні для отримання кольору його тла"
 
 #: ../app/tools/gimpbucketfilltool.c:768 ../app/tools/gimpbucketfilltool.c:903
-#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:462
+#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:472
 msgid "Click in any image to pick the foreground color"
 msgstr ""
 "Натисніть на будь-якому зображенні для отримання його кольору переднього "
@@ -22382,12 +22631,14 @@ msgid "How much to dim everything outside selection"
 msgstr "Міра затемнення усього поза позначеною ділянкою"
 
 #: ../app/tools/gimpcropoptions.c:95
-msgid "Current layer only"
-msgstr "Лише поточний шар"
+#| msgid "Current layer only"
+msgid "Current layers only"
+msgstr "Лише поточні шари"
 
 #: ../app/tools/gimpcropoptions.c:96
-msgid "Crop only currently selected layer"
-msgstr "Обрізати лише поточнийпозначенийй шар"
+#| msgid "Crop only currently selected layer"
+msgid "Crop only currently selected layers"
+msgstr "Обрізати лише поточні позначені шари"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Delete cropped pixels"
@@ -22418,33 +22669,50 @@ msgstr ""
 "Спосіб заповнення нових ділянок, які створено за допомогою «Дозволити "
 "збільшення»"
 
-#: ../app/tools/gimpcroptool.c:119
+#: ../app/tools/gimpcroptool.c:120
 msgid "Crop"
 msgstr "Кадрування"
 
-#: ../app/tools/gimpcroptool.c:120
+#: ../app/tools/gimpcroptool.c:121
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Кадрування: вилучення ділянок з межі зображення чи шару"
 
-#: ../app/tools/gimpcroptool.c:121
+#: ../app/tools/gimpcroptool.c:122
 msgid "_Crop"
 msgstr "_Кадрування"
 
-#: ../app/tools/gimpcroptool.c:159
+#: ../app/tools/gimpcroptool.c:160
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Натисніть і перетягніть для малювання прямокутника обрізання"
 
-#: ../app/tools/gimpcroptool.c:279
+#: ../app/tools/gimpcroptool.c:280
 msgid "Click or press Enter to crop"
 msgstr "Для кадрування клацніть мишею або натисніть Enter"
 
-#: ../app/tools/gimpcroptool.c:386
+#: ../app/tools/gimpcroptool.c:387
 msgid "Crop to: "
 msgstr "Обітнути до:"
 
-#: ../app/tools/gimpcroptool.c:454
-msgid "There is no active layer to crop."
-msgstr "Немає активного шару чи каналу для картування."
+#: ../app/tools/gimpcroptool.c:457
+#| msgid "There is no active layer to crop."
+msgid "There are no selected layers to crop."
+msgstr "Немає позначених шарів для обрізання."
+
+#: ../app/tools/gimpcroptool.c:468
+#| msgid "The active layer's pixels are locked."
+msgid "All selected layers' pixels are locked."
+msgstr "Усі точки позначених шарів заблоковано."
+
+#: ../app/tools/gimpcroptool.c:473
+#, c-format
+#| msgctxt "undo-type"
+#| msgid "Resize Layer"
+msgid "Resize Layer"
+msgid_plural "Resize %d layers"
+msgstr[0] "Змінити розмір %d шару"
+msgstr[1] "Змінити розмір %d шарів"
+msgstr[2] "Змінити розмір %d шарів"
+msgstr[3] "Змінити розмір шару"
 
 #: ../app/tools/gimpcurvestool.c:154
 msgid "Curves"
@@ -22557,41 +22825,40 @@ msgstr "%s для освітлення"
 msgid "Type  (%s)"
 msgstr "Тип (%s)"
 
-#: ../app/tools/gimpeditselectiontool.c:439
-#: ../app/tools/gimpeditselectiontool.c:622
+#: ../app/tools/gimpeditselectiontool.c:465
+#: ../app/tools/gimpeditselectiontool.c:653
 msgid "Move: "
 msgstr "Переміщення: "
 
-#: ../app/tools/gimpeditselectiontool.c:878
-#: ../app/tools/gimpeditselectiontool.c:1207
+#: ../app/tools/gimpeditselectiontool.c:938
+#: ../app/tools/gimpeditselectiontool.c:1267
 msgid "Move Floating Selection"
 msgstr "Перенесення рухомого вибору"
 
-#: ../app/tools/gimpeditselectiontool.c:1121 ../app/tools/gimpmovetool.c:281
+#: ../app/tools/gimpeditselectiontool.c:1181 ../app/tools/gimpmovetool.c:291
 msgid "There is no path to move."
 msgstr "Немає контуру для переміщення."
 
-#: ../app/tools/gimpeditselectiontool.c:1125 ../app/tools/gimpmovetool.c:285
+#: ../app/tools/gimpeditselectiontool.c:1185 ../app/tools/gimpmovetool.c:295
 #: ../app/tools/gimptransformtool.c:736
 msgid "The active path's position is locked."
 msgstr "Позиція активного контура заблокована від змін"
 
-#: ../app/tools/gimpeditselectiontool.c:1136 ../app/tools/gimpmovetool.c:317
+#: ../app/tools/gimpeditselectiontool.c:1196 ../app/tools/gimpmovetool.c:327
 msgid "There is no layer to move."
 msgstr "Немає шару для переміщення."
 
-#: ../app/tools/gimpeditselectiontool.c:1144
-#: ../app/tools/gimpeditselectiontool.c:1170
-#: ../app/tools/gimpeditselectiontool.c:1179 ../app/tools/gimpmovetool.c:324
-#: ../app/tools/gimpmovetool.c:342
+#: ../app/tools/gimpeditselectiontool.c:1204
+#: ../app/tools/gimpeditselectiontool.c:1230
+#: ../app/tools/gimpeditselectiontool.c:1239
 msgid "The active layer's position is locked."
 msgstr "Позиція активного шару заблокована від змін"
 
-#: ../app/tools/gimpeditselectiontool.c:1157 ../app/tools/gimpmovetool.c:333
+#: ../app/tools/gimpeditselectiontool.c:1217
 msgid "The active channel's position is locked."
 msgstr "Позиція активного каналу заблокована від змін."
 
-#: ../app/tools/gimpeditselectiontool.c:1161 ../app/tools/gimpmovetool.c:335
+#: ../app/tools/gimpeditselectiontool.c:1221
 msgid "The active channel's pixels are locked."
 msgstr "Пікселі активного каналу заблоковано."
 
@@ -22986,11 +23253,21 @@ msgstr "Гр_адієнт"
 msgid "Click-Drag to draw a gradient"
 msgstr "Натисніть і перетягніть, щоб намалювати градієнт"
 
-#: ../app/tools/gimpgradienttool.c:278
+#: ../app/tools/gimpgradienttool.c:256
+msgid "Cannot paint on multiple drawables. Select only one."
+msgstr ""
+"Неможливо малювати одразу на декількох об'єктах для малювання. Виберіть лише"
+" один об'єкт."
+
+#: ../app/tools/gimpgradienttool.c:258
+msgid "No active drawables."
+msgstr "Немає активних об'єктів малювання."
+
+#: ../app/tools/gimpgradienttool.c:296
 msgid "No gradient available for use with this tool."
 msgstr "Немає градієнта, доступного для використання з цим інструментом."
 
-#: ../app/tools/gimpgradienttool.c:631
+#: ../app/tools/gimpgradienttool.c:653
 msgid "Gradient: "
 msgstr "Градієнт:"
 
@@ -23455,8 +23732,9 @@ msgid "Pick a layer or guide"
 msgstr "Вибрати шар або напрямну"
 
 #: ../app/tools/gimpmoveoptions.c:156
-msgid "Move the active layer"
-msgstr "Перемістити активний шар"
+#| msgid "Move the selected filter up"
+msgid "Move the selected layers"
+msgstr "Пересунути позначені шари"
 
 #: ../app/tools/gimpmoveoptions.c:160
 msgid "Pick a path"
@@ -23482,6 +23760,26 @@ msgstr "Переміщення: переміщення шарів, познач�
 #: ../app/tools/gimpmovetool.c:118
 msgid "_Move"
 msgstr "Пере_міщення"
+
+#: ../app/tools/gimpmovetool.c:336
+#| msgid "The active layer's position is locked."
+msgid "The selected layer's position is locked."
+msgstr "Позиція позначеного шару заблокована від змін."
+
+#: ../app/tools/gimpmovetool.c:338
+#| msgid "The active layer's pixels are locked."
+msgid "The selected layer's pixels are locked."
+msgstr "Точки растру позначеного шару заблоковані від змін."
+
+#: ../app/tools/gimpmovetool.c:352
+#| msgid "The active channel's pixels are locked."
+msgid "All selected channels' positions or pixels are locked."
+msgstr "Позиції або пікселі усіх позначених каналів заблоковано."
+
+#: ../app/tools/gimpmovetool.c:365
+#| msgid "The active layer's position and size are locked."
+msgid "All selected_items layers' positions are locked."
+msgstr "Усі позиції позначених елементів шарів заблоковано."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -23608,7 +23906,6 @@ msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Інструмент Операція: виконання довільної операції GEGL"
 
 #: ../app/tools/gimpoperationtool.c:560
-#| msgid "Aux Input"
 msgid "Aux\\1 Input"
 msgstr "Вхідний дод.\\1"
 
@@ -23677,16 +23974,25 @@ msgstr "Натисніть, щоб намалювати лінію"
 msgid "%s to pick a color"
 msgstr "%s, зоб взяти колір піпеткою"
 
-#: ../app/tools/gimppainttool.c:293
+#: ../app/tools/gimppainttool.c:294
+msgid "Cannot paint on multiple layer. Select only one layer."
+msgstr ""
+"Не можна малювати на декількох шарах одночасно. Виберіть лише один шар."
+
+#: ../app/tools/gimppainttool.c:297 ../app/tools/gimpwarptool.c:773
+msgid "No active drawable."
+msgstr "Немає активного об'єкта для малювання."
+
+#: ../app/tools/gimppainttool.c:303
 msgid "Cannot paint on layer groups."
 msgstr "Не вдалось малювати на групі шарів"
 
-#: ../app/tools/gimppainttool.c:658
+#: ../app/tools/gimppainttool.c:671
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для малювання прямої лінії"
 
-#: ../app/tools/gimppainttool.c:877
+#: ../app/tools/gimppainttool.c:890
 msgid "The active layer does not have an alpha channel."
 msgstr "У активному шарі немає каналу прозорості."
 
@@ -23985,48 +24291,48 @@ msgstr "Увімкнути розмазування країв позначен�
 msgid "Mode:"
 msgstr "Режим:"
 
-#: ../app/tools/gimpselectiontool.c:319
+#: ../app/tools/gimpselectiontool.c:329
 msgid "Click-Drag to replace the current selection"
 msgstr "Натисніть та перетягніть для заміни поточне позначене"
 
-#: ../app/tools/gimpselectiontool.c:327
+#: ../app/tools/gimpselectiontool.c:337
 msgid "Click-Drag to create a new selection"
 msgstr "Натисніть та перетягніть для створення нового позначеного"
 
-#: ../app/tools/gimpselectiontool.c:332
+#: ../app/tools/gimpselectiontool.c:342
 msgid "Click-Drag to add to the current selection"
 msgstr "Натисніть та перетягніть для додавання до поточного позначеного"
 
-#: ../app/tools/gimpselectiontool.c:341
+#: ../app/tools/gimpselectiontool.c:351
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Натисніть та перетягніть для віднімання від поточного позначеного"
 
-#: ../app/tools/gimpselectiontool.c:350
+#: ../app/tools/gimpselectiontool.c:360
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Натисніть та перетягніть для перетинання з поточним позначеним"
 
-#: ../app/tools/gimpselectiontool.c:360
+#: ../app/tools/gimpselectiontool.c:370
 msgid "Click-Drag to move the selection mask"
 msgstr "Натисніть та перетягніть для зсуву маски позначеного"
 
-#: ../app/tools/gimpselectiontool.c:368
+#: ../app/tools/gimpselectiontool.c:378
 msgid "Click-Drag to move the selected pixels"
 msgstr "Натисніть та перетягніть для зсуву позначених точок"
 
-#: ../app/tools/gimpselectiontool.c:372
+#: ../app/tools/gimpselectiontool.c:382
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Натисніть та перетягніть для зсуву копії позначених точок"
 
-#: ../app/tools/gimpselectiontool.c:376
+#: ../app/tools/gimpselectiontool.c:386
 msgid "Click to anchor the floating selection"
 msgstr "Натисніть, щоб причепити рухоме вибирання"
 
-#: ../app/tools/gimpselectiontool.c:530
+#: ../app/tools/gimpselectiontool.c:539
 #, c-format
 msgid "Cannot subtract from an empty selection."
 msgstr "Неможливо відняти щось від порожнього позначення."
 
-#: ../app/tools/gimpselectiontool.c:541
+#: ../app/tools/gimpselectiontool.c:550
 #, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "Перетин із порожнім позначенням неможливий."
@@ -24203,31 +24509,31 @@ msgstr "Текст: створення або редагування текст�
 msgid "Te_xt"
 msgstr "_Текст"
 
-#: ../app/tools/gimptexttool.c:1039
+#: ../app/tools/gimptexttool.c:1054
 msgid "Fonts are still loading"
 msgstr "Завантаження шрифтів ще не завершено"
 
-#: ../app/tools/gimptexttool.c:1050
+#: ../app/tools/gimptexttool.c:1065
 msgid "Text box: "
 msgstr "Текстовий блок:"
 
-#: ../app/tools/gimptexttool.c:1181
+#: ../app/tools/gimptexttool.c:1196
 msgid "Reshape Text Layer"
 msgstr "Зміна розміру текстового шару"
 
-#: ../app/tools/gimptexttool.c:1754 ../app/tools/gimptexttool.c:1757
+#: ../app/tools/gimptexttool.c:1769 ../app/tools/gimptexttool.c:1772
 msgid "Confirm Text Editing"
 msgstr "Підтвердження зміни тексту"
 
-#: ../app/tools/gimptexttool.c:1761
+#: ../app/tools/gimptexttool.c:1776
 msgid "Create _New Layer"
 msgstr "_Створити новий шар"
 
-#: ../app/tools/gimptexttool.c:1763
+#: ../app/tools/gimptexttool.c:1778
 msgid "_Edit"
 msgstr "З_міни"
 
-#: ../app/tools/gimptexttool.c:1785
+#: ../app/tools/gimptexttool.c:1800
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -24794,41 +25100,45 @@ msgstr "_Викривлення"
 msgid "Warp Tool Stroke"
 msgstr "Обведення викривлення"
 
-#: ../app/tools/gimpwarptool.c:769
+#: ../app/tools/gimpwarptool.c:770
+msgid "Cannot warp multiple layers. Select only one layer."
+msgstr "Неможливо обвести декілька шарів одразу. Виберіть лише один шар."
+
+#: ../app/tools/gimpwarptool.c:783
 msgid "Cannot warp layer groups."
 msgstr "Не можна обводити групи шарів."
 
-#: ../app/tools/gimpwarptool.c:806
+#: ../app/tools/gimpwarptool.c:820
 msgid "No stroke events selected."
 msgstr "Не позначено подій штрихів."
 
-#: ../app/tools/gimpwarptool.c:828
+#: ../app/tools/gimpwarptool.c:842
 msgid "No warp to erase."
 msgstr "Немає обведення для витирання."
 
-#: ../app/tools/gimpwarptool.c:832
+#: ../app/tools/gimpwarptool.c:846
 msgid "No warp to smooth."
 msgstr "Немає обведення для згладжування."
 
-#: ../app/tools/gimpwarptool.c:1056
+#: ../app/tools/gimpwarptool.c:1070
 msgid "Warp transform"
 msgstr "Викривлення"
 
-#: ../app/tools/gimpwarptool.c:1393
+#: ../app/tools/gimpwarptool.c:1407
 msgid "Please add some warp strokes first."
 msgstr "Будь ласка, спочатку додайте якісь обвідні штрихи."
 
-#: ../app/tools/gimpwarptool.c:1407 ../app/tools/gimpwarptool.c:1444
+#: ../app/tools/gimpwarptool.c:1421 ../app/tools/gimpwarptool.c:1458
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Обробляємо кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1422 ../app/tools/gimpwarptool.c:1452
+#: ../app/tools/gimpwarptool.c:1436 ../app/tools/gimpwarptool.c:1466
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1461
+#: ../app/tools/gimpwarptool.c:1475
 msgid "Frame"
 msgstr "Кадр"
 
@@ -26946,9 +27256,19 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "кольорів"
 
-#: ../app/widgets/gimpitemtreeview.c:751
+#: ../app/widgets/gimpitemtreeview.c:783
 msgid "Lock:"
 msgstr "Замкнути:"
+
+#: ../app/widgets/gimpitemtreeview.c:1152
+#, c-format
+#| msgid "No filter selected"
+msgid "%d item selected"
+msgid_plural "%d items selected"
+msgstr[0] "Вибрано %d об'єкт"
+msgstr[1] "Вибрано %d об'єкти"
+msgstr[2] "Вибрано %d об'єктів"
+msgstr[3] "Вибрано %d об'єкт"
 
 #: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
@@ -26958,9 +27278,15 @@ msgstr "Як у системі"
 msgid "Switch to another group of modes"
 msgstr "Перемкнутися на іншу групу режимів"
 
-#: ../app/widgets/gimplayertreeview.c:311
+#: ../app/widgets/gimplayertreeview.c:317
 msgid "Lock alpha channel"
 msgstr "Замкнути альфа-канал"
+
+#: ../app/widgets/gimplayertreeview.c:1063
+#| msgctxt "undo-type"
+#| msgid "Set layer mode"
+msgid "Set layers mode"
+msgstr "Встановити режим шарів"
 
 #: ../app/widgets/gimpmessagebox.c:452
 #, c-format
@@ -26969,6 +27295,7 @@ msgid_plural "Message repeated %d times."
 msgstr[0] "Повідомлення повторено %d раз."
 msgstr[1] "Повідомлення повторено %d рази."
 msgstr[2] "Повідомлення повторено %d разів."
+msgstr[3] "Повідомлення повторено %d раз."
 
 #: ../app/widgets/gimpopendialog.c:89
 msgid "Automatically Detected"
@@ -27464,11 +27791,11 @@ msgstr "Виникла помилка при розборі визначення
 msgid "[ Base Image ]"
 msgstr "[ Основне зображення ]"
 
-#: ../app/widgets/gimpvectorstreeview.c:111
+#: ../app/widgets/gimpvectorstreeview.c:113
 msgid "Lock path strokes"
 msgstr "Замкнути контур від змін"
 
-#: ../app/widgets/gimpvectorstreeview.c:114
+#: ../app/widgets/gimpvectorstreeview.c:116
 msgid "Lock path position"
 msgstr "Замкнути позицію контура від змін"
 
@@ -27630,40 +27957,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
 
-#: ../app/xcf/xcf.c:114 ../app/xcf/xcf.c:176
+#: ../app/xcf/xcf.c:116 ../app/xcf/xcf.c:184
 msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
-#: ../app/xcf/xcf.c:253 ../app/xcf/xcf.c:342
+#: ../app/xcf/xcf.c:261 ../app/xcf/xcf.c:350
 msgid "Memory Stream"
 msgstr "Потік пам'яті"
 
-#: ../app/xcf/xcf.c:264
+#: ../app/xcf/xcf.c:272
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається \"%s\""
 
-#: ../app/xcf/xcf.c:306
+#: ../app/xcf/xcf.c:314
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія файла XCF %d не підтримується"
 
-#: ../app/xcf/xcf.c:365
+#: ../app/xcf/xcf.c:373
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження \"%s\""
 
-#: ../app/xcf/xcf.c:373
+#: ../app/xcf/xcf.c:381
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закривається %s"
 
-#: ../app/xcf/xcf.c:391
+#: ../app/xcf/xcf.c:399
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Помилка запису файла «%s»: "
 
-#: ../app/xcf/xcf.c:479
+#: ../app/xcf/xcf.c:487
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Помилка при створенні «%s»:"
@@ -27698,20 +28025,20 @@ msgstr ""
 "Виявлено пошкоджені паразитом 'gimp-metadata'.\n"
 "Дані XMP не можна перенести: %s"
 
-#: ../app/xcf/xcf-load.c:694
+#: ../app/xcf/xcf-load.c:697
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
-#: ../app/xcf/xcf-load.c:713
+#: ../app/xcf/xcf-load.c:716
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: ../app/xcf/xcf-load.c:804
+#: ../app/xcf/xcf-load.c:807
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -27758,6 +28085,13 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgctxt "layers-action"
+#~ msgid "Delete this layer"
+#~ msgstr "Вилучити цей шар"
+
+#~ msgid "Move the active layer"
+#~ msgstr "Перемістити активний шар"
 
 #~ msgid "Aux%d Input"
 #~ msgstr "Дод. введення%d"
