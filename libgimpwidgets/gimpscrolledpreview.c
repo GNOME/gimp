@@ -859,6 +859,12 @@ gimp_scrolled_preview_set_policy (GimpScrolledPreview *preview,
   gtk_widget_queue_resize (gimp_preview_get_area (GIMP_PREVIEW (preview)));
 }
 
+/**
+ * gimp_scrolled_preview_get_adjustments:
+ * @preview: a #GimpScrolledPreview
+ * @hadj: (out) (transfer none): Horizontal adjustment
+ * @vadj: (out) (transfer none): Vertical adjustment
+ */
 void
 gimp_scrolled_preview_get_adjustments (GimpScrolledPreview  *preview,
                                        GtkAdjustment       **hadj,

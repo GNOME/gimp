@@ -193,17 +193,27 @@ gimp_rgb_set_uchar (GimpRGB *rgb,
   rgb->b = (gdouble) b / 255.0;
 }
 
+/**
+ * gimp_rgb_get_uchar:
+ * @rgb: a #GimpRGB struct
+ * @red: (out) (optional): Location for red component, or %NULL
+ * @green: (out) (optional): Location for green component, or %NULL
+ * @blue: (out) (optional): Location for blue component, or %NULL
+ *
+ * Writes the red, green, blue and alpha components of @rgb to the
+ * color components @red, @green and @blue.
+ */
 void
 gimp_rgb_get_uchar (const GimpRGB *rgb,
-                    guchar        *r,
-                    guchar        *g,
-                    guchar        *b)
+                    guchar        *red,
+                    guchar        *green,
+                    guchar        *blue)
 {
   g_return_if_fail (rgb != NULL);
 
-  if (r) *r = ROUND (CLAMP (rgb->r, 0.0, 1.0) * 255.0);
-  if (g) *g = ROUND (CLAMP (rgb->g, 0.0, 1.0) * 255.0);
-  if (b) *b = ROUND (CLAMP (rgb->b, 0.0, 1.0) * 255.0);
+  if (red)   *red   = ROUND (CLAMP (rgb->r, 0.0, 1.0) * 255.0);
+  if (green) *green = ROUND (CLAMP (rgb->g, 0.0, 1.0) * 255.0);
+  if (blue)  *blue  = ROUND (CLAMP (rgb->b, 0.0, 1.0) * 255.0);
 }
 
 void

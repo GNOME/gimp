@@ -586,8 +586,8 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
 /**
  * gimp_number_pair_entry_get_values:
  * @entry: A #GimpNumberPairEntry widget.
- * @left:  Pointer of where to store the left number (may be %NULL).
- * @right: Pointer of to store the right number (may be %NULL).
+ * @left:  (out) (optional): Location to store the left number (may be %NULL).
+ * @right: (out) (optional): Location to store the right number (may be %NULL).
  *
  * Gets the numbers displayed by a #GimpNumberPairEntry.
  *
@@ -1243,8 +1243,8 @@ gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
 /**
  * gimp_number_pair_entry_get_default_values:
  * @entry: A #GimpNumberPairEntry widget.
- * @left:  Pointer of where to put left value.
- * @right: Pointer of where to put right value.
+ * @left:  (out) (optional): Location to put the default left value, or %NULL.
+ * @right: (out) (optional): Location to put the default right value, or %NULL.
  *
  * Since: 2.4
  **/
