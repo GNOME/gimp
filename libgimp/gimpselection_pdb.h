@@ -32,36 +32,37 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean                   gimp_selection_bounds    (GimpImage    *image,
-                                                     gboolean     *non_empty,
-                                                     gint         *x1,
-                                                     gint         *y1,
-                                                     gint         *x2,
-                                                     gint         *y2);
-gint                       gimp_selection_value     (GimpImage    *image,
-                                                     gint          x,
-                                                     gint          y);
-gboolean                   gimp_selection_is_empty  (GimpImage    *image);
-gboolean                   gimp_selection_translate (GimpImage    *image,
-                                                     gint          offx,
-                                                     gint          offy);
-G_GNUC_INTERNAL GimpLayer* _gimp_selection_float    (GimpDrawable *drawable,
-                                                     gint          offx,
-                                                     gint          offy);
-gboolean                   gimp_selection_invert    (GimpImage    *image);
-gboolean                   gimp_selection_sharpen   (GimpImage    *image);
-gboolean                   gimp_selection_all       (GimpImage    *image);
-gboolean                   gimp_selection_none      (GimpImage    *image);
-gboolean                   gimp_selection_feather   (GimpImage    *image,
-                                                     gdouble       radius);
-gboolean                   gimp_selection_border    (GimpImage    *image,
-                                                     gint          radius);
-gboolean                   gimp_selection_grow      (GimpImage    *image,
-                                                     gint          steps);
-gboolean                   gimp_selection_shrink    (GimpImage    *image,
-                                                     gint          steps);
-gboolean                   gimp_selection_flood     (GimpImage    *image);
-GimpChannel*               gimp_selection_save      (GimpImage    *image);
+gboolean                   gimp_selection_bounds    (GimpImage       *image,
+                                                     gboolean        *non_empty,
+                                                     gint            *x1,
+                                                     gint            *y1,
+                                                     gint            *x2,
+                                                     gint            *y2);
+gint                       gimp_selection_value     (GimpImage       *image,
+                                                     gint             x,
+                                                     gint             y);
+gboolean                   gimp_selection_is_empty  (GimpImage       *image);
+gboolean                   gimp_selection_translate (GimpImage       *image,
+                                                     gint             offx,
+                                                     gint             offy);
+G_GNUC_INTERNAL GimpLayer* _gimp_selection_float    (gint             num_drawables,
+                                                     const GimpItem **drawables,
+                                                     gint             offx,
+                                                     gint             offy);
+gboolean                   gimp_selection_invert    (GimpImage       *image);
+gboolean                   gimp_selection_sharpen   (GimpImage       *image);
+gboolean                   gimp_selection_all       (GimpImage       *image);
+gboolean                   gimp_selection_none      (GimpImage       *image);
+gboolean                   gimp_selection_feather   (GimpImage       *image,
+                                                     gdouble          radius);
+gboolean                   gimp_selection_border    (GimpImage       *image,
+                                                     gint             radius);
+gboolean                   gimp_selection_grow      (GimpImage       *image,
+                                                     gint             steps);
+gboolean                   gimp_selection_shrink    (GimpImage       *image,
+                                                     gint             steps);
+gboolean                   gimp_selection_flood     (GimpImage       *image);
+GimpChannel*               gimp_selection_save      (GimpImage       *image);
 
 
 G_END_DECLS

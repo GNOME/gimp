@@ -114,12 +114,14 @@ select_float_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GtkWidget *widget;
+  GList     *drawables;
   GError    *error = NULL;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
+  drawables = gimp_image_get_selected_drawables (image);
   if (gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
-                            gimp_image_get_active_drawable (image),
+                            drawables,
                             action_data_get_context (data),
                             TRUE, 0, 0, &error))
     {
@@ -132,6 +134,7 @@ select_float_cmd_callback (GimpAction *action,
                             error->message);
       g_clear_error (&error);
     }
+  g_list_free (drawables);
 }
 
 void

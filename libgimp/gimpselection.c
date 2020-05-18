@@ -73,10 +73,12 @@ gimp_selection_get_by_id (gint32 selection_id)
 
 /**
  * gimp_selection_float:
- * @image:    ignored
- * @drawable: The drawable from which to float selection.
- * @offx:     x offset for translation.
- * @offy:     y offset for translation.
+ * @image:       ignored
+ * @n_drawables: Size of @drawables.
+ * @drawables:   (array length=n_drawables): The drawables from which to
+ *               float selection.
+ * @offx:        x offset for translation.
+ * @offy:        y offset for translation.
  *
  * Float the selection from the specified drawable with initial offsets
  * as specified.
@@ -90,12 +92,14 @@ gimp_selection_get_by_id (gint32 selection_id)
  * Returns: (transfer none): The floated layer.
  */
 GimpLayer *
-gimp_selection_float (GimpImage    *image,
-                      GimpDrawable *drawable,
-                      gint          offx,
-                      gint          offy)
+gimp_selection_float (GimpImage     *image,
+                      gint           n_drawables,
+                      GimpDrawable **drawables,
+                      gint           offx,
+                      gint           offy)
 {
-  return _gimp_selection_float (drawable,
+  return _gimp_selection_float (n_drawables,
+                                (const GimpItem **) drawables,
                                 offx,
                                 offy);
 }

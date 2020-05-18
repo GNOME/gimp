@@ -571,14 +571,19 @@ gimp_create_mainimage (Gimp     *gimp,
    */
   if (with_unusual_stuff)
     {
+      GList *drawables;
+
+      drawables = gimp_image_get_selected_drawables (image);
+
       /* Floating selection */
       gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
-                            gimp_image_get_active_drawable (image),
+                            drawables,
                             gimp_get_user_context (gimp),
                             TRUE /*cut_image*/,
                             0 /*off_x*/,
                             0 /*off_y*/,
                             NULL /*error*/);
+      g_list_free (drawables);
     }
 
   /* Adds stuff like layer groups */
