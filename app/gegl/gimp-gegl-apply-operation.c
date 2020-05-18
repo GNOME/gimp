@@ -345,8 +345,9 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   if (result_buffer != dest_buffer)
     {
-      gimp_gegl_buffer_copy (result_buffer, dest_rect, GEGL_ABYSS_NONE,
-                             dest_buffer,   dest_rect);
+      if (! cancel)
+        gimp_gegl_buffer_copy (result_buffer, dest_rect, GEGL_ABYSS_NONE,
+                               dest_buffer,   dest_rect);
 
       g_object_unref (result_buffer);
     }
