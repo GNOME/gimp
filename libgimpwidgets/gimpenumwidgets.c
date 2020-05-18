@@ -49,7 +49,8 @@
  *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button: (out) (optional): returns the first button in the created group.
+ * @first_button: (out) (optional) (transfer none):
+ *                Returns the first button in the created group.
  *
  * Creates a new group of #GtkRadioButtons representing the enum
  * values.  A group of radiobuttons is a good way to represent enums
@@ -95,7 +96,8 @@ gimp_enum_radio_box_new (GType            enum_type,
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button: (out) (optional): returns the first button in the created group.
+ * @first_button: (out) (optional) (transfer none):
+ *                Returns the first button in the created group.
  *
  * Just like gimp_enum_radio_box_new(), this function creates a group
  * of radio buttons, but additionally it supports limiting the range
@@ -175,7 +177,8 @@ gimp_enum_radio_box_new_with_range (GType            enum_type,
  *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button: (out) (optional): returns the first button in the created group.
+ * @first_button: (out) (optional) (transfer none):
+ *                Returns the first button in the created group.
  *
  * Calls gimp_enum_radio_box_new() and puts the resulting vbox into a
  * #GtkFrame.
@@ -227,7 +230,8 @@ gimp_enum_radio_frame_new (GType            enum_type,
  *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button: (out) (optional): returns the first button in the created group.
+ * @first_button: (out) (optional) (transfer none):
+ *                Returns the first button in the created group.
  *
  * Calls gimp_enum_radio_box_new_with_range() and puts the resulting
  * vertical box into a #GtkFrame.
@@ -282,7 +286,8 @@ gimp_enum_radio_frame_new_with_range (GType            enum_type,
  *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button: (out) (optional): returns the first button in the created group.
+ * @first_button: (out) (optional) (transfer none):
+ *                Returns the first button in the created group.
  *
  * Creates a horizontal box of radio buttons with named icons. The
  * icon name for each icon is created by appending the enum_value's
@@ -332,7 +337,8 @@ gimp_enum_icon_box_new (GType            enum_type,
  *                        #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
  * @callback_data_destroy: Destroy function for @callback_data.
- * @first_button: (out) (optional): returns the first button in the created group.
+ * @first_button: (out) (optional) (transfer none):
+ *                Returns the first button in the created group.
  *
  * Just like gimp_enum_icon_box_new(), this function creates a group
  * of radio buttons, but additionally it supports limiting the range
