@@ -40,6 +40,7 @@ menudata_DATA = \
 	text-tool-menu.xml		\
 	tool-options-menu.xml		\
 	undo-menu.xml			\
+	vector-toolpath-menu.xml	\
 	vectors-menu.xml
 
 EXTRA_DIST = \

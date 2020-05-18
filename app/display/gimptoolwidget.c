@@ -1084,3 +1084,24 @@ gimp_tool_widget_get_cursor (GimpToolWidget      *widget,
 
   return FALSE;
 }
+
+GimpUIManager *
+gimp_tool_widget_get_popup (GimpToolWidget        *widget,
+                            const GimpCoords      *coords,
+                            GdkModifierType        state,
+                            GimpDisplay           *display,
+                            const gchar          **ui_path)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (coords != NULL, FALSE);
+
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_popup)
+    {
+      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_popup (widget, coords,
+                                                             state, display,
+                                                             ui_path);
+    }
+
+  return NULL;
+}

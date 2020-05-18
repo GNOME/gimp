@@ -92,6 +92,7 @@
 #include "tool-presets-actions.h"
 #include "tool-preset-editor-actions.h"
 #include "tools-actions.h"
+#include "vector-toolpath-actions.h"
 #include "vectors-actions.h"
 #include "view-actions.h"
 #include "windows-actions.h"
@@ -234,6 +235,9 @@ static const GimpActionFactoryEntry action_groups[] =
   { "tools", N_("Tools"), GIMP_ICON_DIALOG_TOOLS,
     tools_actions_setup,
     tools_actions_update },
+  { "vector-toolpath", N_("Path Toolpath"), GIMP_ICON_PATH,
+    vector_toolpath_actions_setup,
+    vector_toolpath_actions_update },
   { "vectors", N_("Paths"), GIMP_ICON_PATH,
     vectors_actions_setup,
     vectors_actions_update },

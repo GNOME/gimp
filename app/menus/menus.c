@@ -177,6 +177,14 @@ menus_init (Gimp              *gimp,
                                       "vectors-menu.xml", plug_in_menus_setup,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<VectorToolPath>",
+                                      "vector-toolpath",
+                                      NULL,
+                                      "/vector-toolpath-popup",
+                                      "vector-toolpath-menu.xml",
+                                      NULL,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<Colormap>",
                                       "colormap",
                                       "plug-in",

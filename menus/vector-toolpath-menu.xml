@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="vector-toolpath-popup">
+    <menuitem action="vector-toolpath-reverse-stroke" />
+    <separator />
+  </popup>
+</ui>

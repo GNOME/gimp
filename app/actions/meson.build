@@ -83,6 +83,8 @@ libappactions_sources = [
   'tool-presets-commands.c',
   'tools-actions.c',
   'tools-commands.c',
+  'vector-toolpath-actions.c',
+  'vector-toolpath-commands.c',
   'vectors-actions.c',
   'vectors-commands.c',
   'view-actions.c',

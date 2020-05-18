@@ -36,6 +36,10 @@
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockcontainer.h"
+#include "widgets/gimpmenufactory.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "tools/gimptools-utils.h"
@@ -123,6 +127,8 @@ struct _GimpToolPathPrivate
 
   GimpCanvasItem       *path;
   GList                *items;
+
+  GimpUIManager        *ui_manager;
 };
 
 
@@ -170,6 +176,11 @@ static gboolean gimp_tool_path_get_cursor      (GimpToolWidget        *widget,
                                                 GimpCursorType        *cursor,
                                                 GimpToolCursorType    *tool_cursor,
                                                 GimpCursorModifier    *modifier);
+static GimpUIManager * gimp_tool_path_get_popup (GimpToolWidget       *widget,
+                                                const GimpCoords      *coords,
+                                                GdkModifierType        state,
+                                                GimpDisplay           *display,
+                                                const gchar          **ui_path);
 
 static GimpVectorFunction
                    gimp_tool_path_get_function (GimpToolPath          *path,
@@ -228,6 +239,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
   widget_class->hover           = gimp_tool_path_hover;
   widget_class->key_press       = gimp_tool_path_key_press;
   widget_class->get_cursor      = gimp_tool_path_get_cursor;
+  widget_class->get_popup       = gimp_tool_path_get_popup;
 
   path_signals[BEGIN_CHANGE] =
     g_signal_new ("begin-change",
@@ -1273,6 +1285,37 @@ gimp_tool_path_get_cursor (GimpToolWidget     *widget,
   return TRUE;
 }
 
+static GimpUIManager *
+gimp_tool_path_get_popup (GimpToolWidget    *widget,
+                          const GimpCoords  *coords,
+                          GdkModifierType    state,
+                          GimpDisplay       *display,
+                          const gchar      **ui_path)
+{
+  GimpToolPath        *path    = GIMP_TOOL_PATH (widget);
+  GimpToolPathPrivate *private = path->private;
+
+  if (!private->ui_manager)
+    {
+      GimpDisplayShell  *shell = gimp_tool_widget_get_shell (widget);
+      GimpImageWindow   *image_window;
+      GimpDialogFactory *dialog_factory;
+
+      image_window   = gimp_display_shell_get_window (shell);
+      dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
+
+      private->ui_manager =
+        gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
+                                       "<VectorToolPath>",
+                                       widget);
+    }
+
+  gimp_ui_manager_update (private->ui_manager, widget);
+  *ui_path = "/vector-toolpath-popup";
+  return private->ui_manager;
+}
+
+
 static GimpVectorFunction
 gimp_tool_path_get_function (GimpToolPath     *path,
                              const GimpCoords *coords,
@@ -1932,4 +1975,10 @@ gimp_tool_path_set_vectors (GimpToolPath *path,
     }
 
   g_object_notify (G_OBJECT (path), "vectors");
+}
+
+void
+gimp_tool_path_reverse_stroke (GimpToolPath *path)
+{
+  g_printerr ("REVERSE_STROKE\n");
 }

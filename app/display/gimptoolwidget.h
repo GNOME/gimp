@@ -119,6 +119,13 @@ struct _GimpToolWidgetClass
                                 GimpCursorType        *cursor,
                                 GimpToolCursorType    *tool_cursor,
                                 GimpCursorModifier    *modifier);
+
+  GimpUIManager *
+           (* get_popup)       (GimpToolWidget        *widget,
+                                const GimpCoords      *coords,
+                                GdkModifierType        state,
+                                GimpDisplay           *display,
+                                const gchar          **ui_path);
 };
 
 
@@ -310,5 +317,11 @@ gboolean   gimp_tool_widget_get_cursor      (GimpToolWidget        *widget,
                                              GimpToolCursorType    *tool_cursor,
                                              GimpCursorModifier    *modifier);
 
+GimpUIManager *
+           gimp_tool_widget_get_popup       (GimpToolWidget        *widget,
+                                             const GimpCoords      *coords,
+                                             GdkModifierType        state,
+                                             GimpDisplay           *display,
+                                             const gchar          **ui_path);
 
 #endif /* __GIMP_TOOL_WIDGET_H__ */

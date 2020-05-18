@@ -31,6 +31,7 @@ menus_files = [
   'tool-preset-editor-menu.xml',
   'tool-presets-menu.xml',
   'undo-menu.xml',
+  'vector-toolpath-menu.xml',
   'vectors-menu.xml',
 ]
 

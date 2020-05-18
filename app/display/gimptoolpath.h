@@ -64,5 +64,6 @@ GimpToolWidget * gimp_tool_path_new         (GimpDisplayShell *shell);
 void             gimp_tool_path_set_vectors (GimpToolPath     *path,
                                              GimpVectors      *vectors);
 
+void             gimp_tool_path_reverse_stroke (GimpToolPath *path);
 
 #endif /* __GIMP_TOOL_PATH_H__ */
