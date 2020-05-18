@@ -282,6 +282,12 @@ gimp_paned_box_get_handle_drag (GimpPanedBox   *paned_box,
       return FALSE;
     }
 
+  if (gtk_drag_dest_find_target (GTK_WIDGET (paned_box), context, NULL) ==
+      GDK_NONE)
+    {
+      return FALSE;
+    }
+
   gtk_widget_get_allocation (GTK_WIDGET (paned_box), &allocation);
 
   /* See if we're at the edge of the dock If there are no dockables,
@@ -503,6 +509,9 @@ gimp_paned_box_drag_drop (GtkWidget      *widget,
     }
 
   target = gtk_drag_dest_find_target (widget, context, NULL);
+
+  if (target == GDK_NONE)
+    return FALSE;
 
   gtk_drag_get_data (widget, context, target, time);
 
