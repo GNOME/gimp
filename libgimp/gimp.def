@@ -664,6 +664,7 @@ EXPORTS
 	gimp_pdb_procedure_exists
 	gimp_pdb_query_procedures
 	gimp_pdb_run_procedure
+	gimp_pdb_run_procedure_argv
 	gimp_pdb_run_procedure_array
 	gimp_pdb_run_procedure_valist
 	gimp_pdb_set_data
