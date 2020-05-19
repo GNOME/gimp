@@ -40,18 +40,6 @@ import math
 import time
 
 
-def pdb_call(proc_name, *args):
-    if len(args) % 2 == 1:
-        raise ValueError("The number of arguments after proc_name needs to be even. ")
-
-    num_args = len(args) // 2
-    proc_args = Gimp.ValueArray.new(num_args)
-    for i in range(num_args):
-        proc_args.append(GObject.Value(args[2 * i], args[2 * i + 1]))
-
-    return Gimp.get_pdb().run_procedure(proc_name, proc_args)
-
-
 def result_success():
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
@@ -388,11 +376,11 @@ class SelectionToPath:
         else:
             selection_was_empty = False
 
-        result = pdb_call('plug-in-sel2path',
-                          Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE,
-                          Gimp.Image, self.image,
-                          Gimp.Drawable, self.image.get_active_layer()
-        )
+        result = Gimp.get_pdb().run_procedure('plug-in-sel2path', [
+            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
+            GObject.Value(Gimp.Image, self.image),
+            GObject.Value(Gimp.Drawable, self.image.get_active_layer()),
+        ])
 
         self.path = self.image.get_vectors()[0]
         self.stroke_ids = self.path.get_strokes()
