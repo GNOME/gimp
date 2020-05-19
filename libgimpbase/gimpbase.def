@@ -219,6 +219,7 @@ EXPORTS
 	gimp_value_array_new
 	gimp_value_array_new_from_types
 	gimp_value_array_new_from_types_valist
+	gimp_value_array_new_from_values
 	gimp_value_array_prepend
 	gimp_value_array_ref
 	gimp_value_array_remove

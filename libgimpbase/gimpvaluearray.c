@@ -147,7 +147,7 @@ gimp_value_array_new (gint n_prealloced)
 }
 
 /**
- * gimp_value_array_new_from_types:
+ * gimp_value_array_new_from_types: (skip)
  * @error_msg:  return location for an error message.
  * @first_type: first type in the array, or #G_TYPE_NONE.
  * @...:        the remaining types in the array, terminated by #G_TYPE_NONE
@@ -183,7 +183,7 @@ gimp_value_array_new_from_types (gchar **error_msg,
 }
 
 /**
- * gimp_value_array_new_from_types_valist:
+ * gimp_value_array_new_from_types_valist: (skip)
  * @error_msg:  return location for an error message.
  * @first_type: first type in the array, or #G_TYPE_NONE.
  * @va_args:    a va_list of GTypes and values, terminated by #G_TYPE_NONE
@@ -246,6 +246,38 @@ gimp_value_array_new_from_types_valist (gchar   **error_msg,
     }
 
   va_end (va_args);
+
+  return value_array;
+}
+
+/**
+ * gimp_value_array_new_from_values:
+ * @values: (array length=n_values) The #GValue elements
+ * @n_values: the number of value elements
+ *
+ * Allocate and initialize a new #GimpValueArray, and fill it with
+ * the given #GValues.
+ *
+ * Returns: a newly allocated #GimpValueArray.
+ *
+ * Since: 3.0
+ */
+GimpValueArray *
+gimp_value_array_new_from_values (const GValue **values,
+                                  gint           n_values)
+{
+  GimpValueArray *value_array;
+  gint i;
+
+  g_return_val_if_fail (values != NULL, NULL);
+  g_return_val_if_fail (n_values > 0, NULL);
+
+  value_array = gimp_value_array_new (n_values);
+
+  for (i = 0; i < n_values; i++)
+    {
+      gimp_value_array_insert (value_array, i, values[i]);
+    }
 
   return value_array;
 }
