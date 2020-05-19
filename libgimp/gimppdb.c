@@ -193,7 +193,7 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
 }
 
 /**
- * gimp_pdb_run_procedure:
+ * gimp_pdb_run_procedure: (skip)
  * @pdb:            the #GimpPDB object.
  * @procedure_name: the procedure registered name.
  * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
@@ -229,7 +229,7 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
 }
 
 /**
- * gimp_pdb_run_procedure_valist:
+ * gimp_pdb_run_procedure_valist: (skip)
  * @pdb:            the #GimpPDB object.
  * @procedure_name: the procedure registered name.
  * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
@@ -280,7 +280,40 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
 }
 
 /**
- * gimp_pdb_run_procedure_array: (rename-to gimp_pdb_run_procedure)
+ * gimp_pdb_run_procedure_argv: (rename-to gimp_pdb_run_procedure)
+ * @pdb:            the #GimpPDB object.
+ * @procedure_name: the procedure registered name.
+ * @arguments: (array length=n_arguments): the call arguments.
+ * @n_arguments: the number of arguments.
+ *
+ * Runs the procedure named @procedure_name with @arguments.
+ *
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
+ */
+GimpValueArray *
+gimp_pdb_run_procedure_argv (GimpPDB       *pdb,
+                             const gchar   *procedure_name,
+                             const GValue **arguments,
+                             gint           n_arguments)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_values;
+
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (arguments != NULL, NULL);
+
+  args = gimp_value_array_new_from_values (arguments, n_arguments);
+  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);
+  gimp_value_array_unref (args);
+
+  return return_values;
+}
+
+/**
+ * gimp_pdb_run_procedure_array:
  * @pdb:            the #GimpPDB object.
  * @procedure_name: the procedure registered name.
  * @arguments:      the call arguments.

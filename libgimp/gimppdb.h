@@ -81,6 +81,10 @@ GimpValueArray * gimp_pdb_run_procedure_valist (GimpPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 GType                 first_type,
                                                 va_list               args);
+GimpValueArray * gimp_pdb_run_procedure_argv   (GimpPDB              *pdb,
+                                                const gchar          *procedure_name,
+                                                const GValue        **arguments,
+                                                gint                  n_arguments);
 GimpValueArray * gimp_pdb_run_procedure_array  (GimpPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 const GimpValueArray *arguments);
