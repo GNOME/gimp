@@ -373,7 +373,7 @@ gimp_eek (const gchar *reason,
           g_snprintf (pid, 16, "%u", (guint) getpid ());
           args[2] = pid;
 
-          g_snprintf (timestamp, 16, "%lu", the_errors_gimp->config->last_release_timestamp);
+          g_snprintf (timestamp, 16, "%"G_GINT64_FORMAT, the_errors_gimp->config->last_release_timestamp);
           args[7] = timestamp;
 
 #ifndef G_OS_WIN32
