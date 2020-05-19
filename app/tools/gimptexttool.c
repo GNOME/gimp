@@ -313,6 +313,7 @@ gimp_text_tool_finalize (GObject *object)
 
   g_clear_object (&text_tool->proxy);
   g_clear_object (&text_tool->buffer);
+  g_clear_object (&text_tool->ui_manager);
 
   gimp_text_tool_editor_finalize (text_tool);
 
