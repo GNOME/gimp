@@ -1717,24 +1717,49 @@ layers_blend_space_cmd_callback (GimpAction *action,
                                  gpointer    data)
 {
   GimpImage           *image;
-  GimpLayer           *layer;
+  GList               *layers;
+  GList               *update_layers = NULL;
+  GList               *iter;
   GimpLayerColorSpace  blend_space;
-  return_if_no_layer (image, layer, data);
+  gboolean             push_undo = TRUE;
+  return_if_no_layers (image, layers, data);
 
   blend_space = (GimpLayerColorSpace) g_variant_get_int32 (value);
 
-  if (blend_space != gimp_layer_get_blend_space (layer))
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayerMode mode;
+
+      mode = gimp_layer_get_mode (iter->data);
+      if (gimp_layer_mode_is_blend_space_mutable (mode) &&
+          blend_space != gimp_layer_get_blend_space (iter->data))
+        update_layers = g_list_prepend (update_layers, iter->data);
+    }
+
+  if (g_list_length (update_layers) == 1)
     {
       GimpUndo *undo;
-      gboolean  push_undo = TRUE;
 
       undo = gimp_image_undo_can_compress (image, GIMP_TYPE_LAYER_PROP_UNDO,
                                            GIMP_UNDO_LAYER_MODE);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (update_layers->data))
         push_undo = FALSE;
+    }
 
-      gimp_layer_set_blend_space (layer, blend_space, push_undo);
+  if (update_layers)
+    {
+      if (g_list_length (update_layers) > 1)
+        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_MODE,
+                                     _("Set layers' blend space"));
+
+      for (iter = update_layers; iter; iter = iter->next)
+        gimp_layer_set_blend_space (iter->data, blend_space, push_undo);
+
+      if (g_list_length (update_layers) > 1)
+        gimp_image_undo_group_end (image);
+
+      g_list_free (update_layers);
       gimp_image_flush (image);
     }
 }
@@ -1745,24 +1770,49 @@ layers_composite_space_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpImage           *image;
-  GimpLayer           *layer;
+  GList               *layers;
+  GList               *update_layers = NULL;
+  GList               *iter;
   GimpLayerColorSpace  composite_space;
-  return_if_no_layer (image, layer, data);
+  gboolean             push_undo = TRUE;
+  return_if_no_layers (image, layers, data);
 
   composite_space = (GimpLayerColorSpace) g_variant_get_int32 (value);
 
-  if (composite_space != gimp_layer_get_composite_space (layer))
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayerMode mode;
+
+      mode = gimp_layer_get_mode (iter->data);
+      if (gimp_layer_mode_is_composite_space_mutable (mode) &&
+          composite_space != gimp_layer_get_composite_space (iter->data))
+        update_layers = g_list_prepend (update_layers, iter->data);
+    }
+
+  if (g_list_length (update_layers) == 1)
     {
       GimpUndo *undo;
-      gboolean  push_undo = TRUE;
 
       undo = gimp_image_undo_can_compress (image, GIMP_TYPE_LAYER_PROP_UNDO,
                                            GIMP_UNDO_LAYER_MODE);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (update_layers->data))
         push_undo = FALSE;
+    }
 
-      gimp_layer_set_composite_space (layer, composite_space, push_undo);
+  if (update_layers)
+    {
+      if (g_list_length (update_layers) > 1)
+        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_MODE,
+                                     _("Set layers' composite space"));
+
+      for (iter = update_layers; iter; iter = iter->next)
+        gimp_layer_set_composite_space (iter->data, composite_space, push_undo);
+
+      if (g_list_length (update_layers) > 1)
+        gimp_image_undo_group_end (image);
+
+      g_list_free (update_layers);
       gimp_image_flush (image);
     }
 }
@@ -1773,24 +1823,49 @@ layers_composite_mode_cmd_callback (GimpAction *action,
                                     gpointer    data)
 {
   GimpImage              *image;
-  GimpLayer              *layer;
+  GList                  *layers;
+  GList                  *update_layers = NULL;
+  GList                  *iter;
   GimpLayerCompositeMode  composite_mode;
-  return_if_no_layer (image, layer, data);
+  gboolean             push_undo = TRUE;
+  return_if_no_layers (image, layers, data);
 
   composite_mode = (GimpLayerCompositeMode) g_variant_get_int32 (value);
 
-  if (composite_mode != gimp_layer_get_composite_mode (layer))
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayerMode mode;
+
+      mode = gimp_layer_get_mode (iter->data);
+      if (gimp_layer_mode_is_composite_mode_mutable (mode) &&
+          composite_mode != gimp_layer_get_composite_mode (iter->data))
+        update_layers = g_list_prepend (update_layers, iter->data);
+    }
+
+  if (g_list_length (update_layers) == 1)
     {
       GimpUndo *undo;
-      gboolean  push_undo = TRUE;
 
       undo = gimp_image_undo_can_compress (image, GIMP_TYPE_LAYER_PROP_UNDO,
                                            GIMP_UNDO_LAYER_MODE);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (update_layers->data))
         push_undo = FALSE;
+    }
 
-      gimp_layer_set_composite_mode (layer, composite_mode, push_undo);
+  if (update_layers)
+    {
+      if (g_list_length (update_layers) > 1)
+        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_MODE,
+                                     _("Set layers' composite mode"));
+
+      for (iter = update_layers; iter; iter = iter->next)
+        gimp_layer_set_composite_mode (iter->data, composite_mode, push_undo);
+
+      if (g_list_length (update_layers) > 1)
+        gimp_image_undo_group_end (image);
+
+      g_list_free (update_layers);
       gimp_image_flush (image);
     }
 }

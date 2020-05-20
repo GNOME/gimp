@@ -2712,7 +2712,7 @@ gimp_layer_set_blend_space (GimpLayer           *layer,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-          gimp_image_undo_push_layer_mode (image, NULL, layer);
+          gimp_image_undo_push_layer_mode (image, _("Set layer's blend space"), layer);
         }
 
       layer->blend_space = blend_space;
@@ -2759,7 +2759,7 @@ gimp_layer_set_composite_space (GimpLayer           *layer,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-          gimp_image_undo_push_layer_mode (image, NULL, layer);
+          gimp_image_undo_push_layer_mode (image, _("Set layer's composite space"), layer);
         }
 
       layer->composite_space = composite_space;
@@ -2806,7 +2806,7 @@ gimp_layer_set_composite_mode (GimpLayer              *layer,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-          gimp_image_undo_push_layer_mode (image, NULL, layer);
+          gimp_image_undo_push_layer_mode (image, _("Set layer's composite mode"), layer);
         }
 
       layer->composite_mode = composite_mode;

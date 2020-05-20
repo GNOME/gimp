@@ -778,9 +778,9 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       writable       = FALSE;
   gboolean       movable        = FALSE;
   gboolean       children       = FALSE;
-  gboolean       bs_mutable     = FALSE;
-  gboolean       cs_mutable     = FALSE;
-  gboolean       cm_mutable     = FALSE;
+  gboolean       bs_mutable     = FALSE; /* At least 1 selected layers' blend space is mutable.     */
+  gboolean       cs_mutable     = FALSE; /* At least 1 selected layers' composite space is mutable. */
+  gboolean       cm_mutable     = FALSE; /* At least 1 selected layers' composite mode is mutable.  */
   GList         *next_visible   = NULL;
   gboolean       next_mode      = TRUE;
   gboolean       prev_mode      = TRUE;
@@ -879,26 +879,32 @@ layers_actions_update (GimpActionGroup *group,
                 have_next = TRUE;
             }
 
+          if (gimp_layer_mode_is_blend_space_mutable (mode))
+            bs_mutable = TRUE;
+          if (gimp_layer_mode_is_composite_space_mutable (mode))
+            cs_mutable = TRUE;
+          if (gimp_layer_mode_is_composite_mode_mutable (mode))
+            cm_mutable = TRUE;
+
           if (have_masks && have_no_masks        &&
               have_groups && have_no_groups      &&
               have_writable && ! all_masks_shown &&
               ! all_masks_disabled               &&
               ! lock_alpha && can_lock_alpha     &&
               ! prev_mode && ! next_mode         &&
-              have_prev && have_next)
+              have_prev && have_next             &&
+              bs_mutable && cs_mutable && cm_mutable)
             break;
         }
 
       if (n_layers == 1)
         {
           /* Special unique layer case. */
-          GimpLayerMode  mode;
           const gchar   *action = NULL;
           GList         *layer_list;
           GList         *list;
 
           layer  = layers->data;
-          mode   = gimp_layer_get_mode (layer);
           switch (gimp_layer_get_blend_space (layer))
             {
             case GIMP_LAYER_COLOR_SPACE_AUTO:
@@ -944,10 +950,6 @@ layers_actions_update (GimpActionGroup *group,
             }
 
           gimp_action_group_set_action_active (group, action, TRUE);
-
-          bs_mutable = gimp_layer_mode_is_blend_space_mutable (mode);
-          cs_mutable = gimp_layer_mode_is_composite_space_mutable (mode);
-          cm_mutable = gimp_layer_mode_is_composite_mode_mutable (mode);
 
           mask           = gimp_layer_get_mask (layer);
           alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
@@ -1060,19 +1062,19 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-blend-space-auto",           layer && bs_mutable);
-  SET_SENSITIVE ("layers-blend-space-rgb-linear",     layer && bs_mutable);
-  SET_SENSITIVE ("layers-blend-space-rgb-perceptual", layer && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-auto",           n_layers && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-rgb-linear",     n_layers && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-rgb-perceptual", n_layers && bs_mutable);
 
-  SET_SENSITIVE ("layers-composite-space-auto",           layer && cs_mutable);
-  SET_SENSITIVE ("layers-composite-space-rgb-linear",     layer && cs_mutable);
-  SET_SENSITIVE ("layers-composite-space-rgb-perceptual", layer && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-auto",           n_layers && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-rgb-linear",     n_layers && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-rgb-perceptual", n_layers && cs_mutable);
 
-  SET_SENSITIVE ("layers-composite-mode-auto",             layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-union",            layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-clip-to-backdrop", layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-clip-to-layer",    layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-intersection",     layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-auto",             n_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-union",            n_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-clip-to-backdrop", n_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-clip-to-layer",    n_layers && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-intersection",     n_layers && cm_mutable);
 
   SET_SENSITIVE ("layers-mask-add",             n_layers > 0 && !fs && !ac && mask);
   SET_SENSITIVE ("layers-mask-add-button",      n_layers > 0 && !fs && !ac);
