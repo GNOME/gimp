@@ -1562,8 +1562,25 @@ layers_alpha_to_selection_cmd_callback (GimpAction *action,
 
   operation = (GimpChannelOps) g_variant_get_int32 (value);
 
-  gimp_channel_push_undo (gimp_image_get_mask (image),
-                          C_("undo-type", "Alpha to Selection"));
+  switch (operation)
+    {
+    case GIMP_CHANNEL_OP_REPLACE:
+      gimp_channel_push_undo (gimp_image_get_mask (image),
+                              C_("undo-type", "Alpha to Selection"));
+      break;
+    case GIMP_CHANNEL_OP_ADD:
+      gimp_channel_push_undo (gimp_image_get_mask (image),
+                              C_("undo-type", "Add Alpha to Selection"));
+      break;
+    case GIMP_CHANNEL_OP_SUBTRACT:
+      gimp_channel_push_undo (gimp_image_get_mask (image),
+                              C_("undo-type", "Subtract Alpha from Selection"));
+      break;
+    case GIMP_CHANNEL_OP_INTERSECT:
+      gimp_channel_push_undo (gimp_image_get_mask (image),
+                              C_("undo-type", "Intersect Alpha with Selection"));
+      break;
+    }
   gimp_channel_combine_items (gimp_image_get_mask (image),
                               layers, operation);
   gimp_image_flush (image);
