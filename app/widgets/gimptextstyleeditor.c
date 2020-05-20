@@ -861,7 +861,7 @@ gimp_text_style_editor_size_changed (GimpSizeEntry       *entry,
       GtkTextIter start, end;
       gdouble points;
       gint size;
-      taille = gtk_text_buffer_get_char_count(buffer);
+      size = gtk_text_buffer_get_char_count(buffer);
       points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
                                      GIMP_UNIT_PIXEL, 
                                      editor->resolution_y);
