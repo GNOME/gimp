@@ -29,8 +29,15 @@
 
 #include "gegl/gimp-gegl-mask-combine.h"
 
+#include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
+#include "gimpimage.h"
+#include "gimpimage-merge.h"
+#include "gimpimage-new.h"
+#include "gimplayer.h"
+
+#include "vectors/gimpvectors.h"
 
 
 typedef struct
@@ -468,4 +475,107 @@ gimp_channel_combine_buffer (GimpChannel    *mask,
     }
 
   gimp_channel_combine_end (mask, &data);
+}
+
+/**
+ * gimp_channel_combine_items:
+ * @channel:
+ * @items:
+ * @op:
+ *
+ * Edit @channel with the given @items, according to the boolean @op.
+ * @items need to belong to the same image, but it doesn't have to be
+ * the owner image of @channel.
+ * If @items contain a single layer, it will be used as-is, without
+ * caring about opacity, mode or visibility.
+ * If @items contain several layers, they will be used composited using
+ * their opacity, mode, visibility, etc. properties within the image
+ * (similar as if a "merge visible" had been applied to the image then
+ * the resulting layer used alone).
+ * If @items contain channels or vectors, they will be added as a set
+ * (i.e. as a single item which is an union of other items). E.g. an
+ * combine in GIMP_CHANNEL_OP_INTERSECT mode does not intersect all
+ * @items with each other and @channel. It first adds-alike all @items
+ * together, then intersects the result with @channel.
+ */
+void
+gimp_channel_combine_items (GimpChannel    *mask,
+                            GList          *items,
+                            GimpChannelOps  op)
+{
+  GimpImage   *image;
+  GimpImage   *items_image = NULL;
+  GimpImage   *temp_image  = NULL;
+
+  GimpChannel *channel     = NULL;
+  GList       *layers      = NULL;
+  GList       *iter;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (g_list_length (items) > 0);
+
+  for (iter = items; iter; iter = iter->next)
+    {
+      g_return_if_fail (GIMP_IS_LAYER (iter->data)   ||
+                        GIMP_IS_CHANNEL (iter->data) ||
+                        GIMP_IS_VECTORS (iter->data));
+
+      if (items_image == NULL)
+        items_image = gimp_item_get_image (iter->data);
+      else
+        g_return_if_fail (items_image == gimp_item_get_image (iter->data));
+
+      if (GIMP_IS_LAYER (iter->data))
+        layers = g_list_prepend (layers, iter->data);
+    }
+
+  image = gimp_item_get_image (GIMP_ITEM (mask));
+  if (g_list_length (layers) > 1)
+    {
+      GList *merged_layers;
+
+      temp_image = gimp_image_new_from_drawables (image->gimp, items, FALSE);
+      merged_layers = gimp_image_merge_visible_layers (temp_image,
+                                                       gimp_get_user_context (temp_image->gimp),
+                                                       GIMP_CLIP_TO_IMAGE,
+                                                       FALSE, TRUE, NULL);
+      g_return_if_fail (g_list_length (merged_layers) == 1);
+      gimp_item_to_selection (GIMP_ITEM (merged_layers->data),
+                              GIMP_CHANNEL_OP_REPLACE,
+                              TRUE, FALSE, 0.0, 0.0);
+      channel = gimp_image_get_mask (temp_image);
+    }
+
+  if (! channel)
+    {
+      channel = gimp_channel_new (image,
+                                      gimp_image_get_width (image),
+                                      gimp_image_get_height (image),
+                                      NULL, NULL);
+      gimp_channel_clear (channel, NULL, FALSE);
+
+      if (g_list_length (layers) == 1)
+        gimp_channel_combine_buffer (channel,
+                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (layers->data)),
+                                     GIMP_CHANNEL_OP_REPLACE, 0, 0);
+    }
+
+  for (iter = items; iter; iter = iter->next)
+    {
+      if (! GIMP_IS_LAYER (iter->data))
+        gimp_channel_combine_buffer (channel,
+                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (iter->data)),
+                                     GIMP_CHANNEL_OP_ADD, 0, 0);
+    }
+
+  gimp_channel_combine_buffer (mask,
+                               gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                               op, 0, 0);
+
+  if (temp_image)
+    g_object_unref (temp_image);
+  else
+    g_object_unref (channel);
+
+  g_list_free (layers);
 }

@@ -52,5 +52,9 @@ void   gimp_channel_combine_buffer       (GimpChannel    *mask,
                                           gint            off_x,
                                           gint            off_y);
 
+void   gimp_channel_combine_items        (GimpChannel    *mask,
+                                          GList          *items,
+                                          GimpChannelOps  op);
+
 
 #endif /* __GIMP_CHANNEL_COMBINE_H__ */

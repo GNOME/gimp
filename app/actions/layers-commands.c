@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpchannel-combine.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-fill.h"
@@ -1556,22 +1557,15 @@ layers_alpha_to_selection_cmd_callback (GimpAction *action,
 {
   GimpImage      *image;
   GList          *layers;
-  GList          *iter;
   GimpChannelOps  operation;
   return_if_no_layers (image, layers, data);
 
   operation = (GimpChannelOps) g_variant_get_int32 (value);
 
-  for (iter = layers; iter; iter = iter->next)
-    {
-      if (operation != GIMP_CHANNEL_OP_REPLACE || iter == layers)
-        gimp_item_to_selection (GIMP_ITEM (iter->data), operation,
-                                TRUE, FALSE, 0.0, 0.0);
-      else
-         gimp_item_to_selection (GIMP_ITEM (iter->data),
-                                 GIMP_CHANNEL_OP_ADD,
-                                 TRUE, FALSE, 0.0, 0.0);
-    }
+  gimp_channel_push_undo (gimp_image_get_mask (image),
+                          C_("undo-type", "Alpha to Selection"));
+  gimp_channel_combine_items (gimp_image_get_mask (image),
+                              layers, operation);
   gimp_image_flush (image);
 }
 
