@@ -796,7 +796,10 @@ gimp_color_frame_update (GimpColorFrame *frame)
                     g_free (tmp);
 
                     if (! frame->sample_average)
-                      values[4] = g_strdup_printf ("%d", frame->pixel[0]);
+                      {
+                        values[4] = g_strdup_printf (
+                          "%d", ((guint8 *) frame->pixel)[0]);
+                      }
                   }
               }
           }
