@@ -500,26 +500,26 @@ static const GimpEnumActionEntry layers_mask_apply_actions[] =
 static const GimpEnumActionEntry layers_mask_to_selection_actions[] =
 {
   { "layers-mask-selection-replace", GIMP_ICON_SELECTION_REPLACE,
-    NC_("layers-action", "_Mask to Selection"), NULL,
-    NC_("layers-action", "Replace the selection with the layer mask"),
+    NC_("layers-action", "_Masks to Selection"), NULL,
+    NC_("layers-action", "Replace the selection with the layer masks"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_REPLACE },
 
   { "layers-mask-selection-add", GIMP_ICON_SELECTION_ADD,
-    NC_("layers-action", "_Add to Selection"), NULL,
-    NC_("layers-action", "Add the layer mask to the current selection"),
+    NC_("layers-action", "_Add Masks to Selection"), NULL,
+    NC_("layers-action", "Add the layer masks to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_ADD },
 
   { "layers-mask-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
-    NC_("layers-action", "_Subtract from Selection"), NULL,
-    NC_("layers-action", "Subtract the layer mask from the current selection"),
+    NC_("layers-action", "_Subtract Masks from Selection"), NULL,
+    NC_("layers-action", "Subtract the layer masks from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_SUBTRACT },
 
   { "layers-mask-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
-    NC_("layers-action", "_Intersect with Selection"), NULL,
-    NC_("layers-action", "Intersect the layer mask with the current selection"),
+    NC_("layers-action", "_Intersect Masks with Selection"), NULL,
+    NC_("layers-action", "Intersect the layer masks with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_INTERSECT }
 };
@@ -1089,10 +1089,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_ACTIVE ("layers-mask-show",    all_masks_shown);
   SET_ACTIVE ("layers-mask-disable", all_masks_disabled);
 
-  SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-selection-subtract",  layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-selection-intersect", layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-selection-replace",   n_layers && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-selection-add",       n_layers && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-selection-subtract",  n_layers && !fs && !ac && have_masks);
+  SET_SENSITIVE ("layers-mask-selection-intersect", n_layers && !fs && !ac && have_masks);
 
   SET_SENSITIVE ("layers-alpha-selection-replace",   n_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-alpha-selection-add",       n_layers > 0 && !fs && !ac);

@@ -1502,19 +1502,44 @@ layers_mask_to_selection_cmd_callback (GimpAction *action,
                                        gpointer    data)
 {
   GimpImage     *image;
-  GimpLayer     *layer;
-  GimpLayerMask *mask;
-  return_if_no_layer (image, layer, data);
+  GList         *layers;
+  GList         *iter;
+  GList         *masks = NULL;
+  return_if_no_layers (image, layers, data);
 
-  mask = gimp_layer_get_mask (layer);
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (gimp_layer_get_mask (iter->data))
+        masks = g_list_prepend (masks, gimp_layer_get_mask (iter->data));
+    }
 
-  if (mask)
+  if (masks)
     {
       GimpChannelOps operation = (GimpChannelOps) g_variant_get_int32 (value);
 
-      gimp_item_to_selection (GIMP_ITEM (mask), operation,
-                              TRUE, FALSE, 0.0, 0.0);
+      switch (operation)
+        {
+        case GIMP_CHANNEL_OP_REPLACE:
+          gimp_channel_push_undo (gimp_image_get_mask (image),
+                                  C_("undo-type", "Masks to Selection"));
+          break;
+        case GIMP_CHANNEL_OP_ADD:
+          gimp_channel_push_undo (gimp_image_get_mask (image),
+                                  C_("undo-type", "Add Masks to Selection"));
+          break;
+        case GIMP_CHANNEL_OP_SUBTRACT:
+          gimp_channel_push_undo (gimp_image_get_mask (image),
+                                  C_("undo-type", "Subtract Masks from Selection"));
+          break;
+        case GIMP_CHANNEL_OP_INTERSECT:
+          gimp_channel_push_undo (gimp_image_get_mask (image),
+                                  C_("undo-type", "Intersect Masks with Selection"));
+          break;
+        }
+      gimp_channel_combine_items (gimp_image_get_mask (image),
+                                  masks, operation);
       gimp_image_flush (image);
+      g_list_free (masks);
     }
 }
 
