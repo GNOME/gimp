@@ -714,6 +714,8 @@ remap_indexed_layer (GimpLayer    *layer,
             {
               if (data[ALPHA_I])
                 data[INDEXED] = remap_table[data[INDEXED]];
+              else
+                data[INDEXED] = 0;
 
               data += bpp;
             }
