@@ -28,6 +28,9 @@
 
 G_BEGIN_DECLS
 
+#include <gegl.h>
+#include <gtk/gtk.h>
+
 /* For information look at the html documentation */
 
 

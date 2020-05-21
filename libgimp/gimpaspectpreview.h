@@ -27,6 +27,8 @@
 
 G_BEGIN_DECLS
 
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
 
 /* For information look into the C source or the html documentation */
 

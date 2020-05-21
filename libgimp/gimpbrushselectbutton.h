@@ -25,6 +25,8 @@
 #ifndef __GIMP_BRUSH_SELECT_BUTTON_H__
 #define __GIMP_BRUSH_SELECT_BUTTON_H__
 
+#include <libgimp/gimp.h>
+
 #include <libgimp/gimpselectbutton.h>
 
 G_BEGIN_DECLS

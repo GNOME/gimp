@@ -25,8 +25,9 @@
 #ifndef __GIMP_DRAWABLE_PREVIEW_H__
 #define __GIMP_DRAWABLE_PREVIEW_H__
 
-G_BEGIN_DECLS
+#include <libgimp/gimp.h>
 
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
