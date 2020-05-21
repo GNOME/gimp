@@ -199,7 +199,7 @@ gimp_tool_gui_finalize (GObject *object)
 
 
 /**
- * gimp_tool_gui_new:
+ * gimp_tool_gui_new: (skip)
  * @tool_info:   a #GimpToolInfo
  * @description: a string to use in the gui header or %NULL to use the help
  *               field from #GimpToolInfo

@@ -259,7 +259,7 @@ gimp_int_store_add_empty (GimpIntStore *store)
 }
 
 /**
- * gimp_int_store_new:
+ * gimp_int_store_new: (skip)
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @...:         a %NULL terminated list of more label, value pairs

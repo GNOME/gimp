@@ -229,7 +229,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
 /*  public functions  */
 
 /**
- * gimp_proc_browser_dialog_new:
+ * gimp_proc_browser_dialog_new: (skip)
  * @title:     The dialog's title.
  * @role:      The dialog's role, see gtk_window_set_role().
  * @help_func: (scope async): The function which will be called if

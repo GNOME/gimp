@@ -88,7 +88,7 @@ gimp_tool_dialog_dispose (GObject *object)
 
 
 /**
- * gimp_tool_dialog_new:
+ * gimp_tool_dialog_new: (skip)
  * @tool_info: a #GimpToolInfo
  * @desc:      a string to use in the dialog header or %NULL to use the help
  *             field from #GimpToolInfo

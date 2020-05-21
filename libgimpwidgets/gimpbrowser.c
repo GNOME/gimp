@@ -229,7 +229,7 @@ gimp_browser_new (void)
 }
 
 /**
- * gimp_browser_add_search_types:
+ * gimp_browser_add_search_types: (skip)
  * @browser:          a #GimpBrowser widget
  * @first_type_label: the label of the first search type
  * @first_type_id:    an integer that identifies the first search type

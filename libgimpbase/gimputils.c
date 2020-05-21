@@ -151,7 +151,7 @@ gimp_utf8_strtrim (const gchar *str,
 }
 
 /**
- * gimp_any_to_utf8:
+ * gimp_any_to_utf8: (skip)
  * @str: (array length=len): The string to be converted to UTF-8.
  * @len:            The length of the string, or -1 if the string
  *                  is nul-terminated.

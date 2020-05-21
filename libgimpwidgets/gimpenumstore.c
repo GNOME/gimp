@@ -261,7 +261,7 @@ gimp_enum_store_new_with_range (GType  enum_type,
 }
 
 /**
- * gimp_enum_store_new_with_values
+ * gimp_enum_store_new_with_values: (skip)
  * @enum_type: the #GType of an enum.
  * @n_values:  the number of enum values to include
  * @...:       a list of enum values (exactly @n_values)
@@ -292,7 +292,7 @@ gimp_enum_store_new_with_values (GType enum_type,
 }
 
 /**
- * gimp_enum_store_new_with_values_valist:
+ * gimp_enum_store_new_with_values_valist: (skip)
  * @enum_type: the #GType of an enum.
  * @n_values:  the number of enum values to include
  * @args:      a va_list of enum values (exactly @n_values)

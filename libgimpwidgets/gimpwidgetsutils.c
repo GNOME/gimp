@@ -157,7 +157,7 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
 }
 
 /**
- * gimp_label_set_attributes:
+ * gimp_label_set_attributes: (skip)
  * @label: a #GtkLabel
  * @...:   a list of PangoAttrType and value pairs terminated by -1.
  *

@@ -252,7 +252,7 @@ gimp_int_combo_box_get_property (GObject    *object,
 
 
 /**
- * gimp_int_combo_box_new:
+ * gimp_int_combo_box_new: (skip)
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @...: a %NULL terminated list of more label, value pairs
@@ -362,7 +362,7 @@ gimp_int_combo_box_new_array (gint         n_values,
 }
 
 /**
- * gimp_int_combo_box_prepend:
+ * gimp_int_combo_box_prepend: (skip)
  * @combo_box: a #GimpIntComboBox
  * @...:       pairs of column number and value, terminated with -1
  *
@@ -395,7 +395,7 @@ gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
 }
 
 /**
- * gimp_int_combo_box_append:
+ * gimp_int_combo_box_append: (skip)
  * @combo_box: a #GimpIntComboBox
  * @...:       pairs of column number and value, terminated with -1
  *

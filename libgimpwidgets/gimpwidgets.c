@@ -45,7 +45,7 @@
 
 
 /**
- * gimp_int_radio_group_new:
+ * gimp_int_radio_group_new: (skip)
  * @in_frame:              %TRUE if you want a #GtkFrame around the
  *                         radio button group.
  * @frame_title: (nullable):

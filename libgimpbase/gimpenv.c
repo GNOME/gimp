@@ -730,7 +730,7 @@ gimp_child_file (const gchar *parent,
 }
 
 /**
- * gimp_directory_file:
+ * gimp_directory_file: (skip)
  * @first_element: the first element of a path to a file in the
  *                 user's GIMP directory, or %NULL.
  * @...: a %NULL terminated list of the remaining elements of the path
@@ -761,7 +761,7 @@ gimp_directory_file (const gchar *first_element,
 }
 
 /**
- * gimp_installation_directory_file:
+ * gimp_installation_directory_file: (skip)
  * @first_element: the first element of a path to a file in the
  *                 top installation directory, or %NULL.
  * @...: a %NULL terminated list of the remaining elements of the path
@@ -792,7 +792,7 @@ gimp_installation_directory_file (const gchar *first_element,
 }
 
 /**
- * gimp_data_directory_file:
+ * gimp_data_directory_file: (skip)
  * @first_element: the first element of a path to a file in the
  *                 data directory, or %NULL.
  * @...: a %NULL terminated list of the remaining elements of the path
@@ -823,7 +823,7 @@ gimp_data_directory_file (const gchar *first_element,
 }
 
 /**
- * gimp_locale_directory_file:
+ * gimp_locale_directory_file: (skip)
  * @first_element: the first element of a path to a file in the
  *                 locale directory, or %NULL.
  * @...: a %NULL terminated list of the remaining elements of the path
