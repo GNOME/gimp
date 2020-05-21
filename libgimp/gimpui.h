@@ -19,7 +19,9 @@
 #ifndef __GIMP_UI_H__
 #define __GIMP_UI_H__
 
+#include <gio/gio.h>
 #include <gtk/gtk.h>
+#include <libgimp/gimp.h>
 
 #include <libgimpwidgets/gimpwidgets.h>
 
