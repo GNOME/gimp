@@ -19,7 +19,6 @@
 #ifndef __GIMP_BASE_ENUMS_H__
 #define __GIMP_BASE_ENUMS_H__
 
-#include <glib-object.h>
 
 /**
  * SECTION: gimpbaseenums
@@ -28,6 +27,7 @@
  *
  * Basic GIMP enumeration data types.
  **/
+
 
 G_BEGIN_DECLS
 
