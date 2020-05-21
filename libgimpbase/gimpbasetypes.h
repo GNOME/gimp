@@ -19,6 +19,7 @@
 #ifndef __GIMP_BASE_TYPES_H__
 #define __GIMP_BASE_TYPES_H__
 
+#include <glib-object.h>
 
 #include <libgimpcolor/gimpcolortypes.h>
 #include <libgimpmath/gimpmathtypes.h>
