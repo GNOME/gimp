@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-18 10:23+0000\n"
-"PO-Revision-Date: 2020-05-18 15:53+0300\n"
+"POT-Creation-Date: 2020-05-20 22:05+0000\n"
+"PO-Revision-Date: 2020-05-21 10:39+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3199,7 +3199,7 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:345
-#: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1777
+#: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1778
 #: ../app/tools/gimptransformgridtool.c:1262
 #: ../app/tools/gimptransformtool.c:437 ../app/widgets/gimpactionview.c:601
 #: ../app/widgets/gimpcolordialog.c:460
@@ -6636,7 +6636,7 @@ msgstr "Віддзеркалення"
 msgid "Rotating"
 msgstr "Обертання"
 
-#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1128
+#: ../app/actions/image-commands.c:867 ../app/actions/layers-commands.c:1129
 msgid "Cannot crop because the current selection is empty."
 msgstr "Не вдалось кадрувати, бо позначена ділянка порожня."
 
@@ -6681,7 +6681,7 @@ msgid "Scale Image"
 msgstr "Зміна розміру зображення"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2270
+#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2381
 #: ../app/dialogs/preferences-dialog.c:1688
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
@@ -6826,7 +6826,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Змінити назву шару"
 
-#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1010
+#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:1012
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Створити шар…"
@@ -6836,14 +6836,12 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Створити новий шар та додати його до зображення"
 
-#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:1011
+#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:1013
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Створити шар"
 
 #: ../app/actions/layers-actions.c:114
-#| msgctxt "layers-action"
-#| msgid "Create a new layer with last used values"
 msgctxt "layers-action"
 msgid "Create new layers with last used values"
 msgstr "Створити шари з останніми використаними параметрами"
@@ -6874,21 +6872,16 @@ msgid "D_uplicate Layer"
 msgstr "Д_ублювати шар"
 
 #: ../app/actions/layers-actions.c:134
-#| msgctxt "layers-action"
-#| msgid "Create a duplicate of the layer and add it to the image"
 msgctxt "layers-action"
 msgid "Create duplicates of selected layers and add them to the image"
 msgstr "Створити дублікати вибраних шарів і додати їх до зображення"
 
 #: ../app/actions/layers-actions.c:139
-#| msgctxt "layers-action"
-#| msgid "_Delete Layer"
 msgctxt "layers-action"
 msgid "_Delete Layers"
 msgstr "В_илучити шари"
 
 #: ../app/actions/layers-actions.c:140
-#| msgid "Delete the selected preset"
 msgctxt "layers-action"
 msgid "Delete selected layers"
 msgstr "Вилучити позначені шари"
@@ -7076,33 +7069,25 @@ msgid ""
 msgstr "Обрізати шар до меж його вмісту (вилучає порожні краї із шару)"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
-#| msgctxt "layers-action"
-#| msgid "Add La_yer Mask..."
 msgctxt "layers-action"
 msgid "Add La_yer Masks..."
 msgstr "Додати маски ша_рів…"
 
 #: ../app/actions/layers-actions.c:264 ../app/actions/layers-actions.c:274
-#| msgctxt "layers-action"
-#| msgid "Add a mask that allows non-destructive editing of transparency"
 msgctxt "layers-action"
 msgid ""
 "Add masks to selected layers that allows non-destructive editing of "
 "transparency"
 msgstr ""
-"Додати маски до позначених шарів, користуючись якими можна виконувати"
-" неруйнівне редагування прозорості"
+"Додати маски до позначених шарів, користуючись якими можна виконувати "
+"неруйнівне редагування прозорості"
 
 #: ../app/actions/layers-actions.c:279
-#| msgctxt "layers-action"
-#| msgid "Add La_yer Mask"
 msgctxt "layers-action"
 msgid "Add La_yer Masks"
 msgstr "Додати м_аски шарів"
 
 #: ../app/actions/layers-actions.c:281
-#| msgctxt "layers-action"
-#| msgid "Add a mask with last used values"
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
 msgstr ""
@@ -7139,15 +7124,11 @@ msgid "Work on the layer mask"
 msgstr "Робота з маскою шару"
 
 #: ../app/actions/layers-actions.c:308
-#| msgctxt "layers-action"
-#| msgid "S_how Layer Mask"
 msgctxt "layers-action"
 msgid "S_how Layer Masks"
 msgstr "_Показати маски шарів"
 
 #: ../app/actions/layers-actions.c:314
-#| msgctxt "layers-action"
-#| msgid "_Disable Layer Mask"
 msgctxt "layers-action"
 msgid "_Disable Layer Masks"
 msgstr "_Вимкнути маски шарів"
@@ -7385,51 +7366,65 @@ msgid "Delete Layer Mas_k"
 msgstr "Вилучити ма_ску шару"
 
 #: ../app/actions/layers-actions.c:495
-#| msgctxt "layers-action"
-#| msgid "Remove the layer mask and its effect"
 msgctxt "layers-action"
 msgid "Remove layer masks and their effect"
 msgstr "Вилучити маски шарів та їхні ефекти"
 
 #: ../app/actions/layers-actions.c:503
+#| msgctxt "layers-action"
+#| msgid "_Mask to Selection"
 msgctxt "layers-action"
-msgid "_Mask to Selection"
-msgstr "_Маска → Позначене"
+msgid "_Masks to Selection"
+msgstr "_Маски → Позначене"
 
 #: ../app/actions/layers-actions.c:504
+#| msgctxt "layers-action"
+#| msgid "Replace the selection with the layer mask"
 msgctxt "layers-action"
-msgid "Replace the selection with the layer mask"
-msgstr "Перетворює маску на позначену ділянку"
+msgid "Replace the selection with the layer masks"
+msgstr "Перетворює маски на позначену ділянку"
 
 #: ../app/actions/layers-actions.c:509
+#| msgctxt "layers-action"
+#| msgid "_Mask to Selection"
 msgctxt "layers-action"
-msgid "_Add to Selection"
-msgstr "_Додати до позначеного"
+msgid "_Add Masks to Selection"
+msgstr "_Додати маски до позначеного"
 
 #: ../app/actions/layers-actions.c:510
+#| msgctxt "layers-action"
+#| msgid "Add the layer mask to the current selection"
 msgctxt "layers-action"
-msgid "Add the layer mask to the current selection"
-msgstr "Додати маску шару до поточного позначеного"
+msgid "Add the layer masks to the current selection"
+msgstr "Додати маски шарів до поточного позначеного"
 
-#: ../app/actions/layers-actions.c:515 ../app/actions/layers-actions.c:544
+#: ../app/actions/layers-actions.c:515
+#| msgctxt "layers-action"
+#| msgid "_Subtract from Selection"
 msgctxt "layers-action"
-msgid "_Subtract from Selection"
-msgstr "_Відняти від позначеного"
+msgid "_Subtract Masks from Selection"
+msgstr "_Відняти маски від позначеного"
 
 #: ../app/actions/layers-actions.c:516
+#| msgctxt "layers-action"
+#| msgid "Subtract the layer mask from the current selection"
 msgctxt "layers-action"
-msgid "Subtract the layer mask from the current selection"
-msgstr "Відняти маску шару від поточного позначеного"
+msgid "Subtract the layer masks from the current selection"
+msgstr "Відняти маски шарів від поточного позначеного"
 
-#: ../app/actions/layers-actions.c:521 ../app/actions/layers-actions.c:551
+#: ../app/actions/layers-actions.c:521
+#| msgctxt "layers-action"
+#| msgid "_Intersect with Selection"
 msgctxt "layers-action"
-msgid "_Intersect with Selection"
-msgstr "_Перетнути з позначеним"
+msgid "_Intersect Masks with Selection"
+msgstr "_Перетнути маски з позначеним"
 
 #: ../app/actions/layers-actions.c:522
+#| msgctxt "layers-action"
+#| msgid "Intersect the layer mask with the current selection"
 msgctxt "layers-action"
-msgid "Intersect the layer mask with the current selection"
-msgstr "Перетнути маску шару з поточним позначеним"
+msgid "Intersect the layer masks with the current selection"
+msgstr "Перетнути маски шарів з поточним позначеним"
 
 #: ../app/actions/layers-actions.c:530
 msgctxt "layers-action"
@@ -7442,19 +7437,35 @@ msgid "Replace the selection with the layer's alpha channel"
 msgstr "Перетворити альфа-канал на позначене"
 
 #: ../app/actions/layers-actions.c:537
+#| msgctxt "undo-type"
+#| msgid "Alpha to Selection"
 msgctxt "layers-action"
-msgid "A_dd to Selection"
-msgstr "_Додати до позначеного"
+msgid "A_dd Alpha to Selection"
+msgstr "Д_одати альфу до позначеного"
 
 #: ../app/actions/layers-actions.c:539
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Додати альфа-канал до позначеного"
 
+#: ../app/actions/layers-actions.c:544
+#| msgctxt "layers-action"
+#| msgid "_Subtract from Selection"
+msgctxt "layers-action"
+msgid "_Subtract Alpha from Selection"
+msgstr "_Відняти альфу від позначеного"
+
 #: ../app/actions/layers-actions.c:546
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Відняти альфа-канал від позначеного"
+
+#: ../app/actions/layers-actions.c:551
+#| msgctxt "layers-action"
+#| msgid "_Intersect with Selection"
+msgctxt "layers-action"
+msgid "_Intersect Alpha with Selection"
+msgstr "_Перетнути альфу з позначеним"
 
 #: ../app/actions/layers-actions.c:553
 msgctxt "layers-action"
@@ -7462,57 +7473,41 @@ msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Перетнути альфа-канал з позначеним"
 
 #: ../app/actions/layers-actions.c:561
-#| msgctxt "layers-action"
-#| msgid "Select _Top Layer"
 msgctxt "layers-action"
 msgid "Select _Top Layers"
 msgstr "Позначити _верхні шари"
 
 #: ../app/actions/layers-actions.c:562
-#| msgctxt "layers-action"
-#| msgid "Select the topmost layer"
 msgctxt "layers-action"
 msgid "Select the topmost layers"
 msgstr "Позначити найвищі шари"
 
 #: ../app/actions/layers-actions.c:567
-#| msgctxt "layers-action"
-#| msgid "Select _Bottom Layer"
 msgctxt "layers-action"
 msgid "Select _Bottom Layers"
 msgstr "Позначити _нижні шари"
 
 #: ../app/actions/layers-actions.c:568
-#| msgctxt "layers-action"
-#| msgid "Select the bottommost layer"
 msgctxt "layers-action"
 msgid "Select the bottommost layers"
 msgstr "Позначити найнижчі шари"
 
 #: ../app/actions/layers-actions.c:573
-#| msgctxt "layers-action"
-#| msgid "Select _Previous Layer"
 msgctxt "layers-action"
 msgid "Select _Previous Layers"
 msgstr "Позначити п_опередні шари"
 
 #: ../app/actions/layers-actions.c:574
-#| msgctxt "layers-action"
-#| msgid "Select the layer above the current layer"
 msgctxt "layers-action"
 msgid "Select the layers above the current layers"
 msgstr "Позначити шари над поточними шарами"
 
 #: ../app/actions/layers-actions.c:579
-#| msgctxt "layers-action"
-#| msgid "Select _Next Layer"
 msgctxt "layers-action"
 msgid "Select _Next Layers"
 msgstr "Позначити н_аступні шари"
 
 #: ../app/actions/layers-actions.c:580
-#| msgctxt "layers-action"
-#| msgid "Select the layer below the current layer"
 msgctxt "layers-action"
 msgid "Select the layers below the current layers"
 msgstr "Позначити шари під поточними шарами"
@@ -7586,23 +7581,22 @@ msgstr "Скорочення: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Натисніть на мініатюру у пришвартованих шарах"
 
-#: ../app/actions/layers-actions.c:1005 ../app/actions/layers-actions.c:1006
+#: ../app/actions/layers-actions.c:1007 ../app/actions/layers-actions.c:1008
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _новий шар"
 
-#: ../app/actions/layers-commands.c:265 ../app/actions/layers-commands.c:2112
+#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2223
 msgid "Layer Attributes"
 msgstr "Ознаки шару"
 
-#: ../app/actions/layers-commands.c:268
+#: ../app/actions/layers-commands.c:269
 msgid "Edit Layer Attributes"
 msgstr "Зміна ознак шару"
 
-#: ../app/actions/layers-commands.c:337
+#: ../app/actions/layers-commands.c:338
 #: ../app/widgets/gimpdrawabletreeview.c:350
 #: ../app/widgets/gimplayertreeview.c:944
-#| msgid "New Layer"
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Нові шари"
@@ -7610,9 +7604,8 @@ msgstr[1] "Нові шари"
 msgstr[2] "Нові шари"
 msgstr[3] "Новий шар"
 
-#: ../app/actions/layers-commands.c:338
+#: ../app/actions/layers-commands.c:339
 #, c-format
-#| msgid "Create a New Layer"
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "Створення %d нового шару"
@@ -7620,9 +7613,7 @@ msgstr[1] "Створення %d нових шарів"
 msgstr[2] "Створення %d нових шарів"
 msgstr[3] "Створення нового шару"
 
-#: ../app/actions/layers-commands.c:423 ../app/actions/layers-commands.c:1998
-#| msgctxt "undo-type"
-#| msgid "New layer"
+#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2109
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Нові шари"
@@ -7630,13 +7621,11 @@ msgstr[1] "Нові шари"
 msgstr[2] "Нові шари"
 msgstr[3] "Новий шар"
 
-#: ../app/actions/layers-commands.c:502
+#: ../app/actions/layers-commands.c:503
 msgid "Visible"
 msgstr "Видиме"
 
-#: ../app/actions/layers-commands.c:531
-#| msgctxt "layers-action"
-#| msgid "New Layer _Group"
+#: ../app/actions/layers-commands.c:532
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "Нові групи шарів"
@@ -7644,9 +7633,7 @@ msgstr[1] "Нові групи шарів"
 msgstr[2] "Нові групи шарів"
 msgstr[3] "Нова група шарів"
 
-#: ../app/actions/layers-commands.c:639
-#| msgctxt "undo-type"
-#| msgid "Raise Layer"
+#: ../app/actions/layers-commands.c:640
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Підняти шари"
@@ -7654,9 +7641,7 @@ msgstr[1] "Підняти шари"
 msgstr[2] "Підняти шари"
 msgstr[3] "Підняти шар"
 
-#: ../app/actions/layers-commands.c:673
-#| msgctxt "undo-type"
-#| msgid "Raise Layer to Top"
+#: ../app/actions/layers-commands.c:674
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Підняти шари на вершину"
@@ -7664,9 +7649,7 @@ msgstr[1] "Підняти шари на вершину"
 msgstr[2] "Підняти шари на вершину"
 msgstr[3] "Підняти шар на вершину"
 
-#: ../app/actions/layers-commands.c:710
-#| msgctxt "undo-type"
-#| msgid "Lower Layer"
+#: ../app/actions/layers-commands.c:711
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Опустити шари"
@@ -7674,9 +7657,7 @@ msgstr[1] "Опустити шари"
 msgstr[2] "Опустити шари"
 msgstr[3] "Опустити шар"
 
-#: ../app/actions/layers-commands.c:747
-#| msgctxt "undo-type"
-#| msgid "Lower Layer to Bottom"
+#: ../app/actions/layers-commands.c:748
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Опустити шари на дно"
@@ -7684,112 +7665,158 @@ msgstr[1] "Опустити шари на дно"
 msgstr[2] "Опустити шари на дно"
 msgstr[3] "Опустити шар на дно"
 
-#: ../app/actions/layers-commands.c:774
-#| msgctxt "layers-action"
-#| msgid "D_uplicate Layer"
+#: ../app/actions/layers-commands.c:775
 msgid "Duplicate layers"
 msgstr "Дублювати шари"
 
-#: ../app/actions/layers-commands.c:890
+#: ../app/actions/layers-commands.c:891
 #, c-format
-#| msgctxt "undo-type"
-#| msgid "Remove Layer"
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Вилучення %d шарів"
 
-#: ../app/actions/layers-commands.c:1031
+#: ../app/actions/layers-commands.c:1032
 msgid "Set Layer Boundary Size"
 msgstr "Встановлення меж шару"
 
-#: ../app/actions/layers-commands.c:1095
+#: ../app/actions/layers-commands.c:1096
 msgid "Scale Layer"
 msgstr "Масштабування шару"
 
-#: ../app/actions/layers-commands.c:1138
+#: ../app/actions/layers-commands.c:1139
 msgid "Crop Layer to Selection"
 msgstr "_Обрізати шар до позначеного"
 
-#: ../app/actions/layers-commands.c:1169
+#: ../app/actions/layers-commands.c:1170
 msgid "Crop Layer to Content"
 msgstr "Обрізати шар до вмісту"
 
-#: ../app/actions/layers-commands.c:1182
+#: ../app/actions/layers-commands.c:1183
 msgid "Cannot crop because the active layer has no content."
 msgstr "Не вдалось обрізати, бо активний шар не має вмісту."
 
-#: ../app/actions/layers-commands.c:1189
+#: ../app/actions/layers-commands.c:1190
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr "Не вдалось кадрувати, бо активний шар вже обрізаний до свого вмісту."
 
-#: ../app/actions/layers-commands.c:1297 ../app/actions/layers-commands.c:2205
-#| msgid "Add Layer Mask"
+#: ../app/actions/layers-commands.c:1298 ../app/actions/layers-commands.c:2316
 msgid "Add Layer Masks"
 msgstr "Додавання масок шарів"
 
-#: ../app/actions/layers-commands.c:1349
-#| msgctxt "undo-type"
-#| msgid "Apply Layer Mask"
+#: ../app/actions/layers-commands.c:1350
 msgid "Apply Layer Masks"
 msgstr "Застосувати маски шару"
 
-#: ../app/actions/layers-commands.c:1353
-#| msgctxt "undo-type"
-#| msgid "Delete Layer Mask"
+#: ../app/actions/layers-commands.c:1354
 msgid "Delete Layer Masks"
 msgstr "Вилучити маски шарів"
 
-#: ../app/actions/layers-commands.c:1437
-#| msgctxt "undo-type"
-#| msgid "Show Layer Mask"
+#: ../app/actions/layers-commands.c:1438
 msgid "Show Layer Masks"
 msgstr "Показати маски шарів"
 
-#: ../app/actions/layers-commands.c:1484
-#| msgctxt "undo-type"
-#| msgid "Disable Layer Mask"
+#: ../app/actions/layers-commands.c:1485
 msgid "Disable Layer Masks"
 msgstr "Вимкнути маски шарів"
 
-#: ../app/actions/layers-commands.c:1604 ../app/actions/layers-commands.c:1648
-#: ../app/widgets/gimplayertreeview.c:1177
+#: ../app/actions/layers-commands.c:1524
+#| msgctxt "layers-action"
+#| msgid "_Mask to Selection"
+msgctxt "undo-type"
+msgid "Masks to Selection"
+msgstr "Маски → Позначене"
+
+#: ../app/actions/layers-commands.c:1528
+#| msgctxt "layers-action"
+#| msgid "_Mask to Selection"
+msgctxt "undo-type"
+msgid "Add Masks to Selection"
+msgstr "Додавання масок до позначеного"
+
+#: ../app/actions/layers-commands.c:1532
+#| msgctxt "channels-action"
+#| msgid "_Subtract from Selection"
+msgctxt "undo-type"
+msgid "Subtract Masks from Selection"
+msgstr "Віднімання масок від позначеного"
+
+#: ../app/actions/layers-commands.c:1536
+#| msgctxt "channels-action"
+#| msgid "_Intersect with Selection"
+msgctxt "undo-type"
+msgid "Intersect Masks with Selection"
+msgstr "Перетин масок із позначеним"
+
+#: ../app/actions/layers-commands.c:1594 ../app/core/gimpchannel-select.c:421
+#: ../app/core/gimplayer.c:442
+msgctxt "undo-type"
+msgid "Alpha to Selection"
+msgstr "Альфа на вибір"
+
+#: ../app/actions/layers-commands.c:1598
 #| msgctxt "undo-type"
-#| msgid "Set layer opacity"
+#| msgid "Alpha to Selection"
+msgctxt "undo-type"
+msgid "Add Alpha to Selection"
+msgstr "Додавання альфи до позначеного"
+
+#: ../app/actions/layers-commands.c:1602
+#| msgctxt "vectors-action"
+#| msgid "Subtract path from selection"
+msgctxt "undo-type"
+msgid "Subtract Alpha from Selection"
+msgstr "Віднімання альфи від позначеного"
+
+#: ../app/actions/layers-commands.c:1606
+#| msgctxt "vectors-action"
+#| msgid "Intersect path with selection"
+msgctxt "undo-type"
+msgid "Intersect Alpha with Selection"
+msgstr "Перетин альфи з позначеним"
+
+#: ../app/actions/layers-commands.c:1640 ../app/actions/layers-commands.c:1684
+#: ../app/widgets/gimplayertreeview.c:1177
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
-#: ../app/actions/layers-commands.c:1818 ../app/widgets/gimpitemtreeview.c:1683
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock content"
+#: ../app/actions/layers-commands.c:1754
+#| msgid "Set layers mode"
+msgid "Set layers' blend space"
+msgstr "Встановити простір змішування шарів"
+
+#: ../app/actions/layers-commands.c:1807
+#| msgid "Set layers opacity"
+msgid "Set layers' composite space"
+msgstr "Встановити простір композиції шарів"
+
+#: ../app/actions/layers-commands.c:1860
+#| msgid "Set layers mode"
+msgid "Set layers' composite mode"
+msgstr "Встановити режим композиції шарів"
+
+#: ../app/actions/layers-commands.c:1929 ../app/widgets/gimpitemtreeview.c:1683
 msgid "Lock content"
 msgstr "Заблокувати вміст"
 
-#: ../app/actions/layers-commands.c:1820 ../app/widgets/gimpitemtreeview.c:1685
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock content"
+#: ../app/actions/layers-commands.c:1931 ../app/widgets/gimpitemtreeview.c:1685
 msgid "Unlock content"
 msgstr "Розблокувати вміст"
 
-#: ../app/actions/layers-commands.c:1867 ../app/widgets/gimpitemtreeview.c:1749
-#| msgid "Lock path position"
+#: ../app/actions/layers-commands.c:1978 ../app/widgets/gimpitemtreeview.c:1749
 msgid "Lock position"
 msgstr "Заблокувати позицію"
 
-#: ../app/actions/layers-commands.c:1869 ../app/widgets/gimpitemtreeview.c:1751
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock position"
+#: ../app/actions/layers-commands.c:1980 ../app/widgets/gimpitemtreeview.c:1751
 msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
-#: ../app/actions/layers-commands.c:1919
+#: ../app/actions/layers-commands.c:2030
 #: ../app/widgets/gimplayertreeview.c:1122
-#| msgid "Lock alpha channel"
 msgid "Lock alpha channels"
 msgstr "Заблокувати альфа-канали"
 
-#: ../app/actions/layers-commands.c:1919
+#: ../app/actions/layers-commands.c:2030
 #: ../app/widgets/gimplayertreeview.c:1122
-#| msgid "Lock alpha channel"
 msgid "Unlock alpha channels"
 msgstr "Розблокувати альфа-канали"
 
@@ -12640,8 +12667,6 @@ msgid "Link/Unlink item"
 msgstr "Приєднати/від'єднати елемент"
 
 #: ../app/core/core-enums.c:1221
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock content"
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Заблокувати/розблокувати вміст"
@@ -12687,15 +12712,11 @@ msgid "Apply layer mask"
 msgstr "Застосування маски шару"
 
 #: ../app/core/core-enums.c:1230
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Заблокувати/розблокувати альфа-канали"
 
 #: ../app/core/core-enums.c:1231
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
@@ -13497,11 +13518,6 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Прямокутний закруглений вибір"
 
-#: ../app/core/gimpchannel-select.c:421 ../app/core/gimplayer.c:442
-msgctxt "undo-type"
-msgid "Alpha to Selection"
-msgstr "Альфа на вибір"
-
 #: ../app/core/gimpchannel-select.c:460
 #, c-format
 msgctxt "undo-type"
@@ -14158,7 +14174,6 @@ msgstr ""
 
 #: ../app/core/gimpimage.c:2823
 #, c-format
-#| msgid "Layer mode '%s' was added in %s"
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
@@ -14317,20 +14332,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Додати колір до карти кольорів"
 
-#: ../app/core/gimpimage-convert-indexed.c:793
+#: ../app/core/gimpimage-convert-indexed.c:795
 msgid "Cannot convert image: palette is empty."
 msgstr "Не можна перетворити зображення: палітра порожня."
 
-#: ../app/core/gimpimage-convert-indexed.c:805
+#: ../app/core/gimpimage-convert-indexed.c:807
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Перетворити зображення у індексоване"
 
-#: ../app/core/gimpimage-convert-indexed.c:890
+#: ../app/core/gimpimage-convert-indexed.c:892
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Перетворення в індексовані кольори (2 етап)"
 
-#: ../app/core/gimpimage-convert-indexed.c:939
+#: ../app/core/gimpimage-convert-indexed.c:941
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Триває перетворення в індексовані кольори (3 етап)"
 
@@ -14738,6 +14753,21 @@ msgstr "Вилучити канал альфи"
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Шар до розміру зображення"
+
+#: ../app/core/gimplayer.c:2715
+#| msgid "Set layers mode"
+msgid "Set layer's blend space"
+msgstr "Встановити режим змішування шару"
+
+#: ../app/core/gimplayer.c:2762
+#| msgid "Set layers opacity"
+msgid "Set layer's composite space"
+msgstr "Встановити простір композиції шару"
+
+#: ../app/core/gimplayer.c:2809
+#| msgid "Set layers mode"
+msgid "Set layer's composite mode"
+msgstr "Встановити режим композиції шару"
 
 #: ../app/core/gimplayermask.c:84
 msgctxt "undo-type"
@@ -15935,7 +15965,6 @@ msgid "Final, Merged Layer should be:"
 msgstr "Об'єднаний шар має бути:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
-#| msgid "Merge within active _group only"
 msgid "Merge within active _groups only"
 msgstr "Об'єднати лише в межах чинних _груп"
 
@@ -16072,7 +16101,6 @@ msgid "S_ave keyboard shortcuts on exit"
 msgstr "З_берігати комбінації клавіш при виході"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:105
-#| msgid "Add Layer Mask"
 msgid "Add Layer Mask"
 msgid_plural "Add Layer Masks"
 msgstr[0] "Додавання масок шарів"
@@ -16082,7 +16110,6 @@ msgstr[3] "Додавання маски шару"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:107
 #, c-format
-#| msgid "Add a Mask to the Layer"
 msgid "Add a Mask to the Layer"
 msgid_plural "Add Masks to %d Layers"
 msgstr[0] "Додавання масок до %d шару"
@@ -17218,7 +17245,6 @@ msgid "Merged layer size:"
 msgstr "Розмір об'єднаного шару:"
 
 #: ../app/dialogs/preferences-dialog.c:2356
-#| msgid "Merge within active group only"
 msgid "Merge within active groups only"
 msgstr "Об'єднувати лише у межах активних груп"
 
@@ -18579,13 +18605,10 @@ msgid "Layer Select"
 msgstr "Вибір шару"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:276
-#| msgctxt "line-art-source"
-#| msgid "Layer below the active one"
 msgid "Layer Selection Moved Down"
 msgstr "позначені шари пересунуто нижче"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:277
-#| msgid "Layer Select"
 msgid "Layer Selection Moved Up"
 msgstr "позначені шари пересунуто вище"
 
@@ -22043,7 +22066,7 @@ msgstr ""
 "Не вдалося завантажити деякі шрифти:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1649
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1650
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
@@ -22631,12 +22654,10 @@ msgid "How much to dim everything outside selection"
 msgstr "Міра затемнення усього поза позначеною ділянкою"
 
 #: ../app/tools/gimpcropoptions.c:95
-#| msgid "Current layer only"
 msgid "Current layers only"
 msgstr "Лише поточні шари"
 
 #: ../app/tools/gimpcropoptions.c:96
-#| msgid "Crop only currently selected layer"
 msgid "Crop only currently selected layers"
 msgstr "Обрізати лише поточні позначені шари"
 
@@ -22694,19 +22715,15 @@ msgid "Crop to: "
 msgstr "Обітнути до:"
 
 #: ../app/tools/gimpcroptool.c:457
-#| msgid "There is no active layer to crop."
 msgid "There are no selected layers to crop."
 msgstr "Немає позначених шарів для обрізання."
 
 #: ../app/tools/gimpcroptool.c:468
-#| msgid "The active layer's pixels are locked."
 msgid "All selected layers' pixels are locked."
 msgstr "Усі точки позначених шарів заблоковано."
 
 #: ../app/tools/gimpcroptool.c:473
 #, c-format
-#| msgctxt "undo-type"
-#| msgid "Resize Layer"
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
 msgstr[0] "Змінити розмір %d шару"
@@ -23256,8 +23273,8 @@ msgstr "Натисніть і перетягніть, щоб намалюват�
 #: ../app/tools/gimpgradienttool.c:256
 msgid "Cannot paint on multiple drawables. Select only one."
 msgstr ""
-"Неможливо малювати одразу на декількох об'єктах для малювання. Виберіть лише"
-" один об'єкт."
+"Неможливо малювати одразу на декількох об'єктах для малювання. Виберіть лише "
+"один об'єкт."
 
 #: ../app/tools/gimpgradienttool.c:258
 msgid "No active drawables."
@@ -23732,7 +23749,6 @@ msgid "Pick a layer or guide"
 msgstr "Вибрати шар або напрямну"
 
 #: ../app/tools/gimpmoveoptions.c:156
-#| msgid "Move the selected filter up"
 msgid "Move the selected layers"
 msgstr "Пересунути позначені шари"
 
@@ -23762,22 +23778,18 @@ msgid "_Move"
 msgstr "Пере_міщення"
 
 #: ../app/tools/gimpmovetool.c:336
-#| msgid "The active layer's position is locked."
 msgid "The selected layer's position is locked."
 msgstr "Позиція позначеного шару заблокована від змін."
 
 #: ../app/tools/gimpmovetool.c:338
-#| msgid "The active layer's pixels are locked."
 msgid "The selected layer's pixels are locked."
 msgstr "Точки растру позначеного шару заблоковані від змін."
 
 #: ../app/tools/gimpmovetool.c:352
-#| msgid "The active channel's pixels are locked."
 msgid "All selected channels' positions or pixels are locked."
 msgstr "Позиції або пікселі усіх позначених каналів заблоковано."
 
 #: ../app/tools/gimpmovetool.c:365
-#| msgid "The active layer's position and size are locked."
 msgid "All selected_items layers' positions are locked."
 msgstr "Усі позиції позначених елементів шарів заблоковано."
 
@@ -24509,31 +24521,31 @@ msgstr "Текст: створення або редагування текст�
 msgid "Te_xt"
 msgstr "_Текст"
 
-#: ../app/tools/gimptexttool.c:1054
+#: ../app/tools/gimptexttool.c:1055
 msgid "Fonts are still loading"
 msgstr "Завантаження шрифтів ще не завершено"
 
-#: ../app/tools/gimptexttool.c:1065
+#: ../app/tools/gimptexttool.c:1066
 msgid "Text box: "
 msgstr "Текстовий блок:"
 
-#: ../app/tools/gimptexttool.c:1196
+#: ../app/tools/gimptexttool.c:1197
 msgid "Reshape Text Layer"
 msgstr "Зміна розміру текстового шару"
 
-#: ../app/tools/gimptexttool.c:1769 ../app/tools/gimptexttool.c:1772
+#: ../app/tools/gimptexttool.c:1770 ../app/tools/gimptexttool.c:1773
 msgid "Confirm Text Editing"
 msgstr "Підтвердження зміни тексту"
 
-#: ../app/tools/gimptexttool.c:1776
+#: ../app/tools/gimptexttool.c:1777
 msgid "Create _New Layer"
 msgstr "_Створити новий шар"
 
-#: ../app/tools/gimptexttool.c:1778
+#: ../app/tools/gimptexttool.c:1779
 msgid "_Edit"
 msgstr "З_міни"
 
-#: ../app/tools/gimptexttool.c:1800
+#: ../app/tools/gimptexttool.c:1801
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -25573,28 +25585,28 @@ msgstr "З:"
 
 #. TRANSLATORS: A for Alpha (color transparency)
 #: ../app/widgets/gimpcolorframe.c:768 ../app/widgets/gimpcolorframe.c:781
-#: ../app/widgets/gimpcolorframe.c:817 ../app/widgets/gimpcolorframe.c:859
-#: ../app/widgets/gimpcolorframe.c:887 ../app/widgets/gimpcolorframe.c:919
-#: ../app/widgets/gimpcolorframe.c:951 ../app/widgets/gimpcolorframe.c:983
-#: ../app/widgets/gimpcolorframe.c:1017
+#: ../app/widgets/gimpcolorframe.c:820 ../app/widgets/gimpcolorframe.c:862
+#: ../app/widgets/gimpcolorframe.c:890 ../app/widgets/gimpcolorframe.c:922
+#: ../app/widgets/gimpcolorframe.c:954 ../app/widgets/gimpcolorframe.c:986
+#: ../app/widgets/gimpcolorframe.c:1020
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "П:"
 
 #. TRANSLATORS: R for Red (RGB)
-#: ../app/widgets/gimpcolorframe.c:773 ../app/widgets/gimpcolorframe.c:809
+#: ../app/widgets/gimpcolorframe.c:773 ../app/widgets/gimpcolorframe.c:812
 msgctxt "RGB"
 msgid "R:"
 msgstr "Ч:"
 
 #. TRANSLATORS: G for Green (RGB)
-#: ../app/widgets/gimpcolorframe.c:775 ../app/widgets/gimpcolorframe.c:811
+#: ../app/widgets/gimpcolorframe.c:775 ../app/widgets/gimpcolorframe.c:814
 msgctxt "RGB"
 msgid "G:"
 msgstr "З:"
 
 #. TRANSLATORS: B for Blue (RGB)
-#: ../app/widgets/gimpcolorframe.c:777 ../app/widgets/gimpcolorframe.c:813
+#: ../app/widgets/gimpcolorframe.c:777 ../app/widgets/gimpcolorframe.c:816
 msgctxt "RGB"
 msgid "B:"
 msgstr "С:"
@@ -25606,126 +25618,126 @@ msgid "Index:"
 msgstr "Індекс:"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
-#: ../app/widgets/gimpcolorframe.c:820
+#: ../app/widgets/gimpcolorframe.c:823
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Ш.:"
 
 #. TRANSLATORS: H for Hue (HSV color space)
-#: ../app/widgets/gimpcolorframe.c:851
+#: ../app/widgets/gimpcolorframe.c:854
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "В:"
 
 #. TRANSLATORS: S for Saturation (HSV color space)
-#: ../app/widgets/gimpcolorframe.c:853
+#: ../app/widgets/gimpcolorframe.c:856
 msgctxt "HSV color space"
 msgid "S:"
 msgstr "Н:"
 
 #. TRANSLATORS: V for Value (HSV color space)
-#: ../app/widgets/gimpcolorframe.c:855
+#: ../app/widgets/gimpcolorframe.c:858
 msgctxt "HSV color space"
 msgid "V:"
 msgstr "З:"
 
 #. TRANSLATORS: L for Lightness (LCH color space)
-#: ../app/widgets/gimpcolorframe.c:879
+#: ../app/widgets/gimpcolorframe.c:882
 msgctxt "LCH color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: C for Chroma (LCH color space)
-#: ../app/widgets/gimpcolorframe.c:881
+#: ../app/widgets/gimpcolorframe.c:884
 msgctxt "LCH color space"
 msgid "C*:"
 msgstr "C*:"
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
-#: ../app/widgets/gimpcolorframe.c:883
+#: ../app/widgets/gimpcolorframe.c:886
 msgctxt "LCH color space"
 msgid "h°:"
 msgstr "h°:"
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
-#: ../app/widgets/gimpcolorframe.c:911
+#: ../app/widgets/gimpcolorframe.c:914
 msgctxt "Lab color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
-#: ../app/widgets/gimpcolorframe.c:913
+#: ../app/widgets/gimpcolorframe.c:916
 msgctxt "Lab color space"
 msgid "a*:"
 msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
-#: ../app/widgets/gimpcolorframe.c:915
+#: ../app/widgets/gimpcolorframe.c:918
 msgctxt "Lab color space"
 msgid "b*:"
 msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
-#: ../app/widgets/gimpcolorframe.c:943
+#: ../app/widgets/gimpcolorframe.c:946
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
 
 #. TRANSLATORS: y from xyY color space
-#: ../app/widgets/gimpcolorframe.c:945
+#: ../app/widgets/gimpcolorframe.c:948
 msgctxt "xyY color space"
 msgid "y:"
 msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
-#: ../app/widgets/gimpcolorframe.c:947
+#: ../app/widgets/gimpcolorframe.c:950
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: Y from Yu'v' color space
-#: ../app/widgets/gimpcolorframe.c:975
+#: ../app/widgets/gimpcolorframe.c:978
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: u' from Yu'v' color space
-#: ../app/widgets/gimpcolorframe.c:977
+#: ../app/widgets/gimpcolorframe.c:980
 msgctxt "Yu'v' color space"
 msgid "u':"
 msgstr "u':"
 
 #. TRANSLATORS: v' from Yu'v' color space
-#: ../app/widgets/gimpcolorframe.c:979
+#: ../app/widgets/gimpcolorframe.c:982
 msgctxt "Yu'v' color space"
 msgid "v':"
 msgstr "v':"
 
 #. TRANSLATORS: C for Cyan (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1007
+#: ../app/widgets/gimpcolorframe.c:1010
 msgctxt "CMYK"
 msgid "C:"
 msgstr "Б:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1009
+#: ../app/widgets/gimpcolorframe.c:1012
 msgctxt "CMYK"
 msgid "M:"
 msgstr "М:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1011
+#: ../app/widgets/gimpcolorframe.c:1014
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Ж:"
 
 #. TRANSLATORS: K for Key/black (CMYK)
-#: ../app/widgets/gimpcolorframe.c:1013
+#: ../app/widgets/gimpcolorframe.c:1016
 msgctxt "CMYK"
 msgid "K:"
 msgstr "К:"
 
-#: ../app/widgets/gimpcolorframe.c:1075
+#: ../app/widgets/gimpcolorframe.c:1078
 msgctxt "Color value"
 msgid "n/a"
 msgstr "н/д"
@@ -27262,7 +27274,6 @@ msgstr "Замкнути:"
 
 #: ../app/widgets/gimpitemtreeview.c:1152
 #, c-format
-#| msgid "No filter selected"
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "Вибрано %d об'єкт"
@@ -27283,8 +27294,6 @@ msgid "Lock alpha channel"
 msgstr "Замкнути альфа-канал"
 
 #: ../app/widgets/gimplayertreeview.c:1063
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layers mode"
 msgstr "Встановити режим шарів"
 
@@ -28085,6 +28094,14 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Add to Selection"
+#~ msgstr "_Додати до позначеного"
+
+#~ msgctxt "layers-action"
+#~ msgid "A_dd to Selection"
+#~ msgstr "_Додати до позначеного"
 
 #~ msgctxt "layers-action"
 #~ msgid "Delete this layer"
