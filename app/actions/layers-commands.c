@@ -805,12 +805,13 @@ layers_anchor_cmd_callback (GimpAction *action,
                             gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  return_if_no_layers (image, layers, data);
 
-  if (gimp_layer_is_floating_sel (layer))
+  if (g_list_length (layers) == 1 &&
+      gimp_layer_is_floating_sel (layers->data))
     {
-      floating_sel_anchor (layer);
+      floating_sel_anchor (layers->data);
       gimp_image_flush (image);
     }
 }
@@ -838,10 +839,49 @@ layers_merge_group_cmd_callback (GimpAction *action,
                                  gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *merge_layers = NULL;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  gimp_image_merge_group_layer (image, GIMP_GROUP_LAYER (layer));
+  for (iter = layers; iter; iter = iter->next)
+    {
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+        {
+          GList *iter2;
+
+          for (iter2 = layers; iter2; iter2 = iter2->next)
+            {
+              /* Do not merge a layer when we already merge one of its
+               * ancestors.
+               */
+              if (gimp_item_is_ancestor (iter->data, iter2->data))
+                break;
+            }
+
+          if (iter2 == NULL)
+            merge_layers = g_list_prepend (merge_layers, iter->data);
+        }
+    }
+
+  if (g_list_length (merge_layers) > 1)
+    {
+      gchar *undo_name;
+
+      undo_name = g_strdup_printf (C_("undo-type", "Merge %d Layer Groups"),
+                                   g_list_length (merge_layers));
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+                                   undo_name);
+      g_free (undo_name);
+    }
+
+  for (iter = merge_layers; iter; iter = iter->next)
+    gimp_image_merge_group_layer (image, GIMP_GROUP_LAYER (iter->data));
+
+  if (g_list_length (merge_layers) > 1)
+    gimp_image_undo_group_end (image);
+
+  g_list_free (merge_layers);
   gimp_image_flush (image);
 }
 

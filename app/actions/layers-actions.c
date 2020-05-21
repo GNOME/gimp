@@ -187,8 +187,8 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_MERGE_DOWN },
 
   { "layers-merge-group", NULL,
-    NC_("layers-action", "Merge Layer Group"), NULL,
-    NC_("layers-action", "Merge the layer group's layers into one normal layer"),
+    NC_("layers-action", "Merge Layer Groups"), NULL,
+    NC_("layers-action", "Merge the layer groups' layers into one normal layer"),
     layers_merge_group_cmd_callback,
     GIMP_HELP_LAYER_MERGE_GROUP },
 
@@ -1035,15 +1035,15 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower",            n_layers > 0 && !fs && !ac && have_next);
   SET_SENSITIVE ("layers-lower-to-bottom",  n_layers > 0 && !fs && !ac && have_next);
 
-  SET_VISIBLE   ("layers-anchor",            layer &&  fs && !ac);
+  SET_VISIBLE   ("layers-anchor",            fs && !ac);
   SET_VISIBLE   ("layers-merge-down",        !fs);
   SET_SENSITIVE ("layers-merge-down",        layer && !fs && !ac && visible && next_visible);
   SET_VISIBLE   ("layers-merge-down-button", !fs);
   SET_SENSITIVE ("layers-merge-down-button", layer && !fs && !ac);
-  SET_VISIBLE   ("layers-merge-group",       children);
-  SET_SENSITIVE ("layers-merge-group",       layer && !fs && !ac && children);
+  SET_VISIBLE   ("layers-merge-group",       have_groups);
+  SET_SENSITIVE ("layers-merge-group",       n_layers && !fs && !ac && have_groups);
   SET_SENSITIVE ("layers-merge-layers",      n_layers > 0 && !fs && !ac);
-  SET_SENSITIVE ("layers-flatten-image",     layer && !fs && !ac);
+  SET_SENSITIVE ("layers-flatten-image",     !fs && !ac);
 
   SET_VISIBLE   ("layers-text-discard",       text_layer && !ac);
   SET_VISIBLE   ("layers-text-to-vectors",    text_layer && !ac);
