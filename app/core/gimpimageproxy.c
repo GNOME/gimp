@@ -61,92 +61,102 @@ struct _GimpImageProxyPrivate
 
 /*  local function prototypes  */
 
-static void           gimp_image_proxy_pickable_iface_init      (GimpPickableInterface  *iface);
-                    
-static void           gimp_image_proxy_finalize                 (GObject                *object);
-static void           gimp_image_proxy_set_property             (GObject                *object,
-                                                                 guint                   property_id,
-                                                                 const GValue           *value,
-                                                                 GParamSpec             *pspec);
-static void           gimp_image_proxy_get_property             (GObject                *object,
-                                                                 guint                   property_id,
-                                                                 GValue                 *value,
-                                                                 GParamSpec             *pspec);
-                    
-static gboolean       gimp_image_proxy_get_size                 (GimpViewable           *viewable,
-                                                                 gint                   *width,
-                                                                 gint                   *height);
-static void           gimp_image_proxy_get_preview_size         (GimpViewable           *viewable,
-                                                                 gint                    size,
-                                                                 gboolean                is_popup,
-                                                                 gboolean                dot_for_dot,
-                                                                 gint                   *width,
-                                                                 gint                   *height);
-static gboolean       gimp_image_proxy_get_popup_size           (GimpViewable           *viewable,
-                                                                 gint                    width,
-                                                                 gint                    height,
-                                                                 gboolean                dot_for_dot,
-                                                                 gint                   *popup_width,
-                                                                 gint                   *popup_height);
-static GimpTempBuf  * gimp_image_proxy_get_new_preview          (GimpViewable           *viewable,
-                                                                 GimpContext            *context,
-                                                                 gint                    width,
-                                                                 gint                    height);
-static GdkPixbuf    * gimp_image_proxy_get_new_pixbuf           (GimpViewable           *viewable,
-                                                                 GimpContext            *context,
-                                                                 gint                    width,
-                                                                 gint                    height);
-static gchar        * gimp_image_proxy_get_description          (GimpViewable           *viewable,
-                                                                 gchar                 **tooltip);
-                    
-static void           gimp_image_proxy_flush                    (GimpPickable           *pickable);
-static const Babl   * gimp_image_proxy_get_format               (GimpPickable           *pickable);
-static const Babl   * gimp_image_proxy_get_format_with_alpha    (GimpPickable           *pickable);
-static GeglBuffer   * gimp_image_proxy_get_buffer               (GimpPickable           *pickable);
-static gboolean       gimp_image_proxy_get_pixel_at             (GimpPickable           *pickable,
-                                                                 gint                    x,
-                                                                 gint                    y,
-                                                                 const Babl             *format,
-                                                                 gpointer                pixel);
-static gdouble        gimp_image_proxy_get_opacity_at           (GimpPickable           *pickable,
-                                                                 gint                    x,
-                                                                 gint                    y);
-static void           gimp_image_proxy_get_pixel_average        (GimpPickable           *pickable,
-                                                                 const GeglRectangle    *rect,
-                                                                 const Babl             *format,
-                                                                 gpointer                pixel);
-static void           gimp_image_proxy_pixel_to_srgb            (GimpPickable           *pickable,
-                                                                 const Babl             *format,
-                                                                 gpointer                pixel,
-                                                                 GimpRGB                *color);
-static void           gimp_image_proxy_srgb_to_pixel            (GimpPickable           *pickable,
-                                                                 const GimpRGB          *color,
-                                                                 const Babl             *format,
-                                                                 gpointer                pixel);
-                    
-static void           gimp_image_proxy_image_frozen_notify      (GimpImage              *image,
-                                                                 const GParamSpec       *pspec,
-                                                                 GimpImageProxy         *image_proxy);
-static void           gimp_image_proxy_image_invalidate_preview (GimpImage              *image,
-                                                                 GimpImageProxy         *image_proxy);
-static void           gimp_image_proxy_image_size_changed       (GimpImage              *image,
-                                                                 GimpImageProxy         *image_proxy);
-static void           gimp_image_proxy_image_bounds_changed     (GimpImage              *image,
-                                                                 gint                    old_x,
-                                                                 gint                    old_y,
-                                                                 GimpImageProxy         *image_proxy);
-                    
-static void           gimp_image_proxy_set_image                (GimpImageProxy         *image_proxy,
-                                                                 GimpImage              *image);
-static GimpPickable * gimp_image_proxy_get_pickable             (GimpImageProxy         *image_proxy);
-static void           gimp_image_proxy_update_bounding_box      (GimpImageProxy         *image_proxy);
-static void           gimp_image_proxy_update_frozen            (GimpImageProxy         *image_proxy);
+static void               gimp_image_proxy_pickable_iface_init      (GimpPickableInterface      *iface);
+static void               gimp_image_proxy_color_managed_iface_init (GimpColorManagedInterface  *iface);
+
+static void               gimp_image_proxy_finalize                 (GObject                    *object);
+static void               gimp_image_proxy_set_property             (GObject                    *object,
+                                                                     guint                       property_id,
+                                                                     const GValue               *value,
+                                                                     GParamSpec                 *pspec);
+static void               gimp_image_proxy_get_property             (GObject                    *object,
+                                                                     guint                       property_id,
+                                                                     GValue                     *value,
+                                                                     GParamSpec                 *pspec);
+
+static gboolean           gimp_image_proxy_get_size                 (GimpViewable               *viewable,
+                                                                     gint                       *width,
+                                                                     gint                       *height);
+static void               gimp_image_proxy_get_preview_size         (GimpViewable               *viewable,
+                                                                     gint                        size,
+                                                                     gboolean                    is_popup,
+                                                                     gboolean                    dot_for_dot,
+                                                                     gint                       *width,
+                                                                     gint                       *height);
+static gboolean           gimp_image_proxy_get_popup_size           (GimpViewable               *viewable,
+                                                                     gint                        width,
+                                                                     gint                        height,
+                                                                     gboolean                    dot_for_dot,
+                                                                     gint                       *popup_width,
+                                                                     gint                       *popup_height);
+static GimpTempBuf      * gimp_image_proxy_get_new_preview          (GimpViewable               *viewable,
+                                                                     GimpContext                *context,
+                                                                     gint                        width,
+                                                                     gint                        height);
+static GdkPixbuf        * gimp_image_proxy_get_new_pixbuf           (GimpViewable               *viewable,
+                                                                     GimpContext                *context,
+                                                                     gint                        width,
+                                                                     gint                        height);
+static gchar            * gimp_image_proxy_get_description          (GimpViewable               *viewable,
+                                                                     gchar                     **tooltip);
+
+static void               gimp_image_proxy_flush                    (GimpPickable               *pickable);
+static const Babl       * gimp_image_proxy_get_format               (GimpPickable               *pickable);
+static const Babl       * gimp_image_proxy_get_format_with_alpha    (GimpPickable               *pickable);
+static GeglBuffer       * gimp_image_proxy_get_buffer               (GimpPickable               *pickable);
+static gboolean           gimp_image_proxy_get_pixel_at             (GimpPickable               *pickable,
+                                                                     gint                        x,
+                                                                     gint                        y,
+                                                                     const Babl                 *format,
+                                                                     gpointer                    pixel);
+static gdouble            gimp_image_proxy_get_opacity_at           (GimpPickable               *pickable,
+                                                                     gint                        x,
+                                                                     gint                        y);
+static void               gimp_image_proxy_get_pixel_average        (GimpPickable               *pickable,
+                                                                     const GeglRectangle        *rect,
+                                                                     const Babl                 *format,
+                                                                     gpointer                    pixel);
+static void               gimp_image_proxy_pixel_to_srgb            (GimpPickable               *pickable,
+                                                                     const Babl                 *format,
+                                                                     gpointer                    pixel,
+                                                                     GimpRGB                    *color);
+static void               gimp_image_proxy_srgb_to_pixel            (GimpPickable               *pickable,
+                                                                     const GimpRGB              *color,
+                                                                     const Babl                 *format,
+                                                                     gpointer                    pixel);
+
+static const guint8     * gimp_image_proxy_get_icc_profile          (GimpColorManaged           *managed,
+                                                                     gsize                      *len);
+static GimpColorProfile * gimp_image_proxy_get_color_profile        (GimpColorManaged           *managed);
+static void               gimp_image_proxy_profile_changed          (GimpColorManaged           *managed);
+
+static void               gimp_image_proxy_image_frozen_notify      (GimpImage                  *image,
+                                                                     const GParamSpec           *pspec,
+                                                                     GimpImageProxy             *image_proxy);
+static void               gimp_image_proxy_image_invalidate_preview (GimpImage                  *image,
+                                                                     GimpImageProxy             *image_proxy);
+static void               gimp_image_proxy_image_size_changed       (GimpImage                  *image,
+                                                                     GimpImageProxy             *image_proxy);
+static void               gimp_image_proxy_image_bounds_changed     (GimpImage                  *image,
+                                                                     gint                        old_x,
+                                                                     gint                        old_y,
+                                                                     GimpImageProxy             *image_proxy);
+static void               gimp_image_proxy_image_profile_changed    (GimpImage                  *image,
+                                                                     GimpImageProxy             *image_proxy);
+
+static void               gimp_image_proxy_set_image                (GimpImageProxy             *image_proxy,
+                                                                     GimpImage                  *image);
+static GimpPickable     * gimp_image_proxy_get_pickable             (GimpImageProxy             *image_proxy);
+static void               gimp_image_proxy_update_bounding_box      (GimpImageProxy             *image_proxy);
+static void               gimp_image_proxy_update_frozen            (GimpImageProxy             *image_proxy);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageProxy, gimp_image_proxy, GIMP_TYPE_VIEWABLE,
                          G_ADD_PRIVATE (GimpImageProxy)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_image_proxy_pickable_iface_init))
+                                                gimp_image_proxy_pickable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_image_proxy_color_managed_iface_init))
 
 #define parent_class gimp_image_proxy_parent_class
 
@@ -202,6 +212,14 @@ gimp_image_proxy_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_pixel_average     = gimp_image_proxy_get_pixel_average;
   iface->pixel_to_srgb         = gimp_image_proxy_pixel_to_srgb;
   iface->srgb_to_pixel         = gimp_image_proxy_srgb_to_pixel;
+}
+
+static void
+gimp_image_proxy_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile   = gimp_image_proxy_get_icc_profile;
+  iface->get_color_profile = gimp_image_proxy_get_color_profile;
+  iface->profile_changed   = gimp_image_proxy_profile_changed;
 }
 
 static void
@@ -610,6 +628,32 @@ gimp_image_proxy_srgb_to_pixel (GimpPickable  *pickable,
   gimp_pickable_srgb_to_pixel (proxy_pickable, color, format, pixel);
 }
 
+static const guint8 *
+gimp_image_proxy_get_icc_profile (GimpColorManaged *managed,
+                                  gsize            *len)
+{
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (managed);
+
+  return gimp_color_managed_get_icc_profile (
+    GIMP_COLOR_MANAGED (image_proxy->priv->image),
+    len);
+}
+
+static GimpColorProfile *
+gimp_image_proxy_get_color_profile (GimpColorManaged *managed)
+{
+  GimpImageProxy *image_proxy = GIMP_IMAGE_PROXY (managed);
+
+  return gimp_color_managed_get_color_profile (
+    GIMP_COLOR_MANAGED (image_proxy->priv->image));
+}
+
+static void
+gimp_image_proxy_profile_changed (GimpColorManaged *managed)
+{
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (managed));
+}
+
 static void
 gimp_image_proxy_image_frozen_notify (GimpImage        *image,
                                       const GParamSpec *pspec,
@@ -642,6 +686,13 @@ gimp_image_proxy_image_bounds_changed (GimpImage      *image,
 }
 
 static void
+gimp_image_proxy_image_profile_changed (GimpImage      *image,
+                                        GimpImageProxy *image_proxy)
+{
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image_proxy));
+}
+
+static void
 gimp_image_proxy_set_image (GimpImageProxy *image_proxy,
                             GimpImage      *image)
 {
@@ -662,6 +713,10 @@ gimp_image_proxy_set_image (GimpImageProxy *image_proxy,
       g_signal_handlers_disconnect_by_func (
         image_proxy->priv->image,
         gimp_image_proxy_image_bounds_changed,
+        image_proxy);
+      g_signal_handlers_disconnect_by_func (
+        image_proxy->priv->image,
+        gimp_image_proxy_image_profile_changed,
         image_proxy);
 
       g_object_unref (image_proxy->priv->image);
@@ -688,6 +743,10 @@ gimp_image_proxy_set_image (GimpImageProxy *image_proxy,
       g_signal_connect (
         image_proxy->priv->image, "bounds-changed",
         G_CALLBACK (gimp_image_proxy_image_bounds_changed),
+        image_proxy);
+      g_signal_connect (
+        image_proxy->priv->image, "profile-changed",
+        G_CALLBACK (gimp_image_proxy_image_profile_changed),
         image_proxy);
 
       gimp_image_proxy_update_bounding_box (image_proxy);
