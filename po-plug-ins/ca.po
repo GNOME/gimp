@@ -709,7 +709,7 @@ msgstr "Valor inicial:"
 
 #: ../plug-ins/common/cml-explorer.c:1487
 msgid "Zoom scale:"
-msgstr "Escala d’ampliació/reducció:"
+msgstr "Escala d'ampliació/reducció:"
 
 #: ../plug-ins/common/cml-explorer.c:1496
 msgid "Start offset:"
@@ -2136,11 +2136,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:224
 msgid "Save the image comment in the GIF file"
-msgstr "Desa el comentari d’imatge al fitxer GIF"
+msgstr "Desa el comentari d'imatge al fitxer GIF"
 
 #: ../plug-ins/common/file-gif-save.c:230
 msgid "Image comment"
-msgstr "Comentari d’imatge"
+msgstr "Comentari d'imatge"
 
 #: ../plug-ins/common/file-gif-save.c:528
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
@@ -2878,7 +2878,7 @@ msgstr "_Importa"
 
 #: ../plug-ins/common/file-pdf-load.c:1074
 msgid "Error getting number of pages from the given PDF file."
-msgstr "S'ha produït un error obtenint el número de pàgines del fitxer PDF."
+msgstr "S'ha produït un error obtenint el nombre de pàgines del fitxer PDF."
 
 #: ../plug-ins/common/file-pdf-load.c:1120
 msgid "_Width (pixels):"
@@ -3515,7 +3515,7 @@ msgstr "Error en llegir les dades del creador de paraules clau"
 #: ../plug-ins/common/file-psp.c:1051
 #, c-format
 msgid "Creator keyword data not nul-terminated"
-msgstr "Les dades de les paraules clau del creador no s’acaben en NULL"
+msgstr "Les dades de les paraules clau del creador no s'acaben en NULL"
 
 #: ../plug-ins/common/file-psp.c:1427 ../plug-ins/common/file-psp.c:1441
 #, c-format
@@ -3591,12 +3591,12 @@ msgstr "la mida del bloc no és vàlida"
 #: ../plug-ins/common/file-psp.c:1988
 #, c-format
 msgid "Duplicate General Image Attributes block."
-msgstr "Bloc duplicat d’atributs d'imatge general."
+msgstr "Bloc duplicat d'atributs d'imatge general."
 
 #: ../plug-ins/common/file-psp.c:2018
 #, c-format
 msgid "Missing General Image Attributes block."
-msgstr "S'ha perdut el bloc d’atributs d'imatge general."
+msgstr "S'ha perdut el bloc d'atributs d'imatge general."
 
 #: ../plug-ins/common/file-psp.c:2108
 #, c-format
@@ -3606,12 +3606,12 @@ msgstr "No s'ha implementat l'exportació."
 #: ../plug-ins/common/file-raw-data.c:252
 #: ../plug-ins/common/file-raw-data.c:313
 msgid "Raw image data"
-msgstr "Dades d'imatge sene format"
+msgstr "Dades d'imatge sense format"
 
 #: ../plug-ins/common/file-raw-data.c:275
 #: ../plug-ins/common/file-raw-data.c:1808
 msgid "Digital Elevation Model data"
-msgstr "Dades del model d’elevació digital"
+msgstr "Dades del model d'elevació digital"
 
 #: ../plug-ins/common/file-raw-data.c:381
 #, c-format
@@ -3648,11 +3648,11 @@ msgstr "Carrega una imatge des de dades sense format"
 #.
 #: ../plug-ins/common/file-raw-data.c:1804
 msgid "Digital Elevation Model data (1 arc-second)"
-msgstr "Dades del model d’elevació digital (1 arc de segon)"
+msgstr "Dades del model d'elevació digital (1 arc de segon)"
 
 #: ../plug-ins/common/file-raw-data.c:1806
 msgid "Digital Elevation Model data (3 arc-seconds)"
-msgstr "Dades del model d’elevació digital (3 arcs de segon)"
+msgstr "Dades del model d'elevació digital (3 arcs de segon)"
 
 #: ../plug-ins/common/file-raw-data.c:1812
 msgid "Image"
@@ -4169,7 +4169,7 @@ msgstr "L'alçada del marc %d de «%s» és massa gran pel cursor X."
 #: ../plug-ins/common/file-xmc.c:974
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr "Manca un bocí de la imatge a «%s». "
+msgstr "Manca un bocí de la imatge a «%s»."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -4310,7 +4310,7 @@ msgstr "Al_tres:"
 
 #: ../plug-ins/common/file-xmc.c:1408
 msgid "Enter other comment if you want."
-msgstr "Introduïu comentaris addicionals si voleu. "
+msgstr "Introduïu comentaris addicionals si voleu."
 
 #: ../plug-ins/common/file-xmc.c:1460
 #, c-format
@@ -4408,7 +4408,7 @@ msgid ""
 "nominal sizes."
 msgstr ""
 "Aquest connector no pot treballar amb cursors amb més de %i mides nominals "
-"diferents. "
+"diferents."
 
 #: ../plug-ins/common/file-xpm.c:190 ../plug-ins/common/file-xpm.c:225
 msgid "X PixMap image"
@@ -6219,7 +6219,7 @@ msgstr "_Compressió:"
 
 #: ../plug-ins/file-dds/ddswrite.c:1992
 msgid "Use _perceptual error metric"
-msgstr "Utilitzeu la mètrica d’error _perceptiu"
+msgstr "Utilitzeu la mètrica d'error _perceptiu"
 
 #: ../plug-ins/file-dds/ddswrite.c:2026
 msgid "_Save:"
@@ -7148,7 +7148,7 @@ msgstr "sense memòria"
 
 #: ../plug-ins/file-webp/file-webp-save.c:103
 msgid "not enough memory to flush bits"
-msgstr "No hi ha prou memòria per eliminar els bits"
+msgstr "No hi ha prou memòria per buidar els bits"
 
 #: ../plug-ins/file-webp/file-webp-save.c:105
 msgid "NULL parameter"
@@ -11772,7 +11772,7 @@ msgstr "Després del retard es farà la captura de pantalla."
 
 #: ../plug-ins/screenshot/screenshot.c:813
 msgid "Once the region is selected, it will be captured after this delay."
-msgstr "Un cop seleccionada la regió, es capturarà després d’aquest retard."
+msgstr "Un cop seleccionada la regió, es capturarà després d'aquest retard."
 
 #: ../plug-ins/screenshot/screenshot.c:818
 msgid "Once the window is selected, it will be captured after this delay."
