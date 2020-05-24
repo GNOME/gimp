@@ -20,9 +20,11 @@ Tools:
     behavior is changed.
   - Crop tool in image crop mode will not crop layers with "Lock pixels"
     on, anymore, even if "Delete cropped pixels" is checked.
+  - Painting tools can now restore opacity and blend mode from presets.
 
 User interface:
 
+  - Image / Precision renamed to Image > Encoding
   - Tool groups can now display their tool list on hover rather than on
     click. This can be set in Preferences, in the Toolbox tab.
   - Improved update notification GUI in About dialog, and now also
@@ -49,12 +51,17 @@ Plugins:
 
 Filters:
 
+  - The 'Vignette' filter now has on-canvas controls
+  - New 'Filters -> Blur -> Focus Blur' filter with on-canvas controls
+    to emulate out-of-focus blurring
+  - New 'Filters -> Blur -> Variable Blur' filter that uses an aux mask input
+    to blur an image with variable intensity
   - New 'Filters -> Light and Shadow -> Bloom' filter
-
+  
 Updated translations:
 
-  - Catalan, Chinese (Taiwan), Dutch, Finnish, German, Italian, Korean, Polish,
-    Russian, Spanish, Swedish, Ukrainian
+  - Catalan, Chinese (Taiwan), Dutch, Finnish, German, Greek, Italian, Korean,
+    Polish, Romanian, Russian, Spanish, Swedish, Ukrainian
 
 Icons:
 
@@ -65,8 +72,9 @@ Icons:
 
 Bug fixes:
 
-  - #4663, #4734, #4641, #4328, #4094, #872, #4793, #4618, #4745, #4871,
-    #4904, #4487, #1669, #4967, #4968, #189, #4996, #4721, #4846, #4858.
+  - #4663, #4734, #4641, #4328, #4094, #872,  #4793, #4618, #4745, #4871,
+    #4904, #4487, #1669, #4967, #4968, #189,  #4996, #4721, #4846, #4858,
+    #5010, #5009, #3949, #3405, #4992, #3533
 
 Developers:
 
@@ -79,9 +87,10 @@ Contributors:
 
 Translators:
 
-  - Alexandre Prokoudine, Anders Jonsson, Daniel Korostil, Jiri Grönroos,
-    Jordi Mas , Nathan Follens, Piotr Drąg, Rodrigo Lledó Milanca, Seong-ho Cho,
-    Tim Sabsch, Yuri Chornoivan
+  - Alexandre Prokoudine, Anders Jonsson, Cristian Secară, Daniel Korostil,
+    Daniel Șerbănescu, Dimitris Spingos, Jiri Grönroos, Jordi Mas,
+    Nathan Follens, Piotr Drąg, Rodrigo Lledó Milanca, Seong-ho Cho, Tim Sabsch,
+    Yuri Chornoivan
 
 Overview of Changes from GIMP 2.10.16 to GIMP 2.10.18
 =====================================================
