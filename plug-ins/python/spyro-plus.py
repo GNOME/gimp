@@ -377,9 +377,9 @@ class SelectionToPath:
             selection_was_empty = False
 
         result = Gimp.get_pdb().run_procedure('plug-in-sel2path', [
-            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-            GObject.Value(Gimp.Image, self.image),
-            GObject.Value(Gimp.Drawable, self.image.get_active_layer()),
+            Gimp.RunMode.NONINTERACTIVE,
+            self.image,
+            self.image.get_active_layer(),
         ])
 
         self.path = self.image.get_vectors()[0]
