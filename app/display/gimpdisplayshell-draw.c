@@ -42,6 +42,8 @@
 #include "gimpdisplayshell-transform.h"
 #include "gimpdisplayxfer.h"
 
+#include "widgets/gimprender.h"
+
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
 #endif
@@ -98,24 +100,16 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
   if (G_UNLIKELY (! shell->checkerboard))
     {
       GimpCheckSize  check_size;
-      GimpCheckType  check_type;
-      guchar         check_light;
-      guchar         check_dark;
-      GimpRGB        light;
-      GimpRGB        dark;
 
       g_object_get (shell->display->config,
                     "transparency-size", &check_size,
-                    "transparency-type", &check_type,
                     NULL);
-
-      gimp_checks_get_shades (check_type, &check_light, &check_dark);
-      gimp_rgb_set_uchar (&light, check_light, check_light, check_light);
-      gimp_rgb_set_uchar (&dark,  check_dark,  check_dark,  check_dark);
 
       shell->checkerboard =
         gimp_cairo_checkerboard_create (cr,
-                                        1 << (check_size + 2), &light, &dark);
+                                        1 << (check_size + 2),
+                                        gimp_render_light_check_color (),
+                                        gimp_render_dark_check_color ());
     }
 
   cairo_translate (cr, - shell->offset_x, - shell->offset_y);

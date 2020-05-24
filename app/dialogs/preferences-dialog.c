@@ -2669,9 +2669,34 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_combo_box_add (object, "transparency-type", 0, 0,
                             _("_Check style:"),
                             GTK_TABLE (table), 0, size_group);
+
+  button = gimp_prop_color_button_new (object,
+                                       "transparency-custom-dark-color",
+                                       _("Transparency Custom Dark Color"),
+                                       PREFS_COLOR_BUTTON_WIDTH,
+                                       PREFS_COLOR_BUTTON_HEIGHT,
+                                       GIMP_COLOR_AREA_FLAT);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("_Custom dark color:"), 0.0, 0.5,
+                             button, 1, TRUE);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
+
+  button = gimp_prop_color_button_new (object,
+                                       "transparency-custom-light-color",
+                                       _("Transparency Custom Light Color"),
+                                       PREFS_COLOR_BUTTON_WIDTH,
+                                       PREFS_COLOR_BUTTON_HEIGHT,
+                                       GIMP_COLOR_AREA_FLAT);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("_Custom light color:"), 0.0, 0.5,
+                             button, 1, TRUE);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
+
   prefs_enum_combo_box_add (object, "transparency-size", 0, 0,
                             _("Check _size:"),
-                            GTK_TABLE (table), 1, size_group);
+                            GTK_TABLE (table), 3, size_group);
 
   vbox2 = prefs_frame_new (_("Monitor Resolution"),
                            GTK_CONTAINER (vbox), FALSE);

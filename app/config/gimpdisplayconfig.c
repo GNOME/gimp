@@ -47,6 +47,8 @@ enum
   PROP_0,
   PROP_TRANSPARENCY_SIZE,
   PROP_TRANSPARENCY_TYPE,
+  PROP_TRANSPARENCY_CUSTOM_DARK_COLOR,
+  PROP_TRANSPARENCY_CUSTOM_LIGHT_COLOR,
   PROP_SNAP_DISTANCE,
   PROP_MARCHING_ANTS_SPEED,
   PROP_RESIZE_WINDOWS_ON_ZOOM,
@@ -111,6 +113,8 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GimpRGB       color        = { 0, 0, 0, 0 };
+  GimpRGB       red          = { 1, 0, 0, 1 };
+  GimpRGB       green        = { 0, 1, 0, 1 };
 
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;
@@ -131,6 +135,20 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                          GIMP_TYPE_CHECK_TYPE,
                          GIMP_CHECK_TYPE_GRAY_CHECKS,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_DARK_COLOR,
+                        "transparency-custom-dark-color",
+                        "Transparency custom dark color",
+                        TRANSPARENCY_CUSTOM_DARK_COLOR_BLURB,
+                        FALSE, &red,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_LIGHT_COLOR,
+                        "transparency-custom-light-color",
+                        "Transparency custom light color",
+                        TRANSPARENCY_CUSTOM_LIGHT_COLOR_BLURB,
+                        FALSE, &green,
+                        GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,
                         "snap-distance",
@@ -405,6 +423,12 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_TRANSPARENCY_TYPE:
       display_config->transparency_type = g_value_get_enum (value);
       break;
+    case PROP_TRANSPARENCY_CUSTOM_DARK_COLOR:
+      display_config->transparency_custom_dark_color = *(GimpRGB *) g_value_get_boxed (value);
+      break;
+    case PROP_TRANSPARENCY_CUSTOM_LIGHT_COLOR:
+      display_config->transparency_custom_light_color = *(GimpRGB *) g_value_get_boxed (value);
+      break;
     case PROP_SNAP_DISTANCE:
       display_config->snap_distance = g_value_get_int (value);
       break;
@@ -516,6 +540,12 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_TRANSPARENCY_TYPE:
       g_value_set_enum (value, display_config->transparency_type);
+      break;
+    case PROP_TRANSPARENCY_CUSTOM_DARK_COLOR:
+      g_value_set_boxed (value, &display_config->transparency_custom_dark_color);
+      break;
+    case PROP_TRANSPARENCY_CUSTOM_LIGHT_COLOR:
+      g_value_set_boxed (value, &display_config->transparency_custom_light_color);
       break;
     case PROP_SNAP_DISTANCE:
       g_value_set_int (value, display_config->snap_distance);

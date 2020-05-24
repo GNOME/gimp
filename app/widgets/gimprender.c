@@ -50,6 +50,14 @@ gimp_render_init (Gimp *gimp)
                     G_CALLBACK (gimp_render_setup_notify),
                     gimp);
 
+  g_signal_connect (gimp->config, "notify::transparency-custom-light-color",
+                    G_CALLBACK (gimp_render_setup_notify),
+                    gimp);
+
+  g_signal_connect (gimp->config, "notify::transparency-custom-dark-color",
+                    G_CALLBACK (gimp_render_setup_notify),
+                    gimp);
+
   gimp_render_setup_notify (gimp->config, NULL, gimp);
 }
 
@@ -81,15 +89,17 @@ gimp_render_setup_notify (gpointer    config,
                           Gimp       *gimp)
 {
   GimpCheckType check_type;
-  guchar        dark_check;
-  guchar        light_check;
+  GimpRGB       *light_custom;
+  GimpRGB       *dark_custom;
 
   g_object_get (config,
                 "transparency-type", &check_type,
+                "transparency-custom-light-color", &light_custom,
+                "transparency-custom-dark-color", &dark_custom,
                 NULL);
 
-  gimp_checks_get_shades (check_type, &light_check, &dark_check);
+  gimp_checks_get_colors (check_type, &light, &dark, light_custom, dark_custom);
 
-  gimp_rgba_set_uchar (&light, light_check, light_check, light_check, 255);
-  gimp_rgba_set_uchar (&dark,  dark_check,  dark_check,  dark_check,  255);
+  g_free (light_custom);
+  g_free (dark_custom);
 }
