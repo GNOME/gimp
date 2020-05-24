@@ -546,6 +546,8 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       GdkCursor       *cursor;
       GtkBorder        border;
       GimpCheckType    check_type;
+      GimpRGB          check_custom_color1;
+      GimpRGB          check_custom_color2;
       gint             area_width;
       gint             area_height;
       gint             x, y;
@@ -575,11 +577,15 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
 
       g_object_get (gimp_preview_get_area (gimp_preview),
                     "check-type", &check_type,
+                    "check-custom-color1", &check_custom_color1,
+                    "check-custom-color2", &check_custom_color2,
                     NULL);
 
       area = g_object_new (GIMP_TYPE_PREVIEW_AREA,
                            "check-size", GIMP_CHECK_SIZE_SMALL_CHECKS,
                            "check-type", check_type,
+                           "check-custom-color1", check_custom_color1,
+                           "check-custom-color2", check_custom_color2,
                            NULL);
 
       gtk_container_add (GTK_CONTAINER (inner), area);

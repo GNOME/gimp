@@ -198,6 +198,8 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
   g_object_set (area,
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
+                "check-custom-color1", gimp_check_custom_color1 (),
+                "check-custom-color2", gimp_check_custom_color2 (),
                 NULL);
 
   gimp_scrolled_preview_set_policy (GIMP_SCROLLED_PREVIEW (preview),

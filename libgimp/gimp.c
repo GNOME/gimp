@@ -141,6 +141,8 @@ static gboolean            _export_thumbnail     = TRUE;
 static gint32              _num_processors       = 1;
 static GimpCheckSize       _check_size           = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType       _check_type           = GIMP_CHECK_TYPE_GRAY_CHECKS;
+static GimpRGB             _check_custom_color1  = GIMP_CHECKS_CUSTOM_COLOR1;
+static GimpRGB             _check_custom_color2  = GIMP_CHECKS_CUSTOM_COLOR2;
 static gint                _default_display_id   = -1;
 static gchar              *_wm_class             = NULL;
 static gchar              *_display_name         = NULL;
@@ -796,6 +798,38 @@ gimp_check_type (void)
 }
 
 /**
+ * gimp_check_custom_color1:
+ *
+ * Returns the first checkerboard custom color that can
+ * be used in previews.
+ *
+ * This is a constant value given at plug-in configuration time.
+ *
+ * Return value: the _check_custom_color1 value
+ **/
+const GimpRGB *
+gimp_check_custom_color1 (void)
+{
+  return &_check_custom_color1;
+}
+
+/**
+ * gimp_check_custom_color2:
+ *
+ * Returns the second checkerboard custom color that can
+ * be used in previews.
+ *
+ * This is a constant value given at plug-in configuration time.
+ *
+ * Return value: the _check_custom_color2 value
+ **/
+const GimpRGB *
+gimp_check_custom_color2 (void)
+{
+  return &_check_custom_color2;
+}
+
+/**
  * gimp_default_display:
  *
  * Returns the default display ID. This corresponds to the display the
@@ -1037,6 +1071,8 @@ _gimp_config (GPConfig *config)
   _tile_height          = config->tile_height;
   _check_size           = config->check_size;
   _check_type           = config->check_type;
+  _check_custom_color1  = config->check_custom_color1;
+  _check_custom_color2  = config->check_custom_color2;
   _show_help_button     = config->show_help_button ? TRUE : FALSE;
   _export_color_profile = config->export_color_profile   ? TRUE : FALSE;
   _export_exif          = config->export_exif      ? TRUE : FALSE;

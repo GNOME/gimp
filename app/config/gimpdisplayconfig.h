@@ -43,6 +43,8 @@ struct _GimpDisplayConfig
 
   GimpCheckSize       transparency_size;
   GimpCheckType       transparency_type;
+  GimpRGB             transparency_custom_color1;
+  GimpRGB             transparency_custom_color2;
   gint                snap_distance;
   gint                marching_ants_speed;
   gboolean            resize_windows_on_zoom;

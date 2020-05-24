@@ -210,6 +210,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                      -1);
       config.check_size           = display_config->transparency_size;
       config.check_type           = display_config->transparency_type;
+      config.check_custom_color1  = display_config->transparency_custom_color1;
+      config.check_custom_color2  = display_config->transparency_custom_color2;
       config.show_help_button     = (gui_config->use_help &&
                                      gui_config->show_help_button);
       config.use_cpu_accel        = manager->gimp->use_cpu_accel;

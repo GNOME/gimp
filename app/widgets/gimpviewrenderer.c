@@ -775,8 +775,8 @@ gimp_view_renderer_real_draw (GimpViewRenderer *renderer,
           if (! renderer->priv->pattern)
             renderer->priv->pattern =
               gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM,
-                                              gimp_render_light_check_color (),
-                                              gimp_render_dark_check_color ());
+                                              gimp_render_check_color1 (),
+                                              gimp_render_check_color2 ());
 
           cairo_set_source (cr, renderer->priv->pattern);
           cairo_fill_preserve (cr);
@@ -1129,8 +1129,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       if (! renderer->priv->pattern)
         renderer->priv->pattern =
           gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM,
-                                          gimp_render_light_check_color (),
-                                          gimp_render_dark_check_color ());
+                                          gimp_render_check_color1 (),
+                                          gimp_render_check_color2 ());
     }
 
   switch (outside_bg)

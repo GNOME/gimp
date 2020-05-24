@@ -144,6 +144,8 @@ gimp_aspect_preview_init (GimpAspectPreview *preview)
   g_object_set (gimp_preview_get_area (GIMP_PREVIEW (preview)),
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
+                "check-custom-color1", gimp_check_custom_color1 (),
+                "check-custom-color2", gimp_check_custom_color2 (),
                 NULL);
 }
 

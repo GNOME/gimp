@@ -178,6 +178,7 @@ typedef enum  /*< pdb-skip >*/
  * @GIMP_CHECK_TYPE_WHITE_ONLY:   White only
  * @GIMP_CHECK_TYPE_GRAY_ONLY:    Gray only
  * @GIMP_CHECK_TYPE_BLACK_ONLY:   Black only
+ * @GIMP_CHECK_TYPE_CUSTOM_CHECKS: Custom checks
  *
  * Color/Brightness of the checkerboard indicating transparency.
  **/
@@ -192,7 +193,8 @@ typedef enum  /*< pdb-skip >*/
   GIMP_CHECK_TYPE_DARK_CHECKS  = 2,  /*< desc="Dark checks"     >*/
   GIMP_CHECK_TYPE_WHITE_ONLY   = 3,  /*< desc="White only"      >*/
   GIMP_CHECK_TYPE_GRAY_ONLY    = 4,  /*< desc="Gray only"       >*/
-  GIMP_CHECK_TYPE_BLACK_ONLY   = 5   /*< desc="Black only"      >*/
+  GIMP_CHECK_TYPE_BLACK_ONLY   = 5,  /*< desc="Black only"      >*/
+  GIMP_CHECK_TYPE_CUSTOM_CHECKS = 6  /*< desc="Custom checks"   >*/
 } GimpCheckType;
 
 

@@ -44,6 +44,8 @@
  * @light: (out) (optional): return location for the light shade
  * @dark:  (out) (optional): return location for the dark shade
  *
+ * Deprecated: use gimp_checks_get_colors() instead.
+ *
  * Retrieves the actual shades of gray to use when drawing a
  * checkerboard for a certain #GimpCheckType.
  *
@@ -70,4 +72,78 @@ gimp_checks_get_shades (GimpCheckType  type,
     *light = shades[type][1];
   if (dark)
     *dark  = shades[type][0];
+}
+
+/**
+ * gimp_checks_get_colors:
+ * @type:          the checkerboard type
+ * @color1:        return location for the first color,
+ *                 usually the light color
+ * @color2:        return location for the second color,
+ *                 usually the dark color
+ * @color1_custom: the first color to return if type is custom
+ * @color2_custom: the second color to return if type is custom
+ **/
+void
+gimp_checks_get_colors (GimpCheckType  type,
+                        GimpRGB       *color1,
+                        GimpRGB       *color2,
+                        GimpRGB        color1_custom,
+                        GimpRGB        color2_custom)
+{
+  if (color1)
+    {
+      switch (type)
+        {
+        case GIMP_CHECK_TYPE_LIGHT_CHECKS:
+          *color1 = GIMP_CHECKS_LIGHT_COLOR_LIGHT;
+          break;
+        case GIMP_CHECK_TYPE_DARK_CHECKS:
+          *color1 = GIMP_CHECKS_DARK_COLOR_LIGHT;
+          break;
+        case GIMP_CHECK_TYPE_WHITE_ONLY:
+          *color1 = GIMP_CHECKS_WHITE_COLOR;
+          break;
+        case GIMP_CHECK_TYPE_GRAY_ONLY:
+          *color1 = GIMP_CHECKS_GRAY_COLOR;
+          break;
+        case GIMP_CHECK_TYPE_BLACK_ONLY:
+          *color1 = GIMP_CHECKS_BLACK_COLOR;
+          break;
+        case GIMP_CHECK_TYPE_CUSTOM_CHECKS:
+          *color1 = color1_custom;
+          break;
+        default:
+          *color1 = GIMP_CHECKS_GRAY_COLOR_LIGHT;
+          break;
+        }
+    }
+
+  if (color2)
+    {
+      switch (type)
+        {
+        case GIMP_CHECK_TYPE_LIGHT_CHECKS:
+          *color2 = GIMP_CHECKS_LIGHT_COLOR_DARK;
+          break;
+        case GIMP_CHECK_TYPE_DARK_CHECKS:
+          *color2 = GIMP_CHECKS_DARK_COLOR_DARK;
+          break;
+        case GIMP_CHECK_TYPE_WHITE_ONLY:
+          *color2 = GIMP_CHECKS_WHITE_COLOR;
+          break;
+        case GIMP_CHECK_TYPE_GRAY_ONLY:
+          *color2 = GIMP_CHECKS_GRAY_COLOR;
+          break;
+        case GIMP_CHECK_TYPE_BLACK_ONLY:
+          *color2 = GIMP_CHECKS_BLACK_COLOR;
+          break;
+        case GIMP_CHECK_TYPE_CUSTOM_CHECKS:
+          *color2 = color2_custom;
+          break;
+        default:
+          *color2 = GIMP_CHECKS_GRAY_COLOR_DARK;
+          break;
+        }
+    }
 }

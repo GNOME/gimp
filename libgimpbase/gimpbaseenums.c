@@ -227,6 +227,7 @@ gimp_check_type_get_type (void)
     { GIMP_CHECK_TYPE_WHITE_ONLY, "GIMP_CHECK_TYPE_WHITE_ONLY", "white-only" },
     { GIMP_CHECK_TYPE_GRAY_ONLY, "GIMP_CHECK_TYPE_GRAY_ONLY", "gray-only" },
     { GIMP_CHECK_TYPE_BLACK_ONLY, "GIMP_CHECK_TYPE_BLACK_ONLY", "black-only" },
+    { GIMP_CHECK_TYPE_CUSTOM_CHECKS, "GIMP_CHECK_TYPE_CUSTOM_CHECKS", "custom-checks" },
     { 0, NULL, NULL }
   };
 
@@ -238,6 +239,7 @@ gimp_check_type_get_type (void)
     { GIMP_CHECK_TYPE_WHITE_ONLY, NC_("check-type", "White only"), NULL },
     { GIMP_CHECK_TYPE_GRAY_ONLY, NC_("check-type", "Gray only"), NULL },
     { GIMP_CHECK_TYPE_BLACK_ONLY, NC_("check-type", "Black only"), NULL },
+    { GIMP_CHECK_TYPE_CUSTOM_CHECKS, NC_("check-type", "Custom checks"), NULL },
     { 0, NULL, NULL }
   };
 

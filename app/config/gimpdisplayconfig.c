@@ -47,6 +47,8 @@ enum
   PROP_0,
   PROP_TRANSPARENCY_SIZE,
   PROP_TRANSPARENCY_TYPE,
+  PROP_TRANSPARENCY_CUSTOM_COLOR1,
+  PROP_TRANSPARENCY_CUSTOM_COLOR2,
   PROP_SNAP_DISTANCE,
   PROP_MARCHING_ANTS_SPEED,
   PROP_RESIZE_WINDOWS_ON_ZOOM,
@@ -133,6 +135,20 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                          GIMP_TYPE_CHECK_TYPE,
                          GIMP_CHECK_TYPE_GRAY_CHECKS,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR1,
+                        "transparency-custom-color1",
+                        "Transparency custom color 1",
+                        TRANSPARENCY_CUSTOM_COLOR1_BLURB,
+                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR1,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
+                        "transparency-custom-color2",
+                        "Transparency custom color 2",
+                        TRANSPARENCY_CUSTOM_COLOR2_BLURB,
+                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR2,
+                        GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,
                         "snap-distance",
@@ -422,6 +438,12 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_TRANSPARENCY_TYPE:
       display_config->transparency_type = g_value_get_enum (value);
       break;
+    case PROP_TRANSPARENCY_CUSTOM_COLOR1:
+      display_config->transparency_custom_color1 = *(GimpRGB *) g_value_get_boxed (value);
+      break;
+    case PROP_TRANSPARENCY_CUSTOM_COLOR2:
+      display_config->transparency_custom_color2 = *(GimpRGB *) g_value_get_boxed (value);
+      break;
     case PROP_SNAP_DISTANCE:
       display_config->snap_distance = g_value_get_int (value);
       break;
@@ -539,6 +561,12 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_TRANSPARENCY_TYPE:
       g_value_set_enum (value, display_config->transparency_type);
+      break;
+    case PROP_TRANSPARENCY_CUSTOM_COLOR1:
+      g_value_set_boxed (value, &display_config->transparency_custom_color1);
+      break;
+    case PROP_TRANSPARENCY_CUSTOM_COLOR2:
+      g_value_set_boxed (value, &display_config->transparency_custom_color2);
       break;
     case PROP_SNAP_DISTANCE:
       g_value_set_int (value, display_config->snap_distance);

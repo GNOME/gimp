@@ -493,6 +493,12 @@ _gp_config_read (GIOChannel      *channel,
   if (! _gimp_wire_read_int8 (channel,
                               (guint8 *) &config->check_type, 1, user_data))
     goto cleanup;
+  if (! _gimp_wire_read_color (channel, &config->check_custom_color1,
+                               1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_color (channel, &config->check_custom_color2,
+                               1, user_data))
+    goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
                               (guint8 *) &config->show_help_button, 1,
                               user_data))
@@ -600,6 +606,12 @@ _gp_config_write (GIOChannel      *channel,
   if (! _gimp_wire_write_int8 (channel,
                                (const guint8 *) &config->check_type, 1,
                                user_data))
+    return;
+  if (! _gimp_wire_write_color (channel, &config->check_custom_color1,
+                                1, user_data))
+    return;
+  if (! _gimp_wire_write_color (channel, &config->check_custom_color2,
+                                1, user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
                                (const guint8 *) &config->show_help_button, 1,

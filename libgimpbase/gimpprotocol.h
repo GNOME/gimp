@@ -106,6 +106,8 @@ struct _GPConfig
   gint32   shm_id;
   gint8    check_size;
   gint8    check_type;
+  GimpRGB  check_custom_color1;
+  GimpRGB  check_custom_color2;
   gint8    show_help_button;
   gint8    use_cpu_accel;
   gint8    use_opencl;

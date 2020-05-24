@@ -183,6 +183,8 @@ gboolean            gimp_export_thumbnail     (void) G_GNUC_CONST;
 gint                gimp_get_num_processors   (void) G_GNUC_CONST;
 GimpCheckSize       gimp_check_size           (void) G_GNUC_CONST;
 GimpCheckType       gimp_check_type           (void) G_GNUC_CONST;
+const GimpRGB     * gimp_check_custom_color1  (void) G_GNUC_CONST;
+const GimpRGB *     gimp_check_custom_color2  (void) G_GNUC_CONST;
 GimpDisplay       * gimp_default_display      (void) G_GNUC_CONST;
 const gchar       * gimp_wm_class             (void) G_GNUC_CONST;
 const gchar       * gimp_display_name         (void) G_GNUC_CONST;

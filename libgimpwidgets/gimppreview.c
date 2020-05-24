@@ -241,6 +241,12 @@ gimp_preview_init (GimpPreview *preview)
   g_signal_connect_swapped (priv->area, "notify::check-type",
                             G_CALLBACK (gimp_preview_notify_checks),
                             preview);
+  g_signal_connect_swapped (priv->area, "notify::check-custom-color1",
+                            G_CALLBACK (gimp_preview_notify_checks),
+                            preview);
+  g_signal_connect_swapped (priv->area, "notify::check-custom-color2",
+                            G_CALLBACK (gimp_preview_notify_checks),
+                            preview);
 
   gtk_widget_add_events (priv->area,
                          GDK_BUTTON_PRESS_MASK        |

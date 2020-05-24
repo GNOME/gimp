@@ -813,6 +813,12 @@ view_actions_setup (GimpActionGroup *group)
   g_signal_connect_object (group->gimp->config, "notify::check-type",
                            G_CALLBACK (view_actions_check_type_notify),
                            group, 0);
+  g_signal_connect_object (group->gimp->config, "notify::check-custom-color1",
+                           G_CALLBACK (view_actions_check_type_notify),
+                           group, 0);
+  g_signal_connect_object (group->gimp->config, "notify::check-custom-color2",
+                           G_CALLBACK (view_actions_check_type_notify),
+                           group, 0);
   view_actions_check_type_notify (GIMP_DISPLAY_CONFIG (group->gimp->config),
                                   NULL, group);
 
@@ -1207,9 +1213,9 @@ view_actions_check_type_notify (GimpDisplayConfig *config,
                                 GimpActionGroup   *group)
 {
   gimp_action_group_set_action_color (group, "view-padding-color-light-check",
-                                      gimp_render_light_check_color (),
+                                      gimp_render_check_color1 (),
                                       FALSE);
   gimp_action_group_set_action_color (group, "view-padding-color-dark-check",
-                                      gimp_render_dark_check_color (),
+                                      gimp_render_check_color2 (),
                                       FALSE);
 }

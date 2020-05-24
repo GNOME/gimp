@@ -37,8 +37,8 @@ static void   gimp_render_setup_notify (gpointer    config,
                                         Gimp       *gimp);
 
 
-static GimpRGB light;
-static GimpRGB dark;
+static GimpRGB color1;
+static GimpRGB color2;
 
 
 void
@@ -47,6 +47,14 @@ gimp_render_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_signal_connect (gimp->config, "notify::transparency-type",
+                    G_CALLBACK (gimp_render_setup_notify),
+                    gimp);
+
+  g_signal_connect (gimp->config, "notify::transparency-custom-color1",
+                    G_CALLBACK (gimp_render_setup_notify),
+                    gimp);
+
+  g_signal_connect (gimp->config, "notify::transparency-custom-color2",
                     G_CALLBACK (gimp_render_setup_notify),
                     gimp);
 
@@ -64,15 +72,15 @@ gimp_render_exit (Gimp *gimp)
 }
 
 const GimpRGB *
-gimp_render_light_check_color (void)
+gimp_render_check_color1 (void)
 {
-  return &light;
+  return &color1;
 }
 
 const GimpRGB *
-gimp_render_dark_check_color (void)
+gimp_render_check_color2 (void)
 {
-  return &dark;
+  return &color2;
 }
 
 static void
@@ -81,15 +89,17 @@ gimp_render_setup_notify (gpointer    config,
                           Gimp       *gimp)
 {
   GimpCheckType check_type;
-  guchar        dark_check;
-  guchar        light_check;
+  GimpRGB       *color1_custom;
+  GimpRGB       *color2_custom;
 
   g_object_get (config,
                 "transparency-type", &check_type,
+                "transparency-custom-color1", &color1_custom,
+                "transparency-custom-color2", &color2_custom,
                 NULL);
 
-  gimp_checks_get_shades (check_type, &light_check, &dark_check);
+  gimp_checks_get_colors (check_type, &color1, &color2, *color1_custom, *color2_custom);
 
-  gimp_rgba_set_uchar (&light, light_check, light_check, light_check, 255);
-  gimp_rgba_set_uchar (&dark,  dark_check,  dark_check,  dark_check,  255);
+  g_free (color1_custom);
+  g_free (color2_custom);
 }
