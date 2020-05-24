@@ -267,9 +267,7 @@ def save_colorxhtml(procedure, run_mode, image, drawable, file, args, data):
     if separate:
         css.close()
 
-    return Gimp.ValueArray.new([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
-    ])
+    return Gimp.ValueArray.new([ Gimp.PDBStatusType.SUCCESS ])
 
 
 class ColorXhtml(Gimp.PlugIn):

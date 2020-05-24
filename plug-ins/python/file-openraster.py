@@ -92,8 +92,8 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
         fid.write(orafile.read('Thumbnails/thumbnail.png'))
 
     img = Gimp.get_pdb().run_procedure('file-png-load', [
-        GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-        GObject.Value(GObject.TYPE_STRING, tmp),
+        Gimp.RunMode.NONINTERACTIVE,
+        tmp,
     ])
     img = img.index(1)
     img = Gimp.Image.get_by_id(img)
@@ -102,12 +102,12 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
     os.rmdir(tempdir)
 
     return Gimp.ValueArray.new_from_values([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS),
-        GObject.Value(Gimp.Image, img),
-        GObject.Value(GObject.TYPE_INT, w),
-        GObject.Value(GObject.TYPE_INT, h),
-        GObject.Value(Gimp.ImageType, Gimp.ImageType.RGB_IMAGE),
-        GObject.Value(GObject.TYPE_INT, 1)
+        Gimp.PDBStatusType.SUCCESS,
+        img,
+        w,
+        h,
+        Gimp.ImageType.RGB_IMAGE,
+        1
     ])
 
 def save_ora(procedure, run_mode, image, drawable, file, args, data):
@@ -138,18 +138,18 @@ def save_ora(procedure, run_mode, image, drawable, file, args, data):
         interlace, compression = 0, 2
 
         Gimp.get_pdb().run_procedure('file-png-save', [
-            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-            GObject.Value(Gimp.Image, image),
-            GObject.Value(Gimp.Drawable, drawable),
-            GObject.Value(GObject.TYPE_STRING, tmp),
-            GObject.Value(GObject.TYPE_STRING, 'tmp.png'),
-            GObject.Value(GObject.TYPE_BOOLEAN, interlace),
-            GObject.Value(GObject.TYPE_INT, compression),
+            Gimp.RunMode.NONINTERACTIVE,
+            image,
+            drawable,
+            tmp,
+            'tmp.png',
+            interlace,
+            compression,
             # write all PNG chunks except oFFs(ets)
-            GObject.Value(GObject.TYPE_BOOLEAN, True),
-            GObject.Value(GObject.TYPE_BOOLEAN, True),
-            GObject.Value(GObject.TYPE_BOOLEAN, False),
-            GObject.Value(GObject.TYPE_BOOLEAN, True),
+            True,
+            True,
+            False,
+            True,
         ])
         orafile.write(tmp, path)
         os.remove(tmp)
@@ -220,9 +220,7 @@ def save_ora(procedure, run_mode, image, drawable, file, args, data):
             add_layer(parent, x, y, opac, lay, path_name, lay.get_visible())
 
     # save mergedimage
-    thumb = Gimp.get_pdb().run_procedure('gimp-image-duplicate', [
-        GObject.Value(Gimp.Image, image),
-    ])
+    thumb = Gimp.get_pdb().run_procedure('gimp-image-duplicate', [ image ])
     thumb = thumb.index(1)
     thumb = Gimp.Image.get_by_id(thumb)
     thumb_layer = thumb.merge_visible_layers (Gimp.MergeType.CLIP_TO_IMAGE)
@@ -253,9 +251,7 @@ def save_ora(procedure, run_mode, image, drawable, file, args, data):
         os.remove(file.peek_path()) # win32 needs that
     os.rename(file.peek_path() + '.tmpsave', file.peek_path())
 
-    return Gimp.ValueArray.new_from_values([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
-    ])
+    return Gimp.ValueArray.new_from_values([ Gimp.PDBStatusType.SUCCESS ])
 
 def load_ora(procedure, run_mode, file, args, data):
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
@@ -312,9 +308,9 @@ def load_ora(procedure, run_mode, file, args, data):
 
             # import layer, set attributes and add to image
             gimp_layer = Gimp.get_pdb().run_procedure('gimp-file-load-layer', [
-                GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-                GObject.Value(Gimp.Image, img),
-                GObject.Value(GObject.TYPE_STRING, tmp),
+                Gimp.RunMode.NONINTERACTIVE,
+                img,
+                tmp
             ])
             gimp_layer = gimp_layer.index(1)
             gimp_layer = Gimp.Item.get_by_id(gimp_layer)
@@ -338,10 +334,7 @@ def load_ora(procedure, run_mode, file, args, data):
 
     os.rmdir(tempdir)
 
-    return Gimp.ValueArray.new_from_values([
-        GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS),
-        GObject.Value(Gimp.Image, img),
-    ])
+    return Gimp.ValueArray.new_from_values([ Gimp.PDBStatusType.SUCCESS, img ])
 
 
 class FileOpenRaster (Gimp.PlugIn):
