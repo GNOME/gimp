@@ -2694,25 +2694,25 @@ prefs_dialog_new (Gimp       *gimp,
                             GTK_TABLE (table), 0, size_group);
 
   button = gimp_prop_color_button_new (object,
-                                       "transparency-custom-dark-color",
-                                       _("Transparency Custom Dark Color"),
+                                       "transparency-custom-color1",
+                                       _("Transparency Custom Color 1"),
                                        PREFS_COLOR_BUTTON_WIDTH,
                                        PREFS_COLOR_BUTTON_HEIGHT,
                                        GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Custom dark color:"), 0.0, 0.5,
+                             _("_Custom color 1:"), 0.0, 0.5,
                              button, 1, TRUE);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
 
   button = gimp_prop_color_button_new (object,
-                                       "transparency-custom-light-color",
-                                       _("Transparency Custom Light Color"),
+                                       "transparency-custom-color2",
+                                       _("Transparency Custom Color 2"),
                                        PREFS_COLOR_BUTTON_WIDTH,
                                        PREFS_COLOR_BUTTON_HEIGHT,
                                        GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Custom light color:"), 0.0, 0.5,
+                             _("_Custom color 2:"), 0.0, 0.5,
                              button, 1, TRUE);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
