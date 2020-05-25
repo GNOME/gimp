@@ -82,7 +82,7 @@ gimp_checks_get_shades (GimpCheckType  type,
  * @color2:        return location for the second color,
  *                 usually the dark color
  * @color1_custom: the first color to return if type is custom
- * @dark_custom:   the second color to return if type is custom
+ * @color2_custom: the second color to return if type is custom
  **/
 void
 gimp_checks_get_colors (GimpCheckType  type,
