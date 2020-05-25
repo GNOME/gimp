@@ -337,6 +337,47 @@ CODE
 }
 
 
+sub vectors_stroke_reverse {
+    $blurb = 'reverses the specified stroke.';
+
+    $help = <<'HELP';
+Reverses the specified stroke.
+HELP
+
+    &simon_pdb_misc('2020', '3.0');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'stroke_id', type => 'int32',
+	  desc => 'The stroke ID' }
+    );
+
+    %invoke = (
+        code => <<"CODE"
+{
+  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                    GIMP_PDB_ITEM_CONTENT, error);
+
+  if (stroke)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                          _("Reverse path stroke"),
+                                          vectors);
+
+      gimp_vectors_freeze (vectors);
+      gimp_stroke_reverse (stroke);
+      gimp_vectors_thaw (vectors);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
 sub vectors_stroke_translate {
     $blurb = 'translate the given stroke.';
 
@@ -1297,6 +1338,7 @@ CODE
             vectors_stroke_get_point_at_dist
             vectors_remove_stroke
             vectors_stroke_close
+            vectors_stroke_reverse
             vectors_stroke_translate
             vectors_stroke_scale
             vectors_stroke_rotate
