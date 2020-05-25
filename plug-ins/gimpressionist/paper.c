@@ -119,7 +119,6 @@ void
 paper_store (void)
 {
   pcvals.paper_invert = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (paper_invert));
-  pcvals.paper_invert = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (paper_invert));
   pcvals.paper_overlay = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (paper_overlay));
 }
 

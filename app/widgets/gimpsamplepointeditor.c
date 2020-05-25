@@ -548,7 +548,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
         {
           GimpSamplePoint   *sample_point = list->data;
           const Babl        *format;
-          guchar             pixel[32];
+          gdouble            pixel[4];
           GimpRGB            color;
           GimpColorPickMode  pick_mode;
           gint               x;

@@ -34,6 +34,7 @@
 #include "gimpcanvascorner.h"
 #include "gimpcanvasgroup.h"
 #include "gimpcanvashandle.h"
+#include "gimpcanvaslimit.h"
 #include "gimpcanvasline.h"
 #include "gimpcanvaspath.h"
 #include "gimpcanvaspolygon.h"
@@ -555,17 +556,29 @@ gimp_tool_widget_remove_item (GimpToolWidget *widget,
 }
 
 GimpCanvasGroup *
-gimp_tool_widget_add_stroke_group (GimpToolWidget *widget)
+gimp_tool_widget_add_group (GimpToolWidget *widget)
 {
   GimpCanvasItem *item;
 
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   item = gimp_canvas_group_new (widget->private->shell);
-  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (item), TRUE);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);
+
+  return GIMP_CANVAS_GROUP (item);
+}
+
+GimpCanvasGroup *
+gimp_tool_widget_add_stroke_group (GimpToolWidget *widget)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_tool_widget_add_group (widget);
+  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (item), TRUE);
 
   return GIMP_CANVAS_GROUP (item);
 }
@@ -577,11 +590,8 @@ gimp_tool_widget_add_fill_group (GimpToolWidget *widget)
 
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
-  item = gimp_canvas_group_new (widget->private->shell);
+  item = gimp_tool_widget_add_group (widget);
   gimp_canvas_group_set_group_filling (GIMP_CANVAS_GROUP (item), TRUE);
-
-  gimp_tool_widget_add_item (widget, item);
-  g_object_unref (item);
 
   return GIMP_CANVAS_GROUP (item);
 }
@@ -677,6 +687,34 @@ gimp_tool_widget_add_arc (GimpToolWidget *widget,
                               radius_x, radius_y,
                               start_angle, slice_angle,
                               filled);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_limit (GimpToolWidget *widget,
+                            GimpLimitType   type,
+                            gdouble         x,
+                            gdouble         y,
+                            gdouble         radius,
+                            gdouble         aspect_ratio,
+                            gdouble         angle,
+                            gboolean        dashed)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_limit_new (widget->private->shell,
+                                type,
+                                x, y,
+                                radius,
+                                aspect_ratio,
+                                angle,
+                                dashed);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);

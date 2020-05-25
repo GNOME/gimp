@@ -170,6 +170,8 @@ static GeglBuffer * gimp_transform_grid_tool_transform       (GimpTransformTool 
                                                               gint                   *new_offset_x,
                                                               gint                   *new_offset_y);
 
+static void     gimp_transform_grid_tool_real_apply_info     (GimpTransformGridTool  *tg_tool,
+                                                              const TransInfo         info);
 static gchar  * gimp_transform_grid_tool_real_get_undo_desc  (GimpTransformGridTool  *tg_tool);
 static void     gimp_transform_grid_tool_real_update_widget  (GimpTransformGridTool  *tg_tool);
 static void     gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool  *tg_tool);
@@ -278,6 +280,7 @@ gimp_transform_grid_tool_class_init (GimpTransformGridToolClass *klass)
 
   klass->info_to_matrix      = NULL;
   klass->matrix_to_info      = NULL;
+  klass->apply_info          = gimp_transform_grid_tool_real_apply_info;
   klass->get_undo_desc       = gimp_transform_grid_tool_real_get_undo_desc;
   klass->dialog              = NULL;
   klass->dialog_update       = NULL;
@@ -332,12 +335,13 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
                                      GimpDisplay  *display,
                                      GError      **error)
 {
-  GimpTransformTool     *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformGridTool *tg_tool  = GIMP_TRANSFORM_GRID_TOOL (tool);
-  GimpImage             *image    = gimp_display_get_image (display);
-  GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
-  GimpObject            *object;
-  UndoInfo              *undo_info;
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformGridTool    *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tool);
+  GimpImage                *image      = gimp_display_get_image (display);
+  GimpDrawable             *drawable   = gimp_image_get_active_drawable (image);
+  GimpObject               *object;
+  UndoInfo                 *undo_info;
 
   object = gimp_transform_tool_check_active_object (tr_tool, display, error);
 
@@ -384,6 +388,9 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   memcpy (undo_info->trans_infos, tg_tool->trans_infos,
           sizeof (tg_tool->trans_infos));
 
+  if (tg_options->direction_chain_button)
+    gtk_widget_set_sensitive (tg_options->direction_chain_button, TRUE);
+
   g_signal_connect (
     image, "linked-items-changed",
     G_CALLBACK (gimp_transform_grid_tool_image_linked_items_changed),
@@ -397,16 +404,12 @@ gimp_transform_grid_tool_control (GimpTool       *tool,
                                   GimpToolAction  action,
                                   GimpDisplay    *display)
 {
-  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
 
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
     case GIMP_TOOL_ACTION_RESUME:
-      gimp_transform_tool_recalc_matrix (tr_tool, display);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -1034,6 +1037,13 @@ gimp_transform_grid_tool_transform (GimpTransformTool  *tr_tool,
   return new_buffer;
 }
 
+static void
+gimp_transform_grid_tool_real_apply_info (GimpTransformGridTool *tg_tool,
+                                          const TransInfo        info)
+{
+  memcpy (tg_tool->trans_info, info, sizeof (TransInfo));
+}
+
 static gchar *
 gimp_transform_grid_tool_real_get_undo_desc (GimpTransformGridTool *tg_tool)
 {
@@ -1149,8 +1159,9 @@ gimp_transform_grid_tool_image_linked_items_changed (GimpImage             *imag
 static void
 gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTool                 *tool       = GIMP_TOOL (tg_tool);
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
 
   if (tool->display)
     {
@@ -1187,6 +1198,15 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
     }
 
   gimp_transform_grid_tool_show_active_object (tg_tool);
+
+  if (tg_options->direction_chain_button)
+    {
+      g_object_set (tg_options,
+                    "direction-linked", FALSE,
+                    NULL);
+
+      gtk_widget_set_sensitive (tg_options->direction_chain_button, FALSE);
+    }
 
   tool->display   = NULL;
   tool->drawable  = NULL;
@@ -1385,6 +1405,12 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
   GimpDisplay              *display    = tool->display;
 
+  /* we can get here while already committing a transformation.  just return in
+   * this case.  see issue #4734.
+   */
+  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tg_tool)))
+    return;
+
   switch (response_id)
     {
     case RESPONSE_RESET:
@@ -1448,9 +1474,8 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
               if (tr_options->direction == GIMP_TRANSFORM_BACKWARD)
                 gimp_matrix3_invert (&transform);
 
-              memcpy (tg_tool->trans_info, tg_tool->init_trans_info,
-                      sizeof (TransInfo));
-
+              GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->apply_info (
+                tg_tool, tg_tool->init_trans_info);
               GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info (
                 tg_tool, &transform);
 

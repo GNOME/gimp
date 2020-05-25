@@ -1,193 +1,143 @@
-image: archlinux/base:latest
+image: debian:testing
 
 stages:
-  - babl
-  - gegl
+  - dependencies
   - gimp
 
 variables:
+  GIT_DEPTH: "1"
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
   PACMAN_CACHE:   "${CI_PROJECT_DIR}/_pacman_cache"
 
-cache:
-  paths:
-  - _pacman_cache
+## GNU/Linux 64-bit CIs ##
 
-.babl-base:
-  stage: babl
+deps-debian/testing:
+  stage: dependencies
+  cache:
+    paths:
+    - _pacman_cache
   artifacts:
+    expire_in: 1 week
+    when: always
     paths:
     - "${INSTALL_DIR}"
-  variables:
-    GIT_DEPTH: "5"
+    - _babl/_build
+    - _gegl/_build
   before_script:
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
         git
-        base-devel
+        ffmpeg
+        graphviz-dev
         gobject-introspection
+        libjson-glib-dev
+        libgexiv2-dev
+        libgirepository1.0-dev
+        liblcms2-dev
+        libopenexr-dev
+        libraw-dev
+        librsvg2-dev
+        libspiro-dev
+        libsuitesparse-dev
+        libtiff5-dev
+        luajit
         meson
-        lcms2
-    - git clone --depth="${GIT_DEPTH}" https://gitlab.gnome.org/GNOME/babl.git _babl
-
-babl-git:
-  extends: .babl-base
+        python3
+        valac
+    - apt-get install -y --reinstall ca-certificates
+    - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
+    - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
+    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
   script:
     - cd _babl
     - meson -Dprefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
-
-# babl-min:
-#   extends: .babl-base
-#   script:
-#     - BABL_MIN_VERSION="$(grep babl meson.build | grep version
-#         | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g')"
-#     - cd _babl
-#     - git fetch --no-tags origin "refs/tags/BABL_${BABL_MIN_VERSION}:refs/tags/MIN_VERSION"
-#     - git checkout MIN_VERSION
-#     - meson -Dprefix="${INSTALL_PREFIX}" _build
-#     - ninja -C _build
-#     - ninja -C _build install
-
-.gegl-base:
-  stage: gegl
-  artifacts:
-    paths:
-    - "${INSTALL_DIR}"
-  variables:
-    GIT_DEPTH: "5"
-  before_script:
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        meson
-        lcms2
-        base-devel
-        ffmpeg
-        gobject-introspection
-        graphviz
-        jasper
-        json-glib
-        lcms2
-        libgexiv2
-        libraw
-        librsvg
-        libspiro
-        libtiff
-        luajit
-        openexr
-        python
-        sdl2
-        suitesparse
-    - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
-
-gegl-git:
-  extends: .gegl-base
-  script:
-    - cd _gegl
+    - cd ../_gegl
     - meson --prefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
 
-# gegl-min:
-#   extends: .gegl-base
-#   script:
-#     - GEGL_MIN_VERSION="$(grep gegl meson.build | grep version
-#         | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g')"
-#     - cd _gegl
-#     - git fetch --no-tags origin "refs/tags/GEGL_${GEGL_MIN_VERSION}:refs/tags/MIN_VERSION"
-#     - git checkout MIN_VERSION
-#     - meson -Dprefix="${INSTALL_PREFIX}" _build
-#     - ninja -C _build
-#     - ninja -C _build install
-
-.gimp-base:
+.gimp-debian/testing-base:
   stage: gimp
+  dependencies:
+    - deps-debian/testing
   artifacts:
+    expire_in: 1 week
+    when: always
+    name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
     paths:
-    - "${INSTALL_DIR}"
-  variables:
-    GIT_DEPTH: "5"
+    - _build
+    #- "${INSTALL_DIR}"
   before_script:
-    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
-    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
-    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
-        git
-        base-devel
-        appstream-glib
+    - apt-get update
+    - apt-get install -y --no-install-recommends
         at-spi2-core
-        at-spi2-atk
-        dbus-glib
+        build-essential
         desktop-file-utils
         ffmpeg
+        hicolor-icon-theme
+        ghostscript
+        git
         glib-networking
         gobject-introspection
-        gtk2
-        hicolor-icon-theme
-        jasper
-        lcms2
-        libexif
-        libgudev
-        libheif
-        libmng
-        libmypaint
-        librsvg
-        libwebp
-        libwmf
-        libxmu
-        libxpm
-        mypaint-brushes1
-        openexr
-        poppler-data
-        pygtk
-        alsa-lib
-        ghostscript
-        poppler-glib
-        gtk-doc
+        gtk-doc-tools
         intltool
         iso-codes
-        xorg-server-xvfb
-        xorgproto
+        libappstream-glib-dev
+        libbz2-dev
+        libdbus-glib-1-dev
+        libexif-dev
+        libgexiv2-dev
+        libgirepository1.0-dev
+        libgtk2.0-bin
+        libgtk2.0-dev
+        libgudev-1.0-dev
+        libjson-glib-dev
+        liblcms2-dev
+        liblzma-dev
+        libmng-dev
+        libmypaint-dev
+        libopenexr-dev
+        libpoppler-glib-dev
+        libraw19
+        librsvg2-dev
+        libspiro-dev
+        libtiff-dev
+        libtool
+        libumfpack5
+        libwebp-dev
+        libwmf-dev
+        libxmu-dev
+        libxpm-dev
+        meson
+        mypaint-brushes
+        poppler-data
+        xauth
+        xvfb
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/share/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
+    - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
+    - export PATH="${INSTALL_PREFIX}/bin:$PATH"
+  needs: ["deps-debian/testing"]
 
-.gimp-autotools:
-  extends: .gimp-base
+gimp-debian/testing-autotools:
+  extends: .gimp-debian/testing-base
   script:
     - mkdir _build
     - cd _build
     - ../autogen.sh
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
+        --disable-python
     - make -j "$(nproc)"
-    # - make check
-  artifacts:
-    name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    when: on_failure
-    expire_in: 1 week
-    paths:
-      - _build/app/tests/
-
-build-git-autotools:
-  extends: .gimp-autotools
-  dependencies:
-    - babl-git
-    - gegl-git
-
-# build-min-autotools:
-#   extends: .gimp-autotools
-#   dependencies:
-#     - babl-git
-#     - gegl-git
-
-# build-min-meson:
-#   extends: .gimp-meson
-#   dependencies:
-#     - babl-min
-#     - gegl-min
+    - make check

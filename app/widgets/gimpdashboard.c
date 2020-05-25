@@ -3858,14 +3858,14 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 
               for (frame = n_head; frame < n_frames - n_tail; frame++)
                 {
-                  unsigned long long      address;
+                  guintptr address;
 
                   address = gimp_backtrace_get_frame_address (backtrace,
                                                               thread, frame);
 
                   gimp_dashboard_log_printf (dashboard,
                                              "<frame address=\"0x%llx\" />\n",
-                                             address);
+                                             (unsigned long long) address);
 
                   g_hash_table_add (priv->log_addresses, (gpointer) address);
                 }
@@ -4570,7 +4570,7 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
       GimpAsync *async;
 
       async = gimp_parallel_run_async_independent (
-        (GimpParallelRunAsyncFunc) gimp_dashboard_log_write_address_map,
+        (GimpRunAsyncFunc) gimp_dashboard_log_write_address_map,
         dashboard);
 
       gimp_wait (priv->gimp, GIMP_WAITABLE (async),

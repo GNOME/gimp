@@ -44,10 +44,11 @@ static const FileFormat file_formats[] =
 {
   {
     N_("Raw Canon"),
-    "image/x-canon-cr2,image/x-canon-crw",
-    "cr2,crw",
+    "image/x-canon-cr2,image/x-canon-crw,image/x-canon-cr3",
+    "cr2,crw,cr3",
     "0,string,II*\\0\\020\\0\\0\\0CR,"   /* cr2  */
-    "0,string,II\\024\\0\\0\\0HEAPCCDR", /* crw  */
+    "0,string,II\\024\\0\\0\\0HEAPCCDR," /* crw  */
+    "4,string,ftypcrx ",                 /* cr3  */
 
     "file-%s-canon-load",
     "Load files in the Canon raw formats via %s",

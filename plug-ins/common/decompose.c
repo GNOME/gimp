@@ -143,14 +143,10 @@ static gchar   * generate_filename           (guint32              image_ID,
 #define CPN_HSL_S       { "saturation", N_("saturation"),    0.0, 1.0, TRUE }
 #define CPN_HSL_L       { "lightness",  N_("lightness"),     0.0, 1.0, TRUE }
 
-#define CPN_CMYK_C      { "cyan",       N_("cyan-k"),        0.0, 1.0, TRUE }
-#define CPN_CMYK_M      { "magenta",    N_("magenta-k"),     0.0, 1.0, TRUE }
-#define CPN_CMYK_Y      { "yellow",     N_("yellow-k"),      0.0, 1.0, TRUE }
-#define CPN_CMYK_K      { "key",        N_("black"),         0.0, 1.0, TRUE }
-
-#define CPN_CMY_C       { "cyan",       N_("cyan"),          0.0, 1.0, TRUE }
-#define CPN_CMY_M       { "magenta",    N_("magenta"),       0.0, 1.0, TRUE }
-#define CPN_CMY_Y       { "yellow",     N_("yellow"),        0.0, 1.0, TRUE }
+#define CPN_CMYK_C      { "Cyan",       N_("cyan"),          0.0, 1.0, TRUE }
+#define CPN_CMYK_M      { "Magenta",    N_("magenta"),       0.0, 1.0, TRUE }
+#define CPN_CMYK_Y      { "Yellow",     N_("yellow"),        0.0, 1.0, TRUE }
+#define CPN_CMYK_K      { "Key",        N_("black"),         0.0, 1.0, TRUE }
 
 #define CPN_LAB_L       { "CIE L",      N_("L"),             0.0, 100.0, TRUE }
 #define CPN_LAB_A       { "CIE a",      N_("A"),          -127.5, 127.5, TRUE }
@@ -189,15 +185,11 @@ static const Extract extract[] =
   { N_("Saturation (HSL)"), "HSL", FALSE, 1, FALSE, { CPN_HSL_S } },
   { N_("Lightness"),        "HSL", FALSE, 1, FALSE, { CPN_HSL_L } },
 
-  { N_("CMY"),     "CMY", TRUE,  3, FALSE, { CPN_CMY_C, CPN_CMY_M, CPN_CMY_Y } },
-  { N_("Cyan"),    "CMY", FALSE, 1, FALSE, { CPN_CMY_C } },
-  { N_("Magenta"), "CMY", FALSE, 1, FALSE, { CPN_CMY_M } },
-  { N_("Yellow"),  "CMY", FALSE, 1, FALSE, { CPN_CMY_Y } },
-
   { N_("CMYK"),      "CMYK", TRUE,  4, FALSE, { CPN_CMYK_C, CPN_CMYK_M, CPN_CMYK_Y, CPN_CMYK_K } },
-  { N_("Cyan_K"),    "CMYK", FALSE, 1, FALSE, { CPN_CMYK_C } },
-  { N_("Magenta_K"), "CMYK", FALSE, 1, FALSE, { CPN_CMYK_M } },
-  { N_("Yellow_K"),  "CMYK", FALSE, 1, FALSE, { CPN_CMYK_Y } },
+  { N_("Cyan"),      "CMYK", FALSE, 1, FALSE, { CPN_CMYK_C } },
+  { N_("Magenta"),   "CMYK", FALSE, 1, FALSE, { CPN_CMYK_M } },
+  { N_("Yellow"),    "CMYK", FALSE, 1, FALSE, { CPN_CMYK_Y } },
+  { N_("Black"),     "CMYK", FALSE, 1, FALSE, { CPN_CMYK_K } },
 
   { N_("LAB"), "CIE Lab",     TRUE, 3, FALSE, { CPN_LAB_L, CPN_LAB_A, CPN_LAB_B } },
 

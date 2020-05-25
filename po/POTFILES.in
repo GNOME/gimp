@@ -262,6 +262,7 @@ app/display/gimpdisplayshell-utils.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 app/display/gimptoolcompass.c
+app/display/gimptoolfocus.c
 app/display/gimptoolgyroscope.c
 app/display/gimptoolhandlegrid.c
 app/display/gimptoolline.c
@@ -302,6 +303,7 @@ app/operations/gimpoperationlevels.c
 app/operations/gimpoperationoffset.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
+app/operations/gimpoperationsettings.c
 app/operations/gimpoperationthreshold.c
 app/operations/gimpoperationthresholdalpha.c
 
@@ -393,6 +395,7 @@ app/propgui/gimppropgui-color-rotate.c
 app/propgui/gimppropgui-color-to-alpha.c
 app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
+app/propgui/gimppropgui-focus-blur.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
 app/propgui/gimppropgui-motion-blur-circular.c
@@ -405,6 +408,7 @@ app/propgui/gimppropgui-shadows-highlights.c
 app/propgui/gimppropgui-spiral.c
 app/propgui/gimppropgui-supernova.c
 app/propgui/gimppropgui-utils.c
+app/propgui/gimppropgui-vignette.c
 app/propgui/gimppropgui.c
 
 app/text/gimpfont.c

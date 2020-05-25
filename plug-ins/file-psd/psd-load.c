@@ -2087,7 +2087,7 @@ add_merged_image (gint32     image_id,
           channel_id = gimp_channel_new (image_id, alpha_name,
                                          chn_a[cidx].columns, chn_a[cidx].rows,
                                          alpha_opacity, &alpha_rgb);
-          gimp_image_insert_channel (image_id, channel_id, -1, 0);
+          gimp_image_insert_channel (image_id, channel_id, -1, i);
           g_free (alpha_name);
           buffer = gimp_drawable_get_buffer (channel_id);
           if (alpha_id)
@@ -2538,7 +2538,8 @@ get_channel_format (PSDimage *img_a)
 
     case 8:
     case 1:
-      format = babl_format ("Y u8");
+      /* see gimp_image_get_channel_format() */
+      format = babl_format ("Y' u8");
       break;
 
     default:

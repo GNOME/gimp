@@ -22,7 +22,7 @@
 #define __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__
 
 
-#include "core/gimpsettings.h"
+#include "gimpoperationsettings.h"
 
 
 #define GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG            (gimp_brightness_contrast_config_get_type ())
@@ -37,15 +37,15 @@ typedef struct _GimpBrightnessContrastConfigClass GimpBrightnessContrastConfigCl
 
 struct _GimpBrightnessContrastConfig
 {
-  GimpSettings  parent_instance;
+  GimpOperationSettings  parent_instance;
 
-  gdouble       brightness;
-  gdouble       contrast;
+  gdouble                brightness;
+  gdouble                contrast;
 };
 
 struct _GimpBrightnessContrastConfigClass
 {
-  GimpSettingsClass  parent_class;
+  GimpOperationSettingsClass  parent_class;
 };
 
 

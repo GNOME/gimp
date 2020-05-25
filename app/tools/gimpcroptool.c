@@ -477,7 +477,7 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
             {
               gimp_image_crop (image,
                                GIMP_CONTEXT (options), GIMP_FILL_TRANSPARENT,
-                               x, y, w, h, TRUE);
+                               x, y, w, h, options->delete_pixels);
             }
 
           gimp_image_flush (image);

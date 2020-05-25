@@ -175,6 +175,7 @@ void               gimp_tool_widget_add_item         (GimpToolWidget  *widget,
 void               gimp_tool_widget_remove_item      (GimpToolWidget  *widget,
                                                       GimpCanvasItem  *item);
 
+GimpCanvasGroup  * gimp_tool_widget_add_group        (GimpToolWidget  *widget);
 GimpCanvasGroup  * gimp_tool_widget_add_stroke_group (GimpToolWidget  *widget);
 GimpCanvasGroup  * gimp_tool_widget_add_fill_group   (GimpToolWidget  *widget);
 
@@ -203,6 +204,14 @@ GimpCanvasItem * gimp_tool_widget_add_arc       (GimpToolWidget       *widget,
                                                  gdouble               start_angle,
                                                  gdouble               slice_angle,
                                                  gboolean              filled);
+GimpCanvasItem * gimp_tool_widget_add_limit     (GimpToolWidget       *widget,
+                                                 GimpLimitType         type,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gdouble               radius,
+                                                 gdouble               aspect_ratio,
+                                                 gdouble               angle,
+                                                 gboolean              dashed);
 GimpCanvasItem * gimp_tool_widget_add_polygon   (GimpToolWidget       *widget,
                                                  GimpMatrix3          *transform,
                                                  const GimpVector2    *points,

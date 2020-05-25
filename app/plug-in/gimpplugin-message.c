@@ -76,7 +76,6 @@ static void gimp_plug_in_handle_proc_uninstall   (GimpPlugIn      *plug_in,
 static void gimp_plug_in_handle_extension_ack    (GimpPlugIn      *plug_in);
 static void gimp_plug_in_handle_has_init         (GimpPlugIn      *plug_in);
 
-static gboolean gimp_plug_in_is_valid_property_name (const gchar  *name);
 
 /*  public functions  */
 
@@ -863,49 +862,105 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   for (i = 0; i < proc_install->nparams; i++)
     {
       GParamSpec *pspec;
+      gboolean    name_valid;
 
-      if (! gimp_plug_in_is_valid_property_name (proc_install->params[i].name))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-in \"%s\"\n(%s)\n"
-                        "attempted to install procedure \"%s\" with "
-                        "invalid parameter name \"%s\".",
-                        gimp_object_get_name (plug_in),
-                        gimp_file_get_utf8_name (plug_in->file),
-                        canonical, proc_install->params[i].name);
-          g_object_unref (procedure);
-          return;
-        }
       pspec = gimp_pdb_compat_param_spec (plug_in->manager->gimp,
                                           proc_install->params[i].type,
                                           proc_install->params[i].name,
-                                          proc_install->params[i].description);
+                                          proc_install->params[i].description,
+                                          &name_valid);
 
       gimp_procedure_add_argument (procedure, pspec);
+
+      if (pspec && ! name_valid)
+        {
+          switch (plug_in->manager->gimp->pdb_compat_mode)
+            {
+            case GIMP_PDB_COMPAT_ON:
+              break;
+
+            case GIMP_PDB_COMPAT_WARN:
+              gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_WARNING,
+                            "Plug-in \"%s\"\n(%s)\n"
+                            "attempted to install procedure \"%s\" "
+                            "with invalid parameter name \"%s\".\n"
+                            "This is deprecated.\n"
+                            "The parameter name was changed to \"%s\".",
+                            gimp_object_get_name (plug_in),
+                            gimp_file_get_utf8_name (plug_in->file),
+                            gimp_object_get_name (proc),
+                            proc_install->params[i].name,
+                            pspec->name);
+              break;
+
+            case GIMP_PDB_COMPAT_OFF:
+              gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                            "Plug-in \"%s\"\n(%s)\n"
+                            "attempted to install procedure \"%s\" "
+                            "with invalid parameter name \"%s\".\n"
+                            "This is not allowed.",
+                            gimp_object_get_name (plug_in),
+                            gimp_file_get_utf8_name (plug_in->file),
+                            gimp_object_get_name (proc),
+                            proc_install->params[i].name);
+
+              g_object_unref (proc);
+
+              return;
+            }
+        }
     }
 
   for (i = 0; i < proc_install->nreturn_vals; i++)
     {
       GParamSpec *pspec;
+      gboolean    name_valid;
 
-      if (! gimp_plug_in_is_valid_property_name (proc_install->return_vals[i].name))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-in \"%s\"\n(%s)\n"
-                        "attempted to install procedure \"%s\" with "
-                        "invalid return value name \"%s\".",
-                        gimp_object_get_name (plug_in),
-                        gimp_file_get_utf8_name (plug_in->file),
-                        canonical, proc_install->return_vals[i].name);
-          g_object_unref (procedure);
-          return;
-        }
       pspec = gimp_pdb_compat_param_spec (plug_in->manager->gimp,
                                           proc_install->return_vals[i].type,
                                           proc_install->return_vals[i].name,
-                                          proc_install->return_vals[i].description);
+                                          proc_install->return_vals[i].description,
+                                          &name_valid);
 
       gimp_procedure_add_return_value (procedure, pspec);
+
+      if (pspec && ! name_valid)
+        {
+          switch (plug_in->manager->gimp->pdb_compat_mode)
+            {
+            case GIMP_PDB_COMPAT_ON:
+              break;
+
+            case GIMP_PDB_COMPAT_WARN:
+              gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_WARNING,
+                            "Plug-in \"%s\"\n(%s)\n"
+                            "attempted to install procedure \"%s\" "
+                            "with invalid return-value name \"%s\".\n"
+                            "This is deprecated.\n"
+                            "The return-value name was changed to \"%s\".",
+                            gimp_object_get_name (plug_in),
+                            gimp_file_get_utf8_name (plug_in->file),
+                            gimp_object_get_name (proc),
+                            proc_install->return_vals[i].name,
+                            pspec->name);
+              break;
+
+            case GIMP_PDB_COMPAT_OFF:
+              gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                            "Plug-in \"%s\"\n(%s)\n"
+                            "attempted to install procedure \"%s\" "
+                            "with invalid return-value name \"%s\".\n"
+                            "This is not allowed.",
+                            gimp_object_get_name (plug_in),
+                            gimp_file_get_utf8_name (plug_in->file),
+                            gimp_object_get_name (proc),
+                            proc_install->return_vals[i].name);
+
+              g_object_unref (proc);
+
+              return;
+            }
+        }
     }
 
   /*  Sanity check menu path  */
@@ -1005,34 +1060,4 @@ gimp_plug_in_handle_has_init (GimpPlugIn *plug_in)
                     gimp_file_get_utf8_name (plug_in->file));
       gimp_plug_in_close (plug_in, TRUE);
     }
-}
-
-/*
- * XXX: this function should be removed when/if it becomes public in
- * glib, i.e. when this patch is merged:
- * https://gitlab.gnome.org/GNOME/glib/merge_requests/1302
- * See #4392.
- */
-static gboolean
-gimp_plug_in_is_valid_property_name (const gchar *name)
-{
-  const gchar *p;
-
-  /* First character must be a letter. */
-  if ((name[0] < 'A' || name[0] > 'Z') &&
-      (name[0] < 'a' || name[0] > 'z'))
-    return FALSE;
-
-  for (p = name; *p != 0; p++)
-    {
-      const gchar c = *p;
-
-      if (c != '-' && c != '_' &&
-          (c < '0' || c > '9') &&
-          (c < 'A' || c > 'Z') &&
-          (c < 'a' || c > 'z'))
-        return FALSE;
-    }
-
-  return TRUE;
 }

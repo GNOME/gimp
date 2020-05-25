@@ -60,6 +60,8 @@ libappdisplay_a_sources = \
 	gimpcanvasitem-utils.h			\
 	gimpcanvaslayerboundary.c		\
 	gimpcanvaslayerboundary.h		\
+	gimpcanvaslimit.c			\
+	gimpcanvaslimit.h			\
 	gimpcanvasline.c			\
 	gimpcanvasline.h			\
 	gimpcanvaspassepartout.c		\
@@ -180,6 +182,8 @@ libappdisplay_a_sources = \
 	gimptoolgui.h				\
 	gimptoolcompass.c			\
 	gimptoolcompass.h			\
+	gimptoolfocus.h				\
+	gimptoolfocus.c				\
 	gimptoolgyroscope.c			\
 	gimptoolgyroscope.h			\
 	gimptoolhandlegrid.c			\

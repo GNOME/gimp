@@ -211,10 +211,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
   config = GIMP_CURVES_CONFIG (filter_tool->config);
 
-  gegl_node_set (filter_tool->operation,
-                 "linear", config->linear,
-                 NULL);
-
   histogram = gimp_histogram_new (config->linear);
   g_object_unref (gimp_drawable_calculate_histogram_async (
     drawable, histogram, FALSE));
@@ -688,46 +684,17 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 static void
 gimp_curves_tool_reset (GimpFilterTool *filter_tool)
 {
-  GimpCurvesConfig     *config = GIMP_CURVES_CONFIG (filter_tool->config);
-  GimpCurvesConfig     *default_config;
-  GimpHistogramChannel  channel;
+  GimpHistogramChannel channel;
 
-  default_config = GIMP_CURVES_CONFIG (filter_tool->default_config);
+  g_object_get (filter_tool->config,
+                "channel", &channel,
+                NULL);
 
-  g_object_freeze_notify (G_OBJECT (config));
+  GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
-  if (default_config)
-    g_object_set (config, "linear", default_config->linear, NULL);
-  else
-    gimp_config_reset_property (G_OBJECT (config), "linear");
-
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
-       channel++)
-    {
-      if (default_config)
-        {
-          GimpCurveType curve_type = config->curve[channel]->curve_type;
-
-          g_object_freeze_notify (G_OBJECT (config->curve[channel]));
-
-          gimp_config_copy (GIMP_CONFIG (default_config->curve[channel]),
-                            GIMP_CONFIG (config->curve[channel]),
-                            0);
-
-          g_object_set (config->curve[channel],
-                        "curve-type", curve_type,
-                        NULL);
-
-          g_object_thaw_notify (G_OBJECT (config->curve[channel]));
-        }
-      else
-        {
-          gimp_curve_reset (config->curve[channel], FALSE);
-        }
-    }
-
-  g_object_thaw_notify (G_OBJECT (config));
+  g_object_set (filter_tool->config,
+                "channel", channel,
+                NULL);
 }
 
 static void
@@ -749,10 +716,6 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
   if (! strcmp (pspec->name, "linear"))
     {
       GimpHistogram *histogram;
-
-      gegl_node_set (filter_tool->operation,
-                     "linear", curves_config->linear,
-                     NULL);
 
       histogram = gimp_histogram_new (curves_config->linear);
       g_object_unref (gimp_drawable_calculate_histogram_async (

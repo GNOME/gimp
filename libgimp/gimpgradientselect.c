@@ -65,9 +65,9 @@ gimp_gradient_select_new (const gchar             *title,
   static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING,    "str",            "String"                     },
-    { GIMP_PDB_INT32,     "gradient width", "Gradient width"             },
-    { GIMP_PDB_FLOATARRAY,"gradient data",  "The gradient mask data"     },
-    { GIMP_PDB_INT32,     "dialog status",  "If the dialog was closing "
+    { GIMP_PDB_INT32,     "gradient-width", "Gradient width"             },
+    { GIMP_PDB_FLOATARRAY,"gradient-data",  "The gradient mask data"     },
+    { GIMP_PDB_INT32,     "dialog-status",  "If the dialog was closing "
                                             "[0 = No, 1 = Yes]"          }
   };
 

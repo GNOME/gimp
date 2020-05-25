@@ -34,13 +34,11 @@ enum
   PROP_0,
   PROP_PREVIEW,
   PROP_PREVIEW_SPLIT,
-  PROP_PREVIEW_ALIGNMENT,
-  PROP_PREVIEW_POSITION,
+  PROP_PREVIEW_SPLIT_ALIGNMENT,
+  PROP_PREVIEW_SPLIT_POSITION,
   PROP_CONTROLLER,
-  PROP_CLIP,
-  PROP_REGION,
-  PROP_COLOR_MANAGED,
-  PROP_GAMMA_HACK
+  PROP_BLENDING_OPTIONS_EXPANDED,
+  PROP_COLOR_OPTIONS_EXPANDED
 };
 
 
@@ -83,16 +81,16 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_PREVIEW_ALIGNMENT,
-                                   g_param_spec_enum ("preview-alignment",
+  g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT_ALIGNMENT,
+                                   g_param_spec_enum ("preview-split-alignment",
                                                       NULL, NULL,
                                                       GIMP_TYPE_ALIGNMENT_TYPE,
                                                       GIMP_ALIGN_LEFT,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_PREVIEW_POSITION,
-                                   g_param_spec_double ("preview-position",
+  g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT_POSITION,
+                                   g_param_spec_double ("preview-split-position",
                                                         NULL, NULL,
                                                         0.0, 1.0, 0.5,
                                                         GIMP_PARAM_READWRITE |
@@ -105,37 +103,17 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CLIP,
-                         "clip",
-                         _("Clipping"),
-                         _("How to clip"),
-                         GIMP_TYPE_TRANSFORM_RESIZE,
-                         GIMP_TRANSFORM_RESIZE_ADJUST,
-                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BLENDING_OPTIONS_EXPANDED,
+                            "blending-options-expanded",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (object_class, PROP_REGION,
-                                   g_param_spec_enum ("region",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_FILTER_REGION,
-                                                      GIMP_FILTER_REGION_SELECTION,
-                                                      GIMP_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_COLOR_MANAGED,
-                                   g_param_spec_boolean ("color-managed",
-                                                         _("Color _managed"),
-                                                         NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_GAMMA_HACK,
-                                   g_param_spec_boolean ("gamma-hack",
-                                                         "Gamma hack (temp hack, please ignore)",
-                                                         NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_OPTIONS_EXPANDED,
+                            "color-options-expanded",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -161,32 +139,24 @@ gimp_filter_options_set_property (GObject      *object,
       options->preview_split = g_value_get_boolean (value);
       break;
 
-    case PROP_PREVIEW_ALIGNMENT:
-      options->preview_alignment = g_value_get_enum (value);
+    case PROP_PREVIEW_SPLIT_ALIGNMENT:
+      options->preview_split_alignment = g_value_get_enum (value);
       break;
 
-    case PROP_PREVIEW_POSITION:
-      options->preview_position = g_value_get_double (value);
+    case PROP_PREVIEW_SPLIT_POSITION:
+      options->preview_split_position = g_value_get_double (value);
       break;
 
     case PROP_CONTROLLER:
       options->controller = g_value_get_boolean (value);
       break;
 
-    case PROP_CLIP:
-      options->clip = g_value_get_enum (value);
+    case PROP_BLENDING_OPTIONS_EXPANDED:
+      options->blending_options_expanded = g_value_get_boolean (value);
       break;
 
-    case PROP_REGION:
-      options->region = g_value_get_enum (value);
-      break;
-
-    case PROP_COLOR_MANAGED:
-      options->color_managed = g_value_get_boolean (value);
-      break;
-
-    case PROP_GAMMA_HACK:
-      options->gamma_hack = g_value_get_boolean (value);
+    case PROP_COLOR_OPTIONS_EXPANDED:
+      options->color_options_expanded = g_value_get_boolean (value);
       break;
 
     default:
@@ -213,32 +183,24 @@ gimp_filter_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->preview_split);
       break;
 
-    case PROP_PREVIEW_ALIGNMENT:
-      g_value_set_enum (value, options->preview_alignment);
+    case PROP_PREVIEW_SPLIT_ALIGNMENT:
+      g_value_set_enum (value, options->preview_split_alignment);
       break;
 
-    case PROP_PREVIEW_POSITION:
-      g_value_set_double (value, options->preview_position);
+    case PROP_PREVIEW_SPLIT_POSITION:
+      g_value_set_double (value, options->preview_split_position);
       break;
 
     case PROP_CONTROLLER:
       g_value_set_boolean (value, options->controller);
       break;
 
-    case PROP_CLIP:
-      g_value_set_enum (value, options->clip);
+    case PROP_BLENDING_OPTIONS_EXPANDED:
+      g_value_set_boolean (value, options->blending_options_expanded);
       break;
 
-    case PROP_REGION:
-      g_value_set_enum (value, options->region);
-      break;
-
-    case PROP_COLOR_MANAGED:
-      g_value_set_boolean (value, options->color_managed);
-      break;
-
-    case PROP_GAMMA_HACK:
-      g_value_set_boolean (value, options->gamma_hack);
+    case PROP_COLOR_OPTIONS_EXPANDED:
+      g_value_set_boolean (value, options->color_options_expanded);
       break;
 
     default:
@@ -257,7 +219,7 @@ gimp_filter_options_switch_preview_side (GimpFilterOptions *options)
 
   g_return_if_fail (GIMP_IS_FILTER_OPTIONS (options));
 
-  switch (options->preview_alignment)
+  switch (options->preview_split_alignment)
     {
     case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_RIGHT;  break;
     case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_LEFT;   break;
@@ -267,7 +229,7 @@ gimp_filter_options_switch_preview_side (GimpFilterOptions *options)
       g_return_if_reached ();
     }
 
-  g_object_set (options, "preview-alignment", alignment, NULL);
+  g_object_set (options, "preview-split-alignment", alignment, NULL);
 }
 
 void
@@ -280,7 +242,7 @@ gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
 
   g_return_if_fail (GIMP_IS_FILTER_OPTIONS (options));
 
-  switch (options->preview_alignment)
+  switch (options->preview_split_alignment)
     {
     case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_TOP;    break;
     case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_BOTTOM; break;
@@ -301,7 +263,7 @@ gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
     }
 
   g_object_set (options,
-                "preview-alignment", alignment,
-                "preview-position",  CLAMP (position, 0.0, 1.0),
+                "preview-split-alignment", alignment,
+                "preview-split-position",  CLAMP (position, 0.0, 1.0),
                 NULL);
 }

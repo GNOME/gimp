@@ -29,6 +29,9 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "operations/gimp-operation-config.h"
+#include "operations/gimpoperationsettings.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawablefilter.h"
@@ -44,6 +47,18 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                const gchar  *undo_desc,
                                GeglNode     *operation)
 {
+  gimp_drawable_apply_operation_with_config (drawable,
+                                             progress, undo_desc,
+                                             operation, NULL);
+}
+
+void
+gimp_drawable_apply_operation_with_config (GimpDrawable *drawable,
+                                           GimpProgress *progress,
+                                           const gchar  *undo_desc,
+                                           GeglNode     *operation,
+                                           GObject      *config)
+{
   GimpDrawableFilter *filter;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -51,6 +66,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GEGL_IS_NODE (operation));
+  g_return_if_fail (config == NULL || GIMP_IS_OPERATION_SETTINGS (config));
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
                                   NULL, NULL, NULL, NULL))
@@ -60,10 +76,16 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 
   filter = gimp_drawable_filter_new (drawable, undo_desc, operation, NULL);
 
-  if (gimp_drawable_supports_alpha (drawable) &&
-      gimp_gegl_node_get_key (operation, "needs-alpha"))
+  gimp_drawable_filter_set_add_alpha (filter,
+                                      gimp_gegl_node_has_key (operation,
+                                                              "needs-alpha"));
+
+  if (config)
     {
-      gimp_drawable_filter_set_add_alpha (filter, TRUE);
+      gimp_operation_config_sync_node (config, operation);
+
+      gimp_operation_settings_sync_drawable_filter (
+        GIMP_OPERATION_SETTINGS (config), filter);
     }
 
   gimp_drawable_filter_apply  (filter, NULL);

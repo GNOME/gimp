@@ -60,6 +60,8 @@ enum
 
 static void             gimp_unified_transform_tool_matrix_to_info (GimpTransformGridTool    *tg_tool,
                                                                     const GimpMatrix3        *transform);
+static void             gimp_unified_transform_tool_apply_info     (GimpTransformGridTool    *tg_tool,
+                                                                    const TransInfo           info);
 static void             gimp_unified_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
 static void             gimp_unified_transform_tool_readjust       (GimpTransformGridTool    *tg_tool);
 static GimpToolWidget * gimp_unified_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
@@ -101,6 +103,7 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
   tg_class->matrix_to_info      = gimp_unified_transform_tool_matrix_to_info;
+  tg_class->apply_info          = gimp_unified_transform_tool_apply_info;
   tg_class->prepare             = gimp_unified_transform_tool_prepare;
   tg_class->readjust            = gimp_unified_transform_tool_readjust;
   tg_class->get_widget          = gimp_unified_transform_tool_get_widget;
@@ -122,18 +125,23 @@ static void
 gimp_unified_transform_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
                                             const GimpMatrix3     *transform)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpMatrix3        transfer;
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
 
-  gimp_transform_grid_tool_info_to_matrix (tg_tool, &transfer);
-  gimp_matrix3_invert (&transfer);
-  gimp_matrix3_mult (transform, &transfer);
+  if (! tg_options->fixedpivot)
+    {
+      GimpMatrix3 transfer;
 
-  gimp_matrix3_transform_point (&transfer,
-                                tg_tool->trans_info[PIVOT_X],
-                                tg_tool->trans_info[PIVOT_Y],
-                                &tg_tool->trans_info[PIVOT_X],
-                                &tg_tool->trans_info[PIVOT_Y]);
+      gimp_transform_grid_tool_info_to_matrix (tg_tool, &transfer);
+      gimp_matrix3_invert (&transfer);
+      gimp_matrix3_mult (transform, &transfer);
+
+      gimp_matrix3_transform_point (&transfer,
+                                    tg_tool->trans_info[PIVOT_X],
+                                    tg_tool->trans_info[PIVOT_Y],
+                                    &tg_tool->trans_info[PIVOT_X],
+                                    &tg_tool->trans_info[PIVOT_Y]);
+    }
 
   gimp_matrix3_transform_point (transform,
                                 tr_tool->x1,
@@ -155,6 +163,31 @@ gimp_unified_transform_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
                                 tr_tool->y2,
                                 &tg_tool->trans_info[X3],
                                 &tg_tool->trans_info[Y3]);
+}
+
+static void
+gimp_unified_transform_tool_apply_info (GimpTransformGridTool *tg_tool,
+                                        const TransInfo        info)
+{
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+
+  tg_tool->trans_info[X0] = info[X0];
+  tg_tool->trans_info[Y0] = info[Y0];
+
+  tg_tool->trans_info[X1] = info[X1];
+  tg_tool->trans_info[Y1] = info[Y1];
+
+  tg_tool->trans_info[X2] = info[X2];
+  tg_tool->trans_info[Y2] = info[Y2];
+
+  tg_tool->trans_info[X3] = info[X3];
+  tg_tool->trans_info[Y3] = info[Y3];
+
+  if (! tg_options->fixedpivot)
+    {
+      tg_tool->trans_info[PIVOT_X] = info[PIVOT_X];
+      tg_tool->trans_info[PIVOT_Y] = info[PIVOT_Y];
+    }
 }
 
 static void
@@ -180,11 +213,12 @@ gimp_unified_transform_tool_prepare (GimpTransformGridTool *tg_tool)
 static void
 gimp_unified_transform_tool_readjust (GimpTransformGridTool *tg_tool)
 {
-  GimpTool         *tool  = GIMP_TOOL (tg_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  gdouble           x;
-  gdouble           y;
-  gdouble           r;
+  GimpTool                 *tool       = GIMP_TOOL (tg_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GimpDisplayShell         *shell      = gimp_display_get_shell (tool->display);
+  gdouble                   x;
+  gdouble                   y;
+  gdouble                   r;
 
   x = shell->disp_width  / 2.0;
   y = shell->disp_height / 2.0;
@@ -192,10 +226,13 @@ gimp_unified_transform_tool_readjust (GimpTransformGridTool *tg_tool)
            GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0,
            GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0);
 
-  gimp_display_shell_untransform_xy_f (shell,
-                                       x, y,
-                                       &tg_tool->trans_info[PIVOT_X],
-                                       &tg_tool->trans_info[PIVOT_Y]);
+  if (! tg_options->fixedpivot)
+    {
+      gimp_display_shell_untransform_xy_f (shell,
+                                           x, y,
+                                           &tg_tool->trans_info[PIVOT_X],
+                                           &tg_tool->trans_info[PIVOT_Y]);
+    }
 
   gimp_display_shell_untransform_xy_f (shell,
                                        x - r, y - r,

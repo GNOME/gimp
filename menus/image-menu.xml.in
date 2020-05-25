@@ -696,11 +696,13 @@
       <menuitem action="plug-in-reset-all" />
       <separator />
       <menu action="filters-blur-menu" name="Blur">
+	<menuitem action="filters-focus-blur" />
 	<menuitem action="filters-gaussian-blur" />
 	<menuitem action="filters-mean-curvature-blur" />
 	<menuitem action="filters-median-blur" />
 	<menuitem action="filters-pixelize" />
 	<menuitem action="filters-gaussian-blur-selective" />
+        <menuitem action="filters-variable-blur" />
 	<placeholder name="Motion">
 	  <menuitem action="filters-motion-blur-circular" />
 	  <menuitem action="filters-motion-blur-linear" />
@@ -736,6 +738,7 @@
       </menu>
       <menu action="filters-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light">
+	  <menuitem action="filters-bloom" />
 	  <menuitem action="filters-supernova" />
 	  <menuitem action="filters-lens-flare" />
 	</placeholder>

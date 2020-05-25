@@ -123,6 +123,20 @@ typedef enum
 } GimpHandleAnchor;
 
 
+#define GIMP_TYPE_LIMIT_TYPE (gimp_limit_type_get_type ())
+
+GType gimp_limit_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_LIMIT_CIRCLE,
+  GIMP_LIMIT_SQUARE,
+  GIMP_LIMIT_DIAMOND,
+  GIMP_LIMIT_HORIZONTAL,
+  GIMP_LIMIT_VERTICAL
+} GimpLimitType;
+
+
 #define GIMP_TYPE_PATH_STYLE (gimp_path_style_get_type ())
 
 GType gimp_path_style_get_type (void) G_GNUC_CONST;

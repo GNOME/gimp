@@ -432,13 +432,13 @@ channels_select_cmd_callback (GimpAction *action,
   GimpChannel          *channel;
   GimpChannel          *channel2;
   GimpContainer        *container;
-  GimpActionSelectType  type;
+  GimpActionSelectType  select_type;
   return_if_no_channel (image, channel, data);
 
-  type = (GimpActionSelectType) g_variant_get_int32 (value);
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   container = gimp_image_get_channels (image);
-  channel2 = (GimpChannel *) action_select_object (type, container,
+  channel2 = (GimpChannel *) action_select_object (select_type, container,
                                                    (GimpObject *) channel);
 
   if (channel2 && channel2 != channel)

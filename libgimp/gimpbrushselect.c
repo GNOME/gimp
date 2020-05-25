@@ -73,12 +73,12 @@ gimp_brush_select_new (const gchar          *title,
     { GIMP_PDB_STRING,    "str",           "String"                     },
     { GIMP_PDB_FLOAT,     "opacity",       "Opacity"                    },
     { GIMP_PDB_INT32,     "spacing",       "Spacing"                    },
-    { GIMP_PDB_INT32,     "paint mode",    "Paint mode"                 },
-    { GIMP_PDB_INT32,     "mask width",    "Brush width"                },
-    { GIMP_PDB_INT32,     "mask height"    "Brush height"               },
-    { GIMP_PDB_INT32,     "mask len",      "Length of brush mask data"  },
-    { GIMP_PDB_INT8ARRAY, "mask data",     "The brush mask data"        },
-    { GIMP_PDB_INT32,     "dialog status", "If the dialog was closing "
+    { GIMP_PDB_INT32,     "paint-mode",    "Paint mode"                 },
+    { GIMP_PDB_INT32,     "mask-width",    "Brush width"                },
+    { GIMP_PDB_INT32,     "mask-height",   "Brush height"               },
+    { GIMP_PDB_INT32,     "mask-len",      "Length of brush mask data"  },
+    { GIMP_PDB_INT8ARRAY, "mask-data",     "The brush mask data"        },
+    { GIMP_PDB_INT32,     "dialog-status", "If the dialog was closing "
                                            "[0 = No, 1 = Yes]"          }
   };
 

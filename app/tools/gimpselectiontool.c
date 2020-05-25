@@ -161,11 +161,20 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
     {
       GimpChannelOps button_op = options->operation;
 
+      state &= extend_mask |
+               modify_mask |
+               GDK_MOD1_MASK;
+
       if (press)
         {
-          if (key == (state & (extend_mask |
-                               modify_mask |
-                               GDK_MOD1_MASK)))
+          if (key == state ||
+              /* GimpPolygonSelectTool may mask-out part of the state, which
+               * can cause the wrong mode to be restored on release if we don't
+               * init saved_operation here.
+               *
+               * see issue #4992.
+               */
+              ! state)
             {
               /*  first modifier pressed  */
 
@@ -174,9 +183,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
         }
       else
         {
-          if (! (state & (extend_mask |
-                          modify_mask |
-                          GDK_MOD1_MASK)))
+          if (! state)
             {
               /*  last modifier released  */
 

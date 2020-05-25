@@ -22,6 +22,7 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <stdlib.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"

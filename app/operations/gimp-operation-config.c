@@ -38,6 +38,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-operation-config.h"
+#include "gimpoperationsettings.h"
 
 
 /*  local function prototypes  */
@@ -216,7 +217,7 @@ gimp_operation_config_equal (GimpConfig *a,
         {
           GParamSpec *pspec = list->data;
 
-          if (pspec->owner_type == G_TYPE_FROM_INSTANCE (a))
+          if (g_type_is_a (pspec->owner_type, GIMP_TYPE_OPERATION_SETTINGS))
             {
               equal = FALSE;
               break;
@@ -501,29 +502,21 @@ gimp_operation_config_sync_node (GObject  *config,
 
   for (i = 0; i < n_pspecs; i++)
     {
-      GParamSpec *pspec = pspecs[i];
-
-      /*  if the operation has an object property of the config's
-       *  type, set it and done
-       */
-      if (G_IS_PARAM_SPEC_OBJECT (pspec) &&
-          pspec->value_type == G_TYPE_FROM_INSTANCE (config))
-        {
-          gegl_node_set (node,
-                         pspec->name, config,
-                         NULL);
-          g_free (pspecs);
-          return;
-        }
-    }
-
-  for (i = 0; i < n_pspecs; i++)
-    {
       GParamSpec *gegl_pspec = pspecs[i];
       GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                              gegl_pspec->name);
 
-      if (gimp_pspec)
+      /*  if the operation has an object property of the config's
+       *  type, use the config object directly
+       */
+      if (G_IS_PARAM_SPEC_OBJECT (gegl_pspec) &&
+          gegl_pspec->value_type == G_TYPE_FROM_INSTANCE (config))
+        {
+          gegl_node_set (node,
+                         gegl_pspec->name, config,
+                         NULL);
+        }
+      else if (gimp_pspec)
         {
           GValue value = G_VALUE_INIT;
 

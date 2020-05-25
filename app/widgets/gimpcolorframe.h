@@ -39,7 +39,7 @@ struct _GimpColorFrame
   gboolean            sample_valid;
   gboolean            sample_average;
   const Babl         *sample_format;
-  guchar              pixel[32];
+  gdouble             pixel[4];
   GimpRGB             color;
   gint                x;
   gint                y;

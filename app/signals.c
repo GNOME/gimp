@@ -30,6 +30,7 @@
 #include "errors.h"
 #include "signals.h"
 
+#ifdef G_OS_WIN32
 #ifdef HAVE_EXCHNDL
 #include <windows.h>
 #include <time.h>
@@ -38,6 +39,7 @@
 static LPTOP_LEVEL_EXCEPTION_FILTER g_prevExceptionFilter = NULL;
 
 static LONG WINAPI  gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
+#endif
 
 #else
 
@@ -66,7 +68,7 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 
   time (&t);
   filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
-                              PACKAGE_NAME, t);
+                              PACKAGE_NAME, (guint64) t);
   *backtrace_file = g_build_filename (dir, filename, NULL);
   g_free (filename);
   g_free (dir);

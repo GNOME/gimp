@@ -95,7 +95,8 @@ void                      gimp_tile_handler_validate_end_validate      (GimpTile
 void                      gimp_tile_handler_validate_validate          (GimpTileHandlerValidate *validate,
                                                                         GeglBuffer              *buffer,
                                                                         const GeglRectangle     *rect,
-                                                                        gboolean                 intersect);
+                                                                        gboolean                 intersect,
+                                                                        gboolean                 chunked);
 
 gboolean                  gimp_tile_handler_validate_buffer_set_extent (GeglBuffer              *buffer,
                                                                         const GeglRectangle     *extent);

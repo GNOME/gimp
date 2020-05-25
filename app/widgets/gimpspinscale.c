@@ -133,6 +133,9 @@ static void       gimp_spin_scale_mnemonics_notify  (GtkWindow        *window,
 static void       gimp_spin_scale_setup_mnemonic    (GimpSpinScale    *scale,
                                                      guint             previous_keyval);
 
+static gdouble    odd_pow                           (gdouble           x,
+                                                     gdouble           y);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinScale, gimp_spin_scale,
                             GIMP_TYPE_SPIN_BUTTON)
@@ -757,13 +760,16 @@ gimp_spin_scale_change_value (GtkWidget *widget,
     }
   else
     {
+      gdouble x0, x1;
       gdouble fraction;
 
-      fraction = x / (gdouble) width;
-      if (fraction > 0.0)
-        fraction = pow (fraction, private->gamma);
+      x0 = odd_pow (lower, 1.0 / private->gamma);
+      x1 = odd_pow (upper, 1.0 / private->gamma);
 
-      value = fraction * (upper - lower) + lower;
+      fraction = x / (gdouble) width;
+
+      value = fraction * (x1 - x0) + x0;
+      value = odd_pow (value, private->gamma);
 
       if (state & GDK_CONTROL_MASK)
         {
@@ -1085,14 +1091,19 @@ gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
   gdouble               lower;
   gdouble               upper;
   gdouble               value;
+  gdouble               x0, x1;
+  gdouble               x;
 
   gimp_spin_scale_get_limits (GIMP_SPIN_SCALE (spin_button), &lower, &upper);
 
   value = CLAMP (gtk_adjustment_get_value (adjustment), lower, upper);
 
+  x0 = odd_pow (lower, 1.0 / private->gamma);
+  x1 = odd_pow (upper, 1.0 / private->gamma);
+  x  = odd_pow (value, 1.0 / private->gamma);
+
   gtk_entry_set_progress_fraction (GTK_ENTRY (spin_button),
-                                   pow ((value - lower) / (upper - lower),
-                                        1.0 / private->gamma));
+                                   (x - x0) / (x1 - x0));
 }
 
 static void
@@ -1174,6 +1185,16 @@ gimp_spin_scale_setup_mnemonic (GimpSpinScale *scale,
                         G_CALLBACK (gimp_spin_scale_mnemonics_notify),
                         scale);
      }
+}
+
+static gdouble
+odd_pow (gdouble x,
+         gdouble y)
+{
+  if (x >= 0.0)
+    return pow (x, y);
+  else
+    return -pow (-x, y);
 }
 
 

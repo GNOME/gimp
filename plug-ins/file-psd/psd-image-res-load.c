@@ -480,7 +480,7 @@ load_resource_unknown (const PSDimageres  *res_a,
   IFDBG(2) g_debug ("Process unknown image resource block: %d", res_a->id);
 
   data = g_malloc (res_a->data_len);
-  if (fread (data, res_a->data_len, 1, f) < 1)
+  if (res_a->data_len > 0 && fread (data, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
       g_free (data);
@@ -738,7 +738,7 @@ load_resource_1007 (const PSDimageres  *res_a,
                         dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
                         gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
 
-      img_a->alpha_display_info[cidx] = g_malloc (sizeof (PSDchanneldata));
+      img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
       img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_kind = dsp_info.kind;
@@ -1390,16 +1390,16 @@ load_resource_1077 (const PSDimageres  *res_a,
 
       gimp_rgb_set_alpha (&gimp_rgb, 1.0);
 
-      IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, kind: %d",
+      IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, mode: %d",
                         dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
                         ps_color.cmyk.yellow, ps_color.cmyk.black, dsp_info.opacity,
-                        dsp_info.kind);
+                        dsp_info.mode);
 
-      IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, kind: %d",
+      IFDBG(2) g_debug ("cSpace: %d, col: %g %g %g, opacity: %d, mode: %d",
                         dsp_info.colorSpace, gimp_rgb.r * 255 , gimp_rgb.g * 255,
-                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.kind);
+                        gimp_rgb.b * 255, dsp_info.opacity, dsp_info.mode);
 
-      img_a->alpha_display_info[cidx] = g_malloc (sizeof (PSDchanneldata));
+      img_a->alpha_display_info[cidx] = g_malloc0 (sizeof (PSDchanneldata));
       img_a->alpha_display_info[cidx]->gimp_color = gimp_rgb;
       img_a->alpha_display_info[cidx]->opacity = dsp_info.opacity;
       img_a->alpha_display_info[cidx]->ps_mode = dsp_info.mode;

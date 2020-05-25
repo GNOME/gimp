@@ -135,6 +135,18 @@ typedef enum
 } GimpSpaceBarAction;
 
 
+#define GIMP_TYPE_TOOL_GROUP_MENU_MODE (gimp_tool_group_menu_mode_get_type ())
+
+GType gimp_tool_group_menu_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_CLICK,               /*< desc="Show on click"                   >*/
+  GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER,               /*< desc="Show on hover"                   >*/
+  GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN  /*< desc="Show on hover in single column"  >*/
+} GimpToolGroupMenuMode;
+
+
 #define GIMP_TYPE_WINDOW_HINT (gimp_window_hint_get_type ())
 
 GType gimp_window_hint_get_type (void) G_GNUC_CONST;

@@ -80,7 +80,7 @@ static void     gimp_curves_config_curve_dirty  (GimpCurve        *curve,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCurvesConfig, gimp_curves_config,
-                         GIMP_TYPE_SETTINGS,
+                         GIMP_TYPE_OPERATION_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_curves_config_iface_init))
 
@@ -242,7 +242,7 @@ gimp_curves_config_serialize (GimpConfig       *config,
   GimpHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time",   writer) ||
+  if (! gimp_operation_settings_config_serialize_base (config, writer, data) ||
       ! gimp_config_serialize_property_by_name (config, "linear", writer))
     return FALSE;
 
@@ -254,10 +254,10 @@ gimp_curves_config_serialize (GimpConfig       *config,
     {
       c_config->channel = channel;
 
-      /*  Serialize the channel properties manually (not using
+      /*  serialize the channel properties manually (not using
        *  gimp_config_serialize_properties()), so the parent class'
-       *  "time" property doesn't end up in the config file once per
-       *  channel. See bug #700653.
+       *  properties don't end up in the config file one per channel.
+       *  See bug #700653.
        */
       success =
         (gimp_config_serialize_property_by_name (config, "channel", writer) &&
@@ -299,7 +299,8 @@ gimp_curves_config_equal (GimpConfig *a,
   GimpCurvesConfig     *config_b = GIMP_CURVES_CONFIG (b);
   GimpHistogramChannel  channel;
 
-  if (config_a->linear != config_b->linear)
+  if (! gimp_operation_settings_config_equal_base (a, b) ||
+      config_a->linear != config_b->linear)
     return FALSE;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
@@ -332,6 +333,8 @@ gimp_curves_config_reset (GimpConfig *config)
   GimpCurvesConfig     *c_config = GIMP_CURVES_CONFIG (config);
   GimpHistogramChannel  channel;
 
+  gimp_operation_settings_config_reset_base (config);
+
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
@@ -352,6 +355,9 @@ gimp_curves_config_copy (GimpConfig  *src,
   GimpCurvesConfig     *src_config  = GIMP_CURVES_CONFIG (src);
   GimpCurvesConfig     *dest_config = GIMP_CURVES_CONFIG (dest);
   GimpHistogramChannel  channel;
+
+  if (! gimp_operation_settings_config_copy_base (src, dest, flags))
+    return FALSE;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;

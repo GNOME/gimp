@@ -59,7 +59,7 @@ static gboolean gimp_brightness_contrast_config_equal        (GimpConfig   *a,
 
 G_DEFINE_TYPE_WITH_CODE (GimpBrightnessContrastConfig,
                          gimp_brightness_contrast_config,
-                         GIMP_TYPE_SETTINGS,
+                         GIMP_TYPE_OPERATION_SETTINGS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_brightness_contrast_config_iface_init))
 
@@ -156,7 +156,8 @@ gimp_brightness_contrast_config_equal (GimpConfig *a,
   GimpBrightnessContrastConfig *config_a = GIMP_BRIGHTNESS_CONTRAST_CONFIG (a);
   GimpBrightnessContrastConfig *config_b = GIMP_BRIGHTNESS_CONTRAST_CONFIG (b);
 
-  if (config_a->brightness != config_b->brightness ||
+  if (! gimp_operation_settings_config_equal_base (a, b) ||
+      config_a->brightness != config_b->brightness       ||
       config_a->contrast   != config_b->contrast)
     {
       return FALSE;
@@ -179,6 +180,10 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
   g_return_val_if_fail (GIMP_IS_BRIGHTNESS_CONTRAST_CONFIG (config), NULL);
 
   levels = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+
+  gimp_operation_settings_config_copy_base (GIMP_CONFIG (config),
+                                            GIMP_CONFIG (levels),
+                                            0);
 
   brightness = config->brightness / 2.0;
   slant = tan ((config->contrast + 1) * G_PI_4);

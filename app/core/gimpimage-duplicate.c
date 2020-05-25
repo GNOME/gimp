@@ -164,6 +164,9 @@ gimp_image_duplicate (GimpImage *image)
 
   gimp_image_undo_enable (new_image);
 
+  /*  Explicitly mark image as dirty, so that its dirty time is set  */
+  gimp_image_dirty (new_image, GIMP_DIRTY_ALL);
+
   return new_image;
 }
 

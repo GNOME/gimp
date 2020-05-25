@@ -325,6 +325,13 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
   GimpMirror *mirror  = GIMP_MIRROR (sym);
   GList      *strokes = NULL;
   GimpCoords *coords;
+  gdouble     mirror_position_x, mirror_position_y;
+  gint        offset_x,          offset_y;
+
+  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+
+  mirror_position_x = mirror->mirror_position_x - offset_x;
+  mirror_position_y = mirror->mirror_position_y - offset_y;
 
   g_list_free_full (sym->strokes, g_free);
   strokes = g_list_prepend (strokes,
@@ -333,22 +340,22 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
   if (mirror->horizontal_mirror)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
-      coords->y = 2.0 * mirror->mirror_position_y - origin->y;
+      coords->y = 2.0 * mirror_position_y - origin->y;
       strokes = g_list_prepend (strokes, coords);
     }
 
   if (mirror->vertical_mirror)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
-      coords->x = 2.0 * mirror->mirror_position_x - origin->x;
+      coords->x = 2.0 * mirror_position_x - origin->x;
       strokes = g_list_prepend (strokes, coords);
     }
 
   if (mirror->point_symmetry)
     {
       coords = g_memdup (origin, sizeof (GimpCoords));
-      coords->x = 2.0 * mirror->mirror_position_x - origin->x;
-      coords->y = 2.0 * mirror->mirror_position_y - origin->y;
+      coords->x = 2.0 * mirror_position_x - origin->x;
+      coords->y = 2.0 * mirror_position_y - origin->y;
       strokes = g_list_prepend (strokes, coords);
     }
 

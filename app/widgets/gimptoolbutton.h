@@ -46,18 +46,22 @@ struct _GimpToolButtonClass
 };
 
 
-GType          gimp_tool_button_get_type      (void) G_GNUC_CONST;
+GType          gimp_tool_button_get_type               (void) G_GNUC_CONST;
 
-GtkToolItem  * gimp_tool_button_new           (GimpToolbox    *toolbox,
-                                               GimpToolItem   *tool_item);
+GtkToolItem  * gimp_tool_button_new                    (GimpToolbox    *toolbox,
+                                                        GimpToolItem   *tool_item);
 
-GimpToolbox  * gimp_tool_button_get_toolbox   (GimpToolButton *tool_button);
+GimpToolbox  * gimp_tool_button_get_toolbox            (GimpToolButton *tool_button);
 
-void           gimp_tool_button_set_tool_item (GimpToolButton *tool_button,
-                                               GimpToolItem   *tool_item);
-GimpToolItem * gimp_tool_button_get_tool_item (GimpToolButton *tool_button);
+void           gimp_tool_button_set_tool_item          (GimpToolButton *tool_button,
+                                                        GimpToolItem   *tool_item);
+GimpToolItem * gimp_tool_button_get_tool_item          (GimpToolButton *tool_button);
 
-GimpToolInfo * gimp_tool_button_get_tool_info (GimpToolButton *tool_button);
+GimpToolInfo * gimp_tool_button_get_tool_info          (GimpToolButton *tool_button);
+
+void           gimp_tool_button_set_show_menu_on_hover (GimpToolButton *tool_button,
+                                                        gboolean        show_menu_on_hover);
+gboolean       gimp_tool_button_get_show_menu_on_hover (GimpToolButton *tool_button);
 
 
 #endif /* __GIMP_TOOL_BUTTON_H__ */

@@ -11,11 +11,11 @@ AC_PREREQ(2.54)
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [10])
-m4_define([gimp_micro_version], [18])
+m4_define([gimp_micro_version], [19])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
-m4_define([gimp_interface_age], [18])
+m4_define([gimp_interface_age], [19])
 m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
@@ -52,11 +52,11 @@ m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([gdk_pixbuf_required_version], [2.30.8])
 m4_define([gegl_major_minor_version], [0.4])
-m4_define([gegl_micro_version], [22])
+m4_define([gegl_micro_version], [23])
 m4_define([gegl_required_version],
           [gegl_major_minor_version.gegl_micro_version])
 m4_define([gexiv2_required_version], [0.10.6])
-m4_define([glib_required_version], [2.54.2])
+m4_define([glib_required_version], [2.56.2])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([gtk_required_version], [2.24.32])
 m4_define([gtkdoc_required_version], [1.0])
@@ -705,15 +705,7 @@ PKG_CHECK_MODULES(GEGL, gegl-gegl_major_minor_version >= gegl_required_version,,
 PKG_CHECK_MODULES(ATK, atk >= atk_required_version,,
                   [add_deps_error([atk >= atk_required_version])])
 
-# glib 2.56.0 and 2.56.1 have a bad bug on Win32, breaking the file
-# chooser dialogs. This has been fixed, but no release made yet. When
-# 2.56.2 is released, the additional test for these broken versions can
-# be removed and we can bump the requirement to glib 2.56.2.
-AM_PATH_GLIB_2_0(glib_required_version,
-                 [if test "x$platform_win32" = "xyes"; then
-                   PKG_CHECK_MODULES(GLIB_WIN_BUG, glib-2.0 >= 2.56.0 glib-2.0 < 2.56.2,
-                                     [add_deps_error([glib >= glib_required_version except glib 2.56.0 and 2.56.1 (broken on Win32 - bug 795855)])],:)
-                 fi],
+AM_PATH_GLIB_2_0(glib_required_version,,
                  [add_deps_error([glib >= glib_required_version],
                                  [Test for GLIB failed])],
                  gobject)
@@ -786,13 +778,13 @@ if test "x$GDBUS_CODEGEN" = xno; then
   add_deps_error([gdbus-codegen], [Could not find gdbus-codegen in your PATH.])
 fi
 
-AC_MSG_CHECKING([if GLib is version 2.43.0 or newer])
-if $PKG_CONFIG --atleast-version=2.43.0 glib-2.0; then
-  have_glib_2_43=yes
+AC_MSG_CHECKING([if GLib is version 2.57.0 or newer])
+if $PKG_CONFIG --atleast-version=2.57.0 glib-2.0; then
+  have_glib_2_57=yes
 else
-  have_glib_2_43=no
+  have_glib_2_57=no
 fi
-AC_MSG_RESULT($have_glib_2_43)
+AC_MSG_RESULT($have_glib_2_57)
 
 AC_PATH_PROG(GEGL, gegl, no)
 if test "x$GEGL" = xno; then
@@ -1096,7 +1088,7 @@ intrinsics_save_CFLAGS="$CFLAGS"
 GIMP_DETECT_CFLAGS(SSE_MATH_CFLAG, '-mfpmath=sse')
 GIMP_DETECT_CFLAGS(SSE2_CFLAG, '-msse2')
 SSE2_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE2_CFLAG"
-CFLAGS="$intrinsics_save_CFLAGS $SSE2_EXTRA_CFLAGS"
+CFLAGS="$SSE2_EXTRA_CFLAGS $intrinsics_save_CFLAGS"
 
 AC_MSG_CHECKING(whether we can compile SSE2 intrinsics)
 AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <emmintrin.h>]],[[__m128i one = _mm_set1_epi32 (1);]])],
@@ -1111,7 +1103,7 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <emmintrin.h>]],[[__m128i one = _mm_s
 
 GIMP_DETECT_CFLAGS(SSE4_1_CFLAG, '-msse4.1')
 SSE4_1_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE4_1_CFLAG"
-CFLAGS="$intrinsics_save_CFLAGS $SSE4_1_EXTRA_CFLAGS"
+CFLAGS="$SSE4_1_EXTRA_CFLAGS $intrinsics_save_CFLAGS"
 
 AC_MSG_CHECKING(whether we can compile SSE4.1 intrinsics)
 AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <smmintrin.h>]],[[__v4sf a, b, c; c = _mm_blend_ps(a, b, 0x08);]])],
@@ -2746,7 +2738,7 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # We must build without problems with future releases of libraries
 # and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_43" != "xyes"; then
+if test "x$have_glib_2_57" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 

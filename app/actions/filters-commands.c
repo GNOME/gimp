@@ -29,12 +29,12 @@
 #include "actions-types.h"
 
 #include "operations/gimp-operation-config.h"
+#include "operations/gimpoperationsettings.h"
 
 #include "core/gimp.h"
 #include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
-#include "core/gimpsettings.h"
 
 #include "widgets/gimpaction.h"
 
@@ -193,7 +193,7 @@ filters_parse_operation (Gimp         *gimp,
           *settings =
             g_object_new (gimp_operation_config_get_type (gimp, operation,
                                                           icon_name,
-                                                          GIMP_TYPE_SETTINGS),
+                                                          GIMP_TYPE_OPERATION_SETTINGS),
                           NULL);
 
           if (! gimp_config_deserialize_string (GIMP_CONFIG (*settings),

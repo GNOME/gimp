@@ -626,6 +626,11 @@ gimp_curve_config_copy (GimpConfig  *src,
   GimpCurve *src_curve  = GIMP_CURVE (src);
   GimpCurve *dest_curve = GIMP_CURVE (dest);
 
+  /* make sure the curve type is copied *before* the points, so that we don't
+   * overwrite the copied points when changing the type
+   */
+  dest_curve->curve_type = src_curve->curve_type;
+
   gimp_config_sync (G_OBJECT (src), G_OBJECT (dest), flags);
 
   dest_curve->identity = src_curve->identity;

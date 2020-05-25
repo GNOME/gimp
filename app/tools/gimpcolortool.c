@@ -629,7 +629,7 @@ gimp_color_tool_pick (GimpColorTool      *tool,
 {
   GimpColorToolClass *klass;
   const Babl         *sample_format;
-  guchar              pixel[32];
+  gdouble             pixel[4];
   GimpRGB             color;
 
   klass = GIMP_COLOR_TOOL_GET_CLASS (tool);

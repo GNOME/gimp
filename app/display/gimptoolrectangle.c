@@ -143,7 +143,7 @@ struct _GimpToolRectanglePrivate
   gboolean                is_first;
 
   /* Whether or not the rectangle currently being rubber-banded was
-   * created from scatch.
+   * created from scratch.
    */
   gboolean                is_new;
 
@@ -805,10 +805,6 @@ gimp_tool_rectangle_constructed (GObject *object)
                                                                    FALSE);
       gimp_canvas_item_set_highlight (private->highlight_handles[i], TRUE);
     }
-
-  g_signal_connect_object (gimp_tool_widget_get_shell (widget), "scaled",
-                           G_CALLBACK (gimp_tool_rectangle_changed),
-                           widget, G_CONNECT_SWAPPED);
 
   gimp_tool_rectangle_changed (widget);
 }

@@ -33,143 +33,154 @@
 #include "gimp-pdb-compat.h"
 
 
+/*  local function prototypes  */
+
+static gchar * gimp_pdb_compat_fix_param_name (const gchar *name);
+
+
 /*  public functions  */
 
 GParamSpec *
 gimp_pdb_compat_param_spec (Gimp           *gimp,
                             GimpPDBArgType  arg_type,
                             const gchar    *name,
-                            const gchar    *desc)
+                            const gchar    *desc,
+                            gboolean       *name_valid)
 {
   GParamSpec *pspec = NULL;
+  gchar      *real_name;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
+  real_name = gimp_pdb_compat_fix_param_name (name);
+
+  if (name_valid) *name_valid = ! strcmp (name, real_name);
+
   switch (arg_type)
     {
     case GIMP_PDB_INT32:
-      pspec = gimp_param_spec_int32 (name, name, desc,
+      pspec = gimp_param_spec_int32 (real_name, real_name, desc,
                                      G_MININT32, G_MAXINT32, 0,
                                      G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT16:
-      pspec = gimp_param_spec_int16 (name, name, desc,
+      pspec = gimp_param_spec_int16 (real_name, real_name, desc,
                                      G_MININT16, G_MAXINT16, 0,
                                      G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT8:
-      pspec = gimp_param_spec_int8 (name, name, desc,
+      pspec = gimp_param_spec_int8 (real_name, real_name, desc,
                                     0, G_MAXUINT8, 0,
                                     G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_FLOAT:
-      pspec = g_param_spec_double (name, name, desc,
+      pspec = g_param_spec_double (real_name, real_name, desc,
                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
                                    G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_STRING:
-      pspec = gimp_param_spec_string (name, name, desc,
+      pspec = gimp_param_spec_string (real_name, real_name, desc,
                                       TRUE, TRUE, FALSE,
                                       NULL,
                                       G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT32ARRAY:
-      pspec = gimp_param_spec_int32_array (name, name, desc,
+      pspec = gimp_param_spec_int32_array (real_name, real_name, desc,
                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT16ARRAY:
-      pspec = gimp_param_spec_int16_array (name, name, desc,
+      pspec = gimp_param_spec_int16_array (real_name, real_name, desc,
                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT8ARRAY:
-      pspec = gimp_param_spec_int8_array (name, name, desc,
+      pspec = gimp_param_spec_int8_array (real_name, real_name, desc,
                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_FLOATARRAY:
-      pspec = gimp_param_spec_float_array (name, name, desc,
+      pspec = gimp_param_spec_float_array (real_name, real_name, desc,
                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_STRINGARRAY:
-      pspec = gimp_param_spec_string_array (name, name, desc,
+      pspec = gimp_param_spec_string_array (real_name, real_name, desc,
                                             G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_COLOR:
-      pspec = gimp_param_spec_rgb (name, name, desc,
+      pspec = gimp_param_spec_rgb (real_name, real_name, desc,
                                    TRUE, NULL,
                                    G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_ITEM:
-      pspec = gimp_param_spec_item_id (name, name, desc,
+      pspec = gimp_param_spec_item_id (real_name, real_name, desc,
                                        gimp, TRUE,
                                        G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_DISPLAY:
-      pspec = gimp_param_spec_display_id (name, name, desc,
+      pspec = gimp_param_spec_display_id (real_name, real_name, desc,
                                           gimp, TRUE,
                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_IMAGE:
-      pspec = gimp_param_spec_image_id (name, name, desc,
+      pspec = gimp_param_spec_image_id (real_name, real_name, desc,
                                         gimp, TRUE,
                                         G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_LAYER:
-      pspec = gimp_param_spec_layer_id (name, name, desc,
+      pspec = gimp_param_spec_layer_id (real_name, real_name, desc,
                                         gimp, TRUE,
                                         G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_CHANNEL:
-      pspec = gimp_param_spec_channel_id (name, name, desc,
+      pspec = gimp_param_spec_channel_id (real_name, real_name, desc,
                                           gimp, TRUE,
                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_DRAWABLE:
-      pspec = gimp_param_spec_drawable_id (name, name, desc,
+      pspec = gimp_param_spec_drawable_id (real_name, real_name, desc,
                                            gimp, TRUE,
                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_SELECTION:
-      pspec = gimp_param_spec_selection_id (name, name, desc,
+      pspec = gimp_param_spec_selection_id (real_name, real_name, desc,
                                             gimp, TRUE,
                                             G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_COLORARRAY:
-      pspec = gimp_param_spec_color_array (name, name, desc,
+      pspec = gimp_param_spec_color_array (real_name, real_name, desc,
                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_VECTORS:
-      pspec = gimp_param_spec_vectors_id (name, name, desc,
+      pspec = gimp_param_spec_vectors_id (real_name, real_name, desc,
                                           gimp, TRUE,
                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_PARASITE:
-      pspec = gimp_param_spec_parasite (name, name, desc,
+      pspec = gimp_param_spec_parasite (real_name, real_name, desc,
                                         G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_STATUS:
-      pspec = g_param_spec_enum (name, name, desc,
+      pspec = g_param_spec_enum (real_name, real_name, desc,
                                  GIMP_TYPE_PDB_STATUS_TYPE,
                                  GIMP_PDB_EXECUTION_ERROR,
                                  G_PARAM_READWRITE);
@@ -180,8 +191,14 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
     }
 
   if (! pspec)
-    g_warning ("%s: returning NULL for %s (%s)",
-               G_STRFUNC, name, gimp_pdb_compat_arg_type_to_string (arg_type));
+    {
+      g_warning ("%s: returning NULL for %s (%s)",
+                 G_STRFUNC,
+                 real_name,
+                 gimp_pdb_compat_arg_type_to_string (arg_type));
+    }
+
+  g_free (real_name);
 
   return pspec;
 }
@@ -500,4 +517,46 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
                                             compat_procs[i].old_name,
                                             compat_procs[i].new_name);
     }
+}
+
+
+/*  private functions  */
+
+/* Since GLib 2.63.3, invalid param-spec names are rejected upon creation.
+ * This impacts procedure parameters and return-values, which are stored as
+ * param-specs internally.  Since this requirement wasn't previously enforced,
+ * keep supporting arbitrary parameter names in gimp-2.
+ *
+ * See issues #4392 and #4641.
+ */
+static gchar *
+gimp_pdb_compat_fix_param_name (const gchar *name)
+{
+  GString *new_name;
+
+  new_name = g_string_new (NULL);
+
+  /* First character must be a letter. */
+  if ((name[0] < 'A' || name[0] > 'Z') &&
+      (name[0] < 'a' || name[0] > 'z'))
+    {
+      g_string_append (new_name, "param-");
+    }
+
+  for (; *name; name++)
+    {
+      gchar c = *name;
+
+      if ((c < 'A' || c > 'Z') &&
+          (c < 'a' || c > 'z') &&
+          (c < '0' || c > '9') &&
+          c != '-' && c != '_')
+        {
+          c = '-';
+        }
+
+      g_string_append_c (new_name, c);
+    }
+
+  return g_string_free (new_name, FALSE);
 }

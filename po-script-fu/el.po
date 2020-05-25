@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-11-24 21:28+0000\n"
-"PO-Revision-Date: 2019-11-28 10:07+0200\n"
+"POT-Creation-Date: 2020-05-15 09:01+0000\n"
+"PO-Revision-Date: 2020-05-15 12:09+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -141,7 +141,7 @@ msgstr "Αποθήκευση εξόδου κονσόλας Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
 #: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:836
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "Ακύρω_ση"
 
@@ -242,28 +242,28 @@ msgstr "Πολύ λίγα ορίσματα κατά την κλήση του 'sc
 msgid "Error while loading %s:"
 msgstr "Σφάλμα φόρτωσης %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Επιλογές εξυπηρετητή Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:837
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "Εκκίνη_ση εξυπηρετητή"
 
-#: ../plug-ins/script-fu/script-fu-server.c:870
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "Ακρόαση σε IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:877
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Θύρα εξυπηρετητή:"
 
 #
-#: ../plug-ins/script-fu/script-fu-server.c:883
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Αρχείο ημερολογίου εξυπηρετητή:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:896
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -703,50 +703,64 @@ msgstr "Αδιαφάνεια"
 msgid "Allow resizing"
 msgstr "Δυνατότητα αλλαγής μεγέθους"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Σβήσιμο κάθε δεύτερης γραμμής..."
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Σβήσιμο κάθε δεύτερη γραμμής ή στήλης"
+msgid "_Erase Every Nth Row..."
+msgstr "_Σβήσιμο κάθε νιοστής γραμμής..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Σβήσιμο κάθε νιοστής γραμμής ή στήλης"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Γραμμές/στήλες"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Σειρές"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Στήλες"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase/fill"
+msgstr "Σβήσιμο/γέμισμα"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase"
+msgstr "Σβήσιμο"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Fill with BG"
+msgstr "Γέμισμα με παρασκήνιο"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Σβήσιμο κάθε δεύτερης γραμμής..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Σβήσιμο κάθε δεύτερη γραμμής ή στήλης"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Even/odd"
 msgstr "Ζυγός/μονός"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Even"
 msgstr "Ζυγός"
 
 #
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Odd"
 msgstr "Ζυγός"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
-msgid "Erase/fill"
-msgstr "Σβήσιμο/γέμισμα"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
-msgid "Erase"
-msgstr "Σβήσιμο"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
-msgid "Fill with BG"
-msgstr "Γέμισμα με παρασκήνιο"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."

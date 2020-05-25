@@ -1,22 +1,24 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2011.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2012-02-10 19:00+0000\n"
-"PO-Revision-Date: 2012-02-10 23:09+0200\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2018-05-21 15:43+0000\n"
+"PO-Revision-Date: 2020-05-10 10:45+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -45,18 +47,17 @@ msgstr ""
 "Puteți executa multe operații de strat prin clic-dreapta pe eticheta text a "
 "unui strat în dialogul de straturi."
 
-# de la 2.8 salvarea se face exclusiv în xcf, salvarea în xcf nu acoperă „every aspect” (citat de pe gimp-developer-list: „It was never true -- e.g. undo history is not saved, tool options are not saved...”), iar salvarea la alt tip de fișier se face prin export
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
-"native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and many aspects of your work-in-progress. Once a project is "
-"completed, you can export it as JPEG, PNG, GIF, etc."
+"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"progress, allowing to work on it again later. Once a project is completed, "
+"you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Când salvați o imagine pentru a lucra la ea mai târziu, folosiți XCF, "
-"formatul nativ GIMP (cu extensia <tt>.xcf</tt>). Astfel se conservă "
-"straturile și multe alte aspecte ale lucrului în desfășurare. Odată ce "
-"proiectul este complet, puteți să îl exportați ca JPEG, PNG, GIF, etc."
+"Pentru salvarea unei imagini se folosește XCF, formatul nativ GIMP (cu "
+"extensia <tt>.xcf</tt>). Acest format păstrează straturile și multe alte "
+"aspecte ale lucrului în desfășurare. Odată ce proiectul este finalizat, "
+"puteți să îl exportați ca JPEG, PNG, GIF, etc."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -76,7 +77,7 @@ msgid ""
 msgstr ""
 "Dacă numele unui strat în dialogul de straturi este afișat <b>îngroșat</b>, "
 "acel strat nu are un canal alfa. Puteți adăuga un canal alfa folosind Strat "
-"→ Transparență → Adaugă un canal alfa"
+"→ Transparență → Adaugă un canal alfa."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""

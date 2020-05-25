@@ -36,8 +36,10 @@
 
 #include "gimp.h"
 #include "gimp-parallel.h"
+#include "gimp-utils.h"
 #include "gimpasync.h"
 #include "gimpchannel.h"
+#include "gimpchunkiterator.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpdrawable-preview.h"
@@ -45,13 +47,17 @@
 #include "gimplayer.h"
 #include "gimptempbuf.h"
 
+#include "gimp-priorities.h"
+
 
 typedef struct
 {
-  const Babl    *format;
-  GeglBuffer    *buffer;
-  GeglRectangle  rect;
-  gdouble        scale;
+  const Babl        *format;
+  GeglBuffer        *buffer;
+  GeglRectangle      rect;
+  gdouble            scale;
+
+  GimpChunkIterator *iter;
 } SubPreviewData;
 
 
@@ -81,6 +87,8 @@ sub_preview_data_new (const Babl          *format,
   data->rect   = *rect;
   data->scale  = scale;
 
+  data->iter   = NULL;
+
   return data;
 }
 
@@ -88,6 +96,9 @@ static void
 sub_preview_data_free (SubPreviewData *data)
 {
   g_object_unref (data->buffer);
+
+  if (data->iter)
+    gimp_chunk_iterator_stop (data->iter, TRUE);
 
   g_slice_free (SubPreviewData, data);
 }
@@ -327,10 +338,55 @@ static void
 gimp_drawable_get_sub_preview_async_func (GimpAsync      *async,
                                           SubPreviewData *data)
 {
-  GimpTempBuf *preview;
+  GimpTempBuf             *preview;
+  GimpTileHandlerValidate *validate;
 
   preview = gimp_temp_buf_new (data->rect.width, data->rect.height,
                                data->format);
+
+  validate = gimp_tile_handler_validate_get_assigned (data->buffer);
+
+  if (validate)
+    {
+      if (! data->iter)
+        {
+          cairo_region_t        *region;
+          cairo_rectangle_int_t  rect;
+
+          rect.x      = floor (data->rect.x / data->scale);
+          rect.y      = floor (data->rect.y / data->scale);
+          rect.width  = ceil ((data->rect.x + data->rect.width)  /
+                              data->scale) - rect.x;
+          rect.height = ceil ((data->rect.x + data->rect.height) /
+                              data->scale) - rect.y;
+
+          region = cairo_region_copy (validate->dirty_region);
+
+          cairo_region_intersect_rectangle (region, &rect);
+
+          data->iter = gimp_chunk_iterator_new (region);
+        }
+
+      if (gimp_chunk_iterator_next (data->iter))
+        {
+          GeglRectangle rect;
+
+          gimp_tile_handler_validate_begin_validate (validate);
+
+          while (gimp_chunk_iterator_get_rect (data->iter, &rect))
+            {
+              gimp_tile_handler_validate_validate (validate,
+                                                   data->buffer, &rect,
+                                                   FALSE, FALSE);
+            }
+
+          gimp_tile_handler_validate_end_validate (validate);
+
+          return;
+        }
+
+      data->iter = NULL;
+    }
 
   gegl_buffer_get (data->buffer, &data->rect, data->scale,
                    gimp_temp_buf_get_format (preview),
@@ -353,13 +409,14 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
                                      gint          dest_width,
                                      gint          dest_height)
 {
-  GimpItem    *item;
-  GimpImage   *image;
-  GeglBuffer  *buffer;
-  gdouble      scale;
-  gint         scaled_x;
-  gint         scaled_y;
-  static gint  no_async_drawable_previews = -1;
+  GimpItem       *item;
+  GimpImage      *image;
+  GeglBuffer     *buffer;
+  SubPreviewData *data;
+  gdouble         scale;
+  gint            scaled_x;
+  gint            scaled_y;
+  static gint     no_async_drawable_previews = -1;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -387,8 +444,7 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
         (g_getenv ("GIMP_NO_ASYNC_DRAWABLE_PREVIEWS") != NULL);
     }
 
-  if (no_async_drawable_previews ||
-      gimp_tile_handler_validate_get_assigned (buffer))
+  if (no_async_drawable_previews)
     {
       GimpAsync *async = gimp_async_new ();
 
@@ -411,13 +467,26 @@ gimp_drawable_get_sub_preview_async (GimpDrawable *drawable,
   scaled_x = RINT ((gdouble) src_x * scale);
   scaled_y = RINT ((gdouble) src_y * scale);
 
-  return gimp_parallel_run_async_full (
-    +1,
-    (GimpParallelRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
-    sub_preview_data_new (
-      gimp_drawable_get_preview_format (drawable),
-      buffer,
-      GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
-      scale),
-    (GDestroyNotify) sub_preview_data_free);
+  data = sub_preview_data_new (
+    gimp_drawable_get_preview_format (drawable),
+    buffer,
+    GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
+    scale);
+
+  if (gimp_tile_handler_validate_get_assigned (buffer))
+    {
+      return gimp_idle_run_async_full (
+        GIMP_PRIORITY_VIEWABLE_IDLE,
+        (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
+        data,
+        (GDestroyNotify) sub_preview_data_free);
+    }
+  else
+    {
+      return gimp_parallel_run_async_full (
+        +1,
+        (GimpRunAsyncFunc) gimp_drawable_get_sub_preview_async_func,
+        data,
+        (GDestroyNotify) sub_preview_data_free);
+    }
 }

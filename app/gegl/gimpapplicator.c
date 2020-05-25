@@ -57,6 +57,7 @@ gimp_applicator_class_init (GimpApplicatorClass *klass)
 static void
 gimp_applicator_init (GimpApplicator *applicator)
 {
+  applicator->active          = TRUE;
   applicator->opacity         = 1.0;
   applicator->paint_mode      = GIMP_LAYER_MODE_NORMAL;
   applicator->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
@@ -203,6 +204,23 @@ gimp_applicator_new (GeglNode *parent)
 }
 
 void
+gimp_applicator_set_active (GimpApplicator *applicator,
+                            gboolean        active)
+{
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
+  if (active != applicator->active)
+    {
+      applicator->active = active;
+
+      if (active)
+        gegl_node_link (applicator->crop_node, applicator->output_node);
+      else
+        gegl_node_link (applicator->input_node, applicator->output_node);
+    }
+}
+
+void
 gimp_applicator_set_src_buffer (GimpApplicator *applicator,
                                 GeglBuffer     *src_buffer)
 {
@@ -230,19 +248,15 @@ gimp_applicator_set_src_buffer (GimpApplicator *applicator,
         }
 
       if (! applicator->src_buffer)
-        {
-          gegl_node_connect_to (applicator->src_node,    "output",
-                                applicator->mode_node,   "input");
-          gegl_node_connect_to (applicator->src_node,    "output",
-                                applicator->affect_node, "input");
-        }
+        gegl_node_link (applicator->src_node, applicator->input_node);
     }
   else if (applicator->src_buffer)
     {
-      gegl_node_connect_to (applicator->input_node,  "output",
-                            applicator->mode_node,   "input");
-      gegl_node_connect_to (applicator->input_node,  "output",
-                            applicator->affect_node, "input");
+      gegl_node_disconnect (applicator->input_node, "input");
+
+      gegl_node_set (applicator->src_node,
+                     "buffer", NULL,
+                     NULL);
     }
 
   applicator->src_buffer = src_buffer;
@@ -276,19 +290,15 @@ gimp_applicator_set_dest_buffer (GimpApplicator *applicator,
         }
 
       if (! applicator->dest_buffer)
-        {
-          gegl_node_disconnect (applicator->output_node, "input");
-
-          gegl_node_connect_to (applicator->affect_node, "output",
-                                applicator->dest_node,   "input");
-        }
+        gegl_node_link (applicator->affect_node, applicator->dest_node);
     }
   else if (applicator->dest_buffer)
     {
       gegl_node_disconnect (applicator->dest_node, "input");
 
-      gegl_node_connect_to (applicator->affect_node, "output",
-                            applicator->output_node, "input");
+      gegl_node_set (applicator->dest_node,
+                     "buffer", NULL,
+                     NULL);
     }
 
   applicator->dest_buffer = dest_buffer;

@@ -213,7 +213,7 @@ static const PngSaveVals defaults =
   TRUE,
   TRUE,
   TRUE,
-  TRUE,
+  FALSE,
   9,
   FALSE,               /* save exif       */
   FALSE,               /* save xmp        */

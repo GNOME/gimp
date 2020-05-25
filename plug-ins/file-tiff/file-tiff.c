@@ -82,7 +82,7 @@ static TiffSaveVals tsvals =
 {
   COMPRESSION_NONE,    /*  compression         */
   TRUE,                /*  alpha handling      */
-  TRUE,                /*  save transp. pixels */
+  FALSE,               /*  save transp. pixels */
   FALSE,               /*  save exif           */
   FALSE,               /*  save xmp            */
   FALSE,               /*  save iptc           */

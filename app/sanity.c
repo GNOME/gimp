@@ -171,7 +171,7 @@ static gchar *
 sanity_check_glib (void)
 {
 #define GLIB_REQUIRED_MAJOR 2
-#define GLIB_REQUIRED_MINOR 54
+#define GLIB_REQUIRED_MINOR 56
 #define GLIB_REQUIRED_MICRO 2
 
   const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
@@ -518,7 +518,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 4
-#define GEGL_REQUIRED_MICRO 22
+#define GEGL_REQUIRED_MICRO 23
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
@@ -606,6 +606,7 @@ sanity_check_gegl_ops (void)
   {
     "gegl:alien-map",
     "gegl:bayer-matrix",
+    "gegl:bloom",
     "gegl:buffer-sink",
     "gegl:buffer-source",
     "gegl:c2g",
@@ -639,6 +640,7 @@ sanity_check_gegl_ops (void)
     "gegl:engrave",
     "gegl:exposure",
     "gegl:fattal02",
+    "gegl:focus-blur",
     "gegl:fractal-trace",
     "gegl:gaussian-blur",
     "gegl:gaussian-blur-selective",
@@ -721,6 +723,7 @@ sanity_check_gegl_ops (void)
     "gegl:unsharp-mask",
     "gegl:value-invert",
     "gegl:value-propagate",
+    "gegl:variable-blur",
     "gegl:video-degradation",
     "gegl:vignette",
     "gegl:warp",

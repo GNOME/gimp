@@ -1751,16 +1751,15 @@ static gint32
 load_image (const gchar  *filename,
             GError      **error)
 {
-  FILE *f;
-  struct stat st;
-  char buf[32];
-  PSPimage ia;
-  guint32 block_init_len, block_total_len;
-  long block_start;
+  FILE      *f;
+  GStatBuf   st;
+  char       buf[32];
+  PSPimage   ia;
+  guint32    block_init_len, block_total_len;
+  long       block_start;
   PSPBlockID id = -1;
-  gint block_number;
-
-  gint32 image_ID = -1;
+  gint       block_number;
+  gint32     image_ID = -1;
 
   if (g_stat (filename, &st) == -1)
     return -1;

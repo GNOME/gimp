@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-24 15:16+0000\n"
-"PO-Revision-Date: 2020-01-30 18:57+0200\n"
+"POT-Creation-Date: 2020-02-27 13:52+0000\n"
+"PO-Revision-Date: 2020-03-01 11:18+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -616,32 +616,26 @@ msgid "Distress the selection"
 msgstr "Згладити виділення"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-#| msgid "Threshold (bigger 1<-->254 smaller)"
 msgid "_Threshold (bigger 1<-->254 smaller)"
 msgstr "_Поріг (більше 1<-->254 менше)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-#| msgid "Spread"
 msgid "_Spread"
 msgstr "_Розповсюдження"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-#| msgid "Granularity (1 is low)"
 msgid "_Granularity (1 is low)"
 msgstr "З_ернистість (1 -- низька)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-#| msgid "Smooth"
 msgid "S_mooth"
 msgstr "З_гладити"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#| msgid "Smooth horizontally"
 msgid "Smooth hor_izontally"
 msgstr "Згладити _горизонтально"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-#| msgid "Smooth vertically"
 msgid "Smooth _vertically"
 msgstr "Згладити _вертикально"
 
@@ -684,49 +678,65 @@ msgstr "Непрозорість"
 msgid "Allow resizing"
 msgstr "Дозволити зміну розміру"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "О_чистити кожен другий рядок…"
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Очистити кожен другий рядок чи стовпчик"
+#| msgid "_Erase Every Other Row..."
+msgid "_Erase Every Nth Row..."
+msgstr "О_чистити кожен N-ий рядок…"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+#| msgid "Erase every other row or column"
+msgid "Erase every nth row or column"
+msgstr "Очистити кожен N-ий рядок чи стовпчик"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Рядки/Стовпчики"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Рядки"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Стовпчики"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Парні/непарні"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Парні"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Непарні"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Очистити/заповнити"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Очистити"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Заповнити кольором тла"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "О_чистити кожен другий рядок…"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Очистити кожен другий рядок чи стовпчик"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Парні/непарні"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Парні"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Непарні"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -958,7 +968,6 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-#| msgid "Direction"
 msgid "_Direction"
 msgstr "_Орієнтація"
 
@@ -973,7 +982,6 @@ msgid "Vertical"
 msgstr "Вертикаль"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#| msgid "Position (in %)"
 msgid "_Position (in %)"
 msgstr "_Розташування (у %)"
 
@@ -986,7 +994,6 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Додати напрямну до розташування, вказаному у точках"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-#| msgid "Position"
 msgid "_Position"
 msgstr "_Розташування"
 
@@ -1195,7 +1202,6 @@ msgstr "Вставити зміст буферу у новий пензель"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-#| msgid "Brush name"
 msgid "_Brush name"
 msgstr "_Назва пензля"
 
@@ -1203,13 +1209,11 @@ msgstr "_Назва пензля"
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-#| msgid "File name"
 msgid "_File name"
 msgstr "Назва _файла"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
-#| msgid "Spacing"
 msgid "_Spacing"
 msgstr "І_нтервал"
 
@@ -1223,7 +1227,6 @@ msgstr "Вставити зміст буферу обміну у нову тек
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#| msgid "Pattern name"
 msgid "_Pattern name"
 msgstr "Назва _текстури"
 
@@ -1364,12 +1367,10 @@ msgid "Round the corners of the current selection"
 msgstr "Закруглити кути активного виділення"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-#| msgid "Radius (%)"
 msgid "R_adius (%)"
 msgstr "Р_адіус (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-#| msgid "Concave"
 msgid "Co_ncave"
 msgstr "_Угнуте"
 

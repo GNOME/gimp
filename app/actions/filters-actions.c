@@ -189,6 +189,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:bayer-matrix",
     GIMP_HELP_FILTER_BAYER_MATRIX },
 
+  { "filters-bloom", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Bloom..."), NULL, NULL,
+    "gegl:bloom",
+    GIMP_HELP_FILTER_BLOOM },
+
   { "filters-brightness-contrast", GIMP_ICON_TOOL_BRIGHTNESS_CONTRAST,
     NC_("filters-action", "B_rightness-Contrast..."), NULL, NULL,
     "gimp:brightness-contrast",
@@ -348,6 +353,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "_Fattal et al. 2002..."), NULL, NULL,
     "gegl:fattal02",
     GIMP_HELP_FILTER_FATTAL_2002 },
+
+  { "filters-focus-blur", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Focus Blur..."), NULL, NULL,
+    "gegl:focus-blur",
+    GIMP_HELP_FILTER_FOCUS_BLUR },
 
   { "filters-fractal-trace", GIMP_ICON_GEGL,
     NC_("filters-action", "_Fractal Trace..."), NULL, NULL,
@@ -719,6 +729,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:value-propagate",
     GIMP_HELP_FILTER_VALUE_PROPAGATE },
 
+  { "filters-variable-blur", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Variable Blur..."), NULL, NULL,
+    "gegl:variable-blur",
+    GIMP_HELP_FILTER_VARIABLE_BLUR },
+
   { "filters-video-degradation", GIMP_ICON_GEGL,
     NC_("filters-action", "Vi_deo Degradation..."), NULL, NULL,
     "gegl:video-degradation",
@@ -882,6 +897,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-apply-canvas",            writable);
   SET_SENSITIVE ("filters-apply-lens",              writable);
   SET_SENSITIVE ("filters-bayer-matrix",            writable);
+  SET_SENSITIVE ("filters-bloom",                   writable);
   SET_SENSITIVE ("filters-brightness-contrast",     writable);
   SET_SENSITIVE ("filters-bump-map",                writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
@@ -917,6 +933,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-erode",                   writable);
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-fattal-2002",             writable);
+  SET_SENSITIVE ("filters-focus-blur",              writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-gaussian-blur-selective", writable);
@@ -995,6 +1012,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-value-propagate",         writable);
+  SET_SENSITIVE ("filters-variable-blur",           writable);
   SET_SENSITIVE ("filters-video-degradation",       writable);
   SET_SENSITIVE ("filters-vignette",                writable);
   SET_SENSITIVE ("filters-waterpixels",             writable);

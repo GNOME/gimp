@@ -46,6 +46,7 @@
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-scrollbars.h"
+#include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 
@@ -696,9 +697,14 @@ gimp_display_set_image (GimpDisplay *display,
   if (shell)
     {
       if (image)
-        gimp_display_shell_reconnect (shell);
+        {
+          gimp_display_shell_reconnect (shell);
+        }
       else
-        gimp_display_shell_icon_update (shell);
+        {
+          gimp_display_shell_title_update (shell);
+          gimp_display_shell_icon_update (shell);
+        }
     }
 
   if (old_image != image)
@@ -864,7 +870,12 @@ gimp_display_flush (GimpDisplay *display)
 {
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  gimp_display_flush_whenever (display, FALSE);
+  /* FIXME: we can end up being called during shell construction if "show all"
+   * is enabled by default, in which case the shell's display pointer is still
+   * NULL
+   */
+  if (gimp_display_get_shell (display))
+    gimp_display_flush_whenever (display, FALSE);
 }
 
 void

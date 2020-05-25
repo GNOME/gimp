@@ -302,6 +302,37 @@ gimp_space_bar_action_get_type (void)
 }
 
 GType
+gimp_tool_group_menu_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_CLICK, "GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_CLICK", "click" },
+    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER, "GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER", "hover" },
+    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN, "GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN", "hover-single-column" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_CLICK, NC_("tool-group-menu-mode", "Show on click"), NULL },
+    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER, NC_("tool-group-menu-mode", "Show on hover"), NULL },
+    { GIMP_TOOL_GROUP_MENU_MODE_SHOW_ON_HOVER_SINGLE_COLUMN, NC_("tool-group-menu-mode", "Show on hover in single column"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpToolGroupMenuMode", values);
+      gimp_type_set_translation_context (type, "tool-group-menu-mode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_window_hint_get_type (void)
 {
   static const GEnumValue values[] =

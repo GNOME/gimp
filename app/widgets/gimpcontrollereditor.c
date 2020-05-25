@@ -704,6 +704,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       gtk_widget_show (editor->edit_dialog);
 
       g_free (event_name);
+      g_free (event_blurb);
       g_free (action_name);
     }
 }

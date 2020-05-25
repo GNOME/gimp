@@ -58,6 +58,9 @@ static const GimpActionEntry image_actions[] =
   { "image-menu",                  NULL, NC_("image-action", "_Image")     },
   { "image-mode-menu",             NULL, NC_("image-action", "_Mode")      },
   { "image-precision-menu",        NULL, NC_("image-action", "Pr_ecision") },
+#if PENDING_TRANSLATION
+  { "image-precision-menu",        NULL, NC_("image-action", "_Encoding")  },
+#endif
   { "image-color-management-menu", NULL, NC_("image-action",
                                              "Color Ma_nagement")          },
   { "image-transform-menu",        NULL, NC_("image-action", "_Transform") },

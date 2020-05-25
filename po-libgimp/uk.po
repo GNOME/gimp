@@ -3,15 +3,15 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2007.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020.
 # Olexandr Pylypchuk <lxlalexlxl@ukr.net>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-07 10:43+0000\n"
-"PO-Revision-Date: 2019-09-27 22:09+0200\n"
-"Last-Translator: Olexandr Pylypchuk <lxlalexlxl@ukr.net>\n"
+"POT-Creation-Date: 2020-03-19 23:32+0000\n"
+"PO-Revision-Date: 2020-03-21 16:34+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 20.03.70\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -1793,17 +1793,17 @@ msgstr "значення для маркера %s не є коректним р�
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "очікувалось 'yes' або 'no' для булевого маркера %s, отримано '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неправильне значення '%s' для маркера %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:599
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неправильне значення '%ld' для маркера %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:668
+#: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксичному розборі маркера '%s': %s"
@@ -2919,16 +2919,16 @@ msgstr "Протанопія (нечутливість до червоного)"
 
 #: ../modules/display-filter-color-blind.c:70
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Девтеранопія (нечутливість до зеленого)"
+msgstr "Дейтеранопія (нечутливість до зеленого)"
 
 #: ../modules/display-filter-color-blind.c:72
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Трітаопія (нечутливість до синього)"
+msgstr "Тританопія (нечутливість до синього)"
 
 #: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
-"Фільтр, що моделює несприйняття кольору (алгоритм Бреттеля-Виєнота-Моллона)"
+"Фільтр, що моделює несприйняття кольорів (алгоритм Бреттеля-Вієно-Моллона)"
 
 #: ../modules/display-filter-color-blind.c:253
 msgid "Type"

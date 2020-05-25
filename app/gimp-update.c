@@ -82,12 +82,14 @@ gimp_check_updates_callback (GObject      *source,
                              GAsyncResult *result,
                              gpointer      user_data)
 {
-  GFileInputStream *stream;
-  GimpCoreConfig   *config = user_data;
-  GError           *error  = NULL;
+  GimpCoreConfig *config        = user_data;
+  char           *file_contents = NULL;
+  gsize           file_length   = 0;
+  GError         *error         = NULL;
 
-  stream = g_file_read_finish (G_FILE (source), result, &error);
-  if (stream)
+  if (g_file_load_contents_finish (G_FILE (source), result,
+                                   &file_contents, &file_length,
+                                   NULL, &error))
     {
       const gchar *platform;
       const gchar *last_version   = NULL;
@@ -113,13 +115,11 @@ gimp_check_updates_callback (GObject      *source,
         platform = "source";
 
       parser = json_parser_new ();
-      if (! json_parser_load_from_stream (parser, G_INPUT_STREAM (stream), NULL, &error))
+      if (! json_parser_load_from_data (parser, file_contents, file_length, &error))
         {
-#ifdef GIMP_UNSTABLE
-          g_printerr("Parsing of %s failed: %s\n",
+          g_printerr("%s: parsing of %s failed: %s\n", G_STRFUNC,
                      g_file_get_uri (G_FILE (source)), error->message);
-#endif
-          g_clear_object (&stream);
+          g_free (file_contents);
           g_clear_object (&parser);
           g_clear_error (&error);
 
@@ -141,7 +141,7 @@ gimp_check_updates_callback (GObject      *source,
 #ifdef GIMP_UNSTABLE
           g_printerr("Path compilation failed: %s\n", error->message);
 #endif
-          g_clear_object (&stream);
+          g_free (file_contents);
           g_clear_object (&parser);
           g_clear_error (&error);
 
@@ -174,7 +174,8 @@ gimp_check_updates_callback (GObject      *source,
        */
       if (gimp_version_break (last_version, &major, &minor, &micro))
         {
-          const gchar *build_date  = NULL;
+          const gchar *build_date    = NULL;
+          const gchar *build_comment = NULL;
           GDateTime   *datetime;
           gchar       *str;
 
@@ -203,6 +204,8 @@ gimp_check_updates_callback (GObject      *source,
                         build_revision = json_object_get_int_member (build, "revision");
                       if (json_object_has_member (build, "date"))
                         build_date = json_object_get_string_member (build, "date");
+                      if (json_object_has_member (build, "comment"))
+                        build_comment = json_object_get_string_member (build, "comment");
                       break;
                     }
                 }
@@ -223,6 +226,7 @@ gimp_check_updates_callback (GObject      *source,
                             "last-release-timestamp", g_date_time_to_unix (datetime),
                             "last-known-release",     last_version,
                             "last-revision",          build_revision,
+                            "last-release-comment",   build_comment,
                             NULL);
               g_date_time_unref (datetime);
             }
@@ -230,7 +234,13 @@ gimp_check_updates_callback (GObject      *source,
 
       g_object_unref (path);
       g_object_unref (parser);
-      g_object_unref (stream);
+      g_free (file_contents);
+    }
+  else
+    {
+      g_printerr("%s: loading of %s failed: %s\n", G_STRFUNC,
+                 g_file_get_uri (G_FILE (source)), error->message);
+      g_clear_error (&error);
     }
 }
 
@@ -314,7 +324,7 @@ gimp_update_check (GimpCoreConfig *config)
 #else
   gimp_versions = g_file_new_for_uri ("https://gimp.org/gimp_versions.json");
 #endif
-  g_file_read_async (gimp_versions, 0, NULL, gimp_check_updates_callback, config);
+  g_file_load_contents_async (gimp_versions, NULL, gimp_check_updates_callback, config);
   g_object_unref (gimp_versions);
 
   return TRUE;

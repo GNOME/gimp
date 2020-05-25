@@ -247,23 +247,23 @@ gimp_tool_editor_constructed (GObject *object)
 
   tool_editor->priv->raise_button =
     gimp_editor_add_button (GIMP_EDITOR (tool_editor), GIMP_ICON_GO_UP,
-                            _("Raise this tool"),
-                            _("Raise this tool to the top"),
+                            _("Raise this item"),
+                            _("Raise this item to the top"),
                             G_CALLBACK (gimp_tool_editor_raise_clicked),
                             G_CALLBACK (gimp_tool_editor_raise_extend_clicked),
                             tool_editor);
 
   tool_editor->priv->lower_button =
     gimp_editor_add_button (GIMP_EDITOR (tool_editor), GIMP_ICON_GO_DOWN,
-                            _("Lower this tool"),
-                            _("Lower this tool to the bottom"),
+                            _("Lower this item"),
+                            _("Lower this item to the bottom"),
                             G_CALLBACK (gimp_tool_editor_lower_clicked),
                             G_CALLBACK (gimp_tool_editor_lower_extend_clicked),
                             tool_editor);
 
   tool_editor->priv->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (tool_editor), GIMP_ICON_EDIT_DELETE,
-                            _("Delete this tool"), NULL,
+                            _("Delete this tool group"), NULL,
                             G_CALLBACK (gimp_tool_editor_delete_clicked),
                             NULL,
                             tool_editor);

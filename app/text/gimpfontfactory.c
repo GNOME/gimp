@@ -334,7 +334,7 @@ gimp_font_factory_load (GimpFontFactory  *factory,
    */
   async = gimp_parallel_run_async_independent_full (
     +10,
-    (GimpParallelRunAsyncFunc) gimp_font_factory_load_async,
+    (GimpRunAsyncFunc) gimp_font_factory_load_async,
     config);
 
   gimp_async_add_callback_for_object (

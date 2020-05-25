@@ -33,6 +33,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "operations/gimp-operation-config.h"
+#include "operations/gimpoperationsettings.h"
 
 #include "core/gimp.h"
 #include "core/gimp-memsize.h"
@@ -247,12 +248,12 @@ gimp_gegl_procedure_execute (GimpProcedure   *procedure,
   node = gegl_node_new_child (NULL,
                               "operation", procedure->original_name,
                               NULL);
-  if (config)
-    gimp_operation_config_sync_node (config, node);
 
-  gimp_drawable_apply_operation (drawable, progress,
-                                 gimp_procedure_get_label (procedure),
-                                 node);
+  gimp_drawable_apply_operation_with_config (
+    drawable,
+    progress, gimp_procedure_get_label (procedure),
+    node, config);
+
   g_object_unref (node);
 
   gimp_image_flush (image);
@@ -424,7 +425,7 @@ gimp_gegl_procedure_new (Gimp        *gimp,
   g_return_val_if_fail (menu_label != NULL, NULL);
 
   config_type = gimp_operation_config_get_type (gimp, operation, icon_name,
-                                                GIMP_TYPE_SETTINGS);
+                                                GIMP_TYPE_OPERATION_SETTINGS);
 
   procedure = g_object_new (GIMP_TYPE_GEGL_PROCEDURE, NULL);
 

@@ -481,7 +481,6 @@ typedef struct {
   gint16        colorSpace;             /* Color space from PSDColorSpace */
   guint16       color[4];               /* 4 * 16 bit color components */
   gint16        opacity;                /* Opacity 0 to 100 */
-  gchar         kind;                   /* Selected = 0, Protected = 1 */
   gchar         mode;                   /* Alpha = 0, Inverted alpha = 1, Spot = 2 */
 } DisplayInfoNew;
 
@@ -627,8 +626,8 @@ typedef struct
   gchar         type[4];                /* Image resource type */
   gint16        id;                     /* Image resource ID */
   gchar         name[256];              /* Image resource name (pascal string) */
-  gint32        data_start;             /* Image resource data start */
-  gint32        data_len;               /* Image resource data length */
+  guint32       data_start;             /* Image resource data start */
+  guint32       data_len;               /* Image resource data length */
 } PSDimageres;
 
 /* PSD Layer Resource data structure */
@@ -636,8 +635,8 @@ typedef struct
 {
   gchar         sig[4];                 /* Layer resource signature */
   gchar         key[4];                 /* Layer resource key */
-  gint32        data_start;             /* Layer resource data start */
-  gint32        data_len;               /* Layer resource data length */
+  guint32       data_start;             /* Layer resource data start */
+  guint32       data_len;               /* Layer resource data length */
 } PSDlayerres;
 
 /* PSD File data structures */

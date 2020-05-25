@@ -39,6 +39,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "operations/gimp-operation-config.h"
+#include "operations/gimpoperationsettings.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -59,6 +60,8 @@
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimplayermodebox.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpsettingsbox.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -158,6 +161,9 @@ static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_to
 static void      gimp_filter_tool_create_filter  (GimpFilterTool      *filter_tool);
 
 static void      gimp_filter_tool_update_dialog  (GimpFilterTool      *filter_tool);
+static void      gimp_filter_tool_update_dialog_operation_settings
+                                                 (GimpFilterTool      *filter_tool);
+
 
 static void      gimp_filter_tool_region_changed (GimpFilterTool      *filter_tool);
 
@@ -322,10 +328,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       GtkWidget *vbox;
       GtkWidget *hbox;
       GtkWidget *toggle;
-      GtkWidget *expander;
-      GtkWidget *frame;
-      GtkWidget *vbox2;
-      GtkWidget *combo;
 
       /*  disabled for at least GIMP 2.8  */
       filter_tool->overlay = FALSE;
@@ -399,56 +401,14 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       if (filter_tool->widget)
         gtk_widget_show (filter_tool->controller_toggle);
 
-      /*  The Color Options expander  */
-      expander = gtk_expander_new (_("Advanced Color Options"));
-      gtk_box_pack_end (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
-
-      g_object_bind_property (G_OBJECT (image->gimp->config),
-                              "filter-tool-show-color-options",
-                              G_OBJECT (expander), "visible",
-                              G_BINDING_SYNC_CREATE);
-
-      frame = gimp_frame_new (NULL);
-      gtk_container_add (GTK_CONTAINER (expander), frame);
-      gtk_widget_show (frame);
-
-      vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-      gtk_container_add (GTK_CONTAINER (frame), vbox2);
-      gtk_widget_show (vbox2);
-
-      /*  The color managed combo  */
-      combo = gimp_prop_boolean_combo_box_new
-        (G_OBJECT (tool_info->tool_options), "color-managed",
-         _("Convert pixels to built-in sRGB to apply filter (slow)"),
-         _("Assume pixels are built-in sRGB (ignore actual image color space)"));
-      g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-      gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
-      gtk_widget_show (combo);
-
-      /*  The gamma hack toggle  */
-      toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
-                                           "gamma-hack", NULL);
-      gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
-
-      /*  The area combo  */
-      filter_tool->region_combo =
-        gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
-                                      "region",
-                                      0, 0);
-      gtk_box_pack_end (GTK_BOX (vbox), filter_tool->region_combo,
+      /*  The operation-settings box  */
+      filter_tool->operation_settings_box = gtk_box_new (
+        GTK_ORIENTATION_VERTICAL, 2);
+      gtk_box_pack_end (GTK_BOX (vbox), filter_tool->operation_settings_box,
                         FALSE, FALSE, 0);
+      gtk_widget_show (filter_tool->operation_settings_box);
 
-      /*  The clipping combo  */
-      filter_tool->clip_combo =
-        gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
-                                      "clip",
-                                      GIMP_TRANSFORM_RESIZE_ADJUST,
-                                      GIMP_TRANSFORM_RESIZE_CLIP);
-      gimp_int_combo_box_set_label (
-        GIMP_INT_COMBO_BOX (filter_tool->clip_combo), _("Clipping"));
-      gtk_box_pack_end (GTK_BOX (vbox), filter_tool->clip_combo,
-                        FALSE, FALSE, 0);
+      gimp_filter_tool_update_dialog_operation_settings (filter_tool);
 
       /*  Fill in subclass widgets  */
       gimp_filter_tool_dialog (filter_tool);
@@ -724,6 +684,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
   if (! strcmp (pspec->name, "preview") &&
       filter_tool->filter)
     {
+      gimp_filter_tool_update_filter (filter_tool);
+
       if (filter_options->preview)
         {
           gimp_drawable_filter_apply (filter_tool->filter, NULL);
@@ -733,8 +695,6 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
         }
       else
         {
-          gimp_drawable_filter_abort (filter_tool->filter);
-
           if (filter_options->preview_split)
             gimp_filter_tool_remove_guide (filter_tool);
         }
@@ -760,8 +720,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
             {
               gdouble position;
 
-              if (filter_options->preview_alignment == GIMP_ALIGN_LEFT ||
-                  filter_options->preview_alignment == GIMP_ALIGN_RIGHT)
+              if (filter_options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+                  filter_options->preview_split_alignment == GIMP_ALIGN_RIGHT)
                 {
                   position = ((gdouble) ((x + width / 2) -
                                          gimp_item_get_offset_x (item)) /
@@ -774,9 +734,10 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
                               (gdouble) gimp_item_get_height (item));
                 }
 
-              g_object_set (options,
-                            "preview-position", CLAMP (position, 0.0, 1.0),
-                            NULL);
+              g_object_set (
+                options,
+                "preview-split-position", CLAMP (position, 0.0, 1.0),
+                NULL);
             }
         }
 
@@ -787,20 +748,13 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       else
         gimp_filter_tool_remove_guide (filter_tool);
     }
-  else if (! strcmp (pspec->name, "preview-alignment") ||
-           ! strcmp (pspec->name, "preview-position"))
+  else if (! strcmp (pspec->name, "preview-split-alignment") ||
+           ! strcmp (pspec->name, "preview-split-position"))
     {
       gimp_filter_tool_update_filter (filter_tool);
 
       if (filter_options->preview_split)
         gimp_filter_tool_move_guide (filter_tool);
-    }
-  else if (! strcmp (pspec->name, "clip")          ||
-           ! strcmp (pspec->name, "region")        ||
-           ! strcmp (pspec->name, "color-managed") ||
-           ! strcmp (pspec->name, "gamma-hack"))
-    {
-      gimp_filter_tool_update_filter (filter_tool);
     }
   else if (! strcmp (pspec->name, "controller") &&
            filter_tool->widget)
@@ -926,6 +880,18 @@ static void
 gimp_filter_tool_real_set_config (GimpFilterTool *filter_tool,
                                   GimpConfig     *config)
 {
+  GimpFilterRegion region;
+
+  /* copy the "gimp-region" property first, to avoid incorrectly adjusting the
+   * copied operation properties in gimp_operation_tool_region_changed().
+   */
+  g_object_get (config,
+                "gimp-region", &region,
+                NULL);
+  g_object_set (filter_tool->config,
+                "gimp-region", region,
+                NULL);
+
   gimp_config_copy (GIMP_CONFIG (config),
                     GIMP_CONFIG (filter_tool->config), 0);
 
@@ -946,8 +912,32 @@ gimp_filter_tool_real_config_notify (GimpFilterTool   *filter_tool,
 {
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
 
-  if (filter_tool->filter && options->preview)
-    gimp_drawable_filter_apply (filter_tool->filter, NULL);
+  if (filter_tool->filter)
+    {
+      /* note that we may be called with a NULL pspec.  see
+       * gimp_operation_tool_aux_input_notify().
+       */
+      if (pspec)
+        {
+          if (! strcmp (pspec->name, "gimp-clip")          ||
+              ! strcmp (pspec->name, "gimp-mode")          ||
+              ! strcmp (pspec->name, "gimp-opacity")       ||
+              ! strcmp (pspec->name, "gimp-color-managed") ||
+              ! strcmp (pspec->name, "gimp-gamma-hack"))
+            {
+              gimp_filter_tool_update_filter (filter_tool);
+            }
+          else if (! strcmp (pspec->name, "gimp-region"))
+            {
+              gimp_filter_tool_update_filter (filter_tool);
+
+              gimp_filter_tool_region_changed (filter_tool);
+            }
+        }
+
+      if (options->preview)
+        gimp_drawable_filter_apply (filter_tool->filter, NULL);
+    }
 }
 
 static void
@@ -1067,6 +1057,131 @@ gimp_filter_tool_dialog (GimpFilterTool *filter_tool)
 }
 
 static void
+gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
+{
+  GimpTool          *tool    = GIMP_TOOL (filter_tool);
+  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpImage         *image   = gimp_display_get_image (tool->display);
+
+  if (filter_tool->operation_settings_box)
+    {
+      gimp_gtk_container_clear (
+        GTK_CONTAINER (filter_tool->operation_settings_box));
+
+      if (filter_tool->config)
+        {
+          GtkWidget *vbox;
+          GtkWidget *expander;
+          GtkWidget *frame;
+          GtkWidget *vbox2;
+          GtkWidget *combo;
+          GtkWidget *mode_box;
+          GtkWidget *scale;
+          GtkWidget *toggle;
+
+          vbox = filter_tool->operation_settings_box;
+
+          /*  The clipping combo  */
+          filter_tool->clip_combo =
+            gimp_prop_enum_combo_box_new (filter_tool->config,
+                                          "gimp-clip",
+                                          GIMP_TRANSFORM_RESIZE_ADJUST,
+                                          GIMP_TRANSFORM_RESIZE_CLIP);
+          gimp_int_combo_box_set_label (
+            GIMP_INT_COMBO_BOX (filter_tool->clip_combo), _("Clipping"));
+          gtk_box_pack_start (GTK_BOX (vbox), filter_tool->clip_combo,
+                              FALSE, FALSE, 0);
+
+          /*  The region combo  */
+          filter_tool->region_combo =
+            gimp_prop_enum_combo_box_new (filter_tool->config,
+                                          "gimp-region",
+                                          0, 0);
+          gtk_box_pack_start (GTK_BOX (vbox), filter_tool->region_combo,
+                              FALSE, FALSE, 0);
+
+          /*  The blending-options expander  */
+          expander = gtk_expander_new (_("Blending Options"));
+          gtk_box_pack_start (GTK_BOX (vbox), expander,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (expander);
+
+          g_object_bind_property (options,  "blending-options-expanded",
+                                  expander, "expanded",
+                                  G_BINDING_SYNC_CREATE |
+                                  G_BINDING_BIDIRECTIONAL);
+
+          frame = gimp_frame_new (NULL);
+          gtk_container_add (GTK_CONTAINER (expander), frame);
+          gtk_widget_show (frame);
+
+          vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+          gtk_container_add (GTK_CONTAINER (frame), vbox2);
+          gtk_widget_show (vbox2);
+
+          /*  The mode box  */
+          mode_box = gimp_prop_layer_mode_box_new (
+            filter_tool->config, "gimp-mode",
+            GIMP_LAYER_MODE_CONTEXT_FILTER);
+          gimp_layer_mode_box_set_label (GIMP_LAYER_MODE_BOX (mode_box),
+                                         _("Mode"));
+          gtk_box_pack_start (GTK_BOX (vbox2), mode_box,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (mode_box);
+
+          /*  The opacity scale  */
+          scale = gimp_prop_spin_scale_new (filter_tool->config,
+                                            "gimp-opacity",
+                                            NULL,
+                                            1.0, 10.0, 1);
+          gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+          gtk_box_pack_start (GTK_BOX (vbox2), scale,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (scale);
+
+          /*  The Color Options expander  */
+          expander = gtk_expander_new (_("Advanced Color Options"));
+          gtk_box_pack_start (GTK_BOX (vbox), expander,
+                              FALSE, FALSE, 0);
+
+          g_object_bind_property (image->gimp->config,
+                                  "filter-tool-show-color-options",
+                                  expander, "visible",
+                                  G_BINDING_SYNC_CREATE);
+          g_object_bind_property (options,  "color-options-expanded",
+                                  expander, "expanded",
+                                  G_BINDING_SYNC_CREATE |
+                                  G_BINDING_BIDIRECTIONAL);
+
+          frame = gimp_frame_new (NULL);
+          gtk_container_add (GTK_CONTAINER (expander), frame);
+          gtk_widget_show (frame);
+
+          vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+          gtk_container_add (GTK_CONTAINER (frame), vbox2);
+          gtk_widget_show (vbox2);
+
+          /*  The color managed combo  */
+          combo = gimp_prop_boolean_combo_box_new (
+            filter_tool->config, "gimp-color-managed",
+             _("Convert pixels to built-in sRGB to apply filter (slow)"),
+             _("Assume pixels are built-in sRGB (ignore actual image color space)"));
+          g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+          gtk_box_pack_start (GTK_BOX (vbox2), combo,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (combo);
+
+          /*  The gamma hack toggle  */
+          toggle = gimp_prop_check_button_new (filter_tool->config,
+                                               "gimp-gamma-hack", NULL);
+          gtk_box_pack_start (GTK_BOX (vbox2), toggle,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (toggle);
+        }
+    }
+}
+
+static void
 gimp_filter_tool_reset (GimpFilterTool *filter_tool)
 {
   if (filter_tool->config)
@@ -1123,6 +1238,12 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
     {
       GimpImage   *image = gimp_display_get_image (tool->display);
       GimpChannel *mask  = gimp_image_get_mask (image);
+      const Babl  *format;
+
+      if (filter_tool->filter)
+        format = gimp_drawable_filter_get_format (filter_tool->filter);
+      else
+        format = gimp_drawable_get_format (tool->drawable);
 
       if (gimp_channel_is_empty (mask))
         {
@@ -1130,7 +1251,7 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
             filter_tool->clip_combo,
             gimp_item_get_clip (GIMP_ITEM (tool->drawable), FALSE) == FALSE &&
             ! gimp_gegl_node_is_point_operation (filter_tool->operation)    &&
-            gimp_drawable_has_alpha (tool->drawable));
+            babl_format_has_alpha (format));
 
           gtk_widget_hide (filter_tool->region_combo);
         }
@@ -1141,7 +1262,7 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
           gtk_widget_set_visible (
             filter_tool->region_combo,
             ! gimp_gegl_node_is_point_operation (filter_tool->operation) ||
-            gimp_gegl_node_get_key (filter_tool->operation,
+            gimp_gegl_node_has_key (filter_tool->operation,
                                     "position-dependent"));
         }
     }
@@ -1200,11 +1321,13 @@ static void
 gimp_filter_tool_mask_changed (GimpImage      *image,
                                GimpFilterTool *filter_tool)
 {
-  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpOperationSettings *settings;
+
+  settings = GIMP_OPERATION_SETTINGS (filter_tool->config);
 
   gimp_filter_tool_update_dialog (filter_tool);
 
-  if (options->region == GIMP_FILTER_REGION_SELECTION)
+  if (settings && settings->region == GIMP_FILTER_REGION_SELECTION)
     gimp_filter_tool_region_changed (filter_tool);
 }
 
@@ -1224,14 +1347,14 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   item  = GIMP_ITEM (tool->drawable);
   image = gimp_item_get_image (item);
 
-  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
-      options->preview_alignment == GIMP_ALIGN_RIGHT)
+  if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       orientation = GIMP_ORIENTATION_VERTICAL;
 
       position = (gimp_item_get_offset_x (item) +
                   gimp_item_get_width (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
   else
     {
@@ -1239,7 +1362,7 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
 
       position = (gimp_item_get_offset_y (item) +
                   gimp_item_get_height (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
 
   filter_tool->preview_guide =
@@ -1285,14 +1408,14 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
 
   item = GIMP_ITEM (tool->drawable);
 
-  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
-      options->preview_alignment == GIMP_ALIGN_RIGHT)
+  if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       orientation = GIMP_ORIENTATION_VERTICAL;
 
       position = (gimp_item_get_offset_x (item) +
                   gimp_item_get_width (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
   else
     {
@@ -1300,7 +1423,7 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
 
       position = (gimp_item_get_offset_y (item) +
                   gimp_item_get_height (item) *
-                  options->preview_position);
+                  options->preview_split_position);
     }
 
   if (orientation != gimp_guide_get_orientation (filter_tool->preview_guide) ||
@@ -1342,8 +1465,8 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
   GimpItem          *item    = GIMP_ITEM (tool->drawable);
   gdouble            position;
 
-  if (options->preview_alignment == GIMP_ALIGN_LEFT ||
-      options->preview_alignment == GIMP_ALIGN_RIGHT)
+  if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
+      options->preview_split_alignment == GIMP_ALIGN_RIGHT)
     {
       position = ((gdouble) (gimp_guide_get_position (guide) -
                              gimp_item_get_offset_x (item)) /
@@ -1357,7 +1480,7 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
     }
 
   g_object_set (options,
-                "preview-position", CLAMP (position, 0.0, 1.0),
+                "preview-split-position", CLAMP (position, 0.0, 1.0),
                 NULL);
 }
 
@@ -1387,34 +1510,26 @@ gimp_filter_tool_response (GimpToolGui    *gui,
 static void
 gimp_filter_tool_update_filter (GimpFilterTool *filter_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (filter_tool);
-  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
-  gboolean           add_alpha;
-  gboolean           clip;
+  GimpFilterOptions     *options  = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+  GimpOperationSettings *settings;
 
   if (! filter_tool->filter)
     return;
 
-  add_alpha = gimp_drawable_supports_alpha (tool->drawable) &&
-              gimp_gegl_node_get_key (filter_tool->operation, "needs-alpha");
-  clip      = options->clip == GIMP_TRANSFORM_RESIZE_CLIP ||
-              ! (gimp_drawable_has_alpha (tool->drawable) ||
-                 add_alpha);
+  settings = GIMP_OPERATION_SETTINGS (filter_tool->config);
 
-  gimp_drawable_filter_set_clip          (filter_tool->filter,
-                                          clip);
-  gimp_drawable_filter_set_region        (filter_tool->filter,
-                                          options->region);
   gimp_drawable_filter_set_preview       (filter_tool->filter,
+                                          options->preview);
+  gimp_drawable_filter_set_preview_split (filter_tool->filter,
                                           options->preview_split,
-                                          options->preview_alignment,
-                                          options->preview_position);
+                                          options->preview_split_alignment,
+                                          options->preview_split_position);
   gimp_drawable_filter_set_add_alpha     (filter_tool->filter,
-                                          add_alpha);
-  gimp_drawable_filter_set_color_managed (filter_tool->filter,
-                                          options->color_managed);
-  gimp_drawable_filter_set_gamma_hack    (filter_tool->filter,
-                                          options->gamma_hack);
+                                          gimp_gegl_node_has_key (
+                                            filter_tool->operation,
+                                            "needs-alpha"));
+
+  gimp_operation_settings_sync_drawable_filter (settings, filter_tool->filter);
 }
 
 static void
@@ -1531,7 +1646,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     g_object_new (gimp_operation_config_get_type (tool->tool_info->gimp,
                                                   operation_name,
                                                   gimp_tool_get_icon_name (tool),
-                                                  GIMP_TYPE_SETTINGS),
+                                                  GIMP_TYPE_OPERATION_SETTINGS),
                   NULL);
 
   gimp_operation_config_sync_node (filter_tool->config,
@@ -1563,14 +1678,8 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                      gimp_tool_get_icon_name (tool));
       gimp_tool_gui_set_help_id     (filter_tool->gui,
                                      gimp_tool_get_help_id (tool));
-    }
 
-  if (gimp_gegl_node_is_point_operation (filter_tool->operation) &&
-      ! gimp_gegl_node_get_key (filter_tool->operation, "position-dependent"))
-    {
-      g_object_set (GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool),
-                    "region", GIMP_FILTER_REGION_SELECTION,
-                    NULL);
+      gimp_filter_tool_update_dialog_operation_settings (filter_tool);
     }
 
   gimp_filter_tool_update_dialog (filter_tool);
@@ -1578,8 +1687,8 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   g_free (operation_name);
 
   g_object_set (GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool),
-                "preview-split",    FALSE,
-                "preview-position", 0.5,
+                "preview-split",          FALSE,
+                "preview-split-position", 0.5,
                 NULL);
 
   g_signal_connect_object (filter_tool->config, "notify",
@@ -1595,7 +1704,7 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
                              GimpConfig     *config)
 {
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
-  g_return_if_fail (GIMP_IS_SETTINGS (config));
+  g_return_if_fail (GIMP_IS_OPERATION_SETTINGS (config));
 
   /* if the user didn't change a setting since the last set_config(),
    * this handler is still connected
@@ -1880,15 +1989,17 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
                                     gint           *drawable_offset_y,
                                     GeglRectangle  *drawable_area)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  GimpTool              *tool;
+  GimpOperationSettings *settings;
+  GimpDrawable          *drawable;
 
   g_return_val_if_fail (GIMP_IS_FILTER_TOOL (filter_tool), FALSE);
   g_return_val_if_fail (drawable_offset_x != NULL, FALSE);
   g_return_val_if_fail (drawable_offset_y != NULL, FALSE);
   g_return_val_if_fail (drawable_area != NULL, FALSE);
 
-  tool = GIMP_TOOL (filter_tool);
+  tool     = GIMP_TOOL (filter_tool);
+  settings = GIMP_OPERATION_SETTINGS (filter_tool->config);
 
   *drawable_offset_x = 0;
   *drawable_offset_y = 0;
@@ -1900,14 +2011,12 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
 
   drawable = tool->drawable;
 
-  if (drawable)
+  if (drawable && settings)
     {
-      GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
-
       gimp_item_get_offset (GIMP_ITEM (drawable),
                             drawable_offset_x, drawable_offset_y);
 
-      switch (options->region)
+      switch (settings->region)
         {
         case GIMP_FILTER_REGION_SELECTION:
           if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
