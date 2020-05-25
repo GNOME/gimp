@@ -4479,6 +4479,42 @@ gimp_image_set_active_vectors (GimpImage   *image,
   return active_vectors;
 }
 
+/**
+ * gimp_image_equal_selected_drawables:
+ * @image:
+ * @drawables:
+ *
+ * Compare the list of @drawables with the selected drawables in @image
+ * (i.e. the result of gimp_image_equal_selected_drawables()).
+ * The order of the @drawables does not matter, only if the size and
+ * contents of the list is the same.
+ */
+gboolean
+gimp_image_equal_selected_drawables (GimpImage *image,
+                                     GList     *drawables)
+{
+  GList    *selected_drawables;
+  GList    *iter;
+  gboolean  equal = FALSE;
+
+  selected_drawables = gimp_image_get_selected_drawables (image);
+
+  if (g_list_length (drawables) == g_list_length (selected_drawables))
+    {
+      equal = TRUE;
+
+      for (iter = drawables; iter; iter = iter->next)
+        if (! g_list_find (selected_drawables, iter->data))
+          {
+            equal = FALSE;
+            break;
+          }
+    }
+  g_list_free (selected_drawables);
+
+  return equal;
+}
+
 GList *
 gimp_image_get_selected_drawables (GimpImage *image)
 {
