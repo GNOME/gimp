@@ -1621,9 +1621,11 @@ layers_alpha_to_selection_cmd_callback (GimpAction *action,
                                         gpointer    data)
 {
   GimpImage      *image;
+  GimpDisplay    *display;
   GList          *layers;
   GimpChannelOps  operation;
   return_if_no_layers (image, layers, data);
+  return_if_no_display (display, data);
 
   operation = (GimpChannelOps) g_variant_get_int32 (value);
 
@@ -1649,6 +1651,13 @@ layers_alpha_to_selection_cmd_callback (GimpAction *action,
   gimp_channel_combine_items (gimp_image_get_mask (image),
                               layers, operation);
   gimp_image_flush (image);
+
+  if (gimp_channel_is_empty (gimp_image_get_mask (image)))
+    {
+      gimp_message_literal (image->gimp, G_OBJECT (display),
+                            GIMP_MESSAGE_WARNING,
+                            _("Empty Selection"));
+    }
 }
 
 void
