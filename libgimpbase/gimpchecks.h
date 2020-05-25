@@ -125,10 +125,10 @@ void  gimp_checks_get_shades (GimpCheckType  type,
                               guchar        *dark);
 
 void  gimp_checks_get_colors (GimpCheckType  type,
-                              GimpRGB       *light,
-                              GimpRGB       *dark,
-                              GimpRGB       *light_custom,
-                              GimpRGB       *dark_custom);
+                              GimpRGB       *color1,
+                              GimpRGB       *color2,
+                              GimpRGB        color1_custom,
+                              GimpRGB        color2_custom);
 
 
 G_END_DECLS

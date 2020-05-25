@@ -333,11 +333,11 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
   g_signal_connect (config,
-                    "notify::transparency-custom-light-color",
+                    "notify::transparency-custom-color1",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
   g_signal_connect (config,
-                    "notify::transparency-custom-dark-color",
+                    "notify::transparency-custom-color2",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
 

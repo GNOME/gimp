@@ -691,12 +691,12 @@ _("Show the currently active image in the toolbox.")
 #define TOOLBOX_WILBER_BLURB \
 "Show the GIMP mascot at the top of the toolbox."
 
-#define TRANSPARENCY_CUSTOM_DARK_COLOR_BLURB \
-_("Sets the color of the dark checks on the transparency checkerboard, " \
+#define TRANSPARENCY_CUSTOM_COLOR1_BLURB \
+_("The first color to use in the transparency checkerboard, " \
   "when Transparency Type is set to Custom colors.")
 
-#define TRANSPARENCY_CUSTOM_LIGHT_COLOR_BLURB \
-_("Sets the color of the light checks on the transparency checkerboard, " \
+#define TRANSPARENCY_CUSTOM_COLOR2_BLURB \
+_("The second color to use in the transparency checkerboard, " \
   "when Transparency Type is set to Custom colors.")
 
 #define TRANSPARENCY_TYPE_BLURB \

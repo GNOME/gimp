@@ -928,10 +928,10 @@ gimp_image_constructed (GObject *object)
   g_signal_connect_object (config, "notify::transparency-size",
                            G_CALLBACK (gimp_item_stack_invalidate_previews),
                            private->layers->container, G_CONNECT_SWAPPED);
-  g_signal_connect_object (config, "notify::transparency-custom-light-color",
+  g_signal_connect_object (config, "notify::transparency-custom-color1",
                            G_CALLBACK (gimp_item_stack_invalidate_previews),
                            private->layers->container, G_CONNECT_SWAPPED);
-  g_signal_connect_object (config, "notify::transparency-custom-dark-color",
+  g_signal_connect_object (config, "notify::transparency-custom-color2",
                            G_CALLBACK (gimp_item_stack_invalidate_previews),
                            private->layers->container, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::layer-previews",
