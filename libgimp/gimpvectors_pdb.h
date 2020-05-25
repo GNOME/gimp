@@ -54,6 +54,8 @@ gboolean              gimp_vectors_remove_stroke             (GimpVectors       
                                                               gint                     stroke_id);
 gboolean              gimp_vectors_stroke_close              (GimpVectors             *vectors,
                                                               gint                     stroke_id);
+gboolean              gimp_vectors_stroke_reverse            (GimpVectors             *vectors,
+                                                              gint                     stroke_id);
 gboolean              gimp_vectors_stroke_translate          (GimpVectors             *vectors,
                                                               gint                     stroke_id,
                                                               gint                     off_x,

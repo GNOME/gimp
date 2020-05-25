@@ -378,6 +378,45 @@ vectors_stroke_close_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+vectors_stroke_reverse_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint stroke_id;
+
+  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
+                                                        GIMP_PDB_ITEM_CONTENT, error);
+
+      if (stroke)
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+                                              _("Reverse path stroke"),
+                                              vectors);
+
+          gimp_vectors_freeze (vectors);
+          gimp_stroke_reverse (stroke);
+          gimp_vectors_thaw (vectors);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 vectors_stroke_translate_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
@@ -1580,6 +1619,35 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "Simon Budig",
                                          "2005");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors ("vectors",
+                                                        "vectors",
+                                                        "The vectors object",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-stroke-reverse
+   */
+  procedure = gimp_procedure_new (vectors_stroke_reverse_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-stroke-reverse");
+  gimp_procedure_set_static_help (procedure,
+                                  "reverses the specified stroke.",
+                                  "Reverses the specified stroke.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Simon Budig",
+                                         "Simon Budig",
+                                         "2020");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("vectors",
                                                         "vectors",

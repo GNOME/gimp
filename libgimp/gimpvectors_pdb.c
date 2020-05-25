@@ -387,6 +387,44 @@ gimp_vectors_stroke_close (GimpVectors *vectors,
 }
 
 /**
+ * gimp_vectors_stroke_reverse:
+ * @vectors: The vectors object.
+ * @stroke_id: The stroke ID.
+ *
+ * reverses the specified stroke.
+ *
+ * Reverses the specified stroke.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_vectors_stroke_reverse (GimpVectors *vectors,
+                             gint         stroke_id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS, vectors,
+                                          G_TYPE_INT, stroke_id,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-vectors-stroke-reverse",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_vectors_stroke_translate:
  * @vectors: The vectors object.
  * @stroke_id: The stroke ID.
