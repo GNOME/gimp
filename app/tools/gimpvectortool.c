@@ -403,7 +403,7 @@ gimp_vector_tool_get_popup (GimpTool         *tool,
     }
 
   return gimp_tool_widget_get_popup (GIMP_TOOL_WIDGET (vector_tool->widget),
-                                     coords, state, display, ui_path);
+                                     coords, state, ui_path);
 }
 
 static void

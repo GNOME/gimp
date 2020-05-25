@@ -1089,7 +1089,6 @@ GimpUIManager *
 gimp_tool_widget_get_popup (GimpToolWidget        *widget,
                             const GimpCoords      *coords,
                             GdkModifierType        state,
-                            GimpDisplay           *display,
                             const gchar          **ui_path)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
@@ -1099,8 +1098,7 @@ gimp_tool_widget_get_popup (GimpToolWidget        *widget,
       GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_popup)
     {
       return GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_popup (widget, coords,
-                                                             state, display,
-                                                             ui_path);
+                                                             state, ui_path);
     }
 
   return NULL;

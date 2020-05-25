@@ -64,6 +64,14 @@ GimpToolWidget * gimp_tool_path_new         (GimpDisplayShell *shell);
 void             gimp_tool_path_set_vectors (GimpToolPath     *path,
                                              GimpVectors      *vectors);
 
+void             gimp_tool_path_get_popup_state (GimpToolPath *path,
+                                                 gboolean     *on_handle,
+                                                 gboolean     *on_curve);
+
+void             gimp_tool_path_delete_anchor  (GimpToolPath *path);
+void             gimp_tool_path_shift_start    (GimpToolPath *path);
+void             gimp_tool_path_insert_anchor  (GimpToolPath *path);
+void             gimp_tool_path_delete_segment (GimpToolPath *path);
 void             gimp_tool_path_reverse_stroke (GimpToolPath *path);
 
 #endif /* __GIMP_TOOL_PATH_H__ */

@@ -124,7 +124,6 @@ struct _GimpToolWidgetClass
            (* get_popup)       (GimpToolWidget        *widget,
                                 const GimpCoords      *coords,
                                 GdkModifierType        state,
-                                GimpDisplay           *display,
                                 const gchar          **ui_path);
 };
 
@@ -321,7 +320,6 @@ GimpUIManager *
            gimp_tool_widget_get_popup       (GimpToolWidget        *widget,
                                              const GimpCoords      *coords,
                                              GdkModifierType        state,
-                                             GimpDisplay           *display,
                                              const gchar          **ui_path);
 
 #endif /* __GIMP_TOOL_WIDGET_H__ */

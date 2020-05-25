@@ -41,10 +41,27 @@
 
 static const GimpActionEntry vector_toolpath_actions[] =
 {
-  { "vector-tool-popup", NULL,
+  { "vector-toolpath-popup", NULL,
     NC_("vector-toolpath-action", "Vector Toolpath Menu"), NULL, NULL, NULL,
     NULL },
 
+  { "vector-toolpath-delete-anchor", GIMP_ICON_PATH,
+    NC_("vector-toolpath-action", "_Delete Anchor"), NULL, NULL,
+    vector_toolpath_delete_anchor_cmd_callback,
+    NULL },
+  { "vector-toolpath-shift-start", GIMP_ICON_PATH,
+    NC_("vector-toolpath-action", "Shift S_tart"), NULL, NULL,
+    vector_toolpath_shift_start_cmd_callback,
+    NULL },
+
+  { "vector-toolpath-insert-anchor", GIMP_ICON_PATH,
+    NC_("vector-toolpath-action", "_Insert Anchor"), NULL, NULL,
+    vector_toolpath_insert_anchor_cmd_callback,
+    NULL },
+  { "vector-toolpath-delete-segment", GIMP_ICON_PATH,
+    NC_("vector-toolpath-action", "Delete _Segment"), NULL, NULL,
+    vector_toolpath_delete_segment_cmd_callback,
+    NULL },
   { "vector-toolpath-reverse-stroke", GIMP_ICON_PATH,
     NC_("vector-toolpath-action", "_Reverse Stroke"), NULL, NULL,
     vector_toolpath_reverse_stroke_cmd_callback,
@@ -64,7 +81,7 @@ vector_toolpath_actions_setup (GimpActionGroup *group)
 }
 
 /* The following code is written on the assumption that this is for a
- * context menu, activated by right-clicking in a text layer.
+ * context menu, activated by right-clicking on a toolpath vectors widget.
  * Therefore, the tool must have a display.  If for any reason the
  * code is adapted to a different situation, some existence testing
  * will need to be added.
@@ -74,6 +91,9 @@ vector_toolpath_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
   GimpToolPath *toolpath = GIMP_TOOL_PATH (data);
+  gboolean on_handle, on_curve;
+
+  gimp_tool_path_get_popup_state (toolpath, &on_handle, &on_curve);
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
@@ -82,5 +102,11 @@ vector_toolpath_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vector-toolpath-reverse-stroke", TRUE);
+  SET_VISIBLE ("vector-toolpath-shift-start",    on_handle);
+  SET_VISIBLE ("vector-toolpath-delete-anchor",  on_handle);
+
+  SET_VISIBLE ("vector-toolpath-insert-anchor",  !on_handle && on_curve);
+  SET_VISIBLE ("vector-toolpath-delete-segment", !on_handle && on_curve);
+  SET_VISIBLE ("vector-toolpath-reverse-stroke", on_curve);
+
 }
