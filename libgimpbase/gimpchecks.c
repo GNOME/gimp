@@ -44,6 +44,8 @@
  * @light: return location for the light shade
  * @dark:  return location for the dark shade
  *
+ * Deprecated: use gimp_checks_get_colors() instead.
+ *
  * Retrieves the actual shades of gray to use when drawing a
  * checkerboard for a certain #GimpCheckType.
  *

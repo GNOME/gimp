@@ -120,6 +120,7 @@ G_BEGIN_DECLS
  **/
 #define GIMP_CHECKS_BLACK_COLOR ((GimpRGB) { 0.0, 0.0, 0.0, 1.0 })
 
+GIMP_DEPRECATED_FOR(gimp_checks_get_colors)
 void  gimp_checks_get_shades (GimpCheckType  type,
                               guchar        *light,
                               guchar        *dark);
