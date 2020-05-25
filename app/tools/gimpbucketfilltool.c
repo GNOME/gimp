@@ -327,21 +327,23 @@ gimp_bucket_fill_tool_start (GimpBucketFillTool *tool,
                              const GimpCoords   *coords,
                              GimpDisplay        *display)
 {
-  GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-  GimpContext           *context  = GIMP_CONTEXT (options);
-  GimpImage             *image    = gimp_display_get_image (display);
-  GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
+  GimpBucketFillOptions *options   = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpContext           *context   = GIMP_CONTEXT (options);
+  GimpImage             *image     = gimp_display_get_image (display);
+  GList                 *drawables = gimp_image_get_selected_drawables (image);
 
   g_return_if_fail (! tool->priv->filter);
+  g_return_if_fail (g_list_length (drawables) == 1);
 
   gimp_line_art_freeze (tool->priv->line_art);
 
   GIMP_TOOL (tool)->display  = display;
-  GIMP_TOOL (tool)->drawable = drawable;
+  g_list_free (GIMP_TOOL (tool)->drawables);
+  GIMP_TOOL (tool)->drawables = drawables;
 
   gimp_bucket_fill_tool_create_graph (tool);
 
-  tool->priv->filter = gimp_drawable_filter_new (drawable, _("Bucket fill"),
+  tool->priv->filter = gimp_drawable_filter_new (drawables->data, _("Bucket fill"),
                                                  tool->priv->graph,
                                                  GIMP_ICON_TOOL_BUCKET_FILL);
 
@@ -370,10 +372,16 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                GimpDisplay        *display,
                                GimpFillOptions    *fill_options)
 {
-  GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell      *shell    = gimp_display_get_shell (display);
-  GimpImage             *image    = gimp_display_get_image (display);
-  GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
+  GimpBucketFillOptions *options   = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell      *shell     = gimp_display_get_shell (display);
+  GimpImage             *image     = gimp_display_get_image (display);
+  GList                 *drawables = gimp_image_get_selected_drawables (image);
+  GimpDrawable          *drawable;
+
+  g_return_if_fail (g_list_length (drawables) == 1);
+
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   if (tool->priv->filter)
     {
@@ -486,8 +494,9 @@ gimp_bucket_fill_tool_halt (GimpBucketFillTool *tool)
   if (gimp_line_art_is_frozen (tool->priv->line_art))
     gimp_line_art_thaw (tool->priv->line_art);
 
-  GIMP_TOOL (tool)->display  = NULL;
-  GIMP_TOOL (tool)->drawable = NULL;
+  GIMP_TOOL (tool)->display   = NULL;
+  g_list_free (GIMP_TOOL (tool)->drawables);
+  GIMP_TOOL (tool)->drawables = NULL;
 }
 
 static void
@@ -539,7 +548,8 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpGuiConfig         *config      = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage             *image       = gimp_display_get_image (display);
-  GimpDrawable          *drawable    = gimp_image_get_active_drawable (image);
+  GList                 *drawables   = gimp_image_get_selected_drawables (image);
+  GimpDrawable          *drawable;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -547,6 +557,21 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
                                                     press_type, display);
       return;
     }
+
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot fill multiple layers. Select only one layer."));
+      else
+        gimp_tool_message_literal (tool, display, _("No selected drawables."));
+
+      g_list_free (drawables);
+      return;
+    }
+
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
@@ -827,9 +852,14 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   if (gimp_bucket_fill_tool_coords_in_active_pickable (bucket_tool,
                                                        display, coords))
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GList        *drawables = gimp_image_get_selected_drawables (image);
+      GimpDrawable *drawable  = NULL;
 
-      if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+      if (g_list_length (drawables) == 1)
+        drawable = drawables->data;
+
+      if (drawable                                                &&
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
           ! gimp_item_is_content_locked (GIMP_ITEM (drawable))    &&
           (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
            config->edit_non_visible))
@@ -999,7 +1029,12 @@ gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool *tool)
 
   if (image)
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GList        *drawables = gimp_image_get_selected_drawables (image);
+      GimpDrawable *drawable;
+
+      g_return_if_fail (g_list_length (drawables) == 1);
+      drawable = drawables->data;
+      g_list_free (drawables);
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         drawable = NULL;

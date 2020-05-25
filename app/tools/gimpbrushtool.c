@@ -156,14 +156,20 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
                              GimpDisplay      *display)
 {
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpDrawable     *drawable;
+  GimpDrawable     *drawable      = NULL;
+  GList            *drawables;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                proximity, display);
 
-  drawable = gimp_image_get_active_drawable (gimp_display_get_image (display));
+  drawables = gimp_image_get_selected_drawables (gimp_display_get_image (display));
+
+  if (drawables)
+    drawable = drawables->data;
+
+  g_list_free (drawables);
 
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
       drawable && proximity)

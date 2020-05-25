@@ -292,7 +292,7 @@ gimp_operation_tool_reset (GimpFilterTool *filter_tool)
 
   GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
-  if (filter_tool->config && GIMP_TOOL (op_tool)->drawable)
+  if (filter_tool->config && GIMP_TOOL (op_tool)->drawables)
     gimp_operation_tool_sync_op (op_tool, TRUE);
 
   gimp_operation_tool_relink_chains (op_tool);
@@ -308,7 +308,7 @@ gimp_operation_tool_set_config (GimpFilterTool *filter_tool,
 
   GIMP_FILTER_TOOL_CLASS (parent_class)->set_config (filter_tool, config);
 
-  if (filter_tool->config && GIMP_TOOL (op_tool)->drawable)
+  if (filter_tool->config && GIMP_TOOL (op_tool)->drawables)
     gimp_operation_tool_sync_op (op_tool, FALSE);
 
   gimp_operation_tool_relink_chains (op_tool);
@@ -857,7 +857,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
 
   gimp_filter_tool_get_operation (filter_tool);
 
-  if (tool->drawable)
+  if (tool->drawables)
     gimp_operation_tool_sync_op (op_tool, TRUE);
 
   if (filter_tool->config && tool->display)

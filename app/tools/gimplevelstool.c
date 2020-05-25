@@ -187,7 +187,8 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
   GimpLevelsTool   *l_tool      = GIMP_LEVELS_TOOL (tool);
   GimpImage        *image       = gimp_display_get_image (display);
-  GimpDrawable     *drawable    = gimp_image_get_active_drawable (image);
+  GList            *drawables;
+  GimpDrawable     *drawable;
   GimpLevelsConfig *config;
   gdouble           scale_factor;
   gdouble           step_increment;
@@ -198,6 +199,22 @@ gimp_levels_tool_initialize (GimpTool     *tool,
     {
       return FALSE;
     }
+
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot modify multiple drawables. Select only one."));
+      else
+        gimp_tool_message_literal (tool, display, _("No selected drawables."));
+
+      g_list_free (drawables);
+      return FALSE;
+    }
+
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   config = GIMP_LEVELS_CONFIG (filter_tool->config);
 
@@ -679,7 +696,7 @@ gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
       levels_tool->histogram = gimp_histogram_new (levels_config->trc);
 
       levels_tool->histogram_async = gimp_drawable_calculate_histogram_async
-        (GIMP_TOOL (filter_tool)->drawable, levels_tool->histogram, FALSE);
+        (GIMP_TOOL (filter_tool)->drawables->data, levels_tool->histogram, FALSE);
       gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (levels_tool->histogram_view),
                                          levels_tool->histogram);
     }
@@ -949,11 +966,13 @@ static gboolean
 levels_menu_sensitivity (gint      value,
                          gpointer  data)
 {
-  GimpDrawable         *drawable = GIMP_TOOL (data)->drawable;
+  GimpDrawable         *drawable;
   GimpHistogramChannel  channel  = value;
 
-  if (!drawable)
+  if (! GIMP_TOOL (data)->drawables)
     return FALSE;
+
+  drawable = GIMP_TOOL (data)->drawables->data;
 
   switch (channel)
     {
@@ -998,7 +1017,7 @@ levels_stretch_callback (GtkWidget      *widget,
     {
       gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (filter_tool->config),
                                   levels_tool->histogram,
-                                  gimp_drawable_is_rgb (tool->drawable));
+                                  gimp_drawable_is_rgb (tool->drawables->data));
     }
 }
 

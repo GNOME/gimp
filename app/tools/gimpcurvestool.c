@@ -199,7 +199,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   GimpFilterTool       *filter_tool = GIMP_FILTER_TOOL (tool);
   GimpCurvesTool       *c_tool      = GIMP_CURVES_TOOL (tool);
   GimpImage            *image       = gimp_display_get_image (display);
-  GimpDrawable         *drawable    = gimp_image_get_active_drawable (image);
+  GList                *drawables;
+  GimpDrawable         *drawable;
   GimpCurvesConfig     *config;
   GimpHistogram        *histogram;
   GimpHistogramChannel  channel;
@@ -208,6 +209,21 @@ gimp_curves_tool_initialize (GimpTool     *tool,
     {
       return FALSE;
     }
+
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot modify multiple drawables. Select only one."));
+      else
+        gimp_tool_message_literal (tool, display, _("No selected drawables."));
+
+      g_list_free (drawables);
+      return FALSE;
+    }
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   config = GIMP_CURVES_CONFIG (filter_tool->config);
 
@@ -713,7 +729,7 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
 
       histogram = gimp_histogram_new (curves_config->trc);
       g_object_unref (gimp_drawable_calculate_histogram_async
-                      (GIMP_TOOL (filter_tool)->drawable, histogram, FALSE));
+                      (GIMP_TOOL (filter_tool)->drawables->data, histogram, FALSE));
       gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (curves_tool->graph),
                                           histogram);
       g_object_unref (histogram);
@@ -782,7 +798,7 @@ gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
 {
   GimpCurvesTool   *tool     = GIMP_CURVES_TOOL (filter_tool);
   GimpCurvesConfig *config   = GIMP_CURVES_CONFIG (filter_tool->config);
-  GimpDrawable     *drawable = GIMP_TOOL (tool)->drawable;
+  GimpDrawable     *drawable = GIMP_TOOL (tool)->drawables->data;
   GimpRGB           rgb      = *color;
 
   if (config->trc == GIMP_TRC_LINEAR)
@@ -1015,7 +1031,7 @@ static gboolean
 curves_menu_sensitivity (gint      value,
                          gpointer  data)
 {
-  GimpDrawable         *drawable = GIMP_TOOL (data)->drawable;
+  GimpDrawable         *drawable = GIMP_TOOL (data)->drawables->data;
   GimpHistogramChannel  channel  = value;
 
   if (!drawable)

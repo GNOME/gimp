@@ -1911,13 +1911,12 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
       (! gimp_image_is_empty (image) ||
        gimp_tool_control_get_handle_empty_image (active_tool->control)))
     {
-      /*  initialize the current tool if it has no drawable  */
-      if (! active_tool->drawable)
+      /*  initialize the current tool if it has no drawables  */
+      if (! active_tool->drawables)
         {
           initialized = tool_manager_initialize_active (gimp, display);
         }
-      else if ((active_tool->drawable !=
-                gimp_image_get_active_drawable (image)) &&
+      else if (! gimp_image_equal_selected_drawables (image, active_tool->drawables) &&
                (! gimp_tool_control_get_preserve (active_tool->control) &&
                 (gimp_tool_control_get_dirty_mask (active_tool->control) &
                  GIMP_DIRTY_ACTIVE_DRAWABLE)))
@@ -1925,7 +1924,7 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
           GimpProcedure *procedure = g_object_get_data (G_OBJECT (active_tool),
                                                         "gimp-gegl-procedure");
 
-          if (image == gimp_item_get_image (GIMP_ITEM (active_tool->drawable)))
+          if (image == gimp_item_get_image (GIMP_ITEM (active_tool->drawables->data)))
             {
               /*  When changing between drawables if the *same* image,
                *  stop the tool using its dirty action, so it doesn't

@@ -279,9 +279,15 @@ static void
 gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
                                 GimpDisplay           *display)
 {
-  GimpTool     *tool     = GIMP_TOOL (sc);
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpTool     *tool      = GIMP_TOOL (sc);
+  GimpImage    *image     = gimp_display_get_image (display);
+  GList        *drawables = gimp_image_get_selected_drawables (image);
+  GimpDrawable *drawable;
+
+  g_return_if_fail (g_list_length (drawables) == 1);
+
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   /* First handle the paste - we need to make sure we have one in order
    * to do anything else.
@@ -718,7 +724,7 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
   static gint rendered_yoff              = G_MAXINT;
 
   GimpSeamlessCloneOptions *options = GIMP_SEAMLESS_CLONE_TOOL_GET_OPTIONS (sc);
-  GimpDrawable *bg = GIMP_TOOL (sc)->drawable;
+  GimpDrawable *bg = GIMP_TOOL (sc)->drawables->data;
   gint          off_x, off_y;
 
   /* All properties stay the same. No need to update. */
@@ -775,7 +781,7 @@ gimp_seamless_clone_tool_filter_update (GimpSeamlessCloneTool *sc)
 {
   GimpTool         *tool  = GIMP_TOOL (sc);
   GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GimpItem         *item  = GIMP_ITEM (tool->drawable);
+  GimpItem         *item  = GIMP_ITEM (tool->drawables->data);
   gint              x, y;
   gint              w, h;
   gint              off_x, off_y;

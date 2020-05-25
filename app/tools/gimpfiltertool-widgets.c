@@ -409,7 +409,7 @@ gimp_filter_tool_set_line (Controller    *controller,
     return;
 
   tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawable;
+  drawable = tool->drawables->data;
 
   if (drawable)
     {
@@ -486,7 +486,7 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
     return;
 
   tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawable;
+  drawable = tool->drawables->data;
 
   if (drawable)
     {
@@ -572,7 +572,7 @@ gimp_filter_tool_set_transform_grid (Controller        *controller,
     return;
 
   tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawable;
+  drawable = tool->drawables->data;
 
   if (drawable)
     {
@@ -662,7 +662,7 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
 
   tool     = GIMP_TOOL (controller->filter_tool);
   shell    = gimp_display_get_shell (tool->display);
-  drawable = tool->drawable;
+  drawable = tool->drawables->data;
 
   g_signal_handlers_block_by_func (controller->widget,
                                    gimp_filter_tool_transform_grids_changed,
@@ -885,7 +885,7 @@ gimp_filter_tool_set_focus (Controller    *controller,
     return;
 
   tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawable;
+  drawable = tool->drawables->data;
 
   if (drawable)
     {

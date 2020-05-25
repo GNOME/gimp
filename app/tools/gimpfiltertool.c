@@ -283,25 +283,40 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   GimpToolInfo     *tool_info   = tool->tool_info;
   GimpGuiConfig    *config      = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage        *image       = gimp_display_get_image (display);
-  GimpDrawable     *drawable    = gimp_image_get_active_drawable (image);
   GimpDisplayShell *shell       = gimp_display_get_shell (display);
+  GList            *drawables   = gimp_image_get_selected_drawables (image);
+  GimpDrawable     *drawable;
 
-  if (! drawable)
-    return FALSE;
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                   _("Cannot modify multiple drawables. Select only one."));
+      else
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
+
+      g_list_free (drawables);
+      return FALSE;
+    }
+  drawable = drawables->data;
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("Cannot modify the pixels of layer groups."));
+
+      g_list_free (drawables);
       return FALSE;
     }
 
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer's pixels are locked."));
+                           _("A selected layer's pixels are locked."));
       if (error)
         gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+
+      g_list_free (drawables);
       return FALSE;
     }
 
@@ -309,7 +324,9 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer is not visible."));
+                           _("A selected layer is not visible."));
+
+      g_list_free (drawables);
       return FALSE;
     }
 
@@ -317,8 +334,9 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
   gimp_filter_tool_disable_color_picking (filter_tool);
 
-  tool->display  = display;
-  tool->drawable = drawable;
+  tool->display   = display;
+  g_list_free (tool->drawables);
+  tool->drawables = drawables;
 
   if (filter_tool->config)
     gimp_config_reset (GIMP_CONFIG (filter_tool->config));
@@ -486,7 +504,7 @@ gimp_filter_tool_button_press (GimpTool            *tool,
         }
       else if (state & gimp_get_toggle_behavior_mask ())
         {
-          GimpItem *item = GIMP_ITEM (tool->drawable);
+          GimpItem *item = GIMP_ITEM (tool->drawables->data);
           gdouble   pos_x;
           gdouble   pos_y;
 
@@ -702,7 +720,7 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       if (filter_options->preview_split)
         {
           GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-          GimpItem         *item  = GIMP_ITEM (tool->drawable);
+          GimpItem         *item  = GIMP_ITEM (tool->drawables->data);
           gint              x, y, width, height;
 
           gimp_display_shell_untransform_viewport (shell, TRUE,
@@ -723,6 +741,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
                   position = ((gdouble) ((x + width / 2) -
                                          gimp_item_get_offset_x (item)) /
                               (gdouble) gimp_item_get_width (item));
+
+
                 }
               else
                 {
@@ -770,7 +790,7 @@ gimp_filter_tool_can_pick_color (GimpColorTool    *color_tool,
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
   GimpImage      *image       = gimp_display_get_image (display);
 
-  if (gimp_image_get_active_drawable (image) != tool->drawable)
+  if (! gimp_image_equal_selected_drawables (image, tool->drawables))
     return FALSE;
 
   return filter_tool->pick_abyss ||
@@ -791,11 +811,13 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
   gint            off_x, off_y;
   gboolean        picked;
 
-  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
 
-  *sample_format = gimp_drawable_get_format (tool->drawable);
+  gimp_item_get_offset (GIMP_ITEM (tool->drawables->data), &off_x, &off_y);
 
-  picked = gimp_pickable_pick_color (GIMP_PICKABLE (tool->drawable),
+  *sample_format = gimp_drawable_get_format (tool->drawables->data);
+
+  picked = gimp_pickable_pick_color (GIMP_PICKABLE (tool->drawables->data),
                                      coords->x - off_x,
                                      coords->y - off_y,
                                      color_tool->options->sample_average,
@@ -946,10 +968,12 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
   if (tool->display)
     {
       GimpImage *image = gimp_display_get_image (tool->display);
+      GList     *iter;
 
-      g_signal_handlers_disconnect_by_func (tool->drawable,
-                                            gimp_filter_tool_lock_position_changed,
-                                            filter_tool);
+      for (iter = tool->drawables; iter; iter = iter->next)
+        g_signal_handlers_disconnect_by_func (iter->data,
+                                              gimp_filter_tool_lock_position_changed,
+                                              filter_tool);
 
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_filter_tool_mask_changed,
@@ -980,7 +1004,6 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
     {
       gimp_drawable_filter_abort (filter_tool->filter);
       g_clear_object (&filter_tool->filter);
-
       gimp_filter_tool_remove_guide (filter_tool);
     }
 
@@ -1005,8 +1028,9 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 
   gimp_filter_tool_set_widget (filter_tool, NULL);
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  tool->display   = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
 }
 
 static void
@@ -1194,8 +1218,9 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
     }
 
   gimp_assert (filter_tool->operation);
+  g_return_if_fail (g_list_length (tool->drawables) == 1);
 
-  filter_tool->filter = gimp_drawable_filter_new (tool->drawable,
+  filter_tool->filter = gimp_drawable_filter_new (tool->drawables->data,
                                                   gimp_tool_get_undo_desc (tool),
                                                   filter_tool->operation,
                                                   gimp_tool_get_icon_name (tool));
@@ -1225,16 +1250,18 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
       GimpChannel *mask  = gimp_image_get_mask (image);
       const Babl  *format;
 
+      g_return_if_fail (g_list_length (tool->drawables) == 1);
+
       if (filter_tool->filter)
         format = gimp_drawable_filter_get_format (filter_tool->filter);
       else
-        format = gimp_drawable_get_format (tool->drawable);
+        format = gimp_drawable_get_format (tool->drawables->data);
 
       if (gimp_channel_is_empty (mask))
         {
           gtk_widget_set_visible (
             filter_tool->clip_combo,
-            gimp_item_get_clip (GIMP_ITEM (tool->drawable), FALSE) == FALSE &&
+            gimp_item_get_clip (GIMP_ITEM (tool->drawables->data), FALSE) == FALSE &&
             ! gimp_gegl_node_is_point_operation (filter_tool->operation)    &&
             babl_format_has_alpha (format));
 
@@ -1326,10 +1353,12 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
+  g_return_if_fail (g_list_length (tool->drawables) == 1);
+
   if (filter_tool->preview_guide)
     return;
 
-  item  = GIMP_ITEM (tool->drawable);
+  item  = GIMP_ITEM (tool->drawables->data);
   image = gimp_item_get_image (item);
 
   if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
@@ -1374,7 +1403,7 @@ gimp_filter_tool_remove_guide (GimpFilterTool *filter_tool)
   if (! filter_tool->preview_guide)
     return;
 
-  image = gimp_item_get_image (GIMP_ITEM (tool->drawable));
+  image = gimp_item_get_image (GIMP_ITEM (tool->drawables->data));
 
   gimp_image_remove_guide (image, filter_tool->preview_guide, FALSE);
 }
@@ -1388,10 +1417,12 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
+  g_return_if_fail (g_list_length (tool->drawables) == 1);
+
   if (! filter_tool->preview_guide)
     return;
 
-  item = GIMP_ITEM (tool->drawable);
+  item = GIMP_ITEM (tool->drawables->data);
 
   if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
       options->preview_split_alignment == GIMP_ALIGN_RIGHT)
@@ -1447,8 +1478,12 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
 {
   GimpTool          *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
-  GimpItem          *item    = GIMP_ITEM (tool->drawable);
+  GimpItem          *item;
   gdouble            position;
+
+  g_return_if_fail (g_list_length (tool->drawables) == 1);
+
+  item = GIMP_ITEM (tool->drawables->data);
 
   if (options->preview_split_alignment == GIMP_ALIGN_LEFT ||
       options->preview_split_alignment == GIMP_ALIGN_RIGHT)
@@ -1680,7 +1715,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                            G_CALLBACK (gimp_filter_tool_config_notify),
                            G_OBJECT (filter_tool), 0);
 
-  if (tool->drawable)
+  if (tool->drawables)
     gimp_filter_tool_create_filter (filter_tool);
 }
 
@@ -1991,6 +2026,8 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
   tool     = GIMP_TOOL (filter_tool);
   settings = GIMP_OPERATION_SETTINGS (filter_tool->config);
 
+  g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
+
   *drawable_offset_x = 0;
   *drawable_offset_y = 0;
 
@@ -1999,7 +2036,7 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
   drawable_area->width  = 1;
   drawable_area->height = 1;
 
-  drawable = tool->drawable;
+  drawable = tool->drawables->data;
 
   if (drawable && settings)
     {

@@ -339,7 +339,7 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   GimpTransformGridTool    *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tool);
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tool);
   GimpImage                *image      = gimp_display_get_image (display);
-  GimpDrawable             *drawable   = gimp_image_get_active_drawable (image);
+  GList                    *drawables;
   GimpObject               *object;
   UndoInfo                 *undo_info;
 
@@ -348,8 +348,21 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   if (! object)
     return FALSE;
 
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot modify multiple drawables. Select only one."));
+      else
+        gimp_tool_message_literal (tool, display, _("No active drawables."));
+
+      g_list_free (drawables);
+      return FALSE;
+    }
+
   tool->display   = display;
-  tool->drawable  = drawable;
+  tool->drawables = drawables;
 
   tr_tool->object = object;
 
@@ -762,7 +775,9 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
         }
       else
         {
-          pickable = GIMP_PICKABLE (tool->drawable);
+          g_return_if_fail (g_list_length (tool->drawables) == 1);
+
+          pickable = GIMP_PICKABLE (tool->drawables->data);
         }
 
       tg_tool->preview =
@@ -1209,7 +1224,8 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
     }
 
   tool->display   = NULL;
-  tool->drawable  = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
 
   if (tr_tool->object)
     {
@@ -1720,7 +1736,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
           g_object_set (
             tg_tool->preview,
             "transform", &tr_tool->transform,
-            "clip",      gimp_item_get_clip (GIMP_ITEM (tool->drawable),
+            "clip",      gimp_item_get_clip (GIMP_ITEM (tool->drawables->data),
                                              tr_options->clip),
             "opacity",   tg_options->preview_opacity,
             NULL);
@@ -1781,8 +1797,10 @@ gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
   if (! tg_tool->filters)
     return;
 
+  g_return_if_fail (g_list_length (tool->drawables) == 1);
+
   if (options->preview_linked &&
-      gimp_item_get_linked (GIMP_ITEM (tool->drawable)))
+      gimp_item_get_linked (GIMP_ITEM (tool->drawables->data)))
     {
       GimpImage *image = gimp_display_get_image (tool->display);
 
@@ -1795,7 +1813,7 @@ gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
     }
   else
     {
-      drawables = g_list_prepend (NULL, tool->drawable);
+      drawables = g_list_copy (tool->drawables);
     }
 
   new_drawables = g_hash_table_new (g_direct_hash, g_direct_equal);

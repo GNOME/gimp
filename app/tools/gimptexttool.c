@@ -1102,8 +1102,9 @@ gimp_text_tool_halt (GimpTextTool *text_tool)
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&text_tool->widget);
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  tool->display   = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
 }
 
 static void
@@ -2223,7 +2224,8 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
               return FALSE;
             }
 
-          tool->drawable = GIMP_DRAWABLE (layer);
+          g_list_free (tool->drawables);
+          tool->drawables = g_list_prepend (NULL, GIMP_DRAWABLE (layer));
         }
     }
 

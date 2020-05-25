@@ -197,7 +197,7 @@ gimp_tool_init (GimpTool *tool)
   tool->ID                    = global_tool_ID++;
   tool->control               = g_object_new (GIMP_TYPE_TOOL_CONTROL, NULL);
   tool->display               = NULL;
-  tool->drawable              = NULL;
+  tool->drawables             = NULL;
   tool->focus_display         = NULL;
   tool->modifier_state        = 0;
   tool->active_modifier_state = 0;
@@ -331,8 +331,9 @@ gimp_tool_real_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      tool->display  = NULL;
-      tool->drawable = NULL;
+      tool->display   = NULL;
+      g_list_free (tool->drawables);
+      tool->drawables = NULL;
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
@@ -352,8 +353,9 @@ gimp_tool_real_button_press (GimpTool            *tool,
     {
       GimpImage *image = gimp_display_get_image (display);
 
-      tool->display  = display;
-      tool->drawable = gimp_image_get_active_drawable (image);
+      tool->display   = display;
+      g_list_free (tool->drawables);
+      tool->drawables = gimp_image_get_selected_drawables (image);
 
       gimp_tool_control_activate (tool->control);
     }

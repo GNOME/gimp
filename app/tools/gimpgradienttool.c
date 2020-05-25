@@ -239,9 +239,9 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
                                GError      **error)
 {
   GimpImage           *image     = gimp_display_get_image (display);
-  GList               *drawables = gimp_image_get_selected_drawables (image);
   GimpGradientOptions *options   = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
   GimpGuiConfig       *config    = GIMP_GUI_CONFIG (display->gimp->config);
+  GList               *drawables;
   GimpDrawable        *drawable;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
@@ -249,6 +249,7 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  drawables = gimp_image_get_selected_drawables (image);
   if (g_list_length (drawables) != 1)
     {
       if (g_list_length (drawables) > 1)
@@ -482,8 +483,10 @@ gimp_gradient_tool_cursor_update (GimpTool         *tool,
                             gimp_tool_control_get_cursor (tool->control),
                             gimp_tool_control_get_tool_cursor (tool->control),
                             GIMP_CURSOR_MODIFIER_BAD);
+      g_list_free (drawables);
       return;
     }
+  g_list_free (drawables);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
@@ -634,9 +637,9 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
   if (options->instant_toggle)
     gtk_widget_set_sensitive (options->instant_toggle, FALSE);
 
-  tool->display  = display;
-  tool->drawable = drawables->data;
-  g_list_free (drawables);
+  tool->display   = display;
+  g_list_free (tool->drawables);
+  tool->drawables = drawables;
 
   gradient_tool->start_x = coords->x;
   gradient_tool->start_y = coords->y;
@@ -669,7 +672,7 @@ gimp_gradient_tool_start (GimpGradientTool *gradient_tool,
                             G_CALLBACK (gimp_gradient_tool_fg_bg_changed),
                             gradient_tool);
 
-  gimp_gradient_tool_create_filter (gradient_tool, tool->drawable);
+  gimp_gradient_tool_create_filter (gradient_tool, tool->drawables->data);
 
   /* Initially sync all of the properties */
   gimp_operation_config_sync_node (G_OBJECT (options),
@@ -742,8 +745,9 @@ gimp_gradient_tool_halt (GimpGradientTool *gradient_tool)
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&gradient_tool->widget);
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  tool->display   = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
 
   if (options->instant_toggle)
     gtk_widget_set_sensitive (options->instant_toggle, TRUE);
@@ -840,15 +844,17 @@ gimp_gradient_tool_precalc_shapeburst (GimpGradientTool *gradient_tool)
   GimpTool            *tool    = GIMP_TOOL (gradient_tool);
   gint                 x, y, width, height;
 
-  if (gradient_tool->dist_buffer || ! tool->drawable)
+  if (gradient_tool->dist_buffer || ! tool->drawables)
     return;
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (tool->drawable),
+  g_return_if_fail (g_list_length (tool->drawables) == 1);
+
+  if (! gimp_item_mask_intersect (GIMP_ITEM (tool->drawables->data),
                                   &x, &y, &width, &height))
     return;
 
   gradient_tool->dist_buffer =
-    gimp_drawable_gradient_shapeburst_distmap (tool->drawable,
+    gimp_drawable_gradient_shapeburst_distmap (tool->drawables->data,
                                                options->distance_metric,
                                                GEGL_RECTANGLE (x, y, width, height),
                                                GIMP_PROGRESS (gradient_tool));
@@ -924,7 +930,7 @@ gimp_gradient_tool_update_graph (GimpGradientTool *gradient_tool)
   GimpGradientOptions *options = GIMP_GRADIENT_TOOL_GET_OPTIONS (gradient_tool);
   gint                 off_x, off_y;
 
-  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (tool->drawables->data), &off_x, &off_y);
 
 #if 0
   if (gimp_gradient_tool_is_shapeburst (gradient_tool))
@@ -962,7 +968,7 @@ gimp_gradient_tool_update_graph (GimpGradientTool *gradient_tool)
       gdouble       start_x, start_y;
       gdouble       end_x,   end_y;
 
-      gimp_item_mask_intersect (GIMP_ITEM (tool->drawable),
+      gimp_item_mask_intersect (GIMP_ITEM (tool->drawables->data),
                                 &roi.x, &roi.y, &roi.width, &roi.height);
 
       start_x = gradient_tool->start_x - off_x;
@@ -970,7 +976,7 @@ gimp_gradient_tool_update_graph (GimpGradientTool *gradient_tool)
       end_x   = gradient_tool->end_x   - off_x;
       end_y   = gradient_tool->end_y   - off_y;
 
-      gimp_drawable_gradient_adjust_coords (tool->drawable,
+      gimp_drawable_gradient_adjust_coords (tool->drawables->data,
                                             options->gradient_type,
                                             &roi,
                                             &start_x, &start_y, &end_x, &end_y);

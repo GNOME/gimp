@@ -282,11 +282,23 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpGuiConfig            *config    = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage                *image     = gimp_display_get_image (display);
-  GimpDrawable             *drawable  = gimp_image_get_active_drawable (image);
   GimpDisplayShell         *shell     = gimp_display_get_shell (display);
+  GList                    *drawables = gimp_image_get_selected_drawables (image);
+  GimpDrawable             *drawable;
 
-  if (! drawable)
-    return FALSE;
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                             _("Cannot select from multiple layers."));
+      else
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
+
+      g_list_free (drawables);
+      return FALSE;
+    }
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
       ! config->edit_non_visible)
@@ -910,8 +922,15 @@ gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (poly_sel);
   GimpImage                *image     = gimp_display_get_image (display);
-  GimpDrawable             *drawable  = gimp_image_get_active_drawable (image);
-  GimpItem                 *item      = GIMP_ITEM (drawable);
+  GList                    *drawables = gimp_image_get_selected_drawables (image);
+  GimpDrawable             *drawable;
+  GimpItem                 *item;
+
+  g_return_if_fail (g_list_length (drawables) == 1);
+
+  drawable = drawables->data;
+  item     = GIMP_ITEM (drawable);
+  g_list_free (drawables);
 
   if (drawable && fg_select->state == MATTING_STATE_FREE_SELECT)
     {
@@ -995,8 +1014,9 @@ gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
   if (tool->display)
     gimp_image_flush (gimp_display_get_image (tool->display));
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  tool->display   = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
 
   if (fg_select->gui)
     gimp_tool_gui_hide (fg_select->gui);
@@ -1131,10 +1151,16 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select)
 static void
 gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select)
 {
-  GimpTool                    *tool     = GIMP_TOOL (fg_select);
+  GimpTool                    *tool      = GIMP_TOOL (fg_select);
   GimpForegroundSelectOptions *options;
-  GimpImage                   *image    = gimp_display_get_image (tool->display);
-  GimpDrawable                *drawable = gimp_image_get_active_drawable (image);
+  GimpImage                   *image     = gimp_display_get_image (tool->display);
+  GList                       *drawables = gimp_image_get_selected_drawables (image);
+  GimpDrawable                *drawable;
+
+  g_return_if_fail (g_list_length (drawables) == 1);
+
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   options  = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 

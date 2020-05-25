@@ -266,7 +266,8 @@ tool_manager_initialize_active (Gimp        *gimp,
         {
           GimpImage *image = gimp_display_get_image (display);
 
-          tool->drawable = gimp_image_get_active_drawable (image);
+          g_list_free (tool->drawables);
+          tool->drawables = gimp_image_get_selected_drawables (image);
 
           return TRUE;
         }

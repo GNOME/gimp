@@ -532,8 +532,9 @@ gimp_crop_tool_halt (GimpCropTool *crop_tool)
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&crop_tool->widget);
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  tool->display   = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
 
   gimp_crop_tool_update_option_defaults (crop_tool, TRUE);
 }

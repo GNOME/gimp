@@ -139,7 +139,8 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
   GimpThresholdTool *t_tool      = GIMP_THRESHOLD_TOOL (tool);
   GimpFilterTool    *filter_tool = GIMP_FILTER_TOOL (tool);
   GimpImage         *image       = gimp_display_get_image (display);
-  GimpDrawable      *drawable    = gimp_image_get_active_drawable (image);
+  GList             *drawables;
+  GimpDrawable      *drawable;
   gdouble            low;
   gdouble            high;
   gint               n_bins;
@@ -148,6 +149,22 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
     {
       return FALSE;
     }
+
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot modify multiple drawables. Select only one."));
+      else
+        gimp_tool_message_literal (tool, display, _("No selected drawables."));
+
+      g_list_free (drawables);
+      return FALSE;
+    }
+
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   g_clear_object (&t_tool->histogram_async);
 
@@ -338,11 +355,15 @@ static gboolean
 gimp_threshold_tool_channel_sensitive (gint     value,
                                        gpointer data)
 {
-  GimpDrawable         *drawable = GIMP_TOOL (data)->drawable;
-  GimpHistogramChannel  channel  = value;
+  GList                *drawables = GIMP_TOOL (data)->drawables;
+  GimpDrawable         *drawable;
+  GimpHistogramChannel  channel   = value;
 
-  if (!drawable)
+  if (!drawables)
     return FALSE;
+
+  g_return_val_if_fail (g_list_length (drawables) == 1, FALSE);
+  drawable = drawables->data;
 
   switch (channel)
     {

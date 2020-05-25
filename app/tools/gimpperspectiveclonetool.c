@@ -209,20 +209,35 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
                                         GError      **error)
 {
   GimpPerspectiveCloneTool *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
+  GimpImage                *image      = gimp_display_get_image (display);
+  GList                    *drawables;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
     }
 
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot paint on multiple layers. Select only one layer."));
+      else
+        gimp_tool_message_literal (tool, display, _("No selected drawables."));
+
+      g_list_free (drawables);
+
+      return FALSE;
+    }
+
   if (display != tool->display)
     {
       GimpDisplayShell *shell = gimp_display_get_shell (display);
-      GimpImage        *image = gimp_display_get_image (display);
       gint              i;
 
-      tool->display  = display;
-      tool->drawable = gimp_image_get_active_drawable (image);
+      tool->display   = display;
+      tool->drawables = drawables;
 
       /*  Find the transform bounds initializing */
       gimp_perspective_clone_tool_bounds (clone_tool, display);
@@ -268,6 +283,10 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
       /*  Save the current transformation info  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
         clone_tool->old_trans_info[i] = clone_tool->trans_info[i];
+    }
+  else
+    {
+      g_list_free (drawables);
     }
 
   return TRUE;
@@ -777,8 +796,9 @@ gimp_perspective_clone_tool_halt (GimpPerspectiveCloneTool *clone_tool)
 
   g_clear_object (&clone_tool->widget);
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  tool->display   = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
 }
 
 static void

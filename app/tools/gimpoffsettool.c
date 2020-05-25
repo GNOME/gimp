@@ -173,13 +173,27 @@ gimp_offset_tool_initialize (GimpTool     *tool,
   GimpOffsetTool *offset_tool = GIMP_OFFSET_TOOL (tool);
   GimpContext    *context     = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
   GimpImage      *image;
+  GimpDrawable   *drawable;
   gdouble         xres;
   gdouble         yres;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     return FALSE;
 
-  image = gimp_item_get_image (GIMP_ITEM (tool->drawable));
+  if (g_list_length (tool->drawables) != 1)
+    {
+      if (g_list_length (tool->drawables) > 1)
+        gimp_tool_message_literal (tool, display,
+                                   _("Cannot modify multiple drawables. Select only one."));
+      else
+        gimp_tool_message_literal (tool, display, _("No selected drawables."));
+
+      return FALSE;
+    }
+
+  drawable = tool->drawables->data;
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -194,17 +208,17 @@ gimp_offset_tool_initialize (GimpTool     *tool,
     GIMP_SIZE_ENTRY (offset_tool->offset_se), 1,
     yres, FALSE);
 
-  if (GIMP_IS_LAYER (tool->drawable))
+  if (GIMP_IS_LAYER (drawable))
     gimp_tool_gui_set_description (filter_tool->gui, _("Offset Layer"));
-  else if (GIMP_IS_LAYER_MASK (tool->drawable))
+  else if (GIMP_IS_LAYER_MASK (drawable))
     gimp_tool_gui_set_description (filter_tool->gui, _("Offset Layer Mask"));
-  else if (GIMP_IS_CHANNEL (tool->drawable))
+  else if (GIMP_IS_CHANNEL (drawable))
     gimp_tool_gui_set_description (filter_tool->gui, _("Offset Channel"));
   else
     g_warning ("%s: unexpected drawable type", G_STRFUNC);
 
   gtk_widget_set_sensitive (offset_tool->transparent_radio,
-                            gimp_drawable_has_alpha (tool->drawable));
+                            gimp_drawable_has_alpha (drawable));
 
   g_signal_handlers_unblock_by_func (offset_tool->offset_se,
                                      gimp_offset_tool_offset_changed,
@@ -403,7 +417,7 @@ gimp_offset_tool_oper_update (GimpTool         *tool,
                               gboolean          proximity,
                               GimpDisplay      *display)
 {
-  if (! tool->drawable ||
+  if (! tool->drawables ||
       gimp_filter_tool_on_guide (GIMP_FILTER_TOOL (tool),
                                  coords, display))
     {
@@ -425,7 +439,7 @@ gimp_offset_tool_cursor_update (GimpTool         *tool,
                                 GdkModifierType   state,
                                 GimpDisplay      *display)
 {
-  if (! tool->drawable ||
+  if (! tool->drawables ||
       gimp_filter_tool_on_guide (GIMP_FILTER_TOOL (tool),
                                  coords, display))
     {
@@ -708,8 +722,8 @@ gimp_offset_tool_update (GimpOffsetTool *offset_tool)
 
   type = orig_type;
 
-  if (tool->drawable                             &&
-      ! gimp_drawable_has_alpha (tool->drawable) &&
+  if (tool->drawables                            &&
+      ! gimp_drawable_has_alpha (tool->drawables->data) &&
       type == GIMP_OFFSET_TRANSPARENT)
     {
       type = GIMP_OFFSET_BACKGROUND;

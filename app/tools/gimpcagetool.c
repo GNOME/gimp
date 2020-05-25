@@ -214,12 +214,25 @@ gimp_cage_tool_initialize (GimpTool     *tool,
                            GimpDisplay  *display,
                            GError      **error)
 {
-  GimpGuiConfig *config   = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpImage     *image    = gimp_display_get_image (display);
-  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
+  GimpGuiConfig *config    = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage     *image     = gimp_display_get_image (display);
+  GList         *drawables = gimp_image_get_selected_drawables (image);
+  GimpDrawable  *drawable;
 
-  if (! drawable)
-    return FALSE;
+  if (g_list_length (drawables) != 1)
+    {
+      if (g_list_length (drawables) > 1)
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                   _("Cannot modify multiple layers. Select only one layer."));
+      else
+        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
+
+      g_list_free (drawables);
+      return FALSE;
+    }
+
+  drawable = drawables->data;
+  g_list_free (drawables);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
@@ -693,10 +706,16 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
     }
   else
     {
-      GimpImage    *image    = gimp_display_get_image (display);
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GimpImage    *image     = gimp_display_get_image (display);
+      GList        *drawables = gimp_image_get_selected_drawables (image);
+      GimpDrawable *drawable  = NULL;
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
+      if (g_list_length (drawables) == 1)
+        drawable = drawables->data;
+      g_list_free (drawables);
+
+      if (! drawable                                            ||
+          gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
           gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
           ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
              config->edit_non_visible))
@@ -927,10 +946,13 @@ gimp_cage_tool_start (GimpCageTool *ct,
 {
   GimpTool     *tool     = GIMP_TOOL (ct);
   GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GList        *drawables = gimp_image_get_selected_drawables (image);
 
-  tool->display  = display;
-  tool->drawable = drawable;
+  g_return_if_fail (g_list_length (drawables) == 1);
+
+  tool->display   = display;
+  g_list_free (tool->drawables);
+  tool->drawables = drawables;
 
   g_clear_object (&ct->config);
 
@@ -958,7 +980,7 @@ gimp_cage_tool_start (GimpCageTool *ct,
   /* Setting up cage offset to convert the cage point coords to
    * drawable coords
    */
-  gimp_item_get_offset (GIMP_ITEM (tool->drawable),
+  gimp_item_get_offset (GIMP_ITEM (tool->drawables->data),
                         &ct->offset_x, &ct->offset_y);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (ct), display);
@@ -987,9 +1009,10 @@ gimp_cage_tool_halt (GimpCageTool *ct)
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
-  ct->tool_state = CAGE_STATE_INIT;
+  tool->display   = NULL;
+  g_list_free (tool->drawables);
+  tool->drawables = NULL;
+  ct->tool_state  = CAGE_STATE_INIT;
 
   g_object_set (gimp_tool_get_options (tool),
                 "cage-mode", GIMP_CAGE_MODE_CAGE_CHANGE,
@@ -1274,7 +1297,7 @@ gimp_cage_tool_create_filter (GimpCageTool *ct)
   if (! ct->render_node)
     gimp_cage_tool_create_render_node (ct);
 
-  ct->filter = gimp_drawable_filter_new (GIMP_TOOL (ct)->drawable,
+  ct->filter = gimp_drawable_filter_new (GIMP_TOOL (ct)->drawables->data,
                                          _("Cage transform"),
                                          ct->render_node,
                                          GIMP_ICON_TOOL_CAGE);

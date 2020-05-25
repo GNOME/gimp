@@ -276,7 +276,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   GimpGuiConfig    *config     = GIMP_GUI_CONFIG (display->gimp->config);
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GimpImage        *image      = gimp_display_get_image (display);
-  GimpDrawable     *drawable   = gimp_image_get_active_drawable (image);
+  GList            *drawables;
+  GimpDrawable     *drawable;
   gboolean          constrain;
   GError           *error = NULL;
 
@@ -287,20 +288,28 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  if (! drawable)
+  drawables  = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) != 1)
     {
-      if (g_list_length (gimp_image_get_selected_layers (image)) > 1)
+      if (g_list_length (drawables) > 1)
         gimp_tool_message_literal (tool, display,
-                                   _("Cannot paint on multiple layer. Select only one layer."));
+                                   _("Cannot paint on multiple layers. Select only one layer."));
       else
         gimp_tool_message_literal (tool, display,
-                                   _("No active drawable."));
+                                   _("No selected drawables."));
+
+      g_list_free (drawables);
       return;
     }
-  else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+
+  drawable = drawables->data;
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       gimp_tool_message_literal (tool, display,
                                  _("Cannot paint on layer groups."));
+      g_list_free (drawables);
+
       return;
     }
 
@@ -309,6 +318,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       gimp_tool_message_literal (tool, display,
                                  _("The active layer's pixels are locked."));
       gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+      g_list_free (drawables);
+
       return;
     }
 
@@ -327,6 +338,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
         gimp_widget_blink (mode_box);
 
       g_clear_error (&error);
+      g_list_free (drawables);
 
       return;
     }
@@ -336,6 +348,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer is not visible."));
+      g_list_free (drawables);
+
       return;
     }
 
@@ -366,8 +380,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  tool->display  = display;
-  tool->drawable = drawable;
+  tool->display   = display;
+  tool->drawables = drawables;
 
   /*  pause the current selection  */
   gimp_display_shell_selection_pause (shell);
@@ -517,13 +531,20 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
 
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
-      GimpImage    *image    = gimp_display_get_image (display);
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GimpImage    *image     = gimp_display_get_image (display);
+      GList        *drawables = gimp_image_get_selected_drawables (image);
+      GimpDrawable *drawable  = NULL;
 
-      if (! drawable)
+      if (! drawables)
         return;
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
+      if (g_list_length (drawables) == 1)
+        drawable = drawables->data;
+
+      g_list_free (drawables);
+
+      if (! drawable                                                          ||
+          gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
           gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
           ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
           ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
@@ -574,7 +595,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   GimpPaintCore    *core          = paint_tool->core;
   GimpDisplayShell *shell         = gimp_display_get_shell (display);
   GimpImage        *image         = gimp_display_get_image (display);
-  GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
+  GList            *drawables;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -604,7 +625,8 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
       tool->display = display;
     }
 
-  if (drawable && proximity)
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) == 1 && proximity)
     {
       gchar    *status;
       gboolean  constrain_mask = gimp_get_constrain_behavior_mask ();
@@ -612,7 +634,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
       core->cur_coords = *coords;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawables->data), &off_x, &off_y);
 
       core->cur_coords.x -= off_x;
       core->cur_coords.y -= off_y;
@@ -691,6 +713,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
                                                display);
 
   gimp_draw_tool_resume (draw_tool);
+  g_list_free (drawables);
 }
 
 static void
@@ -698,17 +721,22 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
 
-
   if (paint_tool->active &&
       ! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
       GimpPaintCore  *core       = paint_tool->core;
       GimpImage      *image      = gimp_display_get_image (draw_tool->display);
-      GimpDrawable   *drawable   = gimp_image_get_active_drawable (image);
       GimpCanvasItem *outline    = NULL;
       gboolean        line_drawn = FALSE;
       gdouble         cur_x, cur_y;
       gint            off_x, off_y;
+      GList          *drawables  = gimp_image_get_selected_drawables (image);
+      GimpDrawable   *drawable;
+
+      g_return_if_fail (g_list_length (drawables) == 1);
+
+      drawable = drawables->data;
+      g_list_free (drawables);
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
