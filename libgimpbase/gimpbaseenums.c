@@ -2044,4 +2044,3 @@ gimp_vectors_stroke_type_get_type (void)
 
 
 /* Generated data ends here */
-
