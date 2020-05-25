@@ -50,11 +50,11 @@ gimp_render_init (Gimp *gimp)
                     G_CALLBACK (gimp_render_setup_notify),
                     gimp);
 
-  g_signal_connect (gimp->config, "notify::transparency-custom-color1",
+  g_signal_connect (gimp->config, "notify::transparency-custom-light-color",
                     G_CALLBACK (gimp_render_setup_notify),
                     gimp);
 
-  g_signal_connect (gimp->config, "notify::transparency-custom-color2",
+  g_signal_connect (gimp->config, "notify::transparency-custom-dark-color",
                     G_CALLBACK (gimp_render_setup_notify),
                     gimp);
 
@@ -89,17 +89,17 @@ gimp_render_setup_notify (gpointer    config,
                           Gimp       *gimp)
 {
   GimpCheckType check_type;
-  GimpRGB       *color1_custom;
-  GimpRGB       *color2_custom;
+  GimpRGB       *light_custom;
+  GimpRGB       *dark_custom;
 
   g_object_get (config,
                 "transparency-type", &check_type,
-                "transparency-custom-color1", &color1_custom,
-                "transparency-custom-color2", &color2_custom,
+                "transparency-custom-light-color", &light_custom,
+                "transparency-custom-dark-color", &dark_custom,
                 NULL);
 
-  gimp_checks_get_colors (check_type, &light, &dark, *color1_custom, *color2_custom);
+  gimp_checks_get_colors (check_type, &light, &dark, light_custom, dark_custom);
 
-  g_free (color1_custom);
-  g_free (color2_custom);
+  g_free (light_custom);
+  g_free (dark_custom);
 }
