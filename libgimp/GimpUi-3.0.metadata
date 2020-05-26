@@ -11,15 +11,5 @@ IntComboBox
   .new skip=false
 IntStore
   .new skip=false
-MessageDialog
-  .new skip=false
 ProcBrowserDialog
   .new skip=false
-ToolDialog
-  .new skip=false
-OverlayDialog
-  .new skip=false
-ViewableDialog
-  .new skip=false
-
-text_layer_set
