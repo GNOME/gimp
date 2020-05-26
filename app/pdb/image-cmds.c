@@ -725,9 +725,11 @@ image_pick_color_invoker (GimpProcedure         *procedure,
 
           for (i = 0; i < num_drawables; i++)
             {
-              drawable_list = g_list_prepend (drawable_list, drawables[i]);
+              GimpPickable *pickable = (GimpPickable *) drawables[i];
+
+              drawable_list = g_list_prepend (drawable_list, pickable);
               if (! sample_merged)
-                  gimp_pickable_flush (GIMP_PICKABLE (drawables[i]));
+                gimp_pickable_flush (pickable);
             }
 
           if (sample_merged)
