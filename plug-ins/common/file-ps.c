@@ -1088,7 +1088,7 @@ ps_end_data (GOutputStream  *output,
       if (end_data > 0)
         {
           g_snprintf (s, sizeof (s),
-                      "%ld ASCII Bytes", end_data - ps_data_pos.begin_data);
+                      "%"G_GOFFSET_FORMAT" ASCII Bytes", end_data - ps_data_pos.begin_data);
 
           if (! g_seekable_seek (G_SEEKABLE (output),
                                  ps_data_pos.eol - strlen (s), G_SEEK_SET,
