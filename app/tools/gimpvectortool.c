@@ -101,11 +101,6 @@ static void     gimp_vector_tool_cursor_update   (GimpTool              *tool,
                                                   const GimpCoords      *coords,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
-static GimpUIManager * gimp_vector_tool_get_popup (GimpTool             *tool,
-                                                  const GimpCoords      *coords,
-                                                  GdkModifierType        state,
-                                                  GimpDisplay           *display,
-                                                  const gchar          **ui_path);
 
 static void     gimp_vector_tool_start           (GimpVectorTool        *vector_tool,
                                                   GimpDisplay           *display);
@@ -191,7 +186,6 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   tool_class->motion         = gimp_vector_tool_motion;
   tool_class->modifier_key   = gimp_vector_tool_modifier_key;
   tool_class->cursor_update  = gimp_vector_tool_cursor_update;
-  tool_class->get_popup      = gimp_vector_tool_get_popup;
 }
 
 static void
@@ -386,24 +380,6 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-}
-
-static GimpUIManager *
-gimp_vector_tool_get_popup (GimpTool         *tool,
-                            const GimpCoords *coords,
-                            GdkModifierType   state,
-                            GimpDisplay      *display,
-                            const gchar     **ui_path)
-{
-  GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
-
-  if (display != tool->display || ! vector_tool->widget)
-    {
-      return NULL;
-    }
-
-  return gimp_tool_widget_get_popup (GIMP_TOOL_WIDGET (vector_tool->widget),
-                                     coords, state, ui_path);
 }
 
 static void
