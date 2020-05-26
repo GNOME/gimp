@@ -362,7 +362,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
                 n_items++;
 
             if (n_items == 0)
-              locked_message = _("All selected_items layers' positions are locked.");
+              locked_message = _("All selected _items layers' positions are locked.");
           }
       }
       break;
