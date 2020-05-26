@@ -135,7 +135,7 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Console"));
+      gimp_procedure_set_menu_label (procedure, N_("Script-Fu _Console"));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Development/Script-Fu");
 

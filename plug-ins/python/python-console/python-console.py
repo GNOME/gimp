@@ -277,7 +277,7 @@ class PythonConsole (Gimp.PlugIn):
             procedure = Gimp.Procedure.new(self, name,
                                            Gimp.PDBProcType.PLUGIN,
                                            run, None)
-            procedure.set_menu_label(N_("_Console"))
+            procedure.set_menu_label(N_("Python _Console"))
             procedure.set_documentation(N_("Interactive GIMP Python interpreter"),
                                         "Type in commands and see results",
                                         "")
