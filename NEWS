@@ -3,9 +3,7 @@
                          Development Branch
                    ------------------------------
 
-This is the stable branch of GIMP. Unlike earlier stable branches,
-we do allow some new features here, if they are not too invasive.
-Otherwise, this branch is only for bug-fixes.
+This is the unstable branch of GIMP.
 
 
 Overview of Changes from GIMP 2.10.x to GIMP 2.99.2
@@ -25,6 +23,9 @@ Core:
     are now multi-selection aware.
   - XCF format bumped to version 14 with awareness of multiple layer
     selection.
+  - All code is year-2038-safe with deprecated time API replaced.
+  - "Alpha to Selection" various actions warn when the result selection
+    is empty.
 
 User Interface:
 
@@ -45,9 +46,12 @@ User Interface:
     the theme colors (no theme and icon theme tweaking anymore to end up
     with dark on dark or light on light interfaces), except for color
     elements whose SVG style is marked as "!important".
-  - Image display rendered faster with  a render cache that keeps the
+  - Image display rendered faster with a render cache that keeps the
     result of scaling, color management, display filters and shell mask
     (for tools like fuzzy select).
+  - Shift-click on layer GimpContainerTreeView (typically the Layers
+    dockable) allows to expand/collapse all item groups but the clicked
+    one.
 
 Devices:
 
@@ -73,7 +77,27 @@ Plug-ins:
     drawable. All "Goat Exercises" must do the same thing in the same
     way, simply in their respective languages, as documentation code for
     a language binding.
+  - Plug-ins must be installed in their own subdirectory in
+    `$XDG_CONFIG_HOME/GIMP/2.99/plug-ins/`, thus preventing data mess
+    (with plug-ins coming with data and installing it all in the root
+    plug-ins/ directory) and DLL hell. The main plug-in executable must
+    be named the same as the directory (possibly with an added
+    extension).
+    E.g.: `plug-ins/my-cool-plug-in/my-cool-plug-in.py`
 
 Documentation:
 
-  - devel-docs/xcf.txt updated to handle XCF 14.
+  - `devel-docs/xcf.txt` updated to handle XCF 14.
+
+Build:
+
+  - New meson build system. Still deemed "experimental" for the time
+    being. Packagers are recommended to continue using the autotools
+    build system in order to avoid specific bugs.
+  - Continuous integration in Gitlab with:
+    - an autotools build with GCC on a Debian/testing runner
+    - a meson build with GCC on a Debian/testing runner
+    - a meson build with Clang on a Debian/testing runner
+    - a meson cross-build with Mingw-w64 for Windows 32-bit
+    - a meson cross-build with Mingw-w64 for Windows 64-bit
+    - static code analysis with cppcheck
