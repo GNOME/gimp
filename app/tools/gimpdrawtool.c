@@ -217,11 +217,7 @@ gimp_draw_tool_control (GimpTool       *tool,
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
     case GIMP_TOOL_ACTION_RESUME:
-      if (draw_tool->widget)
-        gimp_tool_widget_changed (draw_tool->widget);
       break;
 
     case GIMP_TOOL_ACTION_HALT:

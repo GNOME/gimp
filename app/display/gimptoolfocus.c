@@ -224,6 +224,7 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
   widget_class->motion_modifier = gimp_tool_focus_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_focus_hover_modifier;
   widget_class->get_cursor      = gimp_tool_focus_get_cursor;
+  widget_class->update_on_scale = TRUE;
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("type", NULL, NULL,

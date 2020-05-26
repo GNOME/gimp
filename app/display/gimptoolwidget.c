@@ -224,6 +224,7 @@ gimp_tool_widget_constructed (GObject *object)
 {
   GimpToolWidget        *widget  = GIMP_TOOL_WIDGET (object);
   GimpToolWidgetPrivate *private = widget->private;
+  GimpToolWidgetClass   *klass   = GIMP_TOOL_WIDGET_GET_CLASS (widget);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -232,6 +233,33 @@ gimp_tool_widget_constructed (GObject *object)
   private->item = gimp_canvas_group_new (private->shell);
 
   gimp_canvas_item_set_visible (private->item, private->visible);
+
+  if (klass->changed)
+    {
+      if (klass->update_on_scale)
+        {
+          g_signal_connect_object (private->shell, "scaled",
+                                   G_CALLBACK (klass->changed),
+                                   widget,
+                                   G_CONNECT_SWAPPED);
+        }
+
+      if (klass->update_on_scroll)
+        {
+          g_signal_connect_object (private->shell, "scrolled",
+                                   G_CALLBACK (klass->changed),
+                                   widget,
+                                   G_CONNECT_SWAPPED);
+        }
+
+      if (klass->update_on_rotate)
+        {
+          g_signal_connect_object (private->shell, "rotated",
+                                   G_CALLBACK (klass->changed),
+                                   widget,
+                                   G_CONNECT_SWAPPED);
+        }
+    }
 }
 
 static void

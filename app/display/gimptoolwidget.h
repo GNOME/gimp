@@ -119,6 +119,10 @@ struct _GimpToolWidgetClass
                                 GimpCursorType        *cursor,
                                 GimpToolCursorType    *tool_cursor,
                                 GimpCursorModifier    *modifier);
+
+  gboolean update_on_scale;
+  gboolean update_on_scroll;
+  gboolean update_on_rotate;
 };
 
 
