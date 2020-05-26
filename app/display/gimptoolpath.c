@@ -318,9 +318,12 @@ gimp_tool_path_constructed (GObject *object)
 static void
 gimp_tool_path_dispose (GObject *object)
 {
-  GimpToolPath *path = GIMP_TOOL_PATH (object);
+  GimpToolPath        *path    = GIMP_TOOL_PATH (object);
+  GimpToolPathPrivate *private = path->private;
 
   gimp_tool_path_set_vectors (path, NULL);
+
+  g_clear_object (&private->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
