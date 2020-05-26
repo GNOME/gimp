@@ -660,7 +660,7 @@ gimp_selection_resume (GimpSelection *selection)
 
 GeglBuffer *
 gimp_selection_extract (GimpSelection *selection,
-                        GimpPickable  *pickable,
+                        GList         *pickables,
                         GimpContext   *context,
                         gboolean       cut_image,
                         gboolean       keep_indexed,
@@ -669,23 +669,53 @@ gimp_selection_extract (GimpSelection *selection,
                         gint          *offset_y,
                         GError       **error)
 {
-  GimpImage  *image;
-  GeglBuffer *src_buffer;
-  GeglBuffer *dest_buffer;
-  const Babl *src_format;
-  const Babl *dest_format;
-  gint        x1, y1, x2, y2;
-  gboolean    non_empty;
-  gint        off_x, off_y;
+  GimpImage    *image      = NULL;
+  GimpImage    *temp_image = NULL;
+  GimpPickable *pickable   = NULL;
+  GeglBuffer   *src_buffer;
+  GeglBuffer   *dest_buffer;
+  GList        *iter;
+  const Babl   *src_format;
+  const Babl   *dest_format;
+  gint          x1, y1, x2, y2;
+  gboolean      non_empty;
+  gint          off_x, off_y;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
-  if (GIMP_IS_ITEM (pickable))
-    g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (pickable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+  g_return_val_if_fail (pickables != NULL, NULL);
 
-  image = gimp_pickable_get_image (pickable);
+  for (iter = pickables; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_PICKABLE (iter->data), NULL);
+
+      if (GIMP_IS_ITEM (iter->data))
+        g_return_val_if_fail (gimp_item_is_attached (iter->data), NULL);
+
+      if (! image)
+        image = gimp_pickable_get_image (iter->data);
+      else
+        g_return_val_if_fail (image == gimp_pickable_get_image (iter->data), NULL);
+    }
+
+  if (g_list_length (pickables) == 1)
+    {
+      pickable = pickables->data;
+    }
+  else
+    {
+      for (iter = pickables; iter; iter = iter->next)
+        g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
+
+      temp_image = gimp_image_new_from_drawables (image->gimp, pickables, TRUE);
+      selection  = GIMP_SELECTION (gimp_image_get_mask (temp_image));
+
+      pickable   = GIMP_PICKABLE (temp_image);
+
+      /* Don't cut from the temporary image. */
+      cut_image = FALSE;
+    }
 
   /*  If there are no bounds, then just extract the entire image
    *  This may not be the correct behavior, but after getting rid
@@ -719,6 +749,10 @@ gimp_selection_extract (GimpSelection *selection,
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("Unable to cut or copy because the "
                              "selected region is empty."));
+
+      if (temp_image)
+        g_object_unref (temp_image);
+
       return NULL;
     }
 
@@ -804,6 +838,9 @@ gimp_selection_extract (GimpSelection *selection,
   *offset_x = x1 + off_x;
   *offset_y = y1 + off_y;
 
+  if (temp_image)
+    g_object_unref (temp_image);
+
   return dest_buffer;
 }
 
@@ -818,7 +855,6 @@ gimp_selection_float (GimpSelection *selection,
 {
   GimpImage        *image;
   GimpLayer        *layer;
-  GimpPickable     *pickable;
   GeglBuffer       *buffer;
   GimpColorProfile *profile;
   GimpImage        *temp_image = NULL;
@@ -864,22 +900,12 @@ gimp_selection_float (GimpSelection *selection,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_FLOAT,
                                C_("undo-type", "Float Selection"));
 
-  if (g_list_length (drawables) > 1)
-    {
-      temp_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE);
-      pickable = GIMP_PICKABLE (temp_image);
-    }
-  else
-    {
-      pickable = GIMP_PICKABLE (drawables->data);
-    }
-
   /*  Cut or copy the selected region  */
-  buffer = gimp_selection_extract (selection, pickable, context,
+  buffer = gimp_selection_extract (selection, drawables, context,
                                    cut_image, FALSE, TRUE,
                                    &x1, &y1, NULL);
 
-  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (pickable));
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawables->data));
 
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);

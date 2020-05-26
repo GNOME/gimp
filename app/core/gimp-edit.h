@@ -20,7 +20,7 @@
 
 
 GimpObject  * gimp_edit_cut                (GimpImage       *image,
-                                            GimpDrawable    *drawable,
+                                            GList           *drawables,
                                             GimpContext     *context,
                                             GError         **error);
 GimpObject  * gimp_edit_copy               (GimpImage       *image,
@@ -44,12 +44,12 @@ GimpImage   * gimp_edit_paste_as_new_image (Gimp            *gimp,
 
 const gchar * gimp_edit_named_cut          (GimpImage       *image,
                                             const gchar     *name,
-                                            GimpDrawable    *drawable,
+                                            GList           *drawables,
                                             GimpContext     *context,
                                             GError         **error);
 const gchar * gimp_edit_named_copy         (GimpImage       *image,
                                             const gchar     *name,
-                                            GimpDrawable    *drawable,
+                                            GList           *drawables,
                                             GimpContext     *context,
                                             GError         **error);
 const gchar * gimp_edit_named_copy_visible (GimpImage       *image,

@@ -32,16 +32,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean   gimp_edit_cut                      (GimpDrawable    *drawable);
+gboolean   gimp_edit_cut                      (gint             num_drawables,
+                                               const GimpItem **drawables);
 gboolean   gimp_edit_copy                     (gint             num_drawables,
                                                const GimpItem **drawables);
 gboolean   gimp_edit_copy_visible             (GimpImage       *image);
 GimpLayer* gimp_edit_paste                    (GimpDrawable    *drawable,
                                                gboolean         paste_into);
 GimpImage* gimp_edit_paste_as_new_image       (void);
-gchar*     gimp_edit_named_cut                (GimpDrawable    *drawable,
+gchar*     gimp_edit_named_cut                (gint             num_drawables,
+                                               const GimpItem **drawables,
                                                const gchar     *buffer_name);
-gchar*     gimp_edit_named_copy               (GimpDrawable    *drawable,
+gchar*     gimp_edit_named_copy               (gint             num_drawables,
+                                               const GimpItem **drawables,
                                                const gchar     *buffer_name);
 gchar*     gimp_edit_named_copy_visible       (GimpImage       *image,
                                                const gchar     *buffer_name);

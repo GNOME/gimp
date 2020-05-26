@@ -47,7 +47,9 @@ struct _GimpTransformTool
 {
   GimpDrawTool       parent_instance;
 
-  GimpObject        *object;
+  GList             *objects;            /*  List of GimpObject initially
+                                             selected and set for
+                                             transform processing.        */
 
   gint               x1, y1;             /*  upper left hand coordinate   */
   gint               x2, y2;             /*  lower right hand coords      */
@@ -68,7 +70,7 @@ struct _GimpTransformToolClass
   gchar                  * (* get_undo_desc) (GimpTransformTool  *tr_tool);
   GimpTransformDirection   (* get_direction) (GimpTransformTool  *tr_tool);
   GeglBuffer             * (* transform)     (GimpTransformTool  *tr_tool,
-                                              GimpObject         *object,
+                                              GList              *objects,
                                               GeglBuffer         *orig_buffer,
                                               gint                orig_offset_x,
                                               gint                orig_offset_y,
@@ -83,9 +85,9 @@ struct _GimpTransformToolClass
 
 GType        gimp_transform_tool_get_type            (void) G_GNUC_CONST;
 
-GimpObject * gimp_transform_tool_get_active_object   (GimpTransformTool  *tr_tool,
+GList     * gimp_transform_tool_get_selected_objects (GimpTransformTool  *tr_tool,
                                                       GimpDisplay        *display);
-GimpObject * gimp_transform_tool_check_active_object (GimpTransformTool  *tr_tool,
+GList   * gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
                                                       GimpDisplay        *display,
                                                       GError            **error);
 

@@ -72,7 +72,7 @@ static void                     gimp_transform_tool_control            (GimpTool
 static gchar                  * gimp_transform_tool_real_get_undo_desc (GimpTransformTool  *tr_tool);
 static GimpTransformDirection   gimp_transform_tool_real_get_direction (GimpTransformTool  *tr_tool);
 static GeglBuffer             * gimp_transform_tool_real_transform     (GimpTransformTool  *tr_tool,
-                                                                        GimpObject         *object,
+                                                                        GList              *objects,
                                                                         GeglBuffer         *orig_buffer,
                                                                         gint                orig_offset_x,
                                                                         gint                orig_offset_y,
@@ -159,7 +159,7 @@ gimp_transform_tool_real_get_direction (GimpTransformTool *tr_tool)
 
 static GeglBuffer *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
-                                    GimpObject        *object,
+                                    GList             *objects,
                                     GeglBuffer        *orig_buffer,
                                     gint               orig_offset_x,
                                     gint               orig_offset_y,
@@ -186,13 +186,11 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 
   if (orig_buffer)
     {
-      /*  this happens when transforming a selection cut out of a
-       *  normal drawable
+      /*  this happens when transforming a selection cut out of
+       *  normal drawables.
        */
 
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (object), NULL);
-
-      ret = gimp_drawable_transform_buffer_affine (GIMP_DRAWABLE (object),
+      ret = gimp_drawable_transform_buffer_affine (objects->data,
                                                    context,
                                                    orig_buffer,
                                                    orig_offset_x,
@@ -206,45 +204,34 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                    new_offset_y,
                                                    progress);
     }
-  else if (GIMP_IS_ITEM (object))
-    {
-      /*  this happens for entire drawables, paths and layer groups  */
-
-      GimpItem *item = GIMP_ITEM (object);
-
-      if (gimp_item_get_linked (item))
-        {
-          gimp_item_linked_transform (item, context,
-                                      &tr_tool->transform,
-                                      direction,
-                                      options->interpolation,
-                                      clip,
-                                      progress);
-        }
-      else
-        {
-          clip = gimp_item_get_clip (item, clip);
-
-          gimp_item_transform (item, context,
-                               &tr_tool->transform,
-                               direction,
-                               options->interpolation,
-                               clip,
-                               progress);
-        }
-    }
-  else
+  else if (g_list_length (objects) == 1 && GIMP_IS_IMAGE (objects->data))
     {
       /*  this happens for images  */
 
-      g_return_val_if_fail (GIMP_IS_IMAGE (object), NULL);
-
-      gimp_image_transform (GIMP_IMAGE (object), context,
+      gimp_image_transform (objects->data, context,
                             &tr_tool->transform,
                             direction,
                             options->interpolation,
                             clip,
                             progress);
+    }
+  else
+    {
+      GList *items;
+
+      /*  this happens for entire drawables, paths and layer groups  */
+      g_return_val_if_fail (g_list_length (objects) > 0, NULL);
+
+      items = gimp_image_item_list_linked (gimp_item_get_image (objects->data), objects);
+
+      gimp_image_item_list_transform (gimp_item_get_image (objects->data),
+                                      items, context,
+                                      &tr_tool->transform,
+                                      direction,
+                                      options->interpolation,
+                                      clip,
+                                      progress);
+      g_list_free (items);
     }
 
   if (progress)
@@ -280,11 +267,11 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
   GimpTransformOptions *options          = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   GimpDisplayShell     *shell            = gimp_display_get_shell (display);
   GimpImage            *image            = gimp_display_get_image (display);
-  GimpObject           *active_object;
+  GList                *selected_objects;
   gdouble               max_ratio        = 0.0;
   GimpObject           *max_ratio_object = NULL;
 
-  active_object = gimp_transform_tool_get_active_object (tr_tool, display);
+  selected_objects = gimp_transform_tool_get_selected_objects (tr_tool, display);
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
     {
@@ -292,7 +279,7 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
       GimpTransformDirection  direction;
       GeglRectangle           selection_bounds;
       gboolean                selection_empty = TRUE;
-      GList                  *objects;
+      GList                  *objects         = NULL;
       GList                  *iter;
 
       transform = tr_tool->transform;
@@ -302,26 +289,31 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
       if (direction == GIMP_TRANSFORM_BACKWARD)
         gimp_matrix3_invert (&transform);
 
-      if (options->type == GIMP_TRANSFORM_TYPE_LAYER &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (active_object)))
+      if (options->type == GIMP_TRANSFORM_TYPE_LAYER)
         {
-          selection_empty = ! gimp_item_bounds (
-            GIMP_ITEM (gimp_image_get_mask (image)),
-            &selection_bounds.x,     &selection_bounds.y,
-            &selection_bounds.width, &selection_bounds.height);
+          for (iter = selected_objects; iter; iter = iter->next)
+            if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+          {
+            if (gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                                  &selection_bounds.x,     &selection_bounds.y,
+                                  &selection_bounds.width, &selection_bounds.height))
+              {
+                selection_empty = FALSE;
+                break;
+              }
+          }
         }
 
-      if (selection_empty              &&
-          GIMP_IS_ITEM (active_object) &&
-          gimp_item_get_linked (GIMP_ITEM (active_object)))
+      if (selection_empty  &&
+          selected_objects &&
+          GIMP_IS_ITEM (selected_objects->data))
         {
-          objects = gimp_image_item_list_get_list (image,
-                                                   GIMP_ITEM_TYPE_ALL,
-                                                   GIMP_ITEM_SET_LINKED);
+          objects = gimp_image_item_list_linked (image, selected_objects);
+          g_list_free (selected_objects);
         }
       else
         {
-          objects = g_list_append (NULL, active_object);
+          objects = selected_objects;
         }
 
       if (options->type == GIMP_TRANSFORM_TYPE_IMAGE)
@@ -506,22 +498,24 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
       {
-        GimpDrawable *drawable;
-        gint          offset_x;
-        gint          offset_y;
-        gint          x, y;
-        gint          width, height;
+        GList *drawables;
+        gint   offset_x;
+        gint   offset_y;
+        gint   x, y;
+        gint   width, height;
 
-        drawable = gimp_image_get_active_drawable (image);
+        drawables = gimp_image_get_selected_drawables (image);
 
-        gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+        gimp_item_get_offset (GIMP_ITEM (drawables->data), &offset_x, &offset_y);
 
-        non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawable),
+        non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawables->data),
                                               &x, &y, &width, &height);
         tr_tool->x1 = x + offset_x;
         tr_tool->y1 = y + offset_y;
         tr_tool->x2 = x + width  + offset_x;
         tr_tool->y2 = y + height + offset_y;
+
+        g_list_free (drawables);
       }
       break;
 
@@ -612,13 +606,13 @@ gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
     GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool);
 }
 
-GimpObject *
-gimp_transform_tool_get_active_object (GimpTransformTool  *tr_tool,
-                                       GimpDisplay        *display)
+GList *
+gimp_transform_tool_get_selected_objects (GimpTransformTool  *tr_tool,
+                                          GimpDisplay        *display)
 {
   GimpTransformOptions *options;
   GimpImage            *image;
-  GimpObject           *object = NULL;
+  GList                *objects = NULL;
 
   g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
@@ -629,41 +623,40 @@ gimp_transform_tool_get_active_object (GimpTransformTool  *tr_tool,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  if (tr_tool->object)
-    return tr_tool->object;
+  if (tr_tool->objects)
+    return g_list_copy (tr_tool->objects);
 
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      object = GIMP_OBJECT (gimp_image_get_active_drawable (image));
+      objects = gimp_image_get_selected_drawables (image);
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      object = GIMP_OBJECT (gimp_image_get_mask (image));
-
-      if (gimp_channel_is_empty (GIMP_CHANNEL (object)))
-        object = NULL;
+      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+        objects = g_list_prepend (NULL, gimp_image_get_mask (image));
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      object = GIMP_OBJECT (gimp_image_get_active_vectors (image));
+      objects = g_list_copy (gimp_image_get_selected_vectors (image));
       break;
 
     case GIMP_TRANSFORM_TYPE_IMAGE:
-      object = GIMP_OBJECT (image);
+      objects = g_list_prepend (NULL, image);
       break;
     }
 
-  return object;
+  return objects;
 }
 
-GimpObject *
-gimp_transform_tool_check_active_object (GimpTransformTool  *tr_tool,
-                                         GimpDisplay        *display,
-                                         GError            **error)
+GList *
+gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
+                                            GimpDisplay        *display,
+                                            GError            **error)
 {
   GimpTransformOptions *options;
-  GimpObject           *object;
+  GList                *objects;
+  GList                *iter;
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
   GimpGuiConfig        *config         = GIMP_GUI_CONFIG (display->gimp->config);
@@ -674,35 +667,35 @@ gimp_transform_tool_check_active_object (GimpTransformTool  *tr_tool,
 
   options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
-  object = gimp_transform_tool_get_active_object (tr_tool, display);
+  objects = gimp_transform_tool_get_selected_objects (tr_tool, display);
 
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
       null_message = _("There is no layer to transform.");
 
-      if (object)
+      for (iter = objects; iter; iter = iter->next)
         {
-          GimpItem *item = GIMP_ITEM (object);
+          GimpItem *item = iter->data;
 
           if (gimp_item_is_content_locked (item))
-            locked_message = _("The active layer's pixels are locked.");
+            locked_message = _("A selected layer's pixels are locked.");
           else if (gimp_item_is_position_locked (item))
-            locked_message = _("The active layer's position and size are locked.");
+            locked_message = _("A selected layer's position and size are locked.");
 
           if (! gimp_item_is_visible (item) &&
               ! config->edit_non_visible &&
-              object != tr_tool->object) /* see bug #759194 */
+              ! g_list_find (tr_tool->objects, item)) /* see bug #759194 */
             {
               g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                                   _("The active layer is not visible."));
+                                   _("A selected layer is not visible."));
               return NULL;
             }
 
           if (! gimp_transform_tool_bounds (tr_tool, display))
             {
               g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                                   _("The selection does not intersect with the layer."));
+                                   _("The selection does not intersect with a selected layer."));
               return NULL;
             }
         }
@@ -711,9 +704,9 @@ gimp_transform_tool_check_active_object (GimpTransformTool  *tr_tool,
     case GIMP_TRANSFORM_TYPE_SELECTION:
       null_message = _("There is no selection to transform.");
 
-      if (object)
+      for (iter = objects; iter; iter = iter->next)
         {
-          GimpItem *item = GIMP_ITEM (object);
+          GimpItem *item = iter->data;
 
           /* cannot happen, so don't translate these messages */
           if (gimp_item_is_content_locked (item))
@@ -726,9 +719,9 @@ gimp_transform_tool_check_active_object (GimpTransformTool  *tr_tool,
     case GIMP_TRANSFORM_TYPE_PATH:
       null_message = _("There is no path to transform.");
 
-      if (object)
+      for (iter = objects; iter; iter = iter->next)
         {
-          GimpItem *item = GIMP_ITEM (object);
+          GimpItem *item = iter->data;
 
           if (gimp_item_is_content_locked (item))
             locked_message = _("The active path's strokes are locked.");
@@ -745,7 +738,7 @@ gimp_transform_tool_check_active_object (GimpTransformTool  *tr_tool,
       break;
     }
 
-  if (! object)
+  if (! objects)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, null_message);
       if (error)
@@ -757,11 +750,11 @@ gimp_transform_tool_check_active_object (GimpTransformTool  *tr_tool,
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, locked_message);
       if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (object));
+        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (objects->data));
       return NULL;
     }
 
-  return object;
+  return objects;
 }
 
 gboolean
@@ -770,9 +763,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 {
   GimpTool             *tool;
   GimpTransformOptions *options;
-  GimpContext          *context;
   GimpImage            *image;
-  GimpObject           *active_object;
+  GList                *selected_objects;
   GeglBuffer           *orig_buffer   = NULL;
   gint                  orig_offset_x = 0;
   gint                  orig_offset_y = 0;
@@ -789,15 +781,14 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 
   tool    = GIMP_TOOL (tr_tool);
   options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-  context = GIMP_CONTEXT (options);
   image   = gimp_display_get_image (display);
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  active_object = gimp_transform_tool_check_active_object (tr_tool, display,
-                                                           &error);
+  selected_objects = gimp_transform_tool_check_selected_objects (tr_tool, display,
+                                                                 &error);
 
-  if (! active_object)
+  if (! selected_objects)
     {
       gimp_tool_message_literal (tool, display, error->message);
       g_clear_error (&error);
@@ -835,12 +826,11 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      if (! gimp_viewable_get_children (GIMP_VIEWABLE (active_object)) &&
-          ! gimp_channel_is_empty (gimp_image_get_mask (image)))
+      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
           orig_buffer = gimp_drawable_transform_cut (
-            GIMP_DRAWABLE (active_object),
-            context,
+            selected_objects,
+            GIMP_CONTEXT (options),
             &orig_offset_x,
             &orig_offset_y,
             &new_layer);
@@ -857,7 +847,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    */
   new_buffer = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (
     tr_tool,
-    active_object,
+    selected_objects,
     orig_buffer,
     orig_offset_x,
     orig_offset_y,
@@ -876,7 +866,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
           /*  paste the new transformed image to the image...also implement
            *  undo...
            */
-          gimp_drawable_transform_paste (GIMP_DRAWABLE (active_object),
+          gimp_drawable_transform_paste (GIMP_DRAWABLE (selected_objects->data),
                                          new_buffer, buffer_profile,
                                          new_offset_x, new_offset_y,
                                          new_layer);
@@ -901,6 +891,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   gimp_unset_busy (display->gimp);
 
   gimp_image_flush (image);
+
+  g_list_free (selected_objects);
 
   return TRUE;
 }

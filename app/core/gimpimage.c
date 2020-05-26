@@ -3082,6 +3082,109 @@ gimp_image_mask_changed (GimpImage *image)
   g_signal_emit (image, gimp_image_signals[MASK_CHANGED], 0);
 }
 
+/**
+ * gimp_item_mask_intersect:
+ * @image:   the #GimpImage
+ * @items:   a list of #GimpItem
+ * @x: (out) (optional): return location for x
+ * @y: (out) (optional): return location for y
+ * @width: (out) (optional): return location for the width
+ * @height: (out) (optional): return location for the height
+ *
+ * Intersect the area of the @items and its image's selection mask.
+ * The computed area is the bounding box of the selection intersection
+ * within the image. These values are only returned if the function
+ * returns %TRUE.
+ *
+ * Note that even though the items bounding box may not be empty, it is
+ * possible to get a return value of %FALSE. Imagine disjoint items, one
+ * on the left, one on the right, and a selection in the middle not
+ * intersecting with any of the items.
+ *
+ * Returns: %TRUE if the selection intersects with any of the @items.
+ */
+gboolean
+gimp_image_mask_intersect (GimpImage *image,
+                           GList     *items,
+                           gint      *x,
+                           gint      *y,
+                           gint      *width,
+                           gint      *height)
+{
+  GimpChannel *selection;
+  GList       *iter;
+  gint         sel_x, sel_y, sel_width, sel_height;
+  gint         x1 = G_MAXINT;
+  gint         y1 = G_MAXINT;
+  gint         x2 = G_MININT;
+  gint         y2 = G_MININT;
+  gboolean     intersect = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  for (iter = items; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_ITEM (iter->data), FALSE);
+      g_return_val_if_fail (gimp_item_is_attached (iter->data), FALSE);
+      g_return_val_if_fail (gimp_item_get_image (iter->data) == image, FALSE);
+    }
+
+  selection = gimp_image_get_mask (image);
+  if (selection)
+    gimp_item_bounds (GIMP_ITEM (selection),
+                      &sel_x, &sel_y, &sel_width, &sel_height);
+
+  for (iter = items; iter; iter = iter->next)
+    {
+      GimpItem *item = iter->data;
+      gboolean  item_intersect;
+      gint      tmp_x, tmp_y;
+      gint      tmp_width, tmp_height;
+
+      gimp_item_get_offset (item, &tmp_x, &tmp_y);
+
+      /* check for is_empty() before intersecting so we ignore the
+       * selection if it is suspended (like when stroking)
+       */
+      if (GIMP_ITEM (selection) != item       &&
+          ! gimp_channel_is_empty (selection))
+        {
+          item_intersect = gimp_rectangle_intersect (sel_x, sel_y, sel_width, sel_height,
+                                                     tmp_x, tmp_y,
+                                                     gimp_item_get_width  (item),
+                                                     gimp_item_get_height (item),
+                                                     &tmp_x, &tmp_y,
+                                                     &tmp_width, &tmp_height);
+        }
+      else
+        {
+          tmp_width  = gimp_item_get_width  (item);
+          tmp_height = gimp_item_get_height (item);
+
+          item_intersect = TRUE;
+        }
+
+      if (item_intersect)
+        {
+          x1 = MIN (x1, tmp_x);
+          y1 = MIN (y1, tmp_y);
+          x2 = MAX (x2, tmp_x + tmp_width);
+          y2 = MAX (y2, tmp_y + tmp_height);
+
+          intersect = TRUE;
+        }
+    }
+
+  if (intersect)
+    {
+      if (x)      *x      = x1;
+      if (y)      *y      = y1;
+      if (width)  *width  = x2 - x1;
+      if (height) *height = y2 - y1;
+    }
+
+  return intersect;
+}
+
 void
 gimp_image_take_mask (GimpImage   *image,
                       GimpChannel *mask)

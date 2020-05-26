@@ -162,7 +162,7 @@ static gchar   * gimp_transform_grid_tool_get_undo_desc      (GimpTransformTool 
 static GimpTransformDirection gimp_transform_grid_tool_get_direction
                                                              (GimpTransformTool      *tr_tool);
 static GeglBuffer * gimp_transform_grid_tool_transform       (GimpTransformTool      *tr_tool,
-                                                              GimpObject             *object,
+                                                              GList                  *objects,
                                                               GeglBuffer             *orig_buffer,
                                                               gint                    orig_offset_x,
                                                               gint                    orig_offset_y,
@@ -176,7 +176,7 @@ static gchar  * gimp_transform_grid_tool_real_get_undo_desc  (GimpTransformGridT
 static void     gimp_transform_grid_tool_real_update_widget  (GimpTransformGridTool  *tg_tool);
 static void     gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool  *tg_tool);
 static GeglBuffer * gimp_transform_grid_tool_real_transform  (GimpTransformGridTool  *tg_tool,
-                                                              GimpObject             *object,
+                                                              GList                  *objects,
                                                               GeglBuffer             *orig_buffer,
                                                               gint                    orig_offset_x,
                                                               gint                    orig_offset_y,
@@ -215,9 +215,9 @@ static gboolean  gimp_transform_grid_tool_composited_preview (GimpTransformGridT
 static void      gimp_transform_grid_tool_update_sensitivity (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_update_preview     (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_update_filters     (GimpTransformGridTool  *tg_tool);
-static void      gimp_transform_grid_tool_hide_active_object (GimpTransformGridTool  *tg_tool,
-                                                              GimpObject             *object);
-static void      gimp_transform_grid_tool_show_active_object (GimpTransformGridTool  *tg_tool);
+static void   gimp_transform_grid_tool_hide_selected_objects (GimpTransformGridTool  *tg_tool,
+                                                              GList                  *objects);
+static void   gimp_transform_grid_tool_show_selected_objects (GimpTransformGridTool  *tg_tool);
 
 static void      gimp_transform_grid_tool_add_filter         (GimpDrawable           *drawable,
                                                               AddFilterData          *data);
@@ -340,34 +340,32 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tool);
   GimpImage                *image      = gimp_display_get_image (display);
   GList                    *drawables;
-  GimpObject               *object;
+  GList                    *objects;
+  GList                    *iter;
   UndoInfo                 *undo_info;
 
-  object = gimp_transform_tool_check_active_object (tr_tool, display, error);
+  objects = gimp_transform_tool_check_selected_objects (tr_tool, display, error);
 
-  if (! object)
+  if (! objects)
     return FALSE;
 
   drawables = gimp_image_get_selected_drawables (image);
-  if (g_list_length (drawables) != 1)
+  if (g_list_length (drawables) < 1)
     {
-      if (g_list_length (drawables) > 1)
-        gimp_tool_message_literal (tool, display,
-                                   _("Cannot modify multiple drawables. Select only one."));
-      else
-        gimp_tool_message_literal (tool, display, _("No active drawables."));
-
+      gimp_tool_message_literal (tool, display, _("No selected drawables."));
       g_list_free (drawables);
+      g_list_free (objects);
       return FALSE;
     }
 
-  tool->display   = display;
-  tool->drawables = drawables;
+  tool->display    = display;
+  tool->drawables  = drawables;
 
-  tr_tool->object = object;
+  tr_tool->objects = objects;
 
-  if (GIMP_IS_DRAWABLE (object))
-    gimp_viewable_preview_freeze (GIMP_VIEWABLE (object));
+  for (iter = objects; iter; iter = iter->next)
+    if (GIMP_IS_DRAWABLE (iter->data))
+      gimp_viewable_preview_freeze (iter->data);
 
   /*  Initialize the transform_grid tool dialog  */
   if (! tg_tool->gui)
@@ -387,7 +385,7 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   /*  Get the on-canvas gui  */
   tg_tool->widget = gimp_transform_grid_tool_get_widget (tg_tool);
 
-  gimp_transform_grid_tool_hide_active_object (tg_tool, object);
+  gimp_transform_grid_tool_hide_selected_objects (tg_tool, objects);
 
   /*  start drawing the bounding box and handles...  */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
@@ -562,9 +560,11 @@ gimp_transform_grid_tool_cursor_update (GimpTool         *tool,
                                         GimpDisplay      *display)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GList             *objects;
 
-  if (display != tool->display &&
-      ! gimp_transform_tool_check_active_object (tr_tool, display, NULL))
+  objects = gimp_transform_tool_check_selected_objects (tr_tool, display, NULL);
+
+  if (display != tool->display && ! objects)
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
@@ -572,6 +572,7 @@ gimp_transform_grid_tool_cursor_update (GimpTool         *tool,
                             GIMP_CURSOR_MODIFIER_BAD);
       return;
     }
+  g_list_free (objects);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
@@ -703,21 +704,21 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
       if (tg_tool->preview)
         {
           GimpDisplay *display;
-          GimpObject  *object;
+          GList       *objects;
 
           display = tool->display;
-          object  = gimp_transform_tool_get_active_object (tr_tool, display);
+          objects = gimp_transform_tool_get_selected_objects (tr_tool, display);
 
-          if (object)
+          if (objects)
             {
               if (tg_options->show_preview &&
                   ! gimp_transform_grid_tool_composited_preview (tg_tool))
                 {
-                  gimp_transform_grid_tool_hide_active_object (tg_tool, object);
+                  gimp_transform_grid_tool_hide_selected_objects (tg_tool, objects);
                 }
               else
                 {
-                  gimp_transform_grid_tool_show_active_object (tg_tool);
+                  gimp_transform_grid_tool_show_selected_objects (tg_tool);
                 }
             }
 
@@ -775,8 +776,7 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
         }
       else
         {
-          g_return_if_fail (g_list_length (tool->drawables) == 1);
-
+          /* TODO */
           pickable = GIMP_PICKABLE (tool->drawables->data);
         }
 
@@ -1017,7 +1017,7 @@ gimp_transform_grid_tool_get_direction (GimpTransformTool *tr_tool)
 
 static GeglBuffer *
 gimp_transform_grid_tool_transform (GimpTransformTool  *tr_tool,
-                                    GimpObject         *object,
+                                    GList              *objects,
                                     GeglBuffer         *orig_buffer,
                                     gint                orig_offset_x,
                                     gint                orig_offset_y,
@@ -1035,7 +1035,7 @@ gimp_transform_grid_tool_transform (GimpTransformTool  *tr_tool,
    */
   new_buffer =
     GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->transform (tg_tool,
-                                                             object,
+                                                             objects,
                                                              orig_buffer,
                                                              orig_offset_x,
                                                              orig_offset_y,
@@ -1101,7 +1101,7 @@ gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool *tg_tool)
 
 static GeglBuffer *
 gimp_transform_grid_tool_real_transform (GimpTransformGridTool  *tg_tool,
-                                         GimpObject             *object,
+                                         GList                  *objects,
                                          GeglBuffer             *orig_buffer,
                                          gint                    orig_offset_x,
                                          gint                    orig_offset_y,
@@ -1112,7 +1112,7 @@ gimp_transform_grid_tool_real_transform (GimpTransformGridTool  *tg_tool,
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
   return GIMP_TRANSFORM_TOOL_CLASS (parent_class)->transform (tr_tool,
-                                                              object,
+                                                              objects,
                                                               orig_buffer,
                                                               orig_offset_x,
                                                               orig_offset_y,
@@ -1212,7 +1212,7 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
       tg_tool->undo_list = NULL;
     }
 
-  gimp_transform_grid_tool_show_active_object (tg_tool);
+  gimp_transform_grid_tool_show_selected_objects (tg_tool);
 
   if (tg_options->direction_chain_button)
     {
@@ -1227,12 +1227,16 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
   g_list_free (tool->drawables);
   tool->drawables = NULL;
 
-  if (tr_tool->object)
+  if (tr_tool->objects)
     {
-      if (GIMP_IS_DRAWABLE (tr_tool->object))
-        gimp_viewable_preview_thaw (GIMP_VIEWABLE (tr_tool->object));
+      GList *iter;
 
-      tr_tool->object = NULL;
+      for (iter = tr_tool->objects; iter; iter = iter->next)
+        if (GIMP_IS_DRAWABLE (iter->data))
+          gimp_viewable_preview_thaw (iter->data);
+
+      g_list_free (tr_tool->objects);
+      tr_tool->objects = NULL;
     }
 }
 
@@ -1313,11 +1317,11 @@ gimp_transform_grid_tool_prepare (GimpTransformGridTool *tg_tool,
 
   if (tg_tool->gui)
     {
-      GimpObject *object = gimp_transform_tool_get_active_object (tr_tool,
-                                                                  display);
+      GList *objects = gimp_transform_tool_get_selected_objects (tr_tool, display);
 
       gimp_tool_gui_set_shell (tg_tool->gui, gimp_display_get_shell (display));
-      gimp_tool_gui_set_viewable (tg_tool->gui, GIMP_VIEWABLE (object));
+      gimp_tool_gui_set_viewables (tg_tool->gui, objects);
+      g_list_free (objects);
     }
 
   if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->prepare)
@@ -1786,8 +1790,9 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
 static void
 gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
 {
-  GimpTool                 *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformGridOptions *options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GimpTool                 *tool      = GIMP_TOOL (tg_tool);
+  GimpTransformGridOptions *options   = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GimpImage                *image     = gimp_display_get_image (tool->display);
   GHashTable               *new_drawables;
   GList                    *drawables;
   GList                    *iter;
@@ -1797,24 +1802,10 @@ gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
   if (! tg_tool->filters)
     return;
 
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
-
-  if (options->preview_linked &&
-      gimp_item_get_linked (GIMP_ITEM (tool->drawables->data)))
-    {
-      GimpImage *image = gimp_display_get_image (tool->display);
-
-      drawables = gimp_image_item_list_get_list (image,
-                                                 GIMP_ITEM_TYPE_LAYERS |
-                                                 GIMP_ITEM_TYPE_CHANNELS,
-                                                 GIMP_ITEM_SET_LINKED);
-
-      drawables = gimp_image_item_list_filter (drawables);
-    }
+  if (options->preview_linked)
+    drawables = gimp_image_item_list_linked (image, tool->drawables);
   else
-    {
-      drawables = g_list_copy (tool->drawables);
-    }
+    drawables = gimp_image_item_list_filter (g_list_copy (tool->drawables));
 
   new_drawables = g_hash_table_new (g_direct_hash, g_direct_equal);
 
@@ -1848,62 +1839,80 @@ gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_transform_grid_tool_hide_active_object (GimpTransformGridTool *tg_tool,
-                                             GimpObject            *object)
+gimp_transform_grid_tool_hide_selected_objects (GimpTransformGridTool *tg_tool,
+                                                GList                 *objects)
 {
   GimpTransformGridOptions *options    = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
   GimpTransformOptions     *tr_options = GIMP_TRANSFORM_OPTIONS (options);
   GimpDisplay              *display    = GIMP_TOOL (tg_tool)->display;
   GimpImage                *image      = gimp_display_get_image (display);
 
+  g_return_if_fail (tr_options->type != GIMP_TRANSFORM_TYPE_IMAGE ||
+                    (g_list_length (objects) == 1 && GIMP_IS_IMAGE (objects->data)));
+
+  g_list_free (tg_tool->hidden_objects);
+  tg_tool->hidden_objects = NULL;
+
   if (options->show_preview)
     {
-      /*  hide only complete layers and channels, not layer masks  */
-      if (tr_options->type == GIMP_TRANSFORM_TYPE_LAYER &&
-          ! options->composited_preview                 &&
-          GIMP_IS_DRAWABLE (object)                     &&
-          ! GIMP_IS_LAYER_MASK (object)                 &&
-          gimp_item_get_visible (GIMP_ITEM (object))    &&
-          gimp_channel_is_empty (gimp_image_get_mask (image)))
+      if (tr_options->type == GIMP_TRANSFORM_TYPE_IMAGE)
         {
-          tg_tool->hidden_object = object;
-
-          gimp_item_set_visible (GIMP_ITEM (object), FALSE, FALSE);
-
-          gimp_projection_flush (gimp_image_get_projection (image));
-        }
-      else if (tr_options->type == GIMP_TRANSFORM_TYPE_IMAGE)
-        {
-          tg_tool->hidden_object = object;
-
+          tg_tool->hidden_objects = g_list_copy (objects);
           gimp_display_shell_set_show_image (gimp_display_get_shell (display),
                                              FALSE);
+        }
+      else
+        {
+          /*  hide only complete layers and channels, not layer masks  */
+          GList *iter;
+
+          for (iter = objects; iter; iter = iter->next)
+            {
+              if (tr_options->type == GIMP_TRANSFORM_TYPE_LAYER &&
+                  ! options->composited_preview                 &&
+                  GIMP_IS_DRAWABLE (iter->data)                 &&
+                  ! GIMP_IS_LAYER_MASK (iter->data)             &&
+                  gimp_item_get_visible (iter->data)            &&
+                  gimp_channel_is_empty (gimp_image_get_mask (image)))
+                {
+                  tg_tool->hidden_objects = g_list_prepend (tg_tool->hidden_objects, iter->data);
+
+                  gimp_item_set_visible (iter->data, FALSE, FALSE);
+                }
+            }
+
+          gimp_projection_flush (gimp_image_get_projection (image));
         }
     }
 }
 
 static void
-gimp_transform_grid_tool_show_active_object (GimpTransformGridTool *tg_tool)
+gimp_transform_grid_tool_show_selected_objects (GimpTransformGridTool *tg_tool)
 {
-  if (tg_tool->hidden_object)
+  if (tg_tool->hidden_objects)
     {
       GimpDisplay *display = GIMP_TOOL (tg_tool)->display;
       GimpImage   *image   = gimp_display_get_image (display);
+      GList       *iter;
 
-      if (GIMP_IS_ITEM (tg_tool->hidden_object))
+      for (iter = tg_tool->hidden_objects; iter; iter = iter->next)
         {
-          gimp_item_set_visible (GIMP_ITEM (tg_tool->hidden_object), TRUE,
-                                            FALSE);
-        }
-      else
-        {
-          g_return_if_fail (GIMP_IS_IMAGE (tg_tool->hidden_object));
+          if (GIMP_IS_ITEM (iter->data))
+            {
+              gimp_item_set_visible (GIMP_ITEM (iter->data), TRUE,
+                                     FALSE);
+            }
+          else
+            {
+              g_return_if_fail (GIMP_IS_IMAGE (iter->data));
 
-          gimp_display_shell_set_show_image (gimp_display_get_shell (display),
-                                             TRUE);
+              gimp_display_shell_set_show_image (gimp_display_get_shell (display),
+                                                 TRUE);
+            }
         }
 
-      tg_tool->hidden_object = NULL;
+      g_list_free (tg_tool->hidden_objects);
+      tg_tool->hidden_objects = NULL;
 
       gimp_image_flush (image);
     }

@@ -17,24 +17,28 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub edit_cut {
-    $blurb = 'Cut from the specified drawable.';
+    $blurb = 'Cut from the specified drawables.';
 
     $help = <<'HELP';
 If there is a selection in the image, then the area specified by the
-selection is cut from the specified drawable and placed in an internal
+selection is cut from the specified drawables and placed in an internal
 GIMP edit buffer. It can subsequently be retrieved using the
-gimp_edit_paste() command. If there is no selection, then the
-specified drawable will be removed and its contents stored in the
-internal GIMP edit buffer. This procedure will fail if the selected area
-lies completely outside the bounds of the current drawable and there is
-nothing to copy from.
+gimp_edit_paste() command. If there is no selection and only one
+specified drawable, then the specified drawable will be removed and its
+contents stored in the internal GIMP edit buffer.
+This procedure will fail if the selected area lies completely outside
+the bounds of the current drawables and there is nothing to cut from.
 HELP
 
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable to cut from' }
+        { name => 'drawables', type => 'itemarray',
+         desc => 'The drawables to cut from',
+          no_validate => 1,
+          array => { name => 'num_drawables',
+                     type => '1 <= int32',
+                     desc => "The number of drawables" } }
     );
 
     @outargs = (
@@ -46,14 +50,41 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-      GError    *my_error = NULL;
+  GimpImage *image         = NULL;
+  GList     *drawable_list = NULL;
+  gint       i;
 
-      non_empty = gimp_edit_cut (image, drawable, context, &my_error) != NULL;
+  for (i = 0; i < num_drawables; i++)
+    {
+      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+                                       GIMP_PDB_ITEM_CONTENT, error) ||
+          gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+        {
+          success = FALSE;
+          break;
+        }
+
+      if (! image)
+        {
+          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+        }
+      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+        {
+          success = FALSE;
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                _("All specified drawables must belong to the same image."));
+          break;
+        }
+
+      drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
+    }
+
+  if (success && image)
+    {
+      GError *my_error = NULL;
+
+      non_empty = gimp_edit_cut (image, drawable_list, context, &my_error) != NULL;
 
       if (! non_empty)
         {
@@ -64,7 +95,10 @@ HELP
         }
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
+  g_list_free (drawable_list);
 }
 CODE
     );
@@ -299,8 +333,12 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => "The drawable to cut from" },
+        { name => 'drawables', type => 'itemarray',
+         desc => 'The drawables to cut from',
+          no_validate => 1,
+          array => { name => 'num_drawables',
+                     type => '1 <= int32',
+                     desc => "The number of drawables" } },
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
@@ -314,15 +352,42 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  GimpImage *image         = NULL;
+  GList     *drawable_list = NULL;
+  gint       i;
+
+  for (i = 0; i < num_drawables; i++)
     {
-      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-      GError    *my_error = NULL;
+      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+                                       GIMP_PDB_ITEM_CONTENT, error) ||
+          gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+        {
+          success = FALSE;
+          break;
+        }
+
+      if (! image)
+        {
+          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+        }
+      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+        {
+          success = FALSE;
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                _("All specified drawables must belong to the same image."));
+          break;
+        }
+
+      drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
+    }
+
+  if (success && image)
+    {
+      GError *my_error = NULL;
 
       real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
-                                                 drawable, context, &my_error);
+                                                 drawable_list, context, &my_error);
 
       if (real_name)
         {
@@ -337,7 +402,10 @@ HELP
         }
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
+  g_list_free (drawable_list);
 }
 CODE
     );
@@ -355,8 +423,12 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => "The drawable to copy from" },
+        { name => 'drawables', type => 'itemarray',
+         desc => 'The drawables to copy from',
+          no_validate => 1,
+          array => { name => 'num_drawables',
+                     type => '1 <= int32',
+                     desc => "The number of drawables" } },
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
@@ -370,13 +442,41 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
+  GimpImage *image         = NULL;
+  GList     *drawable_list = NULL;
+  gint       i;
+
+  for (i = 0; i < num_drawables; i++)
     {
-      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-      GError    *my_error = NULL;
+      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+                                       0, error))
+        {
+          success = FALSE;
+          break;
+        }
+
+      if (! image)
+        {
+          image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+        }
+      else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+        {
+          success = FALSE;
+          gimp_message_literal (gimp,
+                                G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                _("All specified drawables must belong to the same image."));
+          break;
+        }
+
+      drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
+    }
+
+  if (success && image)
+    {
+      GError *my_error = NULL;
 
       real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
-                                                  drawable, context, &my_error);
+                                                  drawable_list, context, &my_error);
 
       if (real_name)
         {
@@ -391,7 +491,10 @@ HELP
         }
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
+  g_list_free (drawable_list);
 }
 CODE
     );

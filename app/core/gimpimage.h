@@ -216,6 +216,12 @@ void       gimp_image_floating_selection_changed (GimpImage          *image);
 
 GimpChannel   * gimp_image_get_mask              (GimpImage          *image);
 void            gimp_image_mask_changed          (GimpImage          *image);
+gboolean        gimp_image_mask_intersect        (GimpImage          *image,
+                                                  GList              *items,
+                                                  gint               *x,
+                                                  gint               *y,
+                                                  gint               *width,
+                                                  gint               *height);
 
 
 /*  image components  */

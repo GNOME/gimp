@@ -216,16 +216,20 @@ edit_cut_cmd_callback (GimpAction *action,
                        gpointer    data)
 {
   GimpImage    *image;
-  GimpDrawable *drawable;
+  GList        *drawables;
+  GList        *iter;
   GimpObject   *cut;
   GError       *error = NULL;
-  return_if_no_drawable (image, drawable, data);
+  return_if_no_drawables (image, drawables, data);
 
-  if (! check_drawable_alpha (drawable, data))
-    return;
+  for (iter = drawables; iter; iter = iter->next)
+    if (! check_drawable_alpha (iter->data, data))
+      {
+        g_list_free (drawables);
+        return;
+      }
 
-  cut = gimp_edit_cut (image, drawable, action_data_get_context (data),
-                       &error);
+  cut = gimp_edit_cut (image, drawables, action_data_get_context (data), &error);
 
   if (cut)
     {
@@ -248,6 +252,7 @@ edit_cut_cmd_callback (GimpAction *action,
                             error->message);
       g_clear_error (&error);
     }
+  g_list_free (drawables);
 }
 
 void
@@ -539,7 +544,7 @@ check_drawable_alpha (GimpDrawable *drawable,
         {
           gimp_message_literal (
             gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
-            _("The active layer's alpha channel is locked."));
+            _("A selected layer's alpha channel is locked."));
 
           gimp_tools_blink_lock_box (gimp, GIMP_ITEM (drawable));
         }
@@ -639,21 +644,21 @@ cut_named_buffer_callback (GtkWidget   *widget,
                            const gchar *name,
                            gpointer     data)
 {
-  GimpImage    *image    = GIMP_IMAGE (data);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-  GError       *error    = NULL;
+  GimpImage *image     = GIMP_IMAGE (data);
+  GList     *drawables = gimp_image_get_selected_drawables (image);
+  GError    *error     = NULL;
 
-  if (! drawable)
+  if (! drawables)
     {
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to cut from."));
+                            _("There are no selected layers or channels to cut from."));
       return;
     }
 
   if (! (name && strlen (name)))
     name = _("(Unnamed Buffer)");
 
-  if (gimp_edit_named_cut (image, name, drawable,
+  if (gimp_edit_named_cut (image, name, drawables,
                            gimp_get_user_context (image->gimp), &error))
     {
       gimp_image_flush (image);
@@ -664,6 +669,7 @@ cut_named_buffer_callback (GtkWidget   *widget,
                             error->message);
       g_clear_error (&error);
     }
+  g_list_free (drawables);
 }
 
 static void
@@ -671,21 +677,21 @@ copy_named_buffer_callback (GtkWidget   *widget,
                             const gchar *name,
                             gpointer     data)
 {
-  GimpImage    *image    = GIMP_IMAGE (data);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-  GError       *error    = NULL;
+  GimpImage *image     = GIMP_IMAGE (data);
+  GList     *drawables = gimp_image_get_selected_drawables (image);
+  GError    *error     = NULL;
 
-  if (! drawable)
+  if (! drawables)
     {
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to copy from."));
+                            _("There are no selected layers or channels to copy from."));
       return;
     }
 
   if (! (name && strlen (name)))
     name = _("(Unnamed Buffer)");
 
-  if (gimp_edit_named_copy (image, name, drawable,
+  if (gimp_edit_named_copy (image, name, drawables,
                             gimp_get_user_context (image->gimp), &error))
     {
       gimp_image_flush (image);
@@ -696,6 +702,7 @@ copy_named_buffer_callback (GtkWidget   *widget,
                             error->message);
       g_clear_error (&error);
     }
+  g_list_free (drawables);
 }
 
 static void

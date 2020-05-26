@@ -58,21 +58,50 @@ edit_cut_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  gint num_drawables;
+  const GimpItem **drawables;
   gboolean non_empty = FALSE;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
+  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        {
-          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-          GError    *my_error = NULL;
+      GimpImage *image         = NULL;
+      GList     *drawable_list = NULL;
+      gint       i;
 
-          non_empty = gimp_edit_cut (image, drawable, context, &my_error) != NULL;
+      for (i = 0; i < num_drawables; i++)
+        {
+          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+                                           GIMP_PDB_ITEM_CONTENT, error) ||
+              gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+            {
+              success = FALSE;
+              break;
+            }
+
+          if (! image)
+            {
+              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+            }
+          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+            {
+              success = FALSE;
+              gimp_message_literal (gimp,
+                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                    _("All specified drawables must belong to the same image."));
+              break;
+            }
+
+          drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
+        }
+
+      if (success && image)
+        {
+          GError *my_error = NULL;
+
+          non_empty = gimp_edit_cut (image, drawable_list, context, &my_error) != NULL;
 
           if (! non_empty)
             {
@@ -83,7 +112,10 @@ edit_cut_invoker (GimpProcedure         *procedure,
             }
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
+      g_list_free (drawable_list);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -295,24 +327,53 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  gint num_drawables;
+  const GimpItem **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
+  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
+  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      GimpImage *image         = NULL;
+      GList     *drawable_list = NULL;
+      gint       i;
+
+      for (i = 0; i < num_drawables; i++)
         {
-          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-          GError    *my_error = NULL;
+          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+                                           GIMP_PDB_ITEM_CONTENT, error) ||
+              gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error))
+            {
+              success = FALSE;
+              break;
+            }
+
+          if (! image)
+            {
+              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+            }
+          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+            {
+              success = FALSE;
+              gimp_message_literal (gimp,
+                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                    _("All specified drawables must belong to the same image."));
+              break;
+            }
+
+          drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
+        }
+
+      if (success && image)
+        {
+          GError *my_error = NULL;
 
           real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
-                                                     drawable, context, &my_error);
+                                                     drawable_list, context, &my_error);
 
           if (real_name)
             {
@@ -327,7 +388,10 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
             }
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
+      g_list_free (drawable_list);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -349,22 +413,52 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  gint num_drawables;
+  const GimpItem **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
+  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
+  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
+      GimpImage *image         = NULL;
+      GList     *drawable_list = NULL;
+      gint       i;
+
+      for (i = 0; i < num_drawables; i++)
         {
-          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-          GError    *my_error = NULL;
+          if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
+                                           0, error))
+            {
+              success = FALSE;
+              break;
+            }
+
+          if (! image)
+            {
+              image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+            }
+          else if (image != gimp_item_get_image (GIMP_ITEM (drawables[i])))
+            {
+              success = FALSE;
+              gimp_message_literal (gimp,
+                                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                                    _("All specified drawables must belong to the same image."));
+              break;
+            }
+
+          drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
+        }
+
+      if (success && image)
+        {
+          GError *my_error = NULL;
 
           real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
-                                                      drawable, context, &my_error);
+                                                      drawable_list, context, &my_error);
 
           if (real_name)
             {
@@ -379,7 +473,10 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
             }
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
+      g_list_free (drawable_list);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -538,19 +635,25 @@ register_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-edit-cut");
   gimp_procedure_set_static_help (procedure,
-                                  "Cut from the specified drawable.",
-                                  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawable and there is nothing to copy from.",
+                                  "Cut from the specified drawables.",
+                                  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection and only one specified drawable, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to cut from.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable to cut from",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "The drawables to cut from",
+                                                             GIMP_TYPE_ITEM,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
@@ -697,11 +800,17 @@ register_edit_procs (GimpPDB *pdb)
                                          "Michael Natterer",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable to cut from",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "The drawables to cut from",
+                                                             GIMP_TYPE_ITEM,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -734,11 +843,17 @@ register_edit_procs (GimpPDB *pdb)
                                          "Michael Natterer",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "The drawable to copy from",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-drawables",
+                                                 "num drawables",
+                                                 "The number of drawables",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("drawables",
+                                                             "drawables",
+                                                             "The drawables to copy from",
+                                                             GIMP_TYPE_ITEM,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",

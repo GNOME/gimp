@@ -81,7 +81,7 @@ static void         gimp_flip_tool_draw          (GimpDrawTool         *draw_too
 
 static gchar      * gimp_flip_tool_get_undo_desc (GimpTransformTool    *tr_tool);
 static GeglBuffer * gimp_flip_tool_transform     (GimpTransformTool    *tr_tool,
-                                                  GimpObject           *object,
+                                                  GList                *objects,
                                                   GeglBuffer           *orig_buffer,
                                                   gint                  orig_offset_x,
                                                   gint                  orig_offset_y,
@@ -258,8 +258,11 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpFlipTool      *flip    = GIMP_FLIP_TOOL (tool);
+  GList             *selected_objects;
 
-  if (! gimp_transform_tool_check_active_object (tr_tool, display, NULL))
+  selected_objects = gimp_transform_tool_check_selected_objects (tr_tool, display, NULL);
+
+  if (! selected_objects)
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
@@ -267,6 +270,7 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
                             GIMP_CURSOR_MODIFIER_BAD);
       return;
     }
+  g_list_free (selected_objects);
 
   gimp_tool_control_set_toggled (tool->control,
                                  gimp_flip_tool_get_flip_type (flip) ==
@@ -318,7 +322,7 @@ gimp_flip_tool_get_undo_desc (GimpTransformTool *tr_tool)
 
 static GeglBuffer *
 gimp_flip_tool_transform (GimpTransformTool *tr_tool,
-                          GimpObject        *object,
+                          GList             *objects,
                           GeglBuffer        *orig_buffer,
                           gint               orig_offset_x,
                           gint               orig_offset_y,
@@ -380,9 +384,9 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
        *  normal drawable
        */
 
-      g_return_val_if_fail (GIMP_IS_DRAWABLE (object), NULL);
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (objects->data), NULL);
 
-      ret = gimp_drawable_transform_buffer_flip (GIMP_DRAWABLE (object),
+      ret = gimp_drawable_transform_buffer_flip (GIMP_DRAWABLE (objects->data),
                                                  context,
                                                  orig_buffer,
                                                  orig_offset_x,
@@ -393,42 +397,49 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
                                                  new_offset_x,
                                                  new_offset_y);
     }
-  else if (GIMP_IS_ITEM (object))
-    {
-      /*  this happens for entire drawables, paths and layer groups  */
-
-      GimpItem *item = GIMP_ITEM (object);
-
-      if (gimp_item_get_linked (item))
-        {
-          gimp_item_linked_flip (item, context,
-                                 flip_type, axis, clip_result);
-        }
-      else
-        {
-          clip_result = gimp_item_get_clip (item, clip_result);
-
-          gimp_item_flip (item, context,
-                          flip_type, axis, clip_result);
-        }
-    }
-  else
+  else if (g_list_length (objects) == 1 && GIMP_IS_IMAGE (objects->data))
     {
       /*  this happens for images  */
       GimpTransformToolClass *tr_class = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool);
       GimpProgress           *progress;
 
-      g_return_val_if_fail (GIMP_IS_IMAGE (object), NULL);
-
       progress = gimp_progress_start (GIMP_PROGRESS (tr_tool), FALSE,
                                       "%s", tr_class->progress_text);
 
-      gimp_image_flip_full (GIMP_IMAGE (object), context,
+      gimp_image_flip_full (GIMP_IMAGE (objects->data), context,
                             flip_type, axis, clip_result,
                             progress);
 
       if (progress)
         gimp_progress_end (progress);
+    }
+  else
+    {
+      /*  this happens for entire drawables, paths and layer groups  */
+
+      GList *iter;
+
+      for (iter = objects; iter; iter = iter->next)
+        {
+          GimpItem *item;
+
+          g_return_val_if_fail (GIMP_IS_ITEM (iter->data), NULL);
+
+          item = GIMP_ITEM (iter->data);
+
+          if (gimp_item_get_linked (item))
+            {
+              gimp_item_linked_flip (item, context,
+                                     flip_type, axis, clip_result);
+            }
+          else
+            {
+              clip_result = gimp_item_get_clip (item, clip_result);
+
+              gimp_item_flip (item, context,
+                              flip_type, axis, clip_result);
+            }
+        }
     }
 
   return ret;

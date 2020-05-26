@@ -47,7 +47,7 @@
 /*  local function protypes  */
 
 static GimpBuffer * gimp_edit_extract (GimpImage     *image,
-                                       GimpPickable  *pickable,
+                                       GList         *pickables,
                                        GimpContext   *context,
                                        gboolean       cut_pixels,
                                        GError       **error);
@@ -57,25 +57,24 @@ static GimpBuffer * gimp_edit_extract (GimpImage     *image,
 
 GimpObject *
 gimp_edit_cut (GimpImage     *image,
-               GimpDrawable  *drawable,
+               GList         *drawables,
                GimpContext   *context,
                GError       **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (GIMP_IS_LAYER (drawable) &&
+  if (g_list_length (drawables) == 1  &&
+      GIMP_IS_LAYER (drawables->data) &&
       gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       GimpImage *clip_image;
       gint       off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (drawables->data), &off_x, &off_y);
 
-      clip_image = gimp_image_new_from_drawable (image->gimp, drawable);
+      clip_image = gimp_image_new_from_drawable (image->gimp, drawables->data);
       g_object_set_data (G_OBJECT (clip_image), "offset-x",
                          GINT_TO_POINTER (off_x));
       g_object_set_data (G_OBJECT (clip_image), "offset-y",
@@ -87,7 +86,7 @@ gimp_edit_cut (GimpImage     *image,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT,
                                    C_("undo-type", "Cut Layer"));
 
-      gimp_image_remove_layer (image, GIMP_LAYER (drawable),
+      gimp_image_remove_layer (image, GIMP_LAYER (drawables->data),
                                TRUE, NULL);
 
       gimp_image_undo_group_end (image);
@@ -98,8 +97,7 @@ gimp_edit_cut (GimpImage     *image,
     {
       GimpBuffer *buffer;
 
-      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                                  context, TRUE, error);
+      buffer = gimp_edit_extract (image, drawables, context, TRUE, error);
 
       if (buffer)
         {
@@ -183,8 +181,7 @@ gimp_edit_copy (GimpImage     *image,
     {
       GimpBuffer *buffer;
 
-      buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawables->data),
-                                  context, FALSE, error);
+      buffer = gimp_edit_extract (image, drawables, context, FALSE, error);
 
       if (buffer)
         {
@@ -204,13 +201,15 @@ gimp_edit_copy_visible (GimpImage    *image,
                         GError      **error)
 {
   GimpBuffer *buffer;
+  GList      *pickables;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (image),
-                              context, FALSE, error);
+  pickables = g_list_prepend (NULL, image);
+  buffer = gimp_edit_extract (image, pickables, context, FALSE, error);
+  g_list_free (pickables);
 
   if (buffer)
     {
@@ -662,7 +661,7 @@ gimp_edit_paste_as_new_image (Gimp       *gimp,
 const gchar *
 gimp_edit_named_cut (GimpImage     *image,
                      const gchar   *name,
-                     GimpDrawable  *drawable,
+                     GList         *drawables,
                      GimpContext   *context,
                      GError       **error)
 {
@@ -670,13 +669,10 @@ gimp_edit_named_cut (GimpImage     *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, TRUE, error);
+  buffer = gimp_edit_extract (image, drawables, context, TRUE, error);
 
   if (buffer)
     {
@@ -693,7 +689,7 @@ gimp_edit_named_cut (GimpImage     *image,
 const gchar *
 gimp_edit_named_copy (GimpImage     *image,
                       const gchar   *name,
-                      GimpDrawable  *drawable,
+                      GList         *drawables,
                       GimpContext   *context,
                       GError       **error)
 {
@@ -701,13 +697,10 @@ gimp_edit_named_copy (GimpImage     *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, FALSE, error);
+  buffer = gimp_edit_extract (image, drawables, context, FALSE, error);
 
   if (buffer)
     {
@@ -728,14 +721,16 @@ gimp_edit_named_copy_visible (GimpImage    *image,
                               GError      **error)
 {
   GimpBuffer *buffer;
+  GList      *pickables;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  buffer = gimp_edit_extract (image, GIMP_PICKABLE (image),
-                              context, FALSE, error);
+  pickables = g_list_prepend (NULL, image);
+  buffer = gimp_edit_extract (image, pickables, context, FALSE, error);
+  g_list_free (pickables);
 
   if (buffer)
     {
@@ -752,9 +747,29 @@ gimp_edit_named_copy_visible (GimpImage    *image,
 
 /*  private functions  */
 
+/**
+ * gimp_edit_extract:
+ * @image:
+ * @pickables:
+ * @context:
+ * @cut_pixels:
+ * @error:
+ *
+ * Extracts the selected part of @image from the list of @pickables.
+ * If @cut_pixels is %TRUE, and there is only one pickable input, and if
+ * this pickable is a #GimpDrawable, then the selected pixels will be
+ * effectively erased from the input pickable.
+ * Otherwise @cut_pixels has no additional effect.
+ * Note that all @pickables must belong to the same @image.
+ *
+ * Returns: a #GimpBuffer of the selected part of @image as if only the
+ * selected @pickables were present (composited according to their
+ * properties, unless there is only one pickable, in which case direct
+ * pixel information is used without composition).
+ */
 static GimpBuffer *
 gimp_edit_extract (GimpImage     *image,
-                   GimpPickable  *pickable,
+                   GList         *pickables,
                    GimpContext   *context,
                    gboolean       cut_pixels,
                    GError       **error)
@@ -763,13 +778,19 @@ gimp_edit_extract (GimpImage     *image,
   gint        offset_x;
   gint        offset_y;
 
+  g_return_val_if_fail (g_list_length (pickables) > 0, NULL);
+
+  if (g_list_length (pickables) > 1 ||
+      ! GIMP_IS_DRAWABLE (pickables->data))
+    cut_pixels = FALSE;
+
   if (cut_pixels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT,
                                  C_("undo-type", "Cut"));
 
   /*  Cut/copy the mask portion from the image  */
   buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                   pickable, context,
+                                   pickables, context,
                                    cut_pixels, FALSE, FALSE,
                                    &offset_x, &offset_y, error);
 
@@ -790,10 +811,10 @@ gimp_edit_extract (GimpImage     *image,
       gimp_buffer_set_resolution (gimp_buffer, res_x, res_y);
       gimp_buffer_set_unit (gimp_buffer, gimp_image_get_unit (image));
 
-      if (GIMP_IS_COLOR_MANAGED (pickable))
+      if (GIMP_IS_COLOR_MANAGED (pickables->data))
         {
           GimpColorProfile *profile =
-            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (pickable));
+            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (pickables->data));
 
           if (profile)
             gimp_buffer_set_color_profile (gimp_buffer, profile);
