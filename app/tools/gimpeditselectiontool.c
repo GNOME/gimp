@@ -212,7 +212,6 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   GList                 *selected_items;
   GList                 *iter;
   GList                 *list;
-  gboolean               have_linked = FALSE;
   gint                   off_x       = G_MAXINT;
   gint                   off_y       = G_MAXINT;
 
@@ -261,9 +260,6 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       gimp_item_get_offset (iter->data, &item_off_x, &item_off_y);
       off_x = MIN (off_x, item_off_x);
       off_y = MIN (off_y, item_off_y);
-
-      if (gimp_item_get_linked (iter->data))
-        have_linked = TRUE;
     }
 
   /* Manually set the last coords to the starting point */
@@ -333,13 +329,16 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       case GIMP_TRANSLATE_MODE_CHANNEL:
       case GIMP_TRANSLATE_MODE_MASK:
       case GIMP_TRANSLATE_MODE_LAYER_MASK:
-        gimp_item_bounds (selected_items->data, &x, &y, &w, &h);
+        edit_select->delayed_items = gimp_image_item_list_linked (image, selected_items);
+        gimp_image_item_list_bounds (image, edit_select->delayed_items, &x, &y, &w, &h);
         x += off_x;
         y += off_y;
+
         break;
 
       case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
       case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
+        /* MASK_TO_LAYER and MASK_COPY_TO_LAYER create a live_item later */
         x = edit_select->sel_x + off_x;
         y = edit_select->sel_y + off_y;
         w = edit_select->sel_width;
@@ -349,30 +348,9 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       case GIMP_TRANSLATE_MODE_LAYER:
       case GIMP_TRANSLATE_MODE_FLOATING_SEL:
       case GIMP_TRANSLATE_MODE_VECTORS:
-        if (have_linked)
-          {
-            GList *linked;
-
-            linked = gimp_image_item_list_get_list (image,
-                                                    GIMP_IS_LAYER (selected_items->data) ?
-                                                    GIMP_ITEM_TYPE_LAYERS :
-                                                    GIMP_ITEM_TYPE_VECTORS,
-                                                    GIMP_ITEM_SET_LINKED);
-            linked = gimp_image_item_list_filter (linked);
-
-            for (iter = selected_items; iter; iter = iter->next)
-              if (! g_list_find (linked, iter->data))
-                linked = g_list_prepend (linked, iter->data);
-
-            gimp_image_item_list_bounds (image, linked, &x, &y, &w, &h);
-
-            g_list_free (linked);
-          }
-        else
-          {
-            gimp_image_item_list_bounds (image, selected_items, &x, &y, &w, &h);
-          }
-       break;
+        edit_select->live_items = gimp_image_item_list_linked (image, selected_items);
+        gimp_image_item_list_bounds (image, edit_select->live_items, &x, &y, &w, &h);
+        break;
       }
 
     gimp_tool_control_set_snap_offsets (tool->control,
@@ -384,61 +362,6 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
     edit_select->center_x = x + w / 2.0;
     edit_select->center_y = y + h / 2.0;
   }
-
-  if (have_linked)
-    {
-      switch (edit_select->edit_mode)
-        {
-        case GIMP_TRANSLATE_MODE_CHANNEL:
-        case GIMP_TRANSLATE_MODE_LAYER:
-        case GIMP_TRANSLATE_MODE_VECTORS:
-          edit_select->live_items =
-            gimp_image_item_list_get_list (image,
-                                           GIMP_ITEM_TYPE_LAYERS |
-                                           GIMP_ITEM_TYPE_VECTORS,
-                                           GIMP_ITEM_SET_LINKED);
-
-          for (iter = selected_items; iter; iter = iter->next)
-            if (! g_list_find (edit_select->live_items, iter->data))
-              edit_select->live_items = g_list_prepend (edit_select->live_items, iter->data);
-
-          edit_select->live_items =
-            gimp_image_item_list_filter (edit_select->live_items);
-
-          edit_select->delayed_items =
-            gimp_image_item_list_get_list (image,
-                                           GIMP_ITEM_TYPE_CHANNELS,
-                                           GIMP_ITEM_SET_LINKED);
-          edit_select->delayed_items =
-            gimp_image_item_list_filter (edit_select->delayed_items);
-          break;
-
-        default:
-          /* other stuff can't be linked so don't bother */
-          break;
-        }
-    }
-  else
-    {
-      switch (edit_select->edit_mode)
-        {
-        case GIMP_TRANSLATE_MODE_VECTORS:
-        case GIMP_TRANSLATE_MODE_LAYER:
-        case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-          edit_select->live_items = g_list_copy (selected_items);
-          break;
-
-        case GIMP_TRANSLATE_MODE_CHANNEL:
-        case GIMP_TRANSLATE_MODE_LAYER_MASK:
-        case GIMP_TRANSLATE_MODE_MASK:
-          edit_select->delayed_items = g_list_copy (selected_items);
-          break;
-
-        default:
-          /* MASK_TO_LAYER and MASK_COPY_TO_LAYER create a live_item later */
-          break;
-        }
-    }
 
   for (list = edit_select->live_items; list; list = g_list_next (list))
     {
@@ -709,7 +632,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   GimpImage             *image       = gimp_display_get_image (display);
   GList                 *selected_items;
   GList                 *iter;
-  gboolean               have_linked = FALSE;
   gint                   off_x       = G_MAXINT;
   gint                   off_y       = G_MAXINT;
 
@@ -723,9 +645,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       gimp_item_get_offset (iter->data, &item_off_x, &item_off_y);
       off_x = MIN (off_x, item_off_x);
       off_y = MIN (off_y, item_off_y);
-
-      if (gimp_item_get_linked (iter->data))
-        have_linked = TRUE;
     }
 
   switch (edit_select->edit_mode)
@@ -787,36 +706,16 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
     case GIMP_TRANSLATE_MODE_LAYER:
     case GIMP_TRANSLATE_MODE_VECTORS:
-      {
-        gint x, y, w, h;
+        {
+          GList *translate_items;
+          gint   x, y, w, h;
 
-        if (have_linked)
-          {
-            GList *linked;
+          translate_items = gimp_image_item_list_linked (image, selected_items);
+          gimp_image_item_list_bounds (image, translate_items, &x, &y, &w, &h);
+          g_list_free (translate_items);
 
-            linked = gimp_image_item_list_get_list (image,
-                                                    GIMP_IS_LAYER (selected_items->data) ?
-                                                    GIMP_ITEM_TYPE_LAYERS :
-                                                    GIMP_ITEM_TYPE_VECTORS,
-                                                    GIMP_ITEM_SET_LINKED);
-            linked = gimp_image_item_list_filter (linked);
-
-            for (iter = selected_items; iter; iter = iter->next)
-              if (! g_list_find (linked, iter->data))
-                linked = g_list_prepend (linked, iter->data);
-
-            gimp_image_item_list_bounds (image, linked, &x, &y, &w, &h);
-
-            g_list_free (linked);
-          }
-        else
-          {
-            gimp_image_item_list_bounds (image, selected_items, &x, &y, &w, &h);
-          }
-
-        gimp_draw_tool_add_rectangle (draw_tool, FALSE,
-                                      x, y, w, h);
-      }
+          gimp_draw_tool_add_rectangle (draw_tool, FALSE, x, y, w, h);
+        }
       break;
 
     case GIMP_TRANSLATE_MODE_FLOATING_SEL:
