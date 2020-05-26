@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-23 05:28+0000\n"
-"PO-Revision-Date: 2020-05-23 09:41+0300\n"
+"POT-Creation-Date: 2020-05-26 14:53+0000\n"
+"PO-Revision-Date: 2020-05-26 19:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1010,225 +1010,231 @@ msgstr ""
 "від UTF-8, та ви не вказали про це GLib. Установите правильне значення "
 "змінної оточення G_FILENAME_ENCODING."
 
-#: ../app/actions/actions.c:111 ../app/dialogs/dialogs.c:423
+#: ../app/actions/actions.c:112 ../app/dialogs/dialogs.c:423
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Редактор пензлів"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:114 ../app/core/gimp-data-factories.c:356
+#: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
 #: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:3229
 msgid "Brushes"
 msgstr "Пензлі"
 
-#: ../app/actions/actions.c:117 ../app/dialogs/dialogs.c:359
+#: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:359
 msgid "Buffers"
 msgstr "Буфери"
 
-#: ../app/actions/actions.c:120 ../app/dialogs/dialogs.c:377
+#: ../app/actions/actions.c:121 ../app/dialogs/dialogs.c:377
 #: ../app/propgui/gimppropgui-newsprint.c:160
 #: ../app/widgets/gimppickablepopup.c:247
 msgid "Channels"
 msgstr "Канали"
 
-#: ../app/actions/actions.c:123 ../app/dialogs/convert-indexed-dialog.c:178
+#: ../app/actions/actions.c:124 ../app/dialogs/convert-indexed-dialog.c:178
 #: ../app/dialogs/dialogs.c:385
 msgid "Colormap"
 msgstr "Мапа кольорів"
 
-#: ../app/actions/actions.c:126
+#: ../app/actions/actions.c:127
 msgid "Context"
 msgstr "Контекст"
 
-#: ../app/actions/actions.c:129 ../app/dialogs/dialogs.c:325
+#: ../app/actions/actions.c:130 ../app/dialogs/dialogs.c:325
 msgid "Pointer Information"
 msgstr "Інформація про вказівник"
 
-#: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:329
+#: ../app/actions/actions.c:133 ../app/dialogs/dialogs.c:329
 msgid "Dashboard"
 msgstr "Панель приладів"
 
-#: ../app/actions/actions.c:135
+#: ../app/actions/actions.c:136
 msgid "Debug"
 msgstr "Налагодження"
 
-#: ../app/actions/actions.c:138
+#: ../app/actions/actions.c:139
 msgid "Dialogs"
 msgstr "Діалоги"
 
-#: ../app/actions/actions.c:141
+#: ../app/actions/actions.c:142
 msgid "Dock"
 msgstr "Панель"
 
-#: ../app/actions/actions.c:144
+#: ../app/actions/actions.c:145
 msgid "Dockable"
 msgstr "Панель"
 
 #. Document History
-#: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:365
+#: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:365
 #: ../app/dialogs/preferences-dialog.c:1237
 msgid "Document History"
 msgstr "Недавні зображення"
 
-#: ../app/actions/actions.c:150
+#: ../app/actions/actions.c:151
 msgid "Drawable"
 msgstr "Малювання"
 
-#: ../app/actions/actions.c:153 ../app/dialogs/dialogs.c:341
+#: ../app/actions/actions.c:154 ../app/dialogs/dialogs.c:341
 msgid "Paint Dynamics"
 msgstr "Динаміка пензля"
 
-#: ../app/actions/actions.c:156 ../app/dialogs/dialogs.c:427
+#: ../app/actions/actions.c:157 ../app/dialogs/dialogs.c:427
 #: ../app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Редактор динаміки малювання"
 
-#: ../app/actions/actions.c:159
+#: ../app/actions/actions.c:160
 msgid "Edit"
 msgstr "Зміни"
 
-#: ../app/actions/actions.c:162 ../app/dialogs/dialogs.c:321
+#: ../app/actions/actions.c:163 ../app/dialogs/dialogs.c:321
 msgid "Error Console"
 msgstr "Консоль помилок"
 
-#: ../app/actions/actions.c:165
+#: ../app/actions/actions.c:166
 msgid "File"
 msgstr "Файл"
 
-#: ../app/actions/actions.c:168
+#: ../app/actions/actions.c:169
 msgid "Filters"
 msgstr "Фільтри"
 
 #. initialize the list of gimp fonts
-#: ../app/actions/actions.c:171 ../app/core/gimp-data-factories.c:390
+#: ../app/actions/actions.c:172 ../app/core/gimp-data-factories.c:390
 #: ../app/dialogs/dialogs.c:356 ../app/dialogs/preferences-dialog.c:3259
 msgid "Fonts"
 msgstr "Шрифти"
 
-#: ../app/actions/actions.c:174 ../app/dialogs/dialogs.c:431
+#: ../app/actions/actions.c:175 ../app/dialogs/dialogs.c:431
 #: ../app/widgets/gimpgradienteditor.c:285
 msgid "Gradient Editor"
 msgstr "Редактор градієнтів"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:177 ../app/core/gimp-data-factories.c:381
+#: ../app/actions/actions.c:178 ../app/core/gimp-data-factories.c:381
 #: ../app/dialogs/dialogs.c:350 ../app/dialogs/preferences-dialog.c:3253
 msgid "Gradients"
 msgstr "Градієнти"
 
-#: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:397
+#: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
 #: ../app/dialogs/dialogs.c:362 ../app/dialogs/preferences-dialog.c:3265
 msgid "Tool Presets"
 msgstr "Шаблони інструментів"
 
-#: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:439
+#: ../app/actions/actions.c:184 ../app/dialogs/dialogs.c:439
 #: ../app/widgets/gimptoolpreseteditor.c:96
 msgid "Tool Preset Editor"
 msgstr "Текстовий редактор інструментів"
 
-#: ../app/actions/actions.c:186
+#: ../app/actions/actions.c:187
 msgid "Help"
 msgstr "Довідка"
 
-#: ../app/actions/actions.c:189
+#: ../app/actions/actions.c:190
 msgid "Image"
 msgstr "Зображення"
 
-#: ../app/actions/actions.c:192 ../app/dialogs/dialogs.c:335
+#: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:335
 #: ../app/widgets/gimppickablepopup.c:177
 msgid "Images"
 msgstr "Зображення"
 
-#: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:373
+#: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:373
 #: ../app/dialogs/resize-dialog.c:143 ../app/widgets/gimppickablepopup.c:228
 msgid "Layers"
 msgstr "Шари"
 
 #. initialize the list of mypaint brushes
-#: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:366
+#: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
 #: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:3271
 msgid "MyPaint Brushes"
 msgstr "Пензлі MyPaint"
 
-#: ../app/actions/actions.c:201 ../app/dialogs/dialogs.c:435
+#: ../app/actions/actions.c:202 ../app/dialogs/dialogs.c:435
 #: ../app/widgets/gimppaletteeditor.c:155
 msgid "Palette Editor"
 msgstr "Редактор палітри"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:204 ../app/core/gimp-data-factories.c:376
+#: ../app/actions/actions.c:205 ../app/core/gimp-data-factories.c:376
 #: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3247
 msgid "Palettes"
 msgstr "Палітри"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:207 ../app/core/gimp-data-factories.c:371
+#: ../app/actions/actions.c:208 ../app/core/gimp-data-factories.c:371
 #: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3241
 msgid "Patterns"
 msgstr "Текстури"
 
-#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3277
+#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3277
 msgid "Plug-ins"
 msgstr "Додатки"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:359
+#: ../app/actions/actions.c:214 ../app/core/gimpchannel.c:359
 #: ../app/dialogs/preferences-dialog.c:1767
 msgid "Quick Mask"
 msgstr "Швидка маска"
 
-#: ../app/actions/actions.c:216 ../app/dialogs/dialogs.c:405
+#: ../app/actions/actions.c:217 ../app/dialogs/dialogs.c:405
 msgid "Sample Points"
 msgstr "Зразкові точки"
 
-#: ../app/actions/actions.c:219
+#: ../app/actions/actions.c:220
 msgid "Select"
 msgstr "Позначити"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:824
+#: ../app/actions/actions.c:223 ../app/core/gimp.c:824
 #: ../app/dialogs/dialogs.c:368
 msgid "Templates"
 msgstr "Шаблони"
 
-#: ../app/actions/actions.c:225
+#: ../app/actions/actions.c:226
 msgid "Text Tool"
 msgstr "Текст"
 
-#: ../app/actions/actions.c:228
+#: ../app/actions/actions.c:229
 msgid "Text Editor"
 msgstr "Текстовий редактор"
 
-#: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:313
+#: ../app/actions/actions.c:232 ../app/dialogs/dialogs.c:313
 #: ../app/gui/gui.c:527
 msgid "Tool Options"
 msgstr "Параметри інструменту"
 
-#: ../app/actions/actions.c:234 ../app/widgets/gimptoolpalette.c:327
+#: ../app/actions/actions.c:235 ../app/widgets/gimptoolpalette.c:327
 msgid "Tools"
 msgstr "Інструменти"
 
-#: ../app/actions/actions.c:237 ../app/dialogs/dialogs.c:381
-#: ../app/tools/gimpvectortool.c:163
+#: ../app/actions/actions.c:238
+#| msgctxt "tools-action"
+#| msgid "_Paint Tools"
+msgid "Path Toolpath"
+msgstr "Інструмент контуру"
+
+#: ../app/actions/actions.c:241 ../app/dialogs/dialogs.c:381
+#: ../app/tools/gimpvectortool.c:167
 msgid "Paths"
 msgstr "Контури"
 
-#: ../app/actions/actions.c:240
+#: ../app/actions/actions.c:244
 msgid "View"
 msgstr "Перегляд"
 
-#: ../app/actions/actions.c:243
+#: ../app/actions/actions.c:247
 msgid "Windows"
 msgstr "Вікна"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:617
+#: ../app/actions/actions.c:621
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:643
+#: ../app/actions/actions.c:647
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -3198,9 +3204,9 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:345
-#: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1778
-#: ../app/tools/gimptransformgridtool.c:1262
+#: ../app/tools/gimpfiltertool.c:363
+#: ../app/tools/gimpforegroundselecttool.c:331 ../app/tools/gimptexttool.c:1779
+#: ../app/tools/gimptransformgridtool.c:1278
 #: ../app/tools/gimptransformtool.c:437 ../app/widgets/gimpactionview.c:601
 #: ../app/widgets/gimpcolordialog.c:460
 #: ../app/widgets/gimpcontrollereditor.c:661
@@ -4475,7 +4481,7 @@ msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
 #: ../app/actions/edit-commands.c:387 ../app/actions/edit-commands.c:632
-#: ../app/tools/gimpseamlessclonetool.c:297
+#: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
 
@@ -4496,7 +4502,7 @@ msgstr "Копіювання з буфера з назвою"
 msgid "Copy Visible Named "
 msgstr "Копіювати видиме з назвою"
 
-#: ../app/actions/edit-commands.c:542 ../app/tools/gimppainttool.c:900
+#: ../app/actions/edit-commands.c:542 ../app/tools/gimppainttool.c:928
 msgid "The active layer's alpha channel is locked."
 msgstr "Канал прозорості активного шару заблоковано."
 
@@ -6681,7 +6687,7 @@ msgid "Scale Image"
 msgstr "Зміна розміру зображення"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2421
+#: ../app/actions/image-commands.c:1488 ../app/actions/layers-commands.c:2430
 #: ../app/dialogs/preferences-dialog.c:1688
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:640
 #: ../app/pdb/layer-cmds.c:410 ../app/tools/gimpscaletool.c:122
@@ -7564,7 +7570,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _новий шар"
 
-#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2263
+#: ../app/actions/layers-commands.c:266 ../app/actions/layers-commands.c:2272
 msgid "Layer Attributes"
 msgstr "Ознаки шару"
 
@@ -7591,7 +7597,7 @@ msgstr[1] "Створення %d нових шарів"
 msgstr[2] "Створення %d нових шарів"
 msgstr[3] "Створення нового шару"
 
-#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2149
+#: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2158
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Нові шари"
@@ -7683,7 +7689,7 @@ msgstr "Не вдалось обрізати, бо активний шар не 
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr "Не вдалось кадрувати, бо активний шар вже обрізаний до свого вмісту."
 
-#: ../app/actions/layers-commands.c:1338 ../app/actions/layers-commands.c:2356
+#: ../app/actions/layers-commands.c:1338 ../app/actions/layers-commands.c:2365
 msgid "Add Layer Masks"
 msgstr "Додавання масок шарів"
 
@@ -7723,66 +7729,71 @@ msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Перетин масок із позначеним"
 
-#: ../app/actions/layers-commands.c:1634 ../app/core/gimpchannel-select.c:421
+#: ../app/actions/layers-commands.c:1636 ../app/core/gimpchannel-select.c:421
 #: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Альфа на вибір"
 
-#: ../app/actions/layers-commands.c:1638
+#: ../app/actions/layers-commands.c:1640
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Додавання альфи до позначеного"
 
-#: ../app/actions/layers-commands.c:1642
+#: ../app/actions/layers-commands.c:1644
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Віднімання альфи від позначеного"
 
-#: ../app/actions/layers-commands.c:1646
+#: ../app/actions/layers-commands.c:1648
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Перетин альфи з позначеним"
 
-#: ../app/actions/layers-commands.c:1680 ../app/actions/layers-commands.c:1724
+#: ../app/actions/layers-commands.c:1659
+#| msgid "Selection"
+msgid "Empty Selection"
+msgstr "Спорожнити позначене"
+
+#: ../app/actions/layers-commands.c:1689 ../app/actions/layers-commands.c:1733
 #: ../app/widgets/gimplayertreeview.c:1177
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
-#: ../app/actions/layers-commands.c:1794
+#: ../app/actions/layers-commands.c:1803
 msgid "Set layers' blend space"
 msgstr "Встановити простір змішування шарів"
 
-#: ../app/actions/layers-commands.c:1847
+#: ../app/actions/layers-commands.c:1856
 msgid "Set layers' composite space"
 msgstr "Встановити простір композиції шарів"
 
-#: ../app/actions/layers-commands.c:1900
+#: ../app/actions/layers-commands.c:1909
 msgid "Set layers' composite mode"
 msgstr "Встановити режим композиції шарів"
 
-#: ../app/actions/layers-commands.c:1969 ../app/widgets/gimpitemtreeview.c:1683
+#: ../app/actions/layers-commands.c:1978 ../app/widgets/gimpitemtreeview.c:1683
 msgid "Lock content"
 msgstr "Заблокувати вміст"
 
-#: ../app/actions/layers-commands.c:1971 ../app/widgets/gimpitemtreeview.c:1685
+#: ../app/actions/layers-commands.c:1980 ../app/widgets/gimpitemtreeview.c:1685
 msgid "Unlock content"
 msgstr "Розблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2018 ../app/widgets/gimpitemtreeview.c:1749
+#: ../app/actions/layers-commands.c:2027 ../app/widgets/gimpitemtreeview.c:1749
 msgid "Lock position"
 msgstr "Заблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2020 ../app/widgets/gimpitemtreeview.c:1751
+#: ../app/actions/layers-commands.c:2029 ../app/widgets/gimpitemtreeview.c:1751
 msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2070
+#: ../app/actions/layers-commands.c:2079
 #: ../app/widgets/gimplayertreeview.c:1122
 msgid "Lock alpha channels"
 msgstr "Заблокувати альфа-канали"
 
-#: ../app/actions/layers-commands.c:2070
+#: ../app/actions/layers-commands.c:2079
 #: ../app/widgets/gimplayertreeview.c:1122
 msgid "Unlock alpha channels"
 msgstr "Розблокувати альфа-канали"
@@ -8138,7 +8149,7 @@ msgstr "Перезавантажити усі фільтри"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:344 ../app/tools/gimptransformgridtool.c:1259
+#: ../app/tools/gimpfiltertool.c:362 ../app/tools/gimptransformgridtool.c:1275
 #: ../app/widgets/gimpcolordialog.c:459
 #: ../app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
@@ -9799,12 +9810,12 @@ msgid "Create a New Path"
 msgstr "Створити новий контур"
 
 #: ../app/actions/vectors-commands.c:438 ../app/tools/gimpvectoroptions.c:201
-#: ../app/tools/gimpvectortool.c:740
+#: ../app/tools/gimpvectortool.c:744
 msgid "Fill Path"
 msgstr "Заповнити контур"
 
 #: ../app/actions/vectors-commands.c:470 ../app/tools/gimpvectoroptions.c:209
-#: ../app/tools/gimpvectortool.c:812
+#: ../app/tools/gimpvectortool.c:816
 msgid "Stroke Path"
 msgstr "Обведення за контуром"
 
@@ -10707,7 +10718,7 @@ msgstr "Перемістити це вікно на екран %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
-#: ../app/tools/gimpfiltertool.c:346 ../app/widgets/gimpcolordialog.c:461
+#: ../app/tools/gimpfiltertool.c:364 ../app/widgets/gimpcolordialog.c:461
 #: ../app/widgets/gimpcontrollereditor.c:662
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:176
 msgid "_OK"
@@ -12689,7 +12700,6 @@ msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
 #: ../app/core/core-enums.c:1233
-#| msgid "Set layers mode"
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Встановлення режиму шарів"
@@ -13038,7 +13048,7 @@ msgstr ""
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:338
 #: ../app/core/gimptooloptions.c:361 ../app/gui/session.c:449
-#: ../app/menus/menus.c:484 ../app/widgets/gimpdevices.c:225
+#: ../app/menus/menus.c:492 ../app/widgets/gimpdevices.c:225
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Не вдалось вилучити «%s»: %s"
@@ -13316,7 +13326,7 @@ msgstr "Неправильний UTF-8 рядок у файлі пензля «%
 
 #: ../app/core/gimpbrush-load.c:279 ../app/core/gimppattern-load.c:141
 #: ../app/dialogs/template-options-dialog.c:110
-#: ../app/display/gimptoolpath.c:601
+#: ../app/display/gimptoolpath.c:619
 msgid "Unnamed"
 msgstr "Без назви"
 
@@ -13843,7 +13853,7 @@ msgid "Render Stroke"
 msgstr "Відтворення мазків"
 
 #: ../app/core/gimpdrawable-gradient.c:125
-#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1077
+#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1083
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Градієнтна"
@@ -14178,37 +14188,37 @@ msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: ../app/core/gimpimage.c:4945
+#: ../app/core/gimpimage.c:4981
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: ../app/core/gimpimage.c:4989 ../app/core/gimpimage.c:5020
+#: ../app/core/gimpimage.c:5025 ../app/core/gimpimage.c:5056
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: ../app/core/gimpimage.c:5014
+#: ../app/core/gimpimage.c:5050
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: ../app/core/gimpimage.c:5167
+#: ../app/core/gimpimage.c:5203
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: ../app/core/gimpimage.c:5197 ../app/core/gimpimage.c:5221
+#: ../app/core/gimpimage.c:5233 ../app/core/gimpimage.c:5257
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: ../app/core/gimpimage.c:5278
+#: ../app/core/gimpimage.c:5314
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: ../app/core/gimpimage.c:5308 ../app/core/gimpimage.c:5315
+#: ../app/core/gimpimage.c:5344 ../app/core/gimpimage.c:5351
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -14377,22 +14387,22 @@ msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "Перемістити напрямну"
 
-#: ../app/core/gimpimage-item-list.c:117
+#: ../app/core/gimpimage-item-list.c:121
 msgctxt "undo-type"
 msgid "Translate Items"
 msgstr "Перекласти об'єкти"
 
-#: ../app/core/gimpimage-item-list.c:157
+#: ../app/core/gimpimage-item-list.c:161
 msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "Віддзеркалити об'єкти"
 
-#: ../app/core/gimpimage-item-list.c:201
+#: ../app/core/gimpimage-item-list.c:205
 msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr "Обернути об'єкти"
 
-#: ../app/core/gimpimage-item-list.c:256
+#: ../app/core/gimpimage-item-list.c:260
 msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Перетворити об'єкти"
@@ -15534,7 +15544,7 @@ msgid "Select Soft-Proof Profile"
 msgstr "Виберіть профіль для проби кольорів"
 
 #: ../app/dialogs/color-profile-dialog.c:209
-#: ../app/tools/gimpforegroundselecttool.c:320
+#: ../app/tools/gimpforegroundselecttool.c:332
 msgid "_Select"
 msgstr "_Вибрати"
 
@@ -15654,7 +15664,7 @@ msgstr "Перетворення кодувань"
 #. gamma
 #: ../app/dialogs/convert-precision-dialog.c:176
 #: ../app/operations/gimplevelsconfig.c:149
-#: ../app/operations/gimplevelsconfig.c:150 ../app/tools/gimplevelstool.c:498
+#: ../app/operations/gimplevelsconfig.c:150 ../app/tools/gimplevelstool.c:515
 msgid "Gamma"
 msgstr "Гама"
 
@@ -16322,7 +16332,7 @@ msgstr "_Інтервал:"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:351
-#: ../app/tools/gimpforegroundselecttool.c:1290
+#: ../app/tools/gimpforegroundselecttool.c:1316
 msgid "Preview"
 msgstr "Попередній перегляд"
 
@@ -18048,18 +18058,18 @@ msgstr "З_мінити розмір"
 #. offset frame
 #: ../app/dialogs/resize-dialog.c:229 ../app/tools/gimpalignoptions.c:97
 #: ../app/tools/gimpalignoptions.c:104 ../app/tools/gimpgradientoptions.c:89
-#: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:459
+#: ../app/tools/gimpoffsettool.c:129 ../app/tools/gimpoffsettool.c:473
 #: ../app/tools/gimptransform3dtool.c:343 ../app/widgets/gimpgrideditor.c:211
 msgid "Offset"
 msgstr "Зсув"
 
-#: ../app/dialogs/resize-dialog.c:252 ../app/tools/gimpoffsettool.c:483
+#: ../app/dialogs/resize-dialog.c:252 ../app/tools/gimpoffsettool.c:497
 #: ../app/tools/gimptransform3dtool.c:271
 #: ../app/tools/gimptransform3dtool.c:383
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/resize-dialog.c:253 ../app/tools/gimpoffsettool.c:485
+#: ../app/dialogs/resize-dialog.c:253 ../app/tools/gimpoffsettool.c:499
 #: ../app/tools/gimptransform3dtool.c:272
 #: ../app/tools/gimptransform3dtool.c:388
 msgid "_Y:"
@@ -18509,19 +18519,19 @@ msgid "Drop New Path"
 msgstr "Опускання нового контуру"
 
 #: ../app/display/gimpdisplayshell-dnd.c:363
-#: ../app/tools/gimpbucketfilltool.c:554 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:295 ../app/tools/gimpgradienttool.c:272
+#: ../app/tools/gimpbucketfilltool.c:579 ../app/tools/gimpcagetool.c:240
+#: ../app/tools/gimpfiltertool.c:306 ../app/tools/gimpgradienttool.c:273
 #: ../app/tools/gimpselectiontool.c:569
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Неможливо змінити точки растру групи шарів"
 
 #: ../app/display/gimpdisplayshell-dnd.c:371
-#: ../app/tools/gimpbucketfilltool.c:569 ../app/tools/gimpcagetool.c:234
-#: ../app/tools/gimpeditselectiontool.c:1208 ../app/tools/gimpfiltertool.c:302
-#: ../app/tools/gimpgradienttool.c:279 ../app/tools/gimppainttool.c:310
+#: ../app/tools/gimpbucketfilltool.c:594 ../app/tools/gimpcagetool.c:247
+#: ../app/tools/gimpeditselectiontool.c:1107
+#: ../app/tools/gimpgradienttool.c:280 ../app/tools/gimppainttool.c:319
 #: ../app/tools/gimpselectiontool.c:577 ../app/tools/gimptransformtool.c:689
-#: ../app/tools/gimpwarptool.c:794
+#: ../app/tools/gimpwarptool.c:803
 #, c-format
 msgid "The active layer's pixels are locked."
 msgstr "Точки растру активного шару заблоковані від змін"
@@ -18648,61 +18658,61 @@ msgstr "точок"
 msgid "Cancel <i>%s</i>"
 msgstr "Скасувати <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:845
+#: ../app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
 msgstr "Натисніть для розміщення вертикальної чи горизонтальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:853
+#: ../app/display/gimptoolcompass.c:855
 msgid "Click to place a horizontal guide"
 msgstr "Натисніть для розміщення горизонтальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:861
+#: ../app/display/gimptoolcompass.c:863
 msgid "Click to place a vertical guide"
 msgstr "Натисніть для розміщення вертикальної напрямної"
 
-#: ../app/display/gimptoolcompass.c:869
+#: ../app/display/gimptoolcompass.c:871
 msgid "Click-Drag to add a new point"
 msgstr "Натисніть, щоб створити новий контур."
 
-#: ../app/display/gimptoolcompass.c:880 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:882 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Натисніть та перетягніть, щоб перемістити точку"
 
-#: ../app/display/gimptoolcompass.c:897
+#: ../app/display/gimptoolcompass.c:899
 msgid "Click-Drag to move all points"
 msgstr "Натисніть та перетягніть, щоб перемістити всі точки"
 
-#: ../app/display/gimptoolfocus.c:1116
+#: ../app/display/gimptoolfocus.c:1117
 msgid "Click-Drag to change the midpoint"
 msgstr "Натисніть і перетягніть, щоб змінити середню точку"
 
-#: ../app/display/gimptoolfocus.c:1118
+#: ../app/display/gimptoolfocus.c:1119
 msgid "Click-Drag to resize the limit"
 msgstr "Натисніть і перетягніть, щоб змінити розміри обмеження"
 
-#: ../app/display/gimptoolfocus.c:1120 ../app/display/gimptoolfocus.c:1133
+#: ../app/display/gimptoolfocus.c:1121 ../app/display/gimptoolfocus.c:1134
 #, c-format
 msgid "%s to resize the focus"
 msgstr "%s, щоб змінити розміри фокуса"
 
-#: ../app/display/gimptoolfocus.c:1125 ../app/display/gimptoolfocus.c:1138
+#: ../app/display/gimptoolfocus.c:1126 ../app/display/gimptoolfocus.c:1139
 msgid "Click-Drag to resize the focus"
 msgstr "Натисніть і перетягніть, щоб змінити розміри фокуса"
 
-#: ../app/display/gimptoolfocus.c:1132
+#: ../app/display/gimptoolfocus.c:1133
 msgid "Click-Drag to change the aspect ratio"
 msgstr "Натисніть і перетягніть, щоб змінити співвідношення розмірів"
 
-#: ../app/display/gimptoolfocus.c:1143
+#: ../app/display/gimptoolfocus.c:1144
 msgid "Click-Drag to move the focus"
 msgstr "Натисніть і перетягніть, щоб пересунути фокус"
 
-#: ../app/display/gimptoolfocus.c:1147
+#: ../app/display/gimptoolfocus.c:1148
 msgid "Click-Drag to rotate the focus"
 msgstr "Натисніть і перетягніть для обертання фокуса"
 
-#: ../app/display/gimptoolfocus.c:1148 ../app/display/gimptoolgyroscope.c:729
-#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:640
+#: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
+#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:662
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для обмеження кроку кута"
@@ -18717,7 +18727,7 @@ msgid "%s for constrained steps"
 msgstr "%s для обмеження кроку"
 
 #: ../app/display/gimptoolgyroscope.c:725
-#: ../app/display/gimptooltransformgrid.c:1840
+#: ../app/display/gimptooltransformgrid.c:1841
 msgid "Click-Drag to rotate"
 msgstr "Натисніть і перетягніть для обертання"
 
@@ -18741,7 +18751,7 @@ msgid "%s to zoom"
 msgstr "%s для масштабування"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1831
+#: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
 msgstr "Натисніть і перетягніть, щоб пересунути"
 
@@ -18754,7 +18764,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Натисніть і перетягніть для перекошування і масштабування"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1819
+#: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
 msgstr "Натисніть і перетягніть, щоб змінити перспективу"
 
@@ -18822,150 +18832,156 @@ msgstr "Натисніть та перетягніть, щоб пересуну�
 msgid "%s to move the whole line"
 msgstr "%s для зсуву усієї лінії"
 
-#: ../app/display/gimptoolpath.c:267 ../app/tools/gimpvectoroptions.c:72
+#: ../app/display/gimptoolpath.c:282 ../app/tools/gimpvectoroptions.c:72
 msgid "Edit Mode"
 msgstr "Тип дії"
 
-#: ../app/display/gimptoolpath.c:276 ../app/tools/gimpvectoroptions.c:80
+#: ../app/display/gimptoolpath.c:291 ../app/tools/gimpvectoroptions.c:80
 msgid "Polygonal"
 msgstr "Багатокутники"
 
-#: ../app/display/gimptoolpath.c:277 ../app/tools/gimpvectoroptions.c:81
+#: ../app/display/gimptoolpath.c:292 ../app/tools/gimpvectoroptions.c:81
 msgid "Restrict editing to polygons"
 msgstr "Створювати лише прямі та кути"
 
-#: ../app/display/gimptoolpath.c:535
+#: ../app/display/gimptoolpath.c:553
 msgid "The active path is locked."
 msgstr "Активний контур заблоковано від змін"
 
-#: ../app/display/gimptoolpath.c:623
+#: ../app/display/gimptoolpath.c:641
 msgid "Add Stroke"
 msgstr "Додавання контуру"
 
-#: ../app/display/gimptoolpath.c:647
+#: ../app/display/gimptoolpath.c:665
 msgid "Add Anchor"
 msgstr "Додавання вузла"
 
-#: ../app/display/gimptoolpath.c:671
+#: ../app/display/gimptoolpath.c:689 ../app/display/gimptoolpath.c:2090
+#: ../app/display/gimptoolpath.c:2130
 msgid "Insert Anchor"
 msgstr "Вставка вузла"
 
-#: ../app/display/gimptoolpath.c:700
+#: ../app/display/gimptoolpath.c:718
 msgid "Drag Handle"
 msgstr "Перетягування важеля"
 
-#: ../app/display/gimptoolpath.c:731
+#: ../app/display/gimptoolpath.c:749
 msgid "Drag Anchor"
 msgstr "Перетягування вузла"
 
-#: ../app/display/gimptoolpath.c:749
+#: ../app/display/gimptoolpath.c:767
 msgid "Drag Anchors"
 msgstr "Перетягування вузлів"
 
-#: ../app/display/gimptoolpath.c:771
+#: ../app/display/gimptoolpath.c:789
 msgid "Drag Curve"
 msgstr "Перетягування кривої"
 
-#: ../app/display/gimptoolpath.c:800
+#: ../app/display/gimptoolpath.c:818
 msgid "Connect Strokes"
 msgstr "З'єднання контурів"
 
-#: ../app/display/gimptoolpath.c:832
+#: ../app/display/gimptoolpath.c:850
 msgid "Drag Path"
 msgstr "Перетягування контуру"
 
-#: ../app/display/gimptoolpath.c:843
+#: ../app/display/gimptoolpath.c:861
 msgid "Convert Edge"
 msgstr "Перетворення кута"
 
-#: ../app/display/gimptoolpath.c:874
+#: ../app/display/gimptoolpath.c:892
 msgid "Delete Anchor"
 msgstr "Вилучити вузол"
 
-#: ../app/display/gimptoolpath.c:897
+#: ../app/display/gimptoolpath.c:915 ../app/display/gimptoolpath.c:2109
 msgid "Delete Segment"
 msgstr "Вилучити сегмент"
 
-#: ../app/display/gimptoolpath.c:1149
+#: ../app/display/gimptoolpath.c:1167
 msgid "Move Anchors"
 msgstr "Перенести вузол"
 
-#: ../app/display/gimptoolpath.c:1536
+#: ../app/display/gimptoolpath.c:1625
 msgid "Click to pick path to edit"
 msgstr "Натисніть, щоб вибрати контур для редагування"
 
-#: ../app/display/gimptoolpath.c:1540
+#: ../app/display/gimptoolpath.c:1629
 msgid "Click to create a new path"
 msgstr "Натисніть, щоб створити новий контур"
 
-#: ../app/display/gimptoolpath.c:1544
+#: ../app/display/gimptoolpath.c:1633
 msgid "Click to create a new component of the path"
 msgstr "Натисніть, щоб створити новий компонент контуру"
 
-#: ../app/display/gimptoolpath.c:1548
+#: ../app/display/gimptoolpath.c:1637
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Натисніть, або клацніть та перетягніть, щоб створити новий контур"
 
-#: ../app/display/gimptoolpath.c:1558 ../app/display/gimptoolpath.c:1565
+#: ../app/display/gimptoolpath.c:1647 ../app/display/gimptoolpath.c:1654
 msgid "Click-Drag to move the anchor around"
 msgstr "Натисніть та перетягніть, щоб перемістити вузол"
 
-#: ../app/display/gimptoolpath.c:1569 ../app/display/gimptoolpath.c:1592
+#: ../app/display/gimptoolpath.c:1658 ../app/display/gimptoolpath.c:1681
 msgid "Click-Drag to move the anchors around"
 msgstr "Натисніть та перетягніть, щоб перемістити вузли"
 
-#: ../app/display/gimptoolpath.c:1575
+#: ../app/display/gimptoolpath.c:1664
 msgid "Click-Drag to move the handle around"
 msgstr "Натисніть та перетягніть, щоб перемістити важіль"
 
-#: ../app/display/gimptoolpath.c:1582
+#: ../app/display/gimptoolpath.c:1671
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Натисніть та перетягніть, щоб перемістити важелі симетрично"
 
-#: ../app/display/gimptoolpath.c:1597
+#: ../app/display/gimptoolpath.c:1686
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Натисніть та перетягніть, щоб змінити фігуру кривої"
 
-#: ../app/display/gimptoolpath.c:1600
+#: ../app/display/gimptoolpath.c:1689
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: симетрично"
 
-#: ../app/display/gimptoolpath.c:1605
+#: ../app/display/gimptoolpath.c:1694
 msgid "Click-Drag to move the component around"
 msgstr "Натисніть та перетягніть, щоб перемістити компонент"
 
-#: ../app/display/gimptoolpath.c:1613
+#: ../app/display/gimptoolpath.c:1702
 msgid "Click-Drag to move the path around"
 msgstr "Натисніть та перетягніть, щоб перемістити контур"
 
-#: ../app/display/gimptoolpath.c:1617
+#: ../app/display/gimptoolpath.c:1706
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Натисніть, щоб вставити вузол у контур"
 
-#: ../app/display/gimptoolpath.c:1625
+#: ../app/display/gimptoolpath.c:1714
 msgid "Click to delete this anchor"
 msgstr "Натисніть, щоб вилучити цей вузол"
 
-#: ../app/display/gimptoolpath.c:1629
+#: ../app/display/gimptoolpath.c:1718
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Натисніть, щоб об'єднати цей вузол з позначеним кінцевим вузлом"
 
-#: ../app/display/gimptoolpath.c:1634
+#: ../app/display/gimptoolpath.c:1723
 msgid "Click to open up the path"
 msgstr "Натисніть, щоб розімкнути контур"
 
-#: ../app/display/gimptoolpath.c:1638
+#: ../app/display/gimptoolpath.c:1727
 msgid "Click to make this node angular"
 msgstr "Натисніть, щоб зробити цей вузол кутовим"
 
-#: ../app/display/gimptoolpath.c:1642
+#: ../app/display/gimptoolpath.c:1731
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "Тут клацання не діє, спробуйте клацати елементи контуру."
 
-#: ../app/display/gimptoolpath.c:1850
+#: ../app/display/gimptoolpath.c:1939 ../app/display/gimptoolpath.c:2049
 msgid "Delete Anchors"
 msgstr "Вилучити вузли"
+
+#: ../app/display/gimptoolpath.c:2076
+#| msgid "Shift"
+msgid "Shift start"
+msgstr "Початок зсуву"
 
 #: ../app/display/gimptoolpolygon.c:891
 msgid "Click to close shape"
@@ -18990,13 +19006,13 @@ msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Клацання+перетягування малює довільну лінію, клацання додає прямий відрізок"
 
-#: ../app/display/gimptoolrectangle.c:565
-#: ../app/display/gimptoolrectangle.c:873
+#: ../app/display/gimptoolrectangle.c:566
+#: ../app/display/gimptoolrectangle.c:874
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Прямокутник: "
 
-#: ../app/display/gimptoolrectangle.c:2137
+#: ../app/display/gimptoolrectangle.c:2138
 msgid "Position: "
 msgstr "Позиція:"
 
@@ -19004,16 +19020,16 @@ msgstr "Позиція:"
 msgid "Click-Drag to move the vanishing point"
 msgstr "Натисніть та перетягніть, щоб перемістити нескінченно віддалену точку"
 
-#: ../app/display/gimptooltransformgrid.c:1824
-#: ../app/display/gimptooltransformgrid.c:1829
+#: ../app/display/gimptooltransformgrid.c:1825
+#: ../app/display/gimptooltransformgrid.c:1830
 msgid "Click-Drag to scale"
 msgstr "Натисніть і перетягніть для масштабування"
 
-#: ../app/display/gimptooltransformgrid.c:1833
+#: ../app/display/gimptooltransformgrid.c:1834
 msgid "Click-Drag to move the pivot point"
 msgstr "Натисніть і перетягніть, щоб пересунути опорну точку"
 
-#: ../app/display/gimptooltransformgrid.c:1838
+#: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
 msgstr "Натисніть і перетягніть для перекошування"
 
@@ -20009,7 +20025,7 @@ msgstr "Перетворити кольори на градації сірого
 
 #: ../app/operations/gimpoperationdesaturate.c:91
 #: ../app/operations/gimpoperationsettings.c:92
-#: ../app/tools/gimpfiltertool.c:1122 ../app/tools/gimppaintoptions-gui.c:111
+#: ../app/tools/gimpfiltertool.c:1146 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/tools/gimptransform3doptions.c:77 ../app/widgets/gimpdeviceinfo.c:124
 #: ../app/widgets/gimplayertreeview.c:277
 msgid "Mode"
@@ -20049,7 +20065,7 @@ msgid "The color"
 msgstr "Колір"
 
 #: ../app/operations/gimpoperationsettings.c:77
-#: ../app/tools/gimpfiltertool.c:1086 ../app/tools/gimpflipoptions.c:156
+#: ../app/tools/gimpfiltertool.c:1110 ../app/tools/gimpflipoptions.c:156
 #: ../app/tools/gimptransformoptions.c:109
 #: ../app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -20550,7 +20566,7 @@ msgstr "Об'єднати маски"
 msgid "Plug-in"
 msgstr "Додаток"
 
-#: ../app/pdb/drawable-cmds.c:951 ../app/tools/gimpforegroundselecttool.c:1019
+#: ../app/pdb/drawable-cmds.c:951 ../app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Вибір переднього плану"
@@ -21440,29 +21456,34 @@ msgstr "Вилучити обведення контуру"
 msgid "Close path stroke"
 msgstr "Закрити обведення контуру"
 
-#: ../app/pdb/vectors-cmds.c:410
+#: ../app/pdb/vectors-cmds.c:404
+#| msgid "Remove path stroke"
+msgid "Reverse path stroke"
+msgstr "Розвернути штрих у контурі"
+
+#: ../app/pdb/vectors-cmds.c:449
 msgid "Translate path stroke"
 msgstr "Транслювати обведення контуру"
 
-#: ../app/pdb/vectors-cmds.c:455
+#: ../app/pdb/vectors-cmds.c:494
 msgid "Scale path stroke"
 msgstr "Масштабувати обведення контуру"
 
-#: ../app/pdb/vectors-cmds.c:502
+#: ../app/pdb/vectors-cmds.c:541
 msgid "Rotate path stroke"
 msgstr "Обернути обведення контуру"
 
-#: ../app/pdb/vectors-cmds.c:547 ../app/pdb/vectors-cmds.c:596
+#: ../app/pdb/vectors-cmds.c:586 ../app/pdb/vectors-cmds.c:635
 msgid "Flip path stroke"
 msgstr "Віддзеркалити обведення контуру"
 
-#: ../app/pdb/vectors-cmds.c:727 ../app/pdb/vectors-cmds.c:851
-#: ../app/pdb/vectors-cmds.c:1081
+#: ../app/pdb/vectors-cmds.c:766 ../app/pdb/vectors-cmds.c:890
+#: ../app/pdb/vectors-cmds.c:1120
 msgid "Add path stroke"
 msgstr "Додати обведення контуру"
 
-#: ../app/pdb/vectors-cmds.c:905 ../app/pdb/vectors-cmds.c:961
-#: ../app/pdb/vectors-cmds.c:1025
+#: ../app/pdb/vectors-cmds.c:944 ../app/pdb/vectors-cmds.c:1000
+#: ../app/pdb/vectors-cmds.c:1064
 msgid "Extend path stroke"
 msgstr "Розширити обведення контуру"
 
@@ -21664,7 +21685,7 @@ msgid "Select Range to Adjust"
 msgstr "Вибір ділянки для зміни"
 
 #: ../app/propgui/gimppropgui-color-balance.c:100
-#: ../app/tools/gimplevelstool.c:252
+#: ../app/tools/gimplevelstool.c:269
 msgid "Adjust Color Levels"
 msgstr "Коригування рівнів кольорів"
 
@@ -22036,7 +22057,7 @@ msgstr ""
 "Не вдалося завантажити деякі шрифти:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1650
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1651
 msgid "Add Text Layer"
 msgstr "Додавання текстового шару"
 
@@ -22384,29 +22405,43 @@ msgstr "Заповнення: заповнення кольором чи тек�
 msgid "_Bucket Fill"
 msgstr "_Заповнення"
 
-#: ../app/tools/gimpbucketfilltool.c:344
+#: ../app/tools/gimpbucketfilltool.c:346
 msgid "Bucket fill"
 msgstr "Заповнення"
 
-#: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
-#: ../app/tools/gimpfiltertool.c:312
+#: ../app/tools/gimpbucketfilltool.c:565
+#| msgid "Cannot warp multiple layers. Select only one layer."
+msgid "Cannot fill multiple layers. Select only one layer."
+msgstr "Неможливо заповнити декілька шарів одразу. Виберіть лише один шар."
+
+#: ../app/tools/gimpbucketfilltool.c:567 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
 #: ../app/tools/gimpforegroundselecttool.c:295
-#: ../app/tools/gimpgradienttool.c:289 ../app/tools/gimppainttool.c:338
-#: ../app/tools/gimptransformtool.c:698 ../app/tools/gimpwarptool.c:808
+#: ../app/tools/gimplevelstool.c:210 ../app/tools/gimpoffsettool.c:189
+#: ../app/tools/gimppainttool.c:299 ../app/tools/gimpperspectiveclonetool.c:227
+#: ../app/tools/gimpthresholdtool.c:160
+#| msgid "No active drawables."
+msgid "No selected drawables."
+msgstr "Немає позначених об'єктів малювання."
+
+#: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
+#: ../app/tools/gimpforegroundselecttool.c:307
+#: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppainttool.c:350
+#: ../app/tools/gimptransformtool.c:698 ../app/tools/gimpwarptool.c:817
 msgid "The active layer is not visible."
 msgstr "Активний шар - невидимий."
 
-#: ../app/tools/gimpbucketfilltool.c:578
+#: ../app/tools/gimpbucketfilltool.c:603
 msgid "No valid line art source selected."
 msgstr "Не вибрано придатного джерела контурів."
 
-#: ../app/tools/gimpbucketfilltool.c:761 ../app/tools/gimpbucketfilltool.c:894
-#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:478
+#: ../app/tools/gimpbucketfilltool.c:786 ../app/tools/gimpbucketfilltool.c:924
+#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:492
 msgid "Click in any image to pick the background color"
 msgstr "Натисніть на будь-якому зображенні для отримання кольору його тла"
 
-#: ../app/tools/gimpbucketfilltool.c:768 ../app/tools/gimpbucketfilltool.c:903
-#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:472
+#: ../app/tools/gimpbucketfilltool.c:793 ../app/tools/gimpbucketfilltool.c:933
+#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:486
 msgid "Click in any image to pick the foreground color"
 msgstr ""
 "Натисніть на будь-якому зображенні для отримання його кольору переднього "
@@ -22437,7 +22472,7 @@ msgstr ""
 "Заповнити початкові позиції\n"
 "клітки простим кольором"
 
-#: ../app/tools/gimpcagetool.c:162 ../app/tools/gimpcagetool.c:1235
+#: ../app/tools/gimpcagetool.c:162 ../app/tools/gimpcagetool.c:1258
 msgid "Cage Transform"
 msgstr "Перетворення кліткою"
 
@@ -22449,15 +22484,20 @@ msgstr "Перетворення клітки: деформує позначен
 msgid "_Cage Transform"
 msgstr "Перетворення _клітки"
 
-#: ../app/tools/gimpcagetool.c:744 ../app/tools/gimpwarptool.c:389
+#: ../app/tools/gimpcagetool.c:226
+#| msgid "Cannot warp multiple layers. Select only one layer."
+msgid "Cannot modify multiple layers. Select only one layer."
+msgstr "Неможливо змінити декілька шарів одразу. Виберіть лише один шар."
+
+#: ../app/tools/gimpcagetool.c:763 ../app/tools/gimpwarptool.c:391
 msgid "Press ENTER to commit the transform"
 msgstr "Натисніть «ENTER», щоб здійснити перетворення"
 
-#: ../app/tools/gimpcagetool.c:1145
+#: ../app/tools/gimpcagetool.c:1168
 msgid "Computing Cage Coefficients"
 msgstr "Обчислення коефіцієнту клітки"
 
-#: ../app/tools/gimpcagetool.c:1278
+#: ../app/tools/gimpcagetool.c:1301
 msgid "Cage transform"
 msgstr "Перетворення клітки"
 
@@ -22709,62 +22749,72 @@ msgstr "Криві"
 msgid "_Curves..."
 msgstr "_Криві…"
 
-#: ../app/tools/gimpcurvestool.c:395
+#: ../app/tools/gimpcurvestool.c:218 ../app/tools/gimpfiltertool.c:294
+#: ../app/tools/gimplevelstool.c:208 ../app/tools/gimpoffsettool.c:187
+#: ../app/tools/gimpthresholdtool.c:158
+#: ../app/tools/gimptransformgridtool.c:356
+#| msgid "Cannot paint on multiple drawables. Select only one."
+msgid "Cannot modify multiple drawables. Select only one."
+msgstr ""
+"Неможливо змінити одразу декілька об'єктів для малювання. Виберіть лише "
+"один об'єкт."
+
+#: ../app/tools/gimpcurvestool.c:411
 msgid "Click to add a control point"
 msgstr "Натисніть, щоб додати керувальну точку"
 
-#: ../app/tools/gimpcurvestool.c:400
+#: ../app/tools/gimpcurvestool.c:416
 msgid "Click to add control points to all channels"
 msgstr "Натисніть, щоб додати керувальні точки до усіх каналів"
 
-#: ../app/tools/gimpcurvestool.c:405
+#: ../app/tools/gimpcurvestool.c:421
 msgid "Click to locate on curve"
 msgstr "Натисніть, щоб вказати криву"
 
-#: ../app/tools/gimpcurvestool.c:407
+#: ../app/tools/gimpcurvestool.c:423
 #, c-format
 msgid "%s: add control point"
 msgstr "%s:  додати керувальну точку"
 
-#: ../app/tools/gimpcurvestool.c:408
+#: ../app/tools/gimpcurvestool.c:424
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: додати керувальні точки до всіх каналів"
 
-#: ../app/tools/gimpcurvestool.c:425
+#: ../app/tools/gimpcurvestool.c:441
 msgid "Adjust Color Curves"
 msgstr "Коригування кривих кольору"
 
-#: ../app/tools/gimpcurvestool.c:470 ../app/tools/gimplevelstool.c:350
-#: ../app/tools/gimpthresholdtool.c:230
+#: ../app/tools/gimpcurvestool.c:486 ../app/tools/gimplevelstool.c:367
+#: ../app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "_Канал:"
 
-#: ../app/tools/gimpcurvestool.c:502 ../app/tools/gimplevelstool.c:380
+#: ../app/tools/gimpcurvestool.c:518 ../app/tools/gimplevelstool.c:397
 msgid "R_eset Channel"
 msgstr "В_ідновити канал"
 
-#: ../app/tools/gimpcurvestool.c:612
+#: ../app/tools/gimpcurvestool.c:628
 msgid "_Input:"
 msgstr "В_хід:"
 
-#: ../app/tools/gimpcurvestool.c:626
+#: ../app/tools/gimpcurvestool.c:642
 msgid "O_utput:"
 msgstr "В_ихід:"
 
-#: ../app/tools/gimpcurvestool.c:640
+#: ../app/tools/gimpcurvestool.c:656
 msgid "T_ype:"
 msgstr "_Тип:"
 
-#: ../app/tools/gimpcurvestool.c:659 ../app/widgets/gimpdeviceinfoeditor.c:500
+#: ../app/tools/gimpcurvestool.c:675 ../app/widgets/gimpdeviceinfoeditor.c:500
 msgid "Curve _type:"
 msgstr "_Тип кривої:"
 
-#: ../app/tools/gimpcurvestool.c:745 ../app/tools/gimplevelstool.c:733
+#: ../app/tools/gimpcurvestool.c:761 ../app/tools/gimplevelstool.c:750
 msgid "Could not read header: "
 msgstr "Не вдалось прочитати заголовок: "
 
-#: ../app/tools/gimpcurvestool.c:819
+#: ../app/tools/gimpcurvestool.c:835
 msgid "Use _old curves file format"
 msgstr "_Використовувати старий формат кривих"
 
@@ -22812,40 +22862,40 @@ msgstr "%s для освітлення"
 msgid "Type  (%s)"
 msgstr "Тип (%s)"
 
-#: ../app/tools/gimpeditselectiontool.c:465
-#: ../app/tools/gimpeditselectiontool.c:653
+#: ../app/tools/gimpeditselectiontool.c:388
+#: ../app/tools/gimpeditselectiontool.c:576
 msgid "Move: "
 msgstr "Переміщення: "
 
-#: ../app/tools/gimpeditselectiontool.c:938
-#: ../app/tools/gimpeditselectiontool.c:1267
+#: ../app/tools/gimpeditselectiontool.c:837
+#: ../app/tools/gimpeditselectiontool.c:1166
 msgid "Move Floating Selection"
 msgstr "Перенесення рухомого вибору"
 
-#: ../app/tools/gimpeditselectiontool.c:1181 ../app/tools/gimpmovetool.c:291
+#: ../app/tools/gimpeditselectiontool.c:1080 ../app/tools/gimpmovetool.c:291
 msgid "There is no path to move."
 msgstr "Немає контуру для переміщення."
 
-#: ../app/tools/gimpeditselectiontool.c:1185 ../app/tools/gimpmovetool.c:295
+#: ../app/tools/gimpeditselectiontool.c:1084 ../app/tools/gimpmovetool.c:295
 #: ../app/tools/gimptransformtool.c:736
 msgid "The active path's position is locked."
 msgstr "Позиція активного контура заблокована від змін"
 
-#: ../app/tools/gimpeditselectiontool.c:1196 ../app/tools/gimpmovetool.c:327
+#: ../app/tools/gimpeditselectiontool.c:1095 ../app/tools/gimpmovetool.c:327
 msgid "There is no layer to move."
 msgstr "Немає шару для переміщення."
 
-#: ../app/tools/gimpeditselectiontool.c:1204
-#: ../app/tools/gimpeditselectiontool.c:1230
-#: ../app/tools/gimpeditselectiontool.c:1239
+#: ../app/tools/gimpeditselectiontool.c:1103
+#: ../app/tools/gimpeditselectiontool.c:1129
+#: ../app/tools/gimpeditselectiontool.c:1138
 msgid "The active layer's position is locked."
 msgstr "Позиція активного шару заблокована від змін"
 
-#: ../app/tools/gimpeditselectiontool.c:1217
+#: ../app/tools/gimpeditselectiontool.c:1116
 msgid "The active channel's position is locked."
 msgstr "Позиція активного каналу заблокована від змін."
 
-#: ../app/tools/gimpeditselectiontool.c:1221
+#: ../app/tools/gimpeditselectiontool.c:1120
 msgid "The active channel's pixels are locked."
 msgstr "Пікселі активного каналу заблоковано."
 
@@ -22904,44 +22954,54 @@ msgstr "Керування на _полотгі"
 msgid "Show on-canvas filter controls"
 msgstr "Показувати засоби керування фільтром на полотні"
 
-#: ../app/tools/gimpfiltertool.c:624
+#: ../app/tools/gimpfiltertool.c:315
+#| msgid "The selected layer's pixels are locked."
+msgid "A selected layer's pixels are locked."
+msgstr "Точки растру позначеного шару заблоковані від змін."
+
+#: ../app/tools/gimpfiltertool.c:327
+#| msgid "The active layer is not visible."
+msgid "A selected layer is not visible."
+msgstr "Вибраний шар є невидимим."
+
+#: ../app/tools/gimpfiltertool.c:642
 msgid "Click to switch the original and filtered sides"
 msgstr "Натисніть, щоб поміняти місцями оригінал і результат обробки"
 
-#: ../app/tools/gimpfiltertool.c:628
+#: ../app/tools/gimpfiltertool.c:646
 msgid "Click to switch between vertical and horizontal"
 msgstr "Натисніть, щоб перемкнутися між вертикальним і горизонтальним"
 
-#: ../app/tools/gimpfiltertool.c:632
+#: ../app/tools/gimpfiltertool.c:650
 msgid "Click to move the split guide"
 msgstr "Натисніть, щоб пересунути межу поділу"
 
-#: ../app/tools/gimpfiltertool.c:634
+#: ../app/tools/gimpfiltertool.c:652
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: перемикання оригінал/фільтрування"
 
-#: ../app/tools/gimpfiltertool.c:635
+#: ../app/tools/gimpfiltertool.c:653
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
 #. The blending-options expander
-#: ../app/tools/gimpfiltertool.c:1099
+#: ../app/tools/gimpfiltertool.c:1123
 msgid "Blending Options"
 msgstr "Параметри змішування"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:1138
+#: ../app/tools/gimpfiltertool.c:1162
 msgid "Advanced Color Options"
 msgstr "Додаткові параметри кольорів"
 
-#: ../app/tools/gimpfiltertool.c:1542 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1577 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Імпортувати параметри «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1544 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1579 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Експортувати параметри «%s»"
@@ -23074,48 +23134,53 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "Вибір _переднього плану"
 
-#: ../app/tools/gimpforegroundselecttool.c:314
+#: ../app/tools/gimpforegroundselecttool.c:293
+#| msgid "Base selection on all visible layers"
+msgid "Cannot select from multiple layers."
+msgstr "Не можна позначати об'єкти з декількох шарів."
+
+#: ../app/tools/gimpforegroundselecttool.c:326
 msgid "Dialog for foreground select"
 msgstr "Діалог для вибору переднього плану"
 
-#: ../app/tools/gimpforegroundselecttool.c:331
+#: ../app/tools/gimpforegroundselecttool.c:343
 msgid "_Preview mask"
 msgstr "_Маска попереднього перегляду"
 
-#: ../app/tools/gimpforegroundselecttool.c:342
+#: ../app/tools/gimpforegroundselecttool.c:354
 msgid "Select foreground pixels"
 msgstr "Обрати точки переднього плану"
 
-#: ../app/tools/gimpforegroundselecttool.c:618
-#: ../app/tools/gimpforegroundselecttool.c:623
+#: ../app/tools/gimpforegroundselecttool.c:630
+#: ../app/tools/gimpforegroundselecttool.c:635
 msgid "Roughly outline the object to extract"
 msgstr "Обведіть об'єкт що витягується нашвидкуруч"
 
-#: ../app/tools/gimpforegroundselecttool.c:619
+#: ../app/tools/gimpforegroundselecttool.c:631
 msgid "press Enter to refine."
 msgstr "натисніть Enter для удосконалення."
 
-#: ../app/tools/gimpforegroundselecttool.c:646
+#: ../app/tools/gimpforegroundselecttool.c:658
 msgid "Selecting foreground"
 msgstr "Вибір переднього плану"
 
-#: ../app/tools/gimpforegroundselecttool.c:648
+#: ../app/tools/gimpforegroundselecttool.c:660
 msgid "Selecting background"
 msgstr "Вибір тла"
 
-#: ../app/tools/gimpforegroundselecttool.c:650
+#: ../app/tools/gimpforegroundselecttool.c:662
 msgid "Selecting unknown"
 msgstr "Вибір невідомого"
 
-#: ../app/tools/gimpforegroundselecttool.c:653
+#: ../app/tools/gimpforegroundselecttool.c:665
 msgid "press Enter to preview."
 msgstr "натисніть Enter для перегляду."
 
-#: ../app/tools/gimpforegroundselecttool.c:655
+#: ../app/tools/gimpforegroundselecttool.c:667
 msgid "press Escape to exit preview or Enter to apply."
 msgstr "натисніть Escape для виходу із перегляду або Enter для застосування."
 
-#: ../app/tools/gimpforegroundselecttool.c:1286
+#: ../app/tools/gimpforegroundselecttool.c:1312
 msgid "Paint mask"
 msgstr "Фарбувати маску"
 
@@ -23240,21 +23305,22 @@ msgstr "Гр_адієнт"
 msgid "Click-Drag to draw a gradient"
 msgstr "Натисніть і перетягніть, щоб намалювати градієнт"
 
-#: ../app/tools/gimpgradienttool.c:256
+#: ../app/tools/gimpgradienttool.c:257
 msgid "Cannot paint on multiple drawables. Select only one."
 msgstr ""
 "Неможливо малювати одразу на декількох об'єктах для малювання. Виберіть лише "
 "один об'єкт."
 
-#: ../app/tools/gimpgradienttool.c:258
+#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimptransformgridtool.c:358
+#: ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
 msgstr "Немає активних об'єктів малювання."
 
-#: ../app/tools/gimpgradienttool.c:296
+#: ../app/tools/gimpgradienttool.c:297
 msgid "No gradient available for use with this tool."
 msgstr "Немає градієнта, доступного для використання з цим інструментом."
 
-#: ../app/tools/gimpgradienttool.c:653
+#: ../app/tools/gimpgradienttool.c:656
 msgid "Gradient: "
 msgstr "Градієнт:"
 
@@ -23524,70 +23590,70 @@ msgstr "Змінити криву ножиць"
 msgid "_Levels..."
 msgstr "_Рівні…"
 
-#: ../app/tools/gimplevelstool.c:276
+#: ../app/tools/gimplevelstool.c:293
 msgid "Pick black point for all channels"
 msgstr "Вибрати чорну точку для всіх каналів"
 
-#: ../app/tools/gimplevelstool.c:278
+#: ../app/tools/gimplevelstool.c:295
 msgid "Pick black point for the selected channel"
 msgstr "Вибрати чорну точку для позначеного каналу"
 
-#: ../app/tools/gimplevelstool.c:285
+#: ../app/tools/gimplevelstool.c:302
 msgid "Pick gray point for all channels"
 msgstr "Вибрати сіру точку для всіх каналів"
 
-#: ../app/tools/gimplevelstool.c:287
+#: ../app/tools/gimplevelstool.c:304
 msgid "Pick gray point for the selected channel"
 msgstr "Вибрати сіру точку для позначеного каналу"
 
-#: ../app/tools/gimplevelstool.c:294
+#: ../app/tools/gimplevelstool.c:311
 msgid "Pick white point for all channels"
 msgstr "Вибрати білу точку для всіх каналів"
 
-#: ../app/tools/gimplevelstool.c:296
+#: ../app/tools/gimplevelstool.c:313
 msgid "Pick white point for the selected channel"
 msgstr "Вибрати білу точку для позначеного каналу"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:405
+#: ../app/tools/gimplevelstool.c:422
 msgid "Input Levels"
 msgstr "Рівні на вході"
 
-#: ../app/tools/gimplevelstool.c:491
+#: ../app/tools/gimplevelstool.c:508
 msgid "Clamp _input"
 msgstr "Затиснуте _введення"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:530
+#: ../app/tools/gimplevelstool.c:547
 msgid "Output Levels"
 msgstr "Рівні на виході"
 
-#: ../app/tools/gimplevelstool.c:577
+#: ../app/tools/gimplevelstool.c:594
 msgid "Clamp outpu_t"
 msgstr "Затиснуте в_иведення"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:590
+#: ../app/tools/gimplevelstool.c:607
 msgid "All Channels"
 msgstr "Всі канали"
 
-#: ../app/tools/gimplevelstool.c:602
+#: ../app/tools/gimplevelstool.c:619
 msgid "_Auto Input Levels"
 msgstr "_Авторівні на вході"
 
-#: ../app/tools/gimplevelstool.c:605
+#: ../app/tools/gimplevelstool.c:622
 msgid "Adjust levels for all channels automatically"
 msgstr "Підібрати рівні для всіх каналів автоматично"
 
-#: ../app/tools/gimplevelstool.c:632
+#: ../app/tools/gimplevelstool.c:649
 msgid "Edit these Settings as Curves"
 msgstr "Змінити ці параметри як криві"
 
-#: ../app/tools/gimplevelstool.c:849
+#: ../app/tools/gimplevelstool.c:866
 msgid "Use _old levels file format"
 msgstr "_Використовувати старий формат рівнів"
 
-#: ../app/tools/gimplevelstool.c:992 ../app/tools/gimpthresholdtool.c:408
+#: ../app/tools/gimplevelstool.c:1011 ../app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "Обчислюємо гістограму…"
 
@@ -23815,8 +23881,8 @@ msgid "Rigid (Rubber)"
 msgstr "Жорстко (гума)"
 
 #: ../app/tools/gimpnpointdeformationtool.c:158
-#: ../app/tools/gimpnpointdeformationtool.c:1002
 #: ../app/tools/gimpnpointdeformationtool.c:1006
+#: ../app/tools/gimpnpointdeformationtool.c:1010
 msgid "N-Point Deformation"
 msgstr "Деформація за N точками"
 
@@ -23834,52 +23900,52 @@ msgstr "Деформація за N _точками"
 msgid "_Offset..."
 msgstr "З_сув…"
 
-#: ../app/tools/gimpoffsettool.c:198
+#: ../app/tools/gimpoffsettool.c:212
 msgid "Offset Layer"
 msgstr "Зсув шару"
 
-#: ../app/tools/gimpoffsettool.c:200
+#: ../app/tools/gimpoffsettool.c:214
 msgid "Offset Layer Mask"
 msgstr "Маска зсуву шару"
 
-#: ../app/tools/gimpoffsettool.c:202
+#: ../app/tools/gimpoffsettool.c:216
 msgid "Offset Channel"
 msgstr "Зсув каналу"
 
-#: ../app/tools/gimpoffsettool.c:294 ../app/tools/gimpoffsettool.c:391
+#: ../app/tools/gimpoffsettool.c:308 ../app/tools/gimpoffsettool.c:405
 msgid "Offset: "
 msgstr "Зсув: "
 
-#: ../app/tools/gimpoffsettool.c:418
+#: ../app/tools/gimpoffsettool.c:432
 msgid "Click-Drag to offset drawable"
 msgstr "Натисніть і перетягніть для зсування намальованого"
 
-#: ../app/tools/gimpoffsettool.c:500
+#: ../app/tools/gimpoffsettool.c:514
 msgid "By width/_2, height/2"
 msgstr "За шириною/_2, висотою/2"
 
-#: ../app/tools/gimpoffsettool.c:512
+#: ../app/tools/gimpoffsettool.c:526
 msgid "By _width/2"
 msgstr "За шириною/_2"
 
-#: ../app/tools/gimpoffsettool.c:520
+#: ../app/tools/gimpoffsettool.c:534
 msgid "By _height/2"
 msgstr "За вис_отою/2"
 
 #. The edge behavior frame
-#: ../app/tools/gimpoffsettool.c:529
+#: ../app/tools/gimpoffsettool.c:543
 msgid "Edge Behavior"
 msgstr "Поведінка межі"
 
-#: ../app/tools/gimpoffsettool.c:536
+#: ../app/tools/gimpoffsettool.c:550
 msgid "W_rap around"
 msgstr "_Заповнити зображенням"
 
-#: ../app/tools/gimpoffsettool.c:539
+#: ../app/tools/gimpoffsettool.c:553
 msgid "Fill with _background color"
 msgstr "Заповнити кольором _тла"
 
-#: ../app/tools/gimpoffsettool.c:542
+#: ../app/tools/gimpoffsettool.c:556
 msgid "Make _transparent"
 msgstr "Зробити _прозорим"
 
@@ -23956,25 +24022,22 @@ msgstr "Натисніть, щоб намалювати лінію"
 msgid "%s to pick a color"
 msgstr "%s, зоб взяти колір піпеткою"
 
-#: ../app/tools/gimppainttool.c:294
-msgid "Cannot paint on multiple layer. Select only one layer."
+#: ../app/tools/gimppainttool.c:296 ../app/tools/gimpperspectiveclonetool.c:225
+#| msgid "Cannot paint on multiple layer. Select only one layer."
+msgid "Cannot paint on multiple layers. Select only one layer."
 msgstr ""
 "Не можна малювати на декількох шарах одночасно. Виберіть лише один шар."
 
-#: ../app/tools/gimppainttool.c:297 ../app/tools/gimpwarptool.c:773
-msgid "No active drawable."
-msgstr "Немає активного об'єкта для малювання."
-
-#: ../app/tools/gimppainttool.c:303
+#: ../app/tools/gimppainttool.c:310
 msgid "Cannot paint on layer groups."
 msgstr "Не вдалось малювати на групі шарів"
 
-#: ../app/tools/gimppainttool.c:671
+#: ../app/tools/gimppainttool.c:693
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для малювання прямої лінії"
 
-#: ../app/tools/gimppainttool.c:890
+#: ../app/tools/gimppainttool.c:918
 msgid "The active layer does not have an alpha channel."
 msgstr "У активному шарі немає каналу прозорості."
 
@@ -23998,7 +24061,7 @@ msgstr ""
 msgid "_Perspective Clone"
 msgstr "Штамп з п_ерспективою"
 
-#: ../app/tools/gimpperspectiveclonetool.c:611
+#: ../app/tools/gimpperspectiveclonetool.c:630
 msgid "Ctrl-Click to set a clone source"
 msgstr "Натисніть Ctrl для отримання джерела штампу"
 
@@ -24249,7 +24312,7 @@ msgstr ""
 "сітки"
 
 #: ../app/tools/gimpseamlessclonetool.c:192
-#: ../app/tools/gimpseamlessclonetool.c:753
+#: ../app/tools/gimpseamlessclonetool.c:759
 msgid "Seamless Clone"
 msgstr "Безшовний клон"
 
@@ -24261,7 +24324,7 @@ msgstr "Безшовний клон: суцільне вставлення од�
 msgid "_Seamless Clone"
 msgstr "_Безшовний клон"
 
-#: ../app/tools/gimpseamlessclonetool.c:791
+#: ../app/tools/gimpseamlessclonetool.c:797
 msgid "Cloning the foreground object"
 msgstr "Клонується об'єкт переднього плану"
 
@@ -24499,23 +24562,23 @@ msgstr "Завантаження шрифтів ще не завершено"
 msgid "Text box: "
 msgstr "Текстовий блок:"
 
-#: ../app/tools/gimptexttool.c:1197
+#: ../app/tools/gimptexttool.c:1198
 msgid "Reshape Text Layer"
 msgstr "Зміна розміру текстового шару"
 
-#: ../app/tools/gimptexttool.c:1770 ../app/tools/gimptexttool.c:1773
+#: ../app/tools/gimptexttool.c:1771 ../app/tools/gimptexttool.c:1774
 msgid "Confirm Text Editing"
 msgstr "Підтвердження зміни тексту"
 
-#: ../app/tools/gimptexttool.c:1777
+#: ../app/tools/gimptexttool.c:1778
 msgid "Create _New Layer"
 msgstr "_Створити новий шар"
 
-#: ../app/tools/gimptexttool.c:1779
+#: ../app/tools/gimptexttool.c:1780
 msgid "_Edit"
 msgstr "З_міни"
 
-#: ../app/tools/gimptexttool.c:1801
+#: ../app/tools/gimptexttool.c:1802
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -24538,19 +24601,19 @@ msgstr "Текстовий редактор GIMP"
 msgid "_Threshold..."
 msgstr "_Поріг…"
 
-#: ../app/tools/gimpthresholdtool.c:195
+#: ../app/tools/gimpthresholdtool.c:212
 msgid "Apply Threshold"
 msgstr "Застосувати поріг"
 
-#: ../app/tools/gimpthresholdtool.c:282
+#: ../app/tools/gimpthresholdtool.c:299
 msgid "_Auto"
 msgstr "_Авто"
 
-#: ../app/tools/gimpthresholdtool.c:284
+#: ../app/tools/gimpthresholdtool.c:301
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Автоматично встановити оптимальну бінаризацію порогу"
 
-#: ../app/tools/gimptool.c:1214
+#: ../app/tools/gimptool.c:1216
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Робота з порожнім зображенням неможлива, спочатку додайте шар"
 
@@ -24736,21 +24799,21 @@ msgstr "Заблокувати позицію опорної точки на п�
 msgid "_Transform"
 msgstr "Пере_творення"
 
-#: ../app/tools/gimptransformgridtool.c:575
-#: ../app/tools/gimptransformgridtool.c:587
+#: ../app/tools/gimptransformgridtool.c:588
+#: ../app/tools/gimptransformgridtool.c:600
 msgid "Transform Step"
 msgstr "Крок перетворення"
 
-#: ../app/tools/gimptransformgridtool.c:982
+#: ../app/tools/gimptransformgridtool.c:997
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (виправлення)"
 
-#: ../app/tools/gimptransformgridtool.c:1261
+#: ../app/tools/gimptransformgridtool.c:1277
 msgid "Re_adjust"
 msgstr "Повторно с_коригувати"
 
-#: ../app/tools/gimptransformgridtool.c:1514
+#: ../app/tools/gimptransformgridtool.c:1530
 msgid "Cannot readjust the transformation"
 msgstr "Не вдалося повторно скоригувати перетворення"
 
@@ -24956,19 +25019,19 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "Вибір з текстур"
 
-#: ../app/tools/gimpvectortool.c:164
+#: ../app/tools/gimpvectortool.c:168
 msgid "Paths Tool: Create and edit paths"
 msgstr "Контури: створення та редагування контурів"
 
-#: ../app/tools/gimpvectortool.c:165
+#: ../app/tools/gimpvectortool.c:169
 msgid "Pat_hs"
 msgstr "Кон_тури"
 
-#: ../app/tools/gimpvectortool.c:733
+#: ../app/tools/gimpvectortool.c:737
 msgid "There is no active layer or channel to fill"
 msgstr "Немає активного шару чи каналу для заповнення"
 
-#: ../app/tools/gimpvectortool.c:805
+#: ../app/tools/gimpvectortool.c:809
 msgid "There is no active layer or channel to stroke to"
 msgstr "Немає активного шару або каналу для обведення"
 
@@ -25078,49 +25141,49 @@ msgstr "Викривлення: деформація різними інстру
 msgid "_Warp Transform"
 msgstr "_Викривлення"
 
-#: ../app/tools/gimpwarptool.c:598 ../app/tools/gimpwarptool.c:610
+#: ../app/tools/gimpwarptool.c:600 ../app/tools/gimpwarptool.c:612
 msgid "Warp Tool Stroke"
 msgstr "Обведення викривлення"
 
-#: ../app/tools/gimpwarptool.c:770
+#: ../app/tools/gimpwarptool.c:773
 msgid "Cannot warp multiple layers. Select only one layer."
 msgstr "Неможливо обвести декілька шарів одразу. Виберіть лише один шар."
 
-#: ../app/tools/gimpwarptool.c:783
+#: ../app/tools/gimpwarptool.c:792
 msgid "Cannot warp layer groups."
 msgstr "Не можна обводити групи шарів."
 
-#: ../app/tools/gimpwarptool.c:820
+#: ../app/tools/gimpwarptool.c:829
 msgid "No stroke events selected."
 msgstr "Не позначено подій штрихів."
 
-#: ../app/tools/gimpwarptool.c:842
+#: ../app/tools/gimpwarptool.c:851
 msgid "No warp to erase."
 msgstr "Немає обведення для витирання."
 
-#: ../app/tools/gimpwarptool.c:846
+#: ../app/tools/gimpwarptool.c:855
 msgid "No warp to smooth."
 msgstr "Немає обведення для згладжування."
 
-#: ../app/tools/gimpwarptool.c:1070
+#: ../app/tools/gimpwarptool.c:1085
 msgid "Warp transform"
 msgstr "Викривлення"
 
-#: ../app/tools/gimpwarptool.c:1407
+#: ../app/tools/gimpwarptool.c:1424
 msgid "Please add some warp strokes first."
 msgstr "Будь ласка, спочатку додайте якісь обвідні штрихи."
 
-#: ../app/tools/gimpwarptool.c:1421 ../app/tools/gimpwarptool.c:1458
+#: ../app/tools/gimpwarptool.c:1438 ../app/tools/gimpwarptool.c:1475
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Обробляємо кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1436 ../app/tools/gimpwarptool.c:1466
+#: ../app/tools/gimpwarptool.c:1453 ../app/tools/gimpwarptool.c:1483
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1475
+#: ../app/tools/gimpwarptool.c:1492
 msgid "Frame"
 msgstr "Кадр"
 
@@ -28064,6 +28127,9 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "No active drawable."
+#~ msgstr "Немає активного об'єкта для малювання."
 
 #~ msgctxt "layers-action"
 #~ msgid "_Add to Selection"
