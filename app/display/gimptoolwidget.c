@@ -1119,8 +1119,8 @@ gimp_tool_widget_get_popup (GimpToolWidget        *widget,
                             GdkModifierType        state,
                             const gchar          **ui_path)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
-  g_return_val_if_fail (coords != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (coords != NULL, NULL);
 
   if (widget->private->visible &&
       GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_popup)
