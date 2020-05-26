@@ -18,7 +18,9 @@
 
 import gi
 gi.require_version('Gimp', '3.0')
+gi.require_version('GimpUi', '3.0')
 from gi.repository import Gimp
+from gi.repository import GimpUi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -38,7 +40,7 @@ PROC_NAME = 'python-fu-console'
 RESPONSE_BROWSE, RESPONSE_CLEAR, RESPONSE_SAVE = range(3)
 
 def run(procedure, args, data):
-    Gimp.ui_init ("python-console.py")
+    GimpUi.ui_init ("python-console.py")
 
     namespace = {'__builtins__': __builtins__,
                  '__name__': '__main__', '__doc__': None,
@@ -65,10 +67,10 @@ def run(procedure, args, data):
             pyconsole.Console._commit(self)
             Gimp.displays_flush()
 
-    class ConsoleDialog(Gimp.Dialog):
+    class ConsoleDialog(GimpUi.Dialog):
         def __init__(self):
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-            Gimp.Dialog.__init__(self, use_header_bar=use_header_bar)
+            GimpUi.Dialog.__init__(self, use_header_bar=use_header_bar)
             self.set_property("help-id", PROC_NAME)
             Gtk.Window.set_title(self, _("Python Console"))
             Gtk.Window.set_role(self, PROC_NAME)
@@ -78,7 +80,7 @@ def run(procedure, args, data):
             Gtk.Dialog.add_button(self, "_Close", Gtk.ResponseType.CLOSE)
 
             Gtk.Widget.set_name (self, PROC_NAME)
-            Gimp.Dialog.set_alternative_button_order_from_array(self,
+            GimpUi.Dialog.set_alternative_button_order_from_array(self,
                                                                 [ Gtk.ResponseType.CLOSE,
                                                                   RESPONSE_BROWSE,
                                                                   RESPONSE_CLEAR,
@@ -173,14 +175,14 @@ def run(procedure, args, data):
         def browse(self):
             if not self.browse_dlg:
                 use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-                dlg = Gimp.ProcBrowserDialog(use_header_bar=use_header_bar)
+                dlg = GimpUi.ProcBrowserDialog(use_header_bar=use_header_bar)
                 Gtk.Window.set_title(dlg, _("Python Procedure Browser"))
                 Gtk.Window.set_role(dlg, PROC_NAME)
                 Gtk.Dialog.add_button(dlg, "Apply", Gtk.ResponseType.APPLY)
                 Gtk.Dialog.add_button(dlg, "Close", Gtk.ResponseType.CLOSE)
 
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
-                Gimp.Dialog.set_alternative_button_order_from_array(dlg,
+                GimpUi.Dialog.set_alternative_button_order_from_array(dlg,
                                                                     [ Gtk.ResponseType.CLOSE,
                                                                       Gtk.ResponseType.APPLY ])
 
@@ -231,7 +233,7 @@ def run(procedure, args, data):
                 Gtk.Dialog.add_button(dlg, "_Cancel", Gtk.ResponseType.CANCEL)
                 Gtk.Dialog.add_button(dlg, "_Save", Gtk.ResponseType.OK)
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
-                Gimp.Dialog.set_alternative_button_order_from_array(dlg,
+                GimpUi.Dialog.set_alternative_button_order_from_array(dlg,
                                                                     [ Gtk.ResponseType.OK,
                                                                       Gtk.ResponseType.CANCEL ])
 
