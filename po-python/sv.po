@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-10 12:00+0000\n"
-"PO-Revision-Date: 2020-05-10 21:34+0200\n"
+"POT-Creation-Date: 2020-05-26 16:46+0000\n"
+"PO-Revision-Date: 2020-05-27 01:41+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
 msgid "Save as colored HTML text..."
@@ -227,37 +227,37 @@ msgstr ""
 msgid "_Slice..."
 msgstr "_Skär…"
 
-#: ../plug-ins/python/python-console/python-console.py:73
+#: ../plug-ins/python/python-console/python-console.py:75
 msgid "Python Console"
 msgstr "Python-konsol"
 
-#: ../plug-ins/python/python-console/python-console.py:77
+#: ../plug-ins/python/python-console/python-console.py:79
 msgid "_Browse..."
 msgstr "_Bläddra…"
 
-#: ../plug-ins/python/python-console/python-console.py:177
+#: ../plug-ins/python/python-console/python-console.py:179
 msgid "Python Procedure Browser"
 msgstr "Bläddrare för Python-procedurer"
 
-#: ../plug-ins/python/python-console/python-console.py:205
+#: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kunde inte öppna \"%s\" för skrivning: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:220
+#: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Kunde inte skriva till \"%s\": %s"
 
-#: ../plug-ins/python/python-console/python-console.py:229
+#: ../plug-ins/python/python-console/python-console.py:231
 msgid "Save Python-Fu Console Output"
 msgstr "Spara konsolutdata för Python-Fu"
 
-#: ../plug-ins/python/python-console/python-console.py:278
-msgid "_Console"
-msgstr "_Konsol"
+#: ../plug-ins/python/python-console/python-console.py:280
+msgid "Python _Console"
+msgstr "Python-_konsol"
 
-#: ../plug-ins/python/python-console/python-console.py:279
+#: ../plug-ins/python/python-console/python-console.py:281
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktiv GIMP Python-tolk"
 
@@ -638,6 +638,9 @@ msgstr "Vänta : Renderar mönster"
 #: ../plug-ins/python/spyro-plus.py:2286
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
+
+#~ msgid "_Console"
+#~ msgstr "_Konsol"
 
 #~ msgid "Missing exception information"
 #~ msgstr "Undantagsinformation saknas"
