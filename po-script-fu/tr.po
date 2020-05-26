@@ -8,15 +8,15 @@
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
 # Alper Ersoy <aersoy@tfz.net>, 2001.
 # Muhammet Kara <muhammetk@gmail.com>, 2014.
-# Sabri Ünal <libreajans@gmail.com>, 2019.
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2020.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-09-07 18:08+0000\n"
-"PO-Revision-Date: 2019-09-08 01:06+0300\n"
+"POT-Creation-Date: 2020-05-18 15:20+0000\n"
+"PO-Revision-Date: 2020-05-19 14:40+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -147,7 +147,7 @@ msgstr "Script-Fu Uçbirimi Çıktısını Kaydet"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
 #: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "_İptal"
 
@@ -245,27 +245,27 @@ msgstr "'script-fu-register' çağrısında çok fazla bağımsız değişken"
 msgid "Error while loading %s:"
 msgstr "%s yüklenirken hata:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Sunucu Seçenekleri"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "_Sunucuyu Başlat"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "IP'yi dinle:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Sunucu bağlantı noktası:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Sunucu günlük dosyası:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -689,49 +689,64 @@ msgstr "Matlık"
 msgid "Allow resizing"
 msgstr "Yeniden boyutlandırmaya izin ver"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "Öteki Bütün Satırları _Sil..."
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Diğer satır ve sütunları sil"
+#| msgid "_Erase Every Other Row..."
+msgid "_Erase Every Nth Row..."
+msgstr "_Her X'inci satırı sil..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Her X'inci satır ve sütunu sil"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Satırlar/Sütunlar"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Satırlar"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Tek/çift"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Çift"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Tek"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Sil/doldur"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Sil"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "AA ile Doldur"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "Öteki Bütün Satırları _Sil..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Diğer satır ve sütunları sil"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Tek/çift"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Çift"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Tek"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
