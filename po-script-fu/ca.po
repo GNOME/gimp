@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-31 23:26+0000\n"
-"PO-Revision-Date: 2019-11-01 23:01+0100\n"
+"POT-Creation-Date: 2020-05-26 14:00+0000\n"
+"PO-Revision-Date: 2020-02-23 23:25+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -23,8 +23,8 @@ msgstr ""
 "X-Generator: Poedit 1.8.12\n"
 
 #: ../plug-ins/script-fu/script-fu.c:138
-msgid "_Console"
-msgstr "_Consola"
+msgid "Script-Fu _Console"
+msgstr "_Consola Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:143
 msgid "Interactive console for Script-Fu development"
@@ -142,7 +142,7 @@ msgstr "Desa la sortida de la consola de funcions"
 
 #: ../plug-ins/script-fu/script-fu-console.c:280
 #: ../plug-ins/script-fu/script-fu-interface.c:238
-#: ../plug-ins/script-fu/script-fu-server.c:831
+#: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
@@ -243,27 +243,27 @@ msgstr "Falten paràmetres per a fer la crida al «script-fu-register»"
 msgid "Error while loading %s:"
 msgstr "S'ha produït un error en carregar %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Opcions de servidor de funcions"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "_Inicia el servidor"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
 msgstr "Escolta en la IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Port del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
 msgstr "Fitxer de registre del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:891
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -689,49 +689,63 @@ msgstr "Opacitat"
 msgid "Allow resizing"
 msgstr "Permet redimensionar"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Esborra les altres files..."
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Esborra totes les altres files i columnes"
+msgid "_Erase Every Nth Row..."
+msgstr "_Esborra cada enèsima fila..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Esborra cada enèsima fila o columna"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Files/columnes"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Files"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Columnes"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Parell/senar"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Parell"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Senar"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Esborra/omple"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Esborra"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Omple amb el fons"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Esborra les altres files..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Esborra totes les altres files i columnes"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Parell/senar"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Parell"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Senar"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -1610,6 +1624,9 @@ msgstr "Desplaçament de la X de l'ombra caiguda"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Desplaçament de la Y de l'ombra caiguda"
+
+#~ msgid "_Console"
+#~ msgstr "_Consola"
 
 #~ msgid "Plug-in _Registry"
 #~ msgstr "_Instal·la més connectors"
