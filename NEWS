@@ -1,6 +1,6 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                         2.10 Stable Branch
+                         Development Branch
                    ------------------------------
 
 This is the stable branch of GIMP. Unlike earlier stable branches,
@@ -8,68 +8,72 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
-Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
+Overview of Changes from GIMP 2.10.x to GIMP 2.99.2
 ===================================================
 
 Core:
 
-  - Discard fonts which fail to load and popup an info dialog to allow
-    people debug their fonts.
-  - New API to suppress updates in UI until plug-ins are done
-    introducing changes.
-  - New API to calculate histograms in separate threads, with possible further
-    extension to handle similar cases elsewhere in GIMP.
-  - Tool options are now properly saved and reloaded per-device at
-    startup.
+  - Improved "space invasion".
+  - New extension format support (.gex a.k.a. GIMP Extension) which is
+    an archive containing various supported data. So far, it can
+    package: brushes, MyPaint brushes, dynamics, patterns, gradients,
+    palettes, tool presets, plug-ins, splash images and themes.
+  - New extension manager allowing to enable, disable or uninstall
+    installed extensions, with a dialog available in `Edit > Manage
+    Extensions`.
+  - Multi selection of layers now possible. Various tools and features
+    are now multi-selection aware.
+  - XCF format bumped to version 14 with awareness of multiple layer
+    selection.
+
+User Interface:
+
+  - Whole interface ported to GTK+3.
+  - Proper HiDPI support, which will follow the system's scale factor
+    for all widgets. This is a core toolkit support, unlike the basic
+    better-than-nothing hacks from GIMP 2.10.x.
+  - GTK+3 CSS-like support. All themes for former versions are therefore
+    not working anymore.
+  - GTK+3 themes have the concept of "dark variant", so a same theme may
+    propose both a light and a dark versions. Preference for dark
+    variants can now be checked in `Preferences > Themes > Use dark
+    theme variant if available` checkbox, allowing for instance to use
+    your system theme in its light variant everywhere except in GIMP.
+    This option is checked by default as graphics software are often
+    prefered in dark modes.
+  - Symbolic icon themes are now recolored automatically according to
+    the theme colors (no theme and icon theme tweaking anymore to end up
+    with dark on dark or light on light interfaces), except for color
+    elements whose SVG style is marked as "!important".
+  - Image display rendered faster with  a render cache that keeps the
+    result of scaling, color management, display filters and shell mask
+    (for tools like fuzzy select).
+
+Devices:
+
+  - Device hotplug supported. In particular, you don't need to have your
+    tablets and other devices plugged before you start GIMP anymore, and
+    enabling your devices in the "Configure Input Devices" dialog is not
+    needed anymore. Tablets will work out-of-the box.
 
 Plug-ins:
 
-  - New plug-in for importing and exporting HEIF images.
-  - Enable visibility of rasterized vector layer from PSD.
-  - Single-window screenshots in Windows fixed to correctly snap a
-    window even when it is partly off-screen or covered by another
-    window or when display scaling is not set to 100%.
-
-Filters:
-
-  - New Spherize filter to wrap an image around a spherical cap
-  - New Recursive Transform filter to create Droste effect.
-
-Usability:
-
-  - Warn users, when alpha-only painting has no effect. E.g. when target
-    drawable doesn't have an alpha channel, or the alpha channel is locked.
-  - Make the splash texts dynamic, so they are larger on larger splashes.
-  - Mention pressing Enter to complete Foreground selection in the status bar.
-  - Make sure that clicking outside any selection prevents Rectangle Select
-    and Ellipse Select tools from creating empty selections.
-  - Improve mouse wheel zooming behavior to keep the same point
-    centered under the pointer even if the image is completely visible
-    in the canvas.
-  - Add "View -> Center Image in Window" (Shift+J) as a quick way to
-    center the image at any zoom level.
-
-Translations:
-
-  - Updated translations: Catalan, Danish, Dutch, French, German, Greek,
-    Hungarian, Icelandic, Italian, Latvian, Polish, Russian, Spanish,
-    Swedish, Ukrainian.
-  - New translation of Windows installer: Chinese (Taiwan)
-
-Build:
-
-  - Add a --with-bug-report-url configure option allowing packagers to
-    set the address of their own bug tracker. This address will be the
-    one opened by the debug dialog for reporting bugs.
-  - Add a flatpak manifest for the gtk3-port branch.
-  - Remove the possibility to disable script-fu.
-  - Add a --with-icc-directory configure option to customize the color
-    profile directory. By default, it is set to the common path
-    /usr/share/color/icc.
+  - Major rewrite of the API. So GIMP 2.10.x plug-ins and below must be
+    ported to the new API.
+  - Various objects are now proper GObject in the plug-in API, and not
+    just ID integers.
+  - The API is GObject Introspected, which means plug-ins can be written
+    in various non-C languages. So far the following languages have been
+    tested and work well: Python 3, Lua and Javascript (Note: Python 2
+    is also still working, but considering that this language is
+    end-of-life since 2020, we don't really care).
+  - Every introspected binding which we test comes with a "Goat
+    Exercise", which is a demo plug-in popping a dialog and showing its
+    own source code. It processes a simple "gegl:invert" operation on a
+    drawable. All "Goat Exercises" must do the same thing in the same
+    way, simply in their respective languages, as documentation code for
+    a language binding.
 
 Documentation:
 
-  - Updating the description of the XCF format "devel-docs/xcf.txt", for
-    third-party readers wishing to support GIMP 2.10 XCF files.
-  - Add documentation skeletons for all enums in libgimpbase/, there is
-    much room for improvement.
+  - devel-docs/xcf.txt updated to handle XCF 14.
