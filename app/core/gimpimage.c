@@ -2818,7 +2818,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
       version = MAX (11, version);
     }
 
-  if (g_list_length (gimp_image_get_selected_layers (image)) > 0)
+  if (g_list_length (gimp_image_get_selected_layers (image)) > 1)
     {
       ADD_REASON (g_strdup_printf (_("Multiple layer selection was "
                                      "added in %s"), "GIMP 2.10.20"));
