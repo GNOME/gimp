@@ -463,6 +463,7 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
   widget_class->key_press       = gimp_tool_rectangle_key_press;
   widget_class->motion_modifier = gimp_tool_rectangle_motion_modifier;
   widget_class->get_cursor      = gimp_tool_rectangle_get_cursor;
+  widget_class->update_on_scale = TRUE;
 
   rectangle_signals[CHANGE_COMPLETE] =
     g_signal_new ("change-complete",

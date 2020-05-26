@@ -125,6 +125,10 @@ struct _GimpToolWidgetClass
                                 const GimpCoords      *coords,
                                 GdkModifierType        state,
                                 const gchar          **ui_path);
+
+  gboolean update_on_scale;
+  gboolean update_on_scroll;
+  gboolean update_on_rotate;
 };
 
 

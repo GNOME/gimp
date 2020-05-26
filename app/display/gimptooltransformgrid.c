@@ -232,6 +232,7 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
   widget_class->leave_notify    = gimp_tool_transform_grid_leave_notify;
   widget_class->hover_modifier  = gimp_tool_transform_grid_hover_modifier;
   widget_class->get_cursor      = gimp_tool_transform_grid_get_cursor;
+  widget_class->update_on_scale = TRUE;
 
   g_object_class_install_property (object_class, PROP_TRANSFORM,
                                    gimp_param_spec_matrix3 ("transform",

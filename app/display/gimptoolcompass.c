@@ -185,19 +185,21 @@ gimp_tool_compass_class_init (GimpToolCompassClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
 
-  object_class->constructed     = gimp_tool_compass_constructed;
-  object_class->set_property    = gimp_tool_compass_set_property;
-  object_class->get_property    = gimp_tool_compass_get_property;
+  object_class->constructed      = gimp_tool_compass_constructed;
+  object_class->set_property     = gimp_tool_compass_set_property;
+  object_class->get_property     = gimp_tool_compass_get_property;
 
-  widget_class->changed         = gimp_tool_compass_changed;
-  widget_class->button_press    = gimp_tool_compass_button_press;
-  widget_class->button_release  = gimp_tool_compass_button_release;
-  widget_class->motion          = gimp_tool_compass_motion;
-  widget_class->hit             = gimp_tool_compass_hit;
-  widget_class->hover           = gimp_tool_compass_hover;
-  widget_class->leave_notify    = gimp_tool_compass_leave_notify;
-  widget_class->motion_modifier = gimp_tool_compass_motion_modifier;
-  widget_class->get_cursor      = gimp_tool_compass_get_cursor;
+  widget_class->changed          = gimp_tool_compass_changed;
+  widget_class->button_press     = gimp_tool_compass_button_press;
+  widget_class->button_release   = gimp_tool_compass_button_release;
+  widget_class->motion           = gimp_tool_compass_motion;
+  widget_class->hit              = gimp_tool_compass_hit;
+  widget_class->hover            = gimp_tool_compass_hover;
+  widget_class->leave_notify     = gimp_tool_compass_leave_notify;
+  widget_class->motion_modifier  = gimp_tool_compass_motion_modifier;
+  widget_class->get_cursor       = gimp_tool_compass_get_cursor;
+  widget_class->update_on_scale  = TRUE;
+  widget_class->update_on_rotate = TRUE;
 
   compass_signals[CREATE_GUIDES] =
     g_signal_new ("create-guides",
