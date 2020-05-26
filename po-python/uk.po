@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-05 11:08+0000\n"
-"PO-Revision-Date: 2020-05-05 18:35+0300\n"
+"POT-Creation-Date: 2020-05-26 16:46+0000\n"
+"PO-Revision-Date: 2020-05-26 20:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -224,37 +224,38 @@ msgstr "Розрізати зображення за напрямними у т�
 msgid "_Slice..."
 msgstr "_Нарізка для веб..."
 
-#: ../plug-ins/python/python-console/python-console.py:73
+#: ../plug-ins/python/python-console/python-console.py:75
 msgid "Python Console"
 msgstr "Консоль Python"
 
-#: ../plug-ins/python/python-console/python-console.py:77
+#: ../plug-ins/python/python-console/python-console.py:79
 msgid "_Browse..."
 msgstr "О_гляд..."
 
-#: ../plug-ins/python/python-console/python-console.py:177
+#: ../plug-ins/python/python-console/python-console.py:179
 msgid "Python Procedure Browser"
 msgstr "Перегляд процедур Python"
 
-#: ../plug-ins/python/python-console/python-console.py:205
+#: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити '%s' для запису: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:220
+#: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Не вдається записати у '%s': %s"
 
-#: ../plug-ins/python/python-console/python-console.py:229
+#: ../plug-ins/python/python-console/python-console.py:231
 msgid "Save Python-Fu Console Output"
 msgstr "Зберегти вивід консолі Python-Fu"
 
-#: ../plug-ins/python/python-console/python-console.py:278
-msgid "_Console"
-msgstr "_Консоль"
+#: ../plug-ins/python/python-console/python-console.py:280
+#| msgid "Python Console"
+msgid "Python _Console"
+msgstr "_Консоль Python"
 
-#: ../plug-ins/python/python-console/python-console.py:279
+#: ../plug-ins/python/python-console/python-console.py:281
 msgid "Interactive GIMP Python interpreter"
 msgstr "Інтерактивна інтерпретатор Python у GIMP"
 
@@ -263,7 +264,6 @@ msgid "Spyro Layer"
 msgstr "Шар спіро"
 
 #: ../plug-ins/python/spyro-plus.py:61
-#| msgid "Spyrograph"
 msgid "Spyro Path"
 msgstr "Спіроконтур"
 
@@ -457,7 +457,6 @@ msgid "Flower Petals"
 msgstr "Квіткові пелюстки"
 
 #: ../plug-ins/python/spyro-plus.py:1561
-#| msgid "Number of sides of the shape."
 msgid "The number of petals in the pattern."
 msgstr "Кількість пелюсток у візерунку."
 
@@ -479,9 +478,9 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
-"Радіус центральної дірки візерунка, де нічого не буде намальовано."
-" Визначається у відсотках до розміру візерунка. Значення «0» — візерунок без"
-" дірки. Значення «99» — тонка лінія на краю."
+"Радіус центральної дірки візерунка, де нічого не буде намальовано. "
+"Визначається у відсотках до розміру візерунка. Значення «0» — візерунок без "
+"дірки. Значення «99» — тонка лінія на краю."
 
 #: ../plug-ins/python/spyro-plus.py:1594
 msgid "Width(%)"
@@ -493,8 +492,8 @@ msgid ""
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
-"Ширина візерунка у відсотках до розміру візерунка. Значення «1» призведе до"
-" створення тонкого візерунка. Значення «100» — до заповнення усього візерунка."
+"Ширина візерунка у відсотках до розміру візерунка. Значення «1» призведе до "
+"створення тонкого візерунка. Значення «100» — до заповнення усього візерунка."
 
 #: ../plug-ins/python/spyro-plus.py:1606
 msgid "Visual"
@@ -605,8 +604,8 @@ msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
-"Виберіть дію: зберегти як новий шар, перемалювати на останньому активному"
-" шарі або зберегти як контур"
+"Виберіть дію: зберегти як новий шар, перемалювати на останньому активному "
+"шарі або зберегти як контур"
 
 #: ../plug-ins/python/spyro-plus.py:1740
 msgid "Spyrogimp"
@@ -641,6 +640,9 @@ msgstr "Будь ласка, зачекайте: обробляємо візер
 #: ../plug-ins/python/spyro-plus.py:2286
 msgid "Spyrogimp..."
 msgstr "Спіроґімп…"
+
+#~ msgid "_Console"
+#~ msgstr "_Консоль"
 
 #~ msgid "Missing exception information"
 #~ msgstr "Бракує інформації про виняток"
