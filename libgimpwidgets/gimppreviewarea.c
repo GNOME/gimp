@@ -2085,6 +2085,10 @@ gimp_preview_area_menu_popup (GimpPreviewArea *area,
                          gimp_preview_area_menu_new (area, "check-type"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                          gimp_preview_area_menu_new (area, "check-size"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu),
+                         gimp_preview_area_menu_new (area, "check-custom-color1"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu),
+                         gimp_preview_area_menu_new (area, "check-custom-color2"));
 
   if (event)
     gtk_menu_popup (GTK_MENU (menu),

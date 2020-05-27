@@ -211,26 +211,28 @@ static HANDLE shm_handle;
 
 // BWROGA: add _check_custom_color1 && _check_custom_color2
 
-static gint           _tile_width        = -1;
-static gint           _tile_height       = -1;
-static gint           _shm_ID            = -1;
-static guchar        *_shm_addr          = NULL;
-static gboolean       _show_tool_tips    = TRUE;
-static gboolean       _show_help_button  = TRUE;
-static gboolean       _export_profile    = FALSE;
-static gboolean       _export_exif       = FALSE;
-static gboolean       _export_xmp        = FALSE;
-static gboolean       _export_iptc       = FALSE;
-static GimpCheckSize  _check_size        = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
-static GimpCheckType  _check_type        = GIMP_CHECK_TYPE_GRAY_CHECKS;
-static gint           _min_colors        = 144;
-static gint           _gdisp_ID          = -1;
-static gchar         *_wm_class          = NULL;
-static gchar         *_display_name      = NULL;
-static gint           _monitor_number    = 0;
-static guint32        _timestamp         = 0;
-static gchar         *_icon_theme_dir    = NULL;
-static const gchar   *progname           = NULL;
+static gint           _tile_width          = -1;
+static gint           _tile_height         = -1;
+static gint           _shm_ID              = -1;
+static guchar        *_shm_addr            = NULL;
+static gboolean       _show_tool_tips      = TRUE;
+static gboolean       _show_help_button    = TRUE;
+static gboolean       _export_profile      = FALSE;
+static gboolean       _export_exif         = FALSE;
+static gboolean       _export_xmp          = FALSE;
+static gboolean       _export_iptc         = FALSE;
+static GimpCheckSize  _check_size          = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
+static GimpCheckType  _check_type          = GIMP_CHECK_TYPE_GRAY_CHECKS;
+static GimpRGB        _check_custom_color1 = GIMP_CHECKS_CUSTOM_COLOR1;
+static GimpRGB        _check_custom_color2 = GIMP_CHECKS_CUSTOM_COLOR2;
+static gint           _min_colors          = 144;
+static gint           _gdisp_ID            = -1;
+static gchar         *_wm_class            = NULL;
+static gchar         *_display_name        = NULL;
+static gint           _monitor_number      = 0;
+static guint32        _timestamp           = 0;
+static gchar         *_icon_theme_dir      = NULL;
+static const gchar   *progname             = NULL;
 
 static gchar          write_buffer[WRITE_BUFFER_SIZE];
 static gulong         write_buffer_index = 0;
@@ -1557,6 +1559,38 @@ gimp_check_type (void)
 }
 
 /**
+ * gimp_check_custom_color1:
+ *
+ * Returns the first checkerboard custom color that can
+ * be used in previews.
+ *
+ * This is a constant value given at plug-in configuration time.
+ *
+ * Return value: the _check_custom_color1 value
+ **/
+GimpRGB
+gimp_check_custom_color1 (void)
+{
+  return _check_custom_color1;
+}
+
+/**
+ * gimp_check_custom_color2:
+ *
+ * Returns the second checkerboard custom color that can
+ * be used in previews.
+ *
+ * This is a constant value given at plug-in configuration time.
+ *
+ * Return value: the _check_custom_color2 value
+ **/
+GimpRGB
+gimp_check_custom_color2 (void)
+{
+  return _check_custom_color2;
+}
+
+/**
  * gimp_default_display:
  *
  * Returns the default display ID. This corresponds to the display the
@@ -2319,24 +2353,26 @@ gimp_config (GPConfig *config)
       gimp_quit ();
     }
 
-  _tile_width       = config->tile_width;
-  _tile_height      = config->tile_height;
-  _shm_ID           = config->shm_ID;
-  _check_size       = config->check_size;
-  _check_type       = config->check_type;
-  _show_tool_tips   = config->show_tooltips    ? TRUE : FALSE;
-  _show_help_button = config->show_help_button ? TRUE : FALSE;
-  _export_profile   = config->export_profile   ? TRUE : FALSE;
-  _export_exif      = config->export_exif      ? TRUE : FALSE;
-  _export_xmp       = config->export_xmp       ? TRUE : FALSE;
-  _export_iptc      = config->export_iptc      ? TRUE : FALSE;
-  _min_colors       = config->min_colors;
-  _gdisp_ID         = config->gdisp_ID;
-  _wm_class         = g_strdup (config->wm_class);
-  _display_name     = g_strdup (config->display_name);
-  _monitor_number   = config->monitor_number;
-  _timestamp        = config->timestamp;
-  _icon_theme_dir   = g_strdup (config->icon_theme_dir);
+  _tile_width          = config->tile_width;
+  _tile_height         = config->tile_height;
+  _shm_ID              = config->shm_ID;
+  _check_size          = config->check_size;
+  _check_type          = config->check_type;
+  _check_custom_color1 = config->check_custom_color1;
+  _check_custom_color2 = config->check_custom_color2;
+  _show_tool_tips      = config->show_tooltips    ? TRUE : FALSE;
+  _show_help_button    = config->show_help_button ? TRUE : FALSE;
+  _export_profile      = config->export_profile   ? TRUE : FALSE;
+  _export_exif         = config->export_exif      ? TRUE : FALSE;
+  _export_xmp          = config->export_xmp       ? TRUE : FALSE;
+  _export_iptc         = config->export_iptc      ? TRUE : FALSE;
+  _min_colors          = config->min_colors;
+  _gdisp_ID            = config->gdisp_ID;
+  _wm_class            = g_strdup (config->wm_class);
+  _display_name        = g_strdup (config->display_name);
+  _monitor_number      = config->monitor_number;
+  _timestamp           = config->timestamp;
+  _icon_theme_dir      = g_strdup (config->icon_theme_dir);
 
   if (config->app_name)
     g_set_application_name (config->app_name);
