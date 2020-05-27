@@ -50,7 +50,7 @@ m4_define([alsa_required_version], [1.0.0])
 m4_define([appstream_glib_required_version], [0.7.7])
 m4_define([atk_required_version], [2.4.0])
 m4_define([babl_major_minor_version], [0.1])
-m4_define([babl_micro_version], [74])
+m4_define([babl_micro_version], [76])
 m4_define([babl_required_version],
           [babl_major_minor_version.babl_micro_version])
 m4_define([babl_required_version], [0.1.74])

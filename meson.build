@@ -339,7 +339,7 @@ dbghelp           = platform_windows ? cc.find_library('dbghelp') : no_dep
 winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
-babl_minver       = '0.1.74'
+babl_minver       = '0.1.76'
 babl              = dependency('babl',               version: '>='+babl_minver)
 cairo_minver      = '1.12.2'
 cairo             = dependency('cairo',              version: '>='+cairo_minver)
