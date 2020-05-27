@@ -162,6 +162,7 @@ gimp_drawable_preview_init (GimpDrawablePreview *preview)
   g_object_set (GIMP_PREVIEW (preview)->area,
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
+                // BWROGA
                 NULL);
 }
 

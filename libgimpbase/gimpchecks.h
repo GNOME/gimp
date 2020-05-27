@@ -58,6 +58,20 @@ G_BEGIN_DECLS
 #define GIMP_CHECK_LIGHT  0.6
 
 /**
+ * GIMP_CHECKS_CUSTOM_COLOR1:
+ *
+ * The default color 1 for the custom checkerboard type.
+ **/
+#define GIMP_CHECKS_CUSTOM_COLOR1 ((GimpRGB) { 1.0, 0.0, 0.0, 1.0 })
+
+/**
+ * GIMP_CHECKS_CUSTOM_COLOR2:
+ *
+ * The default color 2 for the custom checkerboard type.
+ **/
+#define GIMP_CHECKS_CUSTOM_COLOR2 ((GimpRGB) { 0.0, 1.0, 0.0, 1.0 })
+
+/**
  * GIMP_CHECKS_LIGHT_COLOR_DARK:
  *
  * The dark color for the light checkerboard type.

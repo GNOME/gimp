@@ -113,8 +113,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GimpRGB       color        = { 0, 0, 0, 0 };
-  GimpRGB       red          = { 1, 0, 0, 1 };
-  GimpRGB       green        = { 0, 1, 0, 1 };
 
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;
@@ -140,14 +138,14 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                         "transparency-custom-color1",
                         "Transparency custom color 1",
                         TRANSPARENCY_CUSTOM_COLOR1_BLURB,
-                        FALSE, &red,
+                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR1,
                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_RGB (object_class, PROP_TRANSPARENCY_CUSTOM_COLOR2,
                         "transparency-custom-color2",
                         "Transparency custom color 2",
                         TRANSPARENCY_CUSTOM_COLOR2_BLURB,
-                        FALSE, &green,
+                        FALSE, &GIMP_CHECKS_CUSTOM_COLOR2,
                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_SNAP_DISTANCE,

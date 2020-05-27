@@ -42,6 +42,8 @@ struct _GimpPreviewArea
 
   GimpCheckSize    check_size;
   GimpCheckType    check_type;
+  GimpRGB          check_custom_color1;
+  GimpRGB          check_custom_color2;
   gint             width;
   gint             height;
   gint             rowstride;
