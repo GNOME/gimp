@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-26 13:56+0000\n"
-"PO-Revision-Date: 2020-05-26 16:38+0200\n"
+"PO-Revision-Date: 2020-05-27 13:18+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -7013,20 +7013,18 @@ msgstr ""
 "Combinar esta capa con la primera capa visible que está por debajo de ella"
 
 #: ../app/actions/layers-actions.c:190
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Merge Layer Group"
 msgctxt "layers-action"
 msgid "Merge Layer Groups"
-msgstr "Combinar grupo de capas"
+msgstr "Combinar grupos de capas"
 
 #: ../app/actions/layers-actions.c:191
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Merge the layer group's layers into one normal layer"
 msgctxt "layers-action"
 msgid "Merge the layer groups' layers into one normal layer"
-msgstr "Combinar todas las capas del grupo en una sola capa normal"
+msgstr "Combinar los grupos de capas en una sola capa normal"
 
 #: ../app/actions/layers-actions.c:196
 msgctxt "layers-action"
@@ -7143,15 +7141,13 @@ msgstr ""
 "de la capa)"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Add La_yer Mask..."
 msgctxt "layers-action"
 msgid "Add La_yer Masks..."
-msgstr "Añadir má_scara de capa…"
+msgstr "Añadir má_scaras de capa…"
 
 #: ../app/actions/layers-actions.c:264 ../app/actions/layers-actions.c:274
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Add a mask that allows non-destructive editing of transparency"
 msgctxt "layers-action"
@@ -7159,23 +7155,23 @@ msgid ""
 "Add masks to selected layers that allows non-destructive editing of "
 "transparency"
 msgstr ""
-"Añadir una máscara que permita la edición no destructiva de la transparencia"
+"Añadir máscaras a las capas seleccionadas que permitan la edición no "
+"destructiva de la transparencia"
 
 #: ../app/actions/layers-actions.c:279
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Add La_yer Mask"
 msgctxt "layers-action"
 msgid "Add La_yer Masks"
-msgstr "Añadir má_scara de capa"
+msgstr "Añadir má_scaras de capa"
 
 #: ../app/actions/layers-actions.c:281
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Add a mask with last used values"
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
-msgstr "Añadir una máscara con los últimos valores utilizados"
+msgstr ""
+"Añadir máscara a las capas seleccionadas con los últimos valores utilizados"
 
 #: ../app/actions/layers-actions.c:286
 msgctxt "layers-action"
@@ -7208,20 +7204,18 @@ msgid "Work on the layer mask"
 msgstr "Trabajar sobre la máscara de capa"
 
 #: ../app/actions/layers-actions.c:308
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "S_how Layer Mask"
 msgctxt "layers-action"
 msgid "S_how Layer Masks"
-msgstr "_Mostrar máscara de capa"
+msgstr "_Mostrar máscaras de capa"
 
 #: ../app/actions/layers-actions.c:314
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Disable Layer Mask"
 msgctxt "layers-action"
 msgid "_Disable Layer Masks"
-msgstr "_Desactivar máscara de capa"
+msgstr "_Desactivar máscaras de capa"
 
 #: ../app/actions/layers-actions.c:315
 msgctxt "layers-action"
@@ -7457,77 +7451,67 @@ msgid "Delete Layer Mas_k"
 msgstr "Eliminar másca_ra de capa"
 
 #: ../app/actions/layers-actions.c:495
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Remove the layer mask and its effect"
 msgctxt "layers-action"
 msgid "Remove layer masks and their effect"
-msgstr "Quitar la máscara de capa y su efecto"
+msgstr "Quitar las máscaras de capas y su efecto"
 
 #: ../app/actions/layers-actions.c:503
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Mask to Selection"
 msgctxt "layers-action"
 msgid "_Masks to Selection"
-msgstr "_Máscara a selección"
+msgstr "_Máscaras a selección"
 
 #: ../app/actions/layers-actions.c:504
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Replace the selection with the layer mask"
 msgctxt "layers-action"
 msgid "Replace the selection with the layer masks"
-msgstr "Sustituir la selección con la máscara de capa"
+msgstr "Reemplazar la selección con las máscaras de capa"
 
 #: ../app/actions/layers-actions.c:509
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Mask to Selection"
 msgctxt "layers-action"
 msgid "_Add Masks to Selection"
-msgstr "_Máscara a selección"
+msgstr "_Añadir máscaras a la selección"
 
 #: ../app/actions/layers-actions.c:510
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Add the layer mask to the current selection"
 msgctxt "layers-action"
 msgid "Add the layer masks to the current selection"
-msgstr "Añadir la máscara de capa a la selección actual"
+msgstr "Añadir las máscaras de capa a la selección actual"
 
 #: ../app/actions/layers-actions.c:515
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Subtract from Selection"
 msgctxt "layers-action"
 msgid "_Subtract Masks from Selection"
-msgstr "_Sustraer de selección"
+msgstr "_Sustraer máscaras de la selección"
 
 #: ../app/actions/layers-actions.c:516
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Subtract the layer mask from the current selection"
 msgctxt "layers-action"
 msgid "Subtract the layer masks from the current selection"
-msgstr "Sustraer la máscara de capa de la selección actual"
+msgstr "Sustraer las máscaras de capa de la selección actual"
 
 #: ../app/actions/layers-actions.c:521
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Intersect with Selection"
 msgctxt "layers-action"
 msgid "_Intersect Masks with Selection"
-msgstr "_Interseccionar con selección"
+msgstr "_Intersectar máscaras con la selección"
 
 #: ../app/actions/layers-actions.c:522
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Intersect the layer mask with the current selection"
 msgctxt "layers-action"
 msgid "Intersect the layer masks with the current selection"
-msgstr ""
-"Establecer la máscara de capa como su intersección con la selección actual"
+msgstr "Intersectar las máscaras de capa con la selección actual"
 
 #: ../app/actions/layers-actions.c:530
 msgctxt "layers-action"
@@ -7540,12 +7524,11 @@ msgid "Replace the selection with the layer's alpha channel"
 msgstr "Sustituir la selección con el canal alfa de la capa"
 
 #: ../app/actions/layers-actions.c:537
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Alpha to Selection"
 msgctxt "layers-action"
 msgid "A_dd Alpha to Selection"
-msgstr "Alfa a selección"
+msgstr "Aña_dir alfa a la selección"
 
 #: ../app/actions/layers-actions.c:539
 msgctxt "layers-action"
@@ -7553,12 +7536,11 @@ msgid "Add the layer's alpha channel to the current selection"
 msgstr "Añadir el canal alfa de la capa a la selección actual"
 
 #: ../app/actions/layers-actions.c:544
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Subtract from Selection"
 msgctxt "layers-action"
 msgid "_Subtract Alpha from Selection"
-msgstr "_Sustraer de selección"
+msgstr "_Sustraer alfa de la selección"
 
 #: ../app/actions/layers-actions.c:546
 msgctxt "layers-action"
@@ -7566,12 +7548,11 @@ msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Sustraer el canal alfa de la capa de la selección actual"
 
 #: ../app/actions/layers-actions.c:551
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Intersect with Selection"
 msgctxt "layers-action"
 msgid "_Intersect Alpha with Selection"
-msgstr "_Interseccionar con selección"
+msgstr "_Intersectar alfa con la selección"
 
 #: ../app/actions/layers-actions.c:553
 msgctxt "layers-action"
@@ -7588,60 +7569,53 @@ msgid "Select _Top Layers"
 msgstr "Seleccionar las capas _superiores"
 
 #: ../app/actions/layers-actions.c:562
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
 msgctxt "layers-action"
 msgid "Select the topmost layers"
-msgstr "Seleccionar la capa más alta"
+msgstr "Seleccionar las capas más altas"
 
 #: ../app/actions/layers-actions.c:567
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
 msgctxt "layers-action"
 msgid "Select _Bottom Layers"
-msgstr "Seleccionar la capa i_nferior"
+msgstr "Seleccionar las capas i_nferiores"
 
 #: ../app/actions/layers-actions.c:568
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
 msgctxt "layers-action"
 msgid "Select the bottommost layers"
-msgstr "Seleccionar la capa más baja"
+msgstr "Seleccionar las capas más bajas"
 
 #: ../app/actions/layers-actions.c:573
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
 msgctxt "layers-action"
 msgid "Select _Previous Layers"
-msgstr "Seleccionar la _capa anterior"
+msgstr "Seleccionar las _capas anteriores"
 
 #: ../app/actions/layers-actions.c:574
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
 msgctxt "layers-action"
 msgid "Select the layers above the current layers"
-msgstr "Seleccionar la capa por encima de la actual"
+msgstr "Seleccionar las capas por encima de la actual"
 
 #: ../app/actions/layers-actions.c:579
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
 msgctxt "layers-action"
 msgid "Select _Next Layers"
-msgstr "Seleccionar la capa siguie_nte"
+msgstr "Seleccionar las capas siguie_ntes"
 
 #: ../app/actions/layers-actions.c:580
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
 msgctxt "layers-action"
 msgid "Select the layers below the current layers"
-msgstr "Seleccionar la capa por debajo de la actual"
+msgstr "Seleccionar las capas por debajo de las actuales"
 
 #: ../app/actions/layers-actions.c:588
 msgctxt "layers-action"
@@ -7735,52 +7709,48 @@ msgstr[0] "Capa nueva"
 msgstr[1] "Capas nuevas"
 
 #: ../app/actions/layers-commands.c:339
-#, fuzzy, c-format
+#, c-format
 #| msgid "Create a New Layer"
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "Crear una capa nueva"
-msgstr[1] "Crear una capa nueva"
+msgstr[1] "Crear %d capas nuevas"
 
 #: ../app/actions/layers-commands.c:424 ../app/actions/layers-commands.c:2158
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "New layer"
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Capa nueva"
-msgstr[1] "Capa nueva"
+msgstr[1] "Capas nuevas"
 
 #: ../app/actions/layers-commands.c:503
 msgid "Visible"
 msgstr "Visible"
 
 #: ../app/actions/layers-commands.c:532
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "New Layer _Group"
 msgid "New layer group"
 msgid_plural "New layer groups"
-msgstr[0] "_Grupo de capas nuevo"
-msgstr[1] "_Grupo de capas nuevo"
+msgstr[0] "Grupo de capas nuevo"
+msgstr[1] "Grupos de capas nuevos"
 
 #: ../app/actions/layers-commands.c:640
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Raise Layer"
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
-msgstr[0] "Elevar una capa"
-msgstr[1] "Elevar una capa"
+msgstr[0] "Elevar capa"
+msgstr[1] "Elevar capas"
 
 #: ../app/actions/layers-commands.c:674
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Raise Layer to Top"
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
-msgstr[0] "Elevar una capa hasta lo más alto"
-msgstr[1] "Elevar una capa hasta lo más alto"
+msgstr[0] "Elevar capa hasta lo más alto"
+msgstr[1] "Elevar capas hasta lo más alto"
 
 #: ../app/actions/layers-commands.c:711
 #| msgctxt "undo-type"
@@ -7791,28 +7761,26 @@ msgstr[0] "Bajar capa"
 msgstr[1] "Bajar capas"
 
 #: ../app/actions/layers-commands.c:748
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lower Layer to Bottom"
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
-msgstr[0] "Bajar una capa hasta la parte más baja"
-msgstr[1] "Bajar una capa hasta la parte más baja"
+msgstr[0] "Bajar capa hasta la parte más baja"
+msgstr[1] "Bajar capas hasta la parte más baja"
 
 #: ../app/actions/layers-commands.c:775
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "D_uplicate Layer"
 msgid "Duplicate layers"
-msgstr "D_uplicar la capa"
+msgstr "Duplicar capas"
 
 #: ../app/actions/layers-commands.c:871
-#, fuzzy, c-format
+#, c-format
 #| msgctxt "undo-type"
 #| msgid "Merge Layer Group"
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
-msgstr "Combinar el grupo de capas"
+msgstr "Combinar %d grupos de capas"
 
 #: ../app/actions/layers-commands.c:931
 #, c-format
@@ -7871,11 +7839,10 @@ msgid "Show Layer Masks"
 msgstr "Mostrar máscaras de la capa"
 
 #: ../app/actions/layers-commands.c:1525
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Disable Layer Mask"
 msgid "Disable Layer Masks"
-msgstr "Desactivar máscara de capa"
+msgstr "Desactivar máscaras de capa"
 
 #: ../app/actions/layers-commands.c:1564
 #| msgctxt "layers-action"
@@ -7885,28 +7852,25 @@ msgid "Masks to Selection"
 msgstr "Máscaras a selección"
 
 #: ../app/actions/layers-commands.c:1568
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Mask to Selection"
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
-msgstr "_Máscara a selección"
+msgstr "Añadir máscaras a la selección"
 
 #: ../app/actions/layers-commands.c:1572
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_Subtract from Selection"
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
-msgstr "_Sustraer de la selección"
+msgstr "Sustraer máscaras de la selección"
 
 #: ../app/actions/layers-commands.c:1576
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_Intersect with Selection"
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
-msgstr "_Intersectar con la selección"
+msgstr "_Intersectar máscaras con la selección"
 
 #: ../app/actions/layers-commands.c:1636 ../app/core/gimpchannel-select.c:421
 #: ../app/core/gimplayer.c:442
@@ -7915,28 +7879,25 @@ msgid "Alpha to Selection"
 msgstr "Alfa a selección"
 
 #: ../app/actions/layers-commands.c:1640
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Alpha to Selection"
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
-msgstr "Alfa a selección"
+msgstr "Añadir alfa a la selección"
 
 #: ../app/actions/layers-commands.c:1644
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Subtract path from selection"
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
-msgstr "Sustraer la ruta de la selección"
+msgstr "Sustraer alfa de la selección"
 
 #: ../app/actions/layers-commands.c:1648
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Intersect path with selection"
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
-msgstr "Establecer la ruta como su intersección con la selección"
+msgstr "Intersectar alfa con la selección"
 
 #: ../app/actions/layers-commands.c:1659
 #| msgid "Selection"
@@ -7945,32 +7906,28 @@ msgstr "Vaciar selección"
 
 #: ../app/actions/layers-commands.c:1689 ../app/actions/layers-commands.c:1733
 #: ../app/widgets/gimplayertreeview.c:1177
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer opacity"
 msgid "Set layers opacity"
-msgstr "Definir la opacidad de la capa"
+msgstr "Definir la opacidad de las capas"
 
 #: ../app/actions/layers-commands.c:1803
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer opacity"
 msgid "Set layers' blend space"
-msgstr "Definir la opacidad de la capa"
+msgstr "Definir el espacio de mezcla de las capas"
 
 #: ../app/actions/layers-commands.c:1856
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Layer Composite Space: Auto"
 msgid "Set layers' composite space"
-msgstr "Espacio compuesto de la capa: auto"
+msgstr "Definir el espacio compuesto de las capas"
 
 #: ../app/actions/layers-commands.c:1909
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer mode"
 msgid "Set layers' composite mode"
-msgstr "Definir el modo de la capa"
+msgstr "Definir el modo de composición de las capas"
 
 #: ../app/actions/layers-commands.c:1978 ../app/widgets/gimpitemtreeview.c:1683
 #| msgctxt "undo-type"
@@ -8004,10 +7961,9 @@ msgstr "Bloquear canales alfa"
 
 #: ../app/actions/layers-commands.c:2079
 #: ../app/widgets/gimplayertreeview.c:1122
-#, fuzzy
 #| msgid "Lock alpha channel"
 msgid "Unlock alpha channels"
-msgstr "Bloquear el canal alfa"
+msgstr "Desbloquear canales alfa"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -12958,7 +12914,6 @@ msgid "Link/Unlink item"
 msgstr "Enlazar o desenlazar elemento"
 
 #: ../app/core/core-enums.c:1222
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lock/Unlock content"
 msgctxt "undo-type"
@@ -13006,28 +12961,25 @@ msgid "Apply layer mask"
 msgstr "Aplicar máscara de capa"
 
 #: ../app/core/core-enums.c:1231
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
-msgstr "Bloquear o desbloquear el canal Alfa"
+msgstr "Bloquear/desbloquear canales Alfa"
 
 #: ../app/core/core-enums.c:1232
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer opacity"
 msgctxt "undo-type"
 msgid "Set layers opacity"
-msgstr "Definir la opacidad de la capa"
+msgstr "Definir la opacidad de las capas"
 
 #: ../app/core/core-enums.c:1233
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer mode"
 msgctxt "undo-type"
 msgid "Set layers mode"
-msgstr "Definir el modo de la capa"
+msgstr "Definir el modo de las capas"
 
 #: ../app/core/core-enums.c:1234 ../app/core/core-enums.c:1293
 msgctxt "undo-type"
@@ -14502,10 +14454,10 @@ msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Se añadió soporte para archivos de imagen mayores que 4GB en %s"
 
 #: ../app/core/gimpimage.c:2823
-#, fuzzy, c-format
+#, c-format
 #| msgid "Layer mode '%s' was added in %s"
 msgid "Multiple layer selection was added in %s"
-msgstr "El modo de capa «%s» se añadió en %s"
+msgstr "La selección múltiple de capas se añadió en %s"
 
 #: ../app/core/gimpimage.c:2919
 msgctxt "undo-type"
@@ -15085,25 +15037,22 @@ msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
 
 #: ../app/core/gimplayer.c:2715
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer opacity"
 msgid "Set layer's blend space"
-msgstr "Definir la opacidad de la capa"
+msgstr "Definir el espacio de mezcla de la capa"
 
 #: ../app/core/gimplayer.c:2762
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Layer Composite Space: Auto"
 msgid "Set layer's composite space"
-msgstr "Espacio compuesto de la capa: auto"
+msgstr "Definir el espacio compuesto de la capa"
 
 #: ../app/core/gimplayer.c:2809
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer mode"
 msgid "Set layer's composite mode"
-msgstr "Definir el modo de la capa"
+msgstr "Definir el modo compuesto de la capa"
 
 #: ../app/core/gimplayermask.c:84
 msgctxt "undo-type"
@@ -15656,10 +15605,9 @@ msgid "Apply stored FG/BG"
 msgstr "Aplicar el primer plano y el fondo almacenados"
 
 #: ../app/core/gimptoolpreset.c:157
-#, fuzzy
 #| msgid "Apply stored pattern"
 msgid "Apply stored opacity/paint mode"
-msgstr "Aplicar el patrón almacenado"
+msgstr "Aplicar el patrón de opacidad/pintura guardado"
 
 #: ../app/core/gimptoolpreset.c:164
 msgid "Apply stored brush"
@@ -16029,10 +15977,9 @@ msgid "Convert Image to %s"
 msgstr "Convertir imagen a %s"
 
 #: ../app/dialogs/convert-precision-dialog.c:138
-#, fuzzy
 #| msgid "Precision Conversion"
 msgid "Encoding Conversion"
-msgstr "Precisión de la conversión"
+msgstr "Conversión de la codificación"
 
 #. gamma
 #: ../app/dialogs/convert-precision-dialog.c:176
@@ -16322,10 +16269,9 @@ msgid "Final, Merged Layer should be:"
 msgstr "La capa final combinada debería ser:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
-#, fuzzy
 #| msgid "Merge within active _group only"
 msgid "Merge within active _groups only"
-msgstr "Combinar solamente dentro del grupo acti_vo"
+msgstr "Combinar únicamente dentro de _grupos activos"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
@@ -16470,12 +16416,12 @@ msgstr[0] "Añadir máscara de capa"
 msgstr[1] "Añadir máscaras de capa"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:107
-#, fuzzy, c-format
+#, c-format
 #| msgid "Add a Mask to the Layer"
 msgid "Add a Mask to the Layer"
 msgid_plural "Add Masks to %d Layers"
 msgstr[0] "Añadir una máscara a la capa"
-msgstr[1] "Añadir una máscara a la capa"
+msgstr[1] "Añadir %d máscaras a las capas"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:120
 msgid "_Add"
@@ -17619,10 +17565,9 @@ msgid "Merged layer size:"
 msgstr "Tamaño de la capa combinada:"
 
 #: ../app/dialogs/preferences-dialog.c:2356
-#, fuzzy
 #| msgid "Merge within active group only"
 msgid "Merge within active groups only"
-msgstr "Combinar únicamente dentro el grupo activo"
+msgstr "Combinar únicamente dentro de grupos activos"
 
 #: ../app/dialogs/preferences-dialog.c:2359
 msgid "Discard invisible layers"
@@ -18968,17 +18913,15 @@ msgid "Layer Select"
 msgstr "Selección de capas"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:276
-#, fuzzy
 #| msgctxt "line-art-source"
 #| msgid "Layer below the active one"
 msgid "Layer Selection Moved Down"
-msgstr "Capa debajo de la que está activa"
+msgstr "Selección de capa movida abajo"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:277
-#, fuzzy
 #| msgid "Layer Select"
 msgid "Layer Selection Moved Up"
-msgstr "Selección de capas"
+msgstr "Selección de capa movida arriba"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
 msgid "Rotate View"
@@ -19071,45 +19014,39 @@ msgid "Click-Drag to move all points"
 msgstr "Pulse y arrastre para mover todos los puntos"
 
 #: ../app/display/gimptoolfocus.c:1117
-#, fuzzy
 #| msgid "Click-Drag to move the endpoint"
 msgid "Click-Drag to change the midpoint"
-msgstr "Pulse y arrastre para mover el extremo"
+msgstr "Pulse y arrastre para cambiar el punto medio"
 
 #: ../app/display/gimptoolfocus.c:1119
-#, fuzzy
 #| msgid "Click-Drag to remove the slider"
 msgid "Click-Drag to resize the limit"
-msgstr "Pulse y arrastre para quitar el deslizador"
+msgstr "Pulse y arrastre para redimensionar el límite"
 
 #: ../app/display/gimptoolfocus.c:1121 ../app/display/gimptoolfocus.c:1134
 #, c-format
 msgid "%s to resize the focus"
-msgstr ""
+msgstr "%s para redimensionar el foco"
 
 #: ../app/display/gimptoolfocus.c:1126 ../app/display/gimptoolfocus.c:1139
-#, fuzzy
 #| msgid "Click-Drag to remove the slider"
 msgid "Click-Drag to resize the focus"
-msgstr "Pulse y arrastre para quitar el deslizador"
+msgstr "Pulse y arrastre para redimensionar el foco"
 
 #: ../app/display/gimptoolfocus.c:1133
-#, fuzzy
 #| msgid "Click-Drag to change perspective"
 msgid "Click-Drag to change the aspect ratio"
-msgstr "Pulse y arrastre para cambiar la perspectiva"
+msgstr "Pulse y arrastre para cambiar la relación de aspecto"
 
 #: ../app/display/gimptoolfocus.c:1144
-#, fuzzy
 #| msgid "Click-Drag to move the slider"
 msgid "Click-Drag to move the focus"
-msgstr "Pulse y arrastre para mover el deslizador"
+msgstr "Pulse y arrastre para mover el foco"
 
 #: ../app/display/gimptoolfocus.c:1148
-#, fuzzy
 #| msgid "Click-Drag to rotate"
 msgid "Click-Drag to rotate the focus"
-msgstr "Pulse y arrastre para rotar"
+msgstr "Pulse y arrastre para rotar el foco"
 
 #: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
 #: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:662
@@ -22845,7 +22782,7 @@ msgstr "Relleno de cubeta"
 
 #: ../app/tools/gimpbucketfilltool.c:565
 msgid "Cannot fill multiple layers. Select only one layer."
-msgstr ""
+msgstr "No se pueden rellenar varias capas. Seleccione sólo una."
 
 #: ../app/tools/gimpbucketfilltool.c:567 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
@@ -22854,7 +22791,7 @@ msgstr ""
 #: ../app/tools/gimppainttool.c:299 ../app/tools/gimpperspectiveclonetool.c:227
 #: ../app/tools/gimpthresholdtool.c:160
 msgid "No selected drawables."
-msgstr ""
+msgstr "No hay dibujables seleccionados."
 
 #: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
@@ -22918,7 +22855,7 @@ msgstr "_Transformación de rejilla"
 
 #: ../app/tools/gimpcagetool.c:226
 msgid "Cannot modify multiple layers. Select only one layer."
-msgstr ""
+msgstr "No se pueden modificar varias capas. Seleccione sólo una."
 
 #: ../app/tools/gimpcagetool.c:763 ../app/tools/gimpwarptool.c:391
 msgid "Press ENTER to commit the transform"
@@ -23098,16 +23035,14 @@ msgid "How much to dim everything outside selection"
 msgstr "Cuánto atenuar todo por fuera de la selección"
 
 #: ../app/tools/gimpcropoptions.c:95
-#, fuzzy
 #| msgid "Current layer only"
 msgid "Current layers only"
-msgstr "Sólo la capa actual"
+msgstr "Sólo las capas actuales"
 
 #: ../app/tools/gimpcropoptions.c:96
-#, fuzzy
 #| msgid "Crop only currently selected layer"
 msgid "Crop only currently selected layers"
-msgstr "Recortar solo la capa actualmente seleccionada"
+msgstr "Recortar solo las capas actualmente seleccionadas"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Delete cropped pixels"
@@ -23161,25 +23096,23 @@ msgid "Crop to: "
 msgstr "Recortar a: "
 
 #: ../app/tools/gimpcroptool.c:457
-#, fuzzy
 #| msgid "There is no active layer to crop."
 msgid "There are no selected layers to crop."
-msgstr "No hay una capa activa que cortar."
+msgstr "No hay capas seleccionadas que cortar."
 
 #: ../app/tools/gimpcroptool.c:468
-#, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "All selected layers' pixels are locked."
-msgstr "Los píxeles de la capa activa están bloqueados."
+msgstr "Los píxeles de todas las capas seleccionadas están bloqueados."
 
 #: ../app/tools/gimpcroptool.c:473
-#, fuzzy, c-format
+#, c-format
 #| msgctxt "undo-type"
 #| msgid "Resize Layer"
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
 msgstr[0] "Redimensionar una capa"
-msgstr[1] "Redimensionar una capa"
+msgstr[1] "Redimensionar %d capas"
 
 #: ../app/tools/gimpcurvestool.c:154
 msgid "Curves"
@@ -23194,7 +23127,7 @@ msgstr "_Curvas…"
 #: ../app/tools/gimpthresholdtool.c:158
 #: ../app/tools/gimptransformgridtool.c:356
 msgid "Cannot modify multiple drawables. Select only one."
-msgstr ""
+msgstr "No se pueden modificar varios dibujables. Seleccione sólo uno."
 
 #: ../app/tools/gimpcurvestool.c:411
 msgid "Click to add a control point"
@@ -23398,16 +23331,14 @@ msgid "Show on-canvas filter controls"
 msgstr "Mostrar controles de filtros sobre el lienzo"
 
 #: ../app/tools/gimpfiltertool.c:315
-#, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "A selected layer's pixels are locked."
-msgstr "Los píxeles de la capa activa están bloqueados."
+msgstr "Los píxeles de la capa seleccionada están bloqueados."
 
 #: ../app/tools/gimpfiltertool.c:327
-#, fuzzy
 #| msgid "The active layer is not visible."
 msgid "A selected layer is not visible."
-msgstr "La capa activa no está visible."
+msgstr "La capa seleccionada no está visible."
 
 #: ../app/tools/gimpfiltertool.c:642
 msgid "Click to switch the original and filtered sides"
@@ -23580,10 +23511,9 @@ msgid "F_oreground Select"
 msgstr "Selección del _frente"
 
 #: ../app/tools/gimpforegroundselecttool.c:293
-#, fuzzy
 #| msgid "Base selection on all visible layers"
 msgid "Cannot select from multiple layers."
-msgstr "Selección base en todas las capas visibles"
+msgstr "No se puede seleccionar desde varias capas."
 
 #: ../app/tools/gimpforegroundselecttool.c:326
 msgid "Dialog for foreground select"
@@ -23759,12 +23689,12 @@ msgstr "Pulse y arrastre para dibujar un degradado"
 
 #: ../app/tools/gimpgradienttool.c:257
 msgid "Cannot paint on multiple drawables. Select only one."
-msgstr ""
+msgstr "No se puede pintar en varios dibujables. Seleccione sólo uno."
 
 #: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimptransformgridtool.c:358
 #: ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
-msgstr ""
+msgstr "No hay dibujables activos."
 
 #: ../app/tools/gimpgradienttool.c:297
 msgid "No gradient available for use with this tool."
@@ -24237,10 +24167,9 @@ msgid "Pick a layer or guide"
 msgstr "Escoger una capa o guía"
 
 #: ../app/tools/gimpmoveoptions.c:156
-#, fuzzy
 #| msgid "Move the selected filter up"
 msgid "Move the selected layers"
-msgstr "Mover el filtro seleccionado hacia arriba"
+msgstr "Mover las capas seleccionadas"
 
 #: ../app/tools/gimpmoveoptions.c:160
 msgid "Pick a path"
@@ -24268,28 +24197,26 @@ msgid "_Move"
 msgstr "_Mover"
 
 #: ../app/tools/gimpmovetool.c:336
-#, fuzzy
 #| msgid "The active layer's position is locked."
 msgid "The selected layer's position is locked."
-msgstr "Los posición de la capa activa está bloqueada."
+msgstr "Los posición de la capa seleccionada está bloqueada."
 
 #: ../app/tools/gimpmovetool.c:338
-#, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "The selected layer's pixels are locked."
-msgstr "Los píxeles de la capa activa están bloqueados."
+msgstr "Los píxeles de la capa seleccionada están bloqueados."
 
 #: ../app/tools/gimpmovetool.c:352
-#, fuzzy
 #| msgid "The active channel's pixels are locked."
 msgid "All selected channels' positions or pixels are locked."
-msgstr "Los píxeles del canal activo están bloqueados."
+msgstr ""
+"Todas las posiciones o píxeles del canal seleccionado están bloqueadas."
 
 #: ../app/tools/gimpmovetool.c:365
-#, fuzzy
 #| msgid "The active layer's position and size are locked."
 msgid "All selected_items layers' positions are locked."
-msgstr "La posición de la capa activa y su tamaño están bloqueados."
+msgstr ""
+"Todas las posiciones de los elementos seleccionados de capa bloqueados."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -24488,7 +24415,7 @@ msgstr "%s para recoger un color"
 
 #: ../app/tools/gimppainttool.c:296 ../app/tools/gimpperspectiveclonetool.c:225
 msgid "Cannot paint on multiple layers. Select only one layer."
-msgstr ""
+msgstr "No se puede pintar en varias capas. Seleccione sólo una."
 
 #: ../app/tools/gimppainttool.c:310
 msgid "Cannot paint on layer groups."
@@ -25627,7 +25554,7 @@ msgstr "Trazo de la herramienta de deformación"
 
 #: ../app/tools/gimpwarptool.c:773
 msgid "Cannot warp multiple layers. Select only one layer."
-msgstr ""
+msgstr "No se pueden deformar varios dibujables. Seleccione sólo uno."
 
 #: ../app/tools/gimpwarptool.c:792
 msgid "Cannot warp layer groups."
@@ -27794,12 +27721,12 @@ msgid "Lock:"
 msgstr "Bloquear:"
 
 #: ../app/widgets/gimpitemtreeview.c:1152
-#, fuzzy, c-format
+#, c-format
 #| msgid "No filter selected"
 msgid "%d item selected"
 msgid_plural "%d items selected"
-msgstr[0] "No hay ningún filtro seleccionado"
-msgstr[1] "No hay ningún filtro seleccionado"
+msgstr[0] "%d elemento seleccionado"
+msgstr[1] "%d elementos seleccionados"
 
 #: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
@@ -27814,11 +27741,10 @@ msgid "Lock alpha channel"
 msgstr "Bloquear el canal alfa"
 
 #: ../app/widgets/gimplayertreeview.c:1063
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer mode"
 msgid "Set layers mode"
-msgstr "Definir el modo de la capa"
+msgstr "Definir el modo de las capas"
 
 #: ../app/widgets/gimpmessagebox.c:452
 #, c-format
