@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 14:00+0000\n"
-"PO-Revision-Date: 2020-02-27 18:21+0100\n"
+"POT-Creation-Date: 2020-05-27 08:04+0000\n"
+"PO-Revision-Date: 2020-05-27 11:13+0200\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -24,11 +24,11 @@ msgstr ""
 
 #: ../plug-ins/python/colorxhtml.py:89
 msgid "Save as colored HTML text..."
-msgstr "Anomena i desa com a text XHTML de colors…"
+msgstr "Desa com a text HTML de colors…"
 
 #: ../plug-ins/python/colorxhtml.py:94
 msgid "Read characters from file..."
-msgstr "Llegeix els caràcters des del fitxer..."
+msgstr "Llegiu els caràcters del fitxer..."
 
 #: ../plug-ins/python/colorxhtml.py:113
 msgid "Characters"
@@ -44,7 +44,7 @@ msgstr "Caràcters o ubicació del fitxer"
 
 #: ../plug-ins/python/colorxhtml.py:129
 msgid "Read characters from file"
-msgstr "Llegeix els caràcters del fitxer"
+msgstr "Llegeix els caràcters des del fitxer"
 
 #: ../plug-ins/python/colorxhtml.py:132
 msgid ""
@@ -52,9 +52,9 @@ msgid ""
 "the characters will be read. Otherwise, the characters in the text entry "
 "will be used to render the image."
 msgstr ""
-"Si s'habilita, l'entrada dels caràcters de text s'utilitzarà com a nom de "
-"fitxer, a partir del qual es llegiran els caràcters. En cas contrari, els "
-"caràcters en l'entrada de text s'utilitzaran per mostrar la imatge."
+"Si es defineix, s'utilitzarà l'entrada de text de Caràcters com a nom de "
+"fitxer, a partir del qual es llegiran els caràcters. En cas contrari, "
+"s'utilitzaran els caràcters de l'entrada de text per renderitzar la imatge."
 
 #: ../plug-ins/python/colorxhtml.py:138
 msgid "Choose file"
@@ -62,7 +62,7 @@ msgstr "Tria el fitxer"
 
 #: ../plug-ins/python/colorxhtml.py:145
 msgid "Font Size(px)"
-msgstr "Mida de la lletra (px)"
+msgstr "Mida de la lletra(px)"
 
 #: ../plug-ins/python/colorxhtml.py:157
 msgid "Write separate CSS file"
@@ -75,7 +75,7 @@ msgstr "S'està desant com a XHTML amb colors"
 #: ../plug-ins/python/colorxhtml.py:280 ../plug-ins/python/colorxhtml.py:281
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
-"_Llegeix els caràcters del fitxer, si és cert, o utilitza l'entrada de text"
+"_Llegeix caràcters des del fitxer, si és cert, o utilitza l'entrada de text"
 
 #: ../plug-ins/python/colorxhtml.py:285 ../plug-ins/python/colorxhtml.py:286
 msgid "_File to read or characters to use"
@@ -91,7 +91,7 @@ msgstr "_Escriu un fitxer CSS separat"
 
 #: ../plug-ins/python/colorxhtml.py:315
 msgid "Save as colored HTML text"
-msgstr "Anomena i desa com a XHTML de colors"
+msgstr "Desa com a text HTML de colors"
 
 #: ../plug-ins/python/colorxhtml.py:318
 msgid "Colored HTML text"
@@ -257,10 +257,8 @@ msgid "Save Python-Fu Console Output"
 msgstr "Desa la sortida de la consola Python-Fu"
 
 #: ../plug-ins/python/python-console/python-console.py:280
-#, fuzzy
-#| msgid "Python Console"
 msgid "Python _Console"
-msgstr "Consola Python"
+msgstr "_Consola Python"
 
 #: ../plug-ins/python/python-console/python-console.py:281
 msgid "Interactive GIMP Python interpreter"
@@ -271,22 +269,20 @@ msgid "Spyro Layer"
 msgstr "Capa espiroide"
 
 #: ../plug-ins/python/spyro-plus.py:61
-#, fuzzy
-#| msgid "Spyrograph"
 msgid "Spyro Path"
-msgstr "Espirògraf"
+msgstr "Camí de l’espirògraf"
 
 #: ../plug-ins/python/spyro-plus.py:71
 msgid "As New Layer"
-msgstr ""
+msgstr "Com a capa nova"
 
 #: ../plug-ins/python/spyro-plus.py:72
 msgid "Redraw on last active layer"
-msgstr ""
+msgstr "Redibuixa a la darrera capa activa"
 
 #: ../plug-ins/python/spyro-plus.py:73
 msgid "As Path"
-msgstr ""
+msgstr "Com a camí"
 
 #: ../plug-ins/python/spyro-plus.py:121
 msgid "Circle"
@@ -464,25 +460,23 @@ msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1560
 msgid "Flower Petals"
-msgstr ""
+msgstr "Pètals de flors"
 
 #: ../plug-ins/python/spyro-plus.py:1561
-#, fuzzy
-#| msgid "Number of sides of the shape."
 msgid "The number of petals in the pattern."
-msgstr "Nombre de cares de la forma."
+msgstr "El nombre de pètals en el patró."
 
 #: ../plug-ins/python/spyro-plus.py:1566
 msgid "Petal Skip"
-msgstr ""
+msgstr "Salta els pètals"
 
 #: ../plug-ins/python/spyro-plus.py:1567
 msgid "The number of petals to advance for drawing the next petal."
-msgstr ""
+msgstr "El nombre de pètals per avançar i dibuixar el pròxim pètal."
 
 #: ../plug-ins/python/spyro-plus.py:1572
 msgid "Hole Radius(%)"
-msgstr ""
+msgstr "Radi del forat(%)"
 
 #: ../plug-ins/python/spyro-plus.py:1573
 msgid ""
@@ -490,10 +484,13 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
+"El radi del forat en el centre del patró on no s’hi dibuixarà res. Es dóna "
+"com a percentatge de la mida del patró. Un valor de 0 no produirà cap forat. "
+"Un valor de 99 produirà una línia fina a la vora."
 
 #: ../plug-ins/python/spyro-plus.py:1594
 msgid "Width(%)"
-msgstr ""
+msgstr "Amplada(%)"
 
 #: ../plug-ins/python/spyro-plus.py:1595
 msgid ""
@@ -501,10 +498,12 @@ msgid ""
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
+"L’amplada del patró com a percentatge de la mida del patró. Un valor d’1 "
+"només dibuixarà un patró prim. Un valor de 100 omplirà tot l’engranatge fix."
 
 #: ../plug-ins/python/spyro-plus.py:1606
 msgid "Visual"
-msgstr ""
+msgstr "Visual"
 
 #: ../plug-ins/python/spyro-plus.py:1612
 msgid "Toy Kit"
@@ -606,13 +605,15 @@ msgstr "_Reinicia"
 
 #: ../plug-ins/python/spyro-plus.py:1725
 msgid "Save"
-msgstr ""
+msgstr "Desa"
 
 #: ../plug-ins/python/spyro-plus.py:1726
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
 msgstr ""
+"Tria si vols desar com a capa nova, redibuixar l'última capa activa o bé "
+"desar-la al camí"
 
 #: ../plug-ins/python/spyro-plus.py:1740
 msgid "Spyrogimp"
@@ -647,6 +648,9 @@ msgstr "Espereu: s'està renderitzant el patró"
 msgid "Spyrogimp..."
 msgstr "Espirògraf..."
 
+#~ msgid "_Console"
+#~ msgstr "_Consola"
+
 #~ msgid "Missing exception information"
 #~ msgstr "Falta la informació de l'excepció"
 
@@ -673,6 +677,12 @@ msgstr "Espirògraf..."
 
 #~ msgid "Python-Fu Color Selection"
 #~ msgstr "Selecció del color Python-Fu"
+
+#~ msgid "Source code"
+#~ msgstr "Codi font"
+
+#~ msgid "Entry box"
+#~ msgstr "Camp d'entrada"
 
 #~ msgid "Exports the image histogram to a text file (CSV)"
 #~ msgstr "Exporta l'histograma d'imatge a un fitxer de text (CSV)"
@@ -818,9 +828,6 @@ msgstr "Espirògraf..."
 #~ msgid "Drop shadow _Y displacement"
 #~ msgstr "Longitud _Y de l'ombra"
 
-#~ msgid "_Console"
-#~ msgstr "_Consola"
-
 #~ msgid "_Cancel"
 #~ msgstr "_Cancel·la"
 
@@ -844,12 +851,6 @@ msgstr "Espirògraf..."
 #~ "connector surt ràpidament. Si no està marcat, se suprimeix la capa "
 #~ "d'espiroide i es torna a dibuixar el patró a la capa que estava activa "
 #~ "quan es va llançar el connector."
-
-#~ msgid "Source code"
-#~ msgstr "Codi font"
-
-#~ msgid "Entry box"
-#~ msgstr "Camp d'entrada"
 
 #~ msgid "Color _model"
 #~ msgstr "_Model de color"
