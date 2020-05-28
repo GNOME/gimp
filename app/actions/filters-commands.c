@@ -104,9 +104,9 @@ filters_apply_interactive_cmd_callback (GimpAction *action,
                                         gpointer    data)
 {
   GimpImage     *image;
-  GimpDrawable  *drawable;
+  GList         *drawables;
   GimpProcedure *procedure;
-  return_if_no_drawable (image, drawable, data);
+  return_if_no_drawables (image, drawables, data);
 
   procedure = gimp_gegl_procedure_new (image->gimp,
                                        GIMP_RUN_INTERACTIVE, NULL,
@@ -123,6 +123,7 @@ filters_apply_interactive_cmd_callback (GimpAction *action,
                                 data);
 
   g_object_unref (procedure);
+  g_list_free (drawables);
 }
 
 void

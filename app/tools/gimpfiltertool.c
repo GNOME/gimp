@@ -285,49 +285,47 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   GimpImage        *image       = gimp_display_get_image (display);
   GimpDisplayShell *shell       = gimp_display_get_shell (display);
   GList            *drawables   = gimp_image_get_selected_drawables (image);
-  GimpDrawable     *drawable;
+  GList            *iter;
 
-  if (g_list_length (drawables) != 1)
+  if (! drawables)
     {
-      if (g_list_length (drawables) > 1)
-        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                                   _("Cannot modify multiple drawables. Select only one."));
-      else
-        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
-
-      g_list_free (drawables);
-      return FALSE;
-    }
-  drawable = drawables->data;
-
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("Cannot modify the pixels of layer groups."));
-
-      g_list_free (drawables);
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
       return FALSE;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  for (iter = drawables; iter; iter = iter->next)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("A selected layer's pixels are locked."));
-      if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+      GimpDrawable *drawable = iter->data;
 
-      g_list_free (drawables);
-      return FALSE;
-    }
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("Cannot modify the pixels of layer groups."));
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
-      ! config->edit_non_visible)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("A selected layer is not visible."));
+          g_list_free (drawables);
+          return FALSE;
+        }
 
-      g_list_free (drawables);
-      return FALSE;
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("A selected layer's pixels are locked."));
+          if (error)
+            gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+
+          g_list_free (drawables);
+          return FALSE;
+        }
+
+      if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+          ! config->edit_non_visible)
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("A selected layer is not visible."));
+
+          g_list_free (drawables);
+          return FALSE;
+        }
     }
 
   gimp_filter_tool_get_operation (filter_tool);
@@ -440,13 +438,14 @@ gimp_filter_tool_initialize (GimpTool     *tool,
     }
 
   gimp_tool_gui_set_shell (filter_tool->gui, shell);
-  gimp_tool_gui_set_viewable (filter_tool->gui, GIMP_VIEWABLE (drawable));
+  gimp_tool_gui_set_viewables (filter_tool->gui, drawables);
 
   gimp_tool_gui_show (filter_tool->gui);
 
-  g_signal_connect_object (drawable, "lock-position-changed",
-                           G_CALLBACK (gimp_filter_tool_lock_position_changed),
-                           filter_tool, 0);
+  for (iter = drawables; iter; iter = iter->next)
+    g_signal_connect_object (iter->data, "lock-position-changed",
+                             G_CALLBACK (gimp_filter_tool_lock_position_changed),
+                             filter_tool, 0);
 
   g_signal_connect_object (image, "mask-changed",
                            G_CALLBACK (gimp_filter_tool_mask_changed),
@@ -811,7 +810,8 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
   gint            off_x, off_y;
   gboolean        picked;
 
-  g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
+  /*g_return_val_if_fail (g_list_length (tool->drawables) == 1,
+   * FALSE);*/
 
   gimp_item_get_offset (GIMP_ITEM (tool->drawables->data), &off_x, &off_y);
 
@@ -1218,7 +1218,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
     }
 
   gimp_assert (filter_tool->operation);
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+  /*g_return_if_fail (g_list_length (tool->drawables) == 1);*/
 
   filter_tool->filter = gimp_drawable_filter_new (tool->drawables->data,
                                                   gimp_tool_get_undo_desc (tool),
@@ -1250,7 +1250,7 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
       GimpChannel *mask  = gimp_image_get_mask (image);
       const Babl  *format;
 
-      g_return_if_fail (g_list_length (tool->drawables) == 1);
+      /*g_return_if_fail (g_list_length (tool->drawables) == 1);*/
 
       if (filter_tool->filter)
         format = gimp_drawable_filter_get_format (filter_tool->filter);
@@ -1353,7 +1353,7 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+  /*g_return_if_fail (g_list_length (tool->drawables) == 1);*/
 
   if (filter_tool->preview_guide)
     return;
@@ -1417,7 +1417,7 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+  /*g_return_if_fail (g_list_length (tool->drawables) == 1);*/
 
   if (! filter_tool->preview_guide)
     return;
@@ -1481,7 +1481,7 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
   GimpItem          *item;
   gdouble            position;
 
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+  /*g_return_if_fail (g_list_length (tool->drawables) == 1);*/
 
   item = GIMP_ITEM (tool->drawables->data);
 
@@ -2026,7 +2026,8 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
   tool     = GIMP_TOOL (filter_tool);
   settings = GIMP_OPERATION_SETTINGS (filter_tool->config);
 
-  g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
+  /*g_return_val_if_fail (g_list_length (tool->drawables) == 1,
+   * FALSE);*/
 
   *drawable_offset_x = 0;
   *drawable_offset_y = 0;

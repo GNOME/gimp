@@ -858,6 +858,9 @@ filters_actions_update (GimpActionGroup *group,
 {
   GimpImage    *image;
   GimpDrawable *drawable       = NULL;
+  GList        *drawables      = NULL;
+  GList        *iter           = NULL;
+  gboolean      all_writable   = TRUE;
   gboolean      writable       = FALSE;
   gboolean      gray           = FALSE;
   gboolean      alpha          = FALSE;
@@ -868,6 +871,17 @@ filters_actions_update (GimpActionGroup *group,
   if (image)
     {
       drawable = gimp_image_get_active_drawable (image);
+      drawables = gimp_image_get_selected_drawables (image);
+
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          if (gimp_item_is_content_locked (iter->data) ||
+              gimp_viewable_get_children (iter->data))
+            {
+              all_writable = FALSE;
+              break;
+            }
+        }
 
       if (drawable)
         {
@@ -935,7 +949,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-fattal-2002",             writable);
   SET_SENSITIVE ("filters-focus-blur",              writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
-  SET_SENSITIVE ("filters-gaussian-blur",           writable);
+  SET_SENSITIVE ("filters-gaussian-blur",           drawables && all_writable);
   SET_SENSITIVE ("filters-gaussian-blur-selective", writable);
   SET_SENSITIVE ("filters-gegl-graph",              writable);
   SET_SENSITIVE ("filters-grid",                    writable);
@@ -1053,6 +1067,8 @@ filters_actions_update (GimpActionGroup *group,
         g_free (name);
       }
   }
+
+  g_list_free (drawables);
 }
 
 static void

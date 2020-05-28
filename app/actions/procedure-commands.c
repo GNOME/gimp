@@ -251,18 +251,18 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
             {
               GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-              if (drawable)
+              /*if (drawable)*/
                 {
                   g_value_set_object (gimp_value_array_index (args, n_args),
                                       drawable);
                   n_args++;
                 }
-              else
+              /*else
                 {
                   g_warning ("Uh-oh, no active drawable for the plug-in!");
                   gimp_value_array_unref (args);
                   return NULL;
-                }
+                }*/
             }
         }
     }
