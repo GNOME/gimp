@@ -142,7 +142,7 @@ gimp_save_procedure_install (GimpProcedure *procedure)
                                       priority);
 }
 
-#define ARG_OFFSET 4
+#define ARG_OFFSET 5
 
 static GimpValueArray *
 gimp_save_procedure_run (GimpProcedure        *procedure,
