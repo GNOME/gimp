@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-08 11:47+0000\n"
-"PO-Revision-Date: 2020-05-12 19:08+0300\n"
+"POT-Creation-Date: 2020-05-17 10:43+0000\n"
+"PO-Revision-Date: 2020-05-18 11:28+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -344,11 +344,11 @@ msgstr "Scade viteza animației"
 
 #: ../plug-ins/common/animation-play.c:632
 msgid "Reset speed"
-msgstr "Restabilește viteza"
+msgstr "Resetează viteza"
 
 #: ../plug-ins/common/animation-play.c:632
 msgid "Reset the speed of the animation"
-msgstr "Restabilește viteza animației"
+msgstr "Resetează viteza animației"
 
 #: ../plug-ins/common/animation-play.c:640
 #: ../plug-ins/common/animation-play.c:1364
@@ -5076,13 +5076,17 @@ msgstr "Y_1:"
 msgid "Y_2:"
 msgstr "Y_2:"
 
+# stupid, da' nu știu cum altfel
 #: ../plug-ins/common/goat-exercise.c:62
 msgid "Exercise a goat"
-msgstr "Antrenați o capră"
+msgstr ""
+"Exercitează o capră (joc de cuvinte, a se vedea http://gimpchat.com/"
+"viewtopic.php?f=8&t=16635)"
 
+# stupid, da' nu știu cum altfel
 #: ../plug-ins/common/goat-exercise.c:67
 msgid "Goat-e_xercise"
-msgstr "_Antrenament de capră"
+msgstr "E_xercițiu de capră"
 
 #: ../plug-ins/common/gradient-map.c:77
 msgid "Recolor the image using colors from the active gradient"
@@ -6812,7 +6816,7 @@ msgid "Mipmap Options"
 msgstr "Opțiuni mipmap"
 
 #: ../plug-ins/file-dds/ddswrite.c:2117
-msgid "_F_ilter:"
+msgid "F_ilter:"
 msgstr "F_iltru:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2130
@@ -10382,7 +10386,7 @@ msgstr "Comută vizibilitatea barei laterale"
 # hm ?
 #: ../plug-ins/help-browser/dialog.c:648
 msgid "Visit the GIMP documentation website"
-msgstr "Vizitați saitul Web al documentației GIMP"
+msgstr "Vizitați site-ul web al documentației GIMP"
 
 #: ../plug-ins/help-browser/dialog.c:1147
 msgid "Find:"
@@ -10867,11 +10871,11 @@ msgstr "Tip de legătură"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:213
 msgid "_Web Site"
-msgstr "Sait _Web"
+msgstr "Site _web"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "_Ftp Site"
-msgstr "Sait _FTP"
+msgstr "Site _FTP"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "_Gopher"
@@ -12019,7 +12023,7 @@ msgstr "Dată calendar:"
 
 #: ../plug-ins/metadata/metadata-editor.c:766
 msgid "Set Date"
-msgstr "Setează data"
+msgstr "Stabilește data"
 
 #: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
@@ -12274,7 +12278,7 @@ msgstr "Efect de pagină răsucită"
 
 #: ../plug-ins/pagecurl/pagecurl.c:456
 msgid "Curl Location"
-msgstr "Amplasare buclă"
+msgstr "Amplasarea răsucirii"
 
 #: ../plug-ins/pagecurl/pagecurl.c:475
 msgid "Lower right"
@@ -12294,7 +12298,7 @@ msgstr "Dreapta sus"
 
 #: ../plug-ins/pagecurl/pagecurl.c:518
 msgid "Curl Orientation"
-msgstr "Orientare răsucire"
+msgstr "Orientarea răsucirii"
 
 #: ../plug-ins/pagecurl/pagecurl.c:563
 msgid "_Shade under curl"
@@ -12318,7 +12322,7 @@ msgstr "_Opacitate:"
 
 #: ../plug-ins/pagecurl/pagecurl.c:718
 msgid "Curl Layer"
-msgstr "Strat buclă"
+msgstr "Strat de răsucire"
 
 #: ../plug-ins/pagecurl/pagecurl.c:982
 msgid "Page Curl"
@@ -12802,4 +12806,4 @@ msgstr "De la _scaner sau cameră..."
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:506
 msgid "Transferring data from scanner/camera"
-msgstr "Transfer de date de la scaner / cameră"
+msgstr "Transfer de date de la scaner sau cameră"
