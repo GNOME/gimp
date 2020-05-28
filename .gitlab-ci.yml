@@ -9,7 +9,7 @@ variables:
   GIT_DEPTH: "1"
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
-  PACMAN_CACHE:   "${CI_PROJECT_DIR}/_pacman_cache"
+  APT_CACHE: "${CI_PROJECT_DIR}/apt-cache"
 
 ## GNU/Linux 64-bit CIs ##
 
@@ -17,7 +17,7 @@ deps-debian/testing:
   stage: dependencies
   cache:
     paths:
-    - _pacman_cache
+    - apt-cache
   artifacts:
     expire_in: 2 hours
     when: always
@@ -26,8 +26,8 @@ deps-debian/testing:
     - _babl/_build
     - _gegl/_build
   before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get update -o dir::cache::archives="$APT_CACHE"
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         build-essential
         git
         ffmpeg
@@ -47,6 +47,7 @@ deps-debian/testing:
         meson
         python3
         valac
+    - ls $APT_CACHE
     - apt-get install -y --reinstall ca-certificates
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
@@ -69,6 +70,9 @@ deps-debian/testing:
   stage: gimp
   dependencies:
     - deps-debian/testing
+  cache:
+    paths:
+    - apt-cache
   artifacts:
     expire_in: 1 days
     when: always
@@ -77,8 +81,8 @@ deps-debian/testing:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get update -o dir::cache::archives="$APT_CACHE"
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         at-spi2-core
         build-essential
         desktop-file-utils
@@ -177,6 +181,9 @@ gimp-debian/testing-clang:
 
 deps-win64:
   stage: dependencies
+  cache:
+    paths:
+    - /var/cache/apt/
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
@@ -216,6 +223,9 @@ deps-win64:
 
 gimp-win64:
   stage: gimp
+  cache:
+    paths:
+    - /var/cache/apt/
   dependencies:
     - deps-win64
   variables:
@@ -263,6 +273,9 @@ gimp-win64:
 
 deps-win32:
   stage: dependencies
+  cache:
+    paths:
+    - /var/cache/apt/
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
@@ -302,6 +315,9 @@ deps-win32:
 
 gimp-win32:
   stage: gimp
+  cache:
+    paths:
+    - /var/cache/apt/
   dependencies:
     - deps-win32
   variables:
