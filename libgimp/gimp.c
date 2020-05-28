@@ -209,8 +209,6 @@ GIOChannel                          *_writechannel           = NULL;
 static HANDLE shm_handle;
 #endif
 
-// BWROGA: add _check_custom_color1 && _check_custom_color2
-
 static gint           _tile_width          = -1;
 static gint           _tile_height         = -1;
 static gint           _shm_ID              = -1;
