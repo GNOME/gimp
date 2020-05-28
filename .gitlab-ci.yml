@@ -9,7 +9,7 @@ variables:
   GIT_DEPTH: "1"
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
-  PACMAN_CACHE:   "${CI_PROJECT_DIR}/_pacman_cache"
+  APT_CACHE: "${CI_PROJECT_DIR}/apt-cache"
 
 ## GNU/Linux 64-bit CIs ##
 
@@ -17,7 +17,7 @@ deps-debian/testing:
   stage: dependencies
   cache:
     paths:
-    - _pacman_cache
+    - apt-cache
   artifacts:
     expire_in: 2 hours
     when: always
@@ -26,8 +26,9 @@ deps-debian/testing:
     - _babl/_build
     - _gegl/_build
   before_script:
+    - mkdir -p $APT_CACHE
     - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         build-essential
         git
         ffmpeg
@@ -69,6 +70,9 @@ deps-debian/testing:
   stage: gimp
   dependencies:
     - deps-debian/testing
+  cache:
+    paths:
+    - apt-cache
   artifacts:
     expire_in: 1 days
     when: always
@@ -77,8 +81,9 @@ deps-debian/testing:
     - _build
     #- "${INSTALL_DIR}"
   before_script:
+    - mkdir -p $APT_CACHE
     - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         at-spi2-core
         build-essential
         desktop-file-utils
@@ -163,7 +168,7 @@ gimp-debian/testing-clang:
     CC: "clang"
     CXX: "clang++"
   script:
-    - apt-get install -y --no-install-recommends
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         clang libomp-dev
     - meson _build
       --prefix="${INSTALL_PREFIX}"
@@ -183,9 +188,11 @@ deps-win64:
   cache:
     paths:
     - .cache/crossroad/
+    - apt-cache
   before_script:
+    - mkdir -p $APT_CACHE
     - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         build-essential
         cpio
         gcc-mingw-w64-x86-64
@@ -224,9 +231,11 @@ gimp-win64:
   cache:
     paths:
     - .cache/crossroad/
+    - apt-cache
   before_script:
+    - mkdir -p $APT_CACHE
     - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         build-essential
         cpio
         gcc-mingw-w64-x86-64
@@ -269,9 +278,11 @@ deps-win32:
   cache:
     paths:
     - .cache/crossroad/
+    - apt-cache
   before_script:
+    - mkdir -p $APT_CACHE
     - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         build-essential
         cpio
         gcc-mingw-w64-i686
@@ -310,9 +321,11 @@ gimp-win32:
   cache:
     paths:
     - .cache/crossroad/
+    - apt-cache
   before_script:
+    - mkdir -p $APT_CACHE
     - apt-get update
-    - apt-get install -y --no-install-recommends
+    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         build-essential
         cpio
         gcc-mingw-w64-i686
