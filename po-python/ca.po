@@ -245,12 +245,12 @@ msgstr "Navegador de procediments Python"
 #: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "No s'ha pogut obrir '%s' per escriure: %s"
+msgstr "No s'ha pogut obrir «%s» per escriure: %s"
 
 #: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "No s'ha pogut escriure a '%s': %s"
+msgstr "No s'ha pogut escriure a «%s»: %s"
 
 #: ../plug-ins/python/python-console/python-console.py:231
 msgid "Save Python-Fu Console Output"
