@@ -1566,10 +1566,10 @@ gimp_check_type (void)
  *
  * Return value: the _check_custom_color1 value
  **/
-GimpRGB
+const GimpRGB *
 gimp_check_custom_color1 (void)
 {
-  return _check_custom_color1;
+  return &_check_custom_color1;
 }
 
 /**
@@ -1582,10 +1582,10 @@ gimp_check_custom_color1 (void)
  *
  * Return value: the _check_custom_color2 value
  **/
-GimpRGB
+const GimpRGB *
 gimp_check_custom_color2 (void)
 {
-  return _check_custom_color2;
+  return &_check_custom_color2;
 }
 
 /**

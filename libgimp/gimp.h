@@ -323,50 +323,50 @@ GimpPDBStatusType gimp_get_pdb_status   (void);
 
 /* Return various constants given by the GIMP core at plug-in config time.
  */
-guint          gimp_tile_width           (void) G_GNUC_CONST;
-guint          gimp_tile_height          (void) G_GNUC_CONST;
-gint           gimp_shm_ID               (void) G_GNUC_CONST;
-guchar       * gimp_shm_addr             (void) G_GNUC_CONST;
-gboolean       gimp_show_tool_tips       (void) G_GNUC_CONST;
-gboolean       gimp_show_help_button     (void) G_GNUC_CONST;
-gboolean       gimp_export_color_profile (void) G_GNUC_CONST;
-gboolean       gimp_export_exif          (void) G_GNUC_CONST;
-gboolean       gimp_export_xmp           (void) G_GNUC_CONST;
-gboolean       gimp_export_iptc          (void) G_GNUC_CONST;
-GimpCheckSize  gimp_check_size           (void) G_GNUC_CONST;
-GimpCheckType  gimp_check_type           (void) G_GNUC_CONST;
-GimpRGB        gimp_check_custom_color1  (void) G_GNUC_CONST;
-GimpRGB        gimp_check_custom_color2  (void) G_GNUC_CONST;
-gint32         gimp_default_display      (void) G_GNUC_CONST;
-const gchar  * gimp_wm_class             (void) G_GNUC_CONST;
-const gchar  * gimp_display_name         (void) G_GNUC_CONST;
-gint           gimp_monitor_number       (void) G_GNUC_CONST;
-guint32        gimp_user_time            (void) G_GNUC_CONST;
-const gchar  * gimp_icon_theme_dir       (void) G_GNUC_CONST;
+guint           gimp_tile_width           (void) G_GNUC_CONST;
+guint           gimp_tile_height          (void) G_GNUC_CONST;
+gint            gimp_shm_ID               (void) G_GNUC_CONST;
+guchar        * gimp_shm_addr             (void) G_GNUC_CONST;
+gboolean        gimp_show_tool_tips       (void) G_GNUC_CONST;
+gboolean        gimp_show_help_button     (void) G_GNUC_CONST;
+gboolean        gimp_export_color_profile (void) G_GNUC_CONST;
+gboolean        gimp_export_exif          (void) G_GNUC_CONST;
+gboolean        gimp_export_xmp           (void) G_GNUC_CONST;
+gboolean        gimp_export_iptc          (void) G_GNUC_CONST;
+GimpCheckSize   gimp_check_size           (void) G_GNUC_CONST;
+GimpCheckType   gimp_check_type           (void) G_GNUC_CONST;
+const GimpRGB * gimp_check_custom_color1  (void) G_GNUC_CONST;
+const GimpRGB * gimp_check_custom_color2  (void) G_GNUC_CONST;
+gint32          gimp_default_display      (void) G_GNUC_CONST;
+const gchar   * gimp_wm_class             (void) G_GNUC_CONST;
+const gchar   * gimp_display_name         (void) G_GNUC_CONST;
+gint            gimp_monitor_number       (void) G_GNUC_CONST;
+guint32         gimp_user_time            (void) G_GNUC_CONST;
+const gchar   * gimp_icon_theme_dir       (void) G_GNUC_CONST;
 
-const gchar  * gimp_get_progname         (void) G_GNUC_CONST;
+const gchar   * gimp_get_progname         (void) G_GNUC_CONST;
 
 GIMP_DEPRECATED
-gdouble        gimp_gamma                (void) G_GNUC_CONST;
+gdouble         gimp_gamma                (void) G_GNUC_CONST;
 GIMP_DEPRECATED
-gboolean       gimp_install_cmap         (void) G_GNUC_CONST;
+gboolean        gimp_install_cmap         (void) G_GNUC_CONST;
 GIMP_DEPRECATED
-gint           gimp_min_colors           (void) G_GNUC_CONST;
+gint            gimp_min_colors           (void) G_GNUC_CONST;
 
 GIMP_DEPRECATED_FOR(gimp_get_parasite)
-GimpParasite * gimp_parasite_find       (const gchar        *name);
+GimpParasite  * gimp_parasite_find       (const gchar        *name);
 GIMP_DEPRECATED_FOR(gimp_attach_parasite)
-gboolean       gimp_parasite_attach     (const GimpParasite *parasite);
+gboolean        gimp_parasite_attach     (const GimpParasite *parasite);
 GIMP_DEPRECATED_FOR(gimp_detach_parasite)
-gboolean       gimp_parasite_detach     (const gchar        *name);
+gboolean        gimp_parasite_detach     (const gchar        *name);
 GIMP_DEPRECATED_FOR(gimp_get_parasite_list)
-gboolean       gimp_parasite_list       (gint               *num_parasites,
-                                         gchar            ***parasites);
+gboolean        gimp_parasite_list       (gint               *num_parasites,
+                                          gchar            ***parasites);
 GIMP_DEPRECATED_FOR(gimp_attach_parasite)
-gboolean       gimp_attach_new_parasite (const gchar        *name,
-                                         gint                flags,
-                                         gint                size,
-                                         gconstpointer       data);
+gboolean        gimp_attach_new_parasite (const gchar        *name,
+                                          gint                flags,
+                                          gint                size,
+                                          gconstpointer       data);
 
 
 G_END_DECLS
