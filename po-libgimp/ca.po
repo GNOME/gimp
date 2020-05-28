@@ -409,7 +409,7 @@ msgid ""
 "Expected %s, got %s."
 msgstr ""
 "El procediment «%s» ha tornat un tipus de valor incorrecte per al valor de "
-"retorn '%s' (#%d). Esperat %s, obtingut %s."
+"retorn «%s» (#%d). Esperat %s, obtingut %s."
 
 #: ../libgimp/gimpprocedure.c:1825
 #, c-format
@@ -417,7 +417,7 @@ msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
 "%d). Expected %s, got %s."
 msgstr ""
-"El procediment '%s' s'ha cridat amb un tipus de valor erroni per a "
+"El procediment «%s» s'ha cridat amb un tipus de valor erroni per a "
 "l'argument «%s» (#%d). Esperat %s, obtingut %s."
 
 #: ../libgimp/gimpprocedure.c:1860
@@ -451,8 +451,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
-"El procediment '%s' s'ha cridat amb una cadena UTF-8 no vàlida per a "
-"l'argument '%s'."
+"El procediment «%s» s'ha cridat amb una cadena UTF-8 no vàlida per a "
+"l'argument «%s»."
 
 #: ../libgimp/gimpproceduredialog.c:220
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
@@ -955,7 +955,7 @@ msgstr "Esfèric (inc)"
 #: ../libgimpbase/gimpbaseenums.c:692
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
-msgstr "Esfèric (decrementa)"
+msgstr "Esfèric (decreixent)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
@@ -2280,7 +2280,7 @@ msgstr ""
 
 #: ../libgimpwidgets/gimpwidgets.c:255
 msgid "_New Seed"
-msgstr "_Nova llavor"
+msgstr "_Llavor nova"
 
 #: ../libgimpwidgets/gimpwidgets.c:271
 msgid "Seed random number generator with a generated random number"

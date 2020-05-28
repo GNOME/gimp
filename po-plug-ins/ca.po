@@ -4474,7 +4474,7 @@ msgid ""
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
 "El cursor s'ha exportat correctament però conté un o més marcs que "
-"excedeixen l'alçada o l'amplada en 8 digits .\n"
+"excedeixen l'alçada o l'amplada en 8 dígits.\n"
 "L'hem fixat a %dpx. Heu de comprovar el cursor exportat."
 
 #. translators: the %i is *always* 8 here
@@ -4489,7 +4489,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xpm.c:191 ../plug-ins/common/file-xpm.c:226
 msgid "X PixMap image"
-msgstr "imatge X PixMap"
+msgstr "Imatge X PixMap"
 
 #: ../plug-ins/common/file-xpm.c:337
 #, c-format
