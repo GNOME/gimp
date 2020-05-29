@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-09 19:02+0000\n"
-"PO-Revision-Date: 2020-05-17 19:57+0300\n"
+"POT-Creation-Date: 2020-05-28 20:09+0000\n"
+"PO-Revision-Date: 2020-05-29 21:15+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,545 +19,347 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Poedit 2.3\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
-msgid "Missing exception information"
-msgstr "Lipsește informația despre excepție"
+#: ../plug-ins/python/colorxhtml.py:89
+msgid "Save as colored HTML text..."
+msgstr "Salvează ca text HTML colorat..."
 
-#: ../plug-ins/pygimp/gimpfu.py:404
-#, python-format
-msgid "An error occurred running %s"
-msgstr "A apărut o eroare în timpul rulării %s"
+#: ../plug-ins/python/colorxhtml.py:94
+msgid "Read characters from file..."
+msgstr "Citește caractere dintr-un fișier..."
 
-#: ../plug-ins/pygimp/gimpfu.py:415
-msgid "_More Information"
-msgstr "_Mai multe informații"
+#: ../plug-ins/python/colorxhtml.py:113
+msgid "Characters"
+msgstr "Caractere"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
-msgid "No"
-msgstr "Nu"
+#: ../plug-ins/python/colorxhtml.py:114
+msgid "Characters that will be used as colored pixels. "
+msgstr "Caracterele ce vor fi folosite ca pixeli colorați. "
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
-msgid "Yes"
-msgstr "Da"
+#: ../plug-ins/python/colorxhtml.py:123
+msgid "Characters or file location"
+msgstr "Locația caracterelor sau a fișierului"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
-msgid "Python-Fu File Selection"
-msgstr "Selecție de fișier Python-Fu"
+#: ../plug-ins/python/colorxhtml.py:129
+msgid "Read characters from file"
+msgstr "Citește caractere din fișier"
 
-#: ../plug-ins/pygimp/gimpfu.py:648
-msgid "Python-Fu Folder Selection"
-msgstr "Selecție de dosar Python-Fu"
+# adaptare
+#: ../plug-ins/python/colorxhtml.py:132
+msgid ""
+"If set, the Characters text entry will be used as a file name, from which "
+"the characters will be read. Otherwise, the characters in the text entry "
+"will be used to render the image."
+msgstr ""
+"Dacă opțiunea este bifată, caracterele din intrarea de text vor fi folosite "
+"ca nume al fișierului din care vor fi citite caracterele. Dacă opțiunea nu "
+"este bifată, caracterele din intrarea de text vor fi folosite pentru a randa "
+"imaginea."
 
-#: ../plug-ins/pygimp/gimpfu.py:737
-#, python-format
-msgid "Invalid input for '%s'"
-msgstr "Intrarea pentru „%s” nu este validă"
+#: ../plug-ins/python/colorxhtml.py:138
+msgid "Choose file"
+msgstr "Alegeți fișierul"
 
-#: ../plug-ins/pygimp/gimpui.py:176
-msgid "Python-Fu Color Selection"
-msgstr "Selecție de culoare Python-Fu"
+#: ../plug-ins/python/colorxhtml.py:145
+msgid "Font Size(px)"
+msgstr "Dimensiune de font (px)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/python/colorxhtml.py:157
+msgid "Write separate CSS file"
+msgstr "Scrie un fișier CSS separat"
+
+#: ../plug-ins/python/colorxhtml.py:210
 msgid "Saving as colored XHTML"
 msgstr "Salvare ca XHTML colorat"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
-msgid "Save as colored XHTML"
-msgstr "Salvează ca XHTML colorat"
+#: ../plug-ins/python/colorxhtml.py:280 ../plug-ins/python/colorxhtml.py:281
+msgid "_Read characters from file, if true, or use text entry"
+msgstr ""
+"Citește caractere dintr-un fișier, dacă este adevărat, sau folosește o "
+"intrare de text"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
-msgid "Colored XHTML"
-msgstr "XHTML colorat"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Character _source"
-msgstr "_Sursă caracter"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Source code"
-msgstr "Cod sursă"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
-msgid "Text file"
-msgstr "Fișier text"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
-msgid "Entry box"
-msgstr "Căsuță de intrare"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/python/colorxhtml.py:285 ../plug-ins/python/colorxhtml.py:286
 msgid "_File to read or characters to use"
 msgstr "_Fișier de citit sau caracter pentru a fi utilizat"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/python/colorxhtml.py:290 ../plug-ins/python/colorxhtml.py:291
 msgid "Fo_nt size in pixels"
 msgstr "Dimensiune de fo_nt în pixeli"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/python/colorxhtml.py:295 ../plug-ins/python/colorxhtml.py:296
 msgid "_Write a separate CSS file"
 msgstr "_Scrie un fișier CSS separat"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "Degrade de folosit"
+#: ../plug-ins/python/colorxhtml.py:315
+msgid "Save as colored HTML text"
+msgstr "Salvează ca text HTML colorat"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "Nume de fișier"
+#: ../plug-ins/python/colorxhtml.py:318
+msgid "Colored HTML text"
+msgstr "Text HTML colorat"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
-msgid "Exports the image histogram to a text file (CSV)"
-msgstr "Exportă histograma imaginii într-un fișier text (CSV)"
+#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+msgid "Layer name"
+msgstr "Nume de strat"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
-msgid "_Export histogram..."
-msgstr "_Export de histogramă..."
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
-msgid "_Image"
-msgstr "_Imagine"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
-msgid "_Drawable"
-msgstr "_Desenabil"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
-msgid "Histogram _File"
-msgstr "_Fișier de histogramă"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
-msgid "_Bucket Size"
-msgstr "Dimensiune de _găleată"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
-msgid "Sample _Average"
-msgstr "Medie de eș_antion"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
-msgid "Output format"
-msgstr "Format de ieșire"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
-msgid "Pixel count"
-msgstr "Număr de pixeli"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
-msgid "Normalized"
-msgstr "Normalizat"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
-msgid "Percent"
-msgstr "Procent"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "Add a layer of fog"
-msgstr "Adaugă un strat de ceață"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "_Fog..."
-msgstr "_Ceață..."
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "_Nume strat"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/python/foggify.py:84
 msgid "Clouds"
 msgstr "Nori"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
-msgid "_Fog color"
-msgstr "_Culoare ceață"
+#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
+msgid "Fog color"
+msgstr "Culoare de ceață"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
-msgid "_Turbulence"
-msgstr "_Turbulență"
+#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+msgid "Turbulence"
+msgstr "Turbulență"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "Op_acitate"
+#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+msgid "Opacity"
+msgstr "Opacitate"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "Decalează culorile într-o paletă"
+#: ../plug-ins/python/foggify.py:114
+msgid "Add a layer of fog"
+msgstr "Adaugă un strat de ceață"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
-msgid "_Offset Palette..."
-msgstr "_Paletă de decalaj..."
+#: ../plug-ins/python/foggify.py:117
+msgid "_Fog..."
+msgstr "_Ceață..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/python/gradients-save-as-css.py:81
+msgid "CSS file..."
+msgstr "Fișier CSS..."
+
+#: ../plug-ins/python/gradients-save-as-css.py:144
+msgid "Gradient to use"
+msgstr "Degrade de folosit"
+
+#: ../plug-ins/python/gradients-save-as-css.py:147
+msgid "File"
+msgstr "Fișier"
+
+#: ../plug-ins/python/palette-offset.py:44
+#: ../plug-ins/python/palette-offset.py:45
+#: ../plug-ins/python/palette-to-gradient.py:103
 msgid "Palette"
 msgstr "Paletă"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/python/palette-offset.py:56
 msgid "Off_set"
 msgstr "_Decalaj"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Red"
-msgstr "Roșu"
+#: ../plug-ins/python/palette-offset.py:57
+msgid "Offset"
+msgstr "Decalaj"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Green"
-msgstr "Verde"
+#: ../plug-ins/python/palette-offset.py:90
+msgid "_Offset Palette..."
+msgstr "_Decalează paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Blue"
-msgstr "Albastru"
+#: ../plug-ins/python/palette-offset.py:91
+msgid "Offset the colors in a palette"
+msgstr "Decalează culorile într-o paletă"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
-msgid "Luma (Y)"
-msgstr "Luminanță (Y)"
+#: ../plug-ins/python/palette-offset.py:139
+msgid "Offset Palette..."
+msgstr "Decalează paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Hue"
-msgstr "Nuanță"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Saturation"
-msgstr "Saturație"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Value"
-msgstr "Valoare"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
-msgid "Saturation (HSL)"
-msgstr "Saturație (HSL)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
-msgid "Lightness (HSL)"
-msgstr "Luminozitate (HSL)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
-msgid "Index"
-msgstr "Index"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
-msgid "Random"
-msgstr "Aleator"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
-msgid "Lightness (LAB)"
-msgstr "Luminozitate (LAB)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
-msgid "A-color"
-msgstr "Culoare A"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
-msgid "B-color"
-msgstr "Culoare B"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
-msgid "Chroma (LCHab)"
-msgstr "Crominanță (LCHab)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
-msgid "Hue (LCHab)"
-msgstr "Nuanță (LCHab)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
-msgid "Sort the colors in a palette"
-msgstr "Sortează culorile într-o paletă"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
-msgid "_Sort Palette..."
-msgstr "_Sortează paleta..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
-msgid "Se_lections"
-msgstr "Se_lecții"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "All"
-msgstr "Tot"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "Slice / Array"
-msgstr "Felie / Matrice"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "Autoslice (fg->bg)"
-msgstr "Feliere automată (prim-plan->fundal)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
-msgid "Partitioned"
-msgstr "Partiționat"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
-msgid "Slice _expression"
-msgstr "_Expresia feliei"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
-msgid "Channel to _sort"
-msgstr "Canal de _sortat"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
-msgid "_Ascending"
-msgstr "_Ascendent"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-msgid "Secondary Channel to s_ort"
-msgstr "Canalul secundar de s_ortat"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
-msgid "_Quantization"
-msgstr "_Cuantificare"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
-msgid "_Partitioning channel"
-msgstr "Canal de _partiționare"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
-msgid "Partition q_uantization"
-msgstr "C_uantificare de partiționare"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Creează un degrade repetitiv folosind culorile din paletă"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "Paletă la degrade _repetitiv"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "Creează un degrade folosind culorile din paletă"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/python/palette-to-gradient.py:139
 msgid "Palette to _Gradient"
 msgstr "Paletă la de_grade"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/python/palette-to-gradient.py:140
+msgid "Create a gradient using colors from the palette"
+msgstr "Creează un degrade folosind culorile din paletă"
+
+#: ../plug-ins/python/palette-to-gradient.py:144
+msgid "Palette to _Repeating Gradient"
+msgstr "Paletă la degrade _repetitiv"
+
+#: ../plug-ins/python/palette-to-gradient.py:145
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Creează un degrade repetitiv folosind culorile din paletă"
+
+#: ../plug-ins/python/py-slice.py:74
 msgid "Slice"
 msgstr "Felie"
 
+#: ../plug-ins/python/py-slice.py:439 ../plug-ins/python/py-slice.py:440
+msgid "Path for HTML export"
+msgstr "Cale pentru exportul HTML"
+
+#: ../plug-ins/python/py-slice.py:444 ../plug-ins/python/py-slice.py:445
+msgid "Filename for export"
+msgstr "Nume de fișier de exportat"
+
+#: ../plug-ins/python/py-slice.py:449 ../plug-ins/python/py-slice.py:450
+msgid "Image name prefix"
+msgstr "Prefix de nume de imagine"
+
+#: ../plug-ins/python/py-slice.py:454 ../plug-ins/python/py-slice.py:455
+msgid "Image format (gif, jpg, png)"
+msgstr "Format de imagine (gif, jpg, png)"
+
+#: ../plug-ins/python/py-slice.py:459 ../plug-ins/python/py-slice.py:460
+msgid "Separate image folder"
+msgstr "Dosar de imagine separat"
+
+#: ../plug-ins/python/py-slice.py:464 ../plug-ins/python/py-slice.py:465
+msgid "Folder for image export"
+msgstr "Dosar pentru export de imagine"
+
+#: ../plug-ins/python/py-slice.py:469 ../plug-ins/python/py-slice.py:470
+msgid "Space between table elements"
+msgstr "Spațiu între elementele de tabel"
+
+#: ../plug-ins/python/py-slice.py:474 ../plug-ins/python/py-slice.py:475
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript pentru onmouseover și clicked"
+
+# hm ?
+#: ../plug-ins/python/py-slice.py:480 ../plug-ins/python/py-slice.py:481
+msgid "Skip animation for table caps"
+msgstr "Ignoră animația pentru capetele de tabel"
+
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
+#: ../plug-ins/python/py-slice.py:501
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Taie o imagine în lungul ghidajelor ei, creează un fragment de imagine și "
 "tebelă HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/python/py-slice.py:510
 msgid "_Slice..."
 msgstr "_Felie..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Path for HTML export"
-msgstr "Cale pentru exportul HTML"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Filename for export"
-msgstr "Nume de fișier de exportat"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image name prefix"
-msgstr "Prefix de nume de imagine"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Image format"
-msgstr "Format de imagine"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
-msgid "Separate image folder"
-msgstr "Dosar de imagine separat"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Folder for image export"
-msgstr "Dosar pentru export de imagine"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
-msgid "Space between table elements"
-msgstr "Spațiu între elementele de tabel"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript pentru onmouseover și clicked"
-
-# hm ?
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
-msgid "Skip animation for table caps"
-msgstr "Ignoră animația pentru capetele de tabel"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+#: ../plug-ins/python/python-console/python-console.py:75
 msgid "Python Console"
 msgstr "Consolă Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+#: ../plug-ins/python/python-console/python-console.py:79
 msgid "_Browse..."
 msgstr "_Răsfoiește..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:154
+#: ../plug-ins/python/python-console/python-console.py:179
 msgid "Python Procedure Browser"
 msgstr "Navigator de procedură Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#: ../plug-ins/python/python-console/python-console.py:207
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:198
+#: ../plug-ins/python/python-console/python-console.py:222
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Nu s-a putut scrie în „%s”: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:206
+#: ../plug-ins/python/python-console/python-console.py:231
 msgid "Save Python-Fu Console Output"
 msgstr "Salvează ieșirea consolei Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:232
+#: ../plug-ins/python/python-console/python-console.py:280
+msgid "Python _Console"
+msgstr "_Consolă Python"
+
+#: ../plug-ins/python/python-console/python-console.py:281
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretor interactiv GIMP Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:237
-msgid "_Console"
-msgstr "_Consolă"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
-msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Adaugă o umbră detașată la un strat și opțional scoate-l în relief"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
-msgid "_Drop Shadow and Bevel..."
-msgstr "_Umbră detașată și scoatere în relief..."
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "_Shadow blur"
-msgstr "_Neclaritate umbră"
-
-# hm ?
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Bevel"
-msgstr "Î_n relief"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "_Drop shadow"
-msgstr "_Umbră detașată"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow _X displacement"
-msgstr "Deplasare pe axa _X a umbrei detașate"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
-msgid "Drop shadow _Y displacement"
-msgstr "Deplasare pe axa _Y a umbrei detașate"
-
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
+#: ../plug-ins/python/spyro-plus.py:60
 msgid "Spyro Layer"
 msgstr "Strat spyro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+#: ../plug-ins/python/spyro-plus.py:61
 msgid "Spyro Path"
 msgstr "Traseu spyro"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
-msgid ""
-"Save\n"
-"as New Layer"
-msgstr ""
-"Salvează\n"
-"ca strat nou"
+#: ../plug-ins/python/spyro-plus.py:71
+msgid "As New Layer"
+msgstr "Ca strat nou"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
-msgid ""
-"Redraw on\n"
-"Active layer"
-msgstr ""
-"Redesenează\n"
-"pe stratul curent"
+#: ../plug-ins/python/spyro-plus.py:72
+msgid "Redraw on last active layer"
+msgstr "Redesenează pe ultimul strat activ"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
-msgid ""
-"Save\n"
-"as Path"
-msgstr ""
-"Salvează\n"
-"ca traseu"
+#: ../plug-ins/python/spyro-plus.py:73
+msgid "As Path"
+msgstr "Ca traseu"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
+#: ../plug-ins/python/spyro-plus.py:121
 msgid "Circle"
 msgstr "Cerc"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
+#: ../plug-ins/python/spyro-plus.py:157
 msgid "Polygon-Star"
 msgstr "Stea-poligon"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
+#: ../plug-ins/python/spyro-plus.py:173 ../plug-ins/python/spyro-plus.py:996
 msgid "Sine"
 msgstr "Sinusoidal"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
+#: ../plug-ins/python/spyro-plus.py:183
 msgid "Bumps"
 msgstr "Protuberanțe"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
+#: ../plug-ins/python/spyro-plus.py:288
 msgid "Rack"
 msgstr "Raft"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
+#: ../plug-ins/python/spyro-plus.py:332
 msgid "Frame"
 msgstr "Cadru"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
+#: ../plug-ins/python/spyro-plus.py:445
 msgid "Selection"
 msgstr "Selecție"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
+#: ../plug-ins/python/spyro-plus.py:532
 msgid "Pencil"
 msgstr "Creion"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
+#: ../plug-ins/python/spyro-plus.py:548
 msgid "AirBrush"
 msgstr "Aerograf"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
+#: ../plug-ins/python/spyro-plus.py:608
 msgid "Preview"
 msgstr "Previzualizare"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
+#: ../plug-ins/python/spyro-plus.py:613
 msgid "Stroke"
 msgstr "Tușă"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
+#: ../plug-ins/python/spyro-plus.py:660
 msgid "PaintBrush"
 msgstr "Pensulă de pictură"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
+#: ../plug-ins/python/spyro-plus.py:662
 msgid "Ink"
 msgstr "Cerneală"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
+#: ../plug-ins/python/spyro-plus.py:663
 msgid "MyPaintBrush"
 msgstr "Pensulă MyPaint"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
+#: ../plug-ins/python/spyro-plus.py:982
 msgid "Spyrograph"
 msgstr "Spyrograph"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
+#: ../plug-ins/python/spyro-plus.py:989
 msgid "Epitrochoid"
 msgstr "Epitrochoid"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
+#: ../plug-ins/python/spyro-plus.py:1016
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
+#: ../plug-ins/python/spyro-plus.py:1447
 msgid "Curve Type"
 msgstr "Tip de curbă"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
+#: ../plug-ins/python/spyro-plus.py:1448
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -565,22 +367,22 @@ msgstr ""
 "Un model epitrochoid este atunci când roata dințată mobilă este pe partea "
 "exterioară a roții dințate fixe."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
+#: ../plug-ins/python/spyro-plus.py:1453
 msgid "Tool"
 msgstr "Instrument"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
+#: ../plug-ins/python/spyro-plus.py:1454
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
-"Instrumentul cu care să fie desenam modelul. Instrumentul Previzualizare "
+"Instrumentul cu care să se deseneze modelul. Instrumentul de previzualizare "
 "doar desenează rapid."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
+#: ../plug-ins/python/spyro-plus.py:1459
 msgid "Long Gradient"
 msgstr "Degrade lung"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+#: ../plug-ins/python/spyro-plus.py:1461
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -591,11 +393,11 @@ msgstr ""
 "pentru a se potrivi cu lungimea modelului, pe baza degradeului curent și a "
 "modului de repetare din setările instrumentului de degrade."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
+#: ../plug-ins/python/spyro-plus.py:1481
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Specificați modelul folosind una dintre următoarele file:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+#: ../plug-ins/python/spyro-plus.py:1483
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -607,7 +409,7 @@ msgstr ""
 "regăsesc în kiturile de jucării. Dacă urmați instrucțiunile din manualele "
 "kitului de jucării, rezultatele ar trebui să fie similare."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
+#: ../plug-ins/python/spyro-plus.py:1507
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -615,12 +417,11 @@ msgstr ""
 "Numărul de dinți ai roții dințate fixe. Dimensiunea roții dințate fixe este "
 "proporțională cu numărul de dinți."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
+#: ../plug-ins/python/spyro-plus.py:1510 ../plug-ins/python/spyro-plus.py:1538
 msgid "Fixed Gear Teeth"
 msgstr "Dinții roții dințate fixe"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
+#: ../plug-ins/python/spyro-plus.py:1518
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -628,16 +429,15 @@ msgstr ""
 "Numărul de dinți ai roții dințate mobile. Dimensiunea roții dințate mobile "
 "este proporțională cu numărul de dinți."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
+#: ../plug-ins/python/spyro-plus.py:1521 ../plug-ins/python/spyro-plus.py:1543
 msgid "Moving Gear Teeth"
 msgstr "Dinții roții dințate mobile"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
+#: ../plug-ins/python/spyro-plus.py:1526
 msgid "Hole percent"
 msgstr "Procentul găurii"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
+#: ../plug-ins/python/spyro-plus.py:1527
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -645,11 +445,11 @@ msgstr ""
 "Cât de departe să fie gaura din centrul roții dințate mobile. 100% înseamnă "
 "că gaura este la marginea roții dințate."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
+#: ../plug-ins/python/spyro-plus.py:1548
 msgid "Hole Number"
 msgstr "Numărul de găuri"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
+#: ../plug-ins/python/spyro-plus.py:1549
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -658,27 +458,27 @@ msgstr ""
 "aproape de centru. Numărul maxim de găuri este diferit pentru fiecare roată "
 "dințată."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/python/spyro-plus.py:1560
 msgid "Flower Petals"
 msgstr "Petale de floare"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/python/spyro-plus.py:1561
 msgid "The number of petals in the pattern."
 msgstr "Numărul de petale în model."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+#: ../plug-ins/python/spyro-plus.py:1566
 msgid "Petal Skip"
 msgstr "Petale omise"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+#: ../plug-ins/python/spyro-plus.py:1567
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Numărul de petale de avansat pentru desenarea următoarei petale."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+#: ../plug-ins/python/spyro-plus.py:1572
 msgid "Hole Radius(%)"
 msgstr "Raza găurii (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+#: ../plug-ins/python/spyro-plus.py:1573
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -688,11 +488,11 @@ msgstr ""
 "procent din dimensiunea modelului. O valoare de 0 nu va produce nicio gaură. "
 "O valoare de 99 va produce o linie subțire pe margine."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+#: ../plug-ins/python/spyro-plus.py:1594
 msgid "Width(%)"
 msgstr "Lățime(%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+#: ../plug-ins/python/spyro-plus.py:1595
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -702,24 +502,23 @@ msgstr ""
 "desena doar un model subțire. O valoare de 100 va umple întreaga roată "
 "dințată fixă."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+#: ../plug-ins/python/spyro-plus.py:1606
 msgid "Visual"
 msgstr "Vizual"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
+#: ../plug-ins/python/spyro-plus.py:1612
 msgid "Toy Kit"
 msgstr "Kit de jucării"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
+#: ../plug-ins/python/spyro-plus.py:1618
 msgid "Gears"
 msgstr "Roți dințate"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/python/spyro-plus.py:1631 ../plug-ins/python/spyro-plus.py:1675
 msgid "Rotation"
 msgstr "Rotație"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
+#: ../plug-ins/python/spyro-plus.py:1632
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -727,11 +526,11 @@ msgstr ""
 "Rotația modelului, în grade. Poziția de pornire a roții dințate mobile în "
 "roata dințată fixă."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
+#: ../plug-ins/python/spyro-plus.py:1655
 msgid "Shape"
 msgstr "Formă"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
+#: ../plug-ins/python/spyro-plus.py:1656
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -745,39 +544,39 @@ msgstr ""
 "notația roții dințate pentru a atinge limita. Selecția va îmbrățișa "
 "granițele selecției curente - încercați ceva non-dreptunghiular."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/python/spyro-plus.py:1665
 msgid "Sides"
 msgstr "Fețe"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/python/spyro-plus.py:1665
 msgid "Number of sides of the shape."
 msgstr "Numărul de fețe ale formei."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/python/spyro-plus.py:1670
 msgid "Morph"
 msgstr "Transformare"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/python/spyro-plus.py:1670
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Transformă roata dințată fixă. Afectează doar unele dintre forme."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/python/spyro-plus.py:1675
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotația roții dințate fixe, în grade"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/python/spyro-plus.py:1690
 msgid "Margin (px)"
 msgstr "Margine (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/python/spyro-plus.py:1690
 msgid "Margin from edge of selection."
 msgstr "Marginea de la marginea selecției."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
+#: ../plug-ins/python/spyro-plus.py:1695
 msgid "Make width and height equal"
 msgstr "Lățime și înălțime egală"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+#: ../plug-ins/python/spyro-plus.py:1697
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -786,11 +585,11 @@ msgstr ""
 "curentă. Când opțiunea este bifată, modelul va avea aceeași lățime și "
 "înălțime și va fi centrat."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
+#: ../plug-ins/python/spyro-plus.py:1712
 msgid "Re_draw"
 msgstr "Re_desenează"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
+#: ../plug-ins/python/spyro-plus.py:1714
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -799,19 +598,15 @@ msgstr ""
 "selecția, apăsați acest buton pentru a previzualiza modul în care arată "
 "modelul."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+#: ../plug-ins/python/spyro-plus.py:1717
 msgid "_Reset"
 msgstr "_Resetează"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
-msgid "_Cancel"
-msgstr "_Anulează"
+#: ../plug-ins/python/spyro-plus.py:1725
+msgid "Save"
+msgstr "Salvează"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
-msgid "_OK"
-msgstr "_OK"
-
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
+#: ../plug-ins/python/spyro-plus.py:1726
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -819,38 +614,37 @@ msgstr ""
 "Alegeți dacă să fie salvat ca strat nou, să fie redesenat pe ultimul strat "
 "activ sau să fie salvat la traseu"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
+#: ../plug-ins/python/spyro-plus.py:1740
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
+#: ../plug-ins/python/spyro-plus.py:1749 ../plug-ins/python/spyro-plus.py:2282
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Desenați trasee spyrograph folosind setările și selecția actuală a "
 "instrumentelor."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
+#: ../plug-ins/python/spyro-plus.py:1762
 msgid "Curve Pattern"
 msgstr "Model de curbă"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
+#: ../plug-ins/python/spyro-plus.py:1765
 msgid "Fixed Gear"
 msgstr "Roată dințată fixă"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
+#: ../plug-ins/python/spyro-plus.py:1768
 msgid "Size"
 msgstr "Dimensiune"
 
 # raportare de stare
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
+#: ../plug-ins/python/spyro-plus.py:2116
 msgid "Rendering Pattern"
 msgstr "Randare model"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
+#: ../plug-ins/python/spyro-plus.py:2128
 msgid "Please wait : Rendering Pattern"
 msgstr "Așteptați: se randează modelul"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
+#: ../plug-ins/python/spyro-plus.py:2286
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
