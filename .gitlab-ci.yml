@@ -32,6 +32,25 @@ build-image:
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
 
+
+build-image-win64:
+  stage: prepare
+  variables:
+    GIT_STRATEGY: none
+  cache: {}
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - echo "FROM debian:testing" > Dockerfile
+    - echo "RUN apt-get update" >> Dockerfile
+    - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
+    - echo "build-essential cpio g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
+
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
+
 ## GNU/Linux 64-bit CIs ##
 
 deps-debian/testing:
@@ -135,6 +154,7 @@ gimp-debian/testing-clang:
 
 deps-win64:
   stage: dependencies
+  image: $CI_REGISTRY_IMAGE:build-win64-latest
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
@@ -143,21 +163,6 @@ deps-win64:
     - .cache/crossroad/
     - apt-cache
   before_script:
-    - mkdir -p $APT_CACHE
-    - apt-get update
-    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
-        build-essential
-        cpio
-        gcc-mingw-w64-x86-64
-        g++-mingw-w64-x86-64
-        git
-        meson
-        pkg-config
-        python3-distutils
-        python3-docutils
-        python3-pip
-        rpm
-    - apt-get install -y --reinstall ca-certificates
     - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
     - cd crossroad
     - ./setup.py install --prefix=`pwd`/../.local
@@ -176,6 +181,7 @@ deps-win64:
 
 gimp-win64:
   stage: gimp
+  image: $CI_REGISTRY_IMAGE:build-win64-latest
   dependencies:
     - deps-win64
   variables:
@@ -185,22 +191,6 @@ gimp-win64:
     paths:
     - .cache/crossroad/
     - apt-cache
-  before_script:
-    - mkdir -p $APT_CACHE
-    - apt-get update
-    - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
-        build-essential
-        cpio
-        gcc-mingw-w64-x86-64
-        g++-mingw-w64-x86-64
-        git
-        intltool
-        libgdk-pixbuf2.0-dev
-        libglib2.0-bin
-        meson
-        python3
-        rpm
-        xsltproc
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
