@@ -101,7 +101,6 @@ deps-debian/testing:
         libdbus-glib-1-dev
         libexif-dev
         libgexiv2-dev
-        libgirepository1.0-dev
         libgtk-3-bin
         libgtk-3-dev
         libgudev-1.0-dev
