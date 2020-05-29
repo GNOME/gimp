@@ -32,7 +32,6 @@ deps-debian/testing:
         build-essential
         git
         ffmpeg
-        graphviz-dev
         gobject-introspection
         libjson-glib-dev
         libgexiv2-dev
