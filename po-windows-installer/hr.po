@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-06-08 16:17+0000\n"
-"PO-Revision-Date: 2019-06-11 17:21+0200\n"
+"POT-Creation-Date: 2019-07-08 14:48+0000\n"
+"PO-Revision-Date: 2019-07-09 12:28+0200\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -80,9 +80,9 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"Priprema je ustanovila, da tvoj WIndows ne pokreće prikazni modus s 32 bita "
-"po pikselu. Poznato je da to čini GIMP nestabilnim, pa stoga preporučamo "
-"aktiviranje prikaza boja zaslona na 32 BPP prije nastavljanja."
+"Instalacijski program je ustanovio, da Windows nije pokrenut u načinu "
+"prikaza 32 bita po pikselu. Poznato je da to čini GIMP nestabilnim, pa stoga "
+"preporučamo aktiviranje prikaza boja zaslona na 32 BPP prije nastavljanja."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:12
 msgid "E&xit"
@@ -376,7 +376,7 @@ msgstr "Postavljanje GIMP okruženja …"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Postavljanje GIMP konfiguracije za podršku 32-bitovnih dodataka …"
+msgstr "Postavljanje GIMP konfiguracije za podršku 32-bitovnih priključaka …"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Launch GIMP"
@@ -384,7 +384,7 @@ msgstr "Pokreni GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Removing add-on"
-msgstr "Uklanjanje dodataka"
+msgstr "Uklanjanje dodatka"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:83
 #, no-c-format
