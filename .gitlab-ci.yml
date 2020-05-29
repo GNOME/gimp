@@ -103,6 +103,7 @@ deps-debian/testing:
     - meson --prefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
+  needs: ["build-image"]
 
 .gimp-debian/testing-base:
   stage: gimp
@@ -199,6 +200,7 @@ deps-win64:
     paths:
       - .local/
       - _deps/
+  needs: ["build-image-win64"]
 
 gimp-win64:
   stage: gimp
@@ -260,6 +262,7 @@ deps-win32:
     paths:
       - .local/
       - _deps/
+  needs: ["build-image-win32"]
 
 gimp-win32:
   stage: gimp
