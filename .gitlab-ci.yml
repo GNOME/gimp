@@ -140,6 +140,7 @@ gimp-debian/testing-clang:
     CC: "clang"
     CXX: "clang++"
   script:
+    - mkdir -p "$APT_CACHE"
     - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         clang libomp-dev
     - meson _build
