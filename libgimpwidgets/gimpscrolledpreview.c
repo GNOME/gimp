@@ -589,9 +589,9 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
                            "check-size", GIMP_CHECK_SIZE_SMALL_CHECKS,
                            "check-type", GIMP_PREVIEW_AREA (gimp_preview->area)->check_type,
                            "check-custom-color1",
-                           GIMP_PREVIEW_AREA (gimp_preview->area)->check_custom_color1,
+                           &GIMP_PREVIEW_AREA (gimp_preview->area)->check_custom_color1,
                            "check-custom-color2",
-                           GIMP_PREVIEW_AREA (gimp_preview->area)->check_custom_color2,
+                           &GIMP_PREVIEW_AREA (gimp_preview->area)->check_custom_color2,
                            NULL);
 
       gtk_container_add (GTK_CONTAINER (inner), area);
