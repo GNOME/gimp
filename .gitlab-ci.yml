@@ -53,7 +53,7 @@ build-image-win64:
     - echo "build-essential cpio g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
     - echo "RUN pip3 install zstandard" >> Dockerfile
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
-    - echo "RUN cd crossroad && ./setup.py install --prefix=`pwd`/.local" >> Dockerfile
+    - echo "RUN cd crossroad && ./setup.py install --prefix=/usr/local" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN64 --cache=true --cache-ttl=120h
 
@@ -75,7 +75,7 @@ build-image-win32:
     - echo "build-essential cpio g++-mingw-w64-i686 gcc-mingw-w64-i686 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
     - echo "RUN pip3 install zstandard" >> Dockerfile
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
-    - echo "RUN cd crossroad && ./setup.py install --prefix=`pwd`/.local" >> Dockerfile
+    - echo "RUN cd crossroad && ./setup.py install --prefix=/usr/local" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN32 --cache=true --cache-ttl=120h
 
@@ -194,7 +194,6 @@ deps-win64:
     - .cache/crossroad/
     - apt-cache
   script:
-    - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w64 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
@@ -218,8 +217,6 @@ gimp-win64:
     - .cache/crossroad/
     - apt-cache
   script:
-    - export PATH="`pwd`/.local/bin:$PATH"
-    - echo $PATH
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
               -Dgtk-doc=false
@@ -251,7 +248,6 @@ deps-win32:
     - .cache/crossroad/
     - apt-cache
   script:
-    - export PATH="`pwd`/.local/bin:$PATH"
     - crossroad w32 gimp --run="build/windows/crossbuild-gitlab-ci/build-deps.sh"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
@@ -275,7 +271,6 @@ gimp-win32:
     - .cache/crossroad/
     - apt-cache
   script:
-    - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
               -Dwmf=disabled  -Dgtk-doc=false
