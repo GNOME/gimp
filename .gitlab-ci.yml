@@ -44,7 +44,7 @@ build-image:
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
-  script:
+  before_script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
@@ -197,7 +197,7 @@ gimp-debian/testing-clang:
     paths:
     - .cache/crossroad/
     - apt-cache
-  script:
+  before_script:
     - echo "mkdir _deps && cd _deps" > crossroad_deps_build.sh
     - echo "git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git" >> crossroad_deps_build.sh
     - echo "cd babl" >> crossroad_deps_build.sh
