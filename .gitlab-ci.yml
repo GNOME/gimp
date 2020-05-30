@@ -55,14 +55,14 @@ build-image:
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
     - echo "RUN cd crossroad && ./setup.py install --prefix=/usr/local" >> Dockerfile
 
-    - echo 'RUN echo "crossroad source msys2" > /usr/local/bin/crossroad_deps_install.sh'
-    - echo 'RUN echo "crossroad install lcms2" >> /usr/local/bin/crossroad_deps_install.sh'
-    - echo 'RUN echo "crossroad install cairo json-glib" >> /usr/local/bin/crossroad_deps_install.sh'
-    - echo 'RUN echo "LIBMNG=" >> /usr/local/bin/crossroad_deps_install.sh'
-    - echo 'RUN echo "if [ \"x$CROSSROAD_PLATFORM\" = \"xw64\" ]; then" >> /usr/local/bin/crossroad_deps_install.sh'
-    - echo 'RUN echo "  LIBMNG="libmng" >> /usr/local/bin/crossroad_deps_install.sh'
-    - echo 'RUN echo "fi" >> /usr/local/bin/crossroad_deps_install.sh'
-    - echo 'RUN echo "crossroad install appstream-glib atk drmingw gexiv2 ghostscript glib2 iso-codes json-c libheif libmypaint mypaint-brushes libwebp libwmf openexr ilmbase poppler poppler-data xpm-nox" >> /usr/local/bin/crossroad_deps_install.sh'
+    - echo 'RUN echo "crossroad source msys2" > crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "crossroad install lcms2" >> crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "crossroad install cairo json-glib" >> crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "LIBMNG=" >> crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "if [ \"x$CROSSROAD_PLATFORM\" = \"xw64\" ]; then" >> crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "  LIBMNG="libmng" >> crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "fi" >> crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "crossroad install appstream-glib atk drmingw gexiv2 ghostscript glib2 iso-codes json-c libheif libmypaint mypaint-brushes libwebp libwmf openexr ilmbase poppler poppler-data xpm-nox" >> crossroad_deps_install.sh' >> Dockerfile
 
 build-image-win64:
   extends: .build-image-win-base
@@ -70,7 +70,7 @@ build-image-win64:
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64" >> Dockerfile
 
-    - echo 'RUN crossroad w64 gimp --run="/usr/local/bin/crossroad_deps_install.sh"' >> Dockerfile
+    - echo 'RUN crossroad w64 gimp --run="crossroad_deps_install.sh"' >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN64 --cache=true --cache-ttl=120h
 
@@ -80,7 +80,7 @@ build-image-win32:
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "g++-mingw-w64-i686 gcc-mingw-w64-i686" >> Dockerfile
 
-    - echo 'RUN crossroad w32 gimp --run="/usr/local/bin/crossroad_deps_install.sh"' >> Dockerfile
+    - echo 'RUN crossroad w32 gimp --run="crossroad_deps_install.sh"' >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN32 --cache=true --cache-ttl=120h
 
