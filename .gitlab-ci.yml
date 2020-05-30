@@ -191,7 +191,7 @@ gimp-debian/testing-clang:
 .deps-win-base:
   stage: dependencies
   variables:
-    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+#    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
     paths:
