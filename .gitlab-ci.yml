@@ -191,7 +191,7 @@ gimp-debian/testing-clang:
 .deps-win-base:
   stage: dependencies
   variables:
-#    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
+    XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
   cache:
     paths:
@@ -199,13 +199,13 @@ gimp-debian/testing-clang:
     - apt-cache
   before_script:
     - echo "mkdir _deps && cd _deps" > crossroad_deps_build.sh
+
     - echo "git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git" >> crossroad_deps_build.sh
     - echo "cd babl" >> crossroad_deps_build.sh
     - echo "crossroad meson _build/ -Denable-gir=false -Dlibdir=lib" >> crossroad_deps_build.sh
     - echo "ninja -C _build install || exit 1" >> crossroad_deps_build.sh
     - echo "cd .." >> crossroad_deps_build.sh
 
-    - echo "crossroad install cairo json-glib" >> crossroad_deps_build.sh
     - echo "git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git" >> crossroad_deps_build.sh
     - echo "cd gegl" >> crossroad_deps_build.sh
     - echo "crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib" >> crossroad_deps_build.sh
