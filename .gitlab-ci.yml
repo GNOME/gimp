@@ -36,7 +36,7 @@ build-image:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE --cache=true --cache-ttl=120h
 
 
-.build-image-win-base
+.build-image-win-base:
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -188,7 +188,7 @@ gimp-debian/testing-clang:
 
 ## WINDOWS DEPS ##
 
-.deps-win-base
+.deps-win-base:
   stage: dependencies
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
