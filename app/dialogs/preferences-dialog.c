@@ -1200,9 +1200,10 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Hardware Acceleration"), GTK_CONTAINER (vbox),
                            FALSE);
 
-  prefs_check_button_add (object, "use-opencl",
-                          _("Use O_penCL"),
-                          GTK_BOX (vbox2));
+  prefs_switch_add (object, "use-opencl",
+                    _("Use O_penCL"),
+                    GTK_BOX (vbox2),
+                    size_group);
 
   hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
                              _("OpenCL drivers and support are experimental, "
@@ -1215,9 +1216,10 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Network access"), GTK_CONTAINER (vbox),
                            FALSE);
 
-  prefs_check_button_add (object, "check-updates",
-                          _("Check for updates (requires internet)"),
-                          GTK_BOX (vbox2));
+  prefs_switch_add (object, "check-updates",
+                    _("Check for updates (requires internet)"),
+                    GTK_BOX (vbox2),
+                    size_group);
 #endif
 
   /*  Image Thumbnails  */
@@ -1236,9 +1238,10 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Document History  */
   vbox2 = prefs_frame_new (_("Document History"), GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "save-document-history",
-                          _("_Keep record of used files in the Recent Documents list"),
-                          GTK_BOX (vbox2));
+  prefs_switch_add (object, "save-document-history",
+                    _("_Keep record of used files in the Recent Documents list"),
+                    GTK_BOX (vbox2),
+                    size_group);
 
   g_clear_object (&size_group);
 

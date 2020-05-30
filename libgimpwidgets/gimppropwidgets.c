@@ -341,6 +341,78 @@ gimp_prop_enum_check_button_notify (GObject    *config,
 }
 
 
+/******************/
+/*     switch     */
+/******************/
+
+
+/**
+ * gimp_prop_switch_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of boolean property controlled by checkbutton.
+ * @label:         Label to give checkbutton (including mnemonic).
+ * @label_out: (out) (optional) (transfer none): The generated #GtkLabel
+ * @switch_out: (out) (optional) (transfer none): The generated #GtkSwitch
+ *
+ * Creates a #GtkBox with a switch and a label that displays and sets the
+ * specified boolean property.
+ * If @label is %NULL, the @property_name's nick will be used as label.
+ *
+ * Returns: (transfer full): The newly created box containing a #GtkSwitch.
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_switch_new (GObject     *config,
+                      const gchar *property_name,
+                      const gchar *label,
+                      GtkWidget  **label_out,
+                      GtkWidget  **switch_out)
+{
+  GParamSpec  *param_spec;
+  const gchar *tooltip;
+  GtkWidget   *plabel;
+  GtkWidget   *pswitch;
+  GtkWidget   *hbox;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
+
+  tooltip = g_param_spec_get_blurb (param_spec);
+
+  pswitch = gtk_switch_new ();
+  g_object_bind_property (config, property_name, pswitch, "active",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+  gimp_help_set_help_data (pswitch, tooltip, NULL);
+  gtk_widget_show (pswitch);
+
+  plabel = gtk_label_new_with_mnemonic (label);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (plabel), pswitch);
+  gimp_help_set_help_data (plabel, tooltip, NULL);
+  gtk_widget_show (plabel);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), plabel, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), pswitch, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  if (label_out)
+    *label_out = plabel;
+  if (switch_out)
+    *switch_out = pswitch;
+
+  return hbox;
+}
+
+
 /*************************/
 /*  int/enum combo box   */
 /*************************/

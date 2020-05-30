@@ -34,6 +34,11 @@ GtkWidget * prefs_hint_box_new               (const gchar  *icon_name,
 GtkWidget * prefs_button_add                 (const gchar  *icon_name,
                                               const gchar  *label,
                                               GtkBox       *box);
+GtkWidget * prefs_switch_add                 (GObject      *config,
+                                              const gchar  *property_name,
+                                              const gchar  *label,
+                                              GtkBox       *vbox,
+											  GtkSizeGroup *group);
 GtkWidget * prefs_check_button_add           (GObject      *config,
                                               const gchar  *property_name,
                                               const gchar  *label,
