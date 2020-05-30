@@ -72,7 +72,7 @@ build-image-win64:
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64" >> Dockerfile
 
-    - crossroad w64 gimp --run="crossroad_deps_install.sh"
+    - echo 'RUN crossroad w64 gimp --run="crossroad_deps_install.sh"' >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN64 --cache=true --cache-ttl=120h
 
@@ -81,6 +81,8 @@ build-image-win32:
   script:
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "g++-mingw-w64-i686 gcc-mingw-w64-i686" >> Dockerfile
+
+    - echo 'RUN crossroad w32 gimp --run="crossroad_deps_install.sh"' >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN32 --cache=true --cache-ttl=120h
 
