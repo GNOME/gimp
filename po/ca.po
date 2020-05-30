@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-27 13:22+0000\n"
-"PO-Revision-Date: 2020-05-27 21:12+0200\n"
+"POT-Creation-Date: 2020-05-29 11:03+0000\n"
+"PO-Revision-Date: 2020-05-29 20:32+0200\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -3210,8 +3210,8 @@ msgstr "240 segons"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:363
 #: ../app/tools/gimpforegroundselecttool.c:331 ../app/tools/gimptexttool.c:1779
-#: ../app/tools/gimptransformgridtool.c:1278
-#: ../app/tools/gimptransformtool.c:437 ../app/widgets/gimpactionview.c:601
+#: ../app/tools/gimptransformgridtool.c:1282
+#: ../app/tools/gimptransformtool.c:429 ../app/widgets/gimpactionview.c:601
 #: ../app/widgets/gimpcolordialog.c:460
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimpcontrollerlist.c:563
@@ -4486,69 +4486,69 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "Si esborreu l'historial de desfer d'aquesta imatge guanyareu %s de memòria."
 
-#: ../app/actions/edit-commands.c:238
+#: ../app/actions/edit-commands.c:242
 msgid "Cut layer to the clipboard."
 msgstr "Retalla la capa al porta-retalls."
 
-#: ../app/actions/edit-commands.c:239
+#: ../app/actions/edit-commands.c:243
 msgid "Cut pixels to the clipboard."
 msgstr "Retalla els píxels al porta-retalls."
 
-#: ../app/actions/edit-commands.c:275
+#: ../app/actions/edit-commands.c:280
 msgid "Copied layer to the clipboard."
 msgstr "S'ha copiat la capa al porta-retalls."
 
-#: ../app/actions/edit-commands.c:276 ../app/actions/edit-commands.c:308
+#: ../app/actions/edit-commands.c:281 ../app/actions/edit-commands.c:313
 msgid "Copied pixels to the clipboard."
 msgstr "Píxels que s'han copiat al porta-retalls."
 
-#: ../app/actions/edit-commands.c:387 ../app/actions/edit-commands.c:632
+#: ../app/actions/edit-commands.c:392 ../app/actions/edit-commands.c:637
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "No hi ha cap imatge al porta-retalls per enganxar."
 
-#: ../app/actions/edit-commands.c:403
+#: ../app/actions/edit-commands.c:408
 msgid "Cut Named"
 msgstr "Retalla i anomena"
 
-#: ../app/actions/edit-commands.c:406 ../app/actions/edit-commands.c:428
-#: ../app/actions/edit-commands.c:450
+#: ../app/actions/edit-commands.c:411 ../app/actions/edit-commands.c:433
+#: ../app/actions/edit-commands.c:455
 msgid "Enter a name for this buffer"
 msgstr "Introduïu un nom per l'objecte del porta-retalls"
 
-#: ../app/actions/edit-commands.c:425
+#: ../app/actions/edit-commands.c:430
 msgid "Copy Named"
 msgstr "Copia i anomena"
 
 #  GIMP_STOCK_COPY_VISIBLE,
-#: ../app/actions/edit-commands.c:447
+#: ../app/actions/edit-commands.c:452
 msgid "Copy Visible Named "
 msgstr "Copia el que es veu i anomena"
 
-#: ../app/actions/edit-commands.c:542 ../app/tools/gimppainttool.c:928
-msgid "The active layer's alpha channel is locked."
-msgstr "El canal alfa de la capa activa està bloquejat."
+#: ../app/actions/edit-commands.c:547
+msgid "A selected layer's alpha channel is locked."
+msgstr "El canal alfa d'una capa seleccionada està bloquejat."
 
-#: ../app/actions/edit-commands.c:601 ../app/display/gimpdisplayshell-dnd.c:481
+#: ../app/actions/edit-commands.c:606 ../app/display/gimpdisplayshell-dnd.c:481
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Enganxat com a capa nova perquè el destí és un grup de capes."
 
-#: ../app/actions/edit-commands.c:608 ../app/display/gimpdisplayshell-dnd.c:490
+#: ../app/actions/edit-commands.c:613 ../app/display/gimpdisplayshell-dnd.c:490
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Enganxat com a capa nova perquè els píxels de destí estan bloquejats."
 
-#: ../app/actions/edit-commands.c:649
-msgid "There is no active layer or channel to cut from."
-msgstr "No hi ha cap capa ni canal actiu d'on retallar."
+#: ../app/actions/edit-commands.c:654
+msgid "There are no selected layers or channels to cut from."
+msgstr "No hi ha capes ni canals seleccionats per tallar-los."
 
-#: ../app/actions/edit-commands.c:654 ../app/actions/edit-commands.c:686
-#: ../app/actions/edit-commands.c:710
+#: ../app/actions/edit-commands.c:659 ../app/actions/edit-commands.c:692
+#: ../app/actions/edit-commands.c:717
 msgid "(Unnamed Buffer)"
 msgstr "(memòria intermèdia sense nom)"
 
-#: ../app/actions/edit-commands.c:681
-msgid "There is no active layer or channel to copy from."
-msgstr "No hi ha cap capa ni canal actiu d'on copiar."
+#: ../app/actions/edit-commands.c:687
+msgid "There are no selected layers or channels to copy from."
+msgstr "No hi ha capes ni canals seleccionats per copiar-los."
 
 #: ../app/actions/error-console-actions.c:40
 msgctxt "error-console-action"
@@ -8179,7 +8179,7 @@ msgstr "Restableix tots els filtres"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:362 ../app/tools/gimptransformgridtool.c:1275
+#: ../app/tools/gimpfiltertool.c:362 ../app/tools/gimptransformgridtool.c:1279
 #: ../app/widgets/gimpcolordialog.c:459
 #: ../app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
@@ -12805,12 +12805,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ancora la selecció flotant"
 
-#: ../app/core/core-enums.c:1237 ../app/core/gimp-edit.c:550
+#: ../app/core/core-enums.c:1237 ../app/core/gimp-edit.c:549
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Enganxa"
 
-#: ../app/core/core-enums.c:1238 ../app/core/gimp-edit.c:768
+#: ../app/core/core-enums.c:1238 ../app/core/gimp-edit.c:789
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Retalla"
@@ -12820,7 +12820,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Text"
 
-#: ../app/core/core-enums.c:1240 ../app/core/gimpdrawable-transform.c:720
+#: ../app/core/core-enums.c:1240 ../app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transforma"
@@ -13157,16 +13157,16 @@ msgstr "Historial de color"
 msgid "Updating tag cache"
 msgstr "S'està actualitzant la memòria cau de les etiquetes"
 
-#: ../app/core/gimp-edit.c:88
+#: ../app/core/gimp-edit.c:87
 msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Retalla la capa"
 
-#: ../app/core/gimp-edit.c:362 ../app/core/gimpimage-new.c:513
+#: ../app/core/gimp-edit.c:361 ../app/core/gimpimage-new.c:513
 msgid "Pasted Layer"
 msgstr "Capa enganxada"
 
-#: ../app/core/gimp-edit.c:785
+#: ../app/core/gimp-edit.c:806
 msgid "Global Buffer"
 msgstr "Memòria global"
 
@@ -13651,7 +13651,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Gira el canal"
 
-#: ../app/core/gimpchannel.c:262 ../app/core/gimpdrawable-transform.c:1026
+#: ../app/core/gimpchannel.c:262 ../app/core/gimpdrawable-transform.c:1049
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transforma el canal"
@@ -13978,22 +13978,22 @@ msgstr "Desplaçament dibuixable"
 msgid "Not enough points to stroke"
 msgstr "No hi ha prou punts per traçar"
 
-#: ../app/core/gimpdrawable-transform.c:804 ../app/tools/gimpfliptool.c:135
+#: ../app/core/gimpdrawable-transform.c:808 ../app/tools/gimpfliptool.c:135
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Capgira"
 
-#: ../app/core/gimpdrawable-transform.c:884 ../app/tools/gimprotatetool.c:130
+#: ../app/core/gimpdrawable-transform.c:891 ../app/tools/gimprotatetool.c:130
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Gira"
 
-#: ../app/core/gimpdrawable-transform.c:1024 ../app/core/gimplayer.c:441
+#: ../app/core/gimpdrawable-transform.c:1047 ../app/core/gimplayer.c:441
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transforma la capa"
 
-#: ../app/core/gimpdrawable-transform.c:1037
+#: ../app/core/gimpdrawable-transform.c:1060
 msgid "Transformation"
 msgstr "Transformació"
 
@@ -14276,7 +14276,7 @@ msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Canvia les unitats de la imatge"
 
-#: ../app/core/gimpimage.c:3922
+#: ../app/core/gimpimage.c:4025
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14284,47 +14284,47 @@ msgstr ""
 "Error en la validació del paràsit 'gimp-comment': el comentari conté "
 "caràcters UTF-8 invàlids"
 
-#: ../app/core/gimpimage.c:3981
+#: ../app/core/gimpimage.c:4084
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjunta un paràsit a la imatge"
 
-#: ../app/core/gimpimage.c:4023
+#: ../app/core/gimpimage.c:4126
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Suprimeix el paràsit de la imatge"
 
-#: ../app/core/gimpimage.c:4981
+#: ../app/core/gimpimage.c:5084
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Afegeix una capa"
 
-#: ../app/core/gimpimage.c:5025 ../app/core/gimpimage.c:5056
+#: ../app/core/gimpimage.c:5128 ../app/core/gimpimage.c:5159
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Suprimeix la capa"
 
-#: ../app/core/gimpimage.c:5050
+#: ../app/core/gimpimage.c:5153
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Suprimeix la selecció flotant"
 
-#: ../app/core/gimpimage.c:5203
+#: ../app/core/gimpimage.c:5306
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Afegeix un canal"
 
-#: ../app/core/gimpimage.c:5233 ../app/core/gimpimage.c:5257
+#: ../app/core/gimpimage.c:5336 ../app/core/gimpimage.c:5360
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Suprimeix el canal"
 
-#: ../app/core/gimpimage.c:5314
+#: ../app/core/gimpimage.c:5417
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Afegeix un camí"
 
-#: ../app/core/gimpimage.c:5344 ../app/core/gimpimage.c:5351
+#: ../app/core/gimpimage.c:5447 ../app/core/gimpimage.c:5454
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Suprimeix el camí"
@@ -15125,21 +15125,21 @@ msgstr "No hi ha res seleccionat per omplir."
 msgid "There is no selection to stroke."
 msgstr "No hi ha cap selecció per traçar."
 
-#: ../app/core/gimpselection.c:720
+#: ../app/core/gimpselection.c:750
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "No es pot retallar o copiar perquè l'àrea seleccionada és buida."
 
-#: ../app/core/gimpselection.c:858
+#: ../app/core/gimpselection.c:894
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "No s'ha pogut crear una selecció flotant perquè l'àrea seleccionada és buida."
 
-#: ../app/core/gimpselection.c:865
+#: ../app/core/gimpselection.c:901
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Selecció flotant"
 
-#: ../app/core/gimpselection.c:892
+#: ../app/core/gimpselection.c:918
 msgid "Floated Layer"
 msgstr "Capa que flota"
 
@@ -18647,8 +18647,7 @@ msgstr "No es poden modificar els píxels de grups de capes."
 #: ../app/tools/gimpbucketfilltool.c:594 ../app/tools/gimpcagetool.c:247
 #: ../app/tools/gimpeditselectiontool.c:1107
 #: ../app/tools/gimpgradienttool.c:280 ../app/tools/gimppainttool.c:319
-#: ../app/tools/gimpselectiontool.c:577 ../app/tools/gimptransformtool.c:689
-#: ../app/tools/gimpwarptool.c:803
+#: ../app/tools/gimpselectiontool.c:577 ../app/tools/gimpwarptool.c:803
 #, c-format
 msgid "The active layer's pixels are locked."
 msgstr "Els píxels de la capa activa estan bloquejats."
@@ -20742,6 +20741,12 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Llindar"
 
+#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:364
+#: ../app/pdb/edit-cmds.c:449
+msgid "All specified drawables must belong to the same image."
+msgstr ""
+"Tots els dibuixables especificats han de pertànyer a la mateixa imatge."
+
 #: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
 msgstr "No es pot esborrar aquesta capa perquè no és una selecció flotant."
@@ -22561,13 +22566,14 @@ msgstr "No es poden omplir múltiples capes. Seleccioneu-ne només una."
 #: ../app/tools/gimplevelstool.c:210 ../app/tools/gimpoffsettool.c:189
 #: ../app/tools/gimppainttool.c:299 ../app/tools/gimpperspectiveclonetool.c:227
 #: ../app/tools/gimpthresholdtool.c:160
+#: ../app/tools/gimptransformgridtool.c:355
 msgid "No selected drawables."
 msgstr "No hi ha dibuixables seleccionats"
 
 #: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
 #: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppainttool.c:350
-#: ../app/tools/gimptransformtool.c:698 ../app/tools/gimpwarptool.c:817
+#: ../app/tools/gimpwarptool.c:817
 msgid "The active layer is not visible."
 msgstr "La capa activa no és visible."
 
@@ -22890,7 +22896,6 @@ msgstr "_Corbes de color..."
 #: ../app/tools/gimpcurvestool.c:218 ../app/tools/gimpfiltertool.c:294
 #: ../app/tools/gimplevelstool.c:208 ../app/tools/gimpoffsettool.c:187
 #: ../app/tools/gimpthresholdtool.c:158
-#: ../app/tools/gimptransformgridtool.c:356
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "No es poden modificar múltiples dibuixables. Seleccioneu-ne només un."
 
@@ -23014,7 +23019,7 @@ msgid "There is no path to move."
 msgstr "No hi ha cap camí per moure."
 
 #: ../app/tools/gimpeditselectiontool.c:1084 ../app/tools/gimpmovetool.c:295
-#: ../app/tools/gimptransformtool.c:736
+#: ../app/tools/gimptransformtool.c:729
 msgid "The active path's position is locked."
 msgstr "La posició del camí actiu està bloquejada."
 
@@ -23093,11 +23098,11 @@ msgstr "Con_trols al llenç"
 msgid "Show on-canvas filter controls"
 msgstr "Mostra els controls del filtre al llenç"
 
-#: ../app/tools/gimpfiltertool.c:315
+#: ../app/tools/gimpfiltertool.c:315 ../app/tools/gimptransformtool.c:682
 msgid "A selected layer's pixels are locked."
 msgstr "Els píxels d'una capa seleccionada estan bloquejats."
 
-#: ../app/tools/gimpfiltertool.c:327
+#: ../app/tools/gimpfiltertool.c:327 ../app/tools/gimptransformtool.c:691
 msgid "A selected layer is not visible."
 msgstr "Una capa seleccionada no és visible."
 
@@ -23180,12 +23185,12 @@ msgstr ""
 msgid "_Flip"
 msgstr "_Capgira"
 
-#: ../app/tools/gimpfliptool.c:306
+#: ../app/tools/gimpfliptool.c:310
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Capgira horitzontalment"
 
-#: ../app/tools/gimpfliptool.c:309
+#: ../app/tools/gimpfliptool.c:313
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Capgira verticalment"
@@ -23449,8 +23454,7 @@ msgstr "Feu clic-i-arrossega per dibuixar un degradat"
 msgid "Cannot paint on multiple drawables. Select only one."
 msgstr "No es pot pintar en múltiples dibuixables. Seleccioneu-ne només un."
 
-#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimptransformgridtool.c:358
-#: ../app/tools/gimpwarptool.c:776
+#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimpwarptool.c:776
 msgid "No active drawables."
 msgstr "No hi ha dibuixables actius."
 
@@ -24182,6 +24186,10 @@ msgstr "%s per a una línia recta"
 #: ../app/tools/gimppainttool.c:918
 msgid "The active layer does not have an alpha channel."
 msgstr "La capa activa no té un canal alfa."
+
+#: ../app/tools/gimppainttool.c:928
+msgid "The active layer's alpha channel is locked."
+msgstr "El canal alfa de la capa activa està bloquejat."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -24943,12 +24951,12 @@ msgid "Lock pivot position to canvas"
 msgstr "Bloqueja la posició de l'eix al llenç"
 
 #: ../app/tools/gimptransformgridtool.c:294
-#: ../app/tools/gimptransformtool.c:438
+#: ../app/tools/gimptransformtool.c:430
 msgid "_Transform"
 msgstr "_Transforma"
 
-#: ../app/tools/gimptransformgridtool.c:588
-#: ../app/tools/gimptransformgridtool.c:600
+#: ../app/tools/gimptransformgridtool.c:589
+#: ../app/tools/gimptransformgridtool.c:601
 msgid "Transform Step"
 msgstr "Pas de transformació"
 
@@ -24957,11 +24965,11 @@ msgstr "Pas de transformació"
 msgid "%s (Corrective)"
 msgstr "%s (Correctiu)"
 
-#: ../app/tools/gimptransformgridtool.c:1277
+#: ../app/tools/gimptransformgridtool.c:1281
 msgid "Re_adjust"
 msgstr "Re_ajusta"
 
-#: ../app/tools/gimptransformgridtool.c:1530
+#: ../app/tools/gimptransformgridtool.c:1534
 msgid "Cannot readjust the transformation"
 msgstr "No es pot reajustar la transformació"
 
@@ -25069,15 +25077,15 @@ msgstr "Transforma"
 msgid "Transforming"
 msgstr "S'està transformant"
 
-#: ../app/tools/gimptransformtool.c:430
+#: ../app/tools/gimptransformtool.c:422
 msgid "Confirm Transformation"
 msgstr "Confirma la transformació"
 
-#: ../app/tools/gimptransformtool.c:450
+#: ../app/tools/gimptransformtool.c:442
 msgid "Transformation creates a very large item."
 msgstr "La transformació crea un element molt gran."
 
-#: ../app/tools/gimptransformtool.c:455
+#: ../app/tools/gimptransformtool.c:447
 #, c-format
 msgid ""
 "Applying the transformation will result in an item that is over %g times "
@@ -25086,44 +25094,44 @@ msgstr ""
 "Aplicar la transformació donarà com a resultat un element més de %g vegades "
 "més gran que la imatge."
 
-#: ../app/tools/gimptransformtool.c:463
+#: ../app/tools/gimptransformtool.c:455
 msgid "Transformation creates a very large image."
 msgstr "La transformació crea una imatge molt gran."
 
-#: ../app/tools/gimptransformtool.c:468
+#: ../app/tools/gimptransformtool.c:460
 #, c-format
 msgid "Applying the transformation will enlarge the image by a factor of %g."
 msgstr "Aplicar la transformació engrandirà la imatge pel factor de %g."
 
-#: ../app/tools/gimptransformtool.c:682
+#: ../app/tools/gimptransformtool.c:675
 msgid "There is no layer to transform."
 msgstr "No hi ha cap capa per transformar."
 
-#: ../app/tools/gimptransformtool.c:691
-msgid "The active layer's position and size are locked."
-msgstr "La posició i la mida de la capa activa estan bloquejades."
+#: ../app/tools/gimptransformtool.c:684
+msgid "A selected layer's position and size are locked."
+msgstr "La posició i la mida d'una capa seleccionada estan bloquejades."
+
+#: ../app/tools/gimptransformtool.c:698
+msgid "The selection does not intersect with a selected layer."
+msgstr "La selecció no interseca amb una capa seleccionada."
 
 #: ../app/tools/gimptransformtool.c:705
-msgid "The selection does not intersect with the layer."
-msgstr "La selecció no Interseca amb la capa."
-
-#: ../app/tools/gimptransformtool.c:712
 msgid "There is no selection to transform."
 msgstr "No hi ha res seleccionat per transformar."
 
-#: ../app/tools/gimptransformtool.c:727
+#: ../app/tools/gimptransformtool.c:720
 msgid "There is no path to transform."
 msgstr "No hi ha cap camí per transformar."
 
-#: ../app/tools/gimptransformtool.c:734
+#: ../app/tools/gimptransformtool.c:727
 msgid "The active path's strokes are locked."
 msgstr "Els punts del camí estan bloquejats."
 
-#: ../app/tools/gimptransformtool.c:738
+#: ../app/tools/gimptransformtool.c:731
 msgid "The active path has no strokes."
 msgstr "El camí actiu no té traços."
 
-#: ../app/tools/gimptransformtool.c:812
+#: ../app/tools/gimptransformtool.c:803
 msgid "The current transform is invalid"
 msgstr "La transformació actual no és vàlida"
 
