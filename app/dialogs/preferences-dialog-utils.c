@@ -136,6 +136,29 @@ prefs_check_button_add (GObject     *config,
 }
 
 GtkWidget *
+prefs_switch_add (GObject      *config,
+                  const gchar  *property_name,
+                  const gchar  *label,
+                  GtkBox       *vbox,
+                  GtkSizeGroup *group)
+{
+  GtkWidget *box;
+  GtkWidget *plabel;
+
+  box = gimp_prop_switch_new (config, property_name, label, &plabel, NULL);
+
+  if (!box)
+    return NULL;
+
+  gtk_box_pack_start (vbox, box, FALSE, FALSE, 0);
+  gtk_label_set_xalign (GTK_LABEL (plabel), 0.0);
+  if (group)
+    gtk_size_group_add_widget (group, plabel);
+
+  return box;
+}
+
+GtkWidget *
 prefs_check_button_add_with_icon (GObject      *config,
                                   const gchar  *property_name,
                                   const gchar  *label,
