@@ -60,7 +60,7 @@ build-image:
     - echo 'RUN echo "crossroad install cairo json-glib" >> crossroad_deps_install.sh' >> Dockerfile
     - echo 'RUN echo "LIBMNG=" >> crossroad_deps_install.sh' >> Dockerfile
     - echo 'RUN echo "if [ \"x$CROSSROAD_PLATFORM\" = \"xw64\" ]; then" >> crossroad_deps_install.sh' >> Dockerfile
-    - echo 'RUN echo "  LIBMNG="libmng" >> crossroad_deps_install.sh' >> Dockerfile
+    - echo 'RUN echo "  LIBMNG=\"libmng\"" >> crossroad_deps_install.sh' >> Dockerfile
     - echo 'RUN echo "fi" >> crossroad_deps_install.sh' >> Dockerfile
     - echo 'RUN echo "crossroad install appstream-glib atk drmingw gexiv2 ghostscript glib2 iso-codes json-c libheif libmypaint mypaint-brushes libwebp libwmf openexr ilmbase poppler poppler-data xpm-nox" >> crossroad_deps_install.sh' >> Dockerfile
 
