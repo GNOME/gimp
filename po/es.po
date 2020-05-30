@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-24 15:41+0000\n"
-"PO-Revision-Date: 2020-05-26 16:47+0200\n"
+"POT-Creation-Date: 2020-05-29 13:36+0000\n"
+"PO-Revision-Date: 2020-05-29 19:06+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -5270,12 +5270,11 @@ msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002…"
 
 #: ../app/actions/filters-actions.c:358
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Focus Blur..."
-msgstr "Desenfoque ga_ussiano…"
+msgstr "_Enfoque…"
 
 #: ../app/actions/filters-actions.c:363
 msgctxt "filters-action"
@@ -5651,12 +5650,11 @@ msgid "_Value Propagate..."
 msgstr "_Propagar valor…"
 
 #: ../app/actions/filters-actions.c:733
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Variable Blur..."
-msgstr "Desenfoque ga_ussiano…"
+msgstr "Desenfoque _variable…"
 
 # Location lo traducimos por lugar (Serrador)
 #: ../app/actions/filters-actions.c:738
@@ -15213,7 +15211,6 @@ msgid "Apply stored FG/BG"
 msgstr "Aplicar el primer plano y el fondo almacenados"
 
 #: ../app/core/gimptoolpreset.c:156
-#| msgid "Apply stored pattern"
 msgid "Apply stored opacity/paint mode"
 msgstr "Aplicar el modo de opacidad/pintura guardado"
 
@@ -15585,7 +15582,6 @@ msgid "Convert Image to %s"
 msgstr "Convertir imagen a %s"
 
 #: ../app/dialogs/convert-precision-dialog.c:158
-#| msgid "Precision Conversion"
 msgid "Encoding Conversion"
 msgstr "Conversión de la codificación"
 
@@ -18535,66 +18531,60 @@ msgstr "píxeles"
 msgid "Cancel <i>%s</i>"
 msgstr "Cancelar <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:845
+#: ../app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
 msgstr "Pulse para colocar guías verticales y horizontales"
 
-#: ../app/display/gimptoolcompass.c:853
+#: ../app/display/gimptoolcompass.c:855
 msgid "Click to place a horizontal guide"
 msgstr "Pulse para colocar una guía horizontal"
 
-#: ../app/display/gimptoolcompass.c:861
+#: ../app/display/gimptoolcompass.c:863
 msgid "Click to place a vertical guide"
 msgstr "Pulse para colocar una guía vertical"
 
-#: ../app/display/gimptoolcompass.c:869
+#: ../app/display/gimptoolcompass.c:871
 msgid "Click-Drag to add a new point"
 msgstr "Pulse y arrastre para añadir un punto nuevo"
 
-#: ../app/display/gimptoolcompass.c:880 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:882 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Pulse y arrastre para mover este punto"
 
-#: ../app/display/gimptoolcompass.c:897
+#: ../app/display/gimptoolcompass.c:899
 msgid "Click-Drag to move all points"
 msgstr "Pulse y arrastre para mover todos los puntos"
 
-#: ../app/display/gimptoolfocus.c:1116
-#| msgid "Click-Drag to move the endpoint"
+#: ../app/display/gimptoolfocus.c:1117
 msgid "Click-Drag to change the midpoint"
 msgstr "Pulse y arrastre para mover el punto medio"
 
-#: ../app/display/gimptoolfocus.c:1118
-#| msgid "Click-Drag to remove the slider"
+#: ../app/display/gimptoolfocus.c:1119
 msgid "Click-Drag to resize the limit"
 msgstr "Pulse y arrastre para redimensionar el límite"
 
-#: ../app/display/gimptoolfocus.c:1120 ../app/display/gimptoolfocus.c:1133
+#: ../app/display/gimptoolfocus.c:1121 ../app/display/gimptoolfocus.c:1134
 #, c-format
 msgid "%s to resize the focus"
 msgstr "%s para redimensionar el foco"
 
-#: ../app/display/gimptoolfocus.c:1125 ../app/display/gimptoolfocus.c:1138
-#| msgid "Click-Drag to remove the slider"
+#: ../app/display/gimptoolfocus.c:1126 ../app/display/gimptoolfocus.c:1139
 msgid "Click-Drag to resize the focus"
 msgstr "Pulse y arrastre para redimensionar el foco"
 
-#: ../app/display/gimptoolfocus.c:1132
-#| msgid "Click-Drag to change perspective"
+#: ../app/display/gimptoolfocus.c:1133
 msgid "Click-Drag to change the aspect ratio"
 msgstr "Pulse y arrastre para cambiar la relación de aspecto"
 
-#: ../app/display/gimptoolfocus.c:1143
-#| msgid "Click-Drag to move the slider"
+#: ../app/display/gimptoolfocus.c:1144
 msgid "Click-Drag to move the focus"
 msgstr "Pulse y arrastre para mover el foco"
 
-#: ../app/display/gimptoolfocus.c:1147
-#| msgid "Click-Drag to rotate"
+#: ../app/display/gimptoolfocus.c:1148
 msgid "Click-Drag to rotate the focus"
 msgstr "Pulse y arrastre para rotar el foco"
 
-#: ../app/display/gimptoolfocus.c:1148 ../app/display/gimptoolgyroscope.c:728
+#: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:728
 #: ../app/display/gimptoolline.c:1559 ../app/tools/gimppainttool.c:627
 #, c-format
 msgid "%s for constrained angles"
@@ -18610,7 +18600,7 @@ msgid "%s for constrained steps"
 msgstr "%s para pasos restringidos"
 
 #: ../app/display/gimptoolgyroscope.c:724
-#: ../app/display/gimptooltransformgrid.c:1840
+#: ../app/display/gimptooltransformgrid.c:1841
 msgid "Click-Drag to rotate"
 msgstr "Pulse y arrastre para rotar"
 
@@ -18635,7 +18625,7 @@ msgid "%s to zoom"
 msgstr "%s para ampliar"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1831
+#: ../app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
 msgstr "Pulse y arrastre para mover"
 
@@ -18649,7 +18639,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Pulse y arrastre para inclinar y escalar"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1819
+#: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
 msgstr "Pulse y arrastre para cambiar la perspectiva"
 
@@ -18887,13 +18877,13 @@ msgstr ""
 "Pulse y arrastre para añadir un segmento libre, pulse para añadir un "
 "segmento poligonal"
 
-#: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:874
+#: ../app/display/gimptoolrectangle.c:567
+#: ../app/display/gimptoolrectangle.c:875
 #: ../app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Rectángulo: "
 
-#: ../app/display/gimptoolrectangle.c:2138
+#: ../app/display/gimptoolrectangle.c:2139
 msgid "Position: "
 msgstr "Posición: "
 
@@ -18901,17 +18891,17 @@ msgstr "Posición: "
 msgid "Click-Drag to move the vanishing point"
 msgstr "Pulse y arrastre para mover el punto de fuga"
 
-#: ../app/display/gimptooltransformgrid.c:1824
-#: ../app/display/gimptooltransformgrid.c:1829
+#: ../app/display/gimptooltransformgrid.c:1825
+#: ../app/display/gimptooltransformgrid.c:1830
 msgid "Click-Drag to scale"
 msgstr "Pulse y arrastre para escalar"
 
 # pivote, eje
-#: ../app/display/gimptooltransformgrid.c:1833
+#: ../app/display/gimptooltransformgrid.c:1834
 msgid "Click-Drag to move the pivot point"
 msgstr "Pulse y arrastre para mover el punto de pivote"
 
-#: ../app/display/gimptooltransformgrid.c:1838
+#: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
 msgstr "Pulse y arrastre para inclinar"
 
@@ -21597,7 +21587,7 @@ msgstr "Otras opciones"
 
 #: ../app/propgui/gimppropgui-focus-blur.c:143
 msgid "Focus Blur: "
-msgstr ""
+msgstr "Enfoque:"
 
 #: ../app/propgui/gimppropgui-generic.c:185
 msgid "Pick coordinates from the image"
@@ -21827,8 +21817,6 @@ msgid "New Seed"
 msgstr "Semilla nueva"
 
 #: ../app/propgui/gimppropgui-vignette.c:183
-#| msgctxt "filters-action"
-#| msgid "_Vignette..."
 msgid "Vignette: "
 msgstr "Viñeta: "
 
@@ -23719,7 +23707,6 @@ msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta de operación: utilizar una operación GEGL arbitraria"
 
 #: ../app/tools/gimpoperationtool.c:621
-#| msgid "Aux Input"
 msgid "Aux\\1 Input"
 msgstr "Entrada auxiliar\\1"
 
