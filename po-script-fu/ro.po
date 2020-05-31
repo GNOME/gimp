@@ -245,7 +245,7 @@ msgstr "Pornește _serverul"
 
 #: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
-msgstr "Ascultă pe IP-ul:"
+msgstr "IP-ul de ascultare:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
@@ -260,8 +260,9 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
-"Ascultarea pe o altă adresă decât 127.0.0.1 (în special 0.0.0.0) poate "
-"permite atacatorilor să execute cod arbitrar pe această mașină."
+"Ascultarea la o altă adresă IP decât 127.0.0.1 (în special 0.0.0.0) poate "
+"permite atacatorilor să execute de la distanță cod arbitrar pe această "
+"mașină."
 
 # apare ca nume de strat în lista de straturi
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
@@ -913,7 +914,7 @@ msgstr "_Wiki"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:230
 msgid "Bookmark to the wiki of GIMP"
-msgstr "Semn de carte către wiki-ul GIMP"
+msgstr "Semn de carte către wikiul GIMP"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "_Bug Reports and Feature Requests"
