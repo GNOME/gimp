@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-28 12:30+0000\n"
-"PO-Revision-Date: 2020-05-28 18:18+0300\n"
+"POT-Creation-Date: 2020-05-31 10:49+0000\n"
+"PO-Revision-Date: 2020-05-31 14:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4501,7 +4501,6 @@ msgid "Copy Visible Named "
 msgstr "Копіювати видиме з назвою"
 
 #: ../app/actions/edit-commands.c:547
-#| msgid "The active layer's alpha channel is locked."
 msgid "A selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
@@ -4514,7 +4513,6 @@ msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
 #: ../app/actions/edit-commands.c:654
-#| msgid "There is no active layer or channel to cut from."
 msgid "There are no selected layers or channels to cut from."
 msgstr "Немає позначених шарів або каналів для вирізання."
 
@@ -4524,7 +4522,6 @@ msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
 #: ../app/actions/edit-commands.c:687
-#| msgid "There is no active layer or channel to copy from."
 msgid "There are no selected layers or channels to copy from."
 msgstr "Немає позначених шарів або каналів для копіювання."
 
@@ -23820,8 +23817,9 @@ msgid "All selected channels' positions or pixels are locked."
 msgstr "Позиції або пікселі усіх позначених каналів заблоковано."
 
 #: ../app/tools/gimpmovetool.c:365
-msgid "All selected_items layers' positions are locked."
-msgstr "Усі позиції позначених елементів шарів заблоковано."
+#| msgid "All selected_items layers' positions are locked."
+msgid "All selected layers' positions are locked."
+msgstr "Усі позиції позначених шарів заблоковано."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -24950,12 +24948,10 @@ msgid "There is no layer to transform."
 msgstr "Немає шару для перетворення."
 
 #: ../app/tools/gimptransformtool.c:684
-#| msgid "The active layer's position and size are locked."
 msgid "A selected layer's position and size are locked."
 msgstr "Позиція і розмір позначеного шару заблоковані від змін"
 
 #: ../app/tools/gimptransformtool.c:698
-#| msgid "The selection does not intersect with the layer."
 msgid "The selection does not intersect with a selected layer."
 msgstr "Позначене не перетинається з позначеним шаром."
 
