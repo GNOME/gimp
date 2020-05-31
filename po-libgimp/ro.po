@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-01 20:58+0000\n"
-"PO-Revision-Date: 2020-05-08 09:45+0300\n"
+"PO-Revision-Date: 2020-05-31 02:23+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1354,7 +1354,7 @@ msgstr "Puncte"
 #: ../libgimpbase/gimpbaseenums.c:1753
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "Line de contur"
+msgstr "Linie de contur"
 
 #: ../libgimpbase/gimpbaseenums.c:1754
 msgctxt "stroke-method"
@@ -1672,7 +1672,7 @@ msgstr ""
 "Profilul de culoare de folosit pentru simularea de tipărire (soft-proof) de "
 "la spațiul de culoare al imaginii către un alt spațiu de culoare, inclusiv "
 "simulare de tipărire către o imprimantă sau un alt profil de dispozitiv de "
-"ieșire."
+"ieșire. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1709,14 +1709,14 @@ msgid ""
 msgstr ""
 "Modul în care sunt convertite culorile din spațiul de culoare al imaginii în "
 "dispozitivul de simulare de ieșire (de obicei monitorul propriu). Încercați-"
-"le pe toate și alegeți varianta care arată cel mai bine."
+"le pe toate și alegeți varianta care arată cel mai bine. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Încercați cu și fără compensarea punctului de negru și alegeți varianta care "
-"arată cel mai bine."
+"arată cel mai bine. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
@@ -2033,7 +2033,7 @@ msgstr "Drepturi de autor: "
 
 #: ../libgimpwidgets/gimpcolorscales.c:205
 msgid "Scales"
-msgstr "Scale"
+msgstr "Scări"
 
 #: ../libgimpwidgets/gimpcolorscales.c:437
 msgid "0..100"
@@ -3025,133 +3025,3 @@ msgstr "Cicli de contrast"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contrast"
-
-# titlu pe bară
-#~ msgid "Export Image as "
-#~ msgstr "Export de imagine ca "
-
-#~ msgctxt "select-criterion"
-#~ msgid "Hue (HSV)"
-#~ msgstr "Nuanță (HSV)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Saturation (HSV)"
-#~ msgstr "Saturație (HSV)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Value (HSV)"
-#~ msgstr "Valoare (HSV)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Lightness (LCH)"
-#~ msgstr "Luminozitate (LCH)"
-
-#~ msgid "LCH Lightness"
-#~ msgstr "Luminozitate LCH"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Hue"
-#~ msgstr "Nuanță"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Value"
-#~ msgstr "Valoare"
-
-#~ msgid "Hue"
-#~ msgstr "Nuanță"
-
-#~ msgid "_Gamma:"
-#~ msgstr "_Gama:"
-
-#~ msgid "Color management display filter using ICC color profiles"
-#~ msgstr ""
-#~ "Filtru de gestionare de afișare a culorii folosind profiluri de culoare "
-#~ "ICC"
-
-#~ msgid "Color Management"
-#~ msgstr "Gestiune de culori"
-
-#~ msgid ""
-#~ "This filter takes its configuration from the Color Management section in "
-#~ "the Preferences dialog."
-#~ msgstr ""
-#~ "Acest filtru își ia configurația din secțiunea Gestiune de culori în "
-#~ "dialogul Preferințe."
-
-#~ msgid "Mode of operation:"
-#~ msgstr "Mod de operare:"
-
-#~ msgid "Image profile:"
-#~ msgstr "Profil de imagine:"
-
-#~ msgid "Monitor profile:"
-#~ msgstr "Profil de monitor:"
-
-#~ msgid "Print simulation profile:"
-#~ msgstr "Profil de simulare de tipărire"
-
-# la repetarea de la paint brush la gradient;
-# la color display filter, dacă unele poziții nu au niciun profil specificat
-#~ msgid "None"
-#~ msgstr "Fără"
-
-#~ msgid "Color proof filter using ICC color profile"
-#~ msgstr "Filtru de culori sigure folsond profilul de culoare ICC"
-
-#, fuzzy
-#~ msgid "Intent"
-#~ msgstr "_Intenție:"
-
-#, fuzzy
-#~ msgid "Black point compensation"
-#~ msgstr "_Compensare punct de negru"
-
-#, fuzzy
-#~ msgid "Profile"
-#~ msgstr "_Profil:"
-
-#~ msgid "Color Proof"
-#~ msgstr "Culori sigure"
-
-#~ msgid "Choose an ICC Color Profile"
-#~ msgstr "Alegeți un profil de culoare ICC"
-
-#~ msgid "_Profile:"
-#~ msgstr "_Profil:"
-
-#~ msgid "_Intent:"
-#~ msgstr "_Intenție:"
-
-#~ msgid "_Black Point Compensation"
-#~ msgstr "_Compensare punct de negru"
-
-#~ msgid "Sans"
-#~ msgstr "Sans"
-
-#~ msgctxt "desaturate-mode"
-#~ msgid "Luminosity"
-#~ msgstr "L_uminozității (0,21×R+0,71×G+0,07×B)"
-
-#~ msgctxt "desaturate-mode"
-#~ msgid "Average"
-#~ msgstr "Lu_minanței medii ((R+G+B)/3)"
-
-#~ msgid "Mode of operation for color management."
-#~ msgstr "Módul de operare pentru gestiunea de culori."
-
-#~ msgid "The default RGB working space color profile."
-#~ msgstr "Profilul de culoare al spațiului de lucru RGB implicit."
-
-#~ msgctxt "color-management-mode"
-#~ msgid "Print simulation"
-#~ msgstr "Simulare de tipărire"
-
-#~ msgid "Could not open '%s' for writing: %s"
-#~ msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
-
-#~ msgid "_Edit"
-#~ msgstr "_Editează"
-
-#~ msgctxt "icon-type"
-#~ msgid "Stock ID"
-#~ msgstr "ID de fabrică"
