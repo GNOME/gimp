@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-29 22:41+0000\n"
-"PO-Revision-Date: 2020-05-30 13:22+0200\n"
+"POT-Creation-Date: 2020-05-28 20:09+0000\n"
+"PO-Revision-Date: 2020-05-31 17:15+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../plug-ins/common/align-layers.c:190
 msgid "Align Visi_ble Layers..."
@@ -1770,7 +1770,7 @@ msgstr "Eliminare _dungi..."
 
 #: ../plug-ins/common/destripe.c:139
 msgid "Remove vertical stripe artifacts from the image"
-msgstr "Elimină din imagine artifactele sub formă de dungi verticale"
+msgstr "Elimină din imagine artefactele sub formă de dungi verticale"
 
 # apare pe bara de progres
 #: ../plug-ins/common/destripe.c:239
@@ -3505,13 +3505,13 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Când opțiunea este activată, imaginea rezultată va fi scalată pentru a "
-"încăpea în dimensiunea dată, fără schimbarea raportului de aspect."
+"Când opțiunea este comutată, imaginea rezultată va fi scalată pentru a "
+"încăpea în dimensiunea dată fără a modifica raportul de aspect."
 
 #. Unit
 #: ../plug-ins/common/file-ps.c:3880
 msgid "Unit"
-msgstr "Unitate de măsură"
+msgstr "Unitate"
 
 #: ../plug-ins/common/file-ps.c:3884
 msgid "_Inch"
@@ -5589,15 +5589,15 @@ msgstr "Scară Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2894
 msgid "Rotate X:"
-msgstr "Rotire X:"
+msgstr "Rotație X:"
 
 #: ../plug-ins/common/sphere-designer.c:2901
 msgid "Rotate Y:"
-msgstr "Rotire Y:"
+msgstr "Rotație Y:"
 
 #: ../plug-ins/common/sphere-designer.c:2908
 msgid "Rotate Z:"
-msgstr "Rotire Z:"
+msgstr "Rotație Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2918
 msgid "Position X:"
@@ -6069,7 +6069,7 @@ msgstr "Descompunere"
 #: ../plug-ins/common/wavelet-decompose.c:282
 #, c-format
 msgid "Scale %d"
-msgstr "Scară %d"
+msgstr "Scara %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:306
 msgid "Residual"
@@ -6088,7 +6088,7 @@ msgstr "Creează un grup de straturi pentru a stoca descompunerea"
 #. create layer masks
 #: ../plug-ins/common/wavelet-decompose.c:439
 msgid "Add a layer mask to each scales layers"
-msgstr "Adaugă o mască de strat pentru fiecare strat de scară"
+msgstr "Adaugă o mască de strat la fiecare strat de scară"
 
 #: ../plug-ins/common/web-browser.c:175
 msgid "The operating system is out of memory or resources."
@@ -6296,9 +6296,9 @@ msgid ""
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
 "Unele aplicații nu pot citi imagini BMP care includ informații despre "
-"spațiul de culoare. GIMP scrie implicit informațiile despre spațiul de "
-"culoare. Dezactivarea acestei opțiuni va determina GIMP să nu scrie "
-"informații despre spațiul color în fișier."
+"spațiul de culoare. GIMP scrie informațiile despre spațiul de culoare în mod "
+"implicit. Dezactivarea acestei opțiuni va determina GIMP să nu scrie în "
+"fișier informațiile despre spațiul de culoare."
 
 #. RGB Encoding Pptions
 #: ../plug-ins/file-bmp/bmp-save.c:998
@@ -6490,7 +6490,7 @@ msgstr "Înlocuitor pentru pixeli nedefiniți"
 
 #: ../plug-ins/file-fits/fits.c:1211
 msgid "Pixel value scaling"
-msgstr "Scalare valoare de pixel"
+msgstr "Scalarea valorii de pixel"
 
 #: ../plug-ins/file-fits/fits.c:1212
 msgid "By _DATAMIN/DATAMAX"
