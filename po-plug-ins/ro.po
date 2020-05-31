@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-17 10:43+0000\n"
-"PO-Revision-Date: 2020-05-18 11:28+0300\n"
+"PO-Revision-Date: 2020-05-31 17:16+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -905,7 +905,7 @@ msgstr "Valoare inițială:"
 
 #: ../plug-ins/common/cml-explorer.c:1391
 msgid "Zoom scale:"
-msgstr "Scală de zoom:"
+msgstr "Factor de zoom:"
 
 #: ../plug-ins/common/cml-explorer.c:1400
 msgid "Start offset:"
@@ -1281,7 +1281,7 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Trageți și plasați culorile pentru a rearanja paleta de culori. Numerele "
+"Trageți și plasați culorile pentru a rearanja paleta de culori.  Numerele "
 "afișate sunt índicii originali. Clic dreapta pentru meniul cu opțiuni de "
 "sortare."
 
@@ -1445,7 +1445,7 @@ msgstr "C_ompune..."
 # hm ?
 #: ../plug-ins/common/compose.c:419
 msgid "Recompose an image that was previously decomposed"
-msgstr "Recompune o imagine precedent descompusă"
+msgstr "Recompune o imagine care a fost descompusă anterior"
 
 #: ../plug-ins/common/compose.c:427
 msgid "R_ecompose"
@@ -1560,11 +1560,11 @@ msgstr "_Nivel:"
 # hm ? sau scalează ?
 #: ../plug-ins/common/contrast-retinex.c:336
 msgid "_Scale:"
-msgstr "_Scală:"
+msgstr "_Scară:"
 
 #: ../plug-ins/common/contrast-retinex.c:349
 msgid "Scale _division:"
-msgstr "_Diviziune scală:"
+msgstr "_Diviziune de scară:"
 
 #: ../plug-ins/common/contrast-retinex.c:362
 msgid "Dy_namic:"
@@ -1932,7 +1932,7 @@ msgid ""
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
 "Pixelii în culoarea de prim-plan vor apărea negri în toate imaginile "
-"rezultate. Aceasta poate fi folosit pentru lucruri precum markerii de "
+"rezultate.  Aceasta poate fi folosit pentru lucruri precum markerii de "
 "decupare care trebuie să rămână vizibili pe toate canalele."
 
 #: ../plug-ins/common/depth-merge.c:176
@@ -1973,11 +1973,11 @@ msgstr "_Decalaj:"
 
 #: ../plug-ins/common/depth-merge.c:751
 msgid "Sc_ale 1:"
-msgstr "Sc_ala 1:"
+msgstr "Sc_ara 1:"
 
 #: ../plug-ins/common/depth-merge.c:761
 msgid "Sca_le 2:"
-msgstr "Sca_la 2:"
+msgstr "Sca_ra 2:"
 
 #: ../plug-ins/common/despeckle.c:153
 msgid "Remove speckle noise from the image"
@@ -2022,7 +2022,7 @@ msgstr "Nivel de _alb:"
 
 #: ../plug-ins/common/destripe.c:105
 msgid "Remove vertical stripe artifacts from the image"
-msgstr "Elimină din imagine artifactele sub formă de dungi verticale"
+msgstr "Elimină din imagine artefactele sub formă de dungi verticale"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/destripe.c:111
@@ -2051,7 +2051,7 @@ msgstr "_Lățime:"
 
 #: ../plug-ins/common/destripe.c:511
 msgid "Create _histogram"
-msgstr "Creează _histogramă"
+msgstr "Creează o _histogramă"
 
 #: ../plug-ins/common/edge-dog.c:135
 msgid "Edge detection with control of edge thickness"
@@ -2129,7 +2129,7 @@ msgstr "A_dâncime:"
 
 #: ../plug-ins/common/file-aa.c:98
 msgid "ASCII art"
-msgstr "Grafică ASCII"
+msgstr "Artă ASCII"
 
 #. Create the actual window.
 #: ../plug-ins/common/file-aa.c:376
@@ -2449,7 +2449,7 @@ msgstr "Acesta nu este un fișier GIF"
 
 #: ../plug-ins/common/file-gif-load.c:419
 msgid "Non-square pixels.  Image might look squashed."
-msgstr "Pixelii nu sunt pătrați. Imaginea ar putea arăta strivită."
+msgstr "Pixelii nu sunt pătrați.  Imaginea ar putea arăta strivită."
 
 #: ../plug-ins/common/file-gif-load.c:994
 #, c-format
@@ -2490,7 +2490,7 @@ msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Nu se poate exporta „%s”. Formatul de fișier GIF nu suportă imagini care au "
+"Nu se poate exporta „%s”.  Formatul de fișier GIF nu suportă imagini care au "
 "mai mult de %d pixeli pe lățime sau înălțime."
 
 #: ../plug-ins/common/file-gif-save.c:773
@@ -2533,7 +2533,7 @@ msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
 msgstr ""
-"Formatul de fișier GIF nu permite acest lucru. Puteți alege ca toate "
+"Formatul de fișier GIF nu permite acest lucru.  Puteți alege ca toate "
 "straturile să fie decupate la marginile imaginii, sau să renunțați la acest "
 "export."
 
@@ -2559,8 +2559,8 @@ msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
 msgstr ""
-"Puteți exporta ca animație numai atunci când imaginea are mai mult de un "
-"strat. Imaginea pe care încercați să o exportați are numai un strat."
+"Puteți exporta doar ca animație atunci când imaginea are mai mult de un "
+"strat. Imaginea pe care încercați să o exportați are doar un strat."
 
 # tip de fișier
 #. translators: the %d is *always* 240 here
@@ -3498,11 +3498,11 @@ msgstr "Înălțimea imaginii este mai mare decât ce poate manipula GIMP."
 
 #: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
-msgstr "Factor de scală fals."
+msgstr "Factor de scară fals."
 
 #: ../plug-ins/common/file-pnm.c:650
 msgid "Unsupported scale factor."
-msgstr "Factor de scală nesuportat."
+msgstr "Factor de scară nesuportat."
 
 #: ../plug-ins/common/file-pnm.c:661
 msgid "Unsupported maximum value."
@@ -3654,13 +3654,13 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Când opțiunea este activată, imaginea rezultată va fi scalată pentru a "
-"încăpea în dimensiunea dată, fără schimbarea raportului de aspect."
+"Când opțiunea este comutată, imaginea rezultată va fi scalată pentru a "
+"încăpea în dimensiunea dată fără a modifica raportul de aspect."
 
 #. Unit
 #: ../plug-ins/common/file-ps.c:3736
 msgid "Unit"
-msgstr "Unitate de măsură"
+msgstr "Unitate"
 
 #: ../plug-ins/common/file-ps.c:3740
 msgid "_Inch"
@@ -4600,7 +4600,7 @@ msgid ""
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "Cursorul a fost exportat cu succes, dar conține unul sau mai multe cadre a "
-"căror dimensiune nominală nu este suportate de setările GNOME.\n"
+"căror dimensiune nominală nu este suportată de setările GNOME.\n"
 "Puteți satisface cerințele prin bifarea opțiunii „Înlocuiește dimensiunea "
 "tuturor cadrelor...” în dialogul de export, altfel cursorul ar putea să nu "
 "apară în setările GNOME."
@@ -5978,13 +5978,12 @@ msgstr "Culori:"
 msgid "Color Selection Dialog"
 msgstr "Dialog de selecție de culoare"
 
-# hm ? sau scalează ?
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2763
 #: ../plug-ins/gimpressionist/paper.c:192
 #: ../plug-ins/ifs-compose/ifs-compose.c:540
 msgid "Scale:"
-msgstr "Scală:"
+msgstr "Scară:"
 
 #: ../plug-ins/common/sphere-designer.c:2771
 msgid "Turbulence:"
@@ -6005,27 +6004,27 @@ msgstr "Transformări"
 #: ../plug-ins/common/sphere-designer.c:2808
 #: ../plug-ins/map-object/map-object-ui.c:1131
 msgid "Scale X:"
-msgstr "Scalare X:"
+msgstr "Scară X:"
 
 #: ../plug-ins/common/sphere-designer.c:2815
 msgid "Scale Y:"
-msgstr "Scalare Y:"
+msgstr "Scară Y:"
 
 #: ../plug-ins/common/sphere-designer.c:2821
 msgid "Scale Z:"
-msgstr "Scalare Z:"
+msgstr "Scară Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2828
 msgid "Rotate X:"
-msgstr "Rotire X:"
+msgstr "Rotație X:"
 
 #: ../plug-ins/common/sphere-designer.c:2835
 msgid "Rotate Y:"
-msgstr "Rotire Y:"
+msgstr "Rotație Y:"
 
 #: ../plug-ins/common/sphere-designer.c:2842
 msgid "Rotate Z:"
-msgstr "Rotire Z:"
+msgstr "Rotație Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2849
 msgid "Position X:"
@@ -6442,7 +6441,7 @@ msgstr "Mai multe opțiuni avansate"
 
 #: ../plug-ins/common/warp.c:632
 msgid "Gradient scale:"
-msgstr "Scală de degrade:"
+msgstr "Scară de degrade:"
 
 #: ../plug-ins/common/warp.c:652
 msgid "Gradient map selection menu"
@@ -6502,7 +6501,7 @@ msgstr "Descompunere"
 #: ../plug-ins/common/wavelet-decompose.c:248
 #, c-format
 msgid "Scale %d"
-msgstr "Scalare %d"
+msgstr "Scara %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:272
 msgid "Residual"
@@ -6511,22 +6510,22 @@ msgstr "Rezidual"
 # hm ? sau scalează ?
 #: ../plug-ins/common/wavelet-decompose.c:381
 msgid "Scales:"
-msgstr "Scală:"
+msgstr "Scări:"
 
 #. create group layer
 #: ../plug-ins/common/wavelet-decompose.c:393
 msgid "Create a layer group to store the decomposition"
 msgstr "Creează un grup de straturi pentru a stoca descompunerea"
 
-# hm ?
+# hm ? prin prisma tutorialelor de pe internet, pare că în original ar fi trebuit scale layer, nu scales layers
 #. create layer masks
 #: ../plug-ins/common/wavelet-decompose.c:405
 msgid "Add a layer mask to each scales layers"
-msgstr "Adaugă o mască de strat pentru fiecare strat de scalare"
+msgstr "Adaugă o mască de strat la fiecare strat de scară"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
-msgstr "Sistemul de operare nu mai are resurse de memorie."
+msgstr "Sistemul de operare este lipsit de memorie sau de resurse."
 
 #: ../plug-ins/common/web-browser.c:144
 msgid "The specified file was not found."
@@ -6549,7 +6548,7 @@ msgstr "Sistemul de operare a refuzat accesul la fișierul specificat."
 
 #: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
-msgstr "Asocierea cu numele de fișier nu este completă sau nu este validă."
+msgstr "Asocierea numelui de fișier nu este completă sau nu este validă."
 
 #: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
@@ -6726,7 +6725,7 @@ msgid ""
 "information. GIMP writes color space information by default. Enabling this "
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
-"Anumite aplicații nu pot citi imagini BMP care includ informații despre "
+"Unele aplicații nu pot citi imagini BMP care includ informații despre "
 "spațiul de culoare. GIMP scrie informațiile despre spațiul de culoare în mod "
 "implicit. Activarea acestei opțiuni va determina GIMP să nu scrie în fișier "
 "informațiile despre spațiul de culoare."
@@ -6898,7 +6897,7 @@ msgstr "Înlocuitor pentru pixeli nedefiniți"
 
 #: ../plug-ins/file-fits/fits.c:1182
 msgid "Pixel value scaling"
-msgstr "Scalare valoare de pixel"
+msgstr "Scalarea valorii de pixel"
 
 #: ../plug-ins/file-fits/fits.c:1186
 msgid "_Automatic"
@@ -7464,7 +7463,7 @@ msgstr "SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:677
 msgid "Compression type"
-msgstr "Tip de comprimare"
+msgstr "Tip de compresie"
 
 #: ../plug-ins/file-sgi/sgi.c:681
 msgid "_No compression"
@@ -7685,7 +7684,7 @@ msgstr "Folosește întârzierea introdusă mai sus pentru toate ca_drele"
 #. Save EXIF data
 #: ../plug-ins/file-webp/file-webp-dialog.c:367
 msgid "_Save Exif data"
-msgstr "_Salvează datele Exif"
+msgstr "_Salvează datele EXIF"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -9205,7 +9204,7 @@ msgstr "Aplică hârtia așa cum este (fără să fie stampată)"
 
 #: ../plug-ins/gimpressionist/paper.c:196
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Specifică scala texturii (în procente din fișierul original)"
+msgstr "Specifică scara texturii (în procente din fișierul original)"
 
 #: ../plug-ins/gimpressionist/placement.c:66
 msgid "Pl_acement"
@@ -9366,7 +9365,8 @@ msgstr "Nuanța zonei determină mărimea tușei"
 #: ../plug-ins/gimpressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
-"Este selectată mărimea care se potrivește cel mai bine la imaginea originală"
+"Este selectată dimensiunea care se potrivește cel mai bine la imaginea "
+"originală"
 
 #: ../plug-ins/gimpressionist/size.c:196
 msgid "Manually specify the stroke size"
@@ -9604,7 +9604,7 @@ msgstr "<b>Comentariu</b>"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "S_ave Exif data"
-msgstr "S_alvează datele Exif"
+msgstr "S_alvează datele EXIF"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -10017,11 +10017,11 @@ msgstr "DICOM"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
 msgid "Exif Tag"
-msgstr "Etichetă Exif"
+msgstr "Etichetă EXIF"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
-msgstr "Exif"
+msgstr "EXIF"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:4
 msgid "XMP Tag"
@@ -11921,15 +11921,15 @@ msgstr "Mapează imaginea la fețele cutiei"
 
 #: ../plug-ins/map-object/map-object-ui.c:1134
 msgid "X scale (size)"
-msgstr "Scală X (dimensiune)"
+msgstr "Scară X (dimensiune)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
 msgid "Y scale (size)"
-msgstr "Scală Y (dimensiune)"
+msgstr "Scară Y (dimensiune)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1160
 msgid "Z scale (size)"
-msgstr "Scală Z (dimensiune)"
+msgstr "Scară Z (dimensiune)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1183
 #: ../plug-ins/print/print-page-layout.c:450
