@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-29 17:36+0000\n"
-"PO-Revision-Date: 2020-05-29 21:08+0300\n"
+"POT-Creation-Date: 2020-05-09 19:02+0000\n"
+"PO-Revision-Date: 2020-05-31 11:57+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -160,7 +160,7 @@ msgstr "_Ceață..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
-msgstr "_Nume strat"
+msgstr "_Nume de strat"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Clouds"
@@ -168,7 +168,7 @@ msgstr "Nori"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Fog color"
-msgstr "_Culoare ceață"
+msgstr "_Culoare de ceață"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Turbulence"
@@ -573,8 +573,8 @@ msgstr "Instrument"
 msgid ""
 "The tool with which to draw the pattern.The Preview tool just draws quickly."
 msgstr ""
-"Instrumentul cu care să fie desenam modelul. Instrumentul Previzualizare "
-"doar desenează rapid."
+"Instrumentul cu care să fie desenat modelul. Instrumentul de previzualizare "
+"desenează doar o schiță rapidă."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
 msgid "Long Gradient"
