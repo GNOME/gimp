@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-05-17 10:43+0000\n"
-"PO-Revision-Date: 2020-05-31 17:16+0300\n"
+"PO-Revision-Date: 2020-05-31 18:25+0300\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -6482,17 +6482,15 @@ msgstr "Etapa %d a fluxului"
 #: ../plug-ins/common/wavelet-decompose.c:97
 #: ../plug-ins/common/wavelet-decompose.c:350
 msgid "Wavelet decompose"
-msgstr "Descompunere de unde"
+msgstr "Descompunere în vălurele"
 
 #: ../plug-ins/common/wavelet-decompose.c:102
 msgid "_Wavelet-decompose..."
-msgstr ""
-"Descompunere de _\n"
-"unde..."
+msgstr "_Descompunere în vălurele..."
 
 #: ../plug-ins/common/wavelet-decompose.c:177
 msgid "Wavelet-Decompose"
-msgstr "Descompunere de unde"
+msgstr "Descompunere în vălurele"
 
 #: ../plug-ins/common/wavelet-decompose.c:186
 msgid "Decomposition"
