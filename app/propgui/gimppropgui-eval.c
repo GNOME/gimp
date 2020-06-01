@@ -647,6 +647,8 @@ gimp_prop_eval_string_impl (GObject      *config,
     {
       g_set_error (error, GIMP_PROP_EVAL_ERROR, GIMP_PROP_EVAL_FAILED,
                    "invalid expression");
+
+      g_free (result);
     }
 
   g_free (t);
