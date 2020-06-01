@@ -50,15 +50,21 @@ build-image:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
+
+    ## install basic build utilities
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "build-essential cpio g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
+    - echo "build-essential cpio git intltool libgdk-pixbuf2.0-dev libglib2.0-bin meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
     - echo "RUN pip3 install zstandard" >> Dockerfile
 
-    - echo "RUN export XDG_CACHE_HOME="$CI_PROJECT_DIR"/.cache/" >> Dockerfile
-    - echo "RUN export XDG_DATA_HOME="$CI_PROJECT_DIR"/.local/share/" >> Dockerfile
+    ## set XDG_* variables to popint to persistent /opt in the image
+    - echo "RUN export XDG_CACHE_HOME="/opt/.cache/" >> Dockerfile
+    - echo "RUN export XDG_DATA_HOME="/opt/.local/share/" >> Dockerfile
+
+    ## install crossroad
     - echo "RUN git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git" >> Dockerfile
     - echo "RUN cd crossroad && ./setup.py install --prefix=/usr/local" >> Dockerfile
 
+    ## create the crossroad script to install the dependencies into the crossroad environment
     - echo 'RUN echo "crossroad source msys2" > crossroad_deps_install.sh' >> Dockerfile
     - echo 'RUN echo "crossroad install lcms2" >> crossroad_deps_install.sh' >> Dockerfile
     - echo 'RUN echo "crossroad install cairo json-glib" >> crossroad_deps_install.sh' >> Dockerfile
@@ -68,25 +74,37 @@ build-image:
     - echo 'RUN echo "fi" >> crossroad_deps_install.sh' >> Dockerfile
     - echo 'RUN echo "crossroad install appstream-glib atk drmingw gexiv2 ghostscript glib2 iso-codes json-c libheif libmypaint mypaint-brushes libwebp libwmf openexr ilmbase poppler poppler-data xpm-nox" >> crossroad_deps_install.sh' >> Dockerfile
 
+
+
 build-image-win64:
   extends: .build-image-win-base
   script:
+    ## install win64 compilers
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64" >> Dockerfile
 
+    ## set up crossroad w64 environment and run deps install script
     - echo 'RUN crossroad w64 gimp --run="crossroad_deps_install.sh"' >> Dockerfile
+
+    ## clean-up tasks to reduce image size
     - echo 'RUN apt-get clean' >> Dockerfile
+    - echo 'RUN rm -rf $XDG_CACHE_HOME' >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN64 --cache=true --cache-ttl=120h
 
 build-image-win32:
   extends: .build-image-win-base
   script:
+    ## install win64 compilers
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     - echo "g++-mingw-w64-i686 gcc-mingw-w64-i686" >> Dockerfile
 
+    ## set up crossroad w32 environment and run deps install script
     - echo 'RUN crossroad w32 gimp --run="crossroad_deps_install.sh"' >> Dockerfile
+
+    ## clean-up tasks to reduce image size
     - echo 'RUN apt-get clean' >> Dockerfile
+    - echo 'RUN rm -rf $XDG_CACHE_HOME' >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $BUILD_IMAGE_WIN32 --cache=true --cache-ttl=120h
 
@@ -204,14 +222,20 @@ gimp-debian/testing-clang:
     - .cache/crossroad/
     - apt-cache
   before_script:
+    ## create a link to the crossroad environment created in the image prepare step
+    - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
+
+    ## create crossroad script to build deps
     - echo "mkdir _deps && cd _deps" > crossroad_deps_build.sh
 
+    ## part for building babl
     - echo "git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git" >> crossroad_deps_build.sh
     - echo "cd babl" >> crossroad_deps_build.sh
     - echo "crossroad meson _build/ -Denable-gir=false -Dlibdir=lib" >> crossroad_deps_build.sh
     - echo "ninja -C _build install || exit 1" >> crossroad_deps_build.sh
     - echo "cd .." >> crossroad_deps_build.sh
 
+    ## part for building gegl
     - echo "git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git" >> crossroad_deps_build.sh
     - echo "cd gegl" >> crossroad_deps_build.sh
     - echo "crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib" >> crossroad_deps_build.sh
@@ -231,6 +255,7 @@ deps-win64:
   extends: .deps-win-base
   image: $BUILD_IMAGE_WIN64
   script:
+    ## run crossroad deps build for w64 environment
     - crossroad w64 gimp --run="crossroad_deps_build.sh"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
@@ -253,6 +278,9 @@ gimp-win64:
     paths:
     - .cache/crossroad/
     - apt-cache
+  before_script:
+    ## create a link to the crossroad environment created in the image prepare step
+    - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
   script:
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
@@ -277,6 +305,9 @@ gimp-win64:
 deps-win32:
   extends: .deps-win-base
   image: $BUILD_IMAGE_WIN64
+  before_script:
+    ## create a link to the crossroad environment created in the image prepare step
+    - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
   script:
     - crossroad w32 gimp --run="crossroad_deps_build.sh"
   artifacts:
@@ -300,6 +331,9 @@ gimp-win32:
     paths:
     - .cache/crossroad/
     - apt-cache
+  before_script:
+    ## create a link to the crossroad environment created in the image prepare step
+    - ln -s /opt/.local/share/crossroad $XDG_DATA_HOME
   script:
     - mkdir _build && cd _build
     - echo 'crossroad meson ..
