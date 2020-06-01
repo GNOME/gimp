@@ -40,6 +40,8 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimppropgui.h"
 #include "gimppropgui-generic.h"
@@ -191,6 +193,73 @@ _gimp_prop_gui_new_generic (GObject                  *config,
               g_object_weak_ref (G_OBJECT (button),
                                  (GWeakNotify) g_free, pspec_name);
             }
+        }
+      else if (next_pspec                                  &&
+               HAS_KEY (pspec,      "role", "range-start") &&
+               HAS_KEY (next_pspec, "role", "range-end")   &&
+               HAS_KEY (pspec,      "unit", "luminance"))
+        {
+          GtkWidget   *vbox;
+          GtkWidget   *spin_scale;
+          GtkWidget   *label;
+          GtkWidget   *frame;
+          GtkWidget   *range;
+          const gchar *label_str;
+          gdouble      step_increment;
+          gdouble      page_increment;
+          gdouble      ui_lower;
+          gdouble      ui_upper;
+
+          i++;
+
+          vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+          gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+
+          spin_scale = gimp_prop_widget_new_from_pspec (
+            config, pspec,
+            area, context,
+            create_picker_func,
+            create_controller_func,
+            creator,
+            &label_str);
+
+          g_object_set_data_full (G_OBJECT (vbox),
+                                  "gimp-underlying-widget",
+                                  g_object_ref_sink (spin_scale),
+                                  g_object_unref);
+
+          gtk_spin_button_get_increments (GTK_SPIN_BUTTON (spin_scale),
+                                          &step_increment, &page_increment);
+
+          gimp_spin_scale_get_scale_limits (GIMP_SPIN_SCALE (spin_scale),
+                                            &ui_lower, &ui_upper);
+
+          label = gtk_label_new_with_mnemonic (label_str);
+          gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+          gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+          gtk_widget_show (label);
+
+          g_object_bind_property (spin_scale, "label",
+                                  label,      "label",
+                                  G_BINDING_SYNC_CREATE);
+
+          frame = gimp_frame_new (NULL);
+          gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+          gtk_widget_show (frame);
+
+          range = gimp_prop_range_new (config,
+                                       pspec->name, next_pspec->name,
+                                       step_increment, page_increment,
+                                       gtk_spin_button_get_digits (
+                                         GTK_SPIN_BUTTON (spin_scale)),
+                                       ! HAS_KEY (pspec,
+                                                  "range-sorted", "false"));
+          gimp_prop_range_set_ui_limits (range, ui_lower, ui_upper);
+          gtk_container_add (GTK_CONTAINER (frame), range);
+          gtk_widget_show (range);
+
+          gimp_prop_gui_bind_container (spin_scale, vbox);
+          gimp_prop_gui_bind_tooltip   (spin_scale, vbox);
         }
       else
         {
