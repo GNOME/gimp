@@ -40,6 +40,7 @@
 
 #include "actions/tools-commands.h"
 
+#include "gimpaccellabel.h"
 #include "gimpaction.h"
 #include "gimpdock.h"
 #include "gimptoolbox.h"
@@ -47,6 +48,8 @@
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
+
+#include "gimp-intl.h"
 
 
 #define ARROW_SIZE   0.125 /* * 100%       */
@@ -69,6 +72,8 @@ struct _GimpToolButtonPrivate
   GimpToolItem *tool_item;
 
   GtkWidget    *palette;
+
+  GtkWidget    *tooltip_widget;
 
   GtkWidget    *menu;
   GHashTable   *menu_items;
@@ -94,6 +99,11 @@ static void         gimp_tool_button_hierarchy_changed   (GtkWidget           *w
                                                           GtkWidget           *previous_toplevel);
 static gboolean     gimp_tool_button_draw                (GtkWidget           *widget,
                                                           cairo_t             *cr);
+static gboolean     gimp_tool_button_query_tooltip       (GtkWidget           *widget,
+                                                          gint                 x,
+                                                          gint                 y,
+                                                          gboolean             keyboard_mode,
+                                                          GtkTooltip          *tooltip);
 
 static void         gimp_tool_button_toggled             (GtkToggleToolButton *toggle_tool_button);
 
@@ -184,6 +194,7 @@ gimp_tool_button_class_init (GimpToolButtonClass *klass)
 
   widget_class->hierarchy_changed   = gimp_tool_button_hierarchy_changed;
   widget_class->draw                = gimp_tool_button_draw;
+  widget_class->query_tooltip       = gimp_tool_button_query_tooltip;
 
   toggle_tool_button_class->toggled = gimp_tool_button_toggled;
 
@@ -396,6 +407,183 @@ gimp_tool_button_draw (GtkWidget *widget,
   return FALSE;
 }
 
+static GtkWidget *
+gimp_tool_button_query_tooltip_add_tool (GimpToolButton *tool_button,
+                                         GtkGrid        *grid,
+                                         gint            row,
+                                         GimpToolInfo   *tool_info,
+                                         const gchar    *label_str,
+                                         GtkIconSize     icon_size)
+{
+  GimpUIManager *ui_manager;
+  GimpAction    *action = NULL;
+  GtkWidget     *label;
+  GtkWidget     *image;
+
+  ui_manager = gimp_dock_get_ui_manager (
+    GIMP_DOCK (tool_button->priv->toolbox));
+
+  if (ui_manager)
+    {
+      gchar *name;
+
+      name = gimp_tool_info_get_action_name (tool_info);
+
+      action = gimp_ui_manager_find_action (ui_manager, "tools", name);
+
+      g_free (name);
+    }
+
+  image = gtk_image_new_from_icon_name (
+    gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)),
+    icon_size);
+  gtk_grid_attach (grid,
+                   image,
+                   0, row,
+                   1, 1);
+  gtk_widget_show (image);
+
+  label = gtk_label_new (label_str);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_grid_attach (grid,
+                   label,
+                   1, row,
+                   1, 1);
+  gtk_widget_show (label);
+
+  if (action)
+    {
+      GtkWidget *accel_label;
+
+      accel_label = gimp_accel_label_new (action);
+      gtk_widget_set_margin_start (accel_label, 16);
+      gtk_label_set_xalign (GTK_LABEL (accel_label), 1.0);
+      gtk_grid_attach (grid,
+                       accel_label,
+                       2, row,
+                       1, 1);
+      gtk_widget_show (accel_label);
+    }
+
+  return label;
+}
+
+static gboolean
+gimp_tool_button_query_tooltip (GtkWidget  *widget,
+                                gint        x,
+                                gint        y,
+                                gboolean    keyboard_mode,
+                                GtkTooltip *tooltip)
+{
+  GimpToolButton *tool_button = GIMP_TOOL_BUTTON (widget);
+
+  if (! tool_button->priv->tooltip_widget)
+    {
+      GimpToolInfo  *tool_info;
+      GtkWidget     *grid;
+      GtkWidget     *label;
+      gchar        **tooltip_labels;
+      GtkIconSize    icon_size = GTK_ICON_SIZE_MENU;
+      gint           row       = 0;
+
+      tool_info = gimp_tool_button_get_tool_info (tool_button);
+
+      if (! tool_info)
+        return FALSE;
+
+      if (tool_button->priv->palette)
+        {
+          icon_size = gtk_tool_palette_get_icon_size (
+            GTK_TOOL_PALETTE (tool_button->priv->palette));
+        }
+
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+      gtk_widget_show (grid);
+
+      tool_button->priv->tooltip_widget = g_object_ref_sink (grid);
+
+      tooltip_labels = g_strsplit (tool_info->tooltip, ": ", 2);
+
+      label = gimp_tool_button_query_tooltip_add_tool (tool_button,
+                                                       GTK_GRID (grid),
+                                                       row++,
+                                                       tool_info,
+                                                       tooltip_labels[0],
+                                                       icon_size);
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                 -1);
+
+      if (tooltip_labels[0])
+        {
+          //gtk_table_set_row_spacing (GTK_TABLE (table), 0, 0);
+
+          label = gtk_label_new (tooltip_labels[1]);
+          gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+          gtk_grid_attach (GTK_GRID (grid),
+                           label,
+                           1, row++,
+                           1, 1);
+          gtk_widget_show (label);
+        }
+
+      g_strfreev (tooltip_labels);
+
+      if (GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
+        {
+          GimpContainer *children;
+          gint           n_children;
+
+          children = gimp_viewable_get_children (
+            GIMP_VIEWABLE (tool_button->priv->tool_item));
+
+          n_children = gimp_container_get_n_children (children);
+
+          if (n_children > 1)
+            {
+              GtkWidget *label;
+              gint       i;
+
+              label = gtk_label_new (_("Also in group:"));
+              gtk_widget_set_margin_top (label, 4);
+              gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+              gimp_label_set_attributes (GTK_LABEL (label),
+                                         PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                         -1);
+              gtk_grid_attach (GTK_GRID (grid),
+                               label,
+                               0, row++,
+                               3, 1);
+              gtk_widget_show (label);
+
+              for (i = 0; i < n_children; i++)
+                {
+                  GimpToolInfo *other_tool_info;
+
+                  other_tool_info = GIMP_TOOL_INFO (
+                    gimp_container_get_child_by_index (children, i));
+
+                  if (other_tool_info != tool_info)
+                    {
+                      gimp_tool_button_query_tooltip_add_tool (
+                        tool_button,
+                        GTK_GRID (grid),
+                        row++,
+                        other_tool_info,
+                        other_tool_info->label,
+                        icon_size);
+                    }
+                }
+            }
+        }
+    }
+
+  gtk_tooltip_set_custom (tooltip, tool_button->priv->tooltip_widget);
+
+  return TRUE;
+}
+
 static void
 gimp_tool_button_toggled (GtkToggleToolButton *toggle_tool_button)
 {
@@ -578,6 +766,8 @@ gimp_tool_button_tool_add (GimpContainer  *container,
   index = gimp_container_get_child_index (container, GIMP_OBJECT (tool_info));
 
   gimp_tool_button_add_menu_item (tool_button, tool_info, index);
+
+  gimp_tool_button_update (tool_button);
 }
 
 static void
@@ -586,6 +776,8 @@ gimp_tool_button_tool_remove (GimpContainer  *container,
                               GimpToolButton *tool_button)
 {
   gimp_tool_button_remove_menu_item (tool_button, tool_info);
+
+  gimp_tool_button_update (tool_button);
 }
 
 static void
@@ -596,6 +788,8 @@ gimp_tool_button_tool_reorder (GimpContainer  *container,
 {
   gimp_tool_button_remove_menu_item (tool_button, tool_info);
   gimp_tool_button_add_menu_item    (tool_button, tool_info, new_index);
+
+  gimp_tool_button_update (tool_button);
 }
 
 static void
@@ -604,6 +798,8 @@ gimp_tool_button_icon_size_notify (GtkToolPalette   *palette,
                                    GimpToolButton   *tool_button)
 {
   gimp_tool_button_reconstruct_menu (tool_button);
+
+  gimp_tool_button_update (tool_button);
 }
 
 static void
@@ -673,21 +869,17 @@ static void
 gimp_tool_button_update (GimpToolButton *tool_button)
 {
   GimpToolInfo *tool_info;
-  GimpAction   *action;
 
   tool_info = gimp_tool_button_get_tool_info (tool_button);
-  action    = gimp_tool_button_get_action (tool_button, tool_info);
 
   gtk_tool_button_set_icon_name (
     GTK_TOOL_BUTTON (tool_button),
     tool_info ? gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)) :
                 NULL);
 
-  if (action)
-    {
-      gimp_widget_set_accel_help (GTK_WIDGET (tool_button), action);
-    }
-  else if (tool_info)
+  g_clear_object (&tool_button->priv->tooltip_widget);
+
+  if (tool_info)
     {
       gimp_help_set_help_data (GTK_WIDGET (tool_button),
                                tool_info->tooltip, tool_info->help_id);
