@@ -83,6 +83,14 @@ GtkWidget * gimp_prop_polar_new             (GObject       *config,
                                              const gchar   *angle_property_name,
                                              const gchar   *radius_property_name);
 
+GtkWidget * gimp_prop_range_new             (GObject       *config,
+                                             const gchar   *lower_property_name,
+                                             const gchar   *upper_property_name,
+                                             gdouble        step_increment,
+                                             gdouble        page_increment,
+                                             gint           digits,
+                                             gboolean       sorted);
+
 
 /*  GParamObject (GimpViewable)  */
 

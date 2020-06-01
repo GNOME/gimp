@@ -39,10 +39,12 @@
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcolorbar.h"
 #include "gimpcolorpanel.h"
 #include "gimpcompressioncombobox.h"
 #include "gimpdial.h"
 #include "gimpdnd.h"
+#include "gimphandlebar.h"
 #include "gimpiconpicker.h"
 #include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
@@ -1088,6 +1090,75 @@ gimp_prop_polar_new (GObject     *config,
                           G_BINDING_SYNC_CREATE);
 
   return polar;
+}
+
+
+/************/
+/*  ranges  */
+/************/
+
+#define RANGE_GRADIENT_HEIGHT 12
+#define RANGE_CONTROL_HEIGHT  10
+
+GtkWidget *
+gimp_prop_range_new (GObject     *config,
+                     const gchar *lower_property_name,
+                     const gchar *upper_property_name,
+                     gdouble      step_increment,
+                     gdouble      page_increment,
+                     gint         digits,
+                     gboolean     sorted)
+{
+  GtkWidget     *vbox;
+  GtkWidget     *color_bar;
+  GtkWidget     *handle_bar;
+  GtkWidget     *hbox;
+  GtkWidget     *spin_button;
+  GtkAdjustment *adjustment1;
+  GtkAdjustment *adjustment2;
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+
+  color_bar = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_size_request (color_bar, -1, RANGE_GRADIENT_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox), color_bar, FALSE, FALSE, 0);
+  gtk_widget_show (color_bar);
+
+  handle_bar = gimp_handle_bar_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_size_request (handle_bar, -1, RANGE_CONTROL_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox), handle_bar, FALSE, FALSE, 0);
+  gtk_widget_show (handle_bar);
+
+  gimp_handle_bar_connect_events (GIMP_HANDLE_BAR (handle_bar), color_bar);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  spin_button = gimp_prop_spin_button_new (config, lower_property_name,
+                                           step_increment, page_increment,
+                                           digits);
+  adjustment1 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin_button));
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin_button), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
+  gtk_widget_show (spin_button);
+
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 0, adjustment1);
+
+  spin_button = gimp_prop_spin_button_new (config, upper_property_name,
+                                           step_increment, page_increment,
+                                           digits);
+  adjustment2 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin_button));
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin_button), TRUE);
+  gtk_box_pack_end (GTK_BOX (hbox), spin_button, FALSE, FALSE, 0);
+  gtk_widget_show (spin_button);
+
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (handle_bar), 2, adjustment2);
+
+  if (sorted)
+    gimp_gtk_adjustment_chain (adjustment1, adjustment2);
+
+  return vbox;
 }
 
 
