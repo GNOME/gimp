@@ -926,6 +926,15 @@ gimp_prop_eval_parse_reference (GObject      *config,
       g_free (property_name);
 
       *ref_key = g_strdup (*t);
+
+      gimp_prop_eval_read_token (expr, t, error);
+
+      if (*error)
+        {
+          g_free (*ref_key);
+
+          return FALSE;
+        }
     }
 
   return TRUE;
