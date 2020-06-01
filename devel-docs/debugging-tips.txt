@@ -96,6 +96,28 @@ odd minor version) pop up a debug console at start.
 If you are building stable versions of GIMP for debugging and want this
 debug console as well, configure with `--enable-win32-debug-console`.
 
+## Testing older GIMP versions ##
+
+A useful trick when you want to quickly test a specific GIMP older
+version (e.g. to confirm a behavior change) is to install it with our
+official flatpak. The flathub repository stores past builds (up to 20 at
+the time of writing). You can list them with the following command:
+
+```
+$ flatpak remote-info --log flathub org.gimp.GIMP
+```
+
+Each build will have a "Subject" line (a comment to indicate the build
+reason, it may be just dependency updates or build fixes, or sometimes a
+bump in GIMP version) and a commit hash. When you have identified the
+build you want to test, update it like this:
+
+```
+flatpak update --commit=<hash-of-build> org.gimp.GIMP
+```
+
+Then just run your older GIMP!
+
 ## Debugging icons ##
 
 See file `devel-docs/icons.txt` to learn more about our icons, and in
